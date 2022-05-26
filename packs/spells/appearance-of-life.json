@@ -4,46 +4,98 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "c1o404pjc1m011td",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": "one or more undead creatures"
+        },
+        "range": {
+          "units": "long"
+        },
+        "uses": {
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": ""
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief or Will negates (see text)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "conditionals": []
       }
-    },
-    "target": {
-      "value": "one or more undead creatures"
-    },
-    "range": {
-      "units": "long"
-    },
+    ],
     "uses": {
-      "per": ""
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will disbelief or Will negates (see text)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -89,21 +141,82 @@
       "bloodline": []
     },
     "level": 3,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "ill",
     "subschool": "glamer",
     "types": "evil",
-    "conditionals": [],
+    "nonlethal": false,
     "components": {
+      "value": "",
       "verbal": true,
       "somatic": true,
-      "material": true
+      "thought": false,
+      "emotion": false,
+      "material": true,
+      "focus": false,
+      "divineFocus": 0
     },
+    "castTime": "",
     "materials": {
-      "value": "one Tiny or larger living creature"
+      "value": "one Tiny or larger living creature",
+      "focus": "",
+      "gpValue": 0
     },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
     "sr": false,
     "shortDescription": "<p>The illusion makes undead creatures of Medium size or smaller appear as if they were living humanoid creatures. You can target a number of undead creatures whose total number of Hit Dice is no greater than twice your caster level. When you create the illusion, you choose the races, genders, and attire for the undead creatures. Additionally, the illusion makes the undead creatures' movements appear lifelike (two shuffling zombies could be made to appear as two strolling lovers). The illusion doesn't create smell, sound, texture, or temperature. Undead with Intelligence scores can attempt a saving throw to negate the effect of the spell, but mindless undead do not. Any creatures interacting with the illusion receive a saving throw to disbelieve the illusion.  The illusion interferes with <i>detect undead</i>, requiring the caster to succeed at a caster check (DC = 11 + your caster level) for the spell to determine the creatures are undead.  <i>Appearance of Life</i> can be made permanent with a <i>permanency</i> spell by a caster of 12th level or higher for the cost of 10,000 gp.</p>",
-    "spellDuration": "10 minutes/level (D)"
+    "spellDuration": "10 minutes/level (D)",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
+    "activation": {
+      "type": "round"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 3,
+        "type": "action"
+      }
+    },
+    "target": {
+      "value": "one or more undead creatures"
+    },
+    "range": {
+      "units": "long",
+      "maxIncrements": 1
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "spellsave",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0",
+      "type": "will",
+      "description": "Will disbelief or Will negates (see text)"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

@@ -55,9 +55,10 @@ export class SquareHighlight {
  *
  * @param {Token} token
  * @param {ItemPF} attack
+ * @param action
  * @returns SquareHighlight
  */
-export const showAttackReach = function (token, attack) {
+export const showAttackReach = function (token, attack, action) {
   const grid = canvas.grid;
   const gridSize = grid.size;
   const tw = token.data.width;
@@ -67,7 +68,6 @@ export const showAttackReach = function (token, attack) {
     y: Math.floor((token.y + th * gridSize - 0.5 * gridSize) / gridSize),
   };
 
-  const action = attack.firstAction;
   if (!action) return;
   const rollData = action.getRollData();
 
@@ -78,12 +78,12 @@ export const showAttackReach = function (token, attack) {
   const range = rollData.range;
 
   // Determine minimum range
-  const minRangeKey = getProperty(attack.data, "data.range.minUnits");
+  const minRangeKey = action.data.range.minUnits;
   let minRange = null;
   if (["melee", "touch"].includes(minRangeKey)) minRange = range.melee;
   if (minRangeKey === "reach") minRange = range.reach;
   if (minRangeKey === "ft") {
-    minRange = RollPF.safeRoll(getProperty(attack.data, "data.range.minValue") || "0", rollData).total;
+    minRange = RollPF.safeRoll(action.data.range.minValue || "0", rollData).total;
   }
 
   const squares = {
@@ -97,18 +97,18 @@ export const showAttackReach = function (token, attack) {
     squares.normal = getReachSquares(token, range.melee, minRange, null, { useReachRule });
     squares.reach = getReachSquares(token, range.reach, range.melee, null, { useReachRule });
   } else if (rangeKey === "ft") {
-    const r = RollPF.safeRoll(getProperty(attack.data, "data.range.value") || "0", rollData).total;
+    const r = RollPF.safeRoll(action.data.range.value || "0", rollData).total;
     squares.normal = getReachSquares(token, r, minRange, null, { useReachRule: true });
 
     // Add range increments
     const maxSquareRange = Math.min(
-      400,
+      60, // arbitrary limit to enhance performance on large canvases
       Math.max(
         (canvas.dimensions.width / canvas.dimensions.size) * canvas.dimensions.distance,
         (canvas.dimensions.height / canvas.dimensions.size) * canvas.dimensions.distance
       ) + convertDistance(r)[0]
     );
-    const rangeIncrements = getProperty(attack.data, "data.range.maxIncrements") || 1;
+    const rangeIncrements = action.data.range.maxIncrements;
     for (let a = 1; a < rangeIncrements; a++) {
       if ((a + 1) * convertDistance(r)[0] <= maxSquareRange) {
         squares.extra.push(getReachSquares(token, (a + 1) * r, a * r, null, { useReachRule }));
@@ -177,13 +177,15 @@ export const addReachCallback = async function (data, html) {
 
   // Define functions
   let highlight;
-  const mouseEnterCallback = function () {
+  const mouseEnterCallback = function (event) {
+    const a = event.currentTarget;
     const tokenUuid = html.find(".chat-card")[0]?.dataset?.tokenUuid;
     _getTokenByUuid(tokenUuid).then((t) => {
       if (!t) return;
       const item = t.actor.items.get(itemId);
       if (!item) return;
-      if (!game.settings.get("pf1", "hideReachMeasurements")) highlight = showAttackReach(t, item);
+      if (!game.settings.get("pf1", "hideReachMeasurements"))
+        highlight = showAttackReach(t, item, item.actions.get(a.dataset.action));
 
       if (!highlight) return;
 

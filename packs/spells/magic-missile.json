@@ -4,7 +4,171 @@
   "type": "spell",
   "img": "systems/pf1/icons/spells/fire-arrows-sky-1.jpg",
   "data": {
+    "description": {
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "gy27k4v85iexr4b2",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/fire-arrows-sky-1.jpg",
+        "description": "",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": "up to five creatures, no two of which can be more than 15 ft. apart"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "uses": {
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "attackName": "Missile",
+        "actionType": "rsak",
+        "attackBonus": "100",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "1d4+1",
+              "force"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(4, ceil((@cl) / 2) - 1)"
+          },
+          "label": "Missile #{0}"
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "critRange": null,
+          "critMult": null
+        },
+        "save": {
+          "dc": "0"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          1
+        ],
+        [
+          "magus",
+          1
+        ],
+        [
+          "bloodrager",
+          1
+        ],
+        [
+          "psychic",
+          1
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 1,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "evo",
+    "subschool": "",
+    "types": "force",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
+    "shortDescription": "<p>A missile of magical energy darts forth from your fingertip and strikes its target, dealing 1d4+1 points of force damage.</p><p>The missile strikes unerringly, even if the target is in melee combat, so long as it has less than total cover or total concealment.</p><p>Specific parts of a creature can't be singled out. Objects are not damaged by the spell.</p><p>For every two caster levels beyond 1st, you gain an additional missile-two at 3rd level, three at 5th, four at 7th, and the maximum of five missiles at 9th level or higher. If you shoot multiple missiles, you can have them strike a single creature or several creatures.</p><p>A single missile can strike only one creature. You must designate targets before you check for spell resistance or roll damage.</p>",
+    "spellDuration": "instantaneous",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -18,10 +182,8 @@
       "value": "up to five creatures, no two of which can be more than 15 ft. apart"
     },
     "range": {
-      "units": "medium"
-    },
-    "uses": {
-      "per": ""
+      "units": "medium",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -57,48 +219,7 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          1
-        ],
-        [
-          "magus",
-          1
-        ],
-        [
-          "bloodrager",
-          1
-        ],
-        [
-          "psychic",
-          1
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "school": "evo",
-    "types": "force",
-    "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true
-    },
-    "spellbook": "",
-    "shortDescription": "<p>A missile of magical energy darts forth from your fingertip and strikes its target, dealing 1d4+1 points of force damage.</p><p>The missile strikes unerringly, even if the target is in melee combat, so long as it has less than total cover or total concealment.</p><p>Specific parts of a creature can't be singled out. Objects are not damaged by the spell.</p><p>For every two caster levels beyond 1st, you gain an additional missile-two at 3rd level, three at 5th, four at 7th, and the maximum of five missiles at 9th level or higher. If you shoot multiple missiles, you can have them strike a single creature or several creatures.</p><p>A single missile can strike only one creature. You must designate targets before you check for spell resistance or roll damage.</p>",
-    "spellDuration": "instantaneous"
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

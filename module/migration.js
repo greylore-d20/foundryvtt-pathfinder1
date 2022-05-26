@@ -262,7 +262,6 @@ export const migrateItemData = function (item) {
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
-  // _migrateSecondaryAttackData(item, updateData);
   _migrateItemActions(item, updateData);
 
   // Return the migrated update data
@@ -997,18 +996,8 @@ const _migrateSpellData = function (item, updateData) {
   }
 };
 
-const _migrateSecondaryAttackData = function (item, updateData) {
-  if (item.type !== "attack") return;
-
-  const secondaryAttackData = item.data.data.naturalAttack?.secondary;
-  if (secondaryAttackData == null) {
-    updateData["data.naturalAttack.secondary.attackBonus"] = "-5";
-    updateData["data.naturalAttack.secondary.damageMult"] = 0.5;
-  }
-};
-
 const _migrateItemActions = function (item, updateData) {
-  if (!Object.hasOwnProperty.call(item.data, "actionType") || item.data.actions instanceof Array) return;
+  if (!item.data.actionType || (item.data.actions instanceof Array && item.data.actions.length > 0)) return;
 
   // Transfer data to an action
   const actionData = game.pf1.documentComponents.ItemAction.defaultData;
@@ -1026,6 +1015,8 @@ const _migrateItemActions = function (item, updateData) {
     actionData.name = game.i18n.localize("PF1.Use");
   }
   actionData.img = item.img;
+  // Clear description
+  actionData.description = "";
 
   updateData["data.actions"] = [actionData];
 };

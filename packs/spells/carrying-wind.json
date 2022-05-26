@@ -1,22 +1,97 @@
 {
+  "_id": "JmX68u3q4lCxuB0l",
   "name": "Carrying Wind",
   "type": "spell",
   "img": "icons/magic/air/air-wave-gust-blue.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
+    "actions": [],
+    "uses": {
+      "per": null,
+      "value": 0,
+      "maxFormula": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "druid",
+          3
+        ],
+        [
+          "hunter",
+          3
+        ],
+        [
+          "shaman",
+          3
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 3,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "con",
+    "subschool": "",
+    "types": "air",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 1
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">When you cast this spell, a wind spirit envelopes you and carries you with it at your direction. You gain a +10-foot enhancement bonus to your base speed and fly speed while this spell is in effect. If you don&rsquo;t have a fly speed, you instead gain a fly speed of 10 feet with poor maneuverability. If your caster level is 10th&ndash;14th, the enhancement bonus to these speeds is +20 feet (if applicable, your temporary fly speed is 20 feet with average maneuverability). If your caster level is 15th or higher, the enhancement bonus to these speeds is +30 feet (if applicable, your temporary fly speed is 30 feet with average maneuverability).</span></p>",
+    "spellDuration": "10 minutes/level",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 1,
-        "type": ""
+        "cost": 2,
+        "type": "action"
       }
     },
     "duration": {
@@ -32,13 +107,6 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": null,
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
     },
     "measureTemplate": {
       "type": "",
@@ -88,79 +156,13 @@
       "damageBonus": 2,
       "critMultiplier": 1
     },
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "druid",
-          3
-        ],
-        [
-          "hunter",
-          3
-        ],
-        [
-          "shaman",
-          3
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
-    "school": "con",
-    "subschool": "",
-    "types": "air",
-    "nonlethal": false,
     "conditionals": [],
-    "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 1
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": false,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">When you cast this spell, a wind spirit envelopes you and carries you with it at your direction. You gain a +10-foot enhancement bonus to your base speed and fly speed while this spell is in effect. If you don&rsquo;t have a fly speed, you instead gain a fly speed of 10 feet with poor maneuverability. If your caster level is 10th&ndash;14th, the enhancement bonus to these speeds is +20 feet (if applicable, your temporary fly speed is 20 feet with average maneuverability). If your caster level is 15th or higher, the enhancement bonus to these speeds is +30 feet (if applicable, your temporary fly speed is 30 feet with average maneuverability).</span></p>",
-    "spellDuration": "10 minutes/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
     "spellPoints": {
       "cost": "1 + @sl"
     },
-    "domain": false,
-    "slotCost": 1,
     "clCheck": false,
-    "identifiedName": "Carrying Wind"
+    "identifiedName": "Carrying Wind",
+    "size": "med"
   },
   "effects": [],
   "folder": null,
@@ -169,6 +171,5 @@
     "default": 0,
     "LhFOnsRrYD2v4zOf": 3
   },
-  "flags": {},
-  "_id": "JmX68u3q4lCxuB0l"
+  "flags": {}
 }

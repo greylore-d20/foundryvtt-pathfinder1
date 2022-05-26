@@ -4,7 +4,157 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "wjs0tqfjq2q19hnz",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": "you or all creatures within 5 ft.; see text"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "uses": {
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": ""
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will half"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "paladin",
+          1
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 1,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "abj",
+    "subschool": "",
+    "types": "good",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 1
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p>You surround yourself with a veil of positive energy, making it harder for evil outsiders to harm you. For the duration of this spell, you gain a +2 sacred bonus to AC and on saves. Both of these bonuses apply only against attacks or effects created by outsiders with the evil subtype. You can dismiss this spell as a swift action to deal 1d8 points of damage + 1 point per paladin level to all such outsiders within 5 feet. A Will save halves this damage.</p>",
+    "spellDuration": "10 minutes/level (D)",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -18,10 +168,8 @@
       "value": "you or all creatures within 5 ft.; see text"
     },
     "range": {
-      "units": "personal"
-    },
-    "uses": {
-      "per": ""
+      "units": "personal",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -44,37 +192,7 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "paladin",
-          1
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "school": "abj",
-    "types": "good",
-    "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true,
-      "divineFocus": 1
-    },
-    "sr": false,
-    "shortDescription": "<p>You surround yourself with a veil of positive energy, making it harder for evil outsiders to harm you. For the duration of this spell, you gain a +2 sacred bonus to AC and on saves. Both of these bonuses apply only against attacks or effects created by outsiders with the evil subtype. You can dismiss this spell as a swift action to deal 1d8 points of damage + 1 point per paladin level to all such outsiders within 5 feet. A Will save halves this damage.</p>",
-    "spellDuration": "10 minutes/level (D)"
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

@@ -4,7 +4,157 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "lzss5ibz8vmkm3se",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": "object touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "uses": {
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": ""
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "alchemist",
+          3
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 3,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "trs",
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": false,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p>You absorb the next object your hand touches into your body. If you are already holding an object, you can attempt to absorb it; otherwise, you may touch an object as a standard action separate from casting the spell. You can absorb any nonmagical, nonliving object weighing no more than 1 pound per caster level. A container and its contents count as a single object. Objects in the possession of another creature receive a Fortitude saving throw to prevent absorption. You may continue to attempt to absorb objects until one is absorbed.</p><p>An absorbed object melds with your hand and cannot be targeted, but the object's weight still counts against your carrying capacity. If you dismiss the spell, the item appears in the hand that absorbed it, or falls to the ground if that hand is full. Multiple castings let you absorb additional items, but you can only store a single item per hand.</p>",
+    "spellDuration": "1 day/level (D)",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -18,10 +168,8 @@
       "value": "object touched"
     },
     "range": {
-      "units": "touch"
-    },
-    "uses": {
-      "per": ""
+      "units": "touch",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -44,35 +192,7 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "alchemist",
-          3
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 3,
-    "school": "trs",
-    "conditionals": [],
-    "components": {
-      "somatic": true
-    },
-    "sr": false,
-    "shortDescription": "<p>You absorb the next object your hand touches into your body. If you are already holding an object, you can attempt to absorb it; otherwise, you may touch an object as a standard action separate from casting the spell. You can absorb any nonmagical, nonliving object weighing no more than 1 pound per caster level. A container and its contents count as a single object. Objects in the possession of another creature receive a Fortitude saving throw to prevent absorption. You may continue to attempt to absorb objects until one is absorbed.</p><p>An absorbed object melds with your hand and cannot be targeted, but the object's weight still counts against your carrying capacity. If you dismiss the spell, the item appears in the hand that absorbed it, or falls to the ground if that hand is full. Multiple castings let you absorb additional items, but you can only store a single item per hand.</p>",
-    "spellDuration": "1 day/level (D)"
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

@@ -4,45 +4,17 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
-      }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    "actions": [],
     "uses": {
-      "per": ""
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -80,21 +52,81 @@
       "bloodline": []
     },
     "level": 4,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "evo",
-    "conditionals": [],
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
     "components": {
+      "value": "",
       "verbal": true,
       "somatic": true,
+      "thought": false,
+      "emotion": false,
       "material": true,
-      "focus": true
+      "focus": true,
+      "divineFocus": 0
     },
+    "castTime": "",
     "materials": {
       "value": "a scorpion's tail",
-      "focus": "ivory statuette of you worth 1,500 gp"
+      "focus": "ivory statuette of you worth 1,500 gp",
+      "gpValue": 0
     },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions as <i>contingency</i>, except as noted above. This spell also only comes into effect after your death and works only with certain spells. The companion spell triggers 1d6 rounds after your death. All decisions made involving the companion spell must be made when deadman's <i>contingency</i> is cast (including messages and recipients for spells like <i>magic mouth</i> or <i>sending</i>). If the spell targets an object or appears in a certain location, it must target or be centered on your corpse.  The following spells can be companion spells for deadman's <i>contingency</i>: <i>animate dead</i> (animating your corpse as an uncontrolled skeleton or zombie), <i>disintegrate</i>, <i>fireball</i>, <i>gentle repose</i>, <i>magic mouth</i>, <i>major image</i> (with a duration of 3 rounds), <i>permanent image</i>, <i>sending</i>, <i>stinking cloud</i>, and <i>teleport object</i>.</p>",
-    "spellDuration": "up to 1 hour/level plus 1d6 rounds (D); see text"
+    "spellDuration": "up to 1 hour/level plus 1d6 rounds (D); see text",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
+    "activation": {
+      "cost": 10,
+      "type": "minute"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 10,
+        "type": "minute"
+      }
+    },
+    "target": {
+      "value": "you"
+    },
+    "range": {
+      "units": "personal",
+      "maxIncrements": 1
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

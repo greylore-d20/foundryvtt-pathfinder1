@@ -4,7 +4,157 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "qtjy8bxam3pazhkp",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "units": "touch"
+        },
+        "uses": {
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": ""
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "inquisitor",
+          3
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 3,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "abj",
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 1
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p>All creatures within the area who worship the same god as you gain a +2 deflection bonus to AC and a +2 resistance bonus on all saves. At 12th level, these bonuses increase to +3. At 18th level, the bonuses increase to +4.</p><p>If you do not worship a specific deity, the bonuses apply to those who share your faith. If you do not have a specific faith or religion, the spell provides benefits only to yourself. Enemies gain the benefits of this spell if they worship the same god or share the same faith as you, even if you view them as heretical.</p>",
+    "spellDuration": "10 minutes/level",
+    "spellEffect": "",
+    "spellArea": "10-ft.-radius emanation from touched creature",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -15,10 +165,8 @@
       }
     },
     "range": {
-      "units": "touch"
-    },
-    "uses": {
-      "per": ""
+      "units": "touch",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -41,38 +189,7 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "inquisitor",
-          3
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 3,
-    "school": "abj",
-    "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true,
-      "divineFocus": 1
-    },
-    "sr": false,
-    "shortDescription": "<p>All creatures within the area who worship the same god as you gain a +2 deflection bonus to AC and a +2 resistance bonus on all saves. At 12th level, these bonuses increase to +3. At 18th level, the bonuses increase to +4.</p><p>If you do not worship a specific deity, the bonuses apply to those who share your faith. If you do not have a specific faith or religion, the spell provides benefits only to yourself. Enemies gain the benefits of this spell if they worship the same god or share the same faith as you, even if you view them as heretical.</p>",
-    "spellDuration": "10 minutes/level",
-    "spellArea": "10-ft.-radius emanation from touched creature"
+    "conditionals": []
   },
   "effects": [],
   "folder": null,

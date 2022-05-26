@@ -1,22 +1,188 @@
 {
+  "_id": "81QcPhgRcHxjpScn",
   "name": "Bolt of Glory",
   "type": "spell",
   "img": "icons/magic/light/beam-rays-orange.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
+    "actions": [
+      {
+        "_id": "7rlwqohthw3ctsl5",
+        "name": "Use",
+        "img": "icons/magic/light/beam-rays-orange.webp",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "per": null,
+          "value": 0,
+          "maxFormula": "",
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1"
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "rsak",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": ""
+        },
+        "formula": "",
+        "ability": {
+          "attack": "dex",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [
+          "Low damage: [[(min(7, ceil(@cl / 2)))d6]]",
+          "High damage: [[(min(15, @cl))d6]]"
+        ],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": null,
+      "value": 0,
+      "maxFormula": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [],
+      "domain": [
+        [
+          "Glory",
+          6
+        ]
+      ],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 6,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "evo",
+    "subschool": "",
+    "types": "good",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 1
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You fire a ray of positive energy. A creature struck takes varying damage, depending on its nature and home plane of existence. Neutral outsiders and creatures native to the Material Plane and Elemental Planes take 1d6 points of damage per 2 levels (maximum 7d6). Evil outsiders, undead, and natives of the Negative Energy Plane take 1d6 points of damage per level (maximum 15d6). All other creatures take no damage.</span></p>",
+    "spellDuration": "instantaneous",
+    "spellEffect": "ray",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 1,
-        "type": ""
+        "cost": 2,
+        "type": "action"
       }
     },
     "duration": {
@@ -32,13 +198,6 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": null,
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
     },
     "measureTemplate": {
       "type": "",
@@ -91,71 +250,13 @@
       "damageBonus": 2,
       "critMultiplier": 1
     },
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [],
-      "domain": [
-        [
-          "Glory",
-          6
-        ]
-      ],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
-    "school": "evo",
-    "subschool": "",
-    "types": "good",
-    "nonlethal": false,
     "conditionals": [],
-    "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 1
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You fire a ray of positive energy. A creature struck takes varying damage, depending on its nature and home plane of existence. Neutral outsiders and creatures native to the Material Plane and Elemental Planes take 1d6 points of damage per 2 levels (maximum 7d6). Evil outsiders, undead, and natives of the Negative Energy Plane take 1d6 points of damage per level (maximum 15d6). All other creatures take no damage.</span></p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "ray",
-    "spellArea": "",
-    "showInQuickbar": false,
     "spellPoints": {
       "cost": "1 + @sl"
     },
-    "domain": false,
-    "slotCost": 1,
     "clCheck": false,
-    "identifiedName": "Bolt of Glory"
+    "identifiedName": "Bolt of Glory",
+    "size": "med"
   },
   "effects": [],
   "folder": null,
@@ -164,6 +265,5 @@
     "default": 0,
     "LhFOnsRrYD2v4zOf": 3
   },
-  "flags": {},
-  "_id": "81QcPhgRcHxjpScn"
+  "flags": {}
 }

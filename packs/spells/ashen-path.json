@@ -1,22 +1,113 @@
 {
+  "_id": "mjRi4Es29C6Vywqg",
   "name": "Ashen Path",
   "type": "spell",
   "img": "icons/magic/air/air-smoke-casting.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
+    "actions": [],
+    "uses": {
+      "per": null,
+      "value": 0,
+      "maxFormula": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "arcanist",
+          2
+        ],
+        [
+          "cleric/oracle",
+          2
+        ],
+        [
+          "druid",
+          2
+        ],
+        [
+          "hunter",
+          2
+        ],
+        [
+          "ranger",
+          2
+        ],
+        [
+          "sorcerer/wizard",
+          2
+        ],
+        [
+          "warpriest",
+          2
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 2,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "trs",
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You grant the creature touched the ability to breathe with ease air that is contaminated with ash, spores, smoke, dust, or the like. The creature suffers no ill effects from natural airborne irritants or contaminants and gains a +4 bonus on saving throws against magical effects that involve any of these contaminants. In addition, the creature can see through magical obscuring effects caused by dense ash, smoke, fog, or similar concealment up to a distance of 60 feet, although this spell does nothing to enhance sight in dark or shadowy conditions. You can cast this spell on multiple creatures, but if you do, divide the duration evenly among all the creatures you touch (to a minimum duration of 10 minutes per target).</span></p>",
+    "spellDuration": "10 minutes/level",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 1,
-        "type": ""
+        "cost": 2,
+        "type": "action"
       }
     },
     "duration": {
@@ -32,13 +123,6 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": null,
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
     },
     "measureTemplate": {
       "type": "",
@@ -88,95 +172,13 @@
       "damageBonus": 2,
       "critMultiplier": 1
     },
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "arcanist",
-          2
-        ],
-        [
-          "cleric/oracle",
-          2
-        ],
-        [
-          "druid",
-          2
-        ],
-        [
-          "hunter",
-          2
-        ],
-        [
-          "ranger",
-          2
-        ],
-        [
-          "sorcerer/wizard",
-          2
-        ],
-        [
-          "warpriest",
-          2
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
-    "school": "trs",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "conditionals": [],
-    "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": false,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You grant the creature touched the ability to breathe with ease air that is contaminated with ash, spores, smoke, dust, or the like. The creature suffers no ill effects from natural airborne irritants or contaminants and gains a +4 bonus on saving throws against magical effects that involve any of these contaminants. In addition, the creature can see through magical obscuring effects caused by dense ash, smoke, fog, or similar concealment up to a distance of 60 feet, although this spell does nothing to enhance sight in dark or shadowy conditions. You can cast this spell on multiple creatures, but if you do, divide the duration evenly among all the creatures you touch (to a minimum duration of 10 minutes per target).</span></p>",
-    "spellDuration": "10 minutes/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
     "spellPoints": {
       "cost": "1 + @sl"
     },
-    "domain": false,
-    "slotCost": 1,
     "clCheck": false,
-    "identifiedName": "Ashen Path"
+    "identifiedName": "Ashen Path",
+    "size": "med"
   },
   "effects": [],
   "folder": null,
@@ -185,6 +187,5 @@
     "default": 0,
     "LhFOnsRrYD2v4zOf": 3
   },
-  "flags": {},
-  "_id": "mjRi4Es29C6Vywqg"
+  "flags": {}
 }

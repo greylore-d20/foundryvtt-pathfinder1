@@ -90,7 +90,7 @@ export class ItemAction {
   }
 
   get minRange() {
-    const rng = this.data.data.range;
+    const rng = this.data.range;
     if (rng.minUnits !== "" && rng.minValue !== null) {
       const rollData = this.getRollData();
       const formula = { melee: "@range.melee", reach: "@range.reach" }[rng.minUnits] ?? (rng.minValue || "0");
@@ -100,7 +100,7 @@ export class ItemAction {
   }
 
   get maxRange() {
-    return this.data.data.range.maxIncrements * this.range;
+    return this.data.range.maxIncrements * this.range;
   }
 
   get hasTemplate() {

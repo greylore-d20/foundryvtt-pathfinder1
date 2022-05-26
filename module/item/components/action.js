@@ -175,6 +175,7 @@ export class ItemAction {
       _id: randomID(16),
       name: game.i18n.localize("PF1.Action"),
       img: "systems/pf1/icons/skills/gray_04.jpg",
+      description: "",
       activation: {
         cost: 1,
         type: "",

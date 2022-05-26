@@ -5,6 +5,11 @@
 
 <div class="card-content">
   {{enrich description rollData=@root.rollData}}
+  {{#if action.data.description}}
+  <hr>
+  <h1>{{action.name}}</h1>
+  {{enrich action.data.description rollData=@root.rollData}}
+  {{/if}}
 </div>
 
 {{#if range}}

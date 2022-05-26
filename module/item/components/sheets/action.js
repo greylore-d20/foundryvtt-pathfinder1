@@ -20,7 +20,7 @@ export class ItemActionSheet extends FormApplication {
         {
           navSelector: "nav.tabs[data-group='primary']",
           contentSelector: "section.primary-body",
-          initial: "activation",
+          initial: "description",
         },
       ],
     });
@@ -38,7 +38,9 @@ export class ItemActionSheet extends FormApplication {
 
   async getData() {
     const data = await super.getData();
-    data.item = this.item.data;
+    data.action = this.action;
+    data.item = this.item;
+    data.actor = this.actor;
     data.data = this.action.data;
 
     // Include CONFIG values
@@ -76,8 +78,8 @@ export class ItemActionSheet extends FormApplication {
 
     // Prepare attack specific stuff
     if (data.item.type === "attack") {
-      data.isWeaponAttack = data.item.data.attackType === "weapon";
-      data.isNaturalAttack = data.item.data.attackType === "natural";
+      data.isWeaponAttack = data.item.data.data.attackType === "weapon";
+      data.isNaturalAttack = data.item.data.data.attackType === "natural";
     }
 
     // Add distance units

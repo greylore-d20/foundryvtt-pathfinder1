@@ -251,7 +251,7 @@ export const generateAttacks = function (shared) {
   }
 
   // Set ammo usage
-  if (this.data.data.usesAmmo) {
+  if (shared.action.data.usesAmmo) {
     const ammoId = this.getFlag("pf1", "defaultAmmo");
     const item = this.actor.items.get(ammoId);
     const quantity = item?.data.data.quantity ?? 0;
@@ -274,7 +274,7 @@ export const generateAttacks = function (shared) {
  * @returns {Promise}
  */
 export const subtractAmmo = function (shared, value = 1) {
-  if (!this.data.data.usesAmmo) return;
+  if (!shared.action.data.usesAmmo) return;
 
   const ammoUsage = {};
   for (const atk of shared.attacks) {
@@ -392,7 +392,7 @@ export const handleConditionals = function (shared) {
 export const checkAttackRequirements = function (shared) {
   // Determine charge cost
   let cost = 0;
-  if (shared.action.data.uses.autoDeductCharges) {
+  if (shared.action.data.uses.autoDeductCharges && this.isCharged) {
     cost = shared.action.chargeCost;
     let uses = this.charges;
     if (this.data.type === "spell" && this.useSpellPoints()) {
@@ -714,6 +714,7 @@ export const getMessageData = async function (shared) {
 
   // Create chat template data
   shared.templateData = {
+    action: shared.action,
     name: this.name,
     type: CONST.CHAT_MESSAGE_TYPES.OTHER,
     rollMode: shared.rollMode,

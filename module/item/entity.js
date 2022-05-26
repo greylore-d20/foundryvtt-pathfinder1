@@ -109,7 +109,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   get isSingleUse() {
-    return this.data.data.uses?.per === "single";
+    return ["single", undefined].includes(this.data.data.uses?.per);
   }
 
   get isCharged() {

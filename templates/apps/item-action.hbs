@@ -9,6 +9,7 @@
   </header>
 
   <nav class="sheet-navigation tabs" data-group="primary">
+    <a class="item" data-tab="description" data-group="primary">{{localize "PF1.Description"}}</a>
     <a class="item" data-tab="activation" data-group="primary">{{localize "PF1.AttackUsage"}}</a>
     <a class="item" data-tab="action" data-group="primary">{{localize "PF1.AttackAction"}}</a>
     <a class="item" data-tab="misc" data-group="primary">{{localize "PF1.Misc"}}</a>
@@ -16,18 +17,23 @@
 
   <section class="primary-body">
 
-    {{!-- Item Activation --}}
-    <div class="tab summary flexcol" data-group="primary" data-tab="activation">
+    {{!-- Action Description --}}
+    <div class="tab flexcol" data-group="primary" data-tab="description">
+      {{roll-editor content=data.description target="data.description" button=true owner=owner editable=owner}}
+    </div>
+
+    {{!-- Action Activation --}}
+    <div class="tab flexcol" data-group="primary" data-tab="activation">
       {{> "systems/pf1/templates/apps/item-action/activation.hbs"}}
     </div>
 
-    {{!-- Item Action --}}
-    <div class="tab summary flexcol" data-group="primary" data-tab="action">
+    {{!-- Action Effect --}}
+    <div class="tab flexcol" data-group="primary" data-tab="action">
       {{> "systems/pf1/templates/apps/item-action/action.hbs"}}
     </div>
 
     {{!-- Miscellaneous --}}
-    <div class="tab summary flexcol" data-group="primary" data-tab="misc">
+    <div class="tab flexcol" data-group="primary" data-tab="misc">
       <h3 class="form-header">{{localize "PF1.MeasureTemplate"}}</h3>
 
       {{> "systems/pf1/templates/apps/item-action/template.hbs"}}

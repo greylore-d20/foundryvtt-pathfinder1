@@ -9,9 +9,14 @@ export const registerHandlebarsHelpers = function () {
    * Render a MCE editor container with an optional toggle button
    */
   Handlebars.registerHelper("roll-editor", function (options) {
+    const action = options.data.root.action;
     const item = options.data.root.item;
     const actor = options.data.root.actor;
-    const rollData = item != null ? item.getRollData() : actor != null ? actor.getRollData() : {};
+    let rollData;
+    if (action) rollData = action.getRollData();
+    if (item && !rollData) rollData = item.getRollData();
+    if (actor && !rollData) rollData = actor.getRollData();
+    if (!rollData) rollData = {};
 
     // Create editor
     const target = options.hash["target"];

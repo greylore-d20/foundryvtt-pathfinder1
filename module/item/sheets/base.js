@@ -39,6 +39,10 @@ export class ItemSheetPF extends ItemSheet {
           dragSelector: "li.conditional",
           dropSelector: 'div[data-tab="conditionals"]',
         },
+        {
+          dragSelector: "li.action-part",
+          dropSelector: ".tab.details",
+        },
       ],
       tabs: [
         {
@@ -109,7 +113,8 @@ export class ItemSheetPF extends ItemSheet {
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
     data.itemName = data.item.name;
-    data.isPhysical = hasProperty(data.item.data, "data.quantity");
+    data.isPhysical = data.item.data.data.quantity !== undefined;
+    data.isNaturalAttack = data.item.data.data.attackType === "natural";
     data.isSpell = this.item.type === "spell";
     data.canUseAmmo = this.item.data.data.usesAmmo !== undefined;
     data.owned = this.item.actor != null;
@@ -119,10 +124,6 @@ export class ItemSheetPF extends ItemSheet {
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
     data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
-    data.hasActivationType =
-      (game.settings.get("pf1", "unchainedActionEconomy") &&
-        getProperty(data.item.data, "data.unchainedAction.activation.type")) ||
-      (!game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item.data, "data.activation.type"));
     if (rollData.item.auraStrength != null) {
       const auraStrength = rollData.item.auraStrength;
       data.auraStrength = auraStrength;
@@ -245,26 +246,6 @@ export class ItemSheetPF extends ItemSheet {
       });
     }
 
-    // Action Details
-    data.hasAttackRoll = this.item.hasAttack;
-    data.isHealing = data.item.data.actionType === "heal";
-    data.isCombatManeuver = ["mcman", "rcman"].includes(data.item.data.actionType);
-
-    data.isCharged = false;
-    if (data.item.data.data.uses != null) {
-      data.isCharged = ["day", "week", "charges"].includes(data.item.data.data.uses.per);
-    }
-    if (data.item.data.data.range != null) {
-      data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.data.range.units);
-      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.item.data.data.range.minUnits);
-    }
-    if (data.item.data.data.duration != null) {
-      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.item.data.data.duration.units);
-    }
-
-    // Show additional ranged properties
-    data.showMaxRangeIncrements = getProperty(this.item.data, "data.range.units") === "ft";
-
     // Prepare feat specific stuff
     if (data.item.type === "feat") {
       data.isClassFeature = getProperty(this.item.data, "data.featType") === "classFeat";
@@ -314,12 +295,6 @@ export class ItemSheetPF extends ItemSheet {
       data.hasMultipleSlots = Object.keys(data.equipmentSlots).length > 1;
     }
 
-    // Prepare attack specific stuff
-    if (data.item.type === "attack") {
-      data.isWeaponAttack = data.item.data.data.attackType === "weapon";
-      data.isNaturalAttack = data.item.data.data.attackType === "natural";
-    }
-
     // Prepare spell specific stuff
     if (data.item.type === "spell") {
       let spellbook = null;
@@ -339,11 +314,14 @@ export class ItemSheetPF extends ItemSheet {
         "systems/pf1/templates/internal/spell-description.hbs",
         this.document.spellDescriptionData
       );
-      data.topDescription = TextEditor.enrichHTML(desc, { rollData });
+      const firstAction = this.item.firstAction;
+      data.topDescription = TextEditor.enrichHTML(desc, { rollData: firstAction?.getRollData() ?? rollData });
 
       // Enrich description
       if (data.data.shortDescription != null) {
-        data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, { rollData });
+        data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, {
+          rollData: firstAction?.getRollData() ?? rollData,
+        });
       }
     }
 
@@ -851,11 +829,9 @@ export class ItemSheetPF extends ItemSheet {
     // Open help browser
     html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
 
-    // Modify attack formula
-    html.find(".attack-control").click(this._onAttackControl.bind(this));
-
-    // Modify damage formula
-    html.find(".damage-control").click(this._onDamageControl.bind(this));
+    // Action control
+    html.find(".action-control a").on("click", this._onActionControl.bind(this));
+    html.find(".action-parts .action-part .action").on("click", this._onClickAction.bind(this));
 
     // Modify buff changes
     html.find(".change-control").click(this._onBuffControl.bind(this));
@@ -1134,9 +1110,18 @@ export class ItemSheetPF extends ItemSheet {
 
   _onDragStart(event) {
     const elem = event.currentTarget;
+
+    // Drag conditional
     if (elem.dataset?.conditional) {
       const conditional = this.object.data.data.conditionals[elem.dataset?.conditional];
       event.dataTransfer.setData("text/plain", JSON.stringify(conditional));
+    }
+
+    // Drag action
+    else if (elem.dataset?.action) {
+      const action = this.object.actions.get(elem.dataset.action);
+      const obj = { type: "action", source: this.object.uuid, data: action.data };
+      event.dataTransfer.setData("text/plain", JSON.stringify(obj));
     }
   }
 
@@ -1144,38 +1129,70 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     event.stopPropagation();
 
-    let data;
+    let data, type;
     try {
       data = JSON.parse(event.dataTransfer.getData("text/plain"));
       // Surface-level check for conditional
-      if (!(data.default != null && typeof data.name === "string" && Array.isArray(data.modifiers))) return;
+      if (data.default != null && typeof data.name === "string" && Array.isArray(data.modifiers)) type = "conditional";
+      // Surface-level check for action
+      else if (data.type === "action" && data.source) type = "action";
     } catch (e) {
       return false;
     }
 
     const item = this.object;
-    // Check targets and other fields for valid values, reset if necessary
-    for (const modifier of data.modifiers) {
-      if (!Object.keys(item.getConditionalTargets()).includes(modifier.target)) modifier.target = "";
-      let keys;
-      for (let [k, v] of Object.entries(modifier)) {
-        switch (k) {
-          case "subTarget":
-            keys = Object.keys(item.getConditionalSubTargets(modifier.target));
-            break;
-          case "type":
-            keys = Object.keys(item.getConditionalModifierTypes(modifier.target));
-            break;
-          case "critical":
-            keys = Object.keys(item.getConditionalCritical(modifier.target));
-            break;
+    // Handle conditionals
+    if (type === "conditional") {
+      // Check targets and other fields for valid values, reset if necessary
+      for (const modifier of data.modifiers) {
+        if (!Object.keys(item.getConditionalTargets()).includes(modifier.target)) modifier.target = "";
+        let keys;
+        for (let [k, v] of Object.entries(modifier)) {
+          switch (k) {
+            case "subTarget":
+              keys = Object.keys(item.getConditionalSubTargets(modifier.target));
+              break;
+            case "type":
+              keys = Object.keys(item.getConditionalModifierTypes(modifier.target));
+              break;
+            case "critical":
+              keys = Object.keys(item.getConditionalCritical(modifier.target));
+              break;
+          }
+          if (!keys?.includes(v)) v = keys?.[0] ?? "";
         }
-        if (!keys?.includes(v)) v = keys?.[0] ?? "";
       }
+
+      const conditionals = item.data.data.conditionals || [];
+      await this.object.update({ "data.conditionals": conditionals.concat([data]) });
     }
 
-    const conditionals = item.data.data.conditionals || [];
-    await this.object.update({ "data.conditionals": conditionals.concat([data]) });
+    // Handle actions
+    else if (type === "action") {
+      const srcItem = await fromUuid(data.source);
+
+      // Re-order
+      if (srcItem === item) {
+        const targetActionID = event.target?.closest("li.action-part")?.dataset?.action;
+        const prevActions = duplicate(this.object.data.data.actions);
+
+        let targetIdx;
+        if (!targetActionID) targetIdx = prevActions.length - 1;
+        else targetIdx = prevActions.indexOf(prevActions.find((o) => o._id === targetActionID));
+        const srcIdx = prevActions.indexOf(prevActions.find((o) => o._id === data.data._id));
+
+        prevActions.splice(srcIdx, 1);
+        prevActions.splice(targetIdx, 0, data.data);
+        await this.object.update({ "data.actions": prevActions });
+      }
+
+      // Add to another item
+      else {
+        const prevActions = duplicate(this.object.data.data.actions ?? []);
+        prevActions.splice(prevActions.length, 0, data.data);
+        await this.object.update({ "data.actions": prevActions });
+      }
+    }
   }
 
   async _onEditChangeScriptContents(event) {
@@ -1289,61 +1306,38 @@ export class ItemSheetPF extends ItemSheet {
     return result;
   }
 
-  /**
-   * Add or remove a damage part from the damage formula
-   *
-   * @param {Event} event     The original click event
-   * @returns {Promise}
-   * @private
-   */
-  async _onDamageControl(event) {
+  async _onActionControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const list = a.closest(".damage");
-    const k = list.dataset.key || "data.damage.parts";
-    const k2 = k.split(".").slice(0, -1).join(".");
-    const k3 = k.split(".").slice(-1).join(".");
 
-    // Add new damage component
-    if (a.classList.contains("add-damage")) {
-      // Get initial data
-      const initialData = ["", ""];
-
-      // Add data
-      const damage = getProperty(this.item.data, k2);
-      const updateData = {};
-      updateData[k] = getProperty(damage, k3).concat([initialData]);
-      return this._onSubmit(event, { updateData });
+    // Add action
+    if (a.classList.contains("add-action")) {
+      const actionParts = duplicate(this.item.data.data.actions ?? []);
+      const newActionData = mergeObject(game.pf1.documentComponents.ItemAction.defaultData, {
+        img: this.item.img,
+        name: ["weapon", "attack"].includes(this.item.type)
+          ? game.i18n.localize("PF1.Attack")
+          : game.i18n.localize("PF1.Use"),
+      });
+      return this._onSubmit(event, { updateData: { "data.actions": actionParts.concat(newActionData) } });
     }
 
-    // Remove a damage component
-    if (a.classList.contains("delete-damage")) {
-      const li = a.closest(".damage-part");
-      const damage = duplicate(getProperty(this.item.data, k2));
-      getProperty(damage, k3).splice(Number(li.dataset.damagePart), 1);
-      const updateData = {};
-      updateData[k] = getProperty(damage, k3);
-      return this._onSubmit(event, { updateData });
+    // Remove action
+    if (a.classList.contains("delete-action")) {
+      const li = a.closest(".action-part");
+      const action = this.item.actions.get(li.dataset.action);
+      return action.delete();
     }
   }
 
-  async _onAttackControl(event) {
+  async _onClickAction(event) {
     event.preventDefault();
     const a = event.currentTarget;
+    const li = a.closest(".action-part");
+    const action = this.item.actions.get(li.dataset.action);
 
-    // Add new attack component
-    if (a.classList.contains("add-attack")) {
-      const attackParts = this.item.data.data.attackParts;
-      return this._onSubmit(event, { updateData: { "data.attackParts": attackParts.concat([["", ""]]) } });
-    }
-
-    // Remove an attack component
-    if (a.classList.contains("delete-attack")) {
-      const li = a.closest(".attack-part");
-      const attackParts = duplicate(this.item.data.data.attackParts);
-      attackParts.splice(Number(li.dataset.attackPart), 1);
-      return this._onSubmit(event, { updateData: { "data.attackParts": attackParts } });
-    }
+    const app = new game.pf1.applications.ItemActionSheet(action);
+    app.render(true);
   }
 
   async _onBuffControl(event) {

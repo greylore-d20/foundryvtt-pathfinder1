@@ -14,8 +14,8 @@ export class AttackDialog extends Application {
       sl: this.rollData.sl ?? 0,
     };
     this.flags = {
-      "primary-attack": this.object.data.data.primaryAttack === true,
-      "cl-check": this.object.data.data.clCheck === true,
+      "primary-attack": this.object.item.data.data.primaryAttack === true,
+      "cl-check": this.object.data.clCheck === true,
       "measure-template": true,
     };
     this.attributes = {
@@ -29,7 +29,7 @@ export class AttackDialog extends Application {
       held: this.rollData.item?.held ?? "normal",
     };
     this.conditionals = {};
-    for (const [idx, cData] of Object.entries(this.object.data.data.conditionals ?? {})) {
+    for (const [idx, cData] of Object.entries(this.object.data.conditionals ?? {})) {
       this.conditionals[`conditional.${idx}`] = cData.default === true;
     }
 
@@ -74,21 +74,21 @@ export class AttackDialog extends Application {
       rollModes: CONFIG.Dice.rollModes,
       hasAttack: this.object.hasAttack,
       hasDamage: this.object.hasDamage,
-      hasDamageAbility: this.object.data.data.ability?.damage ?? "" !== "",
-      isNaturalAttack: this.object.data.data.attackType === "natural",
-      isWeaponAttack: this.object.data.data.attackType === "weapon",
-      isMeleeWeaponAttackAction: this.object.data.data.actionType === "mwak",
-      isRangedWeaponAttackAction: this.object.data.data.actionType === "rwak",
-      isAttack: this.object.type === "attack",
-      isWeapon: this.object.type === "weapon",
-      isSpell: this.object.type === "spell",
-      isFeat: this.object.type === "feat",
+      hasDamageAbility: this.object.data.ability?.damage ?? "" !== "",
+      isNaturalAttack: this.object.item.data.data.attackType === "natural",
+      isWeaponAttack: this.object.item.data.data.attackType === "weapon",
+      isMeleeWeaponAttackAction: this.object.data.actionType === "mwak",
+      isRangedWeaponAttackAction: this.object.data.actionType === "rwak",
+      isAttack: this.object.item.type === "attack",
+      isWeapon: this.object.item.type === "weapon",
+      isSpell: this.object.item.type === "spell",
+      isFeat: this.object.item.type === "feat",
       hasTemplate: this.object.hasTemplate,
       attacks: this.attacks,
       flags: this.flags,
       attributes: this.attributes,
       conditionals: this.conditionals,
-      usesAmmo: this.object.data.data.usesAmmo,
+      usesAmmo: this.object.data.usesAmmo,
       ammo: this.getAmmo(),
     };
   }
@@ -184,7 +184,7 @@ export class AttackDialog extends Application {
             bonus: 0,
           })
         );
-        this.setAttackAmmo(place, this.object.getFlag("pf1", "defaultAmmo"));
+        this.setAttackAmmo(place, this.object.item.getFlag("pf1", "defaultAmmo"));
       } else {
         this.attacks = this.attacks.filter((o) => o.id !== elem.name);
       }
@@ -295,13 +295,13 @@ export class AttackDialog extends Application {
     // Get normal attack
     result.push(
       mergeObject(this.constructor.defaultAttack, {
-        name: this.object.data.data.attackName || game.i18n.format("PF1.FormulaAttack", { 0: 1 }),
+        name: this.object.data.attackName || game.i18n.format("PF1.FormulaAttack", { 0: 1 }),
       })
     );
 
     // Get static extra attacks
     let curAttackNumber = 1;
-    for (const atk of this.object.data.data.attackParts ?? []) {
+    for (const atk of this.object.data.attackParts ?? []) {
       result.push(
         mergeObject(this.constructor.defaultAttack, {
           name: atk[1] || game.i18n.format("PF1.FormulaAttack", { 0: curAttackNumber + 1 }),
@@ -313,14 +313,14 @@ export class AttackDialog extends Application {
 
     // Get formulaic extra attacks
     const attackFormulae = {
-      count: this.object.data.data.formulaicAttacks?.count?.formula ?? null,
-      bonus: this.object.data.data.formulaicAttacks?.bonus?.formula || "0",
+      count: this.object.data.formulaicAttacks?.count?.formula ?? null,
+      bonus: this.object.data.formulaicAttacks?.bonus?.formula || "0",
     };
     const atkCount = RollPF.safeTotal(attackFormulae.count, this.rollData) || 0;
     for (let a = 0; a < atkCount; a++) {
       this.rollData.formulaicAttack = a + 1;
       const bonus = RollPF.safeTotal(attackFormulae.bonus, this.rollData);
-      const name = game.i18n.format(this.object.data.data.formulaicAttacks?.label || "PF1.FormulaAttack", {
+      const name = game.i18n.format(this.object.data.formulaicAttacks?.label || "PF1.FormulaAttack", {
         0: curAttackNumber + 1,
       });
       result.push(
@@ -336,7 +336,7 @@ export class AttackDialog extends Application {
     this.attacks = result;
 
     // Set ammo usage
-    const ammoId = this.object.getFlag("pf1", "defaultAmmo");
+    const ammoId = this.object.item.getFlag("pf1", "defaultAmmo");
     if (ammoId != null) {
       for (let a = 0; a < this.attacks.length; a++) {
         this.setAttackAmmo(a, ammoId);
@@ -368,7 +368,7 @@ export class AttackDialog extends Application {
   }
 
   setAttackAmmo(attackIndex, ammoId = null) {
-    if (!this.object.data.data.usesAmmo) return;
+    if (!this.object.data.usesAmmo) return;
 
     const atk = this.attacks[attackIndex];
     const curAmmo = atk.ammo?.data._id;

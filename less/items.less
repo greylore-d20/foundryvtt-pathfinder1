@@ -245,44 +245,56 @@
   /*  Item Actions                             */
   /* ----------------------------------------- */
 
-  h4.damage-header,
-  h4.change-header,
-  h4.context-notes-header,
-  h4.attack-header,
-  h4.conditional-header {
-    margin: 0;
-    padding: 0;
-    font-weight: bold;
-    line-height: 24px;
-    color: @colorOlive;
-  }
-  h4.attack-header {
-    margin-left: 4px;
-  }
+  .actions {
+    ol.action-parts {
+      list-style-type: none;
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
 
-  .damage-parts,
-  .attack-parts {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+      li.action-part {
+        display: grid;
+        width: 100%;
+        grid-template-columns: auto 64px;
+        grid-gap: 0.2em;
 
-    .damage-part,
-    .attack-part {
-      flex: 0 0 100%;
-      padding: 2px;
+        a.action {
+          display: grid;
+          grid-template-columns: 32px auto;
+          grid-gap: 0.2em;
 
-      .damage-type {
-        flex: 0 0 80px;
+          img.icon {
+            width: 32px;
+            height: 32px;
+
+            &:hover {
+              opacity: inherit;
+            }
+          }
+
+          span.name {
+            font-size: 12pt;
+            vertical-align: middle;
+            line-height: 28px;
+          }
+        }
       }
-      input {
-        flex: 3;
+
+      li.action-control {
+        width: 100%;
+        a {
+          color: @colorTan;
+          i.fas {
+            margin-right: 0.2em;
+          }
+        }
       }
-      input:not(:first-child) {
-        margin-left: 5px;
-      }
-      select {
-        margin-left: 5px;
-        flex: 1;
+
+      .action-control.add-action {
+        flex: 0 0 auto;
+        line-height: 24px;
+        color: @colorTan;
+        margin-left: 2px;
       }
     }
   }
@@ -413,9 +425,16 @@
     }
   }
 
-  .delete-damage,
-  .crit-damage-control,
-  .delete-attack,
+  h4.change-header,
+  h4.context-notes-header,
+  h4.conditional-header {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    line-height: 24px;
+    color: @colorOlive;
+  }
+
   .delete-change,
   .delete-note,
   .delete-conditional,
@@ -427,8 +446,6 @@
     color: @colorTan;
   }
 
-  .add-attack,
-  .add-damage,
   .add-change,
   .add-note,
   .add-conditional,
@@ -459,10 +476,6 @@
       }
     }
   }
-
-  /* ----------------------------------------- */
-  /*  Item Actions                             */
-  /* ----------------------------------------- */
 
   .weapon-properties label.checkbox {
     flex: 0 0 98px;

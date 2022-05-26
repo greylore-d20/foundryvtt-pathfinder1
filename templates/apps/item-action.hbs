@@ -1,0 +1,49 @@
+<form autocomplete="off" class="pf1 item-action sheet flexcol">
+  <header class="sheet-header flexrow">
+    <img class="profile" src="{{data.img}}" title="{{data.name}}" data-edit="img">
+    <div class="header-details flexrow">
+      <h1 class="action-name">
+        <input name="data.name" type="text" value="{{data.name}}" placeholder="{{localize "PF1.ActionName"}}" />
+      </h1>
+    </div>
+  </header>
+
+  <nav class="sheet-navigation tabs" data-group="primary">
+    <a class="item" data-tab="activation" data-group="primary">{{localize "PF1.AttackUsage"}}</a>
+    <a class="item" data-tab="action" data-group="primary">{{localize "PF1.AttackAction"}}</a>
+    <a class="item" data-tab="misc" data-group="primary">{{localize "PF1.Misc"}}</a>
+  </nav>
+
+  <section class="primary-body">
+
+    {{!-- Item Activation --}}
+    <div class="tab summary flexcol" data-group="primary" data-tab="activation">
+      {{> "systems/pf1/templates/apps/item-action/activation.hbs"}}
+    </div>
+
+    {{!-- Item Action --}}
+    <div class="tab summary flexcol" data-group="primary" data-tab="action">
+      {{> "systems/pf1/templates/apps/item-action/action.hbs"}}
+    </div>
+
+    {{!-- Miscellaneous --}}
+    <div class="tab summary flexcol" data-group="primary" data-tab="misc">
+      <h3 class="form-header">{{localize "PF1.MeasureTemplate"}}</h3>
+
+      {{> "systems/pf1/templates/apps/item-action/template.hbs"}}
+
+      <h3 class="form-header">{{localize "PF1.Misc"}}</h3>
+
+      {{!-- Sound Effect --}}
+      <div class="form-group">
+        <label>{{localize "PF1.SoundEffect"}}</label>
+        <div class="form-fields">
+          <input type="text" name="data.soundEffect" placeholder="path/audio.wav" value="{{data.soundEffect}}"/>
+          <button type="button" class="file-picker-alt" data-for="data.soundEffect" data-type="audio">
+            <i class="fas fa-file-import fa-fw"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>

@@ -837,89 +837,11 @@
           "school": ""
         }
       },
-      "activatedEffect": {
-        "activation": {
-          "cost": 1,
-          "type": ""
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
+      "action": {
+        "actions": [],
         "uses": {
           "value": 0,
-          "per": null,
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
           "maxFormula": ""
-        }
-      },
-      "action": {
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": null,
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": { "formula": "" },
-          "bonus": { "formula": "" },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": null,
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
         }
       },
       "links": {
@@ -969,8 +891,6 @@
         "enh": null
       },
       "hasAttack": {
-        "attackType": "weapon",
-        "nonlethal": false,
         "proficient": true,
         "primaryAttack": true,
         "held": "normal"
@@ -1011,16 +931,7 @@
       "hideFromToken": false
     },
     "consumable": {
-      "templates": [
-        "itemDescription",
-        "physicalItem",
-        "activatedEffect",
-        "action",
-        "links",
-        "tagged",
-        "flags",
-        "scriptCalls"
-      ],
+      "templates": ["itemDescription", "physicalItem", "action", "links", "tagged", "flags", "scriptCalls"],
       "consumableType": "potion",
       "uses": {
         "value": 0,
@@ -1037,7 +948,6 @@
       "templates": [
         "itemDescription",
         "physicalItem",
-        "activatedEffect",
         "changes",
         "contextNotes",
         "action",
@@ -1067,7 +977,6 @@
     "feat": {
       "templates": [
         "itemDescription",
-        "activatedEffect",
         "action",
         "changes",
         "contextNotes",
@@ -1105,7 +1014,7 @@
       "extraType": ""
     },
     "spell": {
-      "templates": ["itemDescription", "activatedEffect", "action", "links", "flags", "scriptCalls"],
+      "templates": ["itemDescription", "action", "links", "flags", "scriptCalls"],
       "learnedAt": {
         "class": [],
         "domain": [],
@@ -1162,7 +1071,6 @@
         "itemDescription",
         "physicalItem",
         "changes",
-        "activatedEffect",
         "action",
         "contextNotes",
         "links",
@@ -1181,17 +1089,7 @@
       "ammoType": ""
     },
     "attack": {
-      "templates": [
-        "itemDescription",
-        "activatedEffect",
-        "action",
-        "links",
-        "tagged",
-        "flags",
-        "scriptCalls",
-        "enhancable",
-        "hasAttack"
-      ],
+      "templates": ["itemDescription", "action", "links", "tagged", "flags", "scriptCalls", "enhancable", "hasAttack"],
       "showInQuickbar": true,
       "broken": false,
       "conditionals": [],

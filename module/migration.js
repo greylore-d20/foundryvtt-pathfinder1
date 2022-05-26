@@ -262,7 +262,8 @@ export const migrateItemData = function (item) {
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
-  _migrateSecondaryAttackData(item, updateData);
+  // _migrateSecondaryAttackData(item, updateData);
+  _migrateItemActions(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -1004,6 +1005,29 @@ const _migrateSecondaryAttackData = function (item, updateData) {
     updateData["data.naturalAttack.secondary.attackBonus"] = "-5";
     updateData["data.naturalAttack.secondary.damageMult"] = 0.5;
   }
+};
+
+const _migrateItemActions = function (item, updateData) {
+  if (!Object.hasOwnProperty.call(item.data, "actionType") || item.data.actions instanceof Array) return;
+
+  // Transfer data to an action
+  const actionData = game.pf1.documentComponents.ItemAction.defaultData;
+  const removeKeys = ["_id", "name", "img"];
+  for (const k of Object.keys(actionData)) {
+    if (!removeKeys.includes(k)) {
+      if (item.data[k] != null) actionData[k] = duplicate(item.data[k]);
+    }
+  }
+
+  // Transfer name and image
+  if (["weapon", "attack"].includes(item.type)) {
+    actionData.name = game.i18n.localize("PF1.Attack");
+  } else {
+    actionData.name = game.i18n.localize("PF1.Use");
+  }
+  actionData.img = item.img;
+
+  updateData["data.actions"] = [actionData];
 };
 
 const _migrateActorCR = function (ent, updateData, linked) {

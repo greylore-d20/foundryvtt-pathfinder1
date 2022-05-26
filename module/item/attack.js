@@ -54,7 +54,7 @@ export const checkRequirements = async function (shared) {
  * @returns {object} The roll data object for this attack.
  */
 export const getRollData = function (shared) {
-  const rollData = duplicate(this.getRollData());
+  const rollData = duplicate(shared.action.getRollData());
   rollData.d20 = shared.dice !== "1d20" ? shared.dice : "";
 
   return rollData;
@@ -72,7 +72,7 @@ export const getRollData = function (shared) {
  * @returns {ItemAttack_Dialog_Result|boolean}
  */
 export const createAttackDialog = async function (shared) {
-  const dialog = new game.pf1.applications.AttackDialog(this, shared.rollData);
+  const dialog = new game.pf1.applications.AttackDialog(shared.action, shared.rollData);
   return dialog.show();
 };
 
@@ -135,7 +135,7 @@ export const alterRollData = function (shared, form = {}) {
       if (this.data.data.attackType === "natural") {
         if (shared.rollData.item?.primaryAttack) powerAttackMultiplier = shared.rollData.item.ability.damageMult;
         else if (!shared.rollData.item?.primaryAttack) {
-          powerAttackMultiplier = shared.rollData.item.naturalAttack?.secondary?.damageMult ?? 0.5;
+          powerAttackMultiplier = shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
         }
       } else {
         if (shared.rollData?.item?.held === "2h") powerAttackMultiplier = 1.5;
@@ -178,14 +178,14 @@ export const alterRollData = function (shared, form = {}) {
 
   // Damage multiplier
   if (formData["damage-ability-multiplier"] != null)
-    shared.rollData.item.ability.damageMult = formData["damage-ability-multiplier"];
+    shared.rollData.action.ability.damageMult = formData["damage-ability-multiplier"];
 
   // Apply secondary attack penalties
   if (shared.rollData.item.primaryAttack === false) {
-    const attackBonus = shared.rollData.item.naturalAttack?.secondary?.attackBonus ?? "-5";
-    const damageMult = shared.rollData.item.naturalAttack?.secondary?.damageMult ?? 0.5;
+    const attackBonus = shared.rollData.action.naturalAttack?.secondary?.attackBonus ?? "-5";
+    const damageMult = shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
     shared.attackBonus.push(`(${attackBonus})[${game.i18n.localize("PF1.SecondaryAttack")}]`);
-    shared.rollData.item.ability.damageMult = damageMult;
+    shared.rollData.action.ability.damageMult = damageMult;
   }
 
   // CL check enabled
@@ -216,9 +216,9 @@ export const alterRollData = function (shared, form = {}) {
  * @returns {ItemAttack_AttackData[]} The generated default attacks.
  */
 export const generateAttacks = function (shared) {
-  const attackName = this.data.data.attackName;
+  const attackName = shared.action.data.attackName;
   const allAttacks = shared.fullAttack
-    ? this.data.data.attackParts.reduce(
+    ? shared.action.data.attackParts.reduce(
         (cur, r) => {
           cur.push({ attackBonus: r[0], label: r[1] });
           return cur;
@@ -231,7 +231,7 @@ export const generateAttacks = function (shared) {
   if (shared.fullAttack) {
     const exAtkCountFormula = getProperty(this.data, "data.formulaicAttacks.count.formula"),
       exAtkCount = RollPF.safeRoll(exAtkCountFormula, shared.rollData)?.total ?? 0,
-      exAtkBonusFormula = this.data.data.formulaicAttacks?.bonus?.formula || "0";
+      exAtkBonusFormula = shared.action.data.formulaicAttacks?.bonus?.formula || "0";
     if (exAtkCount > 0) {
       try {
         const frollData = shared.rollData;
@@ -424,9 +424,9 @@ export const checkAttackRequirements = function (shared) {
  */
 export const generateChatAttacks = async function (shared) {
   // Normal attack(s)
-  if (this.hasAttack) await game.pf1.ItemAttack.addAttacks.call(this, shared);
+  if (shared.action.hasAttack) await game.pf1.ItemAttack.addAttacks.call(this, shared);
   // Damage only
-  else if (this.hasDamage) await game.pf1.ItemAttack.addDamage.call(this, shared);
+  else if (shared.action.hasDamage) await game.pf1.ItemAttack.addDamage.call(this, shared);
   // Effect notes only
   else await game.pf1.ItemAttack.addEffectNotes.call(this, shared);
 
@@ -438,8 +438,8 @@ export const generateChatAttacks = async function (shared) {
   });
 
   // Add save info
-  shared.save = getProperty(this.data, "data.save.type");
-  shared.saveDC = this.getDC(shared.rollData);
+  shared.save = shared.action.data.save.type;
+  shared.saveDC = shared.action.getDC(shared.rollData);
 };
 
 /**
@@ -478,7 +478,7 @@ export const addAttacks = async function (shared) {
     shared.rollData.attackCount = a;
 
     // Create attack object
-    const attack = new ChatAttack(this, {
+    const attack = new ChatAttack(shared.action, {
       label: atk.label,
       rollData: shared.rollData,
       targets: game.user.targets,
@@ -493,7 +493,7 @@ export const addAttacks = async function (shared) {
     }
 
     // Add damage
-    if (this.hasDamage) {
+    if (shared.action.hasDamage) {
       const extraParts = duplicate(shared.damageBonus);
       const nonCritParts = [];
       const critParts = [];
@@ -501,7 +501,7 @@ export const addAttacks = async function (shared) {
       // Add power attack bonus
       if (shared.rollData.powerAttackBonus > 0) {
         // Get label
-        const label = ["rwak", "rsak"].includes(this.data.data.actionType)
+        const label = ["rwak", "rsak"].includes(shared.action.data.actionType)
           ? game.i18n.localize("PF1.DeadlyAim")
           : game.i18n.localize("PF1.PowerAttack");
 
@@ -557,7 +557,7 @@ export const addDamage = async function (shared) {
     "damage.normal": shared.conditionalPartsCommon["damage.allDamage.normal"] ?? [],
   };
 
-  const attack = new ChatAttack(this, { rollData: shared.rollData, primaryAttack: shared.primaryAttack });
+  const attack = new ChatAttack(shared.action, { rollData: shared.rollData, primaryAttack: shared.primaryAttack });
   // Add damage
   await attack.addDamage({
     extraParts: duplicate(shared.damageBonus),
@@ -578,7 +578,7 @@ export const addDamage = async function (shared) {
  * @param {object} shared - Shared data between attack functions.
  */
 export const addEffectNotes = async function (shared) {
-  const attack = new ChatAttack(this, { rollData: shared.rollData, primaryAttack: shared.primaryAttack });
+  const attack = new ChatAttack(shared.action, { rollData: shared.rollData, primaryAttack: shared.primaryAttack });
 
   // Add effect notes
   attack.addEffectNotes();

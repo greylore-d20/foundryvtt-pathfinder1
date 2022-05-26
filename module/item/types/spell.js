@@ -524,6 +524,8 @@ export class ItemSpellPF extends ItemPF {
   get spellDescriptionData() {
     const reSplit = CONFIG.PF1.re.traitSeparator;
     const srcData = this.data;
+    const firstAction = this.firstAction;
+    const actionData = firstAction?.data ?? {};
 
     const label = {
       school: (CONFIG.PF1.spellSchools[getProperty(srcData, "data.school")] || "").toLowerCase(),
@@ -603,23 +605,23 @@ export class ItemSpellPF extends ItemPF {
 
     // Set duration label
     {
-      const duration = getProperty(srcData, "data.spellDuration");
+      const duration = actionData.spellDuration;
       if (duration) label.duration = duration;
     }
     // Set effect label
     {
-      const effect = getProperty(srcData, "data.spellEffect");
+      const effect = actionData.spellEffect;
       if (effect) label.effect = effect;
     }
     // Set targets label
     {
-      const targets = getProperty(srcData, "data.target.value");
+      const targets = actionData.target?.value;
       if (targets) label.targets = targets;
     }
     // Set range label
     {
-      const rangeUnit = getProperty(srcData, "data.range.units");
-      const rangeValue = getProperty(srcData, "data.range.value");
+      const rangeUnit = actionData.range?.units;
+      const rangeValue = actionData.range?.value;
 
       if (rangeUnit != null && rangeUnit !== "none") {
         label.range = (CONFIG.PF1.distanceUnits[rangeUnit] || "").toLowerCase();
@@ -645,21 +647,21 @@ export class ItemSpellPF extends ItemPF {
     }
     // Set area label
     {
-      const area = getProperty(srcData, "data.spellArea");
+      const area = actionData.spellArea;
 
       if (area) label.area = area;
     }
 
     // Set DC and SR
     {
-      const savingThrowDescription = getProperty(srcData, "data.save.description");
+      const savingThrowDescription = actionData.save?.description;
       if (savingThrowDescription) label.savingThrow = savingThrowDescription;
       else label.savingThrow = "none";
 
-      const sr = getProperty(srcData, "data.sr");
+      const sr = srcData.data.sr;
       label.sr = (sr === true ? game.i18n.localize("PF1.Yes") : game.i18n.localize("PF1.No")).toLowerCase();
 
-      if (getProperty(srcData, "data.range.units") !== "personal") data.useDCandSR = true;
+      if (actionData.range?.units !== "personal") data.useDCandSR = true;
     }
     return data;
   }

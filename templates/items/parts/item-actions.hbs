@@ -1,0 +1,40 @@
+{{!-- Inline Action --}}
+{{#*inline "listAction"}}
+  <li class="action-part" data-action="{{action._id}}">
+    <a class="action">
+      <img class="icon" src="{{action.img}}">
+      <span class="name">{{action.name}}</span>
+    </a>
+    <div class="action-control">
+      <a class="delete-action"><i class="fas fa-trash"></i></a>
+    </div>
+  </li>
+{{/inline}}
+
+<h3 class="form-header">{{localize "PF1.ActionPlural"}}</h3>
+
+{{!-- Limited Uses --}}
+{{#unless isSpell}}
+{{#if isCharged}}
+<div class="form-group uses-per">
+  <input class="formula" type="text" name="data.uses.maxFormula" value="{{data.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
+</div>
+{{#if isPhysical}}
+  <div class="form-group">
+    <label>{{localize "PF1.PricePerCharge"}}</label>
+    <input type="text" name="data.uses.pricePerUse" value="{{data.uses.pricePerUse}}" placeholder="0" type="Number"/>
+  </div>
+{{/if}}
+{{/if}}
+{{/unless}}
+
+<div class="actions">
+  <ol class="action-parts form-group">
+    {{#each data.actions as |action i|}}{{> listAction action=action i=i}}{{/each}}
+    <li class="action-control">
+      <a class="add-action">
+        <i class="fas fa-plus"></i><span>{{localize "PF1.Action"}}</span>
+      </a>
+    </li>
+  </ol>
+</div>

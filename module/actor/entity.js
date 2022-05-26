@@ -1861,7 +1861,13 @@ export class ActorPF extends ActorBasePF {
     attackData["data.conditionals"] = item.data._source.data.conditionals;
 
     // Add actions
-    attackData["data.actions"] = item.data._source.data.actions;
+    const actions = duplicate(item.data._source.data.actions ?? []);
+    console.log(actions[0]._id);
+    for (const action of actions) {
+      action._id = randomID(16);
+    }
+    console.log(actions[0]._id);
+    attackData["data.actions"] = actions;
 
     // Synthetic intermediate item
     const attackItem = new ItemPF(expandObject(attackData));

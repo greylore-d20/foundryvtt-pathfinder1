@@ -1190,6 +1190,7 @@ export class ItemSheetPF extends ItemSheet {
       // Add to another item
       else {
         const prevActions = duplicate(this.object.data.data.actions ?? []);
+        data.data._id = randomID(16);
         prevActions.splice(prevActions.length, 0, data.data);
         await this.object.update({ "data.actions": prevActions });
       }
@@ -1352,6 +1353,7 @@ export class ItemSheetPF extends ItemSheet {
       const li = a.closest(".action-part");
       const action = duplicate(this.item.actions.get(li.dataset.action).data);
       action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
+      action._id = randomID(16);
       const actionParts = duplicate(this.item.data.data.actions ?? []);
       return this._onSubmit(event, { updateData: { "data.actions": actionParts.concat(action) } });
     }

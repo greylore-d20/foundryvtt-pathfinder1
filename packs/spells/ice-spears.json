@@ -5,17 +5,19 @@
   "img": "systems/pf1/icons/skills/ice_02.jpg",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "yhbbg4ztz1bzxdjz",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
-        "img": "systems/pf1/icons/skills/ice_02.jpg",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
+          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -25,26 +27,32 @@
           }
         },
         "duration": {
-          "value": null,
+          "value": "instantaneous",
           "units": ""
         },
-        "target": {
-          "value": ""
-        },
+        "target": {},
         "range": {
-          "units": "close"
+          "units": "close",
+          "maxIncrements": 1
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
-          "size": "0"
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
         },
         "attackName": "",
-        "actionType": "rsak",
-        "attackBonus": "100",
+        "actionType": "spellsave",
+        "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
           "parts": [
@@ -63,21 +71,25 @@
         "attackParts": [],
         "formulaicAttacks": {
           "count": {
-            "formula": "floor((@cl)/4)-1"
+            "formula": ""
           },
-          "label": "Ice Spear #{0}"
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
         },
         "formula": "",
         "ability": {
           "attack": "",
           "damage": "",
-          "critRange": null,
-          "critMult": null
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
         },
         "save": {
           "dc": "0",
-          "type": "ref",
-          "description": "Reflex half and see below"
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -96,6 +108,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "1 ice spear/4 levels",
+        "spellArea": "",
         "conditionals": []
       }
     ],
@@ -108,8 +122,8 @@
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -227,7 +241,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "conditionals": []
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

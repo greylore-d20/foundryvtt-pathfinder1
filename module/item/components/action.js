@@ -287,6 +287,8 @@ export class ItemAction {
       attackType: "weapon",
       nonlethal: false,
       usesAmmo: false,
+      spellEffect: "",
+      spellArea: "",
       conditionals: [],
     };
   }

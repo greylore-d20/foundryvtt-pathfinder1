@@ -5,26 +5,29 @@
   "img": "systems/pf1/icons/spells/wind-grasp-magenta-2.jpg",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "eg0a04yual8423c2",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
-        "img": "systems/pf1/icons/spells/wind-grasp-magenta-2.jpg",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "type": "swift"
+          "cost": 1,
+          "type": "standard"
         },
         "unchainedAction": {
           "activation": {
+            "cost": 2,
             "type": "action"
           }
         },
         "duration": {
-          "value": null,
+          "value": "instantaneous",
           "units": ""
         },
         "target": {
@@ -32,23 +35,26 @@
         },
         "range": {
           "units": "personal",
-          "minUnits": "personal"
+          "minUnits": "personal",
+          "maxIncrements": 1
         },
         "uses": {
-          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "",
+          "size": "0",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "heal",
+        "actionType": "spellsave",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -73,10 +79,16 @@
         },
         "formula": "",
         "ability": {
-          "damage": ""
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
         },
         "save": {
-          "dc": "0"
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -95,6 +107,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
         "conditionals": []
       }
     ],
@@ -107,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -222,7 +236,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "conditionals": []
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

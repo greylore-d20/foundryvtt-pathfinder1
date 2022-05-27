@@ -5,28 +5,29 @@
   "img": "icons/magic/fire/elemental-creature-horse.webp",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "fcw1e1u3cy9yb68t",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
-        "img": "icons/magic/fire/elemental-creature-horse.webp",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 10,
-          "type": "minute"
+          "cost": 1,
+          "type": "standard"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 1,
-            "type": ""
+            "cost": 2,
+            "type": "action"
           }
         },
         "duration": {
-          "value": null,
+          "value": "1 hour/level (D)",
           "units": ""
         },
         "target": {
@@ -40,15 +41,15 @@
           "minUnits": ""
         },
         "uses": {
-          "per": null,
-          "value": 0,
-          "maxFormula": "",
           "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "",
+          "size": "0",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -75,7 +76,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": null,
+          "attack": "",
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -83,8 +84,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "",
-          "description": "none, see text"
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,6 +104,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "one quasi-real creature suitable for a mount",
+        "spellArea": "",
         "conditionals": []
       }
     ],

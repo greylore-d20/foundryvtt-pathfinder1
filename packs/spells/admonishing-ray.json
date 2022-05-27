@@ -5,17 +5,19 @@
   "img": "systems/pf1/icons/spells/beam-sky-1.jpg",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "vjm6g5ctkmrafp2s",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
-        "img": "systems/pf1/icons/spells/beam-sky-1.jpg",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
+          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -25,30 +27,31 @@
           }
         },
         "duration": {
-          "value": null,
+          "value": "instantaneous",
           "units": ""
         },
-        "target": {
-          "value": ""
-        },
+        "target": {},
         "range": {
-          "units": "close"
+          "units": "close",
+          "maxIncrements": 1
         },
         "uses": {
-          "per": null,
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "",
+          "size": "0",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "rsak",
+        "actionType": "spellsave",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -64,21 +67,25 @@
         "attackParts": [],
         "formulaicAttacks": {
           "count": {
-            "formula": "min(floor((@cl - 3) / 4), 3)"
+            "formula": ""
           },
           "bonus": {
-            "formula": "0"
+            "formula": ""
           },
-          "label": "Ray #{0}"
+          "label": null
         },
         "formula": "",
         "ability": {
           "attack": "",
-          "damage": ""
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
         },
         "save": {
           "dc": "0",
-          "description": "none"
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -97,6 +104,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "one or more rays",
+        "spellArea": "",
         "conditionals": []
       }
     ],
@@ -109,8 +118,8 @@
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -220,7 +229,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "conditionals": []
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

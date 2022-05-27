@@ -5,28 +5,29 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "j4kidcmalae914i6",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 10,
-          "type": "minute"
+          "cost": 1,
+          "type": "standard"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 10,
-            "type": "minute"
+            "cost": 2,
+            "type": "action"
           }
         },
         "duration": {
-          "value": null,
+          "value": "2 hours/level",
           "units": ""
         },
         "target": {
@@ -40,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -55,7 +56,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "other",
+        "actionType": "spellsave",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -83,8 +84,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "",
-          "description": ""
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,6 +104,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "20-ft.-square structure",
+        "spellArea": "",
         "conditionals": []
       }
     ],

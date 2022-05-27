@@ -5,47 +5,54 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "z38z42qojhgfk3yf",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 4,
-          "type": "hour"
+          "cost": 1,
+          "type": "standard"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 4,
-            "type": "hour"
+            "cost": 2,
+            "type": "action"
           }
         },
         "duration": {
-          "value": null,
+          "value": "1 day/level or instantaneous (see text)",
           "units": ""
         },
-        "target": {
-          "value": ""
-        },
+        "target": {},
         "range": {
           "value": 0,
-          "units": "ft"
+          "units": "ft",
+          "maxIncrements": 1
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
-          "size": "0"
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
         },
         "attackName": "",
-        "actionType": "other",
+        "actionType": "spellsave",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -66,10 +73,15 @@
         "formula": "",
         "ability": {
           "attack": "",
-          "damage": ""
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
         },
         "save": {
-          "dc": "0"
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -88,6 +100,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "extradimensional demiplane, up to 10 10-ft. cubes/level (S)",
+        "spellArea": "",
         "conditionals": []
       }
     ],
@@ -100,8 +114,8 @@
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -223,7 +237,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "conditionals": []
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

@@ -997,7 +997,11 @@ const _migrateSpellData = function (item, updateData) {
 };
 
 const _migrateItemActions = function (item, updateData) {
-  if (!item.data.actionType || (item.data.actions instanceof Array && item.data.actions.length > 0)) return;
+  if (
+    (!item.data.actionType && item.type !== "spell") ||
+    (item.data.actions instanceof Array && item.data.actions.length > 0)
+  )
+    return;
 
   // Transfer data to an action
   const actionData = game.pf1.documentComponents.ItemAction.defaultData;
@@ -1017,6 +1021,10 @@ const _migrateItemActions = function (item, updateData) {
   actionData.img = item.img;
   // Clear description
   actionData.description = "";
+  // Add spell data
+  if (item.type === "spell") {
+    actionData.duration.value = item.data.spellDuration;
+  }
   // Clean out old attack and effect notes
   updateData["data.attackNotes"] = [];
   updateData["data.effectNotes"] = [];

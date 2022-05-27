@@ -113,11 +113,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   get isCharged() {
-    return (
-      this.isSingleUse ||
-      ["day", "week", "charges"].includes(this.data.data.uses?.per) ||
-      (this.type === "spell" && !this.data.data.atWill)
-    );
+    return this.isSingleUse || ["day", "week", "charges"].includes(this.data.data.uses?.per);
   }
 
   get charges() {

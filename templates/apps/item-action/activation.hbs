@@ -93,7 +93,7 @@
   <label>{{localize "PF1.Duration"}}</label>
   <div class="form-fields">
     {{#if isSpell}}
-    <input type="text" name="data.spellDuration" value="{{data.spellDuration}}" placeholder="{{localize "PF1.SpellDurationExample"}}"/>
+    <input type="text" name="data.duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.SpellDurationExample"}}"/>
     {{else}}
     {{#if canInputDuration}}<input class="formula" type="text" name="data.duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.Formula"}}"/>{{/if}}
     <select name="data.duration.units">

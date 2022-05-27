@@ -5,17 +5,19 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "0rfx35bpjtnkbidx",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
+          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -25,22 +27,28 @@
           }
         },
         "duration": {
-          "value": null,
+          "value": "instantaneous",
           "units": ""
         },
-        "target": {
-          "value": ""
-        },
+        "target": {},
         "range": {
-          "units": "personal"
+          "units": "personal",
+          "maxIncrements": 1
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
-          "size": "0"
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
         },
         "attackName": "",
         "actionType": "spellsave",
@@ -64,12 +72,15 @@
         "formula": "",
         "ability": {
           "attack": "",
-          "damage": ""
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
         },
         "save": {
           "dc": "0",
-          "type": "ref",
-          "description": "Reflex partial, see text"
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -88,6 +99,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "30-ft. radius",
         "conditionals": []
       }
     ],
@@ -100,8 +113,8 @@
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -201,7 +214,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "conditionals": []
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

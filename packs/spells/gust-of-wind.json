@@ -5,13 +5,14 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "to3inakmxkv2k2bp",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -26,7 +27,7 @@
           }
         },
         "duration": {
-          "value": null,
+          "value": "1 round",
           "units": ""
         },
         "target": {
@@ -40,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -83,8 +84,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "fort",
-          "description": "Fortitude negates"
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,6 +104,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "line-shaped gust of severe wind emanating out from you to the extreme of the range",
+        "spellArea": "",
         "conditionals": []
       }
     ],

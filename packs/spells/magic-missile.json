@@ -5,17 +5,19 @@
   "img": "systems/pf1/icons/spells/fire-arrows-sky-1.jpg",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "gy27k4v85iexr4b2",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
-        "img": "systems/pf1/icons/spells/fire-arrows-sky-1.jpg",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
+          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -25,26 +27,34 @@
           }
         },
         "duration": {
-          "value": null,
+          "value": "instantaneous",
           "units": ""
         },
         "target": {
           "value": "up to five creatures, no two of which can be more than 15 ft. apart"
         },
         "range": {
-          "units": "medium"
+          "units": "medium",
+          "maxIncrements": 1
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
-          "size": "0"
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
         },
-        "attackName": "Missile",
-        "actionType": "rsak",
-        "attackBonus": "100",
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
           "parts": [
@@ -59,19 +69,25 @@
         "attackParts": [],
         "formulaicAttacks": {
           "count": {
-            "formula": "min(4, ceil((@cl) / 2) - 1)"
+            "formula": ""
           },
-          "label": "Missile #{0}"
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
         },
         "formula": "",
         "ability": {
           "attack": "",
           "damage": "",
-          "critRange": null,
-          "critMult": null
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
         },
         "save": {
-          "dc": "0"
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -90,6 +106,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
         "conditionals": []
       }
     ],
@@ -102,8 +120,8 @@
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -219,7 +237,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "conditionals": []
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

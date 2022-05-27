@@ -5,17 +5,19 @@
   "img": "systems/pf1/icons/spells/fireball-sky-1.jpg",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "cl6eyreh6o4vv62o",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
-        "img": "systems/pf1/icons/spells/fireball-sky-1.jpg",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
+          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -25,25 +27,29 @@
           }
         },
         "duration": {
-          "value": null,
+          "value": "instantaneous",
           "units": ""
         },
-        "target": {
-          "value": ""
-        },
+        "target": {},
         "range": {
           "value": "30",
           "units": "ft",
           "maxIncrements": "1"
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "cone",
-          "size": "30"
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
         },
         "attackName": "",
         "actionType": "spellsave",
@@ -72,12 +78,15 @@
         "formula": "",
         "ability": {
           "attack": "",
-          "damage": ""
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
         },
         "save": {
           "dc": "0",
-          "type": "ref",
-          "description": "Reflex half"
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -96,6 +105,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "cone-shaped burst",
         "conditionals": []
       }
     ],

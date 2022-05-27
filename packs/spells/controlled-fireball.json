@@ -5,17 +5,19 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "t8zantjpu1qljcz1",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
+          "cost": 1,
           "type": "standard"
         },
         "unchainedAction": {
@@ -25,23 +27,28 @@
           }
         },
         "duration": {
-          "value": null,
+          "value": "instantaneous",
           "units": ""
         },
-        "target": {
-          "value": ""
-        },
+        "target": {},
         "range": {
-          "units": "long"
+          "units": "long",
+          "maxIncrements": 1
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "circle",
-          "size": "20"
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
         },
         "attackName": "",
         "actionType": "spellsave",
@@ -70,16 +77,17 @@
         "formula": "",
         "ability": {
           "attack": "",
-          "damage": ""
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
         },
         "save": {
           "dc": "0",
-          "type": "ref",
-          "description": "Reflex half"
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
-        "effectNotes": [
-          "[[min(10, @cl)]] Minimum Damage"
-        ],
+        "effectNotes": [],
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
@@ -96,6 +104,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "20-foot-radius spread",
         "conditionals": []
       }
     ],
@@ -108,8 +118,8 @@
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -217,7 +227,11 @@
       "[[min(10, @cl)]] Minimum Damage"
     ],
     "attackNotes": [],
-    "conditionals": []
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

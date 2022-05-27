@@ -5,15 +5,16 @@
   "img": "icons/magic/light/beam-rays-orange.webp",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "7rlwqohthw3ctsl5",
+        "_id": "u39zpdhepiwcxi7r",
         "name": "Use",
-        "img": "icons/magic/light/beam-rays-orange.webp",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
@@ -21,12 +22,12 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 1,
-            "type": ""
+            "cost": 2,
+            "type": "action"
           }
         },
         "duration": {
-          "value": null,
+          "value": "instantaneous",
           "units": ""
         },
         "target": {
@@ -40,22 +41,22 @@
           "minUnits": ""
         },
         "uses": {
-          "per": null,
-          "value": 0,
-          "maxFormula": "",
           "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "",
+          "size": "0",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "rsak",
+        "actionType": "spellsave",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -71,11 +72,11 @@
           "bonus": {
             "formula": ""
           },
-          "label": ""
+          "label": null
         },
         "formula": "",
         "ability": {
-          "attack": "dex",
+          "attack": "",
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -83,13 +84,10 @@
         },
         "save": {
           "dc": "0",
-          "type": "",
-          "description": ""
+          "type": "will",
+          "description": "Will negates (harmless, object)"
         },
-        "effectNotes": [
-          "Low damage: [[(min(7, ceil(@cl / 2)))d6]]",
-          "High damage: [[(min(15, @cl))d6]]"
-        ],
+        "effectNotes": [],
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
@@ -106,6 +104,8 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "ray",
+        "spellArea": "",
         "conditionals": []
       }
     ],

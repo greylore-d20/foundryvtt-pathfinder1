@@ -194,9 +194,8 @@ export class ItemSpellPF extends ItemPF {
   }
 
   get isCharged() {
-    if (this.spellbook?.spellPreparationMode === "spontaneous") return false;
-    if (this.maxCharges > 0 && this.chargeCost > 0) return true;
-    return super.isCharged;
+    if (this.data.data.atWill) return false;
+    return true;
   }
 
   get autoDeductCharges() {
@@ -566,8 +565,8 @@ export class ItemSpellPF extends ItemPF {
 
     // Set casting time label
     const act = game.settings.get("pf1", "unchainedActionEconomy")
-      ? getProperty(srcData, "data.unchainedAction.activation")
-      : getProperty(srcData, "data.activation");
+      ? getProperty(firstAction, "data.unchainedAction.activation")
+      : getProperty(firstAction, "data.activation");
     if (act != null) {
       const activationCost = act.cost;
       const activationType = act.type;
@@ -594,7 +593,7 @@ export class ItemSpellPF extends ItemPF {
 
     // Set duration label
     {
-      const duration = actionData.spellDuration;
+      const duration = actionData.duration?.value;
       if (duration) label.duration = duration;
     }
     // Set effect label

@@ -1017,6 +1017,9 @@ const _migrateItemActions = function (item, updateData) {
   actionData.img = item.img;
   // Clear description
   actionData.description = "";
+  // Clean out old attack and effect notes
+  updateData["data.attackNotes"] = [];
+  updateData["data.effectNotes"] = [];
 
   updateData["data.actions"] = [actionData];
 };

@@ -118,6 +118,7 @@ export class ItemSheetPF extends ItemSheet {
     data.parentOwned = this.actor != null;
     data.owner = this.item.isOwner;
     data.isGM = game.user.isGM;
+    data.hasAction = this.item.hasAction;
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
     data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");

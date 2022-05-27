@@ -781,7 +781,7 @@ export const getMessageData = async function (shared) {
       hasProperties: props.length > 0,
       item: this.data,
       actor: this.parent.data,
-      hasSave: this.hasSave,
+      hasSave: shared.action.hasSave,
       description: this.fullDescription,
       rollData: shared.rollData,
       save: {

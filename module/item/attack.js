@@ -601,27 +601,28 @@ export const addEffectNotes = async function (shared) {
  */
 export const promptMeasureTemplate = async function (shared) {
   // Determine size
-  let dist = getProperty(this.data, "data.measureTemplate.size");
+  let dist = shared.action.data.measureTemplate.size;
   if (typeof dist === "string") {
-    dist = RollPF.safeRoll(getProperty(this.data, "data.measureTemplate.size"), shared.rollData).total;
+    dist = RollPF.safeRoll(shared.action.data.measureTemplate.size, shared.rollData).total;
   }
   dist = convertDistance(dist)[0];
 
   // Create data object
   const templateOptions = {
-    type: getProperty(this.data, "data.measureTemplate.type"),
+    type: shared.action.data.measureTemplate.type,
     distance: dist,
   };
-  if (getProperty(this.data, "data.measureTemplate.overrideColor")) {
-    templateOptions.color = getProperty(this.data, "data.measureTemplate.customColor");
+  if (shared.action.data.measureTemplate.overrideColor) {
+    templateOptions.color = shared.action.data.measureTemplate.customColor;
   }
-  if (getProperty(this.data, "data.measureTemplate.overrideTexture")) {
-    templateOptions.texture = getProperty(this.data, "data.measureTemplate.customTexture");
+  if (shared.action.data.measureTemplate.overrideTexture) {
+    templateOptions.texture = shared.action.data.measureTemplate.customTexture;
   }
 
   // Create template
   shared.template = null;
   const template = game.pf1.AbilityTemplate.fromData(templateOptions);
+  console.log(templateOptions, template);
   let result;
   if (template) {
     const sheetRendered = this.parent?.sheet?._element != null;

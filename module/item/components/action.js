@@ -72,6 +72,10 @@ export class ItemAction {
     return this.isCharged && this.data.uses.autoDeductCharges === true;
   }
 
+  get isCharged() {
+    return this.item.isCharged;
+  }
+
   get chargeCost() {
     const formula = this.data.uses.autoDeductChargesCost;
     if (!(typeof formula === "string" && formula.length > 0)) return 1;

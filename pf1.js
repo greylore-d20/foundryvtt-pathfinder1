@@ -101,7 +101,7 @@ import { SemanticVersion } from "./module/semver.js";
 import { registerTests } from "./module/test";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { HelpBrowserPF } from "./module/apps/help-browser.js";
-import { addReachCallback } from "./module/misc/attack-reach.js";
+import { addReachListeners } from "./module/misc/attack-reach.js";
 import { TooltipPF } from "./module/hud/tooltip.js";
 import { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
 import * as chat from "./module/chat.js";
@@ -591,6 +591,13 @@ Hooks.once("ready", async function () {
   // Not sure why this is necessary atm
   canvas.perception.initialize();
 
+  // Toggle token condition icons
+  if (game.user.isGM) {
+    canvas.tokens.placeables.forEach((t) => {
+      if (!!t.actor && "toggleConditionStatusIcons" in t.actor) t.actor.toggleConditionStatusIcons();
+    });
+  }
+
   Hooks.callAll("pf1.postReady");
 });
 
@@ -603,41 +610,6 @@ Hooks.on("canvasInit", function () {
   canvas.grid.diagonalRule = game.settings.get("pf1", "diagonalMovement");
   SquareGrid.prototype.measureDistances = measureDistances;
 });
-
-{
-  const callbacks = [];
-
-  Hooks.on("ready", () => {
-    // Add reach measurements
-    game.messages.forEach(async (m) => {
-      const elem = $(`#chat .chat-message[data-message-id="${m.data._id}"]`);
-      if (!elem || (elem && !elem.length)) return;
-
-      // Add reach callback
-      addReachCallback(m.data, elem);
-
-      // Hide non-visible targets for players
-      if (!game.user.isGM) chat.hideInvisibleTargets(m, elem);
-    });
-
-    // Toggle token condition icons
-    if (game.user.isGM) {
-      canvas.tokens.placeables.forEach((t) => {
-        if (!t.actor) return;
-        if (!t.actor.toggleConditionStatusIcons) return; // Don't do anything for actors without this function (e.g. basic actors)
-        t.actor.toggleConditionStatusIcons();
-      });
-    }
-  });
-
-  Hooks.on("renderChatMessage", async (app, html, data) => {
-    // Wait for setup after this
-    if (!game.ready) return;
-
-    // Add reach measurements on hover
-    await addReachCallback(data.message, html);
-  });
-}
 
 /* -------------------------------------------- */
 /*  Other Hooks                                 */
@@ -688,6 +660,7 @@ Hooks.on("renderChatPopout", (app, html, data) => {
 
 Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
+Hooks.on("renderChatLog", (_, html) => addReachListeners(html));
 
 Hooks.on("renderChatPopout", (_, html) => ItemPF.chatListeners(html));
 Hooks.on("renderChatPopout", (_, html) => ActorPF.chatListeners(html));

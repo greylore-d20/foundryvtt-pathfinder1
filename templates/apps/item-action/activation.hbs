@@ -40,8 +40,8 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.Range"}}</label>
   <div class="form-fields">
-    {{#if canInputRange}}<input class="formula" type="text" name="data.range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
-    <select name="data.range.units">
+    {{#if canInputRange}}<input class="formula" type="text" name="range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
+    <select name="range.units">
       {{#select data.range.units}}
       <option value=""></option>
       {{#each distanceUnits as |name key|}}
@@ -57,8 +57,8 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.MinRange"}}</label>
   <div class="form-fields">
-    {{#if canInputMinRange}}<input class="formula" type="text" name="data.range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
-    <select name="data.range.minUnits">
+    {{#if canInputMinRange}}<input class="formula" type="text" name="range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
+    <select name="range.minUnits">
       {{#select data.range.minUnits}}
       <option value=""></option>
       {{#each distanceUnits as |name key|}}
@@ -133,8 +133,8 @@
 <div class="form-group stacked">
   <label>{{#if isSpell}}{{localize "PF1.SpellPointsCost"}}{{else}}{{localize "PF1.AutoDeductCharges"}}{{/if}}</label>
   <div class="flexrow">
-    <input type="checkbox" name="data.uses.autoDeductCharges" {{checked data.uses.autoDeductCharges}}/>
-    {{#if data.uses.autoDeductCharges}}<input class="formula" type="text" name="data.uses.autoDeductChargesCost" placeholder="{{localize "PF1.DeductChargeFormulaPlaceholder"}}"
+    <input type="checkbox" name="uses.autoDeductCharges" {{checked data.uses.autoDeductCharges}}/>
+    {{#if data.uses.autoDeductCharges}}<input class="formula" type="text" name="uses.autoDeductChargesCost" placeholder="{{localize "PF1.DeductChargeFormulaPlaceholder"}}"
       value="{{data.uses.autoDeductChargesCost}}" />{{/if}}
   </div>
 </div>

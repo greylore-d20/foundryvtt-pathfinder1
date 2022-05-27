@@ -56,7 +56,7 @@ export class SquareHighlight {
  * @param {Token} token
  * @param {ItemPF} attack
  * @param action
- * @returns SquareHighlight
+ * @returns {AttackReachHighlight} Highlights for this attack
  */
 export const showAttackReach = function (token, attack, action) {
   const grid = canvas.grid;
@@ -162,65 +162,89 @@ export const showAttackReach = function (token, attack, action) {
   return result;
 };
 
-export const addReachCallback = async function (data, html) {
-  // Don't do anything under certain circumstances
-  const itemId = getProperty(data, "flags.pf1.metadata.item");
+/**
+ * Returns a token belonging to either an actor's UUID or a token's UUID
+ *
+ * @async
+ * @param {string} uuid - UUID of an actor or token
+ * @returns {Promise<Token|null>} A Token, if one can be found
+ */
+const _getTokenByUuid = async function (uuid) {
+  if (!uuid) return;
+  /** @type {TokenDocument | Actor} */
+  const actor = await fromUuid(uuid);
+  if (actor instanceof TokenDocument) return actor.object;
+  return actor?.token ?? (actor != null ? canvas.tokens.placeables.find((o) => o.actor === actor) : null);
+};
+
+/**
+ * Add listeners on the {@link ChatLog}'s HTML element, checking for hover events involving
+ * chat cards' range element using event delegation.
+ *
+ * @param {JQuery<HTMLElement>} html - The chat log
+ */
+export function addReachListeners(html) {
+  html.on("mouseenter", ".card-range", onMouseEnterReach);
+  html.on("mouseleave", ".card-range", onMouseLeaveReach);
+}
+
+/**
+ * An object containing highlights belonging to a specific attack
+ *
+ * @typedef {object} AttackReachHighlight
+ * @property {SquareHighlight} normal - Highlight for normal range
+ * @property {SquareHighlight} reach - Highlight for reach range
+ * @property {SquareHighlight[]} extra - Additional highlights
+ */
+
+/** @type {AttackReachHighlight|undefined} */
+let currentHighlight;
+
+/**
+ * Handle display of reach when a chat card's reach element is hovered
+ *
+ * @param {JQuery.Event} event - A `mouseEnter` event
+ */
+const onMouseEnterReach = (event) => {
+  event.preventDefault();
+
+  const reachEelement = event.currentTarget;
+  const card = reachEelement.closest(".chat-card");
+  const { tokenUuid } = card.dataset;
+  const { messageId } = card.closest(".message").dataset;
+  const message = game.messages.get(messageId);
+  const itemId = message.data.flags.pf1?.metadata?.item;
   if (!itemId) return;
 
-  // Define getter functions
-  const _getTokenByUuid = async function (uuid) {
-    if (!uuid) return;
-    const actor = await fromUuid(uuid);
-    if (actor instanceof TokenDocument) return actor.object;
-    return actor?.token ?? (actor != null ? canvas.tokens.placeables.find((o) => o.actor === actor) : null);
-  };
+  _getTokenByUuid(tokenUuid).then((token) => {
+    if (!token) return;
+    const item = token.actor.items.get(itemId);
+    if (!item) return;
+    if (!game.settings.get("pf1", "hideReachMeasurements")) currentHighlight = showAttackReach(token, item);
 
-  // Define functions
-  let highlight;
-  const mouseEnterCallback = function (event) {
-    const a = event.currentTarget;
-    const tokenUuid = html.find(".chat-card")[0]?.dataset?.tokenUuid;
-    _getTokenByUuid(tokenUuid).then((t) => {
-      if (!t) return;
-      const item = t.actor.items.get(itemId);
-      if (!item) return;
-      if (!game.settings.get("pf1", "hideReachMeasurements"))
-        highlight = showAttackReach(t, item, item.actions.get(a.dataset.action));
+    if (!currentHighlight) return;
 
-      if (!highlight) return;
-
-      highlight.normal.render();
-      highlight.reach.render();
-      highlight.extra.forEach((hl) => {
-        hl.render();
-      });
-    });
-  };
-
-  const mouseLeaveCallback = function () {
-    if (!highlight) return;
-
-    highlight.normal.clear(true);
-    highlight.reach.clear(true);
-    highlight.extra.forEach((hl) => {
-      hl.clear(true);
-    });
-  };
-
-  const rangeElems = html.find(".card-range");
-  rangeElems.on("mouseenter", mouseEnterCallback);
-  rangeElems.on("mouseleave", mouseLeaveCallback);
-
-  // Clear highlights when chat messages are rendered
-  Hooks.on("renderChatMessage", () => {
-    if (!highlight) return;
-
-    highlight.normal.clear(true);
-    highlight.reach.clear(true);
-    highlight.extra.forEach((hl) => {
-      hl.clear(true);
+    currentHighlight.normal.render();
+    currentHighlight.reach.render();
+    currentHighlight.extra.forEach((hl) => {
+      hl.render();
     });
   });
+};
+
+/**
+ * Handle clearing of reach highlights created by {@link onMouseEnterReach}
+ *
+ * @param {JQuery.Event} event - A `mouseLeave` event
+ */
+const onMouseLeaveReach = (event) => {
+  event.preventDefault();
+  if (currentHighlight) {
+    currentHighlight.normal.clear(true);
+    currentHighlight.reach.clear(true);
+    currentHighlight.extra.forEach((hl) => hl.clear(true));
+    currentHighlight = undefined;
+  }
 };
 
 const getReachSquares = function (token, range, minRange = 0, addSquareFunction = null, options) {

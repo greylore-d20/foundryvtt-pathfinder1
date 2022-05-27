@@ -485,7 +485,7 @@ export class ItemPF extends ItemBasePF {
         action = prior.get(o._id);
         action.data = o;
         action.prepareData();
-      } else action = game.pf1.documentComponents.ItemAction.create(o, this);
+      } else action = new game.pf1.documentComponents.ItemAction(o, this);
       collection.set(o._id || action.data._id, action);
     }
     return collection;
@@ -1480,7 +1480,7 @@ export class ItemPF extends ItemBasePF {
       // Create roll template data
       const rollData = mergeObject(
         {
-          user: game.user._id,
+          user: game.user.id,
           formula: roll.formula,
           tooltip: await roll.getTooltip(),
           total: roll.total,
@@ -1490,7 +1490,7 @@ export class ItemPF extends ItemBasePF {
 
       // Create chat data
       const chatData = {
-        user: game.user._id,
+        user: game.user.id,
         type: CONST.CHAT_MESSAGE_TYPES.CHAT,
         rollMode: game.settings.get("core", "rollMode"),
         sound: CONFIG.sounds.dice,

@@ -1,19 +1,41 @@
 import { calculateRange, convertDistance } from "../../lib.js";
 import { getHighestChanges } from "../../actor/apply-changes.js";
 import { RollPF } from "../../roll.js";
+import { ItemPF } from "../entity.js";
+import { PF1 } from "../../config.js";
 
 export class ItemAction {
-  constructor() {
+  constructor(data, parent) {
+    this.data = data;
+    this.parent = parent;
     this.apps = {};
   }
 
-  static create(data, parent) {
-    const result = new this();
+  /**
+   * Creates an action.
+   *
+   * @param {object[]} data - Data to initialize the action with.
+   * @param {object} context - An object containing context information.
+   * @param {ItemPF} [context.parent] - The parent entity to create the action within.
+   * @returns ItemAction|undefined - The resulting action, or undefined if nothing was created.
+   */
+  static async create(data, context = {}) {
+    const { parent } = context;
 
-    result.data = mergeObject(this.defaultData, data);
-    result.parent = parent;
+    if (parent instanceof ItemPF) {
+      // Prepare data
+      data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
+      const newActions = deepClone(parent.data.data.actions || []);
+      newActions.push(...data);
 
-    return result;
+      // Update parent
+      await parent.update({ "data.actions": newActions });
+
+      // Return results
+      return data.map((o) => parent.actions.get(o._id));
+    }
+
+    return undefined;
   }
 
   static get defaultConditional() {
@@ -41,9 +63,6 @@ export class ItemAction {
     return this.parent.parentActor;
   }
 
-  get _id() {
-    return this.data._id;
-  }
   get id() {
     return this._id;
   }
@@ -196,7 +215,7 @@ export class ItemAction {
 
   getRollData() {
     const result = this.item.getRollData();
-    result.action = duplicate(this.data);
+    result.action = deepClone(this.data);
     return result;
   }
 
@@ -295,7 +314,6 @@ export class ItemAction {
 
   prepareData() {
     const data = this.data;
-    const C = CONFIG.PF1;
 
     this.labels = {};
 
@@ -307,48 +325,54 @@ export class ItemAction {
     // Activation method
     if (Object.prototype.hasOwnProperty.call(data, "activation")) {
       const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
-        ? CONFIG.PF1.abilityActivationTypes_unchained
-        : CONFIG.PF1.abilityActivationTypes;
+        ? PF1.abilityActivationTypes_unchained
+        : PF1.abilityActivationTypes;
       const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy")
-        ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
-        : CONFIG.PF1.abilityActivationTypesPlurals;
+        ? PF1.abilityActivationTypesPlurals_unchained
+        : PF1.abilityActivationTypesPlurals;
 
       // Ability Activation Label
-      const act = game.settings.get("pf1", "unchainedActionEconomy")
+      const activation = game.settings.get("pf1", "unchainedActionEconomy")
         ? data.unchainedAction.activation || {}
         : data.activation || {};
-      if (act && act.cost > 1 && activationTypesPlural[act.type] != null) {
-        this.labels.activation = [act.cost.toString(), activationTypesPlural[act.type]].filterJoin(" ");
-      } else if (act) {
+      if (activation && activation.cost > 1 && activationTypesPlural[activation.type] != null) {
+        this.labels.activation = [activation.cost.toString(), activationTypesPlural[activation.type]].filterJoin(" ");
+      } else if (activation) {
         this.labels.activation = [
-          ["minute", "hour", "action"].includes(act.type) && act.cost ? act.cost.toString() : "",
-          activationTypes[act.type],
+          ["minute", "hour", "action"].includes(activation.type) && activation.cost ? activation.cost.toString() : "",
+          activationTypes[activation.type],
         ].filterJoin(" ");
       }
 
       // Target Label
-      const tgt = data.target || {};
-      if (["none", "touch", "personal"].includes(tgt.units)) tgt.value = null;
-      if (["none", "personal"].includes(tgt.type)) {
-        tgt.value = null;
-        tgt.units = null;
+      const target = data.target || {};
+      if (["none", "touch", "personal"].includes(target.units)) target.value = null;
+      if (["none", "personal"].includes(target.type)) {
+        target.value = null;
+        target.units = null;
       }
-      this.labels.target = [tgt.value, C.distanceUnits[tgt.units], C.targetTypes[tgt.type]].filterJoin(" ");
+      this.labels.target = [target.value, PF1.distanceUnits[target.units], PF1.targetTypes[target.type]].filterJoin(
+        " "
+      );
       if (this.labels.target) this.labels.target = `${game.i18n.localize("PF1.Target")}: ${this.labels.target}`;
 
       // Range Label
-      const rng = duplicate(data.range || {});
-      if (!["ft", "mi", "spec"].includes(rng.units)) {
-        rng.value = null;
-        rng.long = null;
-      } else if (typeof rng.value === "string" && rng.value.length) {
+      const range = duplicate(data.range || {});
+      if (!["ft", "mi", "spec"].includes(range.units)) {
+        range.value = null;
+        range.long = null;
+      } else if (typeof range.value === "string" && range.value.length) {
         try {
-          rng.value = RollPF.safeTotal(rng.value, this.parent.getRollData()).toString();
+          range.value = RollPF.safeTotal(range.value, this.parent.getRollData()).toString();
         } catch (err) {
           console.error(err);
         }
       }
-      this.labels.range = [rng.value, rng.long ? `/ ${rng.long}` : null, C.distanceUnits[rng.units]].filterJoin(" ");
+      this.labels.range = [
+        range.value,
+        range.long ? `/ ${range.long}` : null,
+        PF1.distanceUnits[range.units],
+      ].filterJoin(" ");
       if (this.labels.range.length > 0)
         this.labels.range = [`${game.i18n.localize("PF1.Range")}:`, this.labels.range].join(" ");
 
@@ -361,7 +385,7 @@ export class ItemAction {
           "Duration",
         ]).total.toString();
       }
-      this.labels.duration = [dur.value, C.timePeriods[dur.units]].filterJoin(" ");
+      this.labels.duration = [dur.value, PF1.timePeriods[dur.units]].filterJoin(" ");
     }
 
     // Actions
@@ -382,7 +406,7 @@ export class ItemAction {
   }
 
   async delete() {
-    const actions = duplicate(this.item.data.data.actions);
+    const actions = deepClone(this.item.data.data.actions);
     const idx = this.item.data.data.actions.indexOf(this.data);
     actions.splice(idx, 1);
 
@@ -399,7 +423,7 @@ export class ItemAction {
 
   async update(updateData, options = {}) {
     const idx = this.item.data.data.actions.indexOf(this.data);
-    const prevData = duplicate(this.data);
+    const prevData = deepClone(this.data);
     const newUpdateData = flattenObject(mergeObject(prevData, updateData));
 
     // Remove non-array conditionals data
@@ -511,7 +535,7 @@ export class ItemAction {
    * @param root0.primaryAttack
    */
   async rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
-    const rollData = duplicate(data ?? this.getRollData());
+    const rollData = deepClone(data ?? this.getRollData());
     const itemData = rollData.item;
     const actionData = rollData.action;
 
@@ -703,7 +727,7 @@ export class ItemAction {
     conditionalParts = {},
     primaryAttack = true,
   } = {}) {
-    const rollData = duplicate(data ?? this.getRollData());
+    const rollData = deepClone(data ?? this.getRollData());
 
     if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Action.");

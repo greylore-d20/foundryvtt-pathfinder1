@@ -1861,12 +1861,10 @@ export class ActorPF extends ActorBasePF {
     attackData["data.conditionals"] = item.data._source.data.conditionals;
 
     // Add actions
-    const actions = duplicate(item.data._source.data.actions ?? []);
-    console.log(actions[0]._id);
+    const actions = deepClone(item.data._source.data.actions ?? []);
     for (const action of actions) {
       action._id = randomID(16);
     }
-    console.log(actions[0]._id);
     attackData["data.actions"] = actions;
 
     // Synthetic intermediate item
@@ -1880,7 +1878,13 @@ export class ActorPF extends ActorBasePF {
       await item.createItemLink("children", "data", newItem, itemData[0].id);
     }
 
+    // Notify user
     ui.notifications.info(game.i18n.localize("PF1.NotificationCreatedAttack").format(item.data.name));
+
+    // Disable quick use of weapon
+    await item.update({
+      "data.showInQuickbar": false,
+    });
 
     return itemData[0];
   }

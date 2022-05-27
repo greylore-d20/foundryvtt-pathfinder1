@@ -139,22 +139,28 @@ export const registerActorItemAttackTests = () => {
       describe("attack with natural attack", function () {
         const items = {};
         before(async () => {
+          const rawData = game.pf1.documentComponents.ItemAction.defaultData;
           items.bite = (
             await actor.createEmbeddedDocuments("Item", {
               type: "attack",
               name: "Bite",
               data: {
-                actionType: "mwak",
-                damage: {
-                  parts: [["sizeRoll(1, 6, @size)", "B/P/S"]],
-                },
-                ability: {
-                  attack: "str",
-                  damage: "str",
-                  damageMult: 1.5,
-                },
-                attackType: "natural",
-                primaryAttack: true,
+                actions: [
+                  mergeObject(rawData, {
+                    name: "Bite",
+                    actionType: "mwak",
+                    damage: {
+                      parts: [["sizeRoll(1, 6, @size)", "B/P/S"]],
+                    },
+                    ability: {
+                      attack: "str",
+                      damage: "str",
+                      damageMult: 1.5,
+                    },
+                    attackType: "natural",
+                    primaryAttack: true,
+                  }),
+                ],
               },
             })
           )[0];

@@ -137,6 +137,9 @@ export class ItemActionSheet extends FormApplication {
 
     // Modify conditionals
     html.find(".conditional-control").click(this._onConditionalControl.bind(this));
+
+    // Handle alternative file picker
+    html.find(".file-picker-alt").click(this._onFilePickerAlt.bind(this));
   }
 
   _onDragStart(event) {
@@ -324,6 +327,29 @@ export class ItemActionSheet extends FormApplication {
       attackParts.splice(Number(li.dataset.attackPart), 1);
       return this._onSubmit(event, { updateData: { "data.attackParts": attackParts } });
     }
+  }
+
+  async _onFilePickerAlt(event) {
+    const button = event.currentTarget;
+    const attr = button.dataset.for;
+    const current = getProperty(this.item.data, attr);
+    const form = button.form;
+    const targetField = form[attr];
+    if (!targetField) return;
+
+    const fp = new FilePicker({
+      type: button.dataset.type,
+      current: current,
+      callback: (path) => {
+        targetField.value = path;
+        if (this.options.submitOnChange) {
+          this._onSubmit(event);
+        }
+      },
+      top: this.position.top + 40,
+      left: this.position.left + 10,
+    });
+    fp.browse(current);
   }
 
   async _onEditImage(event) {

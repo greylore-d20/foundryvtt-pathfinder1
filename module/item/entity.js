@@ -105,7 +105,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   get hasAction() {
-    return this.actions?.some((o) => o.hasAction);
+    return this.data.data.actions?.length > 0;
   }
 
   get isSingleUse() {
@@ -1293,7 +1293,7 @@ export class ItemPF extends ItemBasePF {
       attacks: [],
       chatAttacks: [],
       rollMode: game.settings.get("core", "rollMode"),
-      useMeasureTemplate: this.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
+      useMeasureTemplate: action.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
       conditionals: null,
       conditionalPartsCommon: {},
       casterLevelCheck: false,

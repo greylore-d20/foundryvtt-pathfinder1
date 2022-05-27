@@ -118,7 +118,7 @@ export const alterRollData = function (shared, form = {}) {
   if (formData["primary-attack"] != null) shared.rollData.item.primaryAttack = formData["primary-attack"];
 
   // Use measure template
-  shared.useMeasureTemplate = formData["measure-template"];
+  if (formData["measure-template"] != null) shared.useMeasureTemplate = formData["measure-template"];
 
   // Set held type
   setProperty(shared.rollData, "item.held", formData["held"] ?? "normal");
@@ -392,12 +392,15 @@ export const handleConditionals = function (shared) {
 export const checkAttackRequirements = function (shared) {
   // Determine charge cost
   let cost = 0;
-  if (shared.action.data.uses.autoDeductCharges && this.isCharged) {
+  if (this.isCharged) {
     cost = shared.action.chargeCost;
     let uses = this.charges;
-    if (this.data.type === "spell" && this.useSpellPoints()) {
-      cost = shared.action.chargeCost;
-      uses = this.getSpellUses();
+    if (this.data.type === "spell") {
+      if (this.useSpellPoints()) {
+        uses = this.getSpellUses();
+      } else {
+        cost = 1;
+      }
     }
     // Add charge cost from conditional modifiers
     cost += shared.rollData["chargeCostBonus"] ?? 0;
@@ -728,7 +731,7 @@ export const getMessageData = async function (shared) {
   };
 
   // Set attack sound
-  if (this.data.data.soundEffect) shared.chatData.sound = this.data.data.soundEffect;
+  if (shared.action.data.soundEffect) shared.chatData.sound = shared.action.data.soundEffect;
   // Set dice sound if neither attack sound nor Dice so Nice are available
   else if (game.dice3d == null || !game.dice3d.isEnabled()) shared.chatData.sound = CONFIG.sounds.dice;
 

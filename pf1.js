@@ -587,17 +587,6 @@ Hooks.once("ready", async function () {
     }
   }
 
-  // Initialize perception, because the game doesn't render lights for GMs at first load
-  // Not sure why this is necessary atm
-  canvas.perception.initialize();
-
-  // Toggle token condition icons
-  if (game.user.isGM) {
-    canvas.tokens.placeables.forEach((t) => {
-      if (!!t.actor && "toggleConditionStatusIcons" in t.actor) t.actor.toggleConditionStatusIcons();
-    });
-  }
-
   Hooks.callAll("pf1.postReady");
 });
 

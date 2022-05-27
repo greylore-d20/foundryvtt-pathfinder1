@@ -1,5 +1,6 @@
 import { calculateRange, convertDistance } from "../../lib.js";
 import { getHighestChanges } from "../../actor/apply-changes.js";
+import { RollPF } from "../../roll.js";
 
 export class ItemAction {
   constructor() {
@@ -166,18 +167,25 @@ export class ItemAction {
     if (!this.actor) return 0;
 
     rollData = rollData ?? this.getRollData();
-    const data = rollData.item;
-
     let result = 10;
 
     // Get conditional save DC bonus
     const dcBonus = rollData["dcBonus"] ?? 0;
 
-    const dcFormula = this.data.save.dc.toString() || "0";
-    try {
+    if (this.item.type === "spell") {
+      const spellbook = this.item.spellbook;
+      if (spellbook) {
+        let formula = spellbook.baseDCFormula;
+
+        const data = rollData.action;
+        if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
+
+        return RollPF.safeRoll(formula, rollData).total + dcBonus;
+      }
+    } else {
+      const dcFormula = this.data.save.dc.toString() || "0";
       result = RollPF.safeRoll(dcFormula, rollData).total + dcBonus;
-    } catch (e) {
-      console.error(e, dcFormula);
+      return result;
     }
     return result;
   }
@@ -873,7 +881,7 @@ export class ItemAction {
         delete result["rapidShotDamage"];
       }
       if (this.hasMultiAttack) {
-        for (const [k, v] of Object.entries(this.data.data.attackParts)) {
+        for (const [k, v] of Object.entries(this.data.attackParts)) {
           result[`attack.${Number(k) + 1}`] = v[1];
         }
       }

@@ -25,7 +25,7 @@ export class AttackDialog extends Application {
       "cl-offset": "0",
       "sl-offset": "0",
       rollMode: game.settings.get("core", "rollMode"),
-      "damage-ability-multiplier": this.rollData.item?.ability?.damageMult ?? 1,
+      "damage-ability-multiplier": this.rollData.action?.ability?.damageMult ?? 1,
       held: this.rollData.item?.held ?? "normal",
     };
     this.conditionals = {};

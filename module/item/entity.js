@@ -436,11 +436,6 @@ export class ItemPF extends ItemBasePF {
   }
 
   prepareDerivedItemData() {
-    // Parse formulaic attacks
-    if (this.hasAttack) {
-      this.parseFormulaicAttacks({ formula: getProperty(this.data, "data.formulaicAttacks.count.formula") });
-    }
-
     // Update maximum uses
     this._updateMaxUses();
 
@@ -1216,42 +1211,6 @@ export class ItemPF extends ItemBasePF {
     }
 
     return shared;
-  }
-
-  parseFormulaicAttacks({ formula = null } = {}) {
-    if (!this.parentActor) return;
-
-    const exAtkCountFormula = formula ?? (this.data.data.formulaicAttacks?.count?.formula || "");
-    let extraAttacks = 0,
-      xaroll;
-    const rollData = this.getRollData();
-    if (exAtkCountFormula.length > 0) {
-      xaroll = RollPF.safeRoll(exAtkCountFormula, rollData);
-      extraAttacks = Math.min(50, Math.max(0, xaroll.total)); // Arbitrarily clamp attacks
-    }
-    if (xaroll?.err) {
-      const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
-      console.warn(msg, xaroll.err, exAtkCountFormula);
-      ui.notifications.warn(msg);
-    }
-
-    // Test bonus attack formula
-    const exAtkBonusFormula = this.data.data.formulaicAttacks?.bonus || "";
-    try {
-      if (exAtkBonusFormula.length > 0) {
-        rollData["attackCount"] = 1;
-        RollPF.safeRoll(exAtkBonusFormula, rollData);
-      }
-    } catch (err) {
-      const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
-      console.warn(msg, err, exAtkBonusFormula);
-      ui.notifications.warn(msg);
-    }
-
-    // Update item
-    setProperty(this.data, "data.formulaicAttacks.count.value", extraAttacks);
-
-    return extraAttacks;
   }
 
   /**

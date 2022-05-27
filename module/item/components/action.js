@@ -289,6 +289,11 @@ export class ItemAction {
 
     this.labels = {};
 
+    // Parse formulaic attacks
+    if (this.hasAttack) {
+      this.parseFormulaicAttacks({ formula: getProperty(this.data, "data.formulaicAttacks.count.formula") });
+    }
+
     // Activation method
     if (Object.prototype.hasOwnProperty.call(data, "activation")) {
       const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
@@ -448,6 +453,42 @@ export class ItemAction {
   }
 
   // -----------------------------------------------------------------------
+
+  parseFormulaicAttacks({ formula = null } = {}) {
+    if (!this.actor) return;
+
+    const exAtkCountFormula = formula ?? (this.data.formulaicAttacks?.count?.formula || "");
+    let extraAttacks = 0,
+      xaroll;
+    const rollData = this.getRollData();
+    if (exAtkCountFormula.length > 0) {
+      xaroll = RollPF.safeRoll(exAtkCountFormula, rollData);
+      extraAttacks = Math.min(50, Math.max(0, xaroll.total)); // Arbitrarily clamp attacks
+    }
+    if (xaroll?.err) {
+      const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
+      console.warn(msg, xaroll.err, exAtkCountFormula);
+      ui.notifications.warn(msg);
+    }
+
+    // Test bonus attack formula
+    const exAtkBonusFormula = this.data.formulaicAttacks?.bonus || "";
+    try {
+      if (exAtkBonusFormula.length > 0) {
+        rollData["attackCount"] = 1;
+        RollPF.safeRoll(exAtkBonusFormula, rollData);
+      }
+    } catch (err) {
+      const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
+      console.warn(msg, err, exAtkBonusFormula);
+      ui.notifications.warn(msg);
+    }
+
+    // Update item
+    setProperty(this.data, "formulaicAttacks.count.value", extraAttacks);
+
+    return extraAttacks;
+  }
 
   /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)

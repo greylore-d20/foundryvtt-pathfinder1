@@ -144,7 +144,7 @@ export class ItemActionSheet extends FormApplication {
 
     // Drag conditional
     if (elem.dataset?.conditional) {
-      const conditional = this.object.data.data.conditionals[elem.dataset?.conditional];
+      const conditional = this.object.data.conditionals[elem.dataset?.conditional];
       event.dataTransfer.setData("text/plain", JSON.stringify(conditional));
     }
   }
@@ -162,31 +162,31 @@ export class ItemActionSheet extends FormApplication {
       return false;
     }
 
-    const item = this.object;
+    const action = this.object;
     // Handle conditionals
     if (type === "conditional") {
       // Check targets and other fields for valid values, reset if necessary
       for (const modifier of data.modifiers) {
-        if (!Object.keys(item.getConditionalTargets()).includes(modifier.target)) modifier.target = "";
+        if (!Object.keys(action.getConditionalTargets()).includes(modifier.target)) modifier.target = "";
         let keys;
         for (let [k, v] of Object.entries(modifier)) {
           switch (k) {
             case "subTarget":
-              keys = Object.keys(item.getConditionalSubTargets(modifier.target));
+              keys = Object.keys(action.getConditionalSubTargets(modifier.target));
               break;
             case "type":
-              keys = Object.keys(item.getConditionalModifierTypes(modifier.target));
+              keys = Object.keys(action.getConditionalModifierTypes(modifier.target));
               break;
             case "critical":
-              keys = Object.keys(item.getConditionalCritical(modifier.target));
+              keys = Object.keys(action.getConditionalCritical(modifier.target));
               break;
           }
           if (!keys?.includes(v)) v = keys?.[0] ?? "";
         }
       }
 
-      const conditionals = item.data.data.conditionals || [];
-      await this.object.update({ "data.conditionals": conditionals.concat([data]) });
+      const conditionals = duplicate(action.data.conditionals || []).concat(data);
+      await this.object.update({ conditionals: conditionals });
     }
   }
 

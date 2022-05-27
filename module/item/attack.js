@@ -622,7 +622,6 @@ export const promptMeasureTemplate = async function (shared) {
   // Create template
   shared.template = null;
   const template = game.pf1.AbilityTemplate.fromData(templateOptions);
-  console.log(templateOptions, template);
   let result;
   if (template) {
     const sheetRendered = this.parent?.sheet?._element != null;
@@ -910,7 +909,7 @@ export const addGenericPropertyLabels = function (shared) {
   // Add conditionals info
   if (shared.conditionals?.length) {
     shared.conditionals.forEach((c) => {
-      properties.push(this.data.data.conditionals[c].name);
+      properties.push(shared.action.data.conditionals[c].name);
     });
   }
 

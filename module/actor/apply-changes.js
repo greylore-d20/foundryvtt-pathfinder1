@@ -519,7 +519,7 @@ export const addDefaultChanges = function (changes) {
 
   const push_health = (value, source) => {
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: value,
         target: "misc",
         subTarget: "mhp",
@@ -528,7 +528,7 @@ export const addDefaultChanges = function (changes) {
       })
     );
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: value,
         target: "misc",
         subTarget: "vigor",
@@ -623,7 +623,7 @@ export const addDefaultChanges = function (changes) {
       if (!useFractional) {
         // Add per class change
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: base,
             target: "savingThrows",
             subTarget: a,
@@ -645,7 +645,7 @@ export const addDefaultChanges = function (changes) {
     if (useFractional) {
       // Add shared change with fractional
       changes.push(
-        game.pf1.documentComponents.ItemChange.create({
+        new game.pf1.documentComponents.ItemChange({
           formula: Math.floor(total),
           target: "savingThrows",
           subTarget: a,
@@ -660,7 +660,7 @@ export const addDefaultChanges = function (changes) {
       const goodSaveFormula = CONFIG.PF1.classFractionalSavingThrowFormulas.goodSaveBonus;
       const total = RollPF.safeRoll(goodSaveFormula).total;
       changes.push(
-        game.pf1.documentComponents.ItemChange.create({
+        new game.pf1.documentComponents.ItemChange({
           formula: total,
           target: "savingThrows",
           subTarget: a,
@@ -679,7 +679,7 @@ export const addDefaultChanges = function (changes) {
   const hpAbility = actorData.attributes.hpAbility;
   if (hpAbility) {
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: (d) => d.abilities[hpAbility].mod * d.attributes.hd.total,
         operator: "function",
         target: "misc",
@@ -695,7 +695,7 @@ export const addDefaultChanges = function (changes) {
     if (!getProperty(this.data, "data.attributes.wounds.base")) {
       const woundFormula = `(@abilities.${hpAbility}.total * 2) + @abilities.${hpAbility}.drain`;
       changes.push(
-        game.pf1.documentComponents.ItemChange.create({
+        new game.pf1.documentComponents.ItemChange({
           formula: (d) => d.abilities[hpAbility].total * 2 + d.abilities[hpAbility].drain,
           operator: "function",
           target: "misc",
@@ -715,7 +715,7 @@ export const addDefaultChanges = function (changes) {
     let base = s.base;
     if (!base) base = 0;
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: base,
         target: "speed",
         subTarget: `${k}Speed`,
@@ -736,7 +736,7 @@ export const addDefaultChanges = function (changes) {
   {
     // BAB to attack
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: getBabTotal,
         operator: "function",
         target: "attack",
@@ -750,7 +750,7 @@ export const addDefaultChanges = function (changes) {
     });
     // Energy drain to attack
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: getNegativeEnergyDrain,
         operator: "function",
         target: "attack",
@@ -764,7 +764,7 @@ export const addDefaultChanges = function (changes) {
     });
     // ACP to attack
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: (d) => -d.attributes.acp.attackPenalty,
         operator: "function",
         target: "attack",
@@ -782,7 +782,7 @@ export const addDefaultChanges = function (changes) {
   {
     // BAB to CMD
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: getBabTotal,
         operator: "function",
         target: "misc",
@@ -800,7 +800,7 @@ export const addDefaultChanges = function (changes) {
     const strAbl = actorData.attributes.cmd.strAbility;
     if (strAbl in CONFIG.PF1.abilities) {
       changes.push(
-        game.pf1.documentComponents.ItemChange.create({
+        new game.pf1.documentComponents.ItemChange({
           formula: `@abilities.${strAbl}.mod`,
           target: "misc",
           subTarget: "cmd",
@@ -816,7 +816,7 @@ export const addDefaultChanges = function (changes) {
     }
     // Energy Drain to CMD
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: getNegativeEnergyDrain,
         operator: "function",
         target: "misc",
@@ -838,7 +838,7 @@ export const addDefaultChanges = function (changes) {
     const abl = actorData.attributes.init.ability;
     if (abl) {
       changes.push(
-        game.pf1.documentComponents.ItemChange.create({
+        new game.pf1.documentComponents.ItemChange({
           formula: getAbilityMod(abl),
           operator: "function",
           target: "misc",
@@ -856,7 +856,7 @@ export const addDefaultChanges = function (changes) {
     // Add ACP penalty
     if (["str", "dex"].includes(abl)) {
       changes.push(
-        game.pf1.documentComponents.ItemChange.create({
+        new game.pf1.documentComponents.ItemChange({
           formula: (d) => -d.attributes.acp.attackPenalty,
           operator: "function",
           target: "misc",
@@ -878,7 +878,7 @@ export const addDefaultChanges = function (changes) {
     let abl = actorData.attributes.savingThrows.fort.ability;
     if (abl) {
       changes.push(
-        game.pf1.documentComponents.ItemChange.create({
+        new game.pf1.documentComponents.ItemChange({
           formula: getAbilityMod(abl),
           operator: "function",
           target: "savingThrows",
@@ -896,7 +896,7 @@ export const addDefaultChanges = function (changes) {
     abl = actorData.attributes.savingThrows.ref.ability;
     if (abl) {
       changes.push(
-        game.pf1.documentComponents.ItemChange.create({
+        new game.pf1.documentComponents.ItemChange({
           formula: getAbilityMod(abl),
           operator: "function",
           target: "savingThrows",
@@ -914,7 +914,7 @@ export const addDefaultChanges = function (changes) {
     abl = actorData.attributes.savingThrows.will.ability;
     if (abl) {
       changes.push(
-        game.pf1.documentComponents.ItemChange.create({
+        new game.pf1.documentComponents.ItemChange({
           formula: getAbilityMod(abl),
           operator: "function",
           target: "savingThrows",
@@ -930,7 +930,7 @@ export const addDefaultChanges = function (changes) {
     }
     // Energy Drain
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: getNegativeEnergyDrain,
         operator: "function",
         target: "savingThrows",
@@ -950,7 +950,7 @@ export const addDefaultChanges = function (changes) {
   {
     const sr = actorData.attributes.sr.formula || 0;
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: sr,
         target: "misc",
         subTarget: "spellResist",
@@ -967,7 +967,7 @@ export const addDefaultChanges = function (changes) {
     // Carry capacity strength bonus
     const cStr = actorData.details.carryCapacity.bonus.user || 0;
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: cStr,
         target: "misc",
         subTarget: "carryStr",
@@ -982,7 +982,7 @@ export const addDefaultChanges = function (changes) {
     // Carry capacity multiplier
     const cMultBase = actorData.details.carryCapacity.multiplier.base ?? 1;
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: cMultBase,
         target: "misc",
         subTarget: "carryMult",
@@ -996,7 +996,7 @@ export const addDefaultChanges = function (changes) {
     });
     const cMult = actorData.details.carryCapacity.multiplier.user || 0;
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: cMult,
         target: "misc",
         subTarget: "carryMult",
@@ -1013,7 +1013,7 @@ export const addDefaultChanges = function (changes) {
   {
     const ac = actorData.attributes.naturalAC || 0;
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: ac,
         target: "ac",
         subTarget: "nac",
@@ -1041,7 +1041,7 @@ export const addDefaultChanges = function (changes) {
         if (item.data.data.broken) ac = Math.floor(ac / 2);
         ac += item.data.data.armor.enh;
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: ac,
             target: "ac",
             subTarget: armorTarget,
@@ -1065,7 +1065,7 @@ export const addDefaultChanges = function (changes) {
     if (flyKey != null) flyValue = CONFIG.PF1.flyManeuverabilityValues[flyKey];
     if (flyValue !== 0) {
       changes.push(
-        game.pf1.documentComponents.ItemChange.create({
+        new game.pf1.documentComponents.ItemChange({
           formula: flyValue,
           target: "skill",
           subTarget: "skill.fly",
@@ -1081,7 +1081,7 @@ export const addDefaultChanges = function (changes) {
   // Add swim and climb skill bonuses based on having speeds for them
   {
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: (d) => (d.attributes.speed.climb.total > 0 ? 8 : 0),
         operator: "function",
         target: "skill",
@@ -1096,7 +1096,7 @@ export const addDefaultChanges = function (changes) {
     });
 
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: (d) => (d.attributes.speed.swim.total > 0 ? 8 : 0),
         operator: "function",
         target: "skill",
@@ -1114,7 +1114,7 @@ export const addDefaultChanges = function (changes) {
   // Add energy drain to skills
   {
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: getNegativeEnergyDrain,
         operator: "function",
         target: "skills",
@@ -1137,7 +1137,7 @@ export const addDefaultChanges = function (changes) {
   if (sizeKey !== "med") {
     // AC
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: CONFIG.PF1.sizeMods[sizeKey],
         target: "ac",
         subTarget: "ac",
@@ -1152,7 +1152,7 @@ export const addDefaultChanges = function (changes) {
     }
     // Stealth skill
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: CONFIG.PF1.sizeStealthMods[sizeKey],
         target: "skill",
         subTarget: "skill.ste",
@@ -1165,7 +1165,7 @@ export const addDefaultChanges = function (changes) {
     });
     // Fly skill
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: CONFIG.PF1.sizeFlyMods[sizeKey],
         target: "skill",
         subTarget: "skill.fly",
@@ -1178,7 +1178,7 @@ export const addDefaultChanges = function (changes) {
     });
     // CMD
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: CONFIG.PF1.sizeSpecialMods[sizeKey],
         target: "misc",
         subTarget: "cmd",
@@ -1200,7 +1200,7 @@ export const addDefaultChanges = function (changes) {
     switch (con) {
       case "pf1_blind":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -2,
             target: "ac",
             subTarget: "ac",
@@ -1235,7 +1235,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "dazzled":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -1,
             target: "attack",
             subTarget: "attack",
@@ -1249,7 +1249,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "pf1_deaf":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -4,
             target: "misc",
             subTarget: "init",
@@ -1263,7 +1263,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "entangled":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -4,
             target: "ability",
             subTarget: "dex",
@@ -1276,7 +1276,7 @@ export const addDefaultChanges = function (changes) {
         });
 
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -2,
             target: "attack",
             subTarget: "attack",
@@ -1291,7 +1291,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "grappled":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -4,
             target: "ability",
             subTarget: "dex",
@@ -1304,7 +1304,7 @@ export const addDefaultChanges = function (changes) {
         });
 
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -2,
             target: "attack",
             subTarget: "attack",
@@ -1319,7 +1319,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "helpless":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: 0,
             target: "ability",
             subTarget: "dex",
@@ -1336,7 +1336,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "pf1_sleep":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: 0,
             target: "ability",
             subTarget: "dex",
@@ -1353,7 +1353,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "paralyzed":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: 0,
             target: "ability",
             subTarget: "dex",
@@ -1364,7 +1364,7 @@ export const addDefaultChanges = function (changes) {
           })
         );
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: 0,
             target: "ability",
             subTarget: "str",
@@ -1385,7 +1385,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "pf1_prone":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -4,
             target: "attack",
             subTarget: "mattack",
@@ -1399,7 +1399,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "pinned":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: "min(0, @abilities.dex.mod)",
             target: "ability",
             subTarget: "dexMod",
@@ -1427,7 +1427,7 @@ export const addDefaultChanges = function (changes) {
         }
 
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -4,
             target: "ac",
             subTarget: "ac",
@@ -1435,7 +1435,7 @@ export const addDefaultChanges = function (changes) {
           })
         );
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -4,
             target: "misc",
             subTarget: "cmd",
@@ -1457,7 +1457,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "cowering":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -2,
             target: "defense",
             subTarget: "ac",
@@ -1486,7 +1486,7 @@ export const addDefaultChanges = function (changes) {
       case "frightened":
       case "panicked":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -2,
             target: "attack",
             subTarget: "attack",
@@ -1500,7 +1500,7 @@ export const addDefaultChanges = function (changes) {
         });
 
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -2,
             target: "savingThrows",
             subTarget: "allSavingThrows",
@@ -1517,7 +1517,7 @@ export const addDefaultChanges = function (changes) {
 
         {
           changes.push(
-            game.pf1.documentComponents.ItemChange.create({
+            new game.pf1.documentComponents.ItemChange({
               formula: -2,
               target: "skills",
               subTarget: "skills",
@@ -1536,7 +1536,7 @@ export const addDefaultChanges = function (changes) {
 
         {
           changes.push(
-            game.pf1.documentComponents.ItemChange.create({
+            new game.pf1.documentComponents.ItemChange({
               formula: -2,
               target: "abilityChecks",
               subTarget: "allChecks",
@@ -1555,7 +1555,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "sickened":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -2,
             target: "attack",
             subTarget: "attack",
@@ -1569,7 +1569,7 @@ export const addDefaultChanges = function (changes) {
         });
 
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -2,
             target: "damage",
             subTarget: "wdamage",
@@ -1583,7 +1583,7 @@ export const addDefaultChanges = function (changes) {
         });
 
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -2,
             target: "savingThrows",
             subTarget: "allSavingThrows",
@@ -1599,7 +1599,7 @@ export const addDefaultChanges = function (changes) {
 
         {
           changes.push(
-            game.pf1.documentComponents.ItemChange.create({
+            new game.pf1.documentComponents.ItemChange({
               formula: -2,
               target: "skills",
               subTarget: "skills",
@@ -1617,7 +1617,7 @@ export const addDefaultChanges = function (changes) {
 
         {
           changes.push(
-            game.pf1.documentComponents.ItemChange.create({
+            new game.pf1.documentComponents.ItemChange({
               formula: -2,
               target: "abilityChecks",
               subTarget: "allChecks",
@@ -1635,7 +1635,7 @@ export const addDefaultChanges = function (changes) {
         break;
       case "stunned":
         changes.push(
-          game.pf1.documentComponents.ItemChange.create({
+          new game.pf1.documentComponents.ItemChange({
             formula: -2,
             target: "ac",
             subTarget: "ac",
@@ -1668,7 +1668,7 @@ export const addDefaultChanges = function (changes) {
   // Handle fatigue and exhaustion so that they don't stack
   if (actorData.attributes.conditions.exhausted) {
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: -6,
         target: "ability",
         subTarget: "str",
@@ -1681,7 +1681,7 @@ export const addDefaultChanges = function (changes) {
     });
 
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: -6,
         target: "ability",
         subTarget: "dex",
@@ -1694,7 +1694,7 @@ export const addDefaultChanges = function (changes) {
     });
   } else if (actorData.attributes.conditions.fatigued) {
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: -2,
         target: "ability",
         subTarget: "str",
@@ -1707,7 +1707,7 @@ export const addDefaultChanges = function (changes) {
     });
 
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: -2,
         target: "ability",
         subTarget: "dex",
@@ -1723,7 +1723,7 @@ export const addDefaultChanges = function (changes) {
   // Apply level drain to hit points
   if (!Number.isNaN(actorData.attributes.energyDrain) && actorData.attributes.energyDrain > 0) {
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: (d) => -d.attributes.energyDrain * 5,
         operator: "function",
         target: "misc",
@@ -1738,7 +1738,7 @@ export const addDefaultChanges = function (changes) {
     });
 
     changes.push(
-      game.pf1.documentComponents.ItemChange.create({
+      new game.pf1.documentComponents.ItemChange({
         formula: (d) => -d.attributes.energyDrain * 5,
         operator: "function",
         target: "misc",

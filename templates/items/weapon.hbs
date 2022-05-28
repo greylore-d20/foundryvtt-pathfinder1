@@ -40,6 +40,10 @@
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
+      {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
+
+      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
+
       {{#if owner}}
       <label class="checkbox">
         <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}} />
@@ -138,8 +142,6 @@
           <input type="text" name="data.enh" value="{{ data.enh }}" data-dtype="Number" placeholder="0" />
         </div>
       </div>
-
-      {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
       {{!-- Advanced Tag --}}
       {{> "systems/pf1/templates/items/parts/item-tag.hbs"}}

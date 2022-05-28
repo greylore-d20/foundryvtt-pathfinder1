@@ -1,18 +1,37 @@
 {{!-- Inline Action --}}
 {{#*inline "listAction"}}
-  <li class="action-part" data-action="{{action._id}}">
-    <a class="action">
-      <img class="icon" src="{{action.img}}">
-      <span class="name">{{action.name}}</span>
-    </a>
-    <div class="action-control">
+  <li class="action-part item flexrow" data-item-id="{{action._id}}" data-item-collection="actions">
+    <div class="item-name flexrow">
+      <div class="item-image no-hover" style='background-image: url("{{action.img}}")'></div>
+      <h4>{{action.name}}</span>
+    </div>
+    <div class="action-controls item-controls">
+      <a class="edit-action" title="{{localize "PF1.EditItem"}}"><i class="fas fa-edit"></i></a>
       <a class="duplicate-action" title="{{localize "PF1.DuplicateItem"}}"><i class="fas fa-copy"></i></a>
       <a class="delete-action" title="{{localize "PF1.DeleteItem"}}"><i class="fas fa-trash"></i></a>
     </div>
   </li>
 {{/inline}}
 
-<h3 class="form-header">{{localize "PF1.ActionPlural"}}</h3>
+{{!-- Actions --}}
+<div class="actions">
+  <ol class="inventory-list action-parts">
+    {{!-- Header --}}
+    <li class="inventory-header flexrow">
+      <h3 class="item-name flexrow">{{localize "PF1.ActionPlural"}}</h3>
+      <div class="action-controls item-controls">
+        <a class="action-control add-action">
+          <i class="fas fa-plus"></i>
+        </a>
+      </div>
+    </li>
+
+    {{!-- Action list --}}
+    <ol class="items-list">
+      {{#each data.actions as |action i|}}{{> listAction action=action i=i}}{{/each}}
+    </ol>
+  </ol>
+</div>
 
 {{!-- Limited Uses --}}
 {{#unless isSpell}}
@@ -46,18 +65,6 @@
 {{/if}}
 {{/if}}
 {{/unless}}
-
-{{!-- Actions --}}
-<div class="actions">
-  <ol class="action-parts form-group">
-    {{#each data.actions as |action i|}}{{> listAction action=action i=i}}{{/each}}
-    <li class="action-control">
-      <a class="add-action">
-        <i class="fas fa-plus"></i><span>{{localize "PF1.Action"}}</span>
-      </a>
-    </li>
-  </ol>
-</div>
 
 {{#if hasAction}}
 {{!-- Attack Notes --}}

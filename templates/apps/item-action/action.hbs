@@ -5,6 +5,18 @@
   </label>
 </div>
 
+<div class="form-group stacked">
+  <label>{{localize "PF1.EnhancementBonus"}}</label>
+  <div class="form-fields">
+    <label class="checkbox">
+      <input type="checkbox" name="data.enh.override" {{checked data.enh.override}} /> {{localize "PF1.Override"}}
+    </label>
+    {{#if data.enh.override}}
+      <input type="text" name="data.enh.value" value="{{ data.enh.value }}" data-dtype="Number" placeholder="0" />
+    {{/if}}
+  </div>
+</div>
+
 {{!-- Action Type --}}
 <div class="form-group select">
   <label>{{localize "PF1.ActionType"}}</label>

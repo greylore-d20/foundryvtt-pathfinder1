@@ -1652,7 +1652,7 @@ export class ActorSheetPF extends ActorSheet {
   /* -------------------------------------------- */
 
   /**
-   * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching its description
    *
    * @param event
    * @private

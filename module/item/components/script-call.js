@@ -3,13 +3,36 @@ import { ScriptEditor } from "../../apps/script-editor.js";
 export class ItemScriptCall {
   static AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 
-  static create(data, parent) {
-    const result = new this();
+  constructor(data, parent) {
+    this.data = mergeObject(this.constructor.defaultData, data);
+    this.parent = parent;
+  }
 
-    result.data = mergeObject(this.defaultData, data);
-    result.parent = parent;
+  /**
+   * Creates a script call.
+   *
+   * @param {object[]} data - Data to initialize the script call(s) with.
+   * @param {object} context - An object containing context information.
+   * @param {ItemPF} [context.parent] - The parent entity to create the script call within.
+   * @returns The resulting script calls, or an empty array if nothing was created.
+   */
+  static async create(data, context) {
+    const { parent } = context;
 
-    return result;
+    if (parent instanceof game.pf1.documents.ItemPF) {
+      // Prepare data
+      data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
+      const newScriptCallData = deepClone(parent.data.data.changes || []);
+      newScriptCallData.push(...data);
+
+      // Update parent
+      await parent.update({ "data.scriptCalls": newScriptCallData });
+
+      // Return results
+      return data.map((o) => parent.scriptCalls.get(o._id));
+    }
+
+    return [];
   }
 
   static get defaultData() {

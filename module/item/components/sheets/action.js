@@ -31,6 +31,9 @@ export class ItemActionSheet extends FormApplication {
       ],
     });
   }
+  get title() {
+    return `${this.item.name}: ${this.action.name}`;
+  }
 
   get action() {
     return this.object;

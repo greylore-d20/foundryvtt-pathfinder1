@@ -36,6 +36,10 @@
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
+      {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
+
+      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
+
       <div class="form-group stacked">
         {{#if owner}}
         <label class="checkbox">
@@ -66,8 +70,6 @@
         <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
       </label>
       {{/if}}
-
-      {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
       {{!-- Advanced Tag --}}
       {{> "systems/pf1/templates/items/parts/item-tag.hbs"}}

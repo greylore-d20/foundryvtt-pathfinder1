@@ -774,10 +774,6 @@ export class ItemSheetPF extends ItemSheet {
     // Open help browser
     html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
 
-    // Action control
-    html.find(".action-control a").on("click", this._onActionControl.bind(this));
-    html.find(".action-parts .action-part .action").on("click", this._onClickAction.bind(this));
-
     // Modify buff changes
     html.find(".change-control").click(this._onBuffControl.bind(this));
     html.find(".change .change-target").click(this._onChangeTargetControl.bind(this));
@@ -815,6 +811,9 @@ export class ItemSheetPF extends ItemSheet {
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
+    // Item summaries
+    html.find(".item .item-name h4").on("click", this._onItemSummary.bind(this));
+
     // Linked item clicks
     html
       .find(".tab[data-tab='links'] .links-item[data-link] .links-item-name")
@@ -832,6 +831,16 @@ export class ItemSheetPF extends ItemSheet {
       });
       html.find(".clear-search").on("click", this._clearSearch.bind(this));
     }
+
+    /* -------------------------------------------- */
+    /*  Actions
+    /* -------------------------------------------- */
+
+    // Action control
+    html.find(".action-controls a").on("click", this._onActionControl.bind(this));
+
+    // Edit action
+    html.find(".actions .items-list .item").on("contextmenu", this._onActionEdit.bind(this));
 
     /* -------------------------------------------- */
     /*  Links
@@ -860,7 +869,7 @@ export class ItemSheetPF extends ItemSheet {
     game.pf1.compendiums[target].render(true, { focus: true });
   }
 
-  _onScriptCallControl(event) {
+  async _onScriptCallControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
     const item = this.document.scriptCalls ? this.document.scriptCalls.get(a.closest(".item")?.dataset.itemId) : null;
@@ -869,11 +878,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Create item
     if (a.classList.contains("item-create")) {
-      const list = this.document.data.data.scriptCalls || [];
-      const item = ItemScriptCall.create({}, null);
-      item.data.category = category;
-      item.data.type = "script";
-      return this._onSubmit(event, { updateData: { "data.scriptCalls": list.concat(item.data) } });
+      await this._onSubmit(event);
+      return game.pf1.documentComponents.ItemScriptCall.create([{ category, type: "script" }], { parent: this.item });
     }
     // Delete item
     else if (item && a.classList.contains("item-delete")) {
@@ -966,8 +972,10 @@ export class ItemSheetPF extends ItemSheet {
       // Submit data
       if (uuid) {
         const list = this.document.data.data.scriptCalls ?? [];
-        const item = ItemScriptCall.create({ type: "macro", value: uuid, category });
-        return this._onSubmit(event, { updateData: { "data.scriptCalls": list.concat(item.data) } });
+        await this._onSubmit(event);
+        return game.pf1.documentComponents.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
+          parent: this.item,
+        });
       }
     }
   }
@@ -1054,7 +1062,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Drag action
     if (elem.dataset?.action) {
-      const action = this.object.actions.get(elem.dataset.action);
+      const action = this.object.actions.get(elem.dataset.itemId);
       const obj = { type: "action", source: this.object.uuid, data: action.data };
       event.dataTransfer.setData("text/plain", JSON.stringify(obj));
     }
@@ -1135,6 +1143,34 @@ export class ItemSheetPF extends ItemSheet {
       choices: CONFIG.PF1[a.dataset.options],
     };
     new ActorTraitSelector(this.object, options).render(true);
+  }
+
+  /**
+   * Handle rolling of an (sub-)item (such as an action) from the sheet, obtaining the item instance and dispatching its description
+   *
+   * @param event
+   * @private
+   */
+  _onItemSummary(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents(".item:not(.sheet)");
+    const item = this.item[li.attr("data-item-collection")].get(li.attr("data-item-id")),
+      description = item.data.description,
+      rollData = typeof item.getRollData === "function" ? item.getRollData() : this.getRollData();
+
+    // Toggle summary
+    if (li.hasClass("expanded")) {
+      const summary = li.children(".item-summary");
+      summary.slideUp(200, () => summary.remove());
+    } else {
+      const div = $(`<div class="item-summary"></div>`);
+      if (description?.length) {
+        div.append(TextEditor.enrichHTML(description, { rollData }));
+      }
+      li.append(div.hide());
+      div.slideDown(200);
+    }
+    li.toggleClass("expanded");
   }
 
   /**
@@ -1221,20 +1257,29 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add action
     if (a.classList.contains("add-action")) {
-      const actionParts = duplicate(this.item.data.data.actions ?? []);
-      const newActionData = mergeObject(game.pf1.documentComponents.ItemAction.defaultData, {
+      const newActionData = {
         img: this.item.img,
         name: ["weapon", "attack"].includes(this.item.type)
           ? game.i18n.localize("PF1.Attack")
           : game.i18n.localize("PF1.Use"),
-      });
-      return this._onSubmit(event, { updateData: { "data.actions": actionParts.concat(newActionData) } });
+      };
+      await this._onSubmit(event);
+      return game.pf1.documentComponents.ItemAction.create([newActionData], { parent: this.item });
+    }
+
+    // Edit action
+    if (a.classList.contains("edit-action")) {
+      const li = a.closest(".action-part");
+      const action = this.item.actions.get(li.dataset.itemId);
+
+      const app = new game.pf1.applications.ItemActionSheet(action);
+      app.render(true);
     }
 
     // Remove action
     if (a.classList.contains("delete-action")) {
       const li = a.closest(".action-part");
-      const action = this.item.actions.get(li.dataset.action);
+      const action = this.item.actions.get(li.dataset.itemId);
 
       const deleteItem = async () => {
         return action.delete();
@@ -1258,7 +1303,7 @@ export class ItemSheetPF extends ItemSheet {
     // Duplicate action
     if (a.classList.contains("duplicate-action")) {
       const li = a.closest(".action-part");
-      const action = duplicate(this.item.actions.get(li.dataset.action).data);
+      const action = duplicate(this.item.actions.get(li.dataset.itemId).data);
       action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
       action._id = randomID(16);
       const actionParts = duplicate(this.item.data.data.actions ?? []);
@@ -1266,11 +1311,11 @@ export class ItemSheetPF extends ItemSheet {
     }
   }
 
-  async _onClickAction(event) {
+  async _onActionEdit(event) {
     event.preventDefault();
     const a = event.currentTarget;
     const li = a.closest(".action-part");
-    const action = this.item.actions.get(li.dataset.action);
+    const action = this.item.actions.get(li.dataset.itemId);
 
     const app = new game.pf1.applications.ItemActionSheet(action);
     app.render(true);
@@ -1282,9 +1327,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new change
     if (a.classList.contains("add-change")) {
-      const changes = this.item.data.data.changes || [];
-      const change = ItemChange.create({}, null);
-      return this._onSubmit(event, { updateData: { "data.changes": changes.concat(change.data) } });
+      await this._onSubmit(event);
+      return game.pf1.documentComponents.ItemChange.create([{}], { parent: this.item });
     }
 
     // Remove a change

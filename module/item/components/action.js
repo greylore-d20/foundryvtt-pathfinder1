@@ -1,7 +1,6 @@
 import { calculateRange, convertDistance } from "../../lib.js";
 import { getHighestChanges } from "../../actor/apply-changes.js";
 import { RollPF } from "../../roll.js";
-import { ItemPF } from "../entity.js";
 import { PF1 } from "../../config.js";
 
 export class ItemAction {
@@ -14,28 +13,28 @@ export class ItemAction {
   /**
    * Creates an action.
    *
-   * @param {object[]} data - Data to initialize the action with.
+   * @param {object[]} data - Data to initialize the action(s) with.
    * @param {object} context - An object containing context information.
    * @param {ItemPF} [context.parent] - The parent entity to create the action within.
-   * @returns ItemAction|undefined - The resulting action, or undefined if nothing was created.
+   * @returns The resulting actions, or an empty array if nothing was created.
    */
   static async create(data, context = {}) {
     const { parent } = context;
 
-    if (parent instanceof ItemPF) {
+    if (parent instanceof game.pf1.documents.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newActions = deepClone(parent.data.data.actions || []);
-      newActions.push(...data);
+      const newActionData = deepClone(parent.data.data.actions || []);
+      newActionData.push(...data);
 
       // Update parent
-      await parent.update({ "data.actions": newActions });
+      await parent.update({ "data.actions": newActionData });
 
       // Return results
       return data.map((o) => parent.actions.get(o._id));
     }
 
-    return undefined;
+    return [];
   }
 
   static get defaultConditional() {
@@ -213,6 +212,10 @@ export class ItemAction {
     return !!this.data.soundEffect;
   }
 
+  get enhancementBonus() {
+    return this.data.enh?.override ? this.data.enh?.value ?? 0 : this.item.data.data.enh ?? 0;
+  }
+
   getRollData() {
     const result = this.item.getRollData();
     result.action = deepClone(this.data);
@@ -309,6 +312,10 @@ export class ItemAction {
       spellEffect: "",
       spellArea: "",
       conditionals: [],
+      enh: {
+        override: false,
+        value: 0,
+      },
     };
   }
 
@@ -425,6 +432,7 @@ export class ItemAction {
     const idx = this.item.data.data.actions.indexOf(this.data);
     const prevData = deepClone(this.data);
     const newUpdateData = flattenObject(mergeObject(prevData, updateData));
+    if (!newUpdateData["name"]) newUpdateData["name"] = this.name;
 
     // Remove non-array conditionals data
     {
@@ -590,6 +598,32 @@ export class ItemAction {
 
     // Add change bonus
     const changes = this.item.getContextChanges(isRanged ? "rattack" : "mattack");
+    // Add masterwork bonus to changes (if applicable)
+    if (["mwak", "rwak", "mcman", "rcman"].includes(this.data.actionType) && this.item.data.data.masterwork) {
+      changes.push(
+        new game.pf1.documentComponents.ItemChange({
+          formula: "1",
+          operator: "add",
+          subTarget: "attack",
+          modifier: "enh",
+          value: 1,
+          flavor: game.i18n.localize("PF1.EnhancementBonus"),
+        })
+      );
+    }
+    // Add enhancement bonus to changes
+    if (this.enhancementBonus) {
+      changes.push(
+        new game.pf1.documentComponents.ItemChange({
+          formula: this.enhancementBonus.toString(),
+          operator: "add",
+          subTarget: "attack",
+          modifier: "enh",
+          value: this.enhancementBonus,
+          flavor: game.i18n.localize("PF1.EnhancementBonus"),
+        })
+      );
+    }
     let changeBonus = [];
     {
       // Get attack bonus
@@ -785,6 +819,19 @@ export class ItemAction {
       const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.actionType);
       const isWeapon = ["mwak", "rwak"].includes(this.data.actionType);
       const changes = this.item.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
+      // Add enhancement bonus to changes
+      if (this.enhancementBonus) {
+        changes.push(
+          new game.pf1.documentComponents.ItemChange({
+            formula: this.enhancementBonus.toString(),
+            operator: "add",
+            subTarget: "damage",
+            modifier: "enh",
+            value: this.enhancementBonus,
+            flavor: game.i18n.localize("PF1.EnhancementBonus"),
+          })
+        );
+      }
       // Get damage bonus
       getHighestChanges(
         changes.filter((c) => {

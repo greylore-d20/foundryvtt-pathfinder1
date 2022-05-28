@@ -470,7 +470,7 @@ export class ItemPF extends ItemBasePF {
         change = prior.get(c._id);
         change.data = c;
         change.prepareData();
-      } else change = ItemChange.create(c, this);
+      } else change = new game.pf1.documentComponents.ItemChange(c, this);
       collection.set(c._id || change.data._id, change);
     }
     return collection;
@@ -499,7 +499,7 @@ export class ItemPF extends ItemBasePF {
       if (prior && prior.has(s.id)) {
         scriptCall = prior.get(s.id);
         scriptCall.data = s;
-      } else scriptCall = ItemScriptCall.create(s, this);
+      } else scriptCall = new game.pf1.documentComponents.ItemScriptCall(s, this);
       collection.set(s._id || scriptCall.data._id, scriptCall);
     }
     return collection;
@@ -1373,35 +1373,6 @@ export class ItemPF extends ItemBasePF {
           if (!subTargetList.includes(c.subTarget)) return false;
           return true;
         });
-        // Add masterwork bonus
-        if (getProperty(this.data, "data.masterwork") === true && !getProperty(this.data, "data.enh")) {
-          result.push(
-            ItemChange.create({
-              formula: "1",
-              operator: "add",
-              target: "attack",
-              subTarget: "attack",
-              modifier: "enh",
-              value: 1,
-              flavor: game.i18n.localize("PF1.Masterwork"),
-            })
-          );
-        }
-        // Add enhancement bonus
-        if (getProperty(this.data, "data.enh")) {
-          const enh = getProperty(this.data, "data.enh");
-          result.push(
-            ItemChange.create({
-              formula: enh.toString(),
-              operator: "add",
-              target: "attack",
-              subTarget: "attack",
-              modifier: "enh",
-              value: enh,
-              flavor: game.i18n.localize("PF1.EnhancementBonus"),
-            })
-          );
-        }
         break;
       }
       case "wdamage":
@@ -1411,21 +1382,6 @@ export class ItemPF extends ItemBasePF {
           if (!subTargetList.includes(c.subTarget)) return false;
           return true;
         });
-        // Add enhancement bonus
-        if (getProperty(this.data, "data.enh")) {
-          const enh = getProperty(this.data, "data.enh");
-          result.push(
-            ItemChange.create({
-              formula: enh.toString(),
-              operator: "add",
-              target: "attack",
-              subTarget: "attack",
-              modifier: "enh",
-              value: enh,
-              flavor: game.i18n.localize("PF1.EnhancementBonus"),
-            })
-          );
-        }
         break;
       }
       case "damage": {

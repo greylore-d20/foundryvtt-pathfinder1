@@ -245,60 +245,6 @@
   /*  Item Actions                             */
   /* ----------------------------------------- */
 
-  .actions {
-    ol.action-parts {
-      list-style-type: none;
-      padding-left: 0;
-      display: flex;
-      flex-direction: column;
-
-      li.action-part {
-        display: grid;
-        width: 100%;
-        grid-template-columns: auto 64px;
-        grid-gap: 0.2em;
-
-        a.action {
-          display: grid;
-          grid-template-columns: 32px auto;
-          grid-gap: 0.2em;
-
-          img.icon {
-            width: 32px;
-            height: 32px;
-
-            &:hover {
-              opacity: inherit;
-            }
-          }
-
-          span.name {
-            font-size: 12pt;
-            vertical-align: middle;
-            line-height: 28px;
-          }
-        }
-      }
-
-      .action-control {
-        width: 100%;
-        a {
-          color: @colorTan;
-          i.fas {
-            margin-right: 0.2em;
-          }
-        }
-      }
-
-      .action-control.add-action {
-        flex: 0 0 auto;
-        line-height: 24px;
-        color: @colorTan;
-        margin-left: 2px;
-      }
-    }
-  }
-
   .changes,
   .context-notes {
     list-style: none;

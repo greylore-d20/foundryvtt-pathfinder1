@@ -40,7 +40,7 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.Range"}}</label>
   <div class="form-fields">
-    {{#if canInputRange}}<input class="{{#unless isSpell}}formula{{/unless}}" type="text" name="data.range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
+    {{#if canInputRange}}<input class="{{#unless isSpell}}formula{{/unless}} formula" type="text" name="data.range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
     <select name="data.range.units">
       {{#select data.range.units}}
       <option value=""></option>
@@ -57,7 +57,7 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.MinRange"}}</label>
   <div class="form-fields">
-    {{#if canInputMinRange}}<input class="{{#unless isSpell}}formula{{/unless}}" type="text" name="data.range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
+    {{#if canInputMinRange}}<input class="{{#unless isSpell}}formula{{/unless}} formula" type="text" name="data.range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
     <select name="data.range.minUnits">
       {{#select data.range.minUnits}}
       <option value=""></option>

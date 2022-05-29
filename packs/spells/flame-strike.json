@@ -30,10 +30,13 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -43,8 +46,8 @@
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
+          "type": "circle",
+          "size": "10",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -55,14 +58,14 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
+          "critParts": [],
+          "nonCritParts": [],
           "parts": [
             [
-              "((min(15, @cl))d6",
+              "(min(15, @cl))d6",
               "Fire and Divine"
             ]
-          ],
-          "critParts": [],
-          "nonCritParts": []
+          ]
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -106,7 +109,13 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "cylinder (10-ft. radius, 40-ft. high)",
-        "conditionals": []
+        "conditionals": [],
+        "attack": {
+          "parts": []
+        },
+        "enh": {
+          "override": false
+        }
       }
     ],
     "uses": {
@@ -202,12 +211,12 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>A <i>flame strike</i> evokes a vertical column of divine fire. The spell deals 1d6 points of damage per caster level (maximum 15d6). Half the damage is fire damage, but the other half results directly from divine power and is therefore not subject to being reduced by resistance to fire-based attacks.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "cylinder (10-ft. radius, 40-ft. high)",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
+    "spellDuration": "instantaneous",
+    "spellEffect": "",
+    "spellArea": "cylinder (10-ft. radius, 40-ft. high)",
     "activation": {
       "type": "standard"
     },
@@ -252,7 +261,9 @@
     "size": "med",
     "spellPoints": {
       "cost": "1 + @sl"
-    }
+    },
+    "clCheck": false,
+    "identifiedName": "Flame Strike"
   },
   "effects": [],
   "folder": null,

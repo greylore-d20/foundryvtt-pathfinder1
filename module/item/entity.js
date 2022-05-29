@@ -2308,7 +2308,7 @@ export class ItemPF extends ItemBasePF {
    * Generic damage source retrieval, includes default conditionals and other item specific modifiers.
    */
   get allDamageSources() {
-    const conds = this.data.data.conditionals
+    const conds = this.firstAction?.data.conditionals
       .filter((c) => c.default)
       .filter((c) => c.modifiers.find((m) => m.target === "damage"));
     const action = this.firstAction,

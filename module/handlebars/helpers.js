@@ -115,7 +115,7 @@ export const registerHandlebarsHelpers = function () {
    * Returns true if there are conditionals disabled by default.
    */
   Handlebars.registerHelper("optionalConditionals", (item) => {
-    return item.data.conditionals.find((c) => !c.default);
+    return item.firstAction?.data.conditionals.find((c) => !c.default);
   });
 
   // Fetches ability mod value based on ability key.

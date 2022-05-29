@@ -63,7 +63,7 @@ export class ItemAction {
   }
 
   get id() {
-    return this._id;
+    return this.data._id;
   }
   get img() {
     return this.data.img;

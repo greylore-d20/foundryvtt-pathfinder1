@@ -37,7 +37,7 @@ export class ItemActionSheet extends FormApplication {
   }
   get id() {
     if (this.actor) return `actor-${this.actor.id}-item-${this.item.id}-action-${this.action.id}`;
-    return super.id;
+    return `item-${this.item.id}-action-${this.action.id}`;
   }
 
   get action() {

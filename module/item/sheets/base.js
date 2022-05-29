@@ -1269,11 +1269,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Edit action
     if (a.classList.contains("edit-action")) {
-      const li = a.closest(".action-part");
-      const action = this.item.actions.get(li.dataset.itemId);
-
-      const app = new game.pf1.applications.ItemActionSheet(action);
-      app.render(true);
+      return this._onActionEdit(event);
     }
 
     // Remove action
@@ -1317,6 +1313,15 @@ export class ItemSheetPF extends ItemSheet {
     const li = a.closest(".action-part");
     const action = this.item.actions.get(li.dataset.itemId);
 
+    // Find existing window
+    for (const app of Object.values(this.item.apps)) {
+      if (app.object === action) {
+        app.render(true, { focus: true });
+        return;
+      }
+    }
+
+    // Open new window
     const app = new game.pf1.applications.ItemActionSheet(action);
     app.render(true);
   }

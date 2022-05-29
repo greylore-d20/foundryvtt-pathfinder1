@@ -2145,9 +2145,10 @@ export class ItemPF extends ItemBasePF {
    * @returns {number[]} Simple array describing the individual guaranteed attacks.
    */
   get attackArray() {
-    const itemData = this.data.data,
-      rollData = this.getRollData(),
+    const actionData = this.firstAction?.data,
+      rollData = this.firstAction?.getRollData(),
       attacks = [0];
+    if (!actionData) return attacks;
 
     const appendAttack = (formula) => {
       const bonus = RollPF.safeRoll(formula, rollData).total;
@@ -2155,13 +2156,13 @@ export class ItemPF extends ItemBasePF {
     };
 
     // Static extra attacks
-    const extraAttacks = itemData.attackParts.map((n) => n[0]?.toString().trim()).filter((n) => n?.length > 0);
+    const extraAttacks = actionData.attackParts.map((n) => n[0]?.toString().trim()).filter((n) => n?.length > 0);
     for (const formula of extraAttacks) appendAttack(formula);
 
     // Formula-based extra attacks
-    const fmAtk = itemData.formulaicAttacks?.count?.formula?.trim();
+    const fmAtk = actionData.formulaicAttacks?.count?.formula?.trim();
     if (fmAtk?.length > 0) {
-      const fmAtkBonus = itemData.formulaicAttacks?.bonus?.formula?.trim() || "0";
+      const fmAtkBonus = actionData.formulaicAttacks?.bonus?.formula?.trim() || "0";
       const count = RollPF.safeRoll(fmAtk, rollData);
       for (let i = 0; i < count.total; i++) {
         rollData.formulaicAttack = i + 1;
@@ -2172,7 +2173,7 @@ export class ItemPF extends ItemBasePF {
 
     // Conditional modifiers
     const condBonuses = new Array(attacks.length).fill(0);
-    itemData.conditionals
+    actionData.conditionals
       .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
       .forEach((c) => {
         c.modifiers.forEach((cc) => {
@@ -2198,9 +2199,11 @@ export class ItemPF extends ItemBasePF {
     const sources = [];
 
     const actorData = this.parentActor?.data.data,
-      itemData = this.data.data;
+      itemData = this.data.data,
+      action = this.firstAction,
+      actionData = action?.data;
 
-    if (!actorData) return sources;
+    if (!actorData || !actionData) return sources;
     const rollData = this.getRollData();
 
     // Attack type identification
@@ -2239,22 +2242,22 @@ export class ItemPF extends ItemBasePF {
     );
     effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, -800));
 
-    if (itemData.ability.attack) {
-      const ablMod = getProperty(actorData, `abilities.${itemData.ability.attack}.mod`) ?? 0;
-      describePart(ablMod, CONFIG.PF1.abilities[itemData.ability.attack], -50);
+    if (actionData.ability.attack) {
+      const ablMod = getProperty(actorData, `abilities.${actionData.ability.attack}.mod`) ?? 0;
+      describePart(ablMod, CONFIG.PF1.abilities[actionData.ability.attack], -50);
     }
 
     // Attack bonus formula
-    const bonusRoll = RollPF.safeRoll(itemData.attackBonus || "0", rollData);
+    const bonusRoll = RollPF.safeRoll(actionData.attackBonus || "0", rollData);
     if (bonusRoll.total != 0)
       describePart(bonusRoll.total, bonusRoll.flavor ?? game.i18n.localize("PF1.AttackRollBonus"), -100);
 
     // Masterwork or enhancement bonus
     // Only add them if there's no larger enhancement bonus from some other source
-    const virtualEnh = itemData.enh ?? (itemData.masterwork ? 1 : 0);
+    const virtualEnh = action.enhancementBonus ?? (itemData.masterwork ? 1 : 0);
     if (!effectiveChanges.find((i) => i.modifier === "enh" && i.value > virtualEnh)) {
-      if (Number.isFinite(itemData.enh) && itemData.enh != 0) {
-        describePart(itemData.enh, game.i18n.localize("PF1.EnhancementBonus"), -300);
+      if (Number.isFinite(action.enhancementBonus) && action.enhancementBonus !== 0) {
+        describePart(action.enhancementBonus, game.i18n.localize("PF1.EnhancementBonus"), -300);
       } else if (itemData.masterwork) {
         describePart(1, game.i18n.localize("PF1.Masterwork"), -300);
       }
@@ -2271,12 +2274,12 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Add secondary natural attack penalty
-    if (!itemData.primaryAttack && itemData.attackType === "natural") {
+    if (!actionData.primaryAttack && itemData.attackType === "natural") {
       describePart(-5, game.i18n.localize("PF1.SecondaryAttack"), -400);
     }
 
     // Conditional modifiers
-    itemData.conditionals
+    actionData.conditionals
       .filter((c) => c.default && c.modifiers.find((sc) => sc.target === "attack"))
       .forEach((c) => {
         c.modifiers.forEach((cc) => {
@@ -2309,7 +2312,10 @@ export class ItemPF extends ItemBasePF {
     const conds = this.data.data.conditionals
       .filter((c) => c.default)
       .filter((c) => c.modifiers.find((m) => m.target === "damage"));
-    const rollData = this.getRollData();
+    const action = this.firstAction,
+      rollData = action?.getRollData();
+
+    if (!rollData) return [];
 
     const mods = Object.keys(CONFIG.PF1.bonusModifiers);
 
@@ -2332,6 +2338,16 @@ export class ItemPF extends ItemBasePF {
     }
 
     const allChanges = [...this.damageSources, ...fakeCondChanges];
+
+    // Add enhancement bonus
+    if (action.enhancementBonus) {
+      allChanges.push({
+        flavor: game.i18n.localize("PF1.EnhancementBonus"),
+        value: action.enhancementBonus,
+        modifier: "enh",
+        formula: action.enhancementBonus.toString(),
+      });
+    }
 
     // Add special cases specific to the item
     // Broken

@@ -176,7 +176,7 @@
 
             <div class="item-detail item-attacks tooltip">
               {{#if item.hasAttack}}
-              <label>{{itemAttacks item ../../rollData max=3}}</label>
+              <label>{{itemAttacks item @root.rollData max=3}}</label>
               <span class="tooltipcontent">
                 {{#each item.document.attackArray~}}
                   {{numberFormat this decimals=0 sign=true}}{{#unless @last}}/{{/unless}}
@@ -192,9 +192,9 @@
 
             <div class="item-detail item-damage tooltip">
               {{#if item.hasDamage}}
-              <label>{{ellipsis (itemDamage item ../../rollData) 8 -4 2}}</label>
+              <label>{{ellipsis (itemDamage item @root.rollData) 8 -4 2}}</label>
               <span class="tooltipcontent">
-                {{itemDamage item ../../rollData}}<br/>
+                {{itemDamage item @root.rollData}}<br/>
                 <br/>
                 {{localize "PF1.Details"}}:<br/>
                 {{#each item.data.damage.parts as |pt ix|}}
@@ -206,7 +206,7 @@
                   {{/each}}
                 {{/if}}
                 {{#if item.data.ability.damage}}
-                  {{abilityMod item.data.ability.damage ../../rollData item.data.ability.damageMult}} [{{lookup ../../config.abilities item.data.ability.damage}}]<br/>
+                  {{abilityMod item.data.ability.damage @root.rollData item.data.ability.damageMult}} [{{lookup ../../config.abilities item.data.ability.damage}}]<br/>
                 {{/if}}
                 {{#each item.document.allDamageSources}}
                   {{#if @first}}<br>{{/if}}
@@ -225,12 +225,12 @@
             <div class="item-detail item-range tooltip">
               {{#if item.hasRange}}
               <label>{{itemRange item @root.rollData}}</label>
-                {{#if (or (gt item.data.range.maxIncrements 1) (ne item.data.range.minUnits ""))}}
+                {{#if (or (gt item.range.maxIncrements 1) (ne item.range.minUnits ""))}}
                 <span class="tooltipcontent">
-                  {{localize "PF1.MaximumRangeIncrements"}}: {{item.data.range.maxIncrements}}<br>
+                  {{localize "PF1.MaximumRangeIncrements"}}: {{item.range.maxIncrements}}<br>
                   <br>
                   {{localize "PF1.Range"}}:
-                  {{item.document.minRange}} {{distanceUnit "ft"}} – {{item.document.maxRange}} {{distanceUnit item.data.range.units}}
+                  {{item.range.min}} {{distanceUnit "ft"}} – {{item.range.max}} {{distanceUnit item.range.units}}
                 </span>
                 {{/if}}
               {{/if}}

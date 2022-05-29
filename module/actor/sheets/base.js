@@ -223,20 +223,31 @@ export class ActorSheetPF extends ActorSheet {
     // The Actor and its Items
     if (this.document.isToken) data.token = duplicate(this.document.token.data);
     else data.token = data.actor.token;
-    data.items = this.document.items.map((i) => {
-      i.data.labels = i.labels;
-      i.data.hasAttack = i.hasAttack;
-      i.data.hasMultiAttack = i.hasMultiAttack;
-      i.data.hasDamage = i.hasDamage;
-      i.data.hasRange = i.hasRange;
-      i.data.hasEffect = i.hasEffect;
-      i.data.hasAction = i.hasAction || i.getScriptCalls("use").length > 0;
-      i.data.showUnidentifiedData = i.showUnidentifiedData;
+    data.items = this.document.items.map((item) => {
+      const i = deepClone(item.data);
+      i.labels = item.labels;
+      i.hasAttack = item.firstAction?.hasAttack;
+      i.hasMultiAttack = item.firstAction?.hasMultiAttack;
+      i.hasDamage = item.firstAction?.hasDamage;
+      i.hasRange = item.firstAction?.hasRange;
+      i.hasEffect = item.firstAction?.hasEffect;
+      i.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
+      i.range = mergeObject(
+        item.firstAction?.data?.range ?? {},
+        {
+          min: item.firstAction?.minRange,
+          max: item.firstAction?.maxRange,
+        },
+        { inplace: false }
+      );
+      i.showUnidentifiedData = item.showUnidentifiedData;
       if (i.showUnidentifiedData)
-        i.data.name =
-          getProperty(i.data, "data.unidentified.name") || getProperty(i.data, "data.identifiedName") || i.data.name;
-      else i.data.name = getProperty(i.data, "data.identifiedName") || i.data.name;
-      return i.data;
+        i.name =
+          getProperty(item.data, "data.unidentified.name") ||
+          getProperty(item.data, "data.identifiedName") ||
+          item.data.name;
+      else i.name = getProperty(item.data, "data.identifiedName") || item.data.name;
+      return i;
     });
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.labels = this.document.labels || {};

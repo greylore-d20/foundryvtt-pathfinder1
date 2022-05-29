@@ -2208,11 +2208,10 @@ export class ItemPF extends ItemBasePF {
 
     // Attack type identification
     const isMelee =
-      ["mwak", "msak", "mcman"].includes(this.data.data.actionType) ||
-      ["melee", "reach"].includes(this.data.data.range.units);
+      ["mwak", "msak", "mcman"].includes(actionData.actionType) || ["melee", "reach"].includes(actionData.range.units);
     const isRanged =
-      ["rwak", "rsak", "rcman"].includes(this.data.data.actionType) || this.data.data.weaponSubtype === "ranged";
-    const isManeuver = ["mcman", "rcman"].includes(this.data.data.actionType);
+      ["rwak", "rsak", "rcman"].includes(actionData.actionType) || this.data.data.weaponSubtype === "ranged";
+    const isManeuver = ["mcman", "rcman"].includes(actionData.actionType);
 
     const describePart = (value, label, sort = 0) => {
       sources.push({ value, label, sort });

@@ -820,7 +820,7 @@ const _migrateItemChanges = function (ent, updateData) {
     const newChanges = [];
     for (const c of changes) {
       if (c instanceof Array) {
-        const nc = ItemChange.create(
+        const newChange = new ItemChange(
           {
             formula: c[0],
             target: c[1],
@@ -830,10 +830,10 @@ const _migrateItemChanges = function (ent, updateData) {
           },
           null
         );
-        newChanges.push(nc.data);
+        newChanges.push(newChange.data);
       } else {
-        const nc = ItemChange.create(c, null);
-        newChanges.push(nc.data);
+        const newChange = new ItemChange(c, null);
+        newChanges.push(newChange.data);
       }
     }
 

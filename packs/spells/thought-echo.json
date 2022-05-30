@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "62va0t0929tatbn5",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -34,8 +33,11 @@
           "value": "living creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -168,9 +174,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>When you cast this spell, you establish a mental echo of up to 25 words. Any attempt to read the surface thoughts of the target creature reads only this mental echo unless the caster succeeds at a caster level check (DC = 11 + your caster level). If you cast <i>thought echo</i> on yourself, the DC is instead equal to 15 + your caster level. In addition, when casting this spell upon yourself, you can change the echoed thoughts by taking a standard action and concentrating.  Each time you change the words echoed by the spell in this way, you reduce the spell's remaining duration by 1 minute. <i>Thought echo</i> d oes n ot i nterfere w ith t elepathy o r m ind reading effects that are capable of reaching thoughts deeper than surface thoughts.</p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -212,10 +215,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level (D)"
   },
   "effects": [],
   "folder": null,

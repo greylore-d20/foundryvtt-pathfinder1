@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "kz0g2gqwi6qf1k4z",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -164,9 +170,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You must have a bardic performance in effect to cast this spell. With a flourish, you immediately end the performance, and one creature within range affected by your bardic performance can make a move action or a standard action of their choice.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -208,10 +211,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "xdkwdk3a5wrr9vz4",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "construct touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -168,9 +174,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You make the target construct appear to be a living creature of flesh and bone, regardless of its actual materials. You can make it seem 1 foot shorter or taller, and appear thin, fat, or anywhere in between. Its bodily configuration does not change; for example, a centaur-like construct looks like a centaur rather than a human. The extent of the apparent change (such as flesh color, hair color, apparent age, and so on) is up to you.  The spell does not provide the abilities or mannerisms of the chosen form, nor does it alter the perceived tactile or audible properties of the construct. If you use this spell to create a disguise, the construct gains a +10 bonus on the Disguise check. A creature that interacts with the glamer receives a Will save to recognize it as an illusion.</p>",
-    "spellDuration": "10 minutes/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -210,10 +213,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "10 minutes/level (D)"
   },
   "effects": [],
   "folder": null,

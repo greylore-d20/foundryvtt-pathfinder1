@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "v93a9i0gvme07knn",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -30,10 +29,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex halves (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "20-ft.-radius herd of animals",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -178,9 +186,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You conjure a herd of aurochs or similar herd animal that immediately stampedes in the direction you indicate. The herd takes up a 20-foot-radius space and moves at a rate of 120 feet per round in a straight line. Any creatures caught in the herd's path take 4d6+9 points of damage that round as they are trampled beneath dozens of animals' hooves. A successful Reflex save halves this damage.  If the stampede's path would put it in an obviously dangerous area (such as over a cliff or through a fire) or force it to move through a solid barrier, the herd stops at the obstacle and moves in a new randomly determined direction until it reaches another obstacle or the spell's duration ends.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "20-ft.-radius herd of animals",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -219,10 +224,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level",
+    "spellEffect": "20-ft.-radius herd of animals"
   },
   "effects": [],
   "folder": null,

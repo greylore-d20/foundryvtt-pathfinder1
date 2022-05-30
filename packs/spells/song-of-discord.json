@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "rgbqhv8wjkhad2dk",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "creatures within a 20-ft.-radius spread",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -171,9 +179,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell causes those within the area to turn on each other rather than attack their foes. Each affected creature has a 50% chance to attack the nearest target each round. (Roll to determine each creature's behavior every round at the beginning of its turn.) A creature that does not attack its nearest neighbor is free to act normally for that round. Creatures forced by a <i>song of discord</i> to attack their fellows employ all methods at their disposal, choosing their deadliest spells and most advantageous combat tactics. They do not, however, harm targets that have fallen unconscious.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "creatures within a 20-ft.-radius spread",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -212,10 +217,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level",
+    "spellArea": "creatures within a 20-ft.-radius spread"
   },
   "effects": [],
   "folder": null,

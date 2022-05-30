@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "hovre3qeze8k229i",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,7 +33,11 @@
           "value": "1 unattended gauntlet or glove"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "None (harmless, object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -191,9 +198,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You animate the target of the spell, manipulating the glove with your own hand from a distance. The glove moves as you direct it with a fly speed of 30 feet and average maneuverability. Directing the glove is a standard action, though the glove can move up to its speed and perform a task in the same action. You can attempt Disable Device and Sleight of Hand checks using the glove, though attempting these checks at a distance increases the normal skill check DCs by 5, or by 20 if you do not have line of sight to the object you are manipulating. The glove can also lift or drag objects using your caster level as your Strength score. The glove cannot wield weapons or make attacks effectively while this spell is in effect. If you cast this spell on a magical glove, its innate magic is suppressed for the duration of the spell.</p>",
-    "spellDuration": "10 minutes/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -230,12 +234,9 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "10 minutes/level",
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
     }
   },
   "effects": [],

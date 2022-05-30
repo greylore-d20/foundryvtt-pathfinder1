@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "31i09d7cake6cyav",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "2 hours/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "20-ft.-radius emanation",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -166,9 +174,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell sanctifies an area with heavenly power. The DC to resist spells or spell-like abilities with the good descriptor or channeled energy that damages evil outsiders (as when using Alignment Channel) increases by +2. In addition, evil outsiders take a -1 penalty on attack rolls, damage rolls, and saving throws, and they cannot be called or summoned into a <i>sacred space</i>. If the <i>sacred space</i> contains an altar, shrine, or other permanent fixture dedicated to your deity, pantheon, or good-aligned higher power, the modifiers given above are doubled. You cannot cast <i>sacred space</i> in an area with a permanent fixture dedicated to a deity other than yours.</p>",
-    "spellDuration": "2 hours/level",
-    "spellEffect": "",
-    "spellArea": "20-ft.-radius emanation",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -205,10 +210,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "2 hours/level",
+    "spellArea": "20-ft.-radius emanation"
   },
   "effects": [],
   "folder": null,

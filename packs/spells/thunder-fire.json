@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "msccmlawaulq5jl8",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "1 loaded firearm"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (object), see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -172,9 +178,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>The firearm targeted creates a thunderous report, even if the firearm is not loaded. Every creature within 15 feet of the creature wielding or carrying the firearm must succeed at a Fortitude save or be deafened for 1 minute. The creature wielding or carrying the firearm takes a -4 penalty on this saving throw, and his misfire range increases by 1 for 1d4 rounds. If the firearm was loaded when it was targeted by this spell, that ammunition is wasted.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -216,10 +219,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

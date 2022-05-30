@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "xr4kie46kpj5o2q3",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one ally"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -164,9 +170,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create a conduit of divine knowledge and outrage between you and an ally. That ally gains the benefit of one of your active judgments (as do you). If you cannot use a judgment (for example, if you are not in combat, are frightened or unconscious, and so on) or change judgments, the ally loses the benefit of the judgment. If you have multiple judgments active, the ally gains only one, chosen when you cast this spell.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -208,10 +211,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level"
   },
   "effects": [],
   "folder": null,

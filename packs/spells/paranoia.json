@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ss1tw9i3qakuva4l",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,7 +33,11 @@
           "value": "one creature"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -183,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>The target believes everyone it sees is an enemy. The target becomes hostile to all creatures, treating all creatures as enemies and only itself as an ally. The target must attempt attacks of opportunity whenever any creature provokes them. Finally, whenever the target is adjacent to two or more creatures, its paranoia overwhelms it, and it takes a -2 penalty on attack rolls, weapon damage rolls, ability checks, skill checks, and saving throws.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -223,12 +227,9 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "1 round/level (D)",
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
     }
   },
   "effects": [],

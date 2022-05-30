@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "lsnwfxzau14nl85w",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 30,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Fortitude partial or Reflex negates (object); see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "cone-shaped burst",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -197,9 +204,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You emit an ear-splitting yell that deafens and damages creatures in its path. Any creature within the area is deafened for 2d6 rounds and takes 5d6 points of sonic damage. A successful save negates the deafness and reduces the damage by half. Any exposed brittle or crystalline object or crystalline creature takes 1d6 points of sonic damage per caster level (maximum 15d6). An affected creature is allowed a Fortitude save to reduce the damage by half, and a creature holding fragile objects can negate damage to them with a successful Reflex save. A <i>shout</i> spell cannot penetrate a <i>silence</i> spell.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "cone-shaped burst",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -239,10 +243,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellArea": "cone-shaped burst"
   },
   "effects": [],
   "folder": null,

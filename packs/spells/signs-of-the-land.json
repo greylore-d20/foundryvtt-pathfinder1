@@ -5,25 +5,24 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "mqwoc6mcjonbjc3o",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -176,9 +182,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions as <i>commune with nature</i> except it reveals up to three details about the territory you currently occupy from the following list: bodies of water, features, minerals, or plants. For each feature you learn about, you automatically know the skills you can use to discover that feature and you gain 1d6 Discovery Points toward finding it (see page 124).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -219,10 +222,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

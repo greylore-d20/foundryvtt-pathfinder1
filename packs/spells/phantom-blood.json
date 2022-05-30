@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "dm0kj3ghhdsnpav0",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -180,9 +186,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You bolster your life energy. If the loss of hit points at the end of a temporary effect that modifies your Constitution (such as barbarian's rage or bloodrager's bloodrage) would cause you to become unconscious or kill you, you gain temporary hit points equal to your caster level (maximum 10). Each casting of this spell grants you temporary hit points only once.</p>",
-    "spellDuration": "10 minutes/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -222,10 +225,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "10 minutes/level"
   },
   "effects": [],
   "folder": null,

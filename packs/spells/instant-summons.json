@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "vhlksjx0hd91qbin",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,7 +33,11 @@
           "value": "one object weighing 10 lbs. or less whose longest dimension is 6 ft. or less"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -176,9 +183,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You call some nonliving item directly to your hand from virtually any location.</p><p>First, you must place your <i>arcane mark</i> on the item. Then you cast this spell, which magically and invisibly inscribes the name of the item on a sapphire worth at least 1,000 gp. Thereafter, you can summon the item by speaking a special word (set by you when the spell is cast) and crushing the gem. The item appears instantly in your hand. Only you can use the gem in this way.</p><p>If the item is in the possession of another creature, the spell does not work, but you know who the possessor is and roughly where that creature is located when the summons occurs.</p><p>The inscription on the gem is invisible. It is also unreadable, except by means of a <i>read magic</i> spell, to anyone but you.</p><p>The item can be summoned from another plane, but only if no other creature has claimed ownership of it.</p>",
-    "spellDuration": "permanent until discharged",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -214,13 +218,13 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "permanent until discharged",
     "spellPoints": {
       "cost": ""
     },
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

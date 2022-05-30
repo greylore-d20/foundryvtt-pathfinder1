@@ -5,25 +5,24 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "y2tpxpc2xqny2prl",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,8 +33,11 @@
           "value": "one living creature"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -184,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>The target gains a perfect memory of the page you used as a focus component. The target can visualize this page as easily as looking at it in person, including minute details visible to close scrutiny by the naked eye. The memory of the page includes text and images, such as a drawing or a map. Someone unfamiliar with the language on the page (or even an illiterate person) could relay what is written simply by copying the shapes of the letters so another person can read them.</p><p>The maximum number of pages that a particular target can memorize through repeated castings of this spell is equal to the target's Intelligence modifier (minimum 1); any attempts beyond this limit have no effect, although the target's memory of a page could be erased (using <i>modify memory</i> or a similar effect) to effectively make room for a different one.</p><p>A creature that memorizes magical writing (such as a scroll or a page from a spellbook) cannot borrow, duplicate, or retain any of the magic in the writing. However, this would allow a wizard to copy a spell into his spellbook so he could prepare the spell from his book (assuming the spell takes up only one page in a spellbook).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -229,10 +232,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

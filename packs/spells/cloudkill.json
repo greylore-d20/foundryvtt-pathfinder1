@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ofa99g42k8mcsjh4",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 min./level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude partial; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "cloud spreads in 20-ft. radius, 20 ft. high",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -188,9 +196,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell generates a bank of fog, similar to a <i>fog cloud</i>, except that its vapors are yellowish green and poisonous. These vapors automatically kill any living creature with 3 or fewer HD (no save).</p><p>A living creature with 4 to 6 HD is slain unless it succeeds on a Fortitude save (in which case it takes 1d4 points of Constitution damage on your turn each round while in the cloud).</p><p>A living creature with more than 6 HD takes 1d4 points of Constitution damage on your turn each round while in the cloud (a successful Fortitude save halves this damage). Holding one's breath doesn't help, but creatures immune to poison are unaffected by the spell.</p><p>Unlike a <i>fog cloud</i>, the <i>cloudkill</i> moves away from you at 10 feet per round, rolling along the surface of the ground.</p><p>Figure out the cloud's new spread each round based on its new point of origin, which is 10 feet farther away from the point of origin where you cast the spell.</p><p>Because the vapors are heavier than air, they sink to the lowest level of the land, even pouring down den or sinkhole openings. It cannot penetrate liquids, nor can it be cast underwater.</p>",
-    "spellDuration": "1 min./level",
-    "spellEffect": "cloud spreads in 20-ft. radius, 20 ft. high",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -229,10 +234,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 min./level",
+    "spellEffect": "cloud spreads in 20-ft. radius, 20 ft. high"
   },
   "effects": [],
   "folder": null,

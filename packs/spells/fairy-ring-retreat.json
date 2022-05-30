@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "cjjdu555pbph30ap",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "2 hours/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "extradimensional meadow, up to three 10-ft. cubes/level (S)",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -170,9 +178,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You conjure up an extradimensional meadow that can be accessed from a single entrance on the plane from which the spell was cast. The entry point looks like a circle of toadstools enclosing a 10-foot square. Only those you designate can enter the meadow before you do, and the portal is shut and made invisible behind you when you enter. You can open it again from your own side at will. Once a visitor has passed through the entry point, they find themselves in an idyllic twilight meadow surrounded by an impassable grove of fruit and nut trees. The atmosphere is clean, fresh, and warm.</p><p>You can configure the meadow into any shape you desire, to the limit of the spell's effect. The place is comfortable and temperate. The trees can provide enough food to sustain 4 people per caster level for a day. A staff of near-transparent animal or feylike servants (as many as two per caster level) wait upon all who enter. The servants function as <i>unseen servant</i> spells except that they are visible and can go anywhere in the meadow.</p><p>Since the place can be entered only through its special portal, outside conditions do not affect the meadow, nor do conditions inside it pass to the plane beyond.</p>",
-    "spellDuration": "2 hours/level (D)",
-    "spellEffect": "extradimensional meadow, up to three 10-ft. cubes/level (S)",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -209,10 +214,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "2 hours/level (D)",
+    "spellEffect": "extradimensional meadow, up to three 10-ft. cubes/level (S)"
   },
   "effects": [],
   "folder": null,

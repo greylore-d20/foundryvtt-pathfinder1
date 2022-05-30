@@ -5,25 +5,24 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "56f3sljry986tchk",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "immediate"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": "reaction"
           }
         },
         "duration": {
@@ -34,8 +33,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -196,9 +202,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You tap into the magical resonance between you and your allies to enhance one another's magic. Cast this spell when an ally casts a spell at least 1 level lower than the highest-level spell she can cast.</p><p>The ally casts her spell as if one of the following metamagic feats were applied to it without increasing the spell level or casting time: Enlarge Spell, Extend Spell, Silent Spell, or Still Spell. If the ally is the target of two <i>collaborative thaumaturgy</i> spells when casting a spell, the ally can instead apply the Empower Spell metamagic feat to a spell at least 2 levels lower than the highest-level spell she can cast. Finally, if the ally is the target of three <i>collaborative thaumaturgy</i> spells when casting a spell, she can instead apply the Maximize Spell or Widen Spell metamagic feat to a spell at least 3 levels lower than the highest-level spell she can cast. You can't target yourself with <i>collaborative thaumaturgy</i>.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -237,10 +240,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

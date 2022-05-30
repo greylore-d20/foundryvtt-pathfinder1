@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "8fbav9i19vhqqhuo",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "instantaneous and 1 round/level (see text)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 30,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half and Will negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "cone-shaped burst",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -171,9 +178,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create a cone of spectral energy resembling screaming elven ghosts that deals 1d4 points of damage per caster level (maximum 15d4); a successful Reflex save halves this damage. Any creature that fails its Reflex save must succeed at a Will save or become panicked for 1 round/level.</p>",
-    "spellDuration": "instantaneous and 1 round/level (see text)",
-    "spellEffect": "",
-    "spellArea": "cone-shaped burst",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -213,10 +217,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous and 1 round/level (see text)",
+    "spellArea": "cone-shaped burst"
   },
   "effects": [],
   "folder": null,

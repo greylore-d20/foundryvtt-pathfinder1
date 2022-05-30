@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "r0uys6p486ezx0ef",
+        "_id": "nq3jaxdz89sb73b5",
         "name": "Use",
         "img": "systems/pf1/icons/skills/emerald_01.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "@classes.sorcerer.level >= 20 ? 3 : ((@classes.sorcerer.level > 16 && @classes.sorcerer.level < 20) ? 2 : 1)",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "@classes.sorcerer.level >= 20 ? 3 : ((@classes.sorcerer.level > 16 && @classes.sorcerer.level < 20) ? 2 : 1)"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "(@classes.sorcerer.level)d6",
-              "Piercing, Slashing, Bludgeoning"
+              [
+                "untyped"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

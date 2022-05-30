@@ -5,25 +5,24 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "37u44ocd2ftbqsb2",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,8 +33,11 @@
           "value": "one trap"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -193,9 +199,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>When this spell is cast upon a trap, it improves one specific element of the trap chosen at the time of casting. The caster can improve the trap in any of the following ways (each one raises the trap's CR by +1).  <ul><li> Increase DC of the Perception check required to locate the trap by +5.  <li> Increase DC of the Disable Device check required to disarm trap by +5.  <li> Increase the trap's attack bonus or saving throw by +2.  To cast this on a trap, you must know that the trap exists and its precise location. A trap can only have one improvement from this spell at a time. A second casting changes the improvement on the trap, but does not add another improvement.</ul></p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -236,10 +239,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

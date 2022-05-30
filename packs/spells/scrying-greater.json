@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "zjp4u2oift8hb5r8",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,9 +29,15 @@
           "value": "1 hour/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -100,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "magical sensor",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -112,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -193,9 +202,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell functions like <i>scrying,</i> except as noted above.</p><p>Additionally, all of the following spells function reliably through the sensor: <i>detect chaos</i>, <i>detect evil</i>, <i>detect good</i>, <i>detect law</i>, <i>detect magic</i>, <i>message</i>, <i>read magic,</i> and <i>tongues</i>.</p>",
-    "spellDuration": "1 hour/level",
-    "spellEffect": "magical sensor",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -230,12 +236,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "1 hour/level",
+    "spellEffect": "magical sensor",
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
     }
   },
   "effects": [],

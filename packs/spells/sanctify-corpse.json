@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "1vf6wv04xe6p00n1",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "24 hours",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "corpse touched",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -178,9 +186,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell blesses a corpse with positive energy, preventing it from being turned into an undead creature. Attempts to raise the corpse as an undead automatically fail. If the corpse is of a person slain by a creature that creates undead out of its slain foes (such as a shadow, vampire, or wraith), that is delayed until the end of this spell. It is possible to protect a corpse for an extended time by casting this spell each day.</p><p><i>Sanctify corpse</i> can be made permanent with a <i>permanency</i> spell by a caster of 9th level or higher for the cost of 500 gp.</p>",
-    "spellDuration": "24 hours",
-    "spellEffect": "",
-    "spellArea": "corpse touched",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -217,10 +222,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "24 hours",
+    "spellArea": "corpse touched"
   },
   "effects": [],
   "folder": null,

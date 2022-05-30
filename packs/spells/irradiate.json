@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "18yqr8hic37lq2de",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude partial (see below)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "special (see below)",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -190,9 +198,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>The spell's area of effect floods with dangerous radiation. The strength of the radiation you create depends on your caster level, as detailed below. The central irradiated area is always a 10-foot-radius spread that expands normally per the rules for radiation areas of effect (see page 55). Creatures within the area are exposed to the radiation only once; the radiation does not linger in the area. The save to resist the radiation effects is set by the spell, not the standard save DC for radiation.</p><p>Caster <b>Level</b> Radiation <b>Level</b> 6th or lower Low 7th-9th Medium 10th-16th High 17th or higher Severe</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "special (see below)",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -231,10 +236,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellEffect": "special (see below)"
   },
   "effects": [],
   "folder": null,

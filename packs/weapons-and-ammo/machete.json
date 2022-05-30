@@ -43,7 +43,7 @@
     },
     "actions": [
       {
-        "_id": "mvij2khntg6zfm8q",
+        "_id": "12so7dpgtkdsc8wi",
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/machete.PNG",
         "description": "",
@@ -72,11 +72,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": null,
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +94,9 @@
           "parts": [
             [
               "sizeRoll(1, 6, @size)",
-              "S"
+              [
+                "slashing"
+              ]
             ]
           ],
           "critParts": [],
@@ -140,7 +142,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

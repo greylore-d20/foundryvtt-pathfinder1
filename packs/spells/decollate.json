@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "9f6l3v5h3hi0bi1n",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one willing humanoid or monstrous humanoid creature"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -188,9 +194,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>A thin red line circles the target's neck. The target's head becomes detachable so long as she removes it willingly. While the target's head is detached, she gains DR 2/- and immunity to decapitation effects and other effects that require their target to have a head or a particular facial feature. The target is blind so long as she has no head, but she gains blindsense to a distance of 15 feet. The target hears normally even without its head.  While detached, the target's head appears to be dead. The target can't see through its eyes or hear events around the head. The target's body knows the direction and distance to its head. Without additional protection, the severed head has AC 7, hardness 5, and 10 hit points. Destroying the head while the  spell is in effect kills the target of the spell. If the spell's duration expires normally without the head being reattached, the target dies. If either the target or the head are removed to a different plane, or if the spell is dispelled, the head teleports back to its owner and reattaches without further harm.</p>",
-    "spellDuration": "24 hours",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -230,10 +233,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "24 hours"
   },
   "effects": [],
   "folder": null,

@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "49uw82ixputy2yez",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -34,8 +33,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -184,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>All melee and natural attacks from the target deal damage as if the target were one size category smaller than it actually is. While the target is under the effects of this spell, weapons dropped by the target function normally for other creatures, while any melee weapons picked up by the target deal damage as if one size smaller. <b>Range</b>d attacks and weapons are unaffected by this spell.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -228,10 +231,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level"
   },
   "effects": [],
   "folder": null,

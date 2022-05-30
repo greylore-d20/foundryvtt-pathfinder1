@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "eh82goi8nmo6k55s",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "1 masterwork melee weapon touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "none (object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -184,9 +190,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You transform one melee weapon into a burning glaive similar to the ones wielded by the runelords of old. The target of your spell must be a masterwork or magical melee weapon appropriate to your size. The weapon becomes a glaive appropriate to your size and has a +1 enhancement bonus and the <i>flaming</i> weapon special ability. When wielding the glaive, you are considered proficient with it and use your caster level as your base attack bonus (which may give you multiple attacks). When you reach caster level 14th, the glaive gains the <i>spell-storing</i> weapon special ability. When you reach caster level 17th, it loses the <i>flaming</i> weapon special ability, and gains the <i>flaming</i> burst weapon special ability. The glaive's enhancement bonus increases to +2 at caster level 15th, and +3 at caster level 19th.  If this spell is cast on a magic weapon, the powers of the spell supersede any that the weapon normally has, rendering the normal enhancement bonus and powers of the weapon inoperative for the duration of the spell. This spell is not cumulative with <i>greater magic weapon</i> or any other spell that might modify the weapon in any way. This spell does not work on artifacts. A masterwork weapon's bonus on attack rolls does not stack with an enhancement bonus to attack.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -227,10 +230,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level"
   },
   "effects": [],
   "folder": null,

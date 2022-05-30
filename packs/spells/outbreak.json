@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "h5p1d1unc93h40j2",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude partial"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "20-ft. burst",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -182,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You cause any diseased creatures in the area to become extremely contagious. Any affected creature is overcome by a fit of wracking coughs, causing it to become fatigued and exposing any creatures within 10 feet of the diseased creature to the diseases it carries. On a successful save, a creature is fatigued for 1 round and doesn't have a chance to infect nearby creatures.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "20-ft. burst",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -223,10 +228,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellArea": "20-ft. burst"
   },
   "effects": [],
   "folder": null,

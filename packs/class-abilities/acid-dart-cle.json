@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "zl4pm66c8y9bdazr",
+        "_id": "h3fsmeyfww0980vq",
         "name": "Use",
         "img": "systems/pf1/icons/spells/beam-acid-1.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "3 + @abilities.wis.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "3 + @abilities.wis.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "1d6 + floor(@classes.cleric.level / 2)",
-              "Acid"
+              [
+                "acid"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

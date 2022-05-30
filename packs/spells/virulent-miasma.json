@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "tfbnzy4zkwsyzngw",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "cloud spreads in 20-ft. radius, 20 ft. high",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -178,9 +186,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p><i>Virulent miasma</i> creates fog like <i>fog cloud</i>, except that the vapors carry the taint of disease. Living creatures take a -4 penalty on saving throws against disease effects as long as they remain within the cloud and for 1d4+1 rounds after leaving. This effect of the spell allows a Fortitude save to negate it, and it is subject to spell resistance. A creature that succeeds at its saving throw against the fog (or ignores the fog due to spell resistance) is not affected and need not make further saves even if it remains in the fog.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "cloud spreads in 20-ft. radius, 20 ft. high",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -219,10 +224,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level",
+    "spellEffect": "cloud spreads in 20-ft. radius, 20 ft. high"
   },
   "effects": [],
   "folder": null,

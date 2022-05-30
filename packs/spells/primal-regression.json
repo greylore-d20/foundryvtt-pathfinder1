@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "shltgcq629h3rjzw",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one creature/2 levels, no two of which can be more than 30 feet apart"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -184,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell sequesters the targets' ability for higher reasoning, allowing their darker impulses to come to the fore. An affected target becomes a ravening monster-savage, bloodthirsty, and brutish. Until the spell ends, the targets have all of the following benefits and drawbacks.  <ul><li> Targets' Intelligence and Charisma scores drop to 3 (if the scores were higher), and they are unable to use Intelligence-or Charisma-based skills, cast spells, understand language, or communicate coherently.  <li> Targets take a -4 penalty on Will saves.  <li> Targets gain a +6 enhancement bonus to Strength, a +2 natural armor bonus to AC, and 2d8 temporary hit points. These temporary hit points disappear at the end of the spell's duration. </ul> When the spell ends, each affected creature must succeed at a Will saving throw or take 1d4 points of Intelligence drain and 1d4 points of Charisma damage.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -228,10 +231,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level"
   },
   "effects": [],
   "folder": null,

@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "1akhharp8zwqpbp4",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -172,9 +178,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>When you cast this spell, you fall into a trance and become helpless as long as you continue concentrating. Choose any one Knowledge skill other than arcana or planes. Your mind is placed in telepathic contact with a nalfeshnee demon skilled at that particular Knowledge skill, in addition to arcana and planes. Each round that you continue to concentrate, you may ask the nalfeshnee one question and it will answer as best it can. If you ask a question about arcana or planes, the nalfeshnee has a +23 bonus to the skill check. If you ask about the Knowledge skill you selected, the nalfeshnee has a +20 bonus. It cannot answer questions pertaining to other Knowledge skills-to do so, you must cast the spell again.  Contact with Abyssal minds is dangerous, and each time the nalfeshnee answers a question, you suffer 1d4 points of ability drain to Intelligence, Wisdom, or Charisma (determined randomly) unless you make a DC 22 Will save. Each additional question you ask with this spell over the course of a single 24-hour period imparts a cumulative -1 penalty on this saving throw. Chaotic evil spellcasters always gain a +4 bonus on this saving throw.</p>",
-    "spellDuration": "concentration",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -214,10 +217,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "concentration",
     "spellPoints": {
       "cost": ""
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

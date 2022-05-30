@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "gsf6pthcznhq8vau",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -30,10 +29,15 @@
           "value": "concentration + 2 rounds and 1 hour/level (see text)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one swarm of bats, rats, or spiders",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -174,9 +182,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions as <i>summon swarm</i>, except that living and undead creatures that fail their saving throw against the swarm's distraction find that their limbs twist and spasm, as their bodies become susceptible to transmutations. Such creatures take a -4 penalty to Dexterity and on saving throws against transmutation effects for 1 hour per caster level.</p>",
-    "spellDuration": "concentration + 2 rounds and 1 hour/level (see text)",
-    "spellEffect": "one swarm of bats, rats, or spiders",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -213,10 +218,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "concentration + 2 rounds and 1 hour/level (see text)",
+    "spellEffect": "one swarm of bats, rats, or spiders"
   },
   "effects": [],
   "folder": null,

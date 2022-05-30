@@ -5,16 +5,15 @@
   "img": "icons/magic/defensive/barrier-shield-dome-deflect-blue.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "rd6qfin7ur9fh9tu",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/defensive/barrier-shield-dome-deflect-blue.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +21,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,20 +42,20 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -76,16 +75,16 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
-          "damage": "",
+          "attack": null,
+          "damage": null,
           "damageMult": 1,
           "critRange": 20,
           "critMult": 2
         },
         "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "dc": 0,
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -169,9 +172,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">Each round you can roll an inspiration die without expending a use of inspiration and gain the result as a dodge bonus to AC for that round. You are immune to precision damage (including the extra damage from the precise strike deed, sneak attack, studied combat, and studied strike).</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\"> If a critical hit is confirmed against you, you can dismiss this spell as an immediate action to negate the critical and make the attack instead deal normal damage.</span></p>",
-    "spellDuration": "1 round/level (D; see below)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -248,6 +248,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "1 round/level (D; see below)",
+    "spellEffect": "",
+    "spellArea": "",
     "spellPoints": {
       "cost": "1 + @sl"
     },

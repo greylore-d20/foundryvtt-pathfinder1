@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "bfxmpbscejubssoh",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -172,9 +178,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>Upon casting this spell, you keep your relative shape, but you and your equipment are transformed into semisolid sound. While in this sonic form, you take no penalties for squeezing, and you can move through spaces without penalty as if you were a creature three size categories smaller. You can make a melee touch attack once per round that deals 1d6 points of sonic damage + 1 point per caster level. You are considered incorporeal (although you cannot move through solid objects). Any nonmagical attacks you make deal half damage. Magical attacks are unaffected, and you can use your magic items and other equipment as normal.  You cannot enter an area of <i>silence</i>. If you are in the area of a <i>silence</i> spell, you take 1d6 points of sonic damage per caster level of the <i>silence</i> spell in the round it is cast and in each round when you end your turn within the spell's area. You can attempt a Fortitude saving throw each round to take half damage.  If this spell's duration ends when you are in a square that a creature of your size cannot normally occupy, you take 3d6 points of damage and are shunted to the nearest open space that you can normally occupy.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -214,10 +217,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "fgbqf3wqqfnb9ytk",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "5 cubic feet of earth or mud"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -176,9 +182,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You create a Small minion out of mud, and it obeys your commands. The <i>mud buddy</i> has AC 12, 10 hit points, Strength 5, and a speed of 30 feet. It can perform any tasks an <i>unseen servant</i> can, plus any similar tasks its Strength allows (it's able to lift up to 50 pounds), but instead of walking on water, it gains a swim speed of 30 feet.  You can command a <i>mud buddy</i> to move up to 5 feet and trip an opponent (CMB = your caster level + your spellcasting ability score modifier). After the trip attempt is resolved, the spell ends.  When the spell ends, the <i>mud buddy</i> reverts to a patch of wet earth.</p>",
-    "spellDuration": "1 hour/level (D) (see text)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -218,10 +221,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 hour/level (D) (see text)"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "dzjwntlvi77hjrqi",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex partial"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -204,9 +210,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create a mobile area of bright light centered on one target while simultaneously suppressing other light sources surrounding it. The light level in the target's space increases to bright light, causing the target to take any penalties that it would normally take in bright light. In addition, all mundane light sources (and magic light sources of 3rd spell level or lower) within 20 feet of the target's space are suppressed, shedding no light as long as they remain within this spell's affected area and reverting the area normally affected by those light sources to their unmodified illumination levels.  The effects of spotlight are centered on the target and move as the target does. As a result, the target takes a -20 penalty on all Stealth checks for the spell's duration and cannot benefit from concealment normally provided by darkness, as though illuminated with <i>faerie fire</i>.  If the target succeeds at its Reflex save, the spotlight is created in the target's square but does not move with the target, and it hinders the Stealth checks only of creatures within that square.</p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -248,10 +251,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level (D)"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "b8rue4wm37dkhez4",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "2 hours/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "20-ft.-radius emanation",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -166,9 +174,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell blesses an area with positive energy. The DC to resist positive channeled energy within this area gains a +3 sacred bonus. Every undead creature entering a <i>consecrate</i>d area suffers minor disruption, suffering a -1 penalty on attack rolls, damage rolls, and saves. Undead cannot be created within or summoned into a <i>consecrate</i>d area. If the <i>consecrate</i>d area contains an altar, shrine, or other permanent fixture dedicated to your deity, pantheon, or aligned higher power, the modifiers given above are doubled (+6 sacred bonus to positive channeled energy DCs, -2 penalties for undead in the area).</p><p>You cannot <i>consecrate</i> an area with a similar fixture of a deity other than your own patron. Instead, the <i>consecrate</i> spell curses the area, cutting off its connection with the associated deity or power.</p><p>This secondary function, if used, does not also grant the bonuses and penalties relating to undead, as given above.</p><p><i>Consecrate</i> counters and dispels <i>desecrate</i>.</p>",
-    "spellDuration": "2 hours/level",
-    "spellEffect": "",
-    "spellArea": "20-ft.-radius emanation",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -205,10 +210,11 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "2 hours/level",
+    "spellArea": "20-ft.-radius emanation",
     "spellPoints": {
       "cost": ""
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

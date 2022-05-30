@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "gygpcsluefixp65d",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "weapon touched or 50 projectiles (all of which must be together at the time of casting)"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -180,7 +186,7 @@
       "focus": "",
       "gpValue": 0
     },
-    "spellbook": "",
+    "spellbook": "primary",
     "preparation": {
       "preparedAmount": 0,
       "maxAmount": 0,
@@ -190,9 +196,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p><i>Align weapon</i> makes a weapon chaotic, evil, good, or lawful, as you choose. A weapon that is aligned can bypass the damage reduction of certain creatures. This spell has no effect on a weapon that already has an alignment.</p><p>You can't cast this spell on a natural weapon, such as an unarmed strike. When you make a weapon chaotic, evil, good, or lawful, <i>align weapon</i> is a chaotic, evil, good, or lawful spell, respectively.</p>",
-    "spellDuration": "1 min./level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -234,12 +237,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "clCheck": false,
-    "identifiedName": "Align Weapon",
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 min./level"
   },
   "effects": [],
   "folder": null,

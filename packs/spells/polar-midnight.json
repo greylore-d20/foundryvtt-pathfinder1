@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "m8iafbh1yo97rdjz",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude partial"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "30-ft. spread",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -174,9 +182,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You plunge an area into the brutal chill of the arctic night.</p><p>Illumination conditions are dropped by two steps (though only to darkness, not supernatural darkness), and all creatures in the area take 5d6 points of cold damage and 1d6 points of Dexterity damage per round. A successful Fortitude save each round negates the Dexterity damage but not the cold damage.</p><p>Any creature that doesn't move on its turn becomes encased in a sheath of ice equivalent to <i>Wall of Ice</i>, is helpless, and cannot breathe. Corpses in the area for longer than 1 round are transmuted into solid ice; reviving the icy corpse requires <i>true resurrection</i>, <i>miracle</i>, or <i>wish</i>. As a move action, you may move the area of effect up to 10 feet in any direction.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "30-ft. spread",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -215,10 +220,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level",
+    "spellEffect": "30-ft. spread"
   },
   "effects": [],
   "folder": null,

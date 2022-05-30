@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "9sguja1r16exkqnj",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "concentration, up to 1 round/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex partial; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "entangling web of ectoplasm",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -183,9 +191,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You unleash a writhing tendril of ectoplasm to grapple  or entangle a target creature. You must make a ranged touch attack to strike a target. If you hit, the target can attempt a Reflex save. On a successful save, the target is entangled for the duration of the spell and suffers no other effects. If the target fails this saving throw, the tendril is more restrictive, making the target grappled and dealing it 1d6+4 points of bludgeoning damage. Each round when you concentrate to maintain the spell, the snare attempts a grapple combat maneuver check to maintain the grapple. As normal when grappling, the snare gains a +5 bonus on grapple combat maneuver checks against opponents it is already grappling. The snare's CMB is equal to 6 + your caster level, and its CMD is equal to 16 + your caster level. Since the ectoplasm passes between planes, this spell affects incorporeal and ethereal creatures normally.  You remain tethered to the target for the duration of the spell. You can shrink or extend the snare, but if the distance between you and the target exceeds the spell's range, the snare disappears. The ectoplasmic tether has hardness 10 and a number of hit points equal to 10 + your caster level + your Constitution modifier, and the tether can be damaged or sundered anywhere along its length. You are not considered to have the grappled condition while tethered to the target. You can perform the move or damage action on a successfully grappled target, moving it up to half your speed or dealing an additional 1d6+4 points of bludgeoning damage to it on a successful grapple combat maneuver check. You can't pin your target.</p>",
-    "spellDuration": "concentration, up to 1 round/level (D)",
-    "spellEffect": "entangling web of ectoplasm",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -224,10 +229,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "concentration, up to 1 round/level (D)",
+    "spellEffect": "entangling web of ectoplasm"
   },
   "effects": [],
   "folder": null,

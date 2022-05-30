@@ -5,35 +5,39 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "5r070w47qqmrzsvy",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
           "value": "2 hours/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will disbelief (see below)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "one 40-ft. cube/level (S)",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -186,9 +194,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create an image of a pool of water, a group of standing stones, a cove, an island, or another simple land formation over a stretch of flat land or water. The image is purely visual, and structures, equipment, and creatures within the area are not hidden or changed in appearance.</p><p>Anyone interacting with the illusion can attempt to disbelieve it, and a creature trained in Survival can make a special attempt to disbelieve the illusion. The creature must be within 120 feet of the illusion's area and can attempt a Survival check instead of a Will saving throw. If the result is equal to or greater than the spell's save DC, the creature realizes the mirage is an illusion as if it disbelieved the spell.</p>",
-    "spellDuration": "2 hours/level (D)",
-    "spellEffect": "",
-    "spellArea": "one 40-ft. cube/level (S)",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -228,10 +233,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "2 hours/level (D)",
+    "spellArea": "one 40-ft. cube/level (S)"
   },
   "effects": [],
   "folder": null,

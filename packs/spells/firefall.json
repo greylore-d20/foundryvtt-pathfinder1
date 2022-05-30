@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "s9q8i1ekx7kc275w",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one fire source, up to a 20-foot cube"
         },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Will negates and Reflex negates; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -172,9 +178,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p><i>Firefall</i> causes a fire to erupt into a geyser of dazzlingly bright liquid flame. The spell uses one fire source, which is immediately extinguished. A fire larger than a 20-foot cube is only partly extinguished. Magical fires are not extinguished, but a creature of the fire subtype used as the source takes 1 point of damage per caster level (no saving throw).</p><p>The coruscating rain of fire fills a hemispherical burst with a radius of 60 feet. All creatures and objects in the area take 5d6 points of fire damage and catch on fire (<i>Core Rulebook</i> 444).</p><p>Creatures who make successful Reflex saves take half damage and don't catch on fire. Creatures within 120 feet of the original fire source are blinded for 1d4+1 rounds (Will negates).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -216,10 +219,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

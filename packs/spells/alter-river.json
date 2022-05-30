@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "au1j7aimef9xvnrl",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "area of river up to 5 ft. wide/2 levels and 10 ft. long/level"
         },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -176,9 +182,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You alter the flow of water in a natural freshwater channel such as a river, stream, or waterfall. The first version of this spell alters the speed of a river's flow. The second diverts the course of the targeted river.</p><p><i>Alter Current</i>: The river's current increases or decreases in speed by up to 1 mile per hour per 2 caster levels you possess. A typical placid river travels at a rate of up to 2 mph (no effect on local movement); a swift river travels 2-4 mph, moving creatures and objects 10 to 40 feet downstream per round; and an area of river rapids travels 7-10 mph, moving creatures and objects 60 to 90 feet downstream per round. Altering the speed of the current alters the difficulty of swimming in the water accordingly.</p><p><i>Divert River</i>: The river diverts its course in a direction of your choosing. The river flows in the general direction indicated, but otherwise conforms to the shape of the local terrain. This spell cannot cause a river to flow uphill, though the river surges over its natural banks and inundates terrain lower than its average depth. Creatures in the path of the redirected river are in danger of being swept away; if directed properly, this spell causes a flood. See Aquatic Terrain on page 432 of the <i>Core Rulebook</i> for more details.</p><p><i>Alter river</i> can be made permanent with a <i>permanency</i> spell.</p><p>Clever application of spells such as <i>move earth</i> can be combined with this spell to likewise make the river's new course permanent.</p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -218,10 +221,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level (D)"
   },
   "effects": [],
   "folder": null,

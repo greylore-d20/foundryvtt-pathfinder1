@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "qqhwexb4gmcee774",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "10-ft. hand",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -171,9 +179,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell functions as <i>interposing hand</i>, except that it can also grapple one opponent you select. The <i>grasping hand</i> gets one grapple attack per round. This attack does not provoke an attack of opportunity. Its CMB and CMD for grapple checks use your caster level in place of its base attack bonus, with a +10 bonus for its Strength (31) score and a +1 bonus for being Large (its Dexterity is 10, granting no bonus on the Combat Maneuver Defense).</p><p>The hand holds but does not harm creatures that it grapples.</p><p>Directing the spell to a new target is a move action. The <i>grasping hand</i> can instead be directed to bull rush a target, using the same bonuses outlined above, or it can be directed to interpose itself, as <i>interposing hand</i> does.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "10-ft. hand",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -210,10 +215,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level",
+    "spellEffect": "10-ft. hand"
   },
   "effects": [],
   "folder": null,

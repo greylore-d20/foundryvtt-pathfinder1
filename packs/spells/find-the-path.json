@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "v263hfo4yri5s44b",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 3,
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 9,
             "type": "action"
           }
         },
@@ -34,8 +33,11 @@
           "value": "you or creature touched"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "none or Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -209,9 +215,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>The recipient of this spell can find the shortest, most direct physical route to a prominent specified destination, such as a city, keep, lake, or dungeon. The locale can be outdoors or underground, as long as it is prominent. For example, a hunter's cabin is not prominent enough, but a logging camp is. <i>Find the path</i> works with respect to locations, not objects or creatures at a locale. The location must be on the same plane as the subject at the time of casting. The spell enables the subject to sense the correct direction that will eventually lead it to its destination, indicating at appropriate times the exact path to follow or physical actions to take. For example, the spell enables the subject to sense what cavern corridor to take when a choice presents itself. The spell ends when the destination is reached or the duration expires, whichever comes first. <i>Find the path</i> can be used to remove the subject and its companions from the effect of a <i>maze</i> spell in a single round, specifying the destination as \"outside the <i>maze</i>.\" This divination is keyed to the recipient, not its companions, and its effect does not predict or allow for the actions of creatures (including guardians) who might take action to oppose the caster as he follows the path revealed by this spell.</p>",
-    "spellDuration": "10 min./level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -254,10 +257,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "10 min./level"
   },
   "effects": [],
   "folder": null,

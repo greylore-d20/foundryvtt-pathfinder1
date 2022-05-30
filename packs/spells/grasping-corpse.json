@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "63542cq85p2mmxt4",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one corpse"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -188,9 +194,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You can cause one nearby corpse to animate for a brief moment. Choose a creature within 30 feet of the corpse (even if the creature is outside the spell's range). The corpse shambles toward the creature and then attempts to trip or grapple it (your choice). The corpse does not provoke attacks of opportunity.  Attempt a special combat maneuver check against the chosen creature. Your CMB for this combat maneuver is equal to your caster level plus your Intelligence, Wisdom, or Charisma modifier, whichever is highest. If you chose to trip the creature, it falls prone if you equal or exceed its CMD. If you chose to grapple, the  creature gains the grappled condition until it breaks free from the corpse. Treat your save DC for a spell of this level as the CMD of the grasping corpse. Alternatively, destroying the corpse with damage ends the grapple. The corpse has 12 hit points and DR 5/slashing.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -230,10 +233,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "instantaneous",
     "spellPoints": {
       "cost": ""
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

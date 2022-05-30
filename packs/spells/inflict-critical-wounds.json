@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "77ixbdan00oapni6",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -63,7 +62,9 @@
           "parts": [
             [
               "4d8 + min(@cl, 20)",
-              ""
+              [
+                "untyped"
+              ]
             ]
           ],
           "critParts": [],
@@ -90,7 +91,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -111,22 +112,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "",
       "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": ""
     },
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -198,15 +201,11 @@
     },
     "atWill": false,
     "sr": true,
-    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.qooag8g9dxck4lik]{Inflict Light Wounds}, except that you deal 4d8 points of damage + 1 point per caster level (maximum +20).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
+    "shortDescription": "<p>This spell functions like <i>inflict light wounds</i>, except that you deal 4d8 points of damage + 1 point per caster level (maximum +20).</p>",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -215,32 +214,17 @@
         "type": "action"
       }
     },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
     "target": {
       "value": "creature touched"
     },
     "range": {
-      "value": null,
       "units": "touch",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
+      "maxIncrements": 1
     },
     "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "0"
     },
-    "attackName": "",
     "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -252,22 +236,9 @@
       "nonCritParts": []
     },
     "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "0",
@@ -276,25 +247,8 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "naturalAttack": {
-      "secondary": {
-        "attackBonus": "-5",
-        "damageMult": 0.5
-      }
-    },
     "conditionals": [],
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Inflict Critical Wounds",
-    "size": "med"
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

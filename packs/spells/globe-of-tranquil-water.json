@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "wzlbugqqza9iow54",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "1 minute/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 20,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "20-ft.-radius emanation, centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -183,9 +190,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>Upon casting this spell, a rippling bubble of calm water extends outward from you to a radius of 20 feet and remains centered on you when you move. The bubble blocks all natural and magical precipitation such as rain, snow, and hail (including spells such as <i>ice</i> storm). This bubble also pushes out any fog or mist within the area, though it does not affect temperature and can't block natural or magical lightning.  All water in this radius counts as calm water for the purposes of Swim checks, and the bubble prevents sprays and blasts of mundane and magic water from striking with enough force to deal damage, move creatures or halt their movement, or perform any action that requires an attack roll or combat maneuver check.  Water elementals are affected by a <i>Globe of Tranquil Water</i> the same way creatures of the plant type are affected by an <i>antiplant shell</i>.</p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellEffect": "",
-    "spellArea": "20-ft.-radius emanation, centered on you",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -223,10 +227,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level (D)",
+    "spellArea": "20-ft.-radius emanation, centered on you"
   },
   "effects": [],
   "folder": null,

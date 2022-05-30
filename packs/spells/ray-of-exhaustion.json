@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "hm0im8xr8258qt3m",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 min./level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "rsak",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -71,7 +75,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": "dex",
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude partial; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "ray",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -187,9 +195,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>A black ray projects from your pointing finger. You must succeed on a ranged touch attack with the ray to strike a target.</p><p>The subject is immediately exhausted for the spell's duration. A successful Fortitude save means the creature is only fatigued.</p><p>A character that is already fatigued instead becomes exhausted.</p><p>This spell has no effect on a creature that is already exhausted.</p><p>Unlike normal exhaustion or fatigue, the effect ends as soon as the spell's duration expires.</p>",
-    "spellDuration": "1 min./level",
-    "spellEffect": "ray",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -228,10 +233,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 min./level",
+    "spellEffect": "ray"
   },
   "effects": [],
   "folder": null,

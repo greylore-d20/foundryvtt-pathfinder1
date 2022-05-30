@@ -19,7 +19,7 @@
     ],
     "actions": [
       {
-        "_id": "icfog6lblvan8nuz",
+        "_id": "8t05y65srgjwkqp9",
         "name": "Use",
         "img": "systems/pf1/icons/feats/alignment-channel.jpg",
         "description": "",
@@ -48,11 +48,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "3 + @abilities.cha.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "3 + @abilities.cha.mod"
         },
         "measureTemplate": {
           "type": "circle",
@@ -70,7 +70,9 @@
           "parts": [
             [
               "(ceil(@classes.cleric.level / 2))d6",
-              "Positive"
+              [
+                "positive"
+              ]
             ]
           ],
           "critParts": [],
@@ -116,7 +118,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

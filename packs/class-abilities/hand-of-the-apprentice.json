@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "gxvjq1b5jdi04oci",
+        "_id": "hv7kuc0yvcf5ljcz",
         "name": "Use",
         "img": "systems/pf1/icons/skills/arrow_02.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "3 + @abilities.int.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "3 + @abilities.int.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -104,7 +104,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "7owsz8a656lsq06n",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -196,9 +202,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell draws upon the latent planar energy of the caster's surroundings, allowing her to temporarily infuse a creature with the plane's power. The touched creature gains that plane's basic infusion for the spell's duration. This spell has no effect if cast on the Material Plane, and it ends as soon as the spell's target leaves the plane with which it has been infused. Details on planar infusions can be found in each plane's Infusion section, as presented in Chapter 3 of this book.  Once a creature gains the benefits of <i>bestow planar infusion I</i>, it remains attuned to that plane for 24 hours. Additional castings of <i>bestow planar infusion I</i> during this time bestow the same infusion that was granted by the initial casting that day. Planar infusions that can be used a limited number of times per day are not refreshed by multiple castings of <i>bestow planar infusion I</i>.</p>",
-    "spellDuration": "1 hour/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -240,10 +243,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 hour/level"
   },
   "effects": [],
   "folder": null,

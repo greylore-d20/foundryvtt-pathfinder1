@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "pce5psay4elltw4o",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "living creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -172,9 +178,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell transforms a willing creature into an animal, humanoid or elemental of your choosing; the spell has no effect on unwilling creatures, nor can the creature being targeted by this spell influence the new form assumed (apart from conveying its wishes, if any, to you verbally).</p>\n<p>If you use this spell to cause the target to take on the form of an animal or magical beast, the spell functions as @Compendium[pf1.spells.774kmgcb7ygviht0]{Beast Shape II}. If the form is that of an elemental, the spell functions as @Compendium[pf1.spells.pawbnw1nm4f0b98e]{Elemental Body I}<em>.</em> If the form is that of a humanoid, the spell functions as @Compendium[pf1.spells.kouqz0pm1xl8xilm]{Alter Self}.</p>\n<p>The subject may choose to resume its normal form as a full-round action; doing so ends the spell for that subject.</p>",
-    "spellDuration": "1 min./level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -216,10 +219,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 min./level"
   },
   "effects": [],
   "folder": null,

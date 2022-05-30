@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "n6lcbf03erope25z",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": "60",
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -44,8 +47,8 @@
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
+          "type": "ray",
+          "size": "60",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -59,7 +62,9 @@
           "parts": [
             [
               "(min(15, @cl))d6",
-              "Acid"
+              [
+                "acid"
+              ]
             ]
           ],
           "critParts": [],
@@ -85,8 +90,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex partial (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -107,7 +112,11 @@
         "usesAmmo": false,
         "spellEffect": "60-ft. line",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -119,8 +128,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -172,9 +181,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>A spray of acid erupts from your outstretched hand, dealing 1d6 points of acid damage per caster level (maximum 15d6) to each creature within its area (Reflex half ). This acid continues to burn for 1 round, dealing 1d6 points of acid damage per two caster levels (maximum 7d6) to any creature that failed its saving throw against the spell (a second Reflex save on the creature's turn negates this additional damage).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "60-ft. line",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -220,10 +226,11 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "instantaneous",
+    "spellEffect": "60-ft. line",
     "spellPoints": {
       "cost": ""
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

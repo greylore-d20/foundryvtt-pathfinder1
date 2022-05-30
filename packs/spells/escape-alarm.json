@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "rnbdhpuuegk12lb7",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "24 hours",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "ten 10-foot cubes/level",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -198,9 +206,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You place a ward on an area that notifies you when a creature exits it. This functions as <i>alarm</i>, except as noted. It alerts you when a creature leaves, rather than enters, the area, and you can't select a password to bypass its effects. Instead, when you place an escape <i>alarm</i>, you can attune up to one additional creature per caster level to the spell. You are automatically attuned to your own escape <i>alarm</i> and don't count against the limit. Attuned creatures can enter and exit the spell's area without triggering the <i>alarm</i>. If you select a mental <i>alarm</i> rather than an audible one, all attuned creatures receive the mental alert when someone exits the warded area.</p>",
-    "spellDuration": "24 hours",
-    "spellEffect": "",
-    "spellArea": "ten 10-foot cubes/level",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -237,10 +242,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "24 hours",
+    "spellArea": "ten 10-foot cubes/level"
   },
   "effects": [],
   "folder": null,

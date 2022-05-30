@@ -5,36 +5,39 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "smcafy75zai3vxuq",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
           "value": "see text",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": "0",
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one symbol",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -188,9 +195,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell functions like <i><i>symbol of</i> death</i>, except that all creatures within the radius of a <i><i>symbol of</i> <i>persuasion</i></i> instead become charmed by the caster (as the <i>charm monster</i> spell) for 1 hour per caster level.</p><p>Unlike <i><i>symbol of</i> death</i>, <i><i>symbol of</i> <i>persuasion</i></i> has no hit point limit; once triggered, a <i><i>symbol of</i> <i>persuasion</i></i> simply remains active for 10 minutes per caster level.</p><p><i>Note:</i> Magic traps such as <i><i>symbol of</i> <i>persuasion</i></i> are hard to detect and disable. A rogue (only) can use the Perception skill to find a <i><i>symbol of</i> <i>persuasion</i></i> and Disable Device to thwart it. The DC in each case is 25 + spell level, or 31 for <i><i>symbol of</i> <i>persuasion</i></i>.</p>",
-    "spellDuration": "see text",
-    "spellEffect": "one symbol",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -231,10 +235,11 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "see text",
+    "spellEffect": "one symbol",
     "spellPoints": {
       "cost": ""
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

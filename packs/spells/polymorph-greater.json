@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "73s0uesbtyeak4aa",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "living creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -173,9 +179,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.d40ia71c2eljm91k]{Polymorph} except that it allows the creature to take on the form of a dragon or plant creature. If you use this spell to cause the target to take on the form of an animal or magical beast, it functions as @Compendium[pf1.spells.br37848gchetel0q]{Beast Shape IV}. If the form is that of an elemental, the spell functions as @Compendium[pf1.spells.hd32fuc6e7j4isbn]{Elemental Body III}<em>.</em> If the form is that of a humanoid, the spell functions as @Compendium[pf1.spells.kouqz0pm1xl8xilm]{Alter Self}. If the form is that of a plant, the spell functions as @Compendium[pf1.spells.ik4riccm7tozdwox]{Plant Shape II}<em>.</em> If the form is that of a dragon, the spell functions as @Compendium[pf1.spells.iqcjiyi9leldfzxt]{Form of the Dragon I}<em>.</em> The subject may choose to resume its normal form as a full-round action; doing so ends the spell.</p>",
-    "spellDuration": "1 min./level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -217,10 +220,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 min./level"
   },
   "effects": [],
   "folder": null,

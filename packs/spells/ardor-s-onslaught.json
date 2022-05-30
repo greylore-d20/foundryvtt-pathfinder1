@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "sencochrjvpsygpv",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "instantaneous or 1d6 rounds; see text",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will partial, see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "20-ft.-radius burst",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -166,9 +174,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You unleash the power of zealous conviction to smite your enemies with a burst of pulsing metallic energy. Only creatures with a neutral alignment component are harmed by the spell.  The spell deals 1d8 points of damage per 2 caster levels (maximum 5d8) to creatures whose alignment is neutral with no other alignment components (with the exception of neutral outsiders, who take 1d6 points of damage per caster level,  maximum 10d6). Neutral outsiders are also nauseated for 1d6 rounds. A creature can attempt a Will save to halve the damage and negate the nauseated effect.  The spell deals half damage against creatures that are chaotic neutral, lawful neutral, neutral evil, or neutral good, and such targets are not nauseated. On a successful Will save, such a creature reduces the damage to one-quarter the damage rolled.</p>",
-    "spellDuration": "instantaneous or 1d6 rounds; see text",
-    "spellEffect": "",
-    "spellArea": "20-ft.-radius burst",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -207,10 +212,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous or 1d6 rounds; see text",
+    "spellArea": "20-ft.-radius burst"
   },
   "effects": [],
   "folder": null,

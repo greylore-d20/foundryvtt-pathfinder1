@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "jws5yzg629oo2gs3",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 0,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one sword-shaped weapon of force",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -187,9 +194,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create a <i>+1 longsword</i> of pure force sized appropriately for you that you can wield or give to another creature like any other longsword. At 8th level, the sword functions as a <i>+2 longsword</i>. At 13th level, it functions as a <i>+3 longsword</i>. A <i>force sword</i> cannot be attacked or harmed by physical attacks, but <i>dispel magic</i>, <i>disintegrate</i>, a <i>sphere of annihilation</i>, or a <i>rod of cancellation</i> affects it.  If a creature you attack with the sword has spell resistance, you must attempt a caster level check (1d20 + your caster level) against that spell resistance the first time the <i>force sword</i> strikes it. If you fail the check, the spell is dispelled. If you succeed, the weapon has its normal full effect on that creature for the duration of the spell.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "one sword-shaped weapon of force",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -227,10 +231,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level",
+    "spellEffect": "one sword-shaped weapon of force"
   },
   "effects": [],
   "folder": null,

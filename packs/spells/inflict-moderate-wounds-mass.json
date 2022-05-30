@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "73njxv45zg87og8a",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -63,7 +62,9 @@
           "parts": [
             [
               "2d8 + min(@cl, 30)",
-              ""
+              [
+                "untyped"
+              ]
             ]
           ],
           "critParts": [],
@@ -90,7 +91,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -111,22 +112,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "",
       "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": ""
     },
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -189,15 +192,11 @@
     },
     "atWill": false,
     "sr": true,
-    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.dhjhfv5hzthy0fgu]{Inflict Light Wounds, Mass}, except that it deals 2d8 points of damage + 1 point per caster level (maximum +30).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
+    "shortDescription": "<p>This spell functions like <i>mass inflict light wounds</i>, except that it deals 2d8 points of damage + 1 point per caster level (maximum +30).</p>",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -206,32 +205,17 @@
         "type": "action"
       }
     },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
     "target": {
       "value": "one creature/level, no two of which can be more than 30 ft. apart"
     },
     "range": {
-      "value": null,
       "units": "close",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
+      "maxIncrements": 1
     },
     "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "0"
     },
-    "attackName": "",
     "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
     "damage": {
       "parts": [
         [
@@ -243,22 +227,9 @@
       "nonCritParts": []
     },
     "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "0",
@@ -267,25 +238,8 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "naturalAttack": {
-      "secondary": {
-        "attackBonus": "-5",
-        "damageMult": 0.5
-      }
-    },
     "conditionals": [],
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Inflict Moderate Wounds, Mass",
-    "size": "med"
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

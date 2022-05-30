@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "jx80jogjvaaburb5",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "concentration",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 200,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "transfer consciousness to an object bearing your likeness",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -187,9 +194,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You cast your consciousness into a single object within range that bears your likeness, as if choosing a specific image with the spell <i>enter</i> imageAPG. In addition to observing your surroundings, speaking, and manipulating the image you inhabit, however, you can converse with nearby creatures and use your normal social skills.  You gain a +5 bonus on Bluff checks to tell lies and Diplomacy checks to make a request. You gain a +2 bonus on Intimidate checks and use the object's size to determine whether you gain a bonus or penalty on Intimidate checks for size.</p>",
-    "spellDuration": "concentration",
-    "spellEffect": "transfer consciousness to an object bearing your likeness",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -229,10 +233,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "concentration",
+    "spellEffect": "transfer consciousness to an object bearing your likeness"
   },
   "effects": [],
   "folder": null,

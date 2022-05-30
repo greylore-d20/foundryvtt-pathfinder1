@@ -43,11 +43,12 @@
     },
     "actions": [
       {
-        "_id": "rdwflly9fcai3j0f",
+        "_id": "950my8mv3ke6lfwr",
         "name": "Attack",
         "img": "systems/pf1/icons/items/potions/major-green.jpg",
         "description": "",
         "activation": {
+          "cost": 1,
           "type": "attack"
         },
         "unchainedAction": {
@@ -57,6 +58,7 @@
           }
         },
         "duration": {
+          "value": null,
           "units": "inst"
         },
         "target": {
@@ -65,9 +67,13 @@
         "range": {
           "value": "10",
           "units": "ft",
-          "maxIncrements": 5
+          "maxIncrements": 5,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "single",
           "value": 0,
           "maxFormula": ""
@@ -88,7 +94,9 @@
           "parts": [
             [
               "1d6",
-              "Acid"
+              [
+                "acid"
+              ]
             ]
           ],
           "critParts": [],
@@ -96,15 +104,26 @@
         },
         "attackParts": [],
         "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
           "label": ""
         },
         "formula": "",
         "ability": {
           "attack": "dex",
-          "damage": ""
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
         },
         "save": {
-          "dc": "0"
+          "dc": "0",
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -123,7 +142,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "uu0wygaxoboq87u9",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -56,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -84,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,22 +105,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "",
       "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": ""
     },
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -204,15 +205,11 @@
     },
     "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You make the touched poison difficult to detect or identify.&nbsp;@Compendium[pf1.spells.kgynwswfuj9oo0es]{Detect Poison} and similar effects detect an obscured poison only with a successful caster level check against a DC equal to 15 + your caster level (rolled secretly by the GM). Even if the poison is detected, the DC of Craft (alchemy) or Wisdom checks to identify the poison is increased by 10. If cast upon a venomous creature, <em>obscure poison</em> disguises all of the creature's natural poisons in the same way.</p>",
-    "spellDuration": "1 hour/level",
-    "spellEffect": "",
-    "spellArea": "",
+    "shortDescription": "<p>You make the touched poison difficult to detect or identify. <i>Detect poison</i> and similar effects detect an obscured poison only with a successful caster level check against a DC equal to 15 + your caster level (rolled secretly by the GM). Even if the poison is detected, the DC of Craft (alchemy) or Wisdom checks to identify the poison is increased by 10.  If cast upon a venomous creature, <i>obscure poison</i> disguises all of the creature's natural poisons in the same way.</p>",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -221,81 +218,37 @@
         "type": "action"
       }
     },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
     "target": {
       "value": "one dose of poison or one venomous creature touched"
     },
     "range": {
-      "value": null,
       "units": "touch",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
+      "maxIncrements": 1
     },
     "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "0"
     },
-    "attackName": "",
     "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
+      "dc": "0"
     },
     "effectNotes": [],
     "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "naturalAttack": {
-      "secondary": {
-        "attackBonus": "-5",
-        "damageMult": 0.5
-      }
-    },
     "conditionals": [],
+    "spellDuration": "1 hour/level",
     "spellPoints": {
       "cost": ""
-    },
-    "clCheck": false,
-    "identifiedName": "Obscure Poison",
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "kx87z2qbphg6w37r",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "heal",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -164,9 +170,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p><i>Resurgent <i>transformation</i></i> grants you the ability to recover from deadly wounds with restored vitality and a will to fight, but at a price. Once cast, <i>resurgent <i>transformation</i></i> lies dormant for up to 1 hour per level until you are reduced to one-quarter hit points or less. Once triggered, you immediately gain a +4 enhancement bonus to Constitution and Strength, damage reduction 5/-, and the benefits of a <i>haste</i> spell. In addition, you heal 4d8 points of damage + 1 point per caster level (maximum +25). <i>Resurgent <i>transformation</i></i> can even save you from death by healing the damage from an otherwise mortal wound, though it does not prevent death from massive damage or from causes other than hit point loss. Your mental faculties are impaired by this magical <i>transformation</i>, however, causing 1d4 points of Intelligence and Wisdom damage.</p><p>The advantages from your <i>transformation</i> persist for 1 round per caster level after the spell is triggered. Once the spell ends, it takes a heavy toll, leaving you exhausted and inflicting 1d4 points of Constitution damage. Utilizing more than one <i>resurgent <i>transformation</i></i> in a day is particularly risky.</p><p>The expiration of a second <i>resurgent <i>transformation</i></i> in a 24- hour period inflicts an additional 1d4 points of Constitution damage and results in death from system shock unless you succeed at a DC 15 Fortitude save, made after the Constitution damage has been applied.</p><p>If the spell expires or is dispelled before the <i>transformation</i> has been triggered, no adverse effects result.</p>",
-    "spellDuration": "1 hour/level or until triggered, then 1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -206,10 +209,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "1 hour/level or until triggered, then 1 round/level",
     "spellPoints": {
       "cost": ""
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

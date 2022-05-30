@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "il2u8l0stdmeibv4",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 30,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "cone-shaped burst or line",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -181,9 +188,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You breathe out a blast of energy. Creatures in the affected area take 1d6 points of energy damage per caster level (maximum of 12d6). A successful Reflex save results in half damage. The spell's effect and energy type depend on the type of dragon scale used: </p><p><i>Black dragon</i>: 60-foot line of acid.</p><p><i>Blue or bronze dragon</i>: 60-foot line of electricity.</p><p><i>Green dragon</i>: 30-foot cone of acid.</p><p><i>Gold or red dragon</i>: 30-foot cone of fire.</p><p><i>Silver or white dragon</i>: 30-foot cone of cold.</p><p><i>Brass dragon</i>: 60-foot line of fire.</p><p><i>Copper dragon</i>: 60-foot line of acid.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "cone-shaped burst or line",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -223,10 +227,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellArea": "cone-shaped burst or line"
   },
   "effects": [],
   "folder": null,

@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "mwnm6yxgtrqvsy46",
+        "_id": "9en3nwfddtjfgr0q",
         "name": "Use",
         "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "3 + @abilities.wis.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "3 + @abilities.wis.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "1d6 + (max(1, floor(@classes.inquisitor.level / 2)))",
-              "Fire"
+              [
+                "fire"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

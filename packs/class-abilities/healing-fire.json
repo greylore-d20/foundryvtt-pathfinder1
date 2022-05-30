@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "zvfxr4wkyiphxbhy",
+        "_id": "ldx5mmrf3qcybxru",
         "name": "Use",
         "img": "systems/pf1/icons/spells/heal-royal-3.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "2",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "2"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "1d6 + (floor(@classes.sorcerer.level / 4))d6",
-              ""
+              [
+                "untyped"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

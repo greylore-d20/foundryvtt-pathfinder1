@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "vdo27umu2mtiyi2n",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -34,8 +33,11 @@
           "value": "creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -164,9 +170,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell etches the symbol of an eye or a lawful institution on the target, dealing 1d6 points of damage. The mark can be placed on any exposed portion of the creature, typically the head or forearm. While the target is branded in this way, twice per day as a standard action, you can instantly determine in what direction and how far away the target is, as long as it is within a range equal to 1 mile per your caster level. If the target travels beyond this range or to another plane, you cannot gain information about the recipient's location. Similarly, if the target becomes warded by a spell or effect that thwarts divination spells (such as nondetection) or moves into such an area (such as one created by <i>antimagic</i> field), you cannot gain information about the target's location. This effect otherwise works as a <i>locate creature</i> spell that lasts for 1 minute per caster level. It can be fooled by <i>mislead</i> but not by <i>polymorph</i>. A Brand of Tracking can be hidden by clothing or temporarily removed by scraping it away (the latter deals 1d6 points of damage, though the brand returns if that damage is healed, or 1 day later otherwise). The effects of a Brand of Tracking continue to function even when hidden or scraped away. A Brand of Tracking cannot be dispelled, but it can be permanently removed by any means that removes a mark of justice (see page 312 of the <i>Pathfinder RPG Core</i> Rulebook).</p>",
-    "spellDuration": "permanent",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -208,10 +211,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "permanent"
   },
   "effects": [],
   "folder": null,

@@ -5,16 +5,15 @@
   "img": "systems/pf1/icons/items/inventory/monster-bones.jpg",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "sbkvgyzy1n3o1vs8",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "systems/pf1/icons/items/inventory/monster-bones.jpg",
         "description": "",
         "activation": {
           "cost": 1,
@@ -34,8 +33,11 @@
           "value": "one corporeal creature or object"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -60,7 +62,9 @@
           "parts": [
             [
               "(min(15, @cl))d6",
-              ""
+              [
+                "untyped"
+              ]
             ]
           ],
           "critParts": [],
@@ -86,8 +90,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude partial (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -108,7 +112,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -120,8 +128,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -173,9 +181,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>The target's bones (or exoskeleton) splinter, dealing 1d6 points of damage per caster level (maximum 15d6) to the target, which is also exhausted for 1 minute per caster level from the pain and exertion of the transformation.  If the target succeeds at its save, it takes half damage and is fatigued rather than exhausted. Objects made of bone, chitin, or similar material take half again as much damage (+50%) from this spell. This spell has no effect on a creature that has neither a skeleton nor a hard carapace.</p>",
-    "spellDuration": "instantaneous and 1 minute/level (see text)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -222,10 +227,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous and 1 minute/level (see text)"
   },
   "effects": [],
   "folder": null,

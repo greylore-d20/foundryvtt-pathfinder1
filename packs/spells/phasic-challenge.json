@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "xr8rf44mqkds3azs",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,7 +33,11 @@
           "value": "two creatures within 60 feet of one another; see text"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (see below)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -183,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You select one enemy and one willing ally as targets. The enemy gains a new Will saving throw at the beginning of each turn, and on a successful saving throw the spell ends. Both targets remain visible and audible, and can see and hear other creatures, but cannot physically interact with any creature save one another. Spells or weapon attacks from the affected creatures impact only each other, though spells might affect terrain or other factors not related to other creatures. If one of the creatures becomes unconscious or dies, or if the effect is dispelled, the effect ends for both of them.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -223,12 +227,9 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "1 round/level (D)",
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
     }
   },
   "effects": [],

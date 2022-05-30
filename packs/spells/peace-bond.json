@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "w84iyaoln3eu1qy3",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "one or more 5-ft. cubes, no two of which can be more than 30 ft. apart",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -194,9 +202,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell creates one glowing rune of <i>peace</i>, plus one per 2 caster levels above 1st (to a maximum of five runes at 9th level). An identical symbol appears on your forehead  for the duration of the spell and cannot be disguised (though it is visible only if you are visible). Each rune illuminates a 5-foot cube, preventing any spell you cast of up to 3rd level and that has a defined area (as opposed to targets or an effect) from entering or affecting the 5-foot cube. For example, creatures and items within any square affected by <i><i>peace</i> bond</i> take no damage from a <i>fireball</i> you cast. However, if you cast <i>stinking cloud</i>, the noxious vapors are an effect and enter such cubes normally. This spell does not break line of effect within any other spells you cast; it simply negates all effects of your 1st-, 2nd- and 3rd-level area spells within the <i><i>peace</i> bond</i>'s area. <i>Peace bond</i> offers no protection against your spell-like abilities or supernatural area effects.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "one or more 5-ft. cubes, no two of which can be more than 30 ft. apart",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -233,10 +238,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level",
+    "spellArea": "one or more 5-ft. cubes, no two of which can be more than 30 ft. apart"
   },
   "effects": [],
   "folder": null,

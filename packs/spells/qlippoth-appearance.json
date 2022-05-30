@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "gxudpv9ee3cvkr1v",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -180,9 +186,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>When under the effects of this spell, your face and body appear subtly wrong, though you are still recognizable as yourself. You gain a +4 circumstance bonus on Intimidate checks but take a -4 penalty on Diplomacy checks. As long as this spell's effects persist, you can reveal the face under your face as a standard action, assaulting the senses of a single living creature within 30 feet that can see you. A targeted creature must succeed at a Will save against the DC of this spell or be subject to one of the following effects (your choice). Every time you use this ability, you reduce the remaining duration of this spell by 10 minutes.  <ul><li> The affected creature takes 1 point of Wisdom damage.  <li> The affected creature is paralyzed with revulsion for 1 round.  <li> The affected creature is sickened with disgust for 1d6 rounds.  <li> The affected creature takes 1d6 points of nonlethal damage as its senses are overwhelmed.</ul></p>",
-    "spellDuration": "10 minutes/level (see text)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -224,10 +227,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "10 minutes/level (see text)"
   },
   "effects": [],
   "folder": null,

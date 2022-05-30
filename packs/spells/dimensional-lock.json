@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "wpxsdezel1qi5xm1",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 day/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "20-ft.-radius emanation centered on a point in space",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -183,9 +191,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create a shimmering emerald barrier that completely blocks extradimensional travel. Forms of movement barred include <i>astral projection</i>, <i>dimension door</i>, <i>ethereal jaunt</i>, <i>etherealness</i>, <i>gate</i>, <i>maze</i>, <i>plane shift</i>, <i>shadow walk</i>, <i>teleport</i>, and similar spell-like abilities. Once <i>dimensional lock</i> is in place, extradimensional travel into or out of the area is not possible.</p><p>A <i>dimensional lock</i> does not interfere with the movement of creatures already in ethereal or astral form when the spell is cast, nor does it block extradimensional perception or attack forms. Also, the spell does not prevent summoned creatures from disappearing at the end of a summoning spell.</p>",
-    "spellDuration": "1 day/level",
-    "spellEffect": "",
-    "spellArea": "20-ft.-radius emanation centered on a point in space",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -222,10 +227,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 day/level",
+    "spellArea": "20-ft.-radius emanation centered on a point in space"
   },
   "effects": [],
   "folder": null,

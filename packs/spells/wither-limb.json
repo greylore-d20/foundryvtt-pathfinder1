@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "je2vlld0lv6b3cvt",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "living creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -184,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You cause one limb of the target to shrivel and weaken. The target takes 2d6 points of damage. The points are permanently lost until the target's limb is restored by <i>heal</i>, <i>limited <i>wish</i></i>, <i>miracle</i>,  <i>regenerate</i>, or <i>wish</i>. <i>Wither limb</i> affects only living creatures of the humanoid or monstrous humanoid type, or similar bipedal creatures at the GM's discretion. You choose the limb affected. This spell's effects stack, until all a target's arms and legs (or equivalent limbs) are withered.  <i>Arm</i>: The target looses the use of one arm, which might affect what weapons and shields it can use. The creature must immediately drop all objects held in the withered limb, though it can shift a two-handed weapon it is holding in both hands to a remaining arm as an immediate action. Worn objects-gauntlets, rings, and magic items in the wrist slot-remain. This prevents the creature from using two-weapon fighting, claw attacks from that arm, and so on. If multiple castings of this spell wither all of a creature's arms, it can't manipulate objects or cast spells requiring somatic components.  <i>Leg</i>: The creature's movement speeds are halved, except for flying or other speeds that don't involve its legs. If multiple castings of this spell wither all of a creature's legs, it can only crawl at a speed of 5 feet each round.  <i>Wing</i>: The creature loses access to any fly speed that depends on its wings if even a single wing is withered.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -228,10 +231,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "b2g6worgt8aqdq7x",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "one creature/level, no two of which can be more than 30 ft. apart",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -166,9 +174,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.fwbgmfya11gtko14]{eldritch conduit} save for the differences listed above and that the target must be within medium range (100 ft. + 10 ft./level) in order for you to use the conduit. Using a creature as a conduit for a spell ends the greater <em>eldritch conduit</em> effect on that creature, but does not end the effect for other <em>eldritch conduit</em>s.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "one creature/level, no two of which can be more than 30 ft. apart",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -207,10 +212,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level",
+    "spellArea": "one creature/level, no two of which can be more than 30 ft. apart"
   },
   "effects": [],
   "folder": null,

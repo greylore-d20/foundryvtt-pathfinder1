@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "cdukekca5cw8ikui",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,14 +55,16 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "rsak",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
               "1d3",
-              "Cold"
+              [
+                "cold"
+              ]
             ]
           ],
           "critParts": [],
@@ -76,7 +82,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": "dex",
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -84,8 +90,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +112,11 @@
         "usesAmmo": false,
         "spellEffect": "ray",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -118,8 +128,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -171,9 +181,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>A ray of freezing air and ice projects from your pointing finger.</p><p>You must succeed on a ranged touch attack with the ray to deal damage to a target. The ray deals 1d3 points of cold damage.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "ray",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -215,10 +222,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellEffect": "ray"
   },
   "effects": [],
   "folder": null,

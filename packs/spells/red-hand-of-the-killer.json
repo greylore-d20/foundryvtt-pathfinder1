@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "357y1w4iurfwmwcn",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,7 +33,11 @@
           "value": "one creature"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -199,9 +206,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>Drawing upon the spiritual link between a corpse and its killer, you reach out across space to brand the killer of the corpse you used as a focus for this spell, creating a physical manifestation of the killer's guilt.  The killer's right hand becomes stained indelibly red, and this stain can't be removed (although it can be hidden by magical or mundane means, such as <i>disguise self</i> or by wearing gloves). If the killer is not humanoid, or doesn't have a right hand for some other reason, the spell instead causes a red stain in the shape of a hand to appear elsewhere on the creature's body (typically on the chest).  This spell affects only the creature that directly killed the targeted corpse. Other individuals that contributed to the target's death are unaffected, and if the victim did not die from violence or died indirectly (for instance, if the creature died from suffocating after someone trapped it in a room filling with water), then the spell has no effect. The killer can attempt a Will save to resist the spell's effects. Distance is not a factor, but the killer must be on the same plane as you at the time you cast the spell, or the spell fails. Once a corpse has acted as the focus for <i>Red Hand of the Killer</i>, it can never act as the focus for another casting of <i>Red Hand of the Killer</i>.</p>",
-    "spellDuration": "1 day/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -239,12 +243,9 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "1 day/level (D)",
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
     }
   },
   "effects": [],

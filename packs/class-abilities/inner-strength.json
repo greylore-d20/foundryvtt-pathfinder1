@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "c7r0dha16cvf2biw",
+        "_id": "jh5hu08jhpme831h",
         "name": "Use",
         "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "1",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "1"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "(floor(@classes.inquisitor.level / 2))d6",
-              ""
+              [
+                "untyped"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

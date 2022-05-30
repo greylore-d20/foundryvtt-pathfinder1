@@ -5,16 +5,15 @@
   "img": "systems/pf1/icons/spells/heal-royal-3.jpg",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "c2ne8p2cdmq6rlo6",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "systems/pf1/icons/spells/heal-royal-3.jpg",
         "description": "",
         "activation": {
           "cost": 1,
@@ -34,8 +33,11 @@
           "value": "eidolon touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,14 +55,16 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "heal",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
               "5d10 + min(@cl, 20)",
-              ""
+              [
+                "untyped"
+              ]
             ]
           ],
           "critParts": [],
@@ -86,8 +90,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -108,7 +112,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -120,8 +128,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -173,9 +181,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions as <i>lesser rejuvenate eidolon</i>, except that it cures 5d10 points of damage +1 point per caster level (maximum +20).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -220,10 +225,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "xlo3wnmiyshd4m9r",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 30,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "30-ft.-radius burst, centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -163,9 +170,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create a loud, resonating clangor that causes metallic objects to vibrate wildly. Affected creatures wielding metal weapons take a -1 penalty on attack rolls, while creatures using metallic tools take a -1 penalty on associated skill checks.</p><p>Creatures wearing metal armor increase the armor check penalty of their armor by 1. These penalties increase by 1 at 8th caster level and every 4 caster levels thereafter (to a maximum of -4 at 16th level).</p><p>To be affected by the spell, an item must be composed primarily of metal. Nonmetallic objects with metal components (such as studded leather armor or padded armor with armor spikes) are not affected. Creatures made of metal take the penalties described above on attack rolls, damage rolls, skill checks, and Reflex saves.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "30-ft.-radius burst, centered on you",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -205,10 +209,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level",
+    "spellArea": "30-ft.-radius burst, centered on you"
   },
   "effects": [],
   "folder": null,

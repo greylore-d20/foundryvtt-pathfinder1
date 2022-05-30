@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "gxrxwx34g3j29t95",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "none and Will negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -184,9 +190,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You surround yourself with a Mantle of Calm serenity. You take a -2 penalty on attack rolls, and opponents gain a +2 bonus on saving throws against spells you cast. Any creature affected by a <i>rage</i> effect (barbarian's <i>rage</i>,  blood<i>rage</i>r's blood<i>rage</i>, blood <i>rage</i> monster ability, <i>rage</i> spell, skald's inspired <i>rage</i> raging song, and so on) that strikes you with a melee attack must attempt a Will saving throw, without the <i>rage</i> effect's bonus to Will; failure means the <i>rage</i> effect ends (as if it were dispelled or the creature voluntarily ended it, as appropriate).  If you become affected by a <i>rage</i> effect while this spell is active, this spell immediately ends. If your <i>rage</i> effect comes from a skald's raging song, then it ends only for you, and you cannot regain the effects of the song.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -228,10 +231,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level (D)"
   },
   "effects": [],
   "folder": null,

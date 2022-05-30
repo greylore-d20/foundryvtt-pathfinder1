@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "6amncefp7ssh49k1",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "20-ft.-radius emanation centered on a creature, object, or point in space",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -179,9 +187,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create a magical emanation that interferes with all figments and glamers within it, giving creatures a +4 bonus on saving throws to recognize them as illusions. The emanation negates concealment less than total concealment within the area. Perception checks to notice creatures or objects within the area gain a bonus equal to half your caster level (maximum +10). The spell is stationary if cast on a point in space. It is mobile if centered on a creature or object, though creatures or attended objects can negate the spell with a saving throw or spell resistance.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "20-ft.-radius emanation centered on a creature, object, or point in space",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -220,10 +225,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level (D)",
+    "spellEffect": "20-ft.-radius emanation centered on a creature, object, or point in space"
   },
   "effects": [],
   "folder": null,

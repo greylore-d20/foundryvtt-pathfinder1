@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "76mq4htf3b8sl6r6",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "willing creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -196,9 +202,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You touch the target and place it into a deathlike state that persists for the duration. The target appears to be dead, and any creature that interacts with the target must succeed at a DC 20 Heal check to recognize it is actually alive.  Until the spell ends, the target counts as if it were dead for the purpose of resolving any effects that target or affect only living creatures, but it doesn't count as undead. The subject is helpless, and can still be killed normally.  Any effect that would bring the creature back to life or animate it as an undead fails, but ends the <i>catatonia</i>. The target can be affected by spells that affect only objects, including <i>animate objects</i> (if the creature is Small) and <i>teleport object</i>. However, anything that would cause the body to change form (such as <i>shrink</i> item) fails and ends the <i>catatonia</i>. This doesn't prevent the effects of spells that simply deal damage or otherwise destroy objects.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -238,10 +241,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 hour/level (D)"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ue1i2d2vwadvfpdv",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "all magical effects and magic items within a 40-ft.-radius burst, or one magic item (see text)",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -171,9 +179,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>All magical effects and magic items within the radius of the spell, except for those that you carry or touch, are disjoined.</p><p>That is, spells and spell-like effects are unraveled and destroyed completely (ending the effect as a <i>dispel magic</i> spell does), and each permanent magic item must make a successful Will save or be turned into a normal item for the duration of this spell.</p><p>An item in a creature's possession uses its own Will save bonus or its possessor's Will save bonus, whichever is higher. If an item's saving throw results in a natural 1 on the die, the item is destroyed instead of being suppressed.</p><p>You also have a 1% chance per caster level of destroying an <i>antimagic field</i>. If the <i>antimagic field</i> survives the <i>disjunction</i>, no items within it are disjoined.</p><p>You can also use this spell to target a single item. The item gets a Will save at a -5 penalty to avoid being permanently destroyed. Even artifacts are subject to mage's <i>disjunction</i>, though there is only a 1% chance per caster level of actually affecting such powerful items. If successful, the artifact's power unravels, and it is destroyed (with no save). If an artifact is destroyed, you must make a DC 25 Will save or permanently lose all spellcasting abilities. These abilities cannot be recovered by mortal magic, not even <i>miracle</i> or <i>wish</i>. Destroying artifacts is a dangerous business, and it is 95% likely to attract the attention of some powerful being who has an interest in or connection with the device.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "all magical effects and magic items within a 40-ft.-radius burst, or one magic item (see text)",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -212,10 +217,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level",
+    "spellArea": "all magical effects and magic items within a 40-ft.-radius burst, or one magic item (see text)"
   },
   "effects": [],
   "folder": null,

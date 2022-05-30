@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "lg3yqx096upcpjol",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -34,8 +33,11 @@
           "value": "one dying or recently dead creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -184,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You draw forth the ebbing life force of a dying creature or one that has died in the past round, focusing it through a crystal lens focus to transform into a soul gem. If the creature is alive and fails its saving throw, it dies and you capture its soul in the gem. If the creature is dead, it can still resist the spell effect by attempting a Will save as if it were still alive. The value of the soul gem created depends on the nature of the creature it is made from (see page 191). Soul gems created by this spell crumble to dust once the spell's duration expires, releasing the trapped soul to travel on to judgment in the Great Beyond.  Only one soul gem can be created from a dying creature. Any attempt to resurrect a body whose soul is trapped in a soul gem requires a caster check against <i>create soul</i> gem's save DC. Failure results in the resurrection spell having no effect, while success shatters the target's soul gem and returns the creature to life as normal. If the soul gem resides in an unholy location, such as that created by the <i>unhallow</i> spell, the DC of this check increases by 2.  If you are a souldrinker (see page 212), you can cast this spell and expend 5 soul points to fill the gem with the equivalent of one basic soul.</p>",
-    "spellDuration": "1 day/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -228,10 +231,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 day/level"
   },
   "effects": [],
   "folder": null,

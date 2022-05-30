@@ -5,34 +5,39 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "pq1ac7xn64kg7w0u",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": "minute"
           }
         },
         "duration": {
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -50,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -78,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -100,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one spell tattoo",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -112,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -173,9 +182,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>When you cast this spell, you mix special tattoo inks into a potion of your choice. Once you finish casting <i>tattoo potion</i>, the potion begins bubbling and fizzing-if no one drinks the potion within 1 minute of the spell being cast, the potion bubbles away into vapor and is destroyed.</p><p>When a potion under the effects of <i>tattoo potion</i> is imbibed, the effects of the potion do not occur. Instead, the potion transforms into a <i>spell tattoo</i> (see page 16) on the drinker's chest tattoo slot-if the drinker already has a magic tattoo in this location, the <i>tattoo potion</i> is wasted. Once the potion transforms into a <i>spell tattoo</i>, it remains in place permanently until it is used as a <i>spell tattoo</i>.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "one spell tattoo",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -207,13 +213,14 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "instantaneous",
+    "spellEffect": "one spell tattoo",
     "spellPoints": {
       "cost": ""
     },
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

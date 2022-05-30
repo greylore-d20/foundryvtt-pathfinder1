@@ -5,25 +5,24 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "hbrq8hjf9qatrnx6",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,8 +33,11 @@
           "value": "object touched or up to 1 sq. ft."
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "object touched or up to 1 sq. ft.",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -176,9 +182,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You ward an object or an area with your personal rune or mark. You can choose for the writing to be visible or invisible, and it doesn't harm the material upon which it is placed. A <i>detect magic</i> spell causes an invisible mark to glow and be visible. If any creature other than you touches the warded object or area and fails a Fortitude save, its skin turns bright red for 1 hour per level. This coloring cannot be washed away, but it can be dispelled.</p><p><i>See invisibility</i>, <i>true seeing</i>, a <i>gem of seeing</i>, or a <i>robe of eyes</i> likewise allows the user to see an invisible mark. A <i>read magic</i> spell reveals the words, if any. The ward cannot be dispelled, but it can be removed by the caster or by an <i>erase</i> spell.</p>",
-    "spellDuration": "permanent and 1 hour/level (see text)",
-    "spellEffect": "",
-    "spellArea": "object touched or up to 1 sq. ft.",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -221,10 +224,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "permanent and 1 hour/level (see text)",
+    "spellArea": "object touched or up to 1 sq. ft."
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "vrk8duwq7bhirtl2",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level; see text",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -186,9 +194,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions as the planar travel function of <i>gate</i>, except it can be used to travel only between points on the Material Plane and the First World, and it comes with additional dangers.</p><p>This spell forms a circular portal between 5 and 20 feet in diameter (your choice) oriented in the direction you desire when it comes into being (typically vertical and facing you). The portal is full of gray fog that blocks line of sight.</p><p>Anyone or anything that moves through the portal to enter the First World is shunted instantly to a random point on that plane (the same point for everything traveling via a particular casting). At the end of the spell's duration, the caster can attempt a DC 30 Spellcraft check. On a success, the portal remains open for 1d4+1 days. Creatures exiting the First World through a fey <i>gate</i> always arrive at the location the spell was cast.</p><p>While the spell always deposits travelers on solid ground in the First World, it conveys no protections against whatever creatures or environmental hazards may be present there.</p>",
-    "spellDuration": "1 round/level; see text",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -225,10 +230,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level; see text"
   },
   "effects": [],
   "folder": null,

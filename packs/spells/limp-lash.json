@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "dt6s09f2mq9ae6k9",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -36,7 +35,9 @@
         "range": {
           "value": 20,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -54,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -82,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -104,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -116,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -169,9 +174,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create a dark whip-shaped field of energy that wraps around an enemy's neck, leaving everything except his head paralyzed until you let go of the whip or it is destroyed. You must make a ranged touch attack with this spell. If you strike your target, he takes a 1d6 penalty to his Strength, Dexterity, and Constitution each round.</p><p>This penalty cannot reduce any attribute to less than 1, and once any of these attributes reaches 1 the target collapses and his body, except his head, becomes paralyzed. While paralyzed in this way, the target retains full use of his senses, including the ability to feel pain, and can speak (including casting spells with only verbal components). The whip has a maximum length of 20 feet, 15 hit points, and a hardness of 5. The spell ends immediately if you let go of the whip or it is destroyed. When the spell ends, all penalties the target took from this spell also end.</p>",
-    "spellDuration": "special (see below)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -212,10 +214,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "special (see below)"
   },
   "effects": [],
   "folder": null,

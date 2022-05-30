@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "4myz6i96r6jja0sa",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 hour/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "circle centered on you, with a radius of 100 feet + 10 feet per level",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -178,9 +186,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You cause the air in the area to ripple where creatures have flown through it up to 1 day ago per caster level. These aerial ripples are tinged by glowing wisps, providing enough illumination to follow the tracks without penalties due to poor lighting. The area moves with you, allowing you to follow the tracks through the air over long distances provided you can fly or follow the route along the ground within range to read the aerial tracks. Other creatures can also follow the trail as long as they move with you. The base DC of Survival checks to track creatures through the air with this spell is the same as tracking creatures across soft ground.</p>",
-    "spellDuration": "1 hour/level",
-    "spellEffect": "",
-    "spellArea": "circle centered on you, with a radius of 100 feet + 10 feet per level",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -217,10 +222,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 hour/level",
+    "spellArea": "circle centered on you, with a radius of 100 feet + 10 feet per level"
   },
   "effects": [],
   "folder": null,

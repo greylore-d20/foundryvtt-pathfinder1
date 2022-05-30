@@ -43,13 +43,13 @@
     },
     "actions": [
       {
-        "_id": "x1qk2r7ea4de8e6x",
-        "name": "Throw",
+        "_id": "hncdd5rq8k8ez07g",
+        "name": "Attack",
         "img": "systems/pf1/icons/items/potions/unique-6.jpg",
         "description": "",
         "activation": {
-          "type": "attack",
-          "cost": null
+          "cost": 1,
+          "type": "attack"
         },
         "unchainedAction": {
           "activation": {
@@ -58,6 +58,7 @@
           }
         },
         "duration": {
+          "value": null,
           "units": "inst"
         },
         "target": {
@@ -67,13 +68,15 @@
           "value": "10",
           "units": "ft",
           "maxIncrements": 5,
+          "minValue": null,
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "single",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": false
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -88,32 +91,34 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
-          "critParts": [],
-          "nonCritParts": [],
           "parts": [
             [
               "1d6",
-              "Fire"
+              [
+                "fire"
+              ]
             ]
-          ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
         },
         "attackParts": [],
         "formulaicAttacks": {
-          "label": "",
           "count": {
             "formula": ""
           },
           "bonus": {
             "formula": ""
-          }
+          },
+          "label": ""
         },
         "formula": "",
         "ability": {
           "attack": "dex",
           "damage": "",
-          "critRange": null,
-          "critMult": null,
-          "damageMult": 1
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
         },
         "save": {
           "dc": "0",
@@ -137,11 +142,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
         "conditionals": [],
-        "attack": {
-          "parts": []
-        },
-        "spellArea": ""
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -167,25 +174,7 @@
     "held": "normal",
     "weaponType": "misc",
     "weaponSubtype": "other",
-    "properties": {
-      "blc": false,
-      "brc": false,
-      "dea": false,
-      "dis": false,
-      "dst": false,
-      "dbl": false,
-      "fin": false,
-      "frg": false,
-      "grp": false,
-      "imp": false,
-      "mnk": false,
-      "nnl": false,
-      "prf": false,
-      "rch": false,
-      "snd": false,
-      "thr": false,
-      "trp": false
-    },
+    "properties": {},
     "showInQuickbar": true,
     "ammoType": "",
     "activation": {

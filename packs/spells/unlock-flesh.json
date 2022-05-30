@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "6i7t5ddfokgh1sau",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level (living target) or instantaneous (undead target); see below",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fort negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "creature touched",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -166,9 +174,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>By touching a creature with a bladed instrument, you cause the creature's flesh to loosen and slide against its skeletal moorings. A living creature touched becomes staggered by the disturbing and uncomfortable sensation for 1 round per level. Each round on its turn, the subject can attempt a new saving throw to end the effect. This is a standard action that does not provoke attacks of opportunity. A corporeal undead creature targeted by this spell instead takes 1d6 points of damage per caster level (maximum 5d6 at 5th level) as wet, oozing chunks of flesh slough off its desiccated bones (a successful Fortitude save halves this damage). Incorporeal creatures, or creatures that do not have flesh, are immune to this spell's effects.</p>",
-    "spellDuration": "1 round/level (living target) or instantaneous (undead target); see below",
-    "spellEffect": "",
-    "spellArea": "creature touched",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -207,10 +212,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level (living target) or instantaneous (undead target); see below",
+    "spellArea": "creature touched"
   },
   "effects": [],
   "folder": null,

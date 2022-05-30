@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "w1t9koxuuznv6zta",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,9 +29,15 @@
           "value": "concentration plus 1 round/level, up to 1 hour/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -100,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "30-ft.-radius emanation centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -112,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -181,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You strip all creatures within the emanation of any gifts associated with corruptions (see page 14). Abilities associated with corruptions cease to function, as if they were magically dispelled. The corruption stains still fully affect creatures. A creature that enters the emanation and fails its saving throw loses its gifts until the spell's duration ends, even if it leaves the emanation, but a successful saving throw renders a creature immune to the spell, even if it enters and exits the emanation several times.</p>",
-    "spellDuration": "concentration plus 1 round/level, up to 1 hour/level",
-    "spellEffect": "",
-    "spellArea": "30-ft.-radius emanation centered on you",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -218,12 +224,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "concentration plus 1 round/level, up to 1 hour/level",
+    "spellArea": "30-ft.-radius emanation centered on you",
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
     }
   },
   "effects": [],

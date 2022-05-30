@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "baoa7po798otdeay",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "up to one weapon/level, no two of which can be more than 30 ft. apart"
         },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -180,9 +186,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>If a target weapon is sheathed or slung as the spell is cast, this functions as @Compendium[pf1.spells.7vdlcav97p98hgy5]{Peacebond}, locking the target's weapon in place on its owner's body or within the weapon's sheath or holster. Anyone who then tries to draw the weapon must spend a standard action and succeed at a Strength check to do so, provoking attacks of opportunity whether the attempt succeeds or fails. The DC for Strength checks required by this spell is equal to the spell's save DC. If a target weapon is not currently sheathed or slung as the spell is cast, the weapon immediately attempts to sheathe itself, and its wielder must succeed at a Strength check to prevent it from doing so. Once sheathed or slung in this way, the weapon is difficult to draw, as previously noted above. Unattended weapons that are not currently sheathed or slung are anchored in place by the spell, and require a successful Strength check to pick up; each attempt requires a standard action. If the wielder doesn't have a sheath or sling available for the weapon, failure on the Strength check causes the weapon to fall to the ground, at which point it requires a Strength check to pick up, as with unattended weapons.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -224,10 +227,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level"
   },
   "effects": [],
   "folder": null,

@@ -5,36 +5,39 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ixy74md9f8d8kofm",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": "minute"
           }
         },
         "duration": {
           "value": "1 hour/level or until destroyed",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 0,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "a suit of armor made of ice",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -161,7 +168,7 @@
       "focus": "5 gallons of water",
       "gpValue": 0
     },
-    "spellbook": "",
+    "spellbook": "primary",
     "preparation": {
       "preparedAmount": 0,
       "maxAmount": 0,
@@ -171,9 +178,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You create a suit of armor made of ice. While cold to the touch, it does not harm the wearer, especially if worn over normal clothing (though it can hasten the effects of exposure in cold environments). It offers the same protection as a breastplate, except it has hardness 0 and 30 hit points. If the intended wearer is immersed in water when you cast this spell, you may form the armor around the wearer (who may be you); otherwise the wearer must don the armor normally. Attacks against the wearer that create heat or fire degrade the armor, reducing its armor bonus by 1 for every 5 points of fire damage the wearer takes; when the armor's bonus to AC reaches 0, the armor is destroyed and the spell ends. Because the ice is slightly buoyant, the wearer gains a +2 circumstance bonus on Swim checks, except when swimming downward. Druids can wear <i>ice armor</i> without penalty.</p>",
-    "spellDuration": "1 hour/level or until destroyed",
-    "spellEffect": "a suit of armor made of ice",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -210,12 +214,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Ice Armor"
+    "spellDuration": "1 hour/level or until destroyed",
+    "spellEffect": "a suit of armor made of ice"
   },
   "effects": [],
   "folder": null,

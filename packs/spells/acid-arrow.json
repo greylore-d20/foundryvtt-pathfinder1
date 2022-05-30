@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "fi0cbaow5foebs7s",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round + 1 round/3 levels",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,14 +55,16 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "rsak",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
               "2d4",
-              "Acid"
+              [
+                "acid"
+              ]
             ]
           ],
           "critParts": [],
@@ -76,7 +82,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": "dex",
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -84,10 +90,12 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
-        "effectNotes": [],
+        "effectNotes": [
+          "Lasts [[min(6, floor(@cl / 3))]] Rounds"
+        ],
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
@@ -106,7 +114,11 @@
         "usesAmmo": false,
         "spellEffect": "one arrow of acid",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -118,8 +130,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -175,9 +187,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>An arrow of acid springs from your hand and speeds to its target. You must succeed on a ranged touch attack to hit your target. The arrow deals 2d4 points of acid damage with no splash damage. For every three caster levels you possess, the acid, unless neutralized, lasts for another round (to a maximum of 6 additional rounds at 18th level), dealing another 2d4 points of damage in each round.</p>",
-    "spellDuration": "1 round + 1 round/3 levels",
-    "spellEffect": "one arrow of acid",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -216,17 +225,11 @@
     "save": {
       "dc": "0"
     },
-    "effectNotes": [
-      "Lasts [[min(6, floor(@cl / 3))]] Rounds"
-    ],
+    "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Acid Arrow"
+    "spellDuration": "1 round + 1 round/3 levels",
+    "spellEffect": "one arrow of acid"
   },
   "effects": [],
   "folder": null,

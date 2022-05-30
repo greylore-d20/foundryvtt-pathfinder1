@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "25vfhsoq9y6pv8yo",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level or until discharged",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "none and Will partial (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one melee weapon",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -202,9 +210,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You imbue a weapon with the power to drive foes back. The first time each round the weapon strikes a creature, the weapon attempts a free bull rush combat maneuver check against that creature. This does not provoke attacks of opportunity. The combat maneuver for the bull rush is equal to 1d20 + your caster level. You do not have to move to push creatures more than 5 feet with this bull rush. If a creature you strike has spell resistance, you must attempt a caster level check to overcome its spell resistance the first time you strike it. If you fail, that creature is immune to the effects of this casting of <i><i>banishing</i> blade</i>.  The first time each extraplanar creature whose Hit Dice don't exceed your caster level is driven back at least 10 feet by this spell, it must attempt a Will save. If it fails, it is sent back to its home plane. Whether it succeeds or fails, that creature is staggered for 1 round and <i><i>banishing</i> blade</i>'s duration ends.</p>",
-    "spellDuration": "1 round/level or until discharged",
-    "spellEffect": "one melee weapon",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -243,10 +248,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level or until discharged",
+    "spellEffect": "one melee weapon"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "4f7v3q8yy7es1aqi",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one creature/level, no two of which can be more than 30 ft. apart"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -172,9 +178,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You coat the targets in thick, sticky mud. The mud acts as a <i>slow</i> spell and also blinds the targets. A creature can use a standard action to remove the mud from its eyes or the eyes of an adjacent creature, ending the blinded condition for that individual. Removing enough mud to end the <i>slow</i> effect is a full-round action. Jumping into a lake or being subject to an effect that creates a lot of water (such as <i>create water</i> or <i>hydraulic</i> pushAPG) removes all the mud in 1 round.</p><p>A <i>haste</i> effect cast on a creature <i>slow</i>ed by the mud allows it to act normally for the duration of the <i>haste</i>. <i>Slow</i> does not stack with the effects of <i>slow</i>ing mud. This spell cannot counter or dispel <i>haste</i>.</p>",
-    "spellDuration": "1 round/level (see text)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -216,10 +219,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level (see text)"
   },
   "effects": [],
   "folder": null,

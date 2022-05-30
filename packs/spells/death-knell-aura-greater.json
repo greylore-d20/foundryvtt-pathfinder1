@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "zrdurgcpz3fopi8a",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "1 round/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": "20",
           "units": "ft",
-          "maxIncrements": "1"
+          "maxIncrements": "1",
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "20-ft.-radius emanation, centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -175,9 +182,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.fmk73r47lhjvordp]{death knell aura}, except a dying creature in the area cannot stabilize on its own and automatically takes 1 point of bleed damage on its turn each round. An incorporeal undead or living spirit traveling outside the body (such as a person using @Compendium[pf1.spells.lnahlmp5mih2ongh]{astral projection} or @Compendium[pf1.spells.8ai7fslz4zu8xe9s]{magic jar}) within the aura at the start of its turn takes 1d8 points of damage.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "",
-    "spellArea": "20-ft.-radius emanation, centered on you",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -217,6 +221,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "1 round/level (D)",
+    "spellArea": "20-ft.-radius emanation, centered on you",
     "size": "med",
     "spellPoints": {
       "cost": "1 + @sl"

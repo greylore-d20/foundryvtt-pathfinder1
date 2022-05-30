@@ -5,16 +5,15 @@
   "img": "systems/pf1/icons/spells/fireball-sky-1.jpg",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "185d8eiv7iv0n6ao",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "systems/pf1/icons/spells/fireball-sky-1.jpg",
         "description": "",
         "activation": {
           "cost": 1,
@@ -30,11 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": "30",
           "units": "ft",
-          "maxIncrements": "1"
+          "maxIncrements": "1",
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -44,8 +47,8 @@
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
+          "type": "cone",
+          "size": "30",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -59,7 +62,9 @@
           "parts": [
             [
               "4d6",
-              "Cold"
+              [
+                "cold"
+              ]
             ]
           ],
           "critParts": [],
@@ -85,8 +90,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -107,7 +112,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "cone-shaped burst",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -184,9 +193,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You send a Flurry of Snowballs hurtling at your foes. Any creature in the area takes 4d6 points of cold damage from being pelted with the icy spheres.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "cone-shaped burst",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -232,6 +238,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "instantaneous",
+    "spellArea": "cone-shaped burst",
     "size": "med",
     "spellPoints": {
       "cost": "1 + @sl"

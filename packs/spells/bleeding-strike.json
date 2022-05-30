@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "sikorhbypccktenm",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level or until discharged",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one slashing melee weapon touched",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -178,9 +186,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You imbue a slashing melee weapon with the ability to create a bleeding wound. As a free action when the weapon hits a living creature, the wielder can discharge this spell to add 1 point of bleed damage to the weapon's base damage. This bleeding is difficult to stop; add your spellcasting ability modifier (Wisdom for clerics, and so on) to the DC to stop the bleeding.</p>",
-    "spellDuration": "1 round/level or until discharged",
-    "spellEffect": "one slashing melee weapon touched",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -219,10 +224,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level or until discharged",
+    "spellEffect": "one slashing melee weapon touched"
   },
   "effects": [],
   "folder": null,

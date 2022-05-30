@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "jah2wefqqkkt9f63",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "a shadowy shadow tether",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -180,9 +186,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>The target's shadow becomes a flexible tether to its current square. The creature can move up to 5 feet from that square without penalty. Moving farther than 5 feet from the tether point requires the target to make a bull rush combat maneuver check against a CMB of 10 + 1/2 your caster level + your Intelligence modifier (if a witch or wizard) or Charisma modifier (if a bard or sorcerer). The target takes a -1 penalty for every 5 feet of distance between it and its tethered square. Failing this check means the target's move is wasted and it cannot move farther away. If it fails this check by 10 or more, it is pulled 5 feet toward the tether square and is knocked prone. If it beats the check by 10 or more, the spell ends. This spell does not work on creatures that do not cast shadows or reflections. If the target uses a teleportation effect or leaves the current plane, the spell ends.</p>",
-    "spellDuration": "1 round/level (D); see text",
-    "spellEffect": "a shadowy shadow tether",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -224,10 +227,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level (D); see text",
+    "spellEffect": "a shadowy shadow tether"
   },
   "effects": [],
   "folder": null,

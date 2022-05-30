@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "9jb1utmooxra5xw7",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -180,9 +186,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>When you cast this spell, you can assume the form of any <i>Small</i> or <i>Medium</i> corporeal creature of the undead type, which must be vaguely humanoid-shaped (like a ghoul, skeleton, or zombie). You gain a bite attack (1d6 for <i>Medium</i> forms, 1d4 for <i>Small</i> forms), two claw or slam attacks (1d6 for <i>Medium</i> forms, 1d4 for <i>Small</i> forms), and darkvision 60 feet. If the form you assume has any of the following abilities, you gain the listed ability: climb 30 feet, fly 30 feet (average maneuverability), swim 30 feet, low-light vision, and scent.</p><p>In this form, you detect as an undead creature (such as with <i>detect undead</i>, but not with magic that reveals your <i>true</i> form, such as <i>true</i> seeing) and are treated as undead for the purposes of channeled energy, <i>cure</i> spells, and <i>inflict</i> spells, but not for other effects that specifically target or react differently to undead (such as <i>searing</i> light).</p><p><i>Small</i> undead: If the form you take is that of a <i>Small</i> undead, you gain a +2 size bonus to your Dexterity and a +1 natural armor bonus.</p><p><i>Medium</i> undead: If the form you take is that of a <i>Medium</i> undead, you gain a +2 size bonus to your Strength and a +2 natural armor bonus.</p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -222,10 +225,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level (D)"
   },
   "effects": [],
   "folder": null,

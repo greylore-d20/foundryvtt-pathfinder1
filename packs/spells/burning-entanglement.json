@@ -5,16 +5,15 @@
   "img": "systems/pf1/icons/spells/shielding-fire-3.jpg",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "hzg54qzkk8m7ehx3",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "systems/pf1/icons/spells/shielding-fire-3.jpg",
         "description": "",
         "activation": {
           "cost": 1,
@@ -30,10 +29,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -43,8 +47,8 @@
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
+          "type": "circle",
+          "size": "40",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex negates or partial (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "40-ft.-radius spread",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -178,9 +186,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions as per <i>entangle</i>, except it sets the foliage on fire. A creature that begins its turn <i>entangle</i>d by the spell takes 4d6 points of fire damage (Reflex half), and a creature that begins its turn in the area but is not <i>entangle</i>d takes 2d6 points of fire damage (Reflex negates). Smoke rising from the vines partially obscures visibility. Creatures can see things in the smoke within 5 feet clearly, but attacks against anything farther away in the smoke must contend with concealment (20% miss chance). When the spell's duration expires, the vines burn away entirely.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "40-ft.-radius spread",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -220,10 +225,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level",
+    "spellArea": "40-ft.-radius spread"
   },
   "effects": [],
   "folder": null,

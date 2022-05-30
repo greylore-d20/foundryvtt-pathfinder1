@@ -43,7 +43,7 @@
     },
     "actions": [
       {
-        "_id": "0om9sxatt9wn8q0a",
+        "_id": "08j9ke8m5bivsrmq",
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/flying-talon.png",
         "description": "",
@@ -72,11 +72,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +94,10 @@
           "parts": [
             [
               "sizeRoll(1, 4, @size)",
-              "P or S"
+              [
+                "piercing",
+                "slashing"
+              ]
             ]
           ],
           "critParts": [],
@@ -140,7 +143,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

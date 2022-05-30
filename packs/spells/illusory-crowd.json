@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "lx1nbhu8k7hjuzir",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 minute/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will disbelief (if interacted with)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one 10-ft. cube of illusory people",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -170,9 +178,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell creates an illusion of a stationary group of people milling about. They can be of any humanoid race or ethnicity you are familiar with, and they speak a language of your choice that you know. To anyone not paying close attention, their  conversations sound perfectly normal but are in fact repetitive and essentially meaningless. The crowd appears to be a group of typical citizens, and cannot duplicate any specific group, guild, or military squad.  The crowd affects movement and provides cover like a real crowd (<i>Pathfinder RPG Core Rulebook</i> 436), b ut a nyone who disbelieves the illusion can move and attack through the crowd without impediment. Each round a creature enters or makes an attack through a crowd-filled square, it can attempt a save to disbelieve the illusion. Similarly, any creature that spends a round listening to or talking to the crowd can attempt a save to disbelieve the illusion. If the group is placed in any terrain other than urban, each creature attempting a save to disbelieve the spell gains a +5 bonus on the save.</p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellEffect": "one 10-ft. cube of illusory people",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -211,10 +216,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level (D)",
+    "spellEffect": "one 10-ft. cube of illusory people"
   },
   "effects": [],
   "folder": null,

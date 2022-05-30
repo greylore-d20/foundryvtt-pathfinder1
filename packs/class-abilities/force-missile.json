@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "8iochai7dfctxeq5",
+        "_id": "a5zreungr4fckcjq",
         "name": "Use",
         "img": "systems/pf1/icons/spells/fireball-eerie-1.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "3 + @abilities.int.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "3 + @abilities.int.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "1d4 + (floor(@classes.wizard.level / 2))",
-              "Force"
+              [
+                "force"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

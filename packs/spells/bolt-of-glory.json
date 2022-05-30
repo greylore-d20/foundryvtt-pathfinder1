@@ -5,16 +5,15 @@
   "img": "icons/magic/light/beam-rays-orange.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "3cciy99h6voz3ogj",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/light/beam-rays-orange.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +21,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,20 +42,20 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "rsak",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -72,11 +71,11 @@
           "bonus": {
             "formula": ""
           },
-          "label": null
+          "label": ""
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": "dex",
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -84,10 +83,13 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
-        "effectNotes": [],
+        "effectNotes": [
+          "Low damage: [[(min(7, ceil(@cl / 2)))d6]]",
+          "High damage: [[(min(15, @cl))d6]]"
+        ],
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
@@ -106,7 +108,11 @@
         "usesAmmo": false,
         "spellEffect": "ray",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -169,9 +175,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You fire a ray of positive energy. A creature struck takes varying damage, depending on its nature and home plane of existence. Neutral outsiders and creatures native to the Material Plane and Elemental Planes take 1d6 points of damage per 2 levels (maximum 7d6). Evil outsiders, undead, and natives of the Negative Energy Plane take 1d6 points of damage per level (maximum 15d6). All other creatures take no damage.</span></p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "ray",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -239,10 +242,7 @@
       "type": "",
       "description": ""
     },
-    "effectNotes": [
-      "Low damage: [[(min(7, ceil(@cl / 2)))d6]]",
-      "High damage: [[(min(15, @cl))d6]]"
-    ],
+    "effectNotes": [],
     "attackNotes": [],
     "soundEffect": "",
     "powerAttack": {
@@ -251,6 +251,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "instantaneous",
+    "spellEffect": "ray",
+    "spellArea": "",
     "spellPoints": {
       "cost": "1 + @sl"
     },

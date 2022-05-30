@@ -43,7 +43,7 @@
     },
     "actions": [
       {
-        "_id": "uuz54x38djpbk0fl",
+        "_id": "0xlir8d29fsphiqi",
         "name": "Attack",
         "img": "icons/weapons/polearms/spear-simple-hooked-grey.webp",
         "description": "",
@@ -72,11 +72,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": null,
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +94,10 @@
           "parts": [
             [
               "sizeRoll(1, 10, @size)",
-              "P or S"
+              [
+                "piercing",
+                "slashing"
+              ]
             ]
           ],
           "critParts": [],
@@ -140,7 +143,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

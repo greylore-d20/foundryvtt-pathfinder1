@@ -5,16 +5,15 @@
   "img": "icons/magic/unholy/beam-ringed-impact-purple.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "yoch125otlcd3s4i",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/unholy/beam-ringed-impact-purple.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +21,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,20 +42,20 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "rsak",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -72,11 +71,11 @@
           "bonus": {
             "formula": ""
           },
-          "label": null
+          "label": ""
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": "dex",
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -85,9 +84,11 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
-        "effectNotes": [],
+        "effectNotes": [
+          "<b>Save Fail Effect</b> @Compendium[pf1.conditions.woFU0s24URgixLm7]{Dazed} for [[1d3]] rounds"
+        ],
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
@@ -106,7 +107,11 @@
         "usesAmmo": false,
         "spellEffect": "ray",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -169,9 +174,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You can fire one ray per round that dazes one living creature for 1d3 rounds.</span></p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "ray",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -239,9 +241,7 @@
       "type": "will",
       "description": "Will negates"
     },
-    "effectNotes": [
-      "<b>Save Fail Effect</b> @Compendium[pf1.conditions.woFU0s24URgixLm7]{Dazed} for [[1d3]] rounds"
-    ],
+    "effectNotes": [],
     "attackNotes": [],
     "soundEffect": "",
     "powerAttack": {
@@ -250,6 +250,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "1 round/level",
+    "spellEffect": "ray",
+    "spellArea": "",
     "spellPoints": {
       "cost": "1 + @sl"
     },

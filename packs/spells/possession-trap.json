@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "eerlgd58kwery0o7",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -168,9 +174,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You place a protective ward over your spirit that ensnares creatures attempting to possess you. Should a creature attempt to possess you (such as via <i>magic jar</i> or a similar effect) while you are under the effects of <i>possession trap</i>, that creature must first succeed at a Will save or its possession attempt is ruined and its spirit is shunted into this spell's focus gem. The trapped creature is contained within the focus gem for 1 round per caster level, acting as though it were trapped in a <i>magic jar</i> for the duration of this effect. This effect fails if you are not carrying the focus gem during the time of the possession attempt.</p><p>If the possessor's Will save is successful, you are affected by its possession attempt as normal, and may attempt a saving throw against this possession attempt if one is normally allowed. Regardless of whether the possessor fails or succeeds at its save against <i>possession trap</i>, you immediately become aware of the possession attempt and whether or not a creature is trapped in the focus gem. If the focus gem is destroyed while it contains a creature, the creature is immediately released.</p><p>Once this spell is triggered, it offers no further protection, and a trapped creature can attempt to possess you again once it's free of the focus gem.</p>",
-    "spellDuration": "24 hours or until activated (see text); 1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -210,10 +213,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "24 hours or until activated (see text); 1 round/level"
   },
   "effects": [],
   "folder": null,

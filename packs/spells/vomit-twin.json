@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "qyxsq8dlvwmhn31c",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "creates one ooze duplicate of the caster",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -182,9 +190,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>Upon casting this spell, you vomit forth a disgusting ooze copy of yourself into a single adjacent square. As long as the twin exists, whenever you take a move action to move, the twin can move as well, although it does not need to follow you and cannot take any other actions. On subsequent rounds, at the start of your turn, you can instantaneously exchange places with your twin, as if using <i>teleport</i>. This is not an action and does not provoke an attack of opportunity.  The twin has a speed of 30 feet and provokes attacks of opportunity from movement as normal. It has an AC equal to 10 + 1/2 your caster level and a number of hit points equal to your caster level. If the twin is reduced to 0 hit points, it is destroyed, although you can create a new one on your turn as a standard action as long as the duration persists. You cannot have more than one vomit twin at a time.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "creates one ooze duplicate of the caster",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -221,10 +226,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level",
+    "spellEffect": "creates one ooze duplicate of the caster"
   },
   "effects": [],
   "folder": null,

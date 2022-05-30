@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "o67tarfy5kbkqr08",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "see below"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -182,9 +188,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You become a Medium chromatic or metallic dragon (see the <i>Pathfinder RPG Bestiary</i>). You gain a +4 size bonus to Strength, a +2 size bonus to Constitution, a +4 natural armor bonus, fly 60 feet (poor), darkvision 60 feet, a breath weapon, and resistance to one element. You also gain one bite (1d8), two claws (1d6), and two wing attacks (1d4). Your breath weapon and resistance depend on the type of dragon. You can only use the breath weapon once per casting of this spell. All breath weapons deal 6d8 points of damage and allow a Reflex save for half damage. In addition, some of the dragon types grant additional abilities, as noted below.</p><p><br><i>Black dragon</i>: 60-foot line of acid, resist acid 20, swim 60 feet <br><i>Blue dragon</i>: 60-foot line of electricity, resist electricity 20, burrow 20 feet <br><i>Green dragon</i>: 30-foot cone of acid, resist acid 20, swim 40 feet <br><i>Red dragon</i>: 30-foot cone of fire, resist fire 30, vulnerability to cold <br><i>White dragon</i>: 30-foot cone of cold, resist cold 20, swim 60 feet, vulnerability to fire <br><i>Brass dragon</i>: 60-foot line of fire, resist fire 20, burrow 30 feet, vulnerability to cold <br><i>Bronze dragon</i>: 60-foot line of electricity, resist electricity 20, swim 60 feet <br><i>Copper dragon</i>: 60-foot line of acid, resist acid 20, <i>spider climb</i> (always active) <br><i>Gold dragon</i>: 30-foot cone of fire, resist fire 20, swim 60 feet <br><i>Silver dragon</i>: 30-foot cone of cold, resist cold 30, vulnerability to fire</p>",
-    "spellDuration": "1 min./level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -225,10 +228,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 min./level"
   },
   "effects": [],
   "folder": null,

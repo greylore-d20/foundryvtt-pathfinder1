@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "k1uxiikzibjm0l8w",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,9 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -78,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -100,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see text)",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -112,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -185,9 +194,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You strike the ground and unleash a tremor of seismic force, hurling up earth, rock, and sand. You choose whether the earth tremor affects a 30-foot line, a 20-foot cone-shaped spread, or a 10-foot-radius spread centered on you. The space you occupy is not affected by earth tremor. The area you choose becomes dense rubble that costs 2 squares of movement to enter. Dense rubble adds 5 to the DC of Acrobatics checks and adds 2 to the DC of Stealth checks. Creatures on the ground in the area take 1d4 points of bludgeoning damage per caster level you have (maximum 10d4) or half damage on a successful save. Medium or smaller creatures that fail their saves are knocked prone.</p><p> This spell can be cast only on a surface of earth, sand, or stone. It has no effect if you are in a wooden or metal structure or if you are not touching the ground.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see text)",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -222,12 +228,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "instantaneous",
+    "spellArea": "30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see text)",
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
     }
   },
   "effects": [],

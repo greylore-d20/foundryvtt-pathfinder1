@@ -43,7 +43,7 @@
     },
     "actions": [
       {
-        "_id": "7gvuscves6ofmd6c",
+        "_id": "h0cvuehbohls1yt6",
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/crossbow-light.PNG",
         "description": "",
@@ -72,11 +72,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +94,9 @@
           "parts": [
             [
               "sizeRoll(1, 4, @size)",
-              "B"
+              [
+                "bludgeoning"
+              ]
             ]
           ],
           "critParts": [],
@@ -140,7 +142,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": true,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "9zxwd0p2uqeq2il4",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level or until discharged",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "25-ft.-radius emanation centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -166,9 +174,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>Anytime a harmless (so noted by a spell's saving throw description) spell of 3rd level or lower is cast within a <i>covetous</i> aura's area of effect, you may choose to immediately gain the benefit of that spell as if it had also targeted you. The intended target still gains the effect of the spell. You gain the benefits of this duplicated spell only if the caster is in range of the <i>covetous</i> aura. You are considered the caster of the additional spell effect. If the effect allows for multiple targets other than yourself, you cannot use the stolen spell effect to target other creatures-a <i>covetous</i> aura only aids you. Once you choose to gain the benefit of another spell, the <i>covetous</i> aura immediately ends. Rumors hold that this unusual spell was invented thousands of years ago by Runelord Belimarius, who was constantly jealous of other spellcasters' abilities.</p>",
-    "spellDuration": "1 round/level or until discharged",
-    "spellEffect": "",
-    "spellArea": "25-ft.-radius emanation centered on you",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -205,10 +210,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level or until discharged",
+    "spellArea": "25-ft.-radius emanation centered on you"
   },
   "effects": [],
   "folder": null,

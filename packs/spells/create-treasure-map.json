@@ -5,25 +5,24 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "kea7asky7dbbmk7s",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "hour"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": "hour"
           }
         },
         "duration": {
@@ -34,8 +33,11 @@
           "value": "one dead creature"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -192,9 +198,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You can take a piece from a dead creature's body and use it to create a map that reveals the locations of any valuables that creature knew about while still alive. You must cut this piece off yourself and the creature cannot have died more than 24 hours prior to the casting of this spell. You cannot cast this spell on a creature without a physical body, and the portion you remove must have a fairly level surface such as a piece of hide, carapace, or skin. The map you create is accurate to the best knowledge the creature had at the time of its death. It reveals the location of one source of treasure for every three caster levels you possess.</p><p>Any inaccuracies or faulty information held by the creature are represented on the map as well. Similarly, the map cannot account for any changes that occur after the creature's death.</p><p>You must choose the scale of the map when creating it, opting between nearby (e.g., one or two dungeon levels), local (e.g., a valley or community), or broad (e.g., a country or larger). The map reveals the locations of what the creature deemed most valuable within its area. Depending on the creature, the map might reveal a source of tasty food, suitable mates, or even your own treasure vault.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -233,10 +236,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "instantaneous",
     "spellPoints": {
       "cost": ""
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

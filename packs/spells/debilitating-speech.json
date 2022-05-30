@@ -5,16 +5,15 @@
   "img": "icons/skills/social/intimidation-impressing.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "8ysx13pjg3ti3jwh",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/skills/social/intimidation-impressing.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +21,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,13 +42,13 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -76,7 +75,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -85,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -173,9 +176,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">By speaking eloquently on the subject of your opponents&rsquo; ineptitude in combat, past failures, personal hygiene, or other faults, you sap their will to fight.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell can be cast as a standard action or as a full-round action. If cast as a standard action, it takes effect in 1d4 rounds following the spell&rsquo;s casting. If cast as a full-round action, it takes effect 1 round after its casting. Enemies with 4 Hit Dice or fewer are @Compendium[pf1.conditions.xhQma4Gl4wLO0jnZ]{Panicked}, enemies with 5&ndash;8 Hit Dice are @Compendium[pf1.conditions.M9FWe38D2J740wLH]{Cowering}, and enemies with more than 8 Hit Dice are @Compendium[pf1.conditions.07JPXUqIPshVnTCL]{Shaken}.</span></p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -252,6 +252,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "1 round/level",
+    "spellEffect": "",
+    "spellArea": "",
     "spellPoints": {
       "cost": "1 + @sl"
     },

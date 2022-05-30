@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "6booos92vygud2ra",
+        "_id": "r6r5zst2l5q2klpd",
         "name": "Use",
         "img": "systems/pf1/icons/skills/violet_17.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "2",
           "per": "charges",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "2"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "circle",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "(ceil(@classes.antipaladin.level / 2))d6",
-              "Negative"
+              [
+                "negative"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

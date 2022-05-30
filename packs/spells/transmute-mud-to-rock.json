@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "78it42m8p9mdqe1i",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "permanent",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "up to two 10-ft. cubes/level",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -174,9 +182,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell permanently transforms normal mud or quicksand of any depth into soft stone (sandstone or a similar mineral).</p><p>Any creature in the mud is allowed a Reflex save to escape before the area is hardened to stone.</p><p><i>Transmute mud to rock</i> counters and dispels <i>transmute rock to mud</i>.</p>",
-    "spellDuration": "permanent",
-    "spellEffect": "",
-    "spellArea": "up to two 10-ft. cubes/level",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -214,10 +219,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "permanent",
+    "spellArea": "up to two 10-ft. cubes/level"
   },
   "effects": [],
   "folder": null,

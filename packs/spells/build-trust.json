@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "k79mxvzd11gdfw2v",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -184,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You get a sense of the best way to interact with the target in order to encourage positive regard and fellowship toward you. You gain a +2 circumstance bonus on all Charisma checks and Charisma-based skill checks you attempt when interacting with the target. In addition, whenever you fail a Charisma  check or Charisma-based skill check when interacting with the target, you can reroll the check as an immediate action. Attempting this reroll grants the target a new saving throw to end the spell. The target doesn't become hostile to you when the spell ends, but it does become disillusioned of its new trust in you. Attacking the target or taking an obvious hostile action against it automatically ends the spell.  If you are using the contacts rules (<i>Ultimate Campaign</i> 148), your trust score with the target increases by 1 for the duration of the spell. If you're using the individual influence system (see pages 102-109), if the target fails its initial saving throw you learn one of its influence skills, strengths, or weaknesses as though you had succeeded at a discovery check.</p>",
-    "spellDuration": "1 day/level; see text",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -228,10 +231,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 day/level; see text"
   },
   "effects": [],
   "folder": null,

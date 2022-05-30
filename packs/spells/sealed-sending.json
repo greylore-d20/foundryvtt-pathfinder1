@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "o3byvbqj0bu09pdd",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,9 +29,15 @@
           "value": "1 hour/level or until discharged",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -78,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "none (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -100,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one nonmagical parchment with a written message",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -112,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -161,9 +170,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You create a scroll bearing a message in any language you can speak, with a maximum length of 50 words. The scroll magically appears anywhere you have viewed at least once on the same plane of existence you are on now. When the spell ends or when the message has been read completely, the scroll disintegrates, leaving no trace. This spell cannot be detected, traced, or blocked by any spell of a lower level.</p>",
-    "spellDuration": "1 hour/level or until discharged",
-    "spellEffect": "one nonmagical parchment with a written message",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -197,12 +203,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "1 hour/level or until discharged",
+    "spellEffect": "one nonmagical parchment with a written message",
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
     }
   },
   "effects": [],

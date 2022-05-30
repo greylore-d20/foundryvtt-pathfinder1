@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "qzfhbhdlzjixp4es",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "1 round/level or until discharged; see text",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 15,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "cone-shaped burst",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -175,9 +182,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>Up to thrice during this spell's duration, you can belch forth a cone of fire as a standard action. The first cone deals 4d6 points of fire damage to every creature in the area. The second cone of flame deals 2d6 points of fire damage to every creature in the area. The third cone of flame deals 1d6 points of fire damage to every creature in the area. A successful Reflex save halves this damage. After the third cone of flame, the spell ends.</p>",
-    "spellDuration": "1 round/level or until discharged; see text",
-    "spellEffect": "",
-    "spellArea": "cone-shaped burst",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -217,10 +221,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level or until discharged; see text",
+    "spellArea": "cone-shaped burst"
   },
   "effects": [],
   "folder": null,

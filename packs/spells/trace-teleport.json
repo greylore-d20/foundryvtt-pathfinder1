@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "c711ekco3ov8nrx3",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 40,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "40-ft.-radius emanation centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -167,9 +174,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You immediately become aware of any <i>teleport</i>ation effects that begin or end within the spell's area. The spell's area radiates from you and moves as you move. You know the exact origin point of any <i>teleport</i>ation effect that originates within the spell's area, and the exact end point of any <i>teleport</i>ation effect that terminates within the spell's area. Further, you can detect the lingering traces of any <i>teleport</i>ation effect that occurred up to 1 hour previously, in the same fashion. You intuitively know, to the nearest minute, when the <i>teleport</i>ation effect occurred.  Whenever you detect the origin point or termination point of any <i>teleport</i>ation effect with this spell, you can study that origin point or termination point for 1 round. If you do, you can attempt a caster level check (DC = 11 + the <i>teleport</i>ation effect's caster level), taking a -5 penalty if the effect occurred more than 1 minute ago. If you succeed, you gain a glimpse of the <i>teleport</i>ation effect's termination point (if you detected an origin point) or origin point (if you detected a termination point). This glimpse lasts long enough for you to get a brief look at the area, but not long enough to scrutinize it in detail. It doesn't come with any geographic knowledge of the location, so it is not sufficient for <i>teleport</i> or similar magic. You can't retry the caster level check, even if you cast trace <i>teleport</i> again.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "40-ft.-radius emanation centered on you",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -207,10 +211,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level",
+    "spellArea": "40-ft.-radius emanation centered on you"
   },
   "effects": [],
   "folder": null,

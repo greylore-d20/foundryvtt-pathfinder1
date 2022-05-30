@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "q6lufhyms5nplc5o",
+        "_id": "vo0i3nbexr4tcmof",
         "name": "Use",
         "img": "systems/pf1/icons/skills/green_15.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "floor(@classes.antipaladin.level / 2) + @abilities.cha.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "floor(@classes.antipaladin.level / 2) + @abilities.cha.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "(floor(@classes.antipaladin.level / 2))d6",
-              "Negative"
+              [
+                "negative"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

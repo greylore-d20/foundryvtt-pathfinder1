@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "7onkt67s9h94h4zj",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "1 minute/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 10,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "none or Will negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "10-ft.-radius emanation, centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -175,9 +182,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create a pale silver barrier that repels undead. Mindless undead and intelligent undead with fewer Hit Dice than your caster level cannot enter the area or penetrate the barrier.</p><p>Undead of Hit Dice equal to or greater than your caster level can pass through this barrier by making a successful Will save against the spell, but as they do so, they take 3d6 points of damage. Once an undead creature makes its save again this spell and takes this damage, it can come and go without further penalty. This spell may only be used defensively, not aggressively. Forcing an undeath ward against creatures that the spell keeps at bay collapses the barrier.</p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellEffect": "",
-    "spellArea": "10-ft.-radius emanation, centered on you",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -217,10 +221,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level (D)",
+    "spellArea": "10-ft.-radius emanation, centered on you"
   },
   "effects": [],
   "folder": null,

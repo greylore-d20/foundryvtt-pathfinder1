@@ -5,16 +5,15 @@
   "img": "icons/magic/earth/strike-fist-stone.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "f9bujam5p5g9bjhy",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/earth/strike-fist-stone.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +21,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,13 +42,13 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -76,7 +75,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -85,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -201,9 +204,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">The target&rsquo;s skin becomes as thick and tough as clay, granting the target DR 5/adamantine. Once the spell has prevented a total of 5 points of damage per caster level (maximum 50 points), it is discharged and the spell ends.</span></p>",
-    "spellDuration": "10 minutes/level or until discharged",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -280,6 +280,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "10 minutes/level or until discharged",
+    "spellEffect": "",
+    "spellArea": "",
     "spellPoints": {
       "cost": "1 + @sl"
     },

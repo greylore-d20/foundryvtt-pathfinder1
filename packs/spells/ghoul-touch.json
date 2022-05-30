@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "3j4h3qvapezsinsw",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "living humanoid touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "msak",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -73,7 +75,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": "str",
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -81,10 +83,12 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates"
         },
-        "effectNotes": [],
+        "effectNotes": [
+          "Lasts [[1d6+2]] Rounds"
+        ],
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
@@ -103,7 +107,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +123,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -177,9 +185,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>Imbuing you with negative energy, this spell allows you to paralyze a single living humanoid for the duration of the spell with a successful melee touch attack.</p><p>A paralyzed subject exudes a carrion stench that causes all living creatures (except you) in a 10-foot-radius spread to become sickened (Fortitude negates). A <i>neutralize poison</i> spell removes the effect from a sickened creature, and creatures immune to poison are unaffected by the stench. This is a poison effect.</p>",
-    "spellDuration": "1d6+2 rounds",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -218,15 +223,10 @@
       "type": "fort",
       "description": "Fortitude negates"
     },
-    "effectNotes": [
-      "Lasts [[1d6+2]] Rounds"
-    ],
+    "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1d6+2 rounds"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "40ou5uofdhu9oenh",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one Small or smaller creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -172,9 +178,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You grant the touched target the ability to ascertain the weaknesses of foes. The target deals an additional 1d6 points of precision damage on successful attacks with daggers or slings against foes within 30 feet, as long as the attacked foe is denied its Dexterity bonus to Armor Class or is flanked by the target. This additional damage increases by 1d6 for every 4 caster levels you have beyond 3rd, to a maximum of 5d6 at 19th level. This bonus damage is precision damage and stacks with other sources of precision damage, such as sneak attack. This bonus damage is not multiplied on a critical hit.  Once per round on a successful attack that deals this precision damage, the target can choose to forgo 2d6 points of precision damage (either granted by this spell or from other sources of precision damage, such as sneak attack) to inflict one of the following conditions on the attacked foe for 1 round:  <ul><li> The attacked foe can't make attacks of opportunity against creatures smaller than it.  <li> The attacked foe is denied its Dexterity bonus to Armor Class against attacks made with daggers or slings.  <li> The attacked foe takes a -2 penalty on attacks against creatures smaller than it.  <li> The attacked foe can't take 5-foot steps.  A creature can benefit from only one <i>halfling vengeance</i> spell at a time.</ul></p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -216,10 +219,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level"
   },
   "effects": [],
   "folder": null,

@@ -43,7 +43,7 @@
     },
     "actions": [
       {
-        "_id": "nsuk96q5gygx6mni",
+        "_id": "thrgfdpnqnda9xo4",
         "name": "Attack",
         "img": "icons/weapons/thrown/bomb-fuse-black.webp",
         "description": "",
@@ -72,11 +72,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "circle",
@@ -94,7 +94,9 @@
           "parts": [
             [
               "sizeRoll(4, 6, @size)",
-              "B, P, and S"
+              [
+                "slashing"
+              ]
             ]
           ],
           "critParts": [],
@@ -140,7 +142,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

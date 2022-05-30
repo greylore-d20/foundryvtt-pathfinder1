@@ -5,36 +5,39 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "981s8mdxedb2l8of",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
           "value": "1 hour/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 0,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one quasi-real chariot and draft team",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -179,9 +186,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You conjure a quasi-real heavy chariot with four horselike creatures in a team to pull it. (The exact description can be customized as you wish.) The chariot has all the normal qualities of a heavy chariot (see page 182). You or a person you designate while casting the spell must drive the chariot, which can carry up to six passengers (including the driver). The team and chariot make no sound and the team does not fight, although the driver can use the chariot like any normal chariot.  The chariot and team are essentially a single entity with an AC of 19 (-2 size, +6 natural armor, +5 Dex), and 10 hit points + 2 hit points per caster level (maximum 50). If the entity loses all its hit points, it disappears, possibly subjecting all aboard to a crash (treat as wrecked). The entity gains certain powers according to caster level, just like a mount does in the <i>phantom steed</i> spell.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "one quasi-real chariot and draft team",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -220,10 +224,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 hour/level (D)",
+    "spellEffect": "one quasi-real chariot and draft team"
   },
   "effects": [],
   "folder": null,

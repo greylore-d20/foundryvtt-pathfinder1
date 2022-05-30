@@ -12,9 +12,9 @@
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "g53idl2534pvhyp8",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "systems/pf1/icons/spells/beam-red-2.jpg",
         "description": "",
         "activation": {
           "cost": 1,
@@ -34,8 +34,10 @@
           "value": ""
         },
         "range": {
+          "value": null,
           "units": "medium",
           "maxIncrements": 1,
+          "minValue": null,
           "minUnits": ""
         },
         "uses": {
@@ -63,7 +65,10 @@
           "parts": [
             [
               "(min(15, @cl))d6",
-              "Fire and Divine"
+              [
+                "fire",
+                "untyped"
+              ]
             ]
           ]
         },
@@ -87,8 +92,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -110,11 +115,12 @@
         "spellEffect": "",
         "spellArea": "cylinder (10-ft. radius, 40-ft. high)",
         "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        },
         "attack": {
           "parts": []
-        },
-        "enh": {
-          "override": false
         }
       }
     ],
@@ -127,8 +133,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -214,9 +220,6 @@
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "cylinder (10-ft. radius, 40-ft. high)",
     "activation": {
       "type": "standard"
     },
@@ -258,10 +261,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
+    "spellDuration": "instantaneous",
+    "spellArea": "cylinder (10-ft. radius, 40-ft. high)",
     "clCheck": false,
     "identifiedName": "Flame Strike"
   },

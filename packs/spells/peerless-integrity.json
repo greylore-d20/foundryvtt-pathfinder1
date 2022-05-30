@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "epjrf0mgrhcmmtqw",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "10 minutes/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "none or Will negates; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "10-ft.-radius emanation centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -178,9 +186,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p><i>Peerless integrity</i> conceals the alignment of creatures from divination magic. All creatures within the spell's area, including you, appear to have lawful good auras for the purposes of divination spells and effects that reveal alignments (such as <i>detect law</i> and <i>see</i> alignmentUC), instead of their actual alignments. If the caster of such divination magic succeeds at a Will save, the caster recognizes whether the readings are true or false. Any creature under the effects of this spell gains a +2 circumstance modifier on Bluff and Diplomacy checks.  This spell does not affect other types of divination magic (such as <i>detect thoughts</i> or <i>discern</i> lies) and does not protect against spells or effects that cause harm based on targeted creatures' alignments.</p>",
-    "spellDuration": "10 minutes/level",
-    "spellEffect": "",
-    "spellArea": "10-ft.-radius emanation centered on you",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -219,10 +224,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "10 minutes/level",
+    "spellArea": "10-ft.-radius emanation centered on you"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "1h68bbxe724vfhxd",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "10-ft. chain",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -179,9 +187,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>A floating chain of force with hooks at each end appears within an unoccupied space of your choosing within range. This chain is a Medium object that has a 10-foot reach. Physical attacks cannot hit or harm the chain of perdition, but dispel magic, disintegrate, a sphere of annihilation, or a rod of cancellation affects it normally. The chain's AC against touch attacks is 10 + your Charisma modifier (sorcerer), Intelligence modifier (wizard), or Wisdom modifier (cleric).</p><p>The chain can perform the dirty trick (blind or entangle), drag, reposition, and trip combat maneuvers, using your caster level in place of your Combat Maneuver Bonus, and your Charisma modifier (sorcerer), Intelligence modifier (wizard), or Wisdom modifier (cleric) in place of your Strength or Dexterity modifier. The chain does not provoke attacks of opportunity for making combat maneuvers. It suffers no penalty or miss chance due to darkness, invisibility, or other forms of concealment.</p><p>As a move action, you can move the chain up to 30 feet. If the chain goes beyond the spell's range or out of your sight, it returns to you.</p><p>If a creature that the chain attacks has spell resistance, you must make a caster level check (1d20 + caster level) against that spell resistance the first time the chain performs a successful maneuver against that creature. If the chain is successfully resisted, the spell is dispelled. If not, the weapon has its normal full effect on that creature for the duration of the spell.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "10-ft. chain",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -218,10 +223,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level (D)",
+    "spellEffect": "10-ft. chain"
   },
   "effects": [],
   "folder": null,

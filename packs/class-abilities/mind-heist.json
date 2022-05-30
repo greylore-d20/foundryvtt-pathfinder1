@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "lx4u7w27d791tyul",
+        "_id": "7yzj1iwohsefhufw",
         "name": "Use",
         "img": "systems/pf1/icons/spells/slice-spirit-3.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "@abilities.cha.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "@abilities.cha.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -104,7 +104,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

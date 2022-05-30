@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "1fi2wmzzji40y0ob",
+        "_id": "vp0gfr2olp6570q7",
         "name": "Use",
         "img": "systems/pf1/icons/feats/deafening-critical.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": false,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "1",
-          "autoDeductCharges": false,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "1"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "(floor(@classes.barbarianUnchained.level / 4))d8 + @abilities.con.mod",
-              ""
+              [
+                "untyped"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

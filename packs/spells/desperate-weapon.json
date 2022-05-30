@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "2v2r60wghk2z7772",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "swift"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 1,
             "type": "action"
           }
         },
@@ -30,10 +29,15 @@
           "value": "1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one-handed improvised weapon",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -198,9 +206,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You create a one-handed object that you might expect to see in your current surroundings, which you can then use as an improvised weapon. The spell conjures such an object near your hand such that you can retrieve it as you complete the spell.  No matter what sort of object you picked, it functions as a one-handed improvised weapon appropriate for your size and that deals 1d6 points of damage for a Medium creature (1d4 for Small creatures). The item deals the type of damage you choose (bludgeoning, piercing, or slashing) when casting the spell, though the object you request must conform to the damage type.  The spell ends prematurely if the improvised weapon leaves your grasp. The object has no value and can't be used for other functions other than as an improvised weapon (for instance, this spell doesn't allow you to conjure an expensive spyglass and sell it or use its other abilities, but you could still use it to beat someone over the head). The conjured object can't already be a manufactured weapon, even in a location where you might expect to see manufactured weapons. It can be an object that would normally make for an unusual improvised weapon, like a herring at a fish market, and it still deals its full damage.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "one-handed improvised weapon",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -236,10 +241,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level",
+    "spellEffect": "one-handed improvised weapon"
   },
   "effects": [],
   "folder": null,

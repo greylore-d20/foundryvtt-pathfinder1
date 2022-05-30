@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "9b6cmjrvi2i7un5a",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -185,9 +191,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You forbid the target a single course of action, which it avoids to the best of its ability. You may demand the target not take actions that fall into one of the following options.</p><p>Attack: The target cannot take any action that involves an attack roll, or uses a spell or ability that targets a foe or an area that includes a foe.</p><p>Cast: Target cannot cast spells or use spell-like abilities.</p><p>Communicate: The target cannot take any actions that allow it to communicate with anyone. This includes such acts as speaking, Bluff checks to pass secret messages, writing, and using telepathy. It does not prevent verbalizations made for purposes other than communication, such as command words or the verbal component of spellcasting.</p><p>Draw: Target cannot ready or prepare any item, weapon, component, or equipment.</p><p>Move: The target can take no act that would cause it to end up in a different location. The target does not resist being moved by others (and thus can be picked up or dragged, or can float along on a raft), but does not consciously attempt to move (including not directing a mount to move).</p><p>The target is free to take any actions not forbidden by the caster. For example, a target affected by this spell's demand to not move is still free to cast spells, make attacks, or shout for help.</p>",
-    "spellDuration": "1 round",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -229,10 +232,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round"
   },
   "effects": [],
   "folder": null,

@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "0h67ae6k428t6l5q",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +30,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -43,8 +48,8 @@
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
+          "type": "circle",
+          "size": "20",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -55,14 +60,16 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
+          "critParts": [],
+          "nonCritParts": [],
           "parts": [
             [
               "(min(10, @cl))d6",
-              "Fire"
+              [
+                "fire"
+              ]
             ]
-          ],
-          "critParts": [],
-          "nonCritParts": []
+          ]
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -84,8 +91,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -107,8 +114,9 @@
         "spellEffect": "",
         "spellArea": "20-ft.-radius spread",
         "conditionals": [],
-        "attack": {
-          "parts": []
+        "enh": {
+          "override": false,
+          "value": 0
         }
       }
     ],
@@ -121,8 +129,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -192,9 +200,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>A <i>fireball</i> spell generates a searing explosion of flame that detonates with a low roar and deals 1d6 points of fire damage per caster level (maximum 10d6) to every creature within the area.</p><p>Unattended objects also take this damage. The explosion creates almost no pressure.</p><p>You point your finger and determine the range (distance and height) at which the <i>fireball</i> is to burst. A glowing, pea-sized bead streaks from the pointing digit and, unless it impacts upon a material body or solid barrier prior to attaining the prescribed range, blossoms into the <i>fireball</i> at that point. An early impact results in an early detonation. If you attempt to send the bead through a narrow passage, such as through an arrow slit, you must \"hit\" the opening with a ranged touch attack, or else the bead strikes the barrier and detonates prematurely.</p><p>The <i>fireball</i> sets fire to combustibles and damages objects in the area. It can melt metals with low melting points, such as lead, gold, copper, silver, and bronze. If the damage caused to an interposing barrier shatters or breaks through it, the <i>fireball</i> may continue beyond the barrier if the area permits; otherwise it stops at the barrier just as any other spell effect does.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "20-ft.-radius spread",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -239,12 +244,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "instantaneous",
+    "spellArea": "20-ft.-radius spread",
     "clCheck": false,
-    "identifiedName": "Fireball",
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "identifiedName": "Fireball"
   },
   "effects": [],
   "folder": null,

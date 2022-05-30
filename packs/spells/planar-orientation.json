@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "iqe3sewtm8otbaci",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -208,9 +214,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell helps creatures accustomed to the concrete reality of the Material Plane to navigate within the confusing realities of other planes. When cast, it functions as <i>know direction</i>, save that instead of revealing true north, it reveals the direction of the palace or demesnes most associated with that plane or demiplane's ruling god or demigod, as well as a brief and generic vision of that entity's appearance or holy symbol. The spell functions only within whatever plane or demiplane you are located in at the time; for instance, if cast within a specific demon lord's Abyssal realm or on a given layer of Hell, it would point to the seat of power for that demon lord or archdevil, not Lamashtu or Asmodeus. If a plane or demiplane has multiple gods or rulers, such as the Eldest of the First World or Heaven's various Empyreal Lords and deities, it reveals the directions of the closest three, allowing for triangulation.  This spell reveals the location of the god or demigod's official seat of power only, not the entity itself, and if such a location is deliberately hidden via magic of any sort, the spell automatically fails. It does not function on the Material Plane.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -250,10 +253,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

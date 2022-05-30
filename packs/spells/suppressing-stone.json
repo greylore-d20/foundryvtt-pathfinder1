@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "4sfpa08f99cz0xoh",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -168,9 +174,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You infuse arcane power into the focus <i>ioun stone</i>, which must be currently floating around your head. If the <i>ioun stone</i> ever ceases floating around you, the spell ends immediately, and the spell fails if the <i>ioun stone</i> in question is cracked, burned, flawed, or otherwise of lesser value (such as a dull gray <i>ioun stone</i>). While the spell is active, you gain a +1 resistance bonus on saving throws against mind-affecting effects for every 4 caster levels (maximum +5 at caster level 20). Whenever you fail a saving throw against a mind-affecting spell or effect, you can burn out the focus, transforming it irrevocably into a dull gray <i>ioun stone</i> and ending this spell, but suppressing the mind-affecting effect for 1 round per 2,500 gp of value of the focus (minimum 1 round). Rounds during which the effect is suppressed still count against its duration, and the effect can still be dispelled or disrupted during this time.</p>",
-    "spellDuration": "10 minutes/level or until discharged (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -210,10 +213,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "10 minutes/level or until discharged (D)"
   },
   "effects": [],
   "folder": null,

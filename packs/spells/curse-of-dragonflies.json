@@ -5,16 +5,15 @@
   "img": "icons/creatures/invertebrates/dragonfly-teal.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "2am14bhfyv3h721j",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/creatures/invertebrates/dragonfly-teal.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +21,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,13 +42,13 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -76,7 +75,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -85,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -197,9 +200,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You invest a target with cursed elemental energy, making the open skies anathema to it. If the affected creature ever tries to fly more than 5 feet above the ground, paper insects erupt from the air around the creature to interfere with its movement. The affected creature&rsquo;s flight maneuverability decreases by one step for every 3 caster levels you have. A creature whose maneuverability would be brought below clumsy must land at the end of its turn each round or fall.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell does not affect incorporeal creatures or creatures that are otherwise intangible (such as a wizard using&nbsp;@Compendium[pf1.spells.mqdoexj35atgqafn]{Gaseous Form} to fly).</span></p>",
-    "spellDuration": "permanent (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -276,6 +276,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "permanent (D)",
+    "spellEffect": "",
+    "spellArea": "",
     "spellPoints": {
       "cost": "1 + @sl"
     },

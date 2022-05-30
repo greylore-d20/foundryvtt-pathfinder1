@@ -43,7 +43,7 @@
     },
     "actions": [
       {
-        "_id": "z5w8c0ta7qbfda0p",
+        "_id": "1zv4kbeoj6k07t7w",
         "name": "Attack",
         "img": "icons/weapons/artillery/catapult-simple.webp",
         "description": "",
@@ -72,11 +72,11 @@
           "minUnits": "ft"
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +94,9 @@
           "parts": [
             [
               "sizeRoll(8, 6, @size)",
-              "B"
+              [
+                "bludgeoning"
+              ]
             ]
           ],
           "critParts": [],
@@ -140,7 +142,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

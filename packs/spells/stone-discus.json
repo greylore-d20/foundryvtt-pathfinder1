@@ -5,16 +5,15 @@
   "img": "systems/pf1/icons/spells/rock-orange-2.jpg",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "bq2830l16puecdca",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "systems/pf1/icons/spells/rock-orange-2.jpg",
         "description": "",
         "activation": {
           "cost": 1,
@@ -30,10 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -50,15 +54,18 @@
           "overrideTexture": false,
           "customTexture": ""
         },
-        "attackName": "",
-        "actionType": "spellsave",
+        "attackName": "Stone",
+        "actionType": "rsak",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
               "4d6",
-              "S or B"
+              [
+                "bludgeoning",
+                "slashing"
+              ]
             ]
           ],
           "critParts": [],
@@ -67,12 +74,12 @@
         "attackParts": [],
         "formulaicAttacks": {
           "count": {
-            "formula": ""
+            "formula": "min(3, floor((@cl + 1) / 4)) - 1"
           },
           "bonus": {
             "formula": ""
           },
-          "label": null
+          "label": "Stone #{0}"
         },
         "formula": "",
         "ability": {
@@ -84,8 +91,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +113,11 @@
         "usesAmmo": false,
         "spellEffect": "one or more stone discuses",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -118,8 +129,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -187,9 +198,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You create a stone discus, which flies at an enemy. You can create one discus, plus one additional discus at 7th and 11th caster levels. For each discus you create, you decide whether its edge is blunt (and deals bludgeoning damage) or sharp (and deals slashing damage). Each discus requires a ranged attack to hit and deals 4d6 points of damage. The discuses can be launched at more than one target, but all must be aimed at targets within 30 feet of each other and launched simultaneously.</p><p>At caster level 5th, the discuses count as magic and silver.</p><p>At caster level 10th, they also count as cold iron. At caster level 15th, they also count as adamantine.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "one or more stone discuses",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -238,10 +246,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellEffect": "one or more stone discuses"
   },
   "effects": [],
   "folder": null,

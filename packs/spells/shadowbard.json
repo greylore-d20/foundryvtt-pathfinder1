@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "boubewijc68twyxg",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "phantom singer",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -162,9 +170,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You conjure up a quasi-real phantom singer that is visible as a shifting, shadowy duplicate of yourself. The singer follows you automatically, moving as you move even if you teleport.</p><p>The singer cannot be damaged, but can be dispelled. When a <i>shadowbard</i> comes into being, it immediately begins a bardic performance of your choice-it has access to all of the bardic performances that you do. It continues that bardic performance until you direct it as a move action to switch to a different performance. Rounds spent by a <i>shadowbard</i> creating a bardic performance do not decrease the number of rounds you can use your own bardic performance, nor can a <i>shadowbard</i>'s bardic performance be used to trigger spells that require you to begin or cease a bardic performance.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "phantom singer",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -201,10 +206,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level (D)",
+    "spellEffect": "phantom singer"
   },
   "effects": [],
   "folder": null,

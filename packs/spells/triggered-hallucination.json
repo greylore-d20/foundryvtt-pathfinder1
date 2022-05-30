@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "rvnb6sxxz1q9l1us",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will disbelief"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -184,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell functions as <i><i>audiovisual</i> hallucination</i> (see page 204), except that this spell's phantasm has no apparent effect until a specific condition occurs. You must overcome the target's spell resistance to plant the <i>triggered hallucination</i>, but the target doesn't attempt a Will save to disbelieve the illusion until the condition occurs (at which point it receives an automatic Will save, as with <i><i>audiovisual</i> hallucination</i>). The phantasm can include auditory, olfactory, visual, tactile, and thermal elements, including intelligible speech.  You set the triggering condition (such as hearing a certain word or seeing a type of creature) when casting the spell. The event that triggers the illusion can be as general or detailed as desired but must be based on an audible, tactile, olfactory, or visual trigger. The trigger can't be based on any quality not  normally obvious to the senses, such as alignment. <i>Triggered hallucination</i> uses the target's senses to notice triggers.</p>",
-    "spellDuration": "permanent until triggered, then 1 minute/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -228,10 +231,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "permanent until triggered, then 1 minute/level",
     "spellPoints": {
       "cost": ""
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

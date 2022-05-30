@@ -43,7 +43,7 @@
     },
     "actions": [
       {
-        "_id": "aw4u4chrx251n5sd",
+        "_id": "1azfp9sgn21fjjf7",
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/piston-maul-gnome.png",
         "description": "",
@@ -72,11 +72,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +94,9 @@
           "parts": [
             [
               "sizeRoll(1, 10, @size)",
-              "B"
+              [
+                "bludgeoning"
+              ]
             ]
           ],
           "critParts": [],
@@ -140,7 +142,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

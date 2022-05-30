@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "b5019qgk5jw267w2",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "10 minutes/level (D); see text",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "trail of lily pads behind you",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -166,9 +174,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>Your every footstep creates aquatic plants capable of supporting your weight and that of any creature of your size or smaller that is following you. These lily pads only appear when you cross water or other liquids which do not immediately destroy plants. You can walk across these liquid surfaces without any fear of stumbling (though if knocked prone, dragged under, or otherwise pulled off your feet you still sink in the liquid). For the duration of the spell, any creature of your size or smaller can attempt to follow you by making a DC 10 Acrobatics check every round. Each such check allows it to move at half its normal land speed. If the creature takes a -5 penalty on its check it can move at its normal speed.</p><p>If a creature fails an Acrobatics check, or if a creature that's larger than you attempts to follow, it falls through, damaging the plants. Each time a creature falls through, all subsequent creatures take a cumulative -5 penalty on their Acrobatics checks when traveling across that particular stretch of plants.</p><p>As you move, the lily pads disappear behind you once you pass beyond the spell's range. Otherwise, they remain until the spell's duration expires.</p>",
-    "spellDuration": "10 minutes/level (D); see text",
-    "spellEffect": "trail of lily pads behind you",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -205,10 +210,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "10 minutes/level (D); see text",
+    "spellEffect": "trail of lily pads behind you"
   },
   "effects": [],
   "folder": null,

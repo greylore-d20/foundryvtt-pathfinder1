@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "dg4kreglrre2nr6j",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "wall whose area is up to one 10-ft. square/level",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -179,9 +187,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>A <i>Wall of Force</i> creates an invisible wall of pure force. The wall cannot move and is not easily destroyed. A <i>Wall of Force</i> is immune to <i>dispel magic</i>, although a mage's disjunction can still dispel it.</p><p>A <i>Wall of Force</i> can be damaged by spells as normal, except for <i>disintegrate</i>, which automatically destroys it. It can be damaged by weapons and supernatural abilities, but a <i>Wall of Force</i> has hardness 30 and a number of hit points equal to 20 per caster level. Contact with a <i>sphere of annihilation</i> or <i>rod of cancellation</i> instantly destroys a <i>Wall of Force</i>.</p><p>Breath weapons and spells cannot pass through a <i>Wall of Force</i> in either direction, although <i>dimension door</i>, <i>teleport</i>, and similar effects can bypass the barrier. It blocks ethereal creatures as well as material ones (though ethereal creatures can usually circumvent the wall by going around it, through material floors and ceilings). Gaze attacks can operate through a <i>Wall of Force</i>.</p><p>The caster can form the wall into a flat, vertical plane whose area is up to one 10-foot square per level. The wall must be continuous and unbroken when formed. If its surface is broken by any object or creature, the spell fails.</p><p><i>Wall of Force</i> can be made permanent with a <i>permanency</i> spell.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "wall whose area is up to one 10-ft. square/level",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -218,10 +223,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level (D)",
+    "spellEffect": "wall whose area is up to one 10-ft. square/level"
   },
   "effects": [],
   "folder": null,

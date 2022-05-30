@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "mnax8uycj89bzsze",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -43,8 +47,8 @@
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
+          "type": "circle",
+          "size": "20",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -58,7 +62,9 @@
           "parts": [
             [
               "(min(10, @cl))d6",
-              "Fire"
+              [
+                "fire"
+              ]
             ]
           ],
           "critParts": [],
@@ -84,10 +90,12 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half"
         },
-        "effectNotes": [],
+        "effectNotes": [
+          "[[min(10, @cl)]] Minimum Damage"
+        ],
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
@@ -106,7 +114,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "20-foot-radius spread",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -118,8 +130,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -179,9 +191,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell functions as <em>fireball</em> except you can cause the bead of fire to originate from anywhere you can see within range. You can choose a number of squares within the area up to your Intelligence bonus (for magi, occultists, or wizards) or Charisma bonus (for bloodragers or sorcerers) to be struck by weaker flames; the controlled <em>fireball</em> deals minimum damage in those squares. Attempts to identify controlled <em>fireball</em> with a skill check incorrectly identify it as <em>fireball</em> (see the ruse descriptor on page 192).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "20-foot-radius spread",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -223,15 +232,11 @@
       "type": "ref",
       "description": "Reflex half"
     },
-    "effectNotes": [
-      "[[min(10, @cl)]] Minimum Damage"
-    ],
+    "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellArea": "20-foot-radius spread"
   },
   "effects": [],
   "folder": null,

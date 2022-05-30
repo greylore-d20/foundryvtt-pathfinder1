@@ -5,16 +5,15 @@
   "img": "icons/magic/earth/barrier-stone-brown-green.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "rkhikpd3jel4ikb9",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/earth/barrier-stone-brown-green.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +21,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,13 +42,13 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -76,7 +75,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -84,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "dirt or loose rock in one 5-ft. cube/level",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -181,9 +184,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You can excavate and move an amount of snow, earth, dust, sand, and loose or packed rocks or ice chunks (each no more than 5 feet in diameter) whose volume fills one 5-foot cube per level. If you are buried, you can open a space around yourself and use any remaining cubes for tunneling. This spell is otherwise similar to @Compendium[pf1.spells.3v1k7qnzd13s5dj3]{Expeditious Excavation}. <em>Carve passage</em> has no effect on earth creatures or solid rock or ice.</span></p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "dirt or loose rock in one 5-ft. cube/level",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -260,6 +260,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "instantaneous",
+    "spellEffect": "",
+    "spellArea": "dirt or loose rock in one 5-ft. cube/level",
     "spellPoints": {
       "cost": "1 + @sl"
     },

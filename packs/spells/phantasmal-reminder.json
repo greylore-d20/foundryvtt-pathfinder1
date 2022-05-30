@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "59t1g5im5jgpobhw",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one living creature"
         },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Will disbelief, then Fortitude partial; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -188,9 +194,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You create a memory loop of a successful attack made against the target, forcing its conscious mind to recall the details of the attack in such excruciating detail that its physical body is racked by the recollection. This spell can affect only a creature that has taken damage since the end of your last turn. The target first can attempt a Will save to recognize the attack as unreal. If it fails that saving throw, the target must succeed at a Fortitude save or take an amount of damage equal to 1d6 x your caster level (maximum 10d6). Because the damage is a quasi-real memory of existing wounds, this damage can't be reduced or prevented (such as by the <i>shield other</i> spell).  If the target of a <i>phantasmal reminder</i> attack succeeds at the Will save to disbelieve the memory loop and either has natural telepathy or is wearing a <i>helm of telepathy</i>, the memory of damage automatically rebounds to affect you. You must immediately attempt a Will save to disbelieve; if you fail, you take half the spell's damage yourself.</p>",
-    "spellDuration": "1 round (see text)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -232,10 +235,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round (see text)"
   },
   "effects": [],
   "folder": null,

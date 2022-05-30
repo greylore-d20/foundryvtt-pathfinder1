@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "36ezhejf1zq8hwcu",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 round/level or until completely discharged (see below)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "1 comet per 4 levels",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -170,9 +178,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell causes a number of miniature comets (up to one per four caster levels) to orbit in the air above your head. Bits of snow and cold wind drift down from the orbiting comets, granting you a circumstance bonus equal to the number of comets on all saving throws against fire effects.</p><p>The actual use for the comets, though, is to make vengeful strikes against foes who dare to target you with offensive spells. As an immediate action whenever you are affected by a spell cast by another creature, you can fire one of your <i><i>vengeful comet</i>s</i> as a bolt of icy retribution (provided the source of the offensive spell is within range of your <i>vengeful comet</i>, of course). The comet requires a ranged touch attack to hit. If it hits, a comet deals 1d6 points of bludgeoning damage and 3d6 points of cold damage to the target, plus an additional amount of cold damage equal to the level of the spell you are retaliating against. If the spell you're retaliating against had the fire descriptor, you may opt to fire two comets instead of one.</p>",
-    "spellDuration": "1 round/level or until completely discharged (see below)",
-    "spellEffect": "1 comet per 4 levels",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -209,10 +214,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level or until completely discharged (see below)",
+    "spellEffect": "1 comet per 4 levels"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "mt4rjx8opy7hhemq",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 hour/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex partial or Reflex negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "one 10-ft. cube/level",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -170,9 +178,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You harden interpenetrated ethereal substance into deadly transdimensional razors that are invisible to normal sight. Movement through an area of <i>etheric shards</i> is halved, even for incorporeal creatures, and creatures entering a 5-foot cube filled with <i>etheric shards</i> take 1d8 points of piercing and slashing damage and must succeed at a Reflex save or take 1 point of bleed damage. This bleed damage stacks with itself and other sources of bleed damage. A creature standing within an area of <i>etheric shards</i> takes no damage as long as it remains completely motionless, but even the minor movements involved in attacking or defending in combat force a stationary creature to attempt a Reflex save. If a stationary creature succeeds at this save, it avoids damage completely for that round, but if it fails, it takes hit point damage and bleed damage as though it had moved through the square.  A creature forcibly moved through an area of <i>etheric shards</i>, such as by a bull rush or drag combat maneuver, takes a -4 penalty on its saving throw, but a creature able to see invisible or ethereal objects gains a +4 bonus, and damage to it is completely negated on a successful Reflex save.  <i>Etheric shards</i> are considered a magical trap, and a creature with trapfinding can use Perception to find them. The DC of this check is equal to 25 + the spell's level. <i>Etheric shards</i> can't be disabled with the Disable Device skill.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "",
-    "spellArea": "one 10-ft. cube/level",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -211,10 +216,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 hour/level (D)",
+    "spellArea": "one 10-ft. cube/level"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "0i96xi2obu4vshi8",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -180,9 +186,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You cause a creature to temporarily lose interest in a passion or pursuit, taking the heat off your trail to facilitate a getaway, the finalization of a scheme, or the elimination of incriminating evidence. When casting the spell, you designate a subject or activity about which the target becomes indifferent. While under the effects of <i>apathy</i>, the target takes a -5 penalty on all skill checks and ability checks to investigate, pursue, or otherwise advance its goals in relation to the designated subject. In most cases, however, the target does not attempt such checks if they can be avoided, as it simply has no interest in putting effort into the endeavor.  If the chosen activity is something that would be harmful for the target to refrain from doing (such as eating, sleeping, or holding its breath underwater), the target receives a +5 bonus on the saving throw or other check required by its inaction, and receives a new saving throw to negate the effects of this spell with the same +5 bonus immediately after. The bonus on these saving throws and checks increases by 1 for each subsequent check required by the same condition. If you directly interact with the target of this spell (such as engaging it in combat or targeting it with another spell or effect), the spell immediately ends.</p>",
-    "spellDuration": "1 hour/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -224,10 +227,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 hour/level"
   },
   "effects": [],
   "folder": null,

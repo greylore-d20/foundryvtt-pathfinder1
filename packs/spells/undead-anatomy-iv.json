@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "mloisjfbj4lqpcx6",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -154,7 +160,7 @@
       "focus": "",
       "gpValue": 0
     },
-    "spellbook": "",
+    "spellbook": "primary",
     "preparation": {
       "preparedAmount": 0,
       "maxAmount": 0,
@@ -164,9 +170,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions as <i>undead anatomy III</i>, except it allows you to use more abilities. If the form you assume has any of the following abilities, you gain the listed ability: burrow 60 feet, climb 90 feet, fly 120 feet (good maneuverability), swim 120 feet, blindsense 60 feet, darkvision 90 feet, lifesense 60 feet, low-light vision, scent, tremorsense 60 feet, breath weapon, constrict, DR 10/magic and silver, DR 15/bludgeoning and magic, fast healing 5, fiery death, fire aura, grab, incorporeal, jet, poison, pounce, rake, rend, roar, spikes, trample, trip, and web.</p><p>If the creature's form is incorporeal, the spell's duration is in rounds per level instead of minutes per level, and your bite and claw (or slam) attacks are incorporeal touch attacks. If the creature has immunity or resistance to any energy types, you gain resistance 30 to those energy types. If the creature has vulnerability to an energy type, you gain that vulnerability.</p><p>In this form, you gain a +8 bonus on saves against mindaffecting effects, disease, poison, sleep, and stunning. If the form has a vulnerability to an attack (such as sunlight), you gain that vulnerability.</p><p><i>Tiny</i> undead: If the form you take is that of a <i>Tiny</i> undead, you gain a -2 penalty to your Strength, a +8 size bonus to your Dexterity, and a +3 natural armor bonus.</p><p><i>Large</i> undead: If the form you take is that of a <i>Large</i> undead, you gain a +6 size bonus to your Strength, a -2 penalty on your Dexterity, a +2 size bonus to your Constitution, and a +6 natural armor bonus.</p>",
-    "spellDuration": "1 minute/level (D) (see text)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -206,12 +209,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "clCheck": false,
-    "identifiedName": "Undead Anatomy IV",
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level (D) (see text)"
   },
   "effects": [],
   "folder": null,

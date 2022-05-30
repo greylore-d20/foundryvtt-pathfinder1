@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "bxcgz8k25tf2xawy",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "an animal companion, familiar, or other bonded creature and its master (which may be no more than 30 ft. apart)"
         },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -172,9 +178,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You make a conduit between the targeted master and her familiar, allowing you to target the master or the familiar with your spells in order to affect the other. If the master succeeds at its save to resist this spell but the familiar fails, you can choose to have your spells that target the master affect the familiar instead. If the familiar resists but the master doesn't, your spells that target the familiar can affect the master instead. If both the familiar and the master fail to resist this spell, you can affect either the familiar or the master when you target either with a spell. When you target the master to affect her familiar or vice versa, the target attempts a save (if one is allowed) with its own saving throw bonus, but the other creature is affected by the spell.  Only spells that target one or more creatures can be cast through <i>empathy conduit</i>. The creature to be affected must still be a valid target of the spell being cast; for example, you can't affect a familiar with <i>charm person</i> through an <i>empathy conduit</i>. Spells with a duration other than instantaneous that are cast through an <i>empathy conduit</i> last either their normal duration or until the <i>empathy conduit</i> expires, whichever comes first. Whenever the master or its familiar is targeted with a spell intended to affect the other creature, the targeted creature can attempt an additional save against the <i>empathy conduit</i>.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -216,10 +219,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level"
   },
   "effects": [],
   "folder": null,

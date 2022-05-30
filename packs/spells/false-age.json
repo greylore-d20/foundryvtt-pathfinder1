@@ -5,16 +5,15 @@
   "img": "icons/magic/control/silhouette-grow-shrink-tan.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "xsi0pp3kkkqg12k0",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/control/silhouette-grow-shrink-tan.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +21,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,20 +42,20 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -76,16 +75,16 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
-          "damage": "",
+          "attack": null,
+          "damage": null,
           "damageMult": 1,
           "critRange": 20,
           "critMult": 2
         },
         "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "dc": 0,
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -197,9 +200,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">Half-elves are accustomed to aging at a different rate from those close to them and can temporarily present themselves at a different age. Select an age category within one step of your actual age category, either older or younger. Your appearance changes to match your age for the chosen category. Your ability scores increase or decrease as appropriate for your chosen age category.</span></p>",
-    "spellDuration": "10 minutes/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -276,6 +276,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "10 minutes/level",
+    "spellEffect": "",
+    "spellArea": "",
     "spellPoints": {
       "cost": "1 + @sl"
     },

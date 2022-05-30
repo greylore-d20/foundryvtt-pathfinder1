@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "xjlz4s8cqr9enrhy",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -164,9 +170,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions as <i>beast shape IV</i> except you can assume the form of only a magical beast of a size between Diminutive and Huge. If the form you assume has any of the following abilities, you gain those abilities: burrow speed 60 feet, climb speed 90 feet, fly speed 120 feet (good maneuverability), swim speed 120 feet, blindsense 60 feet, blindsight 30 feet, darkvision 90 feet, low-light vision, scent, see in darkness, tremorsense 60 feet, blood drain, blood frenzy, breath weapon (if damage, up to 12d6 points), constrict, fast healing 5, ferocity, grab, hold breath, jet, no breath, poison, pounce, powerful charge, pull, rake, rend, roar, spikes, trample, trip, and web. If the creature has immunity to poison, you gain a +8 resistance bonus on saves against poison. If the creature has immunity or resistance to any energy types, you gain resistance 20 to those energy types. If the creature has vulnerability to an energy type, you gain that vulnerability.</p><p><b>Diminutive Magical Beast</b>: If you assume this form, you gain a +10 size bonus to your Dexterity score and take a -4 penalty to your Strength score.</p><p><b>Huge Magical Beast</b>: If you assume this form, you gain a +8 size bonus to your Strength score, take a -4 penalty on your Dexterity score, a +2 size bonus to your Constitution score, and gain a +7 natural armor bonus.</p>",
-    "spellDuration": "1 min./level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -206,10 +209,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 min./level (D)"
   },
   "effects": [],
   "folder": null,

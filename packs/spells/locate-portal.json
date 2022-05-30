@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "45e02aditx7b095n",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "concentration, up to 1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 1,
           "units": "mi",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "circle, centered on you, with a radius of 1 mile/level",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -203,9 +210,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>When this spell is active, you feel a mental pull in the direction of any active or operable portal leading to another plane within range of the spell. If multiple portals are present, you are pulled only to the nearest one. If moving causes you to become closer to a different portal, you become drawn to that one instead. The spell gives you the direction of the portal only, not a route. Once you are within 10 feet of the portal, you no longer feel the pull, only the portal's presence. The spell does not pinpoint or otherwise reveal hidden portals, nor does it do anything to aid in opening or operating them.</p>",
-    "spellDuration": "concentration, up to 1 minute/level",
-    "spellEffect": "",
-    "spellArea": "circle, centered on you, with a radius of 1 mile/level",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -243,10 +247,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "concentration, up to 1 minute/level",
+    "spellArea": "circle, centered on you, with a radius of 1 mile/level"
   },
   "effects": [],
   "folder": null,

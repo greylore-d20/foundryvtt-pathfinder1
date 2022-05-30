@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "02fj4zjbjdxcembt",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half and Will negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "a sheet of flame up to 15 ft. long and 10 ft. high that moves 15 ft. in a straight line.",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -166,9 +174,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>A sheer wall of flame appears and rushes away from you. Tendrils of fire reach out of it, shaped into skulls screaming in agony. When the wall passes through a creature's space, that creature must succeed at a Reflex save or take 1d8 points of fire damage for every 2 caster levels you have (maximum 5d8). Any creature taking fire damage must also succeed at a Will save or take 1d3 points of Wisdom damage. Deaf creatures receive a +4 circumstance bonus on their Will saves.  If your campaign uses the sanity system (see page 12), a creature takes 1d6 points of sanity damage instead of Wisdom damage.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "a sheet of flame up to 15 ft. long and 10 ft. high that moves 15 ft. in a straight line.",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -207,10 +212,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellEffect": "a sheet of flame up to 15 ft. long and 10 ft. high that moves 15 ft. in a straight line."
   },
   "effects": [],
   "folder": null,

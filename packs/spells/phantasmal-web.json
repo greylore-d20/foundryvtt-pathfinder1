@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "2mmlzxjo3f9vi6pf",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one creature/level, no two of which may be more than 30 ft. apart"
         },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Will disbelief, then Fortitude partial; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -185,9 +191,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You implant within the minds of your targets the illusion that they are engulfed in tangled <i>web</i>s teeming with swarms of tiny spiders. Those who fail to disbelieve the <i>phantasmal <i>web</i></i> are treated as if in a <i>web</i> spell, but must also make a Fortitude save at the beginning of each turn or become nauseated for that round by the phantasmal spiders.</p><p>As the <i>phantasmal <i>web</i></i> exists only in the minds of the targets, it cannot be burned or destroyed, and it provides no cover (though it does provide concealment) against attacks made by the targets. <b>Target</b>s cannot escape the <i>phantasmal <i>web</i></i> by moving, even by teleportation. Freedom of movement allows unobstructed movement but does not negate the concealment or nausea effects.</p><p><b>Target</b>s of the spell perceive everyone else around them to be engulfed in <i>web</i>s and swarming spiders, but the spell has no visible effect to other creatures (who may assist allies to disbelieve the effect).</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -229,10 +232,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level (D)"
   },
   "effects": [],
   "folder": null,

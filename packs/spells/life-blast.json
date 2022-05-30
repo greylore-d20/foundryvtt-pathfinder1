@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "rwufszwfcili95b7",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 150,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "150-ft. line",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -175,9 +182,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>This spell must be cast in an area with vegetation or it has no effect. When you cast this spell, you draw the life force from the surrounding land and hurl it at your enemies, dealing 1d6 points of positive energy damage per caster level (to a maximum of 12d6 at 12th level) to any undead creatures in the spell's area. However, doing so blights the land around you in a spread with a radius of 5 feet per caster level you have (to a maximum of 60 feet at 12th level). All vegetation in that area immediately withers and dies. Plant creatures aren't affected.  The blast starts from your palm and is able to travel through solid objects and obstacles.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "150-ft. line",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -217,10 +221,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellArea": "150-ft. line"
   },
   "effects": [],
   "folder": null,

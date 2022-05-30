@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "b77xfhuuz8wmdcz5",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -85,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will half; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,22 +105,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "",
       "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": ""
     },
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -189,7 +190,7 @@
       "focus": "",
       "gpValue": 0
     },
-    "spellbook": "",
+    "spellbook": "primary",
     "preparation": {
       "preparedAmount": 0,
       "maxAmount": 0,
@@ -198,15 +199,11 @@
     },
     "atWill": false,
     "sr": true,
-    "shortDescription": "<p><em>Harm</em> charges a subject with negative energy that deals 10 points of damage per caster level (to a maximum of 150 points at 15th level). If the creature successfully saves, <em>harm</em> deals half this amount. <em>Harm</em> cannot reduce the target's hit points to less than 1.</p>\n<p>If used on an undead creature, <em>harm</em> acts like @Compendium[pf1.spells.4re1j2w8wkvsvnsi]{Heal}.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
+    "shortDescription": "<p><i>Harm</i> charges a subject with negative energy that deals 10 points of damage per caster level (to a maximum of 150 points at 15th level). If the creature successfully saves, <i>harm</i> deals half this amount. <i>Harm</i> cannot reduce the target's hit points to less than 1.</p><p>If used on an undead creature, <i>harm</i> acts like <i>heal</i>.</p>",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
     "activation": {
-      "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
@@ -215,54 +212,26 @@
         "type": "action"
       }
     },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
     "target": {
       "value": "creature touched"
     },
     "range": {
-      "value": null,
       "units": "touch",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
+      "maxIncrements": 1
     },
     "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
+      "size": "0"
     },
-    "attackName": "",
     "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
     "damage": {
       "parts": [],
       "critParts": [],
       "nonCritParts": []
     },
     "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
     "ability": {
       "attack": "",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
+      "damage": ""
     },
     "save": {
       "dc": "0",
@@ -271,25 +240,8 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "naturalAttack": {
-      "secondary": {
-        "attackBonus": "-5",
-        "damageMult": 0.5
-      }
-    },
     "conditionals": [],
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Harm",
-    "size": "med"
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

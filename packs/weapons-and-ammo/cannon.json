@@ -43,7 +43,7 @@
     },
     "actions": [
       {
-        "_id": "dpe3e4rif2z97d4i",
+        "_id": "6r5qxnoqm3mcl7y9",
         "name": "Attack",
         "img": "icons/weapons/artillery/cannon-simple.webp",
         "description": "",
@@ -72,11 +72,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +94,10 @@
           "parts": [
             [
               "sizeRoll(6, 6, @size)",
-              "B and P"
+              [
+                "bludgeoning",
+                "piercing"
+              ]
             ]
           ],
           "critParts": [],
@@ -140,7 +143,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "2oalevuw1e2ehsmy",
+        "_id": "qpdbqz62ufzl66h0",
         "name": "Use",
         "img": "systems/pf1/icons/spells/light-royal-1.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "@classes.oracle.level >= 20 ? 3 : ((@classes.oracle.level < 20 && @classes.oracle.level > 9) ? 2 : 1)",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "@classes.oracle.level >= 20 ? 3 : ((@classes.oracle.level < 20 && @classes.oracle.level > 9) ? 2 : 1)"
         },
         "measureTemplate": {
           "type": "",
@@ -104,7 +104,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

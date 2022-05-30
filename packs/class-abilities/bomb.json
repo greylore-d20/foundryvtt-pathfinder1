@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "09xfjqag96tnc32v",
+        "_id": "g4dga0mhztknss6x",
         "name": "Use",
         "img": "systems/pf1/icons/items/inventory/bomb.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "@classes.alchemist.level + @abilities.int.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "@classes.alchemist.level + @abilities.int.mod"
         },
         "measureTemplate": {
           "type": "circle",
@@ -63,14 +63,18 @@
           "parts": [
             [
               "1d6",
-              "Fire"
+              [
+                "fire"
+              ]
             ]
           ],
           "critParts": [],
           "nonCritParts": [
             [
               "(ceil(@classes.alchemist.level / 2) - 1)d6",
-              "Fire"
+              [
+                "fire"
+              ]
             ]
           ]
         },
@@ -116,7 +120,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -244,9 +254,7 @@
       "type": "ref",
       "description": "Reflex half"
     },
-    "effectNotes": [
-      "[[ceil(@classes.alchemist.level / 2) + @abilities.int.mod]] Splash Damage"
-    ],
+    "effectNotes": [],
     "attackNotes": [],
     "soundEffect": "",
     "size": "med"

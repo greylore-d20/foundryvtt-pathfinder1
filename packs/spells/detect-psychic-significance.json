@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "qmrotgj5j1y2vobf",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 40,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "40-ft.-radius burst, centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -179,9 +186,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You detect the presence of psychically significant items in your vicinity. Such items are those that might have significant psychic imprints or histories that can be read by the psychometry occult skill unlock (see page 196), or items under the effects of the <i>charge object</i> or <i>implant false reading</i> spells. Items within range that contain significant psychic energy spark a recognition in your mind's eye, but no other information is imparted. This spell doesn't automatically detect magic items or strongly aligned items, though such items often have storied histories and might have had previous owners who possessed psychic abilities.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "40-ft.-radius burst, centered on you",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -219,10 +223,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellArea": "40-ft.-radius burst, centered on you"
   },
   "effects": [],
   "folder": null,

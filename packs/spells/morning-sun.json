@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "tnjhgn503oysi0m5",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 minute/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Fortitude negates and Reflex half, see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "60-ft. radius",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -174,9 +182,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell conjures a miniature sphere of sunlight, approximately the size of a human fist, at a desired location within range. The sphere sheds bright light in a 60-foot-radius burst. Creatures that take penalties in bright light do so while within the sphere's area of illumination. Creatures that start their turns within the area of illumination and that are damaged or destroyed by sunlight must succeed at a Fortitude save or become staggered until 1d4+1 rounds after they leave the affected area. Non-creatures, such as hazardous fungi and mold that are destroyed by sunlight, become inert for the duration of the spell.  The sphere cannot be moved from the place it was cast. The sphere deals 10d6 points of fire damage to anything it touches and anything that passes within 5 feet of it. A successful Reflex save reduces this damage by half.</p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellEffect": "",
-    "spellArea": "60-ft. radius",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -215,10 +220,11 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "1 minute/level (D)",
+    "spellArea": "60-ft. radius",
     "spellPoints": {
       "cost": ""
-    },
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

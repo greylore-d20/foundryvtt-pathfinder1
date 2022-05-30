@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "6jgmo3jxegore8jl",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "you and one creature of your gender"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -168,9 +174,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>(harmless) Ithuna Vardsdottir claims to have unearthed this ancient prayer in a ruined temple of Desna, though Pathfinders have reported the use of similar magic in Irrisen among the White Witches. While the name of this spell is <i>sharesister</i>, it works equally well on male or female creatures-both targets of the spell must simply be of the same gender.</p><p>When you deliver the spell, you receive a negative level for the duration of the spell, and the other target receives a +1 insight bonus to her caster level and a +1 insight bonus to the save DCs of all of her spells. At 11th level, you can opt to take four negative levels to grant a +2 insight bonus to the other target's caster level and spell save DCs if you wish, while at 17th level you can take 6 negative levels to increase the insight bonus to +3. Any effect that removes or prevents the negative level immediately ends the <i>sharesister</i> spell. Negative levels received from the spell vanish as soon as this spell effect ends.</p><p>Negative levels from multiple castings of this spell stack.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -212,10 +215,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "qsu0i6fre2yxx31k",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -36,7 +35,9 @@
         "range": {
           "value": 30,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -83,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -104,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -116,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -181,9 +186,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>An invisible sphere of magic surrounds you, clouding the minds of creatures in the area so they regard even the strangest actions as innocuous. For example, if you and your allies are beating a member of the city guard for information, creatures within the area don't think this is unusual or cause for alarm; if your ally is aiming a crossbow at the queen from a balcony, the affected creatures accept this as normal and unworthy of concern. Any hostile actions by you or your allies against a creature or its allies break the effect of the spell for that creature. When the spell ends (or when the affected creatures move outside of the range of the emanation), observers see things normally but altered perceptions from the earlier events remain. Each mention of the events as noteworthy (such as being questioned about them by an authority figure) allows the target another Will save to break the effect and remember things normally.</p>",
-    "spellDuration": "1 minute/level (D) and instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -226,10 +228,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level (D) and instantaneous"
   },
   "effects": [],
   "folder": null,

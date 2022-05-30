@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "l2s4klrn05b0nqnj",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -30,10 +29,15 @@
           "value": "10 minutes/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one melee weapon sized appropriately for you",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -182,9 +190,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>When you cast this spell on a weapon, you cause an extradimensional space to open within the weapon. As part of the casting, you can insert a single magic rod or magic staff into the weapon's extradimensional space, after which the space closes. For the spell's duration, a character wielding the transmuted weapon is also considered to be wielding the rod or staff as well. If the rod or staff can be used to make attacks, you can attack normally with the weapon or use the weapon as if it were the merged rod or staff. If the effect created by the rod or staff requires an attack roll to successfully strike a foe, you can make the attack roll as if you were making an attack with the weapon at its highest bonus (including any bonuses the weapon would normally receive) rather than just a normal attack with the rod or staff-doing so does not allow you to add the weapon's damage to the attack, but instead allows you to use your skill with the weapon to boost your chance of hitting with the rod or staff's attack, spell, or effect.  At the end of the spell's duration, the merged rod or staff is ejected from the weapon. If you have a free hand, you can catch the rod or staff as a free action; otherwise, it drops to the ground.  If the merged weapon is broken or destroyed during the duration of Aroden's spellsword, the merged rod or staff is similarly broken or destroyed.</p>",
-    "spellDuration": "10 minutes/level",
-    "spellEffect": "one melee weapon sized appropriately for you",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -223,10 +228,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "10 minutes/level",
+    "spellEffect": "one melee weapon sized appropriately for you"
   },
   "effects": [],
   "folder": null,

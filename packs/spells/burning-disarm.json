@@ -5,16 +5,15 @@
   "img": "systems/pf1/icons/spells/enchant-red-1.jpg",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "d6nqkp5ibuk8rs1l",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "systems/pf1/icons/spells/enchant-red-1.jpg",
         "description": "",
         "activation": {
           "cost": 1,
@@ -34,7 +33,11 @@
           "value": "Held metal item of one creature or 15 lbs. of unattended metal"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -59,7 +62,9 @@
           "parts": [
             [
               "(min(5, @cl))d4",
-              "Fire"
+              [
+                "fire"
+              ]
             ]
           ],
           "critParts": [],
@@ -85,8 +90,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex negates (object, see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -107,7 +112,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -119,8 +128,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -180,9 +189,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell causes a metal object to instantly become red hot. A creature holding the item may attempt a Reflex save to drop it and take no damage (even if it is not their turn), otherwise the hot metal deals 1d4 points of fire damage per caster level (maximum 5d4). Circumstances that prevent the creature from dropping the item (such as a locked gauntlet) mean the creature gets no saving throw. The heat does not harm the item, and it does not get hot enough or last long enough to ignite flammable objects. The item cools to its previous temperature almost instantly. If cast underwater, burning disarm deals half damage and boils the surrounding water.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -225,12 +231,9 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "instantaneous",
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
     }
   },
   "effects": [],

@@ -5,16 +5,15 @@
   "img": "systems/pf1/icons/items/inventory/drum.jpg",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "wj336o0b0c50o9ly",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "systems/pf1/icons/items/inventory/drum.jpg",
         "description": "",
         "activation": {
           "cost": 1,
@@ -30,11 +29,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": "15",
           "units": "ft",
-          "maxIncrements": "1"
+          "maxIncrements": "1",
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -44,8 +47,8 @@
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
+          "type": "cone",
+          "size": "15",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -59,7 +62,9 @@
           "parts": [
             [
               "(min(5, @cl))d8",
-              ""
+              [
+                "untyped"
+              ]
             ]
           ],
           "critParts": [],
@@ -85,8 +90,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude partial"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -107,7 +112,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "cone-shaped burst",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -168,9 +177,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You strike the ground in front of you, filling the area in front of you with the thunder of pounding drums. Any creature in the area takes 1d8 points of sonic damage per caster level (maximum 5d8) and is knocked prone. A successful Fortitude save halves the damage and negates being knocked prone.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "cone-shaped burst",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -216,6 +222,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "instantaneous",
+    "spellArea": "cone-shaped burst",
     "size": "med",
     "spellPoints": {
       "cost": "1 + @sl"

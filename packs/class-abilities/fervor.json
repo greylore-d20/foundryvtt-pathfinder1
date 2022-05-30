@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "ivs95tl79velb0j2",
+        "_id": "x99j6ivapecfke5y",
         "name": "Use",
         "img": "systems/pf1/icons/spells/heal-jade-2.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "floor(@classes.warpriest.level / 2) + @abilities.wis.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "floor(@classes.warpriest.level / 2) + @abilities.wis.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "(floor((@classes.warpriest.level + 1) / 3))d6",
-              "Positive"
+              [
+                "positive"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

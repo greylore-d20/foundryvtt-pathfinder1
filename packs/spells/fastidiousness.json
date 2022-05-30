@@ -5,16 +5,15 @@
   "img": "icons/sundries/survival/soap.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "1l9pqagg8nko546s",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/sundries/survival/soap.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +21,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,20 +42,20 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -76,16 +75,16 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
-          "damage": "",
+          "attack": null,
+          "damage": null,
           "damageMult": 1,
           "critRange": 20,
           "critMult": 2
         },
         "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "dc": 0,
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -205,9 +208,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">While protected by <em>fastidiousness</em>, your person and your equipment stay clean and dry. Dust and moisture slough off immediately; even when you are completely soiled, your appearance reverts to a pristine state over the course of 1 minute. While this spell offers no protection against most attacks, staying constantly sanitary grants you a +2 circumstance bonus on Fortitude saving throws against inhaled and ingested diseases.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">Members of the Prophet of Kalistrade prestige class can cast this spell, even though it is not a divination or enchantment.</span></p>",
-    "spellDuration": "24 hours",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -284,6 +284,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "24 hours",
+    "spellEffect": "",
+    "spellArea": "",
     "spellPoints": {
       "cost": "1 + @sl"
     },

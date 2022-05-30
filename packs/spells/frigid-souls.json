@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ocqh0qivqviduojd",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +29,15 @@
           "value": "1 hour/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "one 5-ft. cube/level (S)",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -186,9 +194,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You harness the Irriseni people's palpable fear of their frozen environment and cruel Jadwiga overlords into a haunt that withers defenses against the cold. Any creature that enters the affected area must succeed at a Will save or gain spell resistance equal to 11 + your caster level against any abjuration effect that provides resistance to or protection against cold damage or cold climates. This spell resistance cannot be voluntarily lowered. Once every 30 minutes as an immediate action, the haunt attempts a dispel check (1d20 + your caster level) against an active abjuration effect currently protecting a creature in the affected area against cold, even if it was active before the creature was haunted or it successfully bypassed the spell resistance imposed by the haunt. Against creatures with multiple layers of protection, these dispel checks start with the highest-level abjuration effects and work their way down the list. Each time the haunt attempts a dispel check, the spell's haunt-like manifestation occurs during that round.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "",
-    "spellArea": "one 5-ft. cube/level (S)",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -227,10 +232,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 hour/level (D)",
+    "spellArea": "one 5-ft. cube/level (S)"
   },
   "effects": [],
   "folder": null,

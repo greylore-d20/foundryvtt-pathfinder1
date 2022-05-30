@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "7gltiue6qyy8cgmx",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -30,11 +29,15 @@
           "value": "1 minute/level or until discharged (see text)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 0,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "bow or bridge of light",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -167,9 +174,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You create a spectrum of multicolored solid light that can be used for one of two effects.</p><p><i>Bow</i>: The spell creates a longbow or shortbow appropriate for your size, and you are proficient in the use of this weapon. When drawn, the bow automatically creates a <i>+1 seeking brilliant energy arrow</i>; it cannot fire any other arrows. A creature struck by one of these arrows is surrounded by <i>faerie fire</i> and dazzled for 1 minute. This version of the spell ends when you have fired a number of arrows equal to your caster level.</p><p><i>Bridge</i>: The light forms a bridge or ramp 5 feet wide and up to 10 feet long per caster level. Creatures on the bridge are dazzled. Allies gain a bonus equal to your Wisdom modifier (minimum 1) on checks, saves, and to their CMD to resist being moved from the bridge against their will.</p><p>Enemies take a penalty equal to your Wisdom modifier (minimum 1) checks, saves, and to their CMD to resist being moved from the bridge against their will.</p>",
-    "spellDuration": "1 minute/level or until discharged (see text)",
-    "spellEffect": "bow or bridge of light",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -207,10 +211,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 minute/level or until discharged (see text)",
+    "spellEffect": "bow or bridge of light"
   },
   "effects": [],
   "folder": null,

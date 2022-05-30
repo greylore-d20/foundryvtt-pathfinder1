@@ -12,7 +12,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "2zzvzggf58im07j9",
+        "_id": "8cejwkl6d80wg8g2",
         "name": "Use",
         "img": "systems/pf1/icons/spells/slice-spirit-3.jpg",
         "description": "",
@@ -41,11 +41,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "floor((@classes.psychic.level - 3) / 2) + @abilities.cha.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "floor((@classes.psychic.level - 3) / 2) + @abilities.cha.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +63,9 @@
           "parts": [
             [
               "(ceil((@classes.psychic.level - 3) / 2))d6",
-              ""
+              [
+                "untyped"
+              ]
             ]
           ],
           "critParts": [],
@@ -109,7 +111,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

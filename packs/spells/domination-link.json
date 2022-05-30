@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "6qh7h8gowq3bmt3h",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "concentration, up to 1 min./level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 60,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +84,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "cone-shaped emanation",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -175,9 +182,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions like <i>detect thoughts</i>, with the additional ability to find echoes of the thoughts of a creature mentally controlling the target. For example, if the target has been dominated by a vampire, you can use evidence left in the target's mind to learn about that vampire. Each minute you concentrate on the spell, you can learn your choice of one of the following pieces of information.  <i>Direction</i>: The controller's general direction and distance.  <i>Emotion</i>: The controller's emotional state (gloating, sated, frightened, angry, and so on).  <i>Image</i>: A powerful iconic image relevant to the controller or its connection to the target, such as a symbol on a door or a name on a gravestone.  <i>Location</i>: The controller's general location, such as \"in a large city\" or \"on a ship.\"  <i>Name</i>: The name by which the target knows its controller (if any).  All of this information is based on the last time the influencing creature linked itself to the target, either to issue a command or to receive sensory input from the target. For example, if at nightfall a vampire commanded a dominated victim to walk to a cemetery, this spell can reveal the vampire's general location at that time, though it may have moved since then.</p>",
-    "spellDuration": "concentration, up to 1 min./level (D)",
-    "spellEffect": "",
-    "spellArea": "cone-shaped emanation",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -217,10 +221,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "concentration, up to 1 min./level (D)",
+    "spellArea": "cone-shaped emanation"
   },
   "effects": [],
   "folder": null,

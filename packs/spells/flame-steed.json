@@ -5,25 +5,24 @@
   "img": "icons/magic/fire/elemental-creature-horse.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "7dx04g3jbjf1bu9k",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/fire/elemental-creature-horse.webp",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,13 +42,13 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -76,7 +75,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -84,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "none, see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one quasi-real creature suitable for a mount",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -197,9 +200,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You conjure a Large, quasi-real creature made of flame. It functions like @Compendium[pf1.spells.zpwd0f19q1lm04p3]{Phantom Steed}, except as follows.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">The flame steed is immune to fire and has acid, cold, and electricity resistance 10. If it or its rider is attacked, it automatically exhales a 15-foot cone of smoke and ash on your turn as a free action. Anyone in the cone must succeed at a Fortitude save (DC equal to the spell DC) or become sickened for 1d6 rounds after leaving the area. This smoke acts as @Compendium[pf1.spells.tuh5vc2bojaws3ig]{Obscuring Mist} for the purpose of concealment. The smoke persists for 1 round.</span></p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "one quasi-real creature suitable for a mount",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -276,6 +276,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "1 hour/level (D)",
+    "spellEffect": "one quasi-real creature suitable for a mount",
+    "spellArea": "",
     "spellPoints": {
       "cost": "1 + @sl"
     },

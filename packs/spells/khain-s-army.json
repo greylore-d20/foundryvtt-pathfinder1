@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "55wi2c586wk8d3b1",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 5,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude half (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "1d4+1 ghouls and 1 ghast",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -171,9 +178,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>Originally created by the priest-king of Nemret Noktoria, the ghoul Kortash Khain, for use by his minions to bolster their forces in battles against their enemies, Khain's army has become a favorite of many necromancers throughout Osirion and beyond. By scattering a handful of ghoul's teeth across the ground, you cause 1d4+1 ghouls led by a single ghast to rise up from the ground around you. The ghouls and their ghast leader must appear in squares adjacent to you, but after that they follow your spoken commands unerringly.</p><p>If one of the ghouls is destroyed while the spell's duration is still in effect, it bursts into a spray of rotten flesh and necromantic energy that deals 1d6 points of negative energy damage to all adjacent targets-this energy heals undead targets as typical for negative energy damage. If the ghast is destroyed in this manner, it deals twice as much negative energy damage as a ghoul. A successful Fortitude save halves the negative energy damage dealt. When this spell's duration expires, any remaining undead created by this spell crumble apart into dust and blow away without dealing any additional negative energy damage.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "1d4+1 ghouls and 1 ghast",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -213,10 +217,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level",
+    "spellEffect": "1d4+1 ghouls and 1 ghast"
   },
   "effects": [],
   "folder": null,

@@ -43,7 +43,7 @@
     },
     "actions": [
       {
-        "_id": "wuzml6dkeuspssen",
+        "_id": "d3jilu7t7v8b2fdg",
         "name": "Attack",
         "img": "icons/commodities/treasure/statue-carved-figurehead.webp",
         "description": "",
@@ -72,11 +72,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "cone",
@@ -94,7 +94,9 @@
           "parts": [
             [
               "sizeRoll(6, 6, @size)",
-              "fire"
+              [
+                "fire"
+              ]
             ]
           ],
           "critParts": [],
@@ -140,7 +142,13 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "lpxhdr4yagn0j6wq",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one spellcaster, creature, or object"
         },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "20-ft.-radius burst",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -230,9 +236,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.gmgwyjfpeuuc4t4o]{dispel magic}, except that it can end more than one spell on a target and it can be used to target multiple creatures.</p>\n<p>You choose to use <em>greater dispel magic</em> in one of three ways: a targeted dispel, area dispel, or a counterspell: <em>Targeted Dispel</em>: This functions as a targeted <em>dispel magic</em>, but it can dispel one spell for every four caster levels you possess, starting with the highest level spells and proceeding to lower level spells.</p>\n<p>Additionally, <em>greater dispel magic</em> has a chance to dispel any effect that <em>remove curse</em> can remove, even if <em>dispel magic</em> can't dispel that effect. The DC of this check is equal to the curse's DC.</p>\n<p><em>Area Dispel</em>: When <em>greater dispel magic</em> is used in this way, the spell affects everything within a 20-foot-radius burst. Roll one dispel check and apply that check to each creature in the area, as if targeted by <em>dispel magic</em>. For each object within the area that is the target of one or more spells, apply the dispel check as with creatures. Magic items are not affected by an area dispel.</p>\n<p>For each ongoing area or effect spell whose point of origin is within the area of the <em>greater dispel magic</em> spell, apply the dispel check to dispel the spell. For each ongoing spell whose area overlaps that of the <em>greater dispel magic</em> spell, apply the dispel check to end the effect, but only within the overlapping area.</p>\n<p>If an object or creature that is the effect of an ongoing spell (such as a monster summoned by <em>summon monster</em>) is in the area, apply the dispel check to end the spell that conjured that object or creature (returning it whence it came) in addition to attempting to dispel one spell targeting the creature or object.</p>\n<p>You may choose to automatically succeed on dispel checks against any spell that you have cast.</p>\n<p><em>Counterspell</em>: This functions as <em>dispel magic</em>, but you receive a +4 bonus on your dispel check to counter the other spellcaster's spell.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "20-ft.-radius burst",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -272,10 +275,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "instantaneous",
+    "spellArea": "20-ft.-radius burst"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "belx93imsitye34i",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +33,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -180,9 +186,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p>You cause a <i>straitjacket</i> to spring into existence to restrain the target creature. You attempt a combat maneuver against the target's CMD. Your CMB for this check is equal to your caster level + 5 due to the straightjacket's Strength. This combat maneuver doesn't provoke an attack of opportunity, and if it succeeds, the target is restrained. This is similar to the grappled condition, except the target is able to move at its normal speed, the restraint doesn't cause the target to require concentration checks to use abilities that require concentration, and the target can't take actions that require one or more hands or arms to perform (including casting spells that require a somatic or material component).  Once it has been restrained for 1 round, the target can attempt an additional saving throw against a magical effect that makes it confused, a curse, a fear effect, or a madness. The caster chooses which effect the target gets an extra save against. This extra save applies to only effects with durations of 10 minutes per level or less, and it doesn't apply to instantaneous effects. This extra save occurs only once per casting of <i>straitjacket</i>.  A creature can attempt to escape the <i>straitjacket</i> with a combat maneuver check or Escape Artist check, with a DC equal to 10 + your caster level + your Intelligence, Wisdom, or Charisma modifier, whichever is highest.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -222,10 +225,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level (D)"
   },
   "effects": [],
   "folder": null,

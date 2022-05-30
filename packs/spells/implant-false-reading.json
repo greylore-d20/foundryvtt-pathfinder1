@@ -5,25 +5,24 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "4y67uctgcslor2v8",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,8 +33,11 @@
           "value": "object touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "none; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -115,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -172,9 +178,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>You implant a false psychometric reading into an object, imbuing the item with misleading information that might be learned from the <i>object reading</i> spell or through the psychometry occult skill unlock (see page 196). This information might fool enemies, create a false history, or pass on secret messages through objects to psychically attuned allies. You can implant any information you wish that could be implanted by the <i>charge object</i> spell, as well as up to one piece of information per 3 levels that could be attained using psychometry or the <i>object reading</i> spell. You can detail this information in any way you see fit, either making up a previous owner and circumstances involving the object  from whole cloth, or attempting to emulate the biographical information and fictional accounts of a specific individual's experience with the object.  During the spell's duration, creatures reading the object through the <i>object reading</i> spell or the psychometry occult skill unlock receive this false information in place of an item's true history if they fail a Will saving throw. Creatures that succeed at their saves still <i>detect</i> and receive the false information, but recognize it for what is and are able to discern the fictitious information from the item's true history without difficulty.  This spell masks its own magical aura, causing the target to not register as magical to <i>detect</i> spells and similar effects. This masking doesn't conceal any other magical auras on the object, and can be overcome in the same ways as <i>magic aura</i>.</p>",
-    "spellDuration": "1 day/level",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -214,10 +217,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 day/level"
   },
   "effects": [],
   "folder": null,

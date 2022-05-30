@@ -1389,7 +1389,6 @@ const _convertDamageType = function (damageTypeString) {
     }
   }
 
-  console.log(result);
   if (result.length > 0) return result;
   return ["untyped"];
 };

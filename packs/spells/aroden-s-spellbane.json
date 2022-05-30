@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "apvf6ka885oo83hq",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +29,15 @@
           "value": "1 hour/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 10,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "10-ft.-radius emanation, centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -114,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -163,9 +170,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>One of many spells originally created by the Last Azlanti before he became a god, Aroden's <i>spellbane</i> creates an area within which spells selected by you simply do not function.</p><p>Select one spell per five caster levels at the time of casting.</p><p>The spells selected cannot be changed after the spell is cast. Aroden's <i>spellbane</i> otherwise functions like <i>antimagic field</i>, except its emanation only prevents the functioning of the selected spells. Only the exact spells mentioned are affected-a <i>spellbane</i> set to prevent the casting of summon nature's ally II would not prevent castings of summon nature's ally I or summon nature's ally III. If you move into an area where a previously cast spell you have selected as a banned spell is in effect, that spell is affected as if by <i>antimagic field</i>. If the spell affects a summoned creature that has spell resistance, you must make a caster level check against the creature's spell resistance to make it wink out.</p><p>Aroden's <i>spellbane</i> can even negate an <i>antimagic field</i>, another Aroden's <i>spellbane</i>, or any spell that specifies immunity to <i>antimagic field</i> (such as <i>Wall of Force</i>, <i><i>prismatic</i> sphere</i>, and <i>prismatic</i> wall). Multiple <i>spellbane</i> effects can overlap.</p><p>Their effects stack, preventing the functioning of every spell targeted by any of the multiple <i>spellbane</i> emanations. Spell effects created by artifacts or deities cannot be suppressed by Aroden's <i>spellbane</i>.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "",
-    "spellArea": "10-ft.-radius emanation, centered on you",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -203,10 +207,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 hour/level (D)",
+    "spellArea": "10-ft.-radius emanation, centered on you"
   },
   "effects": [],
   "folder": null,

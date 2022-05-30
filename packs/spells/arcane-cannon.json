@@ -5,24 +5,23 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "94sswtgqsxhbfkgd",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -30,10 +29,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one magically animated cannon",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -113,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -162,9 +170,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>Your focus becomes a Medium arcane cannon that appears in an unoccupied square within the spell's range. If no unoccupied square is within range, the spell fails. The cannon comes into existence loaded. Each round thereafter, the cannon can either fire or load. A cannon must be loaded to fire. You do not need to supply ammunition for the cannon.</p><p>On your turn, you can spend a move action to direct the cannon to wheel itself to a new location, moving the cannon up to 20 feet. If the arcane cannon ever leaves your line of sight, it winks out of existence, and the spell's duration ends.</p><p>The cannon has a range increment of 50 feet. It targets touch attack in the first range increment, and it has no misfire chance.</p><p>The cannon acts as a weapon with the conductive special weapon ability (see page 286 of the Advanced Player's Guide), which you can use to channel your spell-like or supernatural abilities as long as you are within the range of arcane cannon. The cannon's attack bonus is equal to your caster level + your Intelligence bonus or your Charisma bonus (for wizards or sorcerers, respectively) with an additional +1 per four caster levels (maximum +5 at 20th level). On a hit, the cannon deals 4d10 damage. The arcane cannon attacks have a critical modifier of x4.</p><p>The cannon has AC 10, hardness 10, and 80 hit points. If the cannon is subject to a spell or effect that requires a save, it uses your saving throw modifiers. The cannon never provokes attacks of opportunity. If the cannon is destroyed, so is your focus.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "one magically animated cannon",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -201,10 +206,8 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellDuration": "1 round/level",
+    "spellEffect": "one magically animated cannon"
   },
   "effects": [],
   "folder": null,

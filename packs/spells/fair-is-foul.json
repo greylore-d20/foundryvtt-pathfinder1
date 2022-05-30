@@ -5,16 +5,15 @@
   "img": "icons/magic/acid/dissolve-arm-flesh.webp",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "kaaymesm4rkkx8a8",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/acid/dissolve-arm-flesh.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +21,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -43,13 +42,13 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
-          "per": "",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -76,7 +75,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -84,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -197,9 +200,6 @@
     "atWill": false,
     "sr": true,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You curse the target with a disfiguring or painful mutation. The target gains one random deformity from the @Compendium[pf1.roll-tables.Vm8ccE6qchTx2Trn]{Arcane Malignancies} table. The curse bestowed by this spell cannot be dispelled but can be removed with a @Compendium[pf1.spells.myg2b9ww43nnlbr2]{Break Enchantment}, @Compendium[pf1.spells.s2p7a4biy7bl4ks2]{Limited Wish}, @Compendium[pf1.spells.suel7sgnztenv551]{Miracle}, @Compendium[pf1.spells.o87h8gjxevcbztgd]{Remove Curse}, or&nbsp;@Compendium[pf1.spells.nnj51dwfkwd15ngj]{Wish} spell.</span></p>",
-    "spellDuration": "permanent (D)",
-    "spellEffect": "",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -276,6 +276,9 @@
       "critMultiplier": 1
     },
     "conditionals": [],
+    "spellDuration": "permanent (D)",
+    "spellEffect": "",
+    "spellArea": "",
     "spellPoints": {
       "cost": "1 + @sl"
     },

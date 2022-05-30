@@ -5,14 +5,13 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
-      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "kc3ekw2f3tuxmc5k",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,9 +29,15 @@
           "value": "1 hour/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -50,7 +55,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -78,8 +83,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -100,7 +105,11 @@
         "usesAmmo": false,
         "spellEffect": "one animal whose CR is equal or less than your caster level",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
@@ -112,8 +121,8 @@
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -173,9 +182,6 @@
     "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell calls the nearest wild animal of a particular type you designate (provided the animal's CR is equal to or less than your caster level) to seek you out. The animal moves toward you under its own power, so the time it takes to arrivedepends on how close an animal of the desired type is when you cast the spell. If there is no animal of that type capable of reaching you within the spell's duration, you are aware of this fact, but the spell is wasted. Knowledge of the local fauna makes this spell more effective, and the GM may permit a Knowledge (nature) skill check (DC 15) to know what animals can be found in an area.</p><p>When the called animal arrives, it approaches to within 5 feet of you and remains nearby for the duration of the spell.</p><p>Its starting attitude is indifferent, modified by circumstances and interaction. Other than starting attitude, this spell gives you no special influence or ability to communicate with the called animal, although you may use other spells or abilities to do so.</p><p>Once the spell's duration expires, the animal acts in accordance with its attitude. Most animals will likely wander off, but a hostile predatory animal may attack, especially if it is hungry or provoked.</p><p>Domesticated animals or animals trained by someone else, including such creatures as familiars or animal companions, are unaffected by <i>call animals</i>.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "one animal whose CR is equal or less than your caster level",
-    "spellArea": "",
     "showInQuickbar": false,
     "domain": false,
     "slotCost": 1,
@@ -208,12 +214,10 @@
     "effectNotes": [],
     "attackNotes": [],
     "conditionals": [],
+    "spellDuration": "1 hour/level (D)",
+    "spellEffect": "one animal whose CR is equal or less than your caster level",
     "range": {
       "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
     }
   },
   "effects": [],

@@ -1,23 +1,31 @@
 import { BaseRegistryObject } from "./_base.js";
 
 export const registerDamageTypes = function () {
-  const cls = game.pf1.documentComponents.DamageType;
   // --------------------------------------------------------- //
   // Register normal Pathfinder 1e damage types                //
   // --------------------------------------------------------- //
+  // Untyped
+  game.pf1.registry.registerDamageType(
+    "pf1",
+    new DamageType({
+      _id: "untyped",
+      name: "PF1.DamageTypeUntyped",
+      img: "icons/magic/control/silhouette-grow-shrink-tan.webp",
+    })
+  );
   // Slashing
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "slashing",
       name: "PF1.DamageTypeSlashing",
-      img: "icons/skills/melee/strike-sword-gray.webp",
+      img: "icons/skills/melee/strike-sword-steel-yellow.webp",
     })
   );
   // Piercing
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "piercing",
       name: "PF1.DamageTypePiercing",
       img: "icons/skills/ranged/arrow-flying-gray-brown.webp",
@@ -26,7 +34,7 @@ export const registerDamageTypes = function () {
   // Bludgeoning
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "bludgeoning",
       name: "PF1.DamageTypeBludgeoning",
       img: "icons/skills/melee/strike-hammer-destructive-blue.webp",
@@ -36,7 +44,7 @@ export const registerDamageTypes = function () {
   // Fire
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "fire",
       name: "PF1.DamageTypeFire",
       img: "icons/magic/fire/projectile-fireball-smoke-strong-orange.webp",
@@ -45,7 +53,7 @@ export const registerDamageTypes = function () {
   // Cold
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "cold",
       name: "PF1.DamageTypeCold",
       img: "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
@@ -54,7 +62,7 @@ export const registerDamageTypes = function () {
   // Electric
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "electric",
       name: "PF1.DamageTypeElectricity",
       img: "icons/magic/lightning/bolt-strike-blue.webp",
@@ -63,7 +71,7 @@ export const registerDamageTypes = function () {
   // Acid
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "acid",
       name: "PF1.DamageTypeAcid",
       img: "icons/magic/acid/dissolve-drip-droplet-smoke.webp",
@@ -72,7 +80,7 @@ export const registerDamageTypes = function () {
   // Sonic
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "sonic",
       name: "PF1.DamageTypeSonic",
       img: "icons/magic/sonic/explosion-impact-shock-wave.webp",
@@ -81,7 +89,7 @@ export const registerDamageTypes = function () {
   // Force
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "force",
       name: "PF1.DamageTypeForce",
       img: "icons/magic/lightning/orb-ball-purple.webp",
@@ -90,7 +98,7 @@ export const registerDamageTypes = function () {
   // Negative Energy
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "negative",
       name: "PF1.DamageTypeNegative",
       img: "icons/magic/unholy/beam-impact-purple.webp",
@@ -99,7 +107,7 @@ export const registerDamageTypes = function () {
   // Positive Energy
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "positive",
       name: "PF1.DamageTypePositive",
       img: "icons/magic/light/beam-explosion-orange.webp",
@@ -112,7 +120,7 @@ export const registerDamageTypes = function () {
   // Precision Damage
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "precision",
       name: "PF1.Precision",
       img: "icons/skills/targeting/crosshair-ringed-gray.webp",
@@ -124,7 +132,7 @@ export const registerDamageTypes = function () {
   // Nonlethal Damage
   game.pf1.registry.registerDamageType(
     "pf1",
-    new cls({
+    new DamageType({
       _id: "nonlethal",
       name: "PF1.Nonlethal",
       img: "icons/skills/melee/unarmed-punch-fist.webp",
@@ -141,17 +149,17 @@ export const registerDamageTypes = function () {
 };
 
 export class DamageType extends BaseRegistryObject {
-  static get _baseSource() {
-    return mergeObject(super._baseSource, {
+  static get _baseData() {
+    return mergeObject(super._baseData, {
       img: "icons/svg/explosion.svg",
     });
   }
 
-  static get name() {
+  static get typeName() {
     return "Damage Type";
   }
 
   get isModifier() {
-    return this._source.flags?.modifier === true;
+    return this.data.flags?.modifier === true;
   }
 }

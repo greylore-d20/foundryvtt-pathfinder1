@@ -47,9 +47,26 @@ export class Registry {
     const db = this._createDatabase(databaseKey);
 
     const result = [];
-    for (const v of db.values()) {
+    for (const v of db.contents) {
       result.push(v.value);
     }
+    return result;
+  }
+
+  /**
+   * Gets all raw registry data, to be used in e.g. Application.getData.
+   */
+  static getRawData() {
+    const result = {};
+
+    Object.entries(this.database).forEach((entries) => {
+      const [databaseKey, database] = entries;
+      result[databaseKey] = database.contents.reduce((cur, o) => {
+        cur[o.value.id] = deepClone(o.value.data);
+        return cur;
+      }, {});
+    });
+
     return result;
   }
 
@@ -60,15 +77,12 @@ export class Registry {
    * Registers a category for item script calls.
    *
    * @param {string} module - The module to register this value as. Should be equal to that of the 'name' field in the module's manifest. Used primarily for de-registering values.
-   * @param {string} key - The unique key of the category.
-   * @param {string} name - The name of the category. Can be something usable with `game.i18n.localize`.
-   * @param {string[]} itemTypes - The item types to add this category to. Something like `["equipment", "buffs"]`.
-   * @param {string} [info=null] - The information of the category. Can be something usable with `game.i18n.localize`.
+   * @param {RegistryScriptCall} scriptCall - A script call to add. Use an instance of `game.pf1.registryTypes.ScriptCall`.
    * @returns {boolean} Whether successful.
    */
-  static registerItemScriptCategory(module, key, name, itemTypes, info) {
+  static registerItemScriptCategory(module, scriptCall) {
     this._createDatabase("itemScriptCategories");
-    return this.register("itemScriptCategories", module, key, { key, name, itemTypes, info });
+    return this.register("itemScriptCategories", module, scriptCall.id, scriptCall);
   }
   static unregisterItemScriptCategory(module, key) {
     return this.unregister("itemScriptCategories", module, key);
@@ -85,11 +99,11 @@ export class Registry {
    *
    * @param {string} module - The module to register this value as. Should be equal to that of the 'name' field in the module's manifest. Used primarily for de-registering values.
    * @param {string} key - The unique key of the damage type.
-   * @param {DamageType} damageType - The damage type to add. Use an instance of `game.pf1.documentComponents.DamageType`.
+   * @param {DamageType} damageType - The damage type to add. Use an instance of `game.pf1.registryTypes.DamageType`.
    * @returns {boolean} Whether successful.
    */
   static registerDamageType(module, damageType) {
-    if (!(damageType instanceof game.pf1.documentComponents.DamageType)) return false;
+    if (!(damageType instanceof game.pf1.registryTypes.DamageType)) return false;
     this._createDatabase("damageTypes");
     return this.register("damageTypes", module, damageType.id, damageType);
   }
@@ -108,7 +122,7 @@ export class Registry {
    *
    * @param {string} module - The module to register this value as. Should be equal to that of the 'name' field in the module's manifest. Used primarily for de-registering values.
    * @param {string} key - The unique key of the damage type.
-   * @param {ItemMaterial} material - The material to add. Use an instance of `game.pf1.documentComponents.ItemMaterial`.
+   * @param {ItemMaterial} material - The material to add. Use an instance of `game.pf1.registryTypes.ItemMaterial`.
    * @returns {boolean} Whether successful.
    */
   static registerMaterial(module, material) {

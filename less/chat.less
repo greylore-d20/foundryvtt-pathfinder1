@@ -164,6 +164,36 @@
       background-color: rgb(192, 96, 96);
     }
   }
+
+  .damage-type-visual {
+    height: 24px;
+    display: grid;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    grid-template-columns: repeat(auto-fit, 16px);
+    grid-template-rows: 16px;
+    grid-gap: 1px;
+    justify-content: center;
+    align-content: center;
+    vertical-align: middle;
+    line-height: 22px;
+
+    &.empty {
+      display: flex;
+      white-space: nowrap;
+    }
+
+    & > span {
+      text-align: center;
+    }
+
+    .damage-type {
+      .icon {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
 }
 
 #chat .chat-message {
@@ -310,6 +340,11 @@
     }
 
     table {
+      td.roll {
+        width: 0;
+        padding: 2px;
+      }
+
       a.inline-action {
         opacity: 0;
       }

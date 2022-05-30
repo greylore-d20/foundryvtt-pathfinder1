@@ -104,12 +104,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Include CONFIG values
     data.config = CONFIG.PF1;
-    data.registry = {
-      damageTypes: Array.from(game.pf1.registry.database.damageTypes).reduce((cur, o) => {
-        cur[o.value.id] = o.value.toObject();
-        return cur;
-      }, {}),
-    };
 
     // Item Type, Status, and Details
     data.itemType = this._getItemType(data.item);
@@ -524,7 +518,7 @@ export class ItemSheetPF extends ItemSheet {
 
   async _prepareScriptCalls(data) {
     const categories = game.pf1.registry.getItemScriptCategories().filter((o) => {
-      if (!o.itemTypes.includes(this.document.type)) return false;
+      if (!o.data.itemTypes.includes(this.document.type)) return false;
       if (o.hidden === true && !game.user.isGM) return false;
       return true;
     });

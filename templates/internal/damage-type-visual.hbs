@@ -1,6 +1,6 @@
-{{#if data.damageTypes.length}}
+{{#if data.length}}
 <div class="damage-type-visual"{{#if name}} data-name="{{name}}"{{/if}}>
-  {{#each data.damageTypes as |d|}}
+  {{#each data as |d|}}
   <div class="damage-type" title="{{localize (lookup (lookup ../damageTypes d) "name")}}">
     <img class="icon" src="{{lookup (lookup ../damageTypes d) "img"}}">
   </div>

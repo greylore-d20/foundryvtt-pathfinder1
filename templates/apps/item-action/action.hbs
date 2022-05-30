@@ -176,8 +176,7 @@
     {{#each data.damage.parts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="data.damage.parts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "1") name=(concat "data.damage.parts." i ".1") damageTypes=@root.registry.damageTypes}}
-      {{!--  <input class="damage-type" type="text" name="data.damage.parts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>  --}}
+      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "1") name=(concat "damage.parts." i ".1") damageTypes=@root.registry.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
@@ -199,7 +198,7 @@
     {{#each data.damage.critParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="data.damage.critParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-      <input class="damage-type" type="text" name="data.damage.critParts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
+      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "1") name=(concat "damage.critParts." i ".1") damageTypes=@root.registry.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
@@ -218,7 +217,7 @@
     {{#each data.damage.nonCritParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="data.damage.nonCritParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-      <input class="damage-type" type="text" name="data.damage.nonCritParts.{{i}}.1" placeholder="{{localize "PF1.DamageTypes"}}" value="{{lookup this "1"}}"/>
+      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "1") name=(concat "damage.nonCritParts." i ".1") damageTypes=@root.registry.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}

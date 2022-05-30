@@ -1071,14 +1071,15 @@ export const postMessage = async function (shared) {
   });
 
   // Create message
-  const t = game.settings.get("pf1", "attackChatCardTemplate");
+  const template = game.settings.get("pf1", "attackChatCardTemplate");
+  shared.templateData.registry = game.pf1.registry.getRawData();
 
   // Show chat message
   let result;
   if (shared.chatAttacks.length > 0) {
     if (shared.chatMessage && shared.scriptData.hideChat !== true)
-      result = await createCustomChatMessage(t, shared.templateData, shared.chatData);
-    else result = { template: t, data: shared.templateData, chatData: shared.chatData };
+      result = await createCustomChatMessage(template, shared.templateData, shared.chatData);
+    else result = { template: template, data: shared.templateData, chatData: shared.chatData };
   } else {
     if (shared.chatMessage && shared.scriptData.hideChat !== true) result = this.roll();
     else result = { descriptionOnly: true };

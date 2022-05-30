@@ -56,6 +56,7 @@ export class ItemActionSheet extends FormApplication {
     data.item = this.item;
     data.actor = this.actor;
     data.data = this.action.data;
+    data.registry = game.pf1.registry.getRawData();
 
     // Include CONFIG values
     data.config = CONFIG.PF1;
@@ -138,6 +139,7 @@ export class ItemActionSheet extends FormApplication {
 
     // Modify damage formula
     html.find(".damage-control").click(this._onDamageControl.bind(this));
+    html.find(".damage-type-visual").on("click", this._onClickDamageType.bind(this));
 
     // Listen to field entries
     html.find(".entry-selector").click(this._onEntrySelector.bind(this));
@@ -298,7 +300,8 @@ export class ItemActionSheet extends FormApplication {
     // Add new damage component
     if (a.classList.contains("add-damage")) {
       // Get initial data
-      const initialData = ["", ""];
+      const damageTypeBase = [];
+      const initialData = ["", damageTypeBase];
 
       // Add data
       const damage = getProperty(this.action, k2);
@@ -316,6 +319,15 @@ export class ItemActionSheet extends FormApplication {
       updateData[k] = getProperty(damage, k3);
       return this._onSubmit(event, { updateData });
     }
+  }
+
+  async _onClickDamageType(event) {
+    event.preventDefault();
+    const clickedElement = event.currentTarget;
+    const dataPath = clickedElement.dataset.name;
+
+    const app = new game.pf1.applications.DamageTypeSelector(this.action, dataPath);
+    app.render(true);
   }
 
   async _onAttackControl(event) {

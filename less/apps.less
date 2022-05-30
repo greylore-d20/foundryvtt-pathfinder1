@@ -1938,17 +1938,17 @@
         -webkit-line-clamp: 2;
       }
 
+      &:hover {
+        background: rgba(155, 155, 155, 0.2);
+        span.name {
+          text-shadow: 0 0 10px red;
+        }
+      }
+
       &.toggled {
         background: rgba(155, 155, 155, 0.5);
         span.name {
           text-shadow: 0 0 10px red;
-        }
-
-        &:hover {
-          background: rgba(155, 155, 155, 0.2);
-          span.name {
-            text-shadow: 0 0 10px red;
-          }
         }
       }
     }
@@ -2224,7 +2224,7 @@
   }
 }
 
-.pf1 .damage-type-visual {
+.pf1.sheet .damage-type-visual {
   height: 26px;
   display: grid;
   flex-direction: row;

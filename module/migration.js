@@ -264,8 +264,36 @@ export const migrateItemData = function (item) {
   _migrateSpellData(item, updateData);
   _migrateItemActions(item, updateData);
 
+  // Migrate action data
+  const alreadyHasActions = item.data.actions instanceof Array && item.data.actions.length > 0;
+  const itemActionData = alreadyHasActions ? item.data.actions : updateData["data.actions"];
+  // The following check is necessary to filter out items with no possible actions
+  if (itemActionData instanceof Array) {
+    const actionDataList = [];
+    for (const action of itemActionData) {
+      actionDataList.push(migrateItemActionData(action, item));
+    }
+    updateData["data.actions"] = actionDataList;
+  }
+
   // Return the migrated update data
   return updateData;
+};
+
+/**
+ * Migrates a single action within an item.
+ *
+ * @param {object} action - The action's data, which also serves as the update data to pass on.
+ * @param {object} item - The item data this action is in.
+ * @returns {object} The resulting action data.
+ */
+export const migrateItemActionData = function (action, item) {
+  action = mergeObject(game.pf1.documentComponents.ItemAction.defaultData, action);
+
+  _migrateActionDamageType(action, item);
+
+  // Return the migrated update data
+  return action;
 };
 
 /* -------------------------------------------- */
@@ -997,18 +1025,16 @@ const _migrateSpellData = function (item, updateData) {
 };
 
 const _migrateItemActions = function (item, updateData) {
-  if (
-    (!item.data.actionType && item.type !== "spell") ||
-    (item.data.actions instanceof Array && item.data.actions.length > 0)
-  )
-    return;
+  const hasOldAction = item.data.actionType != null;
+  const alreadyHasActions = item.data.actions instanceof Array && item.data.actions.length > 0;
+  if ((!hasOldAction && item.type !== "spell") || alreadyHasActions) return;
 
   // Transfer data to an action
   const actionData = game.pf1.documentComponents.ItemAction.defaultData;
   const removeKeys = ["_id", "name", "img"];
   for (const k of Object.keys(actionData)) {
     if (!removeKeys.includes(k)) {
-      if (item.data[k] != null) actionData[k] = duplicate(item.data[k]);
+      if (item.data[k] != null) actionData[k] = deepClone(item.data[k]);
     }
   }
 
@@ -1030,6 +1056,20 @@ const _migrateItemActions = function (item, updateData) {
   updateData["data.effectNotes"] = [];
 
   updateData["data.actions"] = [actionData];
+};
+
+const _migrateActionDamageType = function (action, item) {
+  // Convert damage type
+  const damageGroupPaths = ["damage.parts", "damage.critParts", "damage.nonCritParts"];
+  for (const damageGroupPath of damageGroupPaths) {
+    const damageGroup = getProperty(action, damageGroupPath);
+    for (const damagePart of damageGroup) {
+      const damageType = damagePart[1];
+      if (typeof damageType === "string") {
+        damagePart[1] = _convertDamageType(damageType);
+      }
+    }
+  }
 };
 
 const _migrateActorCR = function (ent, updateData, linked) {
@@ -1288,4 +1328,68 @@ const _migrateActorSenses = function (ent, updateData, linked, token) {
       custom: oldSenses,
     };
   }
+};
+
+const _convertDamageType = function (damageTypeString) {
+  const separator = /(?:\s*\/\s*|\s+and\s+|\s+or\s+)/i;
+  const damageTypeList = [
+    {
+      tests: ["b", "blunt", "bludgeoning"],
+      result: "bludgeoning",
+    },
+    {
+      tests: ["p", "pierce", "piercing"],
+      result: "piercing",
+    },
+    {
+      tests: ["s", "slash", "slashing"],
+      result: "slashing",
+    },
+    {
+      tests: ["f", "fire"],
+      result: "fire",
+    },
+    {
+      tests: ["cold", "c"],
+      result: "cold",
+    },
+    {
+      tests: ["e", "electric", "electricity", "electrical"],
+      result: "electric",
+    },
+    {
+      tests: ["a", "acid"],
+      result: "acid",
+    },
+    {
+      tests: ["sonic"],
+      result: "sonic",
+    },
+    {
+      tests: ["force"],
+      result: "force",
+    },
+    {
+      tests: ["neg", "negative"],
+      result: "negative",
+    },
+    {
+      tests: ["pos", "positive"],
+      result: "positive",
+    },
+  ];
+
+  const damageTypes = damageTypeString.split(separator).map((o) => o.toLowerCase());
+  const result = [];
+  for (const damageTest of damageTypeList) {
+    for (const testString of damageTest.tests) {
+      if (damageTypes.includes(testString)) {
+        result.push(damageTest.result);
+      }
+    }
+  }
+
+  console.log(result);
+  if (result.length > 0) return result;
+  return ["untyped"];
 };

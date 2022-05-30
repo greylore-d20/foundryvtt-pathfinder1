@@ -2,7 +2,8 @@ export class DamageTypeSelector extends FormApplication {
   constructor(object, dataPath, options = {}) {
     super(object, options);
     this._dataPath = dataPath;
-    this._data = duplicate(getProperty(object.data, this._dataPath ?? []));
+    this._data = deepClone(getProperty(object.data, this._dataPath));
+    if (!(this._data instanceof Array)) this._data = [];
   }
 
   static get defaultOptions() {
@@ -15,6 +16,9 @@ export class DamageTypeSelector extends FormApplication {
   }
   get title() {
     return game.i18n.localize("PF1.DamageType");
+  }
+  get id() {
+    return `action-${this.object.id}_${this._dataPath}`;
   }
 
   async getData(options) {
@@ -37,18 +41,17 @@ export class DamageTypeSelector extends FormApplication {
     const a = event.currentTarget;
     const dt = a.dataset.id;
 
-    if (this._data.damageTypes.includes(dt)) this._data.damageTypes.splice(this._data.damageTypes.indexOf(dt), 1);
-    else this._data.damageTypes.push(dt);
+    if (this._data.includes(dt)) this._data.dageTypes.splice(this._data.indexOf(dt), 1);
+    else this._data.push(dt);
     this.render();
   }
 
   async _updateObject(event, formData) {
     formData = expandObject(formData);
     const result = this._data;
-    result.damageTypes = [];
 
     for (const [k, v] of Object.entries(formData.damageTypes ?? {})) {
-      if (v) result.damageTypes.push(k);
+      if (v) result.push(k);
     }
 
     return this.object.update({ [this._dataPath]: result });

@@ -111,6 +111,7 @@ import * as controls from "./module/controls.js";
 import * as ItemAttack from "./module/item/attack.js";
 import { Registry } from "./module/registry.js";
 import { registerDamageTypes, DamageType } from "./module/registry/damage-types.js";
+import { registerScriptCalls, ScriptCall } from "./module/registry/script-call.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
@@ -243,12 +244,15 @@ Hooks.once("init", function () {
     // Components
     documentComponents: {
       ItemChange,
-      DamageType,
       ItemAction,
       ItemScriptCall,
     },
     // API
     registry: Registry,
+    registryTypes: {
+      ScriptCall,
+      DamageType,
+    },
     // Macros
     macros,
     rollItemMacro: macros.rollItemMacro,
@@ -361,43 +365,8 @@ Hooks.once("init", function () {
     makeDefault: true,
   });
 
-  // Register item categories
-  game.pf1.registry.registerItemScriptCategory(
-    "pf1",
-    "use",
-    "PF1.ScriptCalls.Use.Name",
-    ["attack", "feat", "equipment", "consumable", "spell", "weapon"],
-    "PF1.ScriptCalls.Use.Info"
-  );
-  game.pf1.registry.registerItemScriptCategory(
-    "pf1",
-    "equip",
-    "PF1.ScriptCalls.Equip.Name",
-    ["weapon", "equipment", "loot"],
-    "PF1.ScriptCalls.Equip.Info"
-  );
-  game.pf1.registry.registerItemScriptCategory(
-    "pf1",
-    "toggle",
-    "PF1.ScriptCalls.Toggle.Name",
-    ["buff", "feat"],
-    "PF1.ScriptCalls.Toggle.Info"
-  );
-  game.pf1.registry.registerItemScriptCategory(
-    "pf1",
-    "changeQuantity",
-    "PF1.ScriptCalls.ChangeQuantity.Name",
-    ["loot", "equipment", "weapon", "consumable", "container"],
-    "PF1.ScriptCalls.ChangeQuantity.Info"
-  );
-  game.pf1.registry.registerItemScriptCategory(
-    "pf1",
-    "changeLevel",
-    "PF1.ScriptCalls.ChangeLevel.Name",
-    ["buff", "class"],
-    "PF1.ScriptCalls.ChangeLevel.Info"
-  );
-
+  // Register data in the registry
+  registerScriptCalls();
   registerDamageTypes();
 
   // Initialize socket listener

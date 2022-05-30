@@ -1,13 +1,13 @@
 export class BaseRegistryObject {
   constructor(src) {
-    this._source = this._createSource(src);
+    this.data = this._createData(src);
   }
 
-  _createSource(src) {
-    return mergeObject(this.constructor._baseSource, src);
+  _createData(src) {
+    return mergeObject(this.constructor._baseData, src);
   }
 
-  static get _baseSource() {
+  static get _baseData() {
     return {
       _id: randomID(16),
       get id() {
@@ -18,21 +18,21 @@ export class BaseRegistryObject {
     };
   }
 
-  static get name() {
-    return "Basic";
+  static get typeName() {
+    return "Basic Registry Object";
   }
 
   get id() {
-    return this._source.id;
+    return this.data.id;
   }
   get key() {
     return this.id;
   }
   get name() {
-    return this._source.name;
+    return this.data.name;
   }
 
   toObject() {
-    return duplicate(this._source);
+    return deepClone(this.data);
   }
 }

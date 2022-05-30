@@ -4,7 +4,177 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "special (see below)",
+          "units": ""
+        },
+        "target": {
+          "value": "1 creature"
+        },
+        "range": {
+          "value": 20,
+          "units": "ft",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          2
+        ],
+        [
+          "witch",
+          2
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 2,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "nec",
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": true,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "a dead wasp",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
+    "shortDescription": "<p>You create a dark whip-shaped field of energy that wraps around an enemy's neck, leaving everything except his head paralyzed until you let go of the whip or it is destroyed. You must make a ranged touch attack with this spell. If you strike your target, he takes a 1d6 penalty to his Strength, Dexterity, and Constitution each round.</p><p>This penalty cannot reduce any attribute to less than 1, and once any of these attributes reaches 1 the target collapses and his body, except his head, becomes paralyzed. While paralyzed in this way, the target retains full use of his senses, including the ability to feel pain, and can speak (including casting spells with only verbal components). The whip has a maximum length of 20 feet, 15 hit points, and a hardness of 5. The spell ends immediately if you let go of the whip or it is destroyed. When the spell ends, all penalties the target took from this spell also end.</p>",
+    "spellDuration": "special (see below)",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -19,10 +189,8 @@
     },
     "range": {
       "value": 20,
-      "units": "ft"
-    },
-    "uses": {
-      "per": ""
+      "units": "ft",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -43,43 +211,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          2
-        ],
-        [
-          "witch",
-          2
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 2,
-    "school": "nec",
     "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true,
-      "material": true
-    },
-    "materials": {
-      "value": "a dead wasp"
-    },
-    "shortDescription": "<p>You create a dark whip-shaped field of energy that wraps around an enemy's neck, leaving everything except his head paralyzed until you let go of the whip or it is destroyed. You must make a ranged touch attack with this spell. If you strike your target, he takes a 1d6 penalty to his Strength, Dexterity, and Constitution each round.</p><p>This penalty cannot reduce any attribute to less than 1, and once any of these attributes reaches 1 the target collapses and his body, except his head, becomes paralyzed. While paralyzed in this way, the target retains full use of his senses, including the ability to feel pain, and can speak (including casting spells with only verbal components). The whip has a maximum length of 20 feet, 15 hit points, and a hardness of 5. The spell ends immediately if you let go of the whip or it is destroyed. When the spell ends, all penalties the target took from this spell also end.</p>",
-    "spellDuration": "special (see below)"
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

@@ -27,7 +27,6 @@
     {{#unless showUnidentifiedData}}
     <a class="item" data-tab="changes">{{ localize "PF1.Changes" }}</a>
     {{/unless}}
-    <a class="item" data-tab="conditionals">{{localize "PF1.Conditionals"}}</a>
     <a class="item" data-tab="links">{{localize "PF1.Links"}}</a>
     {{#unless showUnidentifiedData}}
     <a class="item" data-tab="advanced">{{localize "PF1.Advanced"}}</a>
@@ -41,6 +40,10 @@
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
+      {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
+
+      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
+
       {{#if owner}}
       <label class="checkbox">
         <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}} />
@@ -140,21 +143,6 @@
         </div>
       </div>
 
-      <h3 class="form-header">{{localize "PF1.AttackUsage"}}</h3>
-
-      {{!-- Item Activation Template --}}
-      {{> "systems/pf1/templates/items/parts/item-activation.hbs"}}
-
-      <h3 class="form-header">{{localize "PF1.AttackAction"}}</h3>
-
-      {{!-- Item Action Template --}}
-      {{> "systems/pf1/templates/items/parts/item-action.hbs"}}
-
-      <h3 class="form-header">{{localize "PF1.MeasureTemplate"}}</h3>
-
-      {{!-- Item Measure Template --}}
-      {{> "systems/pf1/templates/items/parts/item-template.hbs"}}
-
       {{!-- Advanced Tag --}}
       {{> "systems/pf1/templates/items/parts/item-tag.hbs"}}
       {{/unless}}
@@ -167,15 +155,12 @@
     </div>
     {{/unless}}
 
-    {{!-- Conditionals Tab --}}
-    <div class="tab" data-group="primary" data-tab="conditionals">
-      {{> "systems/pf1/templates/items/parts/item-conditionals.hbs"}}
-    </div>
-
+    {{!-- Links Tab --}}
     <div class="tab flexcol" data-group="primary" data-tab="links">
       {{> "systems/pf1/templates/items/parts/item-links.hbs"}}
     </div>
 
+    {{!-- Advanced Tab --}}
     {{#unless showUnidentifiedData}}
     <div class="tab flexcol" data-group="primary" data-tab="advanced">
       {{> "systems/pf1/templates/items/parts/item-advanced.hbs"}}

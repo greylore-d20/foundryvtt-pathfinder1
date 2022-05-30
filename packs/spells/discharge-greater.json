@@ -4,52 +4,119 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous",
+          "units": ""
+        },
+        "target": {
+          "value": "one creature or technological object, or a 20-ft.-radius burst"
+        },
+        "range": {
+          "units": "medium",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "one creature or technological object, or a 20-ft.-radius burst",
+        "conditionals": []
       }
-    },
-    "target": {
-      "value": "one creature or technological object, or a 20-ft.-radius burst"
-    },
-    "range": {
-      "units": "medium"
-    },
+    ],
     "uses": {
-      "per": ""
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -81,17 +148,86 @@
       "bloodline": []
     },
     "level": 6,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "abj",
-    "conditionals": [],
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
     "components": {
+      "value": "",
       "verbal": true,
-      "somatic": true
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
     },
     "spellbook": "",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.cnn3hvm9e4bub6pr]{discharge}, except it can discharge multiple technological objects and can be used to target an area.</p>\n<p>You choose to use greater <em>discharge</em> in one of two ways: an area <em>discharge</em> or a targeted <em>discharge</em>.</p>\n<p><em>Area</em> <em><strong>Discharge</strong></em>: When greater <em>discharge</em> is used in this way, the spell affects everything within a 20-foot-radius burst.</p>\n<p>Each creature in the area is affected as though by <em>discharge</em> (affecting only one object in the creature's possession), and each unattended object is similarly affected.</p>\n<p><em>Targeted</em> <em><strong>Discharge</strong></em>: This spell functions as <em>discharge</em>, but if the target is a creature, it can <em>discharge</em> one randomly determined object from the target's charged or electrically powered possessions for every 4 caster levels you possess.</p>",
     "spellDuration": "instantaneous",
-    "spellArea": "one creature or technological object, or a 20-ft.-radius burst"
+    "spellEffect": "",
+    "spellArea": "one creature or technological object, or a 20-ft.-radius burst",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
+    "activation": {
+      "type": "standard"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "target": {
+      "value": "one creature or technological object, or a 20-ft.-radius burst"
+    },
+    "range": {
+      "units": "medium",
+      "maxIncrements": 1
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "spellsave",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0",
+      "type": "fort",
+      "description": "Fortitude negates"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

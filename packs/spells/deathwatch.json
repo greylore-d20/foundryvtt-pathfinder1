@@ -4,48 +4,118 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 min./level",
+          "units": ""
+        },
+        "target": {},
+        "range": {
+          "value": 30,
+          "units": "ft",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "cone-shaped emanation",
+        "conditionals": []
       }
-    },
-    "range": {
-      "value": 30,
-      "units": "ft"
-    },
+    ],
     "uses": {
-      "per": ""
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -73,16 +143,83 @@
       "elementalSchool": [],
       "bloodline": []
     },
+    "level": 1,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "nec",
-    "conditionals": [],
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
     "components": {
+      "value": "",
       "verbal": true,
-      "somatic": true
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
     },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
     "sr": false,
     "shortDescription": "<p>Using the powers of necromancy, you can determine the condition of creatures near death within the spell's range. You instantly know whether each creature within the area is dead, fragile (alive and wounded, with 3 or fewer hit points left), fighting off death (alive with 4 or more hit points), healthy, undead, or neither alive nor dead (such as a construct). <i>Deathwatch</i> sees through any spell or ability that allows creatures to feign death.</p>",
     "spellDuration": "10 min./level",
-    "spellArea": "cone-shaped emanation"
+    "spellEffect": "",
+    "spellArea": "cone-shaped emanation",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
+    "activation": {
+      "type": "standard"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "range": {
+      "value": 30,
+      "units": "ft",
+      "maxIncrements": 1
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

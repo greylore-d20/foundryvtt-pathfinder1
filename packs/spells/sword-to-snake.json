@@ -4,52 +4,119 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "one Medium or smaller item"
+        },
+        "range": {
+          "units": "close",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": []
       }
-    },
-    "target": {
-      "value": "one Medium or smaller item"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
-      "per": ""
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (object)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -89,20 +156,86 @@
       "bloodline": []
     },
     "level": 4,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "trs",
+    "subschool": "",
     "types": "poison",
-    "conditionals": [],
+    "nonlethal": false,
     "components": {
+      "value": "",
       "verbal": true,
       "somatic": true,
+      "thought": false,
+      "emotion": false,
       "material": true,
+      "focus": false,
       "divineFocus": 2
     },
+    "castTime": "",
     "materials": {
-      "value": "a hair from a spider"
+      "value": "a hair from a spider",
+      "focus": "",
+      "gpValue": 0
     },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
     "shortDescription": "<p>When you make an undulating gesture using your hand, the target item changes slightly in shape and appearance to resemble a cross between its original form and that of a venomous animal. For example, a staff might change to resemble a snake, a shield might change to resemble an enormous venomous beetle, or the hilt of a sword might change to resemble a scorpion's tail.  If this spell is cast on a held item, the wielder adds his Will save bonus to the saving throw. You must be able to see the item to cast this spell on it.  The item retains all its properties, but whenever a creature picks up, attacks with, activates, or otherwise manipulates the item (with the exception of dropping the item) after this spell is cast, it animates and bites the creature. The attack is resolved before the action that triggered it. This spell otherwise does not affect the creature's ability to use the item.  If the item is a nonmagical weapon, it has an attack bonus equal to your caster level plus your spellcasting ability score modifier, and its attack deals 1d4 points of piercing damage. If the target item is a magic weapon, it retains any magical qualities, and its enhancement bonus is still added to both the attack roll and the damage roll.  A creature that takes damage from the bite is affected as if by a venomous snake's poison (<i>frequency</i> 1/round for 6 rounds; <i>effect</i> 1d2 Con; <i>cure</i> 1 save). The poison's save DC is equal to this spell's DC.</p>",
-    "spellDuration": "1 round/level (D)"
+    "spellDuration": "1 round/level (D)",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
+    "activation": {
+      "type": "standard"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "target": {
+      "value": "one Medium or smaller item"
+    },
+    "range": {
+      "units": "close",
+      "maxIncrements": 1
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "spellsave",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0",
+      "type": "will",
+      "description": "Will negates (object)"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

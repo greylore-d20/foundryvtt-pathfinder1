@@ -93,7 +93,7 @@
   <label>{{localize "PF1.Duration"}}</label>
   <div class="form-fields">
     {{#if isSpell}}
-    <input type="text" name="data.spellDuration" value="{{data.spellDuration}}" placeholder="{{localize "PF1.SpellDurationExample"}}"/>
+    <input type="text" name="data.duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.SpellDurationExample"}}"/>
     {{else}}
     {{#if canInputDuration}}<input class="formula" type="text" name="data.duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.Formula"}}"/>{{/if}}
     <select name="data.duration.units">
@@ -108,38 +108,7 @@
   </div>
 </div>
 
-{{!-- Limited Uses --}}
 {{#unless isSpell}}
-<div class="form-group uses-per">
-  <label>{{localize "PF1.LimitedUses"}}</label>
-  <div class="form-fields">
-    {{#if isCharged}}
-    <input type="text" name="data.uses.value" value="{{data.uses.value}}" data-dtype="Number"/>
-    <span class="sep"> / </span>
-    <input type="text" value="{{data.uses.max}}" disabled data-dtype="Number"/>
-    {{/if}}
-    <select name="data.uses.per">
-      {{#select data.uses.per}}
-      <option value=""></option>
-      {{#each config.limitedUsePeriods as |name key|}}
-      <option value="{{key}}">{{name}}</option>
-      {{/each}}
-      {{/select}}
-    </select>
-  </div>
-</div>
-{{#if isCharged}}
-<div class="form-group uses-per">
-  <input class="formula" type="text" name="data.uses.maxFormula" value="{{data.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
-</div>
-{{#if isPhysical}}
-  <div class="form-group">
-    <label>{{localize "PF1.PricePerCharge"}}</label>
-    <input type="text" name="data.uses.pricePerUse" value="{{data.uses.pricePerUse}}" placeholder="0" type="Number"/>
-  </div>
-{{/if}}
-{{/if}}
-
 {{#if canUseAmmo}}
   <label class="checkbox">
     <input type="checkbox" name="data.usesAmmo" {{checked data.usesAmmo}} /> {{localize "PF1.UsesAmmo"}}
@@ -159,14 +128,14 @@
     </div>
   {{/if}}
 {{/if}}
+{{/unless}}
 
 <div class="form-group stacked">
-  <label>{{localize "PF1.AutoDeductCharges"}}</label>
+  <label>{{#if isSpell}}{{localize "PF1.SpellPointsCost"}}{{else}}{{localize "PF1.AutoDeductCharges"}}{{/if}}</label>
   <div class="flexrow">
     <input type="checkbox" name="data.uses.autoDeductCharges" {{checked data.uses.autoDeductCharges}}/>
     {{#if data.uses.autoDeductCharges}}<input type="text" name="data.uses.autoDeductChargesCost" placeholder="{{localize "PF1.DeductChargeFormulaPlaceholder"}}"
       value="{{data.uses.autoDeductChargesCost}}" />{{/if}}
   </div>
 </div>
-{{/unless}}
 {{/if}}

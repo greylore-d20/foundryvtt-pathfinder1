@@ -4,51 +4,119 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
-    "activation": {
-      "cost": 30,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 30,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "see text",
+          "units": ""
+        },
+        "target": {
+          "value": "you plus one additional willing creature touched per two caster levels"
+        },
+        "range": {
+          "units": "touch",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": []
       }
-    },
-    "target": {
-      "value": "you plus one additional willing creature touched per two caster levels"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
-      "per": ""
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -72,27 +140,85 @@
       "bloodline": []
     },
     "level": 5,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "nec",
-    "conditionals": [],
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
     "components": {
+      "value": "",
       "verbal": true,
       "somatic": true,
-      "material": true
+      "thought": false,
+      "emotion": false,
+      "material": true,
+      "focus": false,
+      "divineFocus": 0
     },
+    "castTime": "",
     "materials": {
       "value": "1,000 gp jacinth",
+      "focus": "",
       "gpValue": 1000
     },
     "spellbook": "",
     "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
+    "atWill": false,
+    "sr": true,
     "shortDescription": "<p>This spell functions as <i>astral projection</i>, except you cannot leave the Astral Plane and explore other planes (though you can still return to the plane you were on when you cast this spell).</p>",
     "spellDuration": "see text",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
+    "activation": {
+      "cost": 30,
+      "type": "minute"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 30,
+        "type": "minute"
+      }
+    },
+    "target": {
+      "value": "you plus one additional willing creature touched per two caster levels"
+    },
+    "range": {
+      "units": "touch",
+      "maxIncrements": 1
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "conditionals": [],
     "spellPoints": {
       "cost": ""
-    }
+    },
+    "size": "med"
   },
   "effects": [],
   "folder": null,

@@ -5,10 +5,15 @@
 
 <div class="card-content">
   {{enrich description rollData=@root.rollData}}
+  {{#if action.data.description}}
+  <hr>
+  <h1>{{action.name}}</h1>
+  {{enrich action.data.description rollData=@root.rollData}}
+  {{/if}}
 </div>
 
 {{#if range}}
-<div class="card-range gm-sensitive" data-range="{{range}}" {{#if rangeFormula}}title="{{rangeFormula}}"{{/if}}>
+<div class="card-range gm-sensitive" data-range="{{range}}" data-action="{{action.data._id}}" {{#if rangeFormula}}title="{{rangeFormula}}"{{/if}}>
   {{localize "PF1.Range"}}: {{rangeLabel}}
 </div>
 {{/if}}

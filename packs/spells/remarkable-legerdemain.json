@@ -4,7 +4,176 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "units": "personal",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          2
+        ],
+        [
+          "bard",
+          2
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 2,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "trs",
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p>While this spell is in effect, your body and clothing flutter and distort subtly, allowing you to conceal items with uncanny skill. You treat any object you can hold in one hand as a coin-sized object for the purposes of Sleight of Hand checks to palm the object or make it disappear; however, you can hide only one such item per caster level on your person at one time. This effect does not change the actual sizes of the objects.</p>",
+    "spellDuration": "1 minute/level (D)",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -18,10 +187,8 @@
       "value": "you"
     },
     "range": {
-      "units": "personal"
-    },
-    "uses": {
-      "per": ""
+      "units": "personal",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -42,40 +209,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          2
-        ],
-        [
-          "bard",
-          2
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 2,
-    "school": "trs",
     "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true
-    },
-    "sr": false,
-    "shortDescription": "<p>While this spell is in effect, your body and clothing flutter and distort subtly, allowing you to conceal items with uncanny skill. You treat any object you can hold in one hand as a coin-sized object for the purposes of Sleight of Hand checks to palm the object or make it disappear; however, you can hide only one such item per caster level on your person at one time. This effect does not change the actual sizes of the objects.</p>",
-    "spellDuration": "1 minute/level (D)"
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

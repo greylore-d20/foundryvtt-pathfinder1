@@ -4,52 +4,119 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minutes/level",
+          "units": ""
+        },
+        "target": {
+          "value": "weapon touched"
+        },
+        "range": {
+          "units": "touch",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": []
       }
-    },
-    "target": {
-      "value": "weapon touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
-      "per": ""
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless, object), see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -74,14 +141,86 @@
       "bloodline": []
     },
     "level": 2,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "trs",
-    "conditionals": [],
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
     "components": {
+      "value": "",
       "verbal": true,
-      "somatic": true
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
     },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
     "shortDescription": "<p>You cause a weapon to exude a palpable aura of divine fury. While wielding this weapon, a creature gains a +2 morale bonus on Intimidate checks. When an attack made using the targeted weapon hits, the wielder can spend a free action to discharge the effect to inflict agony on the creature the weapon hit. If that creature has spell resistance, it applies against this effect. If the creature fails a Will save, it is nauseated for 1d4+1 rounds. If it succeeds at the saving throw, the creature is instead sickened for 1 round. The sickened condition created by the instrument is a mind-affecting effect.</p>",
-    "spellDuration": "1 minutes/level"
+    "spellDuration": "1 minutes/level",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
+    "activation": {
+      "type": "standard"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "target": {
+      "value": "weapon touched"
+    },
+    "range": {
+      "units": "touch",
+      "maxIncrements": 1
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "spellsave",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0",
+      "type": "will",
+      "description": "Will negates (harmless, object), see text"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "conditionals": [],
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

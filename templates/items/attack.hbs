@@ -26,7 +26,6 @@
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item" data-tab="description">{{ localize "PF1.Description" }}</a>
     <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
-    <a class="item" data-tab="conditionals">{{localize "PF1.Conditionals"}}</a>
     <a class="item" data-tab="links">{{localize "PF1.Links"}}</a>
     <a class="item" data-tab="advanced">{{localize "PF1.Advanced"}}</a>
   </nav>
@@ -41,6 +40,10 @@
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
+      {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
+
+      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
+
       <div class="form-group stacked">
         <label class="checkbox">
           <input type="checkbox" name="data.proficient" {{checked data.proficient}}/> {{localize "PF1.Proficient"}}
@@ -69,10 +72,6 @@
           <input type="checkbox" name="data.broken" {{checked data.broken}}/> {{localize "PF1.Broken"}}
         </label>
         {{/unless}}
-
-        <label class="checkbox">
-          <input type="checkbox" name="data.nonlethal" {{checked data.nonlethal}}/> {{localize "PF1.Nonlethal"}}
-        </label>
       </div>
 
       <div class="form-group">
@@ -114,28 +113,8 @@
       </div>
       {{/unless}}
 
-      <h3 class="form-header">{{localize "PF1.AttackUsage"}}</h3>
-
-      {{!-- Item Activation Template --}}
-      {{> "systems/pf1/templates/items/parts/item-activation.hbs"}}
-
-      <h3 class="form-header">{{localize "PF1.AttackAction"}}</h3>
-
-      {{!-- Item Action Template --}}
-      {{> "systems/pf1/templates/items/parts/item-action.hbs"}}
-
-      <h3 class="form-header">{{localize "PF1.MeasureTemplate"}}</h3>
-
-      {{!-- Item Measure Template --}}
-      {{> "systems/pf1/templates/items/parts/item-template.hbs"}}
-
       {{!-- Advanced Tag --}}
       {{> "systems/pf1/templates/items/parts/item-tag.hbs"}}
-    </div>
-
-    {{!-- Conditionals Tab --}}
-    <div class="tab" data-group="primary" data-tab="conditionals">
-      {{> "systems/pf1/templates/items/parts/item-conditionals.hbs"}}
     </div>
 
     <div class="tab flexcol" data-group="primary" data-tab="links">

@@ -4,51 +4,118 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "see text",
+          "units": ""
+        },
+        "target": {},
+        "range": {
+          "value": "0",
+          "units": "ft",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "one symbol",
+        "spellArea": "",
+        "conditionals": []
       }
-    },
-    "range": {
-      "value": "0",
-      "units": "ft"
-    },
+    ],
     "uses": {
-      "per": ""
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -76,28 +143,85 @@
       "bloodline": []
     },
     "level": 7,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "nec",
-    "conditionals": [],
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
     "components": {
+      "value": "",
       "verbal": true,
       "somatic": true,
-      "material": true
+      "thought": false,
+      "emotion": false,
+      "material": true,
+      "focus": false,
+      "divineFocus": 0
     },
+    "castTime": "",
     "materials": {
       "value": "mercury and phosphorus, plus powdered diamond and opal worth a total of 5,000 gp",
+      "focus": "",
       "gpValue": 5000
     },
     "spellbook": "",
     "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
+    "atWill": false,
+    "sr": true,
     "shortDescription": "<p>This spell functions like <i>symbol of death</i>, except that every creature within 60 feet of a <i>Symbol of Weakness</i> instead suffers crippling weakness that deals 3d6 points of Strength damage.</p><p>Unlike <i>symbol of death</i>, <i>Symbol of Weakness</i> has no hit point limit; once triggered, a <i>Symbol of Weakness</i> simply remains active for 10 minutes per caster level. A creature can only be affected by this symbol once.</p><p><i>Note</i>: Magic traps such as <i>Symbol of Weakness</i> are hard to detect and disable. While any character can use Perception to find a symbol, only a character with the trapfinding class feature can use Disable Device to disarm it. The DC in each case is 25 + spell level, or 32 for <i>Symbol of Weakness</i>.</p>",
     "spellDuration": "see text",
     "spellEffect": "one symbol",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
+    "activation": {
+      "cost": 10,
+      "type": "minute"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 10,
+        "type": "minute"
+      }
+    },
+    "range": {
+      "value": "0",
+      "units": "ft",
+      "maxIncrements": 1
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "spellsave",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0",
+      "type": "fort",
+      "description": "Fortitude negates"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "conditionals": [],
     "spellPoints": {
       "cost": ""
-    }
+    },
+    "size": "med"
   },
   "effects": [],
   "folder": null,

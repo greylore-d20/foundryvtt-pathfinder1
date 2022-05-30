@@ -4,49 +4,118 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "permanent",
+          "units": ""
+        },
+        "target": {},
+        "range": {
+          "value": "0",
+          "units": "ft",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "one symbol",
+        "spellArea": "",
+        "conditionals": []
       }
-    },
-    "range": {
-      "value": "0",
-      "units": "ft"
-    },
+    ],
     "uses": {
-      "per": ""
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -74,30 +143,83 @@
       "bloodline": []
     },
     "level": 6,
+    "clOffset": 0,
+    "slOffset": 0,
     "school": "abj",
+    "subschool": "",
     "types": "force",
-    "conditionals": [],
+    "nonlethal": false,
     "components": {
+      "value": "",
       "verbal": true,
       "somatic": true,
-      "material": true
+      "thought": false,
+      "emotion": false,
+      "material": true,
+      "focus": false,
+      "divineFocus": 0
     },
+    "castTime": "",
     "materials": {
       "value": "mercury and phosphorous, plus powdered diamond and opal worth a total of 5,000 gp",
+      "focus": "",
       "gpValue": 5000
     },
     "spellbook": "",
     "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
+    "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell allows you to scribe a potent rune of power upon or above a door or other opening measuring no more than 20 square feet/level in size. When the casting is completed, the symbol immediately triggers, glowing visibly and sealing the door or opening with an invisible barrier of force equivalent to a <i>Wall of Force</i>. Destroying the symbol ends the effect, though destroying it once the symbol has been activated requires destroying the <i>Wall of Force</i> first. Once triggered, the wall remains for 10 minutes per caster level.</p><p>When scribing a <i>symbol of sealing</i>, you can specify a password or phrase that allows a creature speaking it to bypass the seal and pass through the opening. You can also attune any number of creatures to the <i>symbol of sealing</i>, but doing this extends the casting time as described under <i>symbol of death</i> (Core <i>Rulebook</i> 355). However, the force wall created by the symbol blocks attacks and line of effect even for creatures that know the password or are attuned-the password only prevents them from triggering the symbol, not from ignoring its effects if triggered.</p><p>A <i>disintegrate</i> spell or similar effect can destroy the <i>Wall of Force</i> created by the symbol if the caster makes a caster level check against a DC of 11 + your caster level. A <i>knock</i> spell has no effect on a <i>symbol of sealing</i> or its force wall. A <i>symbol of sealing</i> cannot be dispelled, but mage's disjunction automatically destroys it.</p>",
     "spellDuration": "permanent",
     "spellEffect": "one symbol",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
+    "activation": {
+      "cost": 10,
+      "type": "minute"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 10,
+        "type": "minute"
+      }
+    },
+    "range": {
+      "value": "0",
+      "units": "ft",
+      "maxIncrements": 1
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "other",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "conditionals": [],
     "spellPoints": {
       "cost": ""
-    }
+    },
+    "size": "med"
   },
   "effects": [],
   "folder": null,

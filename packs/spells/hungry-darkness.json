@@ -4,7 +4,175 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)",
+          "units": ""
+        },
+        "target": {},
+        "range": {
+          "units": "close",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "3d6",
+              "Force"
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "60-ft.-radius spread",
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          7
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 7,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "evo",
+    "subschool": "",
+    "types": "darkness, force",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": true,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "a bat's tooth",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
+    "shortDescription": "<p>This spell creates an area of intense blackness, as <i>deeper darkness</i>, but filled with unseen chewing teeth and ravenous maws. Any creatures beginning its turn within the <i>hungry darkness</i> is gnawed and slashed by these unseen fangs of force, dealing 3d6 points of force damage and 2 points of Constitution damage per round. Once a creature leaves the cloud, it continues to take 1d6 points of bleed damage each round until it receives magical healing or enters an area of bright light. Spell resistance can prevent damage from the <i>hungry darkness</i> but not against the darkness it creates.</p>",
+    "spellDuration": "1 round/level (D)",
+    "spellEffect": "",
+    "spellArea": "60-ft.-radius spread",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -15,10 +183,8 @@
       }
     },
     "range": {
-      "units": "close"
-    },
-    "uses": {
-      "per": ""
+      "units": "close",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "type": "circle",
@@ -45,41 +211,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          7
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 7,
-    "school": "evo",
-    "types": "darkness, force",
     "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true,
-      "material": true
-    },
-    "materials": {
-      "value": "a bat's tooth"
-    },
-    "shortDescription": "<p>This spell creates an area of intense blackness, as <i>deeper darkness</i>, but filled with unseen chewing teeth and ravenous maws. Any creatures beginning its turn within the <i>hungry darkness</i> is gnawed and slashed by these unseen fangs of force, dealing 3d6 points of force damage and 2 points of Constitution damage per round. Once a creature leaves the cloud, it continues to take 1d6 points of bleed damage each round until it receives magical healing or enters an area of bright light. Spell resistance can prevent damage from the <i>hungry darkness</i> but not against the darkness it creates.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellArea": "60-ft.-radius spread"
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

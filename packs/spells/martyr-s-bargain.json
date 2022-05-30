@@ -4,7 +4,176 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "units": "personal",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "cleric/oracle",
+          2
+        ],
+        [
+          "paladin",
+          2
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 2,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "trs",
+    "subschool": "",
+    "types": "good",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": false,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p>Among the faithful followers of the gods of purity-whether they be the servants of Desna in Nidal, zealous followers of Milani struggling against Cheliax's government, paladins of Iomedae fighting against the horrors of the Worldwound, or simply those that fight evil the world over-martyr's bargain represents true faith and true sacrifice.</p><p> You cast this spell as an immediate action when you are subject to a spell or spell-like ability that deals hit point damage, after attack rolls and saving throws have been rolled but before the damage itself is determined. The damage dealt by the spell and any related effects are then delayed for you (and you only) for a number of rounds equal to your caster level.</p><p> At the end of that time (or immediately if martyr's bargain is dispelled), the delayed damage takes effect on you as it would have at the time it was cast, but is maximized as if affected by the Maximize Spell metamagic feat. Spells and spell-like abilities that were already maximized gain no additional benefit from this spell. Nothing can prevent this delayed damage from affecting you.</p><p> You can be affected by only one martyr's bargain spell at a time. If you cast this spell while you are already under the effects of a previous martyr's bargain, the previous spell effect ends and you immediately take the damage it had delayed.</p>",
+    "spellDuration": "1 round/level",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "immediate"
     },
@@ -17,10 +186,8 @@
       "value": "you"
     },
     "range": {
-      "units": "personal"
-    },
-    "uses": {
-      "per": ""
+      "units": "personal",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -41,40 +208,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "cleric/oracle",
-          2
-        ],
-        [
-          "paladin",
-          2
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 2,
-    "school": "trs",
-    "types": "good",
     "conditionals": [],
-    "components": {
-      "verbal": true
-    },
-    "sr": false,
-    "shortDescription": "<p>Among the faithful followers of the gods of purity-whether they be the servants of Desna in Nidal, zealous followers of Milani struggling against Cheliax's government, paladins of Iomedae fighting against the horrors of the Worldwound, or simply those that fight evil the world over-martyr's bargain represents true faith and true sacrifice.</p><p> You cast this spell as an immediate action when you are subject to a spell or spell-like ability that deals hit point damage, after attack rolls and saving throws have been rolled but before the damage itself is determined. The damage dealt by the spell and any related effects are then delayed for you (and you only) for a number of rounds equal to your caster level.</p><p> At the end of that time (or immediately if martyr's bargain is dispelled), the delayed damage takes effect on you as it would have at the time it was cast, but is maximized as if affected by the Maximize Spell metamagic feat. Spells and spell-like abilities that were already maximized gain no additional benefit from this spell. Nothing can prevent this delayed damage from affecting you.</p><p> You can be affected by only one martyr's bargain spell at a time. If you cast this spell while you are already under the effects of a previous martyr's bargain, the previous spell effect ends and you immediately take the damage it had delayed.</p>",
-    "spellDuration": "1 round/level"
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

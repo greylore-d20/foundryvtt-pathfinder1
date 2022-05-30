@@ -262,7 +262,7 @@ export const migrateItemData = function (item) {
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
-  _migrateSecondaryAttackData(item, updateData);
+  _migrateItemActions(item, updateData);
 
   // Return the migrated update data
   return updateData;
@@ -820,7 +820,7 @@ const _migrateItemChanges = function (ent, updateData) {
     const newChanges = [];
     for (const c of changes) {
       if (c instanceof Array) {
-        const nc = ItemChange.create(
+        const newChange = new ItemChange(
           {
             formula: c[0],
             target: c[1],
@@ -830,10 +830,10 @@ const _migrateItemChanges = function (ent, updateData) {
           },
           null
         );
-        newChanges.push(nc.data);
+        newChanges.push(newChange.data);
       } else {
-        const nc = ItemChange.create(c, null);
-        newChanges.push(nc.data);
+        const newChange = new ItemChange(c, null);
+        newChanges.push(newChange.data);
       }
     }
 
@@ -996,14 +996,40 @@ const _migrateSpellData = function (item, updateData) {
   }
 };
 
-const _migrateSecondaryAttackData = function (item, updateData) {
-  if (item.type !== "attack") return;
+const _migrateItemActions = function (item, updateData) {
+  if (
+    (!item.data.actionType && item.type !== "spell") ||
+    (item.data.actions instanceof Array && item.data.actions.length > 0)
+  )
+    return;
 
-  const secondaryAttackData = item.data.data.naturalAttack?.secondary;
-  if (secondaryAttackData == null) {
-    updateData["data.naturalAttack.secondary.attackBonus"] = "-5";
-    updateData["data.naturalAttack.secondary.damageMult"] = 0.5;
+  // Transfer data to an action
+  const actionData = game.pf1.documentComponents.ItemAction.defaultData;
+  const removeKeys = ["_id", "name", "img"];
+  for (const k of Object.keys(actionData)) {
+    if (!removeKeys.includes(k)) {
+      if (item.data[k] != null) actionData[k] = duplicate(item.data[k]);
+    }
   }
+
+  // Transfer name and image
+  if (["weapon", "attack"].includes(item.type)) {
+    actionData.name = game.i18n.localize("PF1.Attack");
+  } else {
+    actionData.name = game.i18n.localize("PF1.Use");
+  }
+  actionData.img = item.img;
+  // Clear description
+  actionData.description = "";
+  // Add spell data
+  if (item.type === "spell") {
+    actionData.duration.value = item.data.spellDuration;
+  }
+  // Clean out old attack and effect notes
+  updateData["data.attackNotes"] = [];
+  updateData["data.effectNotes"] = [];
+
+  updateData["data.actions"] = [actionData];
 };
 
 const _migrateActorCR = function (ent, updateData, linked) {

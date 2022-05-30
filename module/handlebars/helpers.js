@@ -9,9 +9,14 @@ export const registerHandlebarsHelpers = function () {
    * Render a MCE editor container with an optional toggle button
    */
   Handlebars.registerHelper("roll-editor", function (options) {
+    const action = options.data.root.action;
     const item = options.data.root.item;
     const actor = options.data.root.actor;
-    const rollData = item != null ? item.getRollData() : actor != null ? actor.getRollData() : {};
+    let rollData;
+    if (action) rollData = action.getRollData();
+    if (item && !rollData) rollData = item.getRollData();
+    if (actor && !rollData) rollData = actor.getRollData();
+    if (!rollData) rollData = {};
 
     // Create editor
     const target = options.hash["target"];
@@ -39,10 +44,11 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("distanceUnit", (type) => convertDistance(0, type)[1]);
 
   Handlebars.registerHelper("itemRange", (item, rollData) => {
-    // ItemPF.range is not accessible here and is thus largely duplicated here
+    if (!item.document?.firstAction?.hasRange) return null;
+    const action = item.document.firstAction;
 
-    const range = item.data.range.value;
-    const rangeType = item.data.range.units;
+    const range = action.data.range.value;
+    const rangeType = action.data.range.units;
 
     if (rangeType == null) return null;
 
@@ -56,10 +62,10 @@ export const registerHandlebarsHelpers = function () {
   });
 
   Handlebars.registerHelper("itemDamage", (item, rollData) => {
-    if (!item.hasDamage) return null; // It was a mistake to call this
+    if (!item.document?.firstAction?.hasDamage) return null; // It was a mistake to call this
 
     const actorData = item.document.parentActor.data.data,
-      itemData = item.data;
+      actionData = item.document.firstAction.data;
 
     const rv = [];
 
@@ -76,15 +82,15 @@ export const registerHandlebarsHelpers = function () {
     const handleParts = (parts) => parts.forEach(([formula, _]) => handleFormula(formula));
 
     // Normal damage parts
-    handleParts(itemData.damage.parts);
+    handleParts(actionData.damage.parts);
 
     // Include ability score only if the string isn't too long yet
-    const dmgAbl = itemData.ability.damage;
-    const dmgAblMod = Math.floor((actorData.abilities[dmgAbl]?.mod ?? 0) * (itemData.ability.damageMult || 1));
+    const dmgAbl = actionData.ability.damage;
+    const dmgAblMod = Math.floor((actorData.abilities[dmgAbl]?.mod ?? 0) * (actionData.ability.damageMult || 1));
     if (dmgAblMod != 0) rv.push(dmgAblMod);
 
     // Include damage parts that don't happen on crits
-    handleParts(itemData.damage.nonCritParts);
+    handleParts(actionData.damage.nonCritParts);
 
     // Include general sources. Item enhancement bonus is among these.
     item.document.allDamageSources?.forEach((s) => handleFormula(s.formula, s));
@@ -109,7 +115,7 @@ export const registerHandlebarsHelpers = function () {
    * Returns true if there are conditionals disabled by default.
    */
   Handlebars.registerHelper("optionalConditionals", (item) => {
-    return item.data.conditionals.find((c) => !c.default);
+    return item.firstAction?.data.conditionals.find((c) => !c.default);
   });
 
   // Fetches ability mod value based on ability key.

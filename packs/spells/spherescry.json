@@ -4,7 +4,169 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level",
+          "units": ""
+        },
+        "target": {},
+        "range": {
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          3
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 3,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "div",
+    "subschool": "scrying",
+    "types": "",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": true,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "onyx sphere worth at least 50 gp",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p>This spell allows remote viewing through spheres that have previously consumed some portion of the spellcaster's body: a single digit of a finger or toe at a minimum. The caster can view and listen to events within a 20-foot radius of the associated sphere; this radius follows the sphere if the sphere moves. Unlike a true <i>scrying</i> spell, no other spells operate through the associated sphere, but <i>spherescry</i> produces no indication of its activity on the target and cannot be discovered by normal methods of magical detection.</p>",
+    "spellDuration": "1 minute/level",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "hour"
     },
@@ -12,9 +174,6 @@
       "activation": {
         "type": "hour"
       }
-    },
-    "uses": {
-      "per": ""
     },
     "measureTemplate": {
       "size": "0"
@@ -35,41 +194,14 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          3
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 3,
-    "school": "div",
-    "subschool": "scrying",
     "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true,
-      "focus": true
+    "range": {
+      "maxIncrements": 1
     },
-    "materials": {
-      "focus": "onyx sphere worth at least 50 gp"
-    },
-    "sr": false,
-    "shortDescription": "<p>This spell allows remote viewing through spheres that have previously consumed some portion of the spellcaster's body: a single digit of a finger or toe at a minimum. The caster can view and listen to events within a 20-foot radius of the associated sphere; this radius follows the sphere if the sphere moves. Unlike a true <i>scrying</i> spell, no other spells operate through the associated sphere, but <i>spherescry</i> produces no indication of its activity on the target and cannot be discovered by normal methods of magical detection.</p>",
-    "spellDuration": "1 minute/level"
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

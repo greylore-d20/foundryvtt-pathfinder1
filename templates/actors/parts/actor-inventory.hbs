@@ -138,6 +138,7 @@
         {{/if}}
 
         <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
+          {{#unless showUnidentifiedData}}
           {{#if item.isCharged}}
           <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.data.uses.value}}</span>
           <span class="sep"> / </span>
@@ -147,6 +148,7 @@
             @resources.{{item.tag}}.max : {{item.data.uses.max}}
           </span>
           {{/if}}
+          {{/unless}}
         </div>
 
         {{#if ../../owner}}

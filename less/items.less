@@ -34,13 +34,6 @@
     }
   }
 
-  .sheet-navigation {
-    margin-bottom: 5px;
-    .item {
-      font-size: @fontSizeSubHeader;
-    }
-  }
-
   .primary-body {
     overflow: hidden;
 
@@ -289,8 +282,7 @@
   }
 
   .changes,
-  .context-notes,
-  .conditionals {
+  .context-notes {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -357,12 +349,6 @@
           background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% rgba(0, 0, 0, 0.05);
         }
       }
-      .conditional-default {
-        flex: 0 0 18px;
-      }
-      .conditional-modifier {
-        display: flex;
-      }
     }
   }
 
@@ -414,13 +400,17 @@
     }
   }
 
-  .delete-damage,
-  .crit-damage-control,
-  .delete-attack,
+  h4.change-header,
+  h4.context-notes-header {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    line-height: 24px;
+    color: @colorOlive;
+  }
+
   .delete-change,
-  .delete-note,
-  .delete-conditional,
-  .delete-conditional-modifier {
+  .delete-note {
     width: 18px;
     flex: 0 0 18px;
     line-height: 24px;
@@ -428,12 +418,8 @@
     color: @colorTan;
   }
 
-  .add-attack,
-  .add-damage,
   .add-change,
-  .add-note,
-  .add-conditional,
-  .add-conditional-modifier {
+  .add-note {
     flex: 0 0 auto;
     line-height: 24px;
     color: @colorTan;
@@ -460,10 +446,6 @@
       }
     }
   }
-
-  /* ----------------------------------------- */
-  /*  Item Actions                             */
-  /* ----------------------------------------- */
 
   .weapon-properties label.checkbox {
     flex: 0 0 98px;

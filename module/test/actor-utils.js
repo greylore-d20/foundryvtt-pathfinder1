@@ -58,3 +58,35 @@ export const addCompendiumItemToActor = async (actor, packName, itemName, extraD
   if (isTemporaryActor) actor.prepareData();
   return item;
 };
+
+/**
+ * Opens the sheet and closes it.
+ * This could emit errors on its own in some cases, so it can be an important test.
+ *
+ * @param {object} shared - The shared context for this batch of tests.
+ * @param {import("@ethaks/fvtt-quench").QuenchBatchContext} context
+ * @param {object} [options] - Optional options to pass.
+ * @param {string} [options.altName] - An alternate name to give to the test.
+ */
+export const unitTest_renderActorSheet = (shared, context, options = { altName: null }) => {
+  const { describe, before, it, expect } = context;
+
+  describe(options.altName ?? "render sheet", function () {
+    let sheet;
+    before(() => {
+      sheet = shared.actor.sheet;
+    });
+
+    it("sheet should be an ActorSheet", function () {
+      expect(sheet instanceof ActorSheet).to.be.true;
+    });
+
+    it("sheet should render", async function () {
+      await sheet.render(true);
+      await new Promise((resolve) => {
+        window.setTimeout(resolve, 100);
+      });
+      await sheet.close();
+    });
+  });
+};

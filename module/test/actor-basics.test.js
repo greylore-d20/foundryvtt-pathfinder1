@@ -1,6 +1,6 @@
 import { ActorPF } from "../actor/entity";
 import { ChatMessagePF } from "../sidebar/chat-message";
-import { addCompendiumItemToActor, createTestActor } from "./actor-utils";
+import { addCompendiumItemToActor, createTestActor, unitTest_renderActorSheet } from "./actor-utils";
 
 export const registerActorBasicTests = () => {
   // ---------------------------------- //
@@ -10,12 +10,18 @@ export const registerActorBasicTests = () => {
     "pf1.actor.basic-tests",
     async (context) => {
       const { describe, it, expect, before, after } = context;
+      /**
+       * @type {object}
+       * Handles a shared context to pass between functions
+       */
+      const shared = {};
       /** @type {ActorPF} */
       let actor;
       const messages = [];
       before(async () => {
         // Requires actor to NOT be temporary for initiative rolls
         actor = await createTestActor({}, { temporary: false });
+        shared.actor = actor;
       });
       after(async () => {
         await actor.delete();
@@ -264,29 +270,7 @@ export const registerActorBasicTests = () => {
         // ---------------------------------- //
         // Render sheet                       //
         // ---------------------------------- //
-        describe("render sheet", function () {
-          let sheet;
-          before(() => {
-            sheet = actor.sheet;
-          });
-
-          it("sheet should be an ActorSheet", function () {
-            expect(sheet instanceof ActorSheet).to.be.true;
-          });
-
-          it("sheet should render", async function () {
-            await sheet.render(true);
-          });
-
-          it("sheet should close", async function () {
-            await new Promise((resolve) => {
-              window.setTimeout(async () => {
-                await sheet.close();
-                resolve();
-              }, 200);
-            });
-          });
-        });
+        unitTest_renderActorSheet(shared, context);
       });
     },
     { displayName: "PF1: Basic Actor Tests" }

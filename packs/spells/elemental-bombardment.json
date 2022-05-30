@@ -4,7 +4,174 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/2 levels (D)",
+          "units": ""
+        },
+        "target": {},
+        "range": {
+          "units": "long",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "one or more summoned elementals",
+        "spellArea": "",
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          7
+        ],
+        [
+          "druid",
+          7
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 7,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "con",
+    "subschool": "summoning",
+    "types": "see text",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p>You summon elementals from their elemental planes and hurl them onto your enemies with great force. You must have line of effect to a point at least 60 feet above your intended targets and within the spell's range. You can summon one greater elemental, two Huge elementals, four Large elementals, or eight Medium elementals. You aim the elementals at targets within 60 feet of each other, no more than one elemental per target.</p><p>Each elemental can strike only a single target, regardless of its size. When an elemental strikes a target, it makes a single slam attack at its full attack bonus with a +4 circumstance bonus. The elemental deals damage according to the table below. The type and amount of damage dealt varies by the size and type of elemental (see the table). Some elementals inflict an additional special ability upon successfully hitting a target; these additional special abilities are detailed in the elemental's full stat block and are denoted with an asterisk (*). Whether or not it hits, the elemental takes bludgeoning damage according to its size. A summoned elemental acts on the same turn that it lands, starting prone in the nearest available space adjacent to its target.</p><p>You must select one type of elemental to summon when casting this spell (see the table).</p><p>When you use a summoning spell to summon a creature with an elemental subtype, it is a spell of that type.</p>   <table border ='1'><tr><th>Elemental Size</th><th>Damage</th></tr><tr><td>Medium</td><td>6d6</td></tr><tr><td>Large</td><td>8d6</td></tr><tr><td>Huge or larger</td><td>12d6</td></tr></table>   <table border ='1'><tr><th>Elemental Type</th><th>Damage Type</th></tr><tr><td>Air</td><td>Half slashing, half electricity</td></tr><tr><td>Earth</td><td>Bludgeoning and earth mastery*</td></tr><tr><td>Fire</td><td>Fire and burn*</td></tr><tr><td>IceB2</td><td>Half bludgeoning, half cold</td></tr><tr><td>Lightning B2</td><td>Electricity and metal mastery*</td></tr><tr><td>Magma B2</td><td>Half bludgeoning, half fire</td></tr><tr><td>Mud B2</td><td>Bludgeoning and entrap*</td></tr><tr><td>Water</td><td>Bludgeoning and drench*</td></tr></table>   </p>",
+    "spellDuration": "1 round/2 levels (D)",
+    "spellEffect": "one or more summoned elementals",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "round"
     },
@@ -15,10 +182,8 @@
       }
     },
     "range": {
-      "units": "long"
-    },
-    "uses": {
-      "per": ""
+      "units": "long",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -39,43 +204,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          7
-        ],
-        [
-          "druid",
-          7
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 7,
-    "school": "con",
-    "subschool": "summoning",
-    "types": "see text",
     "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true
-    },
-    "sr": false,
-    "shortDescription": "<p>You summon elementals from their elemental planes and hurl them onto your enemies with great force. You must have line of effect to a point at least 60 feet above your intended targets and within the spell's range. You can summon one greater elemental, two Huge elementals, four Large elementals, or eight Medium elementals. You aim the elementals at targets within 60 feet of each other, no more than one elemental per target.</p><p>Each elemental can strike only a single target, regardless of its size. When an elemental strikes a target, it makes a single slam attack at its full attack bonus with a +4 circumstance bonus. The elemental deals damage according to the table below. The type and amount of damage dealt varies by the size and type of elemental (see the table). Some elementals inflict an additional special ability upon successfully hitting a target; these additional special abilities are detailed in the elemental's full stat block and are denoted with an asterisk (*). Whether or not it hits, the elemental takes bludgeoning damage according to its size. A summoned elemental acts on the same turn that it lands, starting prone in the nearest available space adjacent to its target.</p><p>You must select one type of elemental to summon when casting this spell (see the table).</p><p>When you use a summoning spell to summon a creature with an elemental subtype, it is a spell of that type.</p>   <table border ='1'><tr><th>Elemental Size</th><th>Damage</th></tr><tr><td>Medium</td><td>6d6</td></tr><tr><td>Large</td><td>8d6</td></tr><tr><td>Huge or larger</td><td>12d6</td></tr></table>   <table border ='1'><tr><th>Elemental Type</th><th>Damage Type</th></tr><tr><td>Air</td><td>Half slashing, half electricity</td></tr><tr><td>Earth</td><td>Bludgeoning and earth mastery*</td></tr><tr><td>Fire</td><td>Fire and burn*</td></tr><tr><td>IceB2</td><td>Half bludgeoning, half cold</td></tr><tr><td>Lightning B2</td><td>Electricity and metal mastery*</td></tr><tr><td>Magma B2</td><td>Half bludgeoning, half fire</td></tr><tr><td>Mud B2</td><td>Bludgeoning and entrap*</td></tr><tr><td>Water</td><td>Bludgeoning and drench*</td></tr></table>   </p>",
-    "spellDuration": "1 round/2 levels (D)",
-    "spellEffect": "one or more summoned elementals"
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

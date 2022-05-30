@@ -4,15 +4,178 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 day/level or until discharged",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "units": "personal",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          9
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 9,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "evo",
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": true,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "silver statuette of the caster worth 5,000 gp",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p>This powerful variant of the contingency spell transfers you and everything you carry (except for other creatures or objects that weigh more than 50 pounds) to a destination you designate at the time of casting. When casting mage's evasion, you must specify the locale and detail up to six specific conditions that trigger this spell. When any of these conditions occurs, your body, mind, and soul are transported to the target destination. The location can be any place you have familiarity (studied carefully, as defined by the teleport spell), even another plane.</p><p>When casting the spell, you cast greater teleport and possibly other spells that take effect when you arrive at your destination point. The 10 minute casting time is the minimum total for all spells cast (if the companion spells have combined times longer than 10 minutes, use the combined casting times instead). In addition to any material components required by the companion spells, the initial casting of mage's evasion drains 1d6 hp from the spellcaster. These hit points are \"stored\" in the spell, and may be regained by the caster normally.</p><p>The stored hit points are immediately recovered by the caster upon the triggering of the evasion.</p><p>The greater teleport aspect of this spell takes you to your destination, so any condition that prevents teleporting also prevents mage's evasion. Once reaching the destination point, the companion spells included in the evasion instantly and simultaneously take effect. The companion spells must be ones that have a range of personal and be of a spell level no higher than one-third of your caster level. The total combined level of companion spells may not exceed your caster level. The conditions you specify to bring the spell into effect must be clear, although they can be general in nature (see the contingency spell, in the Pathfinder Roleplaying Game Core Rulebook for guidelines).</p><p>The spell pulls together your mind, body, and soul if they have been separated. For example, if your soul is trapped in a magic jar when the evasion is triggered, your soul returns to your body (breaking the magic jar spell).If your body or soul has been bound (for example, with a binding, imprisonment, or trap the soul spell), you must succeed at a opposed caster level check (DC 11 + the caster level of the person who cast the trapping spell) to break free.</p><p>You may only use one mage's evasion spell at a time; if a second is cast, or if a contingency spell is cast, the first spell (if still active) is dispelled.</p>",
+    "spellDuration": "1 day/level or until discharged",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "target": {
       "value": "you"
     },
     "range": {
-      "units": "personal"
-    },
-    "uses": {
-      "per": ""
+      "units": "personal",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -33,40 +196,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          9
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 9,
-    "school": "evo",
     "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true,
-      "focus": true
-    },
-    "materials": {
-      "focus": "silver statuette of the caster worth 5,000 gp"
-    },
-    "sr": false,
-    "shortDescription": "<p>This powerful variant of the contingency spell transfers you and everything you carry (except for other creatures or objects that weigh more than 50 pounds) to a destination you designate at the time of casting. When casting mage's evasion, you must specify the locale and detail up to six specific conditions that trigger this spell. When any of these conditions occurs, your body, mind, and soul are transported to the target destination. The location can be any place you have familiarity (studied carefully, as defined by the teleport spell), even another plane.</p><p>When casting the spell, you cast greater teleport and possibly other spells that take effect when you arrive at your destination point. The 10 minute casting time is the minimum total for all spells cast (if the companion spells have combined times longer than 10 minutes, use the combined casting times instead). In addition to any material components required by the companion spells, the initial casting of mage's evasion drains 1d6 hp from the spellcaster. These hit points are \"stored\" in the spell, and may be regained by the caster normally.</p><p>The stored hit points are immediately recovered by the caster upon the triggering of the evasion.</p><p>The greater teleport aspect of this spell takes you to your destination, so any condition that prevents teleporting also prevents mage's evasion. Once reaching the destination point, the companion spells included in the evasion instantly and simultaneously take effect. The companion spells must be ones that have a range of personal and be of a spell level no higher than one-third of your caster level. The total combined level of companion spells may not exceed your caster level. The conditions you specify to bring the spell into effect must be clear, although they can be general in nature (see the contingency spell, in the Pathfinder Roleplaying Game Core Rulebook for guidelines).</p><p>The spell pulls together your mind, body, and soul if they have been separated. For example, if your soul is trapped in a magic jar when the evasion is triggered, your soul returns to your body (breaking the magic jar spell).If your body or soul has been bound (for example, with a binding, imprisonment, or trap the soul spell), you must succeed at a opposed caster level check (DC 11 + the caster level of the person who cast the trapping spell) to break free.</p><p>You may only use one mage's evasion spell at a time; if a second is cast, or if a contingency spell is cast, the first spell (if still active) is dispelled.</p>",
-    "spellDuration": "1 day/level or until discharged"
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

@@ -4,7 +4,174 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration (maximum 1 round/level)",
+          "units": ""
+        },
+        "target": {},
+        "range": {
+          "units": "close",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "5-foot-radius spread",
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          8
+        ],
+        [
+          "cleric/oracle",
+          8
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 8,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "con",
+    "subschool": "teleportation",
+    "types": "chaotic",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": true,
+      "divineFocus": 3
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "a gold-plated, cold iron ring that was forged in the Abyss",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
+    "shortDescription": "<p>This spell creates a rip in reality that plunges into the interspatial vortices that constantly churn with the raw destructive chaos of the Abyss. Each round at the beginning of your turn, the <i>Maw of Chaos</i> attempts a drag combat maneuver check against every creature within 40 feet, using your caster level plus your primary spellcasting ability modifier in place of a CMB. If a creature is dragged into a <i>Maw of Chaos</i>, the area erupts in a surge of chaotic energy and the creature takes 1d6 points of damage per caster level. Only one such eruption can occur per round.  Creatures dragged adjacent to the <i>Maw of Chaos</i> become entangled by the frayed strands of reality being torn apart at the rim of the <i>Maw of Chaos</i>. Escape requires a successful Escape Artist check or grapple check against a DC equal to 10 plus the spell's save DC. Every creature without the chaotic subtype that ends its turn adjacent to a <i>Maw of Chaos</i> takes 2 points of damage to each ability score. Creatures with the lawful subtype take double this amount of damage; creatures with the chaotic subtype take no damage.  Calling, summoning, and teleportation effects used within 30 feet of the <i>Maw of Chaos</i> or that cause a creature to appear within 30 feet of a <i>Maw of Chaos</i> are redirected, causing the creature to arrive adjacent to the <i>Maw of Chaos</i> rather than at its intended destination. Unattended objects (including dead bodies) adjacent to the <i>Maw of Chaos</i> are drawn into it and affected as by <i>disintegrate</i> at the beginning of the caster's next turn.</p>",
+    "spellDuration": "concentration (maximum 1 round/level)",
+    "spellEffect": "",
+    "spellArea": "5-foot-radius spread",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -15,10 +182,8 @@
       }
     },
     "range": {
-      "units": "close"
-    },
-    "uses": {
-      "per": ""
+      "units": "close",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -40,47 +205,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          8
-        ],
-        [
-          "cleric/oracle",
-          8
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 8,
-    "school": "con",
-    "subschool": "teleportation",
-    "types": "chaotic",
     "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true,
-      "focus": true,
-      "divineFocus": 3
-    },
-    "materials": {
-      "focus": "a gold-plated, cold iron ring that was forged in the Abyss"
-    },
-    "shortDescription": "<p>This spell creates a rip in reality that plunges into the interspatial vortices that constantly churn with the raw destructive chaos of the Abyss. Each round at the beginning of your turn, the <i>Maw of Chaos</i> attempts a drag combat maneuver check against every creature within 40 feet, using your caster level plus your primary spellcasting ability modifier in place of a CMB. If a creature is dragged into a <i>Maw of Chaos</i>, the area erupts in a surge of chaotic energy and the creature takes 1d6 points of damage per caster level. Only one such eruption can occur per round.  Creatures dragged adjacent to the <i>Maw of Chaos</i> become entangled by the frayed strands of reality being torn apart at the rim of the <i>Maw of Chaos</i>. Escape requires a successful Escape Artist check or grapple check against a DC equal to 10 plus the spell's save DC. Every creature without the chaotic subtype that ends its turn adjacent to a <i>Maw of Chaos</i> takes 2 points of damage to each ability score. Creatures with the lawful subtype take double this amount of damage; creatures with the chaotic subtype take no damage.  Calling, summoning, and teleportation effects used within 30 feet of the <i>Maw of Chaos</i> or that cause a creature to appear within 30 feet of a <i>Maw of Chaos</i> are redirected, causing the creature to arrive adjacent to the <i>Maw of Chaos</i> rather than at its intended destination. Unattended objects (including dead bodies) adjacent to the <i>Maw of Chaos</i> are drawn into it and affected as by <i>disintegrate</i> at the beginning of the caster's next turn.</p>",
-    "spellDuration": "concentration (maximum 1 round/level)",
-    "spellArea": "5-foot-radius spread"
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

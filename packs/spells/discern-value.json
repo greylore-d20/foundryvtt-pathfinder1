@@ -4,7 +4,175 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration, up to 1 minute/level (D)",
+          "units": ""
+        },
+        "target": {},
+        "range": {
+          "value": 60,
+          "units": "ft",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "cone-shaped emanation",
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "sorcerer/wizard",
+          3
+        ],
+        [
+          "bard",
+          3
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 3,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "div",
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": true,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "platinum monocle worth 100 gp",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p>You can quickly analyze the monetary value of objects and identify which are most valuable to an average trader. You must specify a minimum value to detect when you cast this spell (such as 1 gp, 100 gp, or 1,000 gp). The amount of information revealed depends on how long you study a particular area or subject.  <i>1st Round</i>: Presence or absence of objects worth at least the specified amount.  <i>2nd Round</i>: The most valuable object in range glows brighter than all of the others. If an aura is outside your line of sight, then you discern its direction but not its exact location.  <i>3rd Round</i>: Objects whose values are within 10% of the most valuable item in range glow slightly.  The spell's effect does not indicate whether an item has magical properties and does not detect artifacts or items that are priceless.</p>",
+    "spellDuration": "concentration, up to 1 minute/level (D)",
+    "spellEffect": "",
+    "spellArea": "cone-shaped emanation",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -16,10 +184,8 @@
     },
     "range": {
       "value": 60,
-      "units": "ft"
-    },
-    "uses": {
-      "per": ""
+      "units": "ft",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -40,45 +206,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          3
-        ],
-        [
-          "bard",
-          3
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 3,
-    "school": "div",
     "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true,
-      "focus": true
-    },
-    "materials": {
-      "focus": "platinum monocle worth 100 gp"
-    },
-    "sr": false,
-    "shortDescription": "<p>You can quickly analyze the monetary value of objects and identify which are most valuable to an average trader. You must specify a minimum value to detect when you cast this spell (such as 1 gp, 100 gp, or 1,000 gp). The amount of information revealed depends on how long you study a particular area or subject.  <i>1st Round</i>: Presence or absence of objects worth at least the specified amount.  <i>2nd Round</i>: The most valuable object in range glows brighter than all of the others. If an aura is outside your line of sight, then you discern its direction but not its exact location.  <i>3rd Round</i>: Objects whose values are within 10% of the most valuable item in range glow slightly.  The spell's effect does not indicate whether an item has magical properties and does not detect artifacts or items that are priceless.</p>",
-    "spellDuration": "concentration, up to 1 minute/level (D)",
-    "spellArea": "cone-shaped emanation"
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

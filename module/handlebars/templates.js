@@ -27,14 +27,11 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/internal/item-search.hbs",
 
     // Item Sheet Partials
-    "systems/pf1/templates/items/parts/item-action.hbs",
-    "systems/pf1/templates/items/parts/item-activation.hbs",
+    "systems/pf1/templates/items/parts/item-actions.hbs",
     "systems/pf1/templates/items/parts/item-description.hbs",
     "systems/pf1/templates/items/parts/item-changes.hbs",
-    "systems/pf1/templates/items/parts/item-template.hbs",
     "systems/pf1/templates/items/parts/item-links.hbs",
     "systems/pf1/templates/items/parts/item-aura.hbs",
-    "systems/pf1/templates/items/parts/item-conditionals.hbs",
     "systems/pf1/templates/items/parts/item-contents.hbs",
     "systems/pf1/templates/items/parts/item-tag.hbs",
     "systems/pf1/templates/items/parts/item-name.hbs",
@@ -46,6 +43,12 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/apps/attack-roll-dialog.hbs",
     "systems/pf1/templates/apps/vision-permission.hbs",
     "systems/pf1/templates/apps/help-browser.hbs",
+
+    // Item Action Partials
+    "systems/pf1/templates/apps/item-action/action.hbs",
+    "systems/pf1/templates/apps/item-action/activation.hbs",
+    "systems/pf1/templates/apps/item-action/template.hbs",
+    "systems/pf1/templates/apps/item-action/conditionals.hbs",
 
     // Chat
     "systems/pf1/templates/chat/roll-ext.hbs",

@@ -4,7 +4,170 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
     "tags": [],
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level",
+          "units": ""
+        },
+        "target": {},
+        "range": {
+          "units": "medium",
+          "maxIncrements": 1
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "5-ft.-square pillar of positive energy, 20 ft. high",
+        "spellArea": "",
+        "conditionals": []
+      }
+    ],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": ""
+    },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "cleric/oracle",
+          5
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 5,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "con",
+    "subschool": "healing",
+    "types": "light",
+    "nonlethal": false,
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 1
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "primary",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p>You conjure a pillar of positive energy in a single 5-foot square within range that radiates light as if it were a sunrod. Living creatures adjacent to the pillar can spend a standard action to touch the pillar and heal 2d8 points of damage + 1 point per caster level (maximum +20). Creatures can move into the square containing the pillar, but if an undead creature moves into the pillar it takes 1d6 points of damage per caster level (maximum 10d6). Undead creatures vulnerable to bright light take 1d8 points if damage per caster level (maximum 10d8). A creature cannot benefit or suffer more than once from a single casting of this spell.</p>",
+    "spellDuration": "1 round/level",
+    "spellEffect": "5-ft.-square pillar of positive energy, 20 ft. high",
+    "spellArea": "",
+    "showInQuickbar": false,
+    "domain": false,
+    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -15,10 +178,8 @@
       }
     },
     "range": {
-      "units": "medium"
-    },
-    "uses": {
-      "per": ""
+      "units": "medium",
+      "maxIncrements": 1
     },
     "measureTemplate": {
       "size": "0"
@@ -39,40 +200,11 @@
     },
     "effectNotes": [],
     "attackNotes": [],
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "cleric/oracle",
-          5
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 5,
-    "school": "con",
-    "subschool": "healing",
-    "types": "light",
     "conditionals": [],
-    "components": {
-      "verbal": true,
-      "somatic": true,
-      "divineFocus": 1
-    },
-    "sr": false,
-    "shortDescription": "<p>You conjure a pillar of positive energy in a single 5-foot square within range that radiates light as if it were a sunrod. Living creatures adjacent to the pillar can spend a standard action to touch the pillar and heal 2d8 points of damage + 1 point per caster level (maximum +20). Creatures can move into the square containing the pillar, but if an undead creature moves into the pillar it takes 1d6 points of damage per caster level (maximum 10d6). Undead creatures vulnerable to bright light take 1d8 points if damage per caster level (maximum 10d8). A creature cannot benefit or suffer more than once from a single casting of this spell.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "5-ft.-square pillar of positive energy, 20 ft. high"
+    "size": "med",
+    "spellPoints": {
+      "cost": "1 + @sl"
+    }
   },
   "effects": [],
   "folder": null,

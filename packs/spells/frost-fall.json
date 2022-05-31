@@ -5,42 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "s5mgp5gk6kmwlway",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/2 levels",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude partial"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "5-foot radius burst",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude partial"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -80,14 +150,11 @@
     "level": 2,
     "school": "evo",
     "types": "cold",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
-    "shortDescription": "<p>The area of this spell is covered in chilling frost, dealing 2d6 points of cold damage to all creatures within it. Creatures that the spell initially damages must succeed at a Fortitude save or become staggered for 1 round. The area remains chilled for the spell's duration. Any creature that starts your turn within the spell's area takes 1d6 points of cold damage (Fortitude saving throw for half) but does not become staggered even on a failed saving throw.</p>",
-    "spellDuration": "1 round/2 levels",
-    "spellArea": "5-foot radius burst"
+    "shortDescription": "<p>The area of this spell is covered in chilling frost, dealing 2d6 points of cold damage to all creatures within it. Creatures that the spell initially damages must succeed at a Fortitude save or become staggered for 1 round. The area remains chilled for the spell's duration. Any creature that starts your turn within the spell's area takes 1d6 points of cold damage (Fortitude saving throw for half) but does not become staggered even on a failed saving throw.</p>"
   },
   "effects": [],
   "folder": null,

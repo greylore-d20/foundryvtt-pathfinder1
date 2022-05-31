@@ -5,45 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "tcag2bi433wh6nmh",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "24 hours",
+          "units": ""
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -107,7 +174,6 @@
     },
     "level": 2,
     "school": "div",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -116,8 +182,7 @@
     "materials": {
       "value": "a page from a dictionary"
     },
-    "shortDescription": "<p>You can share your facility for one particular language with another creature. For 24 hours the target can read, understand, and communicate to the best of its ability in any one language which you already know. For every 5 levels you possess, you can grant the use of another language you know, to a maximum of 5 languages at 20th level. The target must have the physical capacity to articulate sounds, make gestures, or engage in whatever other method speakers of the language use to communicate with each other in order to actually converse. If the target lacks the mental capacity to grasp an actual language it still gains enough knowledge to respond to and carry out even extremely complex commands or suggestions coached in the language (whether written or spoken). However, since this spell does not endow the target with greater reasoning capacity, merely a temporarily enhanced vocabulary, the person offering up instructions to non-sentient creatures must take care to remove any ambiguity or guesswork.</p><p>Similarly, this spell does not affect the basic nature of the target, or its disposition toward you or anyone else, so convincing it to actually carry out these instructions could require negotiation, threats, or outright bribery.</p>",
-    "spellDuration": "24 hours"
+    "shortDescription": "<p>You can share your facility for one particular language with another creature. For 24 hours the target can read, understand, and communicate to the best of its ability in any one language which you already know. For every 5 levels you possess, you can grant the use of another language you know, to a maximum of 5 languages at 20th level. The target must have the physical capacity to articulate sounds, make gestures, or engage in whatever other method speakers of the language use to communicate with each other in order to actually converse. If the target lacks the mental capacity to grasp an actual language it still gains enough knowledge to respond to and carry out even extremely complex commands or suggestions coached in the language (whether written or spoken). However, since this spell does not endow the target with greater reasoning capacity, merely a temporarily enhanced vocabulary, the person offering up instructions to non-sentient creatures must take care to remove any ambiguity or guesswork.</p><p>Similarly, this spell does not affect the basic nature of the target, or its disposition toward you or anyone else, so convincing it to actually carry out these instructions could require negotiation, threats, or outright bribery.</p>"
   },
   "effects": [],
   "folder": null,

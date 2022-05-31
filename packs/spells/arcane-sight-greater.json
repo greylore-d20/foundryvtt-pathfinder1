@@ -5,43 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "7gvoothx6tuytfw1",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 min./level",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -72,15 +141,13 @@
     },
     "level": 7,
     "school": "div",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
     "spellbook": "",
     "sr": false,
-    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.2dc7e9wby8qpi6m0]{arcane sight}, except that you automatically know which spells or magical effects are active upon any individual or object you see.</p>\n<p>Unlike <em>arcane sight</em>, this spell cannot be made permanent with a @Compendium[pf1.spells.nsxngq65mbrzgwnm]{permanency} spell.</p>",
-    "spellDuration": "1 min./level"
+    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.2dc7e9wby8qpi6m0]{arcane sight}, except that you automatically know which spells or magical effects are active upon any individual or object you see.</p>\n<p>Unlike <em>arcane sight</em>, this spell cannot be made permanent with a @Compendium[pf1.spells.nsxngq65mbrzgwnm]{permanency} spell.</p>"
   },
   "effects": [],
   "folder": null,

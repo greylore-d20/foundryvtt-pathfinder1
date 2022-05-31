@@ -5,45 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "kmonhz2hao2f6cbm",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 min./level",
+          "units": ""
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -141,7 +208,6 @@
     },
     "level": 3,
     "school": "trs",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -150,8 +216,7 @@
     "materials": {
       "focus": "a wing feather"
     },
-    "shortDescription": "<p>The subject can <i>fly</i> at a speed of 60 feet (or 40 feet if it wears medium or heavy armor, or if it carries a medium or heavy load).</p><p>It can ascend at half speed and descend at double speed, and its maneuverability is good. Using a <i>fly</i> spell requires only as much concentration as walking, so the subject can attack or cast spells normally. The subject of a <i>fly</i> spell can charge but not run, and it cannot carry aloft more weight than its maximum load, plus any armor it wears. The subject gains a bonus on Fly skill checks equal to 1/2 your caster level.</p><p>Should the spell duration expire while the subject is still aloft, the magic fails slowly. The subject floats downward 60 feet per round for 1d6 rounds. If it reaches the ground in that amount of time, it lands safely. If not, it falls the rest of the distance, taking 1d6 points of damage per 10 feet of fall. Since dispelling a spell effectively ends it, the subject also descends safely in this way if the <i>fly</i> spell is dispelled, but not if it is negated by an <i>antimagic field</i>.</p>",
-    "spellDuration": "1 min./level"
+    "shortDescription": "<p>The subject can <i>fly</i> at a speed of 60 feet (or 40 feet if it wears medium or heavy armor, or if it carries a medium or heavy load).</p><p>It can ascend at half speed and descend at double speed, and its maneuverability is good. Using a <i>fly</i> spell requires only as much concentration as walking, so the subject can attack or cast spells normally. The subject of a <i>fly</i> spell can charge but not run, and it cannot carry aloft more weight than its maximum load, plus any armor it wears. The subject gains a bonus on Fly skill checks equal to 1/2 your caster level.</p><p>Should the spell duration expire while the subject is still aloft, the magic fails slowly. The subject floats downward 60 feet per round for 1d6 rounds. If it reaches the ground in that amount of time, it lands safely. If not, it falls the rest of the distance, taking 1d6 points of damage per 10 feet of fall. Since dispelling a spell effectively ends it, the subject also descends safely in this way if the <i>fly</i> spell is dispelled, but not if it is negated by an <i>antimagic field</i>.</p>"
   },
   "effects": [],
   "folder": null,

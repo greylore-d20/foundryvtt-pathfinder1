@@ -5,92 +5,116 @@
   "img": "systems/pf1/icons/spells/fireball-red-3.jpg",
   "data": {
     "description": {
-      "value": "<p><strong>Element&nbsp;</strong>fire;&nbsp;<strong>Type&nbsp;</strong>form infusion;&nbsp;<strong>Level&nbsp;</strong>1;&nbsp;<strong>Burn&nbsp;</strong>1<br><strong>Associated Blasts&nbsp;</strong>blue flame, fire<br><strong>Saving Throw&nbsp;</strong>Reflex half</p>\n<p>Your kinetic blast extends in a fan of flames, damaging all creatures and objects in a 15-foot cone. The saving throw DC is Dexterity-based.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Element&nbsp;</strong>fire;&nbsp;<strong>Type&nbsp;</strong>form infusion;&nbsp;<strong>Level&nbsp;</strong>1;&nbsp;<strong>Burn&nbsp;</strong>1<br><strong>Associated Blasts&nbsp;</strong>blue flame, fire<br><strong>Saving Throw&nbsp;</strong>Reflex half</p>\n<p>Your kinetic blast extends in a fan of flames, damaging all creatures and objects in a 15-foot cone. The saving throw DC is Dexterity-based.</p>"
     },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "special"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "special"
+    "actions": [
+      {
+        "_id": "3ogvezxg62fgqgxe",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/fireball-red-3.jpg",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "special"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "special"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": "15-ft. cone"
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "save",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": "15-ft. cone"
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
+    ],
     "uses": {
-      "value": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
+      "per": ""
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -99,16 +123,17 @@
     "tag": "classFeat_fanOfFlamesInfusion",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
+    },
+    "languages": {
+      "value": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "featType": "classFeat",
@@ -118,12 +143,7 @@
           "Kineticist"
         ]
       ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "none",
-    "crOffset": "",
-    "disabled": false
+    }
   },
   "effects": [],
   "folder": null,

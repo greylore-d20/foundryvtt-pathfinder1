@@ -5,42 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "33kt5hjs6scwqhkk",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": 40,
+          "units": "ft",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": "see text"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "all living creatures within a 40-ft.-radius burst centered on you",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "value": 40,
-      "units": "ft"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -68,14 +138,11 @@
     "level": 4,
     "school": "nec",
     "types": "evil",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
-    "shortDescription": "<p>All living creatures within the area of effect, including yourself, must immediately attempt a saving throw with a -2 penalty against any and all diseases they have contracted, even if the onset time has not yet elapsed. On a failed saving throw, the affliction has its usual effect. A successful save does not count toward curing the affliction.</p>",
-    "spellDuration": "instantaneous",
-    "spellArea": "all living creatures within a 40-ft.-radius burst centered on you"
+    "shortDescription": "<p>All living creatures within the area of effect, including yourself, must immediately attempt a saving throw with a -2 penalty against any and all diseases they have contracted, even if the onset time has not yet elapsed. On a failed saving throw, the affliction has its usual effect. A successful save does not count toward curing the affliction.</p>"
   },
   "effects": [],
   "folder": null,

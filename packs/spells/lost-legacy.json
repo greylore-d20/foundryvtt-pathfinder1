@@ -5,45 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "9ho9qznkyar46whu",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "permanent",
+          "units": ""
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -91,7 +158,6 @@
     "level": 7,
     "school": "enc",
     "types": "curse, mind-affecting",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -101,8 +167,7 @@
     "materials": {
       "focus": "a holy symbol of a dead or forgotten deity, or flag of a fallen or forgotten nation"
     },
-    "shortDescription": "<p>You inflict a powerful curse on a touched creature that causes others to quickly forget positive aspects of their interactions with the target. The target cannot attempt a Diplomacy (or wild empathy or similar ability) check to improve the attitude of other creatures. Any creature that normally has an attitude of friendly or helpful toward the target must succeed at a Will save at the spell's normal saving throw DC each time it interacts with the target, or its attitude becomes indifferent. Once this curse is removed, creatures coming back into contact with the target regain their pleasant memories of it. If their attitudes toward the target have not been reduced from indifferent, their original attitudes are restored.</p>",
-    "spellDuration": "permanent"
+    "shortDescription": "<p>You inflict a powerful curse on a touched creature that causes others to quickly forget positive aspects of their interactions with the target. The target cannot attempt a Diplomacy (or wild empathy or similar ability) check to improve the attitude of other creatures. Any creature that normally has an attitude of friendly or helpful toward the target must succeed at a Will save at the spell's normal saving throw DC each time it interacts with the target, or its attitude becomes indifferent. Once this curse is removed, creatures coming back into contact with the target regain their pleasant memories of it. If their attitudes toward the target have not been reduced from indifferent, their original attitudes are restored.</p>"
   },
   "effects": [],
   "folder": null,

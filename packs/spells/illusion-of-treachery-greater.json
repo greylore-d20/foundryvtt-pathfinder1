@@ -5,45 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "ukesse64vxo4zidq",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "you and one creature"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you and one creature"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will disbelief"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -87,7 +154,6 @@
     "level": 6,
     "school": "ill",
     "subschool": "figment",
-    "conditionals": [],
     "components": {
       "somatic": true,
       "focus": true
@@ -96,8 +162,7 @@
       "focus": "a tiny marionette"
     },
     "spellbook": "",
-    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.i3w7iwvxrvit0iez]{Illusion of Treachery} except that it also conceals your own actions (as @Compendium[pf1.spells.nju9j6zlv9sbiznw]{Illusion of Calm}) and renders invisible all spell effects and ranged attacks originating from you until they reach the attack's target (this doesn't cause the attack's target to be unable to avoid the attack, as they still see the attack originating from the spell's target).</p>",
-    "spellDuration": "1 round/level (D)"
+    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.i3w7iwvxrvit0iez]{Illusion of Treachery} except that it also conceals your own actions (as @Compendium[pf1.spells.nju9j6zlv9sbiznw]{Illusion of Calm}) and renders invisible all spell effects and ranged attacks originating from you until they reach the attack's target (this doesn't cause the attack's target to be unable to avoid the attack, as they still see the attack originating from the spell's target).</p>"
   },
   "effects": [],
   "folder": null,

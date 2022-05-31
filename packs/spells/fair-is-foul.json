@@ -1,99 +1,119 @@
 {
+  "_id": "61pYmOmQJ2nMk2vL",
   "name": "Fair is Foul",
   "type": "spell",
   "img": "icons/magic/acid/dissolve-arm-flesh.webp",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": ""
+    "actions": [
+      {
+        "_id": "0fssufgmfg5dbg90",
+        "name": "Use",
+        "img": "icons/magic/acid/dissolve-arm-flesh.webp",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": "permanent (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1 + @sl",
+          "per": null,
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "value": null,
-      "units": "touch",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": null,
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
+    ],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -137,50 +157,17 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
-    "conditionals": [],
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a newt eye",
-      "focus": "",
-      "gpValue": 0
+      "value": "a newt eye"
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You curse the target with a disfiguring or painful mutation. The target gains one random deformity from the @Compendium[pf1.roll-tables.Vm8ccE6qchTx2Trn]{Arcane Malignancies} table. The curse bestowed by this spell cannot be dispelled but can be removed with a @Compendium[pf1.spells.myg2b9ww43nnlbr2]{Break Enchantment}, @Compendium[pf1.spells.s2p7a4biy7bl4ks2]{Limited Wish}, @Compendium[pf1.spells.suel7sgnztenv551]{Miracle}, @Compendium[pf1.spells.o87h8gjxevcbztgd]{Remove Curse}, or&nbsp;@Compendium[pf1.spells.nnj51dwfkwd15ngj]{Wish} spell.</span></p>",
-    "spellDuration": "permanent (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "domain": false,
-    "slotCost": 1,
-    "clCheck": false,
-    "identifiedName": "Fair is Foul"
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You curse the target with a disfiguring or painful mutation. The target gains one random deformity from the @Compendium[pf1.roll-tables.Vm8ccE6qchTx2Trn]{Arcane Malignancies} table. The curse bestowed by this spell cannot be dispelled but can be removed with a @Compendium[pf1.spells.myg2b9ww43nnlbr2]{Break Enchantment}, @Compendium[pf1.spells.s2p7a4biy7bl4ks2]{Limited Wish}, @Compendium[pf1.spells.suel7sgnztenv551]{Miracle}, @Compendium[pf1.spells.o87h8gjxevcbztgd]{Remove Curse}, or&nbsp;@Compendium[pf1.spells.nnj51dwfkwd15ngj]{Wish} spell.</span></p>"
   },
   "effects": [],
   "folder": null,
@@ -189,6 +176,5 @@
     "default": 0,
     "LhFOnsRrYD2v4zOf": 3
   },
-  "flags": {},
-  "_id": "61pYmOmQJ2nMk2vL"
+  "flags": {}
 }

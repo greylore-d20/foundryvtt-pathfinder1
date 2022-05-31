@@ -5,43 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "9ftx694cjlik1b0j",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -72,7 +141,6 @@
     },
     "level": 6,
     "school": "div",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -90,11 +158,7 @@
       "spontaneousPrepared": false
     },
     "sr": false,
-    "shortDescription": "<p>When you cast this spell, you fall into a trance and become helpless as long as you continue concentrating. Choose any one Knowledge skill other than arcana or planes. Your mind is placed in telepathic contact with a nalfeshnee demon skilled at that particular Knowledge skill, in addition to arcana and planes. Each round that you continue to concentrate, you may ask the nalfeshnee one question and it will answer as best it can. If you ask a question about arcana or planes, the nalfeshnee has a +23 bonus to the skill check. If you ask about the Knowledge skill you selected, the nalfeshnee has a +20 bonus. It cannot answer questions pertaining to other Knowledge skills-to do so, you must cast the spell again.  Contact with Abyssal minds is dangerous, and each time the nalfeshnee answers a question, you suffer 1d4 points of ability drain to Intelligence, Wisdom, or Charisma (determined randomly) unless you make a DC 22 Will save. Each additional question you ask with this spell over the course of a single 24-hour period imparts a cumulative -1 penalty on this saving throw. Chaotic evil spellcasters always gain a +4 bonus on this saving throw.</p>",
-    "spellDuration": "concentration",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>When you cast this spell, you fall into a trance and become helpless as long as you continue concentrating. Choose any one Knowledge skill other than arcana or planes. Your mind is placed in telepathic contact with a nalfeshnee demon skilled at that particular Knowledge skill, in addition to arcana and planes. Each round that you continue to concentrate, you may ask the nalfeshnee one question and it will answer as best it can. If you ask a question about arcana or planes, the nalfeshnee has a +23 bonus to the skill check. If you ask about the Knowledge skill you selected, the nalfeshnee has a +20 bonus. It cannot answer questions pertaining to other Knowledge skills-to do so, you must cast the spell again.  Contact with Abyssal minds is dangerous, and each time the nalfeshnee answers a question, you suffer 1d4 points of ability drain to Intelligence, Wisdom, or Charisma (determined randomly) unless you make a DC 22 Will save. Each additional question you ask with this spell over the course of a single 24-hour period imparts a cumulative -1 penalty on this saving throw. Chaotic evil spellcasters always gain a +4 bonus on this saving throw.</p>"
   },
   "effects": [],
   "folder": null,

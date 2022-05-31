@@ -5,45 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "8z1sgyrhhq46w6gm",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "permanent",
+          "units": ""
+        },
+        "target": {
+          "value": "one living creature"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one living creature"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -84,7 +151,6 @@
     "school": "enc",
     "subschool": "compulsion",
     "types": "curse, mind-affecting",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -93,8 +159,7 @@
     "materials": {
       "value": "a black mask"
     },
-    "shortDescription": "<p>You unleash the basest instincts of iniquity in the target and cause them to become his overriding reason for being. The target neither gains nor provides benefit from teamwork feats or the aid another action and can't willingly accept harmless magical effects from others.  The target moves by Stealth whenever possible, and lies and deceives others instinctively to further its personal agenda. In addition, when the target is conscious, it must succeed at a Will save against the spell's save DC each hour (or each round during combat or a similarly stressful situation) or behave as if affected by a <i>crime wave</i> spell for 1 round.  <i>Life of Crime</i> is particularly difficult to remove. Only a <i>remove curse</i> with a higher caster level than <i>life of</i> crime's caster level, or a <i>limited <i>wish</i></i>, <i>wish</i>, or <i>miracle</i> can remove its effects.</p>",
-    "spellDuration": "permanent"
+    "shortDescription": "<p>You unleash the basest instincts of iniquity in the target and cause them to become his overriding reason for being. The target neither gains nor provides benefit from teamwork feats or the aid another action and can't willingly accept harmless magical effects from others.  The target moves by Stealth whenever possible, and lies and deceives others instinctively to further its personal agenda. In addition, when the target is conscious, it must succeed at a Will save against the spell's save DC each hour (or each round during combat or a similarly stressful situation) or behave as if affected by a <i>crime wave</i> spell for 1 round.  <i>Life of Crime</i> is particularly difficult to remove. Only a <i>remove curse</i> with a higher caster level than <i>life of</i> crime's caster level, or a <i>limited <i>wish</i></i>, <i>wish</i>, or <i>miracle</i> can remove its effects.</p>"
   },
   "effects": [],
   "folder": null,

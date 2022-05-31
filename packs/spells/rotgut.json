@@ -5,45 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "ajhdfqre1cka2w0i",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous",
+          "units": ""
+        },
+        "target": {
+          "value": "1 gallon of water/level"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "1 gallon of water/level"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates (object)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -82,7 +149,6 @@
     },
     "level": 2,
     "school": "trs",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -91,8 +157,7 @@
     "materials": {
       "value": "a pinch of hops"
     },
-    "shortDescription": "<p>You transform the target into a cheap alcohol of your choice, such as beer, grog, mead, rum, or wine. The alcohol doesn't taste good, but it's drinkable and just as effective as normal alcohol in making creatures inebriated (<i>Pathfinder RPG GameMastery Guide</i> 237). This spell doesn't work on holy water, potions, magical liquids, or water that is part of a creature.</p>",
-    "spellDuration": "instantaneous"
+    "shortDescription": "<p>You transform the target into a cheap alcohol of your choice, such as beer, grog, mead, rum, or wine. The alcohol doesn't taste good, but it's drinkable and just as effective as normal alcohol in making creatures inebriated (<i>Pathfinder RPG GameMastery Guide</i> 237). This spell doesn't work on holy water, potions, magical liquids, or water that is part of a creature.</p>"
   },
   "effects": [],
   "folder": null,

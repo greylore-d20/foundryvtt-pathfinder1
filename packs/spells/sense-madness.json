@@ -5,43 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "xbimrh5feon7lk11",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration, up to 1 round/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "creatures in range (see text)"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "creatures in range (see text)"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -84,14 +153,12 @@
     },
     "level": 2,
     "school": "div",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
     "sr": false,
-    "shortDescription": "<p>You can sense the presence of mental disturbance in creatures within range, focusing your detection on one creature each round. If the target is currently suffering from any form of madness (see page 182) or addiction (<i>GameMastery Guide</i> 236), has total sanity damage greater than or equal to its sanity edge (see page 12), or is under a magical compulsion that could be detected by <i>detect magic</i>, you can detect the presence of such a disturbance on the first round of concentration.  If you concentrate on the same creature for an additional round, you learn if the creature's total sanity damage is greater than or equal to its sanity edge, and you can attempt a Sense Motive check against a DC equal to 10 + the save DC of the target's madness or addiction to determine the exact nature of a madness or addiction. Additionally, you can attempt a Spellcraft check with a DC equal to 11 + the caster level of the compulsion against each magical compulsion currently affecting the target that could be detected by <i>detect magic</i>. If successful, you can identify the specific spell affecting the target. You gain a +4 bonus on your Spellcraft check if the effect is <i>confusion</i>, <i>insanity</i>, or a similar effect that explicitly causes madness or <i>insanity</i>. If you successfully identify such an effect with <i>sense madness</i>, the insights provided  by this spell grant you a +1 circumstance bonus on your next caster level check in the following 1 minute made to counter, dispel, or remove that specific effect. After attempting a check to identify a madness, addiction, or compulsion, you can't attempt that check against the same creature again, even if you concentrate on the creature again.</p>",
-    "spellDuration": "concentration, up to 1 round/level (D)"
+    "shortDescription": "<p>You can sense the presence of mental disturbance in creatures within range, focusing your detection on one creature each round. If the target is currently suffering from any form of madness (see page 182) or addiction (<i>GameMastery Guide</i> 236), has total sanity damage greater than or equal to its sanity edge (see page 12), or is under a magical compulsion that could be detected by <i>detect magic</i>, you can detect the presence of such a disturbance on the first round of concentration.  If you concentrate on the same creature for an additional round, you learn if the creature's total sanity damage is greater than or equal to its sanity edge, and you can attempt a Sense Motive check against a DC equal to 10 + the save DC of the target's madness or addiction to determine the exact nature of a madness or addiction. Additionally, you can attempt a Spellcraft check with a DC equal to 11 + the caster level of the compulsion against each magical compulsion currently affecting the target that could be detected by <i>detect magic</i>. If successful, you can identify the specific spell affecting the target. You gain a +4 bonus on your Spellcraft check if the effect is <i>confusion</i>, <i>insanity</i>, or a similar effect that explicitly causes madness or <i>insanity</i>. If you successfully identify such an effect with <i>sense madness</i>, the insights provided  by this spell grant you a +1 circumstance bonus on your next caster level check in the following 1 minute made to counter, dispel, or remove that specific effect. After attempting a check to identify a madness, addiction, or compulsion, you can't attempt that check against the same creature again, even if you concentrate on the creature again.</p>"
   },
   "effects": [],
   "folder": null,

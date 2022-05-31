@@ -5,43 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "os0etit5wbghuz6g",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "medium",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "medium"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -94,7 +163,6 @@
     "school": "con",
     "subschool": "teleportation",
     "types": "evil, fear, mind-affecting",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -105,8 +173,7 @@
       "value": "a dilated human eyeball"
     },
     "sr": false,
-    "shortDescription": "<p>You gain the ability to detect fear, as per <i>sense fear</i> (see page 127), but you sense creatures within medium range.  Once per round as a standard action, you can teleport to a creature suffering from a fear effect within the spell's range if you are aware of the creature and its rough location. You can carry objects with you so long as you don't transport more than your maximum load. You arrive in a random open space within 20 feet of the creature and immediately begin sensing the location of creatures with a fear condition from your new location.  Once you teleport to a new location with this spell, you can take no additional actions for the round, as if casting <i>dimension door</i>. You can't teleport if there are no creatures suffering from a fear effect in range.</p>",
-    "spellDuration": "1 round/level (D)"
+    "shortDescription": "<p>You gain the ability to detect fear, as per <i>sense fear</i> (see page 127), but you sense creatures within medium range.  Once per round as a standard action, you can teleport to a creature suffering from a fear effect within the spell's range if you are aware of the creature and its rough location. You can carry objects with you so long as you don't transport more than your maximum load. You arrive in a random open space within 20 feet of the creature and immediately begin sensing the location of creatures with a fear condition from your new location.  Once you teleport to a new location with this spell, you can take no additional actions for the round, as if casting <i>dimension door</i>. You can't teleport if there are no creatures suffering from a fear effect in range.</p>"
   },
   "effects": [],
   "folder": null,

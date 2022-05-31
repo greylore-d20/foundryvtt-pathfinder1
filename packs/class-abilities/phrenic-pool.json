@@ -5,92 +5,15 @@
   "img": "systems/pf1/icons/spells/air-burst-jade-3.jpg",
   "data": {
     "description": {
-      "value": "<p>A psychic has a pool of supernatural mental energy that she can draw upon to manipulate psychic spells as she casts them. The maximum number of points in a psychic’s phrenic pool is equal to 1/2 her psychic level + her Wisdom or Charisma modifier, as determined by her psychic discipline.</p>\n<p>The phrenic pool is replenished each morning after 8 hours of rest or meditation; these hours don’t need to be consecutive. The psychic might be able to recharge points in her phrenic pool in additional circumstances dictated by her psychic discipline.</p>\n<p>Points gained in excess of the pool’s maximum are lost.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>A psychic has a pool of supernatural mental energy that she can draw upon to manipulate psychic spells as she casts them. The maximum number of points in a psychic’s phrenic pool is equal to 1/2 her psychic level + her Wisdom or Charisma modifier, as determined by her psychic discipline.</p>\n<p>The phrenic pool is replenished each morning after 8 hours of rest or meditation; these hours don’t need to be consecutive. The psychic might be able to recharge points in her phrenic pool in additional circumstances dictated by her psychic discipline.</p>\n<p>Points gained in excess of the pool’s maximum are lost.</p>"
     },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "special"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "special"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
+    "actions": [],
     "uses": {
-      "value": 0,
       "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
       "maxFormula": "floor(@classes.psychic.level / 2) + @abilities.cha.mod"
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -99,16 +22,17 @@
     "tag": "classFeat_phrenicPool",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
+    },
+    "languages": {
+      "value": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "featType": "classFeat",
@@ -119,11 +43,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

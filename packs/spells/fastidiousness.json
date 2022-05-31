@@ -1,99 +1,119 @@
 {
+  "_id": "HH8UbV2ZYZ6zHgHQ",
   "name": "Fastidiousness",
   "type": "spell",
   "img": "icons/sundries/survival/soap.webp",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": ""
+    "actions": [
+      {
+        "_id": "fkvibk4b9utoyi81",
+        "name": "Use",
+        "img": "icons/sundries/survival/soap.webp",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": "24 hours",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1 + @sl",
+          "per": null,
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "value": null,
-      "units": "personal",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": null,
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
+    ],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -144,51 +164,14 @@
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 1,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
-    "conditionals": [],
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
+      "somatic": true
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">While protected by <em>fastidiousness</em>, your person and your equipment stay clean and dry. Dust and moisture slough off immediately; even when you are completely soiled, your appearance reverts to a pristine state over the course of 1 minute. While this spell offers no protection against most attacks, staying constantly sanitary grants you a +2 circumstance bonus on Fortitude saving throws against inhaled and ingested diseases.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">Members of the Prophet of Kalistrade prestige class can cast this spell, even though it is not a divination or enchantment.</span></p>",
-    "spellDuration": "24 hours",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "domain": false,
-    "slotCost": 1,
-    "clCheck": false,
-    "identifiedName": "Fastidiousness"
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">While protected by <em>fastidiousness</em>, your person and your equipment stay clean and dry. Dust and moisture slough off immediately; even when you are completely soiled, your appearance reverts to a pristine state over the course of 1 minute. While this spell offers no protection against most attacks, staying constantly sanitary grants you a +2 circumstance bonus on Fortitude saving throws against inhaled and ingested diseases.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">Members of the Prophet of Kalistrade prestige class can cast this spell, even though it is not a divination or enchantment.</span></p>"
   },
   "effects": [],
   "folder": null,
@@ -197,6 +180,5 @@
     "default": 0,
     "LhFOnsRrYD2v4zOf": 3
   },
-  "flags": {},
-  "_id": "HH8UbV2ZYZ6zHgHQ"
+  "flags": {}
 }

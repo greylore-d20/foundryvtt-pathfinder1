@@ -5,92 +5,116 @@
   "img": "systems/pf1/icons/skills/fire_07.jpg",
   "data": {
     "description": {
-      "value": "<p>A monk with this ability can spend 2 ki points as a swift action to ask himself a koan, which he then tries to answer. The monk must attempt a Will save (DC 15 + 1/2 the monk’s level). If successful, he gains an insight bonus equal to his Wisdom modifier to AC and on attack rolls, saving throws, skill checks and until the end of the round. If he fails, the monk is instead confused for 1 round. This is a mind-affecting, language-dependent effect.</p>\n<p>A character who can’t become confused can’t benefit from this ability.</p>\n<p>A monk must be at least 8th level before selecting this ki power.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>A monk with this ability can spend 2 ki points as a swift action to ask himself a koan, which he then tries to answer. The monk must attempt a Will save (DC 15 + 1/2 the monk’s level). If successful, he gains an insight bonus equal to his Wisdom modifier to AC and on attack rolls, saving throws, skill checks and until the end of the round. If he fails, the monk is instead confused for 1 round. This is a mind-affecting, language-dependent effect.</p>\n<p>A character who can’t become confused can’t benefit from this ability.</p>\n<p>A monk must be at least 8th level before selecting this ki power.</p>"
     },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "swift"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "8mpkza4spzerx7xq",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/fire_07.jpg",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "save",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
+    ],
     "uses": {
-      "value": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
+      "per": ""
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -99,16 +123,17 @@
     "tag": "classFeat_buildingupKoanUc",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
+    },
+    "languages": {
+      "value": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "featType": "classFeat",
@@ -119,11 +144,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

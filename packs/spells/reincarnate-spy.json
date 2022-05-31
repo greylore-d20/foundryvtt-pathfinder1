@@ -5,45 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "nvqeqq48izlz9gaw",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "instantaneous",
+          "units": ""
+        },
+        "target": {
+          "value": "dead creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "heal",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": "none (see text)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "dead creature touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "heal",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "none (see text)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -79,7 +146,6 @@
     "level": 6,
     "school": "con",
     "subschool": "healing",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -95,11 +161,7 @@
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "shortDescription": "<p>This spell functions as <i>reincarnate</i> except that you can cause the new body to resemble a particular creature, matching its age  category and sex and rerolling any race result that would be the wrong size category. The subject further gains a +5 bonus on Disguise checks to impersonate the chosen creature due to similar features, although it might take a penalty for being the wrong race.  The spell automatically leaves you with a small piece of the creature's new body, typically a lock of hair (useful for <i>scrying</i> and other such spells).</p>",
-    "spellDuration": "instantaneous",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>This spell functions as <i>reincarnate</i> except that you can cause the new body to resemble a particular creature, matching its age  category and sex and rerolling any race result that would be the wrong size category. The subject further gains a +5 bonus on Disguise checks to impersonate the chosen creature due to similar features, although it might take a penalty for being the wrong race.  The spell automatically leaves you with a small piece of the creature's new body, typically a lock of hair (useful for <i>scrying</i> and other such spells).</p>"
   },
   "effects": [],
   "folder": null,

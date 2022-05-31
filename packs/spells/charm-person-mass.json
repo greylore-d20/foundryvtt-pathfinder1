@@ -4,103 +4,119 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "1cpxe8hg5p84td5k",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level",
+          "units": ""
+        },
+        "target": {
+          "value": "one or more humanoid creatures, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1 + @sl",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": "one or more humanoid creatures, no two of which can be more than 30 ft. apart"
-    },
-    "range": {
-      "value": null,
-      "units": "close",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
+    ],
     "uses": {
-      "value": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "naturalAttack": {
-      "secondary": {
-        "attackBonus": "-5",
-        "damageMult": 0.5
-      }
+      "per": ""
     },
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -140,50 +156,15 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
     "subschool": "charm",
     "types": "mind-affecting",
-    "nonlethal": false,
-    "conditionals": [],
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
+      "somatic": true
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.tjog6bufg5b08lvq]{Charm Person}, except that mass <em>charm person</em> affects a number of humanoid creatures whose combined Hit Dice don't exceed twice your level. If there are more potential targets than you can affect, you choose them one at a time until you reach the limit of HD you can affect. If you cast mass <em>charm person</em> on only one creature, you ignore the spell's HD limit.</p>",
-    "spellDuration": "1 hour/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "domain": false,
-    "slotCost": 1,
-    "clCheck": false,
-    "identifiedName": "Charm Person, Mass"
+    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.tjog6bufg5b08lvq]{Charm Person}, except that mass <em>charm person</em> affects a number of humanoid creatures whose combined Hit Dice don't exceed twice your level. If there are more potential targets than you can affect, you choose them one at a time until you reach the limit of HD you can affect. If you cast mass <em>charm person</em> on only one creature, you ignore the spell's HD limit.</p>"
   },
   "effects": [],
   "folder": null,

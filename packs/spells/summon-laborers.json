@@ -5,41 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "qqmwgkyb27q3ro8q",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "8 hours (D)",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "other",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "one summoned petitioner/caster level",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -79,7 +150,6 @@
     "level": 6,
     "school": "con",
     "subschool": "summoning",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -90,9 +160,7 @@
       "focus": "a strip of rune-inscribed parchment"
     },
     "sr": false,
-    "shortDescription": "<p><i>Summon laborers</i> summons one humanoid petitioner per caster level. These petitioners hail from one plane of your choice and perform tasks at your direction. The petitioners cannot fight or travel to dangerous lands, but do assist your downtime activities (<i>Pathfinder RPG Ultimate Campaign</i> 8 4) w ithin a s ettlement, increasing the effect of Influence or Labor you spend by 50%, to  a maximum of 1 additional point of Influence or Labor for every 2 caster levels you possess. This stacks with any increase to the effect of Influence or Labor that you receive from your followers within the settlement where the downtime activity takes place (if any). <i>Summon laborers</i> is a spell of the same alignment type as the plane from which the summoned petitioners hail (chaotic and evil for the Abyss, lawful and good for Heaven, and so on). <b>Effect</b>s that increase the number of creatures summoned by a spell (such as Superior SummoningUM) do not affect <i>summon laborers</i>.</p>",
-    "spellDuration": "8 hours (D)",
-    "spellEffect": "one summoned petitioner/caster level"
+    "shortDescription": "<p><i>Summon laborers</i> summons one humanoid petitioner per caster level. These petitioners hail from one plane of your choice and perform tasks at your direction. The petitioners cannot fight or travel to dangerous lands, but do assist your downtime activities (<i>Pathfinder RPG Ultimate Campaign</i> 8 4) w ithin a s ettlement, increasing the effect of Influence or Labor you spend by 50%, to  a maximum of 1 additional point of Influence or Labor for every 2 caster levels you possess. This stacks with any increase to the effect of Influence or Labor that you receive from your followers within the settlement where the downtime activity takes place (if any). <i>Summon laborers</i> is a spell of the same alignment type as the plane from which the summoned petitioners hail (chaotic and evil for the Abyss, lawful and good for Heaven, and so on). <b>Effect</b>s that increase the number of creatures summoned by a spell (such as Superior SummoningUM) do not affect <i>summon laborers</i>.</p>"
   },
   "effects": [],
   "folder": null,

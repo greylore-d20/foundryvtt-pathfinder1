@@ -5,41 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "rw053r8716l6xr0t",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration, up to 1 minute/level",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": 1,
+          "units": "mi",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "circle, centered on you, with a radius of 1 mile/level",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "value": 1,
-      "units": "mi"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -102,15 +173,12 @@
     },
     "level": 2,
     "school": "div",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
     "sr": false,
-    "shortDescription": "<p>When this spell is active, you feel a mental pull in the direction of any active or operable portal leading to another plane within range of the spell. If multiple portals are present, you are pulled only to the nearest one. If moving causes you to become closer to a different portal, you become drawn to that one instead. The spell gives you the direction of the portal only, not a route. Once you are within 10 feet of the portal, you no longer feel the pull, only the portal's presence. The spell does not pinpoint or otherwise reveal hidden portals, nor does it do anything to aid in opening or operating them.</p>",
-    "spellDuration": "concentration, up to 1 minute/level",
-    "spellArea": "circle, centered on you, with a radius of 1 mile/level"
+    "shortDescription": "<p>When this spell is active, you feel a mental pull in the direction of any active or operable portal leading to another plane within range of the spell. If multiple portals are present, you are pulled only to the nearest one. If moving causes you to become closer to a different portal, you become drawn to that one instead. The spell gives you the direction of the portal only, not a route. Once you are within 10 feet of the portal, you no longer feel the pull, only the portal's presence. The spell does not pinpoint or otherwise reveal hidden portals, nor does it do anything to aid in opening or operating them.</p>"
   },
   "effects": [],
   "folder": null,

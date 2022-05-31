@@ -5,92 +5,15 @@
   "img": "systems/pf1/icons/spells/evil-eye-eerie-3.jpg",
   "data": {
     "description": {
-      "value": "<p>At 1st level, you can attempt to gain control over a summoned creature by disrupting the bond between it and the caster who summoned it. You must make a caster level check (1d20 + caster level) equal to 10 + the summoning caster’s level. If you know the summoned creature’s name, you receive a +2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Circumstance-Bonus\">circumstance bonus</a>&nbsp;on the check. If the check is successful, you can control the summoned creature as if you had summoned it for a number of rounds equal to 1/2 your&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/wizard\">wizard</a>&nbsp;level (minimum 1 round). This does not increase the duration of the original summoning. The original summoning caster can attempt to regain control of the summoned creature as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Standard-Actions\">standard action</a>&nbsp;by making a caster level check against your caster level + 10. When your control ends, the creature reverts to the control of its&nbsp;<a href=\"https://www.d20pfsrd.com/classes/base-classes/summoner\">summoner</a>.</p>\n<p>At 9th level, you can use this ability to bargain with called creatures as if you were the caster who conjured them. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Intelligence</a>&nbsp;modifier.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>At 1st level, you can attempt to gain control over a summoned creature by disrupting the bond between it and the caster who summoned it. You must make a caster level check (1d20 + caster level) equal to 10 + the summoning caster’s level. If you know the summoned creature’s name, you receive a +2&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Circumstance-Bonus\">circumstance bonus</a>&nbsp;on the check. If the check is successful, you can control the summoned creature as if you had summoned it for a number of rounds equal to 1/2 your&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/wizard\">wizard</a>&nbsp;level (minimum 1 round). This does not increase the duration of the original summoning. The original summoning caster can attempt to regain control of the summoned creature as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Standard-Actions\">standard action</a>&nbsp;by making a caster level check against your caster level + 10. When your control ends, the creature reverts to the control of its&nbsp;<a href=\"https://www.d20pfsrd.com/classes/base-classes/summoner\">summoner</a>.</p>\n<p>At 9th level, you can use this ability to bargain with called creatures as if you were the caster who conjured them. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Intelligence-Int-\">Intelligence</a>&nbsp;modifier.</p>"
     },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "free"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "free"
-      }
-    },
-    "duration": {
-      "value": "floor(@classes.wizard.level / 2)",
-      "units": "round"
-    },
-    "target": {
-      "value": "Summoned Creature"
-    },
-    "range": {
-      "value": null,
-      "units": "seeText",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
+    "actions": [],
     "uses": {
-      "value": 0,
       "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
       "maxFormula": "3 + @abilities.int.mod"
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -99,16 +22,17 @@
     "tag": "classFeat_assumeControl",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
+    },
+    "languages": {
+      "value": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "featType": "classFeat",
@@ -119,11 +43,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

@@ -5,46 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "cost": 8,
-      "type": "hour"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 8,
-        "type": "hour"
+    "actions": [
+      {
+        "_id": "yn05zrtu8i98hndi",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 8,
+          "type": "hour"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 8,
+            "type": "hour"
+          }
+        },
+        "duration": {
+          "value": "instantaneous",
+          "units": ""
+        },
+        "target": {
+          "value": "one building"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (object)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one building"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (object)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -68,7 +134,6 @@
     "level": 6,
     "school": "con",
     "subschool": "teleportation",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "material": true
@@ -82,11 +147,7 @@
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "shortDescription": "<p>You instantly teleport a building in a settlement you control to another lot or series of lots in the same settlement district. The building to be teleported must be unoccupied, and the area to which you wish to move the building must be cleared and unoccupied during the casting of this spell. A building cannot be teleported to an area it would not normally be able to occupy, such as an area adjacent to a prohibited building type. If you don't wholly own the structure, all of the structure's owners must consent to the structure's teleportation before the spell is cast; otherwise, it fails immediately.  This spell only functions on buildings that occupy a number of lots equal to one-fourth your caster level (so, for instance, a 16th-level caster could use this spell on a building that occupies up to 4 lots).</p>",
-    "spellDuration": "instantaneous",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>You instantly teleport a building in a settlement you control to another lot or series of lots in the same settlement district. The building to be teleported must be unoccupied, and the area to which you wish to move the building must be cleared and unoccupied during the casting of this spell. A building cannot be teleported to an area it would not normally be able to occupy, such as an area adjacent to a prohibited building type. If you don't wholly own the structure, all of the structure's owners must consent to the structure's teleportation before the spell is cast; otherwise, it fails immediately.  This spell only functions on buildings that occupy a number of lots equal to one-fourth your caster level (so, for instance, a 16th-level caster could use this spell on a building that occupies up to 4 lots).</p>"
   },
   "effects": [],
   "folder": null,

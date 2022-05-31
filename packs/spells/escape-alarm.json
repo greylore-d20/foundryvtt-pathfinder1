@@ -5,40 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "n00vq0pzrfmeb2i0",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "24 hours",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "medium",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "ten 10-foot cubes/level",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "medium"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -97,7 +169,6 @@
     },
     "level": 2,
     "school": "abj",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -107,9 +178,7 @@
       "focus": "a short segment of a chain"
     },
     "sr": false,
-    "shortDescription": "<p>You place a ward on an area that notifies you when a creature exits it. This functions as <i>alarm</i>, except as noted. It alerts you when a creature leaves, rather than enters, the area, and you can't select a password to bypass its effects. Instead, when you place an escape <i>alarm</i>, you can attune up to one additional creature per caster level to the spell. You are automatically attuned to your own escape <i>alarm</i> and don't count against the limit. Attuned creatures can enter and exit the spell's area without triggering the <i>alarm</i>. If you select a mental <i>alarm</i> rather than an audible one, all attuned creatures receive the mental alert when someone exits the warded area.</p>",
-    "spellDuration": "24 hours",
-    "spellArea": "ten 10-foot cubes/level"
+    "shortDescription": "<p>You place a ward on an area that notifies you when a creature exits it. This functions as <i>alarm</i>, except as noted. It alerts you when a creature leaves, rather than enters, the area, and you can't select a password to bypass its effects. Instead, when you place an escape <i>alarm</i>, you can attune up to one additional creature per caster level to the spell. You are automatically attuned to your own escape <i>alarm</i> and don't count against the limit. Attuned creatures can enter and exit the spell's area without triggering the <i>alarm</i>. If you select a mental <i>alarm</i> rather than an audible one, all attuned creatures receive the mental alert when someone exits the warded area.</p>"
   },
   "effects": [],
   "folder": null,

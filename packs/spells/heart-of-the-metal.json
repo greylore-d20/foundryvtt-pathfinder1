@@ -5,43 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "xjn0b9rg8frwopne",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level (see text)",
+          "units": ""
+        },
+        "target": {
+          "value": "one weapon per level"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one weapon per level"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -73,7 +142,6 @@
     "level": 3,
     "school": "trs",
     "types": "earth",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -89,11 +157,7 @@
       "spontaneousPrepared": false
     },
     "sr": false,
-    "shortDescription": "<p>You lend the nature of adamantine, cold iron, or silver to the targeted weapons, depending on which component you used, with the following effects.  <i>Adamantine</i>: The weapons overcome DR/adamantine and ignore hardness of less than 20.  <i>Cold Iron</i>: The weapons overcome DR/cold iron.  <i>Silver</i>: The weapons overcome DR/silver.  No other advantages or disadvantages of these metal types apply. For example, a weapon given the nature of adamantine is not automatically masterwork.  This spell can affect nonmetal weapons. If you grant the target weapons the property of cold iron, the spell lasts half as long as normal.</p>",
-    "spellDuration": "1 minute/level (see text)",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>You lend the nature of adamantine, cold iron, or silver to the targeted weapons, depending on which component you used, with the following effects.  <i>Adamantine</i>: The weapons overcome DR/adamantine and ignore hardness of less than 20.  <i>Cold Iron</i>: The weapons overcome DR/cold iron.  <i>Silver</i>: The weapons overcome DR/silver.  No other advantages or disadvantages of these metal types apply. For example, a weapon given the nature of adamantine is not automatically masterwork.  This spell can affect nonmetal weapons. If you grant the target weapons the property of cold iron, the spell lasts half as long as normal.</p>"
   },
   "effects": [],
   "folder": null,

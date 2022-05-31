@@ -5,44 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "ub31pz2zxi6ik90i",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "instantaneous",
+          "units": ""
+        },
+        "target": {
+          "value": "one creature of your same race"
+        },
+        "range": {
+          "value": null,
+          "units": "medium",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one creature of your same race"
-    },
-    "range": {
-      "units": "medium"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -67,7 +135,6 @@
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -82,11 +149,7 @@
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "shortDescription": "<p>The spell functions as <i>mind swap</i>, except as noted above. In addition, after 24 hours, instead of using each other's hit points, you each revert to your original hit points, modified by your new Constitution modifiers. This spell can be reversed only with <i>miracle</i>, <i>wish</i>, or another major <i>mind swap</i>.</p>",
-    "spellDuration": "instantaneous",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>The spell functions as <i>mind swap</i>, except as noted above. In addition, after 24 hours, instead of using each other's hit points, you each revert to your original hit points, modified by your new Constitution modifiers. This spell can be reversed only with <i>miracle</i>, <i>wish</i>, or another major <i>mind swap</i>.</p>"
   },
   "effects": [],
   "folder": null,

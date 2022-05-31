@@ -5,97 +5,123 @@
   "img": "systems/pf1/icons/items/weapons/lantern-staff.png",
   "data": {
     "description": {
-      "value": "<p>As a standard action that provokes attacks of opportunity, you can expend 2 points of mental focus to unleash a blast of energy. This blast has a range of 100 feet, and deals 5d6 points of energy damage, plus an additional 1d6 points for every 2 occultist levels you possess beyond 5th (6d6 at 7th, 7d6 at 9th, and so on, to a maximum of 12d6 at 19th level). The blast deals damage to each creature in a 20-foot-radius burst, but each affected creature can attempt a Reflex save to halve the damage. When you unleash an energy blast, you must decide what type of damage it deals (acid, cold, electricity, or fire).</p>\n<p>You must be at least 5th level to select this focus power.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>As a standard action that provokes attacks of opportunity, you can expend 2 points of mental focus to unleash a blast of energy. This blast has a range of 100 feet, and deals 5d6 points of energy damage, plus an additional 1d6 points for every 2 occultist levels you possess beyond 5th (6d6 at 7th, 7d6 at 9th, and so on, to a maximum of 12d6 at 19th level). The blast deals damage to each creature in a 20-foot-radius burst, but each affected creature can attempt a Reflex save to halve the damage. When you unleash an energy blast, you must decide what type of damage it deals (acid, cold, electricity, or fire).</p>\n<p>You must be at least 5th level to select this focus power.</p>"
     },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "pd08tlx3a83zlkfc",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/weapons/lantern-staff.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": "20-ft. radius burst"
+        },
+        "range": {
+          "value": "100",
+          "units": "ft",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "2",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "(5 + floor((@classes.occultist.level - 5) / 2))d6",
+              [
+                "untyped"
+              ]
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": "20-ft. radius burst"
-    },
-    "range": {
-      "value": "100",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
+    ],
     "uses": {
-      "value": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "2",
-      "maxFormula": ""
+      "per": ""
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(5 + floor((@classes.occultist.level - 5) / 2))d6",
-          "Energy"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -104,16 +130,17 @@
     "tag": "classFeat_energyBlast",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
+    },
+    "languages": {
+      "value": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "featType": "classFeat",
@@ -124,11 +151,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "sp",
-    "crOffset": "",
-    "disabled": false
+    "abilityType": "sp"
   },
   "effects": [],
   "folder": null,

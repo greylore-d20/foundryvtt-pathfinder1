@@ -5,44 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "hour"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "hour"
+    "actions": [
+      {
+        "_id": "bg7q5v6hy5uwznly",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "hour"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "hour"
+          }
+        },
+        "duration": {
+          "value": "permanent until discharged",
+          "units": ""
+        },
+        "target": {
+          "value": "doorway or portal touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "doorway or portal touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -65,7 +133,6 @@
     },
     "level": 3,
     "school": "abj",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -81,11 +148,7 @@
       "spontaneousPrepared": false
     },
     "sr": false,
-    "shortDescription": "<p>You inscribe a series of runes upon the surface of a door or around the border of an entryway. They function as a <i>Glyph of Warding</i> (blast glyph), though unlike a <i>Glyph of Warding</i>, these runes are always visible. The runes count as a <i>Glyph of Warding</i> for the purpose of what spells can defeat it, placing multiple glyphs in the same area, and so on.</p>",
-    "spellDuration": "permanent until discharged",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>You inscribe a series of runes upon the surface of a door or around the border of an entryway. They function as a <i>Glyph of Warding</i> (blast glyph), though unlike a <i>Glyph of Warding</i>, these runes are always visible. The runes count as a <i>Glyph of Warding</i> for the purpose of what spells can defeat it, placing multiple glyphs in the same area, and so on.</p>"
   },
   "effects": [],
   "folder": null,

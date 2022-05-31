@@ -5,50 +5,119 @@
   "img": "systems/pf1/icons/items/inventory/monster-bones.jpg",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "9nyqoqwqe4hxr7z2",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/monster-bones.jpg",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous and 1 minute/level (see text)",
+          "units": ""
+        },
+        "target": {
+          "value": "one corporeal creature or object"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "(min(15, @cl))d6",
+              [
+                "untyped"
+              ]
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude partial (see text)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one corporeal creature or object"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [
-        [
-          "(min(15, @cl))d6",
-          ""
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude partial (see text)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -75,7 +144,6 @@
     },
     "level": 4,
     "school": "nec",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -89,8 +157,7 @@
       "preparedAmount": 3,
       "maxAmount": 3
     },
-    "shortDescription": "<p>The target's bones (or exoskeleton) splinter, dealing 1d6 points of damage per caster level (maximum 15d6) to the target, which is also exhausted for 1 minute per caster level from the pain and exertion of the transformation.  If the target succeeds at its save, it takes half damage and is fatigued rather than exhausted. Objects made of bone, chitin, or similar material take half again as much damage (+50%) from this spell. This spell has no effect on a creature that has neither a skeleton nor a hard carapace.</p>",
-    "spellDuration": "instantaneous and 1 minute/level (see text)"
+    "shortDescription": "<p>The target's bones (or exoskeleton) splinter, dealing 1d6 points of damage per caster level (maximum 15d6) to the target, which is also exhausted for 1 minute per caster level from the pain and exertion of the transformation.  If the target succeeds at its save, it takes half damage and is fatigued rather than exhausted. Objects made of bone, chitin, or similar material take half again as much damage (+50%) from this spell. This spell has no effect on a creature that has neither a skeleton nor a hard carapace.</p>"
   },
   "effects": [],
   "folder": null,

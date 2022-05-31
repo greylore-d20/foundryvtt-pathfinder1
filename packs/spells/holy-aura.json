@@ -5,45 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "580fcmejyj524nov",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level",
+          "units": ""
+        },
+        "target": {
+          "value": "one creature/level in a 20-ft.-radius burst centered on you"
+        },
+        "range": {
+          "value": 20,
+          "units": "ft",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": "see text"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one creature/level in a 20-ft.-radius burst centered on you"
-    },
-    "range": {
-      "value": 20,
-      "units": "ft"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -76,7 +143,6 @@
     "level": 8,
     "school": "abj",
     "types": "good",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -85,8 +151,7 @@
     "materials": {
       "focus": "a tiny reliquary worth 500 gp"
     },
-    "shortDescription": "<p>A brilliant divine radiance surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by evil creatures, and causing evil creatures to become blinded when they strike the subjects. This abjuration has four effects.</p><p>First, each warded creature gains a +4 deflection bonus to AC and a +4 resistance bonus on saves. Unlike <i>Protection from Evil</i>, this benefit applies against all attacks, not just against attacks by evil creatures.</p><p>Second, each warded creature gains spell resistance 25 against evil spells and spells cast by evil creatures.</p><p>Third, the abjuration protects the recipient from possession and mental influence, just as <i>Protection from Evil</i> does.</p><p>Finally, if an evil creature succeeds on a melee attack against a creature warded by a <i>holy aura</i>, the offending attacker is blinded (Fortitude save negates, as <i>blindness/deafness,</i> but against <i>holy aura</i>'s save DC).</p>",
-    "spellDuration": "1 round/level"
+    "shortDescription": "<p>A brilliant divine radiance surrounds the subjects, protecting them from attacks, granting them resistance to spells cast by evil creatures, and causing evil creatures to become blinded when they strike the subjects. This abjuration has four effects.</p><p>First, each warded creature gains a +4 deflection bonus to AC and a +4 resistance bonus on saves. Unlike <i>Protection from Evil</i>, this benefit applies against all attacks, not just against attacks by evil creatures.</p><p>Second, each warded creature gains spell resistance 25 against evil spells and spells cast by evil creatures.</p><p>Third, the abjuration protects the recipient from possession and mental influence, just as <i>Protection from Evil</i> does.</p><p>Finally, if an evil creature succeeds on a melee attack against a creature warded by a <i>holy aura</i>, the offending attacker is blinded (Fortitude save negates, as <i>blindness/deafness,</i> but against <i>holy aura</i>'s save DC).</p>"
   },
   "effects": [],
   "folder": null,

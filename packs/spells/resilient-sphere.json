@@ -5,42 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "5ub5yv2n7ynwxx9q",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 min./level",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "1-ft.-diameter/level sphere, centered around a creature",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -72,7 +142,6 @@
     "level": 4,
     "school": "evo",
     "types": "force",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -81,9 +150,7 @@
     "materials": {
       "focus": "a crystal sphere"
     },
-    "shortDescription": "<p>A globe of shimmering force encloses a creature, provided the creature is small enough to fit within the diameter of the sphere.</p><p>The sphere contains its subject for the spell's duration. The sphere functions as a <i>Wall of Force</i>, except that it can be negated by dispel magic. A subject inside the sphere can breathe normally.</p><p>The sphere cannot be physically moved either by people outside it or by the struggles of those within.</p>",
-    "spellDuration": "1 min./level",
-    "spellEffect": "1-ft.-diameter/level sphere, centered around a creature"
+    "shortDescription": "<p>A globe of shimmering force encloses a creature, provided the creature is small enough to fit within the diameter of the sphere.</p><p>The sphere contains its subject for the spell's duration. The sphere functions as a <i>Wall of Force</i>, except that it can be negated by dispel magic. A subject inside the sphere can breathe normally.</p><p>The sphere cannot be physically moved either by people outside it or by the struggles of those within.</p>"
   },
   "effects": [],
   "folder": null,

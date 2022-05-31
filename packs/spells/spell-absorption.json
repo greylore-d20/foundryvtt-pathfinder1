@@ -5,43 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "gstpc7esk5aowspk",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -64,7 +133,6 @@
     },
     "level": 5,
     "school": "abj",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -74,8 +142,7 @@
       "value": "a prism"
     },
     "sr": false,
-    "shortDescription": "<p>If you successfully counterspell a 3rd-level or lower level spell (through either <i>dispel magic</i> or normal means) while <i>spell absorption</i> is in effect, you absorb the countered spell and use it to regain spells you have already cast. If you're a wizard, you regain the use of any single spell that you have cast since the last time you prepared spells. If you're a sorcerer, you regain a single spell slot. The spell recovered or spell slot regained must be of an equal level or lower than the spell you counterspelled.</p>",
-    "spellDuration": "1 round/level"
+    "shortDescription": "<p>If you successfully counterspell a 3rd-level or lower level spell (through either <i>dispel magic</i> or normal means) while <i>spell absorption</i> is in effect, you absorb the countered spell and use it to regain spells you have already cast. If you're a wizard, you regain the use of any single spell that you have cast since the last time you prepared spells. If you're a sorcerer, you regain a single spell slot. The spell recovered or spell slot regained must be of an equal level or lower than the spell you counterspelled.</p>"
   },
   "effects": [],
   "folder": null,

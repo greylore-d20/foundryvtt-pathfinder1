@@ -5,41 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "x4bdtbbav30d5prc",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "instantaneous",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "other",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "up to three called fey, totaling no more than 18 Hit Dice, no two of which can appear more than 30 ft. apart",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -67,7 +138,6 @@
     "level": 9,
     "school": "con",
     "subschool": "calling",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -84,12 +154,7 @@
       "spontaneousPrepared": false
     },
     "sr": false,
-    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.fv17a5jsmapb0wcz]{lesser entice fey}, except the spell's whimsical calling can produce a single fey of 18 Hit Dice or less, or up to three fey of the same kind whose Hit Dice total no more than 18.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "up to three called fey, totaling no more than 18 Hit Dice, no two of which can appear more than 30 ft. apart",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.fv17a5jsmapb0wcz]{lesser entice fey}, except the spell's whimsical calling can produce a single fey of 18 Hit Dice or less, or up to three fey of the same kind whose Hit Dice total no more than 18.</p>"
   },
   "effects": [],
   "folder": null,

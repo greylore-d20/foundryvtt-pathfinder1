@@ -5,43 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "6cwyd7m0028brkw7",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": 120,
+          "units": "ft",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "120-ft. line, 10 ft. wide",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "value": 120,
-      "units": "ft"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -65,7 +134,6 @@
     "level": 6,
     "school": "ill",
     "subschool": "shadow",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -74,9 +142,7 @@
     "materials": {
       "focus": "a medal from a dead Hellknight or a copy of a Chelish opera script, either worth at least 100 gp"
     },
-    "shortDescription": "<p>By performing part of the Chelish opera <i>Victory of the Hellknights</i>, you call forth spectral illusions of mounted Hellknights to trample your foes under the hooves of their glorious steeds. The shadowy knights appear in an adjacent 10-foot square and ride forward in the direction you indicate, dealing 1d6 points of damage per caster level (maximum 20d6) to all creatures in their path. Half of this damage is cold damage, while half results directly from arcane power and is not subject to cold resistance or immunity. The knights cannot pass through force effects or barriers that block incorporeal creatures or undead. I</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "120-ft. line, 10 ft. wide"
+    "shortDescription": "<p>By performing part of the Chelish opera <i>Victory of the Hellknights</i>, you call forth spectral illusions of mounted Hellknights to trample your foes under the hooves of their glorious steeds. The shadowy knights appear in an adjacent 10-foot square and ride forward in the direction you indicate, dealing 1d6 points of damage per caster level (maximum 20d6) to all creatures in their path. Half of this damage is cold damage, while half results directly from arcane power and is not subject to cold resistance or immunity. The knights cannot pass through force effects or barriers that block incorporeal creatures or undead. I</p>"
   },
   "effects": [],
   "folder": null,

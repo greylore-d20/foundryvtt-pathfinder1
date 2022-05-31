@@ -5,44 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "bkjwlop5c9r7qtb8",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "1 day/level",
+          "units": ""
+        },
+        "target": {
+          "value": "tree touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "tree touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -73,14 +141,12 @@
     },
     "level": 6,
     "school": "trs",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
     "sr": false,
-    "shortDescription": "<p>This spell turns an oak tree into a protector or guardian. The spell can only be cast on a single tree at a time; while <i>liveoak</i> is in effect, you can't cast it again on another tree. <i>Liveoak</i> must be cast on a healthy, Huge oak. A triggering phrase of up to one word per caster level is placed on the targeted oak. The <i>liveoak</i> spell triggers the tree into animating as a treant.</p><p>If <i>liveoak</i> is dispelled, the tree takes root immediately wherever it happens to be. If released by you, the tree tries to return to its original location before taking root.</p>",
-    "spellDuration": "1 day/level"
+    "shortDescription": "<p>This spell turns an oak tree into a protector or guardian. The spell can only be cast on a single tree at a time; while <i>liveoak</i> is in effect, you can't cast it again on another tree. <i>Liveoak</i> must be cast on a healthy, Huge oak. A triggering phrase of up to one word per caster level is placed on the targeted oak. The <i>liveoak</i> spell triggers the tree into animating as a treant.</p><p>If <i>liveoak</i> is dispelled, the tree takes root immediately wherever it happens to be. If released by you, the tree tries to return to its original location before taking root.</p>"
   },
   "effects": [],
   "folder": null,

@@ -5,43 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "rfntuf1hk2odh9ky",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "see text",
+          "units": ""
+        },
+        "target": {
+          "value": "see text"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "see text"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -68,14 +137,12 @@
     },
     "level": 3,
     "school": "abj",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
     "sr": false,
-    "shortDescription": "<p><i>Numerological resistance</i> allows numerologists to use the Path of Numbers to grant their allies resilience in the face of elemental dangers. Roll 5d8; this is your dice pool. You will use each die in the pool exactly once to customize <i>numerological resistance</i>.</p><p>Choose one of the dice, and match its result to the appropriate value in the first column of the Eight Basic Energies table to determine the type of energy to which <i>numerological resistance</i> grants resistance. Next, allocate one of the dice to represent the number of creatures you can affect with <i>numerological resistance</i> (including yourself). All of these creatures must be within the spell's range. Then allocate one of the dice to represent the number of rounds <i>numerological resistance</i> lasts. Finally, sum the remaining two dice. This is the number of points of resistance that <i>numerological resistance</i> grants.</p>",
-    "spellDuration": "see text"
+    "shortDescription": "<p><i>Numerological resistance</i> allows numerologists to use the Path of Numbers to grant their allies resilience in the face of elemental dangers. Roll 5d8; this is your dice pool. You will use each die in the pool exactly once to customize <i>numerological resistance</i>.</p><p>Choose one of the dice, and match its result to the appropriate value in the first column of the Eight Basic Energies table to determine the type of energy to which <i>numerological resistance</i> grants resistance. Next, allocate one of the dice to represent the number of creatures you can affect with <i>numerological resistance</i> (including yourself). All of these creatures must be within the spell's range. Then allocate one of the dice to represent the number of rounds <i>numerological resistance</i> lasts. Finally, sum the remaining two dice. This is the number of points of resistance that <i>numerological resistance</i> grants.</p>"
   },
   "effects": [],
   "folder": null,

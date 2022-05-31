@@ -5,42 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "zw3hvlv588pziawb",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "medium",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief (if interacted with)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "monstrously distorted duplicate of you",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "medium"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will disbelief (if interacted with)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -84,15 +154,12 @@
     "level": 3,
     "school": "ill",
     "subschool": "figment",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
     "sr": false,
-    "shortDescription": "<p>You create a larger and far more menacing version of yourself that you can send forth, manipulate like a puppet, and use to interact with others. You can make the duplicate  up to two size categories larger than you are and determine a theme as to how it alters your original appearance. However, this duplicate always retains some vestiges of your actual appearance. Creatures who already know you gain a +2 bonus on saving throws made to disbelieve this spell. Your duplicate has no actual substance, and you cannot use it to alter its surroundings or to attack or otherwise harm creatures it encounters. You can use the duplicate to speak, and interact verbally with creatures using the Bluff, Diplomacy, and Intimidate skills, and you gain a +2 competence bonus on Intimidate checks when using that skill through the duplicate.  You can see, hear, taste, and smell your duplicate's surroundings as if you are actually present using your Perception skill. While you also remain aware of your own immediate surroundings when controlling your duplicate, controlling it does take a toll on your senses. You take a -4 penalty on Perception checks while you control your duplicate.  The duplicate moves under your mental command, and while you need not act out its movements, you must take a standard action to control your duplicate for 1 round (concentrating on the spell) or it winks out of existence. You can maintain control of your duplicate even if you have no line of sight or line of effect to it.  The duplicate immediately winks out of existence if it is hit by an attack or in the area of a damaging effect, or if it moves beyond the maximum range of the spell.</p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellEffect": "monstrously distorted duplicate of you"
+    "shortDescription": "<p>You create a larger and far more menacing version of yourself that you can send forth, manipulate like a puppet, and use to interact with others. You can make the duplicate  up to two size categories larger than you are and determine a theme as to how it alters your original appearance. However, this duplicate always retains some vestiges of your actual appearance. Creatures who already know you gain a +2 bonus on saving throws made to disbelieve this spell. Your duplicate has no actual substance, and you cannot use it to alter its surroundings or to attack or otherwise harm creatures it encounters. You can use the duplicate to speak, and interact verbally with creatures using the Bluff, Diplomacy, and Intimidate skills, and you gain a +2 competence bonus on Intimidate checks when using that skill through the duplicate.  You can see, hear, taste, and smell your duplicate's surroundings as if you are actually present using your Perception skill. While you also remain aware of your own immediate surroundings when controlling your duplicate, controlling it does take a toll on your senses. You take a -4 penalty on Perception checks while you control your duplicate.  The duplicate moves under your mental command, and while you need not act out its movements, you must take a standard action to control your duplicate for 1 round (concentrating on the spell) or it winks out of existence. You can maintain control of your duplicate even if you have no line of sight or line of effect to it.  The duplicate immediately winks out of existence if it is hit by an attack or in the area of a damaging effect, or if it moves beyond the maximum range of the spell.</p>"
   },
   "effects": [],
   "folder": null,

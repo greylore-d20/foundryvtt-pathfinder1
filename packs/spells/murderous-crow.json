@@ -5,40 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "kz7tamwzhwbkomuk",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "medium",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "other",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "one crow",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "medium"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -86,7 +158,6 @@
     "school": "con",
     "subschool": "summoning",
     "types": "see text",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -96,9 +167,7 @@
       "focus": "a crow's feather"
     },
     "sr": false,
-    "shortDescription": "<p>You conjure a supernaturally vicious and clever crow to watch over you on the battlefield. Choose one of the following templates; the crow has that template and this spell gains the descriptor listed in parentheses: celestial (good), entropicB2 (chaotic), fiendish (evil), or resoluteB2 (lawful). In addition to its normal abilities, the crow gains the Improved StealAPG feat  as a bonus feat and gains an eye rake attack. If both of its claw attacks hit the same living foe in a single round, that foe must succeed at a DC 13 Reflex save or be blinded as the bird scratches and tears at the foe's eyes. The blindness lasts for 1d4 days or until healed with <i>remove blindness</i>.  If the focus leaves your possession, the crow vanishes and the spell ends.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "one crow"
+    "shortDescription": "<p>You conjure a supernaturally vicious and clever crow to watch over you on the battlefield. Choose one of the following templates; the crow has that template and this spell gains the descriptor listed in parentheses: celestial (good), entropicB2 (chaotic), fiendish (evil), or resoluteB2 (lawful). In addition to its normal abilities, the crow gains the Improved StealAPG feat  as a bonus feat and gains an eye rake attack. If both of its claw attacks hit the same living foe in a single round, that foe must succeed at a DC 13 Reflex save or be blinded as the bird scratches and tears at the foe's eyes. The blindness lasts for 1d4 days or until healed with <i>remove blindness</i>.  If the focus leaves your possession, the crow vanishes and the spell ends.</p>"
   },
   "effects": [],
   "folder": null,

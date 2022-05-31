@@ -5,42 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "onkspurdg9981sfl",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "medium",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex negates; see text"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "20-ft. spread",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "medium"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex negates; see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -72,7 +142,6 @@
     "level": 3,
     "school": "trs",
     "types": "earth",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -82,9 +151,7 @@
       "value": "a handful of sand"
     },
     "sr": false,
-    "shortDescription": "<p>You cause an earthen or sandy surface to shift and churn within the area. The <i>shifting sand</i> obliterates tracks and is considered difficult terrain. Acrobatics checks in the area take a penalty equal to your caster level (maximum +10). Creatures entering or beginning their turn in the <i>shifting sand</i> must make a Reflex save each round or become entangled until the beginning of their next turn. If they attempt to move while entangled, they must make a second Reflex save or fall prone. Creatures with the stability racial trait (like dwarves) may apply it as a bonus on their saving throws.</p><p>As a move action, you may move the area of <i>shifting sand</i> up to 10 feet in any direction. Creatures that are entangled or prone in the spell's area are carried along with the <i>shifting sand</i> in the same direction if possible. This movement does not provoke attacks of opportunity. Unattended Medium or smaller objects may also be carried along or shallowly buried by the <i>shifting sand</i>.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellArea": "20-ft. spread"
+    "shortDescription": "<p>You cause an earthen or sandy surface to shift and churn within the area. The <i>shifting sand</i> obliterates tracks and is considered difficult terrain. Acrobatics checks in the area take a penalty equal to your caster level (maximum +10). Creatures entering or beginning their turn in the <i>shifting sand</i> must make a Reflex save each round or become entangled until the beginning of their next turn. If they attempt to move while entangled, they must make a second Reflex save or fall prone. Creatures with the stability racial trait (like dwarves) may apply it as a bonus on their saving throws.</p><p>As a move action, you may move the area of <i>shifting sand</i> up to 10 feet in any direction. Creatures that are entangled or prone in the spell's area are carried along with the <i>shifting sand</i> in the same direction if possible. This movement does not provoke attacks of opportunity. Unattended Medium or smaller objects may also be carried along or shallowly buried by the <i>shifting sand</i>.</p>"
   },
   "effects": [],
   "folder": null,

@@ -5,42 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "uwo6voekr891lqsc",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "1 day/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -108,7 +178,6 @@
     "level": 3,
     "school": "trs",
     "subschool": "polymorph",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -118,8 +187,7 @@
       "focus": "corpse of the deceased creature whose form you plan to assume"
     },
     "sr": false,
-    "shortDescription": "<p>This spell functions similarly to <i>alter self</i>, except for the following differences. You assume the exact form of a deceased Small or Medium creature of the humanoid type. Your voice changes to match that of the form you assume. The creature whose form you assume must be dead and you must have access to its fresh corpse (either dead less than 24 hours, or preserved via <i>gentle repose</i> or similar effect). Any attempt to copy the form of a living creature causes the spell to fail. You do not have access to the assumed form's abilities, memories, mannerisms, or speech patterns. The spell grants a +10 bonus on Disguise checks to appear as the imitated creature.  If the assumed creature is returned to life while this spell is active, <i>assume appearance</i> immediately ends.</p>",
-    "spellDuration": "1 day/level (D)"
+    "shortDescription": "<p>This spell functions similarly to <i>alter self</i>, except for the following differences. You assume the exact form of a deceased Small or Medium creature of the humanoid type. Your voice changes to match that of the form you assume. The creature whose form you assume must be dead and you must have access to its fresh corpse (either dead less than 24 hours, or preserved via <i>gentle repose</i> or similar effect). Any attempt to copy the form of a living creature causes the spell to fail. You do not have access to the assumed form's abilities, memories, mannerisms, or speech patterns. The spell grants a +10 bonus on Disguise checks to appear as the imitated creature.  If the assumed creature is returned to life while this spell is active, <i>assume appearance</i> immediately ends.</p>"
   },
   "effects": [],
   "folder": null,

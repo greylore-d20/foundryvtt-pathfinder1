@@ -5,151 +5,139 @@
   "img": "systems/pf1/icons/items/weapons/claw-blades.PNG",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Advanced Race Guide pg. 93</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 305 gp <strong>Weight</strong> 2 lbs.</p><p><strong>Damage</strong> - (small), - (medium); <strong>Critical</strong> -; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> catfolk only, see description</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Special</p><h3 class=\"framing\">Description</h3><p>These subtle blades can only be used by catfolk with the cat's claws racial trait. Bought in a set of five, they fit over the wearer's claws on one hand. The blades grant the wearer a +1 enhancement bonus on claw attack rolls with that hand and change the weapon type from a natural weapon to a light slashing weapon. Catfolk with the cat's claws racial trait are proficient with this weapon. The claw blades can be enhanced like a masterwork weapon for the normal costs. The listed cost of the item is for one set of five claws for one hand. </p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Source</strong> <em>Advanced Race Guide pg. 93</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 305 gp <strong>Weight</strong> 2 lbs.</p><p><strong>Damage</strong> - (small), - (medium); <strong>Critical</strong> -; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> catfolk only, see description</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Special</p><h3 class=\"framing\">Description</h3><p>These subtle blades can only be used by catfolk with the cat's claws racial trait. Bought in a set of five, they fit over the wearer's claws on one hand. The blades grant the wearer a +1 enhancement bonus on claw attack rolls with that hand and change the weapon type from a natural weapon to a light slashing weapon. Catfolk with the cat's claws racial trait are proficient with this weapon. The claw blades can be enhanced like a masterwork weapon for the normal costs. The listed cost of the item is for one set of five claws for one hand. </p>"
     },
     "tags": [],
-    "quantity": 1,
     "weight": 2,
     "price": 305,
-    "size": "med",
-    "equipped": true,
-    "resizing": false,
-    "identified": true,
     "hp": {
       "max": 2,
       "value": 2
     },
-    "broken": false,
     "hardness": 10,
-    "carried": true,
-    "unidentified": {
-      "price": 0,
-      "name": ""
-    },
     "identifiedName": "Claw Blades",
-    "cl": 0,
-    "aura": {
-      "custom": false,
-      "school": ""
-    },
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
-    "activation": {
-      "cost": 1,
-      "type": "attack"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": ""
+    "actions": [
+      {
+        "_id": "8ly96clawwb9gw9g",
+        "name": "Attack",
+        "img": "systems/pf1/icons/items/weapons/claw-blades.PNG",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": 0,
+          "units": "melee",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": null,
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "mwak",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "NULL",
+              [
+                "slashing"
+              ]
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 0
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": 0,
-      "units": "melee",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": null,
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "mwak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "NULL",
-          "S"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
-      },
-      "bonus": {
-        "formula": "@formulaicAttack * -5"
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "str",
-      "damage": "str",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 0
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
+    ],
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "clawBlades",
-    "useCustomTag": false,
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
-    "masterwork": false,
-    "enh": null,
-    "attackType": "weapon",
-    "nonlethal": false,
-    "proficient": true,
-    "primaryAttack": true,
-    "held": "normal",
-    "weaponType": "exotic",
-    "weaponSubtype": "light",
-    "properties": {},
-    "showInQuickbar": true,
-    "conditionals": [],
-    "usesAmmo": false,
-    "ammoType": ""
+    "weaponType": "exotic"
   },
   "effects": [],
   "folder": null,

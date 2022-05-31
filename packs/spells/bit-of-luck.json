@@ -5,43 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "makwhwied2odej5y",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -88,7 +157,6 @@
     },
     "level": 4,
     "school": "evo",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -98,8 +166,7 @@
       "value": "a four-leaf clover"
     },
     "sr": false,
-    "shortDescription": "<p>For the spell's duration, the caster gains a reservoir of luck with a total number of points equal to 1 point per 2 caster levels. During the spell's duration, the caster can spend 1 point from this reservoir when making an attack roll or skill check to add a +1d8 luck bonus to the d20 roll's result. This bonus can be added before or after the roll or check's result is revealed, and if this bonus is large enough to turn a failure into a success, the roll succeeds. The spell instantly ends when all points are expended or when it is cast on the target again.  An 8th-level caster can instead spend 4 points to add a +2d8 luck bonus, and a 16th-level caster can spend 8 luck points to instead add a +3d8 luck bonus.</p>",
-    "spellDuration": "10 minutes/level"
+    "shortDescription": "<p>For the spell's duration, the caster gains a reservoir of luck with a total number of points equal to 1 point per 2 caster levels. During the spell's duration, the caster can spend 1 point from this reservoir when making an attack roll or skill check to add a +1d8 luck bonus to the d20 roll's result. This bonus can be added before or after the roll or check's result is revealed, and if this bonus is large enough to turn a failure into a success, the roll succeeds. The spell instantly ends when all points are expended or when it is cast on the target again.  An 8th-level caster can instead spend 4 points to add a +2d8 luck bonus, and a 16th-level caster can spend 8 luck points to instead add a +3d8 luck bonus.</p>"
   },
   "effects": [],
   "folder": null,

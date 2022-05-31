@@ -5,42 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "qzg6dwqqlyam3gjj",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "two creatures within 60 feet of one another; see text"
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (see below)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "two creatures within 60 feet of one another; see text"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (see below)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -83,7 +153,6 @@
     },
     "level": 8,
     "school": "trs",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -92,8 +161,7 @@
     "materials": {
       "value": "a scrap of a knight's banner"
     },
-    "shortDescription": "<p>You select one enemy and one willing ally as targets. The enemy gains a new Will saving throw at the beginning of each turn, and on a successful saving throw the spell ends. Both targets remain visible and audible, and can see and hear other creatures, but cannot physically interact with any creature save one another. Spells or weapon attacks from the affected creatures impact only each other, though spells might affect terrain or other factors not related to other creatures. If one of the creatures becomes unconscious or dies, or if the effect is dispelled, the effect ends for both of them.</p>",
-    "spellDuration": "1 round/level (D)"
+    "shortDescription": "<p>You select one enemy and one willing ally as targets. The enemy gains a new Will saving throw at the beginning of each turn, and on a successful saving throw the spell ends. Both targets remain visible and audible, and can see and hear other creatures, but cannot physically interact with any creature save one another. Spells or weapon attacks from the affected creatures impact only each other, though spells might affect terrain or other factors not related to other creatures. If one of the creatures becomes unconscious or dies, or if the effect is dispelled, the effect ends for both of them.</p>"
   },
   "effects": [],
   "folder": null,

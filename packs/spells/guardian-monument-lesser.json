@@ -5,42 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "full"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "dg92nhqjlztno7z6",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "full"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "40-ft. radius from touched object or 60-ft. radius from touched object; see text",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -95,7 +165,6 @@
     },
     "level": 3,
     "school": "abj",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -105,9 +174,7 @@
       "focus": "an unattended, nonmagical object"
     },
     "spellbook": "",
-    "shortDescription": "<p>You touch an unattended, nonmagical object to create a touchstone for humans defending the area. Such human defenders are protected by a shimmering aura as long as they are in the area. The spell grants each subject damage reduction 2/magic. Humans who leave the area and reenter regain the damage reduction. The spell is suppressed if the object is moved from its place, but resumes if the object is put back. Its duration continues to elapse while it is suppressed this way.  Normally, the area of effect is 40 feet from the touched object. If the touched object is a monument to human achievement, the area increases to a 60-foot radius.</p>",
-    "spellDuration": "1 hour/level",
-    "spellArea": "40-ft. radius from touched object or 60-ft. radius from touched object; see text"
+    "shortDescription": "<p>You touch an unattended, nonmagical object to create a touchstone for humans defending the area. Such human defenders are protected by a shimmering aura as long as they are in the area. The spell grants each subject damage reduction 2/magic. Humans who leave the area and reenter regain the damage reduction. The spell is suppressed if the object is moved from its place, but resumes if the object is put back. Its duration continues to elapse while it is suppressed this way.  Normally, the area of effect is 40 feet from the touched object. If the touched object is a monument to human achievement, the area increases to a 60-foot radius.</p>"
   },
   "effects": [],
   "folder": null,

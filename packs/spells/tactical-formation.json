@@ -5,42 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "20ug5mogh72zaugm",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "up to one creature/level, no two of which may be more than 30 ft. apart",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -75,14 +145,11 @@
     },
     "level": 3,
     "school": "abj",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
-    "shortDescription": "<p>This spell increases the effectiveness of a group's formation in battle. When cast, all creatures under the effect of the spell must be adjacent to one another, forming an unbroken chain of squares (which may include creatures sharing the same square). This chain does not need to be a straight line. Each target in the chain receives a +2 defection bonus to AC as long as the targets stay adjacent to at least one other creature affected by the spell; moving more than 5 feet from another target ends the spell with respect to that creature only. For example, a cleric could cast it on himself and four dwarves blocking a 20-foot-wide corridor; the cleric can move freely from the left side of the formation to the right side (whether in front of or behind the other targets) and not break the spell as long as he stays within 5 feet of at least one of them.</p>",
-    "spellDuration": "10 minutes/level",
-    "spellArea": "up to one creature/level, no two of which may be more than 30 ft. apart"
+    "shortDescription": "<p>This spell increases the effectiveness of a group's formation in battle. When cast, all creatures under the effect of the spell must be adjacent to one another, forming an unbroken chain of squares (which may include creatures sharing the same square). This chain does not need to be a straight line. Each target in the chain receives a +2 defection bonus to AC as long as the targets stay adjacent to at least one other creature affected by the spell; moving more than 5 feet from another target ends the spell with respect to that creature only. For example, a cleric could cast it on himself and four dwarves blocking a 20-foot-wide corridor; the cleric can move freely from the left side of the formation to the right side (whether in front of or behind the other targets) and not break the spell as long as he stays within 5 feet of at least one of them.</p>"
   },
   "effects": [],
   "folder": null,

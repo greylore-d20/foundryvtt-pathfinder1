@@ -5,92 +5,15 @@
   "img": "systems/pf1/icons/skills/affliction_07.jpg",
   "data": {
     "description": {
-      "value": "<p>At 8th level, you can touch a creature that has died within the past minute to grant it a few moments of life. The dead creature returns to life for a number of rounds equal to your cleric level. Creatures returned to life in this way have a number of hit points equal to half your cleric level, and continue to be affected by any still-active spells, conditions, or afflictions present at the time of their death. At the end of this time, the creature dies again. The creature is free to act as it sees fit during this time. You are granted no control over it. You can use this power once per day at 8th level, plus one additional time per day for every four levels beyond 8th.</p>\n<p>This power replaces the Healer's Blessing power of the Healing Domain.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>At 8th level, you can touch a creature that has died within the past minute to grant it a few moments of life. The dead creature returns to life for a number of rounds equal to your cleric level. Creatures returned to life in this way have a number of hit points equal to half your cleric level, and continue to be affected by any still-active spells, conditions, or afflictions present at the time of their death. At the end of this time, the creature dies again. The creature is free to act as it sees fit during this time. You are granted no control over it. You can use this power once per day at 8th level, plus one additional time per day for every four levels beyond 8th.</p>\n<p>This power replaces the Healer's Blessing power of the Healing Domain.</p>"
     },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": "@classes.cleric.level",
-      "units": "round"
-    },
-    "target": {
-      "value": "recently dead creature"
-    },
-    "range": {
-      "value": null,
-      "units": "touch",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
+    "actions": [],
     "uses": {
-      "value": 0,
       "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
       "maxFormula": "floor((@classes.cleric.level - 4) / 4)"
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -99,16 +22,17 @@
     "tag": "classFeat_giftOfLife",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
+    },
+    "languages": {
+      "value": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "featType": "classFeat",
@@ -119,11 +43,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

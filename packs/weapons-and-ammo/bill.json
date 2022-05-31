@@ -5,170 +5,144 @@
   "img": "systems/pf1/icons/items/weapons/bill.PNG",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 18</em>, <em>Adventurer's Armory pg. 2</em>, <em>Advanced Player's Guide pg. 176</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 11 gp <strong>Weight</strong> 11 lbs.</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x3; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> brace, disarm, reach, see text</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Martial</p><p><strong>Weapon Groups</strong> Polearms</p><h3 class=\"framing\">Description</h3><p>The blade of this polearm is a curved or hooked chopping blade with a spiked projection on the back of the blade. The spike is commonly used to block and parry. When fighting defensively or with full defense, this weapon gives you a +1 shield bonus to AC. A mounted opponent hit by a bill takes a -1 penalty on his Ride check to stay mounted.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 18</em>, <em>Adventurer's Armory pg. 2</em>, <em>Advanced Player's Guide pg. 176</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 11 gp <strong>Weight</strong> 11 lbs.</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x3; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> brace, disarm, reach, see text</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Martial</p><p><strong>Weapon Groups</strong> Polearms</p><h3 class=\"framing\">Description</h3><p>The blade of this polearm is a curved or hooked chopping blade with a spiked projection on the back of the blade. The spike is commonly used to block and parry. When fighting defensively or with full defense, this weapon gives you a +1 shield bonus to AC. A mounted opponent hit by a bill takes a -1 penalty on his Ride check to stay mounted.</p>"
     },
     "tags": [],
-    "quantity": 1,
     "weight": 11,
     "price": 11,
-    "size": "med",
-    "equipped": true,
-    "resizing": false,
-    "identified": true,
     "hp": {
       "max": "10",
       "value": "10"
     },
-    "broken": false,
     "hardness": 10,
-    "carried": true,
-    "unidentified": {
-      "price": 0,
-      "name": ""
-    },
     "identifiedName": "Bill",
-    "cl": 0,
-    "aura": {
-      "custom": false,
-      "school": ""
-    },
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
-    "activation": {
-      "cost": 1,
-      "type": "attack"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": ""
+    "actions": [
+      {
+        "_id": "mi2idtytj1xpl2t8",
+        "name": "Attack",
+        "img": "systems/pf1/icons/items/weapons/bill.PNG",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": 0,
+          "units": "reach",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "mwak",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              [
+                "slashing"
+              ]
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "damageMult": 1.5,
+          "critRange": 20,
+          "critMult": 3
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": 0,
-      "units": "reach",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
+    ],
     "uses": {
-      "value": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "mwak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "sizeRoll(1, 8, @size)",
-          "S"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
-      },
-      "bonus": {
-        "formula": "@formulaicAttack * -5"
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "str",
-      "damage": "str",
-      "damageMult": 1.5,
-      "critRange": 20,
-      "critMult": 3
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
+      "per": ""
     },
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "bill",
-    "useCustomTag": false,
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
-    "masterwork": false,
-    "enh": null,
-    "attackType": "weapon",
-    "nonlethal": false,
-    "proficient": true,
-    "primaryAttack": true,
     "held": "2h",
     "weaponType": "martial",
-    "weaponSubtype": "2h",
-    "properties": {
-      "blc": false,
-      "brc": true,
-      "dea": false,
-      "dis": true,
-      "dst": false,
-      "dbl": false,
-      "fin": false,
-      "frg": false,
-      "grp": false,
-      "imp": false,
-      "mnk": false,
-      "nnl": false,
-      "prf": false,
-      "rch": true,
-      "snd": false,
-      "thr": false,
-      "trp": false
-    },
-    "showInQuickbar": true,
-    "conditionals": [],
-    "usesAmmo": false,
-    "ammoType": "",
-    "spellArea": ""
+    "weaponSubtype": "2h"
   },
   "effects": [],
   "folder": null,

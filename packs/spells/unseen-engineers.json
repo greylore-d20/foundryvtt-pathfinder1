@@ -5,40 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "69udjmf1f2lq2t1j",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "long",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "other",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "a team of tiny, invisible engineers",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "long"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -74,7 +146,6 @@
     "level": 3,
     "school": "con",
     "subschool": "creation",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -84,9 +155,7 @@
       "value": "materials required to construct the trap"
     },
     "sr": false,
-    "shortDescription": "<p>You conjure an invisible team of tiny engineers to construct a trap at alarming speed. Originating at your location, the team must remain within range of you or the spell ends. The engineers construct a mechanical trap of your choice. Construction takes a number of rounds equal to the trap's challenge rating. The engineers must have the materials available. At the end of the construction time, use your Craft (traps) skill with a +5 bonus to determine the success of their work. If the engineers succeed, the trap is complete and the spell ends. If they fail, the materials are deposited at that location and the spell ends. If the spell's duration ends before the trap is complete, the engineers automatically fail.  The engineers move at your base speed and can carry only materials required in the construction of the desired trap. They can't attack in any way or be killed, and dissipate if they take 12 points of damage from area attacks (they get no saves against attacks).</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "a team of tiny, invisible engineers"
+    "shortDescription": "<p>You conjure an invisible team of tiny engineers to construct a trap at alarming speed. Originating at your location, the team must remain within range of you or the spell ends. The engineers construct a mechanical trap of your choice. Construction takes a number of rounds equal to the trap's challenge rating. The engineers must have the materials available. At the end of the construction time, use your Craft (traps) skill with a +5 bonus to determine the success of their work. If the engineers succeed, the trap is complete and the spell ends. If they fail, the materials are deposited at that location and the spell ends. If the spell's duration ends before the trap is complete, the engineers automatically fail.  The engineers move at your base speed and can carry only materials required in the construction of the desired trap. They can't attack in any way or be killed, and dissipate if they take 12 points of damage from area attacks (they get no saves against attacks).</p>"
   },
   "effects": [],
   "folder": null,

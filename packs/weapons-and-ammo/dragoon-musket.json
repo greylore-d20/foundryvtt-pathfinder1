@@ -5,170 +5,146 @@
   "img": "icons/weapons/guns/gun-wood.webp",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Villain Codex pg. 57</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 2,000 gp <strong>Weight</strong> 12 lbs.</p><p><strong>Damage</strong> 1d10 (small), 1d12 (medium); <strong>Critical</strong> x3; <strong>Range</strong> 60 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p><p><strong>Misfire</strong> 1-2 (5 ft.); <strong>Capacity</strong> 3</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This long-barreled musket shoots more precisely than other muskets but is slightly less damaging on a critical hit. It can fire only dragoon cartridges or specially modified <em>mage shot</em>.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Source</strong> <em>Villain Codex pg. 57</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 2,000 gp <strong>Weight</strong> 12 lbs.</p><p><strong>Damage</strong> 1d10 (small), 1d12 (medium); <strong>Critical</strong> x3; <strong>Range</strong> 60 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p><p><strong>Misfire</strong> 1-2 (5 ft.); <strong>Capacity</strong> 3</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This long-barreled musket shoots more precisely than other muskets but is slightly less damaging on a critical hit. It can fire only dragoon cartridges or specially modified <em>mage shot</em>.</p>"
     },
     "tags": [],
-    "quantity": 1,
     "weight": 12,
     "price": 2000,
-    "size": "med",
-    "equipped": true,
-    "resizing": false,
-    "identified": true,
     "hp": {
       "max": "10",
       "value": "10"
     },
-    "broken": false,
     "hardness": 10,
-    "carried": true,
-    "unidentified": {
-      "price": 0,
-      "name": ""
-    },
     "identifiedName": "Dragoon Musket",
-    "cl": 0,
-    "aura": {
-      "custom": false,
-      "school": ""
-    },
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
-    "activation": {
-      "cost": 1,
-      "type": "attack"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": ""
+    "actions": [
+      {
+        "_id": "s9dgrl0zx8fe7aog",
+        "name": "Attack",
+        "img": "icons/weapons/guns/gun-wood.webp",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": "60",
+          "units": "ft",
+          "maxIncrements": 10,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "rwak",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 12, @size)",
+              [
+                "bludgeoning",
+                "piercing"
+              ]
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "dex",
+          "damage": "",
+          "damageMult": 1.5,
+          "critRange": 20,
+          "critMult": 3
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": true,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": "60",
-      "units": "ft",
-      "maxIncrements": 10,
-      "minValue": null,
-      "minUnits": ""
-    },
+    ],
     "uses": {
-      "value": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "rwak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "sizeRoll(1, 12, @size)",
-          "B and P"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
-      },
-      "bonus": {
-        "formula": "@formulaicAttack * -5"
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "dex",
-      "damage": "",
-      "damageMult": 1.5,
-      "critRange": 20,
-      "critMult": 3
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
+      "per": ""
     },
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "dragoonMusket",
-    "useCustomTag": false,
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
-    "masterwork": false,
-    "enh": null,
-    "attackType": "weapon",
-    "nonlethal": false,
-    "proficient": true,
-    "primaryAttack": true,
     "held": "2h",
     "weaponType": "exotic",
     "weaponSubtype": "2h",
-    "properties": {
-      "blc": false,
-      "brc": false,
-      "dea": false,
-      "dis": false,
-      "dst": false,
-      "dbl": false,
-      "fin": false,
-      "frg": false,
-      "grp": false,
-      "imp": false,
-      "mnk": false,
-      "nnl": false,
-      "prf": false,
-      "rch": false,
-      "snd": false,
-      "thr": false,
-      "trp": false
-    },
-    "showInQuickbar": true,
-    "conditionals": [],
-    "usesAmmo": true,
-    "ammoType": "dragoonBullet",
-    "spellArea": ""
+    "ammoType": "dragoonBullet"
   },
   "effects": [],
   "folder": null,

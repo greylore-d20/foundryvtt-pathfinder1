@@ -5,56 +5,125 @@
   "img": "systems/pf1/icons/spells/fireball-sky-1.jpg",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "pyrkjg5vgi1jkbpp",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/fireball-sky-1.jpg",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": "30",
+          "units": "ft",
+          "maxIncrements": "1",
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "cone",
+          "size": "30",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "4d6",
+              [
+                "cold"
+              ]
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "cone-shaped burst",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": "1"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "type": "cone",
-      "size": "30"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [
-        [
-          "4d6",
-          "Cold"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -88,16 +157,13 @@
     "level": 2,
     "school": "evo",
     "types": "cold, water",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
     "spellbook": "",
     "sr": false,
-    "shortDescription": "<p>You send a Flurry of Snowballs hurtling at your foes. Any creature in the area takes 4d6 points of cold damage from being pelted with the icy spheres.</p>",
-    "spellDuration": "instantaneous",
-    "spellArea": "cone-shaped burst"
+    "shortDescription": "<p>You send a Flurry of Snowballs hurtling at your foes. Any creature in the area takes 4d6 points of cold damage from being pelted with the icy spheres.</p>"
   },
   "effects": [],
   "folder": null,

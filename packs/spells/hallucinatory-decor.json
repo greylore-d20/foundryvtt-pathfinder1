@@ -1,105 +1,119 @@
 {
+  "_id": "GX0BBBs6HMCZxOWU",
   "name": "Hallucinatory Decor",
   "type": "spell",
   "img": "icons/magic/perception/orb-crystal-ball-scrying.webp",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": ""
+    "actions": [
+      {
+        "_id": "he72drxqumpanj13",
+        "name": "Use",
+        "img": "icons/magic/perception/orb-crystal-ball-scrying.webp",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": "1 hour/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "medium",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1 + @sl",
+          "per": null,
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief (if interacted with)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "one 10-ft. cube/level (S)",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "medium",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": null,
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will disbelief (if interacted with)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "naturalAttack": {
-      "secondary": {
-        "attackBonus": "-5",
-        "damageMult": 0.5
-      }
-    },
+    ],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -135,50 +149,15 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "ill",
     "subschool": "glamer",
-    "types": "",
-    "nonlethal": false,
-    "conditionals": [],
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
+      "somatic": true
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You transform the decor of a courtyard, structure, or other edifice to meet your highest standards and personal tastes. Objects and architectural elements remain in the same configuration&mdash;a chair remains a chair&mdash;but can look, sound, and smell like a different physical material and artistic style. You cannot change the appearance of natural terrain, but landscaped areas such as a garden or orchard can be affected. This spell functions in all other ways as @Compendium[pf1.spells.a2y1yf0a4jy3610w]{Hallucinatory Terrain}.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">Members of the Prophet of Kalistrade prestige class can cast this spell, even though it is not a divination or enchantment.</span></p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "",
-    "spellArea": "one 10-ft. cube/level (S)",
-    "showInQuickbar": false,
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "domain": false,
-    "slotCost": 1,
-    "clCheck": false,
-    "identifiedName": "Hallucinatory Decor"
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You transform the decor of a courtyard, structure, or other edifice to meet your highest standards and personal tastes. Objects and architectural elements remain in the same configuration&mdash;a chair remains a chair&mdash;but can look, sound, and smell like a different physical material and artistic style. You cannot change the appearance of natural terrain, but landscaped areas such as a garden or orchard can be affected. This spell functions in all other ways as @Compendium[pf1.spells.a2y1yf0a4jy3610w]{Hallucinatory Terrain}.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">Members of the Prophet of Kalistrade prestige class can cast this spell, even though it is not a divination or enchantment.</span></p>"
   },
   "effects": [],
   "folder": null,
@@ -187,6 +166,5 @@
     "default": 0,
     "LhFOnsRrYD2v4zOf": 3
   },
-  "flags": {},
-  "_id": "GX0BBBs6HMCZxOWU"
+  "flags": {}
 }

@@ -5,170 +5,146 @@
   "img": "icons/weapons/guns/gun-wood.webp",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Heroes of Golarion pg. 18</em></p>\n<h3 class=\"framing\">Statistics</h3>\n<p><strong>Cost</strong> 600 gp <strong>Weight</strong> 6 lbs.</p>\n<p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x4; <strong>Range</strong> 50 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p>\n<p><strong>Misfire</strong> 1 (see text); <strong>Capacity</strong> 6</p>\n<p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p>\n<h3 class=\"framing\">Description</h3>\n<p>This long-barreled firearm is powered by a removable compressed air reservoir. A misfire while an air repeater has the broken condition does not cause the firearm to explode, but it does destroy the air reservoir. An air repeater can fire 6 shots before the air reservoir is depleted. An air repeater comes with three air reservoirs. Replacing the air reservoir requires 1 minute. The @Compendium[pf1.feats.11ClnanF4PdEPd9g]{Rapid Reload} feat reduces this to a full-round action.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Source</strong> <em>Heroes of Golarion pg. 18</em></p>\n<h3 class=\"framing\">Statistics</h3>\n<p><strong>Cost</strong> 600 gp <strong>Weight</strong> 6 lbs.</p>\n<p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x4; <strong>Range</strong> 50 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p>\n<p><strong>Misfire</strong> 1 (see text); <strong>Capacity</strong> 6</p>\n<p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p>\n<h3 class=\"framing\">Description</h3>\n<p>This long-barreled firearm is powered by a removable compressed air reservoir. A misfire while an air repeater has the broken condition does not cause the firearm to explode, but it does destroy the air reservoir. An air repeater can fire 6 shots before the air reservoir is depleted. An air repeater comes with three air reservoirs. Replacing the air reservoir requires 1 minute. The @Compendium[pf1.feats.11ClnanF4PdEPd9g]{Rapid Reload} feat reduces this to a full-round action.</p>"
     },
     "tags": [],
-    "quantity": 1,
     "weight": 6,
     "price": 600,
-    "size": "med",
-    "equipped": true,
-    "resizing": false,
-    "identified": true,
     "hp": {
       "max": "10",
       "value": "10"
     },
-    "broken": false,
     "hardness": 10,
-    "carried": true,
-    "unidentified": {
-      "price": 0,
-      "name": ""
-    },
     "identifiedName": "Air Repeater",
-    "cl": 0,
-    "aura": {
-      "custom": false,
-      "school": ""
-    },
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
-    "activation": {
-      "cost": 1,
-      "type": "attack"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": ""
+    "actions": [
+      {
+        "_id": "qmxpvy5rwcfixxi1",
+        "name": "Attack",
+        "img": "icons/weapons/guns/gun-wood.webp",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": "50",
+          "units": "ft",
+          "maxIncrements": 10,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "rwak",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              [
+                "bludgeoning",
+                "piercing"
+              ]
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "dex",
+          "damage": "",
+          "damageMult": 1.5,
+          "critRange": 20,
+          "critMult": 4
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": true,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": "50",
-      "units": "ft",
-      "maxIncrements": 10,
-      "minValue": null,
-      "minUnits": ""
-    },
+    ],
     "uses": {
-      "value": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "rwak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "sizeRoll(1, 8, @size)",
-          "B and P"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
-      },
-      "bonus": {
-        "formula": "@formulaicAttack * -5"
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "dex",
-      "damage": "",
-      "damageMult": 1.5,
-      "critRange": 20,
-      "critMult": 4
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
+      "per": ""
     },
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "airRepeater",
-    "useCustomTag": false,
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
-    "masterwork": false,
-    "enh": null,
-    "attackType": "weapon",
-    "nonlethal": false,
-    "proficient": true,
-    "primaryAttack": true,
     "held": "2h",
     "weaponType": "exotic",
     "weaponSubtype": "2h",
-    "properties": {
-      "blc": false,
-      "brc": false,
-      "dea": false,
-      "dis": false,
-      "dst": false,
-      "dbl": false,
-      "fin": false,
-      "frg": false,
-      "grp": false,
-      "imp": false,
-      "mnk": false,
-      "nnl": false,
-      "prf": false,
-      "rch": false,
-      "snd": false,
-      "thr": false,
-      "trp": false
-    },
-    "showInQuickbar": true,
-    "conditionals": [],
-    "usesAmmo": true,
-    "ammoType": "gunBullet",
-    "spellArea": ""
+    "ammoType": "gunBullet"
   },
   "effects": [],
   "folder": null,

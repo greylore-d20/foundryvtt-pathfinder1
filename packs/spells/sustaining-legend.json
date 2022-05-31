@@ -5,45 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "0g0j4se9mdvm15rp",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level",
+          "units": ""
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "heal",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one creature/level, no two of which can be more than 30 ft. apart"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "heal",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -71,13 +138,11 @@
     "level": 6,
     "school": "con",
     "subschool": "healing",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
-    "shortDescription": "<p>The rulers of Azlant are thought to have used this spell to amplify the mythic power of themselves and their most gifted lieutenants. You amplify the mythic power of the target creatures, bolstering them with healing energy each time they draw upon their mythic abilities. When a creature affected by this spell expends uses of mythic power for any ability, it immediately heals 2d8 points of damage + 1 point per caster level (maximum +25). In addition, the creature benefits from one of the following additional effects.</p><p><ul><li> Remove any one of the following conditions: dazzled, fatigued, shaken, sickened, or staggered.</p><p><li> Reduce the dazed or stunned condition to staggered.</p><p><li> Reduce the exhausted condition to fatigued.</p><p><li> Reduce the frightened condition to shaken, or the panicked condition to frightened.</p><p><li> Reduce the nauseated condition to sickened.</ul></p><p>A target can benefit from the effects of <i>sustaining legend</i> only once per round, even if the target expends multiple uses of mythic power during that time.</p>",
-    "spellDuration": "1 round/level"
+    "shortDescription": "<p>The rulers of Azlant are thought to have used this spell to amplify the mythic power of themselves and their most gifted lieutenants. You amplify the mythic power of the target creatures, bolstering them with healing energy each time they draw upon their mythic abilities. When a creature affected by this spell expends uses of mythic power for any ability, it immediately heals 2d8 points of damage + 1 point per caster level (maximum +25). In addition, the creature benefits from one of the following additional effects.</p><p><ul><li> Remove any one of the following conditions: dazzled, fatigued, shaken, sickened, or staggered.</p><p><li> Reduce the dazed or stunned condition to staggered.</p><p><li> Reduce the exhausted condition to fatigued.</p><p><li> Reduce the frightened condition to shaken, or the panicked condition to frightened.</p><p><li> Reduce the nauseated condition to sickened.</ul></p><p>A target can benefit from the effects of <i>sustaining legend</i> only once per round, even if the target expends multiple uses of mythic power during that time.</p>"
   },
   "effects": [],
   "folder": null,

@@ -5,44 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "tgis3rdyy72nagcc",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level",
+          "units": ""
+        },
+        "target": {
+          "value": "one living creature"
+        },
+        "range": {
+          "value": null,
+          "units": "medium",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": "no"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one living creature"
-    },
-    "range": {
-      "units": "medium"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "no"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -77,7 +145,6 @@
     },
     "level": 3,
     "school": "trs",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -87,8 +154,7 @@
     "materials": {
       "value": "cold iron ingot"
     },
-    "shortDescription": "<p>You launch an ingot of iron at the target. If you succeed at a ranged touch attack, the target's skeleton or exoskeleton turns into jagged shards of cold iron. Whenever the target moves, it takes 1d6 points of piercing damage and is sickened for 1 round as metal spines stab into its flesh. This damage is subject to damage reduction, but it overcomes damage reduction as though it were a weapon of cold iron and magic. A creature affected by this spell can choose to remain motionless to avoid taking damage. Creatures with DR/cold iron or DR/cold iron and magic affected by this spell are nauseated instead of sickened. This spell has no effect on a creature that has neither a skeleton nor a hard carapace.</p>",
-    "spellDuration": "1 round/level"
+    "shortDescription": "<p>You launch an ingot of iron at the target. If you succeed at a ranged touch attack, the target's skeleton or exoskeleton turns into jagged shards of cold iron. Whenever the target moves, it takes 1d6 points of piercing damage and is sickened for 1 round as metal spines stab into its flesh. This damage is subject to damage reduction, but it overcomes damage reduction as though it were a weapon of cold iron and magic. A creature affected by this spell can choose to remain motionless to avoid taking damage. Creatures with DR/cold iron or DR/cold iron and magic affected by this spell are nauseated instead of sickened. This spell has no effect on a creature that has neither a skeleton nor a hard carapace.</p>"
   },
   "effects": [],
   "folder": null,

@@ -359,37 +359,7 @@ export class ItemPF extends ItemBasePF {
       itemData.data.hp = itemData.data.hp || { max: 10, value: 10 };
       itemData.data.hardness = itemData.data.hardness || 0;
       itemData.data.carried = itemData.data.carried == null ? true : itemData.data.carried;
-
-      // Equipped label
-      const checkYes = '<i class="fas fa-check"></i>';
-      const checkNo = '<i class="fas fa-times"></i>';
-      labels.equipped = "";
-      if (itemData.data.equipped === true) labels.equipped = checkYes;
-      else labels.equipped = checkNo;
-
-      // Carried label
-      labels.carried = "";
-      if (itemData.data.carried === true) labels.carried = checkYes;
-      else labels.carried = checkNo;
-
-      // Identified label
-      labels.identified = "";
-      if (itemData.data.identified === true) labels.identified = checkYes;
-      else labels.identified = checkNo;
-
-      // Slot label
-      if (itemData.data.slot) {
-        // Add equipment slot
-        const equipmentType = this.data.data.equipmentType || null;
-        if (equipmentType != null) {
-          const equipmentSlot = this.data.data.slot || null;
-          labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
-        } else labels.slot = null;
-      }
     }
-
-    // Assign labels
-    this.labels = labels;
 
     this.prepareLinks();
 
@@ -413,6 +383,9 @@ export class ItemPF extends ItemBasePF {
       this.items = this._prepareInventory(this.data.data.inventoryItems);
     }
 
+    // Prepare labels
+    this.labels = this.prepareLabels();
+
     if (!this.actor) {
       this.prepareDerivedItemData();
     }
@@ -432,16 +405,73 @@ export class ItemPF extends ItemBasePF {
   }
 
   prepareDerivedItemData() {
+    const action = this.firstAction;
+
     // Update maximum uses
     this._updateMaxUses();
 
     // Add saving throw DC label
-    if (this.data.data.actionType !== undefined && this.hasSave) {
+    if (action?.data.actionType !== undefined && action?.hasSave) {
       // Save DC
-      if (this.hasSave) {
-        this.labels.save = `DC ${this.getDC()}`;
+      this.labels.save = `DC ${action.getDC()}`;
+    }
+  }
+
+  prepareLabels() {
+    const labels = {};
+    const itemData = this.data;
+    const actionData = this.firstAction?.data ?? {};
+
+    // Equipped label
+    const checkYes = '<i class="fas fa-check"></i>';
+    const checkNo = '<i class="fas fa-times"></i>';
+    labels.equipped = "";
+    if (itemData.data.equipped === true) labels.equipped = checkYes;
+    else labels.equipped = checkNo;
+
+    // Carried label
+    labels.carried = "";
+    if (itemData.data.carried === true) labels.carried = checkYes;
+    else labels.carried = checkNo;
+
+    // Identified label
+    labels.identified = "";
+    if (itemData.data.identified === true) labels.identified = checkYes;
+    else labels.identified = checkNo;
+
+    // Slot label
+    if (itemData.data.slot) {
+      // Add equipment slot
+      const equipmentType = this.data.data.equipmentType || null;
+      if (equipmentType != null) {
+        const equipmentSlot = this.data.data.slot || null;
+        labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
+      } else labels.slot = null;
+    }
+
+    // Activation method
+    if (actionData.activation) {
+      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
+        ? CONFIG.PF1.abilityActivationTypes_unchained
+        : CONFIG.PF1.abilityActivationTypes;
+      const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy")
+        ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
+        : CONFIG.PF1.abilityActivationTypesPlurals;
+
+      const activation = game.settings.get("pf1", "unchainedActionEconomy")
+        ? actionData.unchainedAction.activation || {}
+        : actionData.activation || {};
+      if (activation && activation.cost > 1 && activationTypesPlural[activation.type] != null) {
+        labels.activation = [activation.cost.toString(), activationTypesPlural[activation.type]].filterJoin(" ");
+      } else if (activation) {
+        labels.activation = [
+          ["minute", "hour", "action"].includes(activation.type) && activation.cost ? activation.cost.toString() : "",
+          activationTypes[activation.type],
+        ].filterJoin(" ");
       }
     }
+
+    return labels;
   }
 
   prepareLinks() {
@@ -1073,8 +1103,9 @@ export class ItemPF extends ItemBasePF {
   getChatData(htmlOptions, rollData = null) {
     const data = duplicate(this.data.data);
     const labels = this.labels;
+    const actionData = this.firstAction?.data ?? {};
 
-    if (!rollData) rollData = this.getRollData();
+    if (!rollData) rollData = this.firstAction != null ? this.firstAction.getRollData() : this.getRollData();
 
     htmlOptions = mergeObject(htmlOptions || {}, rollData);
 
@@ -1097,26 +1128,26 @@ export class ItemPF extends ItemBasePF {
       dynamicLabels.range = labels.range || "";
       dynamicLabels.level = labels.sl || "";
       // Range
-      if (data.range != null) {
-        const range = data.range.value,
-          units = data.range.units,
-          rangeValue = calculateRange(range, units, rollData);
+      if (actionData.range != null) {
+        const range = calculateRange(actionData.range.value, actionData.range.units),
+          units = actionData.range.units === "mi" ? "mi" : "ft";
+        const distanceValues = convertDistance(range, units);
         dynamicLabels.range =
-          rangeValue[0] > 0
-            ? game.i18n.localize("PF1.RangeNote").format(`${rangeValue} ${CONFIG.PF1.measureUnits[units]}`)
+          distanceValues[0] > 0
+            ? game.i18n.format("PF1.RangeNote", { 0: `${distanceValues[0]} ${distanceValues[1]}` })
             : null;
       }
 
       // Add Difficulty Modifier (DC) label
       props.push(labels.save);
-      const saveDesc = this.data.data.save?.description;
+      const saveDesc = actionData.save?.description;
       if (saveDesc?.length > 0) props.push(saveDesc);
 
       // Duration
-      if (data.duration != null) {
-        if (!["inst", "perm"].includes(data.duration.units) && typeof data.duration.value === "string") {
-          const duration = RollPF.safeRoll(data.duration.value || "0", rollData).total;
-          dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[data.duration.units]].filterJoin(" ");
+      if (actionData.duration != null) {
+        if (!["inst", "perm"].includes(actionData.duration.units) && typeof actionData.duration.value === "string") {
+          const duration = RollPF.safeRoll(actionData.duration.value || "0", rollData).total;
+          dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
       }
 
@@ -1125,7 +1156,7 @@ export class ItemPF extends ItemBasePF {
       if (fn) fn.bind(this)(data, labels, props);
 
       // Ability activation properties
-      if (Object.prototype.hasOwnProperty.call(data, "activation")) {
+      if (actionData.activation?.type) {
         props.push(labels.target, labels.activation, dynamicLabels.range, dynamicLabels.duration);
       }
     }

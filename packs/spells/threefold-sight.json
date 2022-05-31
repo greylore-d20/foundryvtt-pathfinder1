@@ -5,43 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "5ryfw3m9ac7oiodu",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "3 minutes",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -84,7 +153,6 @@
     },
     "level": 3,
     "school": "div",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -95,8 +163,7 @@
       "value": "a three-pointed knot"
     },
     "sr": false,
-    "shortDescription": "<p>You view several possible futures at once, allowing you to thread a needle around disasters by taking a middle path. For the duration of this spell, whenever you roll for an attack, saving throw, or skill check, roll three d20 and use the middle of the three rolls (or the highest, if more than one die shows the same highest value, or the lowest, if more than one die shows the same lowest value). If another ability would make you roll an attack roll, saving throw, or skill check twice and take the higher result, roll twice and take the lower result, or reroll, that ability has no effect and <i>threefold sight</i> ends immediately.</p>",
-    "spellDuration": "3 minutes"
+    "shortDescription": "<p>You view several possible futures at once, allowing you to thread a needle around disasters by taking a middle path. For the duration of this spell, whenever you roll for an attack, saving throw, or skill check, roll three d20 and use the middle of the three rolls (or the highest, if more than one die shows the same highest value, or the lowest, if more than one die shows the same lowest value). If another ability would make you roll an attack roll, saving throw, or skill check twice and take the higher result, roll twice and take the lower result, or reroll, that ability has no effect and <i>threefold sight</i> ends immediately.</p>"
   },
   "effects": [],
   "folder": null,

@@ -5,45 +5,112 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "bjptcpch9xl0izt4",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "8 hours (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -110,7 +177,6 @@
     },
     "level": 3,
     "school": "div",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -119,8 +185,7 @@
     "materials": {
       "value": "a quill"
     },
-    "shortDescription": "<p>You choose any language (except for secret languages, such as Druidic). The target gains the ability to speak, understand, read, and write that language. When you cast this spell, you can attempt a DC 15 Linguistics check. If you succeed, choose an additional language, plus one more language for every 10 by which your check result exceeded the DC.  Written material can be read at the rate of one page (250 words) per minute. As with <i>comprehend languages</i>, this spell doesn't impart insight into material the target read, just the literal meaning, and it doesn't allow the target to read magical writing or decipher codes.  If the target lacks the mental capacity to grasp a language, it still gains enough knowledge to respond to and carry out even extremely complex commands or suggestions coached in the language (whether written or spoken). However, since this spell endows the target merely with a temporarily enhanced vocabulary, the person offering instructions to nonsentient creatures must take care to avoid metaphors or any other ambiguity.</p>",
-    "spellDuration": "8 hours (D)"
+    "shortDescription": "<p>You choose any language (except for secret languages, such as Druidic). The target gains the ability to speak, understand, read, and write that language. When you cast this spell, you can attempt a DC 15 Linguistics check. If you succeed, choose an additional language, plus one more language for every 10 by which your check result exceeded the DC.  Written material can be read at the rate of one page (250 words) per minute. As with <i>comprehend languages</i>, this spell doesn't impart insight into material the target read, just the literal meaning, and it doesn't allow the target to read magical writing or decipher codes.  If the target lacks the mental capacity to grasp a language, it still gains enough knowledge to respond to and carry out even extremely complex commands or suggestions coached in the language (whether written or spoken). However, since this spell endows the target merely with a temporarily enhanced vocabulary, the person offering instructions to nonsentient creatures must take care to avoid metaphors or any other ambiguity.</p>"
   },
   "effects": [],
   "folder": null,

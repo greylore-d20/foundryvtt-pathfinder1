@@ -5,92 +5,15 @@
   "img": "systems/pf1/icons/items/inventory/book-blue.jpg",
   "data": {
     "description": {
-      "value": "<p>At 8th level, when you or an ally within 30 feet rolls a natural 1 or a natural 20 on an attack roll, an ability check, a skill check, or a saving throw, as an immediate action you can grant all allies within 30 feet special insights that help them overcome similar challenges. Once during the next minute, each affected creature can choose to roll twice and take the better result before attempting an attack roll, ability check, skill check, or saving throw. You can use this ability once per day at 8th level, and one additional time per day for every 4 cleric levels beyond 8th.</p>\n<p>This power replaces the Unity power of the Community Domain or the Remote Viewing power of the Knowledge Domain.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>At 8th level, when you or an ally within 30 feet rolls a natural 1 or a natural 20 on an attack roll, an ability check, a skill check, or a saving throw, as an immediate action you can grant all allies within 30 feet special insights that help them overcome similar challenges. Once during the next minute, each affected creature can choose to roll twice and take the better result before attempting an attack roll, ability check, skill check, or saving throw. You can use this ability once per day at 8th level, and one additional time per day for every 4 cleric levels beyond 8th.</p>\n<p>This power replaces the Unity power of the Community Domain or the Remote Viewing power of the Knowledge Domain.</p>"
     },
     "tags": [],
-    "activation": {
-      "cost": 1,
-      "type": "immediate"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "reaction"
-      }
-    },
-    "duration": {
-      "value": "1",
-      "units": "minute"
-    },
-    "target": {
-      "value": "ally within 30 ft."
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
+    "actions": [],
     "uses": {
-      "value": 0,
       "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
       "maxFormula": "floor((@classes.cleric.level - 4) / 4)"
     },
-    "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -99,16 +22,17 @@
     "tag": "classFeat_teachingMoment",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
+    },
+    "languages": {
+      "value": []
     },
     "flags": {
-      "boolean": [],
-      "dictionary": []
+      "boolean": {},
+      "dictionary": {}
     },
     "scriptCalls": [],
     "featType": "classFeat",
@@ -119,11 +43,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

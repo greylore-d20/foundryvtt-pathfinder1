@@ -133,7 +133,7 @@
 <div class="form-group stacked">
   <label>{{#if isSpell}}{{localize "PF1.SpellPointsCost"}}{{else}}{{localize "PF1.AutoDeductCharges"}}{{/if}}</label>
   <div class="flexrow">
-    <input type="checkbox" name="data.uses.autoDeductCharges" {{checked data.uses.autoDeductCharges}}/>
+    <input class="formula" type="checkbox" name="data.uses.autoDeductCharges" {{checked data.uses.autoDeductCharges}}/>
     {{#if data.uses.autoDeductCharges}}<input type="text" name="data.uses.autoDeductChargesCost" placeholder="{{localize "PF1.DeductChargeFormulaPlaceholder"}}"
       value="{{data.uses.autoDeductChargesCost}}" />{{/if}}
   </div>

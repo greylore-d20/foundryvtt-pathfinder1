@@ -1,200 +1,22 @@
 {
-  "_id": "h9JemJZJl9jJWZX5",
   "name": "Drunkard's Breath",
   "type": "spell",
   "img": "icons/magic/air/fog-gas-smoke-green.webp",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
-    "actions": [
-      {
-        "_id": "4272t02c6sblajom",
-        "name": "Use",
-        "img": "icons/magic/air/fog-gas-smoke-green.webp",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "standard"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": "1 round/level",
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": "30",
-          "units": "ft",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": null,
-          "value": 0,
-          "maxFormula": ""
-        },
-        "measureTemplate": {
-          "type": "cone",
-          "size": "30",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "fort",
-          "description": "Fortitude negates; see text"
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "",
-        "spellArea": "cone-shaped burst",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
-      }
-    ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": {},
-      "dictionary": {}
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "bard",
-          2
-        ],
-        [
-          "cleric/oracle",
-          2
-        ],
-        [
-          "skald",
-          2
-        ],
-        [
-          "warpriest",
-          2
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
-    "school": "con",
-    "subschool": "creation",
-    "types": "",
-    "nonlethal": false,
-    "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "a rotten egg or cabbage leaves",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": false,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell emanates from your mouth and functions like @Compendium[pf1.spells.kjke96zd1j1jz48z]{Stinking Cloud}, except as noted above. The effect is barely visible and does not obscure vision. The nausea effect resembles that of an extreme hangover. This is a poison effect. Cayden Cailean&rsquo;s church uses this spell to disperse angry crowds, such as when celebrations get out of hand.</span></p>",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
     "activation": {
       "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 2,
-        "type": "action"
+        "cost": 1,
+        "type": ""
       }
     },
     "duration": {
@@ -210,6 +32,13 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": null,
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
     "measureTemplate": {
       "type": "cone",
@@ -259,16 +88,83 @@
       "damageBonus": 2,
       "critMultiplier": 1
     },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "bard",
+          2
+        ],
+        [
+          "cleric/oracle",
+          2
+        ],
+        [
+          "skald",
+          2
+        ],
+        [
+          "warpriest",
+          2
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 2,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "con",
+    "subschool": "creation",
+    "types": "",
+    "nonlethal": false,
     "conditionals": [],
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": true,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "a rotten egg or cabbage leaves",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": false,
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell emanates from your mouth and functions like @Compendium[pf1.spells.kjke96zd1j1jz48z]{Stinking Cloud}, except as noted above. The effect is barely visible and does not obscure vision. The nausea effect resembles that of an extreme hangover. This is a poison effect. Cayden Cailean&rsquo;s church uses this spell to disperse angry crowds, such as when celebrations get out of hand.</span></p>",
     "spellDuration": "1 round/level",
     "spellEffect": "",
     "spellArea": "cone-shaped burst",
+    "showInQuickbar": false,
     "spellPoints": {
       "cost": "1 + @sl"
     },
+    "domain": false,
+    "slotCost": 1,
     "clCheck": false,
-    "identifiedName": "Drunkard's Breath",
-    "size": "med"
+    "identifiedName": "Drunkard's Breath"
   },
   "effects": [],
   "folder": null,
@@ -277,5 +173,6 @@
     "default": 0,
     "LhFOnsRrYD2v4zOf": 3
   },
-  "flags": {}
+  "flags": {},
+  "_id": "h9JemJZJl9jJWZX5"
 }

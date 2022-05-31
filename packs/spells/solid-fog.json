@@ -4,119 +4,41 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
-    "actions": [
-      {
-        "_id": "8b8618j5okeomia4",
-        "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "standard"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 2,
-            "type": "action"
-          }
-        },
-        "duration": {
-          "value": "1 min./level",
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "medium",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
-          "value": 0,
-          "maxFormula": ""
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "other",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "",
-          "description": ""
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "fog spreads in 20-ft. radius",
-        "spellArea": "",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
-      }
-    ],
-    "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+    "activation": {
+      "type": "standard"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "range": {
+      "units": "medium"
+    },
+    "uses": {
+      "per": ""
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "other",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -167,74 +89,19 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "creation",
-    "types": "",
-    "nonlethal": false,
+    "conditionals": [],
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "powdered peas and an animal hoof",
-      "focus": "",
-      "gpValue": 0
+      "value": "powdered peas and an animal hoof"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
     "shortDescription": "<p>This spell functions like <i>fog cloud</i>, but in addition to obscuring sight, the <i>solid fog</i> is so thick that it impedes movement.</p><p>Creatures moving through a <i>solid fog</i> move at half their normal speed and take a -2 penalty on all melee attack and melee damage rolls. The vapors prevent effective ranged weapon attacks (except for magic rays and the like). A creature or object that falls into <i>solid fog</i> is slowed so that each 10 feet of vapor that it passes through reduces the falling damage by 1d6. A creature cannot take a 5-foot-step while in <i>solid fog</i>. <i>Solid fog</i>, and effects that work like <i>solid fog</i>, do not stack with each other in terms of slowed movement and attack penalties.</p><p>Unlike normal fog, only a severe wind (31+ mph) disperses these vapors, and it does so in 1 round.</p><p><i>Solid fog</i> can be made permanent with a <i>permanency</i> spell. A permanent <i>solid fog</i> dispersed by wind reforms in 10 minutes.</p>",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "medium",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
     "spellDuration": "1 min./level",
     "spellEffect": "fog spreads in 20-ft. radius"
   },

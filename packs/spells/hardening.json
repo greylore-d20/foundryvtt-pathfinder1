@@ -1,195 +1,22 @@
 {
-  "_id": "MqG2GmkVOn3OgJgf",
   "name": "Hardening",
   "type": "spell",
   "img": "icons/commodities/metal/mail-scale-steel.webp",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
-    "actions": [
-      {
-        "_id": "u39zpdhepiwcxi7r",
-        "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "standard"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 2,
-            "type": "action"
-          }
-        },
-        "duration": {
-          "value": "permanent",
-          "units": ""
-        },
-        "target": {
-          "value": "one item of a volume no greater than 10 cu. ft./level"
-        },
-        "range": {
-          "value": null,
-          "units": "touch",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
-          "value": 0,
-          "maxFormula": ""
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "",
-        "spellArea": "",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
-      }
-    ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": {},
-      "dictionary": {}
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "arcanist",
-          6
-        ],
-        [
-          "sorcerer/wizard",
-          6
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
-    "school": "trs",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
-    "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell increases the hardness of materials by 1 point per 2 caster levels. The <em>hardening</em> spell does not in any way affect resistance to other forms of transformation.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell affects up to 10 cubic feet per level. If cast upon a metal or mineral, the spell affects 1 cubic foot per level.</span></p>",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "spellDuration": "permanent",
-    "spellEffect": "",
-    "spellArea": "",
     "activation": {
       "cost": 1,
       "type": "standard"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 2,
-        "type": "action"
+        "cost": 1,
+        "type": ""
       }
     },
     "duration": {
@@ -205,6 +32,13 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": null,
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
     "measureTemplate": {
       "type": "",
@@ -260,13 +94,75 @@
         "damageMult": 0.5
       }
     },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "arcanist",
+          6
+        ],
+        [
+          "sorcerer/wizard",
+          6
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 6,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "trs",
+    "subschool": "",
+    "types": "",
+    "nonlethal": false,
     "conditionals": [],
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": false,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell increases the hardness of materials by 1 point per 2 caster levels. The <em>hardening</em> spell does not in any way affect resistance to other forms of transformation.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell affects up to 10 cubic feet per level. If cast upon a metal or mineral, the spell affects 1 cubic foot per level.</span></p>",
+    "spellDuration": "permanent",
+    "spellEffect": "",
+    "spellArea": "",
+    "showInQuickbar": false,
     "spellPoints": {
       "cost": "1 + @sl"
     },
+    "domain": false,
+    "slotCost": 1,
     "clCheck": false,
-    "identifiedName": "Hardening",
-    "size": "med"
+    "identifiedName": "Hardening"
   },
   "effects": [],
   "folder": null,
@@ -275,5 +171,6 @@
     "default": 0,
     "LhFOnsRrYD2v4zOf": 3
   },
-  "flags": {}
+  "flags": {},
+  "_id": "MqG2GmkVOn3OgJgf"
 }

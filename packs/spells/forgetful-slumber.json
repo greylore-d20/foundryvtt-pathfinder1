@@ -4,119 +4,46 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
-    "actions": [
-      {
-        "_id": "cig4bn7ncjufv1y0",
-        "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "round"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 3,
-            "type": "action"
-          }
-        },
-        "duration": {
-          "value": "1 minute/level",
-          "units": ""
-        },
-        "target": {
-          "value": "one living creature"
-        },
-        "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
-          "value": 0,
-          "maxFormula": ""
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will negates"
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "",
-        "spellArea": "",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
-      }
-    ],
-    "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+    "activation": {
+      "type": "round"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 3,
+        "type": "action"
+      }
+    },
+    "target": {
+      "value": "one living creature"
+    },
+    "range": {
+      "units": "close"
+    },
+    "uses": {
+      "per": ""
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "spellsave",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0",
+      "type": "will",
+      "description": "Will negates"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -154,79 +81,19 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting",
-    "nonlethal": false,
+    "conditionals": [],
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a few drops of river water",
-      "focus": "",
-      "gpValue": 0
+      "value": "a few drops of river water"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
     "shortDescription": "<p>This spell acts as the <i>deeper slumber</i> spell, but only affects one creature of 10 Hit Dice or fewer. In addition, a creature affected by this spell awakens with no knowledge of the events that led to the spell's casting. The target loses all memory from the 5 minutes prior to falling asleep. No effect short of a <i>miracle</i> or <i>wish</i> can restore memories lost by this spell.</p>",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one living creature"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
     "spellDuration": "1 minute/level"
   },
   "effects": [],

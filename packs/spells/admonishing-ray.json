@@ -4,194 +4,7 @@
   "type": "spell",
   "img": "systems/pf1/icons/spells/beam-sky-1.jpg",
   "data": {
-    "description": {
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
-    "actions": [
-      {
-        "_id": "zfnll4m1c8c40l72",
-        "name": "Use",
-        "img": "systems/pf1/icons/spells/beam-sky-1.jpg",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "standard"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 2,
-            "type": "action"
-          }
-        },
-        "duration": {
-          "value": "instantaneous",
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": null,
-          "value": 0,
-          "maxFormula": ""
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "rsak",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [
-            [
-              "4d6",
-              [
-                "untyped"
-              ]
-            ]
-          ],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": "min(floor((@cl - 3) / 4), 3)"
-          },
-          "bonus": {
-            "formula": "0"
-          },
-          "label": "Ray #{0}"
-        },
-        "formula": "",
-        "ability": {
-          "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "",
-          "description": "none"
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "one or more rays",
-        "spellArea": "",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
-      }
-    ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": ""
-    },
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "arcanist",
-          2
-        ],
-        [
-          "sorcerer/wizard",
-          2
-        ],
-        [
-          "cleric/oracle",
-          2
-        ],
-        [
-          "warpriest",
-          2
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 1,
-    "clOffset": 0,
-    "slOffset": 0,
-    "school": "evo",
-    "subschool": "",
-    "types": "force",
-    "nonlethal": false,
-    "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You blast your enemies with rays of nonlethal force. You may fire one ray, plus one additional ray for every four levels you possess beyond 3rd (to a maximum of three rays at 11th level). Each ray requires a ranged touch attack to hit and deals 4d6 points of nonlethal damage. This is a force effect. The rays may be fired at the same or different targets, but all rays must be fired simultaneously and aimed at targets within 30 feet of each other. The rays hit about as hard as a punch from a strong adult human, and can knock away unattended objects weighing up to 10 pounds if that amount of force could normally do so.</p>",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -202,8 +15,7 @@
       }
     },
     "range": {
-      "units": "close",
-      "maxIncrements": 1
+      "units": "close"
     },
     "actionType": "rsak",
     "damage": {
@@ -236,7 +48,47 @@
     },
     "effectNotes": [],
     "attackNotes": [],
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "arcanist",
+          2
+        ],
+        [
+          "sorcerer/wizard",
+          2
+        ],
+        [
+          "cleric/oracle",
+          2
+        ],
+        [
+          "warpriest",
+          2
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "school": "evo",
+    "types": "force",
     "conditionals": [],
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "shortDescription": "<p>You blast your enemies with rays of nonlethal force. You may fire one ray, plus one additional ray for every four levels you possess beyond 3rd (to a maximum of three rays at 11th level). Each ray requires a ranged touch attack to hit and deals 4d6 points of nonlethal damage. This is a force effect. The rays may be fired at the same or different targets, but all rays must be fired simultaneously and aimed at targets within 30 feet of each other. The rays hit about as hard as a punch from a strong adult human, and can knock away unattended objects weighing up to 10 pounds if that amount of force could normally do so.</p>",
     "spellDuration": "instantaneous",
     "spellEffect": "one or more rays"
   },

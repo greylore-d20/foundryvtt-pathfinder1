@@ -1,206 +1,22 @@
 {
-  "_id": "ljz85cb6CjZbUD71",
   "name": "Expel Blood",
   "type": "spell",
   "img": "icons/skills/wounds/blood-cells-red.webp",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
-    "actions": [
-      {
-        "_id": "foqyfbc6w9s2la17",
-        "name": "Use",
-        "img": "icons/skills/wounds/blood-cells-red.webp",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "round"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": ""
-          }
-        },
-        "duration": {
-          "value": "instantaneous and 1 round/level; see text",
-          "units": ""
-        },
-        "target": {
-          "value": "one Small or larger living creature"
-        },
-        "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": null,
-          "value": 0,
-          "maxFormula": ""
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "fort",
-          "description": "Fortitude negates"
-        },
-        "effectNotes": [
-          "<b>Save Fail Effect</b> [[2d4]] Constitution damage"
-        ],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "",
-        "spellArea": "",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
-      }
-    ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": {},
-      "dictionary": {}
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "arcanist",
-          7
-        ],
-        [
-          "sorcerer/wizard",
-          7
-        ],
-        [
-          "summoner",
-          6
-        ],
-        [
-          "unchained Summoner",
-          6
-        ],
-        [
-          "witch",
-          7
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 7,
-    "clOffset": 0,
-    "slOffset": 0,
-    "school": "con",
-    "subschool": "",
-    "types": "evil, water",
-    "nonlethal": false,
-    "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "a drop of blood from each of three different creatures",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You animate a portion of the target&rsquo;s blood, causing it to force itself out of the victim&rsquo;s body and form a corrupted water elemental. The target takes 2d4 points of Constitution damage unless it succeeds at a Fortitude saving throw. Additionally, if the target fails the saving throw, blood (or an analogous internal fluid, such as ichor) pours from the target&rsquo;s body and pools in an empty adjacent square of your choice. The fluids immediately form into a fiendish water elemental (<em>Pathfinder RPG Bestiary</em> 294, 126) of the same size as the target (but not larger than a Large fiendish water elemental). This fiendish water elemental does not have the vortex ability, but it has the blood drain special attack (<em>Pathfinder RPG Bestiary</em> 2 294), which deals 1d3 points of Constitution damage at the end of the water elemental&rsquo;s turn if it grapples a foe. The elemental gains @Compendium[pf1.feats.ZmQkRk93nbHxsQSt]{Improved Grapple} as a bonus feat. You have no control over the fiendish water elemental once it is summoned, though the water elemental does not attack you under any circumstances.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell does not affect creatures that are Small or smaller or those that don&rsquo;t have blood or some analogous internal fluid.</span></p>",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
     "activation": {
       "cost": 1,
       "type": "round"
     },
     "unchainedAction": {
       "activation": {
-        "cost": 3,
-        "type": "action"
+        "cost": 1,
+        "type": ""
       }
     },
     "duration": {
@@ -216,6 +32,13 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": null,
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": ""
     },
     "measureTemplate": {
       "type": "",
@@ -257,7 +80,9 @@
       "type": "fort",
       "description": "Fortitude negates"
     },
-    "effectNotes": [],
+    "effectNotes": [
+      "<b>Save Fail Effect</b> [[2d4]] Constitution damage"
+    ],
     "attackNotes": [],
     "soundEffect": "",
     "powerAttack": {
@@ -265,16 +90,87 @@
       "damageBonus": 2,
       "critMultiplier": 1
     },
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "arcanist",
+          7
+        ],
+        [
+          "sorcerer/wizard",
+          7
+        ],
+        [
+          "summoner",
+          6
+        ],
+        [
+          "unchained Summoner",
+          6
+        ],
+        [
+          "witch",
+          7
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 7,
+    "clOffset": 0,
+    "slOffset": 0,
+    "school": "con",
+    "subschool": "",
+    "types": "evil, water",
+    "nonlethal": false,
     "conditionals": [],
+    "components": {
+      "value": "",
+      "verbal": true,
+      "somatic": true,
+      "thought": false,
+      "emotion": false,
+      "material": true,
+      "focus": false,
+      "divineFocus": 0
+    },
+    "castTime": "",
+    "materials": {
+      "value": "a drop of blood from each of three different creatures",
+      "focus": "",
+      "gpValue": 0
+    },
+    "spellbook": "",
+    "preparation": {
+      "preparedAmount": 0,
+      "maxAmount": 0,
+      "autoDeductCharges": true,
+      "spontaneousPrepared": true
+    },
+    "atWill": false,
+    "sr": true,
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You animate a portion of the target&rsquo;s blood, causing it to force itself out of the victim&rsquo;s body and form a corrupted water elemental. The target takes 2d4 points of Constitution damage unless it succeeds at a Fortitude saving throw. Additionally, if the target fails the saving throw, blood (or an analogous internal fluid, such as ichor) pours from the target&rsquo;s body and pools in an empty adjacent square of your choice. The fluids immediately form into a fiendish water elemental (<em>Pathfinder RPG Bestiary</em> 294, 126) of the same size as the target (but not larger than a Large fiendish water elemental). This fiendish water elemental does not have the vortex ability, but it has the blood drain special attack (<em>Pathfinder RPG Bestiary</em> 2 294), which deals 1d3 points of Constitution damage at the end of the water elemental&rsquo;s turn if it grapples a foe. The elemental gains @Compendium[pf1.feats.ZmQkRk93nbHxsQSt]{Improved Grapple} as a bonus feat. You have no control over the fiendish water elemental once it is summoned, though the water elemental does not attack you under any circumstances.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell does not affect creatures that are Small or smaller or those that don&rsquo;t have blood or some analogous internal fluid.</span></p>",
     "spellDuration": "instantaneous and 1 round/level; see text",
     "spellEffect": "",
     "spellArea": "",
+    "showInQuickbar": false,
     "spellPoints": {
       "cost": "1 + @sl"
     },
+    "domain": false,
+    "slotCost": 1,
     "clCheck": false,
-    "identifiedName": "Expel Blood",
-    "size": "med"
+    "identifiedName": "Expel Blood"
   },
   "effects": [],
   "folder": null,
@@ -283,5 +179,6 @@
     "default": 0,
     "LhFOnsRrYD2v4zOf": 3
   },
-  "flags": {}
+  "flags": {},
+  "_id": "ljz85cb6CjZbUD71"
 }

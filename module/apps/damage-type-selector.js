@@ -41,7 +41,7 @@ export class DamageTypeSelector extends FormApplication {
     const a = event.currentTarget;
     const dt = a.dataset.id;
 
-    if (this._data.includes(dt)) this._data.dageTypes.splice(this._data.indexOf(dt), 1);
+    if (this._data.includes(dt)) this._data.splice(this._data.indexOf(dt), 1);
     else this._data.push(dt);
     this.render();
   }

@@ -5,124 +5,100 @@
   "img": "systems/pf1/icons/spells/heal-sky-3.jpg",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
-    "actions": [
-      {
-        "_id": "fuvpbo9b2g9l7tie",
-        "name": "Use",
-        "img": "systems/pf1/icons/spells/heal-sky-3.jpg",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "standard"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 2,
-            "type": "action"
-          }
-        },
-        "duration": {
-          "value": "instantaneous",
-          "units": ""
-        },
-        "target": {
-          "value": "one creature/level, no two of which can be more than 30 ft. apart"
-        },
-        "range": {
-          "value": null,
-          "units": "close",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
-          "value": 0,
-          "maxFormula": ""
-        },
-        "measureTemplate": {
-          "type": "circle",
-          "size": "30",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "heal",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [
-            [
-              "3d8 + min(35, @cl)",
-              [
-                "untyped"
-              ]
-            ]
-          ],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will half (harmless) or Will half; see text"
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "",
-        "spellArea": "",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
+    "activation": {
+      "cost": 1,
+      "type": "standard"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
       }
-    ],
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": "one creature/level, no two of which can be more than 30 ft. apart"
+    },
+    "range": {
+      "value": null,
+      "units": "close",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
     "uses": {
-      "per": "",
       "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "circle",
+      "size": "30",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "heal",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [
+        [
+          "3d8 + min(35, @cl)",
+          ""
+        ]
+      ],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": "",
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": "0",
+      "type": "will",
+      "description": "Will half (harmless) or Will half; see text"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "soundEffect": "",
+    "powerAttack": {
+      "multiplier": "",
+      "damageBonus": 2,
+      "critMultiplier": 1
+    },
+    "naturalAttack": {
+      "secondary": {
+        "attackBonus": "-5",
+        "damageMult": 0.5
+      }
     },
     "links": {
       "children": []
@@ -163,6 +139,7 @@
     "subschool": "healing",
     "types": "",
     "nonlethal": false,
+    "conditionals": [],
     "components": {
       "value": "",
       "verbal": true,
@@ -188,55 +165,18 @@
     },
     "atWill": false,
     "sr": true,
-    "shortDescription": "<p>This spell functions like <i>mass cure light wounds</i>, except that it cures 3d8 points of damage + 1 point per caster level (maximum +35).</p>",
+    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.ejk08uk2e3h5eg3a]{Cure Light Wounds, Mass}, except that it cures 3d8 points of damage + 1 point per caster level (maximum +35).</p>",
+    "spellDuration": "instantaneous",
+    "spellEffect": "",
+    "spellArea": "",
     "showInQuickbar": false,
+    "spellPoints": {
+      "cost": "1 + @sl"
+    },
     "domain": false,
     "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature/level, no two of which can be more than 30 ft. apart"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "type": "circle",
-      "size": "30"
-    },
-    "actionType": "heal",
-    "damage": {
-      "parts": [
-        [
-          "3d8 + min(35, @cl)",
-          ""
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will half (harmless) or Will half; see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellDuration": "instantaneous"
+    "clCheck": false,
+    "identifiedName": "Cure Serious Wounds, Mass"
   },
   "effects": [],
   "folder": null,

@@ -4,179 +4,7 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
-    "actions": [
-      {
-        "_id": "wnt27hsxlcbkmzt9",
-        "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "standard"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 2,
-            "type": "action"
-          }
-        },
-        "duration": {
-          "value": "1 minute/level (see text)",
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": "5",
-          "units": "ft",
-          "maxIncrements": "1",
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
-          "value": 0,
-          "maxFormula": ""
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "",
-          "description": ""
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "",
-        "spellArea": "allies in a 10-ft.-radius emanation centered on you",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
-      }
-    ],
-    "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
-    },
-    "links": {
-      "children": []
-    },
-    "flags": {
-      "boolean": {},
-      "dictionary": {}
-    },
-    "scriptCalls": [],
-    "learnedAt": {
-      "class": [
-        [
-          "ranger",
-          3
-        ],
-        [
-          "hunter",
-          3
-        ]
-      ],
-      "domain": [],
-      "subDomain": [],
-      "elementalSchool": [],
-      "bloodline": []
-    },
-    "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
-    "school": "ill",
-    "subschool": "glamer",
-    "types": "",
-    "nonlethal": false,
-    "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 1
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": false,
-    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.16j7zppo8x5wj7ve]{chameleon stride} (Pathfinder RPG Advanced Player's Guide 210), except it confers its bonuses upon all allies within 10 feet of you at the time the spell is cast. Those affected by this spell are able to see each other and themselves as if they were unaffected by the spell. If an affected creature moves out of the area, it loses the benefit of the spell. Creatures that move into the area after the spell is cast do not gain its benefit.</p>",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
     "activation": {
       "type": "standard"
     },
@@ -190,6 +18,9 @@
       "value": "5",
       "units": "ft",
       "maxIncrements": "1"
+    },
+    "uses": {
+      "per": ""
     },
     "measureTemplate": {
       "size": "0"
@@ -210,13 +41,44 @@
     },
     "effectNotes": [],
     "attackNotes": [],
+    "links": {
+      "children": []
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "learnedAt": {
+      "class": [
+        [
+          "ranger",
+          3
+        ],
+        [
+          "hunter",
+          3
+        ]
+      ],
+      "domain": [],
+      "subDomain": [],
+      "elementalSchool": [],
+      "bloodline": []
+    },
+    "level": 3,
+    "school": "ill",
+    "subschool": "glamer",
     "conditionals": [],
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "spellbook": "",
+    "sr": false,
+    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.16j7zppo8x5wj7ve]{chameleon stride} (Pathfinder RPG Advanced Player's Guide 210), except it confers its bonuses upon all allies within 10 feet of you at the time the spell is cast. Those affected by this spell are able to see each other and themselves as if they were unaffected by the spell. If an affected creature moves out of the area, it loses the benefit of the spell. Creatures that move into the area after the spell is cast do not gain its benefit.</p>",
     "spellDuration": "1 minute/level (see text)",
-    "spellArea": "allies in a 10-ft.-radius emanation centered on you",
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "spellArea": "allies in a 10-ft.-radius emanation centered on you"
   },
   "effects": [],
   "folder": null,

@@ -10,167 +10,6 @@
       "unidentified": ""
     },
     "tags": [],
-    "actions": [
-      {
-        "_id": "quoarze5jocnpkyi",
-        "name": "Use",
-        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "standard"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 2,
-            "type": "action"
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": "inst"
-        },
-        "target": {
-          "value": "20-ft. radius burst"
-        },
-        "range": {
-          "value": "100",
-          "units": "ft",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "day",
-          "value": 0,
-          "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [
-            [
-              "(@classes.oracle.level)d6",
-              [
-                "bludgeoning"
-              ]
-            ]
-          ],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": null,
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "fort",
-          "description": "Fortidude half and no deafness"
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "",
-        "spellArea": "",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
-      }
-    ],
-    "uses": {
-      "per": "day",
-      "value": 0,
-      "maxFormula": "floor((@classes.oracle.level - 3) / 4)",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "classFeat_thunderburst",
-    "useCustomTag": true,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "languages": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": {},
-      "dictionary": {}
-    },
-    "scriptCalls": [],
-    "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Oracle"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "ex",
-    "crOffset": "",
-    "disabled": false,
     "activation": {
       "cost": 1,
       "type": "standard"
@@ -194,6 +33,13 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
     },
     "measureTemplate": {
       "type": "",
@@ -243,7 +89,46 @@
     "effectNotes": [],
     "attackNotes": [],
     "soundEffect": "",
-    "size": "med"
+    "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "classFeat_thunderburst",
+    "useCustomTag": true,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Oracle"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

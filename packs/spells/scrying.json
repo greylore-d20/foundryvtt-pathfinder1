@@ -5,117 +5,95 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "description": {
+      "value": "",
       "chat": "",
       "unidentified": ""
     },
     "tags": [],
-    "actions": [
-      {
-        "_id": "9uvgwi6eqrs02qzs",
-        "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "hour"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 1,
-            "type": "hour"
-          }
-        },
-        "duration": {
-          "value": "1 min./level",
-          "units": ""
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
-          "value": 0,
-          "maxFormula": ""
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will negates"
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "magical sensor",
-        "spellArea": "",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
+    "activation": {
+      "cost": 1,
+      "type": "hour"
+    },
+    "unchainedAction": {
+      "activation": {
+        "cost": 1,
+        "type": "hour"
       }
-    ],
+    },
+    "duration": {
+      "value": null,
+      "units": ""
+    },
+    "target": {
+      "value": ""
+    },
+    "range": {
+      "value": null,
+      "units": "",
+      "maxIncrements": 1,
+      "minValue": null,
+      "minUnits": ""
+    },
     "uses": {
-      "per": "",
       "value": 0,
+      "per": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
       "maxFormula": ""
+    },
+    "measureTemplate": {
+      "type": "",
+      "size": "0",
+      "overrideColor": false,
+      "customColor": "",
+      "overrideTexture": false,
+      "customTexture": ""
+    },
+    "attackName": "",
+    "actionType": "spellsave",
+    "attackBonus": "",
+    "critConfirmBonus": "",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "formulaicAttacks": {
+      "count": {
+        "formula": ""
+      },
+      "bonus": {
+        "formula": ""
+      },
+      "label": null
+    },
+    "formula": "",
+    "ability": {
+      "attack": "",
+      "damage": "",
+      "damageMult": 1,
+      "critRange": 20,
+      "critMult": 2
+    },
+    "save": {
+      "dc": "0",
+      "type": "will",
+      "description": "Will negates"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
+    "soundEffect": "",
+    "powerAttack": {
+      "multiplier": "",
+      "damageBonus": 2,
+      "critMultiplier": 1
+    },
+    "naturalAttack": {
+      "secondary": {
+        "attackBonus": "-5",
+        "damageMult": 0.5
+      }
     },
     "links": {
       "children": []
@@ -188,6 +166,7 @@
     "subschool": "scrying",
     "types": "",
     "nonlethal": false,
+    "conditionals": [],
     "components": {
       "value": "",
       "verbal": true,
@@ -204,7 +183,7 @@
       "focus": "a silver mirror worth 1,000 gp",
       "gpValue": 0
     },
-    "spellbook": "primary",
+    "spellbook": "",
     "preparation": {
       "preparedAmount": 0,
       "maxAmount": 0,
@@ -213,45 +192,18 @@
     },
     "atWill": false,
     "sr": true,
-    "shortDescription": "<p>You can observe a creature at any distance. If the subject succeeds on a Will save, the spell fails. The difficulty of the save depends on how well your knowledge of the subject and what sort of physical connection (if any) you have to that creature.</p><p>Furthermore, if the subject is on another plane, it gets a +5 bonus on its Will save.</p><p> <table><tr><th>Knowledge</th><th>Will Save Modifier</th></tr><tr><td>None*</td><td>+10</td></tr><tr><td>Secondhand (you have heard of the subject)</td><td>+5</td></tr><tr><td>Firsthand (you have met the subject)</td><td>+0</td></tr><tr><td>Familiar (you know the subject well)</td><td>-5</td></tr><tr><td colspan=\"2\">*You must have some sort of connection (see below) to a creature of which you have no knowledge.</td></tr></table> </p><p> <table><tr><th>Connection</th><th>Will Save Modifier</th></tr><tr><td>Likeness or picture</td><td>-2</td></tr><tr><td>Possession or garment</td><td>-4</td></tr><tr><td>Body part, lock of hair, bit of nail, etc.</td><td>-10</td></tr></table>  If the save fails, you can see and hear the subject and its surroundings (approximately 10 feet in all directions of the subject).</p><p>If the subject moves, the sensor follows at a speed of up to 150 feet.</p><p>As with all divination (scrying) spells, the sensor has your full visual acuity, including any magical effects. In addition, the following spells have a 5% chance per caster level of operating through the sensor: <i>detect chaos</i>, <i>detect evil</i>, <i>detect good</i>, <i>detect law</i>, <i>detect magic</i>, and <i>message.</i></p><p>If the save succeeds, you can't attempt to scry on that subject again for at least 24 hours.</p>",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "hour"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "hour"
-      }
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
+    "shortDescription": "<p>You can observe a creature at any distance. If the subject succeeds on a Will save, the spell fails. The difficulty of the save depends on how well your knowledge of the subject and what sort of physical connection (if any) you have to that creature.</p>\n<p>Furthermore, if the subject is on another plane, it gets a +5 bonus on its Will save.</p>\n<table>\n<tbody>\n<tr>\n<th>Knowledge</th>\n<th>Will Save Modifier</th>\n</tr>\n<tr>\n<td>None*</td>\n<td>+10</td>\n</tr>\n<tr>\n<td>Secondhand (you have heard of the subject)</td>\n<td>+5</td>\n</tr>\n<tr>\n<td>Firsthand (you have met the subject)</td>\n<td>+0</td>\n</tr>\n<tr>\n<td>Familiar (you know the subject well)</td>\n<td>-5</td>\n</tr>\n<tr>\n<td colspan=\"2\">*You must have some sort of connection (see below) to a creature of which you have no knowledge.</td>\n</tr>\n</tbody>\n</table>\n<table>\n<tbody>\n<tr>\n<th>Connection</th>\n<th>Will Save Modifier</th>\n</tr>\n<tr>\n<td>Likeness or picture</td>\n<td>-2</td>\n</tr>\n<tr>\n<td>Possession or garment</td>\n<td>-4</td>\n</tr>\n<tr>\n<td>Body part, lock of hair, bit of nail, etc.</td>\n<td>-10</td>\n</tr>\n</tbody>\n</table>\n<p>If the save fails, you can see and hear the subject and its surroundings (approximately 10 feet in all directions of the subject).</p>\n<p>If the subject moves, the sensor follows at a speed of up to 150 feet.</p>\n<p>As with all divination (scrying) spells, the sensor has your full visual acuity, including any magical effects. In addition, the following spells have a 5% chance per caster level of operating through the sensor: @Compendium[pf1.spells.17eskras8cjynj10]{Detect Chaos}, @Compendium[pf1.spells.tr7m97npkbgm4wp7]{Detect Evil}, @Compendium[pf1.spells.mkgysr5o92kxxn59]{Detect Good}, @Compendium[pf1.spells.jo67xdocgdmk5hhh]{Detect Law}, @Compendium[pf1.spells.uqh87jz757r2cb7r]{Detect Magic}, and @Compendium[pf1.spells.msaqovkgfxi6q8s8]{Message}<em>.</em></p>\n<p>If the save succeeds, you can't attempt to scry on that subject again for at least 24 hours.</p>",
     "spellDuration": "1 min./level",
     "spellEffect": "magical sensor",
-    "range": {
-      "maxIncrements": 1
-    }
+    "spellArea": "",
+    "showInQuickbar": false,
+    "spellPoints": {
+      "cost": "1 + @sl"
+    },
+    "domain": false,
+    "slotCost": 1,
+    "clCheck": false,
+    "identifiedName": "Scrying"
   },
   "effects": [],
   "folder": null,

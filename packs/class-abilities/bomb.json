@@ -10,176 +10,6 @@
       "unidentified": ""
     },
     "tags": [],
-    "actions": [
-      {
-        "_id": "g4dga0mhztknss6x",
-        "name": "Use",
-        "img": "systems/pf1/icons/items/inventory/bomb.jpg",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "standard"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 2,
-            "type": "action"
-          }
-        },
-        "duration": {
-          "value": null,
-          "units": "inst"
-        },
-        "target": {
-          "value": ""
-        },
-        "range": {
-          "value": "20",
-          "units": "ft",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "day",
-          "value": 0,
-          "maxFormula": "@classes.alchemist.level + @abilities.int.mod"
-        },
-        "measureTemplate": {
-          "type": "circle",
-          "size": "5",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "rwak",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [
-            [
-              "1d6",
-              [
-                "fire"
-              ]
-            ]
-          ],
-          "critParts": [],
-          "nonCritParts": [
-            [
-              "(ceil(@classes.alchemist.level / 2) - 1)d6",
-              [
-                "fire"
-              ]
-            ]
-          ]
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": "dex",
-          "damage": "int",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "10 + floor(@classes.alchemist.level / 2) + @abilities.int.mod",
-          "type": "ref",
-          "description": "Reflex half"
-        },
-        "effectNotes": [
-          "[[ceil(@classes.alchemist.level / 2) + @abilities.int.mod]] Splash Damage"
-        ],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "",
-        "spellArea": "",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
-      }
-    ],
-    "uses": {
-      "per": "day",
-      "value": 0,
-      "maxFormula": "@classes.alchemist.level + @abilities.int.mod",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "classFeat_bomb",
-    "useCustomTag": true,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "languages": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": {},
-      "dictionary": {}
-    },
-    "scriptCalls": [],
-    "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Alchemist"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "0",
-    "disabled": false,
     "activation": {
       "cost": 1,
       "type": "standard"
@@ -203,6 +33,13 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
+    },
+    "uses": {
+      "value": 0,
+      "per": "day",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1",
+      "maxFormula": "@classes.alchemist.level + @abilities.int.mod"
     },
     "measureTemplate": {
       "type": "circle",
@@ -254,10 +91,51 @@
       "type": "ref",
       "description": "Reflex half"
     },
-    "effectNotes": [],
+    "effectNotes": [
+      "[[ceil(@classes.alchemist.level / 2) + @abilities.int.mod]] Splash Damage"
+    ],
     "attackNotes": [],
     "soundEffect": "",
-    "size": "med"
+    "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "classFeat_bomb",
+    "useCustomTag": true,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "flags": {
+      "boolean": [],
+      "dictionary": []
+    },
+    "scriptCalls": [],
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Alchemist"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "0",
+    "disabled": false
   },
   "effects": [],
   "folder": null,

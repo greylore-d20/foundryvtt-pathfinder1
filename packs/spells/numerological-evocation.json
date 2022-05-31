@@ -4,119 +4,43 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
-    "actions": [
-      {
-        "_id": "wlze8glzxick0jtw",
-        "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
-        "description": "",
-        "activation": {
-          "cost": 1,
-          "type": "standard"
-        },
-        "unchainedAction": {
-          "activation": {
-            "cost": 2,
-            "type": "action"
-          }
-        },
-        "duration": {
-          "value": "instantaneous",
-          "units": ""
-        },
-        "target": {
-          "value": "see text"
-        },
-        "range": {
-          "value": null,
-          "units": "",
-          "maxIncrements": 1,
-          "minValue": null,
-          "minUnits": ""
-        },
-        "uses": {
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
-          "value": 0,
-          "maxFormula": ""
-        },
-        "measureTemplate": {
-          "type": "",
-          "size": "0",
-          "overrideColor": false,
-          "customColor": "",
-          "overrideTexture": false,
-          "customTexture": ""
-        },
-        "attackName": "",
-        "actionType": "spellsave",
-        "attackBonus": "",
-        "critConfirmBonus": "",
-        "damage": {
-          "parts": [],
-          "critParts": [],
-          "nonCritParts": []
-        },
-        "attackParts": [],
-        "formulaicAttacks": {
-          "count": {
-            "formula": ""
-          },
-          "bonus": {
-            "formula": ""
-          },
-          "label": null
-        },
-        "formula": "",
-        "ability": {
-          "attack": "",
-          "damage": "",
-          "damageMult": 1,
-          "critRange": 20,
-          "critMult": 2
-        },
-        "save": {
-          "dc": "0",
-          "type": "ref",
-          "description": "Reflex half"
-        },
-        "effectNotes": [],
-        "attackNotes": [],
-        "soundEffect": "",
-        "powerAttack": {
-          "multiplier": "",
-          "damageBonus": 2,
-          "critMultiplier": 1
-        },
-        "naturalAttack": {
-          "secondary": {
-            "attackBonus": "-5",
-            "damageMult": 0.5
-          }
-        },
-        "attackType": "weapon",
-        "nonlethal": false,
-        "usesAmmo": false,
-        "spellEffect": "",
-        "spellArea": "",
-        "conditionals": [],
-        "enh": {
-          "override": false,
-          "value": 0
-        }
-      }
-    ],
-    "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+    "activation": {
+      "type": "standard"
     },
+    "unchainedAction": {
+      "activation": {
+        "cost": 2,
+        "type": "action"
+      }
+    },
+    "target": {
+      "value": "see text"
+    },
+    "uses": {
+      "per": ""
+    },
+    "measureTemplate": {
+      "size": "0"
+    },
+    "actionType": "spellsave",
+    "damage": {
+      "parts": [],
+      "critParts": [],
+      "nonCritParts": []
+    },
+    "attackParts": [],
+    "ability": {
+      "attack": "",
+      "damage": ""
+    },
+    "save": {
+      "dc": "0",
+      "type": "ref",
+      "description": "Reflex half"
+    },
+    "effectNotes": [],
+    "attackNotes": [],
     "links": {
       "children": []
     },
@@ -146,79 +70,14 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
-    "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You can use the Path of Numbers to calculate the latent magical energies all around you and fire customized rays of elemental energy that damage nearby targets. Roll 1d6 per 2 caster levels you possess. This is your dice pool. You will use each die in the pool exactly once to customize <i>numerological evocation</i>. Choose a number of dice in the pool, and match their results to the values in the first column of the Eight Basic Energies table to determine the types of energy damage the spell deals. You can allocate any number of dice in this manner, provided you still have enough dice remaining for the subsequent steps.</p><p>Next, allocate one of the dice to represent the total number of target creatures you can affect, including the initial target. No matter how many creatures you are eligible to affect, no two affected creatures can be more than 15 feet apart. Next, allocate any number of the dice to represent the range of <i>numerological resistance</i>. The range of the spell is 10 x the sum of the allocated dice. Finally, add up the results of the dice remaining in the pool. This is the amount of damage that <i>numerological evocation</i> deals to the first creature hit. A successful Reflex save halves this damage. Secondary targets take 50% of the damage dealt to the first creature hit (rounded up), and successful Reflex saves negate this damage.</p>",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "see text"
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
     "conditionals": [],
-    "spellDuration": "instantaneous",
-    "range": {
-      "maxIncrements": 1
-    }
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You can use the Path of Numbers to calculate the latent magical energies all around you and fire customized rays of elemental energy that damage nearby targets. Roll 1d6 per 2 caster levels you possess. This is your dice pool. You will use each die in the pool exactly once to customize <i>numerological evocation</i>. Choose a number of dice in the pool, and match their results to the values in the first column of the Eight Basic Energies table to determine the types of energy damage the spell deals. You can allocate any number of dice in this manner, provided you still have enough dice remaining for the subsequent steps.</p><p>Next, allocate one of the dice to represent the total number of target creatures you can affect, including the initial target. No matter how many creatures you are eligible to affect, no two affected creatures can be more than 15 feet apart. Next, allocate any number of the dice to represent the range of <i>numerological resistance</i>. The range of the spell is 10 x the sum of the allocated dice. Finally, add up the results of the dice remaining in the pool. This is the amount of damage that <i>numerological evocation</i> deals to the first creature hit. A successful Reflex save halves this damage. Secondary targets take 50% of the damage dealt to the first creature hit (rounded up), and successful Reflex saves negate this damage.</p>",
+    "spellDuration": "instantaneous"
   },
   "effects": [],
   "folder": null,

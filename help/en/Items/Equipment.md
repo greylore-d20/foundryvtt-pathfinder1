@@ -2,7 +2,9 @@
 
 Equipment represents all non-weapon equippable items, including armor, shields, rings and wondrous items.
 
-![Equipment details](/Help/img/equipment-details.jpg)
+![Equipment details](/Help/img/equipment-details.webp)
+
+**Weapon/Armor Proficiencies, Languages**: Proficiencies and languages granted by this item, which will appear in the actor's attributes and affect e.g. Armor Check Penalty due to not being proficient in armor.
 
 **Category**: The armor's category (whether it's armor, a shield, or something else)
 

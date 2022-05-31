@@ -3,14 +3,37 @@ import { RollPF } from "../../roll.js";
 import { getAbilityModifier } from "../../actor/lib.mjs";
 
 export class ItemChange {
-  static create(data, parent) {
-    const result = new this();
+  constructor(data, parent) {
+    this.data = mergeObject(this.constructor.defaultData, data);
+    this.parent = parent;
+    this.updateTime = new Date();
+  }
 
-    result.data = mergeObject(this.defaultData, data);
-    result.parent = parent;
-    result.updateTime = new Date();
+  /**
+   * Creates a change.
+   *
+   * @param {object[]} data - Data to initialize the change(s) with.
+   * @param {object} context - An object containing context information.
+   * @param {ItemPF} [context.parent] - The parent entity to create the change within.
+   * @returns The resulting changes, or an empty array if nothing was created.
+   */
+  static async create(data, context) {
+    const { parent } = context;
 
-    return result;
+    if (parent instanceof game.pf1.documents.ItemPF) {
+      // Prepare data
+      data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
+      const newChangeData = deepClone(parent.data.data.changes || []);
+      newChangeData.push(...data);
+
+      // Update parent
+      await parent.update({ "data.changes": newChangeData });
+
+      // Return results
+      return data.map((o) => parent.changes.get(o._id));
+    }
+
+    return [];
   }
 
   static get defaultData() {

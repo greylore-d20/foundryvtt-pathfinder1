@@ -10,6 +10,69 @@
       "unidentified": ""
     },
     "tags": [],
+    "actions": [],
+    "uses": {
+      "per": "",
+      "value": 0,
+      "maxFormula": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "changes": [
+      {
+        "_id": "g5eza6nx",
+        "formula": "@classes.vampirehunter.level >= 16 ? 6 : ((@classes.vampirehunter.level < 16 && @classes.vampirehunter.level > 7) ? 4 : 2)",
+        "operator": "add",
+        "subTarget": "str",
+        "modifier": "enh",
+        "priority": 0,
+        "value": 0,
+        "target": "ability"
+      }
+    ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "classFeat_vampiricMight",
+    "useCustomTag": true,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "languages": {
+      "value": [],
+      "custom": ""
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Vampire Hunter"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false,
     "activation": {
       "cost": 1,
       "type": "passive"
@@ -33,13 +96,6 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
     },
     "measureTemplate": {
       "type": "",
@@ -84,57 +140,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "soundEffect": "",
-    "changes": [
-      {
-        "_id": "g5eza6nx",
-        "formula": "@classes.vampirehunter.level >= 16 ? 6 : ((@classes.vampirehunter.level < 16 && @classes.vampirehunter.level > 7) ? 4 : 2)",
-        "operator": "add",
-        "subTarget": "str",
-        "modifier": "enh",
-        "priority": 0,
-        "value": 0,
-        "target": "ability"
-      }
-    ],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "classFeat_vampiricMight",
-    "useCustomTag": true,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Vampire Hunter"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false
+    "size": "med"
   },
   "effects": [],
   "folder": null,

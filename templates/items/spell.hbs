@@ -29,7 +29,6 @@
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item" data-tab="description">{{ localize "PF1.Description" }}</a>
     <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
-    <a class="item" data-tab="conditionals">{{localize "PF1.Conditionals"}}</a>
     <a class="item" data-tab="links">{{localize "PF1.Links"}}</a>
     <a class="item" data-tab="advanced">{{localize "PF1.Advanced"}}</a>
   </nav>
@@ -48,6 +47,8 @@
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
+      {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
+
       <h3 class="form-header">{{localize "PF1.SpellDetails"}}</h3>
 
       {{!-- Spellbook --}}
@@ -255,14 +256,6 @@
       </div>
       {{/unless}}
 
-      {{!-- Spell Points --}}
-      <div class="spell-points form-group">
-        <div class="form-fields">
-          <label>{{localize "PF1.SpellPointsCost"}}</label>
-          <input type="text" class="formula" name="data.spellPoints.cost" value="{{data.spellPoints.cost}}" placeholder="{{localize "PF1.Formula"}}" title="{{localize "PF1.Formula"}}" />
-        </div>
-      </div>
-
       {{!-- Caster Level Offset --}}
       <div class="form-group">
         <div class="form-fields">
@@ -288,26 +281,6 @@
         </div>
       </div>
       {{/unless}}
-
-      <h3 class="form-header">{{localize "PF1.SpellCasting"}}</h3>
-
-      {{!-- Item Activation Template --}}
-      {{> "systems/pf1/templates/items/parts/item-activation.hbs"}}
-
-      <h3 class="form-header">{{localize "PF1.SpellEffects"}}</h3>
-
-      {{!-- Item Action Template --}}
-      {{> "systems/pf1/templates/items/parts/item-action.hbs"}}
-
-      <h3 class="form-header">{{localize "PF1.MeasureTemplate"}}</h3>
-
-      {{!-- Item Measure Template --}}
-      {{> "systems/pf1/templates/items/parts/item-template.hbs"}}
-    </div>
-
-    {{!-- Conditionals Tab --}}
-    <div class="tab" data-group="primary" data-tab="conditionals">
-      {{> "systems/pf1/templates/items/parts/item-conditionals.hbs"}}
     </div>
 
     <div class="tab flexcol" data-group="primary" data-tab="links">

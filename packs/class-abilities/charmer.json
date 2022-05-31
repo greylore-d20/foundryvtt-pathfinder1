@@ -10,6 +10,63 @@
       "unidentified": ""
     },
     "tags": [],
+    "actions": [],
+    "uses": {
+      "per": "day",
+      "value": 0,
+      "maxFormula": "ceil(@classes.rogue.level / 5)",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "changes": [],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [
+      {
+        "subTarget": "skill.dip",
+        "text": "Charmer: roll two dice and take the better result."
+      }
+    ],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "classFeat_charmer",
+    "useCustomTag": true,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "languages": {
+      "value": [],
+      "custom": ""
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Rogue"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "ex",
+    "crOffset": "",
+    "disabled": false,
     "activation": {
       "cost": 1,
       "type": "free"
@@ -33,13 +90,6 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": "day",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": "ceil(@classes.rogue.level / 5)"
     },
     "measureTemplate": {
       "type": "",
@@ -84,51 +134,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "soundEffect": "",
-    "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
-    "contextNotes": [
-      {
-        "subTarget": "skill.dip",
-        "text": "Charmer: roll two dice and take the better result."
-      }
-    ],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "classFeat_charmer",
-    "useCustomTag": true,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Rogue"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "ex",
-    "crOffset": "",
-    "disabled": false
+    "size": "med"
   },
   "effects": [],
   "folder": null,

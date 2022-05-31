@@ -17,6 +17,75 @@
         "Skill"
       ]
     ],
+    "actions": [],
+    "uses": {
+      "per": null,
+      "value": 0,
+      "maxFormula": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "changes": [
+      {
+        "_id": "sij49210",
+        "formula": "@skills.ste.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.ste",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      },
+      {
+        "_id": "r8iwxuq0",
+        "formula": "@skills.esc.rank>=10?4:2",
+        "operator": "add",
+        "subTarget": "skill.esc",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "skill"
+      }
+    ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "feat_stealthy",
+    "useCustomTag": true,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "languages": {
+      "value": [],
+      "custom": ""
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "featType": "feat",
+    "associations": {
+      "classes": []
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "none",
+    "crOffset": "",
+    "disabled": false,
     "activation": {
       "cost": 1,
       "type": ""
@@ -40,13 +109,6 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": null,
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
     },
     "measureTemplate": {
       "type": "",
@@ -91,63 +153,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "soundEffect": "",
-    "changes": [
-      {
-        "_id": "sij49210",
-        "formula": "@skills.ste.rank>=10?4:2",
-        "operator": "add",
-        "subTarget": "skill.ste",
-        "modifier": "untyped",
-        "priority": 0,
-        "value": 0,
-        "target": "skill"
-      },
-      {
-        "_id": "r8iwxuq0",
-        "formula": "@skills.esc.rank>=10?4:2",
-        "operator": "add",
-        "subTarget": "skill.esc",
-        "modifier": "untyped",
-        "priority": 0,
-        "value": 0,
-        "target": "skill"
-      }
-    ],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "feat_stealthy",
-    "useCustomTag": true,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "featType": "feat",
-    "associations": {
-      "classes": []
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "none",
-    "crOffset": "",
-    "disabled": false
+    "size": "med"
   },
   "effects": [],
   "folder": null,

@@ -7,6 +7,7 @@ import { ScriptEditor } from "../../apps/script-editor.js";
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { Widget_CategorizedItemPicker } from "../../widgets/categorized-item-picker.js";
 import { PF1_HelpBrowser } from "../../apps/help-browser.js";
+import { getSkipActionPrompt } from "../../settings.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -36,8 +37,8 @@ export class ItemSheetPF extends ItemSheet {
       scrollY: [".tab", ".buff-flags", ".editor-content"],
       dragDrop: [
         {
-          dragSelector: "li.conditional",
-          dropSelector: 'div[data-tab="conditionals"]',
+          dragSelector: "li.action-part",
+          dropSelector: ".tab.details",
         },
       ],
       tabs: [
@@ -109,20 +110,18 @@ export class ItemSheetPF extends ItemSheet {
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
     data.itemName = data.item.name;
-    data.isPhysical = hasProperty(data.item.data, "data.quantity");
+    data.isCharged = ["day", "week", "charges"].includes(data.item.data.data.uses?.per);
+    data.isPhysical = data.item.data.data.quantity !== undefined;
+    data.isNaturalAttack = data.item.data.data.attackType === "natural";
     data.isSpell = this.item.type === "spell";
-    data.canUseAmmo = this.item.data.data.usesAmmo !== undefined;
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
     data.owner = this.item.isOwner;
     data.isGM = game.user.isGM;
+    data.hasAction = this.item.hasAction;
     data.showIdentifyDescription = data.isGM && data.isPhysical;
     data.showUnidentifiedData = this.item.showUnidentifiedData;
     data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
-    data.hasActivationType =
-      (game.settings.get("pf1", "unchainedActionEconomy") &&
-        getProperty(data.item.data, "data.unchainedAction.activation.type")) ||
-      (!game.settings.get("pf1", "unchainedActionEconomy") && getProperty(data.item.data, "data.activation.type"));
     if (rollData.item.auraStrength != null) {
       const auraStrength = rollData.item.auraStrength;
       data.auraStrength = auraStrength;
@@ -245,26 +244,6 @@ export class ItemSheetPF extends ItemSheet {
       });
     }
 
-    // Action Details
-    data.hasAttackRoll = this.item.hasAttack;
-    data.isHealing = data.item.data.actionType === "heal";
-    data.isCombatManeuver = ["mcman", "rcman"].includes(data.item.data.actionType);
-
-    data.isCharged = false;
-    if (data.item.data.data.uses != null) {
-      data.isCharged = ["day", "week", "charges"].includes(data.item.data.data.uses.per);
-    }
-    if (data.item.data.data.range != null) {
-      data.canInputRange = ["ft", "mi", "spec"].includes(data.item.data.data.range.units);
-      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.item.data.data.range.minUnits);
-    }
-    if (data.item.data.data.duration != null) {
-      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.item.data.data.duration.units);
-    }
-
-    // Show additional ranged properties
-    data.showMaxRangeIncrements = getProperty(this.item.data, "data.range.units") === "ft";
-
     // Prepare feat specific stuff
     if (data.item.type === "feat") {
       data.isClassFeature = getProperty(this.item.data, "data.featType") === "classFeat";
@@ -314,12 +293,6 @@ export class ItemSheetPF extends ItemSheet {
       data.hasMultipleSlots = Object.keys(data.equipmentSlots).length > 1;
     }
 
-    // Prepare attack specific stuff
-    if (data.item.type === "attack") {
-      data.isWeaponAttack = data.item.data.data.attackType === "weapon";
-      data.isNaturalAttack = data.item.data.data.attackType === "natural";
-    }
-
     // Prepare spell specific stuff
     if (data.item.type === "spell") {
       let spellbook = null;
@@ -339,11 +312,14 @@ export class ItemSheetPF extends ItemSheet {
         "systems/pf1/templates/internal/spell-description.hbs",
         this.document.spellDescriptionData
       );
-      data.topDescription = TextEditor.enrichHTML(desc, { rollData });
+      const firstAction = this.item.firstAction;
+      data.topDescription = TextEditor.enrichHTML(desc, { rollData: firstAction?.getRollData() ?? rollData });
 
       // Enrich description
       if (data.data.shortDescription != null) {
-        data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, { rollData });
+        data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, {
+          rollData: firstAction?.getRollData() ?? rollData,
+        });
       }
     }
 
@@ -437,23 +413,6 @@ export class ItemSheetPF extends ItemSheet {
         cur.push(obj);
         return cur;
       }, []);
-    }
-
-    // Prepare stuff for attacks with conditionals
-    if (data.data.conditionals) {
-      data.conditionals = { targets: {}, conditionalModifierTypes: {} };
-      for (const conditional of data.data.conditionals) {
-        for (const modifier of conditional.modifiers) {
-          modifier.targets = this.item.getConditionalTargets();
-          modifier.subTargets = this.item.getConditionalSubTargets(modifier.target);
-          modifier.conditionalModifierTypes = this.item.getConditionalModifierTypes(modifier.target);
-          modifier.conditionalCritical = this.item.getConditionalCritical(modifier.target);
-          modifier.isAttack = modifier.target === "attack";
-          modifier.isDamage = modifier.target === "damage";
-          modifier.isSize = modifier.target === "size";
-          modifier.isSpell = modifier.target === "spell";
-        }
-      }
     }
 
     // Prepare stuff for items with context notes
@@ -734,42 +693,6 @@ export class ItemSheetPF extends ItemSheet {
    * @private
    */
   async _updateObject(event, formData) {
-    // Handle conditionals array
-    const conditionals = Object.entries(formData).filter((e) => e[0].startsWith("data.conditionals"));
-    formData["data.conditionals"] = conditionals.reduce((arr, entry) => {
-      const [i, j, k] = entry[0].split(".").slice(2);
-      if (!arr[i]) arr[i] = ItemPF.defaultConditional;
-      if (k) {
-        const target = formData[`data.conditionals.${i}.${j}.target`];
-        if (!arr[i].modifiers[j]) arr[i].modifiers[j] = ItemPF.defaultConditionalModifier;
-        arr[i].modifiers[j][k] = entry[1];
-        // Target dependent keys
-        if (["subTarget", "critical", "type"].includes(k)) {
-          const target = (conditionals.find((o) => o[0] === `data.conditionals.${i}.${j}.target`) || [])[1];
-          const val = entry[1];
-          if (typeof target === "string") {
-            let keys;
-            switch (k) {
-              case "subTarget":
-                keys = Object.keys(this.item.getConditionalSubTargets(target));
-                break;
-              case "type":
-                keys = Object.keys(this.item.getConditionalModifierTypes(target));
-                break;
-              case "critical":
-                keys = Object.keys(this.item.getConditionalCritical(target));
-                break;
-            }
-            // Reset subTarget, non-damage type, and critical if necessary
-            if (!keys.includes(val) && target !== "damage" && k !== "type") arr[i].modifiers[j][k] = keys[0];
-          }
-        }
-      } else {
-        arr[i][j] = entry[1];
-      }
-      return arr;
-    }, []);
-
     // Handle links arrays
     const links = Object.entries(formData).filter((e) => e[0].startsWith("data.links"));
     for (const e of links) {
@@ -851,12 +774,6 @@ export class ItemSheetPF extends ItemSheet {
     // Open help browser
     html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
 
-    // Modify attack formula
-    html.find(".attack-control").click(this._onAttackControl.bind(this));
-
-    // Modify damage formula
-    html.find(".damage-control").click(this._onDamageControl.bind(this));
-
     // Modify buff changes
     html.find(".change-control").click(this._onBuffControl.bind(this));
     html.find(".change .change-target").click(this._onChangeTargetControl.bind(this));
@@ -870,12 +787,8 @@ export class ItemSheetPF extends ItemSheet {
       html.find("button[name='create-attack']").click(this._createAttack.bind(this));
     }
 
-    // Modify conditionals
-    html.find(".conditional-control").click(this._onConditionalControl.bind(this));
-
     // Listen to field entries
     html.find(".entry-selector").click(this._onEntrySelector.bind(this));
-
     html.find(".entry-control a").click(this._onEntryControl.bind(this));
 
     // Add drop handler to link tabs
@@ -898,6 +811,9 @@ export class ItemSheetPF extends ItemSheet {
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
+    // Item summaries
+    html.find(".item .item-name h4").on("click", this._onItemSummary.bind(this));
+
     // Linked item clicks
     html
       .find(".tab[data-tab='links'] .links-item[data-link] .links-item-name")
@@ -915,6 +831,16 @@ export class ItemSheetPF extends ItemSheet {
       });
       html.find(".clear-search").on("click", this._clearSearch.bind(this));
     }
+
+    /* -------------------------------------------- */
+    /*  Actions
+    /* -------------------------------------------- */
+
+    // Action control
+    html.find(".action-controls a").on("click", this._onActionControl.bind(this));
+
+    // Edit action
+    html.find(".actions .items-list .item").on("contextmenu", this._onActionEdit.bind(this));
 
     /* -------------------------------------------- */
     /*  Links
@@ -943,7 +869,7 @@ export class ItemSheetPF extends ItemSheet {
     game.pf1.compendiums[target].render(true, { focus: true });
   }
 
-  _onScriptCallControl(event) {
+  async _onScriptCallControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
     const item = this.document.scriptCalls ? this.document.scriptCalls.get(a.closest(".item")?.dataset.itemId) : null;
@@ -952,11 +878,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Create item
     if (a.classList.contains("item-create")) {
-      const list = this.document.data.data.scriptCalls || [];
-      const item = ItemScriptCall.create({}, null);
-      item.data.category = category;
-      item.data.type = "script";
-      return this._onSubmit(event, { updateData: { "data.scriptCalls": list.concat(item.data) } });
+      await this._onSubmit(event);
+      return game.pf1.documentComponents.ItemScriptCall.create([{ category, type: "script" }], { parent: this.item });
     }
     // Delete item
     else if (item && a.classList.contains("item-delete")) {
@@ -1049,8 +972,10 @@ export class ItemSheetPF extends ItemSheet {
       // Submit data
       if (uuid) {
         const list = this.document.data.data.scriptCalls ?? [];
-        const item = ItemScriptCall.create({ type: "macro", value: uuid, category });
-        return this._onSubmit(event, { updateData: { "data.scriptCalls": list.concat(item.data) } });
+        await this._onSubmit(event);
+        return game.pf1.documentComponents.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
+          parent: this.item,
+        });
       }
     }
   }
@@ -1134,9 +1059,12 @@ export class ItemSheetPF extends ItemSheet {
 
   _onDragStart(event) {
     const elem = event.currentTarget;
-    if (elem.dataset?.conditional) {
-      const conditional = this.object.data.data.conditionals[elem.dataset?.conditional];
-      event.dataTransfer.setData("text/plain", JSON.stringify(conditional));
+
+    // Drag action
+    if (elem.dataset?.action) {
+      const action = this.object.actions.get(elem.dataset.itemId);
+      const obj = { type: "action", source: this.object.uuid, data: action.data };
+      event.dataTransfer.setData("text/plain", JSON.stringify(obj));
     }
   }
 
@@ -1144,38 +1072,44 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     event.stopPropagation();
 
-    let data;
+    let data, type;
     try {
       data = JSON.parse(event.dataTransfer.getData("text/plain"));
-      // Surface-level check for conditional
-      if (!(data.default != null && typeof data.name === "string" && Array.isArray(data.modifiers))) return;
+      // Surface-level check for action
+      if (data.type === "action" && data.source) type = "action";
     } catch (e) {
       return false;
     }
 
     const item = this.object;
-    // Check targets and other fields for valid values, reset if necessary
-    for (const modifier of data.modifiers) {
-      if (!Object.keys(item.getConditionalTargets()).includes(modifier.target)) modifier.target = "";
-      let keys;
-      for (let [k, v] of Object.entries(modifier)) {
-        switch (k) {
-          case "subTarget":
-            keys = Object.keys(item.getConditionalSubTargets(modifier.target));
-            break;
-          case "type":
-            keys = Object.keys(item.getConditionalModifierTypes(modifier.target));
-            break;
-          case "critical":
-            keys = Object.keys(item.getConditionalCritical(modifier.target));
-            break;
-        }
-        if (!keys?.includes(v)) v = keys?.[0] ?? "";
+
+    // Handle actions
+    if (type === "action") {
+      const srcItem = await fromUuid(data.source);
+
+      // Re-order
+      if (srcItem === item) {
+        const targetActionID = event.target?.closest("li.action-part")?.dataset?.action;
+        const prevActions = duplicate(this.object.data.data.actions);
+
+        let targetIdx;
+        if (!targetActionID) targetIdx = prevActions.length - 1;
+        else targetIdx = prevActions.indexOf(prevActions.find((o) => o._id === targetActionID));
+        const srcIdx = prevActions.indexOf(prevActions.find((o) => o._id === data.data._id));
+
+        prevActions.splice(srcIdx, 1);
+        prevActions.splice(targetIdx, 0, data.data);
+        await this.object.update({ "data.actions": prevActions });
+      }
+
+      // Add to another item
+      else {
+        const prevActions = duplicate(this.object.data.data.actions ?? []);
+        data.data._id = randomID(16);
+        prevActions.splice(prevActions.length, 0, data.data);
+        await this.object.update({ "data.actions": prevActions });
       }
     }
-
-    const conditionals = item.data.data.conditionals || [];
-    await this.object.update({ "data.conditionals": conditionals.concat([data]) });
   }
 
   async _onEditChangeScriptContents(event) {
@@ -1209,6 +1143,34 @@ export class ItemSheetPF extends ItemSheet {
       choices: CONFIG.PF1[a.dataset.options],
     };
     new ActorTraitSelector(this.object, options).render(true);
+  }
+
+  /**
+   * Handle rolling of an (sub-)item (such as an action) from the sheet, obtaining the item instance and dispatching its description
+   *
+   * @param event
+   * @private
+   */
+  _onItemSummary(event) {
+    event.preventDefault();
+    const li = $(event.currentTarget).parents(".item:not(.sheet)");
+    const item = this.item[li.attr("data-item-collection")].get(li.attr("data-item-id")),
+      description = item.data.description,
+      rollData = typeof item.getRollData === "function" ? item.getRollData() : this.getRollData();
+
+    // Toggle summary
+    if (li.hasClass("expanded")) {
+      const summary = li.children(".item-summary");
+      summary.slideUp(200, () => summary.remove());
+    } else {
+      const div = $(`<div class="item-summary"></div>`);
+      if (description?.length) {
+        div.append(TextEditor.enrichHTML(description, { rollData }));
+      }
+      li.append(div.hide());
+      div.slideDown(200);
+    }
+    li.toggleClass("expanded");
   }
 
   /**
@@ -1289,61 +1251,79 @@ export class ItemSheetPF extends ItemSheet {
     return result;
   }
 
-  /**
-   * Add or remove a damage part from the damage formula
-   *
-   * @param {Event} event     The original click event
-   * @returns {Promise}
-   * @private
-   */
-  async _onDamageControl(event) {
+  async _onActionControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const list = a.closest(".damage");
-    const k = list.dataset.key || "data.damage.parts";
-    const k2 = k.split(".").slice(0, -1).join(".");
-    const k3 = k.split(".").slice(-1).join(".");
 
-    // Add new damage component
-    if (a.classList.contains("add-damage")) {
-      // Get initial data
-      const initialData = ["", ""];
-
-      // Add data
-      const damage = getProperty(this.item.data, k2);
-      const updateData = {};
-      updateData[k] = getProperty(damage, k3).concat([initialData]);
-      return this._onSubmit(event, { updateData });
+    // Add action
+    if (a.classList.contains("add-action")) {
+      const newActionData = {
+        img: this.item.img,
+        name: ["weapon", "attack"].includes(this.item.type)
+          ? game.i18n.localize("PF1.Attack")
+          : game.i18n.localize("PF1.Use"),
+      };
+      await this._onSubmit(event);
+      return game.pf1.documentComponents.ItemAction.create([newActionData], { parent: this.item });
     }
 
-    // Remove a damage component
-    if (a.classList.contains("delete-damage")) {
-      const li = a.closest(".damage-part");
-      const damage = duplicate(getProperty(this.item.data, k2));
-      getProperty(damage, k3).splice(Number(li.dataset.damagePart), 1);
-      const updateData = {};
-      updateData[k] = getProperty(damage, k3);
-      return this._onSubmit(event, { updateData });
+    // Edit action
+    if (a.classList.contains("edit-action")) {
+      return this._onActionEdit(event);
+    }
+
+    // Remove action
+    if (a.classList.contains("delete-action")) {
+      const li = a.closest(".action-part");
+      const action = this.item.actions.get(li.dataset.itemId);
+
+      const deleteItem = async () => {
+        return action.delete();
+      };
+
+      if (getSkipActionPrompt()) {
+        deleteItem();
+      } else {
+        const msg = `<p>${game.i18n.localize("PF1.DeleteItemConfirmation")}</p>`;
+        Dialog.confirm({
+          title: game.i18n.localize("PF1.DeleteItemTitle").format(action.name),
+          content: msg,
+          yes: () => {
+            deleteItem();
+          },
+          rejectClose: true,
+        });
+      }
+    }
+
+    // Duplicate action
+    if (a.classList.contains("duplicate-action")) {
+      const li = a.closest(".action-part");
+      const action = duplicate(this.item.actions.get(li.dataset.itemId).data);
+      action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
+      action._id = randomID(16);
+      const actionParts = duplicate(this.item.data.data.actions ?? []);
+      return this._onSubmit(event, { updateData: { "data.actions": actionParts.concat(action) } });
     }
   }
 
-  async _onAttackControl(event) {
+  async _onActionEdit(event) {
     event.preventDefault();
     const a = event.currentTarget;
+    const li = a.closest(".action-part");
+    const action = this.item.actions.get(li.dataset.itemId);
 
-    // Add new attack component
-    if (a.classList.contains("add-attack")) {
-      const attackParts = this.item.data.data.attackParts;
-      return this._onSubmit(event, { updateData: { "data.attackParts": attackParts.concat([["", ""]]) } });
+    // Find existing window
+    for (const app of Object.values(this.item.apps)) {
+      if (app.object === action) {
+        app.render(true, { focus: true });
+        return;
+      }
     }
 
-    // Remove an attack component
-    if (a.classList.contains("delete-attack")) {
-      const li = a.closest(".attack-part");
-      const attackParts = duplicate(this.item.data.data.attackParts);
-      attackParts.splice(Number(li.dataset.attackPart), 1);
-      return this._onSubmit(event, { updateData: { "data.attackParts": attackParts } });
-    }
+    // Open new window
+    const app = new game.pf1.applications.ItemActionSheet(action);
+    app.render(true);
   }
 
   async _onBuffControl(event) {
@@ -1352,9 +1332,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new change
     if (a.classList.contains("add-change")) {
-      const changes = this.item.data.data.changes || [];
-      const change = ItemChange.create({}, null);
-      return this._onSubmit(event, { updateData: { "data.changes": changes.concat(change.data) } });
+      await this._onSubmit(event);
+      return game.pf1.documentComponents.ItemChange.create([{}], { parent: this.item });
     }
 
     // Remove a change
@@ -1390,46 +1369,6 @@ export class ItemSheetPF extends ItemSheet {
     );
     this._openApplications.push(w.appId);
     w.render(true);
-  }
-
-  async _onConditionalControl(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-
-    // Add new conditional
-    if (a.classList.contains("add-conditional")) {
-      await this._onSubmit(event); // Submit any unsaved changes
-      const conditionals = this.item.data.data.conditionals || [];
-      return this.item.update({ "data.conditionals": conditionals.concat([ItemPF.defaultConditional]) });
-    }
-
-    // Remove a conditional
-    if (a.classList.contains("delete-conditional")) {
-      await this._onSubmit(event); // Submit any unsaved changes
-      const li = a.closest(".conditional");
-      const conditionals = duplicate(this.item.data.data.conditionals);
-      conditionals.splice(Number(li.dataset.conditional), 1);
-      return this.item.update({ "data.conditionals": conditionals });
-    }
-
-    // Add a new conditional modifier
-    if (a.classList.contains("add-conditional-modifier")) {
-      await this._onSubmit(event);
-      const li = a.closest(".conditional");
-      const conditionals = this.item.data.data.conditionals;
-      conditionals[Number(li.dataset.conditional)].modifiers.push(ItemPF.defaultConditionalModifier);
-      // duplicate object to ensure update
-      return this.item.update({ "data.conditionals": duplicate(conditionals) });
-    }
-
-    // Remove a conditional modifier
-    if (a.classList.contains("delete-conditional-modifier")) {
-      await this._onSubmit(event);
-      const li = a.closest(".conditional-modifier");
-      const conditionals = duplicate(this.item.data.data.conditionals);
-      conditionals[Number(li.dataset.conditional)].modifiers.splice(Number(li.dataset.modifier), 1);
-      return this.item.update({ "data.conditionals": conditionals });
-    }
   }
 
   async _onNoteControl(event) {
@@ -1585,7 +1524,7 @@ export class ItemSheetPF extends ItemSheet {
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,
     };
-    new EntrySelector(this.item, options).render(true);
+    new game.pf1.applications.EntrySelector(this.item, options).render(true);
   }
 
   _onEntryControl(event) {

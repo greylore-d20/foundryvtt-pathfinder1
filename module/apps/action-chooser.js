@@ -1,0 +1,43 @@
+import { getSkipActionPrompt } from "../settings.js";
+
+export class ActionChooser extends Application {
+  /**
+   * @param {ItemPF} item - The item for which to choose an attack
+   * @param {any} [options]
+   */
+  constructor(item, options = {}) {
+    super(options);
+
+    this.item = item;
+  }
+
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      template: "systems/pf1/templates/apps/action-chooser.hbs",
+      width: 400,
+    });
+  }
+
+  async getData(options) {
+    const result = await super.getData(options);
+
+    result.item = this.item.data;
+    result.actions = this.item.data.data.actions;
+
+    return result;
+  }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    html.find(".action").on("click", this._onClickAction.bind(this));
+  }
+
+  _onClickAction(event) {
+    event.preventDefault();
+
+    const id = event.currentTarget.dataset?.action;
+    this.item.useAttack({ actionID: id, skipDialog: getSkipActionPrompt() });
+    this.close();
+  }
+}

@@ -112,6 +112,10 @@ import { Registry } from "./module/registry.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
+import { ItemScriptCall } from "./module/item/components/script-call.js";
+import { ItemAction } from "./module/item/components/action.js";
+import { ItemActionSheet } from "./module/item/components/sheets/action.js";
+import { ActionChooser } from "./module/apps/action-chooser.js";
 import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
 import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
 
@@ -164,6 +168,8 @@ Hooks.once("init", function () {
       // Items
       ItemSheetPF,
       ItemSheetPF_Container,
+      // Document Components
+      ItemActionSheet,
       // Misc
       AttackDialog,
       ActorSheetFlags,
@@ -181,6 +187,7 @@ Hooks.once("init", function () {
       PF1_HelpBrowser,
       ExperienceDistributor,
       SkillEditor,
+      ActionChooser,
       // Widgets
       Widget_CategorizedItemPicker,
       CurrencyTransfer,
@@ -233,6 +240,8 @@ Hooks.once("init", function () {
     // Components
     documentComponents: {
       ItemChange,
+      ItemAction,
+      ItemScriptCall,
     },
     // API
     registry: Registry,

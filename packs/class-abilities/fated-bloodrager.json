@@ -10,6 +10,79 @@
       "unidentified": ""
     },
     "tags": [],
+    "actions": [],
+    "uses": {
+      "per": null,
+      "value": 0,
+      "maxFormula": "",
+      "autoDeductCharges": true,
+      "autoDeductChargesCost": "1"
+    },
+    "changes": [
+      {
+        "_id": "37s24fyj",
+        "formula": "floor(@classes.bloodrager.level / 4)",
+        "operator": "+",
+        "subTarget": "ac",
+        "modifier": "luck",
+        "priority": 0,
+        "value": 0,
+        "target": "ac"
+      },
+      {
+        "_id": "7bhdpdxp",
+        "formula": "floor(@classes.bloodrager.level / 4)",
+        "operator": "+",
+        "subTarget": "allSavingThrows",
+        "modifier": "luck",
+        "priority": 0,
+        "value": 0,
+        "target": "savingThrows"
+      }
+    ],
+    "changeFlags": {
+      "loseDexToAC": false,
+      "noEncumbrance": false,
+      "mediumArmorFullSpeed": false,
+      "heavyArmorFullSpeed": false
+    },
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "classFeat_fatedBloodrager",
+    "useCustomTag": true,
+    "armorProf": {
+      "value": [],
+      "custom": ""
+    },
+    "weaponProf": {
+      "value": [],
+      "custom": ""
+    },
+    "languages": {
+      "value": [],
+      "custom": ""
+    },
+    "flags": {
+      "boolean": {},
+      "dictionary": {}
+    },
+    "scriptCalls": [],
+    "featType": "classFeat",
+    "associations": {
+      "classes": [
+        [
+          "Bloodrager"
+        ]
+      ]
+    },
+    "showInQuickbar": false,
+    "nonlethal": false,
+    "abilityType": "su",
+    "crOffset": "",
+    "disabled": false,
     "activation": {
       "cost": 1,
       "type": ""
@@ -33,13 +106,6 @@
       "maxIncrements": 1,
       "minValue": null,
       "minUnits": ""
-    },
-    "uses": {
-      "value": 0,
-      "per": null,
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1",
-      "maxFormula": ""
     },
     "measureTemplate": {
       "type": "",
@@ -84,67 +150,7 @@
     "effectNotes": [],
     "attackNotes": [],
     "soundEffect": "",
-    "changes": [
-      {
-        "_id": "37s24fyj",
-        "formula": "floor(@classes.bloodrager.level / 4)",
-        "operator": "+",
-        "subTarget": "ac",
-        "modifier": "luck",
-        "priority": 0,
-        "value": 0,
-        "target": "ac"
-      },
-      {
-        "_id": "7bhdpdxp",
-        "formula": "floor(@classes.bloodrager.level / 4)",
-        "operator": "+",
-        "subTarget": "allSavingThrows",
-        "modifier": "luck",
-        "priority": 0,
-        "value": 0,
-        "target": "savingThrows"
-      }
-    ],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
-    "contextNotes": [],
-    "links": {
-      "children": [],
-      "charges": []
-    },
-    "tag": "classFeat_fatedBloodrager",
-    "useCustomTag": true,
-    "armorProf": {
-      "value": [],
-      "custom": ""
-    },
-    "weaponProf": {
-      "value": [],
-      "custom": ""
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
-    "scriptCalls": [],
-    "featType": "classFeat",
-    "associations": {
-      "classes": [
-        [
-          "Bloodrager"
-        ]
-      ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false
+    "size": "med"
   },
   "effects": [],
   "folder": null,

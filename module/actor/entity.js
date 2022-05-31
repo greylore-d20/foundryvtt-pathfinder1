@@ -1851,51 +1851,21 @@ export class ActorPF extends ActorBasePF {
     // Add misc things
     attackData["type"] = "attack";
     attackData["name"] = item.data.name;
-    attackData["data.masterwork"] = item.data.data.masterwork;
-    attackData["data.nonlethal"] = item.data.data.nonlethal;
-    attackData["data.attackType"] = item.data.data.attackType;
-    attackData["data.enh"] = item.data.data.enh;
-    attackData["data.ability.critRange"] = item.data.data.ability.critRange || 20;
-    attackData["data.ability.critMult"] = item.data.data.ability.critMult || 2;
-    attackData["data.actionType"] = item.data.data.actionType;
-    attackData["data.activation.type"] = item.data.data.activation.type;
-    attackData["data.duration.units"] = item.data.data.duration.units;
-    attackData["data.range.units"] = item.data.data.range.units;
-    attackData["data.broken"] = item.data.data.broken;
     attackData["img"] = item.data.img;
-    attackData["data.soundEffect"] = item.data.data.soundEffect;
-    attackData["data.usesAmmo"] = item.data.data.usesAmmo;
-    attackData["data.ammoType"] = item.data.data.ammoType;
-
-    // Add properties
-    attackData["data.nonlethal"] = item.data._source.data.properties?.nnl === true;
-
-    // Add additional attacks
-    attackData["data.attackParts"] = item.data.data.attackParts;
-    attackData["data.formulaicAttacks"] = item.data._source.data.formulaicAttacks;
-    attackData["data.critConfirmBonus"] = item.data.data.critConfirmBonus;
-
-    // Add damage
-    attackData["data.damage"] = item.data._source.data.damage;
-
-    // Add attack bonus formula
-    attackData["data.attackBonus"] = item.data.data.attackBonus;
-
-    // Add range
-    attackData["data.range"] = item.data._source.data.range;
-
-    // Add measure template
-    attackData["data.measureTemplate"] = item.data._source.data.measureTemplate;
-
-    // Add notes
-    attackData["data.effectNotes"] = item.data._source.data.effectNotes;
-    attackData["data.attackNotes"] = item.data._source.data.attackNotes;
+    attackData["data.attackType"] = item.data.data.attackType;
+    attackData["data.masterwork"] = item.data.data.masterwork;
+    attackData["data.enh"] = item.data.data.enh;
+    attackData["data.broken"] = item.data.data.broken;
 
     // Add conditionals
     attackData["data.conditionals"] = item.data._source.data.conditionals;
 
-    // Add saving throw
-    attackData["data.save"] = item.data._source.data.save;
+    // Add actions
+    const actions = deepClone(item.data._source.data.actions ?? []);
+    for (const action of actions) {
+      action._id = randomID(16);
+    }
+    attackData["data.actions"] = actions;
 
     // Synthetic intermediate item
     const attackItem = new ItemPF(expandObject(attackData));
@@ -1908,7 +1878,13 @@ export class ActorPF extends ActorBasePF {
       await item.createItemLink("children", "data", newItem, itemData[0].id);
     }
 
+    // Notify user
     ui.notifications.info(game.i18n.localize("PF1.NotificationCreatedAttack").format(item.data.name));
+
+    // Disable quick use of weapon
+    await item.update({
+      "data.showInQuickbar": false,
+    });
 
     return itemData[0];
   }
@@ -3634,38 +3610,26 @@ export class ActorPF extends ActorBasePF {
   }
 
   getQuickActions() {
-    const actualChargeCost = (i) => (i != null ? Math.floor(i.charges / i.chargeCost) : 0),
-      actualMaxCharge = (i) => (i != null ? Math.floor(i.maxCharges / i.chargeCost) : 0);
     return this.items
       .filter(
         (o) =>
           o.isActive &&
           o.data.data.showInQuickbar === true &&
-          ["weapon", "equipment", "consumable", "attack", "spell", "feat"].includes(o.type)
+          ["weapon", "equipment", "consumable", "attack", "spell", "feat"].includes(o.type) &&
+          !o.showUnidentifiedData
       )
       .sort((a, b) => a.data.data.sort - b.data.data.sort)
       .map((o) => {
         return {
           item: o,
+          isSingleUse: o.isSingleUse,
           get haveAnyCharges() {
-            return (this.item.isCharged && this.item.chargeCost !== 0) || this.hasAmmo;
+            return this.item.isCharged;
           },
-          maxCharge: o.isCharged ? actualMaxCharge(o) : 0,
+          maxCharge: o.maxCharges,
           get charges() {
-            return this.item.isCharged
-              ? this.recharging
-                ? -this.item.chargeCost
-                : actualChargeCost(this.item)
-              : this.ammoValue;
+            return this.item.charges;
           },
-          hasAmmo: o.data.data.links?.ammunition?.length > 0 ?? false,
-          ammoValue:
-            o.data.data.links?.ammunition
-              ?.map((l) => this.items.get(l.id))
-              .filter((l) => l != null)
-              .map((l) => actualChargeCost(l))
-              .reduce((a, b) => a + b, 0) ?? 0,
-          recharging: o.isCharged && o.chargeCost < 0,
           color1: ItemPF.getTypeColor(o.type, 0),
           color2: ItemPF.getTypeColor(o.type, 1),
         };

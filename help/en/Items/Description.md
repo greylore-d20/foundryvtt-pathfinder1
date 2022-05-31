@@ -1,6 +1,6 @@
 # Descriptions
 
-![Description example](/Help/img/en/item-description.jpg)
+![Description example](/Help/img/item-description.jpg)
 
 1. **Name**: The name of the item, if identified.
 1. **Unidentified Name**: The name of the item, if unidentified. Shows the identified name for players if left empty.

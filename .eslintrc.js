@@ -485,5 +485,6 @@ module.exports = {
     getDocumentClass: "readonly",
     KeybindingsConfig: "readonly",
     quench: "readonly",
+    JQuery: "readonly",
   },
 };

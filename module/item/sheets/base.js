@@ -1,12 +1,8 @@
 import { getBuffTargetDictionary, getBuffTargets } from "../../lib.js";
-import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
-import { ItemChange } from "../components/change.js";
-import { ItemScriptCall } from "../components/script-call.js";
 import { ScriptEditor } from "../../apps/script-editor.js";
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { Widget_CategorizedItemPicker } from "../../widgets/categorized-item-picker.js";
-import { PF1_HelpBrowser } from "../../apps/help-browser.js";
 import { getSkipActionPrompt } from "../../settings.js";
 
 /**

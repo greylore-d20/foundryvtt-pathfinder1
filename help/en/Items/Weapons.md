@@ -2,7 +2,7 @@
 
 Weapons are meant to represent physical weapons that a character can hold.
 
-![Weapon Details](/Help/img/en/weapon-details.jpg)
+![Weapon Details](/Help/img/weapon-details.jpg)
 
 **Category**: The weapon's category (simple, martial, exotic or misc)
 

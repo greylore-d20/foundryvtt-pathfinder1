@@ -1049,7 +1049,11 @@ const _migrateItemActions = function (item, updateData) {
   actionData.description = "";
   // Add spell data
   if (item.type === "spell") {
+    // Transfer spell duration
     actionData.duration.value = item.data.spellDuration;
+    // Transfer spell point cost
+    const oldSpellPointCostFormula = item.data.spellPoints?.cost;
+    if (oldSpellPointCostFormula) actionData.uses.autoDeductChargesCost = oldSpellPointCostFormula;
   }
   // Clean out old attack and effect notes
   updateData["data.attackNotes"] = [];

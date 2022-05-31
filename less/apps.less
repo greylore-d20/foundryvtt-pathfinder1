@@ -1445,6 +1445,15 @@
       border-right: @borderGroove;
       height: 100%;
       overflow: auto;
+
+      > ul {
+        list-style: none;
+        padding: 0 0 0 0.5em;
+      }
+
+      ul {
+        padding: 0 0 0 1em;
+      }
     }
 
     .content {
@@ -1457,16 +1466,22 @@
       }
 
       code {
-        padding: 2px;
-        background-color: black;
-        color: white;
+        padding: 0 0.1em;
+        background: #2b2b2b;
+        color: #bababa;
+        border: 1px solid #000;
+        border-radius: 3px;
+        box-shadow: 0 0 4px #666;
       }
 
       img {
         margin-left: 8px;
       }
 
-      h2 {
+      h2,
+      h3,
+      h4,
+      h5 {
         margin-top: 1em;
       }
     }

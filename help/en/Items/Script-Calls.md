@@ -18,7 +18,6 @@ Below you will find a list of variables which are present within Script Calls.
 
 ## Categories
 
-
 ### Use
 
 Called when an item has been used.

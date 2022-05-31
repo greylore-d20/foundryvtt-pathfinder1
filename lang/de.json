@@ -238,6 +238,40 @@
   "PF1.LevelUpForm_Health_Manual": "Manuell",
   "PF1.LevelUp": {
     "Label": "Stufenaufstieg",
+    "Health": {
+      "Roll": {
+        "Desc": "Die Trefferpunkte für diese Stufe werden entsprechend deines Trefferwürfels erwürfelt."
+      },
+      "Manual": {
+        "Desc": "Du entscheidest, wie viele Trefferpunkte du für diese Stufe bekommst."
+      }
+    },
+    "FC": {
+      "Label": "Bevorzugte Klasse",
+      "HP": {
+        "Desc": "Du bekommst einen Trefferpunkt als Bonus für deine bevorzugte Klasse für diese Stufe."
+      },
+      "Skill": {
+        "Desc": "Du bekommst einen Fertigkeitspunkt als Bonus für deine bevorzugte Klasse für diese Stufe."
+      },
+      "Alt": {
+        "Desc": "Du bekommst etwas, das sich aus der Kombination deines Volkes und deiner Klasse ergibt, als Bonus für deine bevorzugte Klasse für diese Stufe."
+      }
+    },
+    "AbilityScore": {
+      "Label": "Eigenschaftswert",
+      "PointsLeft": "Punkte übrig: {value}",
+      "Item": {
+        "Name": "Erhöhte Eigenschaftswerte",
+        "Desc": "<p>Dieses Talent wird verwendet, um die Eigenschaftserhöhungen beim Stufenaufstieg nachzuverfolgen.</p>"
+      }
+    },
+    "Summary": {
+      "Label": "Zusammenfassung",
+      "AbilityScore": {
+        "Gain": "{abl}: +{value}"
+      }
+    },
     "Chat": {
       "Header": "Stufenaufstiegszusammenfassung",
       "Health": {
@@ -246,7 +280,10 @@
         "Manual": "Manuelle TP: {add}"
       },
       "FC": {
-        "Header": "Favorisierte-Klasse-Bonus"
+        "Header": "Bonus für bevorzugte Klasse"
+      },
+      "AbilityScore": {
+        "Header": "Eigenschaftswerterhöhung"
       },
       "Extra": {
         "Header": "Extra",
@@ -394,6 +431,7 @@
   "PF1.CondTypeDaze": "Benommen",
   "PF1.CondTypeDazzle": "Blenden",
   "PF1.CondTypeDeaf": "Taub",
+  "PF1.CondTypeDeathEffects": "Todeseffekte",
   "PF1.CondTypeDisease": "Krankheit",
   "PF1.CondTypeEnergyDrain": "Energieentzug",
   "PF1.CondTypeFatigue": "Erschöpfung",
@@ -492,7 +530,7 @@
   "PF1.ItemContainerDetails": "Behälter Details",
   "PF1.ItemContainerHeader": "Behälter",
   "PF1.ItemContainerProperties": "Behälter Eigenschaften",
-  "PF1.ItemContainerWeightless": "Gewichtsloser Inhalt",
+  "PF1.ItemContainerWeightReduction": "Gewichtsreduktion",
   "PF1.ItemContainerTotalValue": "Gesamtwert: {0} GM, {1} SM, {2} KM",
   "PF1.ItemContainerTotalItemValue": "Gesamtwert aller Gegenstände: {0} GM, {1} SM, {2} KM",
   "PF1.ItemContainerSellValue": "Verkaufswert: {0} GM, {1} SM, {2} KM",
@@ -602,6 +640,8 @@
   "PF1.SkillSwm": "Schwimmen",
   "PF1.SkillUMD": "Magischen Gegenstand benutzen",
 
+  "PF1.AddSkill": "Fertigkeit hinzufügen",
+
   "PF1.TargetAlly": "Verbündete",
   "PF1.TargetCreature": "Kreatur",
   "PF1.TargetCylinder": "Zylinder",
@@ -625,6 +665,7 @@
   "PF1.TimeMinute": "Minuten",
   "PF1.TimeMinuteShort": "min",
   "PF1.TimeHour": "Stunden",
+  "PF1.TimeHourShort": "std",
   "PF1.TimeDay": "Tage",
   "PF1.TimeMonth": "Monate",
   "PF1.TimeYear": "Jahre",
@@ -641,9 +682,12 @@
 
   "PF1.Arcanist": "Arkanist",
   "PF1.RedMantisAssassin": "Assassine der Roten Mantis",
+  "PF1.Psychic": "Mentalist",
 
   "PF1.SpellComponentVerbal": "Verbal",
   "PF1.SpellComponentSomatic": "Gesten",
+  "PF1.SpellComponentThought": "Gedanken",
+  "PF1.SpellComponentEmotion": "Emotionen",
   "PF1.SpellComponentMaterial": "Material",
   "PF1.SpellComponentFocus": "Fokus",
   "PF1.SpellComponentDivineFocus": "Göttlicher Fokus",
@@ -882,12 +926,13 @@
   "PF1.ErrorActorNotFound": "Aktor mit ID {0} nicht gefunden",
   "PF1.ErrorCantIdentify": "Du bist nicht befugt Gegenstände zu identifizieren",
   "PF1.ErrorNoApplicableActorFoundForAction": "Kein passender Aktor für Aktion '{0}' gefunden",
+  "PF1.ErrorCouldNotFindActorByName": "Kein Aktor mit Namen '{0}' gefunden",
   "PF1.ErrorFeatDisabled": "Dieses Talent ist deaktiviert",
   "PF1.ErrorNoMacroID": "Kein Makro mit ID '{id}' gefunden",
-  "PF1.ErrorCouldNotFindActorByName": "Kein Aktor mit Namen '{0}' gefunden",
   "PF1.WarningNoSizeDie": "Konnte {0} nicht auf die gewünschte Größe anpassen, würfle stattdessen {1}",
   "PF1.WarningNoDiceAllowedInFormula": "In Formel '{0}' für {1} sind keine Würfelwürfe erlaubt",
   "PF1.WarningInsufficientAmmunition": "Du hast nicht genug Munition vom Typ {0}",
+  "PF1.WarningMissingAmmunition": "Zum Angriff verknüpfte Munition fehlt.",
   "PF1.WarningConditionalRoll": "Formel-Wurf Nr {number} von Bedingtem Modifikator {name} hat einen Fehler verursacht",
   "PF1.WarningNoItemOnActor": "Aktor {0} hat keinen Gegenstand {1}",
   "PF1.WarningCannotCreateChargeLink": "Konnte keinen Ladungen-Link zwischen {0} und {1} erstellen, da {1} bereit selber Ladungen-Links besitzt",
@@ -1308,6 +1353,7 @@
   "PF1.SavingThrow": "Rettungswurf",
   "PF1.SavingThrowPlural": "Rettungswürfe",
   "PF1.SavingThrowEffect": "Rettungswurfeffekt",
+  "PF1.SavingThrowGoodFractionalBonus": "Guter Rettungswurfbonus",
   "PF1.Misc": "Verschiedenes",
   "PF1.MiscShort": "Versch.",
   "PF1.HitPoints": "Trefferpunkte",

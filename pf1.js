@@ -100,7 +100,7 @@ import { initializeSocket } from "./module/socket.js";
 import { SemanticVersion } from "./module/semver.js";
 import { registerTests } from "./module/test";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
-import { PF1_HelpBrowser } from "./module/apps/help-browser.js";
+import { Pf1HelpBrowser } from "./module/apps/help-browser.js";
 import { addReachCallback } from "./module/misc/attack-reach.js";
 import { TooltipPF } from "./module/hud/tooltip.js";
 import { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
@@ -188,7 +188,7 @@ Hooks.once("init", function () {
       ScriptEditor,
       SidebarPF,
       TooltipPF,
-      PF1_HelpBrowser,
+      Pf1HelpBrowser,
       ExperienceDistributor,
       SkillEditor,
       DamageTypeSelector,
@@ -283,6 +283,8 @@ Hooks.once("init", function () {
       getBuffTargets,
       getBuffTargetDictionary,
     },
+    // Singleton instance of the help browser
+    helpBrowser: new Pf1HelpBrowser(),
   };
 
   // Global exports
@@ -1002,7 +1004,7 @@ Hooks.on("renderSidebarTab", (app, html) => {
       const chlog = Object.values(ui.windows).find((o) => o.id == "changelog") ?? new ChangeLogWindow();
       chlog.render(true, { focus: true });
     });
-    helpButton.click(() => new PF1_HelpBrowser().openURL("systems/pf1/help/index.hbs"));
+    helpButton.click(() => game.pf1.helpBrowser.openUrl("Help/Home"));
   }
 });
 

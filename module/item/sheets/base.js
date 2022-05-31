@@ -983,18 +983,7 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
-    let browser = null;
-    for (const w of Object.values(ui.windows)) {
-      if (w instanceof PF1_HelpBrowser) {
-        browser = w;
-        browser.bringToTop();
-        browser.maximize();
-        break;
-      }
-    }
-    if (!browser) browser = new PF1_HelpBrowser();
-
-    browser.openURL(a.dataset.url);
+    game.pf1.helpBrowser.openUrl(a.dataset.url);
   }
 
   async _onLinksDrop(event) {

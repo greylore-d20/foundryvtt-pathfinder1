@@ -80,7 +80,8 @@ export class ItemChange {
     return this.data.continuous;
   }
   get isDeferred() {
-    return ["damage", "wdamage", "sdamage"].includes(this.subTarget);
+    if (["damage", "wdamage", "sdamage", "skills"].includes(this.subTarget)) return true;
+    return /^skill\./.test(this.subTarget);
   }
 
   get source() {
@@ -209,6 +210,9 @@ export class ItemChange {
                 if (t.match(/^system\.abilities/)) continue;
                 base = 0;
               }
+
+              // Deferred formula
+              if (typeof value === "string") break;
 
               if (typeof base === "number") {
                 if (CONFIG.PF1.stackingBonusModifiers.includes(this.modifier)) {

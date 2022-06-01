@@ -203,24 +203,22 @@ let currentHighlight;
 /**
  * Handle display of reach when a chat card's reach element is hovered
  *
- * @param {JQuery.Event} event - A `mouseEnter` event
+ * @param {JQuery.MouseEnterEvent<HTMLElement>} event - A `mouseEnter` event
  */
 const onMouseEnterReach = (event) => {
   event.preventDefault();
 
-  const reachEelement = event.currentTarget;
-  const card = reachEelement.closest(".chat-card");
-  const { tokenUuid } = card.dataset;
-  const { messageId } = card.closest(".message").dataset;
-  const message = game.messages.get(messageId);
-  const itemId = message.data.flags.pf1?.metadata?.item;
-  if (!itemId) return;
+  const reachElement = event.currentTarget;
+  const card = reachElement.closest(".chat-card");
+  const { tokenUuid, actionId, itemId } = card.dataset;
+  if (!(itemId && actionId && tokenUuid)) return;
 
   _getTokenByUuid(tokenUuid).then((token) => {
     if (!token) return;
     const item = token.actor.items.get(itemId);
     if (!item) return;
-    if (!game.settings.get("pf1", "hideReachMeasurements")) currentHighlight = showAttackReach(token, item);
+    if (!game.settings.get("pf1", "hideReachMeasurements"))
+      currentHighlight = showAttackReach(token, item, item.actions.get(actionId));
 
     if (!currentHighlight) return;
 
@@ -235,7 +233,7 @@ const onMouseEnterReach = (event) => {
 /**
  * Handle clearing of reach highlights created by {@link onMouseEnterReach}
  *
- * @param {JQuery.Event} event - A `mouseLeave` event
+ * @param {JQuery.MouseLeaveEvent} event - A `mouseLeave` event
  */
 const onMouseLeaveReach = (event) => {
   event.preventDefault();

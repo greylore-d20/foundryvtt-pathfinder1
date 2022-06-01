@@ -166,7 +166,7 @@
   {{/if}}
 {{/inline}}
 
-<div class="pf1 chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if tokenUuid}}data-token-uuid="{{tokenUuid}}"{{/if}}>
+<div class="pf1 chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}" {{#if tokenUuid}}data-token-uuid="{{tokenUuid}}"{{/if}} {{#if actionId}}data-action-id="{{actionId}}"{{/if}}>
   {{~> "systems/pf1/templates/chat/parts/attack-roll-header.hbs"}}
 
   {{#if targets}}

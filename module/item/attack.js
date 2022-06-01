@@ -766,6 +766,7 @@ export const getMessageData = async function (shared) {
     shared.templateData,
     {
       tokenUuid: token ? token.document?.uuid ?? token.uuid : null,
+      actionId: shared.action?.id,
       extraText: extraText,
       data: itemChatData,
       hasExtraText: extraText.length > 0,

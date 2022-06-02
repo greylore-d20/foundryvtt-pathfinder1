@@ -1061,7 +1061,7 @@ export class ItemSheetPF extends ItemSheet {
     const elem = event.currentTarget;
 
     // Drag action
-    if (elem.dataset?.action) {
+    if (elem.dataset?.itemId) {
       const action = this.object.actions.get(elem.dataset.itemId);
       const obj = { type: "action", source: this.object.uuid, data: action.data };
       event.dataTransfer.setData("text/plain", JSON.stringify(obj));
@@ -1089,7 +1089,7 @@ export class ItemSheetPF extends ItemSheet {
 
       // Re-order
       if (srcItem === item) {
-        const targetActionID = event.target?.closest("li.action-part")?.dataset?.action;
+        const targetActionID = event.target?.closest("li.action-part")?.dataset?.itemId;
         const prevActions = duplicate(this.object.data.data.actions);
 
         let targetIdx;

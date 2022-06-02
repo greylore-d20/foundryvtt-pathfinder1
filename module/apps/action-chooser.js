@@ -17,6 +17,12 @@ export class ActionChooser extends Application {
       width: 400,
     });
   }
+  get title() {
+    return game.i18n.format("PF1.Application.ActionChooser.Title", {
+      actor: this.item.actor.name,
+      item: this.item.name,
+    });
+  }
 
   async getData(options) {
     const result = await super.getData(options);

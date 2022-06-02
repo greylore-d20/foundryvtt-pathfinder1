@@ -2063,7 +2063,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
     if (!item) return;
 
-    game.pf1.rollItemMacro(item.name, { itemId: item.id, itemType: item.type, actorId: this.document.id });
+    return item.use({ skipDialog: getSkipActionPrompt() });
   }
 
   _convertCurrency(event) {

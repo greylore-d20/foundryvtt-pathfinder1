@@ -816,9 +816,11 @@ export class ItemAction {
     }
 
     if (!this.isHealing) {
+      // Gather changes
       const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.actionType);
       const isWeapon = ["mwak", "rwak"].includes(this.data.actionType);
       const changes = this.item.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
+
       // Add enhancement bonus to changes
       if (this.enhancementBonus) {
         changes.push(
@@ -832,6 +834,7 @@ export class ItemAction {
           })
         );
       }
+
       // Get damage bonus
       getHighestChanges(
         changes.filter((c) => {
@@ -840,8 +843,8 @@ export class ItemAction {
         }),
         { ignoreTarget: true }
       ).forEach((c) => {
-        let value = c.isDeferred ? c.formula : c.value;
-        // Put in parenthesis if there's chance it is more complex
+        let value = c.value;
+        // Put in parenthesis if there's a chance it is more complex
         if (/[\s+-?:]/.test(value)) value = `(${value})`;
         parts[0].extra.push(`${value}[${c.flavor}]`);
       });
@@ -902,6 +905,8 @@ export class ItemAction {
           });
           roll.roll = await RollPF.create(parts.join(" "), rollData).evaluate({ async: true });
         }
+
+        // Add to result
         rolls.push(roll);
       } catch (err) {
         console.error("Error with damage formula:", formula, this);

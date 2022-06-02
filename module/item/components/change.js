@@ -135,7 +135,13 @@ export class ItemChange {
     }
   }
 
-  applyChange(actor, targets = null, flags = {}) {
+  /**
+   * Applies this change to an actor.
+   *
+   * @param {ActorPF} actor - The actor to apply the change's data to.
+   * @param {string[]} [targets] - Property paths to target on the actor's data.
+   */
+  applyChange(actor, targets = null) {
     // Prepare change targets
     if (!targets) {
       targets = getChangeFlat.call(actor, this.subTarget, this.modifier);
@@ -148,7 +154,8 @@ export class ItemChange {
 
     const overrides = actor.changeOverrides;
     for (const t of targets) {
-      if (!overrides || overrides[t]) {
+      const override = overrides[t];
+      if (!overrides || override) {
         let operator = this.operator;
         if (operator === "+") operator = "add";
         if (operator === "=") operator = "set";
@@ -177,7 +184,7 @@ export class ItemChange {
           } else if (!isNaN(this.formula)) {
             value = parseFloat(this.formula);
           } else if (this.isDeferred) {
-            value = this.formula;
+            value = RollPF.replaceFormulaData(this.formula, rollData, { missing: 0 });
           } else {
             value = RollPF.safeRoll(this.formula, rollData, [t, this, rollData], {
               suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
@@ -188,7 +195,7 @@ export class ItemChange {
         this.data.value = value;
 
         if (!t) continue;
-        const prior = overrides[t][operator][this.modifier];
+        const prior = override[operator][this.modifier];
 
         switch (operator) {
           case "add":
@@ -197,7 +204,7 @@ export class ItemChange {
               if (typeof base === "number") {
                 if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
                   setProperty(actor.data, t, base + value);
-                  overrides[t][operator][this.modifier] = (prior ?? 0) + value;
+                  override[operator][this.modifier] = (prior ?? 0) + value;
 
                   if (this.parent && !addedSourceInfo) {
                     for (const si of sourceInfoTargets) {
@@ -212,7 +219,7 @@ export class ItemChange {
                 } else {
                   const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
                   setProperty(actor.data, t, base + diff);
-                  overrides[t][operator][this.modifier] = Math.max(prior ?? 0, value);
+                  override[operator][this.modifier] = Math.max(prior ?? 0, value);
 
                   if (this.parent) {
                     for (const si of sourceInfoTargets) {
@@ -246,7 +253,7 @@ export class ItemChange {
 
           case "set":
             setProperty(actor.data, t, value);
-            overrides[t][operator][this.modifier] = value;
+            override[operator][this.modifier] = value;
 
             if (this.parent && !addedSourceInfo) {
               for (const si of sourceInfoTargets) {

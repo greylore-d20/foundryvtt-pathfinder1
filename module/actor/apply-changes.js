@@ -80,8 +80,6 @@ export function applyChanges() {
   }
 
   resetSkills.call(this);
-
-  this.changeOverrides = expandObject(this.changeOverrides);
 }
 
 const createOverride = function () {
@@ -1806,7 +1804,8 @@ export const setSourceInfoByName = function (obj, key, name, value, positive = t
 
 /**
  * @param {ItemChange[]} changes - An array containing all changes to check. Must be called after they received a value (by ItemChange.applyChange)
- * @param options
+ * @param {object} [options]
+ * @param {boolean} [options.ignoreTarget] - Whether to only check for modifiers such as enhancement, insight (true) or whether the target (AC, weapon damage) is also important (false)
  * @returns {ItemChange[]} - A list of processed changes, excluding the lower-valued ones inserted (if they don't stack)
  */
 export const getHighestChanges = function (changes, options = { ignoreTarget: false }) {

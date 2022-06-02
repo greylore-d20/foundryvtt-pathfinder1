@@ -1,4 +1,3 @@
-// Namespace PF1 Configuration Values
 /**
  * PF1 Configuration Values
  *
@@ -8,10 +7,9 @@
  *
  * The PF1 object may be adjusted to influence the system's behaviour during runtime.
  *
- * @global
- * @memberof CONFIG
+ * @module config
  */
-export const PF1 = {
+export const PF1 = /** @type {const} */ ({
   re: {
     traitSeparator: /\s*[;]\s*/g,
   },
@@ -2136,7 +2134,7 @@ export const PF1 = {
   },
 
   keepItemLinksOnCopy: ["classAssociations"],
-};
+});
 
 /**
  * Non-PF1 config entries

@@ -2736,7 +2736,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Easy way to set a condition.
    *
-   * @param key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   * @param {string} key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
    * @param {boolean} enabled - Whether to enable (true) the condition, or disable (false) it.
    */
   async setCondition(key, enabled) {
@@ -2752,7 +2752,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Easy way to determine whether this actor has a condition.
    *
-   * @param key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   * @param {string} key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
    */
   hasCondition(key) {
     key = `data.attributes.conditions.${key}`;

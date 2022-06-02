@@ -66,7 +66,7 @@ import { ItemSheetPF_Container } from "./module/item/sheets/container.js";
 import { getChangeFlat, getSourceInfo } from "./module/actor/apply-changes.js";
 import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
 import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
-import { PatchCore } from "./module/patch-core.js";
+import "./module/patch-core.js";
 import { DicePF } from "./module/dice.js";
 import { RollPF } from "./module/roll.js";
 import { AbilityTemplate } from "./module/pixi/ability-template.js";
@@ -125,6 +125,13 @@ import { ScriptCalls } from "./module/registry/script-call.js";
 
 // OBSOLETE: Add String.format
 if (!String.prototype.format) {
+  /**
+   * Replaces `{<number>}` elements in this string with the provided arguments.
+   *
+   * @deprecated
+   * @param {string[]} args - The arguments to replace the `{<number>}` elements with.
+   * @returns {string} String with `{<number>}` elements replaced.
+   */
   String.prototype.format = function (...args) {
     return this.replace(/{(\d+)}/g, function (match, number) {
       return args[number] != null ? args[number] : match;
@@ -132,18 +139,9 @@ if (!String.prototype.format) {
   };
 }
 
-// Objectify modules
-const objectifyModule = function (module) {
-  return Object.entries(module).reduce((cur, obj) => {
-    cur[obj[0]] = obj[1];
-    return cur;
-  }, {});
-};
-
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
 /* -------------------------------------------- */
-
 Hooks.once("init", function () {
   console.log(`PF1 | Initializing Pathfinder 1 System`);
 
@@ -269,7 +267,7 @@ Hooks.once("init", function () {
     config: PF1,
     tooltip: null,
     AbilityTemplate,
-    ItemAttack: objectifyModule(ItemAttack),
+    ItemAttack: { ...ItemAttack },
     controls,
     // Variables controlled by control configuration
     skipConfirmPrompt: false,
@@ -342,9 +340,6 @@ Hooks.once("init", function () {
   preloadHandlebarsTemplates();
   registerHandlebarsHelpers();
 
-  // Patch Core Functions
-  PatchCore();
-
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("PF1", ActorSheetPFCharacter, {
@@ -381,7 +376,9 @@ Hooks.once("init", function () {
   Hooks.callAll("pf1.postInit");
 });
 
-registerTests();
+Hooks.on("quenchReady", () => {
+  registerTests();
+});
 
 /* -------------------------------------------- */
 /*  Foundry VTT Setup                           */
@@ -1084,26 +1081,50 @@ const handleChatTooltips = function (event) {
   elem.find(".tooltipcontent").css("left", `${x}px`).css("top", `${y}px`).css("width", `${w}px`);
 };
 
-// These exports are deprecated.
-// Do not use them, access classes and functions from the game.pf1 global instead!
+/* ------------------------------- */
+/* Class exports                   */
+/* ------------------------------- */
+// Actor classes
+export { ActorBasePF, ActorPF, ActorCharacterPF, ActorNPCPF, BasicActorPF };
+
+// Item classes
 export {
-  ActorPF,
+  ItemBasePF,
   ItemPF,
-  TokenDocumentPF,
+  ItemAttackPF,
+  ItemBuffPF,
+  ItemClassPF,
+  ItemConsumablePF,
+  ItemContainerPF,
+  ItemEquipmentPF,
+  ItemFeatPF,
+  ItemLootPF,
+  ItemRacePF,
+  ItemSpellPF,
+  ItemWeaponPF,
+};
+
+// Item component classes
+export { ItemChange, ItemAction };
+
+// Actor sheets
+export {
+  ActorSheetPFBasic,
   ActorSheetPF,
   ActorSheetPFCharacter,
-  ActorSheetPFNPC,
   ActorSheetPFNPCLite,
   ActorSheetPFNPCLoot,
-  ItemSheetPF,
-  ItemSheetPF_Container,
-  ActiveEffectPF,
+  ActorSheetPFNPC,
 };
-export { DicePF, ChatMessagePF, measureDistances };
-export { PF1 };
-export { getChangeFlat, getSourceInfo } from "./module/actor/apply-changes.js";
-export { ItemChange } from "./module/item/components/change.js";
-export { SemanticVersion };
-export { RollPF } from "./module/roll.js";
-export { ChatAttack } from "./module/misc/chat-attack.js";
-export { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
+
+// Item sheets
+export { ItemSheetPF, ItemSheetPF_Container };
+
+// Item component sheets
+export { ItemActionSheet };
+
+// Token
+export { TokenPF, TokenDocumentPF };
+
+// Chat Message
+export { ChatMessagePF };

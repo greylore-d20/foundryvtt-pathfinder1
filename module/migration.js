@@ -1070,7 +1070,9 @@ const _migrateActionDamageType = function (action, item) {
     for (const damagePart of damageGroup) {
       const damageType = damagePart[1];
       if (typeof damageType === "string") {
-        damagePart[1] = _convertDamageType(damageType);
+        const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
+        damageTypeData.values = _convertDamageType(damageType);
+        damagePart[1] = damageTypeData;
       }
     }
   }

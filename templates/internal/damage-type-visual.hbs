@@ -1,11 +1,16 @@
-{{#if data.length}}
+{{!-- Damage type indicators --}}
+{{#if (or data.values.length data.custom)}}
 <div class="damage-type-visual"{{#if name}} data-name="{{name}}"{{/if}}>
-  {{#each data as |d|}}
+  {{#each data.values as |d|}}
   <div class="damage-type" title="{{localize (lookup (lookup ../damageTypes d) "name")}}">
     <img class="icon" src="{{lookup (lookup ../damageTypes d) "img"}}">
   </div>
   {{/each}}
+  {{#if data.custom}}
+  <span>{{data.custom}}</span>
+  {{/if}}
 </div>
+{{!-- No damage type values --}}
 {{else}}
 <div class="damage-type-visual empty"{{#if name}} data-name="{{name}}"{{/if}}>
   <span>{{localize "PF1.DamageType"}}</span>

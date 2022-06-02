@@ -3,13 +3,13 @@ export class DamageTypeSelector extends FormApplication {
     super(object, options);
     this._dataPath = dataPath;
     this._data = deepClone(getProperty(object.data, this._dataPath));
-    if (!(this._data instanceof Array)) this._data = [];
+    if (!this._data) this._data = [];
   }
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       width: 720,
-      height: 540,
+      height: 580,
       template: "systems/pf1/templates/apps/damage-type-selector.hbs",
       closeOnSubmit: true,
     });
@@ -34,6 +34,28 @@ export class DamageTypeSelector extends FormApplication {
 
   activateListeners(html) {
     html.find(`.damage-type`).on("click", this._toggleDamageType.bind(this));
+    html.find(`*[name]`).on("change", this._onChangeData.bind(this));
+  }
+
+  _onChangeData(event) {
+    event.preventDefault();
+    const elem = event.currentTarget;
+    const dataPath = elem.name;
+
+    let value = elem.value;
+    console.log(elem);
+    if (elem.type === "checkbox") value = elem.checked;
+
+    switch (elem.dataset.dtype) {
+      case "Boolean":
+        value = Boolean(value);
+        break;
+      case "Number":
+        value = Number(value);
+        break;
+    }
+
+    setProperty(this._data, dataPath, value);
   }
 
   _toggleDamageType(event) {
@@ -41,18 +63,14 @@ export class DamageTypeSelector extends FormApplication {
     const a = event.currentTarget;
     const dt = a.dataset.id;
 
-    if (this._data.includes(dt)) this._data.splice(this._data.indexOf(dt), 1);
-    else this._data.push(dt);
+    if (this._data.values.includes(dt)) this._data.values.splice(this._data.values.indexOf(dt), 1);
+    else this._data.values.push(dt);
     this.render();
   }
 
   async _updateObject(event, formData) {
     formData = expandObject(formData);
     const result = this._data;
-
-    for (const [k, v] of Object.entries(formData.damageTypes ?? {})) {
-      if (v) result.push(k);
-    }
 
     return this.object.update({ [this._dataPath]: result });
   }

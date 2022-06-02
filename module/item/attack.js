@@ -343,6 +343,7 @@ export const handleConditionals = function (shared) {
             ...(shared.conditionalPartsCommon[partString] ?? []),
             flavoredFormula,
           ];
+          console.log(flavoredFormula);
         }
         // Add formula as array for damage
         else if (modifier.target === "damage") {

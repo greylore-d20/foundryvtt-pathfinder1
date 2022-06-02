@@ -52,14 +52,15 @@
           </select>
           {{/if}}
 
-          {{#if modifier.isDamage}}
+          {{!-- {{#if modifier.isDamage}}
           <input class="conditional-damage-type" type="text" list="types" name="data.conditionals.{{a}}.{{m}}.type" value="{{lookup this "type"}}" placeholder="{{localize "PF1.DamageType"}}"/>
             <datalist id="types">
-              {{#each conditionalModifierTypes as |modifierType mt|}}
-              <option value="{{modifierType}}">
+              {{#each conditionalModifierTypes as |modifierType mt|}} --}}
+              {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "type") name=(concat "data.conditionals." a "." m ".damageType") damageTypes=@root.registry.damageTypes}}
+              {{!-- <option value="{{modifierType}}">
               {{/each}}
             </datalist>
-          {{/if}}
+          {{/if}} --}}
 
           {{#if (or modifier.isAttack modifier.isDamage)}}
           <select class="conditional-critical" name="data.conditionals.{{a}}.{{m}}.critical">

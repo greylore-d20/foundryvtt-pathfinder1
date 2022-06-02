@@ -44,14 +44,21 @@ export class ItemAction {
       modifiers: [],
     };
   }
-
   static get defaultConditionalModifier() {
     return {
       formula: "",
       target: "",
       subTarget: "",
       type: "",
+      damageType: this.defaultDamageType,
       critical: "",
+    };
+  }
+
+  static get defaultDamageType() {
+    return {
+      values: [],
+      custom: "",
     };
   }
 

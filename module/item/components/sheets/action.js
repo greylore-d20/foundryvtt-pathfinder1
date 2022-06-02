@@ -300,7 +300,7 @@ export class ItemActionSheet extends FormApplication {
     // Add new damage component
     if (a.classList.contains("add-damage")) {
       // Get initial data
-      const damageTypeBase = [];
+      const damageTypeBase = game.pf1.documentComponents.ItemAction.defaultDamageType;
       const initialData = ["", damageTypeBase];
 
       // Add data

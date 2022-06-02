@@ -23,7 +23,7 @@ The 'formula' of changes using the Script operator are actually small JavaScript
 
 > ⚠ Script Operators are disabled by default. ⚠
 >
-> Only activate them if you trust your players, activating them will allow them to **execute JavaScript code with elevated permissions!**
+> **Only activate them if you trust your players, activating them will allow them to execute JavaScript code with elevated permissions!**
 >
 > If, and only if, you trust every player, you can activate Script Operators in System Settings > Enable Script Changes.
 

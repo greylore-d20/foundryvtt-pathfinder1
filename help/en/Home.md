@@ -3,7 +3,6 @@
 - [Actors](Help/Actors)
 - [Items](Help/Items)
   - Item Types
-    - Attacks
     - [Consumables](Help/Items/Consumables)
     - [Containers](Help/Items/Containers)
     - [Equipment](Help/Items/Equipment)

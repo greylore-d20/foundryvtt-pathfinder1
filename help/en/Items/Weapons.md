@@ -2,7 +2,26 @@
 
 Weapons are meant to represent physical weapons that a character can hold.
 
-![Weapon Details](/Help/img/weapon-details.jpg)
+![Weapon Details](/Help/img/weapon-details.webp)
+
+## Actions
+
+Individual actions embedded in this action can be found here.
+When attacking, it will be the action's configuration that determines how the attack is rolled.
+
+**Limited Uses**: If the item only has a limited number of uses, or charges per day, this can be configured here.
+
+## Attack & Effect Notes
+
+These notes will appear in chat cards, visible only to users with owner permissions for this item.
+
+## Aura
+
+The weapon's magic aura, including its school and caster level, can be entered here.
+
+## Details
+
+**Create Attack**: Clicking this button will create an Attack item in this actor's combat tab.
 
 **Category**: The weapon's category (simple, martial, exotic or misc)
 
@@ -20,15 +39,3 @@ Weapons are meant to represent physical weapons that a character can hold.
 **Weapon Properties**: The weapon's properties, as per the Core rules (does nothing mechanically)
 
 **Enhancement Bonus**: The item's enhancement bonus, as per the Core rules
-
-**Bonus Attack Formula**: The weapon's attack bonus formula. Examples:
-
-- `@abilities.str.mod < 3 ? -2 : 0` will incur a penalty to the attack roll of -2 if the wielder's Strength modifier is lower than 3.
-
-**Base Weapon Damage**: The first field indicates the damage die a Medium-sized weapon would deal, and the second field indicates the type of damage it deals (i.e. Bludgeoning, Slashing, etc.).
-
-**Bonus Damage Formula**: The bonus damage the weapon deals. Examples:
-
-- `min(4, @abilities.str.mod)` will add either 4 or the wielder's Strength modifier to the damage roll, whichever is lower.
-
-**Base Weapon Critical**: The first field indicates the lowest result of the attack's d20 to be a critical threat, and the second field indicates the amount by which the damage is multiplied.

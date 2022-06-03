@@ -1285,7 +1285,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Filter out attacks without ammo usage
-    if (this.data.data.usesAmmo) {
+    if (shared.action.data.usesAmmo) {
       shared.attacks = shared.attacks.filter((o) => o.ammo != null);
       if (shared.attacks.length === 0) {
         ui.notifications.error(game.i18n.localize("PF1.AmmoDepleted"));

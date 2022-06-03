@@ -1883,19 +1883,35 @@
 /* Damage Type Selector
 /* ----------------------------------------- */
 .pf1.damage-type-selector {
-  .damage-types {
-    border-right: 1px dashed black;
-    flex: 2;
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
-  .damage-types,
-  .damage-modifiers {
-    label {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      font-weight: bold;
-      font-size: 18pt;
+  .damage-type-container {
+    flex: 0 0 calc(100% - 72px);
+    height: calc(100% - 72px);
+
+    .damage-type-categories {
+      border-right: 1px dashed black;
+      flex: 2;
+      overflow-y: auto;
+      height: 100%;
+    }
+
+    .damage-types,
+    .damage-modifiers {
+      label {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        font-size: 18pt;
+      }
+    }
+
+    .damage-modifiers {
+      overflow-y: auto;
+      height: 100%;
     }
   }
 

@@ -21,11 +21,40 @@ export class DamageTypeSelector extends FormApplication {
     return `action-${this.object.id}_${this._dataPath}`;
   }
 
+  get damageCategorySortOrder() {
+    return ["physical", "energy", "misc"];
+  }
+
   async getData(options) {
     const data = await super.getData(options);
 
     const damageTypes = game.pf1.registry.getDamageTypes();
     data.damageTypes = damageTypes.filter((o) => !o.isModifier).map((o) => o.toObject());
+
+    // Add damage type categories
+    data.damageCategories = data.damageTypes.reduce((cur, o) => {
+      let categoryObj = cur.find((o2) => o2.key === o.category);
+      if (!categoryObj) {
+        categoryObj = { key: o.category, label: `PF1.DamageTypeCategory.${o.category}`, data: [] };
+        cur.push(categoryObj);
+      }
+      categoryObj.data.push(o);
+      return cur;
+    }, []);
+    // Sort damage type categories
+    {
+      const sortOrder = this.damageCategorySortOrder;
+      data.damageCategories = data.damageCategories.sort((a, b) => {
+        const idxA = sortOrder.indexOf(a.key);
+        const idxB = sortOrder.indexOf(b.key);
+        if (idxA === -1 && idxB >= 0) return 1;
+        if (idxB === -1 && idxA >= 0) return -1;
+        if (idxA > idxB) return 1;
+        if (idxA < idxB) return -1;
+        return 0;
+      });
+    }
+
     data.damageModifiers = damageTypes.filter((o) => o.isModifier).map((o) => o.toObject());
     data.data = this._data;
 

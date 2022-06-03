@@ -11,6 +11,7 @@ export const registerDamageTypes = function () {
       _id: "untyped",
       name: "PF1.DamageTypeUntyped",
       img: "icons/magic/control/silhouette-grow-shrink-tan.webp",
+      category: "misc",
     })
   );
   // Slashing
@@ -20,6 +21,7 @@ export const registerDamageTypes = function () {
       _id: "slashing",
       name: "PF1.DamageTypeSlashing",
       img: "icons/skills/melee/strike-sword-steel-yellow.webp",
+      category: "physical",
     })
   );
   // Piercing
@@ -29,6 +31,7 @@ export const registerDamageTypes = function () {
       _id: "piercing",
       name: "PF1.DamageTypePiercing",
       img: "icons/skills/ranged/arrow-flying-gray-brown.webp",
+      category: "physical",
     })
   );
   // Bludgeoning
@@ -38,6 +41,7 @@ export const registerDamageTypes = function () {
       _id: "bludgeoning",
       name: "PF1.DamageTypeBludgeoning",
       img: "icons/skills/melee/strike-hammer-destructive-blue.webp",
+      category: "physical",
     })
   );
 
@@ -48,6 +52,7 @@ export const registerDamageTypes = function () {
       _id: "fire",
       name: "PF1.DamageTypeFire",
       img: "icons/magic/fire/projectile-fireball-smoke-strong-orange.webp",
+      category: "energy",
     })
   );
   // Cold
@@ -57,6 +62,7 @@ export const registerDamageTypes = function () {
       _id: "cold",
       name: "PF1.DamageTypeCold",
       img: "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
+      category: "energy",
     })
   );
   // Electric
@@ -66,6 +72,7 @@ export const registerDamageTypes = function () {
       _id: "electric",
       name: "PF1.DamageTypeElectricity",
       img: "icons/magic/lightning/bolt-strike-blue.webp",
+      category: "energy",
     })
   );
   // Acid
@@ -75,6 +82,7 @@ export const registerDamageTypes = function () {
       _id: "acid",
       name: "PF1.DamageTypeAcid",
       img: "icons/magic/acid/dissolve-drip-droplet-smoke.webp",
+      category: "energy",
     })
   );
   // Sonic
@@ -84,6 +92,7 @@ export const registerDamageTypes = function () {
       _id: "sonic",
       name: "PF1.DamageTypeSonic",
       img: "icons/magic/sonic/explosion-impact-shock-wave.webp",
+      category: "energy",
     })
   );
   // Force
@@ -93,6 +102,7 @@ export const registerDamageTypes = function () {
       _id: "force",
       name: "PF1.DamageTypeForce",
       img: "icons/magic/lightning/orb-ball-purple.webp",
+      category: "misc",
     })
   );
   // Negative Energy
@@ -102,6 +112,7 @@ export const registerDamageTypes = function () {
       _id: "negative",
       name: "PF1.DamageTypeNegative",
       img: "icons/magic/unholy/beam-impact-purple.webp",
+      category: "misc",
     })
   );
   // Positive Energy
@@ -111,6 +122,7 @@ export const registerDamageTypes = function () {
       _id: "positive",
       name: "PF1.DamageTypePositive",
       img: "icons/magic/light/beam-explosion-orange.webp",
+      category: "misc",
     })
   );
 
@@ -152,6 +164,7 @@ export class DamageType extends BaseRegistryObject {
   static get _baseData() {
     return mergeObject(super._baseData, {
       img: "icons/svg/explosion.svg",
+      category: "misc",
     });
   }
 

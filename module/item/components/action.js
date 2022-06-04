@@ -935,4 +935,14 @@ export class ItemAction {
     }
     return result;
   }
+
+  /**
+   * @param {object} options - See ItemPF#useAttack.
+   * @returns {Promise<void>}
+   */
+  async use(options = {}) {
+    options.actionID = this.id;
+
+    return this.item.useAttack(options);
+  }
 }

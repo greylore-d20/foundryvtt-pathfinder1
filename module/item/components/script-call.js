@@ -22,7 +22,7 @@ export class ItemScriptCall {
     if (parent instanceof game.pf1.documents.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newScriptCallData = deepClone(parent.data.data.changes || []);
+      const newScriptCallData = deepClone(parent.data.data.scriptCalls || []);
       newScriptCallData.push(...data);
 
       // Update parent

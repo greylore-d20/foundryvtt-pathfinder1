@@ -1060,7 +1060,7 @@ export const postMessage = async function (shared) {
 
   // Create message
   const template = game.settings.get("pf1", "attackChatCardTemplate");
-  shared.templateData.registry = game.pf1.registry.getRawData();
+  shared.templateData.damageTypes = game.pf1.damageTypes.toRecord();
 
   // Show chat message
   let result;

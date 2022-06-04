@@ -176,7 +176,7 @@
     {{#each data.damage.parts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="damage.parts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "1") name=(concat "damage.parts." i ".1") damageTypes=@root.registry.damageTypes}}
+      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "1") name=(concat "damage.parts." i ".1") damageTypes=@root.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
@@ -198,7 +198,7 @@
     {{#each data.damage.critParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="damage.critParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "1") name=(concat "damage.critParts." i ".1") damageTypes=@root.registry.damageTypes}}
+      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "1") name=(concat "damage.critParts." i ".1") damageTypes=@root.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
@@ -217,7 +217,7 @@
     {{#each data.damage.nonCritParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
       <input class="damage-formula formula" type="text" name="damage.nonCritParts.{{i}}.0" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{lookup this "0"}}"/>
-      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "1") name=(concat "damage.nonCritParts." i ".1") damageTypes=@root.registry.damageTypes}}
+      {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "1") name=(concat "damage.nonCritParts." i ".1") damageTypes=@root.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
@@ -256,7 +256,7 @@
 {{!-- Secondary Natural Attack properties --}}
 {{#if isNaturalAttack}}
   <hr>
-  
+
   <h4 class="attack-header">{{localize "PF1.SecondaryAttack"}}</h4>
 
   <div class="form-group">

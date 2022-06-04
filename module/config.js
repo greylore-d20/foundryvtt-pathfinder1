@@ -854,8 +854,7 @@ export const PF1 = {
    * The damage types
    */
   get damageTypes() {
-    const db = game.pf1.registry.getDamageTypes();
-    return db.reduce((cur, o) => {
+    return game.pf1.damageTypes.reduce((cur, o) => {
       cur[o.id] = game.i18n.localize(o.name);
       return cur;
     }, {});

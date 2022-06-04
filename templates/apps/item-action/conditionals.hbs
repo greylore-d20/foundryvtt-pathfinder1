@@ -54,7 +54,7 @@
 
           {{#if (eq modifier.target "damage")}}
           <div class="conditional-damage-type">
-              {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "damageType") name=(concat "conditionals." a ".modifiers." m ".damageType") damageTypes=@root.registry.damageTypes}}
+              {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "damageType") name=(concat "conditionals." a ".modifiers." m ".damageType") damageTypes=@root.damageTypes}}
           </div>
           {{/if}}
 

@@ -109,9 +109,6 @@ import * as migrations from "./module/migration.js";
 import * as macros from "./module/macros.js";
 import * as controls from "./module/controls.js";
 import * as ItemAttack from "./module/item/attack.js";
-import { Registry } from "./module/registry.js";
-import { registerDamageTypes, DamageType } from "./module/registry/damage-types.js";
-import { registerScriptCalls, ScriptCall } from "./module/registry/script-call.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
@@ -122,6 +119,9 @@ import { ItemConditional, ItemConditionalModifier } from "./module/item/componen
 import { ActionChooser } from "./module/apps/action-chooser.js";
 import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
 import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
+import { BaseRegistry } from "./module/registry/base-registry.js";
+import { DamageTypes } from "./module/registry/damage-types.js";
+import { ScriptCalls } from "./module/registry/script-call.js";
 
 // OBSOLETE: Add String.format
 if (!String.prototype.format) {
@@ -251,11 +251,9 @@ Hooks.once("init", function () {
       ItemScriptCall,
     },
     // API
-    registry: Registry,
-    registryTypes: {
-      ScriptCall,
-      DamageType,
-    },
+    baseRegistry: BaseRegistry,
+    damageTypes: new DamageTypes(),
+    scriptCalls: new ScriptCalls(),
     // Macros
     macros,
     rollItemMacro: macros.rollItemMacro,
@@ -367,10 +365,6 @@ Hooks.once("init", function () {
     types: ["container"],
     makeDefault: true,
   });
-
-  // Register data in the registry
-  registerScriptCalls();
-  registerDamageTypes();
 
   // Initialize socket listener
   initializeSocket();

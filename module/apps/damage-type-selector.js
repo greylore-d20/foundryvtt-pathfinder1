@@ -28,8 +28,8 @@ export class DamageTypeSelector extends FormApplication {
   async getData(options) {
     const data = await super.getData(options);
 
-    const damageTypes = game.pf1.registry.getDamageTypes();
-    data.damageTypes = damageTypes.filter((o) => !o.isModifier).map((o) => o.toObject());
+    const damageTypes = game.pf1.damageTypes;
+    data.damageTypes = damageTypes.filter((o) => !o.isModifier).map((o) => o.toJSON());
 
     // Add damage type categories
     data.damageCategories = data.damageTypes.reduce((cur, o) => {
@@ -55,7 +55,7 @@ export class DamageTypeSelector extends FormApplication {
       });
     }
 
-    data.damageModifiers = damageTypes.filter((o) => o.isModifier).map((o) => o.toObject());
+    data.damageModifiers = damageTypes.filter((o) => o.isModifier).map((o) => o.toJSON());
     data.data = this._data;
 
     return data;

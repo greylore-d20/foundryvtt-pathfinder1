@@ -57,7 +57,8 @@ export class ItemActionSheet extends FormApplication {
     data.item = this.item;
     data.actor = this.actor;
     data.data = this.action.data;
-    data.registry = game.pf1.registry.getRawData();
+    data.damageTypes = game.pf1.damageTypes.toRecord();
+    data.scriptCalls = game.pf1.scriptCalls.toJSON();
 
     // Include CONFIG values
     data.config = CONFIG.PF1;

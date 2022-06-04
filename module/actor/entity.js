@@ -498,7 +498,7 @@ export class ActorPF extends ActorBasePF {
       }, false);
       if (!isClassSkill) {
         isClassSkill = this.data.items.reduce((cur, value) => {
-          if (["feat", "racial", "trait"].includes(value.data.data.featType)) {
+          if (value.data.type === 'feat') {
             if ((value.data.data.classSkills || {})[k] === true) return true;
             return cur;
           }

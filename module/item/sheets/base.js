@@ -248,26 +248,22 @@ export class ItemSheetPF extends ItemSheet {
     if (data.item.type === "feat") {
       data.isClassFeature = getProperty(this.item.data, "data.featType") === "classFeat";
       data.isTemplate = getProperty(this.item.data, "data.featType") === "template";
-      data.hasClassSkills = false;
 
-      if (["feat", "racial", "trait"].includes(getProperty(this.item.data, "data.featType"))) {
-        data.hasClassSkills = true;
-        // Add skill list
-        if (!this.actor) {
-          data.skills = Object.entries(CONFIG.PF1.skills).reduce((cur, o) => {
-            cur[o[0]] = { name: o[1], classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };
-            return cur;
-          }, {});
-        } else {
-          // Get sorted skill list from config, custom skills get appended to bottom of list
-          const skills = mergeObject(duplicate(CONFIG.PF1.skills), this.actor.data.data.skills);
-          data.skills = Object.entries(skills).reduce((cur, o) => {
-            const key = o[0];
-            const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
-            cur[o[0]] = { name: name, classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };
-            return cur;
-          }, {});
-        }
+      // Add skill list
+      if (!this.actor) {
+        data.skills = Object.entries(CONFIG.PF1.skills).reduce((cur, o) => {
+          cur[o[0]] = { name: o[1], classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };
+          return cur;
+        }, {});
+      } else {
+        // Get sorted skill list from config, custom skills get appended to bottom of list
+        const skills = mergeObject(duplicate(CONFIG.PF1.skills), this.actor.data.data.skills);
+        data.skills = Object.entries(skills).reduce((cur, o) => {
+          const key = o[0];
+          const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
+          cur[o[0]] = { name: name, classSkill: getProperty(this.item.data, `data.classSkills.${o[0]}`) === true };
+          return cur;
+        }, {});
       }
     }
 

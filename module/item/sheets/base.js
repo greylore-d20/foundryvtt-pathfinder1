@@ -1533,7 +1533,7 @@ export class ItemSheetPF extends ItemSheet {
     const key = a.closest(".notes").dataset.name;
 
     if (a.classList.contains("add-entry")) {
-      const notes = getProperty(this.document.data, key);
+      const notes = getProperty(this.document.data, key) ?? [];
       const updateData = {};
       updateData[key] = notes.concat("");
       return this._onSubmit(event, { updateData });

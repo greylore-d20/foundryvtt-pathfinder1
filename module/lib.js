@@ -1114,3 +1114,50 @@ export function refreshActors(options = { renderOnly: false, renderForEveryone: 
     game.socket.emit("pf1", "refreshActorSheets");
   }
 }
+
+/**
+ * Turns dictionaries with numbered keys into arrays.
+ *
+ * @param {object} sourceObj The source object which contains the full array in the same path as targetObj.
+ * @param {object} targetObj The target object to alter. The array doesn't have to be immediately in this object.
+ * @param {string} keepPath A path to the array to keep, separated with dots. e.g. "data.damageParts".
+ */
+export function keepUpdateArray(sourceObj, targetObj, keepPath) {
+  const subData = Object.entries(targetObj).filter((e) => e[0].startsWith(`${keepPath}.`));
+
+  if (subData.length > 0) {
+    const arr = deepClone(getProperty(sourceObj, keepPath) || []);
+    const keySeparatorCount = (keepPath.match(/\./g) || []).length;
+    subData.forEach((entry) => {
+      const subKey = entry[0].split(".").slice(keySeparatorCount + 1);
+      const i = subKey[0];
+      const subKey2 = subKey.slice(1).join(".");
+      if (!arr[i]) arr[i] = {};
+
+      // Single entry array
+      if (!subKey2) {
+        arr[i] = entry[1];
+      }
+      // Remove property
+      else if (subKey[subKey.length - 1].startsWith("-=")) {
+        const obj = flattenObject(arr[i]);
+        subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
+        const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
+        for (const k of deleteKeys) {
+          if (Object.prototype.hasOwnProperty.call(obj, k)) {
+            delete obj[k];
+          }
+        }
+        arr[i] = expandObject(obj);
+      }
+      // Add or change property
+      else {
+        arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
+      }
+
+      delete targetObj[entry[0]];
+    });
+
+    targetObj[keepPath] = arr;
+  }
+}

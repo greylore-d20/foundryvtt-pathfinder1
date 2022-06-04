@@ -118,6 +118,7 @@ import { ItemChange } from "./module/item/components/change.js";
 import { ItemScriptCall } from "./module/item/components/script-call.js";
 import { ItemAction } from "./module/item/components/action.js";
 import { ItemActionSheet } from "./module/item/components/sheets/action.js";
+import { ItemConditional, ItemConditionalModifier } from "./module/item/components/conditionals.js";
 import { ActionChooser } from "./module/apps/action-chooser.js";
 import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
 import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
@@ -245,6 +246,8 @@ Hooks.once("init", function () {
     documentComponents: {
       ItemChange,
       ItemAction,
+      ItemConditional,
+      ItemConditionalModifier,
       ItemScriptCall,
     },
     // API

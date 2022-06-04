@@ -4,6 +4,7 @@ export class ItemActionSheet extends FormApplication {
 
     this.item.apps[this.appId] = this;
     this.action.apps[this.appId] = this;
+    this.action.sheet = this;
   }
 
   static get defaultOptions() {
@@ -114,10 +115,6 @@ export class ItemActionSheet extends FormApplication {
           modifier.subTargets = this.object.getConditionalSubTargets(modifier.target);
           modifier.conditionalModifierTypes = this.object.getConditionalModifierTypes(modifier.target);
           modifier.conditionalCritical = this.object.getConditionalCritical(modifier.target);
-          modifier.isAttack = modifier.target === "attack";
-          modifier.isDamage = modifier.target === "damage";
-          modifier.isSize = modifier.target === "size";
-          modifier.isSpell = modifier.target === "spell";
         }
       }
     }
@@ -245,40 +242,32 @@ export class ItemActionSheet extends FormApplication {
     // Add new conditional
     if (a.classList.contains("add-conditional")) {
       await this._onSubmit(event); // Submit any unsaved changes
-      const conditionals = duplicate(this.object.data.conditionals || []);
-      return this.object.update({
-        conditionals: conditionals.concat([game.pf1.documentComponents.ItemAction.defaultConditional]),
-      });
+      return game.pf1.documentComponents.ItemConditional.create([{}], { parent: this.object });
     }
 
     // Remove a conditional
     if (a.classList.contains("delete-conditional")) {
       await this._onSubmit(event); // Submit any unsaved changes
       const li = a.closest(".conditional");
-      const conditionals = duplicate(this.object.data.conditionals);
-      conditionals.splice(Number(li.dataset.conditional), 1);
-      return this.object.update({ conditionals: conditionals });
+      const conditional = this.object.conditionals.get(li.dataset.conditional);
+      return conditional.delete();
     }
 
     // Add a new conditional modifier
     if (a.classList.contains("add-conditional-modifier")) {
       await this._onSubmit(event);
       const li = a.closest(".conditional");
-      const conditionals = this.object.data.conditionals;
-      conditionals[Number(li.dataset.conditional)].modifiers.push(
-        game.pf1.documentComponents.ItemAction.defaultConditionalModifier
-      );
-      // duplicate object to ensure update
-      return this.object.update({ conditionals: duplicate(conditionals) });
+      const conditional = this.object.conditionals.get(li.dataset.conditional);
+      return game.pf1.documentComponents.ItemConditionalModifier.create([{}], { parent: conditional });
     }
 
     // Remove a conditional modifier
     if (a.classList.contains("delete-conditional-modifier")) {
       await this._onSubmit(event);
       const li = a.closest(".conditional-modifier");
-      const conditionals = duplicate(this.object.data.conditionals);
-      conditionals[Number(li.dataset.conditional)].modifiers.splice(Number(li.dataset.modifier), 1);
-      return this.object.update({ conditionals: conditionals });
+      const conditional = this.object.conditionals.get(li.dataset.conditional);
+      const modifier = conditional.modifiers.get(li.dataset.modifier);
+      return modifier.delete();
     }
   }
 
@@ -293,7 +282,7 @@ export class ItemActionSheet extends FormApplication {
     event.preventDefault();
     const a = event.currentTarget;
     const list = a.closest(".damage");
-    const k = list.dataset.key || "data.damage.parts";
+    const k = list.dataset.key || "damage.parts";
     const k2 = k.split(".").slice(0, -1).join(".");
     const k3 = k.split(".").slice(-1).join(".");
 
@@ -304,7 +293,7 @@ export class ItemActionSheet extends FormApplication {
       const initialData = ["", damageTypeBase];
 
       // Add data
-      const damage = getProperty(this.action, k2);
+      const damage = getProperty(this.action.data, k2);
       const updateData = {};
       updateData[k] = getProperty(damage, k3).concat([initialData]);
       return this._onSubmit(event, { updateData });
@@ -313,7 +302,7 @@ export class ItemActionSheet extends FormApplication {
     // Remove a damage component
     if (a.classList.contains("delete-damage")) {
       const li = a.closest(".damage-part");
-      const damage = duplicate(getProperty(this.action, k2));
+      const damage = duplicate(getProperty(this.action.data, k2));
       getProperty(damage, k3).splice(Number(li.dataset.damagePart), 1);
       const updateData = {};
       updateData[k] = getProperty(damage, k3);
@@ -324,9 +313,22 @@ export class ItemActionSheet extends FormApplication {
   async _onClickDamageType(event) {
     event.preventDefault();
     const clickedElement = event.currentTarget;
-    const dataPath = clickedElement.dataset.name;
+    let dataPath = clickedElement.dataset.name;
+    let targetObj = this.object;
 
-    const app = new game.pf1.applications.DamageTypeSelector(this.action, dataPath);
+    // Check for conditional
+    {
+      const conditionalElement = clickedElement.closest(".conditional");
+      const modifierElement = clickedElement.closest(".conditional-modifier");
+      if (conditionalElement && modifierElement) {
+        const conditional = this.object.conditionals.get(conditionalElement.dataset.conditional);
+        const modifier = conditional.modifiers.get(modifierElement.dataset.modifier);
+        targetObj = modifier;
+        dataPath = "damageType";
+      }
+    }
+
+    const app = new game.pf1.applications.DamageTypeSelector(targetObj, dataPath);
     app.render(true);
   }
 
@@ -419,49 +421,39 @@ export class ItemActionSheet extends FormApplication {
 
   async _updateObject(event, formData) {
     // Handle conditionals array
-    const conditionals = Object.entries(formData).filter((e) => e[0].startsWith("data.conditionals"));
-    formData["data.conditionals"] = conditionals.reduce((arr, entry) => {
-      const [i, j, k] = entry[0].split(".").slice(2);
-      if (!arr[i]) arr[i] = game.pf1.documentComponents.ItemAction.defaultConditional;
-      if (k) {
-        const target = formData[`data.conditionals.${i}.${j}.target`];
-        if (!arr[i].modifiers[j])
-          arr[i].modifiers[j] = game.pf1.documentComponents.ItemAction.defaultConditionalModifier;
-        arr[i].modifiers[j][k] = entry[1];
-        // Target dependent keys
-        if (["subTarget", "critical", "type"].includes(k)) {
-          const target = (conditionals.find((o) => o[0] === `data.conditionals.${i}.${j}.target`) || [])[1];
-          const val = entry[1];
-          if (typeof target === "string") {
-            let keys;
-            switch (k) {
-              case "subTarget":
-                keys = Object.keys(this.action.getConditionalSubTargets(target));
-                break;
-              case "type":
-                keys = Object.keys(this.action.getConditionalModifierTypes(target));
-                break;
-              case "critical":
-                keys = Object.keys(this.action.getConditionalCritical(target));
-                break;
-            }
-            // Reset subTarget, non-damage type, and critical if necessary
-            if (!keys.includes(val) && target !== "damage" && k !== "type") arr[i].modifiers[j][k] = keys[0];
-          }
+    const conditionalData = deepClone(this.object.data.conditionals);
+    Object.entries(formData)
+      .filter((o) => o[0].startsWith("conditionals"))
+      .forEach((o) => {
+        let reResult;
+        // Handle conditional modifier
+        if ((reResult = o[0].match(/^conditionals.([0-9]+).modifiers.([0-9]+).(.+)$/))) {
+          const conditionalIdx = parseInt(reResult[1]);
+          const modifierIdx = parseInt(reResult[2]);
+          const conditional =
+            conditionalData[conditionalIdx] ?? deepClone(this.object.data.conditionals[conditionalIdx]);
+          const path = reResult[3];
+          setProperty(conditional.modifiers[modifierIdx], path, o[1]);
         }
-      } else {
-        arr[i][j] = entry[1];
-      }
-      return arr;
-    }, []);
+        // Handle conditional
+        else if ((reResult = o[0].match(/^conditionals.([0-9]+).(.+)$/))) {
+          const conditionalIdx = parseInt(reResult[1]);
+          const conditional =
+            conditionalData[conditionalIdx] ?? deepClone(this.object.data.conditionals[conditionalIdx]);
+          const path = reResult[2];
+          setProperty(conditional, path, o[1]);
+        }
+      });
+    formData["conditionals"] = conditionalData;
 
     formData = expandObject(formData);
-    return this.action.update(formData.data);
+    return this.action.update(formData);
   }
 
   async close(options) {
     delete this.item.apps[this.appId];
     delete this.action.apps[this.appId];
+    this.action.sheet = null;
     return super.close(options);
   }
 }

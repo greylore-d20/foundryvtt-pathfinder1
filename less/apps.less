@@ -190,6 +190,7 @@
 
   /* Form Groups */
   .form-group {
+    flex: 0;
     gap: 3px;
 
     label {
@@ -1915,6 +1916,12 @@
     }
   }
 
+  .misc-container {
+    div.custom {
+      flex: 1;
+    }
+  }
+
   .icon-row {
     display: grid;
     flex-flow: row wrap;
@@ -2253,6 +2260,8 @@
   background-color: rgba(0, 0, 0, 0.05);
   vertical-align: middle;
   line-height: 24px;
+  white-space: nowrap;
+  overflow: hidden;
 
   &.empty {
     display: flex;

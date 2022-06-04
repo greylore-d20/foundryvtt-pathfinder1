@@ -1,13 +1,16 @@
 import { calculateRange, convertDistance } from "../../lib.js";
 import { getHighestChanges } from "../../actor/apply-changes.js";
 import { RollPF } from "../../roll.js";
-import { PF1 } from "../../config.js";
+import { keepUpdateArray } from "../../lib.js";
 
 export class ItemAction {
   constructor(data, parent) {
     this.data = data;
     this.parent = parent;
     this.apps = {};
+    this.sheet = null;
+
+    this.prepareData();
   }
 
   /**
@@ -35,24 +38,6 @@ export class ItemAction {
     }
 
     return [];
-  }
-
-  static get defaultConditional() {
-    return {
-      default: false,
-      name: "",
-      modifiers: [],
-    };
-  }
-  static get defaultConditionalModifier() {
-    return {
-      formula: "",
-      target: "",
-      subTarget: "",
-      type: "",
-      damageType: this.defaultDamageType,
-      critical: "",
-    };
   }
 
   static get defaultDamageType() {
@@ -327,14 +312,32 @@ export class ItemAction {
   }
 
   prepareData() {
-    const data = this.data;
-
     this.labels = {};
 
     // Parse formulaic attacks
     if (this.hasAttack) {
       this.parseFormulaicAttacks({ formula: getProperty(this.data, "data.formulaicAttacks.count.formula") });
     }
+
+    // Update conditionals
+    if (this.data.conditionals instanceof Array) {
+      this.conditionals = this._prepareConditionals(this.data.conditionals);
+    }
+  }
+
+  _prepareConditionals(conditionals) {
+    const prior = this.conditionals;
+    const collection = new Collection();
+    for (const o of conditionals) {
+      let conditional = null;
+      if (prior && prior.has(o._id)) {
+        conditional = prior.get(o._id);
+        conditional.data = o;
+        conditional.prepareData();
+      } else conditional = new game.pf1.documentComponents.ItemConditional(o, this);
+      collection.set(o._id || conditional.data._id, conditional);
+    }
+    return collection;
   }
 
   async delete() {
@@ -356,67 +359,31 @@ export class ItemAction {
   async update(updateData, options = {}) {
     const idx = this.item.data.data.actions.indexOf(this.data);
     const prevData = deepClone(this.data);
-    const newUpdateData = flattenObject(mergeObject(prevData, updateData));
-    if (!newUpdateData["name"]) newUpdateData["name"] = this.name;
+    const newUpdateData = flattenObject(mergeObject(prevData, expandObject(updateData)));
 
-    // Remove non-array conditionals data
-    {
-      const subData = Object.keys(newUpdateData).filter((e) => e.startsWith("conditionals."));
-      if (subData.length > 0) subData.forEach((s) => delete newUpdateData[s]);
-    }
+    // Make sure this action has a name, even if it's removed
+    if (!newUpdateData["name"]) newUpdateData["name"] = this.name;
 
     // Make sure stuff remains an array
     {
-      const keepArray = [
-        { key: "attackParts" },
-        { key: "damage.parts" },
-        { key: "damage.critParts" },
-        { key: "damage.nonCritParts" },
-        { key: "attackNotes" },
-        { key: "effectNotes" },
+      const keepPaths = [
+        "attackParts",
+        "damage.parts",
+        "damage.critParts",
+        "damage.nonCritParts",
+        "attackNotes",
+        "effectNotes",
+        "conditionals",
       ];
 
-      for (const kArr of keepArray) {
-        if (Object.keys(newUpdateData).filter((e) => e.startsWith(`${kArr.key}.`)).length > 0) {
-          const subData = Object.entries(newUpdateData).filter((e) => e[0].startsWith(`${kArr.key}.`));
-          const arr = duplicate(getProperty(this.data, kArr.key) || []);
-          const keySeparatorCount = (kArr.key.match(/\./g) || []).length;
-          subData.forEach((entry) => {
-            const subKey = entry[0].split(".").slice(keySeparatorCount + 1);
-            const i = subKey[0];
-            const subKey2 = subKey.slice(1).join(".");
-            if (!arr[i]) arr[i] = {};
-
-            // Single entry array
-            if (!subKey2) {
-              arr[i] = entry[1];
-            }
-            // Remove property
-            else if (subKey[subKey.length - 1].startsWith("-=")) {
-              const obj = flattenObject(arr[i]);
-              subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
-              const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
-              for (const k of deleteKeys) {
-                if (Object.prototype.hasOwnProperty.call(obj, k)) {
-                  delete obj[k];
-                }
-              }
-              arr[i] = expandObject(obj);
-            }
-            // Add or change property
-            else {
-              arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
-            }
-
-            delete newUpdateData[entry[0]];
-          });
-
-          newUpdateData[kArr.key] = arr;
-        }
+      for (const path of keepPaths) {
+        keepUpdateArray(this.data, newUpdateData, path);
       }
     }
 
     await this.item.update({ [`data.actions.${idx}`]: expandObject(newUpdateData) });
+    console.log(this.sheet);
+    await this.sheet?.render();
   }
 
   // -----------------------------------------------------------------------
@@ -874,7 +841,7 @@ export class ItemAction {
     if (["attack", "damage"].includes(target)) {
       // Add specific attacks
       if (this.hasAttack) {
-        result["attack.0"] = `${game.i18n.localize("PF1.Attack")} 1`;
+        result["attack_0"] = `${game.i18n.localize("PF1.Attack")} 1`;
       } else {
         delete result["rapidShotDamage"];
       }

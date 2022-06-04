@@ -291,6 +291,7 @@ export const migrateItemActionData = function (action, item) {
   action = mergeObject(game.pf1.documentComponents.ItemAction.defaultData, action);
 
   _migrateActionDamageType(action, item);
+  _migrateActionConditionals(action, item);
 
   // Return the migrated update data
   return action;
@@ -1063,16 +1064,49 @@ const _migrateItemActions = function (item, updateData) {
 };
 
 const _migrateActionDamageType = function (action, item) {
-  // Convert damage type
+  // Determine data paths using damage types
   const damageGroupPaths = ["damage.parts", "damage.critParts", "damage.nonCritParts"];
   for (const damageGroupPath of damageGroupPaths) {
     const damageGroup = getProperty(action, damageGroupPath);
     for (const damagePart of damageGroup) {
+      // Convert damage types
       const damageType = damagePart[1];
       if (typeof damageType === "string") {
         const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
-        damageTypeData.values = _convertDamageType(damageType);
+        damageTypeData.values = _Action_ConvertDamageType(damageType);
         damagePart[1] = damageTypeData;
+      }
+      // Convert array to object
+      else if (damageType instanceof Array) {
+        const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
+        damageTypeData.values = damageType;
+        damagePart[1] = damageTypeData;
+      }
+    }
+  }
+};
+
+const _migrateActionConditionals = function (action, item) {
+  for (const conditional of action.conditionals ?? []) {
+    // Create conditional ID
+    if (!conditional._id) conditional._id = randomID(16);
+
+    for (const modifier of conditional.modifiers) {
+      // Create modifier ID
+      if (!modifier._id) modifier._id = randomID(16);
+
+      let reResult;
+      // Convert modifier subtarget
+      if ((reResult = modifier.subTarget.match(/^attack\.([0-9]+)/))) {
+        modifier.subTarget = `attack_${reResult[1]}`;
+      }
+
+      // Convert modifier damage type
+      if (modifier.target === "damage" && !modifier.damageType) {
+        const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
+        damageTypeData.values = _Action_ConvertDamageType(modifier.type);
+        modifier.damageType = damageTypeData;
+        modifier.type = "";
       }
     }
   }
@@ -1336,7 +1370,7 @@ const _migrateActorSenses = function (ent, updateData, linked, token) {
   }
 };
 
-const _convertDamageType = function (damageTypeString) {
+const _Action_ConvertDamageType = function (damageTypeString) {
   const separator = /(?:\s*\/\s*|\s+and\s+|\s+or\s+)/i;
   const damageTypeList = [
     {

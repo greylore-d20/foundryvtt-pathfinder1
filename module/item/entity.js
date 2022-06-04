@@ -1,9 +1,16 @@
 import { ItemBasePF } from "./base.js";
 import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { createTag, linkData, convertDistance, convertWeight, convertWeightBack, calculateRange } from "../lib.js";
+import {
+  createTag,
+  linkData,
+  convertDistance,
+  convertWeight,
+  convertWeightBack,
+  calculateRange,
+  keepUpdateArray,
+} from "../lib.js";
 import { ItemChange } from "./components/change.js";
-import { ItemScriptCall } from "./components/script-call.js";
 import { getHighestChanges } from "../actor/apply-changes.js";
 import { RollPF } from "../roll.js";
 
@@ -589,151 +596,21 @@ export class ItemPF extends ItemBasePF {
     }
     const srcData = mergeObject(duplicate(this.data), data, { inplace: false });
 
-    // Make sure changes remains an array
-    if (Object.keys(data).filter((e) => e.startsWith("data.changes.")).length > 0) {
-      const changeIndexes = [];
-      let subData = Object.entries(data).filter((e) => e[0].startsWith("data.changes."));
-      const arr = duplicate(this.data.data.changes || []);
-
-      // Get pre update data for changes
-      subData.forEach((entry) => {
-        const i = entry[0].split(".").slice(2)[0];
-
-        // Add change update data
-        if (!changeIndexes.includes(i)) {
-          changeIndexes.push(i);
-          const changeID = this.data.data.changes[i]._id;
-          const change = this.changes.get(changeID);
-          if (change) {
-            const changeDataPrefix = `data.changes.${i}.`;
-            const thisChangeData = subData
-              .filter((o) => o[0].startsWith(changeDataPrefix))
-              .reduce((cur, o) => {
-                const key = o[0].slice(changeDataPrefix.length);
-                cur[key] = o[1];
-                return cur;
-              }, {});
-            const preUpdateData = change.preUpdate(thisChangeData);
-
-            // Apply pre-update data to the data to be parsed
-            for (const [k, v] of Object.entries(preUpdateData)) {
-              const dataKey = `data.changes.${i}.${k}`;
-              data[dataKey] = v;
-            }
-          }
-        }
-      });
-      // Refresh sub-data
-      subData = Object.entries(data).filter((e) => e[0].startsWith("data.changes."));
-
-      subData.forEach((entry) => {
-        const subKey = entry[0].split(".").slice(2);
-        const i = subKey[0];
-        const subKey2 = subKey.slice(1).join(".");
-
-        if (!arr[i]) arr[i] = {};
-
-        // Remove property
-        if (subKey[subKey.length - 1].startsWith("-=")) {
-          const obj = flattenObject(arr[i]);
-          subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
-          const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
-          for (const k of deleteKeys) {
-            if (Object.prototype.hasOwnProperty.call(obj, k)) {
-              delete obj[k];
-            }
-          }
-          arr[i] = expandObject(obj);
-        }
-        // Add or change property
-        else {
-          arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
-        }
-
-        delete data[entry[0]];
-      });
-      linkData(srcData, data, "data.changes", arr);
-    }
-
-    // Make sure inventory contents remains an array
-    if (Object.keys(data).filter((e) => e.startsWith("data.inventoryItems.")).length > 0) {
-      const subData = Object.entries(data).filter((e) => e[0].startsWith("data.inventoryItems."));
-      const arr = duplicate(this.data.data.inventoryItems || []);
-      subData.forEach((entry) => {
-        const subKey = entry[0].split(".").slice(2);
-        const i = subKey[0];
-        const subKey2 = subKey.slice(1).join(".");
-        if (!arr[i]) arr[i] = {};
-
-        // Remove property
-        if (subKey[subKey.length - 1].startsWith("-=")) {
-          const obj = flattenObject(arr[i]);
-          subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
-          const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
-          for (const k of deleteKeys) {
-            if (Object.prototype.hasOwnProperty.call(obj, k)) {
-              delete obj[k];
-            }
-          }
-          arr[i] = expandObject(obj);
-        }
-        // Add or change property
-        else {
-          arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
-        }
-
-        delete data[entry[0]];
-      });
-      linkData(srcData, data, "data.inventoryItems", arr);
-    }
-
     // Make sure stuff remains an array
     {
-      const keepArray = [
-        { key: "data.attackNotes" },
-        { key: "data.effectNotes" },
-        { key: "data.contextNotes" },
-        { key: "data.scriptCalls" },
-        { key: "data.actions" },
+      const keepPaths = [
+        "data.attackNotes",
+        "data.effectNotes",
+        "data.contextNotes",
+        "data.scriptCalls",
+        "data.actions",
+        "data.inventoryItems",
+        "data.changes",
       ];
 
-      for (const kArr of keepArray) {
-        if (Object.keys(data).filter((e) => e.startsWith(`${kArr.key}.`)).length > 0) {
-          const subData = Object.entries(data).filter((e) => e[0].startsWith(`${kArr.key}.`));
-          const arr = duplicate(getProperty(this.data, kArr.key) || []);
-          const keySeparatorCount = (kArr.key.match(/\./g) || []).length;
-          subData.forEach((entry) => {
-            const subKey = entry[0].split(".").slice(keySeparatorCount + 1);
-            const i = subKey[0];
-            const subKey2 = subKey.slice(1).join(".");
-            if (!arr[i]) arr[i] = {};
-
-            // Single entry array
-            if (!subKey2) {
-              arr[i] = entry[1];
-            }
-            // Remove property
-            else if (subKey[subKey.length - 1].startsWith("-=")) {
-              const obj = flattenObject(arr[i]);
-              subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
-              const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
-              for (const k of deleteKeys) {
-                if (Object.prototype.hasOwnProperty.call(obj, k)) {
-                  delete obj[k];
-                }
-              }
-              arr[i] = expandObject(obj);
-            }
-            // Add or change property
-            else {
-              arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
-            }
-
-            delete data[entry[0]];
-          });
-
-          linkData(srcData, data, kArr.key, arr);
-        }
+      for (const path of keepPaths) {
+        keepUpdateArray(this.data, data, path);
+        linkData(srcData, data, path, data[path]);
       }
     }
 

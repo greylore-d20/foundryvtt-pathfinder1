@@ -72,7 +72,6 @@ export class DamageTypeSelector extends FormApplication {
     const dataPath = elem.name;
 
     let value = elem.value;
-    console.log(elem);
     if (elem.type === "checkbox") value = elem.checked;
 
     switch (elem.dataset.dtype) {

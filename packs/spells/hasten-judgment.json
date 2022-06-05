@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "c74l3ma1cmff6vvf",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one living or corporeal undead creature"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -160,86 +162,17 @@
       "bloodline": []
     },
     "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "nec",
-    "subschool": "",
     "types": "curse",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "2 silver pieces",
-      "focus": "",
-      "gpValue": 0
+      "value": "2 silver pieces"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This potent curse weighs upon the target's soul, hastening a living creature's journey to the Boneyard upon death or weakening an undead creature's animating force. A living creature that dies during the spell's duration cannot be affected by <i>Breath of Life</i> or similar effects, and the period during which attempts to restore the target to life can succeed is reduced to 1 hour/level (for <i>raise</i> dead), 1 day/level (for resurrection), or 10 days/level (for <i>true</i> resurrection). <i>Reincarnate</i> and similar effects work normally on a creature killed under this spell's effects.  An undead creature affected by this spell cannot gain temporary hit points, and any existing channel resistance the undead may have is reduced by half as long as the curse persists.  Creatures whose souls are separate from their bodies (such as liches) or are merged with their bodies (such as non-native outsiders) are unaffected by <i>hasten judgment</i>.</p>",
-    "spellDuration": "1 day/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one living or corporeal undead creature"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This potent curse weighs upon the target's soul, hastening a living creature's journey to the Boneyard upon death or weakening an undead creature's animating force. A living creature that dies during the spell's duration cannot be affected by <i>Breath of Life</i> or similar effects, and the period during which attempts to restore the target to life can succeed is reduced to 1 hour/level (for <i>raise</i> dead), 1 day/level (for resurrection), or 10 days/level (for <i>true</i> resurrection). <i>Reincarnate</i> and similar effects work normally on a creature killed under this spell's effects.  An undead creature affected by this spell cannot gain temporary hit points, and any existing channel resistance the undead may have is reduced by half as long as the curse persists.  Creatures whose souls are separate from their bodies (such as liches) or are merged with their bodies (such as non-native outsiders) are unaffected by <i>hasten judgment</i>.</p>"
   },
   "effects": [],
   "folder": null,

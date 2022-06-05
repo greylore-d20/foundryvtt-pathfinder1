@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "bqxi9bsbcj6lz6nw",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -132,84 +134,12 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
-      "verbal": false,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This extract greatly enhances the effects of any potion or elixir you consume. For the duration of this extract, any potion or elixir you consume is treated as if it were empowered. Increase all variable numeric effects of the potion or elixir by half. If the potion or elixir does not have any variable numeric effects, it is instead treated as if it were extended (double the duration of the potion or elixir). If the potion or elixir does not have any variable numeric effects, or has an instantaneous duration, amplify elixir has no effect. Amplify elixir affects oils that target you, but it has no effect on oils that target your equipment.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This extract greatly enhances the effects of any potion or elixir you consume. For the duration of this extract, any potion or elixir you consume is treated as if it were empowered. Increase all variable numeric effects of the potion or elixir by half. If the potion or elixir does not have any variable numeric effects, it is instead treated as if it were extended (double the duration of the potion or elixir). If the potion or elixir does not have any variable numeric effects, or has an instantaneous duration, amplify elixir has no effect. Amplify elixir affects oils that target you, but it has no effect on oils that target your equipment.</p>"
   },
   "effects": [],
   "folder": null,

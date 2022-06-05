@@ -4,17 +4,12 @@
   "type": "spell",
   "img": "icons/skills/social/intimidation-impressing.webp",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "nf4c0zmj7pcv7vxf",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/skills/social/intimidation-impressing.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +17,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -42,14 +37,14 @@
         },
         "uses": {
           "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
+          "autoDeductChargesCost": "1 + @sl",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -76,7 +71,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -85,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,16 +101,15 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -141,123 +135,14 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
-    "subschool": "",
     "types": "language-dependent, mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
+      "somatic": true
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">By speaking eloquently on the subject of your opponents&rsquo; ineptitude in combat, past failures, personal hygiene, or other faults, you sap their will to fight.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell can be cast as a standard action or as a full-round action. If cast as a standard action, it takes effect in 1d4 rounds following the spell&rsquo;s casting. If cast as a full-round action, it takes effect 1 round after its casting. Enemies with 4 Hit Dice or fewer are @Compendium[pf1.conditions.xhQma4Gl4wLO0jnZ]{Panicked}, enemies with 5&ndash;8 Hit Dice are @Compendium[pf1.conditions.M9FWe38D2J740wLH]{Cowering}, and enemies with more than 8 Hit Dice are @Compendium[pf1.conditions.07JPXUqIPshVnTCL]{Shaken}.</span></p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": "1 or more living creatures/level, no two of which may be more than 30 feet apart"
-    },
-    "range": {
-      "value": null,
-      "units": "close",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "conditionals": [],
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Debilitating Speech",
-    "size": "med"
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">By speaking eloquently on the subject of your opponents&rsquo; ineptitude in combat, past failures, personal hygiene, or other faults, you sap their will to fight.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">This spell can be cast as a standard action or as a full-round action. If cast as a standard action, it takes effect in 1d4 rounds following the spell&rsquo;s casting. If cast as a full-round action, it takes effect 1 round after its casting. Enemies with 4 Hit Dice or fewer are @Compendium[pf1.conditions.xhQma4Gl4wLO0jnZ]{Panicked}, enemies with 5&ndash;8 Hit Dice are @Compendium[pf1.conditions.M9FWe38D2J740wLH]{Cowering}, and enemies with more than 8 Hit Dice are @Compendium[pf1.conditions.07JPXUqIPshVnTCL]{Shaken}.</span></p>"
   },
   "effects": [],
   "folder": null,

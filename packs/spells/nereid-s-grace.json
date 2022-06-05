@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "h6fos3m3x35pn5hk",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -139,85 +141,13 @@
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 1,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You radiate the unearthly grace of a nereid. If you're not wearing armor, you gain a deflection bonus to your AC and CMD equal to your Charisma bonus (maximum +3). The maximum increases by 1 for every 6 levels you possess (maximum +6 at 18th level).</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You radiate the unearthly grace of a nereid. If you're not wearing armor, you gain a deflection bonus to your AC and CMD equal to your Charisma bonus (maximum +3). The maximum increases by 1 for every 6 levels you possess (maximum +6 at 18th level).</p>"
   },
   "effects": [],
   "folder": null,

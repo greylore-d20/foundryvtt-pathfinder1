@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "3c9kah34bm1qgie3",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -168,86 +170,15 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting, ruse",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
+      "somatic": true
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.vqfrp8t0c1lw1jna]{Heroism}, except that you can reverse the spell by issuing a special command as a standard action if you are within medium range (100 feet + 10 feet per caster level) of the target. The target loses the bonuses and instead takes a -2 penalty on attack rolls, saving throws, and skill checks until the spell's duration ends (no save). Attempts to identify hollow <em>heroism</em> with a skill check incorrectly identify it as <em>heroism</em> (see the ruse descriptor on page 192).</p>",
-    "spellDuration": "10 minutes/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.vqfrp8t0c1lw1jna]{Heroism}, except that you can reverse the spell by issuing a special command as a standard action if you are within medium range (100 feet + 10 feet per caster level) of the target. The target loses the bonuses and instead takes a -2 penalty on attack rolls, saving throws, and skill checks until the spell's duration ends (no save). Attempts to identify hollow <em>heroism</em> with a skill check incorrectly identify it as <em>heroism</em> (see the ruse descriptor on page 192).</p>"
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/skills/ice_01.jpg",
   "data": {
     "description": {
-      "value": "<p>As a standard action, you can fire an icicle from your finger, targeting any foe within 30 feet as a ranged touch attack. The icicle deals 1d6 points of cold damage + 1 point for every two cleric levels you possess. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>As a standard action, you can fire an icicle from your finger, targeting any foe within 30 feet as a ranged touch attack. The icicle deals 1d6 points of cold damage + 1 point for every two cleric levels you possess. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "5mwt49sjonhozigt",
+        "_id": "zhjtuld6s2jwuyeu",
         "name": "Use",
         "img": "systems/pf1/icons/skills/ice_01.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "3 + @abilities.wis.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "3 + @abilities.wis.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +61,12 @@
           "parts": [
             [
               "1d6 + floor(@classes.cleric.level / 2)",
-              "Cold"
+              {
+                "values": [
+                  "cold"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -109,23 +112,22 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "3 + @abilities.wis.mod",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "3 + @abilities.wis.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -134,16 +136,13 @@
     "tag": "classFeat_icicle",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -158,84 +157,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "sp",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "rsak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "1d6 + floor(@classes.cleric.level / 2)",
-          "Cold"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "sp"
   },
   "effects": [],
   "folder": null,

@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "8v04m71oijsfsp2p",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates, see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -136,86 +138,16 @@
       "bloodline": []
     },
     "level": 7,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "teleportation",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
-      "verbal": false,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "empty crystal box",
-      "focus": "",
-      "gpValue": 0
+      "value": "empty crystal box"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell is similar to <i>ethereal envelope</i>, but it allows you to shunt an unwilling creature to the Ethereal Plane and seal it there within a cocoon of misty ethereal fibers. If the target fails its save, it's forced into a cataleptic meditative state as if unconscious. However, each round at the end of its turn, it can attempt a Will save to awaken itself from this meditation. Once the target awakens, it is considered pinned, treating your caster level as your CMB and your CMD as 10 + your caster level + your ability modifier for your primary spellcasting ability score. A successful grapple combat maneuver check or Escape Artist check leaves the creature grappled rather than pinned but doesn't allow it to escape. However, a trapped creature can attack the cocoon as described in the <i>ethereal envelope</i> spell description.  If the creature breaks free of the <i>ethereal envelopment</i> or  you dismiss the spell, the target is returned to its prior location on the Material Plane, as described for <i>ethereal envelope</i>, but if the target is conscious at the time, it doesn't spend a round asleep or staggered.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates, see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell is similar to <i>ethereal envelope</i>, but it allows you to shunt an unwilling creature to the Ethereal Plane and seal it there within a cocoon of misty ethereal fibers. If the target fails its save, it's forced into a cataleptic meditative state as if unconscious. However, each round at the end of its turn, it can attempt a Will save to awaken itself from this meditation. Once the target awakens, it is considered pinned, treating your caster level as your CMB and your CMD as 10 + your caster level + your ability modifier for your primary spellcasting ability score. A successful grapple combat maneuver check or Escape Artist check leaves the creature grappled rather than pinned but doesn't allow it to escape. However, a trapped creature can attack the cocoon as described in the <i>ethereal envelope</i> spell description.  If the creature breaks free of the <i>ethereal envelopment</i> or  you dismiss the spell, the target is returned to its prior location on the Material Plane, as described for <i>ethereal envelope</i>, but if the target is conscious at the time, it doesn't spend a round asleep or staggered.</p>"
   },
   "effects": [],
   "folder": null,

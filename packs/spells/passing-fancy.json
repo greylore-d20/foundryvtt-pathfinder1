@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "3xu3jxkoit3logxq",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one living creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -148,86 +150,14 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>Taldor's infamous Lion Blades imported this spell from the ninja clans of Minkai, and both groups use it to great effect when maneuvering among the shallow upper classes. When you cast the spell, you dictate one specific topic or recent event and instill a magical obsession with that subject within the target. An affected creature becomes fascinated by the topic, and becomes  completely focused on discussing the event with anyone nearby, possibly wandering off or distracting unaffected creatures. <i>Passing fancy</i> has no effect on a creature with an Intelligence of 2 or less.  Because the target talks and interacts with its usual cadence, onlookers take a -10 penalty on Sense Motive checks to notice that anything is amiss with the target's behavior.</p>",
-    "spellDuration": "4d4 rounds (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one living creature"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>Taldor's infamous Lion Blades imported this spell from the ninja clans of Minkai, and both groups use it to great effect when maneuvering among the shallow upper classes. When you cast the spell, you dictate one specific topic or recent event and instill a magical obsession with that subject within the target. An affected creature becomes fascinated by the topic, and becomes  completely focused on discussing the event with anyone nearby, possibly wandering off or distracting unaffected creatures. <i>Passing fancy</i> has no effect on a creature with an Intelligence of 2 or less.  Because the target talks and interacts with its usual cadence, onlookers take a -10 penalty on Sense Motive checks to notice that anything is amiss with the target's behavior.</p>"
   },
   "effects": [],
   "folder": null,

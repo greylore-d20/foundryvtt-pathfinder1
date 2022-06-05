@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ta7v2dq8669v4b8s",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one creature/2 levels (no two of which may be more than 30 ft. apart)"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -140,86 +142,13 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
       "divineFocus": 1
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You emit a calming subsonic drone that allows the targets to temporarily refocus and restore their balance when they're suffering from debilitating conditions. A target with the dazzled, fatigued, shaken, or sickened condition ignores the penalties of those conditions for the duration of this spell. A target with one of the following conditions is treated as having the associated lesser condition for the duration of the spell, as shown by the following table.</p><p>   <table border ='1'><tr><th>Condition</th><th>Lesser Condition</th></tr><tr><td>Blinded</td><td>Dazzled</td></tr><tr><td>Exhausted</td><td>Fatigued</td></tr><tr><td>Frightened</td><td>Shaken</td></tr><tr><td>Nauseated</td><td>Sickened</td></tr></table>    At the end of the spell's duration, the targets are again subject to the appropriate penalties if the original conditions affecting the target are still in effect.</p>",
-    "spellDuration": "concentration",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature/2 levels (no two of which may be more than 30 ft. apart)"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You emit a calming subsonic drone that allows the targets to temporarily refocus and restore their balance when they're suffering from debilitating conditions. A target with the dazzled, fatigued, shaken, or sickened condition ignores the penalties of those conditions for the duration of this spell. A target with one of the following conditions is treated as having the associated lesser condition for the duration of the spell, as shown by the following table.</p><p>   <table border ='1'><tr><th>Condition</th><th>Lesser Condition</th></tr><tr><td>Blinded</td><td>Dazzled</td></tr><tr><td>Exhausted</td><td>Fatigued</td></tr><tr><td>Frightened</td><td>Shaken</td></tr><tr><td>Nauseated</td><td>Sickened</td></tr></table>    At the end of the spell's duration, the targets are again subject to the appropriate penalties if the original conditions affecting the target are still in effect.</p>"
   },
   "effects": [],
   "folder": null,

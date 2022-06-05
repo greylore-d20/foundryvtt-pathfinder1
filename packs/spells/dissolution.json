@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "8i1nfbt3g4nbigst",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "Tiny or smaller object touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates (object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -148,86 +150,23 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
       "value": "vial of alchemical reagents worth 50 gp",
-      "focus": "",
       "gpValue": 50
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You touch a Tiny or smaller item, causing the item to vanish as if it did not exist at all. The item doesn't take damage or otherwise gain any condition; it simply ceases to be visible to or interact with the world in any way, as if it no longer existed. The oil vanishes with the item and leaves no residue, nor does it affect surfaces that handle or hold the item during its application. No spell or ability short of <i>miracle</i> or <i>wish</i> can locate or affect the item  while it is under the effect of this spell. Though the item seems to not exist while under the effects of this spell, its own reality is consistent (it ages normally, and any ongoing effects upon it continue normally). The target object can be one size larger than Tiny for every 5 caster levels above 5th you possess.  The target item returns to existence when the spell's duration expires. An item returns to existence in exactly the same location and condition it left. If the location no longer has room for the item, the item takes 1d0 points of damage (bypassing hardness) and is teleported to the nearest location that has room for it. If that location is more than 5 feet from the original location, there is a 25% chance the item is instead shifted to a randomly determined alternate plane.</p>",
-    "spellDuration": "10 minutes/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "Tiny or smaller object touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates (object)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>You touch a Tiny or smaller item, causing the item to vanish as if it did not exist at all. The item doesn't take damage or otherwise gain any condition; it simply ceases to be visible to or interact with the world in any way, as if it no longer existed. The oil vanishes with the item and leaves no residue, nor does it affect surfaces that handle or hold the item during its application. No spell or ability short of <i>miracle</i> or <i>wish</i> can locate or affect the item  while it is under the effect of this spell. Though the item seems to not exist while under the effects of this spell, its own reality is consistent (it ages normally, and any ongoing effects upon it continue normally). The target object can be one size larger than Tiny for every 5 caster levels above 5th you possess.  The target item returns to existence when the spell's duration expires. An item returns to existence in exactly the same location and condition it left. If the location no longer has room for the item, the item takes 1d0 points of damage (bypassing hardness) and is teleported to the nearest location that has room for it. If that location is more than 5 feet from the original location, there is a 25% chance the item is instead shifted to a randomly determined alternate plane.</p>"
   },
   "effects": [],
   "folder": null,

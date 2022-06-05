@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "v395ebx0tokwcuaa",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 hour/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "extradimensional space up to 1 cu. ft./level",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -129,82 +133,17 @@
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 1,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "creation",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": false,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
-      "value": "",
-      "focus": "a pocket and a silver button",
-      "gpValue": 0
+      "focus": "a pocket and a silver button"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>With a touch, you conjure an extradimensional space inside a pouch or pocket. The pocket acts as a <i>bag of holding</i>, except it can hold only 10 pounds per caster level. Regardless of what is placed into the pocket, it weighs 3 pounds. Unlike a <i>bag of holding</i>, the pocket created by this ability cannot be overloaded or ruptured-any additional material simply spills out of the top-nor does it have any special interaction with other kinds of extradimensional spaces.  An <i>arcane pocket</i> grants you a +1 bonus on Sleight of Hand checks to conceal its contents. The pocket becomes nonmagical, spilling all of its contents onto the ground unharmed, if it leaves your possession or you create a new <i>arcane pocket</i>.</p>",
-    "spellDuration": "1 hour/level",
-    "spellEffect": "extradimensional space up to 1 cu. ft./level",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>With a touch, you conjure an extradimensional space inside a pouch or pocket. The pocket acts as a <i>bag of holding</i>, except it can hold only 10 pounds per caster level. Regardless of what is placed into the pocket, it weighs 3 pounds. Unlike a <i>bag of holding</i>, the pocket created by this ability cannot be overloaded or ruptured-any additional material simply spills out of the top-nor does it have any special interaction with other kinds of extradimensional spaces.  An <i>arcane pocket</i> grants you a +1 bonus on Sleight of Hand checks to conceal its contents. The pocket becomes nonmagical, spilling all of its contents onto the ground unharmed, if it leaves your possession or you create a new <i>arcane pocket</i>.</p>"
   },
   "effects": [],
   "folder": null,

@@ -5,26 +5,17 @@
   "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
   "data": {
     "description": {
-      "value": "<p>At the start of your turn, you can choose to enter a tranquil, reflective state and forgo all actions (standard, move, swift, immediate, and free actions, including attacks of opportunity) for that round; one ally of your choice within 30 feet gains the benefit of&nbsp;haste&nbsp;for 1 round. You can use this ability a number of times per day equal to your 3 + Wisdom bonus (minimum 1).</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>At the start of your turn, you can choose to enter a tranquil, reflective state and forgo all actions (standard, move, swift, immediate, and free actions, including attacks of opportunity) for that round; one ally of your choice within 30 feet gains the benefit of&nbsp;haste&nbsp;for 1 round. You can use this ability a number of times per day equal to your 3 + Wisdom bonus (minimum 1).</p>"
     },
     "tags": [],
     "actions": [],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "3 + @abilities.wis.mod",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "3 + @abilities.wis.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -33,16 +24,13 @@
     "tag": "classFeat_inquisitorsDirection",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -57,79 +45,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": "1",
-      "units": "round"
-    },
-    "target": {
-      "value": "one ally"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

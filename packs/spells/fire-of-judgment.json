@@ -4,25 +4,20 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "b0gmx9kypf5ainyr",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "swift"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 1,
             "type": "action"
           }
         },
@@ -34,7 +29,11 @@
           "value": "one creature"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will partial"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -131,84 +134,12 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>After casting this spell, the next creature you attack using your smite evil class ability is engulfed in flames of positive energy. At the start of its turn, the target takes 1d6 points of damage, and takes an additional 1d6 points of damage each time it attacks a creature other than you. If the creature is an outsider with the evil subtype, an evil-aligned dragon, or an undead creature this damage increases to 1d10. With a successful saving throw, a creature is affected by this spell for only 1 round. This damage is divine in nature and bypasses any DR the creature possesses.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "swift"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will partial"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "range": {
-      "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>After casting this spell, the next creature you attack using your smite evil class ability is engulfed in flames of positive energy. At the start of its turn, the target takes 1d6 points of damage, and takes an additional 1d6 points of damage each time it attacks a creature other than you. If the creature is an outsider with the evil subtype, an evil-aligned dragon, or an undead creature this damage increases to 1d10. With a successful saving throw, a creature is affected by this spell for only 1 round. This damage is divine in nature and bypasses any DR the creature possesses.</p>"
   },
   "effects": [],
   "folder": null,

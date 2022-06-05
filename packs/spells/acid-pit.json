@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "txj3iv90jhcd2e4z",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 round + 1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex negates; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "10-ft.-by-10-ft. hole, 10 ft. deep/2 levels",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -138,83 +142,21 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "creation",
     "types": "acid",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
       "material": true,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
       "value": "drop of acid",
-      "focus": "Fine shovel worth 10 gp",
-      "gpValue": 0
+      "focus": "Fine shovel worth 10 gp"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This spell functions as create pit, except that it places a 5-footdeep pool of acid at the bottom of the pit. The pit has a maximum depth of 100 feet. Creatures who fall into the pit take falling damage as normal (the acid counts as a yielding surface), plus 2d6 points of acid damage per round spent in contact with the acid. In addition, exposed items carried by a creature in the pit may be harmed. Refer to Table 9-2: Items Affected by Magical Attacks (Core Rulebook 216). Items are affected one at a time in the order listed on the table, and must make Fortitude saves after 3 consecutive rounds in the acid or gain the broken condition. Objects with the broken condition (regardless of how they became broken) must make a Fortitude saving throw each round spent within the acid or be destroyed. The walls of the pit are quite slippery and have a Climb DC of 30.</p>",
-    "spellDuration": "1 round + 1 round/level",
-    "spellEffect": "10-ft.-by-10-ft. hole, 10 ft. deep/2 levels",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "medium",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex negates; see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell functions as create pit, except that it places a 5-footdeep pool of acid at the bottom of the pit. The pit has a maximum depth of 100 feet. Creatures who fall into the pit take falling damage as normal (the acid counts as a yielding surface), plus 2d6 points of acid damage per round spent in contact with the acid. In addition, exposed items carried by a creature in the pit may be harmed. Refer to Table 9-2: Items Affected by Magical Attacks (Core Rulebook 216). Items are affected one at a time in the order listed on the table, and must make Fortitude saves after 3 consecutive rounds in the acid or gain the broken condition. Objects with the broken condition (regardless of how they became broken) must make a Fortitude saving throw each round spent within the acid or be destroyed. The walls of the pit are quite slippery and have a Climb DC of 30.</p>"
   },
   "effects": [],
   "folder": null,

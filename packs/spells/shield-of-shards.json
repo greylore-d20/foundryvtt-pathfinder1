@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "d2rjasx25zbf7mnw",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one shield you wield"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -156,84 +158,17 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
-      "value": "",
-      "focus": "a shield",
-      "gpValue": 0
+      "focus": "a shield"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This defensive spell must be cast on a shield you are currently wielding, and fractures the shield into two shards, plus one additional shard per 2 caster levels (to a maximum of 12 shards at 20th level). While <i>shield of shards</i> is active, you lose your shield's bonus to AC as its broken pieces orbit you. On your turn, you can direct the shards to attack an adjacent opponent as a move action. The shards' attack bonus is equal to your caster level + the modifier for the ability score that determines your spell save DCs. The shards deal an amount of slashing and piercing damage equal to 1d4 points + 1 point per shard beyond the first, and have a threat range of 19-20. They are considered magic weapons for the purpose of bypassing damage reduction. Additionally, if your shield is made from a special material (such as adamantine), the shards penetrate damage reduction and hardness as if they were weapons made from the same material.  At the end of this spell's duration, the shards reform into their original shield form. You regain its shield bonus to AC, provided you still have a free hand in which to wield it. Otherwise, the shield falls at your feet in your square.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one shield you wield"
-    },
-    "range": {
-      "units": "personal",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This defensive spell must be cast on a shield you are currently wielding, and fractures the shield into two shards, plus one additional shard per 2 caster levels (to a maximum of 12 shards at 20th level). While <i>shield of shards</i> is active, you lose your shield's bonus to AC as its broken pieces orbit you. On your turn, you can direct the shards to attack an adjacent opponent as a move action. The shards' attack bonus is equal to your caster level + the modifier for the ability score that determines your spell save DCs. The shards deal an amount of slashing and piercing damage equal to 1d4 points + 1 point per shard beyond the first, and have a threat range of 19-20. They are considered magic weapons for the purpose of bypassing damage reduction. Additionally, if your shield is made from a special material (such as adamantine), the shards penetrate damage reduction and hardness as if they were weapons made from the same material.  At the end of this spell's duration, the shards reform into their original shield form. You regain its shield bonus to AC, provided you still have a free hand in which to wield it. Otherwise, the shield falls at your feet in your square.</p>"
   },
   "effects": [],
   "folder": null,

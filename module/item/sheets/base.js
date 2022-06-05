@@ -517,10 +517,9 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   async _prepareScriptCalls(data) {
-    const categories = game.pf1.registry.getItemScriptCategories().filter((o) => {
-      if (!o.itemTypes.includes(this.document.type)) return false;
-      if (o.hidden === true && !game.user.isGM) return false;
-      return true;
+    const categories = game.pf1.scriptCalls.filter((o) => {
+      if (!o.data.itemTypes.includes(this.document.type)) return false;
+      return !(o.hidden === true && !game.user.isGM);
     });
     // Don't show the Script Calls section if there are no categories for this item type
     if (!categories.length) {
@@ -571,12 +570,12 @@ export class ItemSheetPF extends ItemSheet {
 
     // Create categories, and assign items to them
     for (const c of categories) {
-      data.scriptCalls[c.key] = {
+      data.scriptCalls[c.id] = {
         name: game.i18n.localize(c.name),
         info: c.info ? game.i18n.localize(c.info) : null,
-        items: scriptCalls.filter((o) => o.category === c.key),
+        items: scriptCalls.filter((o) => o.category === c.id),
         dataset: {
-          category: c.key,
+          category: c.id,
         },
       };
     }
@@ -1533,7 +1532,7 @@ export class ItemSheetPF extends ItemSheet {
     const key = a.closest(".notes").dataset.name;
 
     if (a.classList.contains("add-entry")) {
-      const notes = getProperty(this.document.data, key);
+      const notes = getProperty(this.document.data, key) ?? [];
       const updateData = {};
       updateData[key] = notes.concat("");
       return this._onSubmit(event, { updateData });

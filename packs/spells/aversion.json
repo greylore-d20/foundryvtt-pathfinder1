@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "e3clewqyferezbdj",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will partial"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -160,86 +162,14 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You plant a revulsion in the mind of the subject, causing her to avoid an object or location. You must choose a specific object or place. A location chosen in this way can be no larger than a cube measuring 50 feet on a side. The aversion is entirely in the target's mind, so the chosen object or location itself isn't subject to any magical effect. If the target fails her saving throw, she can't come within 60 feet of the chosen object or place. She makes every reasonable effort to avoid the object of the aversion, but will not put herself in danger in order to maintain the aversion. For example, if the object of the aversion is a bridge but a forest fire is closing in and will likely kill the target, she ignores the aversion and crosses the bridge to save herself. If the target must ignore the conditions of the aversion, she is nauseated until she is no longer violating the aversion.  If the target succeeds at her saving throw, she is instead sickened while within 60 feet of the object or place, but isn't compelled to stay away from it.</p>",
-    "spellDuration": "1 day/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will partial"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You plant a revulsion in the mind of the subject, causing her to avoid an object or location. You must choose a specific object or place. A location chosen in this way can be no larger than a cube measuring 50 feet on a side. The aversion is entirely in the target's mind, so the chosen object or location itself isn't subject to any magical effect. If the target fails her saving throw, she can't come within 60 feet of the chosen object or place. She makes every reasonable effort to avoid the object of the aversion, but will not put herself in danger in order to maintain the aversion. For example, if the object of the aversion is a bridge but a forest fire is closing in and will likely kill the target, she ignores the aversion and crosses the bridge to save herself. If the target must ignore the conditions of the aversion, she is nauseated until she is no longer violating the aversion.  If the target succeeds at her saving throw, she is instead sickened while within 60 feet of the object or place, but isn't compelled to stay away from it.</p>"
   },
   "effects": [],
   "folder": null,

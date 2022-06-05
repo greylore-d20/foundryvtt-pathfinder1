@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "6zvk6ao599gbb81k",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "creature touched"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -140,86 +142,17 @@
       "bloodline": []
     },
     "level": 9,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
     "subschool": "polymorph",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
-      "value": "",
-      "focus": "a book bound in precious metals and treated with rare oils, worth 1,000 gp per HD of the target",
-      "gpValue": 0
+      "focus": "a book bound in precious metals and treated with rare oils, worth 1,000 gp per HD of the target"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>Hermea's benevolent Council of Enlightenment uses this spell to humanely preserve their society's greatest minds from the ravages of time, though it has seen far more sinister employment when put to use by other organizations that have since discovered its utility. This spell binds a single creature into a prepared book, sustaining it in suspended animation and filling the book with its experience and knowledge. The tome weighs 10 pounds and has one page for every day of the subject's life. The cover and binding transform to reflect the subject's appearance, interests, and tastes. Every thought and memory-including those the target may have forgotten long ago-are perfectly transcribed within the enchanted pages, penned in excruciating detail in the language that the creature was thinking or speaking in when the event occurred. If a memory includes dialogue in a language the subject didn't understand, that dialogue is reproduced phonetically, and must be translated by a reader who knows that language. Any alterations to a subject's memories-such as by a <i>modify memory</i> spell-appear in a subtly different script; a successful DC 35 Linguistics check is needed to identify this.  Spells that modify or remove text-such as <i>erase</i> or <i>secret page</i>-also affect the target's memory if they persist after its release. <i>Modify memory</i> can be used to repair any changes to its original state, or alter the accounts recorded within the book. A creature imprisoned by scribe's binding automatically fails any saving throws against effects to change or modify its memories.  A target bound by this spell can be freed by only <i>freedom</i>, <i>miracle</i>, or <i>wish</i>. <i>Polymorph any object</i> restores the target's normal form for 24 hours. Scribe's binding makes the imprisoning tome supernaturally durable (hardness 20, 10 hp per HD the imprisoned creature had). Destroying the tome immediately slays the creature imprisoned within.</p>",
-    "spellDuration": "permanent",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>Hermea's benevolent Council of Enlightenment uses this spell to humanely preserve their society's greatest minds from the ravages of time, though it has seen far more sinister employment when put to use by other organizations that have since discovered its utility. This spell binds a single creature into a prepared book, sustaining it in suspended animation and filling the book with its experience and knowledge. The tome weighs 10 pounds and has one page for every day of the subject's life. The cover and binding transform to reflect the subject's appearance, interests, and tastes. Every thought and memory-including those the target may have forgotten long ago-are perfectly transcribed within the enchanted pages, penned in excruciating detail in the language that the creature was thinking or speaking in when the event occurred. If a memory includes dialogue in a language the subject didn't understand, that dialogue is reproduced phonetically, and must be translated by a reader who knows that language. Any alterations to a subject's memories-such as by a <i>modify memory</i> spell-appear in a subtly different script; a successful DC 35 Linguistics check is needed to identify this.  Spells that modify or remove text-such as <i>erase</i> or <i>secret page</i>-also affect the target's memory if they persist after its release. <i>Modify memory</i> can be used to repair any changes to its original state, or alter the accounts recorded within the book. A creature imprisoned by scribe's binding automatically fails any saving throws against effects to change or modify its memories.  A target bound by this spell can be freed by only <i>freedom</i>, <i>miracle</i>, or <i>wish</i>. <i>Polymorph any object</i> restores the target's normal form for 24 hours. Scribe's binding makes the imprisoning tome supernaturally durable (hardness 20, 10 hp per HD the imprisoned creature had). Destroying the tome immediately slays the creature imprisoned within.</p>"
   },
   "effects": [],
   "folder": null,

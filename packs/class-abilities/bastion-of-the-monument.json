@@ -5,26 +5,17 @@
   "img": "systems/pf1/icons/items/inventory/banner-red.jpg",
   "data": {
     "description": {
-      "value": "<p>At 15th level, the cavalier defends his homeland with unmatched ferocity. As a swift action, the cavalier can declare an opponent an enemy of his settlement. This grants the cavalier and his allies a +4 bonus on attack rolls, damage rolls, and ability and skill checks against the opponent, as well as on saving throws to resist effects originating from that opponent. The cavalier can end this ability as a swift action. He can use this ability for a number of rounds per day equal to half his cavalier level. This duration need not be continuous but must be used in 1-round increments.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>At 15th level, the cavalier defends his homeland with unmatched ferocity. As a swift action, the cavalier can declare an opponent an enemy of his settlement. This grants the cavalier and his allies a +4 bonus on attack rolls, damage rolls, and ability and skill checks against the opponent, as well as on saving throws to resist effects originating from that opponent. The cavalier can end this ability as a swift action. He can use this ability for a number of rounds per day equal to half his cavalier level. This duration need not be continuous but must be used in 1-round increments.</p>"
     },
     "tags": [],
     "actions": [],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "floor(@classes.cavalier.level / 2)",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "floor(@classes.cavalier.level / 2)"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -33,16 +24,13 @@
     "tag": "classFeat_bastionOfTheMonument",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -57,79 +45,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "ex",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "swift"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": "1",
-      "units": "round"
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "ex"
   },
   "effects": [],
   "folder": null,

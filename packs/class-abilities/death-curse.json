@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/skills/violet_02.jpg",
   "data": {
     "description": {
-      "value": "<p>This powerful hex seizes a creature's heart, causing death within just a few moments. This hex has a range of 30 feet. The hexed creature receives a Will save to negate the effect. If this save is failed, the creature becomes fatigued the first round of the hex.</p>\n<p>On the second round of the hex, the creature becomes exhausted.</p>\n<p>On the third round, the creature dies unless it succeeds at a Fort save.</p>\n<p>Creatures that fail the first save but succeed at the second remain exhausted and take 4d6 points of damage + 1 point of damage per level of the witch.</p>\n<p>Slaying the witch that hexed the creature ends the effect, but any fatigue or exhaustion remains.</p>\n<p>Whether or not the saves are successful, a creature cannot be the target of this hex again for 1 day.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>This powerful hex seizes a creature's heart, causing death within just a few moments. This hex has a range of 30 feet. The hexed creature receives a Will save to negate the effect. If this save is failed, the creature becomes fatigued the first round of the hex.</p>\n<p>On the second round of the hex, the creature becomes exhausted.</p>\n<p>On the third round, the creature dies unless it succeeds at a Fort save.</p>\n<p>Creatures that fail the first save but succeed at the second remain exhausted and take 4d6 points of damage + 1 point of damage per level of the witch.</p>\n<p>Slaying the witch that hexed the creature ends the effect, but any fatigue or exhaustion remains.</p>\n<p>Whether or not the saves are successful, a creature cannot be the target of this hex again for 1 day.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "uygc81oj5bcmzey3",
+        "_id": "y5r0kxude9h2yxkp",
         "name": "Use",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -104,23 +102,21 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -129,16 +125,13 @@
     "tag": "classFeat_deathCurse",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -153,79 +146,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": "one living creature"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates; Fortitude partial"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "j9xfa5r5rxsrawi9",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +25,15 @@
           "value": "concentration, up to 1 minute/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 60,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "cone-shaped emanation",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -171,84 +174,19 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "div",
-    "subschool": "",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
       "focus": true,
       "divineFocus": 3
     },
-    "castTime": "",
     "materials": {
-      "value": "",
-      "focus": "a medallion",
-      "gpValue": 0
+      "focus": "a medallion"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This spell functions as <i>detect thoughts</i> except that you sense significant anxieties of creatures with an Intelligence score of 1 or higher, regardless of whether they are conscious or not.  Instead of Intelligence, the second round of concentration reveals each mind's Wisdom score and current degree of fear (shaken, frightened, panicked, cowering, or paralyzed with fear). If the highest Wisdom score is 26 or higher (and at least 10 points higher than your own Wisdom score), you are stunned for 1 round and the spell ends.  Instead of surface thoughts, the third round of concentration reveals the most pressing current anxiety of any mind in the area (Will negates).  Presenting a creature with the threat of its anxiety grants you a +2 bonus (or higher, at the GM's discretion) on checks to Intimidate that creature.</p>",
-    "spellDuration": "concentration, up to 1 minute/level (D)",
-    "spellEffect": "",
-    "spellArea": "cone-shaped emanation",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "value": 60,
-      "units": "ft",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (see text)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell functions as <i>detect thoughts</i> except that you sense significant anxieties of creatures with an Intelligence score of 1 or higher, regardless of whether they are conscious or not.  Instead of Intelligence, the second round of concentration reveals each mind's Wisdom score and current degree of fear (shaken, frightened, panicked, cowering, or paralyzed with fear). If the highest Wisdom score is 26 or higher (and at least 10 points higher than your own Wisdom score), you are stunned for 1 round and the spell ends.  Instead of surface thoughts, the third round of concentration reveals the most pressing current anxiety of any mind in the area (Will negates).  Presenting a creature with the threat of its anxiety grants you a +2 bonus (or higher, at the GM's discretion) on checks to Intimidate that creature.</p>"
   },
   "effects": [],
   "folder": null,

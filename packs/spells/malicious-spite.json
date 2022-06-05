@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "u13bpyuuzegoz31l",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -144,86 +146,24 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
     "subschool": "compulsion",
     "types": "emotion, mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
       "value": "powdered turquoise worth 150 gp",
-      "focus": "",
       "gpValue": 150
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You invoke feelings of a driving malicious intent. The target's malice is directed at a second individual as designated by you at the time of casting. Thereafter, the target attempts to slander, abuse, and even plot murder against the target of its spite. This loathing is not overt, and the target's actions against the object of its spite remain subtle and indirect.</p><p>The enchanted target remains within its financial and ethical means when acting against the second individual, though the malice toward this other person pushes the target to the limit of what it would do to a hated individual.</p><p>Each day, the target takes 2 points of Wisdom damage as the all-encompassing spite dominates its thoughts. The target can only alleviate the ability damage by acting upon the emotion and performing a spiteful act. Examples of spiteful acts are spiking the target's drink to make it an easier target for thugs, damaging the target's property, starting foul rumors about the target, framing the target for a crime, paying lepers or beggars to accost the target, extorting or blackmailing the target, or arranging for others to physically harm the target.</p><p>When the spell ends, the target remembers the spiteful behavior, but not the motivation for it.</p>",
-    "spellDuration": "1 day/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>You invoke feelings of a driving malicious intent. The target's malice is directed at a second individual as designated by you at the time of casting. Thereafter, the target attempts to slander, abuse, and even plot murder against the target of its spite. This loathing is not overt, and the target's actions against the object of its spite remain subtle and indirect.</p><p>The enchanted target remains within its financial and ethical means when acting against the second individual, though the malice toward this other person pushes the target to the limit of what it would do to a hated individual.</p><p>Each day, the target takes 2 points of Wisdom damage as the all-encompassing spite dominates its thoughts. The target can only alleviate the ability damage by acting upon the emotion and performing a spiteful act. Examples of spiteful acts are spiking the target's drink to make it an easier target for thugs, damaging the target's property, starting foul rumors about the target, framing the target for a crime, paying lepers or beggars to accost the target, extorting or blackmailing the target, or arranging for others to physically harm the target.</p><p>When the spell ends, the target remembers the spiteful behavior, but not the motivation for it.</p>"
   },
   "effects": [],
   "folder": null,

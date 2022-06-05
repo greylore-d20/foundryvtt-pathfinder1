@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "s6djnvuferd299re",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "objects touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "none or Will disbelief (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -147,87 +149,17 @@
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 1,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "ill",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a copper piece or silver piece",
-      "focus": "",
-      "gpValue": 0
+      "value": "a copper piece or silver piece"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You can temporarily make copper or silver seem to be an equivalent amount of gold. The spell affects 1 gp/level worth of material (thus, at 3rd level, the spell affects up to 300 copper pieces, 30 silver pieces, or a copper or silver item worth no more than 3 gp). Coins increase in value as normal for the new type of coinage. For items other than coins, some of the value of the item comes from its craftsmanship, regardless of the metal used, so the value of the item seems to be 5 times (for silver items) or 50 times (for copper items) its true value. Thus, a copper candlestick originally worth 5 cp transformed by this spell appears to be worth 250 cp, or 2 gp and 5 sp. A successful DC 25 Appraise check automatically detects the true nature of the coins or items. Creatures inspecting or interacting with the coins or items can attempt a saving throw to disbelieve the illusion.</p>",
-    "spellDuration": "1 hour/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "objects touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "none or Will disbelief (see text)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You can temporarily make copper or silver seem to be an equivalent amount of gold. The spell affects 1 gp/level worth of material (thus, at 3rd level, the spell affects up to 300 copper pieces, 30 silver pieces, or a copper or silver item worth no more than 3 gp). Coins increase in value as normal for the new type of coinage. For items other than coins, some of the value of the item comes from its craftsmanship, regardless of the metal used, so the value of the item seems to be 5 times (for silver items) or 50 times (for copper items) its true value. Thus, a copper candlestick originally worth 5 cp transformed by this spell appears to be worth 250 cp, or 2 gp and 5 sp. A successful DC 25 Appraise check automatically detects the true nature of the coins or items. Creatures inspecting or interacting with the coins or items can attempt a saving throw to disbelieve the illusion.</p>"
   },
   "effects": [],
   "folder": null,

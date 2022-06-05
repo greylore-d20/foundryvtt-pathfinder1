@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "b8x3ulsbmgalhsz4",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "1 object weighing up to 1 pound/level"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates (object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -148,86 +150,17 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a specially prepared glass bottle",
-      "focus": "",
-      "gpValue": 0
+      "value": "a specially prepared glass bottle"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>The object you target becomes a liquid version of itself and drips or runs like a thin oil until it pools on any flat surface. If the item has magical or alchemical properties, they become inert for the duration of the spell. If you are holding the item when you cast this spell, you can drain it into the bottle used as focus for the spell. Items with hit point damage or the broken condition regain 5 hit points/caster level if drained into a bottle in this way. The duration of temporary effects (such as applied poison or <i>greater magic</i> weapon) passes normally and may expire while the object is in liquid form. The liquid is clearly unsafe to drink, but if, for some reason, a creature does drink the liquid and the spell ends, the creature takes 3d6 points of damage, and brings up the solid version of the item as a standard action in a coughing fit.  Any spell or effect that would disperse or dilute an object affected by <i>liquefy</i> forces the object to attempt a Fortitude save (using the effect's DC, or DC 15 for effects with no saving throws of their own, such as pouring a liquefied object into a stream). A failed save causes the object to gain the broken condition. If the item is already broken, it is instead destroyed on a failed save. <i>Liquefy</i> has no effect on artifacts, constructs, or intelligent magic items.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "1 object weighing up to 1 pound/level"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates (object)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>The object you target becomes a liquid version of itself and drips or runs like a thin oil until it pools on any flat surface. If the item has magical or alchemical properties, they become inert for the duration of the spell. If you are holding the item when you cast this spell, you can drain it into the bottle used as focus for the spell. Items with hit point damage or the broken condition regain 5 hit points/caster level if drained into a bottle in this way. The duration of temporary effects (such as applied poison or <i>greater magic</i> weapon) passes normally and may expire while the object is in liquid form. The liquid is clearly unsafe to drink, but if, for some reason, a creature does drink the liquid and the spell ends, the creature takes 3d6 points of damage, and brings up the solid version of the item as a standard action in a coughing fit.  Any spell or effect that would disperse or dilute an object affected by <i>liquefy</i> forces the object to attempt a Fortitude save (using the effect's DC, or DC 15 for effects with no saving throws of their own, such as pouring a liquefied object into a stream). A failed save causes the object to gain the broken condition. If the item is already broken, it is instead destroyed on a failed save. <i>Liquefy</i> has no effect on artifacts, constructs, or intelligent magic items.</p>"
   },
   "effects": [],
   "folder": null,

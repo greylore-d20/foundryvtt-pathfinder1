@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
-      "value": "<p>You can draw life force from the bodies of enemies and channel it into yourself. As a standard action, you can drain the life essence from one living target within 30 feet. The target takes 1d6 points of damage per two levels you possess (maximum 10d6). You gain temporary hit points equal to the damage you deal. You can't gain more than the target's current hit points + the target's Constitution score (which is enough to kill the subject). The temporary hit points last a number of hours equal to your Charisma modifier. The target receives a Fortitude save to halve the damage (and the temporary hit points you gain).</p>\n<p>You may use this ability once per day at 7th level, plus one additional time per day for every 4 levels you possess beyond 7th.</p>\n<p>You must be at least 7th level before selecting this revelation.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>You can draw life force from the bodies of enemies and channel it into yourself. As a standard action, you can drain the life essence from one living target within 30 feet. The target takes 1d6 points of damage per two levels you possess (maximum 10d6). You gain temporary hit points equal to the damage you deal. You can't gain more than the target's current hit points + the target's Constitution score (which is enough to kill the subject). The temporary hit points last a number of hours equal to your Charisma modifier. The target receives a Fortitude save to halve the damage (and the temporary hit points you gain).</p>\n<p>You may use this ability once per day at 7th level, plus one additional time per day for every 4 levels you possess beyond 7th.</p>\n<p>You must be at least 7th level before selecting this revelation.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "h408unpj9m50p8ym",
+        "_id": "fo7zg2rlhxji2d67",
         "name": "Use",
         "img": "systems/pf1/icons/spells/light-royal-1.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "floor((@classes.oracle.level - 3) / 4)",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +61,12 @@
           "parts": [
             [
               "(min(floor(@classes.oracle.level / 2),10))d6",
-              ""
+              {
+                "values": [
+                  "untyped"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -111,23 +114,22 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "floor((@classes.oracle.level - 3) / 4)",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -136,16 +138,13 @@
     "tag": "classFeat_lifeLeach",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -160,86 +159,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": "max(@abilities.cha.mod, 0)",
-      "units": "hour"
-    },
-    "target": {
-      "value": "living target"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "msak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(min(floor(@classes.oracle.level / 2),10))d6",
-          ""
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "10 + floor(@classes.oracle.level / 2) + @abilities.cha.mod",
-      "type": "fort",
-      "description": "Fortitude half"
-    },
-    "effectNotes": [
-      "Gain temp HP equal to damage dealt for [[max(@abilities.cha.mod, 0)]] hours"
-    ],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

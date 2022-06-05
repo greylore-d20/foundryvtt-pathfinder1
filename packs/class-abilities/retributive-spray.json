@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/skills/red_05.jpg",
   "data": {
     "description": {
-      "value": "<p>At 12th level, whenever you’re hit by an attack or spell that deals slashing or piercing damage, your black blood sprays up to 10 feet toward the opponent who attacked you, striking the first creature along its path. That creature takes 1d8 points of cold damage + 1 point of cold damage for every 2 bloodrager levels you possess. A successful Reflex save (DC = 10 + 1/2 your bloodrager level + your Constitution modifier) halves the damage.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>At 12th level, whenever you’re hit by an attack or spell that deals slashing or piercing damage, your black blood sprays up to 10 feet toward the opponent who attacked you, striking the first creature along its path. That creature takes 1d8 points of cold damage + 1 point of cold damage for every 2 bloodrager levels you possess. A successful Reflex save (DC = 10 + 1/2 your bloodrager level + your Constitution modifier) halves the damage.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "kk44tymgj2gp6obb",
+        "_id": "uj3jlx4436j2ltcw",
         "name": "Use",
         "img": "systems/pf1/icons/skills/red_05.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +61,12 @@
           "parts": [
             [
               "1d8 + floor(@classes.bloodrager.level / 2)",
-              "Cold"
+              {
+                "values": [
+                  "cold"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -109,23 +112,21 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -134,16 +135,13 @@
     "tag": "classFeat_retributiveSpray",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -158,84 +156,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "special"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "special"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": "10",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "1d8 + floor(@classes.bloodrager.level / 2)",
-          "Cold"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

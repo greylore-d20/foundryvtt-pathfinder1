@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/skills/shadow_21.jpg",
   "data": {
     "description": {
-      "value": "<p>At 1st level, you can make a melee&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Touch-Attacks\">touch attack</a>&nbsp;as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Standard-Actions\">standard action</a>&nbsp;that inflicts 1d4 points of&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Nonlethal-Damage\">nonlethal damage</a>&nbsp;+ 1 for every two sorcerer levels you possess. In addition, the target is&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Dazzled\">dazzled</a>&nbsp;for 1 minute. Creatures with&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Low-Light-Vision\">low-light vision</a>&nbsp;or&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Darkvision\">darkvision</a>&nbsp;are not&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Dazzled\">dazzled</a>&nbsp;by this ability. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>At 1st level, you can make a melee&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Touch-Attacks\">touch attack</a>&nbsp;as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Standard-Actions\">standard action</a>&nbsp;that inflicts 1d4 points of&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Nonlethal-Damage\">nonlethal damage</a>&nbsp;+ 1 for every two sorcerer levels you possess. In addition, the target is&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Dazzled\">dazzled</a>&nbsp;for 1 minute. Creatures with&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Low-Light-Vision\">low-light vision</a>&nbsp;or&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/special-abilities#TOC-Darkvision\">darkvision</a>&nbsp;are not&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/conditions#TOC-Dazzled\">dazzled</a>&nbsp;by this ability. You can use this ability a number of times per day equal to 3 + your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "uliovz2shik2mxkh",
+        "_id": "e0ss4roy10fkp9ib",
         "name": "Use",
         "img": "systems/pf1/icons/skills/shadow_21.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "3 + @abilities.cha.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "3 + @abilities.cha.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +61,12 @@
           "parts": [
             [
               "1d4 + (floor(@classes.sorcerer.level / 2))",
-              "Nonlethal"
+              {
+                "values": [
+                  "untyped"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -109,23 +112,22 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "3 + @abilities.cha.mod",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "3 + @abilities.cha.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -134,16 +136,13 @@
     "tag": "classFeat_shadowstrike",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -158,84 +157,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "sp",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "value": null,
-      "units": "touch",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "msak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "1d4 + (floor(@classes.sorcerer.level / 2))",
-          "Nonlethal"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "sp"
   },
   "effects": [],
   "folder": null,

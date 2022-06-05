@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
-      "value": "<p>As a standard action, you can perform a melee touch attack that deals 1d6 points of fire damage +1 point for every two oracle levels you possess.</p>\n<p>You can use this ability a number of times per day equal to 3 + your Charisma modifier.</p>\n<p>At 11th level, any weapon that you wield is treated as a&nbsp;flaming&nbsp;weapon.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>As a standard action, you can perform a melee touch attack that deals 1d6 points of fire damage +1 point for every two oracle levels you possess.</p>\n<p>You can use this ability a number of times per day equal to 3 + your Charisma modifier.</p>\n<p>At 11th level, any weapon that you wield is treated as a&nbsp;flaming&nbsp;weapon.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "vwdjyp561gewjr6u",
+        "_id": "pvqtu2tk9ti7greh",
         "name": "Use",
         "img": "systems/pf1/icons/spells/light-royal-1.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "3 + @abilities.cha.mod",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "3 + @abilities.cha.mod"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +61,12 @@
           "parts": [
             [
               "1d6 + floor(@classes.oracle.level / 2)",
-              "Fire"
+              {
+                "values": [
+                  "fire"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -109,23 +112,22 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "3 + @abilities.cha.mod",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "3 + @abilities.cha.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -134,16 +136,13 @@
     "tag": "classFeat_touchOfFlame",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -158,84 +157,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "value": null,
-      "units": "touch",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "msak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "1d6 + floor(@classes.oracle.level / 2)",
-          "Fire"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

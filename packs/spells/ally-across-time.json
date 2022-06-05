@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "c4e1rl8pptsxusfq",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "one 5-ft. cube of temporal possibility/2 levels",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -158,81 +162,14 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "summoning",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You create one or more 5-foot cubes of temporal possibility where your timeline overlaps with those of your parallel existences. As a free action, you can summon a duplicate of yourself (not including any animal companions, familiars, intelligent items, or other creatures) from an alternate timeline in one of the cubes you can see, which lasts until the end of your turn. This duplicate has your statistics (though its hit points equal your caster level), threatens all squares adjacent to it, and has any teamwork feats you have. Although the duplicate appears with all of the equipment you currently carry, it cannot use any of its equipment and all its equipment disappears when the duplicate does. This duplicate cannot voluntarily move from the space in which it's summoned. During its brief existence, a duplicate can use the aid another action once to assist you, but it cannot take any other type of action. Once a duplicate disappears, the cube of temporal possibility it occupied dissipates.  You can summon only one duplicate before the spell ends. For every 4 caster levels you have beyond 3rd, you can summon an additional duplicate before the spell ends, though you cannot have more than one duplicate in existence at once.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "one 5-ft. cube of temporal possibility/2 levels",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You create one or more 5-foot cubes of temporal possibility where your timeline overlaps with those of your parallel existences. As a free action, you can summon a duplicate of yourself (not including any animal companions, familiars, intelligent items, or other creatures) from an alternate timeline in one of the cubes you can see, which lasts until the end of your turn. This duplicate has your statistics (though its hit points equal your caster level), threatens all squares adjacent to it, and has any teamwork feats you have. Although the duplicate appears with all of the equipment you currently carry, it cannot use any of its equipment and all its equipment disappears when the duplicate does. This duplicate cannot voluntarily move from the space in which it's summoned. During its brief existence, a duplicate can use the aid another action once to assist you, but it cannot take any other type of action. Once a duplicate disappears, the cube of temporal possibility it occupied dissipates.  You can summon only one duplicate before the spell ends. For every 4 caster levels you have beyond 3rd, you can summon an additional duplicate before the spell ends, though you cannot have more than one duplicate in existence at once.</p>"
   },
   "effects": [],
   "folder": null,

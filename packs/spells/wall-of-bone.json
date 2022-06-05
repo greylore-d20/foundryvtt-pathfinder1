@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ckftzzqe7tvfcobv",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "solid wall of humanoid bones with an area of up to one 5-ft. square/level",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -150,81 +154,16 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "nec",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a polished humanoid femur",
-      "focus": "",
-      "gpValue": 0
+      "value": "a polished humanoid femur"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell creates a vertical wall of skeletal arms that attaches itself to any solid surface. The <i>Wall of Bone</i> works identically to <i>Wall of Stone</i> e xcept a s n oted a bove a nd i n t his s pell description. The <i>Wall of Bone</i> is 1 inch thick per 4 caster levels and composed of up to one 5-foot square per level. The wall created must be vertical, and must rest upon a firm foundation. It cannot be used to bridge a chasm, for instance, or to act as a ramp. Each 5-foot square of the wall has hardness 4 and 7 hit points per inch of thickness. A section of wall whose hit points drops to 0 is breached. If a creature tries to break through the wall with a single attack, the DC of the Strength check is equal to 15 + 2 per inch of thickness.  For each creature adjacent to the wall, the skeletal hands attempt a combat maneuver check to grapple it. The skeletal hands do not provoke attacks of opportunity. They make their attacks at the start of your turn, when the wall is summoned, or when an enemy first moves adjacent to the wall. The skeletal hands' CMB is equal to your caster level, and they can grapple a Huge or smaller creature with no penalty.  If the wall successfully grapples a foe, that foe takes 1d6 points of damage and gains the grappled condition. Grappled opponents cannot move without first breaking the grapple. All other movement is prohibited unless the creature breaks the grapple first. The wall cannot move or pin foes. Each round the wall succeeds at a grapple combat maneuver check, it deals 1d6 additional points of damage. The CMD of the wall, for the purposes of escaping the grapple, is equal to 10 + its CMB.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "solid wall of humanoid bones with an area of up to one 5-ft. square/level",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell creates a vertical wall of skeletal arms that attaches itself to any solid surface. The <i>Wall of Bone</i> works identically to <i>Wall of Stone</i> e xcept a s n oted a bove a nd i n t his s pell description. The <i>Wall of Bone</i> is 1 inch thick per 4 caster levels and composed of up to one 5-foot square per level. The wall created must be vertical, and must rest upon a firm foundation. It cannot be used to bridge a chasm, for instance, or to act as a ramp. Each 5-foot square of the wall has hardness 4 and 7 hit points per inch of thickness. A section of wall whose hit points drops to 0 is breached. If a creature tries to break through the wall with a single attack, the DC of the Strength check is equal to 15 + 2 per inch of thickness.  For each creature adjacent to the wall, the skeletal hands attempt a combat maneuver check to grapple it. The skeletal hands do not provoke attacks of opportunity. They make their attacks at the start of your turn, when the wall is summoned, or when an enemy first moves adjacent to the wall. The skeletal hands' CMB is equal to your caster level, and they can grapple a Huge or smaller creature with no penalty.  If the wall successfully grapples a foe, that foe takes 1d6 points of damage and gains the grappled condition. Grappled opponents cannot move without first breaking the grapple. All other movement is prohibited unless the creature breaks the grapple first. The wall cannot move or pin foes. Each round the wall succeeds at a grapple combat maneuver check, it deals 1d6 additional points of damage. The CMD of the wall, for the purposes of escaping the grapple, is equal to 10 + its CMB.</p>"
   },
   "effects": [],
   "folder": null,

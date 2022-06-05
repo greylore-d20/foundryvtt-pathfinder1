@@ -5,45 +5,21 @@
   "img": "systems/pf1/icons/items/weapons/barbazu-beard.png",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Cheliax, Empire of Devils pg. 27</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 25 gp <strong>Weight</strong> 5 lbs.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> -</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>Popular in Egorian but rarely seen elsewhere, a barbazu beard is an intimidating helm with a full facemask wrought to look like a snarling barbazu's head. Extending from the chin area of the face guard is a razor-sharp blade much like an actual barbazu's beard, usually 8 inches long but sometimes longer. A barbazu beard can be used as an off-hand weapon that requires no hands to use; thus, a warrior could combine use of a barbazu beard with a two-handed weapon. It otherwise follows all rules for using an off-hand weapon. Attacking with a barbazu beard provokes an attack of opportunity. Because it is so close to the wearer's face, using a barbazu beard against creatures harmful to touch (such as fire elementals and acidic oozes) has the same risks as using a natural weapon or unarmed strike against these creatures.</p><p></p><p> A barbazu beard is a light melee exotic weapon.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Source</strong> <em>Cheliax, Empire of Devils pg. 27</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 25 gp <strong>Weight</strong> 5 lbs.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> -</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>Popular in Egorian but rarely seen elsewhere, a barbazu beard is an intimidating helm with a full facemask wrought to look like a snarling barbazu's head. Extending from the chin area of the face guard is a razor-sharp blade much like an actual barbazu's beard, usually 8 inches long but sometimes longer. A barbazu beard can be used as an off-hand weapon that requires no hands to use; thus, a warrior could combine use of a barbazu beard with a two-handed weapon. It otherwise follows all rules for using an off-hand weapon. Attacking with a barbazu beard provokes an attack of opportunity. Because it is so close to the wearer's face, using a barbazu beard against creatures harmful to touch (such as fire elementals and acidic oozes) has the same risks as using a natural weapon or unarmed strike against these creatures.</p><p></p><p> A barbazu beard is a light melee exotic weapon.</p>"
     },
     "tags": [],
-    "quantity": 1,
     "weight": 5,
     "price": 25,
-    "size": "med",
-    "equipped": true,
-    "resizing": false,
-    "identified": true,
     "hp": {
       "max": 2,
       "value": 2
     },
-    "broken": false,
     "hardness": 10,
-    "carried": true,
-    "unidentified": {
-      "price": 0,
-      "name": ""
-    },
     "identifiedName": "Barbazu Beard",
-    "cl": 0,
-    "aura": {
-      "custom": false,
-      "school": ""
-    },
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "actions": [
       {
-        "_id": "h056cex36wq9dwq0",
+        "_id": "eemki30amlrgclnq",
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/barbazu-beard.png",
         "description": "",
@@ -72,11 +48,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": null,
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +70,12 @@
           "parts": [
             [
               "sizeRoll(1, 4, @size)",
-              "S"
+              {
+                "values": [
+                  "slashing"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -140,118 +121,28 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "barbazuBeard",
-    "useCustomTag": false,
     "flags": {
       "boolean": {},
       "dictionary": {}
     },
     "scriptCalls": [],
-    "masterwork": false,
-    "enh": null,
-    "proficient": true,
-    "primaryAttack": true,
-    "held": "normal",
-    "weaponType": "exotic",
-    "weaponSubtype": "light",
-    "properties": {},
-    "showInQuickbar": true,
-    "ammoType": "",
-    "activation": {
-      "cost": 1,
-      "type": "attack"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "attack"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": 0,
-      "units": "melee",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "mwak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "sizeRoll(1, 4, @size)",
-          "S"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
-      },
-      "bonus": {
-        "formula": "@formulaicAttack * -5"
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "str",
-      "damage": "str",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "attackType": "weapon",
-    "nonlethal": false,
-    "conditionals": [],
-    "usesAmmo": false
+    "weaponType": "exotic"
   },
   "effects": [],
   "folder": null,

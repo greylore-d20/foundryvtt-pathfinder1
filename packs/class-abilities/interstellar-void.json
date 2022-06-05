@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
-      "value": "<p>You call upon the frigid depths of outer space to bring a terrible chill to your enemies. As a standard action, one target within 30 feet is cloaked in the void and takes 1d6 points of cold damage for every oracle level you possess. A successful Fortitude save halves this damage.</p>\n<p>At 10th level, the interstellar void is so extreme that a creature that fails its save is fatigued.</p>\n<p>At 15th level, a creature that fail its save is exhausted and stunned for 1 round.</p>\n<p>You can use this ability once per day plus one additional time per day at 10th level.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>You call upon the frigid depths of outer space to bring a terrible chill to your enemies. As a standard action, one target within 30 feet is cloaked in the void and takes 1d6 points of cold damage for every oracle level you possess. A successful Fortitude save halves this damage.</p>\n<p>At 10th level, the interstellar void is so extreme that a creature that fails its save is fatigued.</p>\n<p>At 15th level, a creature that fail its save is exhausted and stunned for 1 round.</p>\n<p>You can use this ability once per day plus one additional time per day at 10th level.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "zq4491l3e99efqeo",
+        "_id": "ic2jqdsogrj4u0fi",
         "name": "Use",
         "img": "systems/pf1/icons/spells/light-royal-1.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "@classes.oracle.level >= 10 ? 2 : 1",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "@classes.oracle.level >= 10 ? 2 : 1"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +61,12 @@
           "parts": [
             [
               "(@classes.oracle.level)d6",
-              "Cold"
+              {
+                "values": [
+                  "cold"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -109,23 +112,22 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "@classes.oracle.level >= 10 ? 2 : 1",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "@classes.oracle.level >= 10 ? 2 : 1"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -134,16 +136,13 @@
     "tag": "classFeat_interstellarVoid",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -158,84 +157,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(@classes.oracle.level)d6",
-          "Cold"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude halves"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

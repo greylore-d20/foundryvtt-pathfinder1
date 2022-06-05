@@ -1807,10 +1807,8 @@ export class ActorPF extends ActorBasePF {
   }
 
   updateItemResources(itemData) {
-    const activationType = game.settings.get("pf1", "unchainedActionEconomy")
-      ? itemData.data.unchainedAction?.activation?.type
-      : itemData.data.activation?.type;
-    if (itemData.data.uses?.per && activationType) {
+    const isCharged = !!itemData.data.uses?.per;
+    if (isCharged) {
       const itemTag = !itemData.data.useCustomTag ? createTag(itemData.name) : itemData.data.tag;
       const curUses = itemData.data.uses;
 

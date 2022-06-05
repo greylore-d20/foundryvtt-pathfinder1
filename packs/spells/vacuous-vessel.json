@@ -4,25 +4,20 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "e1gn235srpshpmmw",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "swift"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 1,
             "type": "action"
           }
         },
@@ -34,8 +29,11 @@
           "value": "container touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -136,85 +138,15 @@
       "bloodline": []
     },
     "level": 0,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "ill",
     "subschool": "glamer",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": false,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "verbal": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": false,
-      "spontaneousPrepared": true
+      "autoDeductCharges": false
     },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell makes a single bag, chest, sack, or other container look and feel empty. The container must be no larger than 1 cubic foot per caster level or the spell fails. Anyone peering into or reaching into the container must succeed at a Will save or perceive the container as being completely empty. All items within the container when the spell was cast are still present, but they can't be noticed unless removed from the bag-such as by someone who can perceive them, or who upends the container.  Casting <i>vacuous vessel</i> on another container or placing a new item in the existing container immediately dismisses the currently active spell.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "swift"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "container touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates; see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell makes a single bag, chest, sack, or other container look and feel empty. The container must be no larger than 1 cubic foot per caster level or the spell fails. Anyone peering into or reaching into the container must succeed at a Will save or perceive the container as being completely empty. All items within the container when the spell was cast are still present, but they can't be noticed unless removed from the bag-such as by someone who can perceive them, or who upends the container.  Casting <i>vacuous vessel</i> on another container or placing a new item in the existing container immediately dismisses the currently active spell.</p>"
   },
   "effects": [],
   "folder": null,

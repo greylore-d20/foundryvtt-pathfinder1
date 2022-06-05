@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "icons/magic/fire/elemental-creature-horse.webp",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "j6y8x86tev3j1q1k",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/fire/elemental-creature-horse.webp",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -42,14 +37,14 @@
         },
         "uses": {
           "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
+          "autoDeductChargesCost": "1 + @sl",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -76,7 +71,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -84,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "none, see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,16 +101,15 @@
         "usesAmmo": false,
         "spellEffect": "one quasi-real creature suitable for a mount",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -165,123 +159,15 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "creation",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
+      "somatic": true
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You conjure a Large, quasi-real creature made of flame. It functions like @Compendium[pf1.spells.zpwd0f19q1lm04p3]{Phantom Steed}, except as follows.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">The flame steed is immune to fire and has acid, cold, and electricity resistance 10. If it or its rider is attacked, it automatically exhales a 15-foot cone of smoke and ash on your turn as a free action. Anyone in the cone must succeed at a Fortitude save (DC equal to the spell DC) or become sickened for 1d6 rounds after leaving the area. This smoke acts as @Compendium[pf1.spells.tuh5vc2bojaws3ig]{Obscuring Mist} for the purpose of concealment. The smoke persists for 1 round.</span></p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "one quasi-real creature suitable for a mount",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": "0",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": "none, see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "conditionals": [],
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Flame Steed",
-    "size": "med"
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You conjure a Large, quasi-real creature made of flame. It functions like @Compendium[pf1.spells.zpwd0f19q1lm04p3]{Phantom Steed}, except as follows.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">The flame steed is immune to fire and has acid, cold, and electricity resistance 10. If it or its rider is attacked, it automatically exhales a 15-foot cone of smoke and ash on your turn as a free action. Anyone in the cone must succeed at a Fortitude save (DC equal to the spell DC) or become sickened for 1d6 rounds after leaving the area. This smoke acts as @Compendium[pf1.spells.tuh5vc2bojaws3ig]{Obscuring Mist} for the purpose of concealment. The smoke persists for 1 round.</span></p>"
   },
   "effects": [],
   "folder": null,

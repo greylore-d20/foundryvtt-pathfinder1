@@ -4,17 +4,12 @@
   "type": "spell",
   "img": "systems/pf1/icons/spells/shielding-fire-2.jpg",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "3nqqp9unq958wuzi",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "systems/pf1/icons/spells/shielding-fire-2.jpg",
         "description": "",
         "activation": {
           "cost": 1,
@@ -30,11 +25,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": "60",
           "units": "ft",
-          "maxIncrements": "1"
+          "maxIncrements": "1",
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -59,7 +58,12 @@
           "parts": [
             [
               "(min(15, @cl))d6",
-              "Fire"
+              {
+                "values": [
+                  "fire"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -85,8 +89,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -107,14 +111,18 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "see text",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -152,89 +160,21 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
     "types": "fire",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a snake scale",
-      "focus": "",
-      "gpValue": 0
+      "value": "a snake scale"
     },
-    "spellbook": "primary",
     "preparation": {
       "preparedAmount": 1,
-      "maxAmount": 1,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
+      "maxAmount": 1
     },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You create a sinuous line of flames that you may shape as desired. The <i>fire snake</i> affects one 5-foot square per caster level, and each square must be adjacent to the previous square, starting with you. The <i>fire snake</i> may not extend beyond its maximum range. Creatures in the path of the <i>fire snake</i> take 1d6 points of fire damage per caster level (maximum 15d6).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "see text",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "value": "60",
-      "units": "ft",
-      "maxIncrements": "1"
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [
-        [
-          "(min(15, @cl))d6",
-          "Fire"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You create a sinuous line of flames that you may shape as desired. The <i>fire snake</i> affects one 5-foot square per caster level, and each square must be adjacent to the previous square, starting with you. The <i>fire snake</i> may not extend beyond its maximum range. Creatures in the path of the <i>fire snake</i> take 1d6 points of fire damage per caster level (maximum 15d6).</p>"
   },
   "effects": [],
   "folder": null,

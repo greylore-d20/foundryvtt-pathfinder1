@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "gk0mclnu4n99xc0m",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one incorporeal creature/level, no two of which can be more than 30 ft. apart"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -136,84 +138,13 @@
       "bloodline": []
     },
     "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
     "types": "force",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You summon ghostly chains to bind incorporeal creatures. The chains' CMB is equal to your caster level + your Intelligence modifier. Roll only once for the entire spell effect and apply the result to all targeted incorporeal creatures.  If the chains succeed in grappling an incorporeal creature, the creature takes an amount of damage equal to 1d8 + your key spellcasting ability score modifier and gains the grappled condition. Grappled opponents can't move without first breaking the grapple. The spell prohibits all other movement unless the creature breaks the grapple first (although dimensional magic and the like still work as normal). Each round you concentrate, the chains continue grappling their current targets (though they don't seek out targets they aren't currently grappling). The <i>incorporeal chains</i> receive a +5 bonus on grapple combat maneuver checks against opponents the chains are already grappling, but can't move foes or pin foes. Each round the <i>incorporeal chains</i> succeed at a grapple combat maneuver check, they deal an additional amount of damage equal to 1d8 + your key spellcasting ability score modifier. The CMD of <i>incorporeal chains</i>, for the purposes of escaping the grapple, is equal to 10 + its CMB. If you move out of range of any of the grappled creatures, the chains cease grappling those creatures.</p>",
-    "spellDuration": "concentration",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one incorporeal creature/level, no two of which can be more than 30 ft. apart"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You summon ghostly chains to bind incorporeal creatures. The chains' CMB is equal to your caster level + your Intelligence modifier. Roll only once for the entire spell effect and apply the result to all targeted incorporeal creatures.  If the chains succeed in grappling an incorporeal creature, the creature takes an amount of damage equal to 1d8 + your key spellcasting ability score modifier and gains the grappled condition. Grappled opponents can't move without first breaking the grapple. The spell prohibits all other movement unless the creature breaks the grapple first (although dimensional magic and the like still work as normal). Each round you concentrate, the chains continue grappling their current targets (though they don't seek out targets they aren't currently grappling). The <i>incorporeal chains</i> receive a +5 bonus on grapple combat maneuver checks against opponents the chains are already grappling, but can't move foes or pin foes. Each round the <i>incorporeal chains</i> succeed at a grapple combat maneuver check, they deal an additional amount of damage equal to 1d8 + your key spellcasting ability score modifier. The CMD of <i>incorporeal chains</i>, for the purposes of escaping the grapple, is equal to 10 + its CMB. If you move out of range of any of the grappled creatures, the chains cease grappling those creatures.</p>"
   },
   "effects": [],
   "folder": null,

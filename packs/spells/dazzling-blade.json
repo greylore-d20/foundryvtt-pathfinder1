@@ -4,25 +4,20 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "py3z4uwykenlk9xf",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "swift"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 1,
             "type": "action"
           }
         },
@@ -34,8 +29,11 @@
           "value": "one metal weapon"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -135,86 +137,13 @@
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 1,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "ill",
     "subschool": "pattern",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p><i>Dazzling blade</i> makes a weapon appear dazzlingly shiny, as if crafted from pure silver and heavily polished. In combat, the flashing movements of a <i>dazzling blade</i> become almost hypnotic. The wielder of a weapon under the effects of <i>dazzling blade</i> gains a +1 competence bonus on all Bluff checks made to feint in combat. The wielder also gains a +1 competence bonus on all CMB checks made to disarm a foe, and a +1 competence bonus to his CMD against disarm attempts made against the weapon bearing the <i>dazzling blade</i> effect. This bonus increases by +1 for every 3 caster levels, to a maximum bonus of +5 at 12th level.</p><p>The wielder of a <i>dazzling blade</i> can discharge the spell into a blinding burst of silvery light as a free action. The wielder selects an adjacent opponent as the focal point of this burst of light-that creature must make a Will save to avoid being blinded for 1 round (with a successful save, the creature is instead dazzled for 1 round).</p><p>Despite its shiny appearance, a <i>dazzling blade</i> grants no extra benefit against creatures that are vulnerable to silver.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "swift"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one metal weapon"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (see text)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p><i>Dazzling blade</i> makes a weapon appear dazzlingly shiny, as if crafted from pure silver and heavily polished. In combat, the flashing movements of a <i>dazzling blade</i> become almost hypnotic. The wielder of a weapon under the effects of <i>dazzling blade</i> gains a +1 competence bonus on all Bluff checks made to feint in combat. The wielder also gains a +1 competence bonus on all CMB checks made to disarm a foe, and a +1 competence bonus to his CMD against disarm attempts made against the weapon bearing the <i>dazzling blade</i> effect. This bonus increases by +1 for every 3 caster levels, to a maximum bonus of +5 at 12th level.</p><p>The wielder of a <i>dazzling blade</i> can discharge the spell into a blinding burst of silvery light as a free action. The wielder selects an adjacent opponent as the focal point of this burst of light-that creature must make a Will save to avoid being blinded for 1 round (with a successful save, the creature is instead dazzled for 1 round).</p><p>Despite its shiny appearance, a <i>dazzling blade</i> grants no extra benefit against creatures that are vulnerable to silver.</p>"
   },
   "effects": [],
   "folder": null,

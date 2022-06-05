@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "x7nz1941t311ja1k",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +25,15 @@
           "value": "1 round/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 0,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "whip of flexible ectoplasm",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -164,82 +167,12 @@
       ]
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>A white, 15-foot-long lash of ghostly evanescence appears from your hand. This weapon is treated as a <i>ghost touch whip</i> with no enhancement bonus. You can wield it as a whip as if you were proficient. Attacks with a <i>ghost whip</i> are resolved as incorporeal touch attacks. The whip affects only creatures you attack with it, passing through objects and other creatures in its path and thereby allowing you to ignore cover between you and your target. When a <i>ghost whip</i> attack passes through total cover, the target is treated as having total concealment (50% miss chance). Against incorporeal and undead creatures,  a <i>ghost whip</i> deals lethal damage and can be used to perform drag or reposition combat maneuvers (in addition to a whip's normal disarm and trip maneuvers). A <i>ghost whip</i> cannot be disarmed or sundered.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "whip of flexible ectoplasm",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "value": 0,
-      "units": "ft",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>A white, 15-foot-long lash of ghostly evanescence appears from your hand. This weapon is treated as a <i>ghost touch whip</i> with no enhancement bonus. You can wield it as a whip as if you were proficient. Attacks with a <i>ghost whip</i> are resolved as incorporeal touch attacks. The whip affects only creatures you attack with it, passing through objects and other creatures in its path and thereby allowing you to ignore cover between you and your target. When a <i>ghost whip</i> attack passes through total cover, the target is treated as having total concealment (50% miss chance). Against incorporeal and undead creatures,  a <i>ghost whip</i> deals lethal damage and can be used to perform drag or reposition combat maneuvers (in addition to a whip's normal disarm and trip maneuvers). A <i>ghost whip</i> cannot be disarmed or sundered.</p>"
   },
   "effects": [],
   "folder": null,

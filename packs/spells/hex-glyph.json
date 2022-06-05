@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "rgjxok1svwks94y9",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,8 +29,11 @@
           "value": "object touched or up to 5 sq. ft./level"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "object touched or up to 5 sq. ft./level",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -136,86 +138,23 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
       "value": "powdered diamond worth 200 gp",
-      "focus": "",
       "gpValue": 200
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This spell functions like the spell glyph version of <i>Glyph of Warding</i>, except you can store a hex you know (but not a major hex or a grand hex) instead of a spell. If the hex has a target, it targets the intruder. If the hex has an area or an amorphous effect, the area or effect is centered on the intruder. The triggered hex uses this spell's caster level and DC.</p><p><i>Read magic</i> allows its caster to identify a <i>hex glyph</i> with a successful DC 13 Knowledge (arcana) check. Identifying the glyph does not discharge it and indicates that it stores a hex, but does not indicate the effect of that hex.</p>",
-    "spellDuration": "permanent until discharged (D)",
-    "spellEffect": "",
-    "spellArea": "object touched or up to 5 sq. ft./level",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
-      }
-    },
-    "target": {
-      "value": "object touched or up to 5 sq. ft./level"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>This spell functions like the spell glyph version of <i>Glyph of Warding</i>, except you can store a hex you know (but not a major hex or a grand hex) instead of a spell. If the hex has a target, it targets the intruder. If the hex has an area or an amorphous effect, the area or effect is centered on the intruder. The triggered hex uses this spell's caster level and DC.</p><p><i>Read magic</i> allows its caster to identify a <i>hex glyph</i> with a successful DC 13 Knowledge (arcana) check. Identifying the glyph does not discharge it and indicates that it stores a hex, but does not indicate the effect of that hex.</p>"
   },
   "effects": [],
   "folder": null,

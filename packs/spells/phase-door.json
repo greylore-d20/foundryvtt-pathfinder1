@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "q3htbix8todorqi1",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "one usage per two levels",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "ethereal 5-ft.-by-8-ft. opening, 10 ft. deep + 5 ft. deep per three levels",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -148,81 +152,13 @@
       ]
     },
     "level": 7,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "creation",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": false,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "verbal": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This spell creates an ethereal passage through wooden, plaster, or stone walls, but not other materials. The <i>phase door</i> is invisible and inaccessible to all creatures except you, and only you can use the passage. You disappear when you enter the <i>phase door</i> and appear when you exit. If you desire, you can take one other creature (Medium or smaller) through the door. This counts as two uses of the door. The door does not allow light, sound, or spell effects through it, nor can you see through it without using it. Thus, the spell can provide an escape route, though certain creatures, such as phase spiders, can follow with ease. A <i>gem of true seeing</i> or similar magic reveals the presence of a <i>phase door</i> but does not allow its use.</p><p>A <i>phase door</i> is subject to <i>dispel magic.</i> If anyone is within the passage when it is dispelled, he is harmlessly ejected just as if he were inside a <i>passwall</i> effect.</p><p>You can allow other creatures to use the <i>phase door</i> by setting some triggering condition for the door. Such conditions can be as simple or elaborate as you desire. They can be based on a creature's name, identity, or alignment, but otherwise must be based on observable actions or qualities. Intangibles such as level, class, HD, and hit points don't qualify.</p><p><i>Phase door</i> can be made permanent with a <i>permanency</i> spell.</p>",
-    "spellDuration": "one usage per two levels",
-    "spellEffect": "ethereal 5-ft.-by-8-ft. opening, 10 ft. deep + 5 ft. deep per three levels",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell creates an ethereal passage through wooden, plaster, or stone walls, but not other materials. The <i>phase door</i> is invisible and inaccessible to all creatures except you, and only you can use the passage. You disappear when you enter the <i>phase door</i> and appear when you exit. If you desire, you can take one other creature (Medium or smaller) through the door. This counts as two uses of the door. The door does not allow light, sound, or spell effects through it, nor can you see through it without using it. Thus, the spell can provide an escape route, though certain creatures, such as phase spiders, can follow with ease. A <i>gem of true seeing</i> or similar magic reveals the presence of a <i>phase door</i> but does not allow its use.</p><p>A <i>phase door</i> is subject to <i>dispel magic.</i> If anyone is within the passage when it is dispelled, he is harmlessly ejected just as if he were inside a <i>passwall</i> effect.</p><p>You can allow other creatures to use the <i>phase door</i> by setting some triggering condition for the door. Such conditions can be as simple or elaborate as you desire. They can be based on a creature's name, identity, or alignment, but otherwise must be based on observable actions or qualities. Intangibles such as level, class, HD, and hit points don't qualify.</p><p><i>Phase door</i> can be made permanent with a <i>permanency</i> spell.</p>"
   },
   "effects": [],
   "folder": null,

@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "yqa6nd1eechohuwk",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one object or creature restraining you"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude half (object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -131,87 +133,11 @@
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 1,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": false,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "verbal": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You blast your restraints with divine wrath, dealing 1d6 points of damage per caster level to the target object (maximum 5d6), ignoring hardness of 10 or less. A Fortitude save halves the damage, although only magical restraints receive a saving throw.</p><p>You can also target a creature that is grappling or otherwise restraining you (such as by adhesive or the swallow whole ability) with the spell. You don't need to make a touch attack to use <i>burst bonds</i> against a creature, and you can cast this spell without making a concentration check while grappled or pinned. The creature does not take damage as above. If you are grappled and your target fails its save, you may make an immediate attempt to break the grapple (but not reverse it) as a free action, with a +1 luck bonus to your CMB per caster level (maximum +5). If the target creature fails its save and you are restrained by an ability that originally allowed a saving throw, <i>burst bonds</i> allows a new saving throw with a +1 luck bonus per two caster levels (maximum +5).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one object or creature restraining you"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude half (object)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You blast your restraints with divine wrath, dealing 1d6 points of damage per caster level to the target object (maximum 5d6), ignoring hardness of 10 or less. A Fortitude save halves the damage, although only magical restraints receive a saving throw.</p><p>You can also target a creature that is grappling or otherwise restraining you (such as by adhesive or the swallow whole ability) with the spell. You don't need to make a touch attack to use <i>burst bonds</i> against a creature, and you can cast this spell without making a concentration check while grappled or pinned. The creature does not take damage as above. If you are grappled and your target fails its save, you may make an immediate attempt to break the grapple (but not reverse it) as a free action, with a +1 luck bonus to your CMB per caster level (maximum +5). If the target creature fails its save and you are restrained by an ability that originally allowed a saving throw, <i>burst bonds</i> allows a new saving throw with a +1 luck bonus per two caster levels (maximum +5).</p>"
   },
   "effects": [],
   "folder": null,

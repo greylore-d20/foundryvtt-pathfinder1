@@ -4,17 +4,12 @@
   "type": "spell",
   "img": "icons/consumables/meat/hock-leg-red-brown.webp",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "g5bthv35uaekuwdk",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/consumables/meat/hock-leg-red-brown.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +17,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -42,14 +37,14 @@
         },
         "uses": {
           "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
+          "autoDeductChargesCost": "1 + @sl",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -76,7 +71,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -85,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,16 +101,15 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -153,123 +147,14 @@
       "bloodline": []
     },
     "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
     "types": "mind-affecting, polymorph",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
+      "somatic": true
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">Choose a creature within range as the object of hunger. All other creatures within 15 feet of the target that can see or smell the target&rsquo;s delectable flesh must succeed at a Will save or spiral into a depraved state from which they gain a single purpose&mdash;to consume as much of the target&rsquo;s delicious flesh as possible. The creature chosen as the target of this spell is not affected by this depravity.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">A depraved creature gains a bite attack, two claw attacks, and the scent ability if it didn&rsquo;t already have them. It drops any items it was carrying and attacks the target of the spell with these natural weapons, acting as if it were confused and the target had attacked it first. This effect lasts for the spell&rsquo;s duration or until the depraved creature can no longer see or smell the object of its hunger for a full minute. Additionally, a depraved creature can attempt a new saving throw to end this effect at the end of any turn in which the affected creature makes an attack against the object of its hunger. If a creature that eats for nourishment succeeds at a save to end the depraved effect early, it takes a &ndash;2 penalty on ability checks, attack rolls, concentration checks, saving throws, and skill checks whenever it is within 15 feet of the target.</span></p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": "all creatures in a 15-foot-radius burst centered on a single living creature"
-    },
-    "range": {
-      "value": null,
-      "units": "close",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "conditionals": [],
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Delectable Flesh",
-    "size": "med"
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">Choose a creature within range as the object of hunger. All other creatures within 15 feet of the target that can see or smell the target&rsquo;s delectable flesh must succeed at a Will save or spiral into a depraved state from which they gain a single purpose&mdash;to consume as much of the target&rsquo;s delicious flesh as possible. The creature chosen as the target of this spell is not affected by this depravity.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">A depraved creature gains a bite attack, two claw attacks, and the scent ability if it didn&rsquo;t already have them. It drops any items it was carrying and attacks the target of the spell with these natural weapons, acting as if it were confused and the target had attacked it first. This effect lasts for the spell&rsquo;s duration or until the depraved creature can no longer see or smell the object of its hunger for a full minute. Additionally, a depraved creature can attempt a new saving throw to end this effect at the end of any turn in which the affected creature makes an attack against the object of its hunger. If a creature that eats for nourishment succeeds at a save to end the depraved effect early, it takes a &ndash;2 penalty on ability checks, attack rolls, concentration checks, saving throws, and skill checks whenever it is within 15 feet of the target.</span></p>"
   },
   "effects": [],
   "folder": null,

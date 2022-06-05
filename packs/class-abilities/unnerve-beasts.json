@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/skills/violet_02.jpg",
   "data": {
     "description": {
-      "value": "<p>The target becomes offensive to animals (Will negates). Animals become distraught and aggressive in the victim's presence—horses buck, dogs snap and bark, bulls charge, and so on. The hex lasts a number of hours equal to the witch's Intelligence modifier.</p>\n<p>A creature that saves against the hex cannot be affected by the hex for 1 day. The reaction of the animals is a mind-affecting charm effect, but the hex on the target is not.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>The target becomes offensive to animals (Will negates). Animals become distraught and aggressive in the victim's presence—horses buck, dogs snap and bark, bulls charge, and so on. The hex lasts a number of hours equal to the witch's Intelligence modifier.</p>\n<p>A creature that saves against the hex cannot be affected by the hex for 1 day. The reaction of the animals is a mind-affecting charm effect, but the hex on the target is not.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "mopv69z2u07am129",
+        "_id": "n6x2xw693rnsw24w",
         "name": "Use",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -104,23 +102,21 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -129,16 +125,13 @@
     "tag": "classFeat_unnerveBeasts",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -153,79 +146,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": "@abilities.int.mod",
-      "units": "hour"
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

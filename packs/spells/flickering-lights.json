@@ -4,25 +4,20 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "7dhz52wzu7jm52bh",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -30,10 +25,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "contiguous area consisting of one 10-foot cube/level (S)",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -154,83 +158,17 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
     "types": "darkness, light",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a patch of white cloth and a patch of black cloth",
-      "focus": "",
-      "gpValue": 0
+      "value": "a patch of white cloth and a patch of black cloth"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You cause the illumination in the area to seem to flicker erratically, fluctuating between absolute darkness and blinding brightness. The level of light in the area changes at the start of each creature's turn, as determined by rolling a percentile die and consulting the following table.     <table border ='1'><tr><th>d%</th><th>Illumination level</th></tr><tr><td>1-10</td><td>Supernatural darkness</td></tr><tr><td>11-25</td><td>Darkness</td></tr><tr><td>26-50</td><td>Dim light</td></tr><tr><td>51-90</td><td>Normal light</td></tr><tr><td>91-00</td><td>Bright light</td></tr></table>     Even darkvision can't see through supernatural darkness (as <i>deeper</i> darkness). Bright light affects creatures with light blindness or light sensitivity. For the purpose of superseding its effects with higher-level light or darkness spells, <i>flickering lights</i> counts as a light spell when it increases the ambient light level and a darkness spell when it decreases the ambient light level.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "contiguous area consisting of one 10-foot cube/level (S)",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "medium",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You cause the illumination in the area to seem to flicker erratically, fluctuating between absolute darkness and blinding brightness. The level of light in the area changes at the start of each creature's turn, as determined by rolling a percentile die and consulting the following table.     <table border ='1'><tr><th>d%</th><th>Illumination level</th></tr><tr><td>1-10</td><td>Supernatural darkness</td></tr><tr><td>11-25</td><td>Darkness</td></tr><tr><td>26-50</td><td>Dim light</td></tr><tr><td>51-90</td><td>Normal light</td></tr><tr><td>91-00</td><td>Bright light</td></tr></table>     Even darkvision can't see through supernatural darkness (as <i>deeper</i> darkness). Bright light affects creatures with light blindness or light sensitivity. For the purpose of superseding its effects with higher-level light or darkness spells, <i>flickering lights</i> counts as a light spell when it increases the ambient light level and a darkness spell when it decreases the ambient light level.</p>"
   },
   "effects": [],
   "folder": null,

@@ -5,45 +5,21 @@
   "img": "icons/weapons/staves/staff-simple-gold.webp",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 20</em>, <em>Ultimate Combat pg. 130</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 1 gp <strong>Weight</strong> 3 lbs.</p><p><strong>Damage</strong> 1d4/1d4 (small), 1d6/1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B; <strong>Special</strong> blocking, double, monk</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Double; Monk</p><h3 class=\"framing\">Description</h3><p>Similar to a quarterstaff, only more slender and tapered at one end, the bo staff is both a defensive device and a weapon.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 20</em>, <em>Ultimate Combat pg. 130</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 1 gp <strong>Weight</strong> 3 lbs.</p><p><strong>Damage</strong> 1d4/1d4 (small), 1d6/1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B; <strong>Special</strong> blocking, double, monk</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Double; Monk</p><h3 class=\"framing\">Description</h3><p>Similar to a quarterstaff, only more slender and tapered at one end, the bo staff is both a defensive device and a weapon.</p>"
     },
     "tags": [],
-    "quantity": 1,
     "weight": 3,
     "price": 1,
-    "size": "med",
-    "equipped": true,
-    "resizing": false,
-    "identified": true,
     "hp": {
       "max": "10",
       "value": "10"
     },
-    "broken": false,
     "hardness": 10,
-    "carried": true,
-    "unidentified": {
-      "price": 0,
-      "name": ""
-    },
     "identifiedName": "Bo Staff",
-    "cl": 0,
-    "aura": {
-      "custom": false,
-      "school": ""
-    },
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "actions": [
       {
-        "_id": "kt4iioi09n70wc4i",
+        "_id": "hnrq2te43kd62m30",
         "name": "Attack",
         "img": "icons/weapons/staves/staff-simple-gold.webp",
         "description": "",
@@ -72,11 +48,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +70,12 @@
           "parts": [
             [
               "sizeRoll(1, 6, @size)",
-              "B"
+              {
+                "values": [
+                  "bludgeoning"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -140,137 +121,33 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "boStaff",
-    "useCustomTag": false,
     "flags": {
       "boolean": {},
       "dictionary": {}
     },
     "scriptCalls": [],
-    "masterwork": false,
-    "enh": null,
-    "proficient": true,
-    "primaryAttack": true,
     "held": "2h",
     "weaponType": "exotic",
-    "weaponSubtype": "2h",
-    "properties": {
-      "blc": true,
-      "brc": false,
-      "dea": false,
-      "dis": false,
-      "dst": false,
-      "dbl": true,
-      "fin": false,
-      "frg": false,
-      "grp": false,
-      "imp": false,
-      "mnk": true,
-      "nnl": false,
-      "prf": false,
-      "rch": false,
-      "snd": false,
-      "thr": false,
-      "trp": false
-    },
-    "showInQuickbar": true,
-    "ammoType": "",
-    "activation": {
-      "cost": 1,
-      "type": "attack"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "attack"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": 0,
-      "units": "melee",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "mwak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "sizeRoll(1, 6, @size)",
-          "B"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
-      },
-      "bonus": {
-        "formula": "@formulaicAttack * -5"
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "str",
-      "damage": "str",
-      "damageMult": 1.5,
-      "critRange": null,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "attackType": "weapon",
-    "nonlethal": false,
-    "conditionals": [],
-    "usesAmmo": false,
-    "spellArea": ""
+    "weaponSubtype": "2h"
   },
   "effects": [],
   "folder": null,

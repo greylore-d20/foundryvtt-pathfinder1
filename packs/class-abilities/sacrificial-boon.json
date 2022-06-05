@@ -5,26 +5,17 @@
   "img": "systems/pf1/icons/skills/affliction_06.jpg",
   "data": {
     "description": {
-      "value": "<p>At 1st level, as an&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Immediate-Actions\">immediate action</a>, you can sacrifice 1 hit point in exchange for a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Sacred-Bonus\">sacred bonus</a>&nbsp;on the next damage roll, saving throw, or skill check you make. This bonus only applies as long as you use it by or during your next turn—otherwise both your sacrificed hit point and the bonus are wasted. You can use this ability a number of times per day equal to 3 +&nbsp; your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>At 1st level, as an&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Immediate-Actions\">immediate action</a>, you can sacrifice 1 hit point in exchange for a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Sacred-Bonus\">sacred bonus</a>&nbsp;on the next damage roll, saving throw, or skill check you make. This bonus only applies as long as you use it by or during your next turn—otherwise both your sacrificed hit point and the bonus are wasted. You can use this ability a number of times per day equal to 3 +&nbsp; your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Charisma-Cha-\">Charisma</a>&nbsp;modifier.</p>"
     },
     "tags": [],
     "actions": [],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "3 + @abilities.cha.mod",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "3 + @abilities.cha.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -33,16 +24,13 @@
     "tag": "classFeat_sacrificialBoon",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -57,79 +45,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "immediate"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "reaction"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

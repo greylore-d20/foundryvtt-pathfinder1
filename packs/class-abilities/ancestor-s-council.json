@@ -5,26 +5,17 @@
   "img": "systems/pf1/icons/skills/violet_20.jpg",
   "data": {
     "description": {
-      "value": "<p>As a standard action the shaman can call upon her ancestors to provide advice and assistance to one ally within 30 feet. The ally gains a +2 bonus on any attack roll, saving throw, ability check, or skill check made before the beginning of the shaman’s next turn.</p>\n<p>The shaman can use this ability a number of times per day equal to 3 + her Charisma bonus.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>As a standard action the shaman can call upon her ancestors to provide advice and assistance to one ally within 30 feet. The ally gains a +2 bonus on any attack roll, saving throw, ability check, or skill check made before the beginning of the shaman’s next turn.</p>\n<p>The shaman can use this ability a number of times per day equal to 3 + her Charisma bonus.</p>"
     },
     "tags": [],
     "actions": [],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "3 + @abilities.cha.mod",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "3 + @abilities.cha.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -33,16 +24,13 @@
     "tag": "classFeat_ancestorsCouncil",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -57,79 +45,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": "1",
-      "units": "round"
-    },
-    "target": {
-      "value": "one ally"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "nwlked3ea4j7s78g",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,8 +29,11 @@
           "value": "creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -144,85 +146,24 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": false,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
       "value": "a piece of jewelry worth at least 100 gp",
-      "focus": "",
       "gpValue": 100
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You inspire yourself or a lover to a vengeful <i>rage</i> against a chosen enemy, who must be a creature that has wronged you in some way. If cast on you, the next time you are in combat with that enemy, you gain the benefits of a <i>rage</i> spell. If cast on a lover, he or she gains the benefits of a <i>rage</i> spell the next time the lover is in combat against your enemy. This variant of the spell must be cast within 1 hour of an intimate encounter with the target. The <i>rage</i> effect lasts 1 round per level. If the creature that triggers the <i>rage</i> effect is one of your lovers or ex-lovers, the benefits granted by the <i>rage</i> spell double. This spell counts as a <i>contingency</i> spell on the target for the purpose of multiple contingent effects. Worshipers of Calistria are fond of using this spell, and many keep the effect running whenever possible.</p>",
-    "spellDuration": "up to 1 day/level (D) or until discharged",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "minute"
-      }
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>You inspire yourself or a lover to a vengeful <i>rage</i> against a chosen enemy, who must be a creature that has wronged you in some way. If cast on you, the next time you are in combat with that enemy, you gain the benefits of a <i>rage</i> spell. If cast on a lover, he or she gains the benefits of a <i>rage</i> spell the next time the lover is in combat against your enemy. This variant of the spell must be cast within 1 hour of an intimate encounter with the target. The <i>rage</i> effect lasts 1 round per level. If the creature that triggers the <i>rage</i> effect is one of your lovers or ex-lovers, the benefits granted by the <i>rage</i> spell double. This spell counts as a <i>contingency</i> spell on the target for the purpose of multiple contingent effects. Worshipers of Calistria are fond of using this spell, and many keep the effect running whenever possible.</p>"
   },
   "effects": [],
   "folder": null,

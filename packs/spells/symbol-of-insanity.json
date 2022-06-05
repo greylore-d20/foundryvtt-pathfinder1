@@ -4,37 +4,36 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "krhh1crzxs7m15wy",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
           "value": "see text",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": "0",
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "one symbol",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -143,85 +146,24 @@
       "bloodline": []
     },
     "level": 8,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
       "value": "mercury and phosphorus, plus powdered diamond and opal worth a total of 5,000 gp",
-      "focus": "",
       "gpValue": 5000
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell functions like <i><i>symbol of</i> death</i>, except that all creatures within the radius of the <i><i>symbol of</i> <i>insanity</i></i> instead become permanently insane (as the <i>insanity</i> spell).</p><p>Unlike <i><i>symbol of</i> death</i>, <i><i>symbol of</i> <i>insanity</i></i> has no hit point limit; once triggered, a <i><i>symbol of</i> <i>insanity</i></i> simply remains active for 10 minutes per caster level.</p><p><i>Note:</i> Magic traps such as <i><i>symbol of</i> <i>insanity</i></i> are hard to detect and disable. A rogue (only) can use the Perception skill to find a <i><i>symbol of</i> <i>insanity</i></i> and Disable Device to thwart it. The DC in each case is 25 + spell level, or 33 for <i><i>symbol of</i> <i>insanity</i></i>.</p>",
-    "spellDuration": "see text",
-    "spellEffect": "one symbol",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
-      }
-    },
-    "range": {
-      "value": "0",
-      "units": "ft",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>This spell functions like <i><i>symbol of</i> death</i>, except that all creatures within the radius of the <i><i>symbol of</i> <i>insanity</i></i> instead become permanently insane (as the <i>insanity</i> spell).</p><p>Unlike <i><i>symbol of</i> death</i>, <i><i>symbol of</i> <i>insanity</i></i> has no hit point limit; once triggered, a <i><i>symbol of</i> <i>insanity</i></i> simply remains active for 10 minutes per caster level.</p><p><i>Note:</i> Magic traps such as <i><i>symbol of</i> <i>insanity</i></i> are hard to detect and disable. A rogue (only) can use the Perception skill to find a <i><i>symbol of</i> <i>insanity</i></i> and Disable Device to thwart it. The DC in each case is 25 + spell level, or 33 for <i><i>symbol of</i> <i>insanity</i></i>.</p>"
   },
   "effects": [],
   "folder": null,

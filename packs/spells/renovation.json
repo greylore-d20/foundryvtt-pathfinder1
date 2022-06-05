@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ibtfcji6lv8trfve",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 8,
+          "type": "hour"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 8,
+            "type": "hour"
           }
         },
         "duration": {
@@ -34,8 +29,11 @@
           "value": "one unoccupied structure"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "none (object; see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -136,86 +138,23 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
       "value": "silver dust worth 1,000 gp",
-      "focus": "",
       "gpValue": 1000
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>Upon casting this spell, you permanently rearrange and resize the rooms in a building you constructed as a downtime activity (see page 84 of <i>Ultimate</i> Campaign). You may reorganize and remap the building however you please, as if each room had just been constructed and is being positioned for the first time. You cannot make any changes to a building that changes how much a room would cost to create or that alters the benefits a room provides. The structure also must remain in the same general position within the district. If you don't wholly own the structure, all of the structure's owners must consent to the changes being made before the spell is cast; otherwise, it fails immediately.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 8,
-      "type": "hour"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 8,
-        "type": "hour"
-      }
-    },
-    "target": {
-      "value": "one unoccupied structure"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "none (object; see text)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>Upon casting this spell, you permanently rearrange and resize the rooms in a building you constructed as a downtime activity (see page 84 of <i>Ultimate</i> Campaign). You may reorganize and remap the building however you please, as if each room had just been constructed and is being positioned for the first time. You cannot make any changes to a building that changes how much a room would cost to create or that alters the benefits a room provides. The structure also must remain in the same general position within the district. If you don't wholly own the structure, all of the structure's owners must consent to the changes being made before the spell is cast; otherwise, it fails immediately.</p>"
   },
   "effects": [],
   "folder": null,

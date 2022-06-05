@@ -5,26 +5,17 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
-      "value": "<p>As an immediate action, you can summon a shroud of spirits that reflects your attackers’ damage back onto them. Any creature that strikes you deals normal damage to you, but at the same time the attacker takes 1d8 points of force damage + 1 point per 2 caster levels you possess (maximum +10). This effect lasts until the end of your next turn.</p>\n<p>You can use this ability once per day, plus one additional time per day at 11th level and every 4 levels thereafter.</p>\n<p>You must be at least 7th level to select this revelation.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>As an immediate action, you can summon a shroud of spirits that reflects your attackers’ damage back onto them. Any creature that strikes you deals normal damage to you, but at the same time the attacker takes 1d8 points of force damage + 1 point per 2 caster levels you possess (maximum +10). This effect lasts until the end of your next turn.</p>\n<p>You can use this ability once per day, plus one additional time per day at 11th level and every 4 levels thereafter.</p>\n<p>You must be at least 7th level to select this revelation.</p>"
     },
     "tags": [],
     "actions": [],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "floor((@classes.oracle.level - 3) / 4)",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -33,16 +24,13 @@
     "tag": "classFeat_shroudOfRetribution",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -57,79 +45,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "immediate"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "reaction"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

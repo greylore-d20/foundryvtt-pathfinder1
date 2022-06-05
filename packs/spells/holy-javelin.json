@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "tjw347ryvmmkfn6r",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 round + 1 round/4 levels",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "javelin of divine energy",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -138,81 +142,15 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "creation",
     "types": "good",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
       "divineFocus": 1
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You create a shimmering javelin of holy energy to hurl at an enemy as a ranged touched attack. The javelin deals 1d6 points of damage to an evil creature on a successful attack; it dissipates harmlessly against creatures of any other alignment. Each time a creature starts its turn while impaled by the javelin, it takes another 1d6 points of damage. For every 4 caster levels you have, the javelin remains in the creature for an additional round (to a maximum of 5 rounds at 18th level). While the creature remains impaled, it takes a -2 penalty on attack rolls and skill checks. As a move action, the creature (or another adjacent creature)  can attempt to pull the javelin out (causing it to immediately disappear) with a DC 12 Strength check.  The <i>holy javelin</i> glows like a torch, and this light clearly indicates the impaled creature's location, even if it turns invisible. Since this light is not a light effect, just the glow of a conjured javelin, darkness spells always suppress it, even if they are lower level.</p>",
-    "spellDuration": "1 round + 1 round/4 levels",
-    "spellEffect": "javelin of divine energy",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "medium",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You create a shimmering javelin of holy energy to hurl at an enemy as a ranged touched attack. The javelin deals 1d6 points of damage to an evil creature on a successful attack; it dissipates harmlessly against creatures of any other alignment. Each time a creature starts its turn while impaled by the javelin, it takes another 1d6 points of damage. For every 4 caster levels you have, the javelin remains in the creature for an additional round (to a maximum of 5 rounds at 18th level). While the creature remains impaled, it takes a -2 penalty on attack rolls and skill checks. As a move action, the creature (or another adjacent creature)  can attempt to pull the javelin out (causing it to immediately disappear) with a DC 12 Strength check.  The <i>holy javelin</i> glows like a torch, and this light clearly indicates the impaled creature's location, even if it turns invisible. Since this light is not a light effect, just the glow of a conjured javelin, darkness spells always suppress it, even if they are lower level.</p>"
   },
   "effects": [],
   "folder": null,

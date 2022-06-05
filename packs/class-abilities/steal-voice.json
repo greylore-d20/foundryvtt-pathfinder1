@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/skills/violet_02.jpg",
   "data": {
     "description": {
-      "value": "<p>The witch can steal the voice of one creature within 30 feet, causing it to lose, for a number of rounds equal to the witch’s Intelligence bonus, all abilities that rely on speech, including talking, casting spells with verbal components, and using auditory bardic performances. A successful Will saving throw negates this effect. If this hex is used upon a willing target, the duration lasts for a number of hours equal to the witch’s Intelligence bonus.</p>\n<p>Additionally, the witch can change her voice to match that of any creature whose voice she has stolen with this hex, as per @Compendium[pf1.spells.26g4tysnax570dxo]{Vocal Alteration} (Pathfinder RPG Ultimate Magic 248).</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>The witch can steal the voice of one creature within 30 feet, causing it to lose, for a number of rounds equal to the witch’s Intelligence bonus, all abilities that rely on speech, including talking, casting spells with verbal components, and using auditory bardic performances. A successful Will saving throw negates this effect. If this hex is used upon a willing target, the duration lasts for a number of hours equal to the witch’s Intelligence bonus.</p>\n<p>Additionally, the witch can change her voice to match that of any creature whose voice she has stolen with this hex, as per @Compendium[pf1.spells.26g4tysnax570dxo]{Vocal Alteration} (Pathfinder RPG Ultimate Magic 248).</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "jweemoqrvgjkazse",
+        "_id": "nxkwafe0c9gyk8sf",
         "name": "Use",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -104,23 +102,21 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -129,16 +125,13 @@
     "tag": "classFeat_stealVoice",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -153,79 +146,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": "@abilities.int.mod",
-      "units": "round"
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

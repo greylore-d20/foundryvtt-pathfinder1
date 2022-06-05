@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/spells/fire-arrows-jade-2.jpg",
   "data": {
     "description": {
-      "value": "<p><strong>Element&nbsp;</strong>aether;&nbsp;<strong>Type&nbsp;</strong>substance infusion;&nbsp;<strong>Level&nbsp;</strong>6;&nbsp;<strong>Burn&nbsp;</strong>4<br><strong>Associated Blasts&nbsp;</strong>force<br><strong>Saving Throw&nbsp;</strong>Fortitude partial; see text</p>\n<p>You can use force to rip your targets apart. Against creatures, your kinetic blast deals double its normal amount of damage, but targets receive a saving throw to reduce the damage to half the blast’s normal amount of damage (for a total of 1/4 of the blast’s increased damage). Any creature reduced to 0 or fewer hit points by the blast is disintegrated, as the spell&nbsp;disintegrate.</p>\n<p>You can use the infused blast to destroy force effects or objects as&nbsp;disintegrate, but for each force effect or 10-foot cube of nonliving matter you destroy in this way, you must accept 1 point of burn, which can’t be reduced by effects such as infusion specialization or gather power.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Element&nbsp;</strong>aether;&nbsp;<strong>Type&nbsp;</strong>substance infusion;&nbsp;<strong>Level&nbsp;</strong>6;&nbsp;<strong>Burn&nbsp;</strong>4<br><strong>Associated Blasts&nbsp;</strong>force<br><strong>Saving Throw&nbsp;</strong>Fortitude partial; see text</p>\n<p>You can use force to rip your targets apart. Against creatures, your kinetic blast deals double its normal amount of damage, but targets receive a saving throw to reduce the damage to half the blast’s normal amount of damage (for a total of 1/4 of the blast’s increased damage). Any creature reduced to 0 or fewer hit points by the blast is disintegrated, as the spell&nbsp;disintegrate.</p>\n<p>You can use the infused blast to destroy force effects or objects as&nbsp;disintegrate, but for each force effect or 10-foot cube of nonliving matter you destroy in this way, you must accept 1 point of burn, which can’t be reduced by effects such as infusion specialization or gather power.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "0nhb9and3b9mmlil",
+        "_id": "5abiu696apphldmy",
         "name": "Use",
         "img": "systems/pf1/icons/spells/fire-arrows-jade-2.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": null,
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -104,23 +102,18 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -129,16 +122,13 @@
     "tag": "classFeat_disintegratingInfusion",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -152,80 +142,7 @@
           "Kineticist"
         ]
       ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "none",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": ""
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": ""
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude partial; see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "data": {
     "description": {
-      "value": "<p>You diminish one target within 30 feet as a standard action, making its attacks weaker. Whenever the target would roll to deal damage with an attack or spell, it deals the minimum amount of damage. This curse lasts for 1 round per 2 oracle levels you have (minimum 1). A successful Will saving throw negates this effect. This is a mind-affecting curse effect.</p>\n<p>You can use this revelation once per day, plus one additional time at 11th level and 15th level. You must be at least 7th level before selecting this revelation.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>You diminish one target within 30 feet as a standard action, making its attacks weaker. Whenever the target would roll to deal damage with an attack or spell, it deals the minimum amount of damage. This curse lasts for 1 round per 2 oracle levels you have (minimum 1). A successful Will saving throw negates this effect. This is a mind-affecting curse effect.</p>\n<p>You can use this revelation once per day, plus one additional time at 11th level and 15th level. You must be at least 7th level before selecting this revelation.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "8zju8peemzl73ms3",
+        "_id": "9gcfxsxm5vcxy5xz",
         "name": "Use",
         "img": "systems/pf1/icons/spells/light-royal-1.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "@classes.oracle.level >= 15 ? 3 : ((@classes.oracle.level < 15 && @classes.oracle.level > 6) ? 2 : 1)",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "@classes.oracle.level >= 15 ? 3 : ((@classes.oracle.level < 15 && @classes.oracle.level > 6) ? 2 : 1)"
         },
         "measureTemplate": {
           "type": "",
@@ -104,23 +102,22 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "@classes.oracle.level >= 15 ? 3 : ((@classes.oracle.level < 15 && @classes.oracle.level > 6) ? 2 : 1)",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "@classes.oracle.level >= 15 ? 3 : ((@classes.oracle.level < 15 && @classes.oracle.level > 6) ? 2 : 1)"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -129,16 +126,13 @@
     "tag": "classFeat_curseOfDampening",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -153,79 +147,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": "max(1, floor(@classes.oracle.level / 2))",
-      "units": "round"
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "yn05zrtu8i98hndi",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 8,
+          "type": "hour"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 8,
+            "type": "hour"
           }
         },
         "duration": {
@@ -34,8 +29,11 @@
           "value": "one building"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -132,87 +134,22 @@
       "bloodline": []
     },
     "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "teleportation",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": false,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
       "value": "gold dust worth 50 gp",
-      "focus": "",
       "gpValue": 50
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You instantly teleport a building in a settlement you control to another lot or series of lots in the same settlement district. The building to be teleported must be unoccupied, and the area to which you wish to move the building must be cleared and unoccupied during the casting of this spell. A building cannot be teleported to an area it would not normally be able to occupy, such as an area adjacent to a prohibited building type. If you don't wholly own the structure, all of the structure's owners must consent to the structure's teleportation before the spell is cast; otherwise, it fails immediately.  This spell only functions on buildings that occupy a number of lots equal to one-fourth your caster level (so, for instance, a 16th-level caster could use this spell on a building that occupies up to 4 lots).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 8,
-      "type": "hour"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 8,
-        "type": "hour"
-      }
-    },
-    "target": {
-      "value": "one building"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (object)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>You instantly teleport a building in a settlement you control to another lot or series of lots in the same settlement district. The building to be teleported must be unoccupied, and the area to which you wish to move the building must be cleared and unoccupied during the casting of this spell. A building cannot be teleported to an area it would not normally be able to occupy, such as an area adjacent to a prohibited building type. If you don't wholly own the structure, all of the structure's owners must consent to the structure's teleportation before the spell is cast; otherwise, it fails immediately.  This spell only functions on buildings that occupy a number of lots equal to one-fourth your caster level (so, for instance, a 16th-level caster could use this spell on a building that occupies up to 4 lots).</p>"
   },
   "effects": [],
   "folder": null,

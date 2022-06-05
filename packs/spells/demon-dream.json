@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "icons/magic/perception/eye-ringed-glow-angry-large-teal.webp",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "05avvtg4jha64h9z",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/perception/eye-ringed-glow-angry-large-teal.webp",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "special"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -42,14 +37,14 @@
         },
         "uses": {
           "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
+          "autoDeductChargesCost": "1 + @sl",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -76,7 +71,7 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -84,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,16 +101,15 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -140,124 +134,16 @@
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 1,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "ill",
     "subschool": "phantasm",
     "types": "evil, mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
       "divineFocus": 1
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">When the target of <em>demon dream</em> is a worshiper of a demon lord or Lamashtu, the caster has the option of making the spell function instead as a&nbsp;@Compendium[pf1.spells.ifcnx1yyw6e7ousm]{Dream} spell. Otherwise, this spell functions like&nbsp;@Compendium[pf1.spells.siv3ub7hbmcklf8c]{Nightmare} (see <em>Pathfinder RPG Core Rulebook 316</em>), save that the subject matter of the dream always involves demons. Upon waking from a <em>demon dream</em>, the victim must make a saving throw against the spell to resist taking 1d6 points of Wisdom drain from the unsettling, madness- inducing dream&mdash;this is in addition to the damage and fatigue normally caused by the <em>nightmare</em>.</span></p>",
-    "spellDuration": "see text",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 1,
-      "type": "special"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "special"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": "one living creature"
-    },
-    "range": {
-      "value": null,
-      "units": "unlimited",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "spellsave",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": "see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "conditionals": [],
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Demon Dream",
-    "size": "med"
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">When the target of <em>demon dream</em> is a worshiper of a demon lord or Lamashtu, the caster has the option of making the spell function instead as a&nbsp;@Compendium[pf1.spells.ifcnx1yyw6e7ousm]{Dream} spell. Otherwise, this spell functions like&nbsp;@Compendium[pf1.spells.siv3ub7hbmcklf8c]{Nightmare} (see <em>Pathfinder RPG Core Rulebook 316</em>), save that the subject matter of the dream always involves demons. Upon waking from a <em>demon dream</em>, the victim must make a saving throw against the spell to resist taking 1d6 points of Wisdom drain from the unsettling, madness- inducing dream&mdash;this is in addition to the damage and fatigue normally caused by the <em>nightmare</em>.</span></p>"
   },
   "effects": [],
   "folder": null,

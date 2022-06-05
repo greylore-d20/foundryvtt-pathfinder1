@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "3ebhv6b6mke0gvxc",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one humanoid, magical beast, or monstrous humanoid"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -156,86 +158,18 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "nec",
-    "subschool": "",
     "types": "evil, mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
       "material": true,
-      "focus": false,
       "divineFocus": 2
     },
-    "castTime": "",
     "materials": {
-      "value": "a ghoul fang",
-      "focus": "",
-      "gpValue": 0
+      "value": "a ghoul fang"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>Your target's belly distends and its front teeth grow longer and sharper. The creature ravenously craves the flesh of its own kind, gaining the staggered condition as hunger pangs rack its altered body. The target gains a bite attack as a primary natural attack that deals damage appropriate for its size (1d6 if Medium, 1d4 if Small). There's a 25% chance on each of the creature's turns that it can't overcome its hunger. If so, it must move directly toward the nearest corporeal creature of its type and subtype (if applicable) and make a bite attack against it. If the target lacks enough actions to attack on that turn, it moves as close to the creature as it can, but on its next turn, if the percentile dice indicate it overcomes its hunger, the target is not forced to pursue or attack further.  On any round after the target deals damage to another creature of its own type and subtype (if applicable) with its bite attack, the target loses the staggered condition. If it doesn't continue dealing bite damage to applicable creatures, the target regains the staggered condition at the beginning of its next turn.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one humanoid, magical beast, or monstrous humanoid"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>Your target's belly distends and its front teeth grow longer and sharper. The creature ravenously craves the flesh of its own kind, gaining the staggered condition as hunger pangs rack its altered body. The target gains a bite attack as a primary natural attack that deals damage appropriate for its size (1d6 if Medium, 1d4 if Small). There's a 25% chance on each of the creature's turns that it can't overcome its hunger. If so, it must move directly toward the nearest corporeal creature of its type and subtype (if applicable) and make a bite attack against it. If the target lacks enough actions to attack on that turn, it moves as close to the creature as it can, but on its next turn, if the percentile dice indicate it overcomes its hunger, the target is not forced to pursue or attack further.  On any round after the target deals damage to another creature of its own type and subtype (if applicable) with its bite attack, the target loses the staggered condition. If it doesn't continue dealing bite damage to applicable creatures, the target regains the staggered condition at the beginning of its next turn.</p>"
   },
   "effects": [],
   "folder": null,

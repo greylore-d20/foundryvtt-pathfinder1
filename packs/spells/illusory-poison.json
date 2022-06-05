@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "oikz35io3fs66rbe",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "weapon touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Will disbelief, then Fortitude (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -132,86 +134,14 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "ill",
     "subschool": "phantasm",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You create a phantasm of an oily green phantasmal poison on the target weapon. The first creature hit by the poisoned weapon must make a Will save against the illusion spell; success means the spell has no effect and is expended from the weapon. If the creature fails its save, it believes it has been poisoned and must make Fortitude saves at the spell's DC to avoid suffering illusory poison damage.</p><p><i>Delay poison</i> allows the target to ignore the effects of the phantasmal poison until the <i>delay poison</i> spell ends, at which time it may make a Will save to realize the poison is illusory and recover all illusory poison damage. <i>Neutralize poison</i>, <i>lesser restoration</i>, <i>or restoration</i> immediately recovers all damage from the spell. A successful <i>dispel magic</i> spell ends the effect of the illusion, as do spells that penetrate illusions (such as <i>true</i> seeing).</p><p>The target automatically recovers all illusory poison damage after 1 hour.</p>",
-    "spellDuration": "1 minute/level or until discharged (see text)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "weapon touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Will disbelief, then Fortitude (see text)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You create a phantasm of an oily green phantasmal poison on the target weapon. The first creature hit by the poisoned weapon must make a Will save against the illusion spell; success means the spell has no effect and is expended from the weapon. If the creature fails its save, it believes it has been poisoned and must make Fortitude saves at the spell's DC to avoid suffering illusory poison damage.</p><p><i>Delay poison</i> allows the target to ignore the effects of the phantasmal poison until the <i>delay poison</i> spell ends, at which time it may make a Will save to realize the poison is illusory and recover all illusory poison damage. <i>Neutralize poison</i>, <i>lesser restoration</i>, <i>or restoration</i> immediately recovers all damage from the spell. A successful <i>dispel magic</i> spell ends the effect of the illusion, as do spells that penetrate illusions (such as <i>true</i> seeing).</p><p>The target automatically recovers all illusory poison damage after 1 hour.</p>"
   },
   "effects": [],
   "folder": null,

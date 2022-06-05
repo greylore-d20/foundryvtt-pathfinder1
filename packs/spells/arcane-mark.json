@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "lz1p2a4jzp8yl7yg",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "permanent",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "one personal rune or mark, all of which must fit within 1 sq. ft.",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -150,81 +154,16 @@
       "bloodline": []
     },
     "level": 0,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "uni",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": false,
-      "spontaneousPrepared": true
+      "autoDeductCharges": false
     },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This spell allows you to inscribe your personal rune or mark, which can consist of no more than six characters. The writing can be visible or invisible. An <i>arcane mark</i> spell enables you to etch the rune upon any substance without harm to the material upon which it is placed. If an invisible mark is made, a <i>detect magic</i> spell causes it to glow and be visible, though not necessarily understandable.</p><p><i>See invisibility</i>, <i>true seeing</i>, a <i>gem of seeing</i>, or a <i>robe of eyes</i> likewise allows the user to see an invisible <i>arcane mark</i>. A <i>read magic</i> spell reveals the words, if any. The mark cannot be dispelled, but it can be removed by the caster or by an <i>erase</i> spell.</p><p>If an <i>arcane mark</i> is placed on a living being, the effect gradually fades in about a month.</p><p><i>Arcane mark</i> must be cast on an object prior to casting <i>instant summons</i> on the same object (see that spell description for details).</p>",
-    "spellDuration": "permanent",
-    "spellEffect": "one personal rune or mark, all of which must fit within 1 sq. ft.",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell allows you to inscribe your personal rune or mark, which can consist of no more than six characters. The writing can be visible or invisible. An <i>arcane mark</i> spell enables you to etch the rune upon any substance without harm to the material upon which it is placed. If an invisible mark is made, a <i>detect magic</i> spell causes it to glow and be visible, though not necessarily understandable.</p><p><i>See invisibility</i>, <i>true seeing</i>, a <i>gem of seeing</i>, or a <i>robe of eyes</i> likewise allows the user to see an invisible <i>arcane mark</i>. A <i>read magic</i> spell reveals the words, if any. The mark cannot be dispelled, but it can be removed by the caster or by an <i>erase</i> spell.</p><p>If an <i>arcane mark</i> is placed on a living being, the effect gradually fades in about a month.</p><p><i>Arcane mark</i> must be cast on an object prior to casting <i>instant summons</i> on the same object (see that spell description for details).</p>"
   },
   "effects": [],
   "folder": null,

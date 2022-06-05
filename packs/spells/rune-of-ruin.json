@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "h4jzm6y5n0qgt7w5",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,7 +29,11 @@
           "value": "1 object"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates (object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -147,85 +150,18 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
     "types": "curse",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a self-portrait on a thin sheet of paper",
-      "focus": "",
-      "gpValue": 0
+      "value": "a self-portrait on a thin sheet of paper"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You curse a magic item, such as magical clothing, a suit of armor, or a weapon. The object is reduced to 1/4 its normal hit point total, gains the broken condition, and appears damaged and worn. If it grants a numeric bonus, such as a +2 deflection bonus to AC, that bonus is reduced by 1 for every 3 caster levels you possess, to a minimum of +0. Other magical qualities fail to work 50% of the time when called upon, so a resistance bonus on saves or a weapon's <i>flaming</i> special ability could fail each time the item is used.  If the object is an intelligent magical item, its Ego score remains unchanged despite its reduced quality. The weapon has only a 50% chance to successfully use any spells or spell-like abilities it has, and has a 25% chance of forgetting its special purpose (if any). If an intelligent weapon is actively dominating its wielder when it fails its save against <i>Rune of Ruin</i>, the wielder gains an immediate saving throw with a +4 bonus to regain control. <i>Rune of Ruin</i> has no affect on magical artifacts.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "1 object"
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates (object)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "range": {
-      "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You curse a magic item, such as magical clothing, a suit of armor, or a weapon. The object is reduced to 1/4 its normal hit point total, gains the broken condition, and appears damaged and worn. If it grants a numeric bonus, such as a +2 deflection bonus to AC, that bonus is reduced by 1 for every 3 caster levels you possess, to a minimum of +0. Other magical qualities fail to work 50% of the time when called upon, so a resistance bonus on saves or a weapon's <i>flaming</i> special ability could fail each time the item is used.  If the object is an intelligent magical item, its Ego score remains unchanged despite its reduced quality. The weapon has only a 50% chance to successfully use any spells or spell-like abilities it has, and has a 25% chance of forgetting its special purpose (if any). If an intelligent weapon is actively dominating its wielder when it fails its save against <i>Rune of Ruin</i>, the wielder gains an immediate saving throw with a +4 bonus to regain control. <i>Rune of Ruin</i> has no affect on magical artifacts.</p>"
   },
   "effects": [],
   "folder": null,

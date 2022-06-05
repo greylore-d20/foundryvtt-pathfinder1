@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "xdz1xd5lbvqa83id",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 minute/level, instantaneous, or until expended (see text)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex negates or none (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "Wall of Ice or flying ice javelins (see text)",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -130,83 +134,23 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
     "types": "cold, good, water",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
       "value": "a flask of holy water or 5 pounds of powdered silver worth 25 gp",
-      "focus": "",
       "gpValue": 25
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell creates a large mass of frozen holy water that can be used for one of two effects.</p><p><i>Holy Ice</i> Wall: This functions like <i>Wall of Ice</i> (hemisphere or plane). Any creature that takes damage from holy water takes 1 point of damage every time it touches or attacks the ice wall with melee attacks; extended contact with the wall (such as standing or walking on it) deals 1d6 points of damage. Even when the ice has been broken through, a sheet of frigid holy air remains. Any creature that steps through it (including the one who broke through the wall) takes 1d6 points of damage + 1 point per caster level (no save); half of this damage is cold damage, half is damage from holy water (creatures unharmed by holy water do not take the damage).</p><p><i>Holy Ice</i> Javelins: The spell creates a number of javelins of frozen holy water in your square equal to your caster level (maximum 15), which hurl themselves toward one or more targets that are no more than 10 feet away from each other.</p><p>You must succeed on attack rolls (one per javelin) to hit the target with the javelin, using your base attack bonus + your Wisdom modifier. The javelins deal 1d6 damage each, plus 1 point of cold damage and 1 point of damage from holy water.</p><p>The javelins are destroyed by this attack.</p>",
-    "spellDuration": "1 minute/level, instantaneous, or until expended (see text)",
-    "spellEffect": "Wall of Ice or flying ice javelins (see text)",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "medium",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex negates or none (see text)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>This spell creates a large mass of frozen holy water that can be used for one of two effects.</p><p><i>Holy Ice</i> Wall: This functions like <i>Wall of Ice</i> (hemisphere or plane). Any creature that takes damage from holy water takes 1 point of damage every time it touches or attacks the ice wall with melee attacks; extended contact with the wall (such as standing or walking on it) deals 1d6 points of damage. Even when the ice has been broken through, a sheet of frigid holy air remains. Any creature that steps through it (including the one who broke through the wall) takes 1d6 points of damage + 1 point per caster level (no save); half of this damage is cold damage, half is damage from holy water (creatures unharmed by holy water do not take the damage).</p><p><i>Holy Ice</i> Javelins: The spell creates a number of javelins of frozen holy water in your square equal to your caster level (maximum 15), which hurl themselves toward one or more targets that are no more than 10 feet away from each other.</p><p>You must succeed on attack rolls (one per javelin) to hit the target with the javelin, using your base attack bonus + your Wisdom modifier. The javelins deal 1d6 damage each, plus 1 point of cold damage and 1 point of damage from holy water.</p><p>The javelins are destroyed by this attack.</p>"
   },
   "effects": [],
   "folder": null,

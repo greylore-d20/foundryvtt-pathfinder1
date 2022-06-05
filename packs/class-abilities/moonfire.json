@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/skills/shadow_12.jpg",
   "data": {
     "description": {
-      "value": "<p>At 8th level, as a standard action, you can shoot a blast of divine moonlight from your eyes as a ranged touch attack against a single target within 30 feet. Moonfire deals 1d8 points of damage per 2 class levels you have, and the target is dazzled for 1 round per class level you have. Moonfire deals 1d10 points of damage per class level you have against lycanthropes. You can use this ability once per day at 8th level, and one additional time per day for every 4 levels beyond 8th.</p>\n<p>This power replaces the Eyes of Darkness power of the Darkness Domain.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>At 8th level, as a standard action, you can shoot a blast of divine moonlight from your eyes as a ranged touch attack against a single target within 30 feet. Moonfire deals 1d8 points of damage per 2 class levels you have, and the target is dazzled for 1 round per class level you have. Moonfire deals 1d10 points of damage per class level you have against lycanthropes. You can use this ability once per day at 8th level, and one additional time per day for every 4 levels beyond 8th.</p>\n<p>This power replaces the Eyes of Darkness power of the Darkness Domain.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "t6f14azi9za42z1a",
+        "_id": "b0j2ib6yxqwu7x3s",
         "name": "Use",
         "img": "systems/pf1/icons/skills/shadow_12.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "day",
           "value": 0,
-          "maxFormula": "floor((@classes.cleric.level - 4) / 4)",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": "floor((@classes.cleric.level - 4) / 4)"
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +61,12 @@
           "parts": [
             [
               "(floor(@classes.cleric.level / 2))d8",
-              ""
+              {
+                "values": [
+                  "untyped"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -109,23 +112,22 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
       "per": "day",
-      "value": 0,
-      "maxFormula": "floor((@classes.cleric.level - 4) / 4)",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "maxFormula": "floor((@classes.cleric.level - 4) / 4)"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -134,16 +136,13 @@
     "tag": "classFeat_moonfire",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -158,84 +157,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "0",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "rsak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(floor(@classes.cleric.level / 2))d8",
-          ""
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

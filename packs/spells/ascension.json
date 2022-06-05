@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "x0gjjtr9d521fzcu",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "hour"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": "hour"
           }
         },
         "duration": {
@@ -34,8 +29,11 @@
           "value": "one non-mythic creature/3 levels"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -148,23 +150,13 @@
       "bloodline": []
     },
     "level": 9,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "uni",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
       "material": true,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
       "value": "10,000 gp in rare herbs, gems, and other exotic materials",
       "focus": "minor artifact",
@@ -172,61 +164,10 @@
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You imbue a number of creatures with mythic power, granting each of them 1st tier in a mythic path of its choice. The creatures immediately gain the benefits of their chosen paths. Divide the duration evenly among all targets.  The targets retain their mythic tier only while they're within 100 feet of the spell's focus component. A target that goes outside this range loses its mythic tier, but instantly regains it if it moves into range again. If the focus component is destroyed while the spell is in effect, the spell immediately ends and all targets gain 1d4 permanent negative levels.</p>",
-    "spellDuration": "2 hours/level; see text",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "hour"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "hour"
-      }
-    },
-    "target": {
-      "value": "one non-mythic creature/3 levels"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>You imbue a number of creatures with mythic power, granting each of them 1st tier in a mythic path of its choice. The creatures immediately gain the benefits of their chosen paths. Divide the duration evenly among all targets.  The targets retain their mythic tier only while they're within 100 feet of the spell's focus component. A target that goes outside this range loses its mythic tier, but instantly regains it if it moves into range again. If the focus component is destroyed while the spell is in effect, the spell immediately ends and all targets gain 1d4 permanent negative levels.</p>"
   },
   "effects": [],
   "folder": null,

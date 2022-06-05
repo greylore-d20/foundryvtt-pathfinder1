@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ooz22zrllkve1m78",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "trail of flame that follows the caster's movements; see text",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -142,81 +146,13 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
     "types": "fire",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>When you cast this spell, flammable liquid oozes from your pores, dripping onto the ground and spontaneously combusting. The flame does not harm you. During this spell's duration, each time you leave your space, you create a trail of fire that burns within the spaces you move through for 1 round before it burns out. You can leave up to 60 feet of flame trail each round, assuming you are Small or Medium. If you are larger than Medium, the maximum trail length is reduced based on your size. If you are Large, you can leave a trail up to 30 feet long (and 10 feet wide), and if you are Huge, you can leave a trail up to 15 feet long (and 15 feet wide); even larger casters can only leave a trail up to 10 feet long (and as wide as your space) each round. You choose where to leave a flame trail.  Creatures that start their turn adjacent to the flame trail take 1d6 points of fire damage. Creatures that start their turn within the flame trail or that enter an area of flame take a number of points of fire damage equal to 1d6 + 1 per caster level (maximum +10). If a creature moves into an area of the flame trail multiple times in a round, it takes this damage each time it enters the area of the flame trail. Flammable objects in or adjacent to the fire trail catch fire.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "trail of flame that follows the caster's movements; see text",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "personal",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>When you cast this spell, flammable liquid oozes from your pores, dripping onto the ground and spontaneously combusting. The flame does not harm you. During this spell's duration, each time you leave your space, you create a trail of fire that burns within the spaces you move through for 1 round before it burns out. You can leave up to 60 feet of flame trail each round, assuming you are Small or Medium. If you are larger than Medium, the maximum trail length is reduced based on your size. If you are Large, you can leave a trail up to 30 feet long (and 10 feet wide), and if you are Huge, you can leave a trail up to 15 feet long (and 15 feet wide); even larger casters can only leave a trail up to 10 feet long (and as wide as your space) each round. You choose where to leave a flame trail.  Creatures that start their turn adjacent to the flame trail take 1d6 points of fire damage. Creatures that start their turn within the flame trail or that enter an area of flame take a number of points of fire damage equal to 1d6 + 1 per caster level (maximum +10). If a creature moves into an area of the flame trail multiple times in a round, it takes this damage each time it enters the area of the flame trail. Flammable objects in or adjacent to the fire trail catch fire.</p>"
   },
   "effects": [],
   "folder": null,

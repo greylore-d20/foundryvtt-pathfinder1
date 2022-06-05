@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
   "data": {
     "description": {
-      "value": "<p>The arcanist can loose a deafening blast of sonic energy by expending 1 point from her arcane reservoir and succeeding at a ranged touch attack against any one target within 30 feet. The blast deals an amount of sonic damage equal to 1d6 + the arcanist’s Charisma modifier, plus an additional 1d6 points of sonic damage for every 2 levels beyond 1st (to a maximum of 10d6 at 19th level). The target is also deafened for 1 minute. The target can attempt a Fortitude save to halve the damage and negate the deafness.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>The arcanist can loose a deafening blast of sonic energy by expending 1 point from her arcane reservoir and succeeding at a ranged touch attack against any one target within 30 feet. The blast deals an amount of sonic damage equal to 1d6 + the arcanist’s Charisma modifier, plus an additional 1d6 points of sonic damage for every 2 levels beyond 1st (to a maximum of 10d6 at 19th level). The target is also deafened for 1 minute. The target can attempt a Fortitude save to halve the damage and negate the deafness.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "794uq92jn48itzkt",
+        "_id": "hypkrf7uiic4ggil",
         "name": "Use",
         "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +61,12 @@
           "parts": [
             [
               "(ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod",
-              "Sonic"
+              {
+                "values": [
+                  "sonic"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -109,23 +112,21 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -134,16 +135,13 @@
     "tag": "classFeat_sonicBlast",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -158,84 +156,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "rsak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod",
-          "Sonic"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates deafness"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

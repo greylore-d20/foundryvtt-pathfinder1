@@ -4,35 +4,36 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "43b7dvm3btsy69ut",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 30,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 30,
+            "type": "minute"
           }
         },
         "duration": {
           "value": "2 hours/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -78,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -100,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "up to 200 sq. ft./level",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -151,82 +156,19 @@
       ]
     },
     "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
       "material": true,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
       "value": "burning incense, a small measure of brimstone and oil, a knotted string, and a small amount of blood",
-      "focus": "a small silver rod",
-      "gpValue": 0
+      "focus": "a small silver rod"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This powerful spell is primarily used to defend a stronghold or fortress by creating a number of magical wards and effects. The ward protects 200 square feet per caster level. The warded area can be as much as 20 feet high, and shaped as you desire. You can ward several stories of a stronghold by dividing the area among them; you must be somewhere within the area to be warded to cast the spell. The spell creates the following magical effects within the warded area.</p><p><i>Fog: Fog</i> fills all corridors, obscuring all sight, including darkvision, beyond 5 feet. A creature within 5 feet has concealment (attacks have a 20% miss chance). Creatures farther away have total concealment (50% miss chance, and the attacker cannot use sight to locate the target). Saving Throw: none. Spell Resistance: no.</p><p><i>Arcane Locks</i>: All doors in the warded area are <i>arcane locked.</i></p><p>Saving Throw: none. Spell Resistance: no.</p><p><i>Webs: Webs</i> fill all stairs from top to bottom. These strands are identical with those created by the <i>web</i> spell, except that they regrow in 10 minutes if they are burned or torn away while the <i>guards and wards</i> spell lasts. Saving Throw: Reflex negates; see text for <i>web</i>. Spell Resistance: no.</p><p><i>Confusion:</i> Where there are choices in direction-such as a corridor intersection or side passage-a minor <i>confusion-type</i> effect functions so as to make it 50% probable that intruders believe they are going in the opposite direction from the one they actually chose. This is a mind-affecting effect. Saving Throw: none. Spell Resistance: yes.</p><p><i>Lost Doors</i>: One door per caster level is covered by a <i>silent image</i> to appear as if it were a plain wall. Saving Throw: Will disbelief (if interacted with). Spell Resistance: no.</p><p>In addition, you can place your choice of one of the following five magical effects.</p><p>1. <i>Dancing lights</i> in four corridors. You can designate a simple program that causes the lights to repeat as long as the <i>guards and wards</i> spell lasts. Saving Throw: none. Spell Resistance: no.</p><p>2. A <i>magic mouth</i> in two places. Saving Throw: none. Spell Resistance: no.</p><p>3. A <i>stinking cloud</i> in two places. The vapors appear in the places you designate; they return within 10 minutes if dispersed by wind while the <i>guards and wards</i> spell lasts. Saving Throw: Fortitude negates; see text for <i>stinking cloud</i>. Spell Resistance: no.</p><p>4. A <i>gust of wind in</i> one corridor or room. Saving Throw: Fortitude negates. Spell Resistance: yes.</p><p>5. A <i>suggestion</i> in one place. You select an area of up to 5 feet square, and any creature who enters or passes through the area receives the <i>suggestion</i> mentally. Saving Throw: Will negates.</p><p>Spell Resistance: yes.</p><p>The whole warded area radiates strong magic of the abjuration school. A <i>dispel magic</i> cast on a specific effect, if successful, removes only that effect. A successful mage's disjunction destroys the entire <i>guards and wards</i> effect.</p>",
-    "spellDuration": "2 hours/level",
-    "spellEffect": "",
-    "spellArea": "up to 200 sq. ft./level",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 30,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 30,
-        "type": "minute"
-      }
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "range": {
-      "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This powerful spell is primarily used to defend a stronghold or fortress by creating a number of magical wards and effects. The ward protects 200 square feet per caster level. The warded area can be as much as 20 feet high, and shaped as you desire. You can ward several stories of a stronghold by dividing the area among them; you must be somewhere within the area to be warded to cast the spell. The spell creates the following magical effects within the warded area.</p><p><i>Fog: Fog</i> fills all corridors, obscuring all sight, including darkvision, beyond 5 feet. A creature within 5 feet has concealment (attacks have a 20% miss chance). Creatures farther away have total concealment (50% miss chance, and the attacker cannot use sight to locate the target). Saving Throw: none. Spell Resistance: no.</p><p><i>Arcane Locks</i>: All doors in the warded area are <i>arcane locked.</i></p><p>Saving Throw: none. Spell Resistance: no.</p><p><i>Webs: Webs</i> fill all stairs from top to bottom. These strands are identical with those created by the <i>web</i> spell, except that they regrow in 10 minutes if they are burned or torn away while the <i>guards and wards</i> spell lasts. Saving Throw: Reflex negates; see text for <i>web</i>. Spell Resistance: no.</p><p><i>Confusion:</i> Where there are choices in direction-such as a corridor intersection or side passage-a minor <i>confusion-type</i> effect functions so as to make it 50% probable that intruders believe they are going in the opposite direction from the one they actually chose. This is a mind-affecting effect. Saving Throw: none. Spell Resistance: yes.</p><p><i>Lost Doors</i>: One door per caster level is covered by a <i>silent image</i> to appear as if it were a plain wall. Saving Throw: Will disbelief (if interacted with). Spell Resistance: no.</p><p>In addition, you can place your choice of one of the following five magical effects.</p><p>1. <i>Dancing lights</i> in four corridors. You can designate a simple program that causes the lights to repeat as long as the <i>guards and wards</i> spell lasts. Saving Throw: none. Spell Resistance: no.</p><p>2. A <i>magic mouth</i> in two places. Saving Throw: none. Spell Resistance: no.</p><p>3. A <i>stinking cloud</i> in two places. The vapors appear in the places you designate; they return within 10 minutes if dispersed by wind while the <i>guards and wards</i> spell lasts. Saving Throw: Fortitude negates; see text for <i>stinking cloud</i>. Spell Resistance: no.</p><p>4. A <i>gust of wind in</i> one corridor or room. Saving Throw: Fortitude negates. Spell Resistance: yes.</p><p>5. A <i>suggestion</i> in one place. You select an area of up to 5 feet square, and any creature who enters or passes through the area receives the <i>suggestion</i> mentally. Saving Throw: Will negates.</p><p>Spell Resistance: yes.</p><p>The whole warded area radiates strong magic of the abjuration school. A <i>dispel magic</i> cast on a specific effect, if successful, removes only that effect. A successful mage's disjunction destroys the entire <i>guards and wards</i> effect.</p>"
   },
   "effects": [],
   "folder": null,

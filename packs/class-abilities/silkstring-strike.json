@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/skills/green_03.jpg",
   "data": {
     "description": {
-      "value": "<p>The shaman causes ribbons of spider silk to erupt from the ground beneath a single creature. The target must succeed at a Reflex save or be entangled and anchored in place. The foe can escape the silk as a standard action with a successful Escape Artist or Strength check at the same DC, or by dealing an amount of damage to the silk equal to double the shaman’s class level (the silk has hardness 0).</p>\n<p>This hex lasts a number of rounds equal to 3 + the shaman’s Wisdom modifier.</p>\n<p>A creature affected by this hex cannot be affected by it again for 24 hours.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>The shaman causes ribbons of spider silk to erupt from the ground beneath a single creature. The target must succeed at a Reflex save or be entangled and anchored in place. The foe can escape the silk as a standard action with a successful Escape Artist or Strength check at the same DC, or by dealing an amount of damage to the silk equal to double the shaman’s class level (the silk has hardness 0).</p>\n<p>This hex lasts a number of rounds equal to 3 + the shaman’s Wisdom modifier.</p>\n<p>A creature affected by this hex cannot be affected by it again for 24 hours.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "wuklg3uq72n5tsb1",
+        "_id": "mik9es4yihhis5jb",
         "name": "Use",
         "img": "systems/pf1/icons/skills/green_03.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -104,23 +102,21 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -129,16 +125,13 @@
     "tag": "classFeat_silkstringStrike",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -153,79 +146,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": "3 + @abilities.wis.mod",
-      "units": "round"
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

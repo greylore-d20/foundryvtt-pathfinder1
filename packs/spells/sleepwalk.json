@@ -4,25 +4,20 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "x5re035aeg88jmpp",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 3,
             "type": "action"
           }
         },
@@ -34,8 +29,11 @@
           "value": "unconscious creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -144,86 +146,24 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
       "value": "a sprig of belladonna worth 100 gp",
-      "focus": "",
       "gpValue": 100
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You compel an unconscious or sleeping creature to rise and move in a half-awake state. The target creature staggers about if led or guided, but remains helpless for all other purposes.</p><p>The subject moves at half speed and is limited to a single move action each round. It is not capable of moving at a higher rate of speed or taking actions other than movement except by magical assistance, and automatically fails any Dexterity- or Strength-based skill checks. If the creature takes any damage while <i><i>sleepwalk</i>ing</i> it must make a new saving throw or the spell ends and the creature awakes (if it has more than 0 hit points). When the spell ends or is dismissed, the target remains unconscious and must be awoken normally. While <i>sleepwalk</i> allows an unconscious creature to move, it does not awaken the creature, nor does it stabilize or otherwise heal them. A disabled creature that moves about while under the effects of this spell does not start dying again as a result of this movement.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "unconscious creature touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates; see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>You compel an unconscious or sleeping creature to rise and move in a half-awake state. The target creature staggers about if led or guided, but remains helpless for all other purposes.</p><p>The subject moves at half speed and is limited to a single move action each round. It is not capable of moving at a higher rate of speed or taking actions other than movement except by magical assistance, and automatically fails any Dexterity- or Strength-based skill checks. If the creature takes any damage while <i><i>sleepwalk</i>ing</i> it must make a new saving throw or the spell ends and the creature awakes (if it has more than 0 hit points). When the spell ends or is dismissed, the target remains unconscious and must be awoken normally. While <i>sleepwalk</i> allows an unconscious creature to move, it does not awaken the creature, nor does it stabilize or otherwise heal them. A disabled creature that moves about while under the effects of this spell does not start dying again as a result of this movement.</p>"
   },
   "effects": [],
   "folder": null,

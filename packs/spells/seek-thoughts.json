@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "cu42rxlo80ulalue",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +25,15 @@
           "value": "concentration, up to 1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 40,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "40-ft.-radius emanation centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -180,84 +183,18 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "div",
-    "subschool": "",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a handful of copper coins",
-      "focus": "",
-      "gpValue": 0
+      "value": "a handful of copper coins"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>Similar to <i>detect thoughts</i>, <i>seek thoughts</i> allows you to sift through the surface thoughts of those around you. You may scan for either the answer to a simple question (such as \"Where is the hidden lair of the wererats?\") or for information on a general topic (such as the beliefs of an evil cult). You detect the number of creatures who are thinking about this question or topic within range, as well as their location if they are visible to you. <i>Seek thoughts</i> does not let you read actual surface thoughts, only if a given creature is thinking about the topic you are concentrating on. A successful Will save prevents you from sensing a creature's thoughts for the duration of the spell.</p><p>You can maintain concentration on <i>seek thoughts</i> while you engage in normal conversation, allowing you to ask leading questions about topics of interest. A creature conversing with you while you concentrate can notice that you are distracted with a successful DC 25 Sense Motive check.</p>",
-    "spellDuration": "concentration, up to 1 minute/level",
-    "spellEffect": "",
-    "spellArea": "40-ft.-radius emanation centered on you",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "value": 40,
-      "units": "ft",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>Similar to <i>detect thoughts</i>, <i>seek thoughts</i> allows you to sift through the surface thoughts of those around you. You may scan for either the answer to a simple question (such as \"Where is the hidden lair of the wererats?\") or for information on a general topic (such as the beliefs of an evil cult). You detect the number of creatures who are thinking about this question or topic within range, as well as their location if they are visible to you. <i>Seek thoughts</i> does not let you read actual surface thoughts, only if a given creature is thinking about the topic you are concentrating on. A successful Will save prevents you from sensing a creature's thoughts for the duration of the spell.</p><p>You can maintain concentration on <i>seek thoughts</i> while you engage in normal conversation, allowing you to ask leading questions about topics of interest. A creature conversing with you while you concentrate can notice that you are distracted with a successful DC 25 Sense Motive check.</p>"
   },
   "effects": [],
   "folder": null,

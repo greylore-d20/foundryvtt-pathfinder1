@@ -164,6 +164,26 @@
       background-color: rgb(192, 96, 96);
     }
   }
+
+  .damage-type-visual {
+    border: unset;
+    background: none;
+
+    &.empty {
+      display: flex;
+      white-space: nowrap;
+    }
+
+    & > span {
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    &:hover:not(.disabled) {
+      cursor: initial;
+      box-shadow: unset;
+    }
+  }
 }
 
 #chat .chat-message {
@@ -310,6 +330,11 @@
     }
 
     table {
+      td.roll {
+        width: 0;
+        padding: 2px;
+      }
+
       a.inline-action {
         opacity: 0;
       }

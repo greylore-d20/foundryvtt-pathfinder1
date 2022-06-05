@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "dfy76tyewhhbhl7y",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one target creature and all its allies within 60 feet; see text"
         },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "heal",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will half (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -148,86 +150,15 @@
       "bloodline": []
     },
     "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "healing",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
       "divineFocus": 1
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You can heal a creature, harm an undead creature, or call upon a very recently dead creature to fight beyond death's reach. The target creature regains 1d8 hit points per 2 caster levels (maximum 10d8).  This healing can even bring back to life creatures that have been dead within the previous 1 round (but they cannot have been dead for any longer). If you apply this spell's healing to such a creature and its hit point total is at a negative amount less than its Constitution score, it comes back to life and stabilizes at its new hit point total. If you awaken a dead creature in this way, all allies of that creature within 60 feet who can see it regain consciousness gain a +2 morale bonus on attack rolls, damage rolls, and saving throws for 1 minute thereafter, as the healing powers of your deity have imbued them with renewed vigor.  Creatures killed by death effects cannot be revived this way. This spell deals damage to undead creatures rather than curing them, and it cannot bring them back to life.</p>",
-    "spellDuration": "instantaneous and 1 minute",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one target creature and all its allies within 60 feet; see text"
-    },
-    "range": {
-      "units": "medium",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "heal",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will half (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You can heal a creature, harm an undead creature, or call upon a very recently dead creature to fight beyond death's reach. The target creature regains 1d8 hit points per 2 caster levels (maximum 10d8).  This healing can even bring back to life creatures that have been dead within the previous 1 round (but they cannot have been dead for any longer). If you apply this spell's healing to such a creature and its hit point total is at a negative amount less than its Constitution score, it comes back to life and stabilizes at its new hit point total. If you awaken a dead creature in this way, all allies of that creature within 60 feet who can see it regain consciousness gain a +2 morale bonus on attack rolls, damage rolls, and saving throws for 1 minute thereafter, as the healing powers of your deity have imbued them with renewed vigor.  Creatures killed by death effects cannot be revived this way. This spell deals damage to undead creatures rather than curing them, and it cannot bring them back to life.</p>"
   },
   "effects": [],
   "folder": null,

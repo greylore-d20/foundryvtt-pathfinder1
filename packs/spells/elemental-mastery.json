@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "uebu1f0bdr9r9pb0",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -152,84 +154,14 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
     "types": "see text",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You gain mastery over the element matching the elemental essence in your blood (fire for ifrits, earth for oreads, air for sylphs, and water for undines). If you are a suli, you can choose any one of the four options as you cast this spell, but the duration is reduced to 1 round per level. Your mastery gives you an insight bonus to your speed or a new movement mode, depending on the element you master, and grants one additional benefit. This spell's descriptor matches the chosen element.     <table border ='1'><tr><th>Element (Race)</th><th>Movement</th><th>Benefit</th></tr><tr><td>Air Fly (suli, sylph)</td><td>30 ft.</td><td>+1 circumstance bonus (average) on attack rolls when both you and your foe are airborne.</td></tr><tr><td>Earth Burrow (oread, suli)</td><td>15 ft.</td><td>+1 circumstance bonus on attack rolls when both you and your foe are touching the ground.</td></tr><tr><td>Fire (ifrit, suli)</td><td>+20 ft.</td><td>+1 circumstance bonus all speeds on attack rolls when your foe is on fire.</td></tr><tr><td>Water (suli, undine)</td><td>+30 ft.</td><td>+1 circumstance bonus swim on attack rolls when both you and your foe are touching water.</td></tr></table>   </p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You gain mastery over the element matching the elemental essence in your blood (fire for ifrits, earth for oreads, air for sylphs, and water for undines). If you are a suli, you can choose any one of the four options as you cast this spell, but the duration is reduced to 1 round per level. Your mastery gives you an insight bonus to your speed or a new movement mode, depending on the element you master, and grants one additional benefit. This spell's descriptor matches the chosen element.     <table border ='1'><tr><th>Element (Race)</th><th>Movement</th><th>Benefit</th></tr><tr><td>Air Fly (suli, sylph)</td><td>30 ft.</td><td>+1 circumstance bonus (average) on attack rolls when both you and your foe are airborne.</td></tr><tr><td>Earth Burrow (oread, suli)</td><td>15 ft.</td><td>+1 circumstance bonus on attack rolls when both you and your foe are touching the ground.</td></tr><tr><td>Fire (ifrit, suli)</td><td>+20 ft.</td><td>+1 circumstance bonus all speeds on attack rolls when your foe is on fire.</td></tr><tr><td>Water (suli, undine)</td><td>+30 ft.</td><td>+1 circumstance bonus swim on attack rolls when both you and your foe are touching water.</td></tr></table>   </p>"
   },
   "effects": [],
   "folder": null,

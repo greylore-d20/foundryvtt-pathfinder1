@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "o7jcnokpn67f2n9v",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one creature, or one nonmagical object of up to 100 cu. ft./level"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates (object); see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -146,86 +148,19 @@
       ]
     },
     "level": 8,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
     "subschool": "polymorph",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
       "material": true,
-      "focus": false,
       "divineFocus": 2
     },
-    "castTime": "",
     "materials": {
-      "value": "mercury, gum arabic, and smoke",
-      "focus": "",
-      "gpValue": 0
+      "value": "mercury, gum arabic, and smoke"
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.t44p3oeq43jwcgwg]{Greater Polymorph}<em>,</em> except that it changes one object or creature into another. You can use this spell to transform all manner of objects and creatures into new forms-you aren't limited to transforming a living creature into another living form. The duration of the spell depends on how radical a change is made from the original state to its transmuted state. The duration is determined by using the following guidelines.</p>\n<table>\n<tbody>\n<tr>\n<th>Changed Subject is...</th>\n<th>Increase to duration Factor*</th>\n</tr>\n<tr>\n<td>Same kingdom (animal, vegetable, mineral)</td>\n<td>+5</td>\n</tr>\n<tr>\n<td>Same class (mammals, fungi, metals, etc.)</td>\n<td>+2</td>\n</tr>\n<tr>\n<td>Same size</td>\n<td>+2</td>\n</tr>\n<tr>\n<td>Related (twig is to tree, wolf fur is to wolf, etc.)</td>\n<td>+2</td>\n</tr>\n<tr>\n<td>Same or lower Intelligence</td>\n<td>+2</td>\n</tr>\n<tr>\n<td colspan=\"2\">*Add all that apply. Look up the total on the next table.</td>\n</tr>\n</tbody>\n</table>\n<table>\n<tbody>\n<tr>\n<th>Duration Factor</th>\n<th>Duration</th>\n<th>Example</th>\n</tr>\n<tr>\n<td>0</td>\n<td>20 minutes</td>\n<td>Pebble to human</td>\n</tr>\n<tr>\n<td>2</td>\n<td>1 hour</td>\n<td>Marionette to human</td>\n</tr>\n<tr>\n<td>4</td>\n<td>3 hours</td>\n<td>Human to marionette</td>\n</tr>\n<tr>\n<td>5</td>\n<td>12 hours</td>\n<td>Lizard to manticore</td>\n</tr>\n<tr>\n<td>6</td>\n<td>2 days</td>\n<td>Sheep to wool coat</td>\n</tr>\n<tr>\n<td>7</td>\n<td>1 week</td>\n<td>Shrew to manticore</td>\n</tr>\n<tr>\n<td>9+</td>\n<td>Permanent</td>\n<td>Manticore to shrew</td>\n</tr>\n</tbody>\n</table>\n<p>If the target of the spell does not have physical ability scores (Strength, Dexterity, or Constitution), this spell grants a base score of 10 to each missing ability score. If the target of the spell does not have mental ability scores (Intelligence, Wisdom, or Charisma), this spell grants a score of 5 to such scores. Damage taken by the new form can result in the injury or death of the polymorphed creature. In general, damage occurs when the new form is changed through physical force. A nonmagical object cannot be made into a magic item with this spell. Magic items aren't affected by this spell.</p>\n<p>This spell cannot create material of great intrinsic value, such as copper, silver, gems, silk, gold, platinum, mithral, or adamantine. It also cannot reproduce the special properties of cold iron in order to overcome the damage reduction of certain creatures.</p>\n<p>This spell can also be used to duplicate the effects of baleful polymorph, <em>greater polymorph,</em> flesh to stone, stone to flesh, transmute mud to rock, transmute metal to wood, or transmute rock to mud.</p>",
-    "spellDuration": "see text",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature, or one nonmagical object of up to 100 cu. ft./level"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates (object); see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.t44p3oeq43jwcgwg]{Greater Polymorph}<em>,</em> except that it changes one object or creature into another. You can use this spell to transform all manner of objects and creatures into new forms-you aren't limited to transforming a living creature into another living form. The duration of the spell depends on how radical a change is made from the original state to its transmuted state. The duration is determined by using the following guidelines.</p>\n<table>\n<tbody>\n<tr>\n<th>Changed Subject is...</th>\n<th>Increase to duration Factor*</th>\n</tr>\n<tr>\n<td>Same kingdom (animal, vegetable, mineral)</td>\n<td>+5</td>\n</tr>\n<tr>\n<td>Same class (mammals, fungi, metals, etc.)</td>\n<td>+2</td>\n</tr>\n<tr>\n<td>Same size</td>\n<td>+2</td>\n</tr>\n<tr>\n<td>Related (twig is to tree, wolf fur is to wolf, etc.)</td>\n<td>+2</td>\n</tr>\n<tr>\n<td>Same or lower Intelligence</td>\n<td>+2</td>\n</tr>\n<tr>\n<td colspan=\"2\">*Add all that apply. Look up the total on the next table.</td>\n</tr>\n</tbody>\n</table>\n<table>\n<tbody>\n<tr>\n<th>Duration Factor</th>\n<th>Duration</th>\n<th>Example</th>\n</tr>\n<tr>\n<td>0</td>\n<td>20 minutes</td>\n<td>Pebble to human</td>\n</tr>\n<tr>\n<td>2</td>\n<td>1 hour</td>\n<td>Marionette to human</td>\n</tr>\n<tr>\n<td>4</td>\n<td>3 hours</td>\n<td>Human to marionette</td>\n</tr>\n<tr>\n<td>5</td>\n<td>12 hours</td>\n<td>Lizard to manticore</td>\n</tr>\n<tr>\n<td>6</td>\n<td>2 days</td>\n<td>Sheep to wool coat</td>\n</tr>\n<tr>\n<td>7</td>\n<td>1 week</td>\n<td>Shrew to manticore</td>\n</tr>\n<tr>\n<td>9+</td>\n<td>Permanent</td>\n<td>Manticore to shrew</td>\n</tr>\n</tbody>\n</table>\n<p>If the target of the spell does not have physical ability scores (Strength, Dexterity, or Constitution), this spell grants a base score of 10 to each missing ability score. If the target of the spell does not have mental ability scores (Intelligence, Wisdom, or Charisma), this spell grants a score of 5 to such scores. Damage taken by the new form can result in the injury or death of the polymorphed creature. In general, damage occurs when the new form is changed through physical force. A nonmagical object cannot be made into a magic item with this spell. Magic items aren't affected by this spell.</p>\n<p>This spell cannot create material of great intrinsic value, such as copper, silver, gems, silk, gold, platinum, mithral, or adamantine. It also cannot reproduce the special properties of cold iron in order to overcome the damage reduction of certain creatures.</p>\n<p>This spell can also be used to duplicate the effects of baleful polymorph, <em>greater polymorph,</em> flesh to stone, stone to flesh, transmute mud to rock, transmute metal to wood, or transmute rock to mud.</p>"
   },
   "effects": [],
   "folder": null,

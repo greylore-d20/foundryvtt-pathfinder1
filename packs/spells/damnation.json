@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "jjw5r2t71f027abr",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,9 +25,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -100,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "30-ft.-radius burst centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -137,82 +142,18 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
     "types": "good",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
       "material": true,
-      "focus": false,
       "divineFocus": 2
     },
-    "castTime": "",
     "materials": {
-      "value": "a drop of holy water",
-      "focus": "",
-      "gpValue": 0
+      "value": "a drop of holy water"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You pass judgment on your enemies' intentions and punish them with holy power. Each creature in the spell's area takes 1d8 points of damage per spell level, determined by the most powerful effect with the evil descriptor either affecting that creature or in its spell repertoire. A caster who prepares spells takes this damage based on the highest-level evil spell he prepared that day, even if he already cast that spell. A spontaneous spellcaster takes this damage based on the highest-level evil spell she knows, even if she has no remaining spell slots available to cast that spell. A creature with evil spell-like abilities takes this damage based on the highest-level evil spell-like ability it can use. A creature who doesn't cast spells but is the willing beneficiary of evil spells takes this damage based on the highest-level evil spell currently affecting it, including spells that affect an area such as <i>desecrate</i>. A creature subject  to the harmful effects of an evil spell are unaffected unless it voluntarily accepted the spell's effects.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "30-ft.-radius burst centered on you",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "range": {
-      "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You pass judgment on your enemies' intentions and punish them with holy power. Each creature in the spell's area takes 1d8 points of damage per spell level, determined by the most powerful effect with the evil descriptor either affecting that creature or in its spell repertoire. A caster who prepares spells takes this damage based on the highest-level evil spell he prepared that day, even if he already cast that spell. A spontaneous spellcaster takes this damage based on the highest-level evil spell she knows, even if she has no remaining spell slots available to cast that spell. A creature with evil spell-like abilities takes this damage based on the highest-level evil spell-like ability it can use. A creature who doesn't cast spells but is the willing beneficiary of evil spells takes this damage based on the highest-level evil spell currently affecting it, including spells that affect an area such as <i>desecrate</i>. A creature subject  to the harmful effects of an evil spell are unaffected unless it voluntarily accepted the spell's effects.</p>"
   },
   "effects": [],
   "folder": null,

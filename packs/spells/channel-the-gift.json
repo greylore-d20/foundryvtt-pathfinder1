@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "pi93nxfp7dku5m3b",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "ally spellcaster touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless) or none"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -156,86 +158,13 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
       "divineFocus": 1
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You channel your magical power to fuel the target's spellcasting.</p><p>The next spell the target casts of 3rd level or lower does not expend a spell slot; in effect, you are using your spell slot to power the target's spell. The target must start casting this spell before your next turn, and the spell cannot have a casting time longer than 1 full round. Your alignment, prohibited wizard school, and other restrictions on your own spellcasting do not affect the target, nor do you suffer any backlash from the target's choice of spell.</p><p>If you target yourself with this spell, you may spontaneously cast any prepared spell of 3rd level or lower without expending its spell slot on your next turn (this aspect of the spell has no effect if you are a spontaneous caster). The spell that's cast after <i>Channel the Gift</i> cannot have a casting time longer than 1 full round.</p>",
-    "spellDuration": "1 round or see text",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "ally spellcaster touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless) or none"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You channel your magical power to fuel the target's spellcasting.</p><p>The next spell the target casts of 3rd level or lower does not expend a spell slot; in effect, you are using your spell slot to power the target's spell. The target must start casting this spell before your next turn, and the spell cannot have a casting time longer than 1 full round. Your alignment, prohibited wizard school, and other restrictions on your own spellcasting do not affect the target, nor do you suffer any backlash from the target's choice of spell.</p><p>If you target yourself with this spell, you may spontaneously cast any prepared spell of 3rd level or lower without expending its spell slot on your next turn (this aspect of the spell has no effect if you are a spontaneous caster). The spell that's cast after <i>Channel the Gift</i> cannot have a casting time longer than 1 full round.</p>"
   },
   "effects": [],
   "folder": null,

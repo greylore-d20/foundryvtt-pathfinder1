@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "jv31x7qu73ih3787",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "object touched, weighing up to 5 lbs./level"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (object)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -136,86 +138,16 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a pinch of salt and pepper",
-      "focus": "",
-      "gpValue": 0
+      "value": "a pinch of salt and pepper"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You can transform one object, weighing up to 5 lbs. per caster level, into an edible substance that any living creature can chew, swallow, and safely digest. This allfood always has a bland taste and slightly gooey consistency when chewed regardless of its original nature.</p><p>One pound of allfood provides enough sustenance to support a Medium creature for an entire day.</p><p>Objects of similar nature in close proximity, such as a pile of rocks, count as a single object for the purpose of this spell. You cannot use this spell to transform objects with magical or other exceptional qualities. An object's hardness is considered to be 0 for the purposes of eating it, but it retains its normal hardness for all other situations, and becomes no more vulnerable to sunder attacks, break attempts, or any other action typically directed against objects. Objects such as hot coals or a burning torch continue to produce energy even after you transform them into allfood and if a creature attempts to eat such an object, it takes damage accordingly.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "object touched, weighing up to 5 lbs./level"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (object)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You can transform one object, weighing up to 5 lbs. per caster level, into an edible substance that any living creature can chew, swallow, and safely digest. This allfood always has a bland taste and slightly gooey consistency when chewed regardless of its original nature.</p><p>One pound of allfood provides enough sustenance to support a Medium creature for an entire day.</p><p>Objects of similar nature in close proximity, such as a pile of rocks, count as a single object for the purpose of this spell. You cannot use this spell to transform objects with magical or other exceptional qualities. An object's hardness is considered to be 0 for the purposes of eating it, but it retains its normal hardness for all other situations, and becomes no more vulnerable to sunder attacks, break attempts, or any other action typically directed against objects. Objects such as hot coals or a burning torch continue to produce energy even after you transform them into allfood and if a creature attempts to eat such an object, it takes damage accordingly.</p>"
   },
   "effects": [],
   "folder": null,

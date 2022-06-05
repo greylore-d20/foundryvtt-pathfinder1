@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "pi3qys4sc1nsday0",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,7 +29,11 @@
           "value": "two living creatures"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -159,85 +162,18 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "nec",
-    "subschool": "",
     "types": "evil",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
-      "value": "",
-      "focus": "a small length of crimson string",
-      "gpValue": 0
+      "focus": "a small length of crimson string"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>One of the targets of this spell must be a hostage-a bound, pinned, or helpless creature within your reach (though the spell doesn't end if the hostage later moves beyond your reach). The second target must be a member of the first target's family. If neither creature successfully saves against the spell, the second target also takes any damage conferred to the hostage, provided both are still alive, to a maximum of 10 points of damage per caster level per day (damage beyond that necessary to kill the first target does not transfer). This transferred damage is typeless and ignores the second creature's damage reduction and resistances. If either target succeeds at the saving throw, you can never attempt to exploit the connection between these particular two creatures again. The connection between your targets weakens when the two are less familiar with one another. Each target gains a +2 bonus on its save if the two are distant relations or related by marriage. Each target takes a -2 penalty on its save if the two targets are parent and child or siblings.</p>",
-    "spellDuration": "1 day/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "two living creatures"
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (see text)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "range": {
-      "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>One of the targets of this spell must be a hostage-a bound, pinned, or helpless creature within your reach (though the spell doesn't end if the hostage later moves beyond your reach). The second target must be a member of the first target's family. If neither creature successfully saves against the spell, the second target also takes any damage conferred to the hostage, provided both are still alive, to a maximum of 10 points of damage per caster level per day (damage beyond that necessary to kill the first target does not transfer). This transferred damage is typeless and ignores the second creature's damage reduction and resistances. If either target succeeds at the saving throw, you can never attempt to exploit the connection between these particular two creatures again. The connection between your targets weakens when the two are less familiar with one another. Each target gains a +2 bonus on its save if the two are distant relations or related by marriage. Each target takes a -2 penalty on its save if the two targets are parent and child or siblings.</p>"
   },
   "effects": [],
   "folder": null,

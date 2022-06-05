@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "xfjqejurv0gn9rnj",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "up to one creature/level, no two of which can be more than 30 feet apart"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -148,86 +150,18 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "ill",
     "subschool": "phantasm",
     "types": "emotion, fear, mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a pinch of black sand",
-      "focus": "",
-      "gpValue": 0
+      "value": "a pinch of black sand"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>Your targets see their surroundings as a nightmarish reflection of the world around them. Buildings and furnishings take on a dirty, ruined appearance. Even allies appear foreign and hostile, with friendly speech turning into garbled mockery and threats.  Each target gains the scared condition and has a hostile attitude toward any new creature it encounters (though not toward creatures that were already present at the time of the casting). Being hostile doesn't necessarily mean the target will attack, and creatures can attempt Diplomacy checks to gain a target's trust at the normal DC. If a creature becomes frightened or panicked while under the influence of <i>dreadscape</i>, that creature takes 1d6 points of Wisdom damage, though only once per casting of <i>dreadscape</i>.  If your campaign uses the sanity system (see page 12), creatures that become frightened or panicked take 2d6 sanity damage instead of Wisdom damage.</p>",
-    "spellDuration": "10 minutes/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "up to one creature/level, no two of which can be more than 30 feet apart"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>Your targets see their surroundings as a nightmarish reflection of the world around them. Buildings and furnishings take on a dirty, ruined appearance. Even allies appear foreign and hostile, with friendly speech turning into garbled mockery and threats.  Each target gains the scared condition and has a hostile attitude toward any new creature it encounters (though not toward creatures that were already present at the time of the casting). Being hostile doesn't necessarily mean the target will attack, and creatures can attempt Diplomacy checks to gain a target's trust at the normal DC. If a creature becomes frightened or panicked while under the influence of <i>dreadscape</i>, that creature takes 1d6 points of Wisdom damage, though only once per casting of <i>dreadscape</i>.  If your campaign uses the sanity system (see page 12), creatures that become frightened or panicked take 2d6 sanity damage instead of Wisdom damage.</p>"
   },
   "effects": [],
   "folder": null,

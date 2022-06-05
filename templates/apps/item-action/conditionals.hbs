@@ -4,19 +4,19 @@
 </h4>
 <ol class="conditionals form-group">
   {{#each data.conditionals as |conditional a|}}
-  <li class="conditional flexcolumn" data-conditional="{{a}}"><div class="conditional flexrow" data-conditional="{{a}}">
-      <input class="conditional-default" type="checkbox" title="{{localize "PF1.Default"}}" name="data.conditionals.{{a}}.default" {{checked this.default}}/>
-      <input class="conditional-name" type="text" name="data.conditionals.{{a}}.name" value="{{lookup this "name"}}"
+  <li class="conditional flexcolumn" data-conditional="{{conditional._id}}"><div class="conditional flexrow" data-conditional="{{conditional._id}}">
+      <input class="conditional-default" type="checkbox" title="{{localize "PF1.Default"}}" name="conditionals.{{a}}.default" {{checked this.default}}/>
+      <input class="conditional-name" type="text" name="conditionals.{{a}}.name" value="{{lookup this "name"}}"
       placeholder="{{localize "PF1.Name"}}"/>
       <a class="delete-conditional conditional-control delete-conditional"><i class="fas fa-trash"></i></a>
     </div>
     <ol class="conditionals form-group">
       {{#each this.modifiers as |modifier m|}}
-      <li class="conditional-modifier flexrow" data-conditional="{{a}}" data-modifier="{{m}}">
-        <input class="conditional-formula formula" type="text" name="data.conditionals.{{a}}.{{m}}.formula" value="{{lookup this "formula"}}"
+      <li class="conditional-modifier flexrow" data-conditional="{{conditional._id}}" data-modifier="{{modifier._id}}">
+        <input class="conditional-formula formula" type="text" name="conditionals.{{a}}.modifiers.{{m}}.formula" value="{{lookup this "formula"}}"
         placeholder="{{localize "PF1.Formula"}}" required/>
 
-        <select class="conditional-target" name="data.conditionals.{{a}}.{{m}}.target" required>
+        <select class="conditional-target" name="conditionals.{{a}}.modifiers.{{m}}.target" required>
           {{#select (lookup this "target") }}
           <option value=""></option>
           {{#each targets as |target type|}}
@@ -25,8 +25,8 @@
           {{/select}}
         </select>
 
-        {{#unless modifier.isSize}}
-          <select class="conditional-sub-target" name="data.conditionals.{{a}}.{{m}}.subTarget">
+        {{#unless (eq modifier.target "size")}}
+          <select class="conditional-sub-target" name="conditionals.{{a}}.modifiers.{{m}}.subTarget">
             {{#select (lookup this "subTarget") }}
             {{#if (lookup this "target") }}
             {{#each subTargets as |target type|}}
@@ -38,8 +38,8 @@
             {{/select}}
           </select>
 
-          {{#if modifier.isAttack}}
-          <select class="conditional-type" name="data.conditionals.{{a}}.{{m}}.type">
+          {{#if (eq modifier.target "attack")}}
+          <select class="conditional-type" name="conditionals.{{a}}.modifiers.{{m}}.type">
             {{#select (lookup this "type") }}
             {{#if (lookup this "target") }}
             {{#each conditionalModifierTypes as |modifierType mt|}}
@@ -52,17 +52,14 @@
           </select>
           {{/if}}
 
-          {{#if modifier.isDamage}}
-          <input class="conditional-damage-type" type="text" list="types" name="data.conditionals.{{a}}.{{m}}.type" value="{{lookup this "type"}}" placeholder="{{localize "PF1.DamageType"}}"/>
-            <datalist id="types">
-              {{#each conditionalModifierTypes as |modifierType mt|}}
-              <option value="{{modifierType}}">
-              {{/each}}
-            </datalist>
+          {{#if (eq modifier.target "damage")}}
+          <div class="conditional-damage-type">
+              {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=(lookup this "damageType") name=(concat "conditionals." a ".modifiers." m ".damageType") damageTypes=@root.damageTypes}}
+          </div>
           {{/if}}
 
-          {{#if (or modifier.isAttack modifier.isDamage)}}
-          <select class="conditional-critical" name="data.conditionals.{{a}}.{{m}}.critical">
+          {{#if (or (eq modifier.target "attack") (eq modifier.target "damage"))}}
+          <select class="conditional-critical" name="conditionals.{{a}}.modifiers.{{m}}.critical">
             {{#select (lookup this "critical") }}
             {{#if (lookup this "target")}}
             {{#each conditionalCritical as |critical c|}}

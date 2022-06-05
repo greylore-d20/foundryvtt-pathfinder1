@@ -308,12 +308,6 @@ export const subtractAmmo = function (shared, value = 1) {
  * @param {object} shared - Shared data between attack functions.
  */
 export const handleConditionals = function (shared) {
-  // Helper to get localized name from CONFIG.PF1 objects
-  const localizeType = (target, type) => {
-    const result = shared.action.getConditionalModifierTypes(target);
-    return game.i18n.localize(result[type]) || type;
-  };
-
   if (shared.conditionals) {
     const conditionalData = {};
     for (const i of shared.conditionals) {
@@ -348,9 +342,7 @@ export const handleConditionals = function (shared) {
         else if (modifier.target === "damage") {
           shared.conditionalPartsCommon[partString] = [
             ...(shared.conditionalPartsCommon[partString] ?? []),
-            Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type)
-              ? [modifier.formula, modifier.type, true]
-              : [modifier.formula, localizeType(modifier.target, modifier.type), false],
+            [modifier.formula, modifier.damageType, false],
           ];
         }
         // Add formula to the size property
@@ -457,23 +449,23 @@ export const addAttacks = async function (shared) {
     // Combine conditional modifiers for attack and damage
     const conditionalParts = {
       "attack.normal": [
-        ...(shared.conditionalPartsCommon[`attack.attack.${a}.normal`] ?? []),
+        ...(shared.conditionalPartsCommon[`attack.attack_${a}.normal`] ?? []),
         ...(shared.conditionalPartsCommon["attack.allAttack.normal"] ?? []),
       ], //`
       "attack.crit": [
-        ...(shared.conditionalPartsCommon[`attack.attack.${a}.crit`] ?? []),
+        ...(shared.conditionalPartsCommon[`attack.attack_${a}.crit`] ?? []),
         ...(shared.conditionalPartsCommon["attack.allAttack.crit"] ?? []),
       ], //`
       "damage.normal": [
-        ...(shared.conditionalPartsCommon[`damage.attack.${a}.normal`] ?? []),
+        ...(shared.conditionalPartsCommon[`damage.attack_${a}.normal`] ?? []),
         ...(shared.conditionalPartsCommon["damage.allDamage.normal"] ?? []),
       ], //`
       "damage.crit": [
-        ...(shared.conditionalPartsCommon[`damage.attack.${a}.crit`] ?? []),
+        ...(shared.conditionalPartsCommon[`damage.attack_${a}.crit`] ?? []),
         ...(shared.conditionalPartsCommon["damage.allDamage.crit"] ?? []),
       ], //`
       "damage.nonCrit": [
-        ...(shared.conditionalPartsCommon[`damage.attack.${a}.nonCrit`] ?? []),
+        ...(shared.conditionalPartsCommon[`damage.attack_${a}.nonCrit`] ?? []),
         ...(shared.conditionalPartsCommon["damage.allDamage.nonCrit"] ?? []),
       ], //`
     };
@@ -1049,10 +1041,6 @@ export const executeScriptCalls = async function (shared) {
     data: new Proxy({ chatMessage: shared.chatMessage, fullAttack: shared.fullAttack }, handlerMaker("data")),
     attacks: new Proxy(shared.chatAttacks ?? [], handlerMaker("attacks", "shared.attackData.chatAttacks")),
     template: new Proxy(shared.template ?? {}, handlerMaker("template")),
-    conditionals: new Proxy(
-      shared.conditionals?.map((c) => this.data.data.conditionals[c]) ?? [],
-      handlerMaker("conditionals")
-    ),
     // End deprecated
   });
 };
@@ -1071,14 +1059,15 @@ export const postMessage = async function (shared) {
   });
 
   // Create message
-  const t = game.settings.get("pf1", "attackChatCardTemplate");
+  const template = game.settings.get("pf1", "attackChatCardTemplate");
+  shared.templateData.damageTypes = game.pf1.damageTypes.toRecord();
 
   // Show chat message
   let result;
   if (shared.chatAttacks.length > 0) {
     if (shared.chatMessage && shared.scriptData.hideChat !== true)
-      result = await createCustomChatMessage(t, shared.templateData, shared.chatData);
-    else result = { template: t, data: shared.templateData, chatData: shared.chatData };
+      result = await createCustomChatMessage(template, shared.templateData, shared.chatData);
+    else result = { template: template, data: shared.templateData, chatData: shared.chatData };
   } else {
     if (shared.chatMessage && shared.scriptData.hideChat !== true) result = this.roll();
     else result = { descriptionOnly: true };

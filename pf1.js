@@ -46,6 +46,7 @@ import { ScriptEditor } from "./module/apps/script-editor.js";
 import { SidebarPF } from "./module/apps/sidebar.js";
 import { ActorTraitSelector } from "./module/apps/trait-selector.js";
 import { ExperienceDistributor } from "./module/apps/xp-distributor.js";
+import { DamageTypeSelector } from "./module/apps/damage-type-selector.js";
 import { ActiveEffectPF } from "./module/ae/entity.js";
 import { ItemPF } from "./module/item/entity.js";
 import { ItemAttackPF } from "./module/item/types/attack.js";
@@ -108,16 +109,19 @@ import * as migrations from "./module/migration.js";
 import * as macros from "./module/macros.js";
 import * as controls from "./module/controls.js";
 import * as ItemAttack from "./module/item/attack.js";
-import { Registry } from "./module/registry.js";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
 import { initializeModules } from "./module/modules.js";
 import { ItemChange } from "./module/item/components/change.js";
 import { ItemScriptCall } from "./module/item/components/script-call.js";
 import { ItemAction } from "./module/item/components/action.js";
 import { ItemActionSheet } from "./module/item/components/sheets/action.js";
+import { ItemConditional, ItemConditionalModifier } from "./module/item/components/conditionals.js";
 import { ActionChooser } from "./module/apps/action-chooser.js";
 import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
 import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
+import { BaseRegistry } from "./module/registry/base-registry.js";
+import { DamageTypes } from "./module/registry/damage-types.js";
+import { ScriptCalls } from "./module/registry/script-call.js";
 
 // OBSOLETE: Add String.format
 if (!String.prototype.format) {
@@ -187,6 +191,7 @@ Hooks.once("init", function () {
       PF1_HelpBrowser,
       ExperienceDistributor,
       SkillEditor,
+      DamageTypeSelector,
       ActionChooser,
       // Widgets
       Widget_CategorizedItemPicker,
@@ -241,10 +246,14 @@ Hooks.once("init", function () {
     documentComponents: {
       ItemChange,
       ItemAction,
+      ItemConditional,
+      ItemConditionalModifier,
       ItemScriptCall,
     },
     // API
-    registry: Registry,
+    baseRegistry: BaseRegistry,
+    damageTypes: new DamageTypes(),
+    scriptCalls: new ScriptCalls(),
     // Macros
     macros,
     rollItemMacro: macros.rollItemMacro,
@@ -357,43 +366,6 @@ Hooks.once("init", function () {
     makeDefault: true,
   });
 
-  // Register item categories
-  game.pf1.registry.registerItemScriptCategory(
-    "pf1",
-    "use",
-    "PF1.ScriptCalls.Use.Name",
-    ["attack", "feat", "equipment", "consumable", "spell", "weapon"],
-    "PF1.ScriptCalls.Use.Info"
-  );
-  game.pf1.registry.registerItemScriptCategory(
-    "pf1",
-    "equip",
-    "PF1.ScriptCalls.Equip.Name",
-    ["weapon", "equipment", "loot"],
-    "PF1.ScriptCalls.Equip.Info"
-  );
-  game.pf1.registry.registerItemScriptCategory(
-    "pf1",
-    "toggle",
-    "PF1.ScriptCalls.Toggle.Name",
-    ["buff", "feat"],
-    "PF1.ScriptCalls.Toggle.Info"
-  );
-  game.pf1.registry.registerItemScriptCategory(
-    "pf1",
-    "changeQuantity",
-    "PF1.ScriptCalls.ChangeQuantity.Name",
-    ["loot", "equipment", "weapon", "consumable", "container"],
-    "PF1.ScriptCalls.ChangeQuantity.Info"
-  );
-  game.pf1.registry.registerItemScriptCategory(
-    "pf1",
-    "changeLevel",
-    "PF1.ScriptCalls.ChangeLevel.Name",
-    ["buff", "class"],
-    "PF1.ScriptCalls.ChangeLevel.Info"
-  );
-
   // Initialize socket listener
   initializeSocket();
 
@@ -470,7 +442,6 @@ Hooks.once("setup", function () {
     "measureUnits",
     "measureUnitsShort",
     "languages",
-    "damageTypes",
     "weaponHoldTypes",
     "auraStrengths",
     "conditionalTargets",
@@ -496,7 +467,6 @@ Hooks.once("setup", function () {
     "weaponProperties",
     "spellSchools",
     "languages",
-    "damageTypes",
   ];
 
   /**

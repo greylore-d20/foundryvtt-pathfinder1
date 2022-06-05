@@ -1,9 +1,16 @@
 import { ItemBasePF } from "./base.js";
 import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import { createTag, linkData, convertDistance, convertWeight, convertWeightBack, calculateRange } from "../lib.js";
+import {
+  createTag,
+  linkData,
+  convertDistance,
+  convertWeight,
+  convertWeightBack,
+  calculateRange,
+  keepUpdateArray,
+} from "../lib.js";
 import { ItemChange } from "./components/change.js";
-import { ItemScriptCall } from "./components/script-call.js";
 import { getHighestChanges } from "../actor/apply-changes.js";
 import { RollPF } from "../roll.js";
 
@@ -359,37 +366,7 @@ export class ItemPF extends ItemBasePF {
       itemData.data.hp = itemData.data.hp || { max: 10, value: 10 };
       itemData.data.hardness = itemData.data.hardness || 0;
       itemData.data.carried = itemData.data.carried == null ? true : itemData.data.carried;
-
-      // Equipped label
-      const checkYes = '<i class="fas fa-check"></i>';
-      const checkNo = '<i class="fas fa-times"></i>';
-      labels.equipped = "";
-      if (itemData.data.equipped === true) labels.equipped = checkYes;
-      else labels.equipped = checkNo;
-
-      // Carried label
-      labels.carried = "";
-      if (itemData.data.carried === true) labels.carried = checkYes;
-      else labels.carried = checkNo;
-
-      // Identified label
-      labels.identified = "";
-      if (itemData.data.identified === true) labels.identified = checkYes;
-      else labels.identified = checkNo;
-
-      // Slot label
-      if (itemData.data.slot) {
-        // Add equipment slot
-        const equipmentType = this.data.data.equipmentType || null;
-        if (equipmentType != null) {
-          const equipmentSlot = this.data.data.slot || null;
-          labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
-        } else labels.slot = null;
-      }
     }
-
-    // Assign labels
-    this.labels = labels;
 
     this.prepareLinks();
 
@@ -413,6 +390,9 @@ export class ItemPF extends ItemBasePF {
       this.items = this._prepareInventory(this.data.data.inventoryItems);
     }
 
+    // Prepare labels
+    this.labels = this.prepareLabels();
+
     if (!this.actor) {
       this.prepareDerivedItemData();
     }
@@ -432,16 +412,73 @@ export class ItemPF extends ItemBasePF {
   }
 
   prepareDerivedItemData() {
+    const action = this.firstAction;
+
     // Update maximum uses
     this._updateMaxUses();
 
     // Add saving throw DC label
-    if (this.data.data.actionType !== undefined && this.hasSave) {
+    if (action?.data.actionType !== undefined && action?.hasSave) {
       // Save DC
-      if (this.hasSave) {
-        this.labels.save = `DC ${this.getDC()}`;
+      this.labels.save = `DC ${action.getDC()}`;
+    }
+  }
+
+  prepareLabels() {
+    const labels = {};
+    const itemData = this.data;
+    const actionData = this.firstAction?.data ?? {};
+
+    // Equipped label
+    const checkYes = '<i class="fas fa-check"></i>';
+    const checkNo = '<i class="fas fa-times"></i>';
+    labels.equipped = "";
+    if (itemData.data.equipped === true) labels.equipped = checkYes;
+    else labels.equipped = checkNo;
+
+    // Carried label
+    labels.carried = "";
+    if (itemData.data.carried === true) labels.carried = checkYes;
+    else labels.carried = checkNo;
+
+    // Identified label
+    labels.identified = "";
+    if (itemData.data.identified === true) labels.identified = checkYes;
+    else labels.identified = checkNo;
+
+    // Slot label
+    if (itemData.data.slot) {
+      // Add equipment slot
+      const equipmentType = this.data.data.equipmentType || null;
+      if (equipmentType != null) {
+        const equipmentSlot = this.data.data.slot || null;
+        labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
+      } else labels.slot = null;
+    }
+
+    // Activation method
+    if (actionData.activation) {
+      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
+        ? CONFIG.PF1.abilityActivationTypes_unchained
+        : CONFIG.PF1.abilityActivationTypes;
+      const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy")
+        ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
+        : CONFIG.PF1.abilityActivationTypesPlurals;
+
+      const activation = game.settings.get("pf1", "unchainedActionEconomy")
+        ? actionData.unchainedAction.activation || {}
+        : actionData.activation || {};
+      if (activation && activation.cost > 1 && activationTypesPlural[activation.type] != null) {
+        labels.activation = [activation.cost.toString(), activationTypesPlural[activation.type]].filterJoin(" ");
+      } else if (activation) {
+        labels.activation = [
+          ["minute", "hour", "action"].includes(activation.type) && activation.cost ? activation.cost.toString() : "",
+          activationTypes[activation.type],
+        ].filterJoin(" ");
       }
     }
+
+    return labels;
   }
 
   prepareLinks() {
@@ -559,151 +596,21 @@ export class ItemPF extends ItemBasePF {
     }
     const srcData = mergeObject(duplicate(this.data), data, { inplace: false });
 
-    // Make sure changes remains an array
-    if (Object.keys(data).filter((e) => e.startsWith("data.changes.")).length > 0) {
-      const changeIndexes = [];
-      let subData = Object.entries(data).filter((e) => e[0].startsWith("data.changes."));
-      const arr = duplicate(this.data.data.changes || []);
-
-      // Get pre update data for changes
-      subData.forEach((entry) => {
-        const i = entry[0].split(".").slice(2)[0];
-
-        // Add change update data
-        if (!changeIndexes.includes(i)) {
-          changeIndexes.push(i);
-          const changeID = this.data.data.changes[i]._id;
-          const change = this.changes.get(changeID);
-          if (change) {
-            const changeDataPrefix = `data.changes.${i}.`;
-            const thisChangeData = subData
-              .filter((o) => o[0].startsWith(changeDataPrefix))
-              .reduce((cur, o) => {
-                const key = o[0].slice(changeDataPrefix.length);
-                cur[key] = o[1];
-                return cur;
-              }, {});
-            const preUpdateData = change.preUpdate(thisChangeData);
-
-            // Apply pre-update data to the data to be parsed
-            for (const [k, v] of Object.entries(preUpdateData)) {
-              const dataKey = `data.changes.${i}.${k}`;
-              data[dataKey] = v;
-            }
-          }
-        }
-      });
-      // Refresh sub-data
-      subData = Object.entries(data).filter((e) => e[0].startsWith("data.changes."));
-
-      subData.forEach((entry) => {
-        const subKey = entry[0].split(".").slice(2);
-        const i = subKey[0];
-        const subKey2 = subKey.slice(1).join(".");
-
-        if (!arr[i]) arr[i] = {};
-
-        // Remove property
-        if (subKey[subKey.length - 1].startsWith("-=")) {
-          const obj = flattenObject(arr[i]);
-          subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
-          const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
-          for (const k of deleteKeys) {
-            if (Object.prototype.hasOwnProperty.call(obj, k)) {
-              delete obj[k];
-            }
-          }
-          arr[i] = expandObject(obj);
-        }
-        // Add or change property
-        else {
-          arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
-        }
-
-        delete data[entry[0]];
-      });
-      linkData(srcData, data, "data.changes", arr);
-    }
-
-    // Make sure inventory contents remains an array
-    if (Object.keys(data).filter((e) => e.startsWith("data.inventoryItems.")).length > 0) {
-      const subData = Object.entries(data).filter((e) => e[0].startsWith("data.inventoryItems."));
-      const arr = duplicate(this.data.data.inventoryItems || []);
-      subData.forEach((entry) => {
-        const subKey = entry[0].split(".").slice(2);
-        const i = subKey[0];
-        const subKey2 = subKey.slice(1).join(".");
-        if (!arr[i]) arr[i] = {};
-
-        // Remove property
-        if (subKey[subKey.length - 1].startsWith("-=")) {
-          const obj = flattenObject(arr[i]);
-          subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
-          const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
-          for (const k of deleteKeys) {
-            if (Object.prototype.hasOwnProperty.call(obj, k)) {
-              delete obj[k];
-            }
-          }
-          arr[i] = expandObject(obj);
-        }
-        // Add or change property
-        else {
-          arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
-        }
-
-        delete data[entry[0]];
-      });
-      linkData(srcData, data, "data.inventoryItems", arr);
-    }
-
     // Make sure stuff remains an array
     {
-      const keepArray = [
-        { key: "data.attackNotes" },
-        { key: "data.effectNotes" },
-        { key: "data.contextNotes" },
-        { key: "data.scriptCalls" },
-        { key: "data.actions" },
+      const keepPaths = [
+        "data.attackNotes",
+        "data.effectNotes",
+        "data.contextNotes",
+        "data.scriptCalls",
+        "data.actions",
+        "data.inventoryItems",
+        "data.changes",
       ];
 
-      for (const kArr of keepArray) {
-        if (Object.keys(data).filter((e) => e.startsWith(`${kArr.key}.`)).length > 0) {
-          const subData = Object.entries(data).filter((e) => e[0].startsWith(`${kArr.key}.`));
-          const arr = duplicate(getProperty(this.data, kArr.key) || []);
-          const keySeparatorCount = (kArr.key.match(/\./g) || []).length;
-          subData.forEach((entry) => {
-            const subKey = entry[0].split(".").slice(keySeparatorCount + 1);
-            const i = subKey[0];
-            const subKey2 = subKey.slice(1).join(".");
-            if (!arr[i]) arr[i] = {};
-
-            // Single entry array
-            if (!subKey2) {
-              arr[i] = entry[1];
-            }
-            // Remove property
-            else if (subKey[subKey.length - 1].startsWith("-=")) {
-              const obj = flattenObject(arr[i]);
-              subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
-              const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
-              for (const k of deleteKeys) {
-                if (Object.prototype.hasOwnProperty.call(obj, k)) {
-                  delete obj[k];
-                }
-              }
-              arr[i] = expandObject(obj);
-            }
-            // Add or change property
-            else {
-              arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
-            }
-
-            delete data[entry[0]];
-          });
-
-          linkData(srcData, data, kArr.key, arr);
-        }
+      for (const path of keepPaths) {
+        keepUpdateArray(this.data, data, path);
+        linkData(srcData, data, path, data[path]);
       }
     }
 
@@ -1073,8 +980,9 @@ export class ItemPF extends ItemBasePF {
   getChatData(htmlOptions, rollData = null) {
     const data = duplicate(this.data.data);
     const labels = this.labels;
+    const actionData = this.firstAction?.data ?? {};
 
-    if (!rollData) rollData = this.getRollData();
+    if (!rollData) rollData = this.firstAction != null ? this.firstAction.getRollData() : this.getRollData();
 
     htmlOptions = mergeObject(htmlOptions || {}, rollData);
 
@@ -1097,26 +1005,26 @@ export class ItemPF extends ItemBasePF {
       dynamicLabels.range = labels.range || "";
       dynamicLabels.level = labels.sl || "";
       // Range
-      if (data.range != null) {
-        const range = data.range.value,
-          units = data.range.units,
-          rangeValue = calculateRange(range, units, rollData);
+      if (actionData.range != null) {
+        const range = calculateRange(actionData.range.value, actionData.range.units),
+          units = actionData.range.units === "mi" ? "mi" : "ft";
+        const distanceValues = convertDistance(range, units);
         dynamicLabels.range =
-          rangeValue[0] > 0
-            ? game.i18n.localize("PF1.RangeNote").format(`${rangeValue} ${CONFIG.PF1.measureUnits[units]}`)
+          distanceValues[0] > 0
+            ? game.i18n.format("PF1.RangeNote", { 0: `${distanceValues[0]} ${distanceValues[1]}` })
             : null;
       }
 
       // Add Difficulty Modifier (DC) label
       props.push(labels.save);
-      const saveDesc = this.data.data.save?.description;
+      const saveDesc = actionData.save?.description;
       if (saveDesc?.length > 0) props.push(saveDesc);
 
       // Duration
-      if (data.duration != null) {
-        if (!["inst", "perm"].includes(data.duration.units) && typeof data.duration.value === "string") {
-          const duration = RollPF.safeRoll(data.duration.value || "0", rollData).total;
-          dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[data.duration.units]].filterJoin(" ");
+      if (actionData.duration != null) {
+        if (!["inst", "perm"].includes(actionData.duration.units) && typeof actionData.duration.value === "string") {
+          const duration = RollPF.safeRoll(actionData.duration.value || "0", rollData).total;
+          dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
       }
 
@@ -1125,7 +1033,7 @@ export class ItemPF extends ItemBasePF {
       if (fn) fn.bind(this)(data, labels, props);
 
       // Ability activation properties
-      if (Object.prototype.hasOwnProperty.call(data, "activation")) {
+      if (actionData.activation?.type) {
         props.push(labels.target, labels.activation, dynamicLabels.range, dynamicLabels.duration);
       }
     }

@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "vyee6tef9gcapmem",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,7 +29,11 @@
           "value": "one living creature"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates; see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -165,86 +168,14 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "ill",
     "subschool": "phantasm",
     "types": "mind-affecting, evil",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You send a hideous and unsettling phantasmal vision to a specific creature that you name or otherwise specifically designate.</p><p>The <i>nightmare</i> prevents restful sleep and causes 1d10 points of damage. The <i>nightmare</i> leaves the subject fatigued and unable to regain arcane spells for the next 24 hours.</p><p>The difficulty of the save depends on your knowledge the subject and the physical connection (if any) you have to that creature.</p>   <table border ='1'><tr><th>Knowledge</th><th>Will Save Modifier</th></tr><tr><td>None*</td><td>+10</td></tr><tr><td>Secondhand (you have heard of the subject)</td><td>+5</td></tr><tr><td>Firsthand (you have met the subject)</td><td>+0</td></tr><tr><td>Familiar (you know the subject well)</td><td>-5</td></tr><tr><td colspan=\"2\">*You must have some sort of connection to a creature of which you have no knowledge.</td></tr></table>    <table border ='1'><tr><th>Connection</th><th>will Save Modifier</th></tr><tr><td>Likeness or picture</td><td>-2</td></tr><tr><td>Possession or garment</td><td>-4</td></tr><tr><td>Body part, lock of hair, bit of nail, etc.</td><td>-10</td></tr></table>    <i>Dispel evil</i> cast on the subject while you are casting the spell dispels the <i>nightmare</i> and causes you to be stunned for 10 minutes per caster level of the <i>dispel evil</i>.</p><p>If the recipient is awake when the spell begins, you can choose to cease casting (ending the spell) or to enter a trance until the recipient goes to sleep, whereupon you become alert again and complete the casting. If you are disturbed during the trance, you must succeed on a concentration check as if you were in the midst of casting a spell or the spell ends.</p><p>If you choose to enter a trance, you are not aware of your surroundings or the activities around you while in the trance.</p><p>You are defenseless, both physically and mentally, while in the trance. (You always fail Reflex and Will saving throws, for example.) Creatures who don't sleep (such as outsiders) or dream are immune to this spell.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
-      }
-    },
-    "target": {
-      "value": "one living creature"
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates; see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "range": {
-      "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You send a hideous and unsettling phantasmal vision to a specific creature that you name or otherwise specifically designate.</p><p>The <i>nightmare</i> prevents restful sleep and causes 1d10 points of damage. The <i>nightmare</i> leaves the subject fatigued and unable to regain arcane spells for the next 24 hours.</p><p>The difficulty of the save depends on your knowledge the subject and the physical connection (if any) you have to that creature.</p>   <table border ='1'><tr><th>Knowledge</th><th>Will Save Modifier</th></tr><tr><td>None*</td><td>+10</td></tr><tr><td>Secondhand (you have heard of the subject)</td><td>+5</td></tr><tr><td>Firsthand (you have met the subject)</td><td>+0</td></tr><tr><td>Familiar (you know the subject well)</td><td>-5</td></tr><tr><td colspan=\"2\">*You must have some sort of connection to a creature of which you have no knowledge.</td></tr></table>    <table border ='1'><tr><th>Connection</th><th>will Save Modifier</th></tr><tr><td>Likeness or picture</td><td>-2</td></tr><tr><td>Possession or garment</td><td>-4</td></tr><tr><td>Body part, lock of hair, bit of nail, etc.</td><td>-10</td></tr></table>    <i>Dispel evil</i> cast on the subject while you are casting the spell dispels the <i>nightmare</i> and causes you to be stunned for 10 minutes per caster level of the <i>dispel evil</i>.</p><p>If the recipient is awake when the spell begins, you can choose to cease casting (ending the spell) or to enter a trance until the recipient goes to sleep, whereupon you become alert again and complete the casting. If you are disturbed during the trance, you must succeed on a concentration check as if you were in the midst of casting a spell or the spell ends.</p><p>If you choose to enter a trance, you are not aware of your surroundings or the activities around you while in the trance.</p><p>You are defenseless, both physically and mentally, while in the trance. (You always fail Reflex and Will saving throws, for example.) Creatures who don't sleep (such as outsiders) or dream are immune to this spell.</p>"
   },
   "effects": [],
   "folder": null,

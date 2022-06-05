@@ -5,45 +5,20 @@
   "img": "icons/equipment/shield/targe-wooden-boss-steel.webp",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 18</em>, <em>PRPG Core Rulebook pg. 142</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 13 gp/19 gp <strong>Weight</strong> special</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> P; <strong>Special</strong> -</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Martial</p><h3 class=\"framing\">Description</h3><p>You can bash with a spiked light shield instead of using it for defense. A spiked light shield can't be disarmed. See the armor spikes entry on page 10 for details.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 18</em>, <em>PRPG Core Rulebook pg. 142</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 13 gp/19 gp <strong>Weight</strong> special</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> P; <strong>Special</strong> -</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Martial</p><h3 class=\"framing\">Description</h3><p>You can bash with a spiked light shield instead of using it for defense. A spiked light shield can't be disarmed. See the armor spikes entry on page 10 for details.</p>"
     },
     "tags": [],
-    "quantity": 1,
-    "weight": 0,
     "price": 13,
-    "size": "med",
-    "equipped": true,
-    "resizing": false,
-    "identified": true,
     "hp": {
       "max": 2,
       "value": 2
     },
-    "broken": false,
     "hardness": 10,
-    "carried": true,
-    "unidentified": {
-      "price": 0,
-      "name": ""
-    },
     "identifiedName": "Spiked Light Shield",
-    "cl": 0,
-    "aura": {
-      "custom": false,
-      "school": ""
-    },
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "actions": [
       {
-        "_id": "8uvw9i7312oq30pq",
+        "_id": "x65kfx0y5uz0cnr4",
         "name": "Attack",
         "img": "icons/equipment/shield/targe-wooden-boss-steel.webp",
         "description": "",
@@ -72,11 +47,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": null,
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +69,12 @@
           "parts": [
             [
               "sizeRoll(1, 4, @size)",
-              "P"
+              {
+                "values": [
+                  "piercing"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -140,118 +120,28 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "spikedLightShield",
-    "useCustomTag": false,
     "flags": {
       "boolean": {},
       "dictionary": {}
     },
     "scriptCalls": [],
-    "masterwork": false,
-    "enh": null,
-    "proficient": true,
-    "primaryAttack": true,
-    "held": "normal",
-    "weaponType": "martial",
-    "weaponSubtype": "light",
-    "properties": {},
-    "showInQuickbar": true,
-    "ammoType": "",
-    "activation": {
-      "cost": 1,
-      "type": "attack"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "attack"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": 0,
-      "units": "melee",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "mwak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "sizeRoll(1, 4, @size)",
-          "P"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
-      },
-      "bonus": {
-        "formula": "@formulaicAttack * -5"
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "str",
-      "damage": "str",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "attackType": "weapon",
-    "nonlethal": false,
-    "conditionals": [],
-    "usesAmmo": false
+    "weaponType": "martial"
   },
   "effects": [],
   "folder": null,

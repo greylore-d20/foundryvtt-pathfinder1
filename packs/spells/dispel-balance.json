@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "l6pjohltf38c11y4",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "you and a touched, neutral creature from another plane, or you and an enchantment on a touched creature or object"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -136,85 +138,14 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
       "divineFocus": 1
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>Pulsing bronze energy surrounds you, bestowing three effects.  First, you gain a +3 deflection bonus to AC against attacks by chaotic neutral, lawful neutral, neutral evil, and neutral good creatures. Against attacks by creatures whose alignment is neutral with no other alignment components, this deflection bonus is instead +5.  Second, upon making a successful melee touch attack against a creature from another plane with a neutral component to its alignment, you can banish that creature back to its home plane. The creature's spell resistance applies to this attempt, and the creature can negate this effect with a successful Will save. If the creature's alignment is neutral with no other alignment components, the creature takes a -2 penalty on this saving throw. This use discharges and ends the spell.  Third, with a touch, you can automatically dispel any one enchantment spell cast by a creature with a neutral component to its alignment. Spells that can't be dispelled by <i>dispel magic</i> also can't be dispelled by <i>dispel balance</i>. <b>Saving Throw</b>s and spell resistance do not apply to this effect. This use discharges and ends the spell.</p>",
-    "spellDuration": "1 round/level or until discharged, whichever comes first",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "you and a touched, neutral creature from another plane, or you and an enchantment on a touched creature or object"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>Pulsing bronze energy surrounds you, bestowing three effects.  First, you gain a +3 deflection bonus to AC against attacks by chaotic neutral, lawful neutral, neutral evil, and neutral good creatures. Against attacks by creatures whose alignment is neutral with no other alignment components, this deflection bonus is instead +5.  Second, upon making a successful melee touch attack against a creature from another plane with a neutral component to its alignment, you can banish that creature back to its home plane. The creature's spell resistance applies to this attempt, and the creature can negate this effect with a successful Will save. If the creature's alignment is neutral with no other alignment components, the creature takes a -2 penalty on this saving throw. This use discharges and ends the spell.  Third, with a touch, you can automatically dispel any one enchantment spell cast by a creature with a neutral component to its alignment. Spells that can't be dispelled by <i>dispel magic</i> also can't be dispelled by <i>dispel balance</i>. <b>Saving Throw</b>s and spell resistance do not apply to this effect. This use discharges and ends the spell.</p>"
   },
   "effects": [],
   "folder": null,

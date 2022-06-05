@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "eb13rmc9oawsgujc",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude partial"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "30-ft. spread",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -142,83 +146,13 @@
       "bloodline": []
     },
     "level": 9,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
     "types": "cold, darkness",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You plunge an area into the brutal chill of the arctic night.</p><p>Illumination conditions are dropped by two steps (though only to darkness, not supernatural darkness), and all creatures in the area take 5d6 points of cold damage and 1d6 points of Dexterity damage per round. A successful Fortitude save each round negates the Dexterity damage but not the cold damage.</p><p>Any creature that doesn't move on its turn becomes encased in a sheath of ice equivalent to <i>Wall of Ice</i>, is helpless, and cannot breathe. Corpses in the area for longer than 1 round are transmuted into solid ice; reviving the icy corpse requires <i>true resurrection</i>, <i>miracle</i>, or <i>wish</i>. As a move action, you may move the area of effect up to 10 feet in any direction.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "30-ft. spread",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude partial"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You plunge an area into the brutal chill of the arctic night.</p><p>Illumination conditions are dropped by two steps (though only to darkness, not supernatural darkness), and all creatures in the area take 5d6 points of cold damage and 1d6 points of Dexterity damage per round. A successful Fortitude save each round negates the Dexterity damage but not the cold damage.</p><p>Any creature that doesn't move on its turn becomes encased in a sheath of ice equivalent to <i>Wall of Ice</i>, is helpless, and cannot breathe. Corpses in the area for longer than 1 round are transmuted into solid ice; reviving the icy corpse requires <i>true resurrection</i>, <i>miracle</i>, or <i>wish</i>. As a move action, you may move the area of effect up to 10 feet in any direction.</p>"
   },
   "effects": [],
   "folder": null,

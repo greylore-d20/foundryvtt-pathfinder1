@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/spells/runes-magenta-1.jpg",
   "data": {
     "description": {
-      "value": "<p><strong>Element&nbsp;</strong>universal;&nbsp;<strong>Type&nbsp;</strong>substance infusion;&nbsp;<strong>Level&nbsp;</strong>1;&nbsp;<strong>Burn&nbsp;</strong>1<br><strong>Associated Blasts&nbsp;</strong>any simple<br><strong>Saving Throw&nbsp;</strong>Fortitude partial; see text</p>\n<p>You can drain elemental energy and matter from your foes to strengthen your next attack. When you use this infusion, your kinetic blast affects only creatures with a subtype matching your kinetic blast’s element (for instance, a fire blast would damage only creatures of the fire subtype). Against such creatures, your blast targets touch AC (if it requires an attack roll) and always allows spell resistance. Because you are draining energy from the target, your blast doesn’t apply your elemental overflow bonuses or Constitution modifier. The target can attempt a Fortitude save to take 1/4 the normal amount of damage.</p>\n<p>Draining infusion ignores any damage reduction, resistances, and immunities the creature might possess. If at least one creature fails its saving throw against your draining infusion, you can reduce the total burn cost of any one blast wild talent used before the end of your next turn by 1, or by 2 if you have the supercharge ability. If you use draining infusion again before applying this reduction, you still deal the damage from that draining infusion, but the burn reductions don’t stack.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Element&nbsp;</strong>universal;&nbsp;<strong>Type&nbsp;</strong>substance infusion;&nbsp;<strong>Level&nbsp;</strong>1;&nbsp;<strong>Burn&nbsp;</strong>1<br><strong>Associated Blasts&nbsp;</strong>any simple<br><strong>Saving Throw&nbsp;</strong>Fortitude partial; see text</p>\n<p>You can drain elemental energy and matter from your foes to strengthen your next attack. When you use this infusion, your kinetic blast affects only creatures with a subtype matching your kinetic blast’s element (for instance, a fire blast would damage only creatures of the fire subtype). Against such creatures, your blast targets touch AC (if it requires an attack roll) and always allows spell resistance. Because you are draining energy from the target, your blast doesn’t apply your elemental overflow bonuses or Constitution modifier. The target can attempt a Fortitude save to take 1/4 the normal amount of damage.</p>\n<p>Draining infusion ignores any damage reduction, resistances, and immunities the creature might possess. If at least one creature fails its saving throw against your draining infusion, you can reduce the total burn cost of any one blast wild talent used before the end of your next turn by 1, or by 2 if you have the supercharge ability. If you use draining infusion again before applying this reduction, you still deal the damage from that draining infusion, but the burn reductions don’t stack.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "kavkwjdf3e6gcrp7",
+        "_id": "bkiqvcqvzmo8tzou",
         "name": "Use",
         "img": "systems/pf1/icons/spells/runes-magenta-1.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": null,
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -104,23 +102,18 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -129,16 +122,13 @@
     "tag": "classFeat_drainingInfusion",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -152,80 +142,7 @@
           "Kineticist"
         ]
       ]
-    },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "none",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": ""
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": ""
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude partial; see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    }
   },
   "effects": [],
   "folder": null,

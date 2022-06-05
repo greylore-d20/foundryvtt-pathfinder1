@@ -5,45 +5,21 @@
   "img": "systems/pf1/icons/items/weapons/maulaxe-dwarven.png",
   "data": {
     "description": {
-      "value": "<p><strong>Source</strong> <em>Adventurer's Armory pg. 3</em>, <em>Pathfinder Campaign Setting pg. 209</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 25 gp <strong>Weight</strong> 5 lbs.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x3; <strong>Range</strong> 10 ft.; <strong>Type</strong> B or S; <strong>Special</strong> -</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This versatile weapon looks like a heavy-headed axe, but a proficient wielder can use the blunt back of the head to deal bludgeoning damage.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Source</strong> <em>Adventurer's Armory pg. 3</em>, <em>Pathfinder Campaign Setting pg. 209</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 25 gp <strong>Weight</strong> 5 lbs.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x3; <strong>Range</strong> 10 ft.; <strong>Type</strong> B or S; <strong>Special</strong> -</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This versatile weapon looks like a heavy-headed axe, but a proficient wielder can use the blunt back of the head to deal bludgeoning damage.</p>"
     },
     "tags": [],
-    "quantity": 1,
     "weight": 5,
     "price": 25,
-    "size": "med",
-    "equipped": true,
-    "resizing": false,
-    "identified": true,
     "hp": {
       "max": 2,
       "value": 2
     },
-    "broken": false,
     "hardness": 10,
-    "carried": true,
-    "unidentified": {
-      "price": 0,
-      "name": ""
-    },
     "identifiedName": "Dwarven Maulaxe",
-    "cl": 0,
-    "aura": {
-      "custom": false,
-      "school": ""
-    },
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "actions": [
       {
-        "_id": "zyu75gov2z03iocz",
+        "_id": "zzcjf7blwdi1rqwn",
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/maulaxe-dwarven.png",
         "description": "",
@@ -72,11 +48,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": null,
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -94,7 +70,13 @@
           "parts": [
             [
               "sizeRoll(1, 6, @size)",
-              "B or S"
+              {
+                "values": [
+                  "bludgeoning",
+                  "slashing"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -140,118 +122,28 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "dwarvenMaulaxe",
-    "useCustomTag": false,
     "flags": {
       "boolean": {},
       "dictionary": {}
     },
     "scriptCalls": [],
-    "masterwork": false,
-    "enh": null,
-    "proficient": true,
-    "primaryAttack": true,
-    "held": "normal",
-    "weaponType": "exotic",
-    "weaponSubtype": "light",
-    "properties": {},
-    "showInQuickbar": true,
-    "ammoType": "",
-    "activation": {
-      "cost": 1,
-      "type": "attack"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": "attack"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": 10,
-      "units": "melee",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "mwak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "sizeRoll(1, 6, @size)",
-          "B or S"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
-      },
-      "bonus": {
-        "formula": "@formulaicAttack * -5"
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "str",
-      "damage": "str",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 3
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "attackType": "weapon",
-    "nonlethal": false,
-    "conditionals": [],
-    "usesAmmo": false
+    "weaponType": "exotic"
   },
   "effects": [],
   "folder": null,

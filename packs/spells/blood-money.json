@@ -4,25 +4,20 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "2651jwee0kkba89r",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "swift"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 1,
             "type": "action"
           }
         },
@@ -30,11 +25,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 0,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "1 material component",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -138,82 +141,13 @@
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 1,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You cast <i>blood money</i> just before casting another spell. As part of this spell's casting, you must cut one of your hands, releasing a stream of blood that causes you to take 1d6 points of damage. When you cast another spell in that same round, your blood transforms into one material component of your choice required by that second spell. Even valuable components worth more than 1 gp can be created, but creating such material components requires an additional cost of 1 point of Strength damage, plus a further point of damage for every full 500 gp of the component's value (so a component worth 500-999 gp costs a total of 2 points, 1,000-1,500 costs 3, etc.). You cannot create magic items with <i>blood money</i>.  For example, a sorcerer with the spell <i>stoneskin</i> prepared could cast <i>blood money</i> to create the 250 gp worth of diamond dust required by that spell, taking 1d6 points of damage and 1 point of Strength damage in the process.  Material components created by <i>blood money</i> transform back into blood at the end of the round if they have not been used as a material component. Spellcasters who do not have blood cannot cast <i>blood money</i>, and those who are immune to Strength damage (such as undead spellcasters) cannot use <i>blood money</i> to create valuable material components.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "1 material component",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "swift"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "action"
-      }
-    },
-    "range": {
-      "value": 0,
-      "units": "ft",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You cast <i>blood money</i> just before casting another spell. As part of this spell's casting, you must cut one of your hands, releasing a stream of blood that causes you to take 1d6 points of damage. When you cast another spell in that same round, your blood transforms into one material component of your choice required by that second spell. Even valuable components worth more than 1 gp can be created, but creating such material components requires an additional cost of 1 point of Strength damage, plus a further point of damage for every full 500 gp of the component's value (so a component worth 500-999 gp costs a total of 2 points, 1,000-1,500 costs 3, etc.). You cannot create magic items with <i>blood money</i>.  For example, a sorcerer with the spell <i>stoneskin</i> prepared could cast <i>blood money</i> to create the 250 gp worth of diamond dust required by that spell, taking 1d6 points of damage and 1 point of Strength damage in the process.  Material components created by <i>blood money</i> transform back into blood at the end of the round if they have not been used as a material component. Spellcasters who do not have blood cannot cast <i>blood money</i>, and those who are immune to Strength damage (such as undead spellcasters) cannot use <i>blood money</i> to create valuable material components.</p>"
   },
   "effects": [],
   "folder": null,

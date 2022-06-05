@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/skills/violet_02.jpg",
   "data": {
     "description": {
-      "value": "<p>The witch curses the target so he is doomed to die (Will negates). As long as the curse persists, the target takes a –4 penalty to his Armor Class and on attack rolls, saves, ability checks, and skill checks. While the curse persists, the witch may end it by bringing its full force upon her victim all at once. Doing so gives the victim a penalty equal to the witch's caster level to his Armor Class or on any single attack roll, combat maneuver check, opposed ability or skill check, or saving throw. The witch must decide to apply this penalty before the roll to be modified is made. If the witch does not have line of sight to the target, the full force of the curse occurs when the GM considers it most appropriate, such as when the target is in mortal danger.</p>\n<p>A target can only have one dire prophecy upon him at a time. Whether or not the target's save against the hex is successful, a creature cannot be the target of this hex for 1 day. This is a curse effect.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>The witch curses the target so he is doomed to die (Will negates). As long as the curse persists, the target takes a –4 penalty to his Armor Class and on attack rolls, saves, ability checks, and skill checks. While the curse persists, the witch may end it by bringing its full force upon her victim all at once. Doing so gives the victim a penalty equal to the witch's caster level to his Armor Class or on any single attack roll, combat maneuver check, opposed ability or skill check, or saving throw. The witch must decide to apply this penalty before the roll to be modified is made. If the witch does not have line of sight to the target, the full force of the curse occurs when the GM considers it most appropriate, such as when the target is in mortal danger.</p>\n<p>A target can only have one dire prophecy upon him at a time. Whether or not the target's save against the hex is successful, a creature cannot be the target of this hex for 1 day. This is a curse effect.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "k60jxmglooyhd2wn",
+        "_id": "ljbaul6wlor8dhkj",
         "name": "Use",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -104,23 +102,21 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -129,16 +125,13 @@
     "tag": "classFeat_direProphecy",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -153,79 +146,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "perm"
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

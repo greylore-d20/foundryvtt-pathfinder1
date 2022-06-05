@@ -238,6 +238,46 @@
   /*  Item Actions                             */
   /* ----------------------------------------- */
 
+  h4.damage-header,
+  h4.change-header,
+  h4.context-notes-header,
+  h4.attack-header,
+  h4.conditional-header {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    line-height: 24px;
+    color: @colorOlive;
+  }
+  h4.attack-header {
+    margin-left: 4px;
+  }
+
+  .damage-parts,
+  .attack-parts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .damage-part,
+    .attack-part {
+      flex: 0 0 100%;
+      padding: 2px;
+
+      input {
+        flex: 3;
+        margin-right: 3px;
+      }
+      input:not(:first-child) {
+        margin-left: 5px;
+      }
+      select {
+        margin-left: 5px;
+        flex: 1;
+      }
+    }
+  }
+
   .changes,
   .context-notes {
     list-style: none;

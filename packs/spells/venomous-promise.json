@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "g2eyvu6fbofsofyj",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "yes"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -148,85 +150,16 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
     "types": "language-dependent, poison",
-    "nonlethal": false,
     "components": {
-      "value": "",
-      "verbal": false,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a vial of poison",
-      "focus": "",
-      "gpValue": 0
+      "value": "a vial of poison"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You guard your words and person with poisonous power. You can impart a short amount of information-up to 25 words-as you cast this spell, entwining your words with the poison provided as a material component. If your target reveals the information you impart (verbally, in writing, with gestures, or by having its mind read with spells like <i>detect</i> thoughts), the target is immediately exposed to the poison (and is allowed any saving throw the poison allows).  Your target instinctively knows that revealing this information will endanger it, but doesn't automatically understand why or how. <i>Neutralize poison</i> removes the effect of this spell; the spellcaster must succeed at a caster level check against the spell's save DC rather than the poison's.</p>",
-    "spellDuration": "permanent or until triggered",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "yes"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You guard your words and person with poisonous power. You can impart a short amount of information-up to 25 words-as you cast this spell, entwining your words with the poison provided as a material component. If your target reveals the information you impart (verbally, in writing, with gestures, or by having its mind read with spells like <i>detect</i> thoughts), the target is immediately exposed to the poison (and is allowed any saving throw the poison allows).  Your target instinctively knows that revealing this information will endanger it, but doesn't automatically understand why or how. <i>Neutralize poison</i> removes the effect of this spell; the spellcaster must succeed at a caster level check against the spell's save DC rather than the poison's.</p>"
   },
   "effects": [],
   "folder": null,

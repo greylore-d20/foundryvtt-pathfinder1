@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "rqrzgebukgfxocuv",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -140,86 +142,12 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "nec",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>The <i>black spot</i> is a specific and feared pirate curse. An intangible, illusory <i>black spot</i> manifests above the target's head and remains until the target dies or the curse is lifted. The <i>black spot</i> cannot be covered or hidden by any means, including other illusions.</p><p>The <i>black spot</i> radiates a cursed aura in a 10-foot radius around its target. Anyone within the aura gains a +2 bonus on weapon attack and damage rolls against the target. In addition, the target has a -4 penalty on saving throws against death effects.</p><p>Every day in which a creature bears a <i>black spot</i>, it must make a Fortitude save. On a failed save, the creature takes 1 point of Constitution damage. The damage cannot be healed until the <i>black spot</i> is removed. If the creature's Constitution reaches 0, it dies. Pirates killed by this spell often return as ghosts, but that is not a direct effect of this spell.</p><p>The <i>black spot</i> cannot be dispelled, but it can be removed with <i>break enchantment</i>, <i>limited <i>wish</i></i>, <i>miracle</i>, <i>remove curse</i>, or <i>wish</i>.</p>",
-    "spellDuration": "permanent",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>The <i>black spot</i> is a specific and feared pirate curse. An intangible, illusory <i>black spot</i> manifests above the target's head and remains until the target dies or the curse is lifted. The <i>black spot</i> cannot be covered or hidden by any means, including other illusions.</p><p>The <i>black spot</i> radiates a cursed aura in a 10-foot radius around its target. Anyone within the aura gains a +2 bonus on weapon attack and damage rolls against the target. In addition, the target has a -4 penalty on saving throws against death effects.</p><p>Every day in which a creature bears a <i>black spot</i>, it must make a Fortitude save. On a failed save, the creature takes 1 point of Constitution damage. The damage cannot be healed until the <i>black spot</i> is removed. If the creature's Constitution reaches 0, it dies. Pirates killed by this spell often return as ghosts, but that is not a direct effect of this spell.</p><p>The <i>black spot</i> cannot be dispelled, but it can be removed with <i>break enchantment</i>, <i>limited <i>wish</i></i>, <i>miracle</i>, <i>remove curse</i>, or <i>wish</i>.</p>"
   },
   "effects": [],
   "folder": null,

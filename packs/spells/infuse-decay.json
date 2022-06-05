@@ -4,36 +4,36 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "mhiwz2py6snc4nrp",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
           "value": "permanent until discharged (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "corporeal undead touched; see text",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -134,84 +138,17 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "nec",
-    "subschool": "",
     "types": "evil",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
-      "value": "",
-      "focus": "a set of fine mortician's tools worth 100 gp",
-      "gpValue": 0
+      "focus": "a set of fine mortician's tools worth 100 gp"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell functions as per <i>imbue with spell ability</i>, except it can only target corporeal undead creatures, and can only transfer touch spells. The number and level of spells the subject can be granted depends on the undead creature's Hit Dice; even multiple castings of <i>infuse decay</i> can't exceed this limit.   <table border ='1'><tr><th>HD of Undead</th><th>Touch Spells Infused</th></tr><tr><td>5 or lower</td><td>One 1st-level spell</td></tr><tr><td>6-10</td><td>One or two 1st-level spells</td></tr><tr><td>11 or higher</td><td>One or two 1st-level spells and one 2nd-level spell</td></tr></table>   Once you cast <i>infuse decay</i>, you can't prepare a new 4th-level spell to replace it (see <i>imbue with spell ability</i> on page 299 of the <i>Pathfinder RPG Core Rulebook</i> for further details). The infused spell is automatically triggered the next time the undead creature makes a successful touch attack or attack with a natural weapon. An intelligent undead can choose not to trigger the spell on a hit. Only one infused spell can be triggered per attack. An intelligent undead can choose which spell to trigger if it has more than one infused spell. A nonintelligent undead triggers a random spell when it hits with a natural weapon. Only one spell can be triggered per round, regardless of the number of attacks the undead makes.</p>",
-    "spellDuration": "permanent until discharged (D)",
-    "spellEffect": "",
-    "spellArea": "corporeal undead touched; see text",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
-      }
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell functions as per <i>imbue with spell ability</i>, except it can only target corporeal undead creatures, and can only transfer touch spells. The number and level of spells the subject can be granted depends on the undead creature's Hit Dice; even multiple castings of <i>infuse decay</i> can't exceed this limit.   <table border ='1'><tr><th>HD of Undead</th><th>Touch Spells Infused</th></tr><tr><td>5 or lower</td><td>One 1st-level spell</td></tr><tr><td>6-10</td><td>One or two 1st-level spells</td></tr><tr><td>11 or higher</td><td>One or two 1st-level spells and one 2nd-level spell</td></tr></table>   Once you cast <i>infuse decay</i>, you can't prepare a new 4th-level spell to replace it (see <i>imbue with spell ability</i> on page 299 of the <i>Pathfinder RPG Core Rulebook</i> for further details). The infused spell is automatically triggered the next time the undead creature makes a successful touch attack or attack with a natural weapon. An intelligent undead can choose not to trigger the spell on a hit. Only one infused spell can be triggered per attack. An intelligent undead can choose which spell to trigger if it has more than one infused spell. A nonintelligent undead triggers a random spell when it hits with a natural weapon. Only one spell can be triggered per round, regardless of the number of attacks the undead makes.</p>"
   },
   "effects": [],
   "folder": null,

@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "q43j0248smni18n3",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one living creature"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "fort",
+          "description": "Fortitude negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -156,86 +158,17 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
     "subschool": "polymorph",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": false,
-      "thought": false,
-      "emotion": false,
       "material": true,
-      "focus": false,
       "divineFocus": 2
     },
-    "castTime": "",
     "materials": {
-      "value": "powdered bull's horn",
-      "focus": "",
-      "gpValue": 0
+      "value": "powdered bull's horn"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You change the target's head into that of a bull. The creature's Intelligence becomes 2, and it gains a gore melee attack that it can use as a primary or secondary attack. The gore attack uses the creature's base attack bonus, and the creature gains a +2 bonus on attack and damage rolls with the gore attack.</p><p>The gore attack deals a number of points of damage equal to 1d6 + Strength modifier if the target is Small, 1d8 + Strength modifier if the target is Medium, and 2d6 + Strength modifier if the target is Large or larger.</p><p>The affected creature still retains its type, class, levels, and Hit Dice. The creature's base attack bonus, base save bonuses, and hit points remain unmodified. It retains all of its class features and may still cast spells, though it must do so using its newly modified Intelligence score. Any items equipped in the creature's head slot meld into its body. Affected items that grant passive bonuses continue to do so, though items that require activation become nonfunctional for the duration of the spell.</p><p>If the target fails to resist Baphomet's blessing, it also becomes immune to polymorph spells (except for this one) for the duration of the spell's effect. Undead, incorporeal, or gaseous creatures are immune to Baphomet's blessing.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one living creature"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You change the target's head into that of a bull. The creature's Intelligence becomes 2, and it gains a gore melee attack that it can use as a primary or secondary attack. The gore attack uses the creature's base attack bonus, and the creature gains a +2 bonus on attack and damage rolls with the gore attack.</p><p>The gore attack deals a number of points of damage equal to 1d6 + Strength modifier if the target is Small, 1d8 + Strength modifier if the target is Medium, and 2d6 + Strength modifier if the target is Large or larger.</p><p>The affected creature still retains its type, class, levels, and Hit Dice. The creature's base attack bonus, base save bonuses, and hit points remain unmodified. It retains all of its class features and may still cast spells, though it must do so using its newly modified Intelligence score. Any items equipped in the creature's head slot meld into its body. Affected items that grant passive bonuses continue to do so, though items that require activation become nonfunctional for the duration of the spell.</p><p>If the target fails to resist Baphomet's blessing, it also becomes immune to polymorph spells (except for this one) for the duration of the spell's effect. Undead, incorporeal, or gaseous creatures are immune to Baphomet's blessing.</p>"
   },
   "effects": [],
   "folder": null,

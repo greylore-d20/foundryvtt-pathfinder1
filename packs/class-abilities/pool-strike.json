@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/spells/enchant-red-3.jpg",
   "data": {
     "description": {
-      "value": "<p>The magus can expend 1 point from his arcane pool as a standard action to charge his free hand with energy. He can make a melee touch attack with that hand as a free action as part of activating this ability. If the touch attack hits, it releases the charge and deals 2d6 points of energy damage (acid, cold, electricity, or fire, chosen when he spends the arcane pool point to activate this ability). He can use this ability with the spellstrike class feature. If he misses with this attack, he can hold the charge for up to 1 minute before it dissipates.</p>\n<p>At 6th level, and every three levels thereafter, the amount of damage dealt by this attack increases by 1d6.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>The magus can expend 1 point from his arcane pool as a standard action to charge his free hand with energy. He can make a melee touch attack with that hand as a free action as part of activating this ability. If the touch attack hits, it releases the charge and deals 2d6 points of energy damage (acid, cold, electricity, or fire, chosen when he spends the arcane pool point to activate this ability). He can use this ability with the spellstrike class feature. If he misses with this attack, he can hold the charge for up to 1 minute before it dissipates.</p>\n<p>At 6th level, and every three levels thereafter, the amount of damage dealt by this attack increases by 1d6.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "o1d1ph9rmzpd0ldw",
+        "_id": "pv0d5s86n85aokyt",
         "name": "Use",
         "img": "systems/pf1/icons/spells/enchant-red-3.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": "",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -63,7 +61,12 @@
           "parts": [
             [
               "2d6",
-              ""
+              {
+                "values": [
+                  "untyped"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -109,23 +112,21 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -134,16 +135,13 @@
     "tag": "classFeat_poolStrike",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -158,84 +156,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "value": null,
-      "units": "touch",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "msak",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "2d6",
-          ""
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": "dex",
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

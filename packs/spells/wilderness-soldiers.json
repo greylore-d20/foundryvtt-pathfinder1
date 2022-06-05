@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "wu54iwqauld0qv7n",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,11 +25,15 @@
           "value": "1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
           "value": 30,
           "units": "ft",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -52,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -80,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "30-ft.-radius emanation, centered on you",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -139,82 +142,13 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You call on the plants nearby to aid you in combat. This spell is ineffective if no plants you can direct are within the area. You can spend a swift action and/or a standard action on each of your turns to direct one of the following attacks. The attack bonus or CMB for these attacks equals your base attack bonus + your Wisdom modifier. You grant a +1 bonus per three caster levels (maximum +5) on damage rolls due to this spell. Your <i>wilderness soldiers</i> never provoke attacks of opportunity, and they do not count as allies for flanking or other purposes.  <br><i>Tree</i>: A tree makes a melee attack with a 10-foot reach from its trunk. A hit deals an amount of damage equal to 1d8 points + your Wisdom modifier. The tree can instead attempt a bull rush, drag, or reposition combat maneuver with the same reach, but the tree cannot move itself.  <br><i>Undergrowth or Hedgerow</i>: Acting as a Medium creature, one square of undergrowth or hedgerow attempts a grapple combat maneuver against an opponent within or adjacent to that square. Heavy undergrowth gains a +2 bonus to its CMD. Undergrowth cannot move the grapple or pin a foe, but it can deal an amount of damage equal to 1d4 points + your Wisdom modifier by making a successful grapple check against a foe it is grappling. The undergrowth's CMD is 5 + its CMB. If you fail to direct the undergrowth to maintain the grapple, it releases its opponent.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "",
-    "spellArea": "30-ft.-radius emanation, centered on you",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "value": 30,
-      "units": "ft",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You call on the plants nearby to aid you in combat. This spell is ineffective if no plants you can direct are within the area. You can spend a swift action and/or a standard action on each of your turns to direct one of the following attacks. The attack bonus or CMB for these attacks equals your base attack bonus + your Wisdom modifier. You grant a +1 bonus per three caster levels (maximum +5) on damage rolls due to this spell. Your <i>wilderness soldiers</i> never provoke attacks of opportunity, and they do not count as allies for flanking or other purposes.  <br><i>Tree</i>: A tree makes a melee attack with a 10-foot reach from its trunk. A hit deals an amount of damage equal to 1d8 points + your Wisdom modifier. The tree can instead attempt a bull rush, drag, or reposition combat maneuver with the same reach, but the tree cannot move itself.  <br><i>Undergrowth or Hedgerow</i>: Acting as a Medium creature, one square of undergrowth or hedgerow attempts a grapple combat maneuver against an opponent within or adjacent to that square. Heavy undergrowth gains a +2 bonus to its CMD. Undergrowth cannot move the grapple or pin a foe, but it can deal an amount of damage equal to 1d4 points + your Wisdom modifier by making a successful grapple check against a foe it is grappling. The undergrowth's CMD is 5 + its CMB. If you fail to direct the undergrowth to maintain the grapple, it releases its opponent.</p>"
   },
   "effects": [],
   "folder": null,

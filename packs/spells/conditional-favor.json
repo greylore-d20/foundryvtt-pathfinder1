@@ -4,25 +4,20 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "33ukkrlxe83pk6jy",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "swift"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 1,
             "type": "action"
           }
         },
@@ -34,7 +29,11 @@
           "value": "1 creature"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "none (see below)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -159,83 +162,11 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
-      "verbal": true,
-      "somatic": false,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "verbal": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You must cast this spell immediately before casting another spell on the same creature, eliciting a promise or warning against a behavior and binding the target to the paired spell. If you don't cast a paired spell, <i>conditional favor</i> has no effect. The paired spell must be from the abjuration, conjuration (healing), enchantment, or transmutation school or subschool, and must be cast on a willing creature. If the spell's recipient violates the oath or prohibition while <i>conditional favor</i> remains in effect, the paired spell is undone as if never cast. If the spell was a healing spell, the hit point damage or condition you removed returns immediately, even if the subject has enjoyed subsequent rest or healing. Poisons, diseases, curses, restored ability damage, and negative levels removed by the paired spell return as well.  <i>Conditional favor</i> recognizes the spirit of your condition and doesn't trigger a violation due to unintended consequences or circumstances that the subject could not predict with her current knowledge of the situation. For instance, if the prohibition prevented the subject from laying a finger on royalty, touching a disguised prince would not count as a violation if the subject did not recognize the prince, nor would touching a member of royalty while dominated. The subject of the spell intuitively knows beforehand whether an action will cause it to lose the paired spell's benefit.</p>",
-    "spellDuration": "1 day/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "swift"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "1 creature"
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "none (see below)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "range": {
-      "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You must cast this spell immediately before casting another spell on the same creature, eliciting a promise or warning against a behavior and binding the target to the paired spell. If you don't cast a paired spell, <i>conditional favor</i> has no effect. The paired spell must be from the abjuration, conjuration (healing), enchantment, or transmutation school or subschool, and must be cast on a willing creature. If the spell's recipient violates the oath or prohibition while <i>conditional favor</i> remains in effect, the paired spell is undone as if never cast. If the spell was a healing spell, the hit point damage or condition you removed returns immediately, even if the subject has enjoyed subsequent rest or healing. Poisons, diseases, curses, restored ability damage, and negative levels removed by the paired spell return as well.  <i>Conditional favor</i> recognizes the spirit of your condition and doesn't trigger a violation due to unintended consequences or circumstances that the subject could not predict with her current knowledge of the situation. For instance, if the prohibition prevented the subject from laying a finger on royalty, touching a disguised prince would not count as a violation if the subject did not recognize the prince, nor would touching a member of royalty while dominated. The subject of the spell intuitively knows beforehand whether an action will cause it to lose the paired spell's benefit.</p>"
   },
   "effects": [],
   "folder": null,

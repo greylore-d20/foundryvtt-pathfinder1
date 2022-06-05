@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "bq6vss92v3lpm6yj",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one creature/level, no two of which can be more than 30 ft. apart"
         },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -148,86 +150,18 @@
       "bloodline": []
     },
     "level": 7,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a tarnished coin",
-      "focus": "",
-      "gpValue": 0
+      "value": "a tarnished coin"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You instill overwhelming avarice in the targets and impel them toward a wild spree of larceny. Creatures affected by a <i>crime wave</i> must roll percentile dice each round to determine what action they take.  <b>d% Behavior</b>  1-25 Act normally, but with suspicion toward others. The target doesn't benefit from or provide benefits with teamwork feats and the aid another action. If a creature attempts to use a harmless spell or effect on the target, there is a 50% chance the target tries to avoid that effect as best as possible (taking an attack of opportunity against a spellcaster, requiring a successful attack roll on a touch spell, or attempting a saving throw).  26-50 Attempt a stealAPG combat maneuver or Sleight of Hand check to steal a random valuable object from the nearest creature (or a nearby unattended object, if obviously of great value), moving adjacent to that creature or object as needed. Once an affected creature has stolen an item, further results of 26-50 cause the affected creature to flee, focusing all of its efforts on escaping with its loot and fighting to prevent the stolen object from being taken.  51-75 Attempt to break, destroy, or deface the nearest unattended manufactured object or structure. If the object or structure is too difficult to damage, the affected creature instead vandalizes or otherwise defaces its appearance.  76-100 Attack the nearest creature (for this purpose, a familiar counts as part of the affected creature's self).  A character affected by a <i>crime wave</i> who is unable to carry out the indicated action moves toward the nearest source of cover or concealment and attempts a Stealth check to hide. Affected creatures with the ability to turn invisible (including through the use of magic items or spells) do so instead of attempting a Stealth check.</p>",
-    "spellDuration": "1 round/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature/level, no two of which can be more than 30 ft. apart"
-    },
-    "range": {
-      "units": "medium",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You instill overwhelming avarice in the targets and impel them toward a wild spree of larceny. Creatures affected by a <i>crime wave</i> must roll percentile dice each round to determine what action they take.  <b>d% Behavior</b>  1-25 Act normally, but with suspicion toward others. The target doesn't benefit from or provide benefits with teamwork feats and the aid another action. If a creature attempts to use a harmless spell or effect on the target, there is a 50% chance the target tries to avoid that effect as best as possible (taking an attack of opportunity against a spellcaster, requiring a successful attack roll on a touch spell, or attempting a saving throw).  26-50 Attempt a stealAPG combat maneuver or Sleight of Hand check to steal a random valuable object from the nearest creature (or a nearby unattended object, if obviously of great value), moving adjacent to that creature or object as needed. Once an affected creature has stolen an item, further results of 26-50 cause the affected creature to flee, focusing all of its efforts on escaping with its loot and fighting to prevent the stolen object from being taken.  51-75 Attempt to break, destroy, or deface the nearest unattended manufactured object or structure. If the object or structure is too difficult to damage, the affected creature instead vandalizes or otherwise defaces its appearance.  76-100 Attack the nearest creature (for this purpose, a familiar counts as part of the affected creature's self).  A character affected by a <i>crime wave</i> who is unable to carry out the indicated action moves toward the nearest source of cover or concealment and attempts a Stealth check to hide. Affected creatures with the ability to turn invisible (including through the use of magic items or spells) do so instead of attempting a Stealth check.</p>"
   },
   "effects": [],
   "folder": null,

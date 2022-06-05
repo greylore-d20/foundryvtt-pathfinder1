@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "pzr0bvfvjw9p63hf",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "2 hours/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "up to 20-ft.-radius emanation centered on a point in space",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -166,81 +170,18 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
       "focus": true,
       "divineFocus": 3
     },
-    "castTime": "",
     "materials": {
-      "value": "",
-      "focus": "a slender iron rod 1 foot in length",
-      "gpValue": 0
+      "focus": "a slender iron rod 1 foot in length"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This spell functions as <i>alarm</i>, except that you can tweak the spell to be more discerning in what types of creatures or objects trigger the <i>alarm</i>. Instead of being triggered whenever a creature of Tiny size or larger enters the warded area, you can set whatever triggering conditions you wish, as long as they are based on observable phenomenon. For example, you could cause the selective <i>alarm</i> to trigger when creatures of a certain race (such as orcs, bugbears, or kobolds) enter the area, or whenever a group of four or more creatures enters the area together, or when a metal object is brought into the area. You can't choose triggering conditions that rely on unobservable information, such as having it triggered when creatures of a certain alignment enter the area, nor could you have the <i>alarm</i> be triggered by \"something worth more than 5,000 gp\" entering the area, or even \"a weapon\" entering the area, because an item's value and classification as a weapon is subjective, and might vary from one person to the next.</p>",
-    "spellDuration": "2 hours/level (D)",
-    "spellEffect": "",
-    "spellArea": "up to 20-ft.-radius emanation centered on a point in space",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell functions as <i>alarm</i>, except that you can tweak the spell to be more discerning in what types of creatures or objects trigger the <i>alarm</i>. Instead of being triggered whenever a creature of Tiny size or larger enters the warded area, you can set whatever triggering conditions you wish, as long as they are based on observable phenomenon. For example, you could cause the selective <i>alarm</i> to trigger when creatures of a certain race (such as orcs, bugbears, or kobolds) enter the area, or whenever a group of four or more creatures enters the area together, or when a metal object is brought into the area. You can't choose triggering conditions that rely on unobservable information, such as having it triggered when creatures of a certain alignment enter the area, nor could you have the <i>alarm</i> be triggered by \"something worth more than 5,000 gp\" entering the area, or even \"a weapon\" entering the area, because an item's value and classification as a weapon is subjective, and might vary from one person to the next.</p>"
   },
   "effects": [],
   "folder": null,

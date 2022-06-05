@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "gp206lygszmwe94q",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,8 +29,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -176,83 +178,19 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "trs",
     "subschool": "polymorph",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
-      "value": "",
-      "focus": "corpse or likeness of the deceased creature whose form you plan to assume",
-      "gpValue": 0
+      "focus": "corpse or likeness of the deceased creature whose form you plan to assume"
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This spell functions similar to @Compendium[pf1.spells.73wog6v19ui2au25]{assume appearance}, except that you can imitate a creature even if you have only a likeness (such as a sketch or painting) that is fairly accurate. If there is an age difference between the likeness and the actual creature, you take on the appearance of the creature near the end of its life. If you have heard the creature whose form you plan to assume speak aloud, you can also copy its voice as @Compendium[pf1.spells.26g4tysnax570dxo]{vocal alteration} (@Compendium[pf1.spells.byn5q46du0ck592a]{speak with dead} can also be used to fulfill this requirement). The spell doesn't grant insight into the dead creature's mannerisms. Additionally, if a likeness used as a focus for the spell is kept on your person or within 30 feet at all times, the aura of greater <em>assume appearance</em> is redirected to the likeness instead of to you, similar to a reverse application of the @Compendium[pf1.spells.8nrt26t37v7koqr8]{misdirection} spell.</p>",
-    "spellDuration": "1 day/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "minute"
-      }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell functions similar to @Compendium[pf1.spells.73wog6v19ui2au25]{assume appearance}, except that you can imitate a creature even if you have only a likeness (such as a sketch or painting) that is fairly accurate. If there is an age difference between the likeness and the actual creature, you take on the appearance of the creature near the end of its life. If you have heard the creature whose form you plan to assume speak aloud, you can also copy its voice as @Compendium[pf1.spells.26g4tysnax570dxo]{vocal alteration} (@Compendium[pf1.spells.byn5q46du0ck592a]{speak with dead} can also be used to fulfill this requirement). The spell doesn't grant insight into the dead creature's mannerisms. Additionally, if a likeness used as a focus for the spell is kept on your person or within 30 feet at all times, the aura of greater <em>assume appearance</em> is redirected to the likeness instead of to you, similar to a reverse application of the @Compendium[pf1.spells.8nrt26t37v7koqr8]{misdirection} spell.</p>"
   },
   "effects": [],
   "folder": null,

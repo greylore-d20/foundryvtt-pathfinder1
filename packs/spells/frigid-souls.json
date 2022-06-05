@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "x76a4u01hnql812z",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 hour/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "one 5-ft. cube/level (S)",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -154,83 +158,19 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "nec",
     "subschool": "haunted",
     "types": "cold, emotion, fear, mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
       "material": true,
-      "focus": false,
       "divineFocus": 2
     },
-    "castTime": "",
     "materials": {
-      "value": "a bloody icicle",
-      "focus": "",
-      "gpValue": 0
+      "value": "a bloody icicle"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You harness the Irriseni people's palpable fear of their frozen environment and cruel Jadwiga overlords into a haunt that withers defenses against the cold. Any creature that enters the affected area must succeed at a Will save or gain spell resistance equal to 11 + your caster level against any abjuration effect that provides resistance to or protection against cold damage or cold climates. This spell resistance cannot be voluntarily lowered. Once every 30 minutes as an immediate action, the haunt attempts a dispel check (1d20 + your caster level) against an active abjuration effect currently protecting a creature in the affected area against cold, even if it was active before the creature was haunted or it successfully bypassed the spell resistance imposed by the haunt. Against creatures with multiple layers of protection, these dispel checks start with the highest-level abjuration effects and work their way down the list. Each time the haunt attempts a dispel check, the spell's haunt-like manifestation occurs during that round.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "",
-    "spellArea": "one 5-ft. cube/level (S)",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You harness the Irriseni people's palpable fear of their frozen environment and cruel Jadwiga overlords into a haunt that withers defenses against the cold. Any creature that enters the affected area must succeed at a Will save or gain spell resistance equal to 11 + your caster level against any abjuration effect that provides resistance to or protection against cold damage or cold climates. This spell resistance cannot be voluntarily lowered. Once every 30 minutes as an immediate action, the haunt attempts a dispel check (1d20 + your caster level) against an active abjuration effect currently protecting a creature in the affected area against cold, even if it was active before the creature was haunted or it successfully bypassed the spell resistance imposed by the haunt. Against creatures with multiple layers of protection, these dispel checks start with the highest-level abjuration effects and work their way down the list. Each time the haunt attempts a dispel check, the spell's haunt-like manifestation occurs during that round.</p>"
   },
   "effects": [],
   "folder": null,

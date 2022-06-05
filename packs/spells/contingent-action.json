@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "x3aewf7cd2plwgjp",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,8 +29,11 @@
           "value": "one willing creature"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -140,85 +142,12 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>The target gains an extra action that becomes available when a condition that you dictate is met. At the time of casting, you dictate the condition, and the target specifies a readied action that occurs when triggered by this condition.  The condition needed to trigger the readied action must be clear, although it can be general. If a complicated or convoluted condition is prescribed, the whole combination might fail when triggered. For example, suppose the trigger and the action are stated as \"If the target is attacked while he is not holding a weapon, he draws a weapon.\" If the target has no weapon to draw when the trigger occurs, the action fails. If the trigger and the action are \"If an ally within 20 feet falls unconscious, the target moves to a space adjacent to that ally\" but the target is chained to a wall when the trigger occurs and can't reach the unconscious ally, the action fails.  The readied action must be a standard, a move, or a swift action, and it cannot be used to cast a spell or use a supernatural ability. This action counts as a readied action and doesn't count toward the number of actions the creature can take in a round. When the condition occurs, the target can decide not to use the readied action. Once the condition is triggered, the spell is discharged-whether or not the target uses the readied action or the action is successful.  This spell counts as a <i>contingency</i> spell for the purpose of having multiple contingent effects on a creature at the same time.</p>",
-    "spellDuration": "1 minute/level (D) or until discharged",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "minute"
-      }
-    },
-    "target": {
-      "value": "one willing creature"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>The target gains an extra action that becomes available when a condition that you dictate is met. At the time of casting, you dictate the condition, and the target specifies a readied action that occurs when triggered by this condition.  The condition needed to trigger the readied action must be clear, although it can be general. If a complicated or convoluted condition is prescribed, the whole combination might fail when triggered. For example, suppose the trigger and the action are stated as \"If the target is attacked while he is not holding a weapon, he draws a weapon.\" If the target has no weapon to draw when the trigger occurs, the action fails. If the trigger and the action are \"If an ally within 20 feet falls unconscious, the target moves to a space adjacent to that ally\" but the target is chained to a wall when the trigger occurs and can't reach the unconscious ally, the action fails.  The readied action must be a standard, a move, or a swift action, and it cannot be used to cast a spell or use a supernatural ability. This action counts as a readied action and doesn't count toward the number of actions the creature can take in a round. When the condition occurs, the target can decide not to use the readied action. Once the condition is triggered, the spell is discharged-whether or not the target uses the readied action or the action is successful.  This spell counts as a <i>contingency</i> spell for the purpose of having multiple contingent effects on a creature at the same time.</p>"
   },
   "effects": [],
   "folder": null,

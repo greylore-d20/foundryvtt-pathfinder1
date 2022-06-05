@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "4mqu7dxog7q2hryc",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one primary target plus one additional target/3 levels  (each of which must be within 15 ft. of the primary target)"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -60,19 +58,39 @@
           "parts": [
             [
               "(min(@cl, 10))d6",
-              "fire"
+              {
+                "values": [
+                  "fire"
+                ],
+                "custom": ""
+              }
             ],
             [
               "(min(floor(@cl / 2), 5))d6",
-              "fire"
+              {
+                "values": [
+                  "fire"
+                ],
+                "custom": ""
+              }
             ],
             [
               "(min(floor(@cl / 4), 5))d6",
-              "fire"
+              {
+                "values": [
+                  "fire"
+                ],
+                "custom": ""
+              }
             ],
             [
               "(min(floor(@cl / 8), 5))d6",
-              "fire"
+              {
+                "values": [
+                  "fire"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -86,7 +104,7 @@
           "bonus": {
             "formula": ""
           },
-          "label": null
+          "label": ""
         },
         "formula": "",
         "ability": {
@@ -98,8 +116,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -120,20 +138,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -149,106 +171,14 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
     "types": "fire",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
-    },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
+      "somatic": true
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>Keleshites brag that they stole this spell from genie-kind thousands of years ago while other civilizations struggled without fire.</p><p>This spell causes an arc of flame to leap from your fingers, burning a number of enemies nearby. It deals 1d6 points of fire damage per caster level (maximum 10d6). For every additional target the discharge arcs to, reduce the number of damage dice by half (rounded down). Therefore, at 9th level, your <i>burning arc</i> deals 9d6 points of fire damage to the primary target, then 4d6 points of fire damage to a secondary target, then 2d6 points of fire damage to an additional target.</p><p>Each target can attempt a Reflex saving throw for half damage. The Reflex DC to halve the damage of the secondary bolts is 2 lower than the DC to halve the damage of the primary bolt. You may choose secondary targets as you like, but they must all be within 15 feet of the primary target, and no target can be struck more than once. You can choose to affect fewer secondary targets than the maximum.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one primary target plus one additional target/3 levels  (each of which must be within 15 ft. of the primary target)"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [
-        [
-          "(min(@cl, 10))d6",
-          "fire"
-        ],
-        [
-          "(min(floor(@cl / 2), 5))d6",
-          "fire"
-        ],
-        [
-          "(min(floor(@cl / 4), 5))d6",
-          "fire"
-        ],
-        [
-          "(min(floor(@cl / 8), 5))d6",
-          "fire"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "label": ""
-    },
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>Keleshites brag that they stole this spell from genie-kind thousands of years ago while other civilizations struggled without fire.</p><p>This spell causes an arc of flame to leap from your fingers, burning a number of enemies nearby. It deals 1d6 points of fire damage per caster level (maximum 10d6). For every additional target the discharge arcs to, reduce the number of damage dice by half (rounded down). Therefore, at 9th level, your <i>burning arc</i> deals 9d6 points of fire damage to the primary target, then 4d6 points of fire damage to a secondary target, then 2d6 points of fire damage to an additional target.</p><p>Each target can attempt a Reflex saving throw for half damage. The Reflex DC to halve the damage of the secondary bolts is 2 lower than the DC to halve the damage of the primary bolt. You may choose secondary targets as you like, but they must all be within 15 feet of the primary target, and no target can be struck more than once. You can choose to affect fewer secondary targets than the maximum.</p>"
   },
   "effects": [],
   "folder": null,

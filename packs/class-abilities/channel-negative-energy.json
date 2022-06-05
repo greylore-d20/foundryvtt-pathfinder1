@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/skills/violet_17.jpg",
   "data": {
     "description": {
-      "value": "<p>When an antipaladin reaches 4th level, he gains the supernatural ability to channel negative energy like a&nbsp;<a href=\"https://www.aonprd.com/ClassDisplay.aspx?ItemName=Cleric\">cleric</a>. Using this ability consumes two uses of his touch of corruption ability. An antipaladin uses his level as his effective cleric level when channeling negative energy. This is a Charisma-based ability.</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p>When an antipaladin reaches 4th level, he gains the supernatural ability to channel negative energy like a&nbsp;<a href=\"https://www.aonprd.com/ClassDisplay.aspx?ItemName=Cleric\">cleric</a>. Using this ability consumes two uses of his touch of corruption ability. An antipaladin uses his level as his effective cleric level when channeling negative energy. This is a Charisma-based ability.</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "6booos92vygud2ra",
+        "_id": "dq523qld5wcr2868",
         "name": "Use",
         "img": "systems/pf1/icons/skills/violet_17.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "2",
           "per": "charges",
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "2"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "circle",
@@ -63,7 +61,12 @@
           "parts": [
             [
               "(ceil(@classes.antipaladin.level / 2))d6",
-              "Negative"
+              {
+                "values": [
+                  "negative"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -109,23 +112,21 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "charges",
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "2"
+      "per": "charges"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -134,16 +135,13 @@
     "tag": "classFeat_channelNegativeEnergy",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -158,84 +156,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "su",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": "inst"
-    },
-    "target": {
-      "value": "self; affects living OR undead"
-    },
-    "range": {
-      "value": "30",
-      "units": "ft",
-      "maxIncrements": "1",
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "circle",
-      "size": "30",
-      "overrideColor": true,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [
-        [
-          "(ceil(@classes.antipaladin.level / 2))d6",
-          "Negative"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "10+floor(@classes.antipaladin.level / 2) + @abilities.cha.mod",
-      "type": "will",
-      "description": "Will halves damage"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "su"
   },
   "effects": [],
   "folder": null,

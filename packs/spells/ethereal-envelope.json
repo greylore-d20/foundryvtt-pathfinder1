@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "diqbrg13cssuvoul",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "you"
         },
         "range": {
+          "value": null,
           "units": "personal",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -136,84 +138,17 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "teleportation",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
-      "verbal": false,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "empty crystal box",
-      "focus": "",
-      "gpValue": 0
+      "value": "empty crystal box"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You place yourself into a cataleptic meditative state and shunt yourself to the Ethereal Plane, where your body is cocooned within a folded ripple of misty space, with total cover from creatures on the Ethereal Plane. While inside your <i>ethereal envelope</i>, you are treated as being asleep for most purposes. You can choose an amount of time within the duration when casting this spell, and you automatically dismiss the spell when that time elapses. Your <i>ethereal envelope</i> counts as an object of your size with AC 10, hardness 5, and hit points equal to twice your level, and it is immune to bludgeoning damage. An attacker must be on the Ethereal Plane or have a way to see ethereal objects in order to detect your <i>ethereal envelope</i>. The envelope can also be broken open with a successful Strength check with a DC equal to 15 + your caster level (to a maximum DC of 30). If the <i>ethereal envelope</i> is destroyed, the spell ends immediately.  When the spell ends, you remain asleep without the protection of the envelope for 1 round. At the end of that round, you are shunted back to the Material Plane at the location where you cast the spell, and you are staggered for 1 round as you reorient yourself to the Material Plane. You can't use this spell to travel from your location on the Ethereal Plane. If the space you formerly occupied is now occupied by another creature or object, you are shunted to the nearest open space and take 1d10 points of damage.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You place yourself into a cataleptic meditative state and shunt yourself to the Ethereal Plane, where your body is cocooned within a folded ripple of misty space, with total cover from creatures on the Ethereal Plane. While inside your <i>ethereal envelope</i>, you are treated as being asleep for most purposes. You can choose an amount of time within the duration when casting this spell, and you automatically dismiss the spell when that time elapses. Your <i>ethereal envelope</i> counts as an object of your size with AC 10, hardness 5, and hit points equal to twice your level, and it is immune to bludgeoning damage. An attacker must be on the Ethereal Plane or have a way to see ethereal objects in order to detect your <i>ethereal envelope</i>. The envelope can also be broken open with a successful Strength check with a DC equal to 15 + your caster level (to a maximum DC of 30). If the <i>ethereal envelope</i> is destroyed, the spell ends immediately.  When the spell ends, you remain asleep without the protection of the envelope for 1 round. At the end of that round, you are shunted back to the Material Plane at the location where you cast the spell, and you are staggered for 1 round as you reorient yourself to the Material Plane. You can't use this spell to travel from your location on the Ethereal Plane. If the space you formerly occupied is now occupied by another creature or object, you are shunted to the nearest open space and take 1d10 points of damage.</p>"
   },
   "effects": [],
   "folder": null,

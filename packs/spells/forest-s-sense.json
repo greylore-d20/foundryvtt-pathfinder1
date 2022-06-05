@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "q8g096cu83dbuzo7",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -36,7 +31,9 @@
         "range": {
           "value": 1,
           "units": "mi",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -83,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -104,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -145,87 +146,13 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "div",
     "subschool": "scrying",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You can sense the location of a target creature within range if it is also within 10 feet of a living plant or fungus. You must be able to target the creature by tangible qualities such as its build, clothing texture, size, or tracks, but you need not have line of effect to your target. The fungus or plants near the target serve as a scrying sensor for this spell. Your senses of hearing, smell, and touch extend to all fungus and plants within 10 feet of the target, allowing you to gauge the size and shape of nearby objects and potentially to overhear conversations in which the target is currently participating. Your scent ability and tremorsense extend through this scrying sensor if you have them, but any other special senses you might have do not. For 1 day after casting this spell, you gain a +5 insight bonus on Survival checks to track creatures you sensed via the spell. You can dismiss this bonus on Survival checks.</p>",
-    "spellDuration": "1 minute/level (D); see text",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "value": 1,
-      "units": "mi",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You can sense the location of a target creature within range if it is also within 10 feet of a living plant or fungus. You must be able to target the creature by tangible qualities such as its build, clothing texture, size, or tracks, but you need not have line of effect to your target. The fungus or plants near the target serve as a scrying sensor for this spell. Your senses of hearing, smell, and touch extend to all fungus and plants within 10 feet of the target, allowing you to gauge the size and shape of nearby objects and potentially to overhear conversations in which the target is currently participating. Your scent ability and tremorsense extend through this scrying sensor if you have them, but any other special senses you might have do not. For 1 day after casting this spell, you gain a +5 insight bonus on Survival checks to track creatures you sensed via the spell. You can dismiss this bonus on Survival checks.</p>"
   },
   "effects": [],
   "folder": null,

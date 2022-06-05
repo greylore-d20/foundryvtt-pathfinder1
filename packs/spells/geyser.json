@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "g2tml55h2g5j5vqz",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "concentration + 1 round/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex partial (see below)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "spout of boiling water filling a 5 ft. square and spraying upward 10 ft./2 levels",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -147,83 +151,20 @@
       ]
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "creation",
     "types": "fire, water",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
       "material": true,
-      "focus": false,
       "divineFocus": 2
     },
-    "castTime": "",
     "materials": {
-      "value": "a piece of lava rock",
-      "focus": "",
-      "gpValue": 0
+      "value": "a piece of lava rock"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You cause a column of boiling water to spring forth from any horizontal surface, knocking over creatures directly over it and exposing nearby creatures to searing droplets as its spray falls back to the ground.</p><p>Any creature entering the <i>geyser</i>, or occupying the square it appears in, must make a Reflex saving throw to avoid being hurled into the air and then tossed to the ground. If the creature fails its saving throw, it takes 3d6 points of fire damage from the boiling water and also takes falling damage based upon the height of the <i>geyser</i> (e.g., if the <i>geyser</i> is 50 feet tall, the creature takes 5d6 falling damage), landing prone in a random square adjacent to the <i>geyser</i>. A successful saving throw halves the damage and negates the falling damage, and the creature is moved to the closest square adjacent to the <i>geyser</i> (Large-sized or larger creatures are moved enough so that they are not on top of the <i>geyser</i> but still adjacent to it).</p><p>This movement does not provoke attacks of opportunity and does not count toward the creature's normal movement.</p><p>In addition, the <i>geyser</i> sprays boiling water in a hemispherical emanation around its square. The radius of this emanation is equal to one-half the <i>geyser</i>'s height (e.g., a 50-foot <i>geyser</i> has a 25-foot-radius emanation). Any creature within this area, including yourself, takes 1d6 points of fire damage each round as droplets of boiling water cascade on them.</p><p>You can choose to make a smaller <i>geyser</i> than your level permits if an obstruction prevents it from reaching its full height, or if you simply want to create a spread of boiling rain that's smaller than what would be created by a full-height <i>geyser</i> spell.</p>",
-    "spellDuration": "concentration + 1 round/level",
-    "spellEffect": "spout of boiling water filling a 5 ft. square and spraying upward 10 ft./2 levels",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "long",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex partial (see below)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You cause a column of boiling water to spring forth from any horizontal surface, knocking over creatures directly over it and exposing nearby creatures to searing droplets as its spray falls back to the ground.</p><p>Any creature entering the <i>geyser</i>, or occupying the square it appears in, must make a Reflex saving throw to avoid being hurled into the air and then tossed to the ground. If the creature fails its saving throw, it takes 3d6 points of fire damage from the boiling water and also takes falling damage based upon the height of the <i>geyser</i> (e.g., if the <i>geyser</i> is 50 feet tall, the creature takes 5d6 falling damage), landing prone in a random square adjacent to the <i>geyser</i>. A successful saving throw halves the damage and negates the falling damage, and the creature is moved to the closest square adjacent to the <i>geyser</i> (Large-sized or larger creatures are moved enough so that they are not on top of the <i>geyser</i> but still adjacent to it).</p><p>This movement does not provoke attacks of opportunity and does not count toward the creature's normal movement.</p><p>In addition, the <i>geyser</i> sprays boiling water in a hemispherical emanation around its square. The radius of this emanation is equal to one-half the <i>geyser</i>'s height (e.g., a 50-foot <i>geyser</i> has a 25-foot-radius emanation). Any creature within this area, including yourself, takes 1d6 points of fire damage each round as droplets of boiling water cascade on them.</p><p>You can choose to make a smaller <i>geyser</i> than your level permits if an obstruction prevents it from reaching its full height, or if you simply want to create a spread of boiling rain that's smaller than what would be created by a full-height <i>geyser</i> spell.</p>"
   },
   "effects": [],
   "folder": null,

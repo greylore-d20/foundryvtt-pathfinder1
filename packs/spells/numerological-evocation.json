@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "x3ixilm3ez3zyuad",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,7 +29,11 @@
           "value": "see text"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "ref",
+          "description": "Reflex half"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -139,85 +142,12 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You can use the Path of Numbers to calculate the latent magical energies all around you and fire customized rays of elemental energy that damage nearby targets. Roll 1d6 per 2 caster levels you possess. This is your dice pool. You will use each die in the pool exactly once to customize <i>numerological evocation</i>. Choose a number of dice in the pool, and match their results to the values in the first column of the Eight Basic Energies table to determine the types of energy damage the spell deals. You can allocate any number of dice in this manner, provided you still have enough dice remaining for the subsequent steps.</p><p>Next, allocate one of the dice to represent the total number of target creatures you can affect, including the initial target. No matter how many creatures you are eligible to affect, no two affected creatures can be more than 15 feet apart. Next, allocate any number of the dice to represent the range of <i>numerological resistance</i>. The range of the spell is 10 x the sum of the allocated dice. Finally, add up the results of the dice remaining in the pool. This is the amount of damage that <i>numerological evocation</i> deals to the first creature hit. A successful Reflex save halves this damage. Secondary targets take 50% of the damage dealt to the first creature hit (rounded up), and successful Reflex saves negate this damage.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "see text"
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "range": {
-      "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You can use the Path of Numbers to calculate the latent magical energies all around you and fire customized rays of elemental energy that damage nearby targets. Roll 1d6 per 2 caster levels you possess. This is your dice pool. You will use each die in the pool exactly once to customize <i>numerological evocation</i>. Choose a number of dice in the pool, and match their results to the values in the first column of the Eight Basic Energies table to determine the types of energy damage the spell deals. You can allocate any number of dice in this manner, provided you still have enough dice remaining for the subsequent steps.</p><p>Next, allocate one of the dice to represent the total number of target creatures you can affect, including the initial target. No matter how many creatures you are eligible to affect, no two affected creatures can be more than 15 feet apart. Next, allocate any number of the dice to represent the range of <i>numerological resistance</i>. The range of the spell is 10 x the sum of the allocated dice. Finally, add up the results of the dice remaining in the pool. This is the amount of damage that <i>numerological evocation</i> deals to the first creature hit. A successful Reflex save halves this damage. Secondary targets take 50% of the damage dealt to the first creature hit (rounded up), and successful Reflex saves negate this damage.</p>"
   },
   "effects": [],
   "folder": null,

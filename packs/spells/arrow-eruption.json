@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "j0vbf1gvegxyxmz0",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "instantaneous",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "long",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -51,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -79,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "30-ft.-radius burst",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -138,81 +142,17 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "con",
     "subschool": "creation",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "arrow or crossbow bolt",
-      "focus": "",
-      "gpValue": 0
+      "value": "arrow or crossbow bolt"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You create exact duplicates of the arrow or crossbow bolt you used to kill a creature in the previous round and launch one at enemy creatures within a 30-foot radius of the corpse. You can target one creature per caster level (maximum 15) within range of the burst and must make a single attack roll and apply it to each arrow. These duplicate arrows possess all the intrinsic magical properties of the arrow that killed the original creature as well as those passed on to it by your bow. They also enjoy the full benefit of any bonuses or modifiers you applied to the attack from other magical items, feats, and class or racial features. However, this spell cannot reproduce any spells or other limited-use magical effects that you used to enhance that particular attack. This includes such effects as the <i>true strike</i> spell, as well as any area spell you might have placed on the arrow by means of the arcane archer's imbue arrow class feature.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "30-ft.-radius burst",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "long",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You create exact duplicates of the arrow or crossbow bolt you used to kill a creature in the previous round and launch one at enemy creatures within a 30-foot radius of the corpse. You can target one creature per caster level (maximum 15) within range of the burst and must make a single attack roll and apply it to each arrow. These duplicate arrows possess all the intrinsic magical properties of the arrow that killed the original creature as well as those passed on to it by your bow. They also enjoy the full benefit of any bonuses or modifiers you applied to the attack from other magical items, feats, and class or racial features. However, this spell cannot reproduce any spells or other limited-use magical effects that you used to enhance that particular attack. This includes such effects as the <i>true strike</i> spell, as well as any area spell you might have placed on the arrow by means of the arcane archer's imbue arrow class feature.</p>"
   },
   "effects": [],
   "folder": null,

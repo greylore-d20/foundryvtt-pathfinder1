@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "eyx5g4pml64w7042",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one creature"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -152,86 +154,13 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This spell harnesses the power of the seasons to protect the target and grant a number of bonuses. This spell has one of four different effects. The caster of the spell can select any one of the following four effects, but can change the effect as a standard action that reduces the total remaining duration by 1 hour.  <i>Spring</i>: The target is wrapped in light vines, culminating in a crown of bright, beautiful flowers. While the spell remains in effect, the target is immune to bleed effects and regains 1 hit point per round whenever below 0 hit points, as long as the target is still alive. This stabilizes the target. For each hit point restored in this way, the spell's total remaining duration is reduced by 1 hour.  <i>Summer</i>: The target is surrounded by tiny motes of light. While the spell remains in effect, the target's base speed increases 10 feet. The target may instead increase its base speed by 30 feet for 1 round by reducing the spell's total remaining duration by 1 hour.  <i>Fall</i>: A cloak of autumn leaves appears on the target. While the spell remains in effect, the target gains a +2 morale bonus on Fortitude saves. The target can decide to roll twice on any saving throw against disease or poison and take the higher result by reducing the spell's total remaining duration by 1 hour.  <i>Winter</i>: A flutter of snow and crisp air surrounds the target. While this spell remains in effect, the target automatically succeeds at Acrobatics skill checks made to avoid falling while moving across slick or narrow surfaces. The target can move freely through difficult terrain for 1 round by reducing the spell's remaining duration by 1 hour. Difficult terrain created by magic affects the target normally.</p>",
-    "spellDuration": "1 hour/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell harnesses the power of the seasons to protect the target and grant a number of bonuses. This spell has one of four different effects. The caster of the spell can select any one of the following four effects, but can change the effect as a standard action that reduces the total remaining duration by 1 hour.  <i>Spring</i>: The target is wrapped in light vines, culminating in a crown of bright, beautiful flowers. While the spell remains in effect, the target is immune to bleed effects and regains 1 hit point per round whenever below 0 hit points, as long as the target is still alive. This stabilizes the target. For each hit point restored in this way, the spell's total remaining duration is reduced by 1 hour.  <i>Summer</i>: The target is surrounded by tiny motes of light. While the spell remains in effect, the target's base speed increases 10 feet. The target may instead increase its base speed by 30 feet for 1 round by reducing the spell's total remaining duration by 1 hour.  <i>Fall</i>: A cloak of autumn leaves appears on the target. While the spell remains in effect, the target gains a +2 morale bonus on Fortitude saves. The target can decide to roll twice on any saving throw against disease or poison and take the higher result by reducing the spell's total remaining duration by 1 hour.  <i>Winter</i>: A flutter of snow and crisp air surrounds the target. While this spell remains in effect, the target automatically succeeds at Acrobatics skill checks made to avoid falling while moving across slick or narrow surfaces. The target can move freely through difficult terrain for 1 round by reducing the spell's remaining duration by 1 hour. Difficult terrain created by magic affects the target normally.</p>"
   },
   "effects": [],
   "folder": null,

@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "icons/skills/wounds/blood-spurt-spray-red.webp",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "hppwxi4g0e4jtlx8",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/skills/wounds/blood-spurt-spray-red.webp",
         "description": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "round"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -42,21 +37,21 @@
         },
         "uses": {
           "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
+          "autoDeductChargesCost": "1 + @sl",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -76,16 +71,16 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
-          "damage": "",
+          "attack": null,
+          "damage": null,
           "damageMult": 1,
           "critRange": 20,
           "critMult": 2
         },
         "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "dc": 0,
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,16 +101,15 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -153,123 +147,18 @@
       "bloodline": []
     },
     "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "nec",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "your blood",
-      "focus": "",
-      "gpValue": 0
+      "value": "your blood"
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">When you cast this spell, you cut yourself and swear an oath of retribution on your own blood. You decide how much damage you want to take from this attack, up to 25 points. This damage cannot be healed for as long as the spell is in effect. Anytime you perform an attack, save, or check that is directly related to the oath and brings you closer to the fulfillment of that oath, you gain a morale bonus to that roll equal to the number of hit points of damage you took from the oath divided by 5. The GM is the final arbiter over whether or not an action qualifies for this bonus. When you fulfill the oath (or choose to forsake it), the spell ends, and the lost hit points can be healed as normal.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">For example, a notorious bandit leader killed Stigur&rsquo;s brother, and Stigur wants to avenge his brother&rsquo;s death. Stigur casts this spell and sacrifices 20 hit points. Thereafter Stigur gains a +4 morale bonus on attack rolls against the bandit leader&rsquo;s minions, saves against spells from said minions, Intimidate checks to coerce an informant to tell him where the bandit leader is camped, and so on.</span></p>",
-    "spellDuration": "special (see text)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 1,
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "value": null,
-      "units": "personal",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "conditionals": [],
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Bloodsworn Retribution",
-    "size": "med"
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">When you cast this spell, you cut yourself and swear an oath of retribution on your own blood. You decide how much damage you want to take from this attack, up to 25 points. This damage cannot be healed for as long as the spell is in effect. Anytime you perform an attack, save, or check that is directly related to the oath and brings you closer to the fulfillment of that oath, you gain a morale bonus to that roll equal to the number of hit points of damage you took from the oath divided by 5. The GM is the final arbiter over whether or not an action qualifies for this bonus. When you fulfill the oath (or choose to forsake it), the spell ends, and the lost hit points can be healed as normal.</span></p>\n<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">For example, a notorious bandit leader killed Stigur&rsquo;s brother, and Stigur wants to avenge his brother&rsquo;s death. Stigur casts this spell and sacrifices 20 hit points. Thereafter Stigur gains a +4 morale bonus on attack rolls against the bandit leader&rsquo;s minions, saves against spells from said minions, Intimidate checks to coerce an informant to tell him where the bandit leader is camped, and so on.</span></p>"
   },
   "effects": [],
   "folder": null,

@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "bh4lrri5d9i36xzw",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "creature touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -82,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -164,86 +166,13 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
       "divineFocus": 1
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell protects the target's soul by briefly enveloping the target in an ethereal vault. The target gains a +4 bonus on saving throws against spells and effects that would trap or redirect its soul (such as <i>magic jar</i>, <i>soul bind</i>, and <i>trap the</i> soul) and effects that would transform the target into an undead creature. The target is granted a save to negate such effects even if one is not normally allowed. If it's cast on a living creature that then dies, the target's body and spirit are protected by the spell for its duration. If it's cast on a corpse within 1 round of death, the target's body and soul are both protected. Otherwise, only the body receives the protection.  Any spellcaster that worships Abadar may learn and cast <i>soul vault</i> as a 4th level spell, if it isn't normally on her class spell list. <i>Soul vault</i> can be made permanent with the <i>permanency</i> spell at a cost of 7,500 gp and a minimum caster level of 11th.</p>",
-    "spellDuration": "10 minutes/level",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell protects the target's soul by briefly enveloping the target in an ethereal vault. The target gains a +4 bonus on saving throws against spells and effects that would trap or redirect its soul (such as <i>magic jar</i>, <i>soul bind</i>, and <i>trap the</i> soul) and effects that would transform the target into an undead creature. The target is granted a save to negate such effects even if one is not normally allowed. If it's cast on a living creature that then dies, the target's body and spirit are protected by the spell for its duration. If it's cast on a corpse within 1 round of death, the target's body and soul are both protected. Otherwise, only the body receives the protection.  Any spellcaster that worships Abadar may learn and cast <i>soul vault</i> as a 4th level spell, if it isn't normally on her class spell list. <i>Soul vault</i> can be made permanent with the <i>permanency</i> spell at a cost of 7,500 gp and a minimum caster level of 11th.</p>"
   },
   "effects": [],
   "folder": null,

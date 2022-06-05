@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ziniwg5c648qk66m",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,8 +29,11 @@
           "value": "one creature or object"
         },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": "see text"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -144,85 +146,18 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "evo",
-    "subschool": "",
     "types": "sonic",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a small rune carved from stone",
-      "focus": "",
-      "gpValue": 0
+      "value": "a small rune carved from stone"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This spell charges magical runes to an explosive degree. If cast on a creature with magical runes on its body, such as a rune giant or a runescarred creature (<i>Pathfinder Campaign Setting</i>: <i>Lost Cities of Golarion</i> 60), it deals 1d6 points of sonic damage per caster level (maximum 20d6) to the target and stuns the target for 1 round. When the spell is cast in this way, it must overcome the target's spell resistance. A successful Will save halves the damage and negates the stun effect.  The spell can also be cast on other magical runes, such as those from <i>arcane mark</i> or <i>explosive runes</i>. In this case, the resulting explosion deals 1d8 points of sonic damage per  2 caster levels (maximum 10d8) to all creatures within a 5-foot radius. Creatures in the area that succeed at a Reflex save take half damage. This spell doesn't destroy runes; targeted runes continue to function normally. Mundane runes, such as ones in writing or runic tattoos, cannot be affected by this spell.</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one creature or object"
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell charges magical runes to an explosive degree. If cast on a creature with magical runes on its body, such as a rune giant or a runescarred creature (<i>Pathfinder Campaign Setting</i>: <i>Lost Cities of Golarion</i> 60), it deals 1d6 points of sonic damage per caster level (maximum 20d6) to the target and stuns the target for 1 round. When the spell is cast in this way, it must overcome the target's spell resistance. A successful Will save halves the damage and negates the stun effect.  The spell can also be cast on other magical runes, such as those from <i>arcane mark</i> or <i>explosive runes</i>. In this case, the resulting explosion deals 1d8 points of sonic damage per  2 caster levels (maximum 10d8) to all creatures within a 5-foot radius. Creatures in the area that succeed at a Reflex save take half damage. This spell doesn't destroy runes; targeted runes continue to function normally. Mundane runes, such as ones in writing or runic tattoos, cannot be affected by this spell.</p>"
   },
   "effects": [],
   "folder": null,

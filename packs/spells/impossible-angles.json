@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "ch9eijv8awjd18ie",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "medium",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "contiguous area up to one 5-foot cube/caster level (S)",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -146,83 +150,17 @@
       "bloodline": []
     },
     "level": 5,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "ill",
     "subschool": "figment",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
-      "value": "a melted prism",
-      "focus": "",
-      "gpValue": 0
+      "value": "a melted prism"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You cause the surrounding area to appear to distort. The angles and corners of the area subtly twist and contort, creating unnatural and impossible shapes. Any creature entering the area must succeed at a Will save or become disoriented. Disoriented characters treat the area as difficult terrain and are sickened. In addition, whenever a disoriented creature uses an action to move (including taking a 5-foot step if it can do so in difficult terrain), roll 1d8 to see which direction it moves, in a similar manner to determining where a splash weapon lands on a miss (<i>Pathfinder RPG Core Rulebook</i> 202). On a 1, the creature moves in its intended direction, with 2 through 8 rotating around the creature's starting square in a clockwise direction. Only the creature's first  5 feet of movement each round are affected in this way-it can move normally for any remaining movement, either from the same action or from later actions, as the creature acclimatizes to the distortion. An affected creature can attempt a new Will save each round to end the disoriented effect. A creature that leaves the area and re-enters must attempt the saving throw again, even if it succeeded at its initial save.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "",
-    "spellArea": "contiguous area up to one 5-foot cube/caster level (S)",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "medium",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You cause the surrounding area to appear to distort. The angles and corners of the area subtly twist and contort, creating unnatural and impossible shapes. Any creature entering the area must succeed at a Will save or become disoriented. Disoriented characters treat the area as difficult terrain and are sickened. In addition, whenever a disoriented creature uses an action to move (including taking a 5-foot step if it can do so in difficult terrain), roll 1d8 to see which direction it moves, in a similar manner to determining where a splash weapon lands on a miss (<i>Pathfinder RPG Core Rulebook</i> 202). On a 1, the creature moves in its intended direction, with 2 through 8 rotating around the creature's starting square in a clockwise direction. Only the creature's first  5 feet of movement each round are affected in this way-it can move normally for any remaining movement, either from the same action or from later actions, as the creature acclimatizes to the distortion. An affected creature can attempt a new Will save each round to end the disoriented effect. A creature that leaves the area and re-enters must attempt the saving throw again, even if it succeeded at its initial save.</p>"
   },
   "effects": [],
   "folder": null,

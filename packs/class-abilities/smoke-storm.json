@@ -5,14 +5,12 @@
   "img": "systems/pf1/icons/spells/fireball-red-3.jpg",
   "data": {
     "description": {
-      "value": "<p><strong>Element&nbsp;</strong>fire;&nbsp;<strong>Type&nbsp;</strong>utility (Sp);&nbsp;<strong>Level&nbsp;</strong>3;&nbsp;<strong>Burn&nbsp;</strong>0<br><strong>Saving Throw&nbsp;</strong>Fortitude negates; see text;&nbsp;<strong>SR&nbsp;</strong>no</p>\n<p>You transform a source of open flame within 120 feet into a cloud of choking smoke, filling a 20-foot-radius spread and affecting vision like a smokestick. All creatures that begin their turns inside the area become sickened as long as they remain in the smoke and for 1d4+1 rounds thereafter (Fortitude negates).</p>",
-      "chat": "",
-      "unidentified": ""
+      "value": "<p><strong>Element&nbsp;</strong>fire;&nbsp;<strong>Type&nbsp;</strong>utility (Sp);&nbsp;<strong>Level&nbsp;</strong>3;&nbsp;<strong>Burn&nbsp;</strong>0<br><strong>Saving Throw&nbsp;</strong>Fortitude negates; see text;&nbsp;<strong>SR&nbsp;</strong>no</p>\n<p>You transform a source of open flame within 120 feet into a cloud of choking smoke, filling a 20-foot-radius spread and affecting vision like a smokestick. All creatures that begin their turns inside the area become sickened as long as they remain in the smoke and for 1d4+1 rounds thereafter (Fortitude negates).</p>"
     },
     "tags": [],
     "actions": [
       {
-        "_id": "xsdp4eitvtri7dsb",
+        "_id": "rglcw0h3z729bolr",
         "name": "Use",
         "img": "systems/pf1/icons/spells/fireball-red-3.jpg",
         "description": "",
@@ -41,11 +39,11 @@
           "minUnits": ""
         },
         "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
           "per": null,
           "value": 0,
-          "maxFormula": "",
-          "autoDeductCharges": true,
-          "autoDeductChargesCost": "1"
+          "maxFormula": ""
         },
         "measureTemplate": {
           "type": "",
@@ -104,23 +102,18 @@
         "attackType": "weapon",
         "nonlethal": false,
         "usesAmmo": false,
-        "conditionals": []
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
-    "changeFlags": {
-      "loseDexToAC": false,
-      "noEncumbrance": false,
-      "mediumArmorFullSpeed": false,
-      "heavyArmorFullSpeed": false
-    },
     "contextNotes": [],
     "links": {
       "children": [],
@@ -129,16 +122,13 @@
     "tag": "classFeat_smokeStorm",
     "useCustomTag": true,
     "armorProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "weaponProf": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "languages": {
-      "value": [],
-      "custom": ""
+      "value": []
     },
     "flags": {
       "boolean": {},
@@ -153,79 +143,7 @@
         ]
       ]
     },
-    "showInQuickbar": false,
-    "nonlethal": false,
-    "abilityType": "sp",
-    "crOffset": "",
-    "disabled": false,
-    "activation": {
-      "cost": 1,
-      "type": ""
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 1,
-        "type": ""
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "",
-      "size": "",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "save",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": "",
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fort negates; see text"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "size": "med"
+    "abilityType": "sp"
   },
   "effects": [],
   "folder": null,

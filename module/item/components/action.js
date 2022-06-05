@@ -1,13 +1,16 @@
 import { calculateRange, convertDistance } from "../../lib.js";
 import { getHighestChanges } from "../../actor/apply-changes.js";
 import { RollPF } from "../../roll.js";
-import { PF1 } from "../../config.js";
+import { keepUpdateArray } from "../../lib.js";
 
 export class ItemAction {
   constructor(data, parent) {
     this.data = data;
     this.parent = parent;
     this.apps = {};
+    this.sheet = null;
+
+    this.prepareData();
   }
 
   /**
@@ -37,21 +40,10 @@ export class ItemAction {
     return [];
   }
 
-  static get defaultConditional() {
+  static get defaultDamageType() {
     return {
-      default: false,
-      name: "",
-      modifiers: [],
-    };
-  }
-
-  static get defaultConditionalModifier() {
-    return {
-      formula: "",
-      target: "",
-      subTarget: "",
-      type: "",
-      critical: "",
+      values: [],
+      custom: "",
     };
   }
 
@@ -320,8 +312,6 @@ export class ItemAction {
   }
 
   prepareData() {
-    const data = this.data;
-
     this.labels = {};
 
     // Parse formulaic attacks
@@ -329,87 +319,25 @@ export class ItemAction {
       this.parseFormulaicAttacks({ formula: getProperty(this.data, "data.formulaicAttacks.count.formula") });
     }
 
-    // Activation method
-    if (Object.prototype.hasOwnProperty.call(data, "activation")) {
-      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
-        ? PF1.abilityActivationTypes_unchained
-        : PF1.abilityActivationTypes;
-      const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy")
-        ? PF1.abilityActivationTypesPlurals_unchained
-        : PF1.abilityActivationTypesPlurals;
-
-      // Ability Activation Label
-      const activation = game.settings.get("pf1", "unchainedActionEconomy")
-        ? data.unchainedAction.activation || {}
-        : data.activation || {};
-      if (activation && activation.cost > 1 && activationTypesPlural[activation.type] != null) {
-        this.labels.activation = [activation.cost.toString(), activationTypesPlural[activation.type]].filterJoin(" ");
-      } else if (activation) {
-        this.labels.activation = [
-          ["minute", "hour", "action"].includes(activation.type) && activation.cost ? activation.cost.toString() : "",
-          activationTypes[activation.type],
-        ].filterJoin(" ");
-      }
-
-      // Target Label
-      const target = data.target || {};
-      if (["none", "touch", "personal"].includes(target.units)) target.value = null;
-      if (["none", "personal"].includes(target.type)) {
-        target.value = null;
-        target.units = null;
-      }
-      this.labels.target = [target.value, PF1.distanceUnits[target.units], PF1.targetTypes[target.type]].filterJoin(
-        " "
-      );
-      if (this.labels.target) this.labels.target = `${game.i18n.localize("PF1.Target")}: ${this.labels.target}`;
-
-      // Range Label
-      const range = duplicate(data.range || {});
-      if (!["ft", "mi", "spec"].includes(range.units)) {
-        range.value = null;
-        range.long = null;
-      } else if (typeof range.value === "string" && range.value.length) {
-        try {
-          range.value = RollPF.safeTotal(range.value, this.parent.getRollData()).toString();
-        } catch (err) {
-          console.error(err);
-        }
-      }
-      this.labels.range = [
-        range.value,
-        range.long ? `/ ${range.long}` : null,
-        PF1.distanceUnits[range.units],
-      ].filterJoin(" ");
-      if (this.labels.range.length > 0)
-        this.labels.range = [`${game.i18n.localize("PF1.Range")}:`, this.labels.range].join(" ");
-
-      // Duration Label
-      const dur = duplicate(data.duration || {});
-      if (["inst", "perm", "spec", "seeText"].includes(dur.units)) dur.value = game.i18n.localize("PF1.Duration") + ":";
-      else if (typeof dur.value === "string" && this.parentActor) {
-        dur.value = RollPF.safeRoll(dur.value || "0", this.parent.getRollData(), [
-          this.name,
-          "Duration",
-        ]).total.toString();
-      }
-      this.labels.duration = [dur.value, PF1.timePeriods[dur.units]].filterJoin(" ");
+    // Update conditionals
+    if (this.data.conditionals instanceof Array) {
+      this.conditionals = this._prepareConditionals(this.data.conditionals);
     }
+  }
 
-    // Actions
-    if (Object.prototype.hasOwnProperty.call(data, "actionType")) {
-      // Damage
-      const dam = data.damage || {};
-      if (dam.parts && dam.parts instanceof Array) {
-        this.labels.damage = dam.parts
-          .map((d) => d[0])
-          .join(" + ")
-          .replace(/\+ -/g, "- ");
-        this.labels.damageTypes = dam.parts.map((d) => d[1]).join(", ");
-      }
-
-      // Add attack parts
-      if (!data.attack) data.attack = { parts: [] };
+  _prepareConditionals(conditionals) {
+    const prior = this.conditionals;
+    const collection = new Collection();
+    for (const o of conditionals) {
+      let conditional = null;
+      if (prior && prior.has(o._id)) {
+        conditional = prior.get(o._id);
+        conditional.data = o;
+        conditional.prepareData();
+      } else conditional = new game.pf1.documentComponents.ItemConditional(o, this);
+      collection.set(o._id || conditional.data._id, conditional);
     }
+    return collection;
   }
 
   async delete() {
@@ -431,67 +359,30 @@ export class ItemAction {
   async update(updateData, options = {}) {
     const idx = this.item.data.data.actions.indexOf(this.data);
     const prevData = deepClone(this.data);
-    const newUpdateData = flattenObject(mergeObject(prevData, updateData));
-    if (!newUpdateData["name"]) newUpdateData["name"] = this.name;
+    const newUpdateData = flattenObject(mergeObject(prevData, expandObject(updateData)));
 
-    // Remove non-array conditionals data
-    {
-      const subData = Object.keys(newUpdateData).filter((e) => e.startsWith("conditionals."));
-      if (subData.length > 0) subData.forEach((s) => delete newUpdateData[s]);
-    }
+    // Make sure this action has a name, even if it's removed
+    if (!newUpdateData["name"]) newUpdateData["name"] = this.name;
 
     // Make sure stuff remains an array
     {
-      const keepArray = [
-        { key: "attackParts" },
-        { key: "damage.parts" },
-        { key: "damage.critParts" },
-        { key: "damage.nonCritParts" },
-        { key: "attackNotes" },
-        { key: "effectNotes" },
+      const keepPaths = [
+        "attackParts",
+        "damage.parts",
+        "damage.critParts",
+        "damage.nonCritParts",
+        "attackNotes",
+        "effectNotes",
+        "conditionals",
       ];
 
-      for (const kArr of keepArray) {
-        if (Object.keys(newUpdateData).filter((e) => e.startsWith(`${kArr.key}.`)).length > 0) {
-          const subData = Object.entries(newUpdateData).filter((e) => e[0].startsWith(`${kArr.key}.`));
-          const arr = duplicate(getProperty(this.data, kArr.key) || []);
-          const keySeparatorCount = (kArr.key.match(/\./g) || []).length;
-          subData.forEach((entry) => {
-            const subKey = entry[0].split(".").slice(keySeparatorCount + 1);
-            const i = subKey[0];
-            const subKey2 = subKey.slice(1).join(".");
-            if (!arr[i]) arr[i] = {};
-
-            // Single entry array
-            if (!subKey2) {
-              arr[i] = entry[1];
-            }
-            // Remove property
-            else if (subKey[subKey.length - 1].startsWith("-=")) {
-              const obj = flattenObject(arr[i]);
-              subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
-              const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
-              for (const k of deleteKeys) {
-                if (Object.prototype.hasOwnProperty.call(obj, k)) {
-                  delete obj[k];
-                }
-              }
-              arr[i] = expandObject(obj);
-            }
-            // Add or change property
-            else {
-              arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
-            }
-
-            delete newUpdateData[entry[0]];
-          });
-
-          newUpdateData[kArr.key] = arr;
-        }
+      for (const path of keepPaths) {
+        keepUpdateArray(this.data, newUpdateData, path);
       }
     }
 
     await this.item.update({ [`data.actions.${idx}`]: expandObject(newUpdateData) });
+    await this.sheet?.render();
   }
 
   // -----------------------------------------------------------------------
@@ -954,7 +845,7 @@ export class ItemAction {
     if (["attack", "damage"].includes(target)) {
       // Add specific attacks
       if (this.hasAttack) {
-        result["attack.0"] = `${game.i18n.localize("PF1.Attack")} 1`;
+        result["attack_0"] = `${game.i18n.localize("PF1.Attack")} 1`;
       } else {
         delete result["rapidShotDamage"];
       }
@@ -1014,5 +905,15 @@ export class ItemAction {
       }
     }
     return result;
+  }
+
+  /**
+   * @param {object} options - See ItemPF#useAttack.
+   * @returns {Promise<void>}
+   */
+  async use(options = {}) {
+    options.actionID = this.id;
+
+    return this.item.useAttack(options);
   }
 }

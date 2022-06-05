@@ -4,35 +4,36 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "wwwwt1c78rdc80zt",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
           "value": "1 minute/level",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -50,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "other",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -78,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -100,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "magical sensor",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -133,81 +138,18 @@
       "bloodline": []
     },
     "level": 3,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "div",
     "subschool": "scrying",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
-      "value": "",
-      "focus": "a mirror",
-      "gpValue": 0
+      "focus": "a mirror"
     },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>This spell lets you look into a mirror near you and see an image that is reflected in another specific mirror (chosen by you) or an individual reflected in any other mirror. This works like a <i>scrying</i> spell, except you can only view creatures on the same plane as you. Each time you cast the spell, you can choose to see one of three types of reflections in your mirror.  <i>Known Mirror</i>: The current reflection in another mirror with which you are familiar.  <i>Known Person</i>: The current reflection of a person you know well, assuming that person is near a mirror.  <i>Known Place</i>: The current reflection of a place you know well, assuming the location is being reflected in a mirror.  You receive only visual information through this ability. You can choose to transmit information both ways so that a person reflected in the remote mirror can view whatever appears in the mirror you are using.  For example, Urion Petresky knows that Queen Elvanna keeps a mirror in a hall near her throne room. He can look through his own handheld mirror and see into this hall, even if the queen is not there. Alternatively, he can attempt to find the queen (wherever she is) by looking into his mirror; if, at that moment, the queen is near any mirror at all, he can see her. He may instead cast the spell and try to see into her throne room, hoping that someone has brought a mirror there. If any of these conditions fails, Urion sees nothing but his own reflection.  This spell works with intentionally fabricated mirrors only; it is not effective with other reflective surfaces, such as still pools or polished metal shields. <b>Effect</b>s that block <i>scrying</i> block this spell.</p>",
-    "spellDuration": "1 minute/level",
-    "spellEffect": "magical sensor",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
-      }
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "range": {
-      "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell lets you look into a mirror near you and see an image that is reflected in another specific mirror (chosen by you) or an individual reflected in any other mirror. This works like a <i>scrying</i> spell, except you can only view creatures on the same plane as you. Each time you cast the spell, you can choose to see one of three types of reflections in your mirror.  <i>Known Mirror</i>: The current reflection in another mirror with which you are familiar.  <i>Known Person</i>: The current reflection of a person you know well, assuming that person is near a mirror.  <i>Known Place</i>: The current reflection of a place you know well, assuming the location is being reflected in a mirror.  You receive only visual information through this ability. You can choose to transmit information both ways so that a person reflected in the remote mirror can view whatever appears in the mirror you are using.  For example, Urion Petresky knows that Queen Elvanna keeps a mirror in a hall near her throne room. He can look through his own handheld mirror and see into this hall, even if the queen is not there. Alternatively, he can attempt to find the queen (wherever she is) by looking into his mirror; if, at that moment, the queen is near any mirror at all, he can see her. He may instead cast the spell and try to see into her throne room, hoping that someone has brought a mirror there. If any of these conditions fails, Urion sees nothing but his own reflection.  This spell works with intentionally fabricated mirrors only; it is not effective with other reflective surfaces, such as still pools or polished metal shields. <b>Effect</b>s that block <i>scrying</i> block this spell.</p>"
   },
   "effects": [],
   "folder": null,

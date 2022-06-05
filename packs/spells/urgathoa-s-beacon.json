@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "7sll0j8rjzmfohg4",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -30,10 +25,15 @@
           "value": "1 hour/level (D)",
           "units": ""
         },
-        "target": {},
+        "target": {
+          "value": ""
+        },
         "range": {
+          "value": null,
           "units": "close",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -80,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -101,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "one 5-ft. cube/level (S)",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -138,83 +142,15 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "nec",
     "subschool": "haunted",
     "types": "emotion, evil, fear, mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
       "divineFocus": 1
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>You shroud an area in Urgathoa's unclean influence, rendering those who pass through it and fail their Will saving throws more enticing to ravenous undead. When an affected creature comes within 60 feet of an undead creature, the spell immediately draws the undead creature's attention, granting it a +4 bonus  on Perception checks to notice the affected creature and on saving throws to resist spells that hide or disguise the affected creature (such as <i>hide from</i> undead). Once the undead creature notices the affected creature, it feels compelled to kill and devour the affected creature, and gains a +1 profane bonus on attack rolls made against the affected creature and a +1 profane bonus on saving throws against the affected creature's spells and special abilities. The undead also ignores any concealment less than total concealment that an affected creature has. Each time the spell draws an undead creature's attention to an affected creature, the spell's haunt-like manifestation occurs during that round.</p>",
-    "spellDuration": "1 hour/level (D)",
-    "spellEffect": "",
-    "spellArea": "one 5-ft. cube/level (S)",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "range": {
-      "units": "close",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>You shroud an area in Urgathoa's unclean influence, rendering those who pass through it and fail their Will saving throws more enticing to ravenous undead. When an affected creature comes within 60 feet of an undead creature, the spell immediately draws the undead creature's attention, granting it a +4 bonus  on Perception checks to notice the affected creature and on saving throws to resist spells that hide or disguise the affected creature (such as <i>hide from</i> undead). Once the undead creature notices the affected creature, it feels compelled to kill and devour the affected creature, and gains a +1 profane bonus on attack rolls made against the affected creature and a +1 profane bonus on saving throws against the affected creature's spells and special abilities. The undead also ignores any concealment less than total concealment that an affected creature has. Each time the spell draws an undead creature's attention to an affected creature, the spell's haunt-like manifestation occurs during that round.</p>"
   },
   "effects": [],
   "folder": null,

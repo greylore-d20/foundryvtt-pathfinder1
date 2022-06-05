@@ -4,17 +4,12 @@
   "type": "spell",
   "img": "icons/magic/defensive/armor-shield-barrier-steel.webp",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "fgb6hj1w0ixnpv33",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/defensive/armor-shield-barrier-steel.webp",
         "description": "",
         "activation": {
           "cost": 1,
@@ -22,8 +17,8 @@
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 1,
+            "type": ""
           }
         },
         "duration": {
@@ -42,21 +37,21 @@
         },
         "uses": {
           "autoDeductCharges": true,
-          "autoDeductChargesCost": "1",
-          "per": "",
+          "autoDeductChargesCost": "1 + @sl",
+          "per": null,
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
+          "type": "circle",
+          "size": "40",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -76,16 +71,16 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
-          "damage": "",
+          "attack": null,
+          "damage": null,
           "damageMult": 1,
           "critRange": 20,
           "critMult": 2
         },
         "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "dc": 0,
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -106,16 +101,15 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "40-ft.-radius sphere; see text (S)",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
-    "uses": {
-      "per": null,
-      "value": 0,
-      "maxFormula": "",
-      "autoDeductCharges": true,
-      "autoDeductChargesCost": "1"
-    },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -157,123 +151,18 @@
       "bloodline": []
     },
     "level": 4,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "abj",
-    "subschool": "",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": true,
-      "divineFocus": 0
+      "focus": true
     },
-    "castTime": "",
     "materials": {
-      "value": "",
-      "focus": "a jagged scrap of metal",
-      "gpValue": 0
+      "focus": "a jagged scrap of metal"
     },
     "spellbook": "",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You ward all creatures and objects in the area from ranged weapons. The spell&rsquo;s area of effect is often a sphere, although you can shape it to be smaller than the maximum area or to exclude certain adjacent areas or objects (for example, if you are warding a specific structure, or if you are roughly warding the front lines of a battlefield). This spell&rsquo;s area is also up to 40 feet in height, so flying creatures benefit as long as they are in this area of effect.<br /><br />Creatures and objects in the warded area gain damage reduction 20/magic against ranged weapons. Once the spell has prevented a total of 20 points of damage per caster level (maximum 200 points) to creatures and objects in the area, it is discharged.</span></p>",
-    "spellDuration": "1 hour/level or until discharged",
-    "spellEffect": "",
-    "spellArea": "40-ft.-radius sphere; see text (S)",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 1,
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "duration": {
-      "value": null,
-      "units": ""
-    },
-    "target": {
-      "value": ""
-    },
-    "range": {
-      "value": null,
-      "units": "medium",
-      "maxIncrements": 1,
-      "minValue": null,
-      "minUnits": ""
-    },
-    "measureTemplate": {
-      "type": "circle",
-      "size": "40",
-      "overrideColor": false,
-      "customColor": "",
-      "overrideTexture": false,
-      "customTexture": ""
-    },
-    "attackName": "",
-    "actionType": "",
-    "attackBonus": "",
-    "critConfirmBonus": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": ""
-      },
-      "bonus": {
-        "formula": ""
-      },
-      "label": null
-    },
-    "formula": "",
-    "ability": {
-      "attack": null,
-      "damage": null,
-      "damageMult": 1,
-      "critRange": 20,
-      "critMult": 2
-    },
-    "save": {
-      "dc": 0,
-      "type": "",
-      "description": ""
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "soundEffect": "",
-    "powerAttack": {
-      "multiplier": "",
-      "damageBonus": 2,
-      "critMultiplier": 1
-    },
-    "conditionals": [],
-    "spellPoints": {
-      "cost": "1 + @sl"
-    },
-    "clCheck": false,
-    "identifiedName": "Absorbing Barrier",
-    "size": "med"
+    "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You ward all creatures and objects in the area from ranged weapons. The spell&rsquo;s area of effect is often a sphere, although you can shape it to be smaller than the maximum area or to exclude certain adjacent areas or objects (for example, if you are warding a specific structure, or if you are roughly warding the front lines of a battlefield). This spell&rsquo;s area is also up to 40 feet in height, so flying creatures benefit as long as they are in this area of effect.<br /><br />Creatures and objects in the warded area gain damage reduction 20/magic against ranged weapons. Once the spell has prevented a total of 20 points of damage per caster level (maximum 200 points) to creatures and objects in the area, it is discharged.</span></p>"
   },
   "effects": [],
   "folder": null,

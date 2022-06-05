@@ -4,15 +4,10 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "cq4yj9vpk3maj56d",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
@@ -34,7 +29,11 @@
           "value": "one living creature"
         },
         "range": {
-          "maxIncrements": 1
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -81,7 +80,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "Will negates (harmless, object)"
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -102,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -147,85 +150,13 @@
       "bloodline": []
     },
     "level": 6,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "div",
-    "subschool": "",
     "types": "mind-affecting",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
-      "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": false,
-      "focus": false,
-      "divineFocus": 0
+      "somatic": true
     },
-    "castTime": "",
-    "materials": {
-      "value": "",
-      "focus": "",
-      "gpValue": 0
-    },
-    "spellbook": "primary",
-    "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
-      "autoDeductCharges": true,
-      "spontaneousPrepared": true
-    },
-    "atWill": false,
-    "sr": true,
-    "shortDescription": "<p>This spell functions as <i>dream</i>, but rather than sending a message to a sleeping target, you can instead read the target's thoughts. The target must be asleep for you to perform a <i>dream</i> scan, though if the target isn't asleep, you can wait in a trance until your target falls asleep. Once the target is asleep, you can concentrate in order to read its surface thoughts as if using <i>detect thoughts</i>. You can continue concentrating for up to 1 minute per caster level.  Instead of reading surface thoughts, you can choose to scan the target's <i>dream</i>s and subconscious mind for the answers to questions. For every minute you spend concentrating, you can obtain the answer to one question,  though the answers might be brief, cryptic, or repetitive. The target is entitled to a new Will save to end the <i>dream</i> scan each time you ask it a question. Otherwise, the creature can attempt a Bluff check with a DC equal to 11 + your Sense Motive modifier. If it fails its Bluff check, you gain the information you desire. If it succeeds at its check, you gain no information. If it succeeds at its check by 5 or more, you misinterpret the target's <i>dream</i>s- you draw a false conclusion of the target's choice and believe that wrong answer to be true.  Unlike with <i>dream</i>, you can't cast this spell on another creature to have it serve as your messenger.</p>",
-    "spellDuration": "see text",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
-      }
-    },
-    "target": {
-      "value": "one living creature"
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "range": {
-      "maxIncrements": 1
-    },
-    "size": "med",
-    "spellPoints": {
-      "cost": "1 + @sl"
-    }
+    "shortDescription": "<p>This spell functions as <i>dream</i>, but rather than sending a message to a sleeping target, you can instead read the target's thoughts. The target must be asleep for you to perform a <i>dream</i> scan, though if the target isn't asleep, you can wait in a trance until your target falls asleep. Once the target is asleep, you can concentrate in order to read its surface thoughts as if using <i>detect thoughts</i>. You can continue concentrating for up to 1 minute per caster level.  Instead of reading surface thoughts, you can choose to scan the target's <i>dream</i>s and subconscious mind for the answers to questions. For every minute you spend concentrating, you can obtain the answer to one question,  though the answers might be brief, cryptic, or repetitive. The target is entitled to a new Will save to end the <i>dream</i> scan each time you ask it a question. Otherwise, the creature can attempt a Bluff check with a DC equal to 11 + your Sense Motive modifier. If it fails its Bluff check, you gain the information you desire. If it succeeds at its check, you gain no information. If it succeeds at its check by 5 or more, you misinterpret the target's <i>dream</i>s- you draw a false conclusion of the target's choice and believe that wrong answer to be true.  Unlike with <i>dream</i>, you can't cast this spell on another creature to have it serve as your messenger.</p>"
   },
   "effects": [],
   "folder": null,

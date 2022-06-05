@@ -4,26 +4,21 @@
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
-    "description": {
-      "value": "",
-      "chat": "",
-      "unidentified": ""
-    },
     "tags": [],
     "actions": [
       {
-        "_id": "u39zpdhepiwcxi7r",
+        "_id": "611w1ug42t8p3qly",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "activation": {
-          "cost": 1,
-          "type": "standard"
+          "cost": 10,
+          "type": "minute"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
-            "type": "action"
+            "cost": 10,
+            "type": "minute"
           }
         },
         "duration": {
@@ -34,8 +29,11 @@
           "value": "trap touched"
         },
         "range": {
+          "value": null,
           "units": "touch",
-          "maxIncrements": 1
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
         },
         "uses": {
           "autoDeductCharges": true,
@@ -53,7 +51,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -81,8 +79,8 @@
         },
         "save": {
           "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless, object)"
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -103,20 +101,24 @@
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
-        "conditionals": []
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
     ],
     "uses": {
-      "per": "",
-      "value": 0,
-      "maxFormula": ""
+      "per": ""
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
     "flags": {
-      "boolean": {},
-      "dictionary": {}
+      "boolean": [],
+      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {
@@ -144,85 +146,24 @@
       "bloodline": []
     },
     "level": 2,
-    "clOffset": 0,
-    "slOffset": 0,
     "school": "ill",
     "subschool": "glamer",
-    "types": "",
-    "nonlethal": false,
     "components": {
-      "value": "",
       "verbal": true,
       "somatic": true,
-      "thought": false,
-      "emotion": false,
-      "material": true,
-      "focus": false,
-      "divineFocus": 0
+      "material": true
     },
-    "castTime": "",
     "materials": {
       "value": "a square of black silk worth 50 gp",
-      "focus": "",
       "gpValue": 50
     },
     "spellbook": "",
     "preparation": {
-      "preparedAmount": 0,
-      "maxAmount": 0,
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "atWill": false,
     "sr": false,
-    "shortDescription": "<p>You shroud a single trap with a powerful illusion to make it more difficult to locate. Spells like <i>detect magic</i> can't locate any magic aura from either the target trap or from <i>undetectable trap</i>. Furthermore, a character under the effect of the <i>find traps</i> spell doesn't receive an automatic chance to locate the target trap when she comes within 10 feet of it, and the bonus on Perception checks from <i>find traps</i> doesn't apply to attempts to notice the target trap. Add 1/2 your caster level to the DC for any creature without the trapfinding class ability to notice the target trap with Perception checks.  A ranger with the ranger traps class feature (<i>Pathfinder RPG Ultimate Magic</i> 64) can cast this spell on a ranger trap he creates as part of the same action he uses to prepare a ranger trap. This doesn't reduce the spell's casting time if such a ranger casts this spell on an ordinary trap, even one that he created himself using Craft (traps).</p>",
-    "spellDuration": "1 day/level (D)",
-    "spellEffect": "",
-    "spellArea": "",
-    "showInQuickbar": false,
-    "domain": false,
-    "slotCost": 1,
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
-      }
-    },
-    "target": {
-      "value": "trap touched"
-    },
-    "range": {
-      "units": "touch",
-      "maxIncrements": 1
-    },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
-    "attackNotes": [],
-    "conditionals": [],
-    "spellPoints": {
-      "cost": ""
-    },
-    "size": "med"
+    "shortDescription": "<p>You shroud a single trap with a powerful illusion to make it more difficult to locate. Spells like <i>detect magic</i> can't locate any magic aura from either the target trap or from <i>undetectable trap</i>. Furthermore, a character under the effect of the <i>find traps</i> spell doesn't receive an automatic chance to locate the target trap when she comes within 10 feet of it, and the bonus on Perception checks from <i>find traps</i> doesn't apply to attempts to notice the target trap. Add 1/2 your caster level to the DC for any creature without the trapfinding class ability to notice the target trap with Perception checks.  A ranger with the ranger traps class feature (<i>Pathfinder RPG Ultimate Magic</i> 64) can cast this spell on a ranger trap he creates as part of the same action he uses to prepare a ranger trap. This doesn't reduce the spell's casting time if such a ranger casts this spell on an ordinary trap, even one that he created himself using Craft (traps).</p>"
   },
   "effects": [],
   "folder": null,

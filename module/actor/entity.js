@@ -547,7 +547,7 @@ export class ActorPF extends ActorBasePF {
     // Set spellbook label
     book.label = `PF1.SpellBook${bookKey.capitalize()}`;
     if (book.class) {
-      if (book.class === "_hd") book.label = "PF1.PF1.HitDie";
+      if (book.class === "_hd") book.label = "PF1.SpellBookSpelllike";
       else book.label = this.data.data.classes?.[book.class]?.name;
     }
     if (book.name) book.label = book.name;

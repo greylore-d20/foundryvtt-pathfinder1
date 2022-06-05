@@ -971,6 +971,16 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   newHTML += "/></div>";
   html.find('.tab[data-tab="appearance"] > *:nth-child(3)').after(newHTML);
 
+  // Add custom vision checkbox
+  newHTML = `<div class="form-group" title="${game.i18n.localize(
+    "PF1.CustomVisionRules.Description"
+  )}"><label>${game.i18n.localize(
+    "PF1.CustomVisionRules.Label"
+  )}</label><input type="checkbox" name="flags.pf1.customVisionRules" data-dtype="Boolean"`;
+  if (getProperty(object, "flags.pf1.customVisionRules")) newHTML += " checked";
+  newHTML += "/></div>";
+  html.find(`.tab[data-tab="vision"]`).append(newHTML);
+
   // Add disable low-light vision checkbox
   addLowLightVisionToTokenConfig(app, html);
 });

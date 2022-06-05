@@ -105,6 +105,9 @@ export class TokenPF extends Token {
   }
 
   updateVisionSource(...args) {
+    // Don't apply vision with custom vision rules flag set
+    if (this.data.flags?.pf1?.customVisionRules) return super.updateVisionSource(...args);
+
     // Set bright vision from actor senses
     if (["character", "npc"].includes(this.actor?.type)) {
       const { dv, bs, bse, ts } = this.actor.data.data.traits.senses;

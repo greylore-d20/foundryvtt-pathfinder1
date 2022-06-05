@@ -288,9 +288,7 @@ export const migrateSceneData = async function (scene) {
       t.actorData = {};
     } else if (!t.actorLink) {
       const mergedData = mergeObject(game.actors.get(t.actorId).toObject(), t.actorData, { inplace: false });
-      const actor = await game.actors.documentClass.create(mergedData, { temporary: true });
-      const actorData = actor.toObject();
-      const update = migrateActorData(actorData, token);
+      const update = migrateActorData(mergedData, token);
       ["items", "effects"].forEach((embeddedName) => {
         if (!update[embeddedName]?.length) return;
         const updates = new Map(update[embeddedName].map((u) => [u._id, u]));

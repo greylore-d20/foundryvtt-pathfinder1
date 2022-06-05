@@ -61,9 +61,12 @@
           "parts": [
             [
               "(max(1, floor(@classes.oracle.level / 2)))d6",
-              [
-                "cold"
-              ]
+              {
+                "values": [
+                  "cold"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -122,6 +125,8 @@
       "per": "day",
       "maxFormula": "1 + floor(@classes.oracle.level / 5)"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
     "contextNotes": [],
     "links": {

@@ -61,9 +61,12 @@
           "parts": [
             [
               "(floor((@classes.warpriest.level + 1) / 3))d6",
-              [
-                "positive"
-              ]
+              {
+                "values": [
+                  "positive"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -122,6 +125,8 @@
       "per": "day",
       "maxFormula": "floor(@classes.warpriest.level / 2) + @abilities.wis.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
     "contextNotes": [],
     "links": {

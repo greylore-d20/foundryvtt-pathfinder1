@@ -61,9 +61,12 @@
           "parts": [
             [
               "1d6 + (max(1, floor(@classes.inquisitor.level / 2)))",
-              [
-                "fire"
-              ]
+              {
+                "values": [
+                  "fire"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -122,6 +125,8 @@
       "per": "day",
       "maxFormula": "3 + @abilities.wis.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
     "contextNotes": [],
     "links": {

@@ -61,9 +61,12 @@
           "parts": [
             [
               "1d4 + (floor(@classes.wizard.level / 2))",
-              [
-                "force"
-              ]
+              {
+                "values": [
+                  "force"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -122,6 +125,8 @@
       "per": "day",
       "maxFormula": "3 + @abilities.int.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
     "contextNotes": [],
     "links": {

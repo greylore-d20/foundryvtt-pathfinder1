@@ -61,9 +61,12 @@
           "parts": [
             [
               "(@classes.psychic.level >= 15 ? 3 : ((@classes.psychic.level >= 8 && @classes.psychic.level < 15) ? 2 : 1)d6",
-              [
-                "untyped"
-              ]
+              {
+                "values": [
+                  "untyped"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -122,6 +125,8 @@
       "per": "day",
       "maxFormula": "3 + @abilities.cha.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
     "contextNotes": [],
     "links": {

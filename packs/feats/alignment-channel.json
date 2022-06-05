@@ -68,9 +68,12 @@
           "parts": [
             [
               "(ceil(@classes.cleric.level / 2))d6",
-              [
-                "positive"
-              ]
+              {
+                "values": [
+                  "positive"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -129,6 +132,8 @@
       "per": "day",
       "maxFormula": "3 + @abilities.cha.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
     "contextNotes": [],
     "links": {

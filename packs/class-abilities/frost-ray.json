@@ -61,9 +61,12 @@
           "parts": [
             [
               "1d6 + floor(@classes.sorcerer.level / 2)",
-              [
-                "cold"
-              ]
+              {
+                "values": [
+                  "cold"
+                ],
+                "custom": ""
+              }
             ]
           ],
           "critParts": [],
@@ -122,6 +125,8 @@
       "per": "day",
       "maxFormula": "3 + @abilities.cha.mod"
     },
+    "attackNotes": [],
+    "effectNotes": [],
     "changes": [],
     "contextNotes": [],
     "links": {

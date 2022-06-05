@@ -382,7 +382,6 @@ export class ItemAction {
     }
 
     await this.item.update({ [`data.actions.${idx}`]: expandObject(newUpdateData) });
-    console.log(this.sheet);
     await this.sheet?.render();
   }
 

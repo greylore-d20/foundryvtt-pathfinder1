@@ -166,19 +166,8 @@
   }
 
   .damage-type-visual {
-    height: 24px;
-    display: grid;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    grid-template-columns: repeat(auto-fit, 16px);
-    grid-template-rows: 16px;
-    grid-gap: 1px;
-    justify-content: center;
-    align-content: center;
-    vertical-align: middle;
-    line-height: 22px;
-    white-space: nowrap;
-    overflow: hidden;
+    border: unset;
+    background: none;
 
     &.empty {
       display: flex;
@@ -190,11 +179,9 @@
       word-break: keep-all;
     }
 
-    .damage-type {
-      .icon {
-        width: 16px;
-        height: 16px;
-      }
+    &:hover:not(.disabled) {
+      cursor: initial;
+      box-shadow: unset;
     }
   }
 }

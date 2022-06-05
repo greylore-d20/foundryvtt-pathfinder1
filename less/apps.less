@@ -1908,6 +1908,12 @@
         font-weight: bold;
         font-size: 18pt;
       }
+
+      .icon {
+        font-size: 64px;
+        text-shadow: 0 0 4px black;
+        background: none;
+      }
     }
 
     .damage-modifiers {
@@ -2192,9 +2198,6 @@
       flex: 0 0 100%;
       padding: 2px;
 
-      .damage-type {
-        flex: 0 0 80px;
-      }
       input {
         flex: 3;
       }
@@ -2246,13 +2249,11 @@
   }
 }
 
-.pf1.sheet .damage-type-visual {
+.damage-type-visual {
   height: 26px;
-  display: grid;
+  display: flex;
+  flex-flow: row nowrap;
   flex-direction: row;
-  grid-template-columns: repeat(auto-fit, 20px);
-  grid-template-rows: 20px;
-  grid-gap: 0.1rem;
   justify-content: center;
   align-content: center;
   border: 1px solid @colorTan;
@@ -2279,9 +2280,19 @@
   }
 
   .damage-type {
-    .icon {
-      width: 20px;
-      height: 20px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    img.icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    i.icon {
+      background: none;
+      font-size: 16px;
+      text-shadow: 0 0 1px black;
     }
   }
 }

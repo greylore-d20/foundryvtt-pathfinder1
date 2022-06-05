@@ -7,7 +7,9 @@ export class DamageType extends BaseRegistryObject {
   /** @inheritdoc */
   static get _baseData() {
     return foundry.utils.mergeObject(super._baseData, {
-      img: "icons/svg/explosion.svg",
+      img: "",
+      icon: "",
+      color: "black",
       category: "misc",
     });
   }
@@ -26,79 +28,90 @@ export class DamageTypes extends BaseRegistry {
     {
       _id: "untyped",
       name: "PF1.DamageTypeUntyped",
-      img: "icons/magic/control/silhouette-grow-shrink-tan.webp",
+      icon: "ra ra-uncertainty",
       category: "misc",
     },
     {
       _id: "slashing",
       name: "PF1.DamageTypeSlashing",
-      img: "icons/skills/melee/strike-sword-steel-yellow.webp",
+      icon: "ra ra-sword",
+      color: "yellow",
       category: "physical",
     },
     {
       _id: "piercing",
       name: "PF1.DamageTypePiercing",
-      img: "icons/skills/ranged/arrow-flying-gray-brown.webp",
+      icon: "ra ra-spear-head",
+      color: "blue",
       category: "physical",
     },
     {
       _id: "bludgeoning",
       name: "PF1.DamageTypeBludgeoning",
-      img: "icons/skills/melee/strike-hammer-destructive-blue.webp",
+      icon: "ra ra-large-hammer",
+      color: "red",
       category: "physical",
     },
     {
       _id: "fire",
       name: "PF1.DamageTypeFire",
-      img: "icons/magic/fire/projectile-fireball-smoke-strong-orange.webp",
+      icon: "ra ra-fire",
+      color: "orange",
       category: "energy",
     },
     {
       _id: "cold",
       name: "PF1.DamageTypeCold",
-      img: "icons/magic/water/barrier-ice-crystal-wall-faceted.webp",
+      icon: "ra ra-frost-emblem",
+      color: "aqua",
       category: "energy",
     },
     {
       _id: "electric",
       name: "PF1.DamageTypeElectricity",
-      img: "icons/magic/lightning/bolt-strike-blue.webp",
+      icon: "ra ra-lightning-bolt",
+      color: "yellow",
       category: "energy",
     },
     {
       _id: "acid",
       name: "PF1.DamageTypeAcid",
-      img: "icons/magic/acid/dissolve-drip-droplet-smoke.webp",
+      icon: "ra ra-acid",
+      color: "lime",
       category: "energy",
     },
     {
       _id: "sonic",
       name: "PF1.DamageTypeSonic",
-      img: "icons/magic/sonic/explosion-impact-shock-wave.webp",
+      icon: "ra ra-horn-call",
+      color: "#00aedb",
       category: "energy",
     },
     {
       _id: "force",
       name: "PF1.DamageTypeForce",
-      img: "icons/magic/lightning/orb-ball-purple.webp",
+      icon: "ra ra-doubled",
+      color: "#a200ff",
       category: "misc",
     },
     {
       _id: "negative",
       name: "PF1.DamageTypeNegative",
-      img: "icons/magic/unholy/beam-impact-purple.webp",
+      icon: "ra ra-skull",
+      color: "#765898",
       category: "misc",
     },
     {
       _id: "positive",
       name: "PF1.DamageTypePositive",
-      img: "icons/magic/light/beam-explosion-orange.webp",
+      icon: "ra ra-sunbeams",
+      color: "#f8ed62",
       category: "misc",
     },
     {
       _id: "precision",
       name: "PF1.Precision",
-      img: "icons/skills/targeting/crosshair-ringed-gray.webp",
+      icon: "ra ra-archery-target",
       flags: {
         modifier: true,
       },
@@ -106,7 +119,7 @@ export class DamageTypes extends BaseRegistry {
     {
       _id: "nonlethal",
       name: "PF1.Nonlethal",
-      img: "icons/skills/melee/unarmed-punch-fist.webp",
+      icon: "ra ra-hand",
       flags: {
         modifier: true,
       },

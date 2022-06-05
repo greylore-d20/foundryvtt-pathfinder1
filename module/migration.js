@@ -36,7 +36,7 @@ export const migrateWorld = async function () {
   console.log("Migrating Actor documents");
   for (const a of game.actors.contents) {
     try {
-      const updateData = migrateActorData(a.data._source);
+      const updateData = migrateActorData(a.toObject());
       if (!foundry.utils.isObjectEmpty(updateData)) {
         console.log(`Migrating Actor document ${a.name}`);
         await a.update(updateData, { enforceTypes: false });
@@ -50,7 +50,7 @@ export const migrateWorld = async function () {
   console.log("Migrating Item documents.");
   for (const i of game.items.contents) {
     try {
-      const updateData = migrateItemData(i.data._source);
+      const updateData = migrateItemData(i.toObject());
       if (!foundry.utils.isObjectEmpty(updateData)) {
         console.log(`Migrating Item document ${i.name}`);
         await i.update(updateData, { enforceTypes: false });
@@ -64,7 +64,7 @@ export const migrateWorld = async function () {
   console.log("Migrating Scene documents.");
   for (const s of game.scenes.contents) {
     try {
-      const updateData = await migrateSceneData(s.data._source);
+      const updateData = await migrateSceneData(s.toObject());
       if (!foundry.utils.isObjectEmpty(updateData)) {
         console.log(`Migrating Scene document ${s.name}`);
         await s.update(updateData, { enforceTypes: false });
@@ -125,9 +125,9 @@ export const migrateCompendium = async function (pack) {
   for (const ent of content) {
     try {
       let updateData = null;
-      if (doc === "Item") updateData = migrateItemData(ent.data._source);
-      else if (doc === "Actor") updateData = migrateActorData(ent.data._source);
-      else if (doc === "Scene") updateData = await migrateSceneData(ent.data._source);
+      if (doc === "Item") updateData = migrateItemData(ent.toObject());
+      else if (doc === "Actor") updateData = migrateActorData(ent.toObject());
+      else if (doc === "Scene") updateData = await migrateSceneData(ent.toObject());
       expandObject(updateData);
       updateData["_id"] = ent.id;
       await ent.update(updateData);
@@ -287,9 +287,9 @@ export const migrateSceneData = async function (scene) {
       t.actorId = null;
       t.actorData = {};
     } else if (!t.actorLink) {
-      const mergedData = mergeObject(game.actors.get(t.actorId).data._source, t.actorData, { inplace: false });
+      const mergedData = mergeObject(game.actors.get(t.actorId).toObject(), t.actorData, { inplace: false });
       const actor = await game.actors.documentClass.create(mergedData, { temporary: true });
-      const actorData = actor.data._source;
+      const actorData = actor.toObject();
       const update = migrateActorData(actorData, token);
       ["items", "effects"].forEach((embeddedName) => {
         if (!update[embeddedName]?.length) return;

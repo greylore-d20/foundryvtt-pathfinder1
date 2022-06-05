@@ -1337,8 +1337,8 @@ const _migrateActorHP = function (ent, updateData, linked) {
   // Migrate HP, Wounds and Vigor values from absolutes to relatives, which is a change in 0.80.16
   for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
     if (getProperty(ent, `${k}.offset`) == null) {
-      const max = getProperty(ent, `${k}.max`);
-      const value = getProperty(ent, `${k}.value`);
+      const max = getProperty(ent, `${k}.max`) ?? 0;
+      const value = getProperty(ent, `${k}.value`) ?? 0;
       updateData[`${k}.offset`] = value - max;
     }
   }

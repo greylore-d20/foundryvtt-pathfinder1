@@ -1236,7 +1236,7 @@ const _migrateBuggedValues = function (ent, updateData, linked) {
   for (const key of convertToInt) {
     const oldValue = getProperty(ent, key),
       value = parseInt(oldValue ?? 0);
-    if (oldValue != value) {
+    if (oldValue !== value) {
       updateData[key] = value;
     }
   }

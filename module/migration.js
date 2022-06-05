@@ -1234,7 +1234,11 @@ const _migrateBuggedValues = function (ent, updateData, linked) {
     "data.altCurrency.cp",
   ];
   for (const key of convertToInt) {
-    updateData[key] = parseInt(getProperty(ent, key)) || 0;
+    const oldValue = getProperty(ent, key),
+      value = parseInt(oldValue ?? 0);
+    if (oldValue != value) {
+      updateData[key] = value;
+    }
   }
 };
 

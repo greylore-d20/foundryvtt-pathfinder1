@@ -7,7 +7,7 @@
     "tags": [],
     "actions": [
       {
-        "_id": "6roubw2os4r2v1e1",
+        "_id": "g53idl2534pvhyp8",
         "name": "Use",
         "img": "systems/pf1/icons/spells/beam-red-2.jpg",
         "description": "",
@@ -57,10 +57,11 @@
         "damage": {
           "parts": [
             [
-              "((min(15, @cl))d6",
+              "(min(15, @cl))d6",
               {
                 "values": [
-                  "fire"
+                  "fire",
+                  "untyped"
                 ],
                 "custom": ""
               }
@@ -115,6 +116,9 @@
         "enh": {
           "override": false,
           "value": 0
+        },
+        "attack": {
+          "parts": []
         }
       }
     ],
@@ -125,10 +129,6 @@
     "effectNotes": [],
     "links": {
       "children": []
-    },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
     },
     "scriptCalls": [],
     "learnedAt": {

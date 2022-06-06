@@ -8,7 +8,109 @@
       "value": "<p>At 10th level, you can teleport up to 20 feet as a move action. You can increase this distance by expending another use of your blessing—each use spent grants an additional 20 feet. You must have line of sight to your destination. This teleportation doesn’t provoke attacks of opportunity. You can bring other willing creatures with you, but each such creature requires expending one additional use of your blessing, regardless of the distance traveled. (For example, transporting yourself 40 feet costs 2 uses of your blessing, and transporting an additional person this distance costs 1 more use.)</p>"
     },
     "tags": [],
-    "actions": [],
+    "actions": [
+      {
+        "_id": "2ps3phr9mjr7vll5",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/wind-grasp-eerie-2.jpg",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "move"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "value": "20",
+          "units": "ft",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
+      }
+    ],
     "uses": {
       "per": ""
     },
@@ -30,10 +132,6 @@
     },
     "languages": {
       "value": []
-    },
-    "flags": {
-      "boolean": {},
-      "dictionary": {}
     },
     "scriptCalls": [],
     "featType": "classFeat",

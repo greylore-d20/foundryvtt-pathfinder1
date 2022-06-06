@@ -8,7 +8,109 @@
       "value": "<p>At 19th level, the vampire hunter’s ability to hunt his&nbsp;<a href=\"https://www.d20pfsrd.com/bestiary/rules-for-monsters/creature-types#TOC-Undead\">undead</a>&nbsp;quarry improves. He can now select a quarry as a&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Free-Actions\">free action</a>, and can now&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Take-20\">take 20</a>&nbsp;while using&nbsp;<a href=\"https://www.d20pfsrd.com/skills/survival\">Survival</a>&nbsp;to track his quarry while moving at normal speed, without penalty. His&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Insight-Bonus\">insight bonus</a>&nbsp;to attack his quarry increases to +4. If his quarry is killed or dismissed, he can select a new one after 10 minutes have passed.</p>"
     },
     "tags": [],
-    "actions": [],
+    "actions": [
+      {
+        "_id": "3twtuydsb159bqvr",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/arrow_13.jpg",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "free"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
+      }
+    ],
     "uses": {
       "per": ""
     },
@@ -30,10 +132,6 @@
     },
     "languages": {
       "value": []
-    },
-    "flags": {
-      "boolean": {},
-      "dictionary": {}
     },
     "scriptCalls": [],
     "featType": "classFeat",

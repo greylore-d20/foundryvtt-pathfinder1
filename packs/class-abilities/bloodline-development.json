@@ -8,7 +8,109 @@
       "value": "<p>The arcanist selects one&nbsp;<a href=\"https://www.aonprd.com/SorcererBloodlines.aspx\">sorcerer bloodline</a>&nbsp;upon taking this exploit. The arcanist gains that bloodline’s 1st-level bloodline power as though she were a 1st-level sorcerer. The arcanist must select an ordinary bloodline with this ability, not one altered by an archetype. As a swift action, the arcanist can expend 1 point from her arcane reservoir to bolster her latent nature, allowing her to treat her arcanist level as her sorcerer level for the purpose of using this ability, which lasts for a number of rounds equal to her Charisma modifier (minimum 1).<br><br>She does not gain any other abilities when using this exploit in this way, such as bloodline arcana or those bloodline powers gained at 3rd level or higher. If this ability is used to gain an arcane bond and a bonded item is selected, the arcanist can only use that item to cast spells of a level equal to the level of spell that could be cast by her equivalent sorcerer level (limiting her to 1st level spells unless she spends a point from her arcane reservoir).<br><br>If the arcanist already has a bloodline (or gains one later), taking this exploit instead allows her arcanist levels to stack with the levels of the class that granted her access to the bloodline when determining the powers and abilities of her bloodline.</p>"
     },
     "tags": [],
-    "actions": [],
+    "actions": [
+      {
+        "_id": "1np8dqjmjhf0enhi",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@abilities.cha.mod",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": 0,
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "attackType": "weapon",
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
+      }
+    ],
     "uses": {
       "per": ""
     },
@@ -30,10 +132,6 @@
     },
     "languages": {
       "value": []
-    },
-    "flags": {
-      "boolean": {},
-      "dictionary": {}
     },
     "scriptCalls": [],
     "featType": "classFeat",

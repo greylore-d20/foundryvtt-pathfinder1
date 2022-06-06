@@ -450,8 +450,14 @@ const _migrateActorSpellbookSlots = function (ent, updateData, linked) {
         if (!linked) continue; // skip with unlinked tokens
         if (typeof max === "number" && max > 0) {
           updateData[baseKey] = max.toString();
+        }
+      } else {
+        const newBase = parseInt(base);
+        if (newBase > 0) {
+          if (newBase !== base) updateData[baseKey] = newBase;
         } else {
-          updateData[baseKey] = "";
+          // Remove pointless default value not present in new actors either
+          updateData[`data.attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.-=base`] = null;
         }
       }
     }
@@ -1340,7 +1346,10 @@ const _migrateSpellbookUsage = function (ent, updateData, linked) {
     }, []);
 
   for (const bookKey of usedSpellbooks) {
-    updateData[`data.attributes.spells.spellbooks.${bookKey}.inUse`] = true;
+    const path = `data.attributes.spells.spellbooks.${bookKey}.inUse`;
+    if (getProperty(ent, path) !== true) {
+      updateData[path] = true;
+    }
   }
 };
 

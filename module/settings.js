@@ -445,22 +445,6 @@ export const registerSystemSettings = function () {
   });
 
   /**
-   * Attack chat card template
-   */
-  game.settings.register("pf1", "attackChatCardTemplate", {
-    name: "SETTINGS.pf1AttackChatCardTemplateN",
-    hint: "SETTINGS.pf1AttackChatCardTemplateH",
-    scope: "world",
-    config: true,
-    default: "systems/pf1/templates/chat/attack-roll.hbs",
-    type: String,
-    choices: {
-      "systems/pf1/templates/chat/attack-roll.hbs": "PF1.Primary",
-      "systems/pf1/templates/chat/attack-roll2.hbs": "PF1.Alternate",
-    },
-  });
-
-  /**
    * Unchained action economy
    */
   game.settings.register("pf1", "unchainedActionEconomy", {
@@ -636,14 +620,7 @@ export const registerClientSettings = function () {
 export const migrateSystemSettings = async function () {
   if (!game.user.isGM) return;
 
-  // Migrate attack template
-  {
-    const template = game.settings.get("pf1", "attackChatCardTemplate");
-    if (template.endsWith(".html")) {
-      const newTemplate = template.slice(0, template.length - "html".length) + "hbs";
-      await game.settings.set("pf1", "attackChatCardTemplate", newTemplate);
-    }
-  }
+  // Currently empty, since the last option was removed (2022-06-06)
 };
 
 export const getSkipActionPrompt = function () {

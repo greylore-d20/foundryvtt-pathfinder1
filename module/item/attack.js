@@ -1059,7 +1059,7 @@ export const postMessage = async function (shared) {
   });
 
   // Create message
-  const template = game.settings.get("pf1", "attackChatCardTemplate");
+  const template = "systems/pf1/templates/chat/attack-roll.hbs";
   shared.templateData.damageTypes = game.pf1.damageTypes.toRecord();
 
   // Show chat message

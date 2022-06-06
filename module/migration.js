@@ -351,20 +351,19 @@ const _migrateCharacterLevel = function (ent, updateData, linked) {
 };
 
 const _migrateActorEncumbrance = function (ent, updateData, linked) {
-  const arr = [
-    "attributes.encumbrance.level",
-    "attributes.encumbrance.levels.light",
-    "attributes.encumbrance.levels.medium",
-    "attributes.encumbrance.levels.heavy",
-    "attributes.encumbrance.levels.carry",
-    "attributes.encumbrance.levels.drag",
-    "attributes.encumbrance.carriedWeight",
-  ];
-  for (const k of arr) {
-    const value = getProperty(ent.data, k);
-    if (value == null) {
-      if (!linked) continue; // skip with unlinked tokens
-      updateData["data." + k] = 0;
+  const arr = {
+    "attributes.encumbrance.level": "attributes.encumbrance.-=level",
+    "attributes.encumbrance.levels.light": "attributes.encumbrance.levels.-=light",
+    "attributes.encumbrance.levels.medium": "attributes.encumbrance.levels.-=medium",
+    "attributes.encumbrance.levels.heavy": "attributes.encumbrance.levels.-=heavy",
+    "attributes.encumbrance.levels.carry": "attributes.encumbrance.levels.-=carry",
+    "attributes.encumbrance.levels.drag": "attributes.encumbrance.levels.-=drag",
+    "attributes.encumbrance.carriedWeight": "attributes.encumbrance.-=carriedWeight",
+  };
+  for (const [key, updateKey] of Object.entries(arr)) {
+    const value = getProperty(ent.data, key);
+    if (value !== undefined) {
+      updateData["data." + updateKey] = null;
     }
   }
 };
@@ -423,10 +422,11 @@ const _migrateActorSpeed = function (ent, updateData, linked) {
     if (typeof value === "string") value = parseInt(value);
     if (typeof value === "number") {
       updateData[`data.${k}.base`] = value;
-      updateData[`data.${k}.total`] = value;
     } else if (value === null) {
       updateData[`data.${k}.base`] = 0;
-      updateData[`data.${k}.total`] = null;
+    } else if (value?.total !== undefined) {
+      // Delete derived data
+      updateData[`data.${k}.-=total`] = null;
     }
 
     // Add maneuverability
@@ -471,7 +471,7 @@ const _migrateActorBaseStats = function (ent, updateData) {
   for (const k of keys) {
     if (k === "data.attributes.hp.base" && !(getProperty(ent, "items") || []).filter((o) => o.type === "class").length)
       continue;
-    if (getProperty(ent, k) != null) {
+    if (getProperty(ent, k) !== undefined) {
       const kList = k.split(".");
       kList[kList.length - 1] = `-=${kList[kList.length - 1]}`;
       updateData[kList.join(".")] = null;
@@ -1118,10 +1118,13 @@ const _migrateActorCR = function (ent, updateData, linked) {
   if (!linked && cr === undefined) return; // skip with unlinked tokens
   if (typeof cr === "number") {
     updateData["data.details.cr.base"] = cr;
-    updateData["data.details.cr.total"] = cr;
   } else if (cr == null) {
     updateData["data.details.cr.base"] = 1;
-    updateData["data.details.cr.total"] = 1;
+  }
+
+  // Remove derived data if present
+  if (getProperty(ent, "data.details.cr.total") !== undefined) {
+    updateData["data.details.cr.-=total"] = null;
   }
 };
 
@@ -1215,33 +1218,39 @@ const _migrateActorCMBRevamp = function (ent, updateData, linked) {
 };
 
 const _migrateActorChangeRevamp = function (ent, updateData) {
-  const keys = {
-    "data.attributes.ac.normal.total": 10,
-    "data.attributes.ac.touch.total": 10,
-    "data.attributes.ac.flatFooted.total": 10,
-    "data.attributes.cmd.total": 10,
-    "data.attributes.cmd.flatFootedTotal": 10,
-    "data.attributes.sr.total": 0,
-    "data.attributes.init.total": 0,
-    "data.attributes.hp.max": 0,
-  };
+  // Skills
+  Object.keys(getProperty(ent, "data.skills") ?? {}).forEach((s) => {
+    const path = `data.skills.${s}.`;
+    if (getProperty(ent, path + "changeBonus") !== undefined) {
+      updateData[path + "-=changeBonus"] = null;
+    }
 
-  const skillKeys = Object.keys(getProperty(ent, "data.skills") ?? {}).reduce((cur, s) => {
-    cur.push(`data.skills.${s}.changeBonus`);
     // Check for subskill
     Object.keys(getProperty(ent, `data.skills.${s}.subSkills`) ?? {}).forEach((s2) => {
-      cur.push(`data.skills.${s}.subSkills.${s2}.changeBonus`);
+      const subPath = `data.skills.${s}.subSkills.${s2}.`;
+      if (getProperty(ent, subPath + "changeBonus") !== undefined) {
+        updateData[subPath + "-=changeBonus"] = null;
+      }
     });
+  });
 
-    return cur;
-  }, []);
-  for (const k of skillKeys) {
-    keys[k] = 0;
-  }
+  // Remove derived data
+  const derivedKeys = {
+    "attributes.hp.max": "attributes.hp.-=max",
+    "attributes.ac.normal.total": "attributes.ac.normal.-=total",
+    "attributes.ac.touch.total": "attributes.ac.touch.-=total",
+    "attributes.ac.flatFooted.total": "attributes.ac.flatFooted.-=total",
+    "attributes.cmd.total": "attributes.cmd.-=total",
+    "attributes.cmd.flatFootedTotal": "attributes.cmd.-=flatFootedTotal",
+    "attributes.sr.total": "attributes.sr.-=total",
+    "attributes.init.total": "attributes.init.-=total",
+  };
 
-  for (const [k, v] of Object.entries(keys)) {
-    updateData[k] = v;
-  }
+  Object.entries(derivedKeys).forEach(([key, updateKey]) => {
+    if (getProperty(ent.data, key) !== undefined) {
+      updateData["data." + updateKey] = null;
+    }
+  });
 };
 
 const _migrateActorConditions = function (ent, updateData) {

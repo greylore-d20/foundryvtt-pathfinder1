@@ -2050,11 +2050,15 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Get attack array for specific action.
+   *
+   * @param {string} actionId Action identifier.
    * @returns {number[]} Simple array describing the individual guaranteed attacks.
    */
-  get attackArray() {
-    const actionData = this.firstAction?.data,
-      rollData = this.firstAction?.getRollData(),
+  getAttackArray(actionId) {
+    const action = this.actions.get(actionId),
+      actionData = action?.data,
+      rollData = action?.getRollData(),
       attacks = [0];
     if (!actionData) return attacks;
 
@@ -2101,15 +2105,29 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Get default action's attack array.
+   *
+   * @returns {number[]} Simple array describing the individual guaranteed attacks.
+   */
+  get attackArray() {
+    return this.getAttackArray(this.firstAction.id);
+  }
+
+  /**
+   * Attack sources for a specific action.
+   *
+   * @param actionId
    * @returns {object[]} Array of value and label pairs for attack bonus sources on the main attack.
    */
-  get attackSources() {
+  getAttackSources(actionId) {
+    const action = this.actions.get(actionId);
+    if (!action) return;
+
     const sources = [];
 
     const actorData = this.parentActor?.data.data,
       itemData = this.data.data,
-      action = this.firstAction,
-      actionData = action?.data;
+      actionData = action.data;
 
     if (!actorData || !actionData) return sources;
     const rollData = this.getRollData();
@@ -2202,6 +2220,15 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Return attack sources for default action.
+   *
+   * @returns {object[]} Array of value and label pairs for attack bonus sources on the main attack.
+   */
+  get attackSources() {
+    return this.getAttackSources(this.firstAction.id);
+  }
+
+  /**
    * Generic damage source retrieval
    */
   get damageSources() {
@@ -2212,15 +2239,14 @@ export class ItemPF extends ItemBasePF {
     return highest;
   }
 
-  /**
-   * Generic damage source retrieval, includes default conditionals and other item specific modifiers.
-   */
-  get allDamageSources() {
-    const conds = this.firstAction?.data.conditionals
+  getAllDamageSources(actionId) {
+    const action = this.actions.get(actionId);
+    if (!action) return;
+
+    const conds = action.data.conditionals
       .filter((c) => c.default)
       .filter((c) => c.modifiers.find((m) => m.target === "damage"));
-    const action = this.firstAction,
-      rollData = action?.getRollData();
+    const rollData = action.getRollData();
 
     if (!rollData) return [];
 
@@ -2268,6 +2294,13 @@ export class ItemPF extends ItemBasePF {
     }
 
     return getHighestChanges(allChanges, { ignoreTarget: true });
+  }
+
+  /**
+   * Generic damage source retrieval, includes default conditionals and other item specific modifiers.
+   */
+  get allDamageSources() {
+    return this.getAllDamageSources(this.firstAction.id);
   }
 
   /**

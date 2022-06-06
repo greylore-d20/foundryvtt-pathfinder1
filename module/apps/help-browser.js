@@ -1,5 +1,4 @@
 import MarkdownIt from "markdown-it";
-import Renderer from "markdown-it/lib/renderer";
 import MarkDownItAnchor from "markdown-it-anchor";
 
 /**
@@ -33,7 +32,7 @@ export class HelpBrowserPF extends Application {
   _currentPage = { url: "" };
 
   /**
-   * The markdown parser instance for this application.
+   * The Markdown parser instance for this application.
    *
    * @type {MarkdownIt}
    * @private
@@ -76,7 +75,7 @@ export class HelpBrowserPF extends Application {
   }
 
   /**
-   * Initialzes this help browser's {@link MarkdownIt} instance, adjusting rules as necessary.
+   * Initializes this help browser's {@link MarkdownIt} instance, adjusting rules as necessary.
    *
    * @private
    */
@@ -115,7 +114,7 @@ export class HelpBrowserPF extends Application {
   openUrl(url) {
     // Remove leading `/`, which are okay in the wiki, but not present in localisation files
     if (url.startsWith("/")) url = url.slice(1);
-    let header = "";
+    let header;
     // Extract header from URL
     [url, header] = url.split("#");
     if (this.currentUrl && url !== this.currentUrl) {
@@ -124,11 +123,11 @@ export class HelpBrowserPF extends Application {
       this._forwardHistory.splice(0, this._forwardHistory.length);
     }
     this._currentPage = { url };
-    this.render({ header: header });
+    this.render(true, { header: header });
   }
 
   /** @inheritdoc */
-  async _render(options) {
+  async _render(force, options) {
     await super._render(options);
     const contentElement = this.element.find(".content")[0];
 
@@ -156,11 +155,10 @@ export class HelpBrowserPF extends Application {
   getCurrentHistoryObject() {
     const elem = this.element.find(".content")[0];
     const scrollTop = elem?.scrollTop ?? 0;
-    const historyObject = {
+    return {
       url: this.currentUrl,
       scrollTop: scrollTop,
     };
-    return historyObject;
   }
 
   /** Go back one page in history. */

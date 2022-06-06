@@ -14,11 +14,12 @@ const source = require("vinyl-source-stream");
 const buffer = require("vinyl-buffer");
 const changed = require("gulp-changed");
 const { exec } = require("child_process");
+const glob = require("glob-promise");
 
 // Dependencies for compendium tasks.
 const Datastore = require("nedb");
 const mergeStream = require("merge-stream");
-const fs = require("fs");
+const fs = require("fs-extra");
 const path = require("path");
 const { Transform } = require("stream");
 
@@ -36,8 +37,9 @@ const changelog = require("./changelog.js");
 // is considered the entry point
 const SYSTEM_LESS = ["less/pf1.less", "less/**/*.less"];
 const SYSTEM_MODULES = ["pf1.js", "module/**/*.js"];
+const LANG_FILES = ["lang/**/*.json"];
+const HELP_FILES = ["help/**/*.md"];
 const SYSTEM_FILES = [
-  "lang/**/*",
   "templates/**/*",
   "fonts/**/*",
   "icons/**/*",
@@ -45,6 +47,7 @@ const SYSTEM_FILES = [
   "system.json",
   "ui/**/*",
   "help/**/*",
+  "!help/**/*.md",
   "CHANGELOG.md",
   "LICENSE.txt",
   "OGL.txt",
@@ -147,6 +150,62 @@ function deleteFiles() {
   return del(`${DESTINATION}/*`, { force: true });
 }
 
+/**
+ * Merges additional files (e.g. help browser files) into language .json files
+ *
+ * @returns {Promise<void[]>} - A promise that resolves to an array of paths to the updated files
+ */
+async function buildLanguageFiles() {
+  await fs.ensureDir(path.join(DESTINATION, "lang"));
+  const baseFileNames = await fs.readdir("lang");
+
+  // Treat English image files as canonical source, map wiki path to localisation path
+  const enHelpImageDirectory = await fs.readdir("help/en/img");
+  const imageFileExtensions = [".jpg", ".webp"];
+  const baseImageFiles = enHelpImageDirectory
+    .filter((file) => imageFileExtensions.some((extension) => file.endsWith(extension)))
+    .map((imageFile) => ({
+      jsonPath: `PF1.Help/img/${imageFile}`,
+      jsonValue: `help/en/img/${imageFile}`,
+      fileName: imageFile,
+    }));
+
+  const languageFiles = baseFileNames
+    .filter((fileName) => fileName.endsWith(".json"))
+    .map(async (fileName) => {
+      const rawJson = await fs.readJson(path.join("lang", fileName));
+      const language = fileName.replace(".json", "");
+
+      const helpFiles = await glob(`help/${language}/**/*.md`);
+      const helpStrings = await Promise.all(
+        helpFiles.map(async (helpFile) => {
+          const text = await fs.readFile(helpFile, "utf8");
+
+          const jsonPath = `PF1.${helpFile.replace(".md", "").replace(`help/${language}/`, "Help/")}`;
+          return [jsonPath, text];
+        })
+      );
+      helpStrings.forEach(([jsonPath, jsonValue]) => (rawJson[jsonPath] = jsonValue));
+
+      if (language === "en") {
+        // English image files require no further changes
+        baseImageFiles.forEach(({ jsonPath, jsonValue }) => (rawJson[jsonPath] = jsonValue));
+      } else if (fs.existsSync(`help/${language}/img`)) {
+        // Insert localised images by their wiki format path
+        const files = await fs.readdir(`help/${language}/img`);
+        files
+          .filter((file) => baseImageFiles.find(({ fileName }) => file === fileName) !== undefined)
+          .forEach((imageFile) => {
+            rawJson[`PF1.Help/img/${imageFile}`] = `help/${language}/img/${imageFile}`;
+          });
+      }
+
+      const filePath = path.join(DESTINATION, "lang", fileName);
+      return fs.writeJson(filePath, rawJson, { spaces: 2 });
+    });
+  return Promise.all(languageFiles);
+}
+
 /* ----------------------------------------- */
 /*  Watch and Reload
 /* ----------------------------------------- */
@@ -158,6 +217,7 @@ function watchUpdates() {
   gulp.watch(SYSTEM_LESS, compileLESS);
   gulp.watch(SYSTEM_FILES, copyFiles);
   gulp.watch(SYSTEM_MODULES, rollup);
+  gulp.watch([...LANG_FILES, ...HELP_FILES], buildLanguageFiles);
 }
 
 /**
@@ -571,14 +631,14 @@ function cleanPacks() {
 
 const watchTask = gulp.series(
   deleteFiles,
-  gulp.parallel(compileLESS, copyFiles, rollup, gulp.series(cleanPacks, compilePacks)),
+  gulp.parallel(compileLESS, copyFiles, rollup, buildLanguageFiles, gulp.series(cleanPacks, compilePacks)),
   serve,
   watchUpdates
 );
 
 const buildTask = gulp.series(
   deleteFiles,
-  gulp.parallel(compileLESS, copyFiles, rollup, gulp.series(cleanPacks, compilePacks))
+  gulp.parallel(compileLESS, copyFiles, rollup, buildLanguageFiles, gulp.series(cleanPacks, compilePacks))
 );
 
 exports.default = watchTask;
@@ -588,6 +648,7 @@ exports.watch = watchTask;
 exports.copy = copyFiles;
 exports.css = compileLESS;
 exports.rollup = rollup;
+exports.buildLanguageFiles = buildLanguageFiles;
 
 exports.patch = gulp.series(patch, buildTask, commitTag);
 exports.minor = gulp.series(minor, buildTask, commitTag);

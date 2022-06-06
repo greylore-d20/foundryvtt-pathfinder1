@@ -1,53 +1,52 @@
-export class PF1_HelpBrowser extends Application {
+import MarkdownIt from "markdown-it";
+import MarkDownItAnchor from "markdown-it-anchor";
+
+/**
+ * @typedef {object} HistoryEntry
+ * @property {string} url - URL of this history entry
+ * @property {number} [scrollTop] - Scroll position of this history entry
+ */
+
+/**
+ * An {@link Application} displaying documentation for the Pathfinder 1e system within Foundry.
+ *
+ * @augments Application
+ */
+export class HelpBrowserPF extends Application {
+  /**
+   * @type {HistoryEntry[]}
+   * @private
+   */
+  _backwardHistory = [];
+  /**
+   * @type {HistoryEntry[]}
+   * @private
+   */
+  _forwardHistory = [];
+  /**
+   * The currently shown entry.
+   *
+   * @type {HistoryEntry}
+   * @private
+   */
+  _currentPage = { url: "" };
+
+  /**
+   * The Markdown parser instance for this application.
+   *
+   * @type {MarkdownIt}
+   * @private
+   */
+  _md;
+
+  /** @inheritdoc */
   constructor(...args) {
     super(...args);
-
-    /**
-     * @property
-     * @type String
-     * The HTML content of the current page.
-     */
-    this.pageContent = "";
-
-    /**
-     * @property
-     * @type Number
-     * Maximum number of pages to track in history.
-     */
-    this.maxHistory = 20;
-
-    /**
-     * @property
-     * @type Array
-     * History list.
-     */
-    this.history = [];
-
-    /**
-     * @property
-     * @type Number
-     * @private
-     * The current index in history.
-     */
-    this._historyIndex = 0;
-
-    /**
-     * @property
-     * @type Number
-     * @private
-     * The scroll index of the nav element.
-     */
-    this._navScroll = 0;
-
-    /**
-     * @property
-     * @type String
-     * @Private
-     * The URL of the current page.
-     */
-    this._currentURL = "";
+    this._initMarkdown();
+    return this;
   }
 
+  /** @inheritdoc */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "help-browser"],
@@ -57,131 +56,155 @@ export class PF1_HelpBrowser extends Application {
       width: 960,
       height: 600,
       resizable: true,
+      id: "pf1-help-browser",
     });
   }
 
+  /** @inheritdoc */
   get title() {
     return game.i18n.localize("PF1.Help.Label");
   }
 
-  get currentURL() {
-    return this.history[this._historyIndex].url;
+  /**
+   * The URL of the page currently displayed
+   *
+   * @type {string}
+   */
+  get currentUrl() {
+    return this._currentPage.url;
   }
 
+  /**
+   * Initializes this help browser's {@link MarkdownIt} instance, adjusting rules as necessary.
+   *
+   * @private
+   */
+  _initMarkdown() {
+    const md = new MarkdownIt().use(MarkDownItAnchor, {
+      tabIndex: false,
+      slugify: (url) => `pf1-help-browser.${url.slugify()}`,
+    });
+    const defaultImageRenderRule = md.renderer.rules.image;
+    md.renderer.rules.image = pf1HelpImageRenderer(defaultImageRenderRule);
+    this._md = md;
+  }
+
+  /** @override */
   async getData() {
     const data = await super.getData();
 
-    data.pageContent = this.pageContent;
+    // Nav element only needs to get rendered once
+    this.nav ??= this._md.render(game.i18n.localize("PF1.Help/Home"));
 
-    data.hasHistoryBack = this.history.length > this._historyIndex + 1;
-    data.hasHistoryForward = this._historyIndex > 0;
+    data.hasHistoryBack = this._backwardHistory.length > 0;
+    data.hasHistoryForward = this._forwardHistory.length > 0;
+    data.nav = this.nav;
 
-    data.nav = await renderTemplate("systems/pf1/help/nav.hbs", data);
+    // Get markdown string from localisation, and parse it
+    data.pageContent = this._md.render(game.i18n.localize(`PF1.${this.currentUrl}`));
 
     return data;
   }
 
-  async openURL(url, { addToHistory = true, header = "" } = {}) {
-    if (url !== this._currentURL) {
+  /**
+   * Opens a specific page in the help browser.
+   *
+   * @param {string} url - The help URL to open
+   */
+  openUrl(url) {
+    // Remove leading `/`, which are okay in the wiki, but not present in localisation files
+    if (url.startsWith("/")) url = url.slice(1);
+    let header;
+    // Extract header from URL
+    [url, header] = url.split("#");
+    if (this.currentUrl && url !== this.currentUrl) {
       // Add new page to history
-      if (addToHistory) {
-        this.addHistory(url);
-        this._historyIndex = 0;
-      }
-
-      // Render new page
-      this.pageContent = await renderTemplate(url, this.getData());
-      await this._render(true);
+      this._backwardHistory.push(this.getCurrentHistoryObject());
+      this._forwardHistory.splice(0, this._forwardHistory.length);
     }
-    this._currentURL = url;
-
-    // Scroll to specified header
-    const baseElem = this.element.find(".content")[0];
-    if (header) {
-      const elem = baseElem.querySelector(`.${header}`);
-      if (elem) {
-        window.setTimeout(() => {
-          baseElem.scrollTop = elem.offsetTop;
-        }, 25);
-      }
-    } else {
-      baseElem.scrollTop = 0;
-    }
+    this._currentPage = { url };
+    this.render(true, { header: header });
   }
 
-  async _render(...args) {
-    await super._render(...args);
+  /** @inheritdoc */
+  async _render(force, options) {
+    await super._render(options);
+    const contentElement = this.element.find(".content")[0];
 
-    const el = this.element[0];
-    el.style.minWidth = `${this.options.minWidth}px`;
-    el.style.minHeight = `${this.options.minHeight}px`;
-  }
-
-  addHistory(url) {
-    const elem = this.element.find(".content")[0];
-    const scrollTop = elem ? elem.scrollTop : 0;
-    const obj = {
-      url: url,
-      scrollTop: scrollTop,
-    };
-
-    this.history = this.history.slice(this._historyIndex);
-
-    this.history.unshift(obj);
-    if (this.history.length > this.maxHistory) {
-      this.history.splice(20, this.history.length - this.maxHistory);
+    if (this._currentPage.scrollTop) {
+      // Dirty timeout to wait for loading of images with unknown height
+      setTimeout(() => {
+        contentElement.scrollTop = this._currentPage.scrollTop;
+      }, 0);
+    } else if (options.header) {
+      const headerElement = document.getElementById(`pf1-help-browser.${options.header}`);
+      if (headerElement) {
+        setTimeout(() => {
+          const emHeight = Number.parseFloat(getComputedStyle(headerElement).fontSize);
+          contentElement.scrollTop = headerElement.offsetTop - (45 + 1.5 * emHeight);
+        }, 0);
+      }
     }
   }
 
   /**
-   * @param {number} index - The specific index in history to go to. Larger values are further down history.
+   * Returns a {@link HistoryEntry} containing a snapshot of the currently rendered state.
+   *
+   * @returns {HistoryEntry} The current state
    */
-  async goToHistory(index) {
-    if (this.history[this._historyIndex]) {
-      const elem = this.element.find(".content")[0];
-      this.history[this._historyIndex].scrollTop = elem ? elem.scrollTop : 0;
-    }
-
-    this._historyIndex = index;
-    await this.openURL(this.currentURL, { addToHistory: false });
-
-    window.setTimeout(() => {
-      this.element.find(".content")[0].scrollTop = this.history[index].scrollTop || 0;
-    }, 25);
+  getCurrentHistoryObject() {
+    const elem = this.element.find(".content")[0];
+    const scrollTop = elem?.scrollTop ?? 0;
+    return {
+      url: this.currentUrl,
+      scrollTop: scrollTop,
+    };
   }
 
+  /** Go back one page in history. */
   backInHistory() {
-    if (this._historyIndex < this.maxHistory) {
-      this.goToHistory(this._historyIndex + 1);
-    }
+    if (!this._backwardHistory.length) return;
+    this._forwardHistory.push(this.getCurrentHistoryObject());
+    this._currentPage = this._backwardHistory.pop();
+    this.render();
   }
 
+  /** Go forward one page in history. */
   forwardInHistory() {
-    if (this._historyIndex > 0) {
-      this.goToHistory(this._historyIndex - 1);
-    }
+    if (!this._forwardHistory.length) return;
+    this._backwardHistory.push(this.getCurrentHistoryObject());
+    this._currentPage = this._forwardHistory.pop();
+    this.render();
   }
 
+  /** @param {JQuery<HTMLElement>} html - This application's HTML element */
   activateListeners(html) {
-    // Translate links
-    {
-      const links = html.find("a[href]");
-      for (const l of links) {
-        const href = l.getAttribute("href");
-        l.removeAttribute("href");
-        l.addEventListener("click", () => {
-          const header = l.dataset?.header || "";
-          this.openURL(href, { header: header });
-        });
-      }
+    // Remove href attributes to avoid actual browser page changes
+    const links = html.find("a[href]");
+    for (const l of links) {
+      const href = l.getAttribute("href");
+      l.removeAttribute("href");
+      // Store target in dataset
+      l.dataset.url = href;
     }
+    html.on("click", "a", (event) => {
+      event.preventDefault();
+      const url = event.currentTarget.dataset.url;
+      if (url) this.openUrl(url);
+    });
 
     // History buttons
-    html.find(".history-back").click(this.backInHistory.bind(this));
-    html.find(".history-forward").click(this.forwardInHistory.bind(this));
-
-    html.find("nav").on("scroll", (event) => {
-      console.log(event, event.currentTarget);
-    });
+    html.find(".history-back").on("click", this.backInHistory.bind(this));
+    html.find(".history-forward").on("click", this.forwardInHistory.bind(this));
   }
 }
+
+/** @type {(defaultRenderer: Renderer.RenderRule) => Renderer.RenderRule} */
+const pf1HelpImageRenderer = (defaultRenderer) => (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  let src = token.attrGet("src");
+  if (src.startsWith("/")) src = src.slice(1);
+  const foundrySrc = game.i18n.localize(`PF1.${src}`);
+  token.attrSet("src", foundry.utils.getRoute(`systems/pf1/${foundrySrc}`));
+  return defaultRenderer(tokens, idx, options, env, self);
+};

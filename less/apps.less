@@ -1431,7 +1431,7 @@
     .content,
     nav {
       a {
-        color: #ff6400;
+        color: var(--color-text-hyperlink);
         text-decoration: underline;
       }
     }
@@ -1445,24 +1445,45 @@
       border-right: @borderGroove;
       height: 100%;
       overflow: auto;
+
+      > ul {
+        list-style: none;
+        padding: 0 0 0 0.5em;
+      }
+
+      ul {
+        padding: 0 0 0 1em;
+      }
     }
 
     .content {
       height: 100%;
       overflow: auto;
       padding-bottom: 32px;
+      padding-left: 0.4em;
+      padding-right: 0.4em;
+
+      * {
+        user-select: text;
+      }
 
       code {
-        padding: 2px;
-        background-color: black;
-        color: white;
+        padding: 0 0.1em;
+        background: #2b2b2b;
+        color: #bababa;
+        border: 1px solid #000;
+        border-radius: 3px;
+        box-shadow: 0 0 4px #666;
       }
 
       img {
         margin-left: 8px;
       }
 
-      h2 {
+      h2,
+      h3,
+      h4,
+      h5 {
         margin-top: 1em;
       }
     }

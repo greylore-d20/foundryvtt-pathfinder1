@@ -1,12 +1,8 @@
 import { getBuffTargetDictionary, getBuffTargets } from "../../lib.js";
-import { EntrySelector } from "../../apps/entry-selector.js";
 import { ItemPF } from "../entity.js";
-import { ItemChange } from "../components/change.js";
-import { ItemScriptCall } from "../components/script-call.js";
 import { ScriptEditor } from "../../apps/script-editor.js";
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { Widget_CategorizedItemPicker } from "../../widgets/categorized-item-picker.js";
-import { PF1_HelpBrowser } from "../../apps/help-browser.js";
 import { getSkipActionPrompt } from "../../settings.js";
 
 /**
@@ -983,18 +979,7 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
-    let browser = null;
-    for (const w of Object.values(ui.windows)) {
-      if (w instanceof PF1_HelpBrowser) {
-        browser = w;
-        browser.bringToTop();
-        browser.maximize();
-        break;
-      }
-    }
-    if (!browser) browser = new PF1_HelpBrowser();
-
-    browser.openURL(a.dataset.url);
+    game.pf1.helpBrowser.openUrl(a.dataset.url);
   }
 
   async _onLinksDrop(event) {

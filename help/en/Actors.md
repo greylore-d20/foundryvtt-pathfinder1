@@ -1,1 +1,10 @@
-This section is currently a Work In Progress (WIP).
+# Actors
+
+## Normal Actor Types
+
+- [Character](Help/Actors/Character)
+- [NPC](Help/Actors/NPC)
+
+## Miscellaneous Actor Types
+
+- [Basic](Help/Actors/Basic)

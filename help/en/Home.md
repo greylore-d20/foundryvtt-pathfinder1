@@ -1,6 +1,10 @@
 # Help
 
 - [Actors](Help/Actors)
+  - Actor Types
+    - [Character](Help/Actors/Character)
+    - [NPC](Help/Actors/NPC)
+    - [Basic](Help/Actors/Basic)
 - [Items](Help/Items)
   - Item Types
     - [Consumables](Help/Items/Consumables)
@@ -8,6 +12,7 @@
     - [Equipment](Help/Items/Equipment)
     - [Loot](/Help/Items/Loot)
     - [Weapons](Help/Items/Weapons)
+    - [Attacks](Help/Items/Attacks)
   - Concepts
     - [Description](Help/Items/Description)
     - [Changes](Help/Items/Changes)

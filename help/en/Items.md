@@ -10,4 +10,4 @@
 
 ## Other
 
-- Attacks
+- [Attacks](Help/Items/Attacks)

@@ -166,7 +166,7 @@ async function releaseLog(newVersion) {
       return text;
     }, "");
 
-    const formattedChangelogs = `## ${releaseVersion} - ${date}\n${formattedData}\n`;
+    const formattedChangelogs = `## v${releaseVersion} - ${date}\n${formattedData}\n`;
 
     const text = `${beginningText}${formattedChangelogs}${endText}`;
 

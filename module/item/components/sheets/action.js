@@ -340,7 +340,7 @@ export class ItemActionSheet extends FormApplication {
     // Add new attack component
     if (a.classList.contains("add-attack")) {
       const attackParts = this.action.data.attackParts;
-      return this._onSubmit(event, { updateData: { "data.attackParts": attackParts.concat([["", ""]]) } });
+      return this._onSubmit(event, { updateData: { attackParts: attackParts.concat([["", ""]]) } });
     }
 
     // Remove an attack component
@@ -348,7 +348,7 @@ export class ItemActionSheet extends FormApplication {
       const li = a.closest(".attack-part");
       const attackParts = duplicate(this.action.data.attackParts);
       attackParts.splice(Number(li.dataset.attackPart), 1);
-      return this._onSubmit(event, { updateData: { "data.attackParts": attackParts } });
+      return this._onSubmit(event, { updateData: { attackParts: attackParts } });
     }
   }
 

@@ -86,7 +86,7 @@ export class ItemSheetPF extends ItemSheet {
     const data = await super.getData();
     data.data = data.data.data;
     data.flags = { flags: data.data.flags };
-    const rollData = duplicate(this.item.getRollData());
+    const rollData = this.item.getRollData();
     data.labels = this.item.labels;
 
     // Include sub-items
@@ -253,7 +253,7 @@ export class ItemSheetPF extends ItemSheet {
         }, {});
       } else {
         // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = mergeObject(duplicate(CONFIG.PF1.skills), this.actor.data.data.skills);
+        const skills = mergeObject(deepClone(CONFIG.PF1.skills), this.actor.data.data.skills);
         data.skills = Object.entries(skills).reduce((cur, o) => {
           const key = o[0];
           const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
@@ -318,7 +318,7 @@ export class ItemSheetPF extends ItemSheet {
       data.isAtWill = data.item.data.atWill;
       data.spellbooks = {};
       if (this.actor) {
-        data.spellbooks = duplicate(this.actor.data.data.attributes.spells.spellbooks);
+        data.spellbooks = deepClone(this.actor.data.data.attributes.spells.spellbooks);
       }
 
       const desc = await renderTemplate(
@@ -367,7 +367,7 @@ export class ItemSheetPF extends ItemSheet {
         }, {});
       } else {
         // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = mergeObject(duplicate(CONFIG.PF1.skills), this.actor.data.data.skills);
+        const skills = mergeObject(deepClone(CONFIG.PF1.skills), this.actor.data.data.skills);
         data.skills = Object.entries(skills).reduce((cur, o) => {
           const key = o[0];
           const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
@@ -430,7 +430,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare stuff for items with context notes
     if (data.item.data.data.contextNotes) {
-      data.contextNotes = duplicate(data.item.data.data.contextNotes);
+      data.contextNotes = deepClone(data.item.data.data.contextNotes);
       const noteTargets = getBuffTargets(this.item.actor, "contextNotes");
       data.contextNotes.forEach((o) => {
         o.label = noteTargets[o.subTarget]?.label;
@@ -438,7 +438,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Add distance units
-    data.distanceUnits = duplicate(CONFIG.PF1.distanceUnits);
+    data.distanceUnits = deepClone(CONFIG.PF1.distanceUnits);
     if (this.item.type !== "spell") {
       for (const d of ["close", "medium", "long"]) {
         delete data.distanceUnits[d];
@@ -553,7 +553,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Iterate over all script calls, and adjust data
     const scriptCalls = Object.hasOwnProperty.call(this.document, "scriptCalls")
-      ? duplicate(Array.from(this.document.scriptCalls).map((o) => o.data))
+      ? deepClone(Array.from(this.document.scriptCalls).map((o) => o.data))
       : [];
     {
       const promises = [];
@@ -720,7 +720,7 @@ export class ItemSheetPF extends ItemSheet {
       delete formData[e[0]];
 
       if (!formData[`data.links.${linkType}`])
-        formData[`data.links.${linkType}`] = duplicate(getProperty(this.item.data, `data.links.${linkType}`));
+        formData[`data.links.${linkType}`] = deepClone(getProperty(this.item.data, `data.links.${linkType}`));
 
       setProperty(formData[`data.links.${linkType}`][index], subPath, value);
     }
@@ -1091,7 +1091,7 @@ export class ItemSheetPF extends ItemSheet {
       // Re-order
       if (srcItem === item) {
         const targetActionID = event.target?.closest("li.action-part")?.dataset?.itemId;
-        const prevActions = duplicate(this.object.data.data.actions);
+        const prevActions = deepClone(this.object.data.data.actions);
 
         let targetIdx;
         if (!targetActionID) targetIdx = prevActions.length - 1;
@@ -1105,7 +1105,7 @@ export class ItemSheetPF extends ItemSheet {
 
       // Add to another item
       else {
-        const prevActions = duplicate(this.object.data.data.actions ?? []);
+        const prevActions = deepClone(this.object.data.data.actions ?? []);
         data.data._id = randomID(16);
         prevActions.splice(prevActions.length, 0, data.data);
         await this.object.update({ "data.actions": prevActions });
@@ -1300,10 +1300,10 @@ export class ItemSheetPF extends ItemSheet {
     // Duplicate action
     if (a.classList.contains("duplicate-action")) {
       const li = a.closest(".action-part");
-      const action = duplicate(this.item.actions.get(li.dataset.itemId).data);
+      const action = deepClone(this.item.actions.get(li.dataset.itemId).data);
       action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
       action._id = randomID(16);
-      const actionParts = duplicate(this.item.data.data.actions ?? []);
+      const actionParts = deepClone(this.item.data.data.actions ?? []);
       return this._onSubmit(event, { updateData: { "data.actions": actionParts.concat(action) } });
     }
   }
@@ -1340,7 +1340,7 @@ export class ItemSheetPF extends ItemSheet {
     // Remove a change
     if (a.classList.contains("delete-change")) {
       const li = a.closest(".change");
-      const changes = duplicate(this.item.data.data.changes);
+      const changes = deepClone(this.item.data.data.changes);
       const change = changes.find((o) => o._id === li.dataset.change);
       changes.splice(changes.indexOf(change), 1);
       return this._onSubmit(event, { updateData: { "data.changes": changes } });

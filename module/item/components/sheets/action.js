@@ -100,7 +100,7 @@ export class ItemActionSheet extends FormApplication {
     }
 
     // Add distance units
-    data.distanceUnits = duplicate(CONFIG.PF1.distanceUnits);
+    data.distanceUnits = deepClone(CONFIG.PF1.distanceUnits);
     if (this.item.type !== "spell") {
       for (const d of ["close", "medium", "long"]) {
         delete data.distanceUnits[d];
@@ -196,7 +196,7 @@ export class ItemActionSheet extends FormApplication {
         }
       }
 
-      const conditionals = duplicate(action.data.conditionals || []).concat(data);
+      const conditionals = deepClone(action.data.conditionals || []).concat(data);
       await this.object.update({ conditionals: conditionals });
     }
   }
@@ -221,13 +221,12 @@ export class ItemActionSheet extends FormApplication {
     const key = a.closest(".notes").dataset.name;
 
     if (a.classList.contains("add-entry")) {
-      const notes = getProperty(this.object, key) ?? [];
-      const updateData = {};
-      updateData[key] = notes.concat("");
+      const notes = deepClone(getProperty(this.object.data, key) ?? []);
+      const updateData = { [key]: notes.concat("") };
       return this._onSubmit(event, { updateData });
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
-      const notes = duplicate(getProperty(this.object, key));
+      const notes = deepClone(getProperty(this.object.data, key));
       notes.splice(index, 1);
 
       const updateData = {};
@@ -303,7 +302,7 @@ export class ItemActionSheet extends FormApplication {
     // Remove a damage component
     if (a.classList.contains("delete-damage")) {
       const li = a.closest(".damage-part");
-      const damage = duplicate(getProperty(this.action.data, k2));
+      const damage = deepClone(getProperty(this.action.data, k2));
       getProperty(damage, k3).splice(Number(li.dataset.damagePart), 1);
       const updateData = {};
       updateData[k] = getProperty(damage, k3);
@@ -346,7 +345,7 @@ export class ItemActionSheet extends FormApplication {
     // Remove an attack component
     if (a.classList.contains("delete-attack")) {
       const li = a.closest(".attack-part");
-      const attackParts = duplicate(this.action.data.attackParts);
+      const attackParts = deepClone(this.action.data.attackParts);
       attackParts.splice(Number(li.dataset.attackPart), 1);
       return this._onSubmit(event, { updateData: { attackParts: attackParts } });
     }

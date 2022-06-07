@@ -2090,7 +2090,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemData = {
       name: baseName,
       type: type,
-      data: duplicate(header.dataset),
+      data: deepClone(header.dataset),
     };
     delete itemData.data["type"];
 

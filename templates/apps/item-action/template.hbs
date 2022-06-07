@@ -35,7 +35,7 @@
   <label>{{localize "PF1.CustomColor"}}</label>
   <div class="form-fields">
     <input class="color" type="text" name="measureTemplate.customColor" value="{{data.measureTemplate.customColor}}" />
-    <input type="color" value="{{data.measureTemplate.customColor}}" data-edit="data.measureTemplate.customColor" />
+    <input type="color" value="{{data.measureTemplate.customColor}}" data-edit="measureTemplate.customColor" />
   </div>
 </div>
 {{/if}}
@@ -46,7 +46,7 @@
   <div class="form-fields">
     {{!-- {{filePicker target="data.measureTemplate.customTexture" type="imagevideo"}} --}}
     <input class="image" type="text" name="measureTemplate.customTexture" placeholder="path/image.png" value="{{data.measureTemplate.customTexture}}"/>
-    <button type="button" class="file-picker-alt" data-for="data.measureTemplate.customTexture" data-type="imagevideo">
+    <button type="button" class="file-picker-alt" data-for="measureTemplate.customTexture" data-type="imagevideo">
       <i class="fas fa-file-import fa-fw"></i>
     </button>
   </div>

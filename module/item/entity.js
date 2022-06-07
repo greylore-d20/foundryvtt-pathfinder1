@@ -98,6 +98,14 @@ export class ItemPF extends ItemBasePF {
     return this.actions.get(this.data.data.actions[0]._id);
   }
 
+  get hasAttack() {
+    return this.actions.some((o) => o.hasAttack);
+  }
+
+  get hasDamage() {
+    return this.actions.some((o) => o.hasDamage);
+  }
+
   /* -------------------------------------------- */
   /*  Item Properties                             */
   /* -------------------------------------------- */

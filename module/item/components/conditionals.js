@@ -75,11 +75,8 @@ export class ItemConditional {
   }
 
   async delete() {
-    const idx = this.parent.data.conditionals.indexOf(this.data);
-    if (idx < 0) throw new Error(`Conditional not found in parent ${this.parent.name}`);
-
-    const conditionals = duplicate(this.parent.data.conditionals);
-    conditionals.splice(idx, 1);
+    const conditionals = foundry.utils.deepClone(this.parent.data.conditionals);
+    conditionals.findSplice((c) => c._id === this.id);
     return this.parent.update({ conditionals });
   }
 }

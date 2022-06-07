@@ -56,7 +56,7 @@ export class ItemActionSheet extends FormApplication {
     data.action = this.action;
     data.item = this.item;
     data.actor = this.actor;
-    data.data = this.action.data;
+    data.data = foundry.utils.deepClone(this.action.data);
     data.damageTypes = game.pf1.damageTypes.toRecord();
     data.scriptCalls = game.pf1.scriptCalls.toJSON();
 
@@ -109,7 +109,6 @@ export class ItemActionSheet extends FormApplication {
 
     // Prepare stuff for actions with conditionals
     if (data.data.conditionals) {
-      data.conditionals = { targets: {}, conditionalModifierTypes: {} };
       for (const conditional of data.data.conditionals) {
         for (const modifier of conditional.modifiers) {
           modifier.targets = this.object.getConditionalTargets();

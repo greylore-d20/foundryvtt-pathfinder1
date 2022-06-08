@@ -215,7 +215,7 @@ const onMouseEnterReach = (event) => {
 
   _getTokenByUuid(tokenUuid).then((token) => {
     if (!token) return;
-    const item = token.actor.items.get(itemId);
+    const item = token.actor.allItems.find((item) => item.id === itemId);
     if (!item) return;
     if (!game.settings.get("pf1", "hideReachMeasurements"))
       currentHighlight = showAttackReach(token, item, item.actions.get(actionId));

@@ -1303,7 +1303,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {ItemChange[]} The resulting changes.
    */
   getContextChanges(context = "attack") {
-    let result = this.actor.changes;
+    let result = this.parentActor.changes;
 
     switch (context) {
       case "mattack":
@@ -1412,7 +1412,8 @@ export class ItemPF extends ItemBasePF {
    * @returns {object} An object with data to be used in rolls in relation to this item.
    */
   getRollData() {
-    const result = this.parent != null && this.parent.data ? this.parent.getRollData() : {};
+    const parentActor = this.parentActor;
+    const result = parentActor != null && parentActor.data ? parentActor.getRollData() : {};
 
     result.item = deepClone(this.data.data);
 

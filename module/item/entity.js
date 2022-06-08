@@ -929,7 +929,7 @@ export class ItemPF extends ItemBasePF {
     if (allowed === false) return;
 
     // Basic template rendering data
-    const token = this.parent.token;
+    const token = this.parentActor.token;
     const templateData = {
       actor: this.parent,
       tokenId: token ? token.uuid : null,

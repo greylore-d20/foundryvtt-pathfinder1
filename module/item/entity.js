@@ -11,6 +11,7 @@ import {
   keepUpdateArray,
 } from "../lib.js";
 import { ItemChange } from "./components/change.js";
+import { ItemAction } from "./components/action.js";
 import { getHighestChanges } from "../actor/apply-changes.js";
 import { RollPF } from "../roll.js";
 
@@ -27,17 +28,30 @@ export class ItemPF extends ItemBasePF {
   constructor(...args) {
     super(...args);
 
-    /**
-     * @property {object} links
-     * Links are stored here during runtime.
-     */
-    if (this.links === undefined) this.links = {};
+    if (this.links === undefined)
+      /**
+       * An object containing links to other items.
+       *
+       * @type {object}
+       */
+      this.links = {};
 
-    /**
-     * @property {object} _rollData
-     * Cached roll data for this item.
-     */
-    if (this._rollData === undefined) this._rollData = null;
+    if (this._rollData === undefined)
+      /**
+       * Cached {@link ItemPF.getRollData}
+       *
+       * @type {null|object}
+       * @private
+       */
+      this._rollData = null;
+
+    if (this.actions === undefined && this.data.data.actions instanceof Array)
+      /**
+       * A {@link Collection} of {@link ItemAction}s.
+       *
+       * @type {Collection<ItemAction>}
+       */
+      this.actions = new Collection();
   }
 
   static isInventoryItem(type) {
@@ -98,12 +112,22 @@ export class ItemPF extends ItemBasePF {
     return this.actions.get(this.data.data.actions[0]._id);
   }
 
+  /**
+   * Returns `true` if any of this item's actions have an attack, see {@link ItemAction#hasAttack}.
+   *
+   * @type {boolean}
+   */
   get hasAttack() {
-    return this.actions.some((o) => o.hasAttack);
+    return this.actions?.some((o) => o.hasAttack) ?? false;
   }
 
+  /**
+   * Returns `true` if any of this item's actions have a damage roll, see {@link ItemAction#hasDamage}.
+   *
+   * @type {boolean}
+   */
   get hasDamage() {
-    return this.actions.some((o) => o.hasDamage);
+    return this.actions?.some((o) => o.hasDamage) ?? false;
   }
 
   /* -------------------------------------------- */

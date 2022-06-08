@@ -849,6 +849,13 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
+    // Re-render sheets for all items in a container
+    for (const item of this.items ?? []) {
+      for (const app of Object.values(item.apps ?? {})) {
+        app.render();
+      }
+    }
+
     // Forget memory variables
     this._memoryVariables = null;
   }
@@ -867,7 +874,7 @@ export class ItemPF extends ItemBasePF {
 
   _updateMaxUses() {
     // No actor? No charges!
-    if (!this.parent) return;
+    if (!this.parentActor) return;
 
     // No charges? No charges!
     if (!["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"))) return;

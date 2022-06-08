@@ -1829,34 +1829,25 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   async createAttackFromWeapon(item) {
+    if (item.data.type !== "weapon") throw new Error("Wrong Item type");
+
     if (!this.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      const msg = game.i18n.format("PF1.ErrorNoActorPermissionAlt", { 0: this.name });
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
 
-    if (item.data.type !== "weapon") throw new Error("Wrong Item type");
-
     // Get attack template
     const attackData = {};
-
-    // Add ability modifiers
-    attackData["data.ability.attack"] = item.data.data.ability.attack;
-    attackData["data.ability.damage"] = item.data.data.ability.damage;
-    attackData["data.ability.damageMult"] = item.data.data.ability.damageMult;
-    attackData["data.held"] = item.data.data.held;
 
     // Add misc things
     attackData["type"] = "attack";
     attackData["name"] = item.data.name;
     attackData["img"] = item.data.img;
-    attackData["data.attackType"] = item.data.data.attackType;
+    attackData["data.attackType"] = "weapon";
     attackData["data.masterwork"] = item.data.data.masterwork;
     attackData["data.enh"] = item.data.data.enh;
     attackData["data.broken"] = item.data.data.broken;
-
-    // Add conditionals
-    attackData["data.conditionals"] = item.data._source.data.conditionals;
 
     // Add actions
     const actions = deepClone(item.data._source.data.actions ?? []);
@@ -1865,15 +1856,12 @@ export class ActorPF extends ActorBasePF {
     }
     attackData["data.actions"] = actions;
 
-    // Synthetic intermediate item
-    const attackItem = new ItemPF(expandObject(attackData));
     // Create attack
-    const itemData = await this.createEmbeddedDocuments("Item", [attackItem.toObject()]);
+    const newItem = (await this.createEmbeddedDocuments("Item", [expandObject(attackData)]))[0];
 
     // Create link
-    const newItem = this.items.get(itemData[0].id);
     if (newItem) {
-      await item.createItemLink("children", "data", newItem, itemData[0].id);
+      await item.createItemLink("children", "data", newItem, newItem.id);
     }
 
     // Notify user
@@ -1884,7 +1872,7 @@ export class ActorPF extends ActorBasePF {
       "data.showInQuickbar": false,
     });
 
-    return itemData[0];
+    return newItem;
   }
 
   /* -------------------------------------------- */

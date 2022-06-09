@@ -1170,9 +1170,10 @@ export function keepUpdateArray(sourceObj, targetObj, keepPath) {
  * @param {object} other          An object containing potentially different data
  * @param {object} [options={}]   Additional options which configure the diff operation
  * @param {boolean} [options.inner=false]  Only recognize differences in other for keys which also exist in original
+ * @param {boolean} [options.keepLength=false]  Keep array length intact, possibly having to insert empty objects
  * @returns {object}               An object of the data in other which differs from that in original
  */
-export const diffObjectAndArray = function (original, other, { inner = false } = {}) {
+export const diffObjectAndArray = function (original, other, { inner = false, keepLength = false } = {}) {
   /**
    *
    * @param v0
@@ -1186,15 +1187,16 @@ export const diffObjectAndArray = function (original, other, { inner = false } =
       if (v0.length !== v1.length) return [true, v1];
       const d = [];
       for (let a = 0; a < v0.length; a++) {
-        const d2 = diffObjectAndArray(v0[a], v1[a], { inner });
+        const d2 = diffObjectAndArray(v0[a], v1[a], { inner, keepLength });
         if (!isObjectEmpty(d2)) d.push(d2);
+        else if (keepLength) d.push({});
       }
       if (d.length > 0) return [true, d];
       return [false, d];
     }
     if (t0 === "Object") {
       if (isObjectEmpty(v0) !== isObjectEmpty(v1)) return [true, v1];
-      const d = diffObjectAndArray(v0, v1, { inner });
+      const d = diffObjectAndArray(v0, v1, { inner, keepLength });
       return [!isObjectEmpty(d), d];
     }
     return [v0 !== v1, v1];

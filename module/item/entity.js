@@ -793,12 +793,19 @@ export class ItemPF extends ItemBasePF {
   }
 
   memorizeVariables() {
+    if (this._memoryVariables != null) return;
+
     const memKeys = this.memoryVariables;
     this._memoryVariables = {};
     for (const k of memKeys) {
       if (hasProperty(this.data, k)) {
         this._memoryVariables[k] = getProperty(this.data, k);
       }
+    }
+
+    // Memorize variables recursively on container items
+    for (const item of this.items ?? []) {
+      item.memorizeVariables();
     }
   }
 
@@ -851,13 +858,14 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Call _onUpdate for changed items
-    for (const itemUpdateData of changed.data?.inventoryItems ?? []) {
-      const memoryItemData = this._memoryVariables["data.inventoryItems"]?.find((o) => o._id === itemUpdateData._id);
+    for (let a = 0; a < (changed.data?.inventoryItems ?? []).length; a++) {
+      const itemUpdateData = changed.data?.inventoryItems[a];
+      const memoryItemData = this._memoryVariables["data.inventoryItems"]?.[a];
       if (!memoryItemData) continue;
 
-      const diffData = diffObjectAndArray(memoryItemData, itemUpdateData);
+      const diffData = diffObjectAndArray(memoryItemData, itemUpdateData, { keepLength: true });
       if (!isObjectEmpty(diffData)) {
-        const item = this.items.get(itemUpdateData._id);
+        const item = this.items.get(memoryItemData._id);
         item._onUpdate(diffData, options, userId);
       }
     }

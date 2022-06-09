@@ -1030,6 +1030,38 @@ const _migrateSpellData = function (item, updateData) {
 };
 
 const _migrateItemActions = function (item, updateData) {
+  if (!["attack", "equipment", "weapon", "feat", "consumable"].includes(item.type)) return;
+
+  // Clean out old data
+  updateData["data.-=attackName"] = null;
+  updateData["data.-=activation"] = null;
+  updateData["data.-=unchainedAction"] = null;
+  updateData["data.-=duration"] = null;
+  updateData["data.-=target"] = null;
+  updateData["data.-=range"] = null;
+  updateData["data.-=measureTemplate"] = null;
+  updateData["data.-=actionType"] = null;
+  updateData["data.-=attackBonus"] = null;
+  updateData["data.-=critConfirmBonus"] = null;
+  updateData["data.-=damage"] = null;
+  updateData["data.-=attackParts"] = null;
+  updateData["data.-=formulaicAttacks"] = null;
+  updateData["data.-=formula"] = null;
+  updateData["data.-=ability"] = null;
+  updateData["data.-=abilityType"] = null;
+  updateData["data.-=save"] = null;
+  updateData["data.-=soundEffect"] = null;
+  updateData["data.-=powerAttack"] = null;
+  updateData["data.-=naturalAttack"] = null;
+  updateData["data.-=nonlethal"] = null;
+  updateData["data.-=usesAmmo"] = null;
+  updateData["data.-=spellEffect"] = null;
+  updateData["data.-=spellArea"] = null;
+  updateData["data.-=conditionals"] = null;
+  updateData["data.-=enh"] = null;
+  updateData["data.attackNotes"] = [];
+  updateData["data.effectNotes"] = [];
+
   const hasOldAction = !!item.data.actionType;
   const alreadyHasActions = item.data.actions instanceof Array && item.data.actions.length > 0;
   if ((!hasOldAction && item.type !== "spell") || alreadyHasActions) return;
@@ -1060,9 +1092,6 @@ const _migrateItemActions = function (item, updateData) {
     const oldSpellPointCostFormula = item.data.spellPoints?.cost;
     if (oldSpellPointCostFormula) actionData.uses.autoDeductChargesCost = oldSpellPointCostFormula;
   }
-  // Clean out old attack and effect notes
-  updateData["data.attackNotes"] = [];
-  updateData["data.effectNotes"] = [];
 
   updateData["data.actions"] = [actionData];
 };

@@ -457,10 +457,24 @@ export class ItemPF extends ItemBasePF {
     }
   }
 
+  /**
+   * Returns this item's default labels, using the item's data and the first action's data, if one is present.
+   *
+   * @returns {Record<string, string>} This item's labels
+   */
   prepareLabels() {
+    const action = this.firstAction;
+    return { ...this.getLabels(), ...(action?.getLabels() ?? {}) };
+  }
+
+  /**
+   * Returns labels for this item
+   *
+   * @returns {Record<string, string>} This item's labels
+   */
+  getLabels() {
     const labels = {};
     const itemData = this.data;
-    const actionData = this.firstAction?.data ?? {};
 
     // Equipped label
     const checkYes = '<i class="fas fa-check"></i>';
@@ -487,28 +501,6 @@ export class ItemPF extends ItemBasePF {
         const equipmentSlot = this.data.data.slot || null;
         labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
       } else labels.slot = null;
-    }
-
-    // Activation method
-    if (actionData.activation) {
-      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
-        ? CONFIG.PF1.abilityActivationTypes_unchained
-        : CONFIG.PF1.abilityActivationTypes;
-      const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy")
-        ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
-        : CONFIG.PF1.abilityActivationTypesPlurals;
-
-      const activation = game.settings.get("pf1", "unchainedActionEconomy")
-        ? actionData.unchainedAction.activation || {}
-        : actionData.activation || {};
-      if (activation && activation.cost > 1 && activationTypesPlural[activation.type] != null) {
-        labels.activation = [activation.cost.toString(), activationTypesPlural[activation.type]].filterJoin(" ");
-      } else if (activation) {
-        labels.activation = [
-          ["minute", "hour", "action"].includes(activation.type) && activation.cost ? activation.cost.toString() : "",
-          activationTypes[activation.type],
-        ].filterJoin(" ");
-      }
     }
 
     return labels;
@@ -1030,26 +1022,55 @@ export class ItemPF extends ItemBasePF {
   /*  Chat Cards																	*/
   /* -------------------------------------------- */
 
-  getChatData(htmlOptions, rollData = null) {
-    const data = duplicate(this.data.data);
-    const labels = this.labels;
-    const actionData = this.firstAction?.data ?? {};
+  /**
+   * Data required to render an item's summary or chat card, including descriptions and properties/tags/labels
+   *
+   * @typedef {object} ChatData
+   * @property {string} description - The item description
+   * @property {string} [actionDescription] - The description of a specific action
+   * @property {string} [shortDescription] - A short text description (available e.g. for spells)
+   * @property {string[]} properties - Additional properties/labels for the item and the action
+   */
 
-    if (!rollData) rollData = this.firstAction != null ? this.firstAction.getRollData() : this.getRollData();
+  /**
+   * Generates {@link ChatData} for this item, either in a default configuration or for a specific action.
+   *
+   * @param {object} [htmlOptions] - Options affecting how descriptions are enriched
+   * @param {object} [htmlOptions.rollData] - Roll data to be used to enrich text, defaults to the action's/item's {@link ItemPF#getRollData}
+   * @param {object} [options] - Additional options affecting the chat data generation
+   * @param {string} [options.actionId] - The ID of an action on this item to generate chat data for
+   * @returns {ChatData} The chat data for this item (+action)
+   */
+  getChatData(htmlOptions = {}, options = {}) {
+    const data = {};
+    const { actionId = null } = options;
+    const itemData = this.data.data;
+    const action = actionId ? this.actions.get(actionId) : this.firstAction;
+    const actionData = action?.data ?? {};
+    const labels = { ...this.getLabels(), ...(action?.getLabels() ?? {}) };
 
-    htmlOptions = mergeObject(htmlOptions || {}, rollData);
+    htmlOptions.rollData ??= action ? action.getRollData() : this.getRollData();
 
-    // Rich text description
+    // Rich text descriptions
     if (this.showUnidentifiedData) {
-      data.description.value = TextEditor.enrichHTML(data.description.unidentified, { rollData: htmlOptions });
+      data.description = TextEditor.enrichHTML(itemData.description.unidentified, { rollData: htmlOptions });
     } else {
-      data.description.value = TextEditor.enrichHTML(data.description.value, { rollData: htmlOptions });
+      data.description = TextEditor.enrichHTML(itemData.description.value, { rollData: htmlOptions });
     }
+    data.actionDescription = TextEditor.enrichHTML(actionData.description, { rollData: htmlOptions });
+    // Add text description for spells
+    data.shortDescription =
+      "shortDescription" in itemData
+        ? TextEditor.enrichHTML(itemData.shortDescription, { rollData: htmlOptions })
+        : undefined;
 
     // General equipment properties
     const props = [];
-    if (Object.prototype.hasOwnProperty.call(data, "equipped") && ["weapon", "equipment"].includes(this.data.type)) {
-      props.push(data.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped"));
+    if (
+      Object.prototype.hasOwnProperty.call(itemData, "equipped") &&
+      ["weapon", "equipment"].includes(this.data.type)
+    ) {
+      props.push(itemData.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped"));
     }
 
     if (!this.showUnidentifiedData) {
@@ -1076,7 +1097,7 @@ export class ItemPF extends ItemBasePF {
       // Duration
       if (actionData.duration != null) {
         if (!["inst", "perm"].includes(actionData.duration.units) && typeof actionData.duration.value === "string") {
-          const duration = RollPF.safeRoll(actionData.duration.value || "0", rollData).total;
+          const duration = RollPF.safeRoll(actionData.duration.value || "0", htmlOptions.rollData).total;
           dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
       }

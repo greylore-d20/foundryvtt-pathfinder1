@@ -1,22 +1,7 @@
 import { ItemPF } from "../entity.js";
+import { PF1 } from "../../config.js";
 
 export class ItemFeatPF extends ItemPF {
-  prepareData() {
-    const itemData = super.prepareData();
-    const data = itemData.data;
-    const labels = this.labels;
-    const C = CONFIG.PF1;
-
-    labels.featType = C.featTypes[data.featType];
-
-    // Ability type
-    if (data.abilityType && data.abilityType !== "none") {
-      labels.abilityType = C.abilityTypes[data.abilityType].short;
-    } else if (labels.abilityType) {
-      delete labels.abilityType;
-    }
-  }
-
   /**
    * @param {boolean} active
    * @param {object} context Optional update context
@@ -33,6 +18,23 @@ export class ItemFeatPF extends ItemPF {
 
   get subType() {
     return this.data.data.featType;
+  }
+
+  /** @inheritdoc */
+  getLabels() {
+    const labels = super.getLabels();
+    const { featType, abilityType } = this.data.data;
+
+    labels.featType = PF1.featTypes[featType];
+
+    // Ability type
+    if (abilityType && abilityType !== "none") {
+      labels.abilityType = PF1.abilityTypes[abilityType].short;
+    } else if (labels.abilityType) {
+      delete labels.abilityType;
+    }
+
+    return labels;
   }
 
   getTypeChatData(data, labels, props) {

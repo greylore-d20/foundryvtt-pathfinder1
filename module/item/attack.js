@@ -732,7 +732,7 @@ export const getMessageData = async function (shared) {
   let extraText = "";
   if (shared.templateData.attacks.length > 0) extraText = shared.templateData.attacks[0].attackNotesHTML;
 
-  const itemChatData = this.getChatData(null, shared.rollData);
+  const itemChatData = this.getChatData({ rollData: shared.rollData }, { actionId: shared.action.id });
 
   // Get properties
   const properties = [...itemChatData.properties, ...game.pf1.ItemAttack.addGenericPropertyLabels.call(this, shared)];

@@ -1663,28 +1663,31 @@ export class ActorSheetPF extends ActorSheet {
   /* -------------------------------------------- */
 
   /**
-   * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching its description
+   * Toggle inline display of an item's summary/description by expanding or hiding info div
    *
-   * @param event
+   * @param {JQuery.ClickEvent<HTMLElement>} event - The click event on the item
    * @private
    */
   _onItemSummary(event) {
     event.preventDefault();
-    const li = $(event.currentTarget).parents(".item"),
-      item = this.document.items.get(li.attr("data-item-id")),
-      chatData = item.getChatData({ secrets: this.document.isOwner });
+    const li = $(event.currentTarget).parents(".item");
+    // Check whether pseudo-item belongs to another collection
+    const collection = li.attr("data-item-collection") ?? "items";
+    const item = this.document[collection].get(li.attr("data-item-id"));
+    const { description, shortDescription, properties } = item.getChatData({ secrets: this.document.isOwner });
 
     // Toggle summary
     if (li.hasClass("expanded")) {
       const summary = li.children(".item-summary");
       summary.slideUp(200, () => summary.remove());
     } else {
-      const div = $(`<div class="item-summary">${chatData.description.value}</div>`);
-      if (chatData.shortDescription?.length) {
-        div.append(TextEditor.enrichHTML(chatData.shortDescription, { rollData: item.getRollData() }));
+      const div = $(`<div class="item-summary">${description}</div>`);
+      // Add text description to spells
+      if (shortDescription?.length) {
+        div.append(shortDescription);
       }
       const props = $(`<div class="item-properties tag-list"></div>`);
-      chatData.properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
+      properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
       div.append(props);
       li.append(div.hide());
       div.slideDown(200);

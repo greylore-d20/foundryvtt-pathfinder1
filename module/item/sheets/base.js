@@ -1134,25 +1134,32 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   /**
-   * Handle rolling of an (sub-)item (such as an action) from the sheet, obtaining the item instance and dispatching its description
+   * Toggle inline display of an item's summary/description by expanding or hiding info div
    *
-   * @param event
+   * @param {JQuery.ClickEvent<HTMLElement>} event - The click event on the item
    * @private
    */
   _onItemSummary(event) {
     event.preventDefault();
     const li = $(event.currentTarget).closest(".item:not(.sheet)");
-    const item = this.object.items.get(li.attr("data-item-id"));
-    const chatData = item.getChatData({ secrets: this.parent ? this.parent.isOwner : this.isOwner });
+    // Check whether pseudo-item belongs to another collection
+    const collection = li.attr("data-item-collection") ?? "items";
+    const item = this.document[collection].get(li.attr("data-item-id"));
+    // For actions (embedded into a parent item), show only the action's summary instead of a complete one
+    const isAction = collection === "actions";
+    const { description, actionDescription, properties } = item.getChatData({
+      secrets: this.parent ? this.parent.isOwner : this.isOwner,
+    });
 
     // Toggle summary
     if (li.hasClass("expanded")) {
       const summary = li.children(".item-summary");
       summary.slideUp(200, () => summary.remove());
     } else {
-      const div = $(`<div class="item-summary">${chatData.description.value}</div>`);
+      const div = $(`<div class="item-summary">${isAction ? actionDescription : description}</div>`);
       const props = $(`<div class="item-properties tag-list"></div>`);
-      chatData.properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
+      // Transform properties into a tag list containing HTML, and append to div
+      properties?.forEach((p) => props.append(`<span class="tag">${p}</span>`));
       div.append(props);
       li.append(div.hide());
       div.slideDown(200);

@@ -384,6 +384,55 @@ export class ItemAction {
     await this.sheet?.render();
   }
 
+  /* -------------------------------------------- */
+  /*  Chat Data Generation												*/
+  /* -------------------------------------------- */
+
+  /**
+   * Generates {@link ChatData} for this action's parent item, but with this action's data,
+   * regardless of whether it is the first action or not.
+   *
+   * @param {object} [htmlOptions] - Options passed to {@link ItemPF#getChatData} affecting text enrichment
+   * @param {object} [chatDataOptions] - Options passed to {@link ItemPF#getChatData} affecting the chat data
+   * @returns {import("../entity.js").ChatData} Chat data for this action's parent and this action
+   */
+  getChatData(htmlOptions = {}, chatDataOptions = {}) {
+    return this.parent.getChatData(htmlOptions, { ...chatDataOptions, actionId: this.id });
+  }
+
+  /**
+   * Returns labels related to this particular action
+   *
+   * @returns {Record<string, string>} This action's labels
+   */
+  getLabels() {
+    const actionData = this.data;
+    const labels = {};
+
+    // Activation method
+    if (actionData.activation) {
+      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
+        ? CONFIG.PF1.abilityActivationTypes_unchained
+        : CONFIG.PF1.abilityActivationTypes;
+      const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy")
+        ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
+        : CONFIG.PF1.abilityActivationTypesPlurals;
+
+      const activation = game.settings.get("pf1", "unchainedActionEconomy")
+        ? actionData.unchainedAction.activation || {}
+        : actionData.activation || {};
+      if (activation && activation.cost > 1 && activationTypesPlural[activation.type] != null) {
+        labels.activation = [activation.cost.toString(), activationTypesPlural[activation.type]].filterJoin(" ");
+      } else if (activation) {
+        labels.activation = [
+          ["minute", "hour", "action"].includes(activation.type) && activation.cost ? activation.cost.toString() : "",
+          activationTypes[activation.type],
+        ].filterJoin(" ");
+      }
+    }
+    return labels;
+  }
+
   // -----------------------------------------------------------------------
 
   parseFormulaicAttacks({ formula = null } = {}) {

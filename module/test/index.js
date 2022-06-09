@@ -11,12 +11,10 @@ import { registerActorItemAttackTests } from "./actor-attacks.test.js";
 /**
  * Registers all `Quench` tests
  */
-export const registerTests = async () => {
-  Hooks.on("quenchReady", async () => {
-    registerActorBasicTests();
-    registerActorConditionsTests();
-    registerActorItemRaceTests();
-    registerActorItemClassTests();
-    registerActorItemAttackTests();
-  });
+export const registerTests = () => {
+  registerActorBasicTests();
+  registerActorConditionsTests();
+  registerActorItemRaceTests();
+  registerActorItemClassTests();
+  registerActorItemAttackTests();
 };

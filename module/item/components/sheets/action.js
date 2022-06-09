@@ -80,7 +80,7 @@ export class ItemActionSheet extends FormApplication {
     // Action Details
     data.itemName = data.item.name;
     data.isSpell = this.item.type === "spell";
-    data.canUseAmmo = this.item.data.data.usesAmmo !== undefined;
+    data.canUseAmmo = this.action.data.usesAmmo !== undefined;
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
     data.owner = this.item.isOwner;

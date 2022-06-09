@@ -9,6 +9,7 @@ import {
   convertWeightBack,
   calculateRange,
   keepUpdateArray,
+  diffObjectAndArray,
 } from "../lib.js";
 import { ItemChange } from "./components/change.js";
 import { ItemAction } from "./components/action.js";
@@ -104,7 +105,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {string[]} The keys of data variables to memorize between updates, for e.g. determining the difference in update.
    */
   get memoryVariables() {
-    return ["data.quantity", "data.level"];
+    return ["data.quantity", "data.level", "data.inventoryItems"];
   }
 
   get firstAction() {
@@ -849,10 +850,15 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    // Re-render sheets for all items in a container
-    for (const item of this.items ?? []) {
-      for (const app of Object.values(item.apps ?? {})) {
-        app.render();
+    // Call _onUpdate for changed items
+    for (const itemUpdateData of changed.data?.inventoryItems ?? []) {
+      const memoryItemData = this._memoryVariables["data.inventoryItems"]?.find((o) => o._id === itemUpdateData._id);
+      if (!memoryItemData) continue;
+
+      const diffData = diffObjectAndArray(memoryItemData, itemUpdateData);
+      if (!isObjectEmpty(diffData)) {
+        const item = this.items.get(itemUpdateData._id);
+        item._onUpdate(diffData, options, userId);
       }
     }
 

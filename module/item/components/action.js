@@ -298,7 +298,6 @@ export class ItemAction {
           damageMult: 0.5,
         },
       },
-      attackType: "weapon",
       nonlethal: false,
       usesAmmo: false,
       spellEffect: "",

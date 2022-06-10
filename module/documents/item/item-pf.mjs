@@ -276,10 +276,10 @@ export class ItemPF extends ItemBasePF {
    * @returns {ActiveEffect} An active effect associated with this item.
    */
   get effect() {
-    return this.actor.effects.find((o) => {
-      const origin = o.data.origin.split(".");
-      if (origin[2] === "Item" && origin[3] === this.id) return true;
-      return false;
+    return this.actor.effects.find((effect) => {
+      if (!effect.origin) return false;
+      // BUG: If origin is from another actor (duplicated actor), this can cause false positives/negatives.
+      return /\.Item\.(?<itemId>[^.]+)/.exec(effect.origin)?.groups.itemId === this.id;
     });
   }
 

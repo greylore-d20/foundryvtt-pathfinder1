@@ -216,32 +216,45 @@ export const alterRollData = function (shared, form = {}) {
  * @returns {ItemAttack_AttackData[]} The generated default attacks.
  */
 export const generateAttacks = function (shared) {
-  const attackName = shared.action.data.attackName;
+  const rollData = shared.rollData;
+  const action = rollData.action;
+  let attackName = action.attackName;
+  /** Counter for unnamed or other numbered attacks, to be incremented with each usage */
+  let unnamedAttackIndex = 0;
+  // Numbered attack for otherwise unnamed full attack, short name for single attack
+  attackName ||= shared.fullAttack
+    ? game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) })
+    : game.i18n.localize("PF1.Attack");
+
   const allAttacks = shared.fullAttack
-    ? shared.action.data.attackParts.reduce(
+    ? action.attackParts.reduce(
         (cur, r) => {
-          cur.push({ attackBonus: r[0], label: r[1] });
+          cur.push({
+            attackBonus: r[0],
+            // Use defined label, or fall back to continuously numbered default attack name
+            label: r[1] || game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
+          });
           return cur;
         },
-        [{ attackBonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }]
+        [{ attackBonus: "", label: attackName }]
       )
-    : [{ attackBonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }];
+    : [{ attackBonus: "", label: attackName }];
 
   // Formulaic extra attacks
   if (shared.fullAttack) {
-    const exAtkCountFormula = getProperty(this.data, "data.formulaicAttacks.count.formula"),
-      exAtkCount = RollPF.safeRoll(exAtkCountFormula, shared.rollData)?.total ?? 0,
-      exAtkBonusFormula = shared.action.data.formulaicAttacks?.bonus?.formula || "0";
+    const exAtkCountFormula = action.formulaicAttacks?.count?.formula,
+      exAtkCount = RollPF.safeRoll(exAtkCountFormula, rollData)?.total ?? 0,
+      exAtkBonusFormula = action.formulaicAttacks?.bonus?.formula || "0";
     if (exAtkCount > 0) {
       try {
-        const frollData = shared.rollData;
-        const fatlabel = this.data.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
+        const fatlabel = action.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
         for (let i = 0; i < exAtkCount; i++) {
-          frollData["formulaicAttack"] = i + 1; // Add and update attack counter
-          const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData).total;
+          rollData["formulaicAttack"] = i + 1; // Add and update attack counter
+          const bonus = RollPF.safeRoll(exAtkBonusFormula, rollData).total;
           allAttacks.push({
             attackBonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
-            label: fatlabel.format(i + 2),
+            // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
+            label: action.formulaicAttacks.label ? fatlabel.format(i + 1) : fatlabel.format((unnamedAttackIndex += 1)),
           });
         }
       } catch (err) {

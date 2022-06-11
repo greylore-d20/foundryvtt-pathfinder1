@@ -2365,57 +2365,66 @@ export class ActorPF extends ActorBasePF {
     return result;
   }
 
-  getDefenseHeaders() {
-    const data = this.system;
+  /**
+   * @param {object} options
+   * @param {boolean} options.damageResistances If false, damage resistances (DR, ER) are omitted.
+   * @param {boolean} options.damageVulnerabilities If false, damage vulnerabilities are omitted.
+   */
+  getDefenseHeaders({ damageResistances = true, damageVulnerabilities = true } = {}) {
+    const actorData = this.system;
     const headers = [];
 
     const reSplit = CONFIG.PF1.re.traitSeparator;
     const misc = [];
 
-    // Damage reduction
-    if (data.traits.dr.length) {
-      headers.push({ header: game.i18n.localize("PF1.DamRed"), value: data.traits.dr.split(reSplit) });
+    if (damageResistances) {
+      // Damage reduction
+      if (actorData.traits.dr.length) {
+        headers.push({ header: game.i18n.localize("PF1.DamRed"), value: actorData.traits.dr.split(reSplit) });
+      }
+      // Energy resistance
+      if (actorData.traits.eres.length) {
+        headers.push({ header: game.i18n.localize("PF1.EnRes"), value: actorData.traits.eres.split(reSplit) });
+      }
     }
-    // Energy resistance
-    if (data.traits.eres.length) {
-      headers.push({ header: game.i18n.localize("PF1.EnRes"), value: data.traits.eres.split(reSplit) });
-    }
-    // Damage vulnerabilities
-    if (data.traits.dv.value.length || data.traits.dv.custom.length) {
-      const value = [].concat(
-        data.traits.dv.value.map((obj) => {
-          return CONFIG.PF1.damageTypes[obj];
-        }),
-        data.traits.dv.custom.length > 0 ? data.traits.dv.custom.split(";") : []
-      );
-      headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: value });
+    if (damageVulnerabilities) {
+      // Damage vulnerabilities
+      if (actorData.traits.dv.value.length || actorData.traits.dv.custom.length) {
+        const value = [].concat(
+          actorData.traits.dv.value.map((obj) => {
+            return CONFIG.PF1.damageTypes[obj];
+          }),
+          actorData.traits.dv.custom.length > 0 ? actorData.traits.dv.custom.split(";") : []
+        );
+        headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: value });
+      }
     }
     // Condition resistance
-    if (data.traits.cres.length) {
-      headers.push({ header: game.i18n.localize("PF1.ConRes"), value: data.traits.cres.split(reSplit) });
+    if (actorData.traits.cres.length) {
+      headers.push({ header: game.i18n.localize("PF1.ConRes"), value: actorData.traits.cres.split(reSplit) });
     }
     // Immunities
     if (
-      data.traits.di.value.length ||
-      data.traits.di.custom.length ||
-      data.traits.ci.value.length ||
-      data.traits.ci.custom.length
+      actorData.traits.di.value.length ||
+      actorData.traits.di.custom.length ||
+      actorData.traits.ci.value.length ||
+      actorData.traits.ci.custom.length
     ) {
       const value = [].concat(
-        data.traits.di.value.map((obj) => {
+        actorData.traits.di.value.map((obj) => {
           return CONFIG.PF1.damageTypes[obj];
         }),
-        data.traits.di.custom.length > 0 ? data.traits.di.custom.split(";") : [],
-        data.traits.ci.value.map((obj) => {
+        actorData.traits.di.custom.length > 0 ? actorData.traits.di.custom.split(";") : [],
+        actorData.traits.ci.value.map((obj) => {
           return CONFIG.PF1.conditionTypes[obj];
         }),
-        data.traits.ci.custom.length > 0 ? data.traits.ci.custom.split(";") : []
+        actorData.traits.ci.custom.length > 0 ? actorData.traits.ci.custom.split(";") : []
       );
       headers.push({ header: game.i18n.localize("PF1.ImmunityPlural"), value: value });
     }
     // Spell Resistance
-    if (data.attributes.sr.total > 0) {
-      misc.push(game.i18n.format("PF1.SpellResistanceNote", { value: data.attributes.sr.total }));
+    if (actorData.attributes.sr.total > 0) {
+      misc.push(game.i18n.format("PF1.SpellResistanceNote", { value: actorData.attributes.sr.total }));
     }
 
     if (misc.length > 0) {
@@ -2561,7 +2570,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Roll saving throw
-    const props = this.getDefenseHeaders();
+    const props = this.getDefenseHeaders({ damageResistances: false, damageVulnerabilities: false });
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     const label = CONFIG.PF1.savingThrows[savingThrowId];
 

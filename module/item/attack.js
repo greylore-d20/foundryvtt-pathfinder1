@@ -213,20 +213,24 @@ export const alterRollData = function (shared, form = {}) {
  * Generates attacks for an item's action.
  *
  * @param {object} shared - Shared data between attack functions.
+ * @param {boolean} simulateAttack - Generate full attack data, e.g. as base data for an {@link AttackDialog}
  * @returns {ItemAttack_AttackData[]} The generated default attacks.
  */
-export const generateAttacks = function (shared) {
+export const generateAttacks = function (shared, simulateAttack = false) {
   const rollData = shared.rollData;
   const action = rollData.action;
-  let attackName = action.attackName;
-  /** Counter for unnamed or other numbered attacks, to be incremented with each usage */
-  let unnamedAttackIndex = 0;
-  // Numbered attack for otherwise unnamed full attack, short name for single attack
-  attackName ||= shared.fullAttack
-    ? game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) })
-    : game.i18n.localize("PF1.Attack");
 
-  const allAttacks = shared.fullAttack
+  /**
+   * Counter for unnamed or other numbered attacks, to be incremented with each usage.
+   * Starts at 1 to account for the base attack.
+   */
+  let unnamedAttackIndex = 1;
+
+  const attackName = action.attackName || game.i18n.format("PF1.FormulaAttack", { 0: unnamedAttackIndex });
+  // Use either natural fullAttack state, or force generation of all attacks via override
+  const fullAttack = simulateAttack || shared.fullAttack;
+
+  const allAttacks = fullAttack
     ? action.attackParts.reduce(
         (cur, r) => {
           cur.push({
@@ -241,20 +245,21 @@ export const generateAttacks = function (shared) {
     : [{ attackBonus: "", label: attackName }];
 
   // Formulaic extra attacks
-  if (shared.fullAttack) {
+  if (fullAttack) {
     const exAtkCountFormula = action.formulaicAttacks?.count?.formula,
       exAtkCount = RollPF.safeRoll(exAtkCountFormula, rollData)?.total ?? 0,
       exAtkBonusFormula = action.formulaicAttacks?.bonus?.formula || "0";
     if (exAtkCount > 0) {
       try {
-        const fatlabel = action.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
         for (let i = 0; i < exAtkCount; i++) {
           rollData["formulaicAttack"] = i + 1; // Add and update attack counter
           const bonus = RollPF.safeRoll(exAtkBonusFormula, rollData).total;
           allAttacks.push({
             attackBonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
             // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
-            label: action.formulaicAttacks.label ? fatlabel.format(i + 1) : fatlabel.format((unnamedAttackIndex += 1)),
+            label: action.formulaicAttacks.label
+              ? action.formulaicAttacks.label.format(i + 1)
+              : game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
           });
         }
       } catch (err) {
@@ -263,8 +268,8 @@ export const generateAttacks = function (shared) {
     }
   }
 
-  // Set ammo usage
-  if (shared.action.data.usesAmmo) {
+  // Set ammo usage if this is not a simulation
+  if (action.usesAmmo && !simulateAttack) {
     const ammoId = this.getFlag("pf1", "defaultAmmo");
     const item = this.actor.items.get(ammoId);
     const quantity = item?.data.data.quantity ?? 0;

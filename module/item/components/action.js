@@ -482,7 +482,7 @@ export class ItemAction {
    * @param root0.primaryAttack
    */
   async rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
-    const rollData = deepClone(data ?? this.getRollData());
+    const rollData = data ?? deepClone(this.getRollData());
     const itemData = rollData.item;
     const actionData = rollData.action;
 
@@ -625,7 +625,7 @@ export class ItemAction {
     rollData.critMult = 1;
     if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
-    if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.data.ability.damageMult;
+    if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.ability.damageMult;
     if (this.data.data.attackType === "natural" && primaryAttack === false && rollData.ablMult > 0)
       rollData.ablMult = 0.5;
 
@@ -700,7 +700,7 @@ export class ItemAction {
     conditionalParts = {},
     primaryAttack = true,
   } = {}) {
-    const rollData = deepClone(data ?? this.getRollData());
+    const rollData = data ?? deepClone(this.getRollData());
 
     if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Action.");
@@ -710,7 +710,7 @@ export class ItemAction {
     rollData.critMult = 1;
     if (critical) rollData.critMult = this.data.ability.critMult;
     // Determine ability multiplier
-    if (rollData.ablMult == null) rollData.ablMult = this.data.ability.damageMult;
+    if (rollData.ablMult == null) rollData.ablMult = rollData.action?.ability.damageMult;
     if (this.item.data.data.attackType === "natural" && primaryAttack === false && rollData.ablMult > 0)
       rollData.ablMult = 0.5;
 

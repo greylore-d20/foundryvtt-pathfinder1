@@ -123,9 +123,13 @@ export const alterRollData = function (shared, form = {}) {
   // Set held type
   setProperty(shared.rollData, "item.held", formData["held"] ?? "normal");
 
+  // Damage multiplier
+  if (formData["damage-ability-multiplier"] != null)
+    shared.rollData.action.ability.damageMult = formData["damage-ability-multiplier"];
+
   // Power Attack
   if (formData["power-attack"]) {
-    const basePowerAttackBonus = shared.rollData.item?.powerAttack?.damageBonus ?? 2;
+    const basePowerAttackBonus = shared.rollData.action?.powerAttack?.damageBonus ?? 2;
     let powerAttackBonus = (1 + Math.floor(shared.rollData.attributes.bab.total / 4)) * basePowerAttackBonus;
 
     // Get multiplier
@@ -133,7 +137,7 @@ export const alterRollData = function (shared, form = {}) {
     if (!powerAttackMultiplier) {
       powerAttackMultiplier = 1;
       if (this.data.data.attackType === "natural") {
-        if (shared.rollData.item?.primaryAttack) powerAttackMultiplier = shared.rollData.item.ability.damageMult;
+        if (shared.rollData.item?.primaryAttack) powerAttackMultiplier = shared.rollData.action.ability?.damageMult;
         else if (!shared.rollData.item?.primaryAttack) {
           powerAttackMultiplier = shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
         }
@@ -175,10 +179,6 @@ export const alterRollData = function (shared, form = {}) {
       else shared.conditionals.push(parseInt(idx));
     }
   });
-
-  // Damage multiplier
-  if (formData["damage-ability-multiplier"] != null)
-    shared.rollData.action.ability.damageMult = formData["damage-ability-multiplier"];
 
   // Apply secondary attack penalties
   if (shared.rollData.item.primaryAttack === false) {

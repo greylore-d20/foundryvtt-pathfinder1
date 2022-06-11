@@ -51,14 +51,26 @@ export class SquareHighlight {
 }
 
 /**
- * Highlights the reach of an attack for a token.
+ * An object containing highlights belonging to a specific attack
  *
- * @param {Token} token
- * @param {ItemPF} attack
- * @param action
- * @returns {AttackReachHighlight} Highlights for this attack
+ * @typedef {object} AttackReachHighlight
+ * @property {SquareHighlight} normal - Highlight for normal range
+ * @property {SquareHighlight} reach - Highlight for reach range
+ * @property {SquareHighlight[]} extra - Additional highlights
  */
-export const showAttackReach = function (token, attack, action) {
+
+/** @type {AttackReachHighlight|undefined} */
+let currentHighlight;
+
+/**
+ * Calculates the {@link AttackReachHighlight} for a token's attack.
+ *
+ * @param {Token} token - The token to calculate the attack reach for
+ * @param {import("../item/entity.js").ItemPF} attack - The attack to calculate the reach for
+ * @param {import("../item/components/action.js").ItemAction} action - The action to calculate the reach for
+ * @returns {AttackReachHighlight | undefined} Highlights for this attack, if any
+ */
+const getAttackReach = function (token, attack, action) {
   const grid = canvas.grid;
   const gridSize = grid.size;
   const tw = token.data.width;
@@ -163,6 +175,47 @@ export const showAttackReach = function (token, attack, action) {
 };
 
 /**
+ * Calculates and renders the {@link AttackReachHighlight} for a token's attack.
+ * If a highlight already exists, it will be removed.
+ *
+ * @param {Token} token - The token to calculate the attack reach for
+ * @param {import("../item/entity.js").ItemPF} attack - The attack to calculate the reach for
+ * @param {import("../item/components/action.js").ItemAction} action - The action to calculate the reach for
+ */
+export const showAttackReach = function (token, attack, action) {
+  // Clear previous highlight
+  clearHighlight();
+
+  const highlight = getAttackReach(token, attack, action);
+
+  // If a highlight could be created, make it the current highlight and render it
+  if (!highlight) return;
+  currentHighlight = highlight;
+  renderHighlight();
+};
+
+export const clearHighlight = function () {
+  if (currentHighlight) {
+    currentHighlight.normal.clear();
+    currentHighlight.reach.clear();
+    for (const h of currentHighlight.extra) {
+      h.clear();
+    }
+    currentHighlight = undefined;
+  }
+};
+
+const renderHighlight = function () {
+  if (currentHighlight) {
+    currentHighlight.normal.render();
+    currentHighlight.reach.render();
+    for (const h of currentHighlight.extra) {
+      h.render();
+    }
+  }
+};
+
+/**
  * Returns a token belonging to either an actor's UUID or a token's UUID
  *
  * @async
@@ -189,18 +242,6 @@ export function addReachListeners(html) {
 }
 
 /**
- * An object containing highlights belonging to a specific attack
- *
- * @typedef {object} AttackReachHighlight
- * @property {SquareHighlight} normal - Highlight for normal range
- * @property {SquareHighlight} reach - Highlight for reach range
- * @property {SquareHighlight[]} extra - Additional highlights
- */
-
-/** @type {AttackReachHighlight|undefined} */
-let currentHighlight;
-
-/**
  * Handle display of reach when a chat card's reach element is hovered
  *
  * @param {JQuery.MouseEnterEvent<HTMLElement>} event - A `mouseEnter` event
@@ -217,16 +258,7 @@ const onMouseEnterReach = (event) => {
     if (!token) return;
     const item = token.actor.allItems.find((item) => item.id === itemId);
     if (!item) return;
-    if (!game.settings.get("pf1", "hideReachMeasurements"))
-      currentHighlight = showAttackReach(token, item, item.actions.get(actionId));
-
-    if (!currentHighlight) return;
-
-    currentHighlight.normal.render();
-    currentHighlight.reach.render();
-    currentHighlight.extra.forEach((hl) => {
-      hl.render();
-    });
+    if (!game.settings.get("pf1", "hideReachMeasurements")) showAttackReach(token, item, item.actions.get(actionId));
   });
 };
 
@@ -237,12 +269,7 @@ const onMouseEnterReach = (event) => {
  */
 const onMouseLeaveReach = (event) => {
   event.preventDefault();
-  if (currentHighlight) {
-    currentHighlight.normal.clear(true);
-    currentHighlight.reach.clear(true);
-    currentHighlight.extra.forEach((hl) => hl.clear(true));
-    currentHighlight = undefined;
-  }
+  clearHighlight();
 };
 
 const getReachSquares = function (token, range, minRange = 0, addSquareFunction = null, options) {

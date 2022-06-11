@@ -490,15 +490,21 @@ export class ActorPF extends ActorBasePF {
     setProperty(actorData, "attributes.hd.total", actorData.details.level.value);
 
     // Reset class skills
-    for (const [k, s] of Object.entries(actorData.skills)) {
-      if (!s) continue;
-      const isClassSkill = this.data.items.reduce((cur, o) => {
-        if ((o.data.data.classSkills || {})[k] === true) return true;
-        return cur;
-      }, false);
-      actorData.skills[k].cs = isClassSkill;
-      for (const k2 of Object.keys(s.subSkills ?? {})) {
-        setProperty(s, `subSkills.${k2}.cs`, isClassSkill);
+    {
+      const skillSet = new Set();
+      const testObjectEntries = Array.from(this.items);
+      testObjectEntries.filter(actorItems => ["class", "race", "feat"].includes(actorItems.type)).forEach((relevantActorItems) => {
+        for (const [classSkillName, isClassSkill] of Object.entries(relevantActorItems.data.data.classSkills || {})) {
+          if (isClassSkill === true) skillSet.add(classSkillName);
+        }
+      });
+
+      for (const [k, s] of Object.entries(actorData.skills)) {
+        if (!s) continue;
+        actorData.skills[k].cs = skillSet.has(k);
+        for (const k2 of Object.keys(s.subSkills ?? {})) {
+          setProperty(s, `subSkills.${k2}.cs`, skillSet.has(k));
+        }
       }
     }
   }

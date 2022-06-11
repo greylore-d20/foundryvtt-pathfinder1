@@ -493,7 +493,7 @@ export class ActorPF extends ActorBasePF {
     {
       const skillSet = new Set();
       Array.from(this.items)
-        .filter(actorItems => ["class", "race", "feat"]
+        .filter((actorItems) => ["class", "race", "feat"]
         .includes(actorItems.type))
         .forEach((relevantActorItems) => {
           for (const [classSkillName, isClassSkill] of Object.entries(relevantActorItems.data.data.classSkills || {})) {

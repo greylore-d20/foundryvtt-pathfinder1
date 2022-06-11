@@ -599,9 +599,10 @@ export class ItemAction {
       parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
     }
 
-    if ((rollData.d20 ?? "") === "") rollData.d20 = "1d20";
-
-    const roll = await RollPF.create([rollData.d20, ...parts.filter((p) => !!p)].join("+"), rollData).evaluate();
+    const roll = await RollPF.create(
+      [rollData.d20 || "1d20", ...parts.filter((p) => !!p)].join("+"),
+      rollData
+    ).evaluate();
     return roll;
   }
 

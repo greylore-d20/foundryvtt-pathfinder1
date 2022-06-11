@@ -1,5 +1,3 @@
-import { PF1_HelpBrowser } from "./help-browser.js";
-
 export class ScriptEditor extends FormApplication {
   constructor(options = {}) {
     super(options);
@@ -63,7 +61,7 @@ export class ScriptEditor extends FormApplication {
   _openHelpBrowser(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    PF1_HelpBrowser.open(a.dataset.url);
+    game.pf1.helpBrowser.openUrl(a.dataset.url);
   }
 
   _updateObject(event, formData) {

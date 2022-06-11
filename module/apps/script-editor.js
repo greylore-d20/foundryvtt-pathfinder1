@@ -36,7 +36,7 @@ export class ScriptEditor extends FormApplication {
     data.isScriptCall = this.isScriptCall;
 
     data.canEdit = {
-      name: data.name != null,
+      name: this.isScriptCall,
     };
 
     return data;

@@ -294,11 +294,13 @@ export class AttackDialog extends Application {
 
   initAttacks() {
     this.attacks = generateAttacks
-      .call(this.object, { rollData: this.rollData }, true)
+      .call(this.object.item, { rollData: this.rollData }, true)
       .map(({ label, attackBonus }) => ({
         label: label,
         attackBonus: attackBonus,
+        // Reduce formula to a single number for easier display
         attackBonusTotal: RollPF.safeTotal(attackBonus, this.rollData),
+        // Ammo data is discarded in favour of specialised handling via setAttackAmmo
         ammo: null,
       }));
 

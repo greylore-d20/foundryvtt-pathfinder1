@@ -208,15 +208,16 @@ export const alterRollData = function (shared, form = {}) {
  * @property {string} label - The attack's name
  * @property {number|string|undefined} [attackBonus] - An attack bonus specific to this attack
  * @property {number|string|undefined} [damageBonus] - A damage bonus specific to this attack
+ * @property {string|null} [ammo] - The ID of the ammo item used
  */
 /**
  * Generates attacks for an item's action.
  *
  * @param {object} shared - Shared data between attack functions.
- * @param {boolean} simulateAttack - Generate full attack data, e.g. as base data for an {@link AttackDialog}
+ * @param {boolean} [forceFullAttack=false] - Generate full attack data, e.g. as base data for an {@link AttackDialog}
  * @returns {ItemAttack_AttackData[]} The generated default attacks.
  */
-export const generateAttacks = function (shared, simulateAttack = false) {
+export const generateAttacks = function (shared, forceFullAttack = false) {
   const rollData = shared.rollData;
   const action = rollData.action;
 
@@ -228,7 +229,7 @@ export const generateAttacks = function (shared, simulateAttack = false) {
 
   const attackName = action.attackName || game.i18n.format("PF1.FormulaAttack", { 0: unnamedAttackIndex });
   // Use either natural fullAttack state, or force generation of all attacks via override
-  const fullAttack = simulateAttack || shared.fullAttack;
+  const fullAttack = forceFullAttack || shared.fullAttack;
 
   const allAttacks = fullAttack
     ? action.attackParts.reduce(
@@ -268,12 +269,12 @@ export const generateAttacks = function (shared, simulateAttack = false) {
     }
   }
 
-  // Set ammo usage if this is not a simulation
-  if (action.usesAmmo && !simulateAttack) {
+  // Set ammo usage
+  if (action.usesAmmo) {
     const ammoId = this.getFlag("pf1", "defaultAmmo");
     const item = this.actor.items.get(ammoId);
     const quantity = item?.data.data.quantity ?? 0;
-    const abundant = item?.data.flags.pf1.abundant;
+    const abundant = item?.data.flags.pf1?.abundant;
     for (let a = 0; a < allAttacks.length; a++) {
       const atk = allAttacks[a];
       if (abundant || quantity >= a + 1) atk.ammo = ammoId;

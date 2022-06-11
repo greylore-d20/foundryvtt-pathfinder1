@@ -91,6 +91,7 @@ import {
   getFirstActiveGM,
   isMinimumCoreVersion,
   refreshActors,
+  diffObjectAndArray,
 } from "./module/lib.js";
 import { getAbilityModifier } from "./module/actor/lib.mjs";
 import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
@@ -239,6 +240,7 @@ Hooks.once("init", function () {
       findInCompendia,
       getFirstActiveGM,
       refreshActors,
+      diffObjectAndArray,
     },
     // Components
     documentComponents: {

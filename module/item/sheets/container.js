@@ -327,9 +327,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     html.find(".item-delete").click(this._onItemDelete.bind(this));
     html.find(".item-take").click(this._onItemTake.bind(this));
 
-    // Item summaries
-    html.find(".item .item-name h4").click((event) => this._onItemSummary(event));
-
     // Quick edit item
     html.find(".item .item-name h4").contextmenu(this._onItemEdit.bind(this));
 
@@ -594,33 +591,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const curQuantity = getProperty(item.data, "data.quantity") || 0;
     const newQuantity = Math.max(0, curQuantity + add);
     return item.update({ "data.quantity": newQuantity });
-  }
-
-  /**
-   * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
-   *
-   * @param event
-   * @private
-   */
-  _onItemSummary(event) {
-    event.preventDefault();
-    const li = $(event.currentTarget).closest(".item"),
-      item = this.item.getContainerContent(li.attr("data-item-id")),
-      chatData = item.getChatData({ secrets: this.actor ? this.actor.owner : this.owner });
-
-    // Toggle summary
-    if (li.hasClass("expanded")) {
-      const summary = li.children(".item-summary");
-      summary.slideUp(200, () => summary.remove());
-    } else {
-      const div = $(`<div class="item-summary">${chatData.description.value}</div>`);
-      const props = $(`<div class="item-properties tag-list"></div>`);
-      chatData.properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
-      div.append(props);
-      li.append(div.hide());
-      div.slideDown(200);
-    }
-    li.toggleClass("expanded");
   }
 
   async _quickItemActionControl(event) {

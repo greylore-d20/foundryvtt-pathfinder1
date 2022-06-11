@@ -824,25 +824,12 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
     // Item summaries
-    html.find(".item .item-name h4").on("click", this._onItemSummary.bind(this));
+    html.find(".item .item-name h4").on("click", (event) => this._onItemSummary(event));
 
     // Linked item clicks
     html
       .find(".tab[data-tab='links'] .links-item[data-link] .links-item-name")
       .on("click", this._openLinkedItem.bind(this));
-
-    // Search box
-    if (["container"].includes(this.item.data.type)) {
-      const sb = html.find(".search-input");
-      sb.on("keyup change", this._searchFilterChange.bind(this));
-      sb.on("compositionstart compositionend", this._searchFilterCompositioning.bind(this)); // for IME
-      this.searchRefresh = true;
-      // Filter tabs on followup refreshes
-      sb.each(function () {
-        if (this.value.length > 0) $(this).change();
-      });
-      html.find(".clear-search").on("click", this._clearSearch.bind(this));
-    }
 
     /* -------------------------------------------- */
     /*  Actions
@@ -1154,20 +1141,19 @@ export class ItemSheetPF extends ItemSheet {
    */
   _onItemSummary(event) {
     event.preventDefault();
-    const li = $(event.currentTarget).parents(".item:not(.sheet)");
-    const item = this.item[li.attr("data-item-collection")].get(li.attr("data-item-id")),
-      description = item.data.description,
-      rollData = typeof item.getRollData === "function" ? item.getRollData() : this.getRollData();
+    const li = $(event.currentTarget).closest(".item:not(.sheet)");
+    const item = this.object.items.get(li.attr("data-item-id"));
+    const chatData = item.getChatData({ secrets: this.parent ? this.parent.isOwner : this.isOwner });
 
     // Toggle summary
     if (li.hasClass("expanded")) {
       const summary = li.children(".item-summary");
       summary.slideUp(200, () => summary.remove());
     } else {
-      const div = $(`<div class="item-summary"></div>`);
-      if (description?.length) {
-        div.append(TextEditor.enrichHTML(description, { rollData }));
-      }
+      const div = $(`<div class="item-summary">${chatData.description.value}</div>`);
+      const props = $(`<div class="item-properties tag-list"></div>`);
+      chatData.properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
+      div.append(props);
       li.append(div.hide());
       div.slideDown(200);
     }

@@ -773,7 +773,7 @@ export const getMessageData = async function (shared) {
       properties: props,
       hasProperties: props.length > 0,
       item: this.data,
-      actor: this.parent.data,
+      actor: this.parentActor.data,
       hasSave: shared.action.hasSave,
       description: this.fullDescription,
       rollData: shared.rollData,
@@ -817,7 +817,10 @@ export const getMessageData = async function (shared) {
   if (this.type === "spell" && this.parent != null) {
     // Spell failure
     if (this.parent.spellFailure > 0 && this.data.data.components.somatic) {
-      const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
+      const spellbook = getProperty(
+        this.parentActor.data,
+        `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
+      );
       if (spellbook && spellbook.arcaneSpellFailure) {
         const roll = RollPF.safeRoll("1d100");
         shared.templateData.spellFailure = roll.total;
@@ -1008,7 +1011,7 @@ export const executeScriptCalls = async function (shared) {
   const attackData = shared;
 
   // Deprecated for V10
-  const actorName = this.actor.name;
+  const actorName = this.parentActor.name;
   const itemName = this.name;
   const deprecationWarning = function (propName, newName) {
     console.warn(

@@ -9,6 +9,7 @@ import {
   convertWeightBack,
   calculateRange,
   keepUpdateArray,
+  diffObjectAndArray,
 } from "../lib.js";
 import { ItemChange } from "./components/change.js";
 import { ItemAction } from "./components/action.js";
@@ -104,7 +105,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {string[]} The keys of data variables to memorize between updates, for e.g. determining the difference in update.
    */
   get memoryVariables() {
-    return ["data.quantity", "data.level"];
+    return ["data.quantity", "data.level", "data.inventoryItems"];
   }
 
   get firstAction() {
@@ -792,12 +793,19 @@ export class ItemPF extends ItemBasePF {
   }
 
   memorizeVariables() {
+    if (this._memoryVariables != null) return;
+
     const memKeys = this.memoryVariables;
     this._memoryVariables = {};
     for (const k of memKeys) {
       if (hasProperty(this.data, k)) {
         this._memoryVariables[k] = getProperty(this.data, k);
       }
+    }
+
+    // Memorize variables recursively on container items
+    for (const item of this.items ?? []) {
+      item.memorizeVariables();
     }
   }
 
@@ -849,6 +857,19 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
+    // Call _onUpdate for changed items
+    for (let a = 0; a < (changed.data?.inventoryItems ?? []).length; a++) {
+      const itemUpdateData = changed.data?.inventoryItems[a];
+      const memoryItemData = this._memoryVariables["data.inventoryItems"]?.[a];
+      if (!memoryItemData) continue;
+
+      const diffData = diffObjectAndArray(memoryItemData, itemUpdateData, { keepLength: true });
+      if (!isObjectEmpty(diffData)) {
+        const item = this.items.get(memoryItemData._id);
+        item._onUpdate(diffData, options, userId);
+      }
+    }
+
     // Forget memory variables
     this._memoryVariables = null;
   }
@@ -867,7 +888,7 @@ export class ItemPF extends ItemBasePF {
 
   _updateMaxUses() {
     // No actor? No charges!
-    if (!this.parent) return;
+    if (!this.parentActor) return;
 
     // No charges? No charges!
     if (!["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"))) return;
@@ -929,7 +950,7 @@ export class ItemPF extends ItemBasePF {
     if (allowed === false) return;
 
     // Basic template rendering data
-    const token = this.parent.token;
+    const token = this.parentActor.token;
     const templateData = {
       actor: this.parent,
       tokenId: token ? token.uuid : null,
@@ -1303,7 +1324,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {ItemChange[]} The resulting changes.
    */
   getContextChanges(context = "attack") {
-    let result = this.actor.changes;
+    let result = this.parentActor.changes;
 
     switch (context) {
       case "mattack":
@@ -1412,7 +1433,8 @@ export class ItemPF extends ItemBasePF {
    * @returns {object} An object with data to be used in rolls in relation to this item.
    */
   getRollData() {
-    const result = this.parent != null && this.parent.data ? this.parent.getRollData() : {};
+    const parentActor = this.parentActor;
+    const result = parentActor != null && parentActor.data ? parentActor.getRollData() : {};
 
     result.item = deepClone(this.data.data);
 

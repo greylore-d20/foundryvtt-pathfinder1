@@ -211,6 +211,9 @@ export class ItemAction {
   getRollData() {
     const result = this.item.getRollData();
     result.action = deepClone(this.data);
+
+    result.dc = this.hasSave ? this.getDC(result) : 0;
+
     return result;
   }
 
@@ -280,7 +283,7 @@ export class ItemAction {
         critMult: 2,
       },
       save: {
-        dc: 0,
+        dc: "",
         type: "",
         description: "",
       },
@@ -403,11 +406,14 @@ export class ItemAction {
   /**
    * Returns labels related to this particular action
    *
+   * @param {object} [options]
+   * @param {object} [options.rollData] - Pre-determined roll data. If not provided, finds the action's own roll data.
    * @returns {Record<string, string>} This action's labels
    */
-  getLabels() {
+  getLabels(options = {}) {
     const actionData = this.data;
     const labels = {};
+    const rollData = options.rollData ?? this.getRollData();
 
     // Activation method
     if (actionData.activation) {
@@ -430,6 +436,12 @@ export class ItemAction {
         ].filterJoin(" ");
       }
     }
+
+    // Difficulty Class
+    if (this.hasSave) {
+      labels.save = `DC ${this.getDC()}`;
+    }
+
     return labels;
   }
 

@@ -149,7 +149,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   get isSingleUse() {
-    return ["single", undefined].includes(this.data.data.uses?.per);
+    return this.data.data.uses?.per === "single";
   }
 
   get isCharged() {
@@ -445,16 +445,8 @@ export class ItemPF extends ItemBasePF {
   }
 
   prepareDerivedItemData() {
-    const action = this.firstAction;
-
     // Update maximum uses
     this._updateMaxUses();
-
-    // Add saving throw DC label
-    if (action?.data.actionType !== undefined && action?.hasSave) {
-      // Save DC
-      this.labels.save = `DC ${action.getDC()}`;
-    }
   }
 
   /**
@@ -1129,7 +1121,7 @@ export class ItemPF extends ItemBasePF {
    */
   getTypeChatData(data, labels, props) {
     // Charges as used by most item types, except spells
-    if (this.isCharged && !this.data.data.atWill) {
+    if (this.isCharged) {
       props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);
     }
   }

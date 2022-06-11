@@ -1,5 +1,6 @@
 import { ItemPF } from "../entity.js";
 import { calculateRange } from "../../lib";
+import { RollPF } from "../../roll.js";
 
 export class ItemSpellPF extends ItemPF {
   prepareData() {
@@ -364,6 +365,7 @@ export class ItemSpellPF extends ItemPF {
   }
 
   static async toConsumable(origData, type) {
+    const actionData = origData.data.actions?.[0] ?? {};
     const data = {
       type: "consumable",
       name: origData.name,
@@ -397,8 +399,10 @@ export class ItemSpellPF extends ItemPF {
       data["data.hardness"] = 1;
       data["data.hp.max"] = 1;
       data["data.hp.value"] = 1;
-      data["data.range.value"] = 0;
-      data["data.range.units"] = "personal";
+      action.range = {
+        value: 0,
+        units: "personal",
+      };
       action.name = game.i18n.localize("PF1.Drink");
       action.img = data.img;
     } else if (type === "scroll") {
@@ -427,29 +431,38 @@ export class ItemSpellPF extends ItemPF {
     action.unchainedAction.activation.type = "action";
     action.unchainedAction.activation.cost = 2;
 
-    // Set measure template
+    // Set measure template and range
     if (type !== "potion") {
-      action.measureTemplate = origData.data.measureTemplate;
+      action.measureTemplate = actionData.measureTemplate;
+      if (["close", "medium", "long"].includes(actionData.range.units)) {
+        action.range = {
+          units: "ft",
+          value: RollPF.safeTotal(CONFIG.PF1.spellRangeFormulas[actionData.range.units], origData).toString(),
+        };
+      } else {
+        action.range = actionData.range;
+      }
     }
 
     // Set damage formula
     action.actionType = origData.data.actionType;
-    for (const d of origData.data.damage.parts) {
+    for (const d of actionData.damage?.parts ?? []) {
       action.damage.parts.push([this._replaceConsumableConversionString(d[0], origData), d[1]]);
     }
 
     // Set saves
-    action.save.description = origData.data.save.description;
-    action.save.type = origData.data.save.type;
+    action.save.description = actionData.save.description;
+    action.save.type = actionData.save.type;
     action.save.dc = `10 + ${origData.sl}[${game.i18n.localize("PF1.SpellLevel")}] + ${Math.floor(
       origData.sl / 2
     )}[${game.i18n.localize("PF1.SpellcastingAbility")}]`;
 
     // Copy variables
-    action.attackNotes = origData.data.attackNotes;
-    action.effectNotes = origData.data.effectNotes;
-    action.attackBonus = origData.data.attackBonus;
-    action.critConfirmBonus = origData.data.critConfirmBonus;
+    action.actionType = actionData.actionType;
+    action.attackNotes = actionData.attackNotes;
+    action.effectNotes = actionData.effectNotes;
+    action.attackBonus = actionData.attackBonus;
+    action.critConfirmBonus = actionData.critConfirmBonus;
     data["data.aura.school"] = origData.data.school;
 
     // Replace attack and effect formula data

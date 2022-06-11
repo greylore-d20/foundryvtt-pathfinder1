@@ -492,12 +492,14 @@ export class ActorPF extends ActorBasePF {
     // Reset class skills
     {
       const skillSet = new Set();
-      const testObjectEntries = Array.from(this.items);
-      testObjectEntries.filter(actorItems => ["class", "race", "feat"].includes(actorItems.type)).forEach((relevantActorItems) => {
-        for (const [classSkillName, isClassSkill] of Object.entries(relevantActorItems.data.data.classSkills || {})) {
-          if (isClassSkill === true) skillSet.add(classSkillName);
-        }
-      });
+      Array.from(this.items)
+        .filter(actorItems => ["class", "race", "feat"]
+        .includes(actorItems.type))
+        .forEach((relevantActorItems) => {
+          for (const [classSkillName, isClassSkill] of Object.entries(relevantActorItems.data.data.classSkills || {})) {
+            if (isClassSkill === true) skillSet.add(classSkillName);
+          }
+        });
 
       for (const [k, s] of Object.entries(actorData.skills)) {
         if (!s) continue;

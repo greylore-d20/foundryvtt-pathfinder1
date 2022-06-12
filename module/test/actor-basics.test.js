@@ -11,8 +11,9 @@ export const registerActorBasicTests = () => {
     async (context) => {
       const { describe, it, expect, before, after } = context;
       /**
-       * @type {object}
        * Handles a shared context to pass between functions
+       *
+       * @type {object}
        */
       const shared = {};
       /** @type {ActorPF} */

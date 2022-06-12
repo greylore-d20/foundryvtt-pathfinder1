@@ -245,8 +245,9 @@ export const registerActorBasicTests = () => {
           /** @type {ChatMessage} */
           let roll;
           before(async () => {
+            combat = await Combat.create({});
+            await combat.activate();
             const combatResult = await actor.rollInitiative({ createCombatants: true, skipDialog: true });
-            combat = combatResult.combat;
             messages.push(...combatResult.messages);
             roll = combatResult.messages[0];
             combatant = combat.combatants.find((o) => o.actor.id === actor.id);

@@ -212,6 +212,105 @@ export const registerActorItemAttackTests = () => {
         // ---------------------------------- //
         unitTest_renderActorSheet(shared, context);
       });
+
+      describe("composite longbow", function () {
+        const items = {};
+        let originalError;
+        const errorNotifications = [];
+        before(async () => {
+          originalError = ui.notifications.error;
+          ui.notifications.error = (message, options) => {
+            errorNotifications.push(message);
+            return originalError.call(ui.notifications, message, options);
+          };
+          items.longbow = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Composite Longbow");
+        });
+        after(() => {
+          ui.notifications.error = originalError;
+        });
+
+        it("should have added an item", function () {
+          expect(actor.items.getName("Composite Longbow")).to.be.ok;
+        });
+
+        it("should not be able to attack without arrows", async function () {
+          expect(await items.longbow.useAttack({ skipDialog: true })).to.be.undefined;
+          expect(errorNotifications.pop()).to.be.equal(game.i18n.localize("PF1.AmmoDepleted"));
+        });
+
+        describe("attack without ammo usage", function () {
+          let roll;
+          before(async () => {
+            await items.longbow.firstAction.update({ usesAmmo: false });
+            roll = await items.longbow.useAttack({ skipDialog: true });
+            messages.push(roll);
+          });
+
+          it("should be a ChatMessage", function () {
+            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
+          });
+          it("should have the correct attack formula", function () {
+            expect(roll.data.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal("1d20 + 2[Dexterity]");
+          });
+          it("should have the correct damage formula", function () {
+            expect(roll.data.flags.pf1.metadata.rolls.attacks[0].damage[0].roll.formula).to.equal(
+              "1d8 + min(4,0)[Strength]"
+            );
+          });
+        });
+
+        describe("attack with ammo usage and ammo present", function () {
+          let roll;
+          before(async () => {
+            await items.longbow.firstAction.update({ usesAmmo: true });
+            items.arrows = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Arrow");
+            await items.longbow.update({ "flags.pf1.defaultAmmo": items.arrows.id });
+            await items.arrows.update({ "flags.pf1.abundant": false });
+            roll = await items.longbow.useAttack({ skipDialog: true, chatMessage: false });
+            messages.push(roll);
+          });
+
+          it("should be an object", function () {
+            expect(roll).to.be.an("object");
+          });
+          it("should have the correct attack formula", function () {
+            expect(roll.chatData["flags.pf1.metadata"].rolls.attacks[0].attack.formula).to.equal("1d20 + 2[Dexterity]");
+          });
+          it("should have the correct damage formula", function () {
+            expect(roll.chatData["flags.pf1.metadata"].rolls.attacks[0].damage[0].roll.formula).to.equal(
+              "1d8 + min(4,0)[Strength]"
+            );
+          });
+          it("should use ammo", function () {
+            expect(items.arrows.data.data.quantity).to.equal(19);
+          });
+        });
+
+        describe("attack with higher BAB and ammo present", function () {
+          let roll;
+          before(async () => {
+            items.fighterClass = await addCompendiumItemToActor(actor, "pf1.classes", "Fighter", {
+              data: { level: 10 },
+            });
+            roll = await items.longbow.useAttack({ skipDialog: true });
+            messages.push(roll);
+          });
+          after(async () => {
+            await items.fighterClass.delete();
+          });
+
+          it("should be a ChatMessage", function () {
+            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
+          });
+          it("should have the correct attack formula", function () {
+            expect(roll.data.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal(
+              "1d20 + 10[Base Attack Bonus] + 2[Dexterity]"
+            );
+            // TODO: Add test for iterative attacks
+            // TODO: Add test for additional ammo usage
+          });
+        });
+      });
     },
     { displayName: "PF1: Actor Attack Item Tests" }
   );

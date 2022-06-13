@@ -614,7 +614,7 @@ export class ItemAction {
     const roll = await RollPF.create(
       [rollData.d20 || "1d20", ...parts.filter((p) => !!p)].join("+"),
       rollData
-    ).evaluate();
+    ).evaluate({ async: true });
     return roll;
   }
 
@@ -687,7 +687,7 @@ export class ItemAction {
     rollData.item = itemData;
     const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
 
-    const roll = await RollPF.create(itemData.formula, rollData).evaluate();
+    const roll = await RollPF.create(itemData.formula, rollData).evaluate({ async: true });
     return roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: this.parent }),
       flavor: itemData.chatFlavor || title,

@@ -1,3 +1,5 @@
+import { generateAttacks } from "./attack.js";
+
 export class AttackDialog extends Application {
   constructor(object, rollData = null, options = {}) {
     super(options);
@@ -59,8 +61,9 @@ export class AttackDialog extends Application {
 
   static get defaultAttack() {
     return {
-      name: "",
-      bonus: 0,
+      label: "",
+      attackBonus: 0,
+      attackBonusTotal: 0,
       ammo: null,
     };
   }
@@ -180,8 +183,8 @@ export class AttackDialog extends Application {
           0,
           mergeObject(this.constructor.defaultAttack, {
             id: elem.name,
-            name: game.i18n.localize(translationString[elem.name]),
-            bonus: 0,
+            label: game.i18n.localize(translationString[elem.name]),
+            attackBonusTotal: "", // Don't show anything in the mod field, as the data is not updated live
           })
         );
         this.setAttackAmmo(place, this.object.item.getFlag("pf1", "defaultAmmo"));
@@ -290,50 +293,16 @@ export class AttackDialog extends Application {
   }
 
   initAttacks() {
-    const result = [];
-
-    // Get normal attack
-    result.push(
-      mergeObject(this.constructor.defaultAttack, {
-        name: this.object.data.attackName || game.i18n.format("PF1.FormulaAttack", { 0: 1 }),
-      })
-    );
-
-    // Get static extra attacks
-    let curAttackNumber = 1;
-    for (const atk of this.object.data.attackParts ?? []) {
-      result.push(
-        mergeObject(this.constructor.defaultAttack, {
-          name: atk[1] || game.i18n.format("PF1.FormulaAttack", { 0: curAttackNumber + 1 }),
-          bonus: RollPF.safeTotal(atk[0], this.rollData),
-        })
-      );
-      curAttackNumber++;
-    }
-
-    // Get formulaic extra attacks
-    const attackFormulae = {
-      count: this.object.data.formulaicAttacks?.count?.formula ?? null,
-      bonus: this.object.data.formulaicAttacks?.bonus?.formula || "0",
-    };
-    const atkCount = RollPF.safeTotal(attackFormulae.count, this.rollData) || 0;
-    for (let a = 0; a < atkCount; a++) {
-      this.rollData.formulaicAttack = a + 1;
-      const bonus = RollPF.safeTotal(attackFormulae.bonus, this.rollData);
-      const name = game.i18n.format(this.object.data.formulaicAttacks?.label || "PF1.FormulaAttack", {
-        0: curAttackNumber + 1,
-      });
-      result.push(
-        mergeObject(this.constructor.defaultAttack, {
-          name,
-          bonus,
-        })
-      );
-      curAttackNumber++;
-    }
-    if (this.rollData.formulaicAttack !== undefined) delete this.rollData.formulaicAttack;
-
-    this.attacks = result;
+    this.attacks = generateAttacks
+      .call(this.object.item, { rollData: this.rollData }, true)
+      .map(({ label, attackBonus }) => ({
+        label: label,
+        attackBonus: attackBonus,
+        // Reduce formula to a single number for easier display
+        attackBonusTotal: RollPF.safeTotal(attackBonus, this.rollData),
+        // Ammo data is discarded in favour of specialised handling via setAttackAmmo
+        ammo: null,
+      }));
 
     // Set ammo usage
     const ammoId = this.object.item.getFlag("pf1", "defaultAmmo");
@@ -360,8 +329,8 @@ export class AttackDialog extends Application {
     return this.attacks.map((o) => {
       return {
         id: o.id,
-        label: o.name,
-        attackBonus: o.bonus,
+        label: o.label,
+        attackBonus: o.attackBonus,
         ammo: o.ammo?.data._id,
       };
     });

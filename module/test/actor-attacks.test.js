@@ -11,8 +11,9 @@ export const registerActorItemAttackTests = () => {
       const { describe, it, expect, before, after } = context;
 
       /**
-       * @type {object}
        * Handles a shared context to pass between functions
+       *
+       * @type {object}
        */
       const shared = {};
       /** @type {ActorPF} */
@@ -145,20 +146,22 @@ export const registerActorItemAttackTests = () => {
               type: "attack",
               name: "Bite",
               data: {
+                attackType: "natural",
+                primaryAttack: true,
                 actions: [
                   mergeObject(rawActionData, {
                     name: "Bite",
                     actionType: "mwak",
                     damage: {
-                      parts: [["sizeRoll(1, 6, @size)", "B/P/S"]],
+                      parts: [
+                        ["sizeRoll(1, 6, @size)", { custom: "", values: ["bludgeoning", "piercing", "slashing"] }],
+                      ],
                     },
                     ability: {
                       attack: "str",
                       damage: "str",
                       damageMult: 1.5,
                     },
-                    attackType: "natural",
-                    primaryAttack: true,
                   }),
                 ],
               },

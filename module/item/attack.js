@@ -208,40 +208,59 @@ export const alterRollData = function (shared, form = {}) {
  * @property {string} label - The attack's name
  * @property {number|string|undefined} [attackBonus] - An attack bonus specific to this attack
  * @property {number|string|undefined} [damageBonus] - A damage bonus specific to this attack
+ * @property {string|null} [ammo] - The ID of the ammo item used
  */
 /**
  * Generates attacks for an item's action.
  *
  * @param {object} shared - Shared data between attack functions.
+ * @param {boolean} [forceFullAttack=false] - Generate full attack data, e.g. as base data for an {@link AttackDialog}
  * @returns {ItemAttack_AttackData[]} The generated default attacks.
  */
-export const generateAttacks = function (shared) {
-  const attackName = shared.action.data.attackName;
-  const allAttacks = shared.fullAttack
-    ? shared.action.data.attackParts.reduce(
+export const generateAttacks = function (shared, forceFullAttack = false) {
+  const rollData = shared.rollData;
+  const action = rollData.action;
+
+  /**
+   * Counter for unnamed or other numbered attacks, to be incremented with each usage.
+   * Starts at 1 to account for the base attack.
+   */
+  let unnamedAttackIndex = 1;
+
+  const attackName = action.attackName || game.i18n.format("PF1.FormulaAttack", { 0: unnamedAttackIndex });
+  // Use either natural fullAttack state, or force generation of all attacks via override
+  const fullAttack = forceFullAttack || shared.fullAttack;
+
+  const allAttacks = fullAttack
+    ? action.attackParts.reduce(
         (cur, r) => {
-          cur.push({ attackBonus: r[0], label: r[1] });
+          cur.push({
+            attackBonus: r[0],
+            // Use defined label, or fall back to continuously numbered default attack name
+            label: r[1] || game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
+          });
           return cur;
         },
-        [{ attackBonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }]
+        [{ attackBonus: "", label: attackName }]
       )
-    : [{ attackBonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }];
+    : [{ attackBonus: "", label: attackName }];
 
   // Formulaic extra attacks
-  if (shared.fullAttack) {
-    const exAtkCountFormula = getProperty(shared.action.data, "formulaicAttacks.count.formula"),
-      exAtkCount = RollPF.safeRoll(exAtkCountFormula, shared.rollData)?.total ?? 0,
-      exAtkBonusFormula = shared.action.data.formulaicAttacks?.bonus?.formula || "0";
+  if (fullAttack) {
+    const exAtkCountFormula = action.formulaicAttacks?.count?.formula,
+      exAtkCount = RollPF.safeRoll(exAtkCountFormula, rollData)?.total ?? 0,
+      exAtkBonusFormula = action.formulaicAttacks?.bonus?.formula || "0";
     if (exAtkCount > 0) {
       try {
-        const frollData = shared.rollData;
-        const fatlabel = shared.action.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
         for (let i = 0; i < exAtkCount; i++) {
-          frollData["formulaicAttack"] = i + 1; // Add and update attack counter
-          const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData).total;
+          rollData["formulaicAttack"] = i + 1; // Add and update attack counter
+          const bonus = RollPF.safeRoll(exAtkBonusFormula, rollData).total;
           allAttacks.push({
             attackBonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
-            label: fatlabel.format(i + 2),
+            // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
+            label: action.formulaicAttacks.label
+              ? action.formulaicAttacks.label.format(i + 1)
+              : game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
           });
         }
       } catch (err) {
@@ -251,11 +270,11 @@ export const generateAttacks = function (shared) {
   }
 
   // Set ammo usage
-  if (shared.action.data.usesAmmo) {
+  if (action.usesAmmo) {
     const ammoId = this.getFlag("pf1", "defaultAmmo");
     const item = this.actor.items.get(ammoId);
     const quantity = item?.data.data.quantity ?? 0;
-    const abundant = item?.data.flags?.pf1?.abundant === true;
+    const abundant = item?.data.flags.pf1?.abundant;
     for (let a = 0; a < allAttacks.length; a++) {
       const atk = allAttacks[a];
       if (abundant || quantity >= a + 1) atk.ammo = ammoId;

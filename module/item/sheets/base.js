@@ -244,7 +244,9 @@ export class ItemSheetPF extends ItemSheet {
     if (data.item.type === "feat") {
       data.isClassFeature = getProperty(this.item.data, "data.featType") === "classFeat";
       data.isTemplate = getProperty(this.item.data, "data.featType") === "template";
+    }
 
+    if (["class", "feat", "race"].includes(data.item.type)) {
       // Add skill list
       if (!this.actor) {
         data.skills = Object.entries(CONFIG.PF1.skills).reduce((cur, o) => {

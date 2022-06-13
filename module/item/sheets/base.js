@@ -1,4 +1,4 @@
-import { getBuffTargetDictionary, getBuffTargets } from "../../lib.js";
+import { getBuffTargetDictionary, getBuffTargets, diffObjectAndArray } from "../../lib.js";
 import { ItemPF } from "../entity.js";
 import { ScriptEditor } from "../../apps/script-editor.js";
 import { ActorTraitSelector } from "../../apps/trait-selector.js";

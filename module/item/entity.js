@@ -702,16 +702,23 @@ export class ItemPF extends ItemBasePF {
 
     this.memorizeVariables();
 
-    const diff = diffObject(flattenObject(this.data), data);
+    const diff = diffObject(flattenObject(this.data.toObject()), data);
+    // Filter diff for undefined values. Single value depth with speed as priority
+    for (const [k, v] of Object.entries(diff)) {
+      if (v === undefined) delete diff[k];
+    }
     // Filter diff for arrays that haven't changed. Single level depth with speed as priority
-    for (const d in diff) {
+    for (const d of Object.keys(diff)) {
       if (!Array.isArray(diff[d])) continue;
       const origData = getProperty(this.data._source, d) || [];
       if (diff[d].length !== origData?.length) continue;
       const anyDiff = diff[d].some((obj, idx) => {
         // Bidirectional diff is required or else it will not detect some changes (e.g. empty attack note being filled).
         // First is additions, second is deletions.
-        if (!isObjectEmpty(diffObject(origData[idx], obj)) || !isObjectEmpty(diffObject(obj, origData[idx])))
+        if (
+          !isObjectEmpty(diffObjectAndArray(origData[idx], obj)) ||
+          !isObjectEmpty(diffObjectAndArray(obj, origData[idx]))
+        )
           return true;
       });
       if (!anyDiff) delete diff[d];

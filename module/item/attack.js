@@ -255,7 +255,7 @@ export const generateAttacks = function (shared) {
     const ammoId = this.getFlag("pf1", "defaultAmmo");
     const item = this.actor.items.get(ammoId);
     const quantity = item?.data.data.quantity ?? 0;
-    const abundant = item?.data.flags.pf1.abundant;
+    const abundant = item?.data.flags?.pf1?.abundant === true;
     for (let a = 0; a < allAttacks.length; a++) {
       const atk = allAttacks[a];
       if (abundant || quantity >= a + 1) atk.ammo = ammoId;

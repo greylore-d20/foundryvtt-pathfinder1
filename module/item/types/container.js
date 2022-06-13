@@ -131,17 +131,14 @@ export class ItemContainerPF extends ItemPF {
     await this.update({ "data.inventoryItems": inventory });
   }
 
-  /**
-   * @param root0
-   * @param root0.inLowestDenomination
-   * @returns {number} The total amount of currency this item contains, in gold pieces
-   */
+  /** @inheritdoc */
   getTotalCurrency({ inLowestDenomination = false } = {}) {
     const currency = this.data.data.currency;
     const total = currency.pp * 1000 + currency.gp * 100 + currency.sp * 10 + currency.cp;
     return inLowestDenomination ? total : total / 100;
   }
 
+  /** @inheritdoc */
   getValue({ recursive = true, sellValue = 0.5, inLowestDenomination = false, forceUnidentified = false } = {}) {
     let result = super.getValue(...arguments);
 

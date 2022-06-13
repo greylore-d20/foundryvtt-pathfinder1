@@ -66,7 +66,7 @@ export const registerContainerItemTests = () => {
           items.alchemistsFire = items.container.items.contents[0];
         });
         after(async () => {
-          await items.container.deleteContainerContent(items.alchemistsFire);
+          await items.container.deleteContainerContent(items.alchemistsFire.id);
         });
 
         it("should be able to be added to the container", async function () {
@@ -82,6 +82,10 @@ export const registerContainerItemTests = () => {
         });
         it("should increase the container's value", function () {
           expect(items.container.getValue()).to.equal(100);
+        });
+        it("should increase the actor's total item value in the sheet", function () {
+          expect(actor.sheet.calculateTotalItemValue()).to.equal(200);
+          expect(actor.sheet.calculateSellItemValue()).to.equal(100);
         });
 
         describe("should be usable from inside the container and", function () {
@@ -105,6 +109,13 @@ export const registerContainerItemTests = () => {
           });
           it("and reduce the actor's weight", function () {
             expect(actor.data.data.attributes.encumbrance.carriedWeight).to.equal(9);
+          });
+          it("reduce the container's overall value", function () {
+            expect(items.container.getValue()).to.equal(90);
+          });
+          it("reduce the actor's total item value in the sheet", function () {
+            expect(actor.sheet.calculateTotalItemValue()).to.equal(180);
+            expect(actor.sheet.calculateSellItemValue()).to.equal(90);
           });
         });
 
@@ -131,7 +142,56 @@ export const registerContainerItemTests = () => {
           });
         });
       });
+
+      describe("with currency", function () {
+        before(async () => {
+          await items.container.update({
+            "data.currency": {
+              gp: 100,
+              sp: 50,
+            },
+          });
+        });
+        after(async () => {
+          await items.container.update({ "data.currency": { pp: 0, gp: 0, sp: 0, cp: 0 } });
+        });
+
+        it("should have the correct value", function () {
+          expect(items.container.getValue()).to.equal(105);
+          expect(items.container.getTotalCurrency()).to.equal(105);
+          expect(items.container.getValue({ inLowestDenomination: true })).to.equal(10500);
+          expect(items.container.getTotalCurrency({ inLowestDenomination: true })).to.equal(10500);
+        });
+        it("should have the right weight", function () {
+          expect(items.container.data.data.weight).to.equal(1.5);
+        });
+        it("should add its weight to the actor", function () {
+          expect(actor.data.data.attributes.encumbrance.carriedWeight).to.equal(1.5);
+        });
+        it("should add its value to the actor", function () {
+          expect(actor.sheet.calculateTotalItemValue()).to.equal(105);
+          expect(actor.sheet.calculateSellItemValue()).to.equal(105);
+        });
+
+        describe("and own value", function () {
+          before(async () => {
+            await items.container.update({ "data.basePrice": 100 });
+          });
+          after(async () => {
+            await items.container.update({ "data.basePrice": 0 });
+          });
+
+          it("should have the correct value", function () {
+            expect(items.container.getValue()).to.equal(155);
+            expect(items.container.getTotalCurrency()).to.equal(105);
+          });
+          it("should add its value to the actor", function () {
+            expect(actor.sheet.calculateTotalItemValue()).to.equal(205);
+            expect(actor.sheet.calculateSellItemValue()).to.equal(155);
+          });
+        });
+      });
     },
-    { displayName: "PF1.Container Items" }
+    { displayName: "PF1: Container Item Tests" }
   );
 };

@@ -773,6 +773,9 @@ export class ItemSheetPF extends ItemSheet {
     // Tooltips
     html.mousemove((ev) => this._moveTooltips(ev));
 
+    // Edit action
+    html.find(".actions .items-list .item").on("contextmenu", this._onActionEdit.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
@@ -836,9 +839,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Action control
     html.find(".action-controls a").on("click", this._onActionControl.bind(this));
-
-    // Edit action
-    html.find(".actions .items-list .item").on("contextmenu", this._onActionEdit.bind(this));
 
     /* -------------------------------------------- */
     /*  Links
@@ -1309,7 +1309,7 @@ export class ItemSheetPF extends ItemSheet {
     // Find existing window
     for (const app of Object.values(this.item.apps)) {
       if (app.object === action) {
-        app.render(true, { focus: true });
+        app.render(true, { focus: true, editable: !this.isEditable });
         return;
       }
     }

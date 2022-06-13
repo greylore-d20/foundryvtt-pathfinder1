@@ -122,8 +122,22 @@ export class ItemActionSheet extends FormApplication {
     return data;
   }
 
+  /**
+   * Copy from core DocumentSheet#isEditable
+   */
+  get isEditable() {
+    let editable = this.options.editable && this.object.parent.isOwner;
+    if (this.object.parent.pack) {
+      const pack = game.packs.get(this.object.parent.pack);
+      if (pack.locked) editable = false;
+    }
+    return editable;
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
+
+    if (!this.isEditable) return;
 
     // Modify action image
     html.find(`img[data-edit="img"]`).on("click", this._onEditImage.bind(this));

@@ -415,20 +415,20 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       }
       return result;
     case "landSpeed":
-      if (changeType === "base") return "data.attributes.speed.land.base";
-      return "data.attributes.speed.land.add";
+      if (changeType === "base") return ["data.attributes.speed.land.total"];
+      return ["data.attributes.speed.land.add", "data.attributes.speed.land.total"];
     case "climbSpeed":
-      if (changeType === "base") return "data.attributes.speed.climb.base";
-      return "data.attributes.speed.climb.add";
+      if (changeType === "base") return ["data.attributes.speed.climb.total"];
+      return ["data.attributes.speed.climb.add", "data.attributes.speed.climb.total"];
     case "swimSpeed":
-      if (changeType === "base") return "data.attributes.speed.swim.base";
-      return "data.attributes.speed.swim.add";
+      if (changeType === "base") return ["data.attributes.speed.swim.total"];
+      return ["data.attributes.speed.swim.add", "data.attributes.speed.swim.total"];
     case "burrowSpeed":
-      if (changeType === "base") return "data.attributes.speed.burrow.base";
-      return "data.attributes.speed.burrow.add";
+      if (changeType === "base") return ["data.attributes.speed.burrow.total"];
+      return ["data.attributes.speed.burrow.add", "data.attributes.speed.burrow.total"];
     case "flySpeed":
-      if (changeType === "base") return "data.attributes.speed.fly.base";
-      return "data.attributes.speed.fly.add";
+      if (changeType === "base") return ["data.attributes.speed.fly.total"];
+      return ["data.attributes.speed.fly.add", "data.attributes.speed.fly.total"];
     case "cmb":
       return "data.attributes.cmb.bonus";
     case "cmd":

@@ -977,13 +977,6 @@ export class ActorPF extends ActorBasePF {
         );
       }
     }
-
-    // Add speed parts together
-    {
-      for (const [k, v] of Object.entries(this.data.data.attributes.speed)) {
-        v.total = (v.base ?? 0) + (v.add ?? 0);
-      }
-    }
   }
 
   /**
@@ -1641,12 +1634,6 @@ export class ActorPF extends ActorBasePF {
       } catch (err) {
         console.log(err, k);
       }
-    }
-  }
-
-  async refresh() {
-    if (this.isOwner) {
-      return this.update({});
     }
   }
 

@@ -451,11 +451,13 @@ export class ItemSpellPF extends ItemPF {
     }
 
     // Set saves
-    action.save.description = actionData.save.description;
-    action.save.type = actionData.save.type;
-    action.save.dc = `10 + ${origData.sl}[${game.i18n.localize("PF1.SpellLevel")}] + ${Math.floor(
-      origData.sl / 2
-    )}[${game.i18n.localize("PF1.SpellcastingAbility")}]`;
+    if (actionData.save) {
+      action.save.description = actionData.save.description;
+      action.save.type = actionData.save.type;
+      action.save.dc = `10 + ${origData.sl}[${game.i18n.localize("PF1.SpellLevel")}] + ${Math.floor(
+        origData.sl / 2
+      )}[${game.i18n.localize("PF1.SpellcastingAbility")}]`;
+    }
 
     // Copy variables
     action.actionType = actionData.actionType;
@@ -468,6 +470,7 @@ export class ItemSpellPF extends ItemPF {
     // Replace attack and effect formula data
     for (const arrKey of ["attackNotes", "effectNotes"]) {
       const arr = getProperty(action, arrKey);
+      if (!arr) continue;
       for (let a = 0; a < arr.length; a++) {
         const note = arr[a];
         arr[a] = this._replaceConsumableConversionString(note, origData);

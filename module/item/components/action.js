@@ -494,7 +494,7 @@ export class ItemAction {
    * @param root0.primaryAttack
    */
   async rollAttack({ data = null, extraParts = [], bonus = null, primaryAttack = true } = {}) {
-    const rollData = duplicate(data ?? this.getRollData());
+    const rollData = data ?? this.getRollData();
     const itemData = rollData.item;
     const actionData = rollData.action;
 
@@ -711,7 +711,7 @@ export class ItemAction {
     conditionalParts = {},
     primaryAttack = true,
   } = {}) {
-    const rollData = duplicate(data ?? this.getRollData());
+    const rollData = data ?? this.getRollData();
 
     if (!this.hasDamage) {
       throw new Error("You may not make a Damage Roll with this Action.");

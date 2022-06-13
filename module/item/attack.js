@@ -86,7 +86,7 @@ export const alterRollData = function (shared, form = {}) {
   let formData;
   if (form instanceof jQuery) formData = new FormDataExtended(form[0].querySelector("form")).toObject();
   else formData = form;
-  shared.rollData.d20 = formData["d20"];
+  if (formData["d20"]) shared.rollData.d20 = formData["d20"];
   const atkBonus = formData["attack-bonus"];
   if (atkBonus) {
     shared.attackBonus.push(atkBonus);

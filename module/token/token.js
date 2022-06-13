@@ -113,6 +113,7 @@ export class TokenPF extends Token {
       const { dv, bs, bse, ts } = this.actor.data.data.traits.senses;
       const highestVision = Math.max(dv, bs, bse, ts);
       this.data.brightSight = game.pf1.utils.convertDistance(highestVision)[0];
+      this.data.brightSight = game.pf1.utils.convertDistance(highestVision)[0] || 0;
     }
 
     super.updateVisionSource(...args);

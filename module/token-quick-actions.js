@@ -1,4 +1,4 @@
-import { showAttackReach } from "./misc/attack-reach.js";
+import { clearHighlight, showAttackReach } from "./misc/attack-reach.js";
 import { getSkipActionPrompt } from "./settings.js";
 
 export class TokenQuickActions {
@@ -61,28 +61,13 @@ export class TokenQuickActions {
       });
 
       // Add mouse enter handler
-      let highlight;
       elem.on("mouseenter", (event) => {
-        if (!game.settings.get("pf1", "hideReachMeasurements")) highlight = showAttackReach(token, item, firstAction);
-
-        if (!highlight) return;
-
-        highlight.normal.render();
-        highlight.reach.render();
-        highlight.extra.forEach((hl) => {
-          hl.render();
-        });
+        if (!game.settings.get("pf1", "hideReachMeasurements")) showAttackReach(token, item, firstAction);
       });
 
       // Add mouse leave callback
       elem.on("mouseleave", (event) => {
-        if (!highlight) return;
-
-        highlight.normal.clear(true);
-        highlight.reach.clear(true);
-        highlight.extra.forEach((hl) => {
-          hl.clear(true);
-        });
+        clearHighlight();
       });
     });
   }

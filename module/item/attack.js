@@ -229,13 +229,13 @@ export const generateAttacks = function (shared) {
 
   // Formulaic extra attacks
   if (shared.fullAttack) {
-    const exAtkCountFormula = getProperty(this.data, "data.formulaicAttacks.count.formula"),
+    const exAtkCountFormula = getProperty(shared.action.data, "formulaicAttacks.count.formula"),
       exAtkCount = RollPF.safeRoll(exAtkCountFormula, shared.rollData)?.total ?? 0,
       exAtkBonusFormula = shared.action.data.formulaicAttacks?.bonus?.formula || "0";
     if (exAtkCount > 0) {
       try {
         const frollData = shared.rollData;
-        const fatlabel = this.data.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
+        const fatlabel = shared.action.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
         for (let i = 0; i < exAtkCount; i++) {
           frollData["formulaicAttack"] = i + 1; // Add and update attack counter
           const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData).total;

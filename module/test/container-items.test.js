@@ -128,12 +128,6 @@ export const registerContainerItemTests = () => {
           it("should have the right quantity", function () {
             expect(items.alchemistsFire.data.data.quantity).to.equal(90);
           });
-
-          /*
-           * FIXME: The following two tests fail, as updating the container will reset its weight to 0.
-           *  The bug is caused by `inventoryItems` only being available for weight calculations if they are updated.
-           *  Swapping the order of update calls above would make the tests pass and conceal the bug in these tests.
-           */
           it("should have the right weight", function () {
             expect(items.container.data.data.weight).to.equal(45);
           });

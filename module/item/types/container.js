@@ -1,6 +1,15 @@
 import { ItemPF } from "../entity.js";
 
 export class ItemContainerPF extends ItemPF {
+  /** @inheritdoc */
+  prepareBaseData() {
+    super.prepareBaseData();
+
+    // Set base weight to weight of coins, which can be calculated without knowing contained items
+    const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
+    this.data.data.weight = this._calculateCoinWeight(this.data) * weightReduction;
+  }
+
   async createContainerContent(data, options = { raw: false }) {
     const embeddedName = "Item";
     const user = game.user;

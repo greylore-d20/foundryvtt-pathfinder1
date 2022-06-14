@@ -832,7 +832,7 @@ export class ItemPF extends ItemBasePF {
     // Call _onUpdate for changed items
     for (let a = 0; a < (changed.data?.inventoryItems ?? []).length; a++) {
       const itemUpdateData = changed.data?.inventoryItems[a];
-      const memoryItemData = this._memoryVariables["data.inventoryItems"]?.[a];
+      const memoryItemData = this._memoryVariables?.["data.inventoryItems"]?.[a];
       if (!memoryItemData) continue;
 
       const diffData = diffObjectAndArray(memoryItemData, itemUpdateData, { keepLength: true });

@@ -374,33 +374,6 @@ export class ItemPF extends ItemBasePF {
     const C = CONFIG.PF1;
     const labels = {};
 
-    // Physical items
-    if (itemData.data.weight !== undefined) {
-      // Sync name
-      if (this.data.data.identifiedName === undefined) this.data.data.identifiedName = this.name;
-      if (this.showUnidentifiedData) {
-        // Set unidentified name for players
-        const unidentifiedName = this.data.data.unidentified.name;
-        if (unidentifiedName) this.data.name = unidentifiedName;
-        // Set unidentified description for players
-        this.data.data.description.value = this.data.data.description.unidentified;
-      }
-      // Prepare unidentified cost
-      if (this.data.data.unidentified.price === undefined) this.data.data.unidentified.price = 0;
-
-      // Convert weight according metric system (lb vs kg)
-      let usystem = game.settings.get("pf1", "weightUnits"); // override
-      if (usystem === "default") usystem = game.settings.get("pf1", "units");
-      itemData.data.weightConverted = convertWeight(itemData.data.weight);
-      itemData.data.weightUnits = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
-      itemData.data.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
-
-      // Set basic data
-      itemData.data.hp = itemData.data.hp || { max: 10, value: 10 };
-      itemData.data.hardness = itemData.data.hardness || 0;
-      itemData.data.carried = itemData.data.carried == null ? true : itemData.data.carried;
-    }
-
     this.prepareLinks();
 
     // Update changes
@@ -422,6 +395,7 @@ export class ItemPF extends ItemBasePF {
     if (this.data.data.inventoryItems instanceof Array) {
       this.items = this._prepareInventory(this.data.data.inventoryItems);
     }
+    this.prepareWeight();
 
     // Prepare labels
     this.labels = this.prepareLabels();
@@ -431,6 +405,40 @@ export class ItemPF extends ItemBasePF {
     }
 
     return itemData;
+  }
+
+  prepareWeight() {
+    // Determine actual item weight, including sub-items
+    const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
+    this.data.data.weight = (this.items ?? []).reduce((cur, o) => {
+      return cur + o.data.data.weight * o.data.data.quantity * weightReduction;
+    }, this.data.data.weight);
+
+    // Convert weight according metric system (lb vs kg)
+    let usystem = game.settings.get("pf1", "weightUnits"); // override
+    if (usystem === "default") usystem = game.settings.get("pf1", "units");
+    this.data.data.weightConverted = convertWeight(this.data.data.weight);
+    this.data.data.weightUnits = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+    this.data.data.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
+  }
+
+  prepareDerivedData() {
+    super.prepareDerivedData();
+
+    // Physical items
+    if (this.data.data.weight !== undefined) {
+      // Sync name
+      if (this.data.data.identifiedName === undefined) this.data.data.identifiedName = this.name;
+      if (this.showUnidentifiedData) {
+        // Set unidentified name for players
+        const unidentifiedName = this.data.data.unidentified.name;
+        if (unidentifiedName) this.data.name = unidentifiedName;
+        // Set unidentified description for players
+        this.data.data.description.value = this.data.data.description.unidentified;
+      }
+      // Prepare unidentified cost
+      if (this.data.data.unidentified.price === undefined) this.data.data.unidentified.price = 0;
+    }
   }
 
   prepareBaseData() {
@@ -631,25 +639,6 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    // Update weight from base weight
-    if (srcData.data.baseWeight !== undefined) {
-      const baseWeight = srcData.data.baseWeight || 0;
-      const weightReduction = Math.max(0, 1 - (srcData.data.weightReduction || 0) / 100);
-
-      let contentsWeight = (srcData.data.inventoryItems || []).reduce((cur, i) => {
-        return cur + (getProperty(i, "data.weight") || 0) * (getProperty(i, "data.quantity") || 0);
-      }, 0);
-      contentsWeight += this._calculateCoinWeight(srcData);
-      contentsWeight = Math.round(contentsWeight * weightReduction * 10) / 10;
-
-      linkData(srcData, data, "data.weight", baseWeight + contentsWeight);
-    }
-
-    // Update weight according metric system (lb vs kg)
-    if (data["data.weightConverted"] != null) {
-      linkData(srcData, data, "data.weight", convertWeightBack(data["data.weightConverted"]));
-    }
-
     // Update price from base price
     if (data["data.basePrice"] != null) {
       linkData(srcData, data, "data.price", getProperty(srcData, "data.basePrice") || 0);
@@ -739,14 +728,6 @@ export class ItemPF extends ItemBasePF {
             delete diff[k];
             diff[`data.inventoryItems.${idx}.${k}`] = v;
           }
-
-          // Set parent weight
-          const contentsWeight = parentInventory.reduce((cur, i) => {
-            if (i._id === this.id)
-              return cur + (getProperty(srcData, "data.weight") || 0) * (getProperty(srcData, "data.quantity") || 0);
-            return cur + (getProperty(i, "data.weight") || 0) * (getProperty(i, "data.quantity") || 0);
-          }, 0);
-          diff["data.weight"] = (getProperty(this.parentItem.data, "data.baseWeight") || 0) + contentsWeight;
 
           // Update parent item
           await this.parentItem.update(diff);
@@ -863,18 +844,6 @@ export class ItemPF extends ItemBasePF {
 
     // Forget memory variables
     this._memoryVariables = null;
-  }
-
-  _updateContentsWeight(data, { srcData = null } = {}) {
-    if (!srcData) srcData = duplicate(this.data);
-
-    let result = getProperty(srcData, "data.baseWeight") || 0;
-
-    result += this.items.reduce((cur, i) => {
-      return cur + (getProperty(i, "data.weight") || 0);
-    }, 0);
-
-    linkData(srcData, data, "data.weight", result);
   }
 
   _updateMaxUses() {

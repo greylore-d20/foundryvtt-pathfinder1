@@ -1279,8 +1279,9 @@ export const getHighestChanges = function (changes, options = { ignoreTarget: fa
   for (const c of changes) {
     let h;
     if (options.ignoreTarget) h = highest[c.modifier];
-    else h = highest[c.modifier][c.subTarget];
+    else h = highest[c.modifier]?.[c.subTarget];
 
+    if (!h) continue; // Ignore bad changes
     h.ids.push(c._id);
     if (h.value < c.value || !h.highestID) {
       h.value = c.value;

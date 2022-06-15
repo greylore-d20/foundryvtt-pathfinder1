@@ -118,4 +118,9 @@ export class TokenPF extends Token {
 
     super.updateVisionSource(...args);
   }
+
+  _onUpdate(data, options, user) {
+    if (options.render === false) return;
+    else super._onUpdate(data, options, user);
+  }
 }

@@ -684,19 +684,20 @@ Hooks.on("preCreateToken", async (scene, token, options, userId) => {
   for (const icon of buffTextures) if (icon) await loadTexture(icon);
 });
 
-Hooks.on("createToken", (doc, options, userId) => {
+Hooks.on("createToken", (token, options, userId) => {
+  if (game.user.id !== userId) return;
   // Re-associate imported Active Effects which are sourced to Items owned by this same Actor
-  if (doc.actor.effects?.size) {
+  if (token.actor.effects?.size) {
     const updates = [];
-    for (const effect of doc.actor.effects) {
+    for (const effect of token.actor.effects) {
       if (!effect.data.origin) continue;
-      const effectItemId = effect.data.origin.split(".").pop();
-      const foundItem = doc.actor.items.get(effectItemId);
+      const effectItemId = effect.data.origin.match(/Item\.(\w+)/)?.pop();
+      const foundItem = token.actor.items.get(effectItemId);
       if (foundItem) {
         updates.push({ _id: effect.id, origin: foundItem.uuid });
       }
     }
-    doc.actor.updateEmbeddedDocuments("ActiveEffect", updates);
+    token.actor.updateEmbeddedDocuments("ActiveEffect", updates, { render: false });
   }
 });
 

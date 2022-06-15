@@ -252,7 +252,7 @@ function serve(done) {
 /**
  * Gets the current system version
  *
- * @returns {string} The current version
+ * @returns {string|false} The current version
  */
 function getTagVersion() {
   try {
@@ -315,7 +315,7 @@ function commitTag() {
     return gulp
       .src(["./system.json"])
       .pipe(git.commit(`Release ${version}`))
-      .pipe(tagVersion({ prefix: "" }));
+      .pipe(tagVersion({ prefix: "v" }));
   } else {
     return gulp.src(["./system.json"]);
   }

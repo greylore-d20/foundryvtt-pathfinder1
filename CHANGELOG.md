@@ -1,5 +1,54 @@
 # Changelog
 
+## 0.81.0 - 2022-6-16
+
+### Bug Fixes
+
+- Buffs with duration ignored hide buffs system setting. ([1441](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1441))
+- Temp vigor was not adjusted before normal vigor when modifying through token bar. ([1445](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1445))
+- Item flags were initialized wrong, requiring migration to make flags work.
+- Opening the summary of an item in a container would immediately close it again.
+- Clicking the (roll) icon of an item in a container would not post its description to chat.
+- Items in containers could not be used ([956](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/956))
+- Sheets would not re-render after an item in a container was updated, displaying a mix of old and new data. ([1422](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1422))
+- Weapons did not respect their nonlethal toggle for damage.
+- Fix actor quick actions using the world document's items ([1463](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1463))
+- Fix incorrect spell-like spellbook label
+- Fix client error message on unlinked token creation ([1449](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1449))
+- Fix harmless errors with random chat messages ([1442](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1442))
+- Weapon held option was not given on weapon attacks ([1438](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1438))
+- Disallow splitting of items with a stack of 1
+- Deferred changes (such as damage) did not use expected roll data ([1464](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1464))
+
+### Changelog
+
+- Temp Vigor is included in token bar vigor value. ([1410](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1410))
+- Race subtypes are shown directly on race sheet. ([1431](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1431))
+- Display subtypes on race sheet ([1431](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1431))
+- Attributes tab now includes more tooltips.
+- Add class skill modification to all feats
+- Add damage type icons
+- Enhance skill customization
+- Add token flag to disable the system's handling of vision ([1466](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1466))
+- Removed alternate attack chat card option
+- Add options for secondary natural attack bonuses ([1440](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1440))
+- Allow equipment and consumables to be added to the quickbar ([1426](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1426))
+- Add multiaction support ([1376](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1376))
+
+### Compendium
+
+- Cleric Aura added as a class ability and as a class association within the Cleric class itself
+- Strength Surge (Rage Power) added ([1472](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1472))
+- Fixed the damage formula for the spell Flame Strike
+- Re-add chained summoner's Eidolon class feature ([1325](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1325))
+- Add age categories as misc feats to the monster templates compendium
+- Name of Sorcerer Arcane Bloodline Power 'Arcane Apotheosis' fixed (was 'Arcane Hypothesis')
+- Sorcerer Bloodline added as a class ability and as a class association within the Sorcerer class itself
+
+### API
+
+- BREAKING: Overhaul ESM exports
+
 ## 0.80.24 - 2022-5-21
 
 ### Bug Fixes

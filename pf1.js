@@ -124,6 +124,8 @@ import { BaseRegistry } from "./module/registry/base-registry.js";
 import { DamageTypes } from "./module/registry/damage-types.js";
 import { ScriptCalls } from "./module/registry/script-call.js";
 
+import "./less/pf1.less";
+
 // OBSOLETE: Add String.format
 if (!String.prototype.format) {
   /**

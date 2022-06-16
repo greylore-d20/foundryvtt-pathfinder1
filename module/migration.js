@@ -1030,7 +1030,7 @@ const _migrateSpellData = function (item, updateData) {
 };
 
 const _migrateItemActions = function (item, updateData) {
-  const hasOldAction = !!item.data.actionType;
+  const hasOldAction = !!item.data.actionType || !!item.data.activation?.type || !!item.data.measureTemplate?.type;
   const alreadyHasActions = item.data.actions instanceof Array && item.data.actions.length > 0;
   if ((!hasOldAction && item.type !== "spell") || alreadyHasActions) return;
 

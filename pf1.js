@@ -1093,3 +1093,6 @@ export { TokenPF, TokenDocumentPF };
 
 // Chat Message
 export { ChatMessagePF };
+
+// Measured Template
+export { MeasuredTemplatePF };

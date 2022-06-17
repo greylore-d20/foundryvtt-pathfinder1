@@ -3,7 +3,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 //import checker from "vite-plugin-checker";
 import path from "path";
 import { copy } from "@guanghechen/rollup-plugin-copy";
-import handlebarsReload from "./scripts/handlebars-reload";
+import handlebarsReload from "./tools/handlebars-reload.mjs";
 
 /**
  * Returns an absolute path
@@ -15,7 +15,7 @@ function resolve(relativePath) {
   return path.resolve(__dirname, relativePath);
 }
 
-const COPY_FILES = ["CREDITS.md", "LICENSE.txt", "CHANGELOG.md", "OGL.text"].map(resolve);
+const COPY_FILES = ["CREDITS.md", "LICENSE.txt", "CHANGELOG.md", "OGL.text", "help"].map(resolve);
 
 const config = defineConfig({
   root: ".",

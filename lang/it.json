@@ -1140,6 +1140,7 @@
     "FormulaicExtraAttacks": "Formula Attacchi Extra",
     "FormulaicAttacksCount": "Formula Conteggio Attacco",
     "CondSleep": "Addormentato",
+    "CombatInfo_Header": "Combattimento",
     "ItemContainerTotalItemValue": "Val.Tot.Oggetti: {0} MO, {1} MA, {2} MR",
     "AddClass": "Aggiunta Classe",
     "Info": {
@@ -1321,22 +1322,27 @@
     "ScriptCalls": {
       "Name": "Script",
       "NewName": "Nuovo Script",
+
       "Use": {
         "Name": "Utilizzo",
         "Info": "Richiamato quando l'oggetto viene 'usato' (attacco, bere pozione, ecc.). Prevede la variabile extra `attacks`, che contiene la serie di tiri per colpire, se disponibile."
       },
+
       "Equip": {
         "Name": "Equipaggiato",
         "Info": "Richiamato quando l'oggetto viene equipaggiato o disequipaggiato. Prevede la variabile extra `equipped`, che può essere `true` o `false`."
       },
+
       "Toggle": {
         "Name": "Attiva/Disattiva",
         "Info": "Richiamato quando l'oggetto viene attivato o disattivato. Prevede la variabile extra `state`, che può essere `true` o `false`."
       },
+
       "ChangeQuantity": {
         "Name": "Cambio Quantità",
         "Info": "Richiamato quando vengono cambiate le quantità dell'oggetto. Prevede la variabile extra `quantity.previous` e `quantity.new`, entrambi numeriche."
       },
+
       "ChangeLevel": {
         "Name": "Cambio Livello",
         "Info": "Richiamato quando viene cambiato il livello dell'oggetto. Prevede la variabile extra `quantity.previous` e `quantity.new`, entrambi numeriche."
@@ -1390,25 +1396,25 @@
                 "Desc": "Il bonus base totale del tiro salvezza appropriato per quell'attore, come dato dai livelli di classe. X può essere sia 'fort' (Tempra), 'ref' (Riflessi) or 'will' (Volontà)"
               },
               "EncumbranceLevel": {
+                "Desc": "Il livello corrente di ingombro dell'attore.",
                 "0": "<code>0</code>: Carico Leggero",
                 "1": "<code>1</code>: Carico Medio",
-                "2": "<code>2</code>: Carico Pesante",
-                "Desc": "Il livello corrente di ingombro dell'attore."
+                "2": "<code>2</code>: Carico Pesante"
               },
               "ArmorType": {
+                "Desc": "Il tipo di armatura che indossa l'attore.",
                 "0": "<code>0</code>: No Armatura",
                 "1": "<code>1</code>: Armatura Leggera",
                 "2": "<code>2</code>: Armatura Media",
-                "3": "<code>3</code>: Armatura Pesante",
-                "Desc": "Il tipo di armatura che indossa l'attore."
+                "3": "<code>3</code>: Armatura Pesante"
               },
               "ShieldType": {
+                "Desc": "Il tipo di scudo che l'attore sta tenendo.",
                 "0": "<code>0</code>: No Scudo",
                 "1": "<code>1</code>: Scudo Vario (come un buckler)",
                 "2": "<code>2</code>: Scudo Leggero",
                 "3": "<code>3</code>: Scudo Medio",
-                "4": "<code>4</code>: Scudo Torre",
-                "Desc": "Il tipo di scudo che l'attore sta tenendo."
+                "4": "<code>4</code>: Scudo Torre"
               },
               "CombatRound": {
                 "Desc": "Il round di combattimento corrente, oppure <code>0</code> se non in combattimento."
@@ -1652,6 +1658,7 @@
               "Label": "Operatore Script",
               "Desc": "La 'formula' delle modifiche che utilizzano l'operatore Script 'S' sono in realtà piccoli script JavaScript che vengono eseguiti durante l'esecuzione delle modifiche. Per comprenderli è necessaria una certa conoscenza di JavaScript.",
               "Variables": {
+                "Desc": "All'interno di questi script, è possibile utilizzare le seguenti variabili:",
                 "0": {
                   "Name": "d",
                   "Desc": "I dati del tiro al momento dell'elaborazione della modifica. Contiene qualsiasi variabile che è possibile utilizzare all'interno di una normale formula di modifica utilizzando il simbolo `@`."
@@ -1659,8 +1666,7 @@
                 "1": {
                   "Name": "result",
                   "Desc": "Questo contiene altre due variabili, <code>value</code> e <code>operator</code>. Imposta <code>value</code> al risultato numerico che vuoi per la modifica, e <code>operator</code> per <code>\"add\"</code> o <code>\"set\"</code>.<br><br><code>value</code> default <code>0</code> e <code>operator</code> default <code>\"add\"</code>."
-                },
-                "Desc": "All'interno di questi script, è possibile utilizzare le seguenti variabili:"
+                }
               }
             }
           },
@@ -1704,32 +1710,38 @@
                 }
               }
             },
+
             "Categories": {
               "Label": "Categorie",
+
               "Use": {
                 "Name": "Utilizzo",
                 "Desc": {
                   "Basic": "Chiamato quando un oggetto viene utilizzato. Se un elemento ha almeno una chiamata di script in questa categoria, è utilizzabile in ogni caso. Questa chiamata prevede due variabili aggiuntive: <code>{var1}</code> che è un array di dati di attacco e <code>{var2}</code>, che contiene il modello di misura dell'attacco (se presente)."
                 }
               },
+
               "Equip": {
                 "Name": "Equipaggiato",
                 "Desc": {
                   "Basic": "Chiamato quando un oggetto viene equipaggiato o disequipaggiato. Questa chiamata prevede una variabile aggiuntiva <code>{var1}</code> che è <code>true</code> appena viene equipaggiato, o <code>false</code> appena viene disequipaggiato."
                 }
               },
+
               "Toggle": {
                 "Name": "Attiva/Disattiva",
                 "Desc": {
                   "Basic": "Chiamato quando un potenziamento o una funzione viene attivata/disattivata. Questa chiamata prevede una variabile aggiuntiva <code>{var1}</code> che è <code>true</code> appena viene attivato o <code>false</code> appena viene disattivato."
                 }
               },
+
               "ChangeQuantity": {
                 "Name": "Cambio Quantità",
                 "Desc": {
                   "Basic": "Chiamato quando viene modificata la quantità di un articolo fisico. Questa chiamata prevede le variabili aggiuntive <code>{var1}</code> e <code>{var2}</code>, che contengono rispettivamente i numeri di quantità prima e dopo l'aggiornamento."
                 }
               },
+
               "ChangeLevel": {
                 "Name": "Cambio Livello",
                 "Desc": {

@@ -1,9 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2022 Ethaks <ethaks@pm.me>
- *
- * SPDX-License-Identifier: EUPL-1.2
- */
-
 import Datastore from "@seald-io/nedb";
 import fs from "fs-extra";
 import path from "node:path";

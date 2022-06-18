@@ -1,9 +1,3 @@
-/*
- * SPDX-FileCopyrightText: 2022 Ethaks <ethaks@pm.me>
- *
- * SPDX-License-Identifier: EUPL-1.2
- */
-
 import * as chokidar from "chokidar";
 import path from "path";
 import fs from "fs-extra";

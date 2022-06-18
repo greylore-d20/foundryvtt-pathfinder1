@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import path from "path";
-import glob from "glob-promise";
+import { globby } from "globby";
 
 const __dirname = new URL(".", import.meta.url).pathname;
 const langDist = path.resolve(__dirname, "../public/lang");
@@ -31,7 +31,7 @@ async function buildLanguageFiles() {
       const rawJson = await fs.readJson(path.join(langSource, fileName));
       const language = fileName.replace(".json", "");
 
-      const helpFiles = await glob(`help/${language}/**/*.md`);
+      const helpFiles = await globby(`help/${language}/**/*.md`);
       const helpStrings = await Promise.all(
         helpFiles.map(async (helpFile) => {
           const text = await fs.readFile(helpFile, "utf8");
@@ -56,6 +56,7 @@ async function buildLanguageFiles() {
       }
 
       const filePath = path.join(langDist, fileName);
+      console.log(`Writing ${filePath}`);
       return fs.writeJson(filePath, rawJson, { spaces: 2 });
     });
   return Promise.all(languageFiles);

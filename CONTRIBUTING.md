@@ -40,19 +40,29 @@ To create a development setup:
   - This can be set up in the repository's settings, under "Repository" > "Mirroring repositories" and adding "Pull" mirroring.
 - Clone the forked repository into a local directory using `git clone` or another git client of your choice.
 - Install JavaScript dependencies with `npm ci`.
-- Run `npm run build:watch` to watch for changes.
-  - Do not change the `pf1.css` file directly; instead, always edit the less files and run the gulp task.
-- The file watcher will create a `dist` directory. Copy this to Foundry's `Data/systems` directory as `pf1`, or symlink it accordingly.
 
-This setup will compile files whenever necessary and activate a commit hook to automatically lint and format any JS, less or markdown files.
+To build the system, you now have multiple options:
+
+- Run `npm run build`.
+This builds the complete, production-ready system into a `dist` directory.
+Copying this directory into your game's `Data/systems/` folder with its name changed to `pf1`, or symlinking the `dist` directory as `pf1` will install the system.
+- Run `npm run build:watch`.
+This builds the system and afterwards watches for changes, rebuilding the system when a change is detected.
+- Run `npm run build:serve`.
+This builds the system *and* starts a Vite development server, which serves as a proxy for a Foundry server running on port `30000`.
+File changes will either trigger a reload of the browser page, or be hot reloaded (in case of less or handlebars files).
+This is the recommended development setup.
+
+Installing the system's dependencies will also install a git commit hook, which will automatically lint and format files before they are committed.
+If committing changes is not possible due to ESLint or Prettier encountering non-fixable problems, change the code in question to follow the rules setup for that file type.
+
+### Documentation
 
 All changes have to be documented in the [changelog](CHANGELOG.md).
 To add your changes to it, run `npm run addlog`.
 [Changelogify](https://github.com/wanadev/changelogify) will then prompt you for a message that will appear in the changelog, the type of change, and an issue number that will be used to create a link in the log.
 The issue number is optional – if there is no issue your merge request will close, you can leave the number out.
 This prompt will create a file in `changelogs/unreleased`, which you will have to commit alongside your changes.
-
-If committing changes is not possible due to ESLint or Prettier encountering non-fixable problems, change the code in question to follow the rules setup for that file type.
 
 For commit messages, describe what the commit does in a very short summary in the first line, e.g. "Add BAB to combat tab".
 After the first line, reference issues or merge requests the commit relates to, using [keywords](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically) recognized by GitLab whenever applicable (e.g. "Fixes #123").

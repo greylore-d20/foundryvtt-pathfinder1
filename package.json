@@ -37,9 +37,11 @@
     "*.less": "prettier --write"
   },
   "scripts": {
-    "build": "npm run compilePacks && npm run buildLang && vite build",
-    "build:watch": "npm run compilePacks && npm run buildLang && vite build --watch",
-    "serve": "npm run build && vite",
+    "prebuild": "npm run compilePacks && npm run buildLang",
+    "build": "vite build",
+    "build:watch": "npm run prebuild && vite build --watch",
+    "build:serve": "npm run build && vite serve",
+    "serve": "vite serve",
     "extractPacks": "node ./tools/packs.mjs extract",
     "compilePacks": "node ./tools/packs.mjs compile",
     "buildLang": "node ./tools/help-lang.mjs",

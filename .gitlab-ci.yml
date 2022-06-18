@@ -60,8 +60,8 @@ build:
       --arg url "$CI_PROJECT_URL" \
       --arg manifest "$CI_PROJECT_URL/-/releases/permalink/latest/downloads/$PACKAGE_TYPE.json" \
       --arg download "$CI_PROJECT_URL/-/releases/$CI_COMMIT_TAG/downloads/$PACKAGE_NAME.zip" \
-      $PACKAGE_TYPE.json > $TEMP_MANIFEST
-    - mv $TEMP_MANIFEST $PACKAGE_TYPE.json
+      public/$PACKAGE_TYPE.json > $TEMP_MANIFEST
+    - mv $TEMP_MANIFEST public/$PACKAGE_TYPE.json
     - npm run build
     - mv $BUILD_DIRECTORY $PACKAGE_NAME
   cache:

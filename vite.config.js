@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
-import path from "path";
+import path from "node:path";
 import { copy } from "@guanghechen/rollup-plugin-copy";
 import handlebarsReload from "./tools/handlebars-reload.mjs";
 

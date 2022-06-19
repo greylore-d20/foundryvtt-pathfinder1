@@ -73,12 +73,12 @@ async function inc(importance) {
 }
 
 /**
- * Commits current changes and creates a new tag
+ * Commits current changes to the manifest and creates a new annotated tag
  */
 function commitTag() {
   const version = getTagVersion();
   if (version) {
-    git().add("public/system.json").commit(`Release v${version}`).tag(`v${version}`, `Release v${version}`);
+    git().commit(`Release v${version}`, ["public/system.json"]).addAnnotatedTag(`v${version}`, `Release v${version}`);
   } else {
     throw new Error("Could not determine version!");
   }

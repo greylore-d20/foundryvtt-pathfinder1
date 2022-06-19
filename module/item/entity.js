@@ -2246,7 +2246,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Add secondary natural attack penalty
-    if (!actionData.primaryAttack && itemData.attackType === "natural") {
+    if (itemData.primaryAttack !== true && itemData.attackType === "natural") {
       describePart(-5, game.i18n.localize("PF1.SecondaryAttack"), -400);
     }
 

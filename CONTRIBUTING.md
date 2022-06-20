@@ -30,7 +30,7 @@ Merge requests are the most direct way to get ideas or changes implemented into 
 
 ### Setup
 
-This project uses [npm](https://www.npmjs.com/) as its package manager, [less](http://lesscss.org/) to create CSS files, [rollup](https://rollupjs.org/guide/en/) to bundle JS, and [ESLint](https://eslint.org/) as well as [Prettier](https://prettier.io/) to lint and format code.
+This project uses [npm](https://www.npmjs.com/) as its package manager, [less](http://lesscss.org/) to create CSS files, [Vite](https://vitejs.dev/) to bundle JS and build all other files, and [ESLint](https://eslint.org/) as well as [Prettier](https://prettier.io/) to lint and format code.
 npm installation instructions for specific operating systems are given at the above URL.
 
 To create a development setup:
@@ -53,8 +53,23 @@ To build the system, you now have multiple options:
   File changes will either trigger a reload of the browser page, or be hot reloaded (in case of less or handlebars files).
   This is the recommended development setup.
 
+After the system has been built at least once, you can also run `npm run serve` to directly start the development server.
+This will not trigger a build and therefore not mirror any changes to compendium, language, or help files, handlebars template files, or any other static content stored in `public`, but does allow rapidly starting an environment to test JavaScript changes.
+
 Installing the system's dependencies will also install a git commit hook, which will automatically lint and format files before they are committed.
 If committing changes is not possible due to ESLint or Prettier encountering non-fixable problems, change the code in question to follow the rules setup for that file type.
+
+### Compendium Changes
+
+The system provides extra tooling to deal with compendiums, including their compilation to and from JSON.
+Source files for all pack entries are stored in `packs`, with each compendium in its own directory.
+When `npm run prebuild` is run – which happens automatically when invoking `npm run build` – the compendiums are compiled into a `.db` file, which is then stored in `public/packs`.
+From there, the actual build process copies the `.db` files into the `dist` directory.
+
+Compendium content can be edited from within Foundry, so that changes are stored in their respective `.db` files.
+To then transfer these changes to the compendium's source files, run `npm run extractPacks`.
+This will extract the contents of `dist/packs/*.db` into their respective directories.
+If Foundry's `Data/systems/pf1` is symlinked to `dist`, you can change content in Foundry, close the server, and then run `npm run extractPacks` to immediately see the changes in the source files.
 
 ### Documentation
 
@@ -74,4 +89,4 @@ The description can also contain references to open issues to automatically clos
 This project's CI/ CD will run after opening a merge request and create a result of either "passed" or "failed".
 In the latter case, check the job for which error caused it to fail, and correct the issue if possible.
 
-If you encounter any problems at any point during the setup, feel free to message one of the developers via Discord or leave a message in the `#pf1e` channel of the FoundryVTT Discord server.
+If you encounter any problems at any point during the setup, feel free to message one of the developers via Discord or leave a message in the `#pf1e` channel of the [FoundryVTT Discord server](https://discord.gg/foundryvtt).

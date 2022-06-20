@@ -61,7 +61,7 @@ export class ItemSheetPF extends ItemSheet {
    * @returns {string}
    */
   get template() {
-    const path = "systems/pf1/templates/items/";
+    const path = "systems/pf1/templates/items";
     return `${path}/${this.item.data.type}.hbs`;
   }
 

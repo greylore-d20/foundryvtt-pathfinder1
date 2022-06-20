@@ -1,10 +1,12 @@
 import fs from "fs-extra";
-import path from "path";
+import url from "node:url";
+import path from "node:path";
 import { globby } from "globby";
 
-const __dirname = new URL(".", import.meta.url).pathname;
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const langDist = path.resolve(__dirname, "../public/lang");
 const langSource = path.resolve(__dirname, "../lang");
+
 /**
  * Merges additional files (e.g. help browser files) into language .json files
  *

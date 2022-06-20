@@ -1,5 +1,5 @@
 import * as chokidar from "chokidar";
-import path from "path";
+import path from "node:path";
 import fs from "fs-extra";
 
 /** @type {import ("vite").ViteDevServer} */
@@ -22,10 +22,18 @@ export default function handlebarsReload() {
     configResolved(config) {
       const watchPath = path.resolve(config.publicDir, "**/*.hbs");
       watcher = chokidar.watch(watchPath);
-      const foundryBaseDir = config.base.replace(/^\/+|\/+$/g, "");
+      const foundryBaseDir = config.base
+        .split(path.sep)
+        .join(path.posix.sep)
+        .replace(/^\/+|\/+$/g, "");
       watcher.on("change", (file) => {
         if (file.endsWith("hbs")) {
-          const foundryPath = `${foundryBaseDir}/${path.relative(config.publicDir, file)}`;
+          const filepathUrl = path
+            .relative(config.publicDir, file)
+            .split(path.sep)
+            .join(path.posix.sep)
+            .replace(/^\/+|\/+$/g, "");
+          const foundryPath = `${foundryBaseDir}/${filepathUrl}`;
           const content = fs.readFileSync(file, { encoding: "utf8" });
           config.logger.info(`Reload ${file} as ${foundryPath}`);
           server.ws.send({

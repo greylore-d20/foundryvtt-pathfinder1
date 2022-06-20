@@ -1,9 +1,10 @@
 import Datastore from "@seald-io/nedb";
 import fs from "fs-extra";
 import path from "node:path";
+import url from "node:url";
 import yargs from "yargs";
 
-const __dirname = new URL(".", import.meta.url).pathname;
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const PACK_SRC = "../packs";
 const PACK_CACHE = "../public/packs";
 const TEMPLATE_EXCEPTION_PATHS = {
@@ -15,8 +16,10 @@ const manifest = loadManifest();
 
 /** Helper function that resolves a path from the pack source directory */
 const resolveSource = (...file) => path.resolve(__dirname, PACK_SRC, ...file);
-/** Helper function that resolves a path from the pack destination directory */
+/** Helper function that resolves a path from the pack cache directory */
 const resolveCache = (...file) => path.resolve(__dirname, PACK_CACHE, ...file);
+/** Helper function that resolves a path from the pack dist directory */
+const resolveDist = (...file) => path.resolve(__dirname, "../dist/packs", ...file);
 
 yargs(process.argv.slice(2))
   .demandCommand(1, 1)
@@ -141,7 +144,7 @@ function duplicate(obj) {
  * @returns {object} The document templates object, merged with their respective templates.
  */
 function loadDocumentTemplates() {
-  const templates = fs.readJsonSync(path.join(__dirname, "../public/template.json"));
+  const templates = fs.readJsonSync(path.resolve(__dirname, "../public/template.json"));
 
   for (const doc of Object.values(templates)) {
     if (doc.types) delete doc.types;
@@ -169,19 +172,19 @@ function loadDocumentTemplates() {
  * @returns {object} The system manifest file as an object.
  */
 function loadManifest() {
-  const f = fs.readFileSync(path.join(__dirname, "../public/system.json"));
-  return JSON.parse(f);
+  return fs.readJsonSync(path.resolve(__dirname, "../public/system.json"));
 }
 
 /**
  * Santize pack entry.
  *
- * This resets an entry's permissions to default and removes all non-pf1(spheres) flags.
+ * This resets an entry's permissions to default and removes all non-pf1 flags.
  *
  * @param {object} entry Loaded compendium content.
+ * @param {string} [documentType] The document type of the entry, determining which data is scrubbed.
  * @returns {object} The sanitized content.
  */
-function sanitizePack(entry, documentType = "") {
+function sanitizePackEntry(entry, documentType = "") {
   // Reset permissions to default
   entry.permission = { default: 0 };
   // Remove non-system/non-core flags
@@ -218,7 +221,7 @@ async function extractPack(filename, options) {
   // This db files directory in PACK_SRC
   const dbFileNameBase = path.basename(filename, ".db");
   const directory = resolveSource(path.basename(filename, ".db"));
-  const db = new Datastore({ filename: resolveCache(filename), autoload: true });
+  const db = new Datastore({ filename: resolveDist(filename), autoload: true });
 
   console.log(`Extracting pack ${filename}`);
 
@@ -235,13 +238,13 @@ async function extractPack(filename, options) {
 
   // Find associated manifest pack data
   const packData = manifest.packs.find((p) => {
-    return p.name === dbFileNameBase;
+    return path.basename(p.path, ".db") === dbFileNameBase;
   });
 
   if (!packData) console.warn(`No data found for package ${filename} within the system manifest.`);
   const docs = await db.findAsync({});
   const docPromises = docs.map(async (doc) => {
-    doc = sanitizePack(doc, packData?.type);
+    doc = sanitizePackEntry(doc, packData?.type);
 
     const entryFilepath = resolveSource(directory, `${sluggify(doc.name)}.json`);
 
@@ -277,7 +280,7 @@ async function extractPack(filename, options) {
  * @param {PackOptions} options - Additional options modifying the extraction process
  */
 async function extractAllPacks(options) {
-  const packs = await fs.readdir(resolveCache(), { withFileTypes: true });
+  const packs = await fs.readdir(resolveDist(), { withFileTypes: true });
   return Promise.all(
     packs.filter((p) => p.isFile() && path.extname(p.name) === ".db").map((p) => extractPack(p.name, options))
   );

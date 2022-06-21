@@ -20,6 +20,10 @@
 
     {{!-- Action Description --}}
     <div class="tab details" data-group="primary" data-tab="description">
+      <div class="form-group">
+        <label>{{localize "PF1.Tag"}}</label>
+        <input type="text" placeholder="{{tag}}" value="{{data.tag}}" name="tag" />
+      </div>
       {{roll-editor content=data.description target="description" button=true owner=owner editable=owner}}
     </div>
 

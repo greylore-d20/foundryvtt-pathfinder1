@@ -1,3 +1,5 @@
+import { createTag } from "../../../lib.js";
+
 export class ItemActionSheet extends FormApplication {
   constructor(...args) {
     super(...args);
@@ -56,9 +58,11 @@ export class ItemActionSheet extends FormApplication {
     data.action = this.action;
     data.item = this.item;
     data.actor = this.actor;
-    data.data = foundry.utils.deepClone(this.action.data);
+    data.data = foundry.utils.mergeObject(this.action.constructor.defaultData, this.action.data, { inplace: false });
     data.damageTypes = game.pf1.damageTypes.toRecord();
-    data.scriptCalls = game.pf1.scriptCalls.toJSON();
+
+    // Set tag
+    data.tag = createTag(data.data.name);
 
     // Include CONFIG values
     data.config = CONFIG.PF1;

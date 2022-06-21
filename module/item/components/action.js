@@ -1,7 +1,7 @@
 import { calculateRange, convertDistance } from "../../lib.js";
 import { getHighestChanges } from "../../actor/apply-changes.js";
 import { RollPF } from "../../roll.js";
-import { keepUpdateArray } from "../../lib.js";
+import { keepUpdateArray, createTag } from "../../lib.js";
 
 export class ItemAction {
   constructor(data, parent) {
@@ -62,6 +62,9 @@ export class ItemAction {
   }
   get name() {
     return this.data.name;
+  }
+  get tag() {
+    return this.data.tag || createTag(this.name);
   }
 
   get hasAction() {
@@ -223,6 +226,7 @@ export class ItemAction {
       name: game.i18n.localize("PF1.Action"),
       img: "systems/pf1/icons/skills/gray_04.jpg",
       description: "",
+      tag: "",
       activation: {
         cost: 1,
         type: "",

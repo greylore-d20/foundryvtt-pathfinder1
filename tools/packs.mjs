@@ -21,20 +21,33 @@ const resolveCache = (...file) => path.resolve(__dirname, PACK_CACHE, ...file);
 /** Helper function that resolves a path from the pack dist directory */
 const resolveDist = (...file) => path.resolve(__dirname, "../dist/packs", ...file);
 
-yargs(process.argv.slice(2))
+const argv = yargs(process.argv.slice(2))
   .demandCommand(1, 1)
-  .command("extract", `Extract packs from cache to source`, async (argv) => {
-    extractAllPacks({
-      reset: !argv.keepDeleted ?? true,
-      keepIds: !argv.resetIds ?? true,
-    });
-  })
+  .command(
+    "extract [packs...]",
+    `Extract packs from cache to source`,
+    () => {},
+    async (argv) => {
+      const options = {
+        reset: !argv.keepDeleted ?? true,
+        keepIds: !argv.resetIds ?? true,
+      };
+      if (argv.packs?.length) {
+        const results = await Promise.allSettled(argv.packs.map((pack) => extractPack(`${pack}.db`, options)));
+        results
+          .filter((res) => res.status === "rejected")
+          .forEach((res) => console.error(`Error: ${res.reason.message}`));
+      } else {
+        await extractAllPacks(options);
+      }
+    }
+  )
   // Option to overwrite the default `reset` option
   .option("keepDeleted", { alias: "k", type: "boolean" })
   // Option to overwrite the default `keepIds` option
   .option("resetIds", { alias: "r", type: "boolean" })
   .command("compile", `Compile json files from source into db files in cache`, async () => {
-    compileAllPacks();
+    await compileAllPacks();
   }).argv;
 
 /**
@@ -221,6 +234,7 @@ async function extractPack(filename, options) {
   // This db files directory in PACK_SRC
   const dbFileNameBase = path.basename(filename, ".db");
   const directory = resolveSource(path.basename(filename, ".db"));
+  if (!fs.existsSync(resolveDist(filename))) throw new Error(`${filename} does not exist`);
   const db = new Datastore({ filename: resolveDist(filename), autoload: true });
 
   console.log(`Extracting pack ${filename}`);
@@ -271,7 +285,7 @@ async function extractPack(filename, options) {
       )
     : [];
 
-  return { writtenFiles, removedFiles };
+  return { filename, writtenFiles, removedFiles };
 }
 
 /**

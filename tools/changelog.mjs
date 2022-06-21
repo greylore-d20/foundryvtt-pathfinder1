@@ -1,30 +1,6 @@
-const fs = require("fs");
-const git = require("simple-git");
-
-/**
- * Retrieves the latest changelog entry from the CHANGELOG.md file, and extracts it into a separate file.
- *
- * @param {boolean} writeFile - Whether a file containing the recent changes should be written.
- * @returns {Promise<string>} The most recent changes
- */
-async function getCurrentLog(writeFile = true) {
-  try {
-    const changelog = fs.readFileSync("./CHANGELOG.md", "utf-8");
-    const recentChanges = changelog.toString().match(/^# Changelog\n*(## (.|\n)*?)^\n^## \d*/m)?.[1] ?? "";
-
-    const manifestFile = fs.readFileSync("system.json", "utf-8");
-    const manifest = JSON.parse(manifestFile.toString());
-    let url = manifest.manifest;
-    url = url.replaceAll("latest", manifest.version);
-
-    const releaseNotes = `**Manifest URL: ${url}**\n\n${recentChanges}`;
-
-    if (writeFile) fs.writeFileSync("recent-changes.md", releaseNotes);
-    else return releaseNotes;
-  } catch (e) {
-    console.error(e);
-  }
-}
+import fs from "fs-extra";
+import git from "simple-git";
+import path from "node:path";
 
 /*
  * The following code was written for the changelogify package and modified to this project's needs.
@@ -71,7 +47,7 @@ async function getCurrentLog(writeFile = true) {
  * @returns {Promise<ChangelogData>} Changelog data
  */
 async function getChangelogData() {
-  const base = process.cwd();
+  const base = path.resolve(new URL(".", import.meta.url).pathname, "..");
   const changelogsDir = `${base}/changelogs/`;
   const unreleasedChangelogsDir = `${changelogsDir}unreleased/`;
   const paths = {
@@ -84,7 +60,7 @@ async function getChangelogData() {
   const gitBranch = await git().silent(true).raw(["symbolic-ref", "--short", "HEAD"]);
   const branchNumberRaw = gitBranch.match(/(\d)+/);
   const branchNumber = branchNumberRaw && Number(branchNumberRaw[0]) ? branchNumberRaw[0] : undefined;
-  const { version } = JSON.parse(fs.readFileSync("system.json", "utf-8"));
+  const { version } = JSON.parse(fs.readFileSync("public/system.json", "utf-8"));
 
   const config = JSON.parse(fs.readFileSync(paths.defaultConfig, "utf-8"));
 
@@ -106,7 +82,7 @@ async function getChangelogData() {
  *
  * @param {string} newVersion - The version used as header for this changelog
  */
-async function releaseLog(newVersion) {
+export async function releaseLog(newVersion) {
   try {
     const { paths, version, currentDate, config } = await getChangelogData();
     const date = currentDate;
@@ -191,6 +167,3 @@ const checkJsonFormat = (content, types) => {
   if (!types.includes(content.type)) return "unknown type";
   return "";
 };
-
-exports.releaseLog = releaseLog;
-exports.getCurrentLog = getCurrentLog;

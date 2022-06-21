@@ -22,25 +22,38 @@ export default function handlebarsReload() {
     configResolved(config) {
       const watchPath = path.resolve(config.publicDir, "**/*.hbs");
       watcher = chokidar.watch(watchPath);
+      // Clean up base dir to determine file placement within Foundry
       const foundryBaseDir = config.base
         .split(path.sep)
         .join(path.posix.sep)
         .replace(/^\/+|\/+$/g, "");
-      watcher.on("change", (file) => {
+
+      watcher.on("change", async (file) => {
         if (file.endsWith("hbs")) {
+          // Transform OS path into Foundry-suitable path
           const filepathUrl = path
             .relative(config.publicDir, file)
             .split(path.sep)
             .join(path.posix.sep)
             .replace(/^\/+|\/+$/g, "");
           const foundryPath = `${foundryBaseDir}/${filepathUrl}`;
-          const content = fs.readFileSync(file, { encoding: "utf8" });
-          config.logger.info(`Reload ${file} as ${foundryPath}`);
+
+          // Shortened relative path for display purposes
+          const fileFromRoot = path.relative(config.root, file);
+
+          // Trigger hot reload within dev server/Foundry
+          const content = await fs.readFile(file, { encoding: "utf8" });
+          config.logger.info(`Reload ${fileFromRoot} as ${foundryPath}`);
           server.ws.send({
             type: "custom",
             event: "hotHandle:update",
             data: { file: foundryPath, content },
           });
+
+          // Also copy template to `dist` to persist the change
+          const distFile = path.resolve(config.build.outDir, path.relative(config.publicDir, file));
+          await fs.copy(file, distFile);
+          config.logger.info(`Copied ${fileFromRoot} to ${path.relative(config.root, distFile)}`);
         }
       });
     },

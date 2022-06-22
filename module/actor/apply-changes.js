@@ -1,4 +1,5 @@
 import { PF1 } from "../config";
+import { RollPF } from "../roll.js";
 import { fractionalToString } from "../lib";
 
 /**

@@ -1,5 +1,6 @@
 import { ItemPF } from "../entity.js";
 import { createTag } from "../../lib";
+import { RollPF } from "../../roll.js";
 
 export class ItemClassPF extends ItemPF {
   async _preUpdate(update, context, userId) {

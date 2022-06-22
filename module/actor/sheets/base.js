@@ -18,6 +18,7 @@ import { LevelUpForm } from "../../apps/level-up.js";
 import { CurrencyTransfer } from "../../apps/currency-transfer.js";
 import { getHighestChanges } from "../apply-changes.js";
 import { PF1 } from "../../config.js";
+import { RollPF } from "../../roll.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!

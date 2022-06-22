@@ -1,4 +1,5 @@
 import { ItemPF } from "../entity.js";
+import { RollPF } from "../../roll.js";
 
 export class ItemBuffPF extends ItemPF {
   async _preUpdate(changed, options, userId) {

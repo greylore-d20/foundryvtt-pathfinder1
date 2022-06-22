@@ -1,5 +1,6 @@
 import { ActorPF } from "./actor/entity.js";
 import { getSkipActionPrompt } from "./settings.js";
+import { RollPF } from "./roll.js";
 
 /* -------------------------------------------- */
 

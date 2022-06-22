@@ -1,6 +1,7 @@
 import { createTag, convertDistance } from "../lib.js";
 import { ChatAttack } from "../misc/chat-attack.js";
 import { createCustomChatMessage } from "../chat.js";
+import { RollPF } from "../roll.js";
 
 export const ERR_REQUIREMENT = {
   NO_ACTOR_PERM: 1,

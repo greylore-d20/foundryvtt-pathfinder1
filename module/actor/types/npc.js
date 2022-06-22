@@ -1,4 +1,5 @@
 import { ActorPF } from "../entity.js";
+import { RollPF } from "../../roll.js";
 
 export class ActorNPCPF extends ActorPF {
   prepareBaseData() {

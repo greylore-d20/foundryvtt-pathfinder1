@@ -1,3 +1,5 @@
+import { RollPF } from "../roll.js";
+
 export class ChatAttack {
   constructor(action, { label = "", rollData = {}, targets = null } = {}) {
     this._rollData = rollData;

@@ -1,4 +1,5 @@
 import { generateAttacks } from "./attack.js";
+import { RollPF } from "../roll.js";
 
 export class AttackDialog extends Application {
   constructor(object, rollData = null, options = {}) {

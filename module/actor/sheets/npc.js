@@ -1,5 +1,6 @@
 import { ActorSheetPF } from "../sheets/base.js";
 import { CR } from "../../lib.js";
+import { RollPF } from "../../roll.js";
 
 /**
  * An Actor sheet for NPC type characters in the game system.

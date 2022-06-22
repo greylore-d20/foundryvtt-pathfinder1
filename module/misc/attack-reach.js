@@ -1,5 +1,6 @@
 import Color from "color";
 import { colorToInt, convertDistance, measureDistance } from "../lib.js";
+import { RollPF } from "../roll.js";
 
 const rangeColor = {
   fill: Color("#ff0000"),

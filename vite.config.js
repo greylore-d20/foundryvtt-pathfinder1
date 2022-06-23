@@ -14,7 +14,7 @@ function resolve(relativePath) {
   return path.resolve(__dirname, relativePath);
 }
 
-const COPY_FILES = ["CREDITS.md", "LICENSE.txt", "CHANGELOG.md", "OGL.txt", "help"].map(resolve);
+const COPY_FILES = ["CREDITS.md", "LICENSE.txt", "CHANGELOG.md", "OGL.txt", "help"];
 
 const config = defineConfig(({ command }) => {
   return {

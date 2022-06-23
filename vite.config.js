@@ -32,12 +32,14 @@ const config = defineConfig(({ command }) => {
         },
       },
     },
-    esbuild: {
-      minifySyntax: true,
-      minifyWhitespace: true,
-      keepNames: true,
-    },
     build: {
+      // Slower than esbuild, but required for options
+      minify: "terser",
+      // Keep class and function symbol names for sane console output
+      terserOptions: {
+        keep_classnames: true,
+        keep_fnames: true,
+      },
       outDir: resolve("dist"),
       emptyOutDir: true,
       sourcemap: true,

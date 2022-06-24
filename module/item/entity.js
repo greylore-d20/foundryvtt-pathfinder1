@@ -408,6 +408,9 @@ export class ItemPF extends ItemBasePF {
   }
 
   prepareWeight() {
+    // HACK: Migration shim. Allows unmigrated items to have their weight correct.
+    this.data.data.baseWeight ??= this.data._source.data.weight;
+
     // Determine actual item weight, including sub-items
     const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
     this.data.data.weight = (this.items ?? []).reduce((cur, o) => {

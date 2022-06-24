@@ -263,6 +263,7 @@ export const migrateItemData = function (item) {
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
   _migrateItemActions(item, updateData);
+  _migrateItemWeight(item, updateData);
 
   // Migrate action data
   const alreadyHasActions = item.data.actions instanceof Array && item.data.actions.length > 0;
@@ -909,6 +910,18 @@ const _migrateEquipmentSize = function (ent, updateData) {
   const size = getProperty(ent, "data.size");
   if (!size) {
     updateData["data.size"] = "med";
+  }
+};
+
+// Migrate .weight to .baseWeight
+const _migrateItemWeight = function (ent, updateData) {
+  const baseWeight = getProperty(ent, "data.baseWeight"),
+    weight = getProperty(ent, "data.weight");
+  if (weight !== undefined) {
+    if (baseWeight === undefined) {
+      updateData["data.baseWeight"] = weight;
+    }
+    updateData["data.-=weight"] = null;
   }
 };
 

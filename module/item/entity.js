@@ -412,7 +412,7 @@ export class ItemPF extends ItemBasePF {
     const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
     this.data.data.weight = (this.items ?? []).reduce((cur, o) => {
       return cur + o.data.data.weight * o.data.data.quantity * weightReduction;
-    }, this.data.data.weight);
+    }, this.data.data.baseWeight);
 
     // Convert weight according metric system (lb vs kg)
     let usystem = game.settings.get("pf1", "weightUnits"); // override

@@ -2459,7 +2459,7 @@ export class ActorSheetPF extends ActorSheet {
       const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
       i.data.weight = i.data.weight || 0;
-      i.totalWeight = Math.round(convertWeight(i.data.quantity * i.data.weight) * 10) / 10;
+      i.totalWeight = Math.roundDecimals(i.data.quantity * i.data.weightConverted, 1);
       i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);

@@ -38,7 +38,7 @@
   "scripts": {
     "prebuild": "npm run compilePacks && npm run buildLang",
     "build": "vite build",
-    "build:watch": "npm run prebuild && vite build --watch",
+    "build:watch": "npm run prebuild && vite build --mode development --watch",
     "build:serve": "npm run build && vite serve",
     "serve": "vite serve",
     "extractPacks": "node ./tools/packs.mjs extract",

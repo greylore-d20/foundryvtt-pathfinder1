@@ -16,7 +16,7 @@ function resolve(relativePath) {
 
 const COPY_FILES = ["CREDITS.md", "LICENSE.txt", "CHANGELOG.md", "OGL.txt", "help"];
 
-const config = defineConfig(({ command }) => {
+const config = defineConfig(({ command, mode }) => {
   return {
     root: ".",
     base: "/systems/pf1/",
@@ -34,12 +34,15 @@ const config = defineConfig(({ command }) => {
     },
     build: {
       // Slower than esbuild, but required for options
-      minify: "terser",
+      minify: mode === "development" ? false : "terser",
       // Keep class and function symbol names for sane console output
-      terserOptions: {
-        keep_classnames: true,
-        keep_fnames: true,
-      },
+      terserOptions:
+        mode === "development"
+          ? undefined
+          : {
+              keep_classnames: true,
+              keep_fnames: true,
+            },
       outDir: resolve("dist"),
       emptyOutDir: true,
       sourcemap: true,
@@ -69,7 +72,7 @@ const config = defineConfig(({ command }) => {
     },
     plugins: [
       visualizer({
-        gzipSize: true,
+        sourcemap: true,
         template: "treemap",
       }),
       copy({ targets: [{ src: COPY_FILES, dest: resolve("dist") }], hook: "writeBundle" }),

@@ -2,10 +2,6 @@ import { convertDistance, calculateRange, simplifyFormula } from "../lib.js";
 import { RollPF } from "../roll.js";
 
 export const registerHandlebarsHelpers = function () {
-  Handlebars.registerHelper("concat", (...args) => {
-    return args.slice(0, args.length - 1).join("");
-  });
-
   /**
    * Render a MCE editor container with an optional toggle button
    */

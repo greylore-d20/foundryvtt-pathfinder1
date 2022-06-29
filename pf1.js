@@ -416,6 +416,7 @@ Hooks.once("setup", function () {
     "flyManeuverabilities",
     "abilityTypes",
     "spellPreparationModes",
+    "weaponGroups",
     "weaponTypes",
     "weaponProperties",
     "spellComponents",

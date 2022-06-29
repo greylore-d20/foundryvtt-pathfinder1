@@ -28,16 +28,17 @@ export const preloadHandlebarsTemplates = async function () {
 
     // Item Sheet Partials
     "systems/pf1/templates/items/parts/item-actions.hbs",
-    "systems/pf1/templates/items/parts/item-description.hbs",
-    "systems/pf1/templates/items/parts/item-changes.hbs",
-    "systems/pf1/templates/items/parts/item-links.hbs",
-    "systems/pf1/templates/items/parts/item-aura.hbs",
-    "systems/pf1/templates/items/parts/item-contents.hbs",
-    "systems/pf1/templates/items/parts/item-tag.hbs",
-    "systems/pf1/templates/items/parts/item-name.hbs",
     "systems/pf1/templates/items/parts/item-advanced.hbs",
-    "systems/pf1/templates/items/parts/item-size.hbs",
+    "systems/pf1/templates/items/parts/item-aura.hbs",
+    "systems/pf1/templates/items/parts/item-changes.hbs",
+    "systems/pf1/templates/items/parts/item-contents.hbs",
+    "systems/pf1/templates/items/parts/item-description.hbs",
+    "systems/pf1/templates/items/parts/item-links.hbs",
+    "systems/pf1/templates/items/parts/item-name.hbs",
     "systems/pf1/templates/items/parts/item-proficiencies.hbs",
+    "systems/pf1/templates/items/parts/item-size.hbs",
+    "systems/pf1/templates/items/parts/item-tag.hbs",
+    "systems/pf1/templates/items/parts/item-weapon-groups.hbs",
 
     // Apps
     "systems/pf1/templates/apps/attack-roll-dialog.hbs",

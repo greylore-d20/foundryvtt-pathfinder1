@@ -1553,6 +1553,29 @@ export const PF1 = /** @type {const} */ ({
     oh: "PF1.WeaponHoldTypeOffhand",
   },
 
+  /**
+   * Weapon groups that a weapon can belong to
+   */
+  weaponGroups: {
+    axes: "PF1.WeaponGroupAxes",
+    bladesHeavy: "PF1.WeaponGroupBladesHeavy",
+    bladesLight: "PF1.WeaponGroupBladesLight",
+    bows: "PF1.WeaponGroupBows",
+    close: "PF1.WeaponGroupClose",
+    crossbows: "PF1.WeaponGroupCrossbows",
+    double: "PF1.WeaponGroupDouble",
+    firearms: "PF1.WeaponGroupFirearms",
+    flails: "PF1.WeaponGroupFlails",
+    hammers: "PF1.WeaponGroupHammers",
+    monk: "PF1.WeaponGroupMonk",
+    natural: "PF1.WeaponGroupNatural",
+    polearms: "PF1.WeaponGroupPolearms",
+    siegeEngines: "PF1.WeaponGroupSiegeEngines",
+    spears: "PF1.WeaponGroupSpears",
+    thrown: "PF1.WeaponGroupThrown",
+    tribal: "PF1.WeaponGroupTribal",
+  },
+
   /* -------------------------------------------- */
 
   /**

@@ -14,22 +14,23 @@ export class ItemWeaponPF extends ItemPF {
   }
 
   prepareData() {
-    const itemData = super.prepareData();
-    const data = itemData.data;
+    super.prepareData();
     const labels = this.labels;
-    const C = CONFIG.PF1;
+    const { weaponTypes } = CONFIG.PF1;
 
     // Type and subtype labels
     let wType = this.data.data.weaponType;
-    const typeKeys = Object.keys(C.weaponTypes);
+    const typeKeys = Object.keys(weaponTypes);
     if (!typeKeys.includes(wType)) wType = typeKeys[0];
 
     let wSubtype = this.data.data.weaponSubtype;
-    const subtypeKeys = Object.keys(C.weaponTypes[wType]).filter((o) => !o.startsWith("_"));
+    const subtypeKeys = Object.keys(weaponTypes[wType]).filter((o) => !o.startsWith("_"));
     if (!subtypeKeys.includes(wSubtype)) wSubtype = subtypeKeys[0];
 
-    labels.weaponType = C.weaponTypes[wType]._label;
-    labels.weaponSubtype = C.weaponTypes[wType][wSubtype];
+    labels.weaponType = weaponTypes[wType]._label;
+    labels.weaponSubtype = weaponTypes[wType][wSubtype];
+
+    this._prepareWeaponGroups();
   }
 
   /**
@@ -44,5 +45,23 @@ export class ItemWeaponPF extends ItemPF {
 
   get isActive() {
     return this.data.data.equipped;
+  }
+
+  _prepareWeaponGroups() {
+    const weaponGroups = this.data.data.weaponGroups || { value: [], custom: "" };
+
+    weaponGroups.selected = weaponGroups.value.reduce((obj, t) => {
+      obj[t] = CONFIG.PF1.weaponGroups[t];
+      return obj;
+    }, {});
+
+    // Add custom entry
+    if (weaponGroups.custom) {
+      weaponGroups.custom
+        .split(CONFIG.PF1.re.traitSeparator)
+        .forEach((c, i) => (weaponGroups.selected[`custom${i + 1}`] = c.trim()));
+    }
+
+    weaponGroups.cssClass = isObjectEmpty(weaponGroups.selected) ? "inactive" : "";
   }
 }

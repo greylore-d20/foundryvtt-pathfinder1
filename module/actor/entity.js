@@ -3034,9 +3034,10 @@ export class ActorPF extends ActorBasePF {
   /**
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
    *
-   * @param {string} context - The context to draw from.
+   * @param {string|Handlebars.SafeString} context - The context to draw from.
    */
   getContextNotes(context) {
+    if (context.string) context = context.string;
     const result = this.allNotes;
 
     // Attacks

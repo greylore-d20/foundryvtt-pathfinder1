@@ -2754,11 +2754,20 @@ export class ActorPF extends ActorBasePF {
    * @param {string} [options.reductionDefault] - Default value for Damage Reduction
    * @param {boolean} [options.asNonlethal] - Marks the damage as non-lethal
    * @param {Array.<Token|Actor>} [options.targets] - Override the targets to apply damage to
+   * @param {number} options.critMult - Critical multiplier as needed for Wounds & Vigor variant health rule. Set to 0 for non-critical hits.
+   * @param {boolean} options.asWounds - Apply damage to wounds directly instead of vigor, as needed for Wounds & Vigor variant health rule.
    * @returns {Promise}
    */
   static async applyDamage(
     value,
-    { forceDialog = false, reductionDefault = "", asNonlethal = false, targets = null } = {}
+    {
+      forceDialog = false,
+      reductionDefault = "",
+      asNonlethal = false,
+      targets = null,
+      critMult = 0,
+      asWounds = false,
+    } = {}
   ) {
     const promises = [];
     let controlled = canvas.tokens.controlled,
@@ -2768,6 +2777,8 @@ export class ActorPF extends ActorBasePF {
     if (targets instanceof Array) {
       controlled = targets.filter((o) => o instanceof Token || o instanceof Actor);
     }
+
+    const healthConfig = game.settings.get("pf1", "healthConfig");
 
     const numReg = /(\d+)/g,
       sliceReg = /[^,;\n]*(\d+)[^,;\n]*/g,
@@ -2789,20 +2800,11 @@ export class ActorPF extends ActorBasePF {
         const checked = [...form.find(".tokenAffected:checked")].map((tok) => tok.name.replace("affect.", ""));
         controlled = controlled.filter((con) => checked.includes(con.id));
       }
+
+      if (value == 0) return; // Early exit
+
       for (const t of controlled) {
-        const a = t instanceof Token ? t.actor : t,
-          hp = a.data.data.attributes.hp,
-          tmp = parseInt(hp.temp) || 0;
-
-        // Handle nonlethal damage
-        let nld = 0;
-        if (asNonlethal && value > 0) {
-          nld = Math.min(hp.max - hp.nonlethal, value);
-          value -= nld;
-        }
-
-        // Temp HP adjustment
-        const dt = value > 0 ? Math.min(tmp, value) : 0;
+        const a = t instanceof Token ? t.actor : t;
 
         if (!a.isOwner) {
           const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -2810,13 +2812,82 @@ export class ActorPF extends ActorBasePF {
           ui.notifications.warn(msg);
           continue;
         }
-        promises.push(
-          a.update({
-            "data.attributes.hp.nonlethal": hp.nonlethal + nld,
-            "data.attributes.hp.temp": tmp - dt,
-            "data.attributes.hp.value": Math.min(hp.value - (value - dt), hp.max),
-          })
-        );
+
+        const actorType = { character: "pc", npc: "npc" }[a.type];
+        const useWoundsAndVigor = healthConfig.variants[actorType]?.useWoundsAndVigor ?? false,
+          hp = !useWoundsAndVigor ? a.data.data.attributes.hp : a.data.data.attributes.vigor,
+          tmp = hp.temp || 0;
+
+        const update = {};
+
+        if (useWoundsAndVigor) {
+          const currentHealth = hp.value;
+          let woundAdjust = 0;
+
+          if (asWounds) {
+            woundAdjust -= value;
+            value = 0;
+          }
+
+          // Temp HP adjustment
+          const dt = value > 0 ? Math.min(tmp, value) : 0;
+          value -= dt;
+
+          // Nonlethal damage
+          if (asNonlethal && value > 0) {
+            // Wounds & Vigor
+            if (currentHealth > 0) {
+              value = Math.min(currentHealth, value);
+            } else {
+              woundAdjust -= critMult > 1 ? critMult : 1;
+              value = 0; // No other bleedover to wounds
+            }
+          }
+
+          // Create update data
+          if (dt != 0) update["data.attributes.vigor.temp"] = tmp - dt;
+          if (value != 0) {
+            let newHP = Math.min(hp.value - value, hp.max);
+            if (value > 0) {
+              if (hp.value > 0) {
+                if (newHP < 0) {
+                  if (critMult > 0) {
+                    woundAdjust -= -newHP;
+                    woundAdjust -= critMult;
+                  }
+                  newHP = 0;
+                }
+              } else {
+                woundAdjust -= value;
+              }
+            }
+
+            if (newHP != hp.value) update["data.attributes.vigor.value"] = newHP;
+          }
+          if (woundAdjust != 0) {
+            const wounds = a.data.data.attributes.wounds;
+            update["data.attributes.wounds.value"] = Math.max(0, Math.min(wounds.value + woundAdjust, wounds.max));
+          }
+        }
+        // Normal Hit Points
+        else {
+          // Nonlethal damage
+          let nld = 0;
+          if (asNonlethal && value > 0) {
+            nld = Math.min(hp.max - hp.nonlethal, value);
+            value -= nld;
+          }
+
+          // Temp HP adjustment
+          const dt = value > 0 ? Math.min(tmp, value) : 0;
+
+          // Create update data
+          update["data.attributes.hp.nonlethal"] = hp.nonlethal + nld;
+          update["data.attributes.hp.temp"] = tmp - dt;
+          update["data.attributes.hp.value"] = Math.min(hp.value - (value - dt), hp.max);
+        }
+
+        promises.push(a.update(update));
       }
       return Promise.all(promises);
     };

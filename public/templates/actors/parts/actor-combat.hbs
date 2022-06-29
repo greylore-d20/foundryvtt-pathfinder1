@@ -192,32 +192,34 @@
 
             <div class="item-detail item-damage tooltip">
               {{#if item.hasDamage}}
-              <label>{{ellipsis (itemDamage item @root.rollData) 8 -4 2}}</label>
+              <label class="resolved-formula">{{actionDamage item.document.firstAction @root.rollData}}</label>
               <span class="tooltipcontent">
-                {{itemDamage item @root.rollData}}<br/>
+                {{actionDamage item.document.firstAction @root.rollData}}<br/>
                 <br/>
                 {{localize "PF1.Details"}}:<br/>
-                {{#each item.data.damage.parts as |pt ix|}}
-                  {{pt.[0]}}{{#if pt.[1]}} [{{pt.[1]}}]{{/if}}<br/>
-                {{/each}}
-                {{#if item.data.damage.nonCritParts}}
-                  {{#each item.data.damage.nonCritParts as |pt|}}
-                    {{pt.[0]}}{{#if pt.[1]}} [{{pt.[1]}}]{{/if}}<br/>
+                {{#with item.document.firstAction}}
+                  {{#each data.damage.parts as |pt ix|}}
+                    {{pt.[0]}}{{#if pt.[1]}} [{{damageTypes pt.[1]}}]{{/if}}<br/>
                   {{/each}}
-                {{/if}}
-                {{#if item.data.ability.damage}}
-                  {{abilityMod item.data.ability.damage @root.rollData item.data.ability.damageMult}} [{{lookup ../../config.abilities item.data.ability.damage}}]<br/>
-                {{/if}}
-                {{#each item.document.allDamageSources}}
-                  {{#if @first}}<br>{{/if}}
-                  {{flavor}} : {{value}} [{{#if type}}{{type}}{{else}}{{lookup @root.config.bonusModifiers modifier}}{{/if}}]<br>
-                {{/each}}
-                {{#if (optionalConditionals item)}}
-                  <br/>+ {{localize "PF1.Conditionals"}}<br/>
-                {{/if}}
-                {{#if item.data.damage.critParts}}
-                  <br/>+ {{localize "PF1.CritDamageBonusFormula"}}<br/>
-                {{/if}}
+                  {{#if data.damage.nonCritParts}}
+                    {{#each data.damage.nonCritParts as |pt|}}
+                      {{pt.[0]}}{{#if pt.[1]}} [{{pt.[1]}}]{{/if}}<br/>
+                    {{/each}}
+                  {{/if}}
+                  {{#if data.ability.damage}}
+                    {{abilityMod data.ability.damage @root.rollData data.ability.damageMult}} [{{lookup @root.config.abilities data.ability.damage}}]<br/>
+                  {{/if}}
+                  {{#each allDamageSources}}
+                    {{#if @first}}<br>{{/if}}
+                    {{flavor}} : {{value}} [{{#if type}}{{type}}{{else}}{{lookup @root.config.bonusModifiers modifier}}{{/if}}]<br>
+                  {{/each}}
+                  {{#if (optionalConditionals item)}}
+                    <br/>+ {{localize "PF1.Conditionals"}}<br/>
+                  {{/if}}
+                  {{#if damage.critParts}}
+                    <br/>+ {{localize "PF1.CritDamageBonusFormula"}}<br/>
+                  {{/if}}
+                {{/with}}
               </span>
               {{/if}}
             </div>

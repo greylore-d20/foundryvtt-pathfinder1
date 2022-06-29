@@ -58,11 +58,19 @@ export const registerHandlebarsHelpers = function () {
     }
   });
 
-  Handlebars.registerHelper("itemDamage", (item, rollData) => {
-    if (!item.document?.firstAction?.hasDamage) return null; // It was a mistake to call this
+  /**
+   *
+   * @param action
+   * @param rollData
+   * @param options
+   */
+  function actionDamage(action, rollData, options) {
+    if (!action.hasDamage) return null;
 
-    const actorData = item.document.parentActor.data.data,
-      actionData = item.document.firstAction.data;
+    const actor = action.actor,
+      item = action.parent,
+      actorData = actor?.data.data,
+      actionData = action.data;
 
     const rv = [];
 
@@ -83,14 +91,14 @@ export const registerHandlebarsHelpers = function () {
 
     // Include ability score only if the string isn't too long yet
     const dmgAbl = actionData.ability.damage;
-    const dmgAblMod = Math.floor((actorData.abilities[dmgAbl]?.mod ?? 0) * (actionData.ability.damageMult || 1));
+    const dmgAblMod = Math.floor((actorData?.abilities[dmgAbl]?.mod ?? 0) * (actionData.ability.damageMult || 1));
     if (dmgAblMod != 0) rv.push(dmgAblMod);
 
     // Include damage parts that don't happen on crits
     handleParts(actionData.damage.nonCritParts);
 
     // Include general sources. Item enhancement bonus is among these.
-    item.document.allDamageSources?.forEach((s) => handleFormula(s.formula, s));
+    item.getAllDamageSources(action.id)?.forEach((s) => handleFormula(s.formula, s));
 
     if (rv.length === 0) rv.push("NaN"); // Something probably went wrong
 
@@ -100,6 +108,22 @@ export const registerHandlebarsHelpers = function () {
       .replace(/\+-/, "-") // simplify math logic pt.1
       .replace(/--/g, "+") // simplify math logic pt.2
       .replace(/\+\++/, "+"); // simplify math logic pt.3
+  }
+
+  Handlebars.registerHelper("actionDamage", actionDamage);
+
+  Handlebars.registerHelper("damageTypes", (typeInfo) => {
+    const rv = [];
+    const { custom, values } = typeInfo;
+    if (custom) rv.push(custom);
+    values.forEach((dtId) => rv.push(game.i18n.localize(game.pf1.damageTypes.get(dtId)?.name ?? "PF1.Undefined")));
+    return rv.join(", ");
+  });
+
+  Handlebars.registerHelper("itemDamage", (item, rollData) => {
+    console.warn("{{itemDamage}} handlebars helper is deprecated, use {{actionDamage}} instead");
+    const action = item.document?.firstAction;
+    return actionDamage(action, rollData);
   });
 
   Handlebars.registerHelper("itemAttacks", (item) => {
@@ -119,31 +143,6 @@ export const registerHandlebarsHelpers = function () {
   // Avoids contaminating rollData or item data with excess strings.
   Handlebars.registerHelper("abilityMod", (abl, rollData, multiplier) => {
     return Math.floor(rollData.abilities[abl]?.mod * multiplier ?? 1);
-  });
-
-  // Shorten string with ellipsis
-  // Favor cutting off near specific symbol within margin of error
-  Handlebars.registerHelper("ellipsis", (value, desiredLength, searchStartOffset = -4, searchEndOffset = 2) => {
-    const delimiters = /(\s|\+|,)/g;
-    // Process only if it's too long
-    if (value?.length > desiredLength + searchEndOffset) {
-      let cut = 0;
-
-      const end = Math.min(value.length - 1, desiredLength + searchEndOffset),
-        start = Math.max(0, desiredLength + searchStartOffset);
-
-      // Find nice cutting position
-      for (let i = end; i > start; i--) {
-        if (value[i].match(delimiters)?.length > 0) {
-          cut = i + 1;
-          break;
-        }
-      }
-      if (cut == 0) cut = desiredLength; // No better position found, just cut it.
-
-      return value.substring(0, cut) + "…";
-    }
-    return value;
   });
 
   Handlebars.registerHelper("hasContextNotes", (actor, context) => {

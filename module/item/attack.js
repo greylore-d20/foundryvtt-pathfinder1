@@ -1061,7 +1061,6 @@ export const executeScriptCalls = async function (shared) {
   // Execute script call
   shared.scriptData = await this.executeScriptCalls("use", {
     attackData,
-    action: shared.action,
     // Deprecated for V10
     data: new Proxy({ chatMessage: shared.chatMessage, fullAttack: shared.fullAttack }, handlerMaker("data")),
     attacks: new Proxy(shared.chatAttacks ?? [], handlerMaker("attacks", "shared.attackData.chatAttacks")),

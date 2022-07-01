@@ -154,10 +154,10 @@ export class ItemSheetPF extends ItemSheet {
       // Add weight
       data.descriptionAttributes.push({
         isNumber: true,
-        name: "data.baseWeight",
+        name: "data.weight.base",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.data.data.weightConverted,
+        value: data.item.data.data.weight.converted,
         decimals: 2,
         id: "data-baseWeight",
       });

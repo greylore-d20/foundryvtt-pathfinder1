@@ -409,19 +409,24 @@ export class ItemPF extends ItemBasePF {
 
   prepareWeight() {
     // HACK: Migration shim. Allows unmigrated items to have their weight correct.
-    this.data.data.baseWeight ??= this.data._source.data.weight;
+    const wt = this.data.data.weight;
+    if (wt === undefined || Number.isFinite(wt)) {
+      const srcd = this.data._source.data,
+        srcw = srcd.baseWeight ?? srcd.weight ?? 0;
+      this.data.data.weight = { base: srcw };
+    }
 
     // Determine actual item weight, including sub-items
     const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
-    this.data.data.weight = (this.items ?? []).reduce((cur, o) => {
-      return cur + o.data.data.weight * o.data.data.quantity * weightReduction;
-    }, this.data.data.baseWeight);
+    this.data.data.weight.total = (this.items ?? []).reduce((cur, o) => {
+      return cur + o.data.data.weight.total * o.data.data.quantity * weightReduction;
+    }, this.data.data.weight.base);
 
     // Convert weight according metric system (lb vs kg)
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
-    this.data.data.weightConverted = convertWeight(this.data.data.weight);
-    this.data.data.weightUnits = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+    this.data.data.weight.converted = convertWeight(this.data.data.weight.total);
+    this.data.data.weight.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
     this.data.data.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
   }
 

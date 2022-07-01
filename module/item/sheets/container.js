@@ -97,10 +97,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       // Add weight
       data.descriptionAttributes.push({
         isNumber: true,
-        name: "data.baseWeight",
+        name: "data.weight.base",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.data.data.weightConverted,
+        value: data.item.data.data.weight.converted,
         id: "data-baseWeight",
       });
 
@@ -185,7 +185,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     data.contentsWeight = Math.round(convertWeight(data.contentsWeight) * 10) / 10;
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
-    data.weightUnits = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+    data.weight.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
 
     // Get contents value
     const cpValue =

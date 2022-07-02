@@ -63,13 +63,13 @@ If committing changes is not possible due to ESLint or Prettier encountering non
 
 The system provides extra tooling to deal with compendiums, including their compilation to and from JSON.
 Source files for all pack entries are stored in `packs`, with each compendium in its own directory.
-When `npm run prebuild` is run – which happens automatically when invoking `npm run build` – the compendiums are compiled into a `.db` file, which is then stored in `public/packs`.
+When `npm run packs:compile` is run – which happens automatically when invoking `npm run build` – the compendiums are compiled into a `.db` file, which is then stored in `public/packs`.
 From there, the actual build process copies the `.db` files into the `dist` directory.
 
 Compendium content can be edited from within Foundry, so that changes are stored in their respective `.db` files.
-To then transfer these changes to the compendium's source files, run `npm run extractPacks`.
+To then transfer these changes to the compendium's source files, run `npm run packs:extract`.
 This will extract the contents of `dist/packs/*.db` into their respective directories.
-If Foundry's `Data/systems/pf1` is symlinked to `dist`, you can change content in Foundry, close the server, and then run `npm run extractPacks` to immediately see the changes in the source files.
+If Foundry's `Data/systems/pf1` is symlinked to `dist`, you can change content in Foundry, close the server, and then run `npm run packs:extract` to immediately see the changes in the source files.
 
 ### Documentation
 

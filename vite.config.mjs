@@ -3,7 +3,10 @@ import { visualizer } from "rollup-plugin-visualizer";
 import path from "node:path";
 import { copy } from "@guanghechen/rollup-plugin-copy";
 import handlebarsReload from "./tools/handlebars-reload.mjs";
+import langReload from "./tools/lang-reload.mjs";
+import url from "node:url";
 
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 /**
  * Returns an absolute path
  *
@@ -78,6 +81,7 @@ const config = defineConfig(({ command, mode }) => {
       }),
       copy({ targets: [{ src: COPY_FILES, dest: resolve("dist") }], hook: "writeBundle" }),
       handlebarsReload(),
+      langReload(),
     ],
   };
 });

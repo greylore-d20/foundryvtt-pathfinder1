@@ -913,19 +913,19 @@ const _migrateEquipmentSize = function (ent, updateData) {
   }
 };
 
-// Migrate .weight number to .weight.base
+// Migrate .weight number to .weight.value
 // Migrate .baseWeight that was briefly introduced in 0.81
 const _migrateItemWeight = function (ent, updateData) {
   const baseWeight = getProperty(ent, "data.baseWeight"),
     weight = getProperty(ent, "data.weight");
   if (Number.isFinite(weight)) {
-    updateData["data.weight.base"] = weight;
+    updateData["data.weight.value"] = weight;
   }
 
   // If baseWeight exists and looks reasonable, use it for base weight instead
   if (baseWeight !== undefined) {
     if (Number.isFinite(baseWeight) && baseWeight > 0) {
-      updateData["data.weight.base"] = baseWeight;
+      updateData["data.weight.value"] = baseWeight;
     }
     updateData["data.-=baseWeight"] = null;
   }

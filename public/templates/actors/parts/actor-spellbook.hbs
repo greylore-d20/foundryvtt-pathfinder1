@@ -365,63 +365,61 @@
     <ol class="inventory-list">
       {{#each spellbook.data as |section sid|}}
       {{#unless section._hidden}}
-      <li class="flexrow inventory-header spellbook-header {{#if section.lowAbilityScore}}insufficient-ability-score{{/if}}" data-level="{{section.level}}"
-        data-preparation-unused="{{section.preparation.unused}}" {{#if ../spellbook.orig.spontaneous}}data-known-unused="{{section.known.unused}}"{{/if}}>
-        <div class="item-name flexrow">
-          <h3>{{section.name}}</h3>
-        </div>
-
-        {{#unless ../spellbook.orig.spellPoints.useSystem}}
-        <div class="item-detail spell-uses">
-          {{#if section.usesSlots}}
-          {{#unless (and (eq section.level 0) ../spellbook.orig.autoSpellLevelCalculation)}}
-          <div class="tooltip spell-slots{{#if ../spellbook.orig.spontaneous}} spontaneous{{/if}}">
-            <span class="{{#unless ../spellbook.orig.spontaneous}}spell-input-readonly{{else}}text-box{{/unless}}" data-dtype="Number" {{#if ../spellbook.orig.spontaneous}}name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value"{{/if}}>
-              {{section.uses}}
-            </span>
-            <span class="tooltipcontent">
-              {{#unless ../spellbook.orig.spontaneous}}
-              {{localize "PF1.LeftToPrepare"}}
-              {{else}}
-              {{localize "PF1.CastsLeft"}}
-              {{/unless}}
-            </span>
+      <ol class="item-list" data-type="spell" data-level="{{section.level}}" data-preparation-unused="{{section.preparation.unused}}" {{#if ../spellbook.orig.spontaneous}}data-known-unused="{{section.known.unused}}"{{/if}}>
+        <li class="flexrow inventory-header spellbook-header {{#if section.lowAbilityScore}}insufficient-ability-score{{/if}}" data-level="{{section.level}}">
+          <div class="item-name flexrow">
+            <h3>{{section.name}}</h3>
           </div>
-          <span class="sep"> / </span>
+
+          {{#unless ../spellbook.orig.spellPoints.useSystem}}
+          <div class="item-detail spell-uses">
+            {{#if section.usesSlots}}
+            {{#unless (and (eq section.level 0) ../spellbook.orig.autoSpellLevelCalculation)}}
+            <div class="tooltip spell-slots{{#if ../spellbook.orig.spontaneous}} spontaneous{{/if}}">
+              <span class="{{#unless ../spellbook.orig.spontaneous}}spell-input-readonly{{else}}text-box{{/unless}}" data-dtype="Number" {{#if ../spellbook.orig.spontaneous}}name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.value"{{/if}}>
+                {{section.uses}}
+              </span>
+              <span class="tooltipcontent">
+                {{#unless ../spellbook.orig.spontaneous}}
+                {{localize "PF1.LeftToPrepare"}}
+                {{else}}
+                {{localize "PF1.CastsLeft"}}
+                {{/unless}}
+              </span>
+            </div>
+            <span class="sep"> / </span>
+            {{/unless}}
+            <div class="tooltip spell-max">
+              <span class="{{#if ../spellbook.orig.autoSpellLevelCalculation}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
+              <span class="tooltipcontent">
+                {{localize "PF1.SpellsTotalEachDay"}}
+              </span>
+            </div>
+            {{ else }}
+            <span class="spell-slots">{{{section.uses}}}</span>
+            <span class="sep"> / </span>
+            <span class="spell-max">{{{section.slots}}}</span>
+            {{/if}}
+          </div>
           {{/unless}}
-          <div class="tooltip spell-max">
-            <span class="{{#if ../spellbook.orig.autoSpellLevelCalculation}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="data.attributes.spells.spellbooks.{{../spellbookIndex}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
-            <span class="tooltipcontent">
-              {{localize "PF1.SpellsTotalEachDay"}}
-            </span>
+
+          <div class="item-detail item-actions"><i class="icon icon-gears large" title="{{localize "PF1.ActionPlural"}}"></i></div>
+
+          <div class="item-detail spell-activation"><i class="icon icon-hand large" title="{{localize "PF1.Usage"}}"></i></div>
+
+          <div class="item-detail spell-components"><i class="icon icon-expense large" title="{{localize "PF1.Components"}}"></i></div>
+
+          <div class="item-detail spell-school"><i class="icon icon-spell-book large" title="{{localize "PF1.SpellSchool"}}"></i></div>
+
+          <div class="item-controls">
+            {{#if section.canCreate}}
+            <a class="item-control item-create" title="{{localize "PF1.CreateItem"}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+              <i class="fas fa-plus"></i>
+            </a>
+            {{/if}}
+            <a data-action="compendium" data-action-target="spells" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
           </div>
-          {{ else }}
-          <span class="spell-slots">{{{section.uses}}}</span>
-          <span class="sep"> / </span>
-          <span class="spell-max">{{{section.slots}}}</span>
-          {{/if}}
-        </div>
-        {{/unless}}
-
-        <div class="item-detail item-actions"><i class="icon icon-gears large" title="{{localize "PF1.ActionPlural"}}"></i></div>
-
-        <div class="item-detail spell-activation"><i class="icon icon-hand large" title="{{localize "PF1.Usage"}}"></i></div>
-
-        <div class="item-detail spell-components"><i class="icon icon-expense large" title="{{localize "PF1.Components"}}"></i></div>
-
-        <div class="item-detail spell-school"><i class="icon icon-spell-book large" title="{{localize "PF1.SpellSchool"}}"></i></div>
-
-        <div class="item-controls">
-          {{#if section.canCreate}}
-          <a class="item-control item-create" title="{{localize "PF1.CreateItem"}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
-            <i class="fas fa-plus"></i>
-          </a>
-          {{/if}}
-          <a data-action="compendium" data-action-target="spells" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
-        </div>
-      </li>
-
-      <ol class="item-list">
+        </li>
 
         {{#each section.items as |item i|}}
         <li class="item flexrow {{#if item.document.canCast}}prepared{{else}}unprepared{{/if}} {{#if item.data.domain}}domain{{/if}}" data-item-id="{{item._id}}">
@@ -516,7 +514,6 @@
         {{#if section.spellMessage}}
           <h4 class="spell-level-message">{{section.spellMessage}}</h4>
         {{/if}}
-
       </ol>
       {{/unless}}
       {{/each}}

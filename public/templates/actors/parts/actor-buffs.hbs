@@ -24,35 +24,35 @@
 
 <section class="buffs-body">
   <div class="inventory-group flexcol">
-    <ol class="inventory-list">
+    <ol class="inventory-list" data-type="buff">
       {{#each sections as |section sid|}}
       {{#unless section._hidden}}
-      <li class="inventory-header flexrow buffs-{{sid}}">
-        <h3 class="item-name flexrow">{{section.label}}</h3>
+      <ol class="item-list" data-type="buff" data-subtype="{{sid}}">
+        <li class="inventory-header flexrow buffs-{{sid}}">
+          <h3 class="item-name flexrow">{{section.label}}</h3>
 
-        <div class="item-detail item-duration">
-          <span>{{localize "PF1.Duration"}}</span>
-        </div>
+          <div class="item-detail item-duration">
+            <span>{{localize "PF1.Duration"}}</span>
+          </div>
 
-        <div class="item-detail item-level">
-          <span>{{localize "PF1.Level"}}</span>
-        </div>
+          <div class="item-detail item-level">
+            <span>{{localize "PF1.Level"}}</span>
+          </div>
 
-        <div class="item-detail item-active">
-          <span>{{localize "PF1.Active"}}</span>
-        </div>
+          <div class="item-detail item-active">
+            <span>{{localize "PF1.Active"}}</span>
+          </div>
 
-        {{#if ../owner}}
-        <div class="item-controls">
-          <a class="item-control item-create" title="{{localize "PF1.CreateItem"}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
-            <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
-          </a>
-          <a data-action="compendium" data-action-target="buffs" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
-        </div>
-        {{/if}}
-      </li>
+          {{#if ../owner}}
+          <div class="item-controls">
+            <a class="item-control item-create" title="{{localize "PF1.CreateItem"}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+              <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
+            </a>
+            <a data-action="compendium" data-action-target="buffs" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
+          </div>
+          {{/if}}
+        </li>
 
-      <ol class="item-list">
         {{#each section.items as |item iid|}}
         <li class="item flexrow" data-item-id="{{item._id}}">
           <div class="item-name flexrow rollable">

@@ -450,28 +450,28 @@
   <div class="classes-body">
     <h2>{{localize "PF1.ClassPlural"}}</h2>
 
-    <div class="inventory-list flexcol">
-      <div class="inventory-header flexrow">
-        <h3 class="item-name flexrow">{{localize "PF1.ItemTypeClass"}}</h3>
+    <ol class="inventory-list">
+      <ol class="item-list" data-type="class">
+        <li class="inventory-header flexrow">
+          <h3 class="item-name flexrow">{{localize "PF1.ItemTypeClass"}}</h3>
 
-        <div class="item-detail item-feat-level"><span>{{localize "PF1.Level"}}</span></div>
+          <div class="item-detail item-feat-level"><span>{{localize "PF1.Level"}}</span></div>
 
-        {{#if levelUp}}
-          <div class="item-detail item-button"><span>{{localize "PF1.Action"}}</span></div>
-        {{/if}}
+          {{#if levelUp}}
+            <div class="item-detail item-button"><span>{{localize "PF1.Action"}}</span></div>
+          {{/if}}
 
-        {{#if owner}}
-        <div class="item-controls">
-          <a class="item-control item-create" title="Create Item" data-type="class">
-            <i class="fas fa-plus"></i>
-          </a>
-          <a data-action="compendium" data-action-target="classes" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
-        </div>
-        {{/if}}
-      </div>
+          {{#if owner}}
+          <div class="item-controls">
+            <a class="item-control item-create" title="Create Item" data-type="class">
+              <i class="fas fa-plus"></i>
+            </a>
+            <a data-action="compendium" data-action-target="classes" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
+          </div>
+          {{/if}}
+        </li>
 
-      {{#if classes.length}}
-      <ol class="item-list">
+        {{#if classes.length}}
         {{#each classes as |item iid|}}
         <li class="item flexrow {{#unless isCharged}}uncharged{{/unless}}" data-item-id="{{item._id}}">
           <div class="item-name flexrow rollable">
@@ -501,14 +501,14 @@
           {{/if}}
         </li>
         {{/each}}
+        {{else}}
+        <div class="flexcol info">
+          <span>
+            {{{labels.firstClass}}}
+          </span>
+        </div>
+        {{/if}}
       </ol>
-      {{else}}
-      <div class="flexcol info">
-        <span>
-          {{{labels.firstClass}}}
-        </span>
-      </div>
-      {{/if}}
-    </div>
+    </ol>
   </div>
 </section>

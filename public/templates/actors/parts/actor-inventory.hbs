@@ -42,38 +42,38 @@
   <ol class="inventory-list">
   {{#each sections as |section sid|}}
   {{#unless section._hidden}}
-    <li class="inventory-header flexrow items-{{sid}}">
-      <h3 class="item-name flexrow">{{section.label}}</h3>
+    <ol class="item-list" data-type="{{section.dataset.type}}" data-subtype="{{section.dataset.sub-type}}">
+      <li class="inventory-header flexrow items-{{sid}}">
+        <h3 class="item-name flexrow">{{section.label}}</h3>
 
-      {{#if section.hasSlots}}<div class="item-detail item-slot"><i class="icon icon-inventory-slot large" title="{{localize "PF1.Slot"}}"></i></div>{{/if}}
-      {{#if section.hasActions}}<div class="item-detail item-actions"><i class="icon icon-gears large" title="{{localize "PF1.ActionPlural"}}"></i></div>{{/if}}
+        {{#if section.hasSlots}}<div class="item-detail item-slot"><i class="icon icon-inventory-slot large" title="{{localize "PF1.Slot"}}"></i></div>{{/if}}
+        {{#if section.hasActions}}<div class="item-detail item-actions"><i class="icon icon-gears large" title="{{localize "PF1.ActionPlural"}}"></i></div>{{/if}}
 
-      {{#if section.showValue}}
-      <div class="item-detail item-value"><i class="icon icon-coins large" title="{{localize "PF1.Value"}}"></i></div>
-      {{/if}}
-      <div class="item-detail item-weight"><i class="icon icon-weight large" src="systems/pf1/icons/actions/weight.svg" title="{{localize "PF1.ItemWeight"}}"></i></div>
-      {{#if ../isGM}}
-      <div class="item-detail item-identified"><i class="icon icon-quill-ink large" title="{{localize "PF1.Identified"}}"></i></div>
-      {{/if}}
-      <div class="item-detail item-carried"><i class="icon icon-wheelbarrow large" title="{{localize "PF1.Carried"}}"></i></div>
-      {{#if section.canEquip}}
-      <div class="item-detail item-equipped"><i class="icon icon-battle-gear large" title="{{localize "PF1.Equipped"}}"></i></div>
-      {{/if}}
-      <div class="item-detail item-uses"><i class="icon icon-battery-pack large" title="{{localize "PF1.ChargePlural"}}"></i></div>
-
-      {{#if ../owner}}
-      <div class="item-controls">
-        {{#if section.canCreate}}
-        <a class="item-control item-create" title="{{localize "PF1.CreateItem"}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
-          <i class="fas fa-plus"></i>
-        </a>
+        {{#if section.showValue}}
+        <div class="item-detail item-value"><i class="icon icon-coins large" title="{{localize "PF1.Value"}}"></i></div>
         {{/if}}
-        <a data-action="compendium" data-action-target="items" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
-      </div>
-      {{/if}}
-    </li>
+        <div class="item-detail item-weight"><i class="icon icon-weight large" src="systems/pf1/icons/actions/weight.svg" title="{{localize "PF1.ItemWeight"}}"></i></div>
+        {{#if ../isGM}}
+        <div class="item-detail item-identified"><i class="icon icon-quill-ink large" title="{{localize "PF1.Identified"}}"></i></div>
+        {{/if}}
+        <div class="item-detail item-carried"><i class="icon icon-wheelbarrow large" title="{{localize "PF1.Carried"}}"></i></div>
+        {{#if section.canEquip}}
+        <div class="item-detail item-equipped"><i class="icon icon-battle-gear large" title="{{localize "PF1.Equipped"}}"></i></div>
+        {{/if}}
+        <div class="item-detail item-uses"><i class="icon icon-battery-pack large" title="{{localize "PF1.ChargePlural"}}"></i></div>
 
-    <ol class="item-list">
+        {{#if ../owner}}
+        <div class="item-controls">
+          {{#if section.canCreate}}
+          <a class="item-control item-create" title="{{localize "PF1.CreateItem"}}" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+            <i class="fas fa-plus"></i>
+          </a>
+          {{/if}}
+          <a data-action="compendium" data-action-target="items" title="{{localize "PF1.OpenCompendium"}}"><i class="fas fa-folder-plus"></i></a>
+        </div>
+        {{/if}}
+      </li>
+
       {{#each section.items as |item iid|}}
       <li class="item flexrow{{#if item.empty}} disabled{{/if}}" data-item-id="{{item._id}}">
         <div class="item-name flexrow">

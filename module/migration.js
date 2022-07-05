@@ -982,7 +982,7 @@ const _migrateUnchainedActionEconomy = function (ent, updateData) {
 const _migrateItemRange = function (ent, updateData) {
   // Set max range increment
   if (getProperty(ent, "data.range.maxIncrements") === undefined) {
-    setProperty(updateData, "data.range.maxIncrements", 1);
+    updateData["data.range.maxIncrements"] = 1;
   }
 };
 

@@ -1018,19 +1018,22 @@ export class ItemPF extends ItemBasePF {
     const labels = { ...this.getLabels(), ...(action?.getLabels() ?? {}) };
 
     htmlOptions.rollData ??= action ? action.getRollData() : this.getRollData();
+    htmlOptions.secrets ??= false;
+    const enrichOptions = {
+      rollData: htmlOptions.rollData,
+      secrets: htmlOptions.secrets,
+    };
 
     // Rich text descriptions
     if (this.showUnidentifiedData) {
-      data.description = TextEditor.enrichHTML(itemData.description.unidentified, { rollData: htmlOptions });
+      data.description = TextEditor.enrichHTML(itemData.description.unidentified, enrichOptions);
     } else {
-      data.description = TextEditor.enrichHTML(itemData.description.value, { rollData: htmlOptions });
+      data.description = TextEditor.enrichHTML(itemData.description.value, enrichOptions);
     }
-    data.actionDescription = TextEditor.enrichHTML(actionData.description, { rollData: htmlOptions });
+    data.actionDescription = TextEditor.enrichHTML(actionData.description, enrichOptions);
     // Add text description for spells
     data.shortDescription =
-      "shortDescription" in itemData
-        ? TextEditor.enrichHTML(itemData.shortDescription, { rollData: htmlOptions })
-        : undefined;
+      "shortDescription" in itemData ? TextEditor.enrichHTML(itemData.shortDescription, enrichOptions) : undefined;
 
     // General equipment properties
     const props = [];

@@ -122,6 +122,7 @@ export const migrateCompendium = async function (pack) {
 
   // Iterate over compendium entries - applying fine-tuned migration functions
   console.log(`Migrating ${doc} documents in Compendium ${pack.collection}`);
+  const updates = [];
   for (const ent of content) {
     try {
       let updateData = null;
@@ -130,11 +131,17 @@ export const migrateCompendium = async function (pack) {
       else if (doc === "Scene") updateData = await migrateSceneData(ent.toObject());
       expandObject(updateData);
       updateData["_id"] = ent.id;
-      await ent.update(updateData);
-      console.log(`Migrated ${doc} document ${ent.name} in Compendium ${pack.collection}`);
+      updates.push(updateData);
     } catch (err) {
       console.error(`Error migrating ${doc} document ${ent.name} in Compendium ${pack.collection}`, err);
     }
+  }
+  try {
+    if (doc === "Item") await Item.updateDocuments(updates, { pack: pack.collection });
+    else if (doc === "Actor") await Actor.updateDocuments(updates, { pack: pack.collection });
+    else if (doc === "Scene") await Scene.updateDocuments(updates, { pack: pack.collection });
+  } catch (err) {
+    console.error(`Error migrating Compendium ${pack.collection}`, err);
   }
   console.log(`Migrated all ${doc} documents from Compendium ${pack.collection}`);
 };

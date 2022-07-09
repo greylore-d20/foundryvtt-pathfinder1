@@ -185,7 +185,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     data.contentsWeight = Math.round(convertWeight(data.contentsWeight) * 10) / 10;
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
-    data.weight.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+    data.weight = {
+      units: usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
+    };
 
     // Get contents value
     const cpValue =

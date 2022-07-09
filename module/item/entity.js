@@ -408,26 +408,35 @@ export class ItemPF extends ItemBasePF {
   }
 
   prepareWeight() {
+    const itemData = this.data.data;
+
     // HACK: Migration shim. Allows unmigrated items to have their weight correct.
-    const wt = this.data.data.weight;
-    if (wt === undefined || Number.isFinite(wt)) {
-      const srcd = this.data._source.data,
-        srcw = srcd.baseWeight ?? srcd.weight ?? 0;
-      this.data.data.weight = { value: srcw };
+    {
+      const wt = itemData.weight;
+      if (wt === undefined || Number.isFinite(wt)) {
+        const srcd = this.data._source.data,
+          srcw = srcd.baseWeight ?? srcd.weight ?? 0;
+        itemData.weight = { value: srcw };
+      }
     }
 
+    const wt = itemData.weight;
     // Determine actual item weight, including sub-items
-    const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
-    this.data.data.weight.total = (this.items ?? []).reduce((cur, o) => {
+    const weightReduction = (100 - (itemData.weightReduction ?? 0)) / 100;
+    wt.total = (this.items ?? []).reduce((cur, o) => {
       return cur + o.data.data.weight.total * o.data.data.quantity * weightReduction;
-    }, this.data.data.weight.value);
+    }, wt.value);
+
+    // Add contained currency (mainly containers)
+    wt.currency ??= 0;
+    wt.total += wt.currency;
 
     // Convert weight according metric system (lb vs kg)
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
-    this.data.data.weight.converted = convertWeight(this.data.data.weight.total);
-    this.data.data.weight.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
-    this.data.data.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
+    wt.converted = convertWeight(wt.total);
+    wt.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+    itemData.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
   }
 
   prepareDerivedData() {

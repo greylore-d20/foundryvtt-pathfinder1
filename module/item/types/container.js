@@ -7,7 +7,7 @@ export class ItemContainerPF extends ItemPF {
 
     // Set base weight to weight of coins, which can be calculated without knowing contained items
     const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
-    this.data.data.weight = this._calculateCoinWeight(this.data) * weightReduction;
+    this.data.data.weight.currency = this._calculateCoinWeight(this.data) * weightReduction;
   }
 
   async createContainerContent(data, options = { raw: false }) {

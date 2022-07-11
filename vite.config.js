@@ -61,6 +61,7 @@ const config = defineConfig(({ command, mode }) => {
       },
     },
     css: {
+      devSourcemap: true,
       preprocessorOptions: {
         // the usual urls in less will work within Foundry due to file placement,
         // but the dev server would resolve them from the root instead of relative to the file

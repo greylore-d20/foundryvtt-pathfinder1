@@ -2,6 +2,7 @@ import * as chokidar from "chokidar";
 import path from "node:path";
 import fs from "fs-extra";
 import { ViteLoggerPF } from "./vite-logger.mjs";
+import { removePrefix } from "./foundry-config.mjs";
 
 /** @type {import ("vite").ViteDevServer} */
 let server;
@@ -38,7 +39,7 @@ export default function handlebarsReload() {
             .split(path.sep)
             .join(path.posix.sep)
             .replace(/^\/+|\/+$/g, "");
-          const foundryPath = `${foundryBaseDir}/${filepathUrl}`;
+          const foundryPath = `${removePrefix(foundryBaseDir)}/${filepathUrl}`;
 
           // Shortened relative path for display purposes
           const fileFromRoot = path.relative(config.root, file);

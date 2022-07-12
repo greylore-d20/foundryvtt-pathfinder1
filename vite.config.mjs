@@ -5,6 +5,7 @@ import { copy } from "@guanghechen/rollup-plugin-copy";
 import handlebarsReload from "./tools/handlebars-reload.mjs";
 import langReload from "./tools/lang-reload.mjs";
 import url from "node:url";
+import { resolveUrl, foundryConfig } from "./tools/foundry-config.mjs";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 /**
@@ -22,14 +23,14 @@ const COPY_FILES = ["CREDITS.md", "LICENSE.txt", "CHANGELOG.md", "OGL.txt", "hel
 const config = defineConfig(({ command, mode }) => {
   return {
     root: ".",
-    base: "/systems/pf1/",
+    base: resolveUrl("systems/pf1/"),
     publicDir: resolve("public"),
     server: {
       port: 30001,
-      open: true,
+      open: foundryConfig.openBrowser ?? false,
       proxy: {
-        "^(?!/systems/pf1)": "http://localhost:30000/",
-        "/socket.io": {
+        [`^(?!${resolveUrl("systems/pf1")})`]: "http://localhost:30000/",
+        [resolveUrl("socket.io/")]: {
           target: "ws://localhost:30000",
           ws: true,
         },

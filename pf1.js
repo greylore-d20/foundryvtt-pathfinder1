@@ -99,7 +99,6 @@ import { ChatAttack } from "./module/misc/chat-attack.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
 import { SemanticVersion } from "./module/semver.js";
-import { registerTests } from "./module/test";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { HelpBrowserPF } from "./module/apps/help-browser.js";
 import { addReachListeners } from "./module/misc/attack-reach.js";
@@ -381,9 +380,10 @@ Hooks.once("init", function () {
   Hooks.callAll("pf1.postInit");
 });
 
-Hooks.on("quenchReady", () => {
-  registerTests();
-});
+// Load Quench test in development environment
+if (import.meta.env.DEV) {
+  await import("./module/test");
+}
 
 /* -------------------------------------------- */
 /*  Foundry VTT Setup                           */

@@ -9,14 +9,12 @@ import { registerActorItemClassTests } from "./actor-classes.test.js";
 import { registerActorItemAttackTests } from "./actor-attacks.test.js";
 import { registerContainerItemTests } from "./container-items.test.js";
 
-/**
- * Registers all `Quench` tests
- */
-export const registerTests = () => {
+// Registers all `Quench` tests
+Hooks.on("quenchReady", () => {
   registerActorBasicTests();
   registerActorConditionsTests();
   registerActorItemRaceTests();
   registerActorItemClassTests();
   registerActorItemAttackTests();
   registerContainerItemTests();
-};
+});

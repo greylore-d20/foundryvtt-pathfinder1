@@ -36,6 +36,7 @@ const config = defineConfig(({ command, mode }) => {
       },
     },
     build: {
+      target: "es2022",
       // Slower than esbuild, but required for options
       minify: mode === "development" ? false : "terser",
       // Keep class and function symbol names for sane console output

@@ -259,6 +259,7 @@ export const migrateItemData = function (item) {
   _migrateItemRange(item, updateData);
   _migrateWeaponData(item, updateData);
   _migrateItemLinks(item, updateData);
+  _migrateClassAssociations(item, updateData);
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
@@ -989,6 +990,25 @@ const _migrateItemRange = function (ent, updateData) {
 const _migrateItemLinks = function (ent, updateData) {
   if (["attack", "consumable", "equipment"].includes(ent.type) && !hasProperty(ent, "data.links.charges")) {
     updateData["data.links.charges"] = [];
+  }
+};
+
+const _migrateClassAssociations = function (ent, updateData) {
+  if (ent.type !== "class") return;
+  const _assoc = ent.data?.links?.classAssociations;
+  if (_assoc === undefined) return;
+
+  let modified = false;
+  const newAssociations = deepClone(_assoc);
+  for (const assoc of newAssociations) {
+    if (assoc.hiddenLinks !== undefined) {
+      delete assoc.hiddenLinks;
+      modified = true;
+    }
+  }
+
+  if (modified) {
+    updateData["data.links.classAssociations"] = newAssociations;
   }
 };
 

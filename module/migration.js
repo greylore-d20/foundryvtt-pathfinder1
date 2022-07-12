@@ -292,6 +292,7 @@ export const migrateItemActionData = function (action, item) {
 
   _migrateActionDamageType(action, item);
   _migrateActionConditionals(action, item);
+  _migrateActionEnhOverride(action, item);
 
   // Return the migrated update data
   return action;
@@ -1114,6 +1115,13 @@ const _migrateActionConditionals = function (action, item) {
       }
     }
   }
+};
+
+const _migrateActionEnhOverride = function (action, item) {
+  if (action.enh.override == false) {
+    action.enh.value = null;
+  }
+  delete action.enh.override;
 };
 
 const _migrateActorCR = function (ent, updateData, linked) {

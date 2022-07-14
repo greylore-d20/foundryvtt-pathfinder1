@@ -1118,9 +1118,15 @@ const _migrateActionConditionals = function (action, item) {
 };
 
 const _migrateActionEnhOverride = function (action, item) {
+  // Set to null if disabled.
   if (action.enh.override == false) {
     action.enh.value = null;
   }
+  // Reset odd values to null, too.
+  else if (action.enh.value !== null && typeof action.enh.value !== "number") {
+    action.enh.value = null;
+  }
+  // Delete now unused .override toggle
   delete action.enh.override;
 };
 

@@ -1076,7 +1076,9 @@ const _migrateItemNotes = function (ent, updateData) {
  */
 const _migrateSpellData = function (item, updateData) {
   if (item.type === "spell") {
-    updateData["data.description.-=value"] = null;
+    if (item.data.description?.value !== undefined) {
+      updateData["data.description.-=value"] = null;
+    }
   }
 };
 

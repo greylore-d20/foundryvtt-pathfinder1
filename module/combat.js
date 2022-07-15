@@ -108,9 +108,10 @@ export class CombatPF extends Combat {
    * See Combat._getInitiativeFormula for more detail.
    *
    * @param {ActorPF} actor
+   * @param d20
    */
-  _getInitiativeFormula(actor) {
-    const defaultParts = ["1d20", `@attributes.init.total[${game.i18n.localize("PF1.Initiative")}]`];
+  _getInitiativeFormula(actor, d20) {
+    const defaultParts = [d20 || "1d20", `@attributes.init.total[${game.i18n.localize("PF1.Initiative")}]`];
     if (actor && game.settings.get("pf1", "initiativeTiebreaker"))
       defaultParts.push(`(@attributes.init.total / 100)[${game.i18n.localize("PF1.Tiebreaker")}]`);
     const parts = CONFIG.Combat.initiative.formula ? CONFIG.Combat.initiative.formula.split(/\s*\+\s*/) : defaultParts;
@@ -127,16 +128,20 @@ export class CombatPF extends Combat {
     ids = typeof ids === "string" ? [ids] : ids;
     const currentId = this.combatant?.id;
     let chatRollMode = game.settings.get("core", "rollMode");
-    if (!formula) formula = this._getInitiativeFormula(this.combatant.actor);
 
     let bonus = "",
-      stop = false;
+      stop = false,
+      d20;
+    // Show initiative dialog
     if (!skipDialog) {
       const dialogData = await Combat.implementation.showInitiativeDialog(formula);
       chatRollMode = dialogData.rollMode;
       bonus = dialogData.bonus || "";
       stop = dialogData.stop || false;
+      if (dialogData.d20) d20 = dialogData.d20;
     }
+    // Determine formula
+    if (!formula) formula = this._getInitiativeFormula(this.combatant.actor, d20);
 
     if (stop) return this;
 
@@ -240,7 +245,8 @@ export class CombatPF extends Combat {
           callback: (html) => {
             rollMode = html.find('[name="rollMode"]').val();
             const bonus = html.find('[name="bonus"]').val();
-            resolve({ rollMode: rollMode, bonus: bonus });
+            const d20 = html.find('[name="d20"]').val();
+            resolve({ rollMode, bonus, d20 });
           },
         },
       };

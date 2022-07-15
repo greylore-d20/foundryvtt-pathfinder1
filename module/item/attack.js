@@ -402,6 +402,16 @@ export const handleConditionals = function (shared) {
  * @returns {number} 0 if successful, otherwise one of the ERR_REQUIREMENT constants.
  */
 export const checkAttackRequirements = function (shared) {
+  // Enforce zero charge cost on cantrips/orisons, but make sure they have at least 1 charge
+  if (
+    this.data.type === "spell" &&
+    shared.rollData.item?.level === 0 &&
+    shared.rollData.item?.preparation?.preparedAmount > 0
+  ) {
+    shared.rollData.chargeCost = 0;
+    return 0;
+  }
+
   // Determine charge cost
   let cost = 0;
   if (this.isCharged) {

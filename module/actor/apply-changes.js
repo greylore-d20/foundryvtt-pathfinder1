@@ -1,6 +1,6 @@
-import { PF1 } from "../config";
+import { PF1 } from "../config.js";
 import { RollPF } from "../roll.js";
-import { fractionalToString } from "../lib";
+import { fractionalToString } from "../lib.js";
 
 /**
  *

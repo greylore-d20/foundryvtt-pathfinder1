@@ -1,4 +1,4 @@
-import { keepUpdateArray } from "../../lib";
+import { keepUpdateArray } from "../../lib.js";
 
 export class ItemConditional {
   constructor(data, parent) {

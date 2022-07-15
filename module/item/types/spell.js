@@ -1,5 +1,4 @@
 import { ItemPF } from "../entity.js";
-import { calculateRange } from "../../lib";
 import { RollPF } from "../../roll.js";
 
 export class ItemSpellPF extends ItemPF {

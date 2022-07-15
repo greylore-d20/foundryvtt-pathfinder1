@@ -870,8 +870,10 @@ const _migrateItemChanges = function (ent, updateData) {
       }
     }
 
-    // Alter the changes list
-    updateData["data.changes"] = newChanges;
+    // Alter the changes list, but only if at least one of them is nonzero length
+    if (newChanges.length !== 0 && changes.length !== 0) {
+      updateData["data.changes"] = newChanges;
+    }
   }
 
   // Migrate context notes
@@ -891,8 +893,10 @@ const _migrateItemChanges = function (ent, updateData) {
       }
     }
 
-    // Alter the context note list
-    updateData["data.contextNotes"] = newNotes;
+    // Alter the context note list, but only if at least one of them is nonzero length
+    if (newNotes.length !== 0 && notes.length !== 0) {
+      updateData["data.contextNotes"] = newNotes;
+    }
   }
 };
 

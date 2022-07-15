@@ -40,4 +40,14 @@ export class ItemRacePF extends ItemPF {
       this.parent.update({ "data.traits.size": this.data.data.size });
     }
   }
+
+  /**
+   * @override
+   */
+  prepareBaseData() {
+    super.prepareBaseData();
+    const actor = this.actor;
+    // Self-register on actor
+    if (actor) actor._race = this;
+  }
 }

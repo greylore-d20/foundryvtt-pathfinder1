@@ -99,6 +99,11 @@ export class ActorPF extends ActorBasePF {
        * @type {object}
        */
       this._states = {};
+
+    /**
+     * Race cache
+     */
+    this._race = undefined;
   }
 
   _preCreate(data, options, user) {
@@ -219,9 +224,11 @@ export class ActorPF extends ActorBasePF {
       }, 0);
   }
 
+  /**
+   * @returns {ItemRacePF|undefined}
+   */
   get race() {
-    if (this.items == null) return null;
-    return this.items.filter((o) => o.type === "race")[0];
+    return this._race;
   }
 
   get typeColor() {

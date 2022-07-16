@@ -324,7 +324,7 @@ export const registerSystemSettings = function () {
     hint: "SETTINGS.pf1characterVisionH",
     scope: "world",
     config: true,
-    default: "0",
+    default: true,
     type: Boolean,
   });
 

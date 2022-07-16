@@ -13,6 +13,13 @@ export class ActorCharacterPF extends ActorPF {
     if (data.token?.actorLink === undefined) {
       this.data.token.update({ actorLink: true });
     }
+
+    // Enable vision by default
+    if (game.settings.get("pf1", "characterVision")) {
+      if (data.token?.vision === undefined) {
+        this.data.token.update({ vision: true });
+      }
+    }
   }
 
   prepareBaseData() {

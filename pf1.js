@@ -665,12 +665,6 @@ Hooks.on("renderTokenHUD", (app, html, data) => {
   TokenQuickActions.addTop3Attacks(app, html, data);
 });
 
-Hooks.on("preCreateActor", (actor, data, options, userId) => {
-  if (data.type === "character") {
-    actor.data._source.token.actorLink = true;
-  }
-});
-
 Hooks.on("updateActor", (actor, data, options, userId) => {
   // Call hook for toggling conditions
   {

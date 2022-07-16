@@ -2,6 +2,19 @@ import { ActorPF } from "../entity.js";
 import { RollPF } from "../../roll.js";
 
 export class ActorCharacterPF extends ActorPF {
+  /**
+   * @param {object} data Creation data
+   * @param {User} user User instance
+   */
+  _preCreate(data, user) {
+    super._preCreate(data, user);
+
+    // Link token data by default
+    if (data.token?.actorLink === undefined) {
+      this.data.token.update({ actorLink: true });
+    }
+  }
+
   prepareBaseData() {
     super.prepareBaseData();
 

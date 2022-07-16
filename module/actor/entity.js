@@ -1989,7 +1989,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (options.bonus?.length) {
-      parts.push(`+ ${options.bonus}`);
+      parts.push(`${options.bonus}`);
     }
 
     const props = [];
@@ -2471,7 +2471,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (options.bonus?.length) {
-      parts.push(`+ ${options.bonus}`);
+      parts.push(`${options.bonus}`);
     }
 
     // Roll saving throw

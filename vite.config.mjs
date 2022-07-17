@@ -1,11 +1,14 @@
+import path from "node:path";
+import url from "node:url";
+
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
-import path from "node:path";
 import { copy } from "@guanghechen/rollup-plugin-copy";
+
+import { resolveUrl, foundryConfig } from "./tools/foundry-config.mjs";
 import handlebarsReload from "./tools/handlebars-reload.mjs";
 import langReload from "./tools/lang-reload.mjs";
-import url from "node:url";
-import { resolveUrl, foundryConfig } from "./tools/foundry-config.mjs";
+import rewriteFoundryImports from "./tools/foundry-imports.mjs";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 /**
@@ -77,6 +80,7 @@ const config = defineConfig(({ command, mode }) => {
       },
     },
     plugins: [
+      rewriteFoundryImports(),
       visualizer({
         sourcemap: true,
         template: "treemap",

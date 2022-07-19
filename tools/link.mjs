@@ -10,7 +10,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import fs from "fs-extra";
 
-import { foundryConfig } from "./foundry-config.mjs";
+import { FOUNDRY_CONFIG } from "./foundry-config.mjs";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const __filename = url.fileURLToPath(import.meta.url);
@@ -43,6 +43,9 @@ if (process.argv[1] === __filename) {
     .command({
       command: "dist",
       describe: "Link dist directory to Foundry's Data",
+      builder: (yargsBuilder) => {
+        return yargsBuilder.option("clean", { describe: "Remove link to Foundry's Data" });
+      },
       handler: async (argv) => {
         await linkPackage(argv.clean);
       },
@@ -50,17 +53,18 @@ if (process.argv[1] === __filename) {
     .command({
       command: "jsconfig",
       describe: "Generate jsconfig.json file",
+      builder: (yargsBuilder) => {
+        return yargsBuilder.option("clean", { describe: "Remove jsconfig.json file" });
+      },
       handler: async (argv) => {
         if (argv.clean) {
           await cleanJsConfig();
           return;
         }
 
-        await generateJsConfig({ app: argv.app });
+        await generateJsConfig();
       },
     })
-    .option("app", { default: true, describe: "Include a link to Foundry's app directory in jsconfig.json" })
-    .option("clean", { default: false, describe: "Remove jsconfig.json file" })
     .parse();
 }
 
@@ -77,28 +81,28 @@ function getJsConfigTemplate() {
 }
 
 /**
- * Get the data path of Foundry VTT based on what is configured in {@link foundryConfig}.
+ * Get the data path of Foundry VTT based on what is configured in {@link FOUNDRY_CONFIG}.
  */
 function getDataPath() {
-  if (foundryConfig?.dataPath) {
-    if (!fs.existsSync(path.resolve(foundryConfig.dataPath))) {
+  if (FOUNDRY_CONFIG?.dataPath) {
+    if (!fs.existsSync(path.resolve(FOUNDRY_CONFIG.dataPath))) {
       throw new Error("User data path invalid, no Data directory found");
     }
-    return path.resolve(foundryConfig.dataPath);
+    return path.resolve(FOUNDRY_CONFIG.dataPath);
   } else {
     throw new Error(`No user data path defined in foundryconfig.json`);
   }
 }
 
 /**
- * Get the app path of Foundry VTT based on what is configured in {@link foundryConfig}.
+ * Get the app path of Foundry VTT based on what is configured in {@link FOUNDRY_CONFIG}.
  */
 function getAppPath() {
-  if (foundryConfig?.appPath) {
-    if (!fs.existsSync(path.resolve(foundryConfig.appPath))) {
+  if (FOUNDRY_CONFIG?.appPath) {
+    if (!fs.existsSync(path.resolve(FOUNDRY_CONFIG.appPath))) {
       throw new Error("App path invalid, no app directory found");
     }
-    return path.resolve(foundryConfig.appPath);
+    return path.resolve(FOUNDRY_CONFIG.appPath);
   } else {
     throw new Error(`No app path defined in foundryconfig.json`);
   }
@@ -139,14 +143,15 @@ async function linkPackage(clean) {
 
 /**
  * Generates a `jsconfig.json` file in the project's root directory.
- *
- * @param {boolean} app - Whether to include a link to the Foundry app directory
  */
-async function generateJsConfig({ app }) {
+async function generateJsConfig() {
   const content = getJsConfigTemplate();
 
-  if (app) {
-    content.compilerOptions.paths["@foundry/*"] = [path.resolve(getAppPath(), "*")];
+  // Only add appPath if at least some value is set _and_ a path should be created
+  // If one should be created, but no value is set, silently do nothing
+  if (FOUNDRY_CONFIG.appPath) {
+    const appPath = getAppPath();
+    content.compilerOptions.paths["@foundry/*"] = [path.resolve(appPath, "resources", "app", "*")];
   }
 
   console.log(`Writing ${JS_CONFIG_FILE}`);

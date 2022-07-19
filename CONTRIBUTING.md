@@ -45,7 +45,7 @@ To create a development setup:
 ```json5
 {
   dataPath: "<path to your home directory>/.local/share/FoundryVTT>",
-  appPath: "<path to your Foundry installation>/resources/app",
+  appPath: "<path to your Foundry installation>",
   routePrefix: "<your routePrefix for Foundry, or leave this out if you do not use one>",
   openBrowser: true, // Open a web browser when running `npm run build:serve`; defaults to false
 }

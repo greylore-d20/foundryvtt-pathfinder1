@@ -991,45 +991,33 @@ export class ItemPF extends ItemBasePF {
   /* -------------------------------------------- */
 
   /**
-   * Data required to render an item's summary or chat card, including descriptions and properties/tags/labels
-   *
-   * @typedef {object} ChatData
-   * @property {string} description - The item description
-   * @property {string} [actionDescription] - The description of a specific action
-   * @property {string} [shortDescription] - A short text description (available e.g. for spells)
-   * @property {string[]} properties - Additional properties/labels for the item and the action
-   */
-
-  /**
    * Generates {@link ChatData} for this item, either in a default configuration or for a specific action.
    *
-   * @param {object} [htmlOptions] - Options affecting how descriptions are enriched
-   * @param {object} [htmlOptions.rollData] - Roll data to be used to enrich text, defaults to the action's/item's {@link ItemPF#getRollData}
+   * @param {EnrichmentOptions} [enrichOptions] - Options affecting how descriptions are enriched.
+   *                                              `rollData` defaults to {@link ItemAction#getRollData}/{@link ItemPF#getRollData}.
+   *                                              `secrets` defaults to {@link Item#isOwner}.
    * @param {object} [options] - Additional options affecting the chat data generation
-   * @param {string} [options.actionId] - The ID of an action on this item to generate chat data for
+   * @param {string} [options.actionId] - The ID of an action on this item to generate chat data for,
+   *                                      defaults to {@link ItemPF.firstAction}
    * @returns {ChatData} The chat data for this item (+action)
    */
-  getChatData(htmlOptions = {}, options = {}) {
+  getChatData(enrichOptions = {}, options = {}) {
+    /** @type {ChatData} */
     const data = {};
     const { actionId = null } = options;
-    const itemData = this.data.data;
     const action = actionId ? this.actions.get(actionId) : this.firstAction;
-    const actionData = action?.data ?? {};
     const labels = { ...this.getLabels(), ...(action?.getLabels() ?? {}) };
 
-    htmlOptions.rollData ??= action ? action.getRollData() : this.getRollData();
-    htmlOptions.secrets ??= false;
-    const enrichOptions = {
-      rollData: htmlOptions.rollData,
-      secrets: htmlOptions.secrets,
-    };
+    enrichOptions.rollData ??= action ? action.getRollData() : this.getRollData();
+    enrichOptions.secrets ??= this.isOwner;
+
+    const itemData = enrichOptions.rollData?.item ?? this.data.data;
+    const actionData = enrichOptions.rollData?.action ?? action?.data ?? {};
 
     // Rich text descriptions
-    if (this.showUnidentifiedData) {
-      data.description = TextEditor.enrichHTML(itemData.description.unidentified, enrichOptions);
-    } else {
-      data.description = TextEditor.enrichHTML(itemData.description.value, enrichOptions);
-    }
+    data.identifiedDescription = TextEditor.enrichHTML(itemData.description.value, enrichOptions);
+    data.unidentifiedDescription = TextEditor.enrichHTML(itemData.description.unidentified, enrichOptions);
+    data.description = this.showUnidentifiedData ? data.unidentifiedDescription : data.identifiedDescription;
     data.actionDescription = TextEditor.enrichHTML(actionData.description, enrichOptions);
     // Add text description for spells
     data.shortDescription =
@@ -1068,14 +1056,10 @@ export class ItemPF extends ItemBasePF {
       // Duration
       if (actionData.duration != null) {
         if (!["inst", "perm"].includes(actionData.duration.units) && typeof actionData.duration.value === "string") {
-          const duration = RollPF.safeRoll(actionData.duration.value || "0", htmlOptions.rollData).total;
+          const duration = RollPF.safeRoll(actionData.duration.value || "0", enrichOptions.rollData).total;
           dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
       }
-
-      // Item type specific properties
-      const fn = this[`_${this.data.type}ChatData`];
-      if (fn) fn.bind(this)(data, labels, props);
 
       // Ability activation properties
       if (actionData.activation?.type) {
@@ -2371,3 +2355,15 @@ export class ItemPF extends ItemBasePF {
     return CONFIG.Item.documentClasses.spell.toConsumable(...args);
   }
 }
+
+/**
+ * Data required to render an item's summary or chat card, including descriptions and properties/tags/labels
+ *
+ * @typedef {object} ChatData
+ * @property {string} description - The item's enriched description as appropriate for the current user
+ * @property {string} identifiedDescription - The item's enriched description when identified
+ * @property {string} unidentifiedDescription - The item's enriched description when unidentified
+ * @property {string} [actionDescription] - The enriched description of a specific action
+ * @property {string} [shortDescription] - The enriched short text description (available e.g. for spells)
+ * @property {string[]} properties - Additional properties/labels for the item and the action
+ */

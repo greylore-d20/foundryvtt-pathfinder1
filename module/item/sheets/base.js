@@ -776,6 +776,9 @@ export class ItemSheetPF extends ItemSheet {
     // Edit action
     html.find(".actions .items-list .item").on("contextmenu", this._onActionEdit.bind(this));
 
+    // Item summaries
+    html.find(".item .item-name h4").on("click", (event) => this._onItemSummary(event));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
@@ -824,9 +827,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
-
-    // Item summaries
-    html.find(".item .item-name h4").on("click", (event) => this._onItemSummary(event));
 
     // Linked item clicks
     html

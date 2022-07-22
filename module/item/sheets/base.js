@@ -331,6 +331,7 @@ export class ItemSheetPF extends ItemSheet {
       if (data.data.shortDescription != null) {
         data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, {
           rollData: firstAction?.getRollData() ?? rollData,
+          secrets: data.owner,
         });
       }
     }

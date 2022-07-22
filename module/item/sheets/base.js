@@ -1147,9 +1147,7 @@ export class ItemSheetPF extends ItemSheet {
     const item = this.document[collection].get(li.attr("data-item-id"));
     // For actions (embedded into a parent item), show only the action's summary instead of a complete one
     const isAction = collection === "actions";
-    const { description, actionDescription, properties } = item.getChatData({
-      secrets: this.parent ? this.parent.isOwner : this.isOwner,
-    });
+    const { description, actionDescription, properties } = item.getChatData();
 
     // Toggle summary
     if (li.hasClass("expanded")) {

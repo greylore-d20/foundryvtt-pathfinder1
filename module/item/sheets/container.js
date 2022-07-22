@@ -178,11 +178,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }
 
     // Get contents weight
-    data.contentsWeight = this.item.items.reduce((cur, o) => {
-      return cur + o.data.data.weight * o.data.data.quantity;
-    }, 0);
-    data.contentsWeight += this.item._calculateCoinWeight(this.item.data);
-    data.contentsWeight = Math.round(convertWeight(data.contentsWeight) * 10) / 10;
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
     data.weight = {

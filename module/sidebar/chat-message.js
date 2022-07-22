@@ -45,6 +45,15 @@ export class ChatMessagePF extends ChatMessage {
   }
 }
 
+/**
+ * @typedef {object} ChatMessagePFIdentifiedInfo
+ * @property {boolean} identified - True if item was identified when rolled.
+ * @property {string} name - Name of the identified item.
+ * @property {string} description - Description of the identified item.
+ * @property {string} [actionName] - Name of the action that was used
+ * @property {string} [actionDescription] - Description of the action that was used
+ */
+
 // Returns a promise to the created chatMessage or false if no command was executed
 export const customRolls = function (message, speaker, rollData) {
   if (message.match(/^\/(\w+)(?: +([^#]+))(?:#(.+))?/)) {

@@ -911,22 +911,37 @@ export class ItemPF extends ItemBasePF {
 
     // Basic template rendering data
     const token = this.parentActor.token;
+    const rollData = this.getRollData();
+    const itemChatData = this.getChatData({ rollData });
+    const identified = Boolean(rollData.item?.identified ?? true);
+
     const templateData = {
       actor: this.parent,
       tokenId: token ? token.uuid : null,
       item: this.data,
-      data: this.getChatData(),
       labels: this.labels,
       hasAttack: this.hasAttack,
       hasMultiAttack: this.hasMultiAttack,
       hasAction: this.hasAction,
       isVersatile: this.isVersatile,
       isSpell: this.data.type === "spell",
-      description: this.fullDescription,
-      rollData: this.getRollData(),
+      name: identified ? rollData.identifiedName : rollData.item.unidentified?.name || this.name,
+      description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
+      rollData: rollData,
       hasExtraProperties: false,
       extraProperties: [],
     };
+
+    const pfFlags = {};
+
+    // If the item is unidentified, store data for GM info box containing identified info
+    if (identified === false) {
+      pfFlags.identifiedInfo = {
+        identified,
+        name: rollData.identifiedName,
+        description: itemChatData.identifiedDescription,
+      };
+    }
 
     // Add combat info
     if (game.combat) {
@@ -959,8 +974,8 @@ export class ItemPF extends ItemBasePF {
     const template = `systems/pf1/templates/chat/${templateType}-card.hbs`;
 
     // Determine metadata
-    const metadata = {};
-    metadata.item = this.id;
+    pfFlags.metadata = {};
+    pfFlags.metadata.item = this.id;
 
     // Basic chat message data
     const chatData = flattenObject(
@@ -973,9 +988,7 @@ export class ItemPF extends ItemBasePF {
             core: {
               canPopout: true,
             },
-            pf1: {
-              metadata,
-            },
+            pf1: pfFlags,
           },
         },
         altChatData

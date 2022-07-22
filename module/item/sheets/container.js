@@ -181,6 +181,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
     data.weight = {
+      contents: this.item.data.data.weight.converted,
       units: usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
     };
 

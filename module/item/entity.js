@@ -424,8 +424,8 @@ export class ItemPF extends ItemBasePF {
     // Determine actual item weight, including sub-items
     const weightReduction = (100 - (itemData.weightReduction ?? 0)) / 100;
     wt.total = (this.items ?? []).reduce((cur, o) => {
-      return cur + o.data.data.weight.total * o.data.data.quantity * weightReduction;
-    }, wt.value);
+      return cur + o.data.data.weight.total * weightReduction;
+    }, wt.value * this.data.data.quantity);
 
     // Add contained currency (mainly containers)
     wt.currency ??= 0;

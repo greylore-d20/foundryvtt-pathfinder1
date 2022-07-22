@@ -5,6 +5,13 @@ export class ItemContainerPF extends ItemPF {
   prepareBaseData() {
     super.prepareBaseData();
 
+    // HACK: Migration shim
+    if (typeof this.data.data.weight !== "object") {
+      this.data.data.weight = {
+        value: this.data.data.weight,
+      };
+    }
+
     // Set base weight to weight of coins, which can be calculated without knowing contained items
     const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
     this.data.data.weight.currency = this._calculateCoinWeight(this.data) * weightReduction;

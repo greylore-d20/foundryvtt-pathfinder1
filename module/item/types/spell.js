@@ -89,8 +89,9 @@ export class ItemSpellPF extends ItemPF {
     return result;
   }
 
-  getTypeChatData(data, labels, props) {
-    if (data.sr) {
+  /** @inheritDoc */
+  getTypeChatData(data, labels, props, rollData) {
+    if (rollData.item.sr) {
       props.push(game.i18n.localize("PF1.SpellResistance"));
     }
 

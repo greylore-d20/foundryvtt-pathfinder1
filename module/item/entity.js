@@ -1068,7 +1068,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Get per item type chat data
-    this.getTypeChatData(data, labels, props);
+    this.getTypeChatData(data, labels, props, enrichOptions.rollData);
 
     // Filter properties and return
     data.properties = props.filter((p) => !!p);
@@ -1078,11 +1078,12 @@ export class ItemPF extends ItemBasePF {
   /**
    * Per item type chat data.
    *
-   * @param data
-   * @param labels
-   * @param props
+   * @param {ChatData} data - A partial of a chat data object that can be modified to add per item type data.
+   * @param {Object<string, string>} labels - The labels for this item.
+   * @param {string[]} props - Additional property strings
+   * @param {object} rollData - A rollData object to be used for checks
    */
-  getTypeChatData(data, labels, props) {
+  getTypeChatData(data, labels, props, rollData) {
     // Charges as used by most item types, except spells
     if (this.isCharged) {
       props.push(`${game.i18n.localize("PF1.ChargePlural")}: ${this.charges}/${this.maxCharges}`);

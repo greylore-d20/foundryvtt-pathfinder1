@@ -182,7 +182,7 @@ export const alterRollData = function (shared, form = {}) {
   });
 
   // Apply secondary attack penalties
-  if (shared.rollData.item.primaryAttack === false) {
+  if (shared.rollData.item.attackType === "natural" && shared.rollData.item.primaryAttack === false) {
     const attackBonus = shared.rollData.action.naturalAttack?.secondary?.attackBonus || "-5";
     const damageMult = shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
     shared.attackBonus.push(`(${attackBonus})[${game.i18n.localize("PF1.SecondaryAttack")}]`);

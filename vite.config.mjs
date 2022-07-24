@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import { copy } from "@guanghechen/rollup-plugin-copy";
 
-import { resolveUrl, foundryConfig } from "./tools/foundry-config.mjs";
+import { resolveUrl, FOUNDRY_CONFIG } from "./tools/foundry-config.mjs";
 import handlebarsReload from "./tools/handlebars-reload.mjs";
 import langReload from "./tools/lang-reload.mjs";
 import rewriteFoundryImports from "./tools/foundry-imports.mjs";
@@ -30,7 +30,7 @@ const config = defineConfig(({ command, mode }) => {
     publicDir: resolve("public"),
     server: {
       port: 30001,
-      open: foundryConfig.openBrowser ?? false,
+      open: FOUNDRY_CONFIG.openBrowser ?? false,
       proxy: {
         [`^(?!${resolveUrl("systems/pf1")})`]: "http://localhost:30000/",
         [resolveUrl("socket.io/")]: {

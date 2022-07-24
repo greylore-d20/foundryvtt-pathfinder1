@@ -17,6 +17,20 @@ export class ItemContainerPF extends ItemPF {
     this.data.data.weight.currency = this._calculateCoinWeight(this.data) * weightReduction;
   }
 
+  /** @inheritDoc */
+  prepareWeight() {
+    super.prepareWeight();
+
+    /** @type {ItemWeightData} */
+    const weight = this.data.data.weight;
+    // Quantity can be ignored for containers
+    weight.contents = this.items.reduce(
+      (total, item) => total + item.data.data.weight.total,
+      this._calculateCoinWeight(this.data)
+    );
+    weight.converted.contents = game.pf1.utils.convertWeight(weight.contents);
+  }
+
   async createContainerContent(data, options = { raw: false }) {
     const embeddedName = "Item";
     const user = game.user;

@@ -183,7 +183,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricUnits"),
     },
-    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   game.settings.register("pf1", "distanceUnits", {
@@ -213,7 +213,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialWeightUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricWeightUnits"),
     },
-    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   /**

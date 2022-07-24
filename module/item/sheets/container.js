@@ -1,6 +1,6 @@
 import { ItemSheetPF } from "./base.js";
 import { ItemPF } from "../entity.js";
-import { convertWeight, splitCurrency } from "../../lib.js";
+import { splitCurrency } from "../../lib.js";
 import { getSkipActionPrompt } from "../../settings.js";
 import { createConsumableSpellDialog } from "../../lib.js";
 import { CurrencyTransfer } from "../../apps/currency-transfer.js";
@@ -100,8 +100,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         name: "data.weight.value",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.data.data.weight.converted,
-        id: "data-baseWeight",
+        value: data.item.data.data.weight.converted.total,
+        inputValue: data.item.data.data.weight.converted.value,
+        decimals: 2,
+        id: "data-weight-value",
       });
 
       // Add price
@@ -181,7 +183,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
     data.weight = {
-      contents: this.item.data.data.weight.converted,
+      contents: this.item.data.data.weight.converted.contents,
       units: usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
     };
 
@@ -300,8 +302,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     for (const i of items) {
       const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
-      i.data.weight = i.data.weight || 0;
-      i.totalWeight = Math.round(convertWeight(i.data.quantity * i.data.weight) * 10) / 10;
+      i.totalWeight = Math.roundDecimals(i.data.weight.converted.total, 2);
       let usystem = game.settings.get("pf1", "weightUnits"); // override
       if (usystem === "default") usystem = game.settings.get("pf1", "units");
       i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");

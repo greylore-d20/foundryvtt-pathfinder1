@@ -206,14 +206,15 @@
 }
 
 .message {
-  h2.attack-targets {
-    &:hover {
-      text-shadow: 0 0 10px red;
-      cursor: pointer;
+  .attack-targets {
+    h2 {
+      flex: 1 100%;
+      &:hover {
+        text-shadow: 0 0 10px red;
+        cursor: pointer;
+      }
     }
-  }
 
-  div.attack-targets {
     margin-bottom: 4px;
     display: flex;
     flex-flow: row wrap;

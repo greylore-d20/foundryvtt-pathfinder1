@@ -623,9 +623,13 @@
         background-color: @colorTan;
       }
 
+      // Do not apply padding to formula fields to squeeze out two pixels
+      &[class^="item-"]:not([class~="item-damage"], [class~="item-attacks"]) {
+        padding: 0 1px 0 1px;
+      }
+
       &.item-actions {
         flex: 0 0 32px;
-        padding: 0 1px 0 1px;
         justify-content: center;
 
         & > div {
@@ -633,58 +637,44 @@
         }
       }
 
-      .horizontalPad() {
-        padding: 0 1px 0 1px;
-      }
-
       &.item-slot {
         flex: 0 0 64px;
-        .horizontalPad();
       }
 
       &.item-usage {
         flex: 0 0 80px;
-        .horizontalPad();
       }
 
       &.item-type {
         flex: 0 0 42px;
-        .horizontalPad();
       }
 
       &.item-value {
         flex: 0 0 72px;
-        .horizontalPad();
       }
 
       &.item-weight {
         flex: 0 0 56px;
-        .horizontalPad();
       }
 
       &.item-hidden {
         flex: 0 0 32px;
-        .horizontalPad();
       }
 
       &.item-identified {
         flex: 0 0 32px;
-        .horizontalPad();
       }
 
       &.item-carried {
         flex: 0 0 32px;
-        .horizontalPad();
       }
 
       &.item-equipped {
         flex: 0 0 32px;
-        .horizontalPad();
       }
 
       &.item-uses {
         flex: 0 0 64px;
-        .horizontalPad();
 
         .sep {
           flex: 0;

@@ -172,8 +172,8 @@ export class ItemActionSheet extends FormApplication {
 
     // Drag conditional
     if (elem.dataset?.conditional) {
-      const conditional = this.object.data.conditionals[elem.dataset?.conditional];
-      event.dataTransfer.setData("text/plain", JSON.stringify(conditional));
+      const conditional = this.object.conditionals.get(elem.dataset?.conditional);
+      event.dataTransfer.setData("text/plain", JSON.stringify(conditional.data));
     }
   }
 
@@ -462,6 +462,7 @@ export class ItemActionSheet extends FormApplication {
         }
       });
     formData["conditionals"] = conditionalData;
+    console.log(conditionalData);
 
     formData = expandObject(formData);
     return this.action.update(formData);

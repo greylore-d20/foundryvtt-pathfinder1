@@ -139,6 +139,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Override description attributes
     if (data.isPhysical) {
+      /** @type {DescriptionAttribute[]} */
       data.descriptionAttributes = [];
 
       // Add quantity
@@ -154,12 +155,13 @@ export class ItemSheetPF extends ItemSheet {
       // Add weight
       data.descriptionAttributes.push({
         isNumber: true,
-        name: "data.baseWeight",
+        name: "data.weight.value",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.data.data.weightConverted,
+        value: data.item.data.data.weight.converted.total,
+        inputValue: data.item.data.data.weight.converted.value,
         decimals: 2,
-        id: "data-baseWeight",
+        id: "data-weight-value",
       });
 
       // Add price
@@ -722,6 +724,11 @@ export class ItemSheetPF extends ItemSheet {
         formData[`data.links.${linkType}`] = deepClone(getProperty(this.item.data, `data.links.${linkType}`));
 
       setProperty(formData[`data.links.${linkType}`][index], subPath, value);
+    }
+
+    // Handle weight to ensure `weight.value` is in lbs
+    if (formData["data.weight.value"]) {
+      formData["data.weight.value"] = game.pf1.utils.convertWeightBack(formData["data.weight.value"]);
     }
 
     // Change relative values
@@ -1484,7 +1491,8 @@ export class ItemSheetPF extends ItemSheet {
 
     elem.removeAttr("readonly");
     elem.attr("name", event.currentTarget.dataset.attrName);
-    let value = getProperty(this.item.data, event.currentTarget.dataset.attrName);
+    const { inputValue } = event.currentTarget.dataset;
+    let value = inputValue ?? getProperty(this.item.data, event.currentTarget.dataset.attrName);
     elem.attr("value", value);
     elem.select();
 
@@ -1547,3 +1555,21 @@ export class ItemSheetPF extends ItemSheet {
     el.select();
   }
 }
+
+/**
+ * @typedef {object} DescriptionAttribute
+ * @property {string} name - Data path to which the input will be written
+ * @property {boolean} [fakeName] - Whether to show a value different from the one the `name` points to
+ * @property {string} id
+ * @property {boolean} [isNumber] - Whether the input is a number (text input)
+ * @property {boolean} [isBoolean] - Whether the input is a boolean (checkbox)
+ * @property {boolean} [isRange] - Whether this is a dual input for a value and a maximum value
+ * @property {string} label - The label for the input
+ * @property {string | boolean | number | {value: string | number, name: string}} value - The value that is show in the sidebar.
+ *   Ranges require an object with `value` and `name` properties.
+ * @property {{value: string | number, name: string}} [max] - Maximum value for a range input
+ * @property {number} [decimals] - Number of decimals to display for `number`s
+ * @property {string} [inputValue] - Value that will appear in the input field when it is edited,
+ *                                   overriding the default value retrieved from the item data
+ *                                   using {@link DescriptionAttribute#name}
+ */

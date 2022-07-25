@@ -1,13 +1,6 @@
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { ActorRestDialog } from "../../apps/actor-rest.js";
-import {
-  createTag,
-  CR,
-  convertWeight,
-  createConsumableSpellDialog,
-  adjustNumberByStringCommand,
-  splitCurrency,
-} from "../../lib.js";
+import { createTag, CR, createConsumableSpellDialog, adjustNumberByStringCommand, splitCurrency } from "../../lib.js";
 import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
 import { Widget_ItemPicker } from "../../widgets/item-picker.js";
 import { getSkipActionPrompt } from "../../settings.js";
@@ -2458,8 +2451,7 @@ export class ActorSheetPF extends ActorSheet {
     for (const i of items) {
       const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
-      i.data.weight = i.data.weight || 0;
-      i.totalWeight = Math.round(convertWeight(i.data.quantity * i.data.weight) * 10) / 10;
+      i.totalWeight = Math.roundDecimals(i.data.weight.converted.total, 1);
       i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);

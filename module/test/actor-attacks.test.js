@@ -270,7 +270,6 @@ export const registerActorItemAttackTests = () => {
             await items.longbow.update({ "flags.pf1.defaultAmmo": items.arrows.id });
             await items.arrows.update({ "flags.pf1.abundant": false });
             roll = await items.longbow.useAttack({ skipDialog: true, chatMessage: false });
-            messages.push(roll);
           });
 
           it("should be an object", function () {

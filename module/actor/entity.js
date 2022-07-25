@@ -3398,7 +3398,7 @@ export class ActorPF extends ActorBasePF {
     });
     const weight = physicalItems.reduce((cur, o) => {
       if (!o.data.data.carried) return cur;
-      return cur + o.data.data.weight * o.data.data.quantity;
+      return cur + o.data.data.weight.total;
     }, this._calculateCoinWeight());
 
     return game.pf1.utils.convertWeight(weight);

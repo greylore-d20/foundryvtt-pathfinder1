@@ -1,16 +1,7 @@
 import { ItemBasePF } from "./base.js";
 import { DicePF, formulaHasDice } from "../dice.js";
 import { createCustomChatMessage } from "../chat.js";
-import {
-  createTag,
-  linkData,
-  convertDistance,
-  convertWeight,
-  convertWeightBack,
-  calculateRange,
-  keepUpdateArray,
-  diffObjectAndArray,
-} from "../lib.js";
+import { createTag, linkData, convertDistance, calculateRange, keepUpdateArray, diffObjectAndArray } from "../lib.js";
 import { ItemChange } from "./components/change.js";
 import { ItemAction } from "./components/action.js";
 import { getHighestChanges } from "../actor/apply-changes.js";
@@ -407,19 +398,42 @@ export class ItemPF extends ItemBasePF {
     return itemData;
   }
 
+  /**
+   * Prepare this item's {@link ItemWeightData}
+   */
   prepareWeight() {
+    const itemData = this.data.data;
+
+    // HACK: Migration shim. Allows unmigrated items to have their weight correct.
+    {
+      const weight = itemData.weight;
+      if (weight === undefined || Number.isFinite(weight)) {
+        const sourceData = this.data._source.data,
+          sourceWeight = sourceData.baseWeight ?? sourceData.weight ?? 0;
+        itemData.weight = { value: sourceWeight };
+      }
+    }
+
+    const weight = itemData.weight;
     // Determine actual item weight, including sub-items
-    const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
-    this.data.data.weight = (this.items ?? []).reduce((cur, o) => {
-      return cur + o.data.data.weight * o.data.data.quantity * weightReduction;
-    }, this.data.data.weight);
+    const weightReduction = (100 - (itemData.weightReduction ?? 0)) / 100;
+    weight.total = (this.items ?? []).reduce((cur, o) => {
+      return cur + o.data.data.weight.total * weightReduction;
+    }, weight.value * this.data.data.quantity);
+
+    // Add contained currency (mainly containers)
+    weight.currency ??= 0;
+    weight.total += weight.currency;
 
     // Convert weight according metric system (lb vs kg)
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
-    this.data.data.weightConverted = convertWeight(this.data.data.weight);
-    this.data.data.weightUnits = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
-    this.data.data.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
+    weight.converted = {
+      value: game.pf1.utils.convertWeight(weight.value),
+      total: game.pf1.utils.convertWeight(weight.total),
+    };
+    weight.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+    itemData.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
   }
 
   prepareDerivedData() {
@@ -2371,3 +2385,21 @@ export class ItemPF extends ItemBasePF {
     return CONFIG.Item.documentClasses.spell.toConsumable(...args);
   }
 }
+
+/**
+ * An item's `weight` data. The only property to be stored is `value`, from which all other values are derived.
+ *
+ * @remarks A weight property is considered "effective" if it is the value that is added to its parent's weight.
+ *          An item with a weight of 10 lbs in a container with 50% weight reduction would increase
+ *          the container's effective `weight.total` by 5 lbs, but increases the container's `weight.contents` weight by 10 lbs.
+ * @typedef {object} ItemWeightData
+ * @property {number} value - The weight of a single item instance, in lbs
+ * @property {number} total - The effective total weight of the item (including quantity and contents), in lbs
+ * @property {number} [currency] - Effective weight of contained currency for containers, in lbs
+ * @property {number} [contents] - Weight of contained items and currency, in lbs
+ * @property {object} converted - Weight of this item, converted to the current unit system
+ * @property {number} converted.value - The weight of a single item instance, in world units
+ * @property {number} converted.total - The effective total weight of the item (including quantity and contents), in world units
+ * @property {number} [converted.contents] - Weight of contained items and currency, in world units
+ * @see {@link ItemPF.prepareWeight} for generation
+ */

@@ -189,22 +189,6 @@
             {{/if}}
           </div>
 
-          <div class="item-detail item-attacks tooltip">
-            {{#if item.hasAttack}}
-            <label>{{itemAttacks item @root.rollData max=3}}</label>
-            <span class="tooltipcontent">
-              {{#each item.document.attackArray~}}
-                {{numberFormat this decimals=0 sign=true}}{{#unless @last}}/{{/unless}}
-              {{~/each}}<br/>
-              <br/>
-              {{localize "PF1.Details"}}:<br/>
-              {{#each item.document.attackSources}}
-                {{this.label}} : {{this.value}}<br/>
-              {{/each}}
-            </span>
-            {{/if}}
-          </div>
-
           <div class="item-detail item-damage tooltip">
             {{#if item.hasDamage}}
               <label class="resolved-formula">{{actionDamage item.document.firstAction @root.rollData}}</label>

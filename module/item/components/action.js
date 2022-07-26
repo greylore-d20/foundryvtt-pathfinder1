@@ -914,7 +914,7 @@ export class ItemAction {
       }
       if (this.hasMultiAttack) {
         for (const [k, v] of Object.entries(this.data.attackParts)) {
-          result[`attack.${Number(k) + 1}`] = v[1];
+          result[`attack_${Number(k) + 1}`] = v[1];
         }
       }
     }

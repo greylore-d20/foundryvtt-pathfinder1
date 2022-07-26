@@ -3745,8 +3745,11 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    const deleteContext = mergeObject({ render: !toCreate.length && !toUpdate.length }, context);
-    const createContext = mergeObject({ render: !toUpdate.length }, context);
+    // Create sub-contexts and disable render if more updates are done
+    const deleteContext = deepClone(context);
+    if (context.render !== false) deleteContext.render = !toCreate.length && !toUpdate.length;
+    const createContext = deepClone(context);
+    if (context.render !== false) createContext.render = !toUpdate.length;
 
     if (toDelete.length) await this.deleteEmbeddedDocuments("ActiveEffect", toDelete, deleteContext);
     if (toCreate.length) await this.createEmbeddedDocuments("ActiveEffect", toCreate, createContext);

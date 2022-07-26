@@ -18,4 +18,5 @@ Hooks.on("quenchReady", () => {
   registerActorItemClassTests();
   registerActorItemAttackTests();
   registerContainerItemTests();
+  registerItemWeightTests();
 });

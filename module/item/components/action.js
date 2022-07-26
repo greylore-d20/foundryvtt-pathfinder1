@@ -208,7 +208,7 @@ export class ItemAction {
   }
 
   get enhancementBonus() {
-    return this.data.enh?.override ? this.data.enh?.value ?? 0 : this.item.data.data.enh ?? 0;
+    return this.data.enh?.value ?? this.item.data.data.enh;
   }
 
   getRollData() {
@@ -311,8 +311,7 @@ export class ItemAction {
       spellArea: "",
       conditionals: [],
       enh: {
-        override: false,
-        value: 0,
+        value: null,
       },
     };
   }

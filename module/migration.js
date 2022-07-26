@@ -1097,6 +1097,7 @@ const _migrateActionDamageType = function (action, item) {
       if (typeof damageType === "string") {
         const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
         damageTypeData.values = _Action_ConvertDamageType(damageType);
+        if (damageTypeData.values.length === 0) damageTypeData.custom = damageType;
         damagePart[1] = damageTypeData;
       }
       // Convert array to object
@@ -1128,6 +1129,7 @@ const _migrateActionConditionals = function (action, item) {
       if (modifier.target === "damage" && !modifier.damageType) {
         const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
         damageTypeData.values = _Action_ConvertDamageType(modifier.type);
+        if (damageTypeData.values.length === 0) damageTypeData.custom = modifier.type;
         modifier.damageType = damageTypeData;
         modifier.type = "";
       }
@@ -1456,6 +1458,10 @@ const _Action_ConvertDamageType = function (damageTypeString) {
       tests: ["pos", "positive"],
       result: "positive",
     },
+    {
+      tests: ["u", "untyped", "untype"],
+      result: "untyped",
+    },
   ];
 
   const damageTypes = damageTypeString.split(separator).map((o) => o.toLowerCase());
@@ -1469,5 +1475,5 @@ const _Action_ConvertDamageType = function (damageTypeString) {
   }
 
   if (result.length > 0) return result;
-  return ["untyped"];
+  return [];
 };

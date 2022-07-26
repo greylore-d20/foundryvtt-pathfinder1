@@ -277,16 +277,6 @@ export class ActorPF extends ActorBasePF {
     return [...skills, ...subSkills];
   }
 
-  /**
-   * The VisionPermissionSheet instance for this actor
-   *
-   * @type {VisionPermissionSheet}
-   */
-  get visionPermissionSheet() {
-    if (!this._visionPermissionSheet) this._visionPermissionSheet = new VisionPermissionSheet(this);
-    return this._visionPermissionSheet;
-  }
-
   _prepareContainerItems(items) {
     const collection = [];
 

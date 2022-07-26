@@ -939,7 +939,7 @@ export class ItemPF extends ItemBasePF {
       hasAction: this.hasAction,
       isVersatile: this.isVersatile,
       isSpell: this.data.type === "spell",
-      name: identified ? rollData.identifiedName : rollData.item.unidentified?.name || this.name,
+      name: (identified ? rollData.identifiedName : rollData.item.unidentified?.name) || this.name,
       description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
       rollData: rollData,
       hasExtraProperties: false,
@@ -952,7 +952,7 @@ export class ItemPF extends ItemBasePF {
     if (identified === false) {
       pfFlags.identifiedInfo = {
         identified,
-        name: rollData.identifiedName,
+        name: rollData.identifiedName || this.name,
         description: itemChatData.identifiedDescription,
       };
     }

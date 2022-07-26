@@ -319,6 +319,15 @@ export const registerSystemSettings = function () {
     },
   });
 
+  game.settings.register("pf1", "characterVision", {
+    name: "SETTINGS.pf1characterVisionN",
+    hint: "SETTINGS.pf1characterVisionH",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean,
+  });
+
   /**
    * Set coin weight
    */

@@ -1688,7 +1688,6 @@ export class ItemPF extends ItemBasePF {
       dataType: dataType,
       name: targetItem.name,
       img: targetItem.data.img,
-      hiddenLinks: {},
     };
 
     if (linkType === "classAssociations") {

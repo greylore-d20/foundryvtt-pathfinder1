@@ -1237,7 +1237,6 @@ export class ItemSheetPF extends ItemSheet {
       dataType: dataType,
       name: itemData.name,
       img: itemData.img,
-      hiddenLinks: {},
     };
 
     if (linkType === "classAssociations") {

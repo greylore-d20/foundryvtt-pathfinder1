@@ -30,17 +30,43 @@
   .card-content {
     margin: 5px 0;
 
+    hr {
+      border-top: none;
+      border-bottom: @borderLightThin;
+    }
+
     h3 {
       font-size: @fontSizeNormal;
       margin: 0;
       font-weight: bold;
     }
 
-    > * {
+    h3.item-name,
+    h3.action-name {
+      .nodesto();
+      align-self: center;
+    }
+
+    .description-metadata {
+      text-align: right;
+      color: @colorOlive;
+      font-size: @fontSizeSubHeader;
+    }
+
+    .item-description *,
+    .action-description * {
       -webkit-user-select: text;
       -moz-user-select: text;
       -ms-user-select: text;
       user-select: text;
+    }
+
+    .identified-info {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 3px;
+      border: @borderLightThin;
+      padding: 2px;
+      margin-bottom: 0.75em;
     }
   }
 

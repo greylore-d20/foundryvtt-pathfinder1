@@ -6,6 +6,7 @@ import { keepUpdateArray, createTag } from "../../lib.js";
 export class ItemAction {
   constructor(data, parent) {
     this.data = data;
+    /** @type {import("../entity.js").ItemPF} */
     this.parent = parent;
     this.apps = {};
     this.sheet = null;
@@ -398,7 +399,8 @@ export class ItemAction {
    * Generates {@link ChatData} for this action's parent item, but with this action's data,
    * regardless of whether it is the first action or not.
    *
-   * @param {object} [htmlOptions] - Options passed to {@link ItemPF#getChatData} affecting text enrichment
+   * @see {@link ItemPF#getChatData}
+   * @param {EnrichmentOptions} [htmlOptions] - Options passed to {@link ItemPF#getChatData} affecting text enrichment
    * @param {object} [chatDataOptions] - Options passed to {@link ItemPF#getChatData} affecting the chat data
    * @returns {import("../entity.js").ChatData} Chat data for this action's parent and this action
    */

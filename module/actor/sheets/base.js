@@ -1668,7 +1668,7 @@ export class ActorSheetPF extends ActorSheet {
     // Check whether pseudo-item belongs to another collection
     const collection = li.attr("data-item-collection") ?? "items";
     const item = this.document[collection].get(li.attr("data-item-id"));
-    const { description, shortDescription, properties } = item.getChatData({ secrets: this.document.isOwner });
+    const { description, shortDescription, properties } = item.getChatData();
 
     // Toggle summary
     if (li.hasClass("expanded")) {

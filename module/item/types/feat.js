@@ -37,13 +37,12 @@ export class ItemFeatPF extends ItemPF {
     return labels;
   }
 
-  getTypeChatData(data, labels, props) {
-    super.getTypeChatData(data, labels, props);
+  /** @inheritDoc */
+  getTypeChatData(data, labels, props, rollData) {
+    super.getTypeChatData(data, labels, props, rollData);
     // Add ability type label
-    if (this.type === "feat") {
-      if (labels.abilityType) {
-        props.push(labels.abilityType);
-      }
+    if (labels.abilityType) {
+      props.push(labels.abilityType);
     }
   }
 }

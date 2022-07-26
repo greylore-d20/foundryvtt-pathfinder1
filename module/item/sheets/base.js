@@ -333,6 +333,7 @@ export class ItemSheetPF extends ItemSheet {
       if (data.data.shortDescription != null) {
         data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, {
           rollData: firstAction?.getRollData() ?? rollData,
+          secrets: data.owner,
         });
       }
     }
@@ -783,6 +784,9 @@ export class ItemSheetPF extends ItemSheet {
     // Edit action
     html.find(".actions .items-list .item").on("contextmenu", this._onActionEdit.bind(this));
 
+    // Item summaries
+    html.find(".item .item-name h4").on("click", (event) => this._onItemSummary(event));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
@@ -831,9 +835,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
-
-    // Item summaries
-    html.find(".item .item-name h4").on("click", (event) => this._onItemSummary(event));
 
     // Linked item clicks
     html
@@ -1153,9 +1154,7 @@ export class ItemSheetPF extends ItemSheet {
     const item = this.document[collection].get(li.attr("data-item-id"));
     // For actions (embedded into a parent item), show only the action's summary instead of a complete one
     const isAction = collection === "actions";
-    const { description, actionDescription, properties } = item.getChatData({
-      secrets: this.parent ? this.parent.isOwner : this.isOwner,
-    });
+    const { description, actionDescription, properties } = item.getChatData();
 
     // Toggle summary
     if (li.hasClass("expanded")) {

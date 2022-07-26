@@ -2151,6 +2151,7 @@ export const PF1 = /** @type {const} */ ({
       "classLevel",
       "ablMod",
       "item",
+      "action",
       "level",
       "mod",
     ],

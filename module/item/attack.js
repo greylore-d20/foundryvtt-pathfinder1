@@ -792,20 +792,26 @@ export const getMessageData = async function (shared) {
   // Parse template data
   const token =
     this.parentActor?.token ?? canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.parentActor?.id);
+  const identified = Boolean(shared.rollData.item?.identified ?? true);
+  const name = identified
+    ? `${shared.rollData.item.identifiedName} (${shared.action.name})`
+    : shared.rollData.item.unidentified?.name || this.name;
   shared.templateData = mergeObject(
     shared.templateData,
     {
       tokenUuid: token ? token.document?.uuid ?? token.uuid : null,
       actionId: shared.action?.id,
       extraText: extraText,
-      data: itemChatData,
+      identified: identified,
+      name: name,
+      description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
+      actionDescription: itemChatData.actionDescription,
       hasExtraText: extraText.length > 0,
       properties: props,
       hasProperties: props.length > 0,
       item: this.data,
       actor: this.parentActor.data,
       hasSave: shared.action.hasSave,
-      description: this.fullDescription,
       rollData: shared.rollData,
       save: {
         dc: shared.saveDC,
@@ -883,11 +889,16 @@ export const getMessageData = async function (shared) {
     }
   }
 
-  // Set item name for attack roll
-  shared.templateData.name = `${this.name} (${shared.action.name})`;
-
   shared.chatData["flags.pf1.metadata"] = metadata;
   shared.chatData["flags.core.canPopout"] = true;
+  if (!identified)
+    shared.chatData["flags.pf1.identifiedInfo"] = {
+      identified,
+      name: this.name,
+      description: itemChatData.identifiedDescription,
+      actionName: shared.action.name,
+      actionDescription: itemChatData.actionDescription,
+    };
 };
 
 /**

@@ -48,8 +48,58 @@ export const hideRollInfo = function (app, html, data) {
   }
 };
 
+/**
+ * Generates an info block containing an item's identified info for GMs
+ *
+ * @remarks This HTML has to be generated in a synchronous way, as adding to a rendered chat message's content
+ *          will cause erratic scrolling behaviour.
+ * @param {ChatMessagePFIdentifiedInfo} info - An object containing the item's identified info
+ * @returns {string} HTML string containing the info block
+ */
+const getIdentifiedBlock = (info) => `
+<div class="gm-sensitive-always identified-info">
+  <section class="item-description">
+    <header class="flexrow description-header">
+      <h3 class="item-name">${info.name} </h3>
+      <div class="description-metadata">
+        <i class="fas fa-user-secret"></i>
+      </div>
+    </header>
+    ${info.description}
+  </section>
+  ${
+    info.actionName
+      ? `
+  <hr>
+  <section class="action-description">
+    <h3 class="action-name">${info.actionName}</h3>
+    ${info.actionDescription}
+  </section>`
+      : ``
+  }
+</div>
+  `;
+
+/**
+ * Add GM-sensitive info for GMs and hide GM-sensitive info for players
+ *
+ * @param {ChatMessagePF} app - The chat message
+ * @param {JQuery} html - The chat message's HTML
+ * @param {object} data - Data used to render the chat message
+ */
 export const hideGMSensitiveInfo = function (app, html, data) {
-  if (game.user.isGM) return;
+  // Handle adding of GM-sensitive info
+  if (game.user.isGM) {
+    // Show identified info box for GM if item was unidentified when rolled
+    const identifiedInfo = app.data.flags.pf1?.identifiedInfo ?? {};
+    const { identified = true } = identifiedInfo;
+    if (!identified && app.hasItemSource) {
+      const cardContent = html.find(".card-content");
+      cardContent.append(getIdentifiedBlock(identifiedInfo));
+    }
+    // Return early, as the rest of the function handles removing already existing info
+    return;
+  }
 
   // Hide info that's always sensitive, no matter the card's owner
   html.find(".gm-sensitive-always").remove();
@@ -86,17 +136,6 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     if (!actor) {
       actor = game.actors.get(speaker.actor);
     }
-  }
-
-  // Hide identified and description
-  const item = app.itemSource;
-  if (item != null && item.data?.data?.identified === false) {
-    const unidentifiedName = item.data.data.unidentified?.name;
-    if (unidentifiedName) {
-      html.find("header .item-name").text(unidentifiedName);
-    }
-    const unidentifiedDescription = item.data.data.description?.unidentified;
-    html.find(".card-content").html(TextEditor.enrichHTML(unidentifiedDescription, item.getRollData()));
   }
 
   if (!actor || (actor && actor.testUserPermission(game.user, "OBSERVER"))) return;

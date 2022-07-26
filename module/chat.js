@@ -238,7 +238,9 @@ export const hideInvisibleTargets = async function (app, html) {
     const elem = $(t.elem);
 
     // Gather token
-    t.token = (await fromUuid(t.uuid)).object;
+    const token = await fromUuid(t.uuid);
+    if (!token) continue;
+    t.token = token.object;
 
     // Hide if token invisible
     if (!t.token?.visible) elem.hide();

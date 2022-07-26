@@ -785,7 +785,7 @@ export class ItemPF extends ItemBasePF {
     this._memoryVariables = {};
     for (const k of memKeys) {
       if (hasProperty(this.data, k)) {
-        this._memoryVariables[k] = getProperty(this.data, k);
+        this._memoryVariables[k] = deepClone(getProperty(this.data, k));
       }
     }
 

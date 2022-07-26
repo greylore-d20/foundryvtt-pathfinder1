@@ -583,7 +583,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const data = duplicate(item.data);
 
     delete data._id;
-    data.name = `${data.name} (Copy)`;
+    data.name = `${data.name} (${game.i18n.localize("PF1.Copy")})`;
+    data.data.identifiedName = `${item.data.data.identifiedName} (${game.i18n.localize("PF1.Copy")})`;
     if (data.data.links) data.data.links = {};
 
     return this.item.createContainerContent(data);

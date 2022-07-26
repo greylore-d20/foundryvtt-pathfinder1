@@ -12,6 +12,10 @@ export class PointBuyCalculator extends DocumentSheet {
         value: actorAbl[k]?.value ?? 10,
       });
     }
+
+    const ablValues = Object.keys(CONFIG.PF1.abilityCost).map((i) => Number(i));
+    this.min = Math.min(...ablValues);
+    this.max = Math.max(...ablValues);
   }
 
   static get defaultOptions() {
@@ -65,9 +69,9 @@ export class PointBuyCalculator extends DocumentSheet {
     const abl = this.abilities.find((o) => o.key === ablKey);
 
     if (a.classList.contains("add")) {
-      abl.value = Math.min(18, abl.value + 1);
+      abl.value = Math.min(this.max, abl.value + 1);
     } else if (a.classList.contains("subtract")) {
-      abl.value = Math.max(7, abl.value - 1);
+      abl.value = Math.max(this.min, abl.value - 1);
     }
     this.render();
   }

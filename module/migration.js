@@ -1170,6 +1170,10 @@ const _migrateActionConditionals = function (action, item) {
 };
 
 const _migrateActionEnhOverride = function (action, item) {
+  if (typeof action.enh !== "object") {
+    action.enh = { value: action.enh ?? null };
+  }
+
   // Set to null if disabled.
   if (action.enh.override == false) {
     action.enh.value = null;

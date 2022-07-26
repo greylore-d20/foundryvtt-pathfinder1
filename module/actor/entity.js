@@ -1862,10 +1862,7 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   getSkillInfo(skillId) {
-    let skl,
-      sklName,
-      parentSkill,
-      isCustom = false;
+    let skl, sklName, parentSkill;
     const [mainSkillId, subSkillDelim, subSkillId] = skillId.split(".", 3),
       isSubSkill = subSkillDelim === "subSkills" && !!subSkillId,
       mainSkill = this.data.data.skills[mainSkillId];
@@ -1880,7 +1877,6 @@ export class ActorPF extends ActorBasePF {
       skl = mainSkill;
       if (skl.name != null) {
         sklName = skl.name;
-        isCustom = true;
       } else sklName = CONFIG.PF1.skills[skillId];
     }
 

@@ -463,7 +463,6 @@ export class ItemActionSheet extends FormApplication {
         }
       });
     formData["conditionals"] = conditionalData;
-    console.log(conditionalData);
 
     formData = expandObject(formData);
     return this.action.update(formData);

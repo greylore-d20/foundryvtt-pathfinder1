@@ -1862,27 +1862,25 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   getSkillInfo(skillId) {
-    let skl, sklName, parentSkill;
+    let skill, skillName, parentSkill;
     const [mainSkillId, subSkillDelim, subSkillId] = skillId.split(".", 3),
       isSubSkill = subSkillDelim === "subSkills" && !!subSkillId,
       mainSkill = this.data.data.skills[mainSkillId];
     if (!mainSkill) return null;
 
     if (isSubSkill) {
-      skl = mainSkill.subSkills[subSkillId];
-      if (!skl) return null;
-      sklName = `${CONFIG.PF1.skills[mainSkillId]} (${skl.name})`;
+      skill = mainSkill.subSkills[subSkillId];
+      if (!skill) return null;
+      skillName = `${CONFIG.PF1.skills[mainSkillId]} (${skill.name})`;
       parentSkill = this.getSkillInfo(mainSkillId);
     } else {
-      skl = mainSkill;
-      if (skl.name != null) {
-        sklName = skl.name;
-      } else sklName = CONFIG.PF1.skills[skillId];
+      skill = mainSkill;
+      skillName = skill.name ?? CONFIG.PF1.skills[skillId];
     }
 
-    const result = duplicate(skl);
+    const result = duplicate(skill);
     result.id = skillId;
-    result.name = sklName;
+    result.name = skillName;
 
     // .bonus is deprecated; backwards compatibility
     Object.defineProperty(result, "bonus", {

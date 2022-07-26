@@ -31,6 +31,13 @@ export class ItemSheetPF_Container extends ItemSheetPF {
      * @type {object[]}
      */
     this._itemUpdates = [];
+
+    /**
+     * Override item sheet initial tab.
+     * Assumes first tab definitionis the main tab.
+     */
+    this.options.tabs[0].initial = "contents"; // Doesn't actually do anything
+    this._tabs[0].active = "contents"; // Actual override
   }
 
   static get defaultOptions() {

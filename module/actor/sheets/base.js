@@ -2406,11 +2406,13 @@ export class ActorSheetPF extends ActorSheet {
     // Partition items by category
     let [items, spells, feats, classes, attacks] = data.items.reduce(
       (arr, item) => {
+        const document = item.document;
         item.img = item.img || CONST.DEFAULT_TOKEN;
         item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
         item.hasUses = item.data.uses && item.data.uses.max > 0;
         item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "data.uses.per"));
-        item.price = item.data.identified === false ? item.data.unidentified.price : item.data.price;
+        if (document) item.price = document.getValue({ recursive: false, sellValue: 1 });
+        else item.price = item.data.identified === false ? item.data.unidentified.price : item.data.price;
 
         const itemQuantity = getProperty(item, "data.quantity") != null ? getProperty(item, "data.quantity") : 1;
         const itemCharges = getProperty(item, "data.uses.value") != null ? getProperty(item, "data.uses.value") : 1;

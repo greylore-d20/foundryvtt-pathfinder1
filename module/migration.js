@@ -976,7 +976,7 @@ const _migrateSpellCosts = function (ent, updateData) {
 };
 
 const _migrateLootEquip = function (ent, updateData) {
-  if (ent.type === "loot" && !hasProperty(ent, "equipped")) {
+  if (ent.type === "loot" && !hasProperty(ent, "data.equipped")) {
     updateData["data.equipped"] = false;
   }
 };

@@ -5,40 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "d1p4wjw40amducec",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (see text)",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -49,22 +122,10 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          2
-        ],
-        [
-          "cleric/oracle",
-          2
-        ],
-        [
-          "bard",
-          2
-        ],
-        [
-          "magus",
-          2
-        ]
+        ["sorcerer/wizard", 2],
+        ["cleric/oracle", 2],
+        ["bard", 2],
+        ["magus", 2]
       ],
       "domain": [],
       "subDomain": [],
@@ -73,7 +134,6 @@
     },
     "level": 2,
     "school": "div",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -83,8 +143,7 @@
       "focus": "a book with blank pages"
     },
     "sr": false,
-    "shortDescription": "<p>You magically scour the world's libraries for information that might refresh your memory about a topic. Upon casting this spell, the focus book's pages fill with snippets and selections from countless books. You can spend up to 1 round per caster level (maximum 10) reading these notes. You may cease reading at any time, and when you do you can immediately attempt one Knowledge check with a +1 circumstance bonus for each round you spent studying the book (maximum +10). The writing disappears when the spell ends, and if you fail to succeed at a Knowledge check on the round you stop reading the notes, you don't gain the benefits of this spell.</p>",
-    "spellDuration": "1 round/level (see text)"
+    "shortDescription": "<p>You magically scour the world's libraries for information that might refresh your memory about a topic. Upon casting this spell, the focus book's pages fill with snippets and selections from countless books. You can spend up to 1 round per caster level (maximum 10) reading these notes. You may cease reading at any time, and when you do you can immediately attempt one Knowledge check with a +1 circumstance bonus for each round you spent studying the book (maximum +10). The writing disappears when the spell ends, and if you fail to succeed at a Knowledge check on the round you stop reading the notes, you don't gain the benefits of this spell.</p>"
   },
   "effects": [],
   "folder": null,

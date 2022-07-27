@@ -5,48 +5,121 @@
   "img": "systems/pf1/icons/spells/ice-blue-1.jpg",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "n3mop128o1mo4unt",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/ice-blue-1.jpg",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "rsak",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "(min(5, @cl))d6",
+              {
+                "values": ["cold"],
+                "custom": ""
+              }
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": ""
+        },
+        "formula": "",
+        "ability": {
+          "attack": "dex",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "one ball of ice and snow",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "rsak",
-    "damage": {
-      "parts": [
-        [
-          "(min(5, @cl))d6",
-          "cold"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "label": ""
-    },
-    "ability": {
-      "attack": "dex",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -57,38 +130,14 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          1
-        ],
-        [
-          "druid",
-          1
-        ],
-        [
-          "summoner",
-          1
-        ],
-        [
-          "witch",
-          1
-        ],
-        [
-          "magus",
-          1
-        ],
-        [
-          "bloodrager",
-          1
-        ],
-        [
-          "hunter",
-          1
-        ],
-        [
-          "unchained Summoner",
-          1
-        ]
+        ["sorcerer/wizard", 1],
+        ["druid", 1],
+        ["summoner", 1],
+        ["witch", 1],
+        ["magus", 1],
+        ["bloodrager", 1],
+        ["hunter", 1],
+        ["unchained Summoner", 1]
       ],
       "domain": [],
       "subDomain": [],
@@ -97,15 +146,12 @@
     },
     "school": "evo",
     "types": "cold, water",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
     "spellbook": "",
-    "shortDescription": "<p>You throw a ball of elemental ice and snow at a single target as a ranged touch attack. The snowball deals 1d6 points of cold damage per caster level you have (maximum 5d6).</p>",
-    "spellDuration": "instantaneous",
-    "spellEffect": "one ball of ice and snow"
+    "shortDescription": "<p>You throw a ball of elemental ice and snow at a single target as a ranged touch attack. The snowball deals 1d6 points of cold damage per caster level you have (maximum 5d6).</p>"
   },
   "effects": [],
   "folder": null,

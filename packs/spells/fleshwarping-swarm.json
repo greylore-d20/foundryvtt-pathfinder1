@@ -5,40 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "round"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "9unuiuwla8e5z15q",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration + 2 rounds and 1 hour/level (see text)",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "other",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "one swarm of bats, rats, or spiders",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -49,22 +122,10 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          3
-        ],
-        [
-          "summoner",
-          3
-        ],
-        [
-          "witch",
-          3
-        ],
-        [
-          "unchained Summoner",
-          3
-        ]
+        ["sorcerer/wizard", 3],
+        ["summoner", 3],
+        ["witch", 3],
+        ["unchained Summoner", 3]
       ],
       "domain": [],
       "subDomain": [],
@@ -74,7 +135,6 @@
     "level": 3,
     "school": "con",
     "subschool": "summoning",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -85,9 +145,7 @@
       "value": "a square of red cloth"
     },
     "sr": false,
-    "shortDescription": "<p>This spell functions as <i>summon swarm</i>, except that living and undead creatures that fail their saving throw against the swarm's distraction find that their limbs twist and spasm, as their bodies become susceptible to transmutations. Such creatures take a -4 penalty to Dexterity and on saving throws against transmutation effects for 1 hour per caster level.</p>",
-    "spellDuration": "concentration + 2 rounds and 1 hour/level (see text)",
-    "spellEffect": "one swarm of bats, rats, or spiders"
+    "shortDescription": "<p>This spell functions as <i>summon swarm</i>, except that living and undead creatures that fail their saving throw against the swarm's distraction find that their limbs twist and spasm, as their bodies become susceptible to transmutations. Such creatures take a -4 penalty to Dexterity and on saving throws against transmutation effects for 1 hour per caster level.</p>"
   },
   "effects": [],
   "folder": null,

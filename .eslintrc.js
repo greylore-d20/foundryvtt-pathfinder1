@@ -2,15 +2,13 @@ module.exports = {
   env: {
     jquery: true,
     browser: true,
-    es2021: true,
+    es2022: true,
     node: true,
   },
   extends: ["eslint:recommended", "plugin:prettier/recommended", "plugin:jsdoc/recommended"],
-  parser: "@babel/eslint-parser",
   parserOptions: {
-    ecmaVersion: 12,
+    ecmaVersion: 2022,
     sourceType: "module",
-    requireConfigFile: false,
   },
   rules: {
     // Required for Foundry compatibility
@@ -29,7 +27,7 @@ module.exports = {
     "newline-per-chained-call": "off",
     "no-plusplus": "off",
     "valid-jsdoc": "off",
-    "jsdoc/no-undefined-types": ["warn", { definedTypes: ["Record"] }],
+    "jsdoc/no-undefined-types": ["warn", { definedTypes: ["Record", "JQuery"] }],
   },
   settings: {
     jsdoc: {
@@ -55,7 +53,6 @@ module.exports = {
     FateDie: "readonly",
     PoolTerm: "readonly",
     Roll: "readonly",
-    RollPF: "readonly",
     MersenneTwister: "readonly",
     Compendium: "readonly",
     Canvas: "readonly",
@@ -125,6 +122,7 @@ module.exports = {
     ActorTokenHelpers: "readonly",
     CombatEncounters: "readonly",
     Combat: "readonly",
+    Combatant: "readonly",
     Folders: "readonly",
     Folder: "readonly",
     Items: "readonly",
@@ -483,5 +481,7 @@ module.exports = {
     RollTerm: "readonly",
     getDocumentClass: "readonly",
     KeybindingsConfig: "readonly",
+    quench: "readonly",
+    JQuery: "readonly",
   },
 };

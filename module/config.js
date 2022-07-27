@@ -1,4 +1,3 @@
-// Namespace PF1 Configuration Values
 /**
  * PF1 Configuration Values
  *
@@ -8,10 +7,9 @@
  *
  * The PF1 object may be adjusted to influence the system's behaviour during runtime.
  *
- * @global
- * @memberof CONFIG
+ * @module config
  */
-export const PF1 = {
+export const PF1 = /** @type {const} */ ({
   re: {
     traitSeparator: /\s*[;]\s*/g,
   },
@@ -170,9 +168,11 @@ export const PF1 = {
     },
   },
   classFractionalSavingThrowFormulas: {
+    goodSaveBonus: "2",
     base: {
       low: "@hitDice / 3",
-      high: "2 + @hitDice / 2",
+      high: "@hitDice / 2",
+      goodSave: true,
     },
     prestige: {
       low: "(1 + @hitDice) / 3",
@@ -180,11 +180,13 @@ export const PF1 = {
     },
     npc: {
       low: "@hitDice / 3",
-      high: "2 + @hitDice / 2",
+      high: "@hitDice / 2",
+      goodSave: true,
     },
     racial: {
       low: "@hitDice / 3",
-      high: "2 + @hitDice / 2",
+      high: "@hitDice / 2",
+      goodSave: true,
     },
     mythic: {
       low: "0",
@@ -367,7 +369,7 @@ export const PF1 = {
   /**
    * Change targets affected by Wound Thresholds.
    */
-  woundThresholdChangeTargets: ["~attackCore", "cmb", "cmd", "allSavingThrows", "ac", "~skillMods", "allChecks"],
+  woundThresholdChangeTargets: ["~attackCore", "cmd", "allSavingThrows", "ac", "~skillMods", "allChecks"],
 
   divineFocus: {
     0: "",
@@ -542,6 +544,7 @@ export const PF1 = {
   /**
    * An array of maximum carry capacities, where the index is the ability/strength score.
    */
+  // prettier-ignore
   encumbranceLoads: [
     0,
     10,
@@ -848,18 +851,11 @@ export const PF1 = {
   /**
    * The damage types
    */
-  damageTypes: {
-    bludgeoning: "PF1.DamageTypeBludgeoning",
-    piercing: "PF1.DamageTypePiercing",
-    slashing: "PF1.DamageTypeSlashing",
-    cold: "PF1.DamageTypeCold",
-    fire: "PF1.DamageTypeFire",
-    electric: "PF1.DamageTypeElectricity",
-    sonic: "PF1.DamageTypeSonic",
-    acid: "PF1.DamageTypeAcid",
-    force: "PF1.DamageTypeForce",
-    negative: "PF1.DamageTypeNegative",
-    positive: "PF1.DamageTypePositive",
+  get damageTypes() {
+    return game.pf1.damageTypes.reduce((cur, o) => {
+      cur[o.id] = game.i18n.localize(o.name);
+      return cur;
+    }, {});
   },
 
   /* -------------------------------------------- */
@@ -1349,10 +1345,14 @@ export const PF1 = {
    */
   senses: {
     bs: "PF1.SenseBS",
+    bse: "PF1.SenseBSense",
     dv: "PF1.SenseDV",
     ts: "PF1.SenseTS",
     tr: "PF1.SenseTR",
     ll: "PF1.SenseLL",
+    si: "PF1.SenseSI",
+    sid: "PF1.SenseSID",
+    sc: "PF1.SenseSC",
   },
 
   /* -------------------------------------------- */
@@ -1553,6 +1553,29 @@ export const PF1 = {
     oh: "PF1.WeaponHoldTypeOffhand",
   },
 
+  /**
+   * Weapon groups that a weapon can belong to
+   */
+  weaponGroups: {
+    axes: "PF1.WeaponGroupAxes",
+    bladesHeavy: "PF1.WeaponGroupBladesHeavy",
+    bladesLight: "PF1.WeaponGroupBladesLight",
+    bows: "PF1.WeaponGroupBows",
+    close: "PF1.WeaponGroupClose",
+    crossbows: "PF1.WeaponGroupCrossbows",
+    double: "PF1.WeaponGroupDouble",
+    firearms: "PF1.WeaponGroupFirearms",
+    flails: "PF1.WeaponGroupFlails",
+    hammers: "PF1.WeaponGroupHammers",
+    monk: "PF1.WeaponGroupMonk",
+    natural: "PF1.WeaponGroupNatural",
+    polearms: "PF1.WeaponGroupPolearms",
+    siegeEngines: "PF1.WeaponGroupSiegeEngines",
+    spears: "PF1.WeaponGroupSpears",
+    thrown: "PF1.WeaponGroupThrown",
+    tribal: "PF1.WeaponGroupTribal",
+  },
+
   /* -------------------------------------------- */
 
   /**
@@ -1748,76 +1771,77 @@ export const PF1 = {
   },
 
   /**
-   * Dictionaries of change/buff targets, each with a label and sub-categories
+   * Dictionaries of change/buff targets, each with a label and a category it belongs to,
+   * as well as a sort value that determines this buffTarget's priority when Changes are applied.
    */
   buffTargets: {
-    ac: { label: "PF1.BuffTarACGeneric", category: "defense" },
-    aac: { label: "PF1.BuffTarACArmor", category: "defense" },
-    sac: { label: "PF1.BuffTarACShield", category: "defense" },
-    nac: { label: "PF1.BuffTarACNatural", category: "defense" },
-    tac: { label: "PF1.BuffTarACTouch", category: "defense" },
-    ffac: { label: "PF1.BuffTarACFlatFooted", category: "defense" },
-    cmd: { label: "PF1.CMD", category: "defense" },
-    ffcmd: { label: "PF1.CMDFlatFooted", category: "defense" },
-    spellResist: { label: "PF1.SpellResistance", category: "defense" },
-    attack: { label: "PF1.BuffTarAllAttackRolls", category: "attack" },
-    mattack: { label: "PF1.BuffTarMeleeAttack", category: "attack" },
-    rattack: { label: "PF1.BuffTarRangedAttack", category: "attack" },
-    "~attackCore": { label: "", category: "attack" },
-    cmb: { label: "PF1.CMB", category: "attack" },
-    bab: { label: "PF1.BAB", category: "attack" },
-    critConfirm: { label: "PF1.CriticalConfirmation", category: "attack" },
-    damage: { label: "PF1.BuffTarAllDamageRolls", category: "damage" },
-    wdamage: { label: "PF1.WeaponDamage", category: "damage" },
-    sdamage: { label: "PF1.SpellDamage", category: "damage" },
-    str: { label: "PF1.AbilityStr", category: "ability" },
-    dex: { label: "PF1.AbilityDex", category: "ability" },
-    con: { label: "PF1.AbilityCon", category: "ability" },
-    int: { label: "PF1.AbilityInt", category: "ability" },
-    wis: { label: "PF1.AbilityWis", category: "ability" },
-    cha: { label: "PF1.AbilityCha", category: "ability" },
-    strMod: { label: "PF1.AbilityStrMod", category: "ability" },
-    dexMod: { label: "PF1.AbilityDexMod", category: "ability" },
-    conMod: { label: "PF1.AbilityConMod", category: "ability" },
-    intMod: { label: "PF1.AbilityIntMod", category: "ability" },
-    wisMod: { label: "PF1.AbilityWisMod", category: "ability" },
-    chaMod: { label: "PF1.AbilityChaMod", category: "ability" },
-    allSavingThrows: { label: "PF1.BuffTarAllSavingThrows", category: "savingThrows" },
-    fort: { label: "PF1.SavingThrowFort", category: "savingThrows" },
-    ref: { label: "PF1.SavingThrowRef", category: "savingThrows" },
-    will: { label: "PF1.SavingThrowWill", category: "savingThrows" },
-    skills: { label: "PF1.BuffTarAllSkills", category: "skills" },
-    strSkills: { label: "PF1.BuffTarStrSkills", category: "skills" },
-    dexSkills: { label: "PF1.BuffTarDexSkills", category: "skills" },
-    conSkills: { label: "PF1.BuffTarConSkills", category: "skills" },
-    intSkills: { label: "PF1.BuffTarIntSkills", category: "skills" },
-    wisSkills: { label: "PF1.BuffTarWisSkills", category: "skills" },
-    chaSkills: { label: "PF1.BuffTarChaSkills", category: "skills" },
-    bonusSkillRanks: { label: "PF1.BuffTarBonusSkillRanks", category: "skills" },
-    allChecks: { label: "PF1.BuffTarAllAbilityChecks", category: "abilityChecks" },
-    strChecks: { label: "PF1.BuffTarStrChecks", category: "abilityChecks" },
-    dexChecks: { label: "PF1.BuffTarDexChecks", category: "abilityChecks" },
-    conChecks: { label: "PF1.BuffTarConChecks", category: "abilityChecks" },
-    intChecks: { label: "PF1.BuffTarIntChecks", category: "abilityChecks" },
-    wisChecks: { label: "PF1.BuffTarWisChecks", category: "abilityChecks" },
-    chaChecks: { label: "PF1.BuffTarChaChecks", category: "abilityChecks" },
-    allSpeeds: { label: "PF1.BuffTarAllSpeeds", category: "speed" },
-    landSpeed: { label: "PF1.SpeedLand", category: "speed" },
-    climbSpeed: { label: "PF1.SpeedClimb", category: "speed" },
-    swimSpeed: { label: "PF1.SpeedSwim", category: "speed" },
-    burrowSpeed: { label: "PF1.SpeedBurrow", category: "speed" },
-    flySpeed: { label: "PF1.SpeedFly", category: "speed" },
-    mhp: { label: "PF1.HitPoints", category: "health" },
-    wounds: { label: "PF1.Wounds", category: "health" },
-    vigor: { label: "PF1.Vigor", category: "health" },
-    init: { label: "PF1.Initiative", category: "misc" },
-    acpA: { label: "PF1.ACPArmor", category: "misc" },
-    acpS: { label: "PF1.ACPShield", category: "misc" },
-    mDexA: { label: "PF1.MaxDexArmor", category: "misc" },
-    mDexS: { label: "PF1.MaxDexShield", category: "misc" },
-    bonusFeats: { label: "PF1.BuffTarBonusFeats", category: "misc" },
-    carryStr: { label: "PF1.CarryStrength", category: "misc" },
-    carryMult: { label: "PF1.CarryMultiplier", category: "misc" },
+    acpA: { label: "PF1.ACPArmor", category: "misc", sort: 10000 },
+    acpS: { label: "PF1.ACPShield", category: "misc", sort: 11000 },
+    mDexA: { label: "PF1.MaxDexArmor", category: "misc", sort: 20000 },
+    mDexS: { label: "PF1.MaxDexShield", category: "misc", sort: 21000 },
+    str: { label: "PF1.AbilityStr", category: "ability", sort: 30000 },
+    dex: { label: "PF1.AbilityDex", category: "ability", sort: 31000 },
+    con: { label: "PF1.AbilityCon", category: "ability", sort: 32000 },
+    int: { label: "PF1.AbilityInt", category: "ability", sort: 33000 },
+    wis: { label: "PF1.AbilityWis", category: "ability", sort: 34000 },
+    cha: { label: "PF1.AbilityCha", category: "ability", sort: 35000 },
+    strMod: { label: "PF1.AbilityStrMod", category: "ability", sort: 40000 },
+    dexMod: { label: "PF1.AbilityDexMod", category: "ability", sort: 41000 },
+    conMod: { label: "PF1.AbilityConMod", category: "ability", sort: 42000 },
+    intMod: { label: "PF1.AbilityIntMod", category: "ability", sort: 43000 },
+    wisMod: { label: "PF1.AbilityWisMod", category: "ability", sort: 44000 },
+    chaMod: { label: "PF1.AbilityChaMod", category: "ability", sort: 45000 },
+    skills: { label: "PF1.BuffTarAllSkills", category: "skills", sort: 50000 },
+    carryStr: { label: "PF1.CarryStrength", category: "misc", sort: 60000 },
+    carryMult: { label: "PF1.CarryMultiplier", category: "misc", sort: 61000 },
+    strSkills: { label: "PF1.BuffTarStrSkills", category: "skills", sort: 70000 },
+    dexSkills: { label: "PF1.BuffTarDexSkills", category: "skills", sort: 71000 },
+    conSkills: { label: "PF1.BuffTarConSkills", category: "skills", sort: 72000 },
+    intSkills: { label: "PF1.BuffTarIntSkills", category: "skills", sort: 73000 },
+    wisSkills: { label: "PF1.BuffTarWisSkills", category: "skills", sort: 74000 },
+    chaSkills: { label: "PF1.BuffTarChaSkills", category: "skills", sort: 75000 },
+    allChecks: { label: "PF1.BuffTarAllAbilityChecks", category: "abilityChecks", sort: 80000 },
+    strChecks: { label: "PF1.BuffTarStrChecks", category: "abilityChecks", sort: 81000 },
+    dexChecks: { label: "PF1.BuffTarDexChecks", category: "abilityChecks", sort: 82000 },
+    conChecks: { label: "PF1.BuffTarConChecks", category: "abilityChecks", sort: 83000 },
+    intChecks: { label: "PF1.BuffTarIntChecks", category: "abilityChecks", sort: 84000 },
+    wisChecks: { label: "PF1.BuffTarWisChecks", category: "abilityChecks", sort: 85000 },
+    chaChecks: { label: "PF1.BuffTarChaChecks", category: "abilityChecks", sort: 86000 },
+    landSpeed: { label: "PF1.SpeedLand", category: "speed", sort: 90000 },
+    climbSpeed: { label: "PF1.SpeedClimb", category: "speed", sort: 91000 },
+    swimSpeed: { label: "PF1.SpeedSwim", category: "speed", sort: 92000 },
+    burrowSpeed: { label: "PF1.SpeedBurrow", category: "speed", sort: 93000 },
+    flySpeed: { label: "PF1.SpeedFly", category: "speed", sort: 94000 },
+    allSpeeds: { label: "PF1.BuffTarAllSpeeds", category: "speed", sort: 95000 },
+    ac: { label: "PF1.BuffTarACGeneric", category: "defense", sort: 100000 },
+    aac: { label: "PF1.BuffTarACArmor", category: "defense", sort: 101000 },
+    sac: { label: "PF1.BuffTarACShield", category: "defense", sort: 102000 },
+    nac: { label: "PF1.BuffTarACNatural", category: "defense", sort: 103000 },
+    tac: { label: "PF1.BuffTarACTouch", category: "defense", sort: 104000 },
+    ffac: { label: "PF1.BuffTarACFlatFooted", category: "defense", sort: 105000 },
+    attack: { label: "PF1.BuffTarAllAttackRolls", category: "attack", sort: 110000 },
+    bab: { label: "PF1.BAB", category: "attack", sort: 111000 },
+    "~attackCore": { label: "", category: "attack", sort: 112000 },
+    mattack: { label: "PF1.BuffTarMeleeAttack", category: "attack", sort: 113000 },
+    rattack: { label: "PF1.BuffTarRangedAttack", category: "attack", sort: 114000 },
+    damage: { label: "PF1.BuffTarAllDamageRolls", category: "damage", sort: 120000 },
+    wdamage: { label: "PF1.WeaponDamage", category: "damage", sort: 121000 },
+    sdamage: { label: "PF1.SpellDamage", category: "damage", sort: 122000 },
+    critConfirm: { label: "PF1.CriticalConfirmation", category: "attack", sort: 130000 },
+    allSavingThrows: { label: "PF1.BuffTarAllSavingThrows", category: "savingThrows", sort: 140000 },
+    fort: { label: "PF1.SavingThrowFort", category: "savingThrows", sort: 141000 },
+    ref: { label: "PF1.SavingThrowRef", category: "savingThrows", sort: 142000 },
+    will: { label: "PF1.SavingThrowWill", category: "savingThrows", sort: 143000 },
+    cmb: { label: "PF1.CMB", category: "attack", sort: 150000 },
+    cmd: { label: "PF1.CMD", category: "defense", sort: 151000 },
+    ffcmd: { label: "PF1.CMDFlatFooted", category: "defense", sort: 152000 },
+    init: { label: "PF1.Initiative", category: "misc", sort: 160000 },
+    mhp: { label: "PF1.HitPoints", category: "health", sort: 170000 },
+    wounds: { label: "PF1.Wounds", category: "health", sort: 180000 },
+    vigor: { label: "PF1.Vigor", category: "health", sort: 181000 },
+    spellResist: { label: "PF1.SpellResistance", category: "defense", sort: 190000 },
+    bonusFeats: { label: "PF1.BuffTarBonusFeats", category: "misc", sort: 200000 },
+    bonusSkillRanks: { label: "PF1.BuffTarBonusSkillRanks", category: "skills", sort: 210000 },
   },
 
   buffTargetCategories: {
@@ -1994,6 +2018,7 @@ export const PF1 = {
   /**
    * Arrays of Character Level XP Requirements by XP track
    */
+  // prettier-ignore
   CHARACTER_EXP_LEVELS: {
     slow: [
       0,
@@ -2066,6 +2091,7 @@ export const PF1 = {
   /**
    * An array of Challenge Rating XP Levels
    */
+  // prettier-ignore
   CR_EXP_LEVELS: [
     200,
     400,
@@ -2125,13 +2151,14 @@ export const PF1 = {
       "classLevel",
       "ablMod",
       "item",
+      "action",
       "level",
       "mod",
     ],
   },
 
   keepItemLinksOnCopy: ["classAssociations"],
-};
+});
 
 /**
  * Non-PF1 config entries

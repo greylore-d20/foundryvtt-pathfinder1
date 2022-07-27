@@ -1,4 +1,4 @@
-import { showAttackReach } from "./misc/attack-reach.js";
+import { clearHighlight, showAttackReach } from "./misc/attack-reach.js";
 import { getSkipActionPrompt } from "./settings.js";
 
 export class TokenQuickActions {
@@ -45,38 +45,29 @@ export class TokenQuickActions {
       const item = actor.items.get(i.item.id);
       const type = item.type;
       const elem = html.find(`#${type}-${item.id}`);
+      const firstAction = item.actions.get(item.data.data.actions?.[0]?._id);
+      if (!firstAction) return;
 
       // Add click handler
       elem.on("click", (event) => {
         if (!event.ctrlKey) {
-          return item.use({ skipDialog: getSkipActionPrompt() });
+          return item.use({ ev: event, skipDialog: getSkipActionPrompt() });
         }
         return item.roll();
       });
 
+      elem.on("contextmenu", () => {
+        item.sheet.render(true, { focus: true });
+      });
+
       // Add mouse enter handler
-      let highlight;
       elem.on("mouseenter", (event) => {
-        if (!game.settings.get("pf1", "hideReachMeasurements")) highlight = showAttackReach(token, item);
-
-        if (!highlight) return;
-
-        highlight.normal.render();
-        highlight.reach.render();
-        highlight.extra.forEach((hl) => {
-          hl.render();
-        });
+        if (!game.settings.get("pf1", "hideReachMeasurements")) showAttackReach(token, item, firstAction);
       });
 
       // Add mouse leave callback
       elem.on("mouseleave", (event) => {
-        if (!highlight) return;
-
-        highlight.normal.clear(true);
-        highlight.reach.clear(true);
-        highlight.extra.forEach((hl) => {
-          hl.clear(true);
-        });
+        clearHighlight();
       });
     });
   }

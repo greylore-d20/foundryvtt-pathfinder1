@@ -5,6 +5,14 @@ export class ScriptEditor extends FormApplication {
     this.command = options.command || "";
     this.name = options.name || null;
 
+    this.parent = options.parent;
+
+    this.isScriptCall = options.scriptCall === true;
+
+    // Add editor title
+    if (this.name) this.options.title = this.parent ? `${this.parent.name}: ${this.name}` : this.name;
+    else this.options.title = this.parent?.name ?? game.i18n.localize("PF1.Unknown");
+
     this._promises = {
       submit: [],
     };
@@ -25,8 +33,10 @@ export class ScriptEditor extends FormApplication {
     data.command = this.command || "";
     data.name = this.name;
 
+    data.isScriptCall = this.isScriptCall;
+
     data.canEdit = {
-      name: data.name != null,
+      name: this.isScriptCall,
     };
 
     return data;
@@ -43,6 +53,15 @@ export class ScriptEditor extends FormApplication {
 
   activateListeners(html) {
     html.find('button[type="submit"]').click(this._onSubmit.bind(this));
+
+    // Open help browser
+    html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
+  }
+
+  _openHelpBrowser(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+    game.pf1.helpBrowser.openUrl(a.dataset.url);
   }
 
   _updateObject(event, formData) {

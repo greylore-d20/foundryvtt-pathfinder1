@@ -1,5 +1,6 @@
 import { ActorPF } from "./actor/entity.js";
 import { getSkipActionPrompt } from "./settings.js";
+import { RollPF } from "./roll.js";
 
 /* -------------------------------------------- */
 
@@ -107,13 +108,14 @@ export class CombatPF extends Combat {
    * See Combat._getInitiativeFormula for more detail.
    *
    * @param {ActorPF} actor
+   * @param d20
    */
-  _getInitiativeFormula(actor) {
-    const defaultParts = ["1d20", "@attributes.init.total"];
+  _getInitiativeFormula(actor, d20) {
+    const defaultParts = [d20 || "1d20", `@attributes.init.total[${game.i18n.localize("PF1.Initiative")}]`];
     if (actor && game.settings.get("pf1", "initiativeTiebreaker"))
       defaultParts.push(`(@attributes.init.total / 100)[${game.i18n.localize("PF1.Tiebreaker")}]`);
     const parts = CONFIG.Combat.initiative.formula ? CONFIG.Combat.initiative.formula.split(/\s*\+\s*/) : defaultParts;
-    if (!actor) return parts[0] ?? "0";
+    if (!actor) return parts[0] || "0";
     return parts.filter((p) => p !== null).join(" + ");
   }
 
@@ -126,16 +128,20 @@ export class CombatPF extends Combat {
     ids = typeof ids === "string" ? [ids] : ids;
     const currentId = this.combatant?.id;
     let chatRollMode = game.settings.get("core", "rollMode");
-    if (!formula) formula = this._getInitiativeFormula(this.combatant.actor);
 
     let bonus = "",
-      stop = false;
+      stop = false,
+      d20;
+    // Show initiative dialog
     if (!skipDialog) {
       const dialogData = await Combat.implementation.showInitiativeDialog(formula);
       chatRollMode = dialogData.rollMode;
       bonus = dialogData.bonus || "";
       stop = dialogData.stop || false;
+      if (dialogData.d20) d20 = dialogData.d20;
     }
+    // Determine formula
+    if (!formula) formula = this._getInitiativeFormula(this.combatant.actor, d20);
 
     if (stop) return this;
 
@@ -158,7 +164,7 @@ export class CombatPF extends Combat {
         }
 
         // Produce an initiative roll for the Combatant
-        const isHidden = c.token.hidden || c.hidden;
+        const isHidden = c.token?.hidden || c.hidden;
         if (isHidden) chatRollMode = messageOptions.rollMode ?? "gmroll";
         const roll = await RollPF.create(formula, rollData).evaluate();
         delete rollData.bonus;
@@ -186,13 +192,13 @@ export class CombatPF extends Combat {
             rollMode: chatRollMode,
             sound: CONFIG.sounds.dice,
             speaker: {
-              scene: canvas.scene.id,
+              scene: canvas.scene?.id,
               actor: c.actor ? c.actor.id : null,
-              token: c.token.id,
-              alias: c.token.name,
+              token: c.token?.id,
+              alias: c.token?.name,
             },
             flags: { pf1: { subject: { core: "init" } } },
-            flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token.name),
+            flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token?.name ?? c.actor.name),
             roll: roll,
             content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", templateData),
           },
@@ -219,8 +225,8 @@ export class CombatPF extends Combat {
     if (updateTurn && currentId) await this.update({ turn: this.turns.findIndex((t) => t.id === currentId) });
 
     // Create multiple chat messages
-    await ChatMessage.implementation.create(messages);
-    return this;
+    const chatMessages = await ChatMessage.implementation.create(messages);
+    return { combat: this, messages: chatMessages };
   }
 
   static showInitiativeDialog = function (formula = null) {
@@ -239,7 +245,8 @@ export class CombatPF extends Combat {
           callback: (html) => {
             rollMode = html.find('[name="rollMode"]').val();
             const bonus = html.find('[name="bonus"]').val();
-            resolve({ rollMode: rollMode, bonus: bonus });
+            const d20 = html.find('[name="d20"]').val();
+            resolve({ rollMode, bonus, d20 });
           },
         },
       };

@@ -5,45 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "1pdvlnitz1pj2r3q",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "creature touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -54,26 +122,11 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          4
-        ],
-        [
-          "cleric/oracle",
-          4
-        ],
-        [
-          "druid",
-          4
-        ],
-        [
-          "ranger",
-          3
-        ],
-        [
-          "hunter",
-          3
-        ]
+        ["sorcerer/wizard", 4],
+        ["cleric/oracle", 4],
+        ["druid", 4],
+        ["ranger", 3],
+        ["hunter", 3]
       ],
       "domain": [],
       "subDomain": [],
@@ -83,13 +136,11 @@
     "level": 4,
     "school": "trs",
     "types": "poison",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
-    "shortDescription": "<p>You cause the target's flesh to exude a layer of putrescent slime so foul that the target is sickened (Fortitude negates) for the duration of the spell and for 1d4 rounds thereafter. All creatures within 20 feet also become sickened (Fortitude negates), and remain sickened for as long as they remain within 20 feet of the target and for 1d4 rounds thereafter. A creature that strikes the target with a bite attack must succeed at an additional save or become nauseated for 1d4 rounds. Creatures immune to poison are unaffected.</p>",
-    "spellDuration": "1 round/level (D)"
+    "shortDescription": "<p>You cause the target's flesh to exude a layer of putrescent slime so foul that the target is sickened (Fortitude negates) for the duration of the spell and for 1d4 rounds thereafter. All creatures within 20 feet also become sickened (Fortitude negates), and remain sickened for as long as they remain within 20 feet of the target and for 1d4 rounds thereafter. A creature that strikes the target with a bite attack must succeed at an additional save or become nauseated for 1d4 rounds. Creatures immune to poison are unaffected.</p>"
   },
   "effects": [],
   "folder": null,

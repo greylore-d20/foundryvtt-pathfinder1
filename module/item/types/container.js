@@ -1,6 +1,36 @@
 import { ItemPF } from "../entity.js";
 
 export class ItemContainerPF extends ItemPF {
+  /** @inheritdoc */
+  prepareBaseData() {
+    super.prepareBaseData();
+
+    // HACK: Migration shim
+    if (typeof this.data.data.weight !== "object") {
+      this.data.data.weight = {
+        value: this.data.data.weight,
+      };
+    }
+
+    // Set base weight to weight of coins, which can be calculated without knowing contained items
+    const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
+    this.data.data.weight.currency = this._calculateCoinWeight(this.data) * weightReduction;
+  }
+
+  /** @inheritDoc */
+  prepareWeight() {
+    super.prepareWeight();
+
+    /** @type {ItemWeightData} */
+    const weight = this.data.data.weight;
+    // Quantity can be ignored for containers
+    weight.contents = this.items.reduce(
+      (total, item) => total + item.data.data.weight.total,
+      this._calculateCoinWeight(this.data)
+    );
+    weight.converted.contents = game.pf1.utils.convertWeight(weight.contents);
+  }
+
   async createContainerContent(data, options = { raw: false }) {
     const embeddedName = "Item";
     const user = game.user;
@@ -131,17 +161,14 @@ export class ItemContainerPF extends ItemPF {
     await this.update({ "data.inventoryItems": inventory });
   }
 
-  /**
-   * @param root0
-   * @param root0.inLowestDenomination
-   * @returns {number} The total amount of currency this item contains, in gold pieces
-   */
+  /** @inheritdoc */
   getTotalCurrency({ inLowestDenomination = false } = {}) {
     const currency = this.data.data.currency;
     const total = currency.pp * 1000 + currency.gp * 100 + currency.sp * 10 + currency.cp;
     return inLowestDenomination ? total : total / 100;
   }
 
+  /** @inheritdoc */
   getValue({ recursive = true, sellValue = 0.5, inLowestDenomination = false, forceUnidentified = false } = {}) {
     let result = super.getValue(...arguments);
 

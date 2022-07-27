@@ -5,42 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "xun545cvnnbvvsvi",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "permanent",
+          "units": ""
+        },
+        "target": {
+          "value": "dead creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "dead creature touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -50,12 +121,7 @@
     },
     "scriptCalls": [],
     "learnedAt": {
-      "class": [
-        [
-          "cleric/oracle",
-          9
-        ]
-      ],
+      "class": [["cleric/oracle", 9]],
       "domain": [],
       "subDomain": [],
       "elementalSchool": [],
@@ -65,7 +131,6 @@
     "school": "con",
     "subschool": "calling",
     "types": "evil, lawful, ruse",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -81,11 +146,7 @@
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.338vg8knwliacgbi]{false resurrection} except that it calls a belier devil with the young simple template (<em>Pathfinder RPG Bestiary 2</em> 85, 292) to possess the body and all parts of <em>false <em>resurrection</em></em> that function like <em>resurrection</em> instead function like true <em>resurrection</em>. Attempts to identify greater <em>false <em>resurrection</em></em> with a skill check incorrectly identify it as @Compendium[pf1.spells.mxqi375ya2rka7cp]{true resurrection} (see the ruse descriptor on page 192). A fooled viewer mistakes greater <em>false <em>resurrection</em></em>'s aura as the lingering aura of an instantaneous conjuration effect.</p>",
-    "spellDuration": "permanent",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.338vg8knwliacgbi]{false resurrection} except that it calls a belier devil with the young simple template (<em>Pathfinder RPG Bestiary 2</em> 85, 292) to possess the body and all parts of <em>false <em>resurrection</em></em> that function like <em>resurrection</em> instead function like true <em>resurrection</em>. Attempts to identify greater <em>false <em>resurrection</em></em> with a skill check incorrectly identify it as @Compendium[pf1.spells.mxqi375ya2rka7cp]{true resurrection} (see the ruse descriptor on page 192). A fooled viewer mistakes greater <em>false <em>resurrection</em></em>'s aura as the lingering aura of an instantaneous conjuration effect.</p>"
   },
   "effects": [],
   "folder": null,

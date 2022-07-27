@@ -1,3 +1,5 @@
+import { VisionPermissionSheet } from "../misc/vision-permission";
+
 /**
  * Polymorphic base class.
  * Should be fairly empty, only containing functionality that all actors should have regardless of type.
@@ -6,8 +8,8 @@ export class ActorBasePF extends Actor {
   /**
    * Polymorphic constructor.
    *
-   * @param {Object} data ActorData
-   * @param {Object} context Context data
+   * @param {object} data ActorData
+   * @param {object} context Context data
    */
   // eslint-disable-next-line constructor-super
   constructor(data, context = {}) {
@@ -19,5 +21,15 @@ export class ActorBasePF extends Actor {
       if (!cls) console.warn(data.data?.type, data.type);
       return new cls(data, { ...subtyped, ...context });
     }
+  }
+
+  /**
+   * The VisionPermissionSheet instance for this actor
+   *
+   * @type {VisionPermissionSheet}
+   */
+  get visionPermissionSheet() {
+    if (!this._visionPermissionSheet) this._visionPermissionSheet = new VisionPermissionSheet(this);
+    return this._visionPermissionSheet;
   }
 }

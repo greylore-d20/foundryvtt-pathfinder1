@@ -22,22 +22,15 @@
       color: @colorTan;
 
       .item-type {
-        font-size: 24px;
-        line-height: 26px;
+        font-size: @fontSizeSubHeader;
+        line-height: 1.1;
         margin: 0;
       }
 
       .item-status {
-        font-size: 16px;
-        line-height: 24px;
+        font-size: @fontSizeLarge;
+        line-height: 1.1;
       }
-    }
-  }
-
-  .sheet-navigation {
-    margin-bottom: 5px;
-    .item {
-      font-size: 18px;
     }
   }
 
@@ -77,8 +70,8 @@
           background: rgba(0, 0, 0, 0.05);
           border: @borderGroove;
           text-align: center;
-          font-size: 12px;
-          line-height: 18px;
+          font-size: @fontSizeNormal;
+          line-height: 1.5;
         }
       }
     }
@@ -91,6 +84,7 @@
   .details {
     // Item Sheet form fields
     input[type="text"],
+    input[type="number"],
     select {
       border: 1px solid @colorTan;
       background: rgba(0, 0, 0, 0.05);
@@ -100,7 +94,7 @@
       flex: 0 0 16px;
       padding: 2px 0;
       color: #666;
-      font-size: 14px;
+      font-size: @fontSizeNormal;
     }
     .traits-list {
       list-style: none;
@@ -114,6 +108,14 @@
         flex: 1;
         height: 28px;
         overflow: hidden;
+      }
+
+      &.subtypes {
+        .entry-selector {
+          flex: 0;
+          overflow: unset;
+          height: unset;
+        }
       }
     }
 
@@ -164,8 +166,8 @@
         flex: 0 0 64px;
         text-align: right;
         margin-right: 5px;
-        font-size: 12px;
-        line-height: 24px;
+        font-size: @fontSizeNormal;
+        line-height: 2;
       }
       input[type="text"] {
         flex: 0 0 48px;
@@ -190,6 +192,10 @@
         .checkbox {
           flex: 0;
         }
+
+        .skill-cs {
+          height: 24px;
+        }
       }
     }
   }
@@ -206,7 +212,7 @@
 
       h3 {
         padding-left: 5px;
-        font-size: 13px;
+        font-size: @fontSizeNormal;
         font-weight: bold;
       }
 
@@ -227,11 +233,11 @@
       padding: 0;
     }
 
-    // Item Dropdown Summary
+    // Item Dropdown Summary in containers
     .item-summary {
       flex: 0 0 100%;
-      font-size: 12px;
-      line-height: 16px;
+      font-size: @fontSizeNormal;
+      line-height: 1.3;
       padding: 0.25em 0.5em;
       border-top: 1px solid @colorFaint;
     }
@@ -252,9 +258,6 @@
     line-height: 24px;
     color: @colorOlive;
   }
-  h4.attack-header {
-    margin-left: 4px;
-  }
 
   .damage-parts,
   .attack-parts {
@@ -267,11 +270,9 @@
       flex: 0 0 100%;
       padding: 2px;
 
-      .damage-type {
-        flex: 0 0 80px;
-      }
       input {
         flex: 3;
+        margin-right: 3px;
       }
       input:not(:first-child) {
         margin-left: 5px;
@@ -284,8 +285,7 @@
   }
 
   .changes,
-  .context-notes,
-  .conditionals {
+  .context-notes {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -341,7 +341,7 @@
         border-radius: 4px;
         text-align: center;
         cursor: pointer;
-        font-size: 12px;
+        font-size: @fontSizeNormal;
 
         &:hover {
           box-shadow: 0 0 8px @colorRed;
@@ -351,12 +351,6 @@
           border: 2px solid @colorRust;
           background: url(icons/misc/hazard-sign.svg) no-repeat 95% 50% rgba(0, 0, 0, 0.05);
         }
-      }
-      .conditional-default {
-        flex: 0 0 18px;
-      }
-      .conditional-modifier {
-        display: flex;
       }
     }
   }
@@ -409,13 +403,17 @@
     }
   }
 
-  .delete-damage,
-  .crit-damage-control,
-  .delete-attack,
+  h4.change-header,
+  h4.context-notes-header {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    line-height: 24px;
+    color: @colorOlive;
+  }
+
   .delete-change,
-  .delete-note,
-  .delete-conditional,
-  .delete-conditional-modifier {
+  .delete-note {
     width: 18px;
     flex: 0 0 18px;
     line-height: 24px;
@@ -423,12 +421,8 @@
     color: @colorTan;
   }
 
-  .add-attack,
-  .add-damage,
   .add-change,
-  .add-note,
-  .add-conditional,
-  .add-conditional-modifier {
+  .add-note {
     flex: 0 0 auto;
     line-height: 24px;
     color: @colorTan;
@@ -455,10 +449,6 @@
       }
     }
   }
-
-  /* ----------------------------------------- */
-  /*  Item Actions                             */
-  /* ----------------------------------------- */
 
   .weapon-properties label.checkbox {
     flex: 0 0 98px;

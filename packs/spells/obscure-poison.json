@@ -5,43 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "z0acna6wbougcn0m",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level",
+          "units": ""
+        },
+        "target": {
+          "value": "one dose of poison or one venomous creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one dose of poison or one venomous creature touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -52,46 +122,16 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          1
-        ],
-        [
-          "cleric/oracle",
-          1
-        ],
-        [
-          "druid",
-          1
-        ],
-        [
-          "bard",
-          1
-        ],
-        [
-          "alchemist",
-          1
-        ],
-        [
-          "witch",
-          1
-        ],
-        [
-          "antipaladin",
-          1
-        ],
-        [
-          "shaman",
-          1
-        ],
-        [
-          "mesmerist",
-          1
-        ],
-        [
-          "hunter",
-          1
-        ]
+        ["sorcerer/wizard", 1],
+        ["cleric/oracle", 1],
+        ["druid", 1],
+        ["bard", 1],
+        ["alchemist", 1],
+        ["witch", 1],
+        ["antipaladin", 1],
+        ["shaman", 1],
+        ["mesmerist", 1],
+        ["hunter", 1]
       ],
       "domain": [],
       "subDomain": [],
@@ -99,7 +139,6 @@
       "bloodline": []
     },
     "school": "abj",
-    "conditionals": [],
     "components": {
       "somatic": true,
       "material": true
@@ -114,11 +153,7 @@
       "spontaneousPrepared": false
     },
     "sr": false,
-    "shortDescription": "<p>You make the touched poison difficult to detect or identify. <i>Detect poison</i> and similar effects detect an obscured poison only with a successful caster level check against a DC equal to 15 + your caster level (rolled secretly by the GM). Even if the poison is detected, the DC of Craft (alchemy) or Wisdom checks to identify the poison is increased by 10.  If cast upon a venomous creature, <i>obscure poison</i> disguises all of the creature's natural poisons in the same way.</p>",
-    "spellDuration": "1 hour/level",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>You make the touched poison difficult to detect or identify. <i>Detect poison</i> and similar effects detect an obscured poison only with a successful caster level check against a DC equal to 15 + your caster level (rolled secretly by the GM). Even if the poison is detected, the DC of Craft (alchemy) or Wisdom checks to identify the poison is increased by 10.  If cast upon a venomous creature, <i>obscure poison</i> disguises all of the creature's natural poisons in the same way.</p>"
   },
   "effects": [],
   "folder": null,

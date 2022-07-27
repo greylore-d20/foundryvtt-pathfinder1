@@ -1,4 +1,5 @@
 {
+  "_id": "utncinnlwzscpzbd",
   "name": "Tanglefoot Bag",
   "type": "weapon",
   "img": "icons/containers/bags/sack-simple-leahter-green.webp",
@@ -13,58 +14,126 @@
     },
     "identifiedName": "Tanglefoot Bag",
     "changes": [],
-    "activation": {
-      "type": "attack"
-    },
-    "range": {
-      "value": "10",
-      "units": "ft",
-      "maxIncrements": 5
-    },
+    "actions": [
+      {
+        "_id": "2m3fhbqasz79dhca",
+        "name": "Attack",
+        "img": "icons/containers/bags/sack-simple-leahter-green.webp",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": "10",
+          "units": "ft",
+          "maxIncrements": 5,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "single",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "rwak",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": ""
+        },
+        "formula": "",
+        "ability": {
+          "attack": "dex",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "15",
+          "type": "ref",
+          "description": "Reflex partial (see text)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
+      }
+    ],
     "uses": {
       "per": "single"
     },
-    "actionType": "rwak",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "label": ""
-    },
-    "ability": {
-      "attack": "dex",
-      "damage": ""
-    },
-    "save": {
-      "dc": "15",
-      "type": "ref",
-      "description": "Reflex partial (see text)"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "contextNotes": [],
     "links": {
       "children": []
     },
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "scriptCalls": [],
     "weaponType": "misc",
-    "weaponSubtype": "splash",
-    "conditionals": []
+    "weaponSubtype": "other"
   },
   "effects": [],
   "folder": null,
   "sort": 0,
   "permission": {
-    "default": 0,
-    "61klraqiWb97OOLa": 3
+    "default": 0
   },
-  "flags": {},
-  "_id": "utncinnlwzscpzbd"
+  "flags": {}
 }

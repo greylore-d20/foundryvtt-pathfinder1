@@ -53,16 +53,7 @@ export const registerSystemSettings = function () {
     default: HealthConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => {
-      game.actors.contents.forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
-      Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   // Experience configuration
@@ -80,19 +71,11 @@ export const registerSystemSettings = function () {
     default: ExperienceConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => {
-      game.actors.contents.forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
-      Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   // Accessibility configuration
+  /*
   game.settings.registerMenu("pf1", "accessibilityConfig", {
     name: "PF1.AccessibilityConfigName",
     label: "PF1.AccessibilityConfigLabel",
@@ -101,13 +84,14 @@ export const registerSystemSettings = function () {
     icon: "fas fa-wheelchair",
     type: AccessibilityConfig,
   });
+  */
   game.settings.register("pf1", "accessibilityConfig", {
     name: "PF1.AccessibilityConfigName",
     scope: "client",
     default: AccessibilityConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: debouncedReload,
+    onChange: () => game.pf1.utils.refreshActors(),
   });
 
   // Tooltip configuration
@@ -182,28 +166,8 @@ export const registerSystemSettings = function () {
     config: false,
     default: "",
     type: String,
-    onChange: () => {
-      [...game.actors.contents, ...Object.values(game.actors.tokens)]
-        .filter((o) => {
-          return o.data.type === "character";
-        })
-        .forEach((o) => {
-          o.prepareData();
-          if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-        });
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
-
-  const reRenderSheets = () => {
-    [...game.actors.contents, ...Object.values(game.actors.tokens)]
-      .filter((o) => {
-        return o.data.type === "character";
-      })
-      .forEach((o) => {
-        o.prepareData();
-        if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-      });
-  };
 
   /**
    * System of Units
@@ -219,7 +183,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricUnits"),
     },
-    onChange: reRenderSheets,
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   game.settings.register("pf1", "distanceUnits", {
@@ -234,7 +198,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialDistanceUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricDistanceUnits"),
     },
-    onChange: reRenderSheets,
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   game.settings.register("pf1", "weightUnits", {
@@ -249,7 +213,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialWeightUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricWeightUnits"),
     },
-    onChange: reRenderSheets,
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   /**
@@ -262,14 +226,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => {
-      game.actors.contents.forEach((o) => {
-        if (o.sheet && o.sheet.rendered) o.sheet.render(true);
-      });
-      Object.values(game.actors.tokens).forEach((o) => {
-        if (o.sheet && o.sheet.rendered) o.sheet.render(true);
-      });
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   /**
@@ -282,7 +239,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: debouncedReload,
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   /**
@@ -362,6 +319,15 @@ export const registerSystemSettings = function () {
     },
   });
 
+  game.settings.register("pf1", "characterVision", {
+    name: "SETTINGS.pf1characterVisionN",
+    hint: "SETTINGS.pf1characterVisionH",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean,
+  });
+
   /**
    * Set coin weight
    */
@@ -372,14 +338,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: 50,
     type: Number,
-    onChange: () => {
-      game.actors.contents.forEach((o) => {
-        o.prepareData();
-      });
-      Object.values(game.actors.tokens).forEach((o) => {
-        o.prepareData();
-      });
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   /**
@@ -420,10 +379,12 @@ export const registerSystemSettings = function () {
       const promises = [];
       const actors = [
         ...Array.from(game.actors.contents.filter((o) => getProperty(o.data, "token.actorLink"))),
-        ...Object.values(game.actors.tokens),
+        ...Object.values(game.actors.tokens).filter((a) => a != null),
       ];
       for (const actor of actors) {
-        promises.push(actor.toggleConditionStatusIcons({ render: false }));
+        if (actor.toggleConditionStatusIcons) {
+          promises.push(actor.toggleConditionStatusIcons({ render: false }));
+        }
       }
       return Promise.all(promises);
     },
@@ -493,22 +454,6 @@ export const registerSystemSettings = function () {
   });
 
   /**
-   * Attack chat card template
-   */
-  game.settings.register("pf1", "attackChatCardTemplate", {
-    name: "SETTINGS.pf1AttackChatCardTemplateN",
-    hint: "SETTINGS.pf1AttackChatCardTemplateH",
-    scope: "world",
-    config: true,
-    default: "systems/pf1/templates/chat/attack-roll.hbs",
-    type: String,
-    choices: {
-      "systems/pf1/templates/chat/attack-roll.hbs": "PF1.Primary",
-      "systems/pf1/templates/chat/attack-roll2.hbs": "PF1.Alternate",
-    },
-  });
-
-  /**
    * Unchained action economy
    */
   game.settings.register("pf1", "unchainedActionEconomy", {
@@ -518,17 +463,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => {
-      const promises = [];
-      const actors = [
-        ...Array.from(game.actors.contents.filter((o) => getProperty(o.data, "token.actorLink"))),
-        ...Object.values(game.actors.tokens),
-      ];
-      for (const actor of actors) {
-        promises.push(actor.toggleConditionStatusIcons());
-      }
-      return Promise.all(promises);
-    },
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   /**
@@ -573,6 +508,18 @@ export const registerSystemSettings = function () {
   game.settings.register("pf1", "alternativeReachCornerRule", {
     name: "SETTINGS.pf1AlternativeReachCornerRuleN",
     hint: "SETTINGS.pf1AlternativeReachCornerRuleH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  /**
+   * Allow proficiencies on NPCs.
+   */
+  game.settings.register("pf1", "npcProficiencies", {
+    name: "SETTINGS.pf1NPCProficienciesN",
+    hint: "SETTINGS.pf1NPCProficienciesH",
     scope: "world",
     config: true,
     default: false,
@@ -682,14 +629,7 @@ export const registerClientSettings = function () {
 export const migrateSystemSettings = async function () {
   if (!game.user.isGM) return;
 
-  // Migrate attack template
-  {
-    const template = game.settings.get("pf1", "attackChatCardTemplate");
-    if (template.endsWith(".html")) {
-      const newTemplate = template.slice(0, template.length - "html".length) + "hbs";
-      await game.settings.set("pf1", "attackChatCardTemplate", newTemplate);
-    }
-  }
+  // Currently empty, since the last option was removed (2022-06-06)
 };
 
 export const getSkipActionPrompt = function () {

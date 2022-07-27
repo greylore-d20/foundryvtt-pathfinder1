@@ -1,4 +1,5 @@
 import { SemanticVersion } from "./semver.js";
+import { RollPF } from "./roll.js";
 
 /**
  * Creates a tag from a string.
@@ -78,7 +79,7 @@ export const linkData = function (expanded, flattened, key, value) {
 };
 
 /**
- * @param {Object} item Item data
+ * @param {object} item Item data
  * @returns {User|null}
  */
 export const getItemOwner = function (item) {
@@ -95,12 +96,12 @@ export const getItemOwner = function (item) {
  */
 export const fractionalToString = (v) => {
   const base = Math.floor(v);
-  const f = Math.roundDecimals(v - Math.floor(v), 3);
+  const f = Math.roundDecimals(v - base, 3);
   if (f === 0) return `${base}`;
   const rv = [];
   if (base !== 0) rv.push(base);
-  else if (f === 0.25) rv.push("1/4");
-  else if (f === 0.336) rv.push("1/3");
+  if (f === 0.25) rv.push("1/4");
+  else if (f === 0.333) rv.push("1/3");
   else if (f === 0.5) rv.push("1/2");
   else if (f === 0.667) rv.push("2/3");
   else if (f === 0.75) rv.push("3/4");
@@ -316,6 +317,29 @@ export const convertDistance = function (value, type = "ft") {
 };
 
 /**
+ * Converts what the world is using as a measurement unit to feet.
+ *
+ * @param {number} value - The value (in the world's measurement unit) to convert back.
+ * @param {string} type - The target type to convert back to. Either 'ft' (feet, default) or 'mi' (miles, in which case the expected given value should be in km (metric))
+ * @returns {number} The resulting value.
+ */
+export const convertDistanceBack = function (value, type = "ft") {
+  let system = game.settings.get("pf1", "distanceUnits"); // override
+  if (system === "default") system = game.settings.get("pf1", "units");
+  switch (system) {
+    case "metric":
+      switch (type) {
+        case "mi":
+          return [Math.round((value / 1.6) * 100) / 100, "mi"];
+        default:
+          return [Math.round(((value * 5) / 1.5) * 100) / 100, "ft"];
+      }
+    default:
+      return [value, type];
+  }
+};
+
+/**
  * @typedef Point
  * @property {number} x X coordinate
  * @param {number} y Y coordinate
@@ -332,7 +356,7 @@ export const convertDistance = function (value, type = "ft") {
  *
  * @param {Point} p0 Start point on canvas
  * @param {Point} p1 End point on canvas
- * @param {Object} options Measuring options.
+ * @param {object} options Measuring options.
  * @param {boolean} options.altReach Use alternate reach weapon diagonal rule at 10 ft range.
  * @param {"5105"|"555"} options.diagonalRule Used diagonal rule. Defaults to 5/10/5 PF measuring.
  * @param {Ray} options.ray Pre-generated ray to use instead of the points.
@@ -568,15 +592,18 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
 
   const getData = function (html) {
     const data = itemData;
-    data.sl = parseInt(html.find(`[name="sl"]`).val()) || 1;
+    data.sl = parseInt(html.find(`[name="sl"]`).val());
     data.cl = parseInt(html.find(`[name="cl"]`).val()) || 1;
+    // NaN check here to allow SL 0
+    if (Number.isNaN(data.sl)) data.sl = 1;
     return data;
   };
 
   return new Promise((resolve) => {
     const dialogData = {
       title: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
-      content: content,
+      content,
+      itemData,
       buttons: {
         potion: {
           icon: '<i class="fas fa-prescription-bottle"></i>',
@@ -655,7 +682,7 @@ export const colorToInt = function (color) {
  *
  * @param {ActorPF} [actor] - An actor for which to specifically get buff targets.
  * @param {string} [type] - Can be set to "contextNotes" to get context notes instead.
- * @returns {object.<string, BuffTargetItem>} The resulting array of buff targets.
+ * @returns {Object<string, BuffTargetItem>} The resulting array of buff targets.
  */
 export const getBuffTargets = function (actor, type = "buffs") {
   const buffTargets = duplicate(
@@ -893,14 +920,14 @@ export function stripRollFlairs(formula) {
  * @param {object} rollData Roll data
  * @param {object} safeEvalOpts Options to Roll.safeEval
  */
-export function simplifyFormula(formula, rollData = {}, safeEvalOpts) {
+export function simplifyFormula(formula, rollData = {}) {
   const temp = [];
   const terms = RollPF.parse(stripRollFlairs(formula), rollData);
   for (const term of terms) {
     if (term instanceof DiceTerm || term instanceof OperatorTerm) {
       temp.push(term);
     } else if (term.isDeterministic) {
-      const evl = RollPF.safeEval(term.formula, {}, safeEvalOpts);
+      const evl = RollPF.safeTotal(term.formula);
       temp.push(...RollPF.parse(`${evl}`));
     } else {
       temp.push(term);
@@ -952,12 +979,12 @@ export function simplifyFormula(formula, rollData = {}, safeEvalOpts) {
  */
 export function createInlineFormula(_match, _command, formula, closing, label, ...args) {
   const rollData = args.pop();
-  if (closing.length === 3) formula += "]"; // What does this even do?
+  if (closing.length === 3) formula += "]";
 
   const cls = ["inline-preroll", "inline-formula"];
   let e_formula;
   try {
-    e_formula = simplifyFormula(formula, rollData, { missing: 0, warn: true });
+    e_formula = simplifyFormula(formula, rollData);
   } catch (err) {
     console.error(err);
     e_formula = "0";
@@ -1066,3 +1093,121 @@ export function calculateRange(formula, type = "ft", rollData = {}) {
   const value = calculateRangeFormula(formula, type, rollData);
   return convertDistance(value)[0];
 }
+
+/**
+ * Refreshes all actor data and re-renders sheets.
+ *
+ * @param options
+ */
+export function refreshActors(options = { renderOnly: false, renderForEveryone: false }) {
+  game.actors.contents.forEach((o) => {
+    if (!options.renderOnly) o.prepareData();
+    if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+  });
+  Object.values(game.actors.tokens).forEach((o) => {
+    if (o) {
+      if (!options.renderOnly) o.prepareData();
+      if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
+    }
+  });
+
+  if (options.renderForEveryone) {
+    game.socket.emit("pf1", "refreshActorSheets");
+  }
+}
+
+/**
+ * Turns dictionaries with numbered keys into arrays.
+ *
+ * @param {object} sourceObj The source object which contains the full array in the same path as targetObj.
+ * @param {object} targetObj The target object to alter. The array doesn't have to be immediately in this object.
+ * @param {string} keepPath A path to the array to keep, separated with dots. e.g. "data.damageParts".
+ */
+export function keepUpdateArray(sourceObj, targetObj, keepPath) {
+  const subData = Object.entries(targetObj).filter((e) => e[0].startsWith(`${keepPath}.`));
+
+  if (subData.length > 0) {
+    const arr = deepClone(getProperty(sourceObj, keepPath) || []);
+    const keySeparatorCount = (keepPath.match(/\./g) || []).length;
+    subData.forEach((entry) => {
+      const subKey = entry[0].split(".").slice(keySeparatorCount + 1);
+      const i = subKey[0];
+      const subKey2 = subKey.slice(1).join(".");
+      if (!arr[i]) arr[i] = {};
+
+      // Single entry array
+      if (!subKey2) {
+        arr[i] = entry[1];
+      }
+      // Remove property
+      else if (subKey[subKey.length - 1].startsWith("-=")) {
+        const obj = flattenObject(arr[i]);
+        subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
+        const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
+        for (const k of deleteKeys) {
+          if (Object.prototype.hasOwnProperty.call(obj, k)) {
+            delete obj[k];
+          }
+        }
+        arr[i] = expandObject(obj);
+      }
+      // Add or change property
+      else {
+        arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
+      }
+
+      delete targetObj[entry[0]];
+    });
+
+    targetObj[keepPath] = arr;
+  }
+}
+
+/**
+ * Deeply difference an object against some other, returning the update keys and values.
+ * Unlike foundry.utils.diffObject, this function also deeply compares arrays.
+ *
+ * @param {object} original       An object comparing data against which to compare
+ * @param {object} other          An object containing potentially different data
+ * @param {object} [options={}]   Additional options which configure the diff operation
+ * @param {boolean} [options.inner=false]  Only recognize differences in other for keys which also exist in original
+ * @param {boolean} [options.keepLength=false]  Keep array length intact, possibly having to insert empty objects
+ * @returns {object}               An object of the data in other which differs from that in original
+ */
+export const diffObjectAndArray = function (original, other, { inner = false, keepLength = false } = {}) {
+  /**
+   *
+   * @param v0
+   * @param v1
+   */
+  function _difference(v0, v1) {
+    const t0 = getType(v0);
+    const t1 = getType(v1);
+    if (t0 !== t1) return [true, v1];
+    if (t0 === "Array") {
+      if (v0.length !== v1.length) return [true, v1];
+      const d = [];
+      for (let a = 0; a < v0.length; a++) {
+        const d2 = diffObjectAndArray(v0[a], v1[a], { inner, keepLength });
+        if (!isObjectEmpty(d2)) d.push(d2);
+        else if (keepLength) d.push({});
+      }
+      if (d.length > 0) return [true, d];
+      return [false, d];
+    }
+    if (t0 === "Object") {
+      if (isObjectEmpty(v0) !== isObjectEmpty(v1)) return [true, v1];
+      const d = diffObjectAndArray(v0, v1, { inner, keepLength });
+      return [!isObjectEmpty(d), d];
+    }
+    return [v0 !== v1, v1];
+  }
+
+  // Recursively call the _difference function
+  return Object.keys(other).reduce((obj, key) => {
+    if (inner && !(key in original)) return obj;
+    const [isDifferent, difference] = _difference(original[key], other[key]);
+    if (isDifferent) obj[key] = difference;
+    return obj;
+  }, {});
+};

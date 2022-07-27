@@ -1,0 +1,198 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  {{!-- Item Sheet Header --}}
+  <header class="sheet-header flexrow">
+    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
+
+    <div class="header-details flexrow">
+      {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
+
+      <ul class="summary">
+        <li>
+          {{itemType}}
+        </li>
+        <li>
+          {{#unless showUnidentifiedData}}{{labels.equipmentSubtype}}{{/unless}}
+        </li>
+        <li>
+          {{#if hasMultipleSlots}}{{#unless showUnidentifiedData}}{{labels.slot}}{{/unless}}{{/if}}
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  {{!-- Item Sheet Navigation --}}
+  <nav class="sheet-navigation tabs" data-group="primary">
+    <a class="item" data-tab="description">{{ localize "PF1.Description" }}</a>
+    <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
+    {{#unless showUnidentifiedData}}
+    <a class="item" data-tab="changes">{{ localize "PF1.Changes" }}</a>
+    {{/unless}}
+    <a class="item" data-tab="links">{{localize "PF1.Links"}}</a>
+    {{#unless showUnidentifiedData}}
+    <a class="item" data-tab="advanced">{{localize "PF1.Advanced"}}</a>
+    {{/unless}}
+  </nav>
+
+  {{!-- Item Sheet Body --}}
+  <section class="primary-body">
+    {{!-- Description Tab --}}
+    {{> "systems/pf1/templates/items/parts/item-description.hbs"}}
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+      {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
+
+      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
+
+      <div class="form-group stacked">
+        {{#if owner}}
+        <label class="checkbox">
+          <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+        </label>
+        {{/if}}
+      </div>
+
+      {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
+
+      <h3 class="form-header">{{localize "PF1.Details"}}</h3>
+      {{!-- Proficiencies --}}
+      {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
+
+      {{!-- Equipment Type --}}
+      <div class="form-group">
+        <label>{{localize "PF1.Category"}}</label>
+        <div class="form-fields">
+          <select name="data.equipmentType">
+            {{#select data.equipmentType}}
+            {{#each equipmentCategories.types as |name type|}}
+            <option value="{{type}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
+      </div>
+
+      {{!-- Equipment Subtype --}}
+      <div class="form-group">
+        <label>{{localize "PF1.Type"}}</label>
+        <div class="form-fields">
+          <select name="data.equipmentSubtype">
+            {{#select data.equipmentSubtype}}
+            {{#each equipmentCategories.subTypes as |name type|}}
+            <option value="{{type}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
+      </div>
+
+      {{!-- Equipment Slot --}}
+      {{#if hasMultipleSlots}}
+      <div class="form-group">
+        <label>{{localize "PF1.Slot"}}</label>
+        <div class="form-fields">
+          <select name="data.slot">
+            {{#select data.slot}}
+            {{#each equipmentSlots as |name type|}}
+            <option value="{{type}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
+      </div>
+      {{else}}
+      <input type="hidden" name="data.slot" value="{{data.equipmentType}}" />
+      {{/if}}
+
+      {{!-- Equipment Size --}}
+      {{> "systems/pf1/templates/items/parts/item-size.hbs" allowAutoResizing=true}}
+
+      {{!-- Equipment Status --}}
+      <div class="form-group stacked">
+        <label>{{localize "PF1.EquipmentStatus"}}</label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> {{localize "PF1.Equipped"}}
+        </label>
+        {{#if isGM}}
+        <label class="checkbox">
+          <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
+        </label>
+        {{/if}}
+        <label class="checkbox">
+          <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> {{localize "PF1.Masterwork"}}
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.broken" {{checked data.broken}}/> {{localize "PF1.Broken"}}
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="data.nonlethal" {{checked data.nonlethal}}/> {{localize "PF1.Nonlethal"}}
+        </label>
+    </div>
+
+      {{!-- Armor Class --}}
+      <div class="form-group">
+        <label>{{localize "PF1.ArmorClass"}}</label>
+        <div class="form-fields">
+          <input type="text" name="data.armor.value" value="{{data.armor.value}}" data-dtype="Number"/>
+        </div>
+      </div>
+
+      {{!-- Enhancement Bonus --}}
+      {{#unless showUnidentifiedData}}
+      <div class="form-group">
+        <label>{{localize "PF1.EnhancementBonus"}}</label>
+        <div class="form-fields">
+          <input type="text" name="data.armor.enh" value="{{data.armor.enh}}" data-dtype="Number"/>
+        </div>
+      </div>
+      {{/unless}}
+
+      {{!-- Dexterity Modifier --}}
+      {{#unless showUnidentifiedData}}
+      <div class="form-group">
+        <label>{{localize "PF1.MaxDexterityModifier"}}</label>
+        <div class="form-fields">
+          <input type="text" name="data.armor.dex" value="{{data.armor.dex}}" placeholder="{{localize "PF1.Unlimited"}}" data-dtype="Number"/>
+        </div>
+      </div>
+
+      {{!-- Armor Check Penalty --}}
+      <div class="form-group">
+        <label>{{localize "PF1.ArmorCheckPenalty"}}</label>
+        <div class="form-fields">
+          <input type="text" name="data.armor.acp" value="{{data.armor.acp}}" data-dtype="Number" placeholder="0"/>
+        </div>
+      </div>
+
+      {{!-- Spell Failure --}}
+      <div class="form-group">
+        <label>{{localize "PF1.ArcaneSpellFailure"}}</label>
+        <div class="form-fields">
+          <input type="text" name="data.spellFailure" value="{{data.spellFailure}}" data-dtype="Number" placeholder="0"/>
+        </div>
+      </div>
+
+      {{!-- Advanced Tag --}}
+      {{> "systems/pf1/templates/items/parts/item-tag.hbs"}}
+      {{/unless}}
+    </div>
+
+    {{!-- Changes Tab --}}
+    {{#unless showUnidentifiedData}}
+    <div class="tab flexcol" data-group="primary" data-tab="changes">
+      {{~> "systems/pf1/templates/items/parts/item-changes.hbs"}}
+    </div>
+    {{/unless}}
+
+    <div class="tab flexcol" data-group="primary" data-tab="links">
+      {{> "systems/pf1/templates/items/parts/item-links.hbs"}}
+    </div>
+
+    {{#unless showUnidentifiedData}}
+    <div class="tab flexcol" data-group="primary" data-tab="advanced">
+      {{> "systems/pf1/templates/items/parts/item-advanced.hbs"}}
+    </div>
+    {{/unless}}
+  </section>
+</form>

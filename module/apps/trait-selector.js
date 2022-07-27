@@ -36,18 +36,18 @@ export class ActorTraitSelector extends DocumentSheet {
   /**
    * Provide data to the HTML template for rendering
    *
-   * @type {Object}
+   * @type {object}
    */
   getData() {
     // Get current values
-    const attr = getProperty(this.object.data, this.attribute);
+    const attr = getProperty(this.object.data, this.attribute) ?? { value: [], custom: "" };
 
     // Populate choices
     const choices = duplicate(this.options.choices);
     for (const [k, v] of Object.entries(choices)) {
       choices[k] = {
         label: v,
-        chosen: attr.value.includes(k),
+        chosen: attr.value?.includes(k),
       };
     }
 

@@ -5,45 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "irzvhdu3cv7zb3bw",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level or until completed",
+          "units": ""
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "value": null,
+          "units": "medium",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one creature/level, no two of which can be more than 30 ft. apart"
-    },
-    "range": {
-      "units": "medium"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -54,59 +122,26 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          6
-        ],
-        [
-          "bard",
-          5
-        ],
-        [
-          "witch",
-          6
-        ],
-        [
-          "psychic",
-          5
-        ],
-        [
-          "mesmerist",
-          5
-        ],
-        [
-          "occultist",
-          5
-        ]
+        ["sorcerer/wizard", 6],
+        ["bard", 5],
+        ["witch", 6],
+        ["psychic", 5],
+        ["mesmerist", 5],
+        ["occultist", 5]
       ],
       "domain": [],
-      "subDomain": [
-        [
-          "Innuendo",
-          6
-        ]
-      ],
+      "subDomain": [["Innuendo", 6]],
       "elementalSchool": [],
       "bloodline": [
-        [
-          "Maestro",
-          6
-        ],
-        [
-          "Rakshasa",
-          6
-        ],
-        [
-          "Serpentine",
-          6
-        ]
+        ["Maestro", 6],
+        ["Rakshasa", 6],
+        ["Serpentine", 6]
       ]
     },
     "level": 6,
     "school": "enc",
     "subschool": "compulsion",
     "types": "language-dependent, mind-affecting",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "material": true
@@ -114,8 +149,7 @@
     "materials": {
       "value": "a snake's tongue and a honeycomb"
     },
-    "shortDescription": "<p>This spell functions like <i><i>suggestion</i>,</i> except that it can affect more creatures. The same <i>suggestion</i> applies to all these creatures.</p>",
-    "spellDuration": "1 hour/level or until completed"
+    "shortDescription": "<p>This spell functions like <i><i>suggestion</i>,</i> except that it can affect more creatures. The same <i>suggestion</i> applies to all these creatures.</p>"
   },
   "effects": [],
   "folder": null,

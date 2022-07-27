@@ -27,24 +27,29 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/internal/item-search.hbs",
 
     // Item Sheet Partials
-    "systems/pf1/templates/items/parts/item-action.hbs",
-    "systems/pf1/templates/items/parts/item-activation.hbs",
-    "systems/pf1/templates/items/parts/item-description.hbs",
-    "systems/pf1/templates/items/parts/item-changes.hbs",
-    "systems/pf1/templates/items/parts/item-template.hbs",
-    "systems/pf1/templates/items/parts/item-links.hbs",
-    "systems/pf1/templates/items/parts/item-aura.hbs",
-    "systems/pf1/templates/items/parts/item-conditionals.hbs",
-    "systems/pf1/templates/items/parts/item-contents.hbs",
-    "systems/pf1/templates/items/parts/item-tag.hbs",
-    "systems/pf1/templates/items/parts/item-name.hbs",
+    "systems/pf1/templates/items/parts/item-actions.hbs",
     "systems/pf1/templates/items/parts/item-advanced.hbs",
+    "systems/pf1/templates/items/parts/item-aura.hbs",
+    "systems/pf1/templates/items/parts/item-changes.hbs",
+    "systems/pf1/templates/items/parts/item-contents.hbs",
+    "systems/pf1/templates/items/parts/item-description.hbs",
+    "systems/pf1/templates/items/parts/item-links.hbs",
+    "systems/pf1/templates/items/parts/item-name.hbs",
+    "systems/pf1/templates/items/parts/item-proficiencies.hbs",
     "systems/pf1/templates/items/parts/item-size.hbs",
+    "systems/pf1/templates/items/parts/item-tag.hbs",
+    "systems/pf1/templates/items/parts/item-weapon-groups.hbs",
 
     // Apps
     "systems/pf1/templates/apps/attack-roll-dialog.hbs",
     "systems/pf1/templates/apps/vision-permission.hbs",
     "systems/pf1/templates/apps/help-browser.hbs",
+
+    // Item Action Partials
+    "systems/pf1/templates/apps/item-action/action.hbs",
+    "systems/pf1/templates/apps/item-action/activation.hbs",
+    "systems/pf1/templates/apps/item-action/template.hbs",
+    "systems/pf1/templates/apps/item-action/conditionals.hbs",
 
     // Chat
     "systems/pf1/templates/chat/roll-ext.hbs",
@@ -61,6 +66,7 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/internal/damage-tooltip.hbs",
     "systems/pf1/templates/internal/token-config_vision.hbs",
     "systems/pf1/templates/internal/compendium-browser_entry.hbs",
+    "systems/pf1/templates/internal/damage-type-visual.hbs",
 
     // Tooltip
     "systems/pf1/templates/hud/tooltip.hbs",

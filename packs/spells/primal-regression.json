@@ -5,45 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "rjqe7kcqk24yxo2d",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level",
+          "units": ""
+        },
+        "target": {
+          "value": "one creature/2 levels, no two of which can be more than 30 feet apart"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one creature/2 levels, no two of which can be more than 30 feet apart"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -54,30 +122,12 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "druid",
-          6
-        ],
-        [
-          "witch",
-          7
-        ],
-        [
-          "shaman",
-          6
-        ],
-        [
-          "psychic",
-          6
-        ],
-        [
-          "mesmerist",
-          5
-        ],
-        [
-          "hunter",
-          6
-        ]
+        ["druid", 6],
+        ["witch", 7],
+        ["shaman", 6],
+        ["psychic", 6],
+        ["mesmerist", 5],
+        ["hunter", 6]
       ],
       "domain": [],
       "subDomain": [],
@@ -88,12 +138,10 @@
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting",
-    "conditionals": [],
     "components": {
       "somatic": true
     },
-    "shortDescription": "<p>This spell sequesters the targets' ability for higher reasoning, allowing their darker impulses to come to the fore. An affected target becomes a ravening monster-savage, bloodthirsty, and brutish. Until the spell ends, the targets have all of the following benefits and drawbacks.  <ul><li> Targets' Intelligence and Charisma scores drop to 3 (if the scores were higher), and they are unable to use Intelligence-or Charisma-based skills, cast spells, understand language, or communicate coherently.  <li> Targets take a -4 penalty on Will saves.  <li> Targets gain a +6 enhancement bonus to Strength, a +2 natural armor bonus to AC, and 2d8 temporary hit points. These temporary hit points disappear at the end of the spell's duration. </ul> When the spell ends, each affected creature must succeed at a Will saving throw or take 1d4 points of Intelligence drain and 1d4 points of Charisma damage.</p>",
-    "spellDuration": "1 minute/level"
+    "shortDescription": "<p>This spell sequesters the targets' ability for higher reasoning, allowing their darker impulses to come to the fore. An affected target becomes a ravening monster-savage, bloodthirsty, and brutish. Until the spell ends, the targets have all of the following benefits and drawbacks.  <ul><li> Targets' Intelligence and Charisma scores drop to 3 (if the scores were higher), and they are unable to use Intelligence-or Charisma-based skills, cast spells, understand language, or communicate coherently.  <li> Targets take a -4 penalty on Will saves.  <li> Targets gain a +6 enhancement bonus to Strength, a +2 natural armor bonus to AC, and 2d8 temporary hit points. These temporary hit points disappear at the end of the spell's duration. </ul> When the spell ends, each affected creature must succeed at a Will saving throw or take 1d4 points of Intelligence drain and 1d4 points of Charisma damage.</p>"
   },
   "effects": [],
   "folder": null,

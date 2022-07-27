@@ -5,45 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "zxvgkay5ojcdrz4o",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "one living creature"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one living creature"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will partial"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -54,38 +122,14 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          3
-        ],
-        [
-          "witch",
-          2
-        ],
-        [
-          "magus",
-          3
-        ],
-        [
-          "bloodrager",
-          3
-        ],
-        [
-          "psychic",
-          2
-        ],
-        [
-          "medium",
-          3
-        ],
-        [
-          "mesmerist",
-          2
-        ],
-        [
-          "spiritualist",
-          2
-        ]
+        ["sorcerer/wizard", 3],
+        ["witch", 2],
+        ["magus", 3],
+        ["bloodrager", 3],
+        ["psychic", 2],
+        ["medium", 3],
+        ["mesmerist", 2],
+        ["spiritualist", 2]
       ],
       "domain": [],
       "subDomain": [],
@@ -96,12 +140,10 @@
     "school": "enc",
     "subschool": "compulsion",
     "types": "emotion, mind-affecting",
-    "conditionals": [],
     "components": {
       "somatic": true
     },
-    "shortDescription": "<p>The target experiences feelings of ennui and lethargy, becoming fatigued for the spell's duration. While the target is fatigued and is within the spell's range, you gain a +2 enhancement bonus to Strength and Dexterity. On a successful save, the target is fatigued for only 1d4 rounds and you receive no bonus. This spell has no effect if it targets a creature that is already fatigued.</p>",
-    "spellDuration": "1 minute/level (D)"
+    "shortDescription": "<p>The target experiences feelings of ennui and lethargy, becoming fatigued for the spell's duration. While the target is fatigued and is within the spell's range, you gain a +2 enhancement bonus to Strength and Dexterity. On a successful save, the target is fatigued for only 1d4 rounds and you receive no bonus. This spell has no effect if it targets a creature that is already fatigued.</p>"
   },
   "effects": [],
   "folder": null,

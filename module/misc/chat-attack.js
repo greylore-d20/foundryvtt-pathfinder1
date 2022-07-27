@@ -1,8 +1,9 @@
+import { RollPF } from "../roll.js";
+
 export class ChatAttack {
-  constructor(item, { label = "", primaryAttack = true, rollData = {}, targets = null } = {}) {
-    this.primaryAttack = primaryAttack;
+  constructor(action, { label = "", rollData = {}, targets = null } = {}) {
     this._rollData = rollData;
-    this.setItem(item);
+    this.setAction(action);
     this.label = label;
 
     this.attack = {
@@ -37,7 +38,7 @@ export class ChatAttack {
       parts: [],
     };
     this.hasDamage = false;
-    this.hasRange = item.hasRange;
+    this.hasRange = action.item.hasRange;
     this.minimumDamage = false;
     this.nonlethal = false;
     this.damageRows = [];
@@ -58,7 +59,7 @@ export class ChatAttack {
     if (ammoId == null) {
       this.ammo = null;
     } else {
-      const ammoItem = this.item.actor?.items.get(ammoId);
+      const ammoItem = this.action.item.actor?.items.get(ammoId);
       if (ammoItem == null) {
         this.ammo = null;
         return;
@@ -73,27 +74,28 @@ export class ChatAttack {
   }
 
   get critRange() {
-    if (this.item.data.data.broken) return 20;
-    return getProperty(this.item, "data.data.ability.critRange") || 20;
+    if (this.action.item.data.data.broken) return 20;
+    return getProperty(this.action, "data.ability.critRange") || 20;
   }
 
   /**
    * Sets the attack's item reference.
    *
-   * @param {ItemPF} item - The item to reference.
+   * @param {ItemAction} item - The action to reference.
+   * @param action
    */
-  setItem(item) {
-    if (item == null) {
+  setAction(action) {
+    if (action == null) {
       this.rollData = this._rollData;
       this.attackType = "";
-      this.item = null;
+      this.action = null;
       return;
     }
 
-    this.item = item;
-    this.rollData = mergeObject(duplicate(this.item.getRollData()), this._rollData);
-    this.attackType = getProperty(item.data, "data.attackType") ?? "";
-    this.isHealing = item.isHealing;
+    this.action = action;
+    this.rollData = mergeObject(this.action.getRollData(), this._rollData, { inplace: false });
+    this.attackType = getProperty(action.data, "data.attackType") ?? "";
+    this.isHealing = action.isHealing;
 
     this.setRollData();
   }
@@ -107,13 +109,9 @@ export class ChatAttack {
     data.critMult = 1;
     data.critCount = 0;
     // Add critical confirmation bonus
-    data.critConfirmBonus = RollPF.safeTotal(data.item.critConfirmBonus || "0") ?? 0;
+    data.critConfirmBonus = RollPF.safeTotal(data.action.critConfirmBonus || "0") ?? 0;
     // Determine ability multiplier
-    if (data.item.ability.damageMult != null) data.ablMult = data.item.ability.damageMult;
-    // Lower ability multiplier for secondary attacks
-    if (this.attackType === "natural" && this.primaryAttack === false && getProperty(data.ablMult > 0)) {
-      data.ablMult = 0.5;
-    }
+    if (data.action.ability.damageMult != null) data.ablMult = data.action.ability.damageMult;
   }
 
   setAttackNotesHTML() {
@@ -152,8 +150,8 @@ export class ChatAttack {
     )}</label><div class="flexrow tag-list">${inner}</div></div>`;
   }
 
-  async addAttack({ bonus = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
-    if (!this.item) return;
+  async addAttack({ noAttack = false, bonus = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
+    if (!this.action.item) return;
 
     this.hasAttack = true;
     this.notesOnly = false;
@@ -164,8 +162,8 @@ export class ChatAttack {
         extraParts.push(`@critConfirmBonus[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
       }
 
-      const ccKey = game.pf1.utils.getChangeFlat.call(this.item, "critConfirm");
-      this.item.parentActor?.sourceDetails[ccKey]?.forEach((c) => extraParts.push(`(${c.value})[${c.name}]`));
+      const ccKey = game.pf1.utils.getChangeFlat.call(this.action.item, "critConfirm");
+      this.action.item.parentActor?.sourceDetails[ccKey]?.forEach((c) => extraParts.push(`(${c.value})[${c.name}]`));
 
       // Add conditionals for critical confirmation
       if (conditionalParts["attack.crit"]?.length) extraParts.push(...conditionalParts["attack.crit"]);
@@ -175,49 +173,51 @@ export class ChatAttack {
     }
 
     // Add broken penalty
-    if (this.item.data.data.broken && !critical) {
+    if (this.action.item.data.data.broken && !critical) {
       const label = game.i18n.localize("PF1.Broken");
       extraParts.push(`-2[${label}]`);
     }
 
     // Roll attack
-    const roll = await this.item.rollAttack({
-      data: this.rollData,
-      bonus: bonus,
-      extraParts: extraParts,
-      primaryAttack: this.attackType === "natural" ? this.primaryAttack : true,
-    });
-    data.roll = roll;
-    const d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
-    let critType = 0;
-    const isCmb = ["mcman", "rcman"].includes(this.item.data.data.actionType);
-    if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;
-    else if (d20 === 1) critType = 2;
+    if (!noAttack) {
+      const roll = await this.action.rollAttack({
+        data: this.rollData,
+        bonus: bonus,
+        extraParts: extraParts,
+      });
+      data.roll = roll;
+      const d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
+      let critType = 0;
+      const isCmb = ["mcman", "rcman"].includes(this.action.data.actionType);
+      if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;
+      else if (d20 === 1) critType = 2;
+
+      data.total = roll.total;
+      data.isCrit = critType === 1;
+      data.isFumble = critType === 2;
+      data.isNat20 = d20 === 20;
+      data.formula = roll.formula;
+
+      // Add crit confirm
+      if (!critical && !isCmb && d20 >= this.critRange && this.rollData.action.ability.critMult > 1) {
+        this.hasCritConfirm = true;
+        this.rollData.critMult = Math.max(1, this.rollData.action.ability.critMult);
+        if (this.action.item.data.data.broken) this.rollData.critMult = 1;
+
+        await this.addAttack({ bonus: bonus, extraParts: extraParts, critical: true, conditionalParts });
+      }
+    }
 
     // Add tooltip
     data.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
-    data.total = roll.total;
-    data.isCrit = critType === 1;
-    data.isFumble = critType === 2;
-    data.isNat20 = d20 === 20;
-    data.formula = roll.formula;
-
-    // Add crit confirm
-    if (!critical && !isCmb && d20 >= this.critRange && this.rollData.item.ability.critMult > 1) {
-      this.hasCritConfirm = true;
-      this.rollData.critMult = Math.max(1, this.rollData.item.ability.critMult);
-      if (this.item.data.data.broken) this.rollData.critMult = 1;
-
-      await this.addAttack({ bonus: bonus, extraParts: extraParts, critical: true, conditionalParts });
-    }
 
     if (this.attackNotes === "") this.addAttackNotes();
   }
 
   addAttackNotes() {
-    if (!this.item) return;
+    if (!this.action.item) return;
 
-    const type = this.item.data.data.actionType;
+    const type = this.action.data.actionType;
     const typeMap = {
       rsak: ["ranged", /*"spell",*/ "rangedSpell"],
       rwak: ["ranged", /*"weapon",*/ "rangedWeapon"],
@@ -228,26 +228,33 @@ export class ChatAttack {
     };
 
     const notes = [];
-    if (this.item != null && this.item.actor != null) {
-      notes.push(...this.item.actor.getContextNotesParsed("attacks.attack"));
+    // Add actor notes
+    if (this.action.item != null && this.action.item.actor != null) {
+      notes.push(...this.action.item.actor.getContextNotesParsed("attacks.attack"));
       if ((typeMap[type]?.length || 0) > 0)
         typeMap[type].forEach((subTarget) =>
-          notes.push(...this.item.actor.getContextNotesParsed(`attacks.${subTarget}`))
+          notes.push(...this.action.item.actor.getContextNotesParsed(`attacks.${subTarget}`))
         );
     }
-    if (this.item != null && this.item.data.data.attackNotes) {
-      notes.push(...this.item.data.data.attackNotes);
+    // Add item notes
+    if (this.action.item != null && this.action.item.data.data.attackNotes) {
+      notes.push(...this.action.item.data.data.attackNotes);
     }
-    if (["mcman", "rcman"].includes(this.item?.data.data.actionType)) {
-      notes.push(...this.item?.actor?.getContextNotesParsed("misc.cmb"));
+    // Add action notes
+    if (this.action.data.attackNotes) {
+      notes.push(...this.action.data.attackNotes);
+    }
+    // Add CMB notes
+    if (["mcman", "rcman"].includes(this.action.item?.data.data.actionType)) {
+      notes.push(...(this.action.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
     }
 
     this.attackNotes = notes;
     this.setAttackNotesHTML();
   }
 
-  async addDamage({ extraParts = [], critical = false, conditionalParts = {} } = {}) {
-    if (!this.item) return;
+  async addDamage({ flavor = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
+    if (!this.action.item) return;
 
     this.hasDamage = true;
     this.notesOnly = false;
@@ -262,10 +269,9 @@ export class ChatAttack {
     const repeatCount = critical ? Math.max(1, rollData.critMult - 1) : 1;
     for (let repeat = 0; repeat < repeatCount; ++repeat) {
       if (critical) rollData.critCount++;
-      const rolls = await this.item.rollDamage({
+      const rolls = await this.action.rollDamage({
         data: rollData,
         extraParts: extraParts,
-        primaryAttack: this.attackType === "natural" ? this.primaryAttack : true,
         critical: critical,
         conditionalParts,
       });
@@ -288,9 +294,11 @@ export class ChatAttack {
     }
 
     // Add normal data
-    let flavor;
-    if (!critical) flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
-    else flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
+    if (!flavor) {
+      if (!critical) flavor = this.isHealing ? game.i18n.localize("PF1.Healing") : game.i18n.localize("PF1.Damage");
+      else
+        flavor = this.isHealing ? game.i18n.localize("PF1.HealingCritical") : game.i18n.localize("PF1.DamageCritical");
+    }
 
     // Determine total damage
     let totalDamage = data.parts.reduce((cur, p) => {
@@ -312,7 +320,7 @@ export class ChatAttack {
     }
 
     // Handle nonlethal attacks
-    if (this.item.data.data.nonlethal) {
+    if (this.action.data.nonlethal || this.action.item.data.data.properties?.nnl) {
       this.nonlethal = true;
       flavor = game.i18n.localize("PF1.Nonlethal");
     }
@@ -324,11 +332,11 @@ export class ChatAttack {
   }
 
   addEffectNotes() {
-    if (!this.item) return;
+    if (!this.action.item) return;
 
     let notes = [];
-    if (this.item != null && this.item.actor != null) {
-      notes = this.item.actor.getContextNotes("attacks.effect").reduce((arr, o) => {
+    if (this.action.item != null && this.action.item.actor != null) {
+      notes = this.action.item.actor.getContextNotes("attacks.effect").reduce((arr, o) => {
         for (const n of o.notes) {
           arr.push(...n.split(/[\n\r]+/));
         }
@@ -336,15 +344,20 @@ export class ChatAttack {
       }, []);
 
       // Spell specific notes
-      if (this.item.type === "spell") {
-        this.item.actor.getContextNotes("spell.effect").forEach((o) => {
+      if (this.action.item.type === "spell") {
+        this.action.item.actor.getContextNotes("spell.effect").forEach((o) => {
           for (const n of o.notes) notes.push(...n.split(/[\n\r]+/));
         });
       }
     }
 
-    if (this.item != null && this.item.data.data.effectNotes) {
-      notes.push(...this.item.data.data.effectNotes);
+    // Add item notes
+    if (this.action.item != null && this.action.item.data.data.effectNotes) {
+      notes.push(...this.action.item.data.data.effectNotes);
+    }
+    // Add action notes
+    if (this.action.data.effectNotes) {
+      notes.push(...this.action.data.effectNotes);
     }
 
     this.effectNotes = this.effectNotes.concat(notes);

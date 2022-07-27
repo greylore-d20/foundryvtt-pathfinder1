@@ -5,45 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "n4ynnktfizrogasj",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "one creature/2 levels"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one creature/2 levels"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex negates"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -54,26 +122,11 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          2
-        ],
-        [
-          "cleric/oracle",
-          2
-        ],
-        [
-          "bard",
-          2
-        ],
-        [
-          "inquisitor",
-          2
-        ],
-        [
-          "magus",
-          2
-        ]
+        ["sorcerer/wizard", 2],
+        ["cleric/oracle", 2],
+        ["bard", 2],
+        ["inquisitor", 2],
+        ["magus", 2]
       ],
       "domain": [],
       "subDomain": [],
@@ -83,13 +136,11 @@
     "level": 2,
     "school": "evo",
     "types": "light",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
-    "shortDescription": "<p>Rays of light burst forth from your outstretched hand, encircling each target's space with a cage of light. If a target fails its Reflex save, it becomes enclosed in the <i>light prison</i>. A creature enclosed in a <i>light prison</i> can attack, cast spells, and otherwise act normally as long as it stays within the <i>light prison</i>. However, if a creature passes through the walls of a <i>light prison</i> enclosing it, it takes 1d6 points of damage and is blinded for 1 round.</p><p>Creatures do not receive saves to negate these effects. Once a creature passes through the walls of a <i>light prison</i> surrounding it, the effect ends for that creature.</p>",
-    "spellDuration": "1 round/level (D)"
+    "shortDescription": "<p>Rays of light burst forth from your outstretched hand, encircling each target's space with a cage of light. If a target fails its Reflex save, it becomes enclosed in the <i>light prison</i>. A creature enclosed in a <i>light prison</i> can attack, cast spells, and otherwise act normally as long as it stays within the <i>light prison</i>. However, if a creature passes through the walls of a <i>light prison</i> enclosing it, it takes 1d6 points of damage and is blinded for 1 round.</p><p>Creatures do not receive saves to negate these effects. Once a creature passes through the walls of a <i>light prison</i> surrounding it, the effect ends for that creature.</p>"
   },
   "effects": [],
   "folder": null,

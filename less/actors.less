@@ -34,7 +34,7 @@
 
         h1.charname {
           input {
-            height: 32px;
+            height: 2.5rem;
             padding: 0;
           }
         }
@@ -45,10 +45,11 @@
 
         & > div {
           flex: 0 0 33%;
-          height: 32px;
-          line-height: 28px;
+          //height: 32px;
+          line-height: 2;
           border-right: @borderGroove;
           border-bottom: @borderGroove;
+          align-content: center;
 
           &:nth-child(3n + 0) {
             border-right: none;
@@ -72,7 +73,7 @@
 
           a {
             flex: 0 0 12px;
-            font-size: 12px;
+            font-size: @fontSizeNormal;
             text-align: center;
             color: #666;
           }
@@ -203,7 +204,7 @@
           a.config-icon {
             flex: 0 0 16px;
             width: 16px;
-            font-size: 16px;
+            font-size: @fontSizeLarge;
             color: rgba(0, 0, 0, 0);
 
             &:hover {
@@ -235,7 +236,7 @@
       .xpbar {
         width: 100%;
         height: 12px;
-        font-size: 16px;
+        font-size: @fontSizeLarge;
         color: @colorOlive;
         background: @colorTan;
         border: 1px solid @colorDark;
@@ -388,7 +389,7 @@
   h4.box-title {
     line-height: 16px;
     margin: 4px 8px 2px;
-    font-size: 20px;
+    font-size: @fontSizeSubHeader;
     border-bottom: 1px solid @colorBeige;
   }
 
@@ -475,7 +476,7 @@
 
         h3 {
           .nodesto();
-          font-size: 24px;
+          font-size: @fontSizeHeader;
         }
       }
     }
@@ -542,7 +543,7 @@
     li.sub-skill {
       padding-left: 0.3em;
       display: grid;
-      grid-template-columns: auto 24px 3em repeat(5, 4em) 24px;
+      grid-template-columns: auto 24px 3em repeat(5, 4em) 40px;
       height: 2em;
 
       .itemBackground();
@@ -579,7 +580,7 @@
 
       .skill-name {
         display: inline-flex;
-        font-size: var(--font-size-13, 10pt);
+        font-size: @fontSizeEnlarged;
 
         h4,
         input[type="text"] {
@@ -618,7 +619,7 @@
       }
 
       .checkbox {
-        font-size: var(--font-size-12, 12pt);
+        font-size: @fontSizeNormal;
       }
 
       .skill-ability {
@@ -665,7 +666,7 @@
       white-space: nowrap;
 
       span {
-        font-size: 14px;
+        font-size: @fontSizeNormal;
       }
     }
   }
@@ -685,11 +686,12 @@
       justify-content: space-between;
     }
 
-    .trait-selector {
+    .trait-selector,
+    .senses-selector {
       flex: 0 0 16px;
       padding: 2px 0;
       color: #666;
-      font-size: 14px;
+      font-size: @fontSizeLarge;
     }
 
     .configure-flags {
@@ -764,8 +766,8 @@
       position: absolute;
       top: 0;
       right: 0;
-      font-size: 14px;
-      line-height: 12px;
+      font-size: @fontSizeNormal;
+      line-height: 1;
       text-align: right;
       color: #eee;
       text-shadow: 0 0 5px #000;
@@ -915,7 +917,7 @@
     .filter-title {
       .nodesto();
       color: @colorOlive;
-      font-size: 24px;
+      font-size: @fontSizeHeader;
       margin: 0;
     }
 
@@ -1004,7 +1006,7 @@
 
       h3 {
         .nodesto();
-        font-size: 22px;
+        font-size: @fontSizeHeader;
         flex: 0 0 160px;
       }
 
@@ -1080,7 +1082,7 @@
       white-space: nowrap;
       overflow: hidden;
       flex: 0 0 96px;
-      font-size: 14px;
+      font-size: @fontSizeNormal;
       text-align: center;
       color: @colorTan;
       display: flex;
@@ -1122,6 +1124,13 @@
     }
 
     .spell-uses {
+      display: flex;
+
+      .spell-slots,
+      .spell-max {
+        flex: 1;
+      }
+
       input {
         flex: 0 0 24px;
       }
@@ -1136,7 +1145,7 @@
       white-space: nowrap;
       overflow: hidden;
       flex: 0 0 96px;
-      font-size: 14px;
+      font-size: @fontSizeNormal;
       color: @colorTan;
       text-align: center;
       border-right: 1px solid @colorFaint;
@@ -1146,7 +1155,7 @@
       white-space: nowrap;
       overflow: hidden;
       flex: 0 0 120px;
-      font-size: 14px;
+      font-size: @fontSizeNormal;
       color: @colorTan;
       text-align: center;
       border-right: 1px solid @colorFaint;
@@ -1156,7 +1165,7 @@
       white-space: nowrap;
       overflow: hidden;
       flex: 0 0 80px;
-      font-size: 14px;
+      font-size: @fontSizeNormal;
       color: @colorTan;
       text-align: center;
       border-right: 1px solid @colorFaint;

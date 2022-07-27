@@ -5,42 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "hour"
-    },
-    "unchainedAction": {
-      "activation": {
-        "type": "hour"
+    "actions": [
+      {
+        "_id": "20xph39ej2c0tzq2",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "hour"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "hour"
+          }
+        },
+        "duration": {
+          "value": "24 hours or until discharged",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -51,18 +122,9 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "cleric/oracle",
-          3
-        ],
-        [
-          "witch",
-          3
-        ],
-        [
-          "shaman",
-          3
-        ]
+        ["cleric/oracle", 3],
+        ["witch", 3],
+        ["shaman", 3]
       ],
       "domain": [],
       "subDomain": [],
@@ -72,7 +134,6 @@
     "level": 3,
     "school": "div",
     "types": "meditative",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "material": true
@@ -87,11 +148,7 @@
       "spontaneousPrepared": false
     },
     "sr": false,
-    "shortDescription": "<p>You attune your mind and your sight to the hidden world of spirits. You gain a +5 circumstance bonus on Perception checks; this circumstance bonus increases to a +10 circumstance bonus  on Perception checks to find invisible creatures or objects, incorporeal creatures or objects, or things that exist only on the Ethereal Plane. Additionally, at any time during the spell's duration, you can push your ethereal vision even further as a swift action. When you do, you can see through solid objects (as if using a <i>ring of x-ray</i> vision) for 5 rounds. After this time, the spell ends.</p>",
-    "spellDuration": "24 hours or until discharged",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>You attune your mind and your sight to the hidden world of spirits. You gain a +5 circumstance bonus on Perception checks; this circumstance bonus increases to a +10 circumstance bonus  on Perception checks to find invisible creatures or objects, incorporeal creatures or objects, or things that exist only on the Ethereal Plane. Additionally, at any time during the spell's duration, you can push your ethereal vision even further as a swift action. When you do, you can see through solid objects (as if using a <i>ring of x-ray</i> vision) for 5 rounds. After this time, the spell ends.</p>"
   },
   "effects": [],
   "folder": null,

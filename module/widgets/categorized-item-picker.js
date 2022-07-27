@@ -41,7 +41,7 @@ export class Widget_CategorizedItemPicker extends Application {
      * Track hidden elements of the sheet.
      *
      * @property
-     * @type {object.<string, string>}
+     * @type {Object<string, string>}
      */
     this._hiddenElems = {};
   }

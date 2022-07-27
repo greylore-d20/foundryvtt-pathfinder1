@@ -1,6 +1,31 @@
 import { ItemPF } from "../entity.js";
+import { createTag } from "../../lib.js";
+import { RollPF } from "../../roll.js";
 
 export class ItemClassPF extends ItemPF {
+  async _preUpdate(update, context, userId) {
+    await super._preUpdate(update, context, userId);
+
+    // Set level marker
+    if (hasProperty(update, "data.level")) {
+      this._prevLevel = this.data.data.level;
+    }
+  }
+
+  async update(data, context = {}) {
+    await super.update(data, context);
+
+    // Update class
+    const newLevel = data["data.level"] || getProperty(data, "data.level");
+    if (newLevel !== undefined && this.parent) {
+      const prevLevel = this._prevLevel;
+      if (prevLevel !== undefined) {
+        delete this._prevLevel;
+        await this._onLevelChange(prevLevel, newLevel);
+      }
+    }
+  }
+
   async delete(context = {}) {
     await this._onLevelChange(this.data.data.level, 0);
     return super.delete(context);
@@ -23,6 +48,12 @@ export class ItemClassPF extends ItemPF {
         const itemId = co.id.split(".")[2];
         const pack = game.packs.get(collection);
         const item = await pack.getDocument(itemId);
+        if (!item) {
+          const msg = `Could not find class association: ${co.id}`;
+          console.warn(co.id, msg, this);
+          ui.notifications?.warn(msg);
+          continue;
+        }
 
         // Apply Foundry's transformations for importing
         // This adds flags.core.sourceId, removes extraneous permissions, resets sorting, etc.
@@ -106,15 +137,17 @@ export class ItemClassPF extends ItemPF {
       for (const save of Object.keys(CONFIG.PF1.savingThrows)) {
         const classType = itemData.classType || "base";
         let formula;
-        const saveType = itemData.savingThrows[save].value;
+        const saveData = itemData.savingThrows[save];
+        const saveType = saveData.value;
         if (saveType === "custom") {
-          formula = itemData.savingThrows[save].custom || "0";
+          formula = saveData.custom || "0";
         } else {
           formula = saveFormulas[classType][saveType];
         }
         if (formula == null) formula = "0";
         const total = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
-        itemData.savingThrows[save].base = total;
+        saveData.base = total;
+        if (useFractional) saveData.good = saveFormulas[classType].goodSave === true && saveType === "high";
       }
     }
 
@@ -130,6 +163,48 @@ export class ItemClassPF extends ItemPF {
         formula = babFormulas[babType] || "0";
       }
       itemData.babBase = RollPF.safeRoll(formula, { level: itemData.level, hitDice: this.hitDice }).total;
+    }
+
+    // Feed info back to actor
+    const actor = this.actor;
+    // Test against actor.data to avoid unlinked token weirdness
+    if (actor?.data) {
+      const actorData = actor.data.data,
+        classData = this.data.data;
+
+      let tag = classData.tag;
+      if (!tag) tag = createTag(this.name);
+
+      let healthConfig = game.settings.get("pf1", "healthConfig");
+      const hasPlayerOwner = this.hasPlayerOwner;
+      healthConfig =
+        classData.classType === "racial"
+          ? healthConfig.hitdice.Racial
+          : hasPlayerOwner
+          ? healthConfig.hitdice.PC
+          : healthConfig.hitdice.NPC;
+
+      if (!classData.classType) console.warn(`${this.name} lacks class type`, this);
+      const isBaseClass = (classData.classType || "base") === "base";
+      actorData.classes[tag] = {
+        level: classData.level,
+        name: this.name,
+        hd: classData.hd,
+        hitDice: this.hitDice,
+        mythicTier: this.mythicTier,
+        bab: classData.bab,
+        hp: healthConfig.auto,
+        savingThrows: {
+          fort: classData.savingThrows.fort.base,
+          ref: classData.savingThrows.ref.base,
+          will: classData.savingThrows.will.base,
+        },
+        fc: {
+          hp: isBaseClass ? classData.fc.hp.value : 0,
+          skill: isBaseClass ? classData.fc.skill.value : 0,
+          alt: isBaseClass ? classData.fc.alt.value : 0,
+        },
+      };
     }
   }
 

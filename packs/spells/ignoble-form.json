@@ -5,45 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "n6obslpiv5qcipuu",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "24 hours",
+          "units": ""
+        },
+        "target": {
+          "value": "one drow"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one drow"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates (harmless)"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -54,42 +122,15 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          4
-        ],
-        [
-          "druid",
-          3
-        ],
-        [
-          "ranger",
-          2
-        ],
-        [
-          "bard",
-          2
-        ],
-        [
-          "alchemist",
-          2
-        ],
-        [
-          "witch",
-          4
-        ],
-        [
-          "antipaladin",
-          2
-        ],
-        [
-          "medium",
-          2
-        ],
-        [
-          "hunter",
-          2
-        ]
+        ["sorcerer/wizard", 4],
+        ["druid", 3],
+        ["ranger", 2],
+        ["bard", 2],
+        ["alchemist", 2],
+        ["witch", 4],
+        ["antipaladin", 2],
+        ["medium", 2],
+        ["hunter", 2]
       ],
       "domain": [],
       "subDomain": [],
@@ -99,7 +140,6 @@
     "level": 4,
     "school": "trs",
     "subschool": "polymorph",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -109,8 +149,7 @@
       "value": "a half-elf ear"
     },
     "sr": false,
-    "shortDescription": "<p>The target takes on the form of a half-elf from the surface world. Its skin, hair, and eyes change to match a specific human ethnicity. You can even change the target's facial features or produce light facial hair or stubble. The target loses its darkvision, light blindness, and light sensitivity traits, if it normally has them. The target gains low-light vision; a +3 racial bonus on a single Craft, Knowledge, Perform, or Profession skill of its choice; and both a +4 bonus on Bluff checks and a +10 bonus on Disguise checks to pass itself off as a half-elf.</p>",
-    "spellDuration": "24 hours"
+    "shortDescription": "<p>The target takes on the form of a half-elf from the surface world. Its skin, hair, and eyes change to match a specific human ethnicity. You can even change the target's facial features or produce light facial hair or stubble. The target loses its darkvision, light blindness, and light sensitivity traits, if it normally has them. The target gains low-light vision; a +3 racial bonus on a single Craft, Knowledge, Perform, or Profession skill of its choice; and both a +4 bonus on Bluff checks and a +10 bonus on Disguise checks to pass itself off as a half-elf.</p>"
   },
   "effects": [],
   "folder": null,

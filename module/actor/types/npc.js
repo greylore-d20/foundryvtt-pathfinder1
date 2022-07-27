@@ -1,4 +1,5 @@
 import { ActorPF } from "../entity.js";
+import { RollPF } from "../../roll.js";
 
 export class ActorNPCPF extends ActorPF {
   prepareBaseData() {
@@ -26,7 +27,7 @@ export class ActorNPCPF extends ActorPF {
 
   hasArmorProficiency(item, proficiencyName) {
     // Assume NPCs to be proficient with their armor
-    return true;
+    return game.settings.get("pf1", "npcProficiencies") ? super.hasArmorProficiency(item, proficiencyName) : true;
   }
 
   /* Not used by NPCs */

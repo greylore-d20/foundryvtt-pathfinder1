@@ -5,44 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "rha71epb5gdmpca7",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "see text",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": "0",
+          "units": "ft",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "one symbol",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "value": "0",
-      "units": "ft"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -53,22 +122,10 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          8
-        ],
-        [
-          "cleric/oracle",
-          8
-        ],
-        [
-          "witch",
-          8
-        ],
-        [
-          "occultist",
-          6
-        ]
+        ["sorcerer/wizard", 8],
+        ["cleric/oracle", 8],
+        ["witch", 8],
+        ["occultist", 6]
       ],
       "domain": [],
       "subDomain": [],
@@ -79,7 +136,6 @@
     "school": "enc",
     "subschool": "compulsion",
     "types": "mind-affecting",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -94,12 +150,7 @@
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "shortDescription": "<p>This spell functions like <i><i>symbol of</i> death</i>, except that all creatures within the radius of the <i><i>symbol of</i> <i>insanity</i></i> instead become permanently insane (as the <i>insanity</i> spell).</p><p>Unlike <i><i>symbol of</i> death</i>, <i><i>symbol of</i> <i>insanity</i></i> has no hit point limit; once triggered, a <i><i>symbol of</i> <i>insanity</i></i> simply remains active for 10 minutes per caster level.</p><p><i>Note:</i> Magic traps such as <i><i>symbol of</i> <i>insanity</i></i> are hard to detect and disable. A rogue (only) can use the Perception skill to find a <i><i>symbol of</i> <i>insanity</i></i> and Disable Device to thwart it. The DC in each case is 25 + spell level, or 33 for <i><i>symbol of</i> <i>insanity</i></i>.</p>",
-    "spellDuration": "see text",
-    "spellEffect": "one symbol",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>This spell functions like <i><i>symbol of</i> death</i>, except that all creatures within the radius of the <i><i>symbol of</i> <i>insanity</i></i> instead become permanently insane (as the <i>insanity</i> spell).</p><p>Unlike <i><i>symbol of</i> death</i>, <i><i>symbol of</i> <i>insanity</i></i> has no hit point limit; once triggered, a <i><i>symbol of</i> <i>insanity</i></i> simply remains active for 10 minutes per caster level.</p><p><i>Note:</i> Magic traps such as <i><i>symbol of</i> <i>insanity</i></i> are hard to detect and disable. A rogue (only) can use the Perception skill to find a <i><i>symbol of</i> <i>insanity</i></i> and Disable Device to thwart it. The DC in each case is 25 + spell level, or 33 for <i><i>symbol of</i> <i>insanity</i></i>.</p>"
   },
   "effects": [],
   "folder": null,

@@ -21,6 +21,10 @@ export class TokenDocumentPF extends TokenDocument {
 
   /**
    * Hijack Token health bar rendering to include temporary and temp-max health in the bar display
+   *
+   * @param barName
+   * @param root0
+   * @param root0.alternative
    */
   getBarAttribute(barName, { alternative = null } = {}) {
     let data;
@@ -29,12 +33,18 @@ export class TokenDocumentPF extends TokenDocument {
     } catch (e) {
       data = null;
     }
-    if (data != null && data.attribute === "attributes.hp") {
-      data.value += parseInt(getProperty(this.actor.data, "data.attributes.hp.temp") || 0);
-    }
 
-    // Make resources editable
-    if (data?.attribute.startsWith("resources.")) data.editable = true;
+    if (data != null) {
+      // Add temp HP to current current health value for HP and Vigor
+      if (data.attribute === "attributes.hp") {
+        data.value += parseInt(getProperty(this.actor.data, "data.attributes.hp.temp") || 0);
+      } else if (data.attribute === "attributes.vigor") {
+        data.value += parseInt(getProperty(this.actor.data, "data.attributes.vigor.temp") || 0);
+      }
+
+      // Make resources editable
+      if (data.attribute.startsWith("resources.")) data.editable = true;
+    }
 
     return data;
   }

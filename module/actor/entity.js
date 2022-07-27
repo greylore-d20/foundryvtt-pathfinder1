@@ -2,14 +2,7 @@ import { ActorBasePF } from "./base.js";
 import { getAbilityModifier } from "./lib.mjs";
 import { DicePF } from "../dice.js";
 import { ItemPF } from "../item/entity.js";
-import {
-  createTag,
-  convertDistance,
-  convertWeight,
-  enrichHTMLUnrolled,
-  calculateRange,
-  fractionalToString,
-} from "../lib.js";
+import { createTag, enrichHTMLUnrolled, fractionalToString } from "../lib.js";
 import { createCustomChatMessage } from "../chat.js";
 import { LinkFunctions } from "../misc/links.js";
 import { getSkipActionPrompt } from "../settings.js";
@@ -23,6 +16,8 @@ import {
 } from "./apply-changes.js";
 import { RollPF } from "../roll.js";
 import { VisionPermissionSheet } from "../misc/vision-permission.js";
+import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./components/spellbook.js";
+import { ItemChange } from "../item/components/change.js";
 
 /**
  * Extend the base Actor class to implement additional game system logic.
@@ -34,75 +29,76 @@ export class ActorPF extends ActorBasePF {
     return this.id;
   }
 
-  /**
-   * Init item flags.
-   */
-  itemFlags = { boolean: {}, dictionary: {} };
+  static get relativeAttributes() {
+    return ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"];
+  }
 
   constructor(...args) {
     super(...args);
 
-    /**
-     * A list of all the active items with changes.
-     *
-     * @property
-     * @type {Array}
-     */
-    if (this.changeItems === undefined) this.changeItems = [];
+    if (this.itemFlags === undefined)
+      /**
+       * Init item flags.
+       */
+      this.itemFlags = { boolean: {}, dictionary: {} };
 
-    /**
-     * Stores all ItemChanges from carried items.
-     *
-     * @property
-     * @public
-     * @type {object}
-     */
-    if (this.changes === undefined) this.changes = new Collection();
+    if (this.changeItems === undefined)
+      /**
+       * A list of all the active items with changes.
+       *
+       * @type {ItemPF[]}
+       */
+      this.changeItems = [];
 
-    /**
-     * Stores updates to be applied to the actor near the end of the _onUpdate method.
-     *
-     * @property
-     * @private
-     * @type {object.<string, any>}
-     */
-    if (this._queuedUpdates === undefined) this._queuedUpdates = {};
+    if (this.changes === undefined)
+      /**
+       * Stores all ItemChanges from carried items.
+       *
+       * @public
+       * @type {Collection<ItemChange>}
+       */
+      this.changes = new Collection();
 
-    /**
-     * @property {object} _rollData
-     * Cached roll data for this item.
-     */
-    if (this._rollData === undefined) this._rollData = null;
+    if (this._queuedUpdates === undefined)
+      /**
+       * Stores updates to be applied to the actor near the end of the _onUpdate method.
+       *
+       * @private
+       * @type {Object<string, any>}
+       */
+      this._queuedUpdates = {};
 
-    /**
-     * @property {object.<string>} _runningFunctions
-     * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
-     */
-    if (this._runningFunctions === undefined) this._runningFunctions = {};
+    if (this._rollData === undefined)
+      /**
+       * Cached roll data for this item.
+       *
+       * @type {object}
+       */
+      this._rollData = null;
 
-    /**
-     * @property {object} _queuedItemUpdates
-     * A dictionary of item IDs and the data to update. Will be called once this actor has been updated, and immediately cleared.
-     */
-    if (this._queuedItemUpdates === undefined) this._queuedItemUpdates = {};
+    if (this._runningFunctions === undefined)
+      /**
+       * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
+       *
+       * @type {Object<string>}
+       */
+      this._runningFunctions = {};
 
-    /**
-     * @property {ItemPF[]} containerItems
-     * All items this actor is holding in containers.
-     */
-    if (this.containerItems === undefined) this.containerItems = [];
+    if (this.containerItems === undefined)
+      /**
+       * All items this actor is holding in containers.
+       *
+       * @type {ItemPF[]}
+       */
+      this.containerItems = [];
 
-    /**
-     * @property {object} _prevAttributes
-     * A list of attributes to remember between updates.
-     */
-    if (this._prevAttributes === undefined) this._prevAttributes = null;
-
-    /**
-     * @property {object} _states
-     * Tracks various states which need to be tracked.
-     */
-    if (this._states === undefined) this._states = {};
+    if (this._states === undefined)
+      /**
+       * Tracks various states which need to be tracked.
+       *
+       * @type {object}
+       */
+      this._states = {};
   }
 
   _preCreate(data, options, user) {
@@ -122,7 +118,7 @@ export class ActorPF extends ActorBasePF {
    * @param data
    * @param options
    * @param user
-   * @returns {Object} Update data to replace with.
+   * @returns {object} Update data to replace with.
    */
   preCreateData(data, options, user) {
     return {};
@@ -159,12 +155,24 @@ export class ActorPF extends ActorBasePF {
     // Show compendium entry
     else if (action === "open-compendium-entry") {
       const entryKey = button.dataset.compendiumEntry;
+      const documentType = button.dataset.documentType;
       const parts = entryKey.split(".");
+
+      // World entry
+      if (parts.length === 1 && documentType) {
+        const collectionName = CONFIG[documentType].documentClass.collectionName;
+        const collection = game[collectionName];
+        const entry = collection.get(parts[0]);
+        entry.sheet.render(true, { focus: true });
+        return;
+      }
+
+      // Compendium entry
       const packKey = parts.slice(0, 2).join(".");
       const entryId = parts.slice(-1)[0];
       const pack = game.packs.get(packKey);
       const entry = await pack.getDocument(entryId);
-      entry.sheet.render(true);
+      entry.sheet.render(true, { focus: true });
     }
   }
 
@@ -269,16 +277,6 @@ export class ActorPF extends ActorBasePF {
     return [...skills, ...subSkills];
   }
 
-  /**
-   * The VisionPermissionSheet instance for this actor
-   *
-   * @type {VisionPermissionSheet}
-   */
-  get visionPermissionSheet() {
-    if (!this._visionPermissionSheet) this._visionPermissionSheet = new VisionPermissionSheet(this);
-    return this._visionPermissionSheet;
-  }
-
   _prepareContainerItems(items) {
     const collection = [];
 
@@ -368,8 +366,6 @@ export class ActorPF extends ActorBasePF {
 
     this._initialized = true;
     this._setSourceDetails(this.sourceInfo);
-
-    this.doQueuedUpdates();
   }
 
   /**
@@ -400,17 +396,27 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Prepare actor data before items are prepared.
+   *
+   * @override
    */
   prepareBaseData() {
     super.prepareBaseData();
+
+    const actorData = this.data.data;
+
+    // Reset equipment info
+    actorData.equipment = {
+      shield: { type: 0, id: undefined },
+      armor: { type: 0, id: undefined },
+    };
+    // Reset class info
+    actorData.classes = {};
 
     // HACK: Init missing resources structure. Needed mostly for JSON imports.
     this.data.data.resources ??= {};
 
     this._resetInherentTotals();
     Hooks.callAll("pf1.prepareBaseActorData", this);
-
-    const actorData = this.data.data;
 
     // Update total level and mythic tier
     const classes = this.items.filter((o) => o.type === "class");
@@ -430,21 +436,6 @@ export class ActorPF extends ActorBasePF {
     // Populate conditions
     for (const condition of Object.keys(CONFIG.PF1.conditions)) {
       actorData.attributes.conditions[condition] ??= false;
-    }
-
-    // Add .total getter for languages
-    if (actorData.traits.languages.total === undefined) {
-      Object.defineProperty(actorData.traits.languages, "total", {
-        get: function () {
-          return [
-            ...this.value,
-            ...this.custom
-              .split(";")
-              .map((l) => l?.trim())
-              .filter((l) => !!l),
-          ];
-        },
-      });
     }
 
     // Refresh ability scores
@@ -489,15 +480,22 @@ export class ActorPF extends ActorBasePF {
     setProperty(actorData, "attributes.hd.total", actorData.details.level.value);
 
     // Reset class skills
-    for (const [k, s] of Object.entries(actorData.skills)) {
-      if (!s) continue;
-      const isClassSkill = classes.reduce((cur, o) => {
-        if ((o.data.data.classSkills || {})[k] === true) return true;
-        return cur;
-      }, false);
-      actorData.skills[k].cs = isClassSkill;
-      for (const k2 of Object.keys(s.subSkills ?? {})) {
-        setProperty(s, `subSkills.${k2}.cs`, isClassSkill);
+    {
+      const skillSet = new Set();
+      this.items
+        .filter((actorItems) => ["class", "race", "feat"].includes(actorItems.type))
+        .forEach((relevantActorItems) => {
+          for (const [classSkillName, isClassSkill] of Object.entries(relevantActorItems.data.data.classSkills || {})) {
+            if (isClassSkill === true) skillSet.add(classSkillName);
+          }
+        });
+
+      for (const [k, s] of Object.entries(actorData.skills)) {
+        if (!s) continue;
+        actorData.skills[k].cs = skillSet.has(k);
+        for (const k2 of Object.keys(s.subSkills ?? {})) {
+          setProperty(s, `subSkills.${k2}.cs`, skillSet.has(k));
+        }
       }
     }
   }
@@ -528,369 +526,412 @@ export class ActorPF extends ActorBasePF {
     );
   }
 
-  updateSpellbookInfo() {
-    const rollData = this.getRollData({ refresh: true });
+  /**
+   * Update specific spellbook.
+   *
+   * @param {string} bookKey
+   * @param {object} rollData
+   * @param {object} cache Pre-calculated data for re-use from _generateSpellbookCache
+   */
+  _updateSpellBook(bookKey, rollData, cache) {
+    const actorData = this.data.data;
+    const book = actorData.attributes.spells.spellbooks[bookKey];
+    if (!book) {
+      console.error(`Spellbook data not found for "${bookKey} on actor`, this);
+      return;
+    }
 
-    // Set spellbook info
-    for (const [spellbookKey, spellbook] of Object.entries(this.data.data.attributes.spells.spellbooks)) {
-      if (!spellbook) {
-        console.error(`Spellbook data not found for "${spellbookKey} on actor`, this);
-        continue;
+    // Set spellbook label
+    book.label = `PF1.SpellBook${bookKey.capitalize()}`;
+    if (book.class) {
+      if (book.class === "_hd") book.label = "PF1.SpellBookSpelllike";
+      else book.label = this.data.data.classes?.[book.class]?.name;
+    }
+    if (book.name) book.label = book.name;
+
+    rollData ??= this.getRollData({ refresh: true });
+    cache ??= this._generateSpellbookCache();
+
+    const bookInfo = cache.books[bookKey];
+
+    const spellbookAbility = actorData.abilities[book.ability];
+
+    // Add spell slots based on ability bonus slot formula
+    const spellSlotAbilityScoreBonus = RollPF.safeRoll(book.spellSlotAbilityBonusFormula || "0", rollData).total,
+      spellSlotAbilityScore = (spellbookAbility?.total ?? 10) + spellSlotAbilityScoreBonus,
+      spellSlotAbilityMod = getAbilityModifier(spellSlotAbilityScore);
+
+    // Set CL
+    let clTotal = 0;
+    {
+      const key = `data.attributes.spells.spellbooks.${bookKey}.cl.total`;
+      const formula = book.cl.formula || "0";
+      let total = 0;
+
+      // Add NPC base
+      if (this.data.type === "npc") {
+        const value = book.cl.base || 0;
+        total += value;
+        clTotal += value;
+        getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
+      }
+      // Add HD
+      if (book.class === "_hd") {
+        const value = actorData.attributes.hd.total;
+        total += value;
+        clTotal += value;
+        setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.HitDie"), value);
+      }
+      // Add class levels
+      else if (book.class && rollData.classes[book.class]) {
+        const value = rollData.classes[book.class].level;
+        total += value;
+        clTotal += value;
+
+        setSourceInfoByName(this.sourceInfo, key, rollData.classes[book.class].name, value);
       }
 
-      const spellbookAbility = this.data.data.abilities[spellbook.ability];
-      let spellbookAbilityScore = spellbookAbility?.total ?? 10;
+      // set auto spell level calculation offset
+      if (book.autoSpellLevelCalculation) {
+        const autoFormula = book.cl.autoSpellLevelCalculationFormula || "0";
+        const autoBonus = RollPF.safeTotal(autoFormula, rollData);
+        const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
+        book.cl.autoSpellLevelTotal = autoTotal;
 
-      // Add spell slots based on ability bonus slot formula
-      {
-        const formula = spellbook.spellSlotAbilityBonusFormula || "0";
-        spellbookAbilityScore += RollPF.safeRoll(formula, rollData).total;
-      }
-
-      const spellbookAbilityMod = Math.floor((spellbookAbilityScore - 10) / 2);
-
-      // Set CL
-      let clTotal = 0;
-      {
-        const key = `data.attributes.spells.spellbooks.${spellbookKey}.cl.total`;
-        const formula = spellbook.cl.formula || "0";
-        let total = 0;
-
-        // Add NPC base
-        if (this.data.type === "npc") {
-          const value = spellbook.cl.base || 0;
-          total += value;
-          clTotal += value;
-          getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
-        }
-        // Add HD
-        if (spellbook.class === "_hd") {
-          const value = this.data.data.attributes.hd.total;
-          total += value;
-          clTotal += value;
-          setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.HitDie"), value);
-        }
-        // Add class levels
-        else if (spellbook.class && rollData.classes[spellbook.class]) {
-          const value = rollData.classes[spellbook.class].level;
-          total += value;
-          clTotal += value;
-
-          setSourceInfoByName(this.sourceInfo, key, rollData.classes[spellbook.class].name, value);
-        }
-
-        // set auto spell level calculation offset
-        if (spellbook.autoSpellLevelCalculation) {
-          const autoFormula = spellbook.cl.autoSpellLevelCalculationFormula || "0";
-          const autoBonus = RollPF.safeTotal(autoFormula, rollData);
-          const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
-          spellbook.cl.autoSpellLevelTotal = autoTotal;
-
-          clTotal += autoBonus;
-          if (autoBonus !== 0) {
-            setSourceInfoByName(
-              this.sourceInfo,
-              key,
-              game.i18n.localize("PF1.AutoSpellClassLevelOffset.Formula"),
-              autoBonus
-            );
-          }
-        }
-
-        // Add from bonus formula
-        const clBonus = RollPF.safeRoll(formula, rollData).total;
-        clTotal += clBonus;
-        if (clBonus > 0) {
-          setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus);
-        } else if (clBonus < 0) {
-          setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus, false);
-        }
-
-        if (rollData.attributes.woundThresholds.penalty != null) {
-          // Subtract Wound Thresholds penalty. Can't reduce below 1.
-          if (rollData.attributes.woundThresholds.penalty > 0 && clTotal > 1) {
-            clTotal = Math.max(1, clTotal - rollData.attributes.woundThresholds.penalty);
-            setSourceInfoByName(
-              this.sourceInfo,
-              key,
-              game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
-              -rollData.attributes.woundThresholds.penalty
-            );
-          }
-        }
-
-        // Subtract energy drain
-        if (rollData.attributes.energyDrain) {
-          clTotal = Math.max(0, clTotal - rollData.attributes.energyDrain);
+        clTotal += autoBonus;
+        if (autoBonus !== 0) {
           setSourceInfoByName(
             this.sourceInfo,
             key,
-            game.i18n.localize("PF1.CondTypeEnergyDrain"),
-            -Math.abs(rollData.attributes.energyDrain),
-            false
+            game.i18n.localize("PF1.AutoSpellClassLevelOffset.Formula"),
+            autoBonus
           );
         }
-
-        setProperty(this.data, key, clTotal);
       }
 
-      // Set concentration bonus
-      {
-        // Temp fix for old actors that fail migration
-        {
-          const v = this.data.data.attributes.spells.spellbooks[spellbookKey].concentration;
-          if (Number.isFinite(v)) this.data.data.attributes.spells.spellbooks[spellbookKey].concentration = {};
-        }
-
-        const concFormula = this.data.data.attributes.spells.spellbooks[spellbookKey].concentrationFormula;
-        let formulaRoll = 0;
-        if (concFormula.length) formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
-
-        const concentration = clTotal + spellbookAbilityMod + formulaRoll - rollData.attributes.energyDrain;
-        this.data.data.attributes.spells.spellbooks[spellbookKey].concentration = {
-          total: concentration,
-        };
+      // Add from bonus formula
+      const clBonus = RollPF.safeRoll(formula, rollData).total;
+      clTotal += clBonus;
+      if (clBonus > 0) {
+        setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus);
+      } else if (clBonus < 0) {
+        setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.CasterLevelBonusFormula"), clBonus, false);
       }
 
-      const getAbilityBonus = (a) =>
-        a !== 0 && typeof spellbookAbilityMod === "number" ? ActorPF.getSpellSlotIncrease(spellbookAbilityMod, a) : 0;
-      // Spell slots
-      {
-        const useAuto = spellbook.autoSpellLevelCalculation;
-        if (useAuto) {
-          let spellPrepMode = spellbook.spellPreparationMode;
-          if (!spellPrepMode) {
-            spellPrepMode = "spontaneous";
-            spellbook.spellPreparationMode = spellPrepMode;
-          }
-
-          // turn off spell points
-          spellbook.spellPoints.useSystem = false;
-
-          // set base "spontaneous" based on spell prep mode
-          if (spellPrepMode === "hybrid" || spellPrepMode === "prestige" || spellPrepMode === "spontaneous") {
-            spellbook.spontaneous = true;
-          } else {
-            spellbook.spontaneous = false;
-          }
-
-          let casterType = spellbook.casterType;
-          if (!casterType || (spellPrepMode === "hybrid" && casterType !== "high")) {
-            casterType = "high";
-            spellbook.casterType = casterType;
-          }
-          if (spellPrepMode === "prestige" && casterType !== "low") {
-            casterType = "low";
-            spellbook.casterType = casterType;
-          }
-
-          const castsForLevels =
-            CONFIG.PF1.casterProgression[spellbook.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][spellPrepMode][
-              casterType
-            ];
-          let classLevel = Math.clamped(spellbook.cl.autoSpellLevelTotal, 1, 20);
-
-          // Protect against invalid class level bricking actors
-          if (!Number.isSafeInteger(classLevel)) {
-            const msg = `Actor ${this.id} has invalid caster class level.`;
-            console.error(msg, classLevel);
-            ui.notifications?.error(msg);
-            classLevel = Math.floor(classLevel);
-          }
-
-          rollData.ablMod = spellbookAbilityMod;
-
-          const allLevelModFormula =
-            spellbook[spellbook.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"] || "0";
-          const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
-
-          for (let a = 0; a < 10; a++) {
-            const spellLevel = spellbook.spells[`spell${a}`];
-            // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
-            const spellsForLevel =
-              a === 0 && spellbook.spontaneous
-                ? CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType][classLevel - 1][a]
-                : castsForLevels[classLevel - 1][a];
-            spellLevel.base = spellsForLevel;
-
-            const offsetFormula =
-              spellLevel[spellbook.spontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula"] || "0";
-
-            const max =
-              typeof spellsForLevel === "number" || (a === 0 && spellbook.hasCantrips)
-                ? spellsForLevel + getAbilityBonus(a) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
-                : null;
-
-            spellLevel.max = max;
-            if (!Number.isFinite(spellLevel.value)) spellLevel.value = max;
-          }
-        } else {
-          for (let a = 0; a < 10; a++) {
-            const spellLevel = spellbook.spells[`spell${a}`];
-            let base = parseInt(spellLevel.base);
-            if (Number.isNaN(base)) {
-              spellLevel.base = null;
-              spellLevel.max = 0;
-            } else if (spellbook.autoSpellLevels) {
-              base += getAbilityBonus(a);
-              spellLevel.max = base;
-            } else {
-              spellLevel.max = base;
-            }
-
-            const max = spellLevel.max;
-            const oldval = spellLevel.value;
-            if (!Number.isFinite(oldval)) spellLevel.value = max;
-          }
+      if (rollData.attributes.woundThresholds.penalty != null) {
+        // Subtract Wound Thresholds penalty. Can't reduce below 1.
+        if (rollData.attributes.woundThresholds.penalty > 0 && clTotal > 1) {
+          clTotal = Math.max(1, clTotal - rollData.attributes.woundThresholds.penalty);
+          setSourceInfoByName(
+            this.sourceInfo,
+            key,
+            game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
+            -rollData.attributes.woundThresholds.penalty
+          );
         }
       }
 
-      // Set spontaneous spell slots to something sane
-      {
-        for (let a = 0; a < 10; a++) {
-          const spellLevel = spellbook.spells[`spell${a}`];
-          const current = spellLevel.value;
-          spellLevel.value = current || 0;
-        }
+      // Subtract energy drain
+      if (rollData.attributes.energyDrain) {
+        clTotal = Math.max(0, clTotal - rollData.attributes.energyDrain);
+        setSourceInfoByName(
+          this.sourceInfo,
+          key,
+          game.i18n.localize("PF1.CondTypeEnergyDrain"),
+          -Math.abs(rollData.attributes.energyDrain),
+          false
+        );
       }
 
-      // Update spellbook slots
-      {
-        const slots = {};
-        for (let a = 0; a < 10; a++) {
-          slots[a] = {
-            value: spellbook.spells[`spell${a}`].max,
-            domainSlots: spellbook.domainSlotValue,
-          };
-        }
-
-        const spells = this.items.filter((o) => o.type === "spell" && o.data.data.spellbook === spellbookKey);
-        if (!spellbook.spontaneous) {
-          for (const i of spells) {
-            const isDomain = i.data.data.domain === true;
-            const a = i.data.data.level;
-            // Basic sanity check
-            if (Math.clamped(a, 0, 9) !== a) {
-              console.error("Spell with impossible spell level:", i);
-              continue;
-            }
-            let uses = slots[a].value;
-            if (Number.isFinite(i.maxCharges)) {
-              const slotCost = i.data.data.slotCost ?? 1;
-              const dSlots = slots[a].domainSlots;
-              const subtract = { domain: 0, uses: 0 };
-              if (isDomain) {
-                subtract.domain = Math.min(i.maxCharges, dSlots);
-                subtract.uses = (i.maxCharges - subtract.domain) * slotCost;
-              } else {
-                subtract.uses = i.maxCharges * slotCost;
-              }
-              slots[a].domainSlots -= subtract.domain;
-              uses -= subtract.uses;
-            }
-            slots[a].value = uses;
-            spellbook.spells[`spell${a}`].value = uses;
-          }
-        }
-
-        // Spells available hint text if auto spell levels is enabled
-        {
-          const useAuto = spellbook.autoSpellLevelCalculation;
-          if (useAuto) {
-            const spellPrepMode = spellbook.spellPreparationMode;
-            const casterType = spellbook.casterType || "high";
-            const classLevel = Math.floor(Math.clamped(spellbook.cl.autoSpellLevelTotal, 1, 20));
-
-            const spellbookAbilityScore = spellbookAbility?.total;
-
-            const allLevelModFormula = spellbook.preparedAllOffsetFormula || "0";
-            const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
-
-            for (let a = 0; a < 10; a++) {
-              const spellLevel = spellbook.spells[`spell${a}`];
-              if (!isNaN(spellbookAbilityScore) && spellbookAbilityScore - 10 < a) {
-                const message = game.i18n.localize("PF1.SpellScoreTooLow");
-                spellLevel.spellMessage = message;
-                continue;
-              }
-
-              let remaining;
-              if (spellPrepMode === "prepared") {
-                // for prepared casters, just use the 'value' calculated above
-                remaining = spellLevel.value;
-              } else {
-                // spontaneous or hybrid
-                // if not prepared then base off of casts per day
-                let available =
-                  CONFIG.PF1.casterProgression.spellsPreparedPerDay[spellPrepMode][casterType]?.[classLevel - 1][a];
-                available += allLevelMod;
-
-                const formula = spellLevel.preparedOffsetFormula || "0";
-                available += RollPF.safeTotal(formula, rollData);
-
-                let dSlots = slots[a].domainSlots;
-                const used = spells.reduce((acc, i) => {
-                  const { level, spellbook, preparation, atWill, domain } = i.data.data;
-                  if (level === a && spellbook === spellbookKey && !atWill && preparation.spontaneousPrepared) {
-                    if (domain && dSlots > 0) --dSlots;
-                    else ++acc;
-                  }
-                  return acc;
-                }, 0);
-
-                remaining = available - used;
-              }
-
-              if (!remaining) {
-                spellLevel.spellMessage = "";
-                continue;
-              }
-
-              let remainingMessage = "";
-              if (remaining < 0) {
-                remainingMessage = game.i18n.format("PF1.TooManySpells", { quantity: Math.abs(remaining) });
-              } else if (remaining > 0) {
-                if (spellPrepMode === "spontaneous") {
-                  remainingMessage =
-                    remaining === 1
-                      ? game.i18n.localize("PF1.LearnMoreSpell")
-                      : game.i18n.format("PF1.LearnMoreSpells", { quantity: remaining });
-                } else {
-                  // hybrid or prepared
-                  remainingMessage =
-                    remaining === 1
-                      ? game.i18n.localize("PF1.PrepareMoreSpell")
-                      : game.i18n.format("PF1.PrepareMoreSpells", { quantity: remaining });
-                }
-              }
-
-              if (remainingMessage) {
-                spellLevel.spellMessage = remainingMessage;
-              }
-            }
-          }
-        }
-      }
-
-      // Spell points
-      {
-        const formula = spellbook.spellPoints.maxFormula || "0";
-        rollData.cl = spellbook.cl.total;
-        rollData.ablMod = spellbookAbilityMod;
-        const spellClass = spellbook.class ?? "";
-        rollData.classLevel = spellClass === "_hd" ? rollData.attributes.hd.total : rollData[spellClass]?.level || 0;
-        const roll = RollPF.safeRoll(formula, rollData);
-        spellbook.spellPoints.max = roll.total;
-      }
-
-      // Set spellbook range
-      const cl = spellbook.cl.total;
-      spellbook.range = {
-        close: calculateRange(null, "close", { cl }),
-        medium: calculateRange(null, "medium", { cl }),
-        long: calculateRange(null, "long", { cl }),
-      };
+      book.cl.total = clTotal;
     }
+
+    // Set concentration bonus
+    {
+      // Temp fix for old actors that fail migration
+      if (Number.isFinite(book.concentration)) book.concentration = {};
+      const concFormula = book.concentrationFormula;
+      const formulaRoll = concFormula.length ? RollPF.safeRoll(concFormula, rollData).total : 0;
+      const classAbilityMod = actorData.abilities[book.ability]?.mod ?? 0;
+      const concentration = clTotal + classAbilityMod + formulaRoll - rollData.attributes.energyDrain;
+      book.concentration = { total: concentration };
+    }
+
+    const getAbilityBonus = (a) => (a !== 0 ? ActorPF.getSpellSlotIncrease(spellSlotAbilityMod, a) : 0);
+
+    const mode = new SpellbookMode(book);
+    const useSpellPoints = book.spellPoints.useSystem === true;
+
+    // Spell slots
+    const useAuto = book.autoSpellLevelCalculation;
+    if (useAuto) {
+      // turn off spell points
+      book.spellPoints.useSystem = false;
+
+      // set base "spontaneous" based on spell prep mode
+      book.spontaneous = mode.isSemiSpontaneous;
+
+      let casterType = book.casterType;
+      if (!casterType || (mode.isHybrid && casterType !== "high")) {
+        book.casterType = casterType = "high";
+      }
+      if (mode.isPrestige && casterType !== "low") {
+        book.casterType = casterType = "low";
+      }
+
+      const castsForLevels =
+        CONFIG.PF1.casterProgression[book.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][mode.raw][casterType];
+      let classLevel = Math.clamped(book.cl.autoSpellLevelTotal, 1, 20);
+
+      // Protect against invalid class level bricking actors
+      if (!Number.isSafeInteger(classLevel)) {
+        const msg = `Actor ${this.id} has invalid caster class level.`;
+        console.error(msg, classLevel);
+        ui.notifications?.error(msg);
+        classLevel = Math.floor(classLevel);
+      }
+
+      rollData.ablMod = spellSlotAbilityMod;
+
+      const allLevelModFormula =
+        book[book.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"] || "0";
+      const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
+
+      for (let level = 0; level < 10; level++) {
+        const levelData = book.spells[`spell${level}`];
+        // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
+        const spellsForLevel =
+          level === 0 && book.spontaneous
+            ? CONFIG.PF1.casterProgression.spellsPreparedPerDay[mode.raw][casterType][classLevel - 1][level]
+            : castsForLevels[classLevel - 1][level];
+        levelData.base = spellsForLevel;
+
+        const offsetFormula = levelData[book.spontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula"] || "0";
+
+        const max =
+          typeof spellsForLevel === "number" || (level === 0 && book.hasCantrips)
+            ? spellsForLevel + getAbilityBonus(level) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
+            : null;
+
+        levelData.max = max;
+        if (!Number.isFinite(levelData.value)) levelData.value = max;
+      }
+    } else {
+      for (let level = 0; level < 10; level++) {
+        const spellLevel = book.spells[`spell${level}`];
+        let base = parseInt(spellLevel.base);
+        if (Number.isNaN(base)) {
+          spellLevel.base = null;
+          spellLevel.max = 0;
+        } else if (book.autoSpellLevels) {
+          base += getAbilityBonus(level);
+          spellLevel.max = base;
+        } else {
+          spellLevel.max = base;
+        }
+
+        const max = spellLevel.max;
+        const oldval = spellLevel.value;
+        if (!Number.isFinite(oldval)) spellLevel.value = max;
+      }
+    }
+
+    // Set spontaneous spell slots to something sane
+    for (let a = 0; a < 10; a++) {
+      const spellLevel = book.spells[`spell${a}`];
+      const current = spellLevel.value;
+      spellLevel.value = current || 0;
+    }
+
+    // Update spellbook slots
+    {
+      const slots = {};
+      for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
+        slots[spellLevel] = new SpellbookSlots({
+          value: book.spells[`spell${spellLevel}`].max,
+          domain: book.domainSlotValue,
+        });
+      }
+
+      // Slot usage
+      if (!book.spontaneous) {
+        for (let level = 0; level < 10; level++) {
+          const levelSpells = bookInfo.level[level]?.spells ?? [];
+          const lvlSlots = slots[level];
+          for (const spell of levelSpells) {
+            if (Number.isFinite(spell.maxCharges)) {
+              const slotCost = spell.data.data.slotCost ?? 1;
+              const subtract = { domain: 0, uses: 0 };
+              if (spell.data.data.domain === true) {
+                subtract.domain = Math.min(spell.maxCharges, lvlSlots.domain);
+                subtract.uses = (spell.maxCharges - subtract.domain) * slotCost;
+              } else {
+                subtract.uses = spell.maxCharges * slotCost;
+              }
+              lvlSlots.domain -= subtract.domain;
+              lvlSlots.value -= subtract.uses;
+            }
+          }
+          book.spells[`spell${level}`].value = lvlSlots.value;
+        }
+      }
+
+      // Spells available hint text if auto spell levels is enabled
+      const useAuto = book.autoSpellLevelCalculation;
+      if (useAuto) {
+        const maxLevelByAblScore = (spellbookAbility?.total ?? 0) - 10;
+
+        const allLevelModFormula = book.preparedAllOffsetFormula || "0";
+        const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
+
+        const casterType = book.casterType || "high";
+        const classLevel = Math.floor(Math.clamped(book.cl.autoSpellLevelTotal, 1, 20));
+
+        for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
+          const spellLevelData = book.spells[`spell${spellLevel}`];
+          if (maxLevelByAblScore < spellLevel) {
+            spellLevelData.lowAbilityScore = true;
+            continue;
+          }
+
+          spellLevelData.known = { unused: 0, max: 0 };
+          spellLevelData.preparation = { unused: 0, max: 0 };
+
+          let remaining;
+          if (mode.isPrepared) {
+            // for prepared casters, just use the 'value' calculated above
+            remaining = spellLevelData.value;
+            spellLevelData.preparation.max = spellLevelData.max;
+          } else {
+            // spontaneous or hybrid
+            // if not prepared then base off of casts per day
+            let available =
+              CONFIG.PF1.casterProgression.spellsPreparedPerDay[mode.raw][casterType]?.[classLevel - 1][spellLevel];
+            available += allLevelMod;
+
+            const formula = spellLevelData.preparedOffsetFormula || "0";
+            available += RollPF.safeTotal(formula, rollData);
+
+            // Leave record of max known
+            spellLevelData.known.max = available;
+
+            // Count spell slots used
+            let dSlots = slots[spellLevel].domain;
+            const used =
+              bookInfo.level[spellLevel]?.spells.reduce((acc, i) => {
+                const { preparation, atWill, domain, slotCost } = i.data.data;
+                if (!atWill && preparation.spontaneousPrepared) {
+                  if (domain && dSlots > 0) dSlots -= slotCost;
+                  else acc += slotCost;
+                }
+                return acc;
+              }, 0) ?? 0;
+            slots[spellLevel].domainUnused = dSlots;
+            slots[spellLevel].used = used;
+
+            remaining = available - used;
+          }
+
+          if (!remaining) {
+            spellLevelData.spellMessage = "";
+            continue;
+          }
+
+          let spellRemainingMsg = "";
+
+          if (remaining < 0) {
+            spellRemainingMsg = game.i18n.format("PF1.TooManySpells", { quantity: Math.abs(remaining) });
+            if (mode.isSpontaneous) spellLevelData.unusedKnown = remaining;
+            else spellLevelData.preparation.unused = remaining;
+          } else if (remaining > 0) {
+            if (mode.isSpontaneous) {
+              spellRemainingMsg =
+                remaining === 1
+                  ? game.i18n.localize("PF1.LearnMoreSpell")
+                  : game.i18n.format("PF1.LearnMoreSpells", { quantity: remaining });
+              spellLevelData.known.unused = remaining;
+            } else {
+              // hybrid or prepared
+              spellRemainingMsg =
+                remaining === 1
+                  ? game.i18n.localize("PF1.PrepareMoreSpell")
+                  : game.i18n.format("PF1.PrepareMoreSpells", { quantity: remaining });
+              spellLevelData.preparation.unused = remaining;
+            }
+          }
+
+          spellLevelData.spellMessage = spellRemainingMsg;
+        }
+      }
+    }
+
+    // Spell points
+    if (useSpellPoints) {
+      const formula = book.spellPoints.maxFormula || "0";
+      rollData.cl = book.cl.total;
+      rollData.ablMod = spellSlotAbilityMod;
+      const spellClass = book.class ?? "";
+      rollData.classLevel = spellClass === "_hd" ? rollData.attributes.hd.total : rollData[spellClass]?.level || 0;
+      const roll = RollPF.safeRoll(formula, rollData);
+      book.spellPoints.max = roll.total;
+    } else {
+      book.spellPoints.max = 0;
+    }
+
+    // Set spellbook ranges
+    book.range = new SpellRanges(book.cl.total);
+  }
+
+  /**
+   * Collect some basic spellbook info so it doesn't need to be gathered again for each spellbook.
+   */
+  _generateSpellbookCache() {
+    const bookKeys = Object.keys(this.data.data.attributes.spells.spellbooks);
+
+    const allSpells = this.items.filter((i) => i.type === "spell");
+
+    const cache = {
+      spells: allSpells,
+      books: {},
+    };
+
+    // Prepare spellbooks
+    bookKeys.forEach((bookKey) => {
+      cache.books[bookKey] ??= new Spellbook(bookKey, this);
+    });
+
+    // Spread out spells to books
+    allSpells.forEach((spell) => {
+      const bookKey = spell.data.data.spellbook;
+      if (!bookKeys.includes(bookKey)) return console.error("Spell has invalid book", spell);
+      cache.books[bookKey].addSpell(spell);
+    });
+
+    // Include the data in output as is
+    this._spellbookCache = cache;
+
+    return cache;
+  }
+
+  /**
+   * Update all spellbooks
+   *
+   * @param rollData
+   * @param cache
+   */
+  updateSpellbookInfo(rollData, cache) {
+    rollData ??= this.getRollData({ refresh: true });
+    cache ??= this._generateSpellbookCache();
+
+    const spellbooks = this.data.data.attributes.spells.spellbooks;
+
+    // Set spellbook info
+    for (const bookKey of Object.keys(spellbooks)) {
+      this._updateSpellBook(bookKey, rollData, cache);
+    }
+
+    // usedSpellbooks backwards compatibility. Mostly unused by the system itself
+    this.data.data.attributes.spells.usedSpellbooks = Object.keys(spellbooks).filter((book) => spellbooks[book].inUse);
   }
 
   /**
@@ -926,13 +967,6 @@ export class ActorPF extends ActorBasePF {
         );
       }
     }
-
-    // Add speed parts together
-    {
-      for (const [k, v] of Object.entries(this.data.data.attributes.speed)) {
-        v.total = (v.base ?? 0) + (v.add ?? 0);
-      }
-    }
   }
 
   /**
@@ -964,87 +998,94 @@ export class ActorPF extends ActorBasePF {
     // Setup links
     this.prepareItemLinks();
 
+    // Refresh roll data again to include processed  info
+    this.getRollData({ refresh: true });
+
     // Update item resources
     this.items.forEach((item) => {
       item.prepareDerivedItemData();
       this.updateItemResources(item.data);
-
-      // Update tokens for resources
-      const tokens = this.isToken ? [this.token] : this.getActiveTokens();
-      tokens.forEach((t) => {
-        try {
-          t.drawBars();
-        } catch (err) {
-          // Drop the harmless error
-        }
-      });
     });
 
-    // Prepare auxillary data
-    this.prepareSpellbooks();
+    // Update tokens for resources
+    const tokens = this.isToken ? [this.token] : this.getActiveTokens();
+    tokens.forEach((t) => {
+      try {
+        t.drawBars();
+      } catch (err) {
+        // Drop the harmless error
+      }
+    });
   }
 
+  /**
+   * Prepare armor, weapon, and language proficiencies.
+   */
   prepareProficiencies() {
     const actorData = this.data.data;
     // Handle armor and weapon proficiencies for PCs
     // NPCs are considered proficient with their armor
-    if (this.type === "character") {
-      // Collect proficiencies from items, add them to actor's proficiency totals
-      for (const prof of ["armorProf", "weaponProf"]) {
-        // Custom proficiency baseline from actor
-        const customProficiencies =
-          actorData.traits[prof]?.custom.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) || [];
+    // Collect proficiencies from items, add them to actor's proficiency totals
+    const proficiencies = {
+      armorProf: CONFIG.PF1.armorProficiencies,
+      weaponProf: CONFIG.PF1.weaponProficiencies,
+      languages: CONFIG.PF1.languages,
+    };
+    for (const [prof, translations] of Object.entries(proficiencies)) {
+      // Custom proficiency baseline from actor
+      const customProficiencies =
+        actorData.traits[prof]?.custom?.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) || [];
 
-        // Iterate over all items to create one array of non-custom proficiencies
-        const proficiencies = this.items.reduce(
-          (profs, item) => {
-            // Check only items able to grant proficiencies
-            if (hasProperty(item.data, `data.${prof}`)) {
-              // Get existing sourceInfo for item with this name, create sourceInfo if none is found
-              // Remember whether sourceInfo can be modified or has to be pushed at the end
-              let sInfo = getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.find(
-                (o) => o.name === item.name
-              );
-              const hasInfo = !!sInfo;
-              if (!sInfo) sInfo = { name: item.name, value: [] };
-              else if (typeof sInfo.value === "string") sInfo.value = sInfo.value.split(", ");
+      // Iterate over all items to create one array of non-custom proficiencies
+      const proficiencies = this.items.reduce(
+        (profs, item) => {
+          // Check only items able to grant proficiencies
+          if (hasProperty(item.data, `data.${prof}`)) {
+            // Get existing sourceInfo for item with this name, create sourceInfo if none is found
+            // Remember whether sourceInfo can be modified or has to be pushed at the end
+            let sInfo = getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.find(
+              (o) => o.name === item.name
+            );
+            const hasInfo = !!sInfo;
+            if (!sInfo) sInfo = { name: item.name, value: [] };
+            else if (typeof sInfo.value === "string") sInfo.value = sInfo.value.split(", ");
 
-              // Regular proficiencies
-              for (const proficiency of item.data.data[prof].value) {
-                // Add localized source info if item's info does not have this proficiency already
-                if (!sInfo.value.includes(proficiency)) sInfo.value.push(CONFIG.PF1[`${prof}iciencies`][proficiency]);
-                // Add raw proficiency key
-                if (!profs.includes(proficiency)) profs.push(proficiency);
-              }
-
-              // Collect trimmed but otherwise original proficiency strings, dedupe array for actor's total
-              const customProfs =
-                item.data.data[prof].custom
-                  ?.split(CONFIG.PF1.re.traitSeparator)
-                  .map((i) => i.trim())
-                  .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
-              // Add readable custom profs to sources and overall collection
-              sInfo.value.push(...customProfs);
-              customProficiencies.push(...customProfs);
-
-              if (sInfo.value.length > 0) {
-                // Dedupe if adding to existing sourceInfo
-                if (hasInfo) sInfo.value = [...new Set(sInfo.value)];
-                // Transform arrays into presentable strings
-                sInfo.value = sInfo.value.join(", ");
-                // If sourceInfo was not a reference to existing info, push it now
-                if (!hasInfo) getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.push(sInfo);
-              }
+            // Regular proficiencies
+            for (const proficiency of item.data.data[prof].value) {
+              // Add localized source info if item's info does not have this proficiency already
+              if (!sInfo.value.includes(proficiency)) sInfo.value.push(translations[proficiency]);
+              // Add raw proficiency key
+              if (!profs.includes(proficiency)) profs.push(proficiency);
             }
-            return profs;
-          },
-          [...actorData.traits[prof].value] // Default proficiency baseline from actor
-        );
 
-        // Save collected proficiencies in actor's data
-        actorData.traits[prof].total = [...proficiencies];
-        actorData.traits[prof].customTotal = customProficiencies.join(";");
-      }
+            // Collect trimmed but otherwise original proficiency strings, dedupe array for actor's total
+            const customProfs =
+              item.data.data[prof].custom
+                ?.split(CONFIG.PF1.re.traitSeparator)
+                .map((i) => i.trim())
+                .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
+            // Add readable custom profs to sources and overall collection
+            sInfo.value.push(...customProfs);
+            customProficiencies.push(...customProfs);
+
+            if (sInfo.value.length > 0) {
+              // Dedupe if adding to existing sourceInfo
+              if (hasInfo) sInfo.value = [...new Set(sInfo.value)];
+              // Transform arrays into presentable strings
+              sInfo.value = sInfo.value.join(", ");
+              // If sourceInfo was not a reference to existing info, push it now
+              if (!hasInfo) getSourceInfo(this.sourceInfo, `data.traits.${prof}`).positive.push(sInfo);
+            }
+          }
+          return profs;
+        },
+        [...(actorData.traits[prof]?.value ?? [])] // Default proficiency baseline from actor
+      );
+
+      // Save collected proficiencies in actor's data
+      actorData.traits[prof] ??= {}; // In case the data structure is missing
+      actorData.traits[prof].total = [...proficiencies];
+      actorData.traits[prof].customTotal = customProficiencies.join(";");
     }
   }
 
@@ -1058,13 +1099,6 @@ export class ActorPF extends ActorBasePF {
       cmbBonus = this.data.data.attributes.cmb.bonus ?? 0,
       cmb = shrAtk + genAtk + szCMBMod + cmbBonus + cmbAblMod;
     this.data.data.attributes.cmb.total = cmb;
-  }
-
-  prepareSpellbooks() {
-    // usedSpellbooks backwards compatibility. Mostly unused by the system itself
-    const spellbooks = this.data.data.attributes?.spells?.spellbooks;
-    const usedBooks = spellbooks ? Object.keys(spellbooks ?? {}).filter((book) => spellbooks[book]?.inUse) : [];
-    setProperty(this.data, "data.attributes.spells.usedSpellbooks", usedBooks);
   }
 
   prepareSpecificDerivedData() {
@@ -1093,15 +1127,19 @@ export class ActorPF extends ActorBasePF {
       attributes[k].max = round(attributes[k].max);
     }
 
+    // Offset relative attributes
+    for (const k of this.constructor.relativeAttributes) {
+      const offset = getProperty(this.data, `${k}.offset`);
+      const max = getProperty(this.data, `${k}.max`);
+      if (offset != null) setProperty(this.data, `${k}.value`, offset + max);
+    }
+
     // Shared attack bonuses
     {
       // Total
       const totalAtk = attributes.bab.total - attributes.acp.attackPenalty - (attributes.energyDrain ?? 0);
       attributes.attack.shared = totalAtk;
     }
-
-    // Refresh HP
-    this._applyPreviousAttributes();
 
     // Update wound threshold
     this.updateWoundThreshold();
@@ -1142,7 +1180,7 @@ export class ActorPF extends ActorBasePF {
     // Set speed labels
     this.labels.speed = {};
     for (const [key, obj] of Object.entries(attributes.speed ?? {})) {
-      const dist = convertDistance(obj.total);
+      const dist = game.pf1.utils.convertDistance(obj.total);
       this.labels.speed[key] = `${dist[0]} ${CONFIG.PF1.measureUnitsShort[dist[1]]}`;
     }
 
@@ -1485,7 +1523,7 @@ export class ActorPF extends ActorBasePF {
             if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
             if (!(src.operator === "add" && srcValue === 0) || src.ignoreNull === false) {
               sourceDetails[changeTarget].push({
-                name: srcInfo,
+                name: srcInfo.replace(/[[\]]/g, ""),
                 value: srcValue,
               });
             }
@@ -1555,10 +1593,10 @@ export class ActorPF extends ActorBasePF {
       "data.abilities.int.checkMod": 0,
       "data.abilities.wis.checkMod": 0,
       "data.abilities.cha.checkMod": 0,
-      "data.attributes.spells.primary.concentration.total": 0,
-      "data.attributes.spells.secondary.concentration.total": 0,
-      "data.attributes.spells.tertiary.concentration.total": 0,
-      "data.attributes.spells.spelllike.concentration.total": 0,
+      "data.attributes.spells.spellbooks.primary.concentration": 0,
+      "data.attributes.spells.spellbooks.secondary.concentration": 0,
+      "data.attributes.spells.spellbooks.tertiary.concentration": 0,
+      "data.attributes.spells.spellbooks.spelllike.concentration": 0,
       "data.details.carryCapacity.bonus.total": 0,
       "data.details.carryCapacity.multiplier.total": 0,
     };
@@ -1581,13 +1619,11 @@ export class ActorPF extends ActorBasePF {
 
     // Reset totals
     for (const [k, v] of Object.entries(keys)) {
-      setProperty(this.data, k, v);
-    }
-  }
-
-  async refresh() {
-    if (this.isOwner) {
-      return this.update({});
+      try {
+        setProperty(this.data, k, v);
+      } catch (err) {
+        console.log(err, k);
+      }
     }
   }
 
@@ -1631,8 +1667,25 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   async _preUpdate(update, options, userId) {
-    this._trackPreviousAttributes();
     await super._preUpdate(update, options, userId);
+
+    // Offset HP value
+    if (this._initialized) {
+      for (const k of this.constructor.relativeAttributes) {
+        const isPathKey = {
+          value: Object.hasOwnProperty.call(update, `${k}.value`),
+          offset: Object.hasOwnProperty.call(update, `${k}.offset`),
+          max: Object.hasOwnProperty.call(update, `${k}.max`),
+        };
+        const value = Object.entries(isPathKey).reduce((cur, o) => {
+          cur[o[0]] = o[1] ? update[`${k}.${o[0]}`] : getProperty(update, `${k}.${o[0]}`);
+          if (o[0] === "max" && cur[o[0]] === undefined) cur[o[0]] = getProperty(this.data, `${k}.max`);
+          return cur;
+        }, {});
+        if (value.value !== undefined && value.offset === undefined)
+          setProperty(update, `${k}.offset`, value.value - value.max);
+      }
+    }
 
     if (!update.data) return; // No system updates.
 
@@ -1669,29 +1722,19 @@ export class ActorPF extends ActorBasePF {
       update.data.attributes.energyDrain = Math.abs(energyDrain);
     }
 
-    // Apply changes in resources
-    const resources = update.data.resources;
-    if (resources) {
-      for (const key of Object.keys(resources)) {
-        const itemId = resources[key]._id ?? oldData.resources[key]._id;
-        const value = resources[key]?.value;
-        if (itemId?.length && Number.isFinite(value)) {
-          const updateData = mergeObject(this._queuedItemUpdates[itemId] ?? {}, { "data.uses.value": value });
-          this._queuedItemUpdates[itemId] = updateData;
-        }
-      }
-      // Avoid contaminating actor data
-      delete update.data.resources;
-    }
-
-    // Make only 1 fear condition active at most
+    // Make only 1 fear or fatigue condition active at most
     const conditions = update.data.attributes?.conditions;
     if (conditions) {
-      const fearStages = ["shaken", "frightened", "panicked"];
-      const updateFearKey = Object.keys(conditions).find((o) => fearStages.includes(o));
-      if (updateFearKey != null) {
-        for (const key of fearStages) {
-          if (key !== updateFearKey) conditions[key] = false;
+      const conditionStages = [
+        ["shaken", "frightened", "panicked"],
+        ["fatigued", "exhausted"],
+      ];
+      for (const conditionGroup of conditionStages) {
+        const conditionKey = Object.keys(conditions).find((o) => conditionGroup.includes(o));
+        if (conditionKey != null) {
+          for (const key of conditionGroup) {
+            if (key !== conditionKey) conditions[key] = false;
+          }
         }
       }
     }
@@ -1724,47 +1767,19 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
-  async doQueuedUpdates() {
-    if (!this.testUserPermission(game.user, "OWNER")) return;
-    if (this._queuedUpdates == null) return;
-
-    const diff = diffObject(duplicate(this.data._source), expandObject(this._queuedUpdates), { inner: true });
-    this._queuedUpdates = {};
-    if (!isObjectEmpty(diff)) {
-      await this.update(diff);
-    }
-  }
-
-  _preCreateEmbeddedDocuments(embeddedName, result, options, userId) {
-    if (game.user.id == userId) {
-      this._trackPreviousAttributes();
-    }
-
-    super._preCreateEmbeddedDocuments(...arguments);
-  }
-
   _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
     super._onCreateEmbeddedDocuments(...arguments);
 
     if (userId === game.user.id && embeddedName === "Item") {
       this.toggleConditionStatusIcons({ render: false });
+
+      // Apply race size to actor
+      const race = documents.find((d) => d.type === "race");
+      if (race?.data.data.size) {
+        if (this.data.data.traits.size !== race.data.data.size)
+          this.update({ "data.traits.size": race.data.data.size });
+      }
     }
-  }
-
-  _preDeleteEmbeddedDocuments(embeddedName, result, options, userId) {
-    if (game.user.id == userId) {
-      this._trackPreviousAttributes();
-    }
-
-    super._preDeleteEmbeddedDocuments(...arguments);
-  }
-
-  _preUpdateEmbeddedDocuments(embeddedName, result, options, userId) {
-    if (game.user.id == userId) {
-      this._trackPreviousAttributes();
-    }
-
-    super._preUpdateEmbeddedDocuments(...arguments);
   }
 
   _onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
@@ -1776,10 +1791,8 @@ export class ActorPF extends ActorBasePF {
   }
 
   updateItemResources(itemData) {
-    const activationType = game.settings.get("pf1", "unchainedActionEconomy")
-      ? itemData.data.unchainedAction?.activation?.type
-      : itemData.data.activation?.type;
-    if (itemData.data.uses?.per && activationType) {
+    const isCharged = !!itemData.data.uses?.per;
+    if (isCharged) {
       const itemTag = !itemData.data.useCustomTag ? createTag(itemData.name) : itemData.data.tag;
       const curUses = itemData.data.uses;
 
@@ -1800,84 +1813,50 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   async createAttackFromWeapon(item) {
+    if (item.data.type !== "weapon") throw new Error("Wrong Item type");
+
     if (!this.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
+      const msg = game.i18n.format("PF1.ErrorNoActorPermissionAlt", { 0: this.name });
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
 
-    if (item.data.type !== "weapon") throw new Error("Wrong Item type");
-
     // Get attack template
     const attackData = {};
-
-    // Add ability modifiers
-    attackData["data.ability.attack"] = item.data.data.ability.attack;
-    attackData["data.ability.damage"] = item.data.data.ability.damage;
-    attackData["data.ability.damageMult"] = item.data.data.ability.damageMult;
-    attackData["data.held"] = item.data.data.held;
 
     // Add misc things
     attackData["type"] = "attack";
     attackData["name"] = item.data.name;
-    attackData["data.masterwork"] = item.data.data.masterwork;
-    attackData["data.nonlethal"] = item.data.data.nonlethal;
-    attackData["data.attackType"] = item.data.data.attackType;
-    attackData["data.enh"] = item.data.data.enh;
-    attackData["data.ability.critRange"] = item.data.data.ability.critRange || 20;
-    attackData["data.ability.critMult"] = item.data.data.ability.critMult || 2;
-    attackData["data.actionType"] = item.data.data.actionType;
-    attackData["data.activation.type"] = item.data.data.activation.type;
-    attackData["data.duration.units"] = item.data.data.duration.units;
-    attackData["data.range.units"] = item.data.data.range.units;
-    attackData["data.broken"] = item.data.data.broken;
     attackData["img"] = item.data.img;
-    attackData["data.soundEffect"] = item.data.data.soundEffect;
-    attackData["data.usesAmmo"] = item.data.data.usesAmmo;
-    attackData["data.ammoType"] = item.data.data.ammoType;
+    attackData["data.attackType"] = "weapon";
+    attackData["data.masterwork"] = item.data.data.masterwork;
+    attackData["data.enh"] = item.data.data.enh;
+    attackData["data.broken"] = item.data.data.broken;
 
-    // Add additional attacks
-    attackData["data.attackParts"] = item.data.data.attackParts;
-    attackData["data.formulaicAttacks"] = item.data._source.data.formulaicAttacks;
-    attackData["data.critConfirmBonus"] = item.data.data.critConfirmBonus;
+    // Add actions
+    const actions = deepClone(item.data._source.data.actions ?? []);
+    for (const action of actions) {
+      action._id = randomID(16);
+    }
+    attackData["data.actions"] = actions;
 
-    // Add damage
-    attackData["data.damage"] = item.data._source.data.damage;
-
-    // Add attack bonus formula
-    attackData["data.attackBonus"] = item.data.data.attackBonus;
-
-    // Add range
-    attackData["data.range"] = item.data._source.data.range;
-
-    // Add measure template
-    attackData["data.measureTemplate"] = item.data._source.data.measureTemplate;
-
-    // Add notes
-    attackData["data.effectNotes"] = item.data._source.data.effectNotes;
-    attackData["data.attackNotes"] = item.data._source.data.attackNotes;
-
-    // Add conditionals
-    attackData["data.conditionals"] = item.data._source.data.conditionals;
-
-    // Add saving throw
-    attackData["data.save"] = item.data._source.data.save;
-
-    // Synthetic intermediate item
-    const attackItem = new ItemPF(expandObject(attackData));
     // Create attack
-    const itemData = await this.createEmbeddedDocuments("Item", [attackItem.toObject()]);
+    const newItem = (await this.createEmbeddedDocuments("Item", [expandObject(attackData)]))[0];
 
     // Create link
-    if (itemData.type === "attack") {
-      // check for correct itemData, Foundry #3419
-      const newItem = this.items.get(itemData.id);
-      if (newItem) {
-        await item.createItemLink("children", "data", newItem, itemData.id);
-      }
+    if (newItem) {
+      await item.createItemLink("children", "data", newItem, newItem.id);
     }
 
+    // Notify user
     ui.notifications.info(game.i18n.localize("PF1.NotificationCreatedAttack").format(item.data.name));
+
+    // Disable quick use of weapon
+    await item.update({
+      "data.showInQuickbar": false,
+    });
+
+    return newItem;
   }
 
   /* -------------------------------------------- */
@@ -2000,7 +1979,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (options.bonus?.length) {
-      parts.push(`+ ${options.bonus}`);
+      parts.push(`${options.bonus}`);
     }
 
     const props = [];
@@ -2020,7 +1999,8 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       chatMessage: options.chatMessage,
       noSound: options.noSound,
-      compendiumEntry: CONFIG.PF1.skillCompendiumEntries[skillId],
+      compendiumEntry: CONFIG.PF1.skillCompendiumEntries[skillId] ?? skl.journal,
+      compendiumEntryType: "JournalEntry",
       originalOptions: options,
     });
   }
@@ -2066,7 +2046,7 @@ export class ActorPF extends ActorBasePF {
     });
   }
 
-  rollCMB(options = { ability: null, chatMessage: true, noSound: false, dice: "1d20" }) {
+  rollCMB(options = { ranged: false, ability: null, chatMessage: true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -2092,16 +2072,9 @@ export class ActorPF extends ActorBasePF {
     rollData.sizeBonus = CONFIG.PF1.sizeSpecialMods[size];
     if (rollData.sizeBonus != 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
-    // Unreliable melee/ranged identification
-    const isMelee =
-      ["mwak", "msak", "mcman"].includes(this.data.data.actionType) ||
-      ["melee", "reach"].includes(this.data.data.range.units);
-    const isRanged =
-      ["rwak", "rsak", "rcman"].includes(this.data.data.actionType) || this.data.data.weaponSubtype === "ranged";
-
     const changeSources = ["attack"];
-    if (isRanged) changeSources.push("rattack");
-    if (isMelee) changeSources.push("mattack");
+    if (options.ranged === true) changeSources.push("rattack");
+    else changeSources.push("mattack");
     const effectiveChanges = getHighestChanges(
       this.changes.filter((c) => changeSources.includes(c.subTarget)),
       { ignoreTarget: true }
@@ -2374,8 +2347,10 @@ export class ActorPF extends ActorBasePF {
     // Obtain (or create) a combat encounter
     let combat = game.combat;
     if (!combat) {
-      if (game.user.isGM && canvas.scene) {
-        combat = await game.combats.documentClass.create({ scene: canvas.scene.id, active: true });
+      if (game.user.isGM) {
+        const combatData = { active: true };
+        if (canvas?.scene?.id) combatData.scene = canvas.scene.id;
+        combat = await game.combats.documentClass.create(combatData);
       } else {
         ui.notifications.warn(game.i18n.localize("COMBAT.NoneActive"));
         return null;
@@ -2387,9 +2362,13 @@ export class ActorPF extends ActorBasePF {
       const tokens = this.isToken ? [this.token] : this.getActiveTokens();
       const createData = tokens.reduce((arr, t) => {
         if (t.inCombat) return arr;
-        arr.push({ tokenId: t.id, hidden: t.data.hidden });
+        arr.push({ tokenId: t.id, actorId: this.id, hidden: t.data.hidden });
         return arr;
       }, []);
+      // Add special combatant if there are no tokens
+      if (tokens.length == 0) {
+        createData.push({ actorId: this.id });
+      }
       await combat.createEmbeddedDocuments("Combatant", createData);
     }
 
@@ -2407,7 +2386,7 @@ export class ActorPF extends ActorBasePF {
             skipDialog,
           })
         )
-      : combat;
+      : { combat, messages: [] };
   }
 
   rollSavingThrow(
@@ -2482,7 +2461,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (options.bonus?.length) {
-      parts.push(`+ ${options.bonus}`);
+      parts.push(`${options.bonus}`);
     }
 
     // Roll saving throw
@@ -2697,6 +2676,61 @@ export class ActorPF extends ActorBasePF {
     const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, chatData);
   }
 
+  /**
+   * Wrapper for the static function, taking this actor as the only target.
+   *
+   * @param value
+   * @param options
+   */
+  async applyDamage(value, options = {}) {
+    return this.constructor.applyDamage(
+      value,
+      mergeObject(options, {
+        targets: [this],
+      })
+    );
+  }
+
+  /**
+   * Easy way to toggle a condition.
+   *
+   * @param key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   */
+  async toggleCondition(key) {
+    key = `data.attributes.conditions.${key}`;
+
+    const newStatus = !getProperty(this.data, key);
+    const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
+    const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
+    await this.update(updateData);
+  }
+
+  /**
+   * Easy way to set a condition.
+   *
+   * @param {string} key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   * @param {boolean} enabled - Whether to enable (true) the condition, or disable (false) it.
+   */
+  async setCondition(key, enabled) {
+    key = `data.attributes.conditions.${key}`;
+
+    const newStatus = !getProperty(this.data, key);
+    if (newStatus !== enabled) return;
+    const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
+    const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
+    await this.update(updateData);
+  }
+
+  /**
+   * Easy way to determine whether this actor has a condition.
+   *
+   * @param {string} key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   */
+  hasCondition(key) {
+    key = `data.attributes.conditions.${key}`;
+    return getProperty(this.data, key) === true;
+  }
+
   /* -------------------------------------------- */
 
   /**
@@ -2709,12 +2743,33 @@ export class ActorPF extends ActorBasePF {
    * @param {boolean} [options.forceDialog=true] - Forces the opening of a Dialog as if Shift was pressed
    * @param {string} [options.reductionDefault] - Default value for Damage Reduction
    * @param {boolean} [options.asNonlethal] - Marks the damage as non-lethal
+   * @param {Array.<Token|Actor>} [options.targets] - Override the targets to apply damage to
+   * @param {number} options.critMult - Critical multiplier as needed for Wounds & Vigor variant health rule. Set to 0 for non-critical hits.
+   * @param {boolean} options.asWounds - Apply damage to wounds directly instead of vigor, as needed for Wounds & Vigor variant health rule.
    * @returns {Promise}
    */
-  static async applyDamage(value, { forceDialog = false, reductionDefault = "", asNonlethal = false } = {}) {
+  static async applyDamage(
+    value,
+    {
+      forceDialog = false,
+      reductionDefault = "",
+      asNonlethal = false,
+      targets = null,
+      critMult = 0,
+      asWounds = false,
+    } = {}
+  ) {
     const promises = [];
     let controlled = canvas.tokens.controlled,
       healingInvert = 1;
+
+    // Override targets, if supplied
+    if (targets instanceof Array) {
+      controlled = targets.filter((o) => o instanceof Token || o instanceof Actor);
+    }
+
+    const healthConfig = game.settings.get("pf1", "healthConfig");
+
     const numReg = /(\d+)/g,
       sliceReg = /[^,;\n]*(\d+)[^,;\n]*/g,
       sliceReg2 = /[^,;\n]+/g;
@@ -2735,20 +2790,11 @@ export class ActorPF extends ActorBasePF {
         const checked = [...form.find(".tokenAffected:checked")].map((tok) => tok.name.replace("affect.", ""));
         controlled = controlled.filter((con) => checked.includes(con.id));
       }
+
+      if (value == 0) return; // Early exit
+
       for (const t of controlled) {
-        const a = t.actor,
-          hp = a.data.data.attributes.hp,
-          tmp = parseInt(hp.temp) || 0;
-
-        // Handle nonlethal damage
-        let nld = 0;
-        if (asNonlethal && value > 0) {
-          nld = Math.min(hp.max - hp.nonlethal, value);
-          value -= nld;
-        }
-
-        // Temp HP adjustment
-        const dt = value > 0 ? Math.min(tmp, value) : 0;
+        const a = t instanceof Token ? t.actor : t;
 
         if (!a.isOwner) {
           const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
@@ -2756,13 +2802,82 @@ export class ActorPF extends ActorBasePF {
           ui.notifications.warn(msg);
           continue;
         }
-        promises.push(
-          t.actor.update({
-            "data.attributes.hp.nonlethal": hp.nonlethal + nld,
-            "data.attributes.hp.temp": tmp - dt,
-            "data.attributes.hp.value": Math.clamped(hp.value - (value - dt), -100, hp.max),
-          })
-        );
+
+        const actorType = { character: "pc", npc: "npc" }[a.type];
+        const useWoundsAndVigor = healthConfig.variants[actorType]?.useWoundsAndVigor ?? false,
+          hp = !useWoundsAndVigor ? a.data.data.attributes.hp : a.data.data.attributes.vigor,
+          tmp = hp.temp || 0;
+
+        const update = {};
+
+        if (useWoundsAndVigor) {
+          const currentHealth = hp.value;
+          let woundAdjust = 0;
+
+          if (asWounds) {
+            woundAdjust -= value;
+            value = 0;
+          }
+
+          // Temp HP adjustment
+          const dt = value > 0 ? Math.min(tmp, value) : 0;
+          value -= dt;
+
+          // Nonlethal damage
+          if (asNonlethal && value > 0) {
+            // Wounds & Vigor
+            if (currentHealth > 0) {
+              value = Math.min(currentHealth, value);
+            } else {
+              woundAdjust -= critMult > 1 ? critMult : 1;
+              value = 0; // No other bleedover to wounds
+            }
+          }
+
+          // Create update data
+          if (dt != 0) update["data.attributes.vigor.temp"] = tmp - dt;
+          if (value != 0) {
+            let newHP = Math.min(hp.value - value, hp.max);
+            if (value > 0) {
+              if (hp.value > 0) {
+                if (newHP < 0) {
+                  if (critMult > 0) {
+                    woundAdjust -= -newHP;
+                    woundAdjust -= critMult;
+                  }
+                  newHP = 0;
+                }
+              } else {
+                woundAdjust -= value;
+              }
+            }
+
+            if (newHP != hp.value) update["data.attributes.vigor.value"] = newHP;
+          }
+          if (woundAdjust != 0) {
+            const wounds = a.data.data.attributes.wounds;
+            update["data.attributes.wounds.value"] = Math.max(0, Math.min(wounds.value + woundAdjust, wounds.max));
+          }
+        }
+        // Normal Hit Points
+        else {
+          // Nonlethal damage
+          let nld = 0;
+          if (asNonlethal && value > 0) {
+            nld = Math.min(hp.max - hp.nonlethal, value);
+            value -= nld;
+          }
+
+          // Temp HP adjustment
+          const dt = value > 0 ? Math.min(tmp, value) : 0;
+
+          // Create update data
+          update["data.attributes.hp.nonlethal"] = hp.nonlethal + nld;
+          update["data.attributes.hp.temp"] = tmp - dt;
+          update["data.attributes.hp.value"] = Math.min(hp.value - (value - dt), hp.max);
+        }
+
+        promises.push(a.update(update));
       }
       return Promise.all(promises);
     };
@@ -2773,19 +2888,16 @@ export class ActorPF extends ActorBasePF {
         value = -1 * value;
       }
       const tokens = controlled.map((tok) => {
+        const isToken = tok instanceof Token;
+        const actor = isToken ? tok.actor : tok;
         return {
-          _id: tok.id,
-          name: tok.name,
-          dr: tok.actor.data.data.traits.dr.match(sliceReg),
-          eres: tok.actor.data.data.traits.eres.match(sliceReg),
-          di: [
-            ...tok.actor.data.data.traits.di.value,
-            ...(tok.actor.data.data.traits.di.custom.match(sliceReg2) ?? []),
-          ],
-          dv: [
-            ...tok.actor.data.data.traits.dv.value,
-            ...(tok.actor.data.data.traits.dv.custom.match(sliceReg2) ?? []),
-          ],
+          _id: isToken ? tok.id : actor.id,
+          name: isToken ? tok.name : actor.name,
+          isToken,
+          dr: actor.data.data.traits.dr.match(sliceReg),
+          eres: actor.data.data.traits.eres.match(sliceReg),
+          di: [...actor.data.data.traits.di.value, ...(actor.data.data.traits.di.custom.match(sliceReg2) ?? [])],
+          dv: [...actor.data.data.traits.dv.value, ...(actor.data.data.traits.dv.custom.match(sliceReg2) ?? [])],
           checked: true,
         };
       });
@@ -2983,9 +3095,10 @@ export class ActorPF extends ActorBasePF {
   /**
    * Generates an array with all the active context-sensitive notes for the given context on this actor.
    *
-   * @param {string} context - The context to draw from.
+   * @param {string|Handlebars.SafeString} context - The context to draw from.
    */
   getContextNotes(context) {
+    if (context.string) context = context.string;
     const result = this.allNotes;
 
     // Attacks
@@ -3238,7 +3351,7 @@ export class ActorPF extends ActorBasePF {
     if (!coinWeightDivisor) return 0;
     return (
       Object.values(this.data.data.currency).reduce((cur, amount) => {
-        return cur + amount;
+        return (parseInt(cur) || 0) + amount;
       }, 0) / coinWeightDivisor
     );
   }
@@ -3259,7 +3372,7 @@ export class ActorPF extends ActorBasePF {
       heavy = Math.floor(table[table.length - 1] * Math.pow(4, multiplierCount) * carryMultiplier);
     }
     // Convert to world unit system
-    heavy = convertWeight(heavy);
+    heavy = game.pf1.utils.convertWeight(heavy);
 
     return {
       light: Math.floor(heavy / 3),
@@ -3275,10 +3388,10 @@ export class ActorPF extends ActorBasePF {
     });
     const weight = physicalItems.reduce((cur, o) => {
       if (!o.data.data.carried) return cur;
-      return cur + o.data.data.weight * o.data.data.quantity;
+      return cur + o.data.data.weight.total;
     }, this._calculateCoinWeight());
 
-    return convertWeight(weight);
+    return game.pf1.utils.convertWeight(weight);
   }
 
   /**
@@ -3339,7 +3452,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   getRollData(options = { refresh: false }) {
-    let result = this.data.data;
+    let result;
 
     // Return cached data, if applicable
     const skipRefresh = !options.refresh && this._rollData;
@@ -3358,6 +3471,8 @@ export class ActorPF extends ActorBasePF {
           if (typeof obj === "object") delete obj[k3];
         }
       }
+    } else {
+      result = deepClone(this.data.data);
     }
 
     /* ----------------------------- */
@@ -3385,67 +3500,20 @@ export class ActorPF extends ActorBasePF {
       result.size = sizeChart.indexOf(result.traits.size);
     }
 
-    // Set class data
-    const baseSavingThrows = {};
-    result.classes = {};
-    this.data.items
-      .filter((obj) => {
-        return obj.type === "class";
-      })
-      .forEach((cls) => {
-        let tag = cls.data.data.tag;
-        if (!tag) {
-          if (cls.data.data["useCustomTag"] !== true) tag = createTag(cls.name);
-          else return;
-        }
-
-        let healthConfig = game.settings.get("pf1", "healthConfig");
-        const hasPlayerOwner = this.hasPlayerOwner;
-        healthConfig =
-          cls.data.data.classType === "racial"
-            ? healthConfig.hitdice.Racial
-            : hasPlayerOwner
-            ? healthConfig.hitdice.PC
-            : healthConfig.hitdice.NPC;
-        const classType = cls.data.data.classType || "base";
-        result.classes[tag] = {
-          level: cls.data.data.level,
-          name: cls.name,
-          hd: cls.data.data.hd,
-          hitDice: cls.hitDice,
-          mythicTier: cls.mythicTier,
-          bab: cls.data.data.bab,
-          hp: healthConfig.auto,
-          savingThrows: {
-            fort: cls.data.data.savingThrows.fort.base,
-            ref: cls.data.data.savingThrows.ref.base,
-            will: cls.data.data.savingThrows.will.base,
-          },
-          fc: {
-            hp: classType === "base" ? cls.data.data.fc.hp.value : 0,
-            skill: classType === "base" ? cls.data.data.fc.skill.value : 0,
-            alt: classType === "base" ? cls.data.data.fc.alt.value : 0,
-          },
-        };
-      });
-
     // Add more info for formulas
-    if (this.data.items) {
-      result.armor = { type: 0 };
-      result.shield = { type: 0 };
+    result.armor = { type: 0 };
+    result.shield = { type: 0 };
 
-      // Determine equipped armor type
-      const armor = this.data.items.filter(
-        (o) => o.data.type === "equipment" && o.data.data.equipmentType === "armor" && o.data.data.equipped
-      );
+    // Determine equipped armor type
+    {
+      const armorId = result.equipment.armor.id;
       const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-      for (const o of armor) {
-        const subtype = o.data.data.equipmentSubtype;
-        if (subtype === "lightArmor" && result.armor.type < 1) result.armor.type = 1;
-        else if (subtype === "mediumArmor" && result.armor.type < 2) result.armor.type = 2;
-        else if (subtype === "heavyArmor" && result.armor.type < 3) result.armor.type = 3;
-        const enhAC = o.data.data.armor.enh ?? 0,
-          baseAC = o.data.data.armor.value ?? 0,
+      const armor = armorId ? this.items.get(armorId) : null;
+      if (armor) {
+        result.armor.type = result.equipment.armor.type;
+        const armorData = armor.data.data;
+        const enhAC = armorData.armor.enh ?? 0,
+          baseAC = armorData.armor.value ?? 0,
           fullAC = baseAC + enhAC;
         if (eqArmor.total < fullAC) {
           eqArmor.ac = baseAC;
@@ -3455,20 +3523,18 @@ export class ActorPF extends ActorBasePF {
       }
       if (!Number.isFinite(eqArmor.total)) eqArmor.total = 0;
       mergeObject(result.armor, eqArmor);
+    }
 
-      // Determine equipped shield type
-      const shields = this.data.items.filter(
-        (o) => o.data.type === "equipment" && o.data.data.equipmentType === "shield" && o.data.data.equipped
-      );
+    // Determine equipped shield type
+    {
+      const shieldId = result.equipment.shield.id;
+      const shield = shieldId ? this.items.get(shieldId) : null;
       const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-      for (const o of shields) {
-        const subtype = o.data.data.equipmentSubtype;
-        if (subtype === "other" && result.shield.type < 1) result.shield.type = 1;
-        else if (subtype === "lightShield" && result.shield.type < 2) result.shield.type = 2;
-        else if (subtype === "heavyShield" && result.shield.type < 3) result.shield.type = 3;
-        else if (subtype === "towerShield" && result.shield.type < 4) result.shield.type = 4;
-        const enhAC = o.data.data.armor.enh ?? 0,
-          baseAC = o.data.data.armor.value ?? 0,
+      if (shield) {
+        result.shield.type = result.equipment.shield.type;
+        const shieldData = shield.data.data;
+        const enhAC = shieldData.armor.enh ?? 0,
+          baseAC = shieldData.armor.value ?? 0,
           fullAC = baseAC + enhAC;
         if (eqShield.total < fullAC) {
           eqShield.ac = baseAC;
@@ -3476,24 +3542,15 @@ export class ActorPF extends ActorBasePF {
           eqShield.enh = enhAC;
         }
       }
-      if (!Number.isFinite(eqShield.total)) eqShield.total = 0;
       mergeObject(result.shield, eqShield);
     }
 
     // Add spellbook info
-    const spellbooks = Object.entries(getProperty(result, "attributes.spells.spellbooks"));
-    const keyedBooks = [];
-    for (const [k, book] of spellbooks) {
-      setProperty(result, `spells.${k}`, book);
-      result.spells[k].abilityMod = result.abilities[book.ability]?.mod ?? "";
-      keyedBooks.push(k);
-    }
-    const aliasBooks = spellbooks.map((x) => x[1]).filter((x) => !!x.class && x.class !== "_hd");
-    for (const book of aliasBooks) {
-      if (!keyedBooks.includes(book.class)) {
-        setProperty(result, `spells.${book.class}`, book);
-        keyedBooks.push(book.class);
-      }
+    result.spells = result.attributes.spells.spellbooks;
+    for (const [k, book] of Object.entries(result.spells)) {
+      book.abilityMod = result.abilities[book.ability]?.mod ?? 0;
+      // Add alias
+      if (book.class && book.class !== "_hd") result.spells[book.class] ??= book;
     }
 
     // Add item dictionary flags
@@ -3595,36 +3652,26 @@ export class ActorPF extends ActorBasePF {
   }
 
   getQuickActions() {
-    const actualChargeCost = (i) => (i != null ? Math.floor(i.charges / i.chargeCost) : 0),
-      actualMaxCharge = (i) => (i != null ? Math.floor(i.maxCharges / i.chargeCost) : 0);
     return this.items
       .filter(
         (o) =>
-          o.isActive && o.data.data.showInQuickbar === true && ["weapon", "attack", "spell", "feat"].includes(o.type)
+          o.isActive &&
+          o.data.data.showInQuickbar === true &&
+          ["weapon", "equipment", "consumable", "attack", "spell", "feat"].includes(o.type) &&
+          !o.showUnidentifiedData
       )
       .sort((a, b) => a.data.data.sort - b.data.data.sort)
       .map((o) => {
         return {
           item: o,
+          isSingleUse: o.isSingleUse,
           get haveAnyCharges() {
-            return (this.item.isCharged && this.item.chargeCost !== 0) || this.hasAmmo;
+            return this.item.isCharged;
           },
-          maxCharge: o.isCharged ? actualMaxCharge(o) : 0,
+          maxCharge: o.maxCharges,
           get charges() {
-            return this.item.isCharged
-              ? this.recharging
-                ? -this.item.chargeCost
-                : actualChargeCost(this.item)
-              : this.ammoValue;
+            return this.item.charges;
           },
-          hasAmmo: o.data.data.links?.ammunition?.length > 0 ?? false,
-          ammoValue:
-            o.data.data.links?.ammunition
-              ?.map((l) => this.items.get(l.id))
-              .filter((l) => l != null)
-              .map((l) => actualChargeCost(l))
-              .reduce((a, b) => a + b, 0) ?? 0,
-          recharging: o.isCharged && o.chargeCost < 0,
           color1: ItemPF.getTypeColor(o.type, 0),
           color2: ItemPF.getTypeColor(o.type, 1),
         };
@@ -3648,7 +3695,9 @@ export class ActorPF extends ActorBasePF {
     const toDelete = [];
     const toUpdate = [];
     for (const [id, obj] of Object.entries(buffTextures)) {
-      const existing = fx.find((f) => f.data.origin === id);
+      const existing = fx.find((f) => {
+        return f.data.origin === id || f.data.flags.pf1?.origin?.item === obj.id;
+      });
       if (!existing) {
         if (obj.active) toCreate.push(obj.item.getRawEffectData());
       } else {
@@ -3656,7 +3705,8 @@ export class ActorPF extends ActorBasePF {
         else {
           const existingData = existing.data.toObject();
           const mergedData = mergeObject(existingData, obj.item.getRawEffectData(), { inplace: false });
-          if (obj.item.data.data.hideFromToken) mergedData.icon = null;
+          const hideIcon = obj.item.data.data.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
+          if (hideIcon) mergedData.icon = null;
           const diffData = diffObject(existingData, mergedData);
           if (!isObjectEmpty(diffData)) {
             diffData._id = existing.id;
@@ -3685,13 +3735,25 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    const deleteContext = mergeObject({ render: !toCreate.length && !toUpdate.length }, context);
-    const createContext = mergeObject({ render: !toUpdate.length }, context);
+    // Create sub-contexts and disable render if more updates are done
+    const deleteContext = deepClone(context);
+    if (context.render !== false) deleteContext.render = !toCreate.length && !toUpdate.length;
+    const createContext = deepClone(context);
+    if (context.render !== false) createContext.render = !toUpdate.length;
 
     if (toDelete.length) await this.deleteEmbeddedDocuments("ActiveEffect", toDelete, deleteContext);
     if (toCreate.length) await this.createEmbeddedDocuments("ActiveEffect", toCreate, createContext);
     if (toUpdate.length) await this.updateEmbeddedDocuments("ActiveEffect", toUpdate, context);
     this._states.togglingStatusIcons = false;
+
+    // Special case for unlinked tokens, which don't seem to draw their effects on an actor update
+    const tokens = this.getActiveTokens();
+    for (const token of tokens) {
+      const linked = token.data.actorLink;
+      if (!linked) {
+        token.drawEffects();
+      }
+    }
   }
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
@@ -3728,7 +3790,7 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
-  importFromJSON(json) {
+  async importFromJSON(json) {
     // Set _initialized flag to prevent faults (such as HP changing incorrectly)
     this._initialized = false;
 
@@ -3900,44 +3962,6 @@ export class ActorPF extends ActorBasePF {
     return this.update(updateData);
   }
 
-  _trackPreviousAttributes() {
-    // Track HP, Wounds and Vigor
-    this._prevAttributes = this._prevAttributes || {};
-    for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
-      const max = getProperty(this.data, `${k}.max`);
-      if (this._prevAttributes[k] != null) continue;
-      this._prevAttributes[k] = max;
-    }
-
-    // Track ability scores
-    this._prevAbilityScores = this._prevAbilityScores || {};
-    for (const k of Object.keys(this.data.data.abilities)) {
-      this._prevAbilityScores[k] = {
-        total: this.data.data.abilities[k].total,
-        mod: this.data.data.abilities[k].mod,
-      };
-    }
-  }
-
-  _applyPreviousAttributes() {
-    if (!game.pf1.isMigrating && this._initialized) {
-      // Apply HP, Wounds and Vigor
-      if (this._prevAttributes) {
-        for (const [k, prevMax] of Object.entries(this._prevAttributes)) {
-          if (prevMax == null) continue;
-          const newMax = getProperty(this.data, `${k}.max`) || 0;
-          const prevValue = getProperty(this.data, `${k}.value`);
-          const newValue = prevValue + (newMax - prevMax);
-          if (prevValue !== newValue) this._queuedUpdates[`${k}.value`] = newValue;
-        }
-      }
-      this._prevAttributes = null;
-
-      // Clear previous ability score tracking
-      this._prevAbilityScores = null;
-    }
-  }
-
   /**
    * @override
    */
@@ -3952,7 +3976,7 @@ export class ActorPF extends ActorBasePF {
     if (!doc) return;
     const updateData = {};
 
-    // Special key
+    // Special keys
     if (attribute === "attributes.hp") {
       if (!isDelta) value = (current.temp + current.value - value) * -1;
       let dt = value;
@@ -3961,8 +3985,17 @@ export class ActorPF extends ActorBasePF {
         updates["data.attributes.hp.temp"] = Math.max(0, current.temp + value);
       }
       updates["data.attributes.hp.value"] = Math.min(current.value + dt, current.max);
-      // Absolute
-    } else if (!isDelta) {
+    } else if (attribute === "attributes.vigor") {
+      if (!isDelta) value = (current.temp + current.value - value) * -1;
+      let dt = value;
+      if (current.temp > 0 && value < 0) {
+        dt = Math.min(0, current.temp + value);
+        updates["data.attributes.vigor.temp"] = Math.max(0, current.temp + value);
+      }
+      updates["data.attributes.vigor.value"] = Math.min(current.value + dt, current.max);
+    }
+    // Absolute
+    else if (!isDelta) {
       if (doc instanceof Actor) {
         if (isBar) updates[`data.${attribute}.value`] = value;
         else updates[`data.${attribute}`] = value;

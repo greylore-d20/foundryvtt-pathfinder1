@@ -5,44 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "1ya5clmsapzh2i19",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "see text",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": "0",
+          "units": "ft",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "one symbol",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "value": "0",
-      "units": "ft"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -53,22 +122,10 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          7
-        ],
-        [
-          "cleric/oracle",
-          7
-        ],
-        [
-          "witch",
-          7
-        ],
-        [
-          "occultist",
-          5
-        ]
+        ["sorcerer/wizard", 7],
+        ["cleric/oracle", 7],
+        ["witch", 7],
+        ["occultist", 5]
       ],
       "domain": [],
       "subDomain": [],
@@ -77,7 +134,6 @@
     },
     "level": 7,
     "school": "nec",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -92,12 +148,7 @@
       "autoDeductCharges": false,
       "spontaneousPrepared": false
     },
-    "shortDescription": "<p>This spell functions like <i>symbol of death</i>, except that every creature within 60 feet of a <i>Symbol of Weakness</i> instead suffers crippling weakness that deals 3d6 points of Strength damage.</p><p>Unlike <i>symbol of death</i>, <i>Symbol of Weakness</i> has no hit point limit; once triggered, a <i>Symbol of Weakness</i> simply remains active for 10 minutes per caster level. A creature can only be affected by this symbol once.</p><p><i>Note</i>: Magic traps such as <i>Symbol of Weakness</i> are hard to detect and disable. While any character can use Perception to find a symbol, only a character with the trapfinding class feature can use Disable Device to disarm it. The DC in each case is 25 + spell level, or 32 for <i>Symbol of Weakness</i>.</p>",
-    "spellDuration": "see text",
-    "spellEffect": "one symbol",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>This spell functions like <i>symbol of death</i>, except that every creature within 60 feet of a <i>Symbol of Weakness</i> instead suffers crippling weakness that deals 3d6 points of Strength damage.</p><p>Unlike <i>symbol of death</i>, <i>Symbol of Weakness</i> has no hit point limit; once triggered, a <i>Symbol of Weakness</i> simply remains active for 10 minutes per caster level. A creature can only be affected by this symbol once.</p><p><i>Note</i>: Magic traps such as <i>Symbol of Weakness</i> are hard to detect and disable. While any character can use Perception to find a symbol, only a character with the trapfinding class feature can use Disable Device to disarm it. The DC in each case is 25 + spell level, or 32 for <i>Symbol of Weakness</i>.</p>"
   },
   "effects": [],
   "folder": null,

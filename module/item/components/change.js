@@ -3,14 +3,37 @@ import { RollPF } from "../../roll.js";
 import { getAbilityModifier } from "../../actor/lib.mjs";
 
 export class ItemChange {
-  static create(data, parent) {
-    const result = new this();
+  constructor(data, parent) {
+    this.data = mergeObject(this.constructor.defaultData, data);
+    this.parent = parent;
+    this.updateTime = new Date();
+  }
 
-    result.data = mergeObject(this.defaultData, data);
-    result.parent = parent;
-    result.updateTime = new Date();
+  /**
+   * Creates a change.
+   *
+   * @param {object[]} data - Data to initialize the change(s) with.
+   * @param {object} context - An object containing context information.
+   * @param {ItemPF} [context.parent] - The parent entity to create the change within.
+   * @returns The resulting changes, or an empty array if nothing was created.
+   */
+  static async create(data, context) {
+    const { parent } = context;
 
-    return result;
+    if (parent instanceof game.pf1.documents.ItemPF) {
+      // Prepare data
+      data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
+      const newChangeData = deepClone(parent.data.data.changes || []);
+      newChangeData.push(...data);
+
+      // Update parent
+      await parent.update({ "data.changes": newChangeData });
+
+      // Return results
+      return data.map((o) => parent.changes.get(o._id));
+    }
+
+    return [];
   }
 
   static get defaultData() {
@@ -55,6 +78,9 @@ export class ItemChange {
   }
   get continuous() {
     return this.data.continuous;
+  }
+  get isDeferred() {
+    return ["damage", "wdamage", "sdamage"].includes(this.subTarget);
   }
 
   get source() {
@@ -109,7 +135,13 @@ export class ItemChange {
     }
   }
 
-  applyChange(actor, targets = null, flags = {}) {
+  /**
+   * Applies this change to an actor.
+   *
+   * @param {ActorPF} actor - The actor to apply the change's data to.
+   * @param {string[]} [targets] - Property paths to target on the actor's data.
+   */
+  applyChange(actor, targets = null) {
     // Prepare change targets
     if (!targets) {
       targets = getChangeFlat.call(actor, this.subTarget, this.modifier);
@@ -118,11 +150,12 @@ export class ItemChange {
     const sourceInfoTargets = this.getSourceInfoTargets(actor);
     let addedSourceInfo = false;
 
-    const rollData = this.parent ? this.parent.getRollData() : actor.getRollData();
+    const rollData = this.parent ? this.parent.getRollData({ refresh: true }) : actor.getRollData({ refresh: true });
 
     const overrides = actor.changeOverrides;
     for (const t of targets) {
-      if (!overrides || overrides[t]) {
+      const override = overrides[t];
+      if (!overrides || override) {
         let operator = this.operator;
         if (operator === "+") operator = "add";
         if (operator === "=") operator = "set";
@@ -130,7 +163,7 @@ export class ItemChange {
         const modifierChanger = t != null ? t.match(/^data\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/) : null;
         const isModifierChanger = modifierChanger != null;
         const abilityTarget = modifierChanger?.[1];
-        const ability = isModifierChanger ? duplicate(rollData.abilities[abilityTarget]) : null;
+        const ability = isModifierChanger ? duplicate(actor.data.data.abilities[abilityTarget]) : null;
 
         let value = 0;
         if (this.formula) {
@@ -150,6 +183,8 @@ export class ItemChange {
             operator = "add";
           } else if (!isNaN(this.formula)) {
             value = parseFloat(this.formula);
+          } else if (this.isDeferred) {
+            value = RollPF.replaceFormulaData(this.formula, rollData, { missing: 0 });
           } else {
             value = RollPF.safeRoll(this.formula, rollData, [t, this, rollData], {
               suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
@@ -160,7 +195,7 @@ export class ItemChange {
         this.data.value = value;
 
         if (!t) continue;
-        const prior = overrides[t][operator][this.modifier];
+        const prior = override[operator][this.modifier];
 
         switch (operator) {
           case "add":
@@ -169,7 +204,7 @@ export class ItemChange {
               if (typeof base === "number") {
                 if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
                   setProperty(actor.data, t, base + value);
-                  overrides[t][operator][this.modifier] = (prior ?? 0) + value;
+                  override[operator][this.modifier] = (prior ?? 0) + value;
 
                   if (this.parent && !addedSourceInfo) {
                     for (const si of sourceInfoTargets) {
@@ -184,7 +219,7 @@ export class ItemChange {
                 } else {
                   const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
                   setProperty(actor.data, t, base + diff);
-                  overrides[t][operator][this.modifier] = Math.max(prior ?? 0, value);
+                  override[operator][this.modifier] = Math.max(prior ?? 0, value);
 
                   if (this.parent) {
                     for (const si of sourceInfoTargets) {
@@ -218,7 +253,7 @@ export class ItemChange {
 
           case "set":
             setProperty(actor.data, t, value);
-            overrides[t][operator][this.modifier] = value;
+            override[operator][this.modifier] = value;
 
             if (this.parent && !addedSourceInfo) {
               for (const si of sourceInfoTargets) {
@@ -240,7 +275,7 @@ export class ItemChange {
             damage: ability.damage,
             penalty: ability.penalty,
           });
-          const newAbility = rollData.abilities[abilityTarget];
+          const newAbility = actor.data.data.abilities[abilityTarget];
           const mod = getAbilityModifier(newAbility.total, {
             damage: newAbility.damage,
             penalty: newAbility.penalty,

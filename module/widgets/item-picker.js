@@ -14,7 +14,7 @@ export class Widget_ItemPicker {
 
     /**
      * @typedef Widget_ItemPicker_Item
-     * @type {Object}
+     * @type {object}
      * @property {string} value
      * @property {string} label
      */

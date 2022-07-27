@@ -5,43 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "o477lbmg3npu2rf2",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level or until discharged (see text)",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -52,14 +122,8 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          1
-        ],
-        [
-          "alchemist",
-          1
-        ]
+        ["sorcerer/wizard", 1],
+        ["alchemist", 1]
       ],
       "domain": [],
       "subDomain": [],
@@ -68,7 +132,6 @@
     },
     "school": "trs",
     "types": "electricity",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -78,8 +141,7 @@
       "value": "an iron coil"
     },
     "sr": false,
-    "shortDescription": "<p>If you take electricity damage while this spell is active, some of the energy is stored on your skin, as with holding the charge on a touch spell. You can release this stored electricity by making a melee touch attack. You gain a +3 bonus on the attack roll if your opponent is wearing metal armor, is carrying a metal weapon, or is made of metal. The target of your touch attack is dealt electricity damage equal to half the amount of electricity damage you took after you cast this spell (for example, if you saved for half damage against a <i>lightning bolt</i> and took only 15 points of electricity damage, your next touch attack deals 7 points of electricity damage). This spell is discharged once you hit with a melee touch attack to deliver its damage. If you take electricity damage multiple times while this spell is active, use the largest amount of electricity damage you took to determine your touch attack damage.</p>",
-    "spellDuration": "1 minute/level or until discharged (see text)"
+    "shortDescription": "<p>If you take electricity damage while this spell is active, some of the energy is stored on your skin, as with holding the charge on a touch spell. You can release this stored electricity by making a melee touch attack. You gain a +3 bonus on the attack roll if your opponent is wearing metal armor, is carrying a metal weapon, or is made of metal. The target of your touch attack is dealt electricity damage equal to half the amount of electricity damage you took after you cast this spell (for example, if you saved for half damage against a <i>lightning bolt</i> and took only 15 points of electricity damage, your next touch attack deals 7 points of electricity damage). This spell is discharged once you hit with a melee touch attack to deliver its damage. If you take electricity damage multiple times while this spell is active, use the largest amount of electricity damage you took to determine your touch attack damage.</p>"
   },
   "effects": [],
   "folder": null,

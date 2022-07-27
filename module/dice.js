@@ -1,4 +1,5 @@
 import { ChatMessagePF } from "./sidebar/chat-message.js";
+import { RollPF } from "./roll.js";
 
 export const formulaHasDice = function (formula) {
   return formula.match(/[0-9)][dD]/) || formula.match(/[dD][0-9(]/);
@@ -26,7 +27,7 @@ export class DicePF {
    * @param {number} critical       The value of d20 result which represents a critical success
    * @param {number} fumble         The value of d20 result which represents a critical failure
    * @param {Function} onClose      Callback for actions to take when the dialog form is closed
-   * @param {Object} dialogOptions  Modal dialog options
+   * @param {object} dialogOptions  Modal dialog options
    * @param {Array} extraRolls      An array containing bonuses/penalties for extra rolls
    * @param {boolean} autoRender    Whether to automatically render the chat messages
    */
@@ -55,6 +56,7 @@ export class DicePF {
     chatMessage = true,
     noSound = false,
     compendiumEntry = null,
+    compendiumEntryType = null,
     originalOptions = {},
   }) {
     // Call pre-roll handlers
@@ -67,6 +69,10 @@ export class DicePF {
 
     // Inner roll function
     const _roll = async (parts, setRoll, form) => {
+      let baseDice = form ? form.find(`[name="d20"]`).val() : dice;
+      if (!baseDice) baseDice = dice;
+      parts = [baseDice].concat(parts);
+
       const originalFlavor = flavor;
       rollMode = form ? form.find('[name="rollMode"]').val() : rollMode;
       for (let a = 0; a < 1 + extraRolls.length; a++) {
@@ -83,14 +89,17 @@ export class DicePF {
           flavor += ` <div class="extra-roll-label">${extraRoll.label}</div>`;
         }
 
-        // Do set roll
-        if (setRoll != null && setRoll >= 0) {
-          curParts[0] = `${setRoll}`;
-          flavor += ` (Take ${setRoll})`;
-        }
-
         // Execute the roll
         const roll = await Roll.create(curParts.join(" + "), data).evaluate({ async: true });
+
+        // Spoof a roll (e.g. Take 10/20)
+        if (setRoll != null && setRoll >= 0) {
+          const diff = setRoll - roll.dice[0].total,
+            newTotal = roll._total + diff;
+          roll.terms[0].results[0].result = setRoll;
+          roll._total = newTotal;
+          flavor += ` (Take ${setRoll})`;
+        }
 
         // Convert the roll to a chat message
         if (chatTemplate) {
@@ -107,6 +116,7 @@ export class DicePF {
               isNat20: d20.total === 20,
               flavor: flavor,
               compendiumEntry: compendiumEntry,
+              compendiumEntryType: compendiumEntryType,
             },
             chatTemplateData || {}
           );
@@ -147,17 +157,16 @@ export class DicePF {
     };
 
     // Modify the roll and handle fast-forwarding
-    parts = [dice].concat(parts);
     if (fastForward === true) return _roll(parts, staticRoll);
     else parts = parts.concat(["@bonus"]);
 
     // Render modal dialog
     template = template || "systems/pf1/templates/chat/roll-dialog.hbs";
     const dialogData = {
-      formula: parts.join(" + "),
       data: data,
       rollMode: rollMode,
       rollModes: CONFIG.Dice.rollModes,
+      d20: dice === "1d20" ? "" : dice,
     };
     const html = await renderTemplate(template, dialogData);
 

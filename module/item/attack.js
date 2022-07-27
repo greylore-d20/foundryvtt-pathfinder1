@@ -1,6 +1,7 @@
 import { createTag, convertDistance } from "../lib.js";
 import { ChatAttack } from "../misc/chat-attack.js";
 import { createCustomChatMessage } from "../chat.js";
+import { RollPF } from "../roll.js";
 
 export const ERR_REQUIREMENT = {
   NO_ACTOR_PERM: 1,
@@ -12,7 +13,7 @@ export const ERR_REQUIREMENT = {
 };
 
 /**
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {number} - 0 when successful, otherwise one of the ERR_REQUIREMENT constants.
  */
 export const checkRequirements = async function (shared) {
@@ -39,7 +40,7 @@ export const checkRequirements = async function (shared) {
     return ERR_REQUIREMENT.INSUFFUCIENT_QUANTITY;
   }
 
-  if (this.isCharged && this.charges < this.chargeCost) {
+  if (this.isCharged && this.charges < shared.chargeCost) {
     const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
     console.warn(msg);
     ui.notifications.warn(msg);
@@ -50,11 +51,11 @@ export const checkRequirements = async function (shared) {
 };
 
 /**
- * @param {Object} shared - Shared data between attack functions.
- * @returns {Object} The roll data object for this attack.
+ * @param {object} shared - Shared data between attack functions.
+ * @returns {object} The roll data object for this attack.
  */
 export const getRollData = function (shared) {
-  const rollData = duplicate(this.getRollData());
+  const rollData = duplicate(shared.action.getRollData());
   rollData.d20 = shared.dice !== "1d20" ? shared.dice : "";
 
   return rollData;
@@ -68,23 +69,25 @@ export const getRollData = function (shared) {
 /**
  * Creates and renders an attack roll dialog, and returns a result.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {ItemAttack_Dialog_Result|boolean}
  */
 export const createAttackDialog = async function (shared) {
-  const dialog = new game.pf1.applications.AttackDialog(this, shared.rollData);
+  const dialog = new game.pf1.applications.AttackDialog(shared.action, shared.rollData);
   return dialog.show();
 };
 
 /**
  * Alters roll (and shared) data based on user input during the attack's dialog.
  *
- * @param {Object} shared - Shared data between attack functions.
- * @param {JQuery} form - The attack dialog's form data.
+ * @param {object} shared - Shared data between attack functions.
+ * @param {JQuery | object} form - The attack dialog's jQuery form data or FormData object
  */
-export const alterRollData = function (shared, form) {
-  const formData = new FormDataExtended(form[0].querySelector("form")).toObject();
-  shared.rollData.d20 = formData["d20"];
+export const alterRollData = function (shared, form = {}) {
+  let formData;
+  if (form instanceof jQuery) formData = new FormDataExtended(form[0].querySelector("form")).toObject();
+  else formData = form;
+  if (formData["d20"]) shared.rollData.d20 = formData["d20"];
   const atkBonus = formData["attack-bonus"];
   if (atkBonus) {
     shared.attackBonus.push(atkBonus);
@@ -93,7 +96,7 @@ export const alterRollData = function (shared, form) {
   if (dmgBonus) {
     shared.damageBonus.push(dmgBonus);
   }
-  shared.rollMode = formData["rollMode"];
+  shared.rollMode = formData["rollMode"] ?? game.settings.get("core", "rollMode");
 
   // Point-Blank Shot
   if (formData["point-blank-shot"]) {
@@ -113,28 +116,32 @@ export const alterRollData = function (shared, form) {
   }
 
   // Primary attack
-  shared.rollData.item.primaryAttack = formData["primary-attack"];
+  if (formData["primary-attack"] != null) shared.rollData.item.primaryAttack = formData["primary-attack"];
 
   // Use measure template
-  shared.useMeasureTemplate = formData["measure-template"];
+  if (formData["measure-template"] != null) shared.useMeasureTemplate = formData["measure-template"];
 
   // Set held type
-  setProperty(shared.rollData, "item.held", formData["held"]);
+  setProperty(shared.rollData, "item.held", formData["held"] ?? "normal");
+
+  // Damage multiplier
+  if (formData["damage-ability-multiplier"] != null)
+    shared.rollData.action.ability.damageMult = formData["damage-ability-multiplier"];
 
   // Power Attack
   if (formData["power-attack"]) {
-    const basePowerAttackBonus = shared.rollData.item?.powerAttack?.damageBonus ?? 2;
-    let powerAttackBonus =
-      (1 + Math.floor(getProperty(shared.rollData, "attributes.bab.total") / 4)) * basePowerAttackBonus;
+    const basePowerAttackBonus = shared.rollData.action?.powerAttack?.damageBonus ?? 2;
+    let powerAttackBonus = (1 + Math.floor(shared.rollData.attributes.bab.total / 4)) * basePowerAttackBonus;
 
     // Get multiplier
     let powerAttackMultiplier = shared.rollData.item?.powerAttack?.multiplier;
     if (!powerAttackMultiplier) {
       powerAttackMultiplier = 1;
       if (this.data.data.attackType === "natural") {
-        if (shared.rollData.item?.primaryAttack && shared.rollData.item.ability.damageMult >= 1.5)
-          powerAttackMultiplier = 1.5;
-        else if (!shared.rollData.item?.primaryAttack) powerAttackMultiplier = 0.5;
+        if (shared.rollData.item?.primaryAttack) powerAttackMultiplier = shared.rollData.action.ability?.damageMult;
+        else if (!shared.rollData.item?.primaryAttack) {
+          powerAttackMultiplier = shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
+        }
       } else {
         if (shared.rollData?.item?.held === "2h") powerAttackMultiplier = 1.5;
         else if (shared.rollData?.item?.held === "oh") powerAttackMultiplier = 0.5;
@@ -166,17 +173,21 @@ export const alterRollData = function (shared, form) {
   }
 
   // Conditionals
-  const elem = form.find(".conditional");
-  if (elem.length > 0) {
-    shared.conditionals = elem
-      .map(function () {
-        if ($(this).prop("checked")) return Number($(this).prop("name").split(".")[1]);
-      })
-      .get();
-  }
+  Object.keys(formData).forEach((f) => {
+    const idx = f.match(/conditional\.(\d+)/)?.[1];
+    if (idx && formData[f]) {
+      if (!shared.conditionals) shared.conditionals = [parseInt(idx)];
+      else shared.conditionals.push(parseInt(idx));
+    }
+  });
 
-  // Damage multiplier
-  shared.rollData.item.ability.damageMult = form.find(`[name="damage-ability-multiplier"]`).val() ?? 1;
+  // Apply secondary attack penalties
+  if (shared.rollData.item.attackType === "natural" && shared.rollData.item.primaryAttack === false) {
+    const attackBonus = shared.rollData.action.naturalAttack?.secondary?.attackBonus || "-5";
+    const damageMult = shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
+    shared.attackBonus.push(`(${attackBonus})[${game.i18n.localize("PF1.SecondaryAttack")}]`);
+    shared.rollData.action.ability.damageMult = damageMult;
+  }
 
   // CL check enabled
   shared.casterLevelCheck = formData["cl-check"];
@@ -185,8 +196,8 @@ export const alterRollData = function (shared, form) {
   shared.concentrationCheck = formData["concentration"];
 
   // Conditional defaults for fast-forwarding
-  if (shared.conditionals === undefined) {
-    shared.conditionals = this.data.data.conditionals?.reduce((arr, con, i) => {
+  if (!shared.conditionals && isObjectEmpty(formData)) {
+    shared.conditionals = shared.action.data.conditionals?.reduce((arr, con, i) => {
       if (con.default) arr.push(i);
       return arr;
     }, []);
@@ -194,44 +205,63 @@ export const alterRollData = function (shared, form) {
 };
 
 /**
- * @typedef {Object} ItemAttack_AttackData
+ * @typedef {object} ItemAttack_AttackData
  * @property {string} label - The attack's name
  * @property {number|string|undefined} [attackBonus] - An attack bonus specific to this attack
  * @property {number|string|undefined} [damageBonus] - A damage bonus specific to this attack
+ * @property {string|null} [ammo] - The ID of the ammo item used
  */
 /**
  * Generates attacks for an item's action.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
+ * @param {boolean} [forceFullAttack=false] - Generate full attack data, e.g. as base data for an {@link AttackDialog}
  * @returns {ItemAttack_AttackData[]} The generated default attacks.
  */
-export const generateAttacks = function (shared) {
-  const attackName = this.data.data.attackName;
-  const allAttacks = shared.fullAttack
-    ? this.data.data.attackParts.reduce(
+export const generateAttacks = function (shared, forceFullAttack = false) {
+  const rollData = shared.rollData;
+  const action = rollData.action;
+
+  /**
+   * Counter for unnamed or other numbered attacks, to be incremented with each usage.
+   * Starts at 1 to account for the base attack.
+   */
+  let unnamedAttackIndex = 1;
+
+  const attackName = action.attackName || game.i18n.format("PF1.FormulaAttack", { 0: unnamedAttackIndex });
+  // Use either natural fullAttack state, or force generation of all attacks via override
+  const fullAttack = forceFullAttack || shared.fullAttack;
+
+  const allAttacks = fullAttack
+    ? action.attackParts.reduce(
         (cur, r) => {
-          cur.push({ attackBonus: r[0], label: r[1] });
+          cur.push({
+            attackBonus: r[0],
+            // Use defined label, or fall back to continuously numbered default attack name
+            label: r[1] || game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
+          });
           return cur;
         },
-        [{ attackBonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }]
+        [{ attackBonus: "", label: attackName }]
       )
-    : [{ attackBonus: "", label: attackName ? attackName : `${game.i18n.localize("PF1.Attack")}` }];
+    : [{ attackBonus: "", label: attackName }];
 
   // Formulaic extra attacks
-  if (shared.fullAttack) {
-    const exAtkCountFormula = getProperty(this.data, "data.formulaicAttacks.count.formula"),
-      exAtkCount = RollPF.safeRoll(exAtkCountFormula, shared.rollData)?.total ?? 0,
-      exAtkBonusFormula = this.data.data.formulaicAttacks?.bonus?.formula || "0";
+  if (fullAttack) {
+    const exAtkCountFormula = action.formulaicAttacks?.count?.formula,
+      exAtkCount = RollPF.safeRoll(exAtkCountFormula, rollData)?.total ?? 0,
+      exAtkBonusFormula = action.formulaicAttacks?.bonus?.formula || "0";
     if (exAtkCount > 0) {
       try {
-        const frollData = shared.rollData;
-        const fatlabel = this.data.data.formulaicAttacks.label || game.i18n.localize("PF1.FormulaAttack");
         for (let i = 0; i < exAtkCount; i++) {
-          frollData["formulaicAttack"] = i + 1; // Add and update attack counter
-          const bonus = RollPF.safeRoll(exAtkBonusFormula, frollData).total;
+          rollData["formulaicAttack"] = i + 1; // Add and update attack counter
+          const bonus = RollPF.safeRoll(exAtkBonusFormula, rollData).total;
           allAttacks.push({
             attackBonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
-            label: fatlabel.format(i + 2),
+            // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
+            label: action.formulaicAttacks.label
+              ? action.formulaicAttacks.label.format(i + 1)
+              : game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
           });
         }
       } catch (err) {
@@ -241,12 +271,14 @@ export const generateAttacks = function (shared) {
   }
 
   // Set ammo usage
-  if (this.data.data.usesAmmo) {
+  if (action.usesAmmo) {
     const ammoId = this.getFlag("pf1", "defaultAmmo");
-    const quantity = this.actor.items.get(ammoId)?.data.data.quantity ?? 0;
+    const item = this.actor.items.get(ammoId);
+    const quantity = item?.data.data.quantity ?? 0;
+    const abundant = item?.data.flags.pf1?.abundant;
     for (let a = 0; a < allAttacks.length; a++) {
       const atk = allAttacks[a];
-      if (quantity >= a + 1) atk.ammo = ammoId;
+      if (abundant || quantity >= a + 1) atk.ammo = ammoId;
       else atk.ammo = null;
     }
   }
@@ -257,16 +289,20 @@ export const generateAttacks = function (shared) {
 /**
  * Subtracts ammo for this attack.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @param {number} [value=1] - How much ammo to subtract.
  * @returns {Promise}
  */
 export const subtractAmmo = function (shared, value = 1) {
-  if (!this.data.data.usesAmmo) return;
+  if (!shared.action.data.usesAmmo) return;
 
   const ammoUsage = {};
   for (const atk of shared.attacks) {
     if (atk.ammo) {
+      const item = this.actor.items.get(atk.ammo);
+      // Don't remove abundant ammunition
+      if (item.data.flags?.pf1?.abundant) continue;
+
       if (!ammoUsage[atk.ammo]) ammoUsage[atk.ammo] = 1;
       else ammoUsage[atk.ammo]++;
     }
@@ -289,19 +325,13 @@ export const subtractAmmo = function (shared, value = 1) {
 };
 
 /**
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const handleConditionals = function (shared) {
-  // Helper to get localized name from CONFIG.PF1 objects
-  const localizeType = (target, type) => {
-    const result = this.getConditionalModifierTypes(target);
-    return game.i18n.localize(result[type]) || type;
-  };
-
   if (shared.conditionals) {
     const conditionalData = {};
     for (const i of shared.conditionals) {
-      const conditional = this.data.data.conditionals[i];
+      const conditional = shared.action.data.conditionals[i];
       const tag = createTag(conditional.name);
       for (const [i, modifier] of conditional.modifiers.entries()) {
         // Adds a formula's result to rollData to allow referencing it.
@@ -332,9 +362,7 @@ export const handleConditionals = function (shared) {
         else if (modifier.target === "damage") {
           shared.conditionalPartsCommon[partString] = [
             ...(shared.conditionalPartsCommon[partString] ?? []),
-            Object.values(CONFIG.PF1.bonusModifiers).includes(modifier.type)
-              ? [modifier.formula, modifier.type, true]
-              : [modifier.formula, localizeType(modifier.target, modifier.type), false],
+            [modifier.formula, modifier.damageType, false],
           ];
         }
         // Add formula to the size property
@@ -370,18 +398,31 @@ export const handleConditionals = function (shared) {
 /**
  * Checks all requirements to make the attack. This is after the attack dialog's data has been parsed.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {number} 0 if successful, otherwise one of the ERR_REQUIREMENT constants.
  */
 export const checkAttackRequirements = function (shared) {
+  // Enforce zero charge cost on cantrips/orisons, but make sure they have at least 1 charge
+  if (
+    this.data.type === "spell" &&
+    shared.rollData.item?.level === 0 &&
+    shared.rollData.item?.preparation?.preparedAmount > 0
+  ) {
+    shared.rollData.chargeCost = 0;
+    return 0;
+  }
+
   // Determine charge cost
   let cost = 0;
-  if (this.autoDeductCharges) {
-    cost = this.chargeCost;
+  if (this.isCharged) {
+    cost = shared.action.chargeCost;
     let uses = this.charges;
-    if (this.data.type === "spell" && this.useSpellPoints()) {
-      cost = this.getSpellPointCost(shared.rollData);
-      uses = this.getSpellUses();
+    if (this.data.type === "spell") {
+      if (this.useSpellPoints()) {
+        uses = this.getSpellUses();
+      } else {
+        cost = 1;
+      }
     }
     // Add charge cost from conditional modifiers
     cost += shared.rollData["chargeCostBonus"] ?? 0;
@@ -404,13 +445,13 @@ export const checkAttackRequirements = function (shared) {
 /**
  * Generates ChatAttack entries based off the attack type.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const generateChatAttacks = async function (shared) {
   // Normal attack(s)
-  if (this.hasAttack) await game.pf1.ItemAttack.addAttacks.call(this, shared);
+  if (shared.action.hasAttack) await game.pf1.ItemAttack.addAttacks.call(this, shared);
   // Damage only
-  else if (this.hasDamage) await game.pf1.ItemAttack.addDamage.call(this, shared);
+  else if (shared.action.hasDamage) await game.pf1.ItemAttack.addDamage.call(this, shared);
   // Effect notes only
   else await game.pf1.ItemAttack.addEffectNotes.call(this, shared);
 
@@ -422,14 +463,14 @@ export const generateChatAttacks = async function (shared) {
   });
 
   // Add save info
-  shared.save = getProperty(this.data, "data.save.type");
-  shared.saveDC = this.getDC(shared.rollData);
+  shared.save = shared.action.data.save.type;
+  shared.saveDC = shared.action.getDC(shared.rollData);
 };
 
 /**
  * Adds ChatAttack entries to an attack's shared context.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const addAttacks = async function (shared) {
   for (let a = 0; a < shared.attacks.length; a++) {
@@ -438,23 +479,23 @@ export const addAttacks = async function (shared) {
     // Combine conditional modifiers for attack and damage
     const conditionalParts = {
       "attack.normal": [
-        ...(shared.conditionalPartsCommon[`attack.attack.${a}.normal`] ?? []),
+        ...(shared.conditionalPartsCommon[`attack.attack_${a}.normal`] ?? []),
         ...(shared.conditionalPartsCommon["attack.allAttack.normal"] ?? []),
       ], //`
       "attack.crit": [
-        ...(shared.conditionalPartsCommon[`attack.attack.${a}.crit`] ?? []),
+        ...(shared.conditionalPartsCommon[`attack.attack_${a}.crit`] ?? []),
         ...(shared.conditionalPartsCommon["attack.allAttack.crit"] ?? []),
       ], //`
       "damage.normal": [
-        ...(shared.conditionalPartsCommon[`damage.attack.${a}.normal`] ?? []),
+        ...(shared.conditionalPartsCommon[`damage.attack_${a}.normal`] ?? []),
         ...(shared.conditionalPartsCommon["damage.allDamage.normal"] ?? []),
       ], //`
       "damage.crit": [
-        ...(shared.conditionalPartsCommon[`damage.attack.${a}.crit`] ?? []),
+        ...(shared.conditionalPartsCommon[`damage.attack_${a}.crit`] ?? []),
         ...(shared.conditionalPartsCommon["damage.allDamage.crit"] ?? []),
       ], //`
       "damage.nonCrit": [
-        ...(shared.conditionalPartsCommon[`damage.attack.${a}.nonCrit`] ?? []),
+        ...(shared.conditionalPartsCommon[`damage.attack_${a}.nonCrit`] ?? []),
         ...(shared.conditionalPartsCommon["damage.allDamage.nonCrit"] ?? []),
       ], //`
     };
@@ -462,9 +503,8 @@ export const addAttacks = async function (shared) {
     shared.rollData.attackCount = a;
 
     // Create attack object
-    const attack = new ChatAttack(this, {
+    const attack = new ChatAttack(shared.action, {
       label: atk.label,
-      primaryAttack: shared.rollData.item?.primaryAttack !== false,
       rollData: shared.rollData,
       targets: game.user.targets,
     });
@@ -475,41 +515,45 @@ export const addAttacks = async function (shared) {
         extraParts: duplicate(shared.attackBonus).concat([atk.attackBonus]),
         conditionalParts,
       });
+    }
 
-      // Add damage
-      if (this.hasDamage) {
-        const extraParts = duplicate(shared.damageBonus);
+    // Add damage
+    if (shared.action.hasDamage) {
+      const extraParts = duplicate(shared.damageBonus);
+      const nonCritParts = [];
+      const critParts = [];
 
-        // Add power attack bonus
-        if (shared.rollData.powerAttackBonus !== 0) {
-          // Get label
-          const label = ["rwak", "rsak"].includes(this.data.data.actionType)
-            ? game.i18n.localize("PF1.DeadlyAim")
-            : game.i18n.localize("PF1.PowerAttack");
+      // Add power attack bonus
+      if (shared.rollData.powerAttackBonus > 0) {
+        // Get label
+        const label = ["rwak", "rsak"].includes(shared.action.data.actionType)
+          ? game.i18n.localize("PF1.DeadlyAim")
+          : game.i18n.localize("PF1.PowerAttack");
 
-          const powerAttackBonus =
-            shared.rollData.powerAttackBonus * (shared.rollData.item?.powerAttack?.critMultiplier ?? 1);
-          extraParts.push(`${powerAttackBonus}[${label}]`);
-        }
-
-        // Add manyshot damage
-        // @TODO: could be cleaner in regards to chat output
-        if (shared.manyShot && a === 0) {
-          await attack.addDamage({ extraParts, critical: false, conditionalParts });
-        }
-
-        // Add damage
-        await attack.addDamage({ extraParts, critical: false, conditionalParts });
-
-        // Add critical hit damage
-        if (attack.hasCritConfirm) {
-          await attack.addDamage({ extraParts, critical: true, conditionalParts });
-        }
+        const powerAttackBonus = shared.rollData.powerAttackBonus;
+        const powerAttackCritBonus = powerAttackBonus * (shared.rollData.item?.powerAttack?.critMultiplier ?? 1);
+        nonCritParts.push(`${powerAttackBonus}[${label}]`);
+        critParts.push(`${powerAttackCritBonus}[${label}]`);
       }
 
-      // Add attack notes
-      if (a === 0) attack.addAttackNotes();
+      // Add damage
+      let flavor = null;
+      if (atk.id === "manyshot") flavor = game.i18n.localize("PF1.Manyshot");
+      await attack.addDamage({
+        flavor,
+        extraParts: [...extraParts, ...nonCritParts],
+        critical: false,
+        conditionalParts,
+      });
+
+      // Add critical hit damage
+      if (attack.hasCritConfirm) {
+        await attack.addDamage({ extraParts: [...extraParts, ...critParts], critical: true, conditionalParts });
+      }
     }
+
+    // Add attack notes
+    if (a === 0) attack.addAttackNotes();
 
     // Add effect notes
     if (atk.id !== "manyshot") {
@@ -530,7 +574,7 @@ export const addAttacks = async function (shared) {
 /**
  * Adds a ChatAttack entry for damage to an attack's shared context.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const addDamage = async function (shared) {
   // Set conditional modifiers
@@ -538,7 +582,7 @@ export const addDamage = async function (shared) {
     "damage.normal": shared.conditionalPartsCommon["damage.allDamage.normal"] ?? [],
   };
 
-  const attack = new ChatAttack(this, { rollData: shared.rollData, primaryAttack: shared.primaryAttack });
+  const attack = new ChatAttack(shared.action, { rollData: shared.rollData, primaryAttack: shared.primaryAttack });
   // Add damage
   await attack.addDamage({
     extraParts: duplicate(shared.damageBonus),
@@ -556,10 +600,10 @@ export const addDamage = async function (shared) {
 /**
  * Adds a ChatAttack entry for effect notes to an attack's shared context.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const addEffectNotes = async function (shared) {
-  const attack = new ChatAttack(this, { rollData: shared.rollData, primaryAttack: shared.primaryAttack });
+  const attack = new ChatAttack(shared.action, { rollData: shared.rollData, primaryAttack: shared.primaryAttack });
 
   // Add effect notes
   attack.addEffectNotes();
@@ -569,7 +613,7 @@ export const addEffectNotes = async function (shared) {
 };
 
 /**
- * @typedef {Object} Attack_MeasureTemplateResult
+ * @typedef {object} Attack_MeasureTemplateResult
  * @property {boolean} result - Whether an area was selected.
  * @property {Function} [place] - Function to place the template, if an area was selected.
  * @property {Function} [delete] - Function to delete the template, if it has been placed.
@@ -577,27 +621,27 @@ export const addEffectNotes = async function (shared) {
 /**
  * Prompts the user for an area, based on the attack's measure template.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {Promise.<Attack_MeasureTemplateResult>} Whether an area was selected.
  */
 export const promptMeasureTemplate = async function (shared) {
   // Determine size
-  let dist = getProperty(this.data, "data.measureTemplate.size");
+  let dist = shared.action.data.measureTemplate.size;
   if (typeof dist === "string") {
-    dist = RollPF.safeRoll(getProperty(this.data, "data.measureTemplate.size"), shared.rollData).total;
+    dist = RollPF.safeRoll(shared.action.data.measureTemplate.size, shared.rollData).total;
   }
   dist = convertDistance(dist)[0];
 
   // Create data object
   const templateOptions = {
-    type: getProperty(this.data, "data.measureTemplate.type"),
+    type: shared.action.data.measureTemplate.type,
     distance: dist,
   };
-  if (getProperty(this.data, "data.measureTemplate.overrideColor")) {
-    templateOptions.color = getProperty(this.data, "data.measureTemplate.customColor");
+  if (shared.action.data.measureTemplate.overrideColor) {
+    templateOptions.color = shared.action.data.measureTemplate.customColor;
   }
-  if (getProperty(this.data, "data.measureTemplate.overrideTexture")) {
-    templateOptions.texture = getProperty(this.data, "data.measureTemplate.customTexture");
+  if (shared.action.data.measureTemplate.overrideTexture) {
+    templateOptions.texture = shared.action.data.measureTemplate.customTexture;
   }
 
   // Create template
@@ -621,7 +665,7 @@ export const promptMeasureTemplate = async function (shared) {
 /**
  * Handles Dice So Nice integration.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const handleDiceSoNice = async function (shared) {
   if (game.dice3d != null && game.dice3d.isEnabled()) {
@@ -688,13 +732,14 @@ export const handleDiceSoNice = async function (shared) {
 /**
  * Adds an attack's chat card data to the shared object.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const getMessageData = async function (shared) {
   if (shared.chatAttacks.length === 0) return;
 
   // Create chat template data
   shared.templateData = {
+    action: shared.action,
     name: this.name,
     type: CONST.CHAT_MESSAGE_TYPES.OTHER,
     rollMode: shared.rollMode,
@@ -708,7 +753,7 @@ export const getMessageData = async function (shared) {
   };
 
   // Set attack sound
-  if (this.data.data.soundEffect) shared.chatData.sound = this.data.data.soundEffect;
+  if (shared.action.data.soundEffect) shared.chatData.sound = shared.action.data.soundEffect;
   // Set dice sound if neither attack sound nor Dice so Nice are available
   else if (game.dice3d == null || !game.dice3d.isEnabled()) shared.chatData.sound = CONFIG.sounds.dice;
 
@@ -717,7 +762,7 @@ export const getMessageData = async function (shared) {
   let extraText = "";
   if (shared.templateData.attacks.length > 0) extraText = shared.templateData.attacks[0].attackNotesHTML;
 
-  const itemChatData = this.getChatData(null, shared.rollData);
+  const itemChatData = this.getChatData({ rollData: shared.rollData }, { actionId: shared.action.id });
 
   // Get properties
   const properties = [...itemChatData.properties, ...game.pf1.ItemAttack.addGenericPropertyLabels.call(this, shared)];
@@ -747,19 +792,26 @@ export const getMessageData = async function (shared) {
   // Parse template data
   const token =
     this.parentActor?.token ?? canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.parentActor?.id);
+  const identified = Boolean(shared.rollData.item?.identified ?? true);
+  const name = identified
+    ? `${shared.rollData.item.identifiedName || this.name} (${shared.action.name})`
+    : shared.rollData.item.unidentified?.name || this.name;
   shared.templateData = mergeObject(
     shared.templateData,
     {
       tokenUuid: token ? token.document?.uuid ?? token.uuid : null,
+      actionId: shared.action?.id,
       extraText: extraText,
-      data: itemChatData,
+      identified: identified,
+      name: name,
+      description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
+      actionDescription: itemChatData.actionDescription,
       hasExtraText: extraText.length > 0,
       properties: props,
       hasProperties: props.length > 0,
       item: this.data,
-      actor: this.parent.data,
-      hasSave: this.hasSave,
-      description: this.fullDescription,
+      actor: this.parentActor.data,
+      hasSave: shared.action.hasSave,
       rollData: shared.rollData,
       save: {
         dc: shared.saveDC,
@@ -778,7 +830,7 @@ export const getMessageData = async function (shared) {
 
   // Add range info
   {
-    const range = this.range;
+    const range = shared.action.range;
     if (range != null) {
       shared.templateData.range = range;
       if (typeof range === "string") {
@@ -790,7 +842,7 @@ export const getMessageData = async function (shared) {
       shared.templateData.rangeLabel =
         usystem === "metric" ? `${shared.templateData.range} m` : `${shared.templateData.range} ft.`;
 
-      const rangeUnits = getProperty(this.data, "data.range.units");
+      const rangeUnits = shared.action.data.range.units;
       if (["melee", "touch", "reach", "close", "medium", "long"].includes(rangeUnits)) {
         shared.templateData.rangeLabel = CONFIG.PF1.distanceUnits[rangeUnits];
       }
@@ -800,8 +852,11 @@ export const getMessageData = async function (shared) {
   // Add spell info
   if (this.type === "spell" && this.parent != null) {
     // Spell failure
-    if (this.parent.spellFailure > 0) {
-      const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
+    if (this.parent.spellFailure > 0 && this.data.data.components.somatic) {
+      const spellbook = getProperty(
+        this.parentActor.data,
+        `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
+      );
       if (spellbook && spellbook.arcaneSpellFailure) {
         const roll = RollPF.safeRoll("1d100");
         shared.templateData.spellFailure = roll.total;
@@ -826,7 +881,7 @@ export const getMessageData = async function (shared) {
     if (targets.length) {
       shared.templateData.targets = targets.map((o) => {
         return {
-          actorData: o.actor.data,
+          actorData: o.actor?.data,
           tokenData: o.data,
           uuid: o.document.uuid,
         };
@@ -836,12 +891,20 @@ export const getMessageData = async function (shared) {
 
   shared.chatData["flags.pf1.metadata"] = metadata;
   shared.chatData["flags.core.canPopout"] = true;
+  if (!identified)
+    shared.chatData["flags.pf1.identifiedInfo"] = {
+      identified,
+      name: this.name,
+      description: itemChatData.identifiedDescription,
+      actionName: shared.action.name,
+      actionDescription: itemChatData.actionDescription,
+    };
 };
 
 /**
  * Adds generic property labels to an attack's chat card.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {string[]} The resulting property labels.
  */
 export const addGenericPropertyLabels = function (shared) {
@@ -886,7 +949,7 @@ export const addGenericPropertyLabels = function (shared) {
   // Add conditionals info
   if (shared.conditionals?.length) {
     shared.conditionals.forEach((c) => {
-      properties.push(this.data.data.conditionals[c].name);
+      properties.push(shared.action.data.conditionals[c].name);
     });
   }
 
@@ -902,7 +965,7 @@ export const addGenericPropertyLabels = function (shared) {
 /**
  * Adds combat property labels to an attack's chat card.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  * @returns {string[]} The resulting property labels.
  */
 export const addCombatPropertyLabels = function (shared) {
@@ -917,8 +980,8 @@ export const addCombatPropertyLabels = function (shared) {
 /**
  * Generates metadata for this attack for the chat card to store.
  *
- * @param {Object} shared - Shared data between attack functions.
- * @returns {Object} The resulting metadata object.
+ * @param {object} shared - Shared data between attack functions.
+ * @returns {object} The resulting metadata object.
  */
 export const generateChatMetadata = function (shared) {
   const metadata = {};
@@ -981,26 +1044,56 @@ export const generateChatMetadata = function (shared) {
 /**
  * Executes the item's script calls.
  *
- * @param {Object} shared - Shared data between attack functions.
- * @returns {Object} The resulting data from the script calls.
+ * @param {object} shared - Shared data between attack functions.
+ * @returns {object} The resulting data from the script calls.
  */
 export const executeScriptCalls = async function (shared) {
   // Extra options for script call
-  const data = { chatMessage: shared.chatMessage, fullAttack: shared.fullAttack };
+  const attackData = shared;
+
+  // Deprecated for V10
+  const actorName = this.parentActor.name;
+  const itemName = this.name;
+  const deprecationWarning = function (propName, newName) {
+    console.warn(
+      `${actorName}'s ${itemName} is using the deprecated "${propName}". Use "${
+        newName ? newName : "shared.attackData." + propName
+      }" instead.`
+    );
+  };
+  const handlerMaker = function (propName, redirect) {
+    return {
+      get(obj, prop) {
+        if (prop == "chatMessage" || prop == "fullAttack")
+          deprecationWarning("data." + prop, "shared.attackData." + prop);
+        else deprecationWarning(propName, redirect);
+        return Reflect.get(...arguments);
+      },
+      set(obj, prop, value) {
+        if (prop == "chatMessage" || prop == "fullAttack")
+          deprecationWarning("data." + prop, "shared.attackData." + prop);
+        else deprecationWarning(propName, redirect);
+        return Reflect.set(...arguments);
+      },
+    };
+  };
+  // End deprecated
 
   // Execute script call
   shared.scriptData = await this.executeScriptCalls("use", {
-    attacks: shared.chatAttacks,
-    template: shared.template,
-    data,
-    conditionals: shared.conditionals?.map((c) => this.data.data.conditionals[c]) ?? [],
+    attackData,
+    // Deprecated for V10
+    data: new Proxy({ chatMessage: shared.chatMessage, fullAttack: shared.fullAttack }, handlerMaker("data")),
+    attacks: new Proxy(shared.chatAttacks ?? [], handlerMaker("attacks", "shared.attackData.chatAttacks")),
+    template: new Proxy(shared.template ?? {}, handlerMaker("template")),
+    // End deprecated
   });
 };
 
 /**
  * Posts the attack's chat card.
  *
- * @param {Object} shared - Shared data between attack functions.
+ * @param {object} shared - Shared data between attack functions.
  */
 export const postMessage = async function (shared) {
   Hooks.call("itemUse", this, "postAttack", {
@@ -1011,14 +1104,15 @@ export const postMessage = async function (shared) {
   });
 
   // Create message
-  const t = game.settings.get("pf1", "attackChatCardTemplate");
+  const template = "systems/pf1/templates/chat/attack-roll.hbs";
+  shared.templateData.damageTypes = game.pf1.damageTypes.toRecord();
 
   // Show chat message
   let result;
   if (shared.chatAttacks.length > 0) {
     if (shared.chatMessage && shared.scriptData.hideChat !== true)
-      result = await createCustomChatMessage(t, shared.templateData, shared.chatData);
-    else result = { template: t, data: shared.templateData, chatData: shared.chatData };
+      result = await createCustomChatMessage(template, shared.templateData, shared.chatData);
+    else result = { template: template, data: shared.templateData, chatData: shared.chatData };
   } else {
     if (shared.chatMessage && shared.scriptData.hideChat !== true) result = this.roll();
     else result = { descriptionOnly: true };

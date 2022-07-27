@@ -48,8 +48,58 @@ export const hideRollInfo = function (app, html, data) {
   }
 };
 
+/**
+ * Generates an info block containing an item's identified info for GMs
+ *
+ * @remarks This HTML has to be generated in a synchronous way, as adding to a rendered chat message's content
+ *          will cause erratic scrolling behaviour.
+ * @param {ChatMessagePFIdentifiedInfo} info - An object containing the item's identified info
+ * @returns {string} HTML string containing the info block
+ */
+const getIdentifiedBlock = (info) => `
+<div class="gm-sensitive-always identified-info">
+  <section class="item-description">
+    <header class="flexrow description-header">
+      <h3 class="item-name">${info.name} </h3>
+      <div class="description-metadata">
+        <i class="fas fa-user-secret"></i>
+      </div>
+    </header>
+    ${info.description}
+  </section>
+  ${
+    info.actionName
+      ? `
+  <hr>
+  <section class="action-description">
+    <h3 class="action-name">${info.actionName}</h3>
+    ${info.actionDescription}
+  </section>`
+      : ``
+  }
+</div>
+  `;
+
+/**
+ * Add GM-sensitive info for GMs and hide GM-sensitive info for players
+ *
+ * @param {ChatMessagePF} app - The chat message
+ * @param {JQuery} html - The chat message's HTML
+ * @param {object} data - Data used to render the chat message
+ */
 export const hideGMSensitiveInfo = function (app, html, data) {
-  if (game.user.isGM) return;
+  // Handle adding of GM-sensitive info
+  if (game.user.isGM) {
+    // Show identified info box for GM if item was unidentified when rolled
+    const identifiedInfo = app.data.flags.pf1?.identifiedInfo ?? {};
+    const { identified = true } = identifiedInfo;
+    if (!identified && app.hasItemSource) {
+      const cardContent = html.find(".card-content");
+      cardContent.append(getIdentifiedBlock(identifiedInfo));
+    }
+    // Return early, as the rest of the function handles removing already existing info
+    return;
+  }
 
   // Hide info that's always sensitive, no matter the card's owner
   html.find(".gm-sensitive-always").remove();
@@ -86,17 +136,6 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     if (!actor) {
       actor = game.actors.get(speaker.actor);
     }
-  }
-
-  // Hide identified and description
-  const item = app.itemSource;
-  if (item != null && item.data?.data?.identified === false) {
-    const unidentifiedName = item.data.data.unidentified?.name;
-    if (unidentifiedName) {
-      html.find("header .item-name").text(unidentifiedName);
-    }
-    const unidentifiedDescription = item.data.data.description?.unidentified;
-    html.find(".card-content").html(TextEditor.enrichHTML(unidentifiedDescription, item.getRollData()));
   }
 
   if (!actor || (actor && actor.testUserPermission(game.user, "OBSERVER"))) return;
@@ -141,35 +180,39 @@ export const addChatCardTitleGradient = async function (app, html, data) {
   else titleText.css("color", "white");
 };
 
-export const applyAccessibilitySettings = function (app, html, data, conf) {
-  const fontSize = conf.fontSize || 0;
+export const alterAmmoRecovery = function (app, html) {
+  const recoveryData = app.getFlag("pf1", "ammoRecovery");
+  if (!recoveryData) return;
 
-  // Enlarge font sizes
-  if (fontSize > 0) {
-    // Enlarge table font sizes
-    {
-      const size = 10 + fontSize * 4;
-      html.find("table").css("font-size", `${size}px`);
-    }
-
-    // Enlarge attack roll numbers
-    {
-      const size = 12 + fontSize * 4;
-      html.find(".inline-roll, .fake-inline-roll").css("font-size", `${size}px`);
-    }
-
-    // Enlarge attack headers
-    {
-      const size = 1 + fontSize * 0.3;
-      html.find(".chat-attack th").css("font-size", `${size}em`);
-    }
-    // Enlarge attack labels
-    {
-      const size = 0.7 + fontSize * 0.3;
-      html.find(".chat-attack td").css("font-size", `${size}em`);
-    }
-  }
+  html.find(".chat-attack .ammo[data-ammo-id]").each((a, el) => {
+    const attackIndex = el.closest(".chat-attack").dataset.index;
+    const ammoId = el.dataset.ammoId;
+    const data = recoveryData[attackIndex]?.[ammoId];
+    if (!data) return;
+    $(el)
+      .find(".inline-action")
+      .each((i, ia) => {
+        // TODO: Disable button & track proper quantities
+        if (data.recovered) ia.classList.add("recovered");
+        if (data.failed) ia.classList.add("recovery-failed");
+      });
+  });
 };
+
+export const alterTargetDefense = function (app, html) {
+  const defenseData = app.getFlag("pf1", "targetDefense");
+  if (!defenseData) return;
+
+  html.find(".attack-targets .saving-throws div[data-saving-throw]").each((a, el) => {
+    const actorUUID = el.closest(".target").dataset.uuid;
+    const save = el.dataset.savingThrow;
+    const value = getProperty(defenseData, `${actorUUID}.save.${save}`);
+    if (value == null) return;
+    $(el).find(".value").text(value.toString());
+  });
+};
+
+export const applyAccessibilitySettings = function (app, html, data, conf) {};
 
 /**
  * Returns an inline roll string suitable for chat messages.
@@ -195,7 +238,9 @@ export const hideInvisibleTargets = async function (app, html) {
     const elem = $(t.elem);
 
     // Gather token
-    t.token = (await fromUuid(t.uuid)).object;
+    const token = await fromUuid(t.uuid);
+    if (!token) continue;
+    t.token = token.object;
 
     // Hide if token invisible
     if (!t.token?.visible) elem.hide();
@@ -282,24 +327,7 @@ export const targetSavingThrowClick = async function (app, html, actor, event) {
 
   // Replace saving throw value on original chat card's target
   if (total != null) {
-    // Prepare parameters
-    const args = {
-      eventType: "alterChatTargetAttribute",
-      message: app.id,
-      targetUuid: actor.uuid,
-      save,
-      value: total,
-    };
-
-    // Add parameters based on d20 result
-    const d20 = message.roll.terms[0];
-    if (d20.faces === 20) {
-      if (d20.total === 1) args.isFailure = true;
-      else if (d20.total === 20) args.isSuccess = true;
-    }
-
-    // Do action
-    if (game.user.isGM) return alterChatTargetAttribute(args);
-    else game.socket.emit("system.pf1", args);
+    const actorUUID = elem.closest(".target").dataset.uuid;
+    await app.setFlag("pf1", "targetDefense", { [actorUUID]: { save: { [save]: total } } });
   }
 };

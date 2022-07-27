@@ -5,41 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "hixnvsrzucr3h32e",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "1 day (D)",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "5-mile radius emanating from the touched point",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -50,30 +122,12 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          6
-        ],
-        [
-          "cleric/oracle",
-          6
-        ],
-        [
-          "druid",
-          6
-        ],
-        [
-          "witch",
-          6
-        ],
-        [
-          "shaman",
-          6
-        ],
-        [
-          "hunter",
-          6
-        ]
+        ["sorcerer/wizard", 6],
+        ["cleric/oracle", 6],
+        ["druid", 6],
+        ["witch", 6],
+        ["shaman", 6],
+        ["hunter", 6]
       ],
       "domain": [],
       "subDomain": [],
@@ -83,7 +137,6 @@
     "level": 6,
     "school": "nec",
     "types": "curse, evil",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -99,12 +152,7 @@
       "spontaneousPrepared": false
     },
     "sr": false,
-    "shortDescription": "<p>By touching the ground, you curse the land with six unnatural hazards. This functions as @Compendium[pf1.spells.ug4qh4cuh5f9ralf]{lesser curse terrain}, but with the effects of the greater perilous demesne curse (see page 145).</p>",
-    "spellDuration": "1 day (D)",
-    "spellArea": "5-mile radius emanating from the touched point",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>By touching the ground, you curse the land with six unnatural hazards. This functions as @Compendium[pf1.spells.ug4qh4cuh5f9ralf]{lesser curse terrain}, but with the effects of the greater perilous demesne curse (see page 145).</p>"
   },
   "effects": [],
   "folder": null,

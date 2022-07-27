@@ -252,20 +252,18 @@ export class LevelUpForm extends FormApplication {
     };
 
     // Update class
-    itemData["data.level"] = chatData.level.new;
-    const lup = new Promise((resolve) => {
-      Hooks.on(
-        "pf1.classLevelChange",
-        function _waiter(actor, item) {
-          if (item.id === this.object.id) {
-            Hooks.off("pf1.classLevelChange", _waiter);
-            resolve();
-          }
-        }.bind(this)
-      );
+    mergeObject(itemData, { "data.level": chatData.level.new });
+    const levelingClass = this.object;
+    const lvlwaiter = new Promise((resolve) => {
+      const hid = Hooks.on("pf1.classLevelChange", function _waiter(actor, item, curLevel, newLevel) {
+        if (item.id === levelingClass.id) {
+          Hooks.off("pf1.classLevelChange", hid);
+          resolve();
+        }
+      });
     });
-    const up = this.object.update(itemData);
-    await Promise.allSettled([up, lup]);
+    await levelingClass.update(itemData);
+    await lvlwaiter;
 
     // Update actor
     if (Object.keys(actorData).length) {

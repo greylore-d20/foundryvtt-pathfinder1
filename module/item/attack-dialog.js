@@ -1,3 +1,6 @@
+import { generateAttacks } from "./attack.js";
+import { RollPF } from "../roll.js";
+
 export class AttackDialog extends Application {
   constructor(object, rollData = null, options = {}) {
     super(options);
@@ -14,8 +17,8 @@ export class AttackDialog extends Application {
       sl: this.rollData.sl ?? 0,
     };
     this.flags = {
-      "primary-attack": this.object.data.data.primaryAttack === true,
-      "cl-check": this.object.data.data.clCheck === true,
+      "primary-attack": this.object.item.data.data.primaryAttack === true,
+      "cl-check": this.object.data.clCheck === true,
       "measure-template": true,
     };
     this.attributes = {
@@ -25,11 +28,11 @@ export class AttackDialog extends Application {
       "cl-offset": "0",
       "sl-offset": "0",
       rollMode: game.settings.get("core", "rollMode"),
-      "damage-ability-multiplier": this.rollData.item?.ability?.damageMult ?? 1,
+      "damage-ability-multiplier": this.rollData.action?.ability?.damageMult ?? 1,
       held: this.rollData.item?.held ?? "normal",
     };
     this.conditionals = {};
-    for (const [idx, cData] of Object.entries(this.object.data.data.conditionals ?? {})) {
+    for (const [idx, cData] of Object.entries(this.object.data.conditionals ?? {})) {
       this.conditionals[`conditional.${idx}`] = cData.default === true;
     }
 
@@ -59,8 +62,9 @@ export class AttackDialog extends Application {
 
   static get defaultAttack() {
     return {
-      name: "",
-      bonus: 0,
+      label: "",
+      attackBonus: 0,
+      attackBonusTotal: 0,
       ammo: null,
     };
   }
@@ -68,26 +72,27 @@ export class AttackDialog extends Application {
   getData() {
     return {
       data: this.rollData,
-      item: this.object.data.data,
+      item: this.object.data,
       config: CONFIG.PF1,
       rollMode: game.settings.get("core", "rollMode"),
       rollModes: CONFIG.Dice.rollModes,
       hasAttack: this.object.hasAttack,
       hasDamage: this.object.hasDamage,
-      hasDamageAbility: this.object.data.data.ability?.damage ?? "" !== "",
-      isNaturalAttack: this.object.data.data.attackType === "natural",
-      isWeaponAttack: this.object.data.data.attackType === "weapon",
-      isMeleeWeaponAttackAction: this.object.data.data.actionType === "mwak",
-      isRangedWeaponAttackAction: this.object.data.data.actionType === "rwak",
-      isAttack: this.object.type === "attack",
-      isWeapon: this.object.type === "weapon",
-      isSpell: this.object.type === "spell",
+      hasDamageAbility: this.object.data.ability?.damage ?? "" !== "",
+      isNaturalAttack: this.object.item.data.data.attackType === "natural",
+      isWeaponAttack: this.object.item.data.data.attackType === "weapon",
+      isMeleeWeaponAttackAction: this.object.data.actionType === "mwak",
+      isRangedWeaponAttackAction: this.object.data.actionType === "rwak",
+      isAttack: this.object.item.type === "attack",
+      isWeapon: this.object.item.type === "weapon",
+      isSpell: this.object.item.type === "spell",
+      isFeat: this.object.item.type === "feat",
       hasTemplate: this.object.hasTemplate,
       attacks: this.attacks,
       flags: this.flags,
       attributes: this.attributes,
       conditionals: this.conditionals,
-      usesAmmo: this.object.data.data.usesAmmo,
+      usesAmmo: this.object.data.usesAmmo,
       ammo: this.getAmmo(),
     };
   }
@@ -99,7 +104,7 @@ export class AttackDialog extends Application {
     return ammo.map((o) => {
       return {
         data: o.data,
-        isDefault: this.object.getFlag("pf1", "defaultAmmo") === o.id,
+        isDefault: this.object.item.getFlag("pf1", "defaultAmmo") === o.id,
       };
     });
   }
@@ -108,7 +113,7 @@ export class AttackDialog extends Application {
     if (!(item.type === "loot" && item.data.data.subType === "ammo")) return false;
     if (item.data.data.quantity <= 0) return false;
 
-    const weaponAmmoType = this.object.data.data.ammoType;
+    const weaponAmmoType = this.object.data.ammoType;
     const ammoType = item.extraType;
     if (!ammoType) return true;
     if (weaponAmmoType === ammoType) return true;
@@ -162,7 +167,7 @@ export class AttackDialog extends Application {
     const elem = event.currentTarget;
     this.flags[elem.name] = elem.checked === true;
 
-    // Add or remove haste attack
+    // Add or remove haste, rapid-shot or manyshot attack
     if (["haste-attack", "rapid-shot", "manyshot"].includes(elem.name)) {
       if (elem.checked) {
         const translationString = {
@@ -171,14 +176,19 @@ export class AttackDialog extends Application {
           manyshot: "PF1.Manyshot",
         };
 
-        this.attacks.push(
+        // Correlate manyshot with the first attack, add the others at the end
+        const place = elem.name === "manyshot" ? 1 : this.attacks.length;
+
+        this.attacks.splice(
+          place,
+          0,
           mergeObject(this.constructor.defaultAttack, {
             id: elem.name,
-            name: game.i18n.localize(translationString[elem.name]),
-            bonus: 0,
+            label: game.i18n.localize(translationString[elem.name]),
+            attackBonusTotal: "", // Don't show anything in the mod field, as the data is not updated live
           })
         );
-        this.setAttackAmmo(this.attacks.length - 1, this.object.getFlag("pf1", "defaultAmmo"));
+        this.setAttackAmmo(place, this.object.item.getFlag("pf1", "defaultAmmo"));
       } else {
         this.attacks = this.attacks.filter((o) => o.id !== elem.name);
       }
@@ -232,8 +242,8 @@ export class AttackDialog extends Application {
     const ammoId = elem.closest(".ammo-item").dataset.id;
     switch (elem.dataset.type) {
       case "set-default":
-        if (ammoId === "null") await this.object.unsetFlag("pf1", "defaultAmmo");
-        else await this.object.setFlag("pf1", "defaultAmmo", ammoId);
+        if (ammoId === "null") await this.object.item.unsetFlag("pf1", "defaultAmmo");
+        else await this.object.item.setFlag("pf1", "defaultAmmo", ammoId);
         // Apply CSS class, since we can't do a render in here and keep the dropdown menu open
         elem
           .closest("ul")
@@ -284,48 +294,19 @@ export class AttackDialog extends Application {
   }
 
   initAttacks() {
-    const result = [];
-
-    // Get normal attack
-    result.push(
-      mergeObject(this.constructor.defaultAttack, {
-        name: this.object.data.data.attackName || game.i18n.format("PF1.FormulaAttack", { 0: 1 }),
-      })
-    );
-
-    // Get static extra attacks
-    for (const atk of this.object.data.data.attackParts ?? []) {
-      result.push(
-        mergeObject(this.constructor.defaultAttack, {
-          name: atk[1],
-          bonus: RollPF.safeTotal(atk[0], this.rollData),
-        })
-      );
-    }
-
-    // Get formulaic extra attacks
-    const attackFormulae = {
-      count: this.object.data.data.formulaicAttacks?.count?.formula ?? null,
-      bonus: this.object.data.data.formulaicAttacks?.bonus?.formula ?? "0",
-    };
-    const atkCount = RollPF.safeTotal(attackFormulae.count, this.rollData) || 0;
-    for (let a = 0; a < atkCount; a++) {
-      this.rollData.formulaicAttack = a + 1;
-      const bonus = RollPF.safeTotal(attackFormulae.bonus, this.rollData);
-      const name = game.i18n.format(this.object.data.data.formulaicAttacks?.label || "PF1.FormulaAttack", { 0: a + 2 });
-      result.push(
-        mergeObject(this.constructor.defaultAttack, {
-          name,
-          bonus,
-        })
-      );
-    }
-    if (this.rollData.formulaicAttack !== undefined) delete this.rollData.formulaicAttack;
-
-    this.attacks = result;
+    this.attacks = generateAttacks
+      .call(this.object.item, { rollData: this.rollData }, true)
+      .map(({ label, attackBonus }) => ({
+        label: label,
+        attackBonus: attackBonus,
+        // Reduce formula to a single number for easier display
+        attackBonusTotal: RollPF.safeTotal(attackBonus, this.rollData),
+        // Ammo data is discarded in favour of specialised handling via setAttackAmmo
+        ammo: null,
+      }));
 
     // Set ammo usage
-    const ammoId = this.object.getFlag("pf1", "defaultAmmo");
+    const ammoId = this.object.item.getFlag("pf1", "defaultAmmo");
     if (ammoId != null) {
       for (let a = 0; a < this.attacks.length; a++) {
         this.setAttackAmmo(a, ammoId);
@@ -349,18 +330,20 @@ export class AttackDialog extends Application {
     return this.attacks.map((o) => {
       return {
         id: o.id,
-        label: o.name,
-        attackBonus: o.bonus,
+        label: o.label,
+        attackBonus: o.attackBonus,
         ammo: o.ammo?.data._id,
       };
     });
   }
 
   setAttackAmmo(attackIndex, ammoId = null) {
-    if (!this.object.data.data.usesAmmo) return;
+    if (!this.object.data.usesAmmo) return;
 
     const atk = this.attacks[attackIndex];
     const curAmmo = atk.ammo?.data._id;
+    const ammoItem = ammoId ? this.object.actor.items.get(ammoId) : null;
+    const abundant = ammoItem?.data.flags?.pf1?.abundant ?? false;
 
     // Check if ammo exists
     if (ammoId && this.ammoUsage[ammoId] == null) ammoId = null;
@@ -375,7 +358,7 @@ export class AttackDialog extends Application {
     }
 
     // Don't allow overusage
-    if (this.ammoUsage[ammoId].used >= this.ammoUsage[ammoId].quantity) return;
+    if (!abundant && this.ammoUsage[ammoId].used >= this.ammoUsage[ammoId].quantity) return;
 
     atk.ammo = this.getAmmo().find((o) => o.data._id === ammoId);
     // Add to ammo usage tracker

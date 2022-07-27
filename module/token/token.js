@@ -1,37 +1,12 @@
 import { hasTokenVision } from "../misc/vision-permission.js";
 
 export class TokenPF extends Token {
-  async _onUpdate(data, options, ...args) {
-    if (!this.hud.effects) return;
-
-    await super._onUpdate(data, options, ...args);
-
-    // Get the changed attributes
-    const keys = Object.keys(data).filter((k) => k !== "_id");
-    const changed = new Set(keys);
-    const changedFlags = Object.keys(data.flags?.pf1 ?? {});
-
-    const testFlags = [
-      "disableLowLight",
-      "lowLightVision",
-      "lowLightVisionMultiplier",
-      "lowLightVisionMultiplierBright",
-    ].some((s) => changedFlags.includes(s));
-
-    if (testFlags || changed.has("light")) {
-      canvas.perception.schedule({
-        lighting: { initialize: true, refresh: true },
-        sight: { initialize: true, refresh: true },
-      });
-    }
-  }
-
   async toggleEffect(effect, { active, overlay = false, midUpdate } = {}) {
     let call;
     if (typeof effect == "string") {
       const buffItem = this.actor.items.get(effect);
       if (buffItem) {
-        call = await buffItem.update({ "data.active": !buffItem.data.data.active });
+        call = await buffItem.setActive(!buffItem.isActive);
       } else call = await super.toggleEffect(effect, { active, overlay });
     } else if (effect && !midUpdate && Object.keys(CONFIG.PF1.conditions).includes(effect.id)) {
       const updates = {};
@@ -46,9 +21,9 @@ export class TokenPF extends Token {
 
   get actorVision() {
     return {
-      lowLight: getProperty(this.data, "flags.pf1.lowLightVision"),
-      lowLightMultiplier: getProperty(this.data, "flags.pf1.lowLightVisionMultiplier"),
-      lowLightMultiplierBright: getProperty(this.data, "flags.pf1.lowLightVisionMultiplierBright"),
+      lowLight: getProperty(this.actor.data, "data.traits.senses.ll.enabled"),
+      lowLightMultiplier: getProperty(this.actor.data, "data.traits.senses.ll.multiplier.dim"),
+      lowLightMultiplierBright: getProperty(this.actor.data, "data.traits.senses.ll.multiplier.bright"),
     };
   }
 
@@ -127,5 +102,25 @@ export class TokenPF extends Token {
         sight: { refresh: true },
       });
     }
+  }
+
+  updateVisionSource(...args) {
+    // Don't apply vision with custom vision rules flag set
+    if (this.data.flags?.pf1?.customVisionRules) return super.updateVisionSource(...args);
+
+    // Set bright vision from actor senses
+    if (["character", "npc"].includes(this.actor?.type)) {
+      const { dv, bs, bse, ts } = this.actor.data.data.traits.senses;
+      const highestVision = Math.max(dv, bs, bse, ts);
+      this.data.brightSight = game.pf1.utils.convertDistance(highestVision)[0];
+      this.data.brightSight = game.pf1.utils.convertDistance(highestVision)[0] || 0;
+    }
+
+    super.updateVisionSource(...args);
+  }
+
+  _onUpdate(data, options, user) {
+    if (options.render === false) return;
+    else super._onUpdate(data, options, user);
   }
 }

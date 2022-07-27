@@ -1,5 +1,6 @@
 import Color from "color";
 import { colorToInt, convertDistance, measureDistance } from "../lib.js";
+import { RollPF } from "../roll.js";
 
 const rangeColor = {
   fill: Color("#ff0000"),
@@ -51,13 +52,26 @@ export class SquareHighlight {
 }
 
 /**
- * Highlights the reach of an attack for a token.
+ * An object containing highlights belonging to a specific attack
  *
- * @param {Token} token
- * @param {ItemPF} attack
- * @returns SquareHighlight
+ * @typedef {object} AttackReachHighlight
+ * @property {SquareHighlight} normal - Highlight for normal range
+ * @property {SquareHighlight} reach - Highlight for reach range
+ * @property {SquareHighlight[]} extra - Additional highlights
  */
-export const showAttackReach = function (token, attack) {
+
+/** @type {AttackReachHighlight|undefined} */
+let currentHighlight;
+
+/**
+ * Calculates the {@link AttackReachHighlight} for a token's attack.
+ *
+ * @param {Token} token - The token to calculate the attack reach for
+ * @param {import("../item/entity.js").ItemPF} attack - The attack to calculate the reach for
+ * @param {import("../item/components/action.js").ItemAction} action - The action to calculate the reach for
+ * @returns {AttackReachHighlight | undefined} Highlights for this attack, if any
+ */
+const getAttackReach = function (token, attack, action) {
   const grid = canvas.grid;
   const gridSize = grid.size;
   const tw = token.data.width;
@@ -67,21 +81,22 @@ export const showAttackReach = function (token, attack) {
     y: Math.floor((token.y + th * gridSize - 0.5 * gridSize) / gridSize),
   };
 
-  const rollData = attack.getRollData();
+  if (!action) return;
+  const rollData = action.getRollData();
 
   // Determine whether reach
-  const rangeKey = getProperty(attack.data, "data.range.units");
+  const rangeKey = action.data.range.units;
   if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
   const isReach = rangeKey === "reach";
   const range = rollData.range;
 
   // Determine minimum range
-  const minRangeKey = getProperty(attack.data, "data.range.minUnits");
+  const minRangeKey = action.data.range.minUnits;
   let minRange = null;
   if (["melee", "touch"].includes(minRangeKey)) minRange = range.melee;
   if (minRangeKey === "reach") minRange = range.reach;
   if (minRangeKey === "ft") {
-    minRange = RollPF.safeRoll(getProperty(attack.data, "data.range.minValue") || "0", rollData).total;
+    minRange = RollPF.safeRoll(action.data.range.minValue || "0", rollData).total;
   }
 
   const squares = {
@@ -95,18 +110,18 @@ export const showAttackReach = function (token, attack) {
     squares.normal = getReachSquares(token, range.melee, minRange, null, { useReachRule });
     squares.reach = getReachSquares(token, range.reach, range.melee, null, { useReachRule });
   } else if (rangeKey === "ft") {
-    const r = RollPF.safeRoll(getProperty(attack.data, "data.range.value") || "0", rollData).total;
+    const r = RollPF.safeRoll(action.data.range.value || "0", rollData).total;
     squares.normal = getReachSquares(token, r, minRange, null, { useReachRule: true });
 
     // Add range increments
     const maxSquareRange = Math.min(
-      400,
+      60, // arbitrary limit to enhance performance on large canvases
       Math.max(
         (canvas.dimensions.width / canvas.dimensions.size) * canvas.dimensions.distance,
         (canvas.dimensions.height / canvas.dimensions.size) * canvas.dimensions.distance
       ) + convertDistance(r)[0]
     );
-    const rangeIncrements = getProperty(attack.data, "data.range.maxIncrements") || 1;
+    const rangeIncrements = action.data.range.maxIncrements;
     for (let a = 1; a < rangeIncrements; a++) {
       if ((a + 1) * convertDistance(r)[0] <= maxSquareRange) {
         squares.extra.push(getReachSquares(token, (a + 1) * r, a * r, null, { useReachRule }));
@@ -160,63 +175,102 @@ export const showAttackReach = function (token, attack) {
   return result;
 };
 
-export const addReachCallback = async function (data, html) {
-  // Don't do anything under certain circumstances
-  const itemId = getProperty(data, "flags.pf1.metadata.item");
-  if (!itemId) return;
+/**
+ * Calculates and renders the {@link AttackReachHighlight} for a token's attack.
+ * If a highlight already exists, it will be removed.
+ *
+ * @param {Token} token - The token to calculate the attack reach for
+ * @param {import("../item/entity.js").ItemPF} attack - The attack to calculate the reach for
+ * @param {import("../item/components/action.js").ItemAction} action - The action to calculate the reach for
+ */
+export const showAttackReach = function (token, attack, action) {
+  // Clear previous highlight
+  clearHighlight();
 
-  // Define getter functions
-  const _getTokenByUuid = async function (uuid) {
-    if (!uuid) return;
-    const actor = await fromUuid(uuid);
-    if (actor instanceof TokenDocument) return actor.object;
-    return actor?.token ?? (actor != null ? canvas.tokens.placeables.find((o) => o.actor === actor) : null);
-  };
+  const highlight = getAttackReach(token, attack, action);
 
-  // Define functions
-  let highlight;
-  const mouseEnterCallback = function () {
-    const tokenUuid = html.find(".chat-card")[0]?.dataset?.tokenUuid;
-    _getTokenByUuid(tokenUuid).then((t) => {
-      if (!t) return;
-      const item = t.actor.items.get(itemId);
-      if (!item) return;
-      if (!game.settings.get("pf1", "hideReachMeasurements")) highlight = showAttackReach(t, item);
+  // If a highlight could be created, make it the current highlight and render it
+  if (!highlight) return;
+  currentHighlight = highlight;
+  renderHighlight();
+};
 
-      if (!highlight) return;
+export const clearHighlight = function () {
+  if (currentHighlight) {
+    currentHighlight.normal.clear();
+    currentHighlight.reach.clear();
+    for (const h of currentHighlight.extra) {
+      h.clear();
+    }
+    currentHighlight = undefined;
+  }
+};
 
-      highlight.normal.render();
-      highlight.reach.render();
-      highlight.extra.forEach((hl) => {
-        hl.render();
-      });
-    });
-  };
+const renderHighlight = function () {
+  if (currentHighlight) {
+    currentHighlight.normal.render();
+    currentHighlight.reach.render();
+    for (const h of currentHighlight.extra) {
+      h.render();
+    }
+  }
+};
 
-  const mouseLeaveCallback = function () {
-    if (!highlight) return;
+/**
+ * Returns a token belonging to either an actor's UUID or a token's UUID
+ *
+ * @async
+ * @param {string} uuid - UUID of an actor or token
+ * @returns {Promise<Token|null>} A Token, if one can be found
+ */
+const _getTokenByUuid = async function (uuid) {
+  if (!uuid) return;
+  /** @type {TokenDocument | Actor} */
+  const actor = await fromUuid(uuid);
+  if (actor instanceof TokenDocument) return actor.object;
+  return actor?.token ?? (actor != null ? canvas.tokens.placeables.find((o) => o.actor === actor) : null);
+};
 
-    highlight.normal.clear(true);
-    highlight.reach.clear(true);
-    highlight.extra.forEach((hl) => {
-      hl.clear(true);
-    });
-  };
+/**
+ * Add listeners on the {@link ChatLog}'s HTML element, checking for hover events involving
+ * chat cards' range element using event delegation.
+ *
+ * @param {JQuery<HTMLElement>} html - The chat log
+ */
+export function addReachListeners(html) {
+  html.on("mouseenter", ".card-range", onMouseEnterReach);
+  html.on("mouseleave", ".card-range", onMouseLeaveReach);
+}
 
-  const rangeElems = html.find(".card-range");
-  rangeElems.on("mouseenter", mouseEnterCallback);
-  rangeElems.on("mouseleave", mouseLeaveCallback);
+/**
+ * Handle display of reach when a chat card's reach element is hovered
+ *
+ * @param {JQuery.MouseEnterEvent<HTMLElement>} event - A `mouseEnter` event
+ */
+const onMouseEnterReach = (event) => {
+  event.preventDefault();
 
-  // Clear highlights when chat messages are rendered
-  Hooks.on("renderChatMessage", () => {
-    if (!highlight) return;
+  const reachElement = event.currentTarget;
+  const card = reachElement.closest(".chat-card");
+  const { tokenUuid, actionId, itemId } = card.dataset;
+  if (!(itemId && actionId && tokenUuid)) return;
 
-    highlight.normal.clear(true);
-    highlight.reach.clear(true);
-    highlight.extra.forEach((hl) => {
-      hl.clear(true);
-    });
+  _getTokenByUuid(tokenUuid).then((token) => {
+    if (!token) return;
+    const item = token.actor.allItems.find((item) => item.id === itemId);
+    if (!item) return;
+    if (!game.settings.get("pf1", "hideReachMeasurements")) showAttackReach(token, item, item.actions.get(actionId));
   });
+};
+
+/**
+ * Handle clearing of reach highlights created by {@link onMouseEnterReach}
+ *
+ * @param {JQuery.MouseLeaveEvent} event - A `mouseLeave` event
+ */
+const onMouseLeaveReach = (event) => {
+  event.preventDefault();
+  clearHighlight();
 };
 
 const getReachSquares = function (token, range, minRange = 0, addSquareFunction = null, options) {

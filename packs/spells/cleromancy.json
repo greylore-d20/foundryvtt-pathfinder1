@@ -5,43 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "full"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 3,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "5n40np4qf5q36ate",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "full"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/ level",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -52,26 +122,11 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          3
-        ],
-        [
-          "cleric/oracle",
-          2
-        ],
-        [
-          "druid",
-          3
-        ],
-        [
-          "inquisitor",
-          3
-        ],
-        [
-          "hunter",
-          3
-        ]
+        ["sorcerer/wizard", 3],
+        ["cleric/oracle", 2],
+        ["druid", 3],
+        ["inquisitor", 3],
+        ["hunter", 3]
       ],
       "domain": [],
       "subDomain": [],
@@ -80,7 +135,6 @@
     },
     "level": 3,
     "school": "div",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -91,8 +145,7 @@
       "focus": "a set of 64 chicken bones"
     },
     "sr": false,
-    "shortDescription": "<p><i>Cleromancy</i> involves casting bones and interpreting the results. Those able to arrive at the proper interpretation are granted knowledge of coming events. Roll 1d4 per caster level. Group the dice by like results, and choose one of the groups. For the duration of <i>cleromancy</i>, you can apply a luck bonus equal to the result of the selected dice to any d20 roll.</p><p>You can apply this bonus to a number of rolls equal to the number of dice in the group. If <i>cleromancy</i> expires before you are able to allocate the total number of allotted bonuses, the remaining bonuses are lost.</p>",
-    "spellDuration": "1 round/ level"
+    "shortDescription": "<p><i>Cleromancy</i> involves casting bones and interpreting the results. Those able to arrive at the proper interpretation are granted knowledge of coming events. Roll 1d4 per caster level. Group the dice by like results, and choose one of the groups. For the duration of <i>cleromancy</i>, you can apply a luck bonus equal to the result of the selected dice to any d20 roll.</p><p>You can apply this bonus to a number of rolls equal to the number of dice in the group. If <i>cleromancy</i> expires before you are able to allocate the total number of allotted bonuses, the remaining bonuses are lost.</p>"
   },
   "effects": [],
   "folder": null,

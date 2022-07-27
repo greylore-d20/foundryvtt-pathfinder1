@@ -1,13 +1,38 @@
 import { ScriptEditor } from "../../apps/script-editor.js";
 
 export class ItemScriptCall {
-  static create(data, parent) {
-    const result = new this();
+  static AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 
-    result.data = mergeObject(this.defaultData, data);
-    result.parent = parent;
+  constructor(data, parent) {
+    this.data = mergeObject(this.constructor.defaultData, data);
+    this.parent = parent;
+  }
 
-    return result;
+  /**
+   * Creates a script call.
+   *
+   * @param {object[]} data - Data to initialize the script call(s) with.
+   * @param {object} context - An object containing context information.
+   * @param {ItemPF} [context.parent] - The parent entity to create the script call within.
+   * @returns The resulting script calls, or an empty array if nothing was created.
+   */
+  static async create(data, context) {
+    const { parent } = context;
+
+    if (parent instanceof game.pf1.documents.ItemPF) {
+      // Prepare data
+      data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
+      const newScriptCallData = deepClone(parent.data.data.scriptCalls || []);
+      newScriptCallData.push(...data);
+
+      // Update parent
+      await parent.update({ "data.scriptCalls": newScriptCallData });
+
+      // Return results
+      return data.map((o) => parent.scriptCalls.get(o._id));
+    }
+
+    return [];
   }
 
   static get defaultData() {
@@ -67,7 +92,7 @@ export class ItemScriptCall {
       let err;
       if (macro) {
         if (macro.testUserPermission(game.user, "OBSERVER")) {
-          macro.sheet.render(true);
+          macro.sheet.render(true, { focus: true });
         } else {
           err = game.i18n.format("DOCUMENT.SheetPermissionWarn", { document: macro.documentName });
         }
@@ -82,7 +107,12 @@ export class ItemScriptCall {
     }
     // For regular script calls
     else {
-      const scriptEditor = new ScriptEditor({ command: this.value, name: this.name }).render(true);
+      const scriptEditor = new ScriptEditor({
+        command: this.value,
+        name: this.name,
+        parent: this.parent,
+        scriptCall: true,
+      }).render(true);
       const result = await scriptEditor.awaitResult();
       if (result) {
         return this.update({ value: result.command, name: result.name });
@@ -94,7 +124,7 @@ export class ItemScriptCall {
    * Executes the script.
    *
    * @param {object} shared - An object passed between script calls, and which is passed back as a result of ItemPF.executeScriptCalls.
-   * @param {object.<string, object>} extraParams - A dictionary containing extra parameters to pass on to the call.
+   * @param {Object<string, object>} extraParams - A dictionary containing extra parameters to pass on to the call.
    */
   async execute(shared, extraParams = {}) {
     // Add variables to the evaluation scope
@@ -104,12 +134,12 @@ export class ItemScriptCall {
       actor?.token?.object ?? (actor ? canvas.tokens.placeables.find((t) => t.actor?.id === actor.id) : null);
 
     // Attempt script execution
-    const body = `(async () => {
+    const body = `await (async () => {
       ${await this.getScriptBody()}
     })()`;
-    const fn = Function("item", "actor", "token", "shared", ...Object.keys(extraParams), body);
+    const fn = ItemScriptCall.AsyncFunction("item", "actor", "token", "shared", ...Object.keys(extraParams), body);
     try {
-      return fn.call(this, item, actor, token, shared, ...Object.values(extraParams));
+      return await fn.call(this, item, actor, token, shared, ...Object.values(extraParams));
     } catch (err) {
       ui.notifications.error(`There was an error in your script/macro syntax. See the console (F12) for details`);
       console.error(err);

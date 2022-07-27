@@ -5,42 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "0kprkyznlkjvqzee",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level (D)",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "10-ft.-radius emanation centered on the touched creature's space",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -51,34 +122,13 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          3
-        ],
-        [
-          "bard",
-          3
-        ],
-        [
-          "summoner",
-          3
-        ],
-        [
-          "psychic",
-          3
-        ],
-        [
-          "mesmerist",
-          3
-        ],
-        [
-          "occultist",
-          3
-        ],
-        [
-          "unchained Summoner",
-          3
-        ]
+        ["sorcerer/wizard", 3],
+        ["bard", 3],
+        ["summoner", 3],
+        ["psychic", 3],
+        ["mesmerist", 3],
+        ["occultist", 3],
+        ["unchained Summoner", 3]
       ],
       "domain": [],
       "subDomain": [],
@@ -88,7 +138,6 @@
     "level": 3,
     "school": "ill",
     "subschool": "glamer",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -97,9 +146,7 @@
     "materials": {
       "value": "a needle from a sea urchin"
     },
-    "shortDescription": "<p>This functions as per <i>invisibility bubble</i>, but the bubble is larger, which allows you to target a creature of up to size Gargantuan, or allows more creatures into the bubble.</p>",
-    "spellDuration": "1 minute/level (D)",
-    "spellArea": "10-ft.-radius emanation centered on the touched creature's space"
+    "shortDescription": "<p>This functions as per <i>invisibility bubble</i>, but the bubble is larger, which allows you to target a creature of up to size Gargantuan, or allows more creatures into the bubble.</p>"
   },
   "effects": [],
   "folder": null,

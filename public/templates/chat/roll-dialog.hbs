@@ -1,0 +1,20 @@
+<form>
+  <div class="form-group">
+      <label>{{localize "PF1.BaseDice"}}</label>
+      <input class="attribute" type="text" name="d20" value="{{d20}}" placeholder="e.g. 2d20kl"/>
+  </div>
+  <div class="form-group">
+    <label>{{localize "PF1.SituationalBonus"}}</label>
+    <input type="text" name="bonus" value="" placeholder="e.g. +1d4"/>
+  </div>
+  <div class="form-group">
+    <label>{{localize "PF1.RollMode"}}</label>
+    <select name="rollMode">
+      {{#select rollMode}}
+      {{#each rollModes as |label mode|}}
+      <option value="{{mode}}">{{localize label}}</option>
+      {{/each}}
+      {{/select}}
+    </select>
+  </div>
+</form>

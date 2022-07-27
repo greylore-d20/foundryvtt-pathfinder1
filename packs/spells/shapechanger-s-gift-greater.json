@@ -5,45 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "uliiqsbsogspqmsc",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level",
+          "units": ""
+        },
+        "target": {
+          "value": "willing living creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "willing living creature touched"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "fort",
-      "description": "Fortitude negates (harmless)"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -53,12 +121,7 @@
     },
     "scriptCalls": [],
     "learnedAt": {
-      "class": [
-        [
-          "sorcerer/wizard",
-          7
-        ]
-      ],
+      "class": [["sorcerer/wizard", 7]],
       "domain": [],
       "subDomain": [],
       "elementalSchool": [],
@@ -67,7 +130,6 @@
     "level": 7,
     "school": "trs",
     "subschool": "polymorph",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -76,8 +138,7 @@
     "materials": {
       "value": "a piece of the creature whose form you plan to grant"
     },
-    "shortDescription": "<p>This spell functions as <i>shapechanger's gift</i> except the chosen form can be an animal (as per <i>beast shape</i> I), elemental (as per <i>elemental body</i> I), fey (as per <i>fey form I</i>*), humanoid (as per <i>alter</i> self), monstrous humanoid (as per <i>monstrous physique</i> IUM), or vermin (as per <i>vermin shape</i> IUM) and the chosen form can have a fly speed.</p>",
-    "spellDuration": "1 hour/level"
+    "shortDescription": "<p>This spell functions as <i>shapechanger's gift</i> except the chosen form can be an animal (as per <i>beast shape</i> I), elemental (as per <i>elemental body</i> I), fey (as per <i>fey form I</i>*), humanoid (as per <i>alter</i> self), monstrous humanoid (as per <i>monstrous physique</i> IUM), or vermin (as per <i>vermin shape</i> IUM) and the chosen form can have a fly speed.</p>"
   },
   "effects": [],
   "folder": null,

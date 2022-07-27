@@ -5,40 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "ubrfi465szemn412",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "other",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "sphere of undead remains composed of 3 or more destroyed undead",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "other",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -49,14 +122,8 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          4
-        ],
-        [
-          "witch",
-          4
-        ]
+        ["sorcerer/wizard", 4],
+        ["witch", 4]
       ],
       "domain": [],
       "subDomain": [],
@@ -65,7 +132,6 @@
     },
     "level": 4,
     "school": "nec",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -74,9 +140,7 @@
     "materials": {
       "value": "a leather glove coated in dried embalming herbs"
     },
-    "shortDescription": "<p>Centuries of war with Nex trained the necromancers of Geb to extract every last resource from the mindless undead that make up most of Geb's rank-and-file troops.</p><p>When you cast this spell, you draw the remains of nearby destroyed undead together and fuse them into a mass of flesh and bone you can then hurl at any foes within range. Three corpses within range of the spell are required for the spell to function. Geb's hammer can be directed to attack one foe within range per round as a move action. It uses your caster level as its base attack bonus, modified by your Intelligence, Wisdom, or Charisma modifier (whichever one is highest). On a hit, the corpse hammer deals 1d6 points of damage per three caster levels (to a maximum of 6d6 points of damage).</p><p>Geb's hammer also has secondary effects based on the nature of the three bodies you use to create it. If the majority used to create Geb's hammer (at least two) were skeletal, the jagged bits of bone cause the corpse hammer to deal slashing damage and increase Geb's hammer's critical threat range to 19-20. On the other hand, if the majority were fleshy (at least two), the increased mass causes Geb's hammer to deal bludgeoning damage and increase its critical hit damage to x3.</p><p>Undead that have been destroyed by positive energy or a similar effect that does not leave a corpse, like a <i>disintegrate</i> spell, cannot be used to form Geb's hammer.</p>",
-    "spellDuration": "1 round/level",
-    "spellEffect": "sphere of undead remains composed of 3 or more destroyed undead"
+    "shortDescription": "<p>Centuries of war with Nex trained the necromancers of Geb to extract every last resource from the mindless undead that make up most of Geb's rank-and-file troops.</p><p>When you cast this spell, you draw the remains of nearby destroyed undead together and fuse them into a mass of flesh and bone you can then hurl at any foes within range. Three corpses within range of the spell are required for the spell to function. Geb's hammer can be directed to attack one foe within range per round as a move action. It uses your caster level as its base attack bonus, modified by your Intelligence, Wisdom, or Charisma modifier (whichever one is highest). On a hit, the corpse hammer deals 1d6 points of damage per three caster levels (to a maximum of 6d6 points of damage).</p><p>Geb's hammer also has secondary effects based on the nature of the three bodies you use to create it. If the majority used to create Geb's hammer (at least two) were skeletal, the jagged bits of bone cause the corpse hammer to deal slashing damage and increase Geb's hammer's critical threat range to 19-20. On the other hand, if the majority were fleshy (at least two), the increased mass causes Geb's hammer to deal bludgeoning damage and increase its critical hit damage to x3.</p><p>Undead that have been destroyed by positive energy or a similar effect that does not leave a corpse, like a <i>disintegrate</i> spell, cannot be used to form Geb's hammer.</p>"
   },
   "effects": [],
   "folder": null,

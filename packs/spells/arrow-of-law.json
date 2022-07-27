@@ -5,42 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "shbvja62nmgtfqf9",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous (1 round); see text",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial (see text)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "arrow-shaped projectile of lawful energy",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will partial (see text)"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -51,14 +122,8 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "cleric/oracle",
-          2
-        ],
-        [
-          "paladin",
-          2
-        ]
+        ["cleric/oracle", 2],
+        ["paladin", 2]
       ],
       "domain": [],
       "subDomain": [],
@@ -68,7 +133,6 @@
     "level": 2,
     "school": "evo",
     "types": "lawful",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -77,9 +141,7 @@
     "materials": {
       "focus": "a holy symbol"
     },
-    "shortDescription": "<p>You fire a shimmering arrow of pure order from your holy symbol at any one target in range as a ranged touch attack.</p><p>A chaotic creature struck by an <i>arrow of law</i> takes 1d8 points of damage per two caster levels (maximum 5d8). A chaotic outsider instead takes 1d6 points of damage per caster level (maximum 10d6) and is dazed for 1 round. A successful Will save reduces the damage to half and negates the daze effect.</p><p>This spell deals only half damage to creatures that are neither chaotic nor lawful, and they are not dazed. The arrow has no effect on lawful creatures.</p>",
-    "spellDuration": "instantaneous (1 round); see text",
-    "spellEffect": "arrow-shaped projectile of lawful energy"
+    "shortDescription": "<p>You fire a shimmering arrow of pure order from your holy symbol at any one target in range as a ranged touch attack.</p><p>A chaotic creature struck by an <i>arrow of law</i> takes 1d8 points of damage per two caster levels (maximum 5d8). A chaotic outsider instead takes 1d6 points of damage per caster level (maximum 10d6) and is dazed for 1 round. A successful Will save reduces the damage to half and negates the daze effect.</p><p>This spell deals only half damage to creatures that are neither chaotic nor lawful, and they are not dazed. The arrow has no effect on lawful creatures.</p>"
   },
   "effects": [],
   "folder": null,

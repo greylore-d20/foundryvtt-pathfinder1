@@ -1,17 +1,19 @@
-import { convertDistance, calculateRange } from "../lib.js";
+import { convertDistance, calculateRange, simplifyFormula } from "../lib.js";
+import { RollPF } from "../roll.js";
 
 export const registerHandlebarsHelpers = function () {
-  Handlebars.registerHelper("concat", (...args) => {
-    return args.slice(0, args.length - 1).join("");
-  });
-
   /**
    * Render a MCE editor container with an optional toggle button
    */
   Handlebars.registerHelper("roll-editor", function (options) {
+    const action = options.data.root.action;
     const item = options.data.root.item;
     const actor = options.data.root.actor;
-    const rollData = item != null ? item.getRollData() : actor != null ? actor.getRollData() : {};
+    let rollData;
+    if (action) rollData = action.getRollData();
+    if (item && !rollData) rollData = item.getRollData();
+    if (actor && !rollData) rollData = actor.getRollData();
+    if (!rollData) rollData = {};
 
     // Create editor
     const target = options.hash["target"];
@@ -39,10 +41,11 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("distanceUnit", (type) => convertDistance(0, type)[1]);
 
   Handlebars.registerHelper("itemRange", (item, rollData) => {
-    // ItemPF.range is not accessible here and is thus largely duplicated here
+    if (!item.document?.firstAction?.hasRange) return null;
+    const action = item.document.firstAction;
 
-    const range = item.data.range.value;
-    const rangeType = item.data.range.units;
+    const range = action.data.range.value;
+    const rangeType = action.data.range.units;
 
     if (rangeType == null) return null;
 
@@ -55,42 +58,47 @@ export const registerHandlebarsHelpers = function () {
     }
   });
 
-  Handlebars.registerHelper("itemDamage", (item, rollData) => {
-    if (!item.hasDamage) return null; // It was a mistake to call this
+  /**
+   *
+   * @param action
+   * @param rollData
+   * @param options
+   */
+  function actionDamage(action, rollData, options) {
+    if (!action.hasDamage) return null;
 
-    const actorData = item.document.parentActor.data.data,
-      itemData = item.data;
+    const actor = action.actor,
+      item = action.parent,
+      actorData = actor?.data.data,
+      actionData = action.data;
 
     const rv = [];
 
-    const reduceFormula = (formula) => {
-      const roll = RollPF.safeRoll(formula, rollData);
-      formula = roll.formula.replace(/\[[^\]]+\]/g, ""); // remove flairs
-      return [roll, formula];
-    };
-
-    const handleParts = (parts) => {
-      for (const [formula, _] of parts) {
-        const [roll, newformula] = reduceFormula(formula);
-        if (roll.total == 0) continue;
+    const handleFormula = (formula, change) => {
+      // Ensure @item.level and similar gets parsed correctly
+      const rd = change?.parent?.getRollData() ?? rollData;
+      const roll = RollPF.safeRoll(formula, rd);
+      if (roll.total !== 0) {
+        const newformula = simplifyFormula(roll.formula);
         rv.push(newformula);
       }
     };
 
+    const handleParts = (parts) => parts.forEach(([formula, _]) => handleFormula(formula));
+
     // Normal damage parts
-    handleParts(itemData.damage.parts);
+    handleParts(actionData.damage.parts);
 
     // Include ability score only if the string isn't too long yet
-    const dmgAbl = itemData.ability.damage;
-    const dmgAblMod = Math.floor((actorData.abilities[dmgAbl]?.mod ?? 0) * (itemData.ability.damageMult || 1));
+    const dmgAbl = actionData.ability.damage;
+    const dmgAblMod = Math.floor((actorData?.abilities[dmgAbl]?.mod ?? 0) * (actionData.ability.damageMult || 1));
     if (dmgAblMod != 0) rv.push(dmgAblMod);
 
     // Include damage parts that don't happen on crits
-    handleParts(itemData.damage.nonCritParts);
+    handleParts(actionData.damage.nonCritParts);
 
     // Include general sources. Item enhancement bonus is among these.
-    const sources = item.document.allDamageSources;
-    for (const s of sources) rv.push(s.formula);
+    item.getAllDamageSources(action.id)?.forEach((s) => handleFormula(s.formula, s));
 
     if (rv.length === 0) rv.push("NaN"); // Something probably went wrong
 
@@ -100,6 +108,22 @@ export const registerHandlebarsHelpers = function () {
       .replace(/\+-/, "-") // simplify math logic pt.1
       .replace(/--/g, "+") // simplify math logic pt.2
       .replace(/\+\++/, "+"); // simplify math logic pt.3
+  }
+
+  Handlebars.registerHelper("actionDamage", actionDamage);
+
+  Handlebars.registerHelper("damageTypes", (typeInfo) => {
+    const rv = [];
+    const { custom, values } = typeInfo;
+    if (custom) rv.push(custom);
+    values.forEach((dtId) => rv.push(game.i18n.localize(game.pf1.damageTypes.get(dtId)?.name ?? "PF1.Undefined")));
+    return rv.join(", ");
+  });
+
+  Handlebars.registerHelper("itemDamage", (item, rollData) => {
+    console.warn("{{itemDamage}} handlebars helper is deprecated, use {{actionDamage}} instead");
+    const action = item.document?.firstAction;
+    return actionDamage(action, rollData);
   });
 
   Handlebars.registerHelper("itemAttacks", (item) => {
@@ -112,38 +136,13 @@ export const registerHandlebarsHelpers = function () {
    * Returns true if there are conditionals disabled by default.
    */
   Handlebars.registerHelper("optionalConditionals", (item) => {
-    return item.data.conditionals.find((c) => !c.default);
+    return item.firstAction?.data.conditionals.find((c) => !c.default);
   });
 
   // Fetches ability mod value based on ability key.
   // Avoids contaminating rollData or item data with excess strings.
   Handlebars.registerHelper("abilityMod", (abl, rollData, multiplier) => {
     return Math.floor(rollData.abilities[abl]?.mod * multiplier ?? 1);
-  });
-
-  // Shorten string with ellipsis
-  // Favor cutting off near specific symbol within margin of error
-  Handlebars.registerHelper("ellipsis", (value, desiredLength, searchStartOffset = -4, searchEndOffset = 2) => {
-    const delimiters = /(\s|\+|,)/g;
-    // Process only if it's too long
-    if (value?.length > desiredLength + searchEndOffset) {
-      let cut = 0;
-
-      const end = Math.min(value.length - 1, desiredLength + searchEndOffset),
-        start = Math.max(0, desiredLength + searchStartOffset);
-
-      // Find nice cutting position
-      for (let i = end; i > start; i--) {
-        if (value[i].match(delimiters)?.length > 0) {
-          cut = i + 1;
-          break;
-        }
-      }
-      if (cut == 0) cut = desiredLength; // No better position found, just cut it.
-
-      return value.substring(0, cut) + "…";
-    }
-    return value;
   });
 
   Handlebars.registerHelper("hasContextNotes", (actor, context) => {
@@ -169,5 +168,11 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("halfNumber", (value) => {
     value = typeof value === "number" ? value : parseFloat(value);
     return new Handlebars.SafeString(Math.floor(value / 2).toString());
+  });
+
+  Handlebars.registerHelper("arrayHas", (options) => {
+    const array = options.hash["array"];
+    const value = options.hash["value"];
+    return array.includes(value);
   });
 };

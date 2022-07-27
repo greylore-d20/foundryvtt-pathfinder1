@@ -5,45 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "cost": 10,
-      "type": "minute"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 10,
-        "type": "minute"
+    "actions": [
+      {
+        "_id": "s37joihzz8rsv86x",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "permanent until discharged (D)",
+          "units": ""
+        },
+        "target": {
+          "value": "object touched or up to 5 sq. ft./level"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": "see text"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "object touched or up to 5 sq. ft./level",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "object touched or up to 5 sq. ft./level"
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "description": "see text"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -53,25 +121,14 @@
     },
     "scriptCalls": [],
     "learnedAt": {
-      "class": [
-        [
-          "cleric/oracle",
-          6
-        ]
-      ],
-      "domain": [
-        [
-          "Rune",
-          6
-        ]
-      ],
+      "class": [["cleric/oracle", 6]],
+      "domain": [["Rune", 6]],
       "subDomain": [],
       "elementalSchool": [],
       "bloodline": []
     },
     "level": 6,
     "school": "abj",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -87,12 +144,7 @@
       "spontaneousPrepared": false
     },
     "sr": false,
-    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.53dyu81yaw4y0nz4]{Glyph of Warding}, except that a <em>greater blast glyph</em> deals up to 10d8 points of damage, and a <em>greater spell glyph</em> can store a spell of 6th level or lower.</p>\n<p>@Compendium[pf1.spells.j0bc0iii8zp1jiwr]{Read Magic} allows you to identify a greater <em>Glyph of Warding</em> with a DC 16 @Compendium[pf1.skills.uLZI2uWz0uB8UgBc]{Spellcraft} check.</p>\n<p><em>Material Component</em>: You trace the glyph with incense, which must first be sprinkled with powdered diamond worth at least 400 gp.</p>",
-    "spellDuration": "permanent until discharged (D)",
-    "spellArea": "object touched or up to 5 sq. ft./level",
-    "spellPoints": {
-      "cost": ""
-    }
+    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.53dyu81yaw4y0nz4]{Glyph of Warding}, except that a <em>greater blast glyph</em> deals up to 10d8 points of damage, and a <em>greater spell glyph</em> can store a spell of 6th level or lower.</p>\n<p>@Compendium[pf1.spells.j0bc0iii8zp1jiwr]{Read Magic} allows you to identify a greater <em>Glyph of Warding</em> with a DC 16 @Compendium[pf1.skills.uLZI2uWz0uB8UgBc]{Spellcraft} check.</p>\n<p><em>Material Component</em>: You trace the glyph with incense, which must first be sprinkled with powdered diamond worth at least 400 gp.</p>"
   },
   "effects": [],
   "folder": null,

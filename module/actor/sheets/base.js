@@ -1,13 +1,6 @@
 import { ActorTraitSelector } from "../../apps/trait-selector.js";
 import { ActorRestDialog } from "../../apps/actor-rest.js";
-import {
-  createTag,
-  CR,
-  convertWeight,
-  createConsumableSpellDialog,
-  adjustNumberByStringCommand,
-  splitCurrency,
-} from "../../lib.js";
+import { createTag, CR, createConsumableSpellDialog, adjustNumberByStringCommand, splitCurrency } from "../../lib.js";
 import { PointBuyCalculator } from "../../apps/point-buy-calculator.js";
 import { Widget_ItemPicker } from "../../widgets/item-picker.js";
 import { getSkipActionPrompt } from "../../settings.js";
@@ -18,6 +11,7 @@ import { LevelUpForm } from "../../apps/level-up.js";
 import { CurrencyTransfer } from "../../apps/currency-transfer.js";
 import { getHighestChanges } from "../apply-changes.js";
 import { PF1 } from "../../config.js";
+import { RollPF } from "../../roll.js";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -106,6 +100,13 @@ export class ActorSheetPF extends ActorSheet {
      * @private
      */
     this._pendingUpdates = {};
+
+    /**
+     * @type {boolean} Whether the skills are currently locked.
+     * @property
+     * @private
+     */
+    this._skillsLocked = true;
   }
 
   static get defaultOptions() {
@@ -156,7 +157,7 @@ export class ActorSheetPF extends ActorSheet {
    * Returns an object containing feature type specific data relevant to feature organization.
    *
    * @static
-   * @type {object.<string, any>}
+   * @type {Object<string, any>}
    */
   static get featTypeData() {
     return {
@@ -201,10 +202,13 @@ export class ActorSheetPF extends ActorSheet {
       race: this.document.race != null ? this.document.race.data : null,
       usesAnySpellbook: this.document.data.data.attributes.spells.usedSpellbooks?.length > 0 ?? false,
       sourceData: {},
+      skillsLocked: this._skillsLocked,
     });
     data.data = data.data.data;
     const rollData = this.document.getRollData();
     data.rollData = rollData;
+
+    data.hasProficiencies = data.isCharacter || game.settings.get("pf1", "npcProficiencies");
 
     // Show whether the item has currency
     data.hasCurrency = Object.values(this.object.data.data.currency).some((o) => o > 0);
@@ -213,20 +217,31 @@ export class ActorSheetPF extends ActorSheet {
     // The Actor and its Items
     if (this.document.isToken) data.token = duplicate(this.document.token.data);
     else data.token = data.actor.token;
-    data.items = this.document.items.map((i) => {
-      i.data.labels = i.labels;
-      i.data.hasAttack = i.hasAttack;
-      i.data.hasMultiAttack = i.hasMultiAttack;
-      i.data.hasDamage = i.hasDamage;
-      i.data.hasRange = i.hasRange;
-      i.data.hasEffect = i.hasEffect;
-      i.data.hasAction = i.hasAction || i.isCharged || i.getScriptCalls("use").length > 0;
-      i.data.showUnidentifiedData = i.showUnidentifiedData;
+    data.items = this.document.items.map((item) => {
+      const i = deepClone(item.data);
+      i.labels = item.labels;
+      i.hasAttack = item.firstAction?.hasAttack;
+      i.hasMultiAttack = item.firstAction?.hasMultiAttack;
+      i.hasDamage = item.firstAction?.hasDamage;
+      i.hasRange = item.firstAction?.hasRange;
+      i.hasEffect = item.firstAction?.hasEffect;
+      i.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
+      i.range = mergeObject(
+        item.firstAction?.data?.range ?? {},
+        {
+          min: item.firstAction?.minRange,
+          max: item.firstAction?.maxRange,
+        },
+        { inplace: false }
+      );
+      i.showUnidentifiedData = item.showUnidentifiedData;
       if (i.showUnidentifiedData)
-        i.data.name =
-          getProperty(i.data, "data.unidentified.name") || getProperty(i.data, "data.identifiedName") || i.data.name;
-      else i.data.name = getProperty(i.data, "data.identifiedName") || i.data.name;
-      return i.data;
+        i.name =
+          getProperty(item.data, "data.unidentified.name") ||
+          getProperty(item.data, "data.identifiedName") ||
+          item.data.name;
+      else i.name = getProperty(item.data, "data.identifiedName") || item.data.name;
+      return i;
     });
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.labels = this.document.labels || {};
@@ -287,7 +302,7 @@ export class ActorSheetPF extends ActorSheet {
       skl.label = CONFIG.PF1.skills[s];
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
-      skl.compendiumEntry = CONFIG.PF1.skillCompendiumEntries[s] ?? null;
+      skl.compendiumEntry = CONFIG.PF1.skillCompendiumEntries[s] ?? skl.journal ?? null;
 
       // Add skill rank source
       if (skl.rank > 0) {
@@ -331,6 +346,7 @@ export class ActorSheetPF extends ActorSheet {
       skl.untrained = skl.rt === true && skl.rank <= 0;
       if (skl.subSkills != null) {
         for (const [s2, skl2] of Object.entries(skl.subSkills)) {
+          skl2.compendiumEntry = skl2.journal ?? null;
           skl2.sourceDetails = [];
           if (skl2.rank > 0) {
             skl2.sourceDetails.push({ name: game.i18n.localize("PF1.SkillRankPlural"), value: skl2.rank });
@@ -340,7 +356,7 @@ export class ActorSheetPF extends ActorSheet {
           }
           skl2.sourceDetails.push({
             name: CONFIG.PF1.abilities[skl2.ability],
-            value: data.data.abilities[skl2.ability].mod,
+            value: data.data.abilities[skl2.ability]?.mod ?? 0,
           });
           if (
             data.sourceDetails != null &&
@@ -366,6 +382,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update traits
     this._prepareTraits(data.data.traits);
+    data.senses = this._prepareSenses(data.data.traits.senses);
 
     // Prepare owned items
     this._prepareItems(data);
@@ -617,7 +634,7 @@ export class ActorSheetPF extends ActorSheet {
       if (!trait) continue;
       let values = [];
       // Prefer total over value for dynamically collected proficiencies
-      if (["armorProf", "weaponProf"].includes(t)) {
+      if (["armorProf", "weaponProf", "languages"].includes(t)) {
         values = trait.total ?? trait.value;
       } else if (trait.value) {
         values = trait.value instanceof Array ? trait.value : [trait.value];
@@ -640,6 +657,37 @@ export class ActorSheetPF extends ActorSheet {
       }
       trait.cssClass = !isObjectEmpty(trait.selected) ? "" : "inactive";
     }
+  }
+
+  _prepareSenses(senses) {
+    const result = {};
+
+    for (const [k, v] of Object.entries(senses)) {
+      if (k === "ll" && senses[k].enabled) {
+        result[k] = CONFIG.PF1.senses[k];
+        continue;
+      }
+
+      if (k === "custom" && v.length) {
+        v.split(CONFIG.PF1.re.traitSeparator).forEach((c, i) => {
+          result[`custom${i + 1}`] = c.trim();
+        });
+        continue;
+      }
+
+      if (typeof v === "number" && v > 0) {
+        const converted = game.pf1.utils.convertDistance(v);
+        result[k] = `${CONFIG.PF1.senses[k]} ${converted[0]} ${converted[1]}`;
+        continue;
+      }
+
+      if (v === true) {
+        result[k] = CONFIG.PF1.senses[k];
+        continue;
+      }
+    }
+
+    return result;
   }
 
   /* -------------------------------------------- */
@@ -687,6 +735,9 @@ export class ActorSheetPF extends ActorSheet {
           dataset: { type: "spell", level: level, spellbook: bookKey },
           name: game.i18n.localize(`PF1.SpellLevel${level}`),
           spellMessage: spellLevel.spellMessage,
+          lowAbilityScore: spellLevel.lowAbilityScore,
+          known: spellLevel.known,
+          preparation: spellLevel.preparation,
         };
       }
     }
@@ -889,6 +940,21 @@ export class ActorSheetPF extends ActorSheet {
     // Item summaries
     html.find(".item .item-name h4").click((event) => this._onItemSummary(event));
 
+    // Allow opening items even if the sheet isn't editable.
+
+    // Race item
+    html.find(".race").each((i, el) => {
+      if (el.closest(".item").dataset?.itemId) el.addEventListener("contextmenu", (ev) => this._onItemEdit(ev));
+    });
+    // General items
+    html.find(".item-edit").on("click", this._onItemEdit.bind(this));
+    // General items (right click)
+    html.find(".item .item-name h4").contextmenu(this._onItemEdit.bind(this));
+    // Quick items (right click)
+    html.find(".quick-actions li").contextmenu(this._onItemEdit.bind(this));
+    // Race controls (editable limitations done internally)
+    html.find(".race-container .item-control").click(this._onRaceControl.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.options.editable) {
       html.find("span.text-box").addClass("readonly");
@@ -966,6 +1032,9 @@ export class ActorSheetPF extends ActorSheet {
     // Add custom skill
     html.find(".skill-controls.skills .skill-create").click((ev) => this._onSkillCreate(ev));
 
+    // Edit skill
+    html.find(".sub-skill > .skill-controls > .skill-edit").on("click", (ev) => this._onSkillEdit(ev));
+    html.find(".skill > .skill-controls > .skill-edit").on("click", (ev) => this._onSkillEdit(ev));
     // Delete custom skill
     html.find(".skill > .skill-controls > .skill-delete").click((ev) => this._onSkillDelete(ev));
 
@@ -990,31 +1059,24 @@ export class ActorSheetPF extends ActorSheet {
     // Rest
     html.find(".rest").click(this._onRest.bind(this));
 
-    // Race controls
-    html.find(".race-container .item-control").click(this._onRaceControl.bind(this));
-
     // Point Buy Calculator
     html.find("button.pointbuy-calculator").click(this._onPointBuyCalculator.bind(this));
 
     // Alignment
     html.find(".control.alignment").click(this._onControlAlignment.bind(this));
 
-    // Quick edit race item
-    html.find(".race").each((i, el) => {
-      if (el.closest(".item").dataset?.itemId) el.addEventListener("contextmenu", (ev) => this._onItemEdit(ev));
-    });
+    // Edit senses
+    html.find(".senses-selector").on("click", this._onSensesSelector.bind(this));
+
     /* -------------------------------------------- */
     /*  Inventory
     /* -------------------------------------------- */
 
     // Owned Item management
-    html.find(".item-create").click((ev) => this._onItemCreate(ev));
-    html.find(".item-edit").click(this._onItemEdit.bind(this));
-    html.find(".item-delete").click(this._onItemDelete.bind(this));
-    html.find(".item-give").click(this._onItemGive.bind(this));
-
-    // Quick edit item
-    html.find(".item .item-name h4").contextmenu(this._onItemEdit.bind(this));
+    html.find(".item-create").on("click", (ev) => this._onItemCreate(ev));
+    html.find(".item-delete").on("click", this._onItemDelete.bind(this));
+    html.find(".item-give").on("click", this._onItemGive.bind(this));
+    html.find(".item-split:not(.disabled)").on("click", this._onItemSplit.bind(this));
 
     // Item Rolling
     html.find(".item .item-image").click((event) => this._onItemRoll(event));
@@ -1156,7 +1218,7 @@ export class ActorSheetPF extends ActorSheet {
     /*  Skills
     /* -------------------------------------------- */
 
-    html.find(".skill-lock-button").click(this._onToggleSkillLock.bind(this)).addClass("unlocked").click();
+    html.find(".skill-lock-button").on("click", this._onToggleSkillLock.bind(this));
 
     /* -------------------------------------------- */
     /*  Links
@@ -1340,7 +1402,7 @@ export class ActorSheetPF extends ActorSheet {
     const app = Object.values(this.document.apps).find((o) => {
       return o instanceof ActorRestDialog && o._element;
     });
-    if (app) app.bringToTop();
+    if (app) app.render(true, { focus: true });
     else new ActorRestDialog(this.document).render(true);
   }
 
@@ -1363,12 +1425,14 @@ export class ActorSheetPF extends ActorSheet {
 
   _mouseWheelAdd(event, el) {
     const isInput = el.tagName.toUpperCase() === "INPUT";
+    const { originalEvent } = event;
 
-    if (event && event instanceof WheelEvent) {
+    if (originalEvent && originalEvent instanceof WheelEvent && originalEvent.ctrlKey) {
+      event.preventDefault();
       const value = (isInput ? parseFloat(el.value) : parseFloat(el.innerText)) || 0;
       if (Number.isNaN(value)) return;
 
-      const increase = -Math.sign(event.deltaY);
+      const increase = -Math.sign(originalEvent.deltaY);
       const amount = parseFloat(el.dataset.wheelStep) || 1;
 
       if (isInput) {
@@ -1380,12 +1444,12 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _setFeatUses(event) {
-    event.preventDefault();
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    this._mouseWheelAdd(event.originalEvent, el);
+    this._mouseWheelAdd(event, el);
 
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "data.uses.value", value);
@@ -1401,12 +1465,12 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _setSpellUses(event) {
-    event.preventDefault();
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    this._mouseWheelAdd(event.originalEvent, el);
+    this._mouseWheelAdd(event, el);
 
     const prevValue = getProperty(item.data, "data.preparation.preparedAmount");
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
@@ -1425,12 +1489,12 @@ export class ActorSheetPF extends ActorSheet {
     } else this._updateItems();
   }
   _setMaxSpellUses(event) {
-    event.preventDefault();
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    this._mouseWheelAdd(event.originalEvent, el);
+    this._mouseWheelAdd(event, el);
 
     const prevValue = getProperty(item.data, "data.preparation.maxAmount");
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
@@ -1453,10 +1517,10 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _adjustActorPropertyBySpan(event) {
-    event.preventDefault();
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
 
-    this._mouseWheelAdd(event.originalEvent, el);
+    this._mouseWheelAdd(event, el);
     // Get base value
     let value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     if (el.dataset.dtype && el.dataset.dtype.toUpperCase() === "STRING") {
@@ -1486,12 +1550,12 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _setBuffLevel(event) {
-    event.preventDefault();
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
     const itemId = el.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    this._mouseWheelAdd(event.originalEvent, el);
+    this._mouseWheelAdd(event, el);
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     const name = el.getAttribute("name");
     if (name) {
@@ -1542,11 +1606,8 @@ export class ActorSheetPF extends ActorSheet {
 
   _onToggleSkillLock(event) {
     event.preventDefault();
-    const state = event.target.classList.toggle("unlocked");
-    const tab = event.target.closest(".tab.skills");
-    const rareInputs = $(tab).find(".skill-acp input,.skill-rt input, .skill-ability select");
-    rareInputs.prop("disabled", !state);
-    $(tab).find(".skill-controls .skill-delete").toggle();
+    this._skillsLocked = !this._skillsLocked;
+    return this.render();
   }
 
   _onOpenCompendium(event) {
@@ -1554,7 +1615,7 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const target = a.dataset.actionTarget;
 
-    game.pf1.compendiums[target].render(true);
+    game.pf1.compendiums[target].render(true, { focus: true });
   }
 
   _onRollConcentration(event) {
@@ -1589,35 +1650,38 @@ export class ActorSheetPF extends ActorSheet {
     const app = Object.values(this.actor.apps).find((o) => {
       return o instanceof LevelUpForm && o._element && o.object === item;
     });
-    if (app) app.bringToTop();
+    if (app) app.render(true, { focus: true });
     else new LevelUpForm(item).render(true);
   }
 
   /* -------------------------------------------- */
 
   /**
-   * Handle rolling of an item from the Actor sheet, obtaining the Item instance and dispatching to it's roll method
+   * Toggle inline display of an item's summary/description by expanding or hiding info div
    *
-   * @param event
+   * @param {JQuery.ClickEvent<HTMLElement>} event - The click event on the item
    * @private
    */
   _onItemSummary(event) {
     event.preventDefault();
-    const li = $(event.currentTarget).parents(".item"),
-      item = this.document.items.get(li.attr("data-item-id")),
-      chatData = item.getChatData({ secrets: this.document.isOwner });
+    const li = $(event.currentTarget).parents(".item");
+    // Check whether pseudo-item belongs to another collection
+    const collection = li.attr("data-item-collection") ?? "items";
+    const item = this.document[collection].get(li.attr("data-item-id"));
+    const { description, shortDescription, properties } = item.getChatData();
 
     // Toggle summary
     if (li.hasClass("expanded")) {
       const summary = li.children(".item-summary");
       summary.slideUp(200, () => summary.remove());
     } else {
-      const div = $(`<div class="item-summary">${chatData.description.value}</div>`);
-      if (chatData.shortDescription?.length) {
-        div.append(TextEditor.enrichHTML(chatData.shortDescription, { rollData: item.getRollData() }));
+      const div = $(`<div class="item-summary">${description}</div>`);
+      // Add text description to spells
+      if (shortDescription?.length) {
+        div.append(shortDescription);
       }
       const props = $(`<div class="item-properties tag-list"></div>`);
-      chatData.properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
+      properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
       div.append(props);
       li.append(div.hide());
       div.slideDown(200);
@@ -1696,12 +1760,12 @@ export class ActorSheetPF extends ActorSheet {
 
   /* -------------------------------------------- */
 
-  _onArbitrarySkillCreate(event) {
+  async _onArbitrarySkillCreate(event) {
     event.preventDefault();
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
     const mainSkillData = this.document.data.data.skills[skillId];
     const skillData = {
-      name: "",
+      name: game.i18n.format("DOCUMENT.New", { type: game.i18n.localize("PF1.Skill") }),
       ability: mainSkillData.ability,
       rank: 0,
       mod: 0,
@@ -1720,14 +1784,16 @@ export class ActorSheetPF extends ActorSheet {
 
     const updateData = {};
     updateData[`data.skills.${skillId}.subSkills.${tag}`] = skillData;
-    if (this.document.testUserPermission(game.user, "OWNER")) this.document.update(updateData);
+    if (this.document.testUserPermission(game.user, "OWNER")) await this.document.update(updateData);
+
+    return this._editSkill(skillId, tag);
   }
 
-  _onSkillCreate(event) {
+  async _onSkillCreate(event) {
     event.preventDefault();
     const isBackground = $(event.currentTarget).parents(".skills-list").attr("data-background") === "true";
     const skillData = {
-      name: "",
+      name: game.i18n.format("DOCUMENT.New", { type: game.i18n.localize("PF1.Skill") }),
       ability: "int",
       rank: 0,
       mod: 0,
@@ -1747,47 +1813,114 @@ export class ActorSheetPF extends ActorSheet {
 
     const updateData = {};
     updateData[`data.skills.${tag}`] = skillData;
-    if (this.document.testUserPermission(game.user, "OWNER")) this.document.update(updateData);
+    if (this.document.testUserPermission(game.user, "OWNER")) await this.document.update(updateData);
+
+    return this._editSkill(tag);
+  }
+
+  /**
+   * Opens a dialog to edit a skill.
+   *
+   * @param {string} skillId - The id of the skill in question.
+   * @param {string} [subSkillId] - The id of the subskill, if appropriate.
+   * @returns {Promise.<void>}
+   */
+  _editSkill(skillId, subSkillId) {
+    return new Promise((resolve) => {
+      const app = new game.pf1.applications.SkillEditor(this.document, skillId, subSkillId);
+      app.addCallback(resolve);
+      app.render(true);
+    });
+  }
+
+  _onSkillEdit(event) {
+    event.preventDefault();
+    const mainSkillId =
+      $(event.currentTarget).parents(".sub-skill").attr("data-main-skill") ??
+      $(event.currentTarget).parents(".skill").attr("data-skill");
+    const subSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-skill");
+
+    return this._editSkill(mainSkillId, subSkillId);
   }
 
   _onArbitrarySkillDelete(event) {
     event.preventDefault();
     const mainSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-main-skill");
+    const skill = this.document.data.data.skills[mainSkillId];
     const subSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-skill");
+    const subSkill = skill?.subSkills?.[subSkillId];
+    const skillName = `${CONFIG.PF1.skills[mainSkillId] ?? skill.name} (${subSkill.name})`;
 
-    const updateData = {};
-    updateData[`data.skills.${mainSkillId}.subSkills.-=${subSkillId}`] = null;
-    if (this.document.testUserPermission(game.user, "OWNER")) this.document.update(updateData);
+    const deleteSkill = () => {
+      const updateData = {};
+      updateData[`data.skills.${mainSkillId}.subSkills.-=${subSkillId}`] = null;
+      this.document.update(updateData);
+    };
+
+    if (getSkipActionPrompt()) {
+      deleteSkill();
+    } else {
+      const msg = `<p>${game.i18n.localize("PF1.DeleteSkillConfirmation")}</p>`;
+      Dialog.confirm({
+        title: game.i18n.localize("PF1.DeleteSkillTitle").format(skillName),
+        content: msg,
+        yes: () => {
+          deleteSkill();
+        },
+        rejectClose: true,
+      });
+    }
   }
 
   _onSkillDelete(event) {
     event.preventDefault();
+    if (!this.document.testUserPermission(game.user, "OWNER")) return;
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
+    const skill = this.document.data.data.skills[skillId];
+    const skillName = CONFIG.PF1.skills[skillId] ?? skill.name;
 
-    const updateData = {};
-    updateData[`data.skills.-=${skillId}`] = null;
-    if (this.document.testUserPermission(game.user, "OWNER")) this.document.update(updateData);
+    const deleteSkill = () => {
+      const updateData = {};
+      updateData[`data.skills.-=${skillId}`] = null;
+      this.document.update(updateData);
+    };
+
+    if (getSkipActionPrompt()) {
+      deleteSkill();
+    } else {
+      const msg = `<p>${game.i18n.localize("PF1.DeleteSkillConfirmation")}</p>`;
+      Dialog.confirm({
+        title: game.i18n.localize("PF1.DeleteSkillTitle").format(skillName),
+        content: msg,
+        yes: () => {
+          deleteSkill();
+        },
+        rejectClose: true,
+      });
+    }
   }
 
   async _onRaceControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
 
-    // Add race
-    if (a.classList.contains("add")) {
-      const itemData = {
-        name: "New Race",
-        type: "race",
-      };
-      this.document.createEmbeddedDocuments("Item", [itemData]);
-    }
-    // Edit race
-    else if (a.classList.contains("edit")) {
+    // Edit race (allow opening without edit rights)
+    if (a.classList.contains("edit")) {
       this._onItemEdit(event);
     }
-    // Delete race
-    else if (a.classList.contains("delete")) {
-      this._onItemDelete(event);
+    // Add race
+    else if (this.isEditable) {
+      if (a.classList.contains("add")) {
+        const itemData = {
+          name: "New Race",
+          type: "race",
+        };
+        this.document.createEmbeddedDocuments("Item", [itemData]);
+      }
+      // Delete race
+      else if (a.classList.contains("delete")) {
+        this._onItemDelete(event);
+      }
     }
   }
 
@@ -1797,8 +1930,18 @@ export class ActorSheetPF extends ActorSheet {
     const app = Object.values(this.document.apps).find((o) => {
       return o instanceof PointBuyCalculator && o._element;
     });
-    if (app) app.bringToTop();
+    if (app) app.render(true, { focus: true });
     else new PointBuyCalculator(this.document).render(true);
+  }
+
+  async _onSensesSelector(event) {
+    event.preventDefault();
+
+    const app = Object.values(this.document.apps).find((o) => {
+      return o instanceof game.pf1.applications.SensesSelector && o._element;
+    });
+    if (app) app.render(true, { focus: true });
+    else new game.pf1.applications.SensesSelector(this.document).render(true);
   }
 
   async _onControlAlignment(event) {
@@ -1917,7 +2060,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
     if (!item) return;
 
-    game.pf1.rollItemMacro(item.name, { itemId: item.id, itemType: item.type, actorId: this.document.id });
+    return item.use({ skipDialog: getSkipActionPrompt() });
   }
 
   _convertCurrency(event) {
@@ -1944,9 +2087,14 @@ export class ActorSheetPF extends ActorSheet {
     const itemData = {
       name: baseName,
       type: type,
-      data: duplicate(header.dataset),
+      data: deepClone(header.dataset),
     };
     delete itemData.data["type"];
+
+    // Convert some data to numbers
+    for (const [k, v] of Object.entries(itemData.data)) {
+      if (!Number.isNaN(parseFloat(v))) itemData.data[k] = parseFloat(v);
+    }
 
     const getSubtype = (d) => getProperty(d, `data.${d.type}Type`);
     const subtype = getSubtype(itemData);
@@ -1996,8 +2144,7 @@ export class ActorSheetPF extends ActorSheet {
     const app = Object.values(item.apps).find((o) => {
       return o instanceof ItemSheet && o.document === item && o._element != null;
     });
-    if (app) app.bringToTop();
-    else item.sheet.render(true);
+    item.sheet.render(true, { focus: true });
   }
 
   /**
@@ -2085,6 +2232,35 @@ export class ActorSheetPF extends ActorSheet {
     }
   }
 
+  async _onItemSplit(event) {
+    event.preventDefault();
+
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.document.items.get(itemId);
+
+    new Dialog({
+      title: game.i18n.format("PF1.Dialog.SplitItem.Title", { 0: item.name }),
+      content: `<p>${game.i18n.format("PF1.Dialog.SplitItem.Desc")}</p><input type="text" name="value" value="1" />`,
+      buttons: {
+        split: {
+          // icon: `<i class="fas fa-people-arrows></i>`,
+          label: game.i18n.localize("PF1.Split"),
+          callback: async (html) => {
+            let splitValue = parseInt(html.find(`[name="value"]`).val());
+            splitValue = Math.min(item.data.data.quantity - 1, Math.max(0, splitValue));
+            if (splitValue > 0) {
+              await item.update({ "data.quantity": Math.max(0, item.data.data.quantity - splitValue) });
+              const data = item.data.toObject();
+              data.data.quantity = splitValue;
+              await CONFIG.Item.documentClass.createDocuments([data], { parent: this.document });
+            }
+          },
+        },
+      },
+      default: "split",
+    }).render(true);
+  }
+
   _onSubmitElement(event) {
     if (event.key === "Enter") {
       const elem = event.currentTarget;
@@ -2155,16 +2331,6 @@ export class ActorSheetPF extends ActorSheet {
    * @private
    */
   _prepareItems(data) {
-    // Set item tags
-    for (const [key, res] of Object.entries(getProperty(data, "data.resources"))) {
-      if (!res) continue;
-      const id = res.id;
-      if (!id) continue;
-      const item = this.document.items.get(id);
-      if (!item) continue;
-      item.data.tag = !item.data.data.useCustomTag ? key : item.data.data.tag;
-    }
-
     // Categorize items as inventory, spellbook, features, and classes
     const inventory = {
       weapon: {
@@ -2240,11 +2406,13 @@ export class ActorSheetPF extends ActorSheet {
     // Partition items by category
     let [items, spells, feats, classes, attacks] = data.items.reduce(
       (arr, item) => {
+        const document = item.document;
         item.img = item.img || CONST.DEFAULT_TOKEN;
         item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
         item.hasUses = item.data.uses && item.data.uses.max > 0;
         item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "data.uses.per"));
-        item.price = item.data.identified === false ? item.data.unidentified.price : item.data.price;
+        if (document) item.price = document.getValue({ recursive: false, sellValue: 1 });
+        else item.price = item.data.identified === false ? item.data.unidentified.price : item.data.price;
 
         const itemQuantity = getProperty(item, "data.quantity") != null ? getProperty(item, "data.quantity") : 1;
         const itemCharges = getProperty(item, "data.uses.value") != null ? getProperty(item, "data.uses.value") : 1;
@@ -2285,8 +2453,7 @@ export class ActorSheetPF extends ActorSheet {
     for (const i of items) {
       const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
-      i.data.weight = i.data.weight || 0;
-      i.totalWeight = Math.round(convertWeight(i.data.quantity * i.data.weight) * 10) / 10;
+      i.totalWeight = Math.roundDecimals(i.data.weight.converted.total, 1);
       i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);
@@ -2486,12 +2653,24 @@ export class ActorSheetPF extends ActorSheet {
    */
   async _onOpenCompendiumEntry(event) {
     const entryKey = event.currentTarget.dataset.compendiumEntry;
+    const documentType = event.currentTarget.dataset.documentType;
     const parts = entryKey.split(".");
+
+    // World entry
+    if (parts.length === 1 && documentType) {
+      const collectionName = CONFIG[documentType].documentClass.collectionName;
+      const collection = game[collectionName];
+      const entry = collection.get(parts[0]);
+      entry.sheet.render(true, { focus: true });
+      return;
+    }
+
+    // Compendium entry
     const packKey = parts.slice(0, 2).join(".");
     const entryId = parts.slice(-1)[0];
     const pack = game.packs.get(packKey);
     const entry = await pack.getDocument(entryId);
-    entry.sheet.render(true);
+    entry.sheet.render(true, { focus: true });
   }
 
   /* -------------------------------------------- */
@@ -2608,7 +2787,7 @@ export class ActorSheetPF extends ActorSheet {
     const app = Object.values(this.document.apps).find((o) => {
       return o instanceof ActorTraitSelector && o.options.name === options.name && o._element;
     });
-    if (app) app.bringToTop();
+    if (app) app.render(true, { focus: true });
     else new ActorTraitSelector(this.document, options).render(true);
   }
 

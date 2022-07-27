@@ -6,8 +6,8 @@ export class ItemBasePF extends Item {
   /**
    * Polymorphic constructor.
    *
-   * @param {Object} data ActorData
-   * @param {Object} context Context data
+   * @param {object} data ActorData
+   * @param {object} context Context data
    */
   // eslint-disable-next-line constructor-super
   constructor(data, context = {}) {

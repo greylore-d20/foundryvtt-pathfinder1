@@ -1,0 +1,17 @@
+<div class="form-group">
+  <label>{{localize "PF1.Size"}}</label>
+  <div class="form-fields">
+    <select name="data.size">
+      {{#select data.size}}
+      {{#each config.actorSizes as |name type|}}
+      <option value="{{type}}">{{name}}</option>
+      {{/each}}
+      {{/select}}
+      {{#if allowAutoResizing}}
+      <label>
+        <input type="checkbox" name="data.resizing" data-dtype="Boolean" {{checked data.resizing}}> {{localize "PF1.Resizing"}}
+      </label>
+      {{/if}}
+    </select>
+  </div>
+</div>

@@ -5,43 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "rddtltbv62rp24to",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "see text",
+          "units": ""
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "value": null,
+          "units": "personal",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "you"
-    },
-    "range": {
-      "units": "personal"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -52,61 +122,23 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          1
-        ],
-        [
-          "alchemist",
-          1
-        ],
-        [
-          "inquisitor",
-          1
-        ],
-        [
-          "magus",
-          1
-        ],
-        [
-          "bloodrager",
-          1
-        ],
-        [
-          "psychic",
-          1
-        ],
-        [
-          "medium",
-          1
-        ]
+        ["sorcerer/wizard", 1],
+        ["alchemist", 1],
+        ["inquisitor", 1],
+        ["magus", 1],
+        ["bloodrager", 1],
+        ["psychic", 1],
+        ["medium", 1]
       ],
       "domain": [
-        [
-          "Destruction",
-          1
-        ],
-        [
-          "Luck",
-          1
-        ]
+        ["Destruction", 1],
+        ["Luck", 1]
       ],
-      "subDomain": [
-        [
-          "Fist",
-          1
-        ]
-      ],
+      "subDomain": [["Fist", 1]],
       "elementalSchool": [],
-      "bloodline": [
-        [
-          "Shaitan",
-          1
-        ]
-      ]
+      "bloodline": [["Shaitan", 1]]
     },
     "school": "div",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "focus": true
@@ -115,8 +147,7 @@
       "focus": "small wooden replica of an archery target"
     },
     "sr": false,
-    "shortDescription": "<p>You gain temporary, intuitive insight into the immediate future during your next attack. Your next single attack roll (if it is made before the end of the next round) gains a +20 insight bonus.</p><p>Additionally, you are not affected by the miss chance that applies to attackers trying to strike a concealed target.</p>",
-    "spellDuration": "see text"
+    "shortDescription": "<p>You gain temporary, intuitive insight into the immediate future during your next attack. Your next single attack roll (if it is made before the end of the next round) gains a +20 insight bonus.</p><p>Additionally, you are not affected by the miss chance that applies to attackers trying to strike a concealed target.</p>"
   },
   "effects": [],
   "folder": null,

@@ -4,15 +4,24 @@ export class ChatMessagePF extends ChatMessage {
   }
 
   /**
-   * Return linked item or falsey
+   * Linked item.
    *
-   * @type {ItemPF}
+   * @type {ItemPF|undefined|null} - Null is returned if no item is linked, undefined if item is not found, and ItemPF otherwise.
    */
   get itemSource() {
     const itemId = this.data.flags?.pf1?.metadata?.item;
-    const actor = this.constructor.getSpeakerActor(this.data.speaker);
-    if (!itemId || !actor) return false;
-    return actor.items.get(itemId);
+    if (itemId) {
+      const actor = this.constructor.getSpeakerActor(this.data.speaker);
+      return actor?.items.get(itemId);
+    }
+    return null;
+  }
+
+  /**
+   * @type {boolean} True if item source is defined, regardless if that item source still exists.
+   */
+  get hasItemSource() {
+    return this.data.flags?.pf1?.metadata?.item !== undefined;
   }
 
   /**
@@ -36,6 +45,15 @@ export class ChatMessagePF extends ChatMessage {
   }
 }
 
+/**
+ * @typedef {object} ChatMessagePFIdentifiedInfo
+ * @property {boolean} identified - True if item was identified when rolled.
+ * @property {string} name - Name of the identified item.
+ * @property {string} description - Description of the identified item.
+ * @property {string} [actionName] - Name of the action that was used
+ * @property {string} [actionDescription] - Description of the action that was used
+ */
+
 // Returns a promise to the created chatMessage or false if no command was executed
 export const customRolls = function (message, speaker, rollData) {
   if (message.match(/^\/(\w+)(?: +([^#]+))(?:#(.+))?/)) {
@@ -47,7 +65,7 @@ export const customRolls = function (message, speaker, rollData) {
     speaker = speaker ?? cMsg.getSpeaker();
     const actor = cMsg.getSpeakerActor(speaker);
     const scene = speaker.scene ? game.scenes.get(speaker.scene) : canvas.scene;
-    const tokenDocument = scene.tokens.get(speaker.token);
+    const tokenDocument = scene?.tokens.get(speaker.token);
     const tokenUuid = tokenDocument?.uuid;
 
     switch (type) {
@@ -56,13 +74,15 @@ export const customRolls = function (message, speaker, rollData) {
       case "H":
       case "HEAL": {
         rollData = rollData ?? actor?.getRollData() ?? {};
-        const roll = RollPF.safeRoll(value, rollData);
-        const total = roll.total;
+        const roll = Roll.create(value, rollData).roll();
 
-        return (async () => {
+        return roll.then(async (roll) => {
+          const total = roll.total;
+          const isHealing = type === "HEAL" || type === "H";
           const content = await renderTemplate("systems/pf1/templates/chat/simple-damage.hbs", {
             tokenId: tokenUuid,
-            isHealing: type === "HEAL" || type === "H",
+            isHealing,
+            css: isHealing ? "heal" : "damage",
             roll,
           });
           const chatOptions = {
@@ -72,9 +92,10 @@ export const customRolls = function (message, speaker, rollData) {
             speaker: speaker,
             rollMode: game.settings.get("core", "rollMode"),
             content: content,
+            flags: { pf1: { subject: { health: isHealing ? "healing" : "damage" } } },
           };
           cMsg.create(chatOptions);
-        })();
+        });
       }
     }
   }

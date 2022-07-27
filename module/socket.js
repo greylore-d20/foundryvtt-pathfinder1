@@ -1,5 +1,4 @@
-import { isString } from "markdown-it/lib/common/utils";
-import { getFirstActiveGM } from "./lib.js";
+import { getFirstActiveGM, refreshActors } from "./lib.js";
 
 /**
  *
@@ -67,6 +66,9 @@ const runSocketFunction = async function (args, senderId) {
         await sourceActor.deleteEmbeddedDocuments("Item", [item.id]);
         break;
       }
+      case "refreshActorSheets":
+        game.pf1.utils.refreshActors({ renderOnly: true });
+        break;
     }
   } catch (err) {
     console.log("PF1 | Socket Error: ", err);

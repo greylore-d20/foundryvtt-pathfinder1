@@ -7,7 +7,7 @@ form {
       flex: auto;
       text-align: left;
       line-height: 20px;
-      font-size: 11px;
+      font-size: @fontSizeSmall;
 
       input[type="checkbox"] {
         height: unset;
@@ -30,7 +30,7 @@ form {
 /* Tooltip text */
 .tooltip .tooltipcontent {
   font-family: sans-serif;
-  font-size: 11px;
+  font-size: @fontSizeSmall;
   font-weight: normal;
   visibility: hidden;
   background-color: rgba(0, 0, 0, 0.8);
@@ -94,7 +94,7 @@ form {
   position: absolute;
   -webkit-text-stroke: 1px black;
   font-weight: bold;
-  font-size: 12px;
+  font-size: @fontSizeNormal;
   color: white;
 }
 
@@ -124,6 +124,14 @@ input.text-box {
 }
 
 .pf1 {
+  a.disabled {
+    * {
+      color: @colorBeige;
+    }
+    text-shadow: 0 0 rgba(0, 0, 0, 0);
+    cursor: auto;
+  }
+
   table {
     margin: 0;
 
@@ -205,4 +213,15 @@ input.text-box {
 #settings #pf1-details > ul {
   padding: 3px 8px;
   margin: 0;
+}
+
+#compendium footer .compendium-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: min-content;
+  gap: 3px;
+
+  .colspan-2 {
+    grid-column: span 2;
+  }
 }

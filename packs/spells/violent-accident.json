@@ -5,45 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "ce477ibbr9ffgwre",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 day or until discharged",
+          "units": ""
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": null,
+          "units": "long",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half; see text"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one creature"
-    },
-    "range": {
-      "units": "long"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "ref",
-      "description": "Reflex half; see text"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -54,22 +122,10 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "cleric/oracle",
-          2
-        ],
-        [
-          "witch",
-          2
-        ],
-        [
-          "mesmerist",
-          2
-        ],
-        [
-          "occultist",
-          2
-        ]
+        ["cleric/oracle", 2],
+        ["witch", 2],
+        ["mesmerist", 2],
+        ["occultist", 2]
       ],
       "domain": [],
       "subDomain": [],
@@ -79,13 +135,11 @@
     "level": 2,
     "school": "trs",
     "types": "curse",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
-    "shortDescription": "<p>You curse the target to suffer a violent accident  within the next 24 hours. You have no control over the form the accident takes or when it strikes. The target can avoid being cursed with spell resistance when you cast the spell, but otherwise receives no saving throw. Regardless of the accident's nature, it is magically empowered to deal an amount of damage equal to 1d8 x your caster level (maximum 5d8 points of damage), and the damage is of a type appropriate to the source of damage (such as fire for an explosion or bludgeoning for a falling object). When the accident occurs, the target can attempt a Reflex saving throw to reduce the damage by half. Although others might be surprised or inconvenienced by the accident, it damages only the target.</p>",
-    "spellDuration": "1 day or until discharged"
+    "shortDescription": "<p>You curse the target to suffer a violent accident  within the next 24 hours. You have no control over the form the accident takes or when it strikes. The target can avoid being cursed with spell resistance when you cast the spell, but otherwise receives no saving throw. Regardless of the accident's nature, it is magically empowered to deal an amount of damage equal to 1d8 x your caster level (maximum 5d8 points of damage), and the damage is of a type appropriate to the source of damage (such as fire for an explosion or bludgeoning for a falling object). When the accident occurs, the target can attempt a Reflex saving throw to reduce the damage by half. Although others might be surprised or inconvenienced by the accident, it damages only the target.</p>"
   },
   "effects": [],
   "folder": null,

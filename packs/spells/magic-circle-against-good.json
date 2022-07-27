@@ -5,43 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "fn0634rlqr41f79y",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 min./level",
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "10",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "10-ft.-radius emanation from touched creature",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "range": {
-      "units": "touch"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "type": "circle",
-      "size": "10"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -52,53 +122,18 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          3
-        ],
-        [
-          "cleric/oracle",
-          3
-        ],
-        [
-          "summoner",
-          3
-        ],
-        [
-          "inquisitor",
-          3
-        ],
-        [
-          "antipaladin",
-          3
-        ],
-        [
-          "shaman",
-          3
-        ],
-        [
-          "medium",
-          3
-        ],
-        [
-          "occultist",
-          3
-        ],
-        [
-          "spiritualist",
-          3
-        ],
-        [
-          "unchained Summoner",
-          3
-        ]
+        ["sorcerer/wizard", 3],
+        ["cleric/oracle", 3],
+        ["summoner", 3],
+        ["inquisitor", 3],
+        ["antipaladin", 3],
+        ["shaman", 3],
+        ["medium", 3],
+        ["occultist", 3],
+        ["spiritualist", 3],
+        ["unchained Summoner", 3]
       ],
-      "domain": [
-        [
-          "Evil",
-          3
-        ]
-      ],
+      "domain": [["Evil", 3]],
       "subDomain": [],
       "elementalSchool": [],
       "bloodline": []
@@ -106,7 +141,6 @@
     "level": 3,
     "school": "abj",
     "types": "evil",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true,
@@ -117,9 +151,7 @@
       "value": "a 3-ft.-diameter circle of powdered silver"
     },
     "sr": false,
-    "shortDescription": "<p>This spell functions like <i>magic circle against evil,</i> except that it is similar to <i>Protection from Good</i> instead of <i>Protection from Evil</i>, and it can imprison a nonevil called creature.</p>",
-    "spellDuration": "10 min./level",
-    "spellArea": "10-ft.-radius emanation from touched creature"
+    "shortDescription": "<p>This spell functions like <i>magic circle against evil,</i> except that it is similar to <i>Protection from Good</i> instead of <i>Protection from Evil</i>, and it can imprison a nonevil called creature.</p>"
   },
   "effects": [],
   "folder": null,

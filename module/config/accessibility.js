@@ -31,9 +31,7 @@ export class AccessibilityConfig extends FormApplication {
   }
 
   static get defaultSettings() {
-    return {
-      fontSize: 0,
-    };
+    return {};
   }
 
   /**

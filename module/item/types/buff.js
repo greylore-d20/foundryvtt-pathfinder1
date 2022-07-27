@@ -1,4 +1,5 @@
 import { ItemPF } from "../entity.js";
+import { RollPF } from "../../roll.js";
 
 export class ItemBuffPF extends ItemPF {
   async _preUpdate(changed, options, userId) {
@@ -55,7 +56,7 @@ export class ItemBuffPF extends ItemPF {
     }
   }
 
-  //Creates a simple ActiveEffect from a buff item. Returns the effect
+  // Creates a simple ActiveEffect from a buff item. Returns the effect
   async toEffect({ noCreate = false } = {}) {
     if (!this.parent) return;
 
@@ -84,8 +85,9 @@ export class ItemBuffPF extends ItemPF {
   getRawEffectData() {
     const createData = super.getRawEffectData();
 
-    createData["flags.pf1.show"] = !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
-    if (this.data.data.hideFromToken) createData.icon = null;
+    const hideIcon = this.data.data.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
+    createData["flags.pf1.show"] = !hideIcon;
+    if (hideIcon) createData.icon = null;
 
     // Add buff durations
     let durationValue = this.data.data.duration.value ?? null;
@@ -135,5 +137,15 @@ export class ItemBuffPF extends ItemPF {
 
   get subType() {
     return this.data.data.buffType;
+  }
+
+  /**
+   * @param {boolean} active
+   * @param {object} context Optional update context
+   * @returns {Promise} Update promise
+   * @override
+   */
+  async setActive(active, context) {
+    return this.update({ "data.active": active }, context);
   }
 }

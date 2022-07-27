@@ -17,65 +17,133 @@
     "hardness": 10,
     "identifiedName": "Flask Pike",
     "changes": [],
-    "activation": {
-      "type": "attack"
-    },
-    "duration": {
-      "units": "inst"
-    },
-    "range": {
-      "value": 0,
-      "units": "melee"
-    },
+    "actions": [
+      {
+        "_id": "p1ft7jzcgoiknmmw",
+        "name": "Attack",
+        "img": "systems/pf1/icons/items/weapons/boarding-pike.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": 0,
+          "units": "melee",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "mwak",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [
+            [
+              "sizeRoll(1, 8, @size)",
+              {
+                "values": ["piercing"],
+                "custom": ""
+              }
+            ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "damageMult": 1.5,
+          "critRange": 20,
+          "critMult": 3
+        },
+        "save": {
+          "dc": "0",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
+      }
+    ],
     "uses": {
       "per": ""
     },
-    "actionType": "mwak",
-    "damage": {
-      "parts": [
-        [
-          "sizeRoll(1, 8, @size)",
-          "P"
-        ]
-      ],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "formulaicAttacks": {
-      "count": {
-        "formula": "ceil(@attributes.bab.total / 5) - 1"
-      },
-      "bonus": {
-        "formula": "@formulaicAttack * -5"
-      },
-      "label": ""
-    },
-    "ability": {
-      "attack": "str",
-      "damage": "str",
-      "damageMult": 1.5,
-      "critMult": 3
-    },
-    "save": {
-      "dc": "0"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "contextNotes": [],
     "links": {
       "children": []
     },
     "tag": "flaskPike",
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    },
     "scriptCalls": [],
     "held": "2h",
+    "weaponGroups": {
+      "value": ["spears"]
+    },
     "weaponType": "exotic",
-    "weaponSubtype": "2h",
-    "conditionals": []
+    "weaponSubtype": "2h"
   },
   "effects": [],
   "folder": null,

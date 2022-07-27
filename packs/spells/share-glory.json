@@ -5,45 +5,113 @@
   "img": "systems/pf1/icons/misc/magic-swirl.png",
   "data": {
     "tags": [],
-    "activation": {
-      "type": "standard"
-    },
-    "unchainedAction": {
-      "activation": {
-        "cost": 2,
-        "type": "action"
+    "actions": [
+      {
+        "_id": "skqy6k042k9klnw4",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "description": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level",
+          "units": ""
+        },
+        "target": {
+          "value": "one non-mythic creature/3 levels"
+        },
+        "range": {
+          "value": null,
+          "units": "close",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductCharges": true,
+          "autoDeductChargesCost": "1",
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "0",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "spellsave",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": "",
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "override": false,
+          "value": 0
+        }
       }
-    },
-    "target": {
-      "value": "one non-mythic creature/3 levels"
-    },
-    "range": {
-      "units": "close"
-    },
+    ],
     "uses": {
       "per": ""
     },
-    "measureTemplate": {
-      "size": "0"
-    },
-    "actionType": "spellsave",
-    "damage": {
-      "parts": [],
-      "critParts": [],
-      "nonCritParts": []
-    },
-    "attackParts": [],
-    "ability": {
-      "attack": "",
-      "damage": ""
-    },
-    "save": {
-      "dc": "0",
-      "type": "will",
-      "description": "Will negates (harmless)"
-    },
-    "effectNotes": [],
     "attackNotes": [],
+    "effectNotes": [],
     "links": {
       "children": []
     },
@@ -54,46 +122,16 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        [
-          "sorcerer/wizard",
-          3
-        ],
-        [
-          "cleric/oracle",
-          3
-        ],
-        [
-          "druid",
-          3
-        ],
-        [
-          "bard",
-          2
-        ],
-        [
-          "summoner",
-          2
-        ],
-        [
-          "witch",
-          3
-        ],
-        [
-          "psychic",
-          3
-        ],
-        [
-          "medium",
-          1
-        ],
-        [
-          "hunter",
-          3
-        ],
-        [
-          "unchained Summoner",
-          2
-        ]
+        ["sorcerer/wizard", 3],
+        ["cleric/oracle", 3],
+        ["druid", 3],
+        ["bard", 2],
+        ["summoner", 2],
+        ["witch", 3],
+        ["psychic", 3],
+        ["medium", 1],
+        ["hunter", 3],
+        ["unchained Summoner", 2]
       ],
       "domain": [],
       "subDomain": [],
@@ -102,13 +140,11 @@
     },
     "level": 3,
     "school": "trs",
-    "conditionals": [],
     "components": {
       "verbal": true,
       "somatic": true
     },
-    "shortDescription": "<p>You imbue the targets with a fraction of your mythic nature. They count as mythic creatures for the purpose of path abilities, spells, and other effects that function differently for mythic creatures. This doesn't grant the targets mythic tiers or any uses of mythic power; it merely gives them a greater advantage when others use abilities that work differently for mythic creatures. You must be at least a 1st-tier mythic character to cast this spell.</p>",
-    "spellDuration": "1 minute/level"
+    "shortDescription": "<p>You imbue the targets with a fraction of your mythic nature. They count as mythic creatures for the purpose of path abilities, spells, and other effects that function differently for mythic creatures. This doesn't grant the targets mythic tiers or any uses of mythic power; it merely gives them a greater advantage when others use abilities that work differently for mythic creatures. You must be at least a 1st-tier mythic character to cast this spell.</p>"
   },
   "effects": [],
   "folder": null,

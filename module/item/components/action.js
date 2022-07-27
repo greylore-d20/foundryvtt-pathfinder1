@@ -642,8 +642,6 @@ export class ItemAction {
     if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
     if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.ability.damageMult;
-    if (this.data.data.attackType === "natural" && primaryAttack === false && rollData.ablMult > 0)
-      rollData.ablMult = 0.5;
 
     // Create effect string
     const effectNotes = this.parent.getContextNotes("attacks.effect").reduce((cur, o) => {
@@ -727,8 +725,6 @@ export class ItemAction {
     if (critical) rollData.critMult = this.data.ability.critMult;
     // Determine ability multiplier
     if (rollData.ablMult == null) rollData.ablMult = rollData.action?.ability.damageMult;
-    if (this.item.data.data.attackType === "natural" && primaryAttack === false && rollData.ablMult > 0)
-      rollData.ablMult = 0.5;
 
     // Define Roll parts
     let parts = this.data.damage.parts.map((p) => {

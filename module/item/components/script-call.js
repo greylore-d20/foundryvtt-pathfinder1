@@ -22,7 +22,7 @@ export class ItemScriptCall {
     if (parent instanceof game.pf1.documents.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newScriptCallData = deepClone(parent.data.data.scriptCalls || []);
+      const newScriptCallData = deepClone(parent.data.scriptCalls || []);
       newScriptCallData.push(...data);
 
       // Update parent
@@ -72,8 +72,8 @@ export class ItemScriptCall {
 
   async update(data, options = {}) {
     if (this.parent != null) {
-      const rawChange = this.parent.data.data.scriptCalls.find((o) => o._id === this.id);
-      const idx = this.parent.data.data.scriptCalls.indexOf(rawChange);
+      const rawChange = this.parent.data.scriptCalls.find((o) => o._id === this.id);
+      const idx = this.parent.data.scriptCalls.indexOf(rawChange);
       if (idx >= 0) {
         data = Object.entries(data).reduce((cur, o) => {
           cur[`data.scriptCalls.${idx}.${o[0]}`] = o[1];

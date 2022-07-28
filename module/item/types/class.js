@@ -8,7 +8,7 @@ export class ItemClassPF extends ItemPF {
 
     // Set level marker
     if (hasProperty(update, "data.level")) {
-      this._prevLevel = this.data.data.level;
+      this._prevLevel = this.data.level;
     }
   }
 
@@ -27,7 +27,7 @@ export class ItemClassPF extends ItemPF {
   }
 
   async delete(context = {}) {
-    await this._onLevelChange(this.data.data.level, 0);
+    await this._onLevelChange(this.data.level, 0);
     return super.delete(context);
   }
 
@@ -114,7 +114,7 @@ export class ItemClassPF extends ItemPF {
 
   prepareBaseData() {
     super.prepareBaseData();
-    const itemData = this.data.data;
+    const itemData = this.system;
     // Reset cached HD/MT
     // Can't prepare here as the actor uses this info before item preparation is done.
     itemData.hitDice = undefined;
@@ -124,7 +124,7 @@ export class ItemClassPF extends ItemPF {
   prepareDerivedData() {
     super.prepareDerivedData();
 
-    const itemData = this.data.data;
+    const itemData = this.system;
 
     const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses");
 
@@ -168,9 +168,9 @@ export class ItemClassPF extends ItemPF {
     // Feed info back to actor
     const actor = this.actor;
     // Test against actor.data to avoid unlinked token weirdness
-    if (actor?.data) {
-      const actorData = actor.data.data,
-        classData = this.data.data;
+    if (actor?.system) {
+      const actorData = actor.system,
+        classData = this.system;
 
       let tag = classData.tag;
       if (!tag) tag = createTag(this.name);
@@ -186,7 +186,7 @@ export class ItemClassPF extends ItemPF {
 
       if (!classData.classType) console.warn(`${this.name} lacks class type`, this);
       const isBaseClass = (classData.classType || "base") === "base";
-      actorData.classes[tag] = {
+      actor.classes[tag] = {
         level: classData.level,
         name: this.name,
         hd: classData.hd,
@@ -209,14 +209,14 @@ export class ItemClassPF extends ItemPF {
   }
 
   get subType() {
-    return this.data.data.classType;
+    return this.system.classType;
   }
 
   get hitDice() {
-    const itemData = this.data.data;
+    const itemData = this.system;
     if (itemData.hitDice === undefined) {
       if (itemData.customHD?.length > 0) {
-        const rollData = { item: { level: this.data.data.level } };
+        const rollData = { item: { level: this.system.level } };
         itemData.hitDice = RollPF.safeRoll(itemData.customHD, rollData).total;
       } else {
         itemData.hitDice = this.subType === "mythic" ? 0 : itemData.level;
@@ -227,7 +227,7 @@ export class ItemClassPF extends ItemPF {
   }
 
   get mythicTier() {
-    const itemData = this.data.data;
+    const itemData = this.system;
     if (itemData.mythicTier === undefined) {
       itemData.mythicTier = this.subType === "mythic" ? itemData.level : 0;
     }

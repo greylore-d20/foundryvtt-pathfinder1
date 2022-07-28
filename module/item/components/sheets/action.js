@@ -62,28 +62,28 @@ export class ItemActionSheet extends FormApplication {
     data.damageTypes = game.pf1.damageTypes.toRecord();
 
     // Set tag
-    data.tag = createTag(data.data.name);
+    data.tag = createTag(data.name);
 
     // Include CONFIG values
     data.config = CONFIG.PF1;
 
     // Action Details
     data.hasAttackRoll = this.action.hasAttack;
-    data.isHealing = data.data.actionType === "heal";
-    data.isCombatManeuver = ["mcman", "rcman"].includes(data.data.actionType);
+    data.isHealing = data.actionType === "heal";
+    data.isCombatManeuver = ["mcman", "rcman"].includes(data.actionType);
 
     data.isCharged = this.action.isCharged;
     if (this.action.hasRange) {
-      data.canInputRange = ["ft", "mi", "spec"].includes(data.data.range.units);
-      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.data.range.minUnits);
+      data.canInputRange = ["ft", "mi", "spec"].includes(data.range.units);
+      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.range.minUnits);
     }
-    if (data.data.duration != null) {
-      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.data.duration.units);
+    if (data.duration != null) {
+      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.duration.units);
     }
 
     // Action Details
     data.itemName = data.item.name;
-    data.itemEnh = data.item.data.data.enh || 0;
+    data.itemEnh = data.item.data.enh || 0;
     data.isSpell = this.item.type === "spell";
     data.canUseAmmo = this.action.data.usesAmmo !== undefined;
     data.owned = this.item.actor != null;
@@ -92,16 +92,16 @@ export class ItemActionSheet extends FormApplication {
     data.isGM = game.user.isGM;
     data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
     data.hasActivationType =
-      (game.settings.get("pf1", "unchainedActionEconomy") && data.data.unchainedAction.activation.type) ||
-      (!game.settings.get("pf1", "unchainedActionEconomy") && data.data.activation.type);
+      (game.settings.get("pf1", "unchainedActionEconomy") && data.unchainedAction.activation.type) ||
+      (!game.settings.get("pf1", "unchainedActionEconomy") && data.activation.type);
 
     // Show additional ranged properties
-    data.showMaxRangeIncrements = data.data.range.units === "ft";
+    data.showMaxRangeIncrements = data.range.units === "ft";
 
     // Prepare attack specific stuff
     if (data.item.type === "attack") {
-      data.isWeaponAttack = data.item.data.data.attackType === "weapon";
-      data.isNaturalAttack = data.item.data.data.attackType === "natural";
+      data.isWeaponAttack = data.item.data.attackType === "weapon";
+      data.isNaturalAttack = data.item.data.attackType === "natural";
     }
 
     // Add distance units
@@ -113,8 +113,8 @@ export class ItemActionSheet extends FormApplication {
     }
 
     // Prepare stuff for actions with conditionals
-    if (data.data.conditionals) {
-      for (const conditional of data.data.conditionals) {
+    if (data.conditionals) {
+      for (const conditional of data.conditionals) {
         for (const modifier of conditional.modifiers) {
           modifier.targets = this.object.getConditionalTargets();
           modifier.subTargets = this.object.getConditionalSubTargets(modifier.target);

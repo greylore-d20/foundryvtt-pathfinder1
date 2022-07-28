@@ -72,19 +72,19 @@ export const registerItemWeightTests = () => {
               });
 
               it("should have a weight of 1 lbs/0.5 kg", async function () {
-                expect(item.data.data.quantity).to.equal(1);
-                expect(item.data.data.weight.total).to.equal(1);
-                expect(item.data.data.weight.converted.value).to.equal(convertWeight(1));
-                expect(item.data.data.weight.converted.total).to.equal(convertWeight(1));
+                expect(item.data.quantity).to.equal(1);
+                expect(item.data.weight.total).to.equal(1);
+                expect(item.data.weight.converted.value).to.equal(convertWeight(1));
+                expect(item.data.weight.converted.total).to.equal(convertWeight(1));
                 expect(await getItemSheetWeight()).to.equal(getPresentationForWeight(1));
               });
               it("should have a price of 10g", function () {
-                expect(item.data.data.price).to.equal(10);
+                expect(item.data.price).to.equal(10);
               });
 
               if (kind === "embedded") {
                 it("should add its weight to the actor", async function () {
-                  expect(actor.data.data.attributes.encumbrance.carriedWeight).to.equal(convertWeight(1));
+                  expect(actor.data.attributes.encumbrance.carriedWeight).to.equal(convertWeight(1));
                   expect(await getActorSheetCarried()).to.equal(getCarriedPresentationForWeight(1));
                 });
               }
@@ -95,21 +95,21 @@ export const registerItemWeightTests = () => {
                 });
 
                 it("should have a total weight of 2 lbs/1 kg", async function () {
-                  expect(item.data.data.quantity).to.equal(2);
-                  expect(item.data.data.weight.total).to.equal(2);
-                  expect(item.data.data.weight.converted.value).to.equal(convertWeight(1));
-                  expect(item.data.data.weight.converted.total).to.equal(convertWeight(2));
+                  expect(item.data.quantity).to.equal(2);
+                  expect(item.data.weight.total).to.equal(2);
+                  expect(item.data.weight.converted.value).to.equal(convertWeight(1));
+                  expect(item.data.weight.converted.total).to.equal(convertWeight(2));
                   expect(await getItemSheetWeight()).to.equal(getPresentationForWeight(2));
                 });
                 it("should have a sell value of 10g", function () {
                   expect(item.getValue({ sellValue: 1 })).to.equal(20);
                   expect(item.getValue()).to.equal(10);
-                  expect(item.data.data.price).to.equal(10);
+                  expect(item.data.price).to.equal(10);
                 });
 
                 if (kind === "embedded") {
                   it("should add its weight to the actor", async function () {
-                    expect(actor.data.data.attributes.encumbrance.carriedWeight).to.equal(convertWeight(2));
+                    expect(actor.data.attributes.encumbrance.carriedWeight).to.equal(convertWeight(2));
                     expect(await getActorSheetCarried()).to.equal(getCarriedPresentationForWeight(2));
                   });
                 }
@@ -120,16 +120,16 @@ export const registerItemWeightTests = () => {
                   });
 
                   it("should have a total weight of 20 lbs/10 kg", async function () {
-                    expect(item.data.data.quantity).to.equal(2);
-                    expect(item.data.data.weight.total).to.equal(20);
-                    expect(item.data.data.weight.converted.value).to.equal(convertWeight(10));
-                    expect(item.data.data.weight.converted.total).to.equal(convertWeight(20));
+                    expect(item.data.quantity).to.equal(2);
+                    expect(item.data.weight.total).to.equal(20);
+                    expect(item.data.weight.converted.value).to.equal(convertWeight(10));
+                    expect(item.data.weight.converted.total).to.equal(convertWeight(20));
                     expect(await getItemSheetWeight()).to.equal(getPresentationForWeight(20));
                   });
 
                   if (kind === "embedded") {
                     it("should add its weight to the actor", async function () {
-                      expect(actor.data.data.attributes.encumbrance.carriedWeight).to.equal(convertWeight(20));
+                      expect(actor.data.attributes.encumbrance.carriedWeight).to.equal(convertWeight(20));
                       expect(await getActorSheetCarried()).to.equal(getCarriedPresentationForWeight(20));
                     });
                   }

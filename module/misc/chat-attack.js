@@ -74,7 +74,7 @@ export class ChatAttack {
   }
 
   get critRange() {
-    if (this.action.item.data.data.broken) return 20;
+    if (this.action.item.data.broken) return 20;
     return getProperty(this.action, "data.ability.critRange") || 20;
   }
 
@@ -173,7 +173,7 @@ export class ChatAttack {
     }
 
     // Add broken penalty
-    if (this.action.item.data.data.broken && !critical) {
+    if (this.action.item.data.broken && !critical) {
       const label = game.i18n.localize("PF1.Broken");
       extraParts.push(`-2[${label}]`);
     }
@@ -202,7 +202,7 @@ export class ChatAttack {
       if (!critical && !isCmb && d20 >= this.critRange && this.rollData.action.ability.critMult > 1) {
         this.hasCritConfirm = true;
         this.rollData.critMult = Math.max(1, this.rollData.action.ability.critMult);
-        if (this.action.item.data.data.broken) this.rollData.critMult = 1;
+        if (this.action.item.data.broken) this.rollData.critMult = 1;
 
         await this.addAttack({ bonus: bonus, extraParts: extraParts, critical: true, conditionalParts });
       }
@@ -237,15 +237,15 @@ export class ChatAttack {
         );
     }
     // Add item notes
-    if (this.action.item != null && this.action.item.data.data.attackNotes) {
-      notes.push(...this.action.item.data.data.attackNotes);
+    if (this.action.item != null && this.action.item.data.attackNotes) {
+      notes.push(...this.action.item.data.attackNotes);
     }
     // Add action notes
     if (this.action.data.attackNotes) {
       notes.push(...this.action.data.attackNotes);
     }
     // Add CMB notes
-    if (["mcman", "rcman"].includes(this.action.item?.data.data.actionType)) {
+    if (["mcman", "rcman"].includes(this.action.item?.data.actionType)) {
       notes.push(...(this.action.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
     }
 
@@ -320,7 +320,7 @@ export class ChatAttack {
     }
 
     // Handle nonlethal attacks
-    if (this.action.data.nonlethal || this.action.item.data.data.properties?.nnl) {
+    if (this.action.data.nonlethal || this.action.item.data.properties?.nnl) {
       this.nonlethal = true;
       flavor = game.i18n.localize("PF1.Nonlethal");
     }
@@ -352,8 +352,8 @@ export class ChatAttack {
     }
 
     // Add item notes
-    if (this.action.item != null && this.action.item.data.data.effectNotes) {
-      notes.push(...this.action.item.data.data.effectNotes);
+    if (this.action.item != null && this.action.item.data.effectNotes) {
+      notes.push(...this.action.item.data.effectNotes);
     }
     // Add action notes
     if (this.action.data.effectNotes) {

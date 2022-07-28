@@ -3,31 +3,31 @@ import { ItemPF } from "../entity.js";
 export class ItemEquipmentPF extends ItemPF {
   async _preUpdate(update, context) {
     // Set equipment subtype and slot
-    const type = getProperty(update, "data.equipmentType");
-    if (type !== undefined && type !== this.data.data.equipmentType) {
+    const type = getProperty(update, "system.equipmentType");
+    if (type !== undefined && type !== this.data.equipmentType) {
       // Set subtype
-      const subtype = getProperty(update, "data.equipmentSubtype") ?? this.data.data.equipmentSubtype ?? "";
+      const subtype = getProperty(update, "system.equipmentSubtype") ?? this.data.equipmentSubtype ?? "";
       let keys = Object.keys(CONFIG.PF1.equipmentTypes[type]).filter((o) => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
-        setProperty(update, "data.equipmentSubtype", keys[0]);
+        setProperty(update, "system.equipmentSubtype", keys[0]);
       }
 
       // Set slot
-      const slot = getProperty(update, "data.slot") ?? this.data.data.slot ?? "";
+      const slot = getProperty(update, "system.slot") ?? this.data.slot ?? "";
       keys = Object.keys(CONFIG.PF1.equipmentSlots[type]);
       if (!slot || !keys.includes(slot)) {
-        setProperty(update, "data.slot", keys[0]);
+        setProperty(update, "system.slot", keys[0]);
       }
     }
   }
 
   get subType() {
-    return this.data.data.equipmentType;
+    return this.system.equipmentType;
   }
 
   prepareData() {
     const itemData = super.prepareData();
-    const data = itemData.data;
+    const data = itemData;
     const labels = this.labels;
     const C = CONFIG.PF1;
 
@@ -36,7 +36,7 @@ export class ItemEquipmentPF extends ItemPF {
     const typeKeys = Object.keys(C.equipmentTypes);
     if (!typeKeys.includes(eType)) eType = typeKeys[0];
 
-    let eSubtype = this.data.data.equipmentSubtype;
+    let eSubtype = this.system.equipmentSubtype;
     const subtypeKeys = Object.keys(C.equipmentTypes[eType]).filter((o) => !o.startsWith("_"));
     if (!subtypeKeys.includes(eSubtype)) eSubtype = subtypeKeys[0];
 
@@ -57,9 +57,9 @@ export class ItemEquipmentPF extends ItemPF {
     if (data.equipped === true) {
       const actor = this.actor;
       // Guard against weirdness with unlinked data (data is undefined at this state), and also basic test for if this item has actor.
-      if (!actor?.data) return;
+      if (!actor?.system) return;
 
-      const actorData = actor.data.data;
+      const actorData = actor.system;
       switch (data.equipmentType) {
         case "shield": {
           const subtype = data.equipmentSubtype;
@@ -76,13 +76,13 @@ export class ItemEquipmentPF extends ItemPF {
         }
         case "armor": {
           const subtype = data.equipmentSubtype;
-          let armorType = actorData.equipment.armor.type;
+          let armorType = actor.equipment.armor.type;
           if (subtype === "lightArmor" && armorType < 1) armorType = 1;
           else if (subtype === "mediumArmor" && armorType < 2) armorType = 2;
           else if (subtype === "heavyArmor" && armorType < 3) armorType = 3;
-          if (armorType !== actorData.equipment.armor.type) {
-            actorData.equipment.armor.type = armorType;
-            actorData.equipment.armor.id = this.id;
+          if (armorType !== actor.equipment.armor.type) {
+            actor.equipment.armor.type = armorType;
+            actor.equipment.armor.id = this.id;
           }
           break;
         }
@@ -97,10 +97,10 @@ export class ItemEquipmentPF extends ItemPF {
    * @override
    */
   async setActive(active, context) {
-    return this.update({ "data.equipped": active }, context);
+    return this.update({ "system.equipped": active }, context);
   }
 
   get isActive() {
-    return this.data.data.equipped;
+    return this.system.equipped;
   }
 }

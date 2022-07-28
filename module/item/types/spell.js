@@ -4,7 +4,7 @@ import { RollPF } from "../../roll.js";
 export class ItemSpellPF extends ItemPF {
   prepareData() {
     const itemData = super.prepareData();
-    const data = itemData.data;
+    const data = itemData;
     const labels = this.labels;
     const C = CONFIG.PF1;
 
@@ -32,11 +32,11 @@ export class ItemSpellPF extends ItemPF {
     if (actor) {
       // Swap non-psychic components for psychic ones
       if (this.spellbook?.psychic === true) {
-        if (this.data.data.components?.verbal === true) {
+        if (this.data.components?.verbal === true) {
           updates["data.components.verbal"] = false;
           updates["data.components.thought"] = true;
         }
-        if (this.data.data.components?.somatic === true) {
+        if (this.data.components?.somatic === true) {
           updates["data.components.somatic"] = false;
           updates["data.components.emotion"] = true;
         }
@@ -54,7 +54,7 @@ export class ItemSpellPF extends ItemPF {
       if (spellbook != null) {
         const spellAbility = spellbook.ability;
         let ablMod = "";
-        if (spellAbility !== "") ablMod = getProperty(this.parent.data, `data.abilities.${spellAbility}.mod`);
+        if (spellAbility !== "") ablMod = getProperty(this.parent, `system.abilities.${spellAbility}.mod`);
 
         result.cl = this.casterLevel || 0;
         result.sl = this.spellLevel || 0;
@@ -95,7 +95,7 @@ export class ItemSpellPF extends ItemPF {
     }
 
     // Add charges
-    if (this.isCharged && !this.data.data.atWill) {
+    if (this.isCharged && !this.data.atWill) {
       if (this.useSpellPoints()) {
         props.push(`${game.i18n.localize("PF1.SpellPoints")}: ${this.charges}/${this.maxCharges}`);
       } else {
@@ -153,26 +153,26 @@ export class ItemSpellPF extends ItemPF {
 
   async addUses(value, data = null) {
     if (!this.parent) return;
-    if (this.data.data.atWill) return;
+    if (this.system.atWill) return;
 
     const spellbook = this.spellbook;
     if (!spellbook) return;
     const isSpontaneous = spellbook.spontaneous,
-      spellbookKey = getProperty(this.data, "data.spellbook") || "primary",
-      spellLevel = getProperty(this.data, "data.level");
+      spellbookKey = getProperty(this, "system.spellbook") || "primary",
+      spellLevel = getProperty(this, "system.level");
 
     if (this.useSpellPoints()) {
       const curUses = this.getSpellUses();
       const updateData = {};
-      updateData[`data.attributes.spells.spellbooks.${spellbookKey}.spellPoints.value`] = curUses + value;
+      updateData[`system.attributes.spells.spellbooks.${spellbookKey}.spellPoints.value`] = curUses + value;
       return this.parent.update(updateData);
     } else {
       const newCharges = isSpontaneous
         ? Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value)
-        : Math.max(0, (getProperty(this.data, "data.preparation.preparedAmount") || 0) + value);
+        : Math.max(0, (getProperty(this, "system.preparation.preparedAmount") || 0) + value);
 
       if (!isSpontaneous) {
-        const key = "data.preparation.preparedAmount";
+        const key = "system.preparation.preparedAmount";
         if (data == null) {
           data = {};
           data[key] = newCharges;
@@ -181,7 +181,7 @@ export class ItemSpellPF extends ItemPF {
           data[key] = newCharges;
         }
       } else {
-        const key = `data.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
+        const key = `system.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
         const actorUpdateData = {};
         actorUpdateData[key] = newCharges;
         return this.parent.update(actorUpdateData);
@@ -196,12 +196,12 @@ export class ItemSpellPF extends ItemPF {
   }
 
   get isCharged() {
-    if (this.data.data.atWill) return false;
+    if (this.system.atWill) return false;
     return true;
   }
 
   get autoDeductCharges() {
-    return getProperty(this.data, "data.preparation.autoDeductCharges") === true;
+    return getProperty(this, "system.preparation.autoDeductCharges") === true;
   }
 
   get charges() {
@@ -213,19 +213,19 @@ export class ItemSpellPF extends ItemPF {
   }
 
   get spellLevel() {
-    return this.data.data.level + (this.data.data.slOffset || 0);
+    return this.system.level + (this.system.slOffset || 0);
   }
 
   get casterLevel() {
     const spellbook = this.spellbook;
     if (!spellbook) return null;
 
-    return spellbook.cl.total + (this.data.data.clOffset || 0);
+    return spellbook.cl.total + (this.system.clOffset || 0);
   }
 
   get spellbook() {
-    const bookId = this.data.data.spellbook;
-    return this.parent?.data?.data.attributes?.spells.spellbooks[bookId];
+    const bookId = this.system.spellbook;
+    return this.parent?.system?.attributes?.spells.spellbooks[bookId];
   }
 
   getDC(rollData = null) {
@@ -250,7 +250,7 @@ export class ItemSpellPF extends ItemPF {
 
   getSpellUses(max = false) {
     if (!this.parent) return 0;
-    const itemData = this.data.data;
+    const itemData = this.system;
     if (itemData.atWill) return Number.POSITIVE_INFINITY;
 
     const spellbook = this.spellbook;
@@ -284,7 +284,7 @@ export class ItemSpellPF extends ItemPF {
   }
 
   getSpellComponents(srcData) {
-    if (!srcData) srcData = duplicate(this.data);
+    if (!srcData) srcData = duplicate(this.system);
     const reSplit = CONFIG.PF1.re.traitSeparator;
 
     let components = [];
@@ -297,7 +297,7 @@ export class ItemSpellPF extends ItemPF {
       F: game.i18n.localize("PF1.SpellComponentKeys.Focus"),
       DF: game.i18n.localize("PF1.SpellComponentKeys.DivineFocus"),
     };
-    for (const [key, value] of Object.entries(getProperty(srcData, "data.components"))) {
+    for (const [key, value] of Object.entries(srcData.components ?? {})) {
       if (key === "value" && value.length > 0) components.push(...value.split(reSplit));
       else if (key === "verbal" && value) components.push(compKeys.V);
       else if (key === "somatic" && value) components.push(compKeys.S);
@@ -306,8 +306,8 @@ export class ItemSpellPF extends ItemPF {
       else if (key === "material" && value) components.push(compKeys.M);
       else if (key === "focus" && value) components.push(compKeys.F);
     }
-    if (getProperty(srcData, "data.components.divineFocus") === 1) components.push(compKeys.DF);
-    const df = getProperty(srcData, "data.components.divineFocus");
+    if (getProperty(srcData, "components.divineFocus") === 1) components.push(compKeys.DF);
+    const df = getProperty(srcData, "components.divineFocus");
     // Sort components
     const componentsOrder = [compKeys.V, compKeys.S, compKeys.T, compKeys.E, compKeys.M, compKeys.F, compKeys.DF];
     components.sort((a, b) => {
@@ -365,17 +365,17 @@ export class ItemSpellPF extends ItemPF {
   }
 
   static async toConsumable(origData, type) {
-    const actionData = origData.data.actions?.[0] ?? {};
+    const actionData = origData.actions?.[0] ?? {};
     const data = {
       type: "consumable",
       name: origData.name,
     };
     const action = game.pf1.documentComponents.ItemAction.defaultData;
 
-    const slcl = this.getMinimumCasterLevelBySpellData(origData.data);
+    const slcl = this.getMinimumCasterLevelBySpellData(origData);
     if (origData.sl == null) origData.sl = slcl[0];
     if (origData.cl == null) origData.cl = slcl[1];
-    const materialPrice = origData.data.materials?.gpValue ?? 0;
+    const materialPrice = origData.materials?.gpValue ?? 0;
 
     // Set consumable type
     data["data.consumableType"] = type;
@@ -445,7 +445,7 @@ export class ItemSpellPF extends ItemPF {
     }
 
     // Set damage formula
-    action.actionType = origData.data.actionType;
+    action.actionType = origData.actionType;
     for (const d of actionData.damage?.parts ?? []) {
       action.damage.parts.push([this._replaceConsumableConversionString(d[0], origData), d[1]]);
     }
@@ -465,7 +465,7 @@ export class ItemSpellPF extends ItemPF {
     action.effectNotes = actionData.effectNotes;
     action.attackBonus = actionData.attackBonus;
     action.critConfirmBonus = actionData.critConfirmBonus;
-    data["data.aura.school"] = origData.data.school;
+    data["data.aura.school"] = origData.school;
 
     // Replace attack and effect formula data
     for (const arrKey of ["attackNotes", "effectNotes"]) {
@@ -506,7 +506,7 @@ export class ItemSpellPF extends ItemPF {
    * @param data
    */
   async _updateSpellDescription(data) {
-    this.data.data.description.value = await renderTemplate(
+    this.system.description.value = await renderTemplate(
       "systems/pf1/templates/internal/spell-description.hbs",
       mergeObject(data ?? {}, this.spellDescriptionData)
     );
@@ -516,66 +516,66 @@ export class ItemSpellPF extends ItemPF {
    * @returns true if the spell is prepared to cast in any manner.
    */
   get canCast() {
-    if (this.data.data.atWill) return true;
+    if (this.system.atWill) return true;
     const charges = this.charges; // Cache
     return (
       (this.isCharged && charges > 0) ||
-      (this.spellbook?.spontaneous && this.data.data.preparation.spontaneousPrepared && charges > 0)
+      (this.spellbook?.spontaneous && this.system.preparation.spontaneousPrepared && charges > 0)
     );
   }
 
   get fullDescription() {
-    return super.fullDescription + this.data.data.shortDescription;
+    return super.fullDescription + this.system.shortDescription;
   }
 
   get spellDescriptionData() {
     const reSplit = CONFIG.PF1.re.traitSeparator;
-    const srcData = this.data;
+    const srcData = this.system;
     const firstAction = this.firstAction;
     const actionData = firstAction?.data ?? {};
 
     const label = {
-      school: (CONFIG.PF1.spellSchools[getProperty(srcData, "data.school")] || "").toLowerCase(),
-      subschool: getProperty(srcData, "data.subschool") || "",
+      school: (CONFIG.PF1.spellSchools[getProperty(srcData, "school")] || "").toLowerCase(),
+      subschool: getProperty(srcData, "subschool") || "",
       types: "",
     };
     const data = {
-      data: mergeObject(this.data.data, srcData.data, { inplace: false }),
+      data: mergeObject(this.system, srcData, { inplace: false }),
       label: label,
     };
 
     // Set subschool and types label
-    const types = getProperty(srcData, "data.types");
+    const types = getProperty(srcData, "types");
     if (typeof types === "string" && types.length > 0) {
       label.types = types.split(reSplit).join(", ");
     }
     // Set information about when the spell is learned
     data.learnedAt = {};
-    data.learnedAt.class = (getProperty(srcData, "data.learnedAt.class") || [])
+    data.learnedAt.class = (getProperty(srcData, "learnedAt.class") || [])
       .map((o) => {
         return `${o[0]} ${o[1]}`;
       })
       .sort()
       .join(", ");
-    data.learnedAt.domain = (getProperty(srcData, "data.learnedAt.domain") || [])
+    data.learnedAt.domain = (getProperty(srcData, "learnedAt.domain") || [])
       .map((o) => {
         return `${o[0]} ${o[1]}`;
       })
       .sort()
       .join(", ");
-    data.learnedAt.subDomain = (getProperty(srcData, "data.learnedAt.subDomain") || [])
+    data.learnedAt.subDomain = (getProperty(srcData, "learnedAt.subDomain") || [])
       .map((o) => {
         return `${o[0]} ${o[1]}`;
       })
       .sort()
       .join(", ");
-    data.learnedAt.elementalSchool = (getProperty(srcData, "data.learnedAt.elementalSchool") || [])
+    data.learnedAt.elementalSchool = (getProperty(srcData, "learnedAt.elementalSchool") || [])
       .map((o) => {
         return `${o[0]} ${o[1]}`;
       })
       .sort()
       .join(", ");
-    data.learnedAt.bloodline = (getProperty(srcData, "data.learnedAt.bloodline") || [])
+    data.learnedAt.bloodline = (getProperty(srcData, "learnedAt.bloodline") || [])
       .map((o) => {
         return `${o[0]} ${o[1]}`;
       })
@@ -665,7 +665,7 @@ export class ItemSpellPF extends ItemPF {
       if (savingThrowDescription) label.savingThrow = savingThrowDescription;
       else label.savingThrow = "none";
 
-      const sr = srcData.data.sr;
+      const sr = srcData.sr;
       label.sr = (sr === true ? game.i18n.localize("PF1.Yes") : game.i18n.localize("PF1.No")).toLowerCase();
 
       if (actionData.range?.units !== "personal") data.useDCandSR = true;

@@ -1,7 +1,7 @@
 export class TokenDocumentPF extends TokenDocument {
   async update(data, options) {
     // Resize token with actor size change
-    const sizeKey = getProperty(data, "actorData.data.traits.size");
+    const sizeKey = getProperty(data, "actordata.traits.size");
     if (sizeKey) {
       const size = CONFIG.PF1.tokenSizes[sizeKey];
       setProperty(data, "width", size.w);
@@ -37,9 +37,9 @@ export class TokenDocumentPF extends TokenDocument {
     if (data != null) {
       // Add temp HP to current current health value for HP and Vigor
       if (data.attribute === "attributes.hp") {
-        data.value += parseInt(getProperty(this.actor.data, "data.attributes.hp.temp") || 0);
+        data.value += parseInt(getProperty(this.actor, "system.attributes.hp.temp") || 0);
       } else if (data.attribute === "attributes.vigor") {
-        data.value += parseInt(getProperty(this.actor.data, "data.attributes.vigor.temp") || 0);
+        data.value += parseInt(getProperty(this.actor, "system.attributes.vigor.temp") || 0);
       }
 
       // Make resources editable

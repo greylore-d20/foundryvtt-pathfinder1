@@ -29,7 +29,7 @@ export class ActionChooser extends Application {
     const result = await super.getData(options);
 
     result.item = this.item.data;
-    result.actions = this.item.data.data.actions;
+    result.actions = this.item.data.actions;
 
     return result;
   }

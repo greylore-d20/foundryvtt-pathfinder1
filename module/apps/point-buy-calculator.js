@@ -2,7 +2,7 @@ export class PointBuyCalculator extends DocumentSheet {
   constructor(...args) {
     super(...args);
 
-    const actorAbl = this.actor.data.data.abilities;
+    const actorAbl = this.actor.data.abilities;
 
     this.abilities = [];
     for (const [k, name] of Object.entries(CONFIG.PF1.abilities)) {

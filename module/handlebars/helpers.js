@@ -69,7 +69,7 @@ export const registerHandlebarsHelpers = function () {
 
     const actor = action.actor,
       item = action.parent,
-      actorData = actor?.data.data,
+      actorData = actor?.data,
       actionData = action.data;
 
     const rv = [];

@@ -126,7 +126,7 @@ export class LevelUpForm extends FormApplication {
         name: "health",
         label: "PF1.LevelUpForm_Health",
         choice: null,
-        manualValue: Math.ceil(1 + (this.object.data.data.hd - 1) / 2),
+        manualValue: Math.ceil(1 + (this.object.data.hd - 1) / 2),
         items: [
           {
             img: "systems/pf1/icons/items/inventory/dice.jpg",
@@ -193,10 +193,10 @@ export class LevelUpForm extends FormApplication {
         choice: null,
         abilities: Object.keys(CONFIG.PF1.abilities).reduce((cur, o) => {
           cur[o] = {
-            value: this.actor.data.data.abilities[o].total,
+            value: this.actor.data.abilities[o].total,
             name: CONFIG.PF1.abilities[o],
             added: 0,
-            isEnhanced: this.actor.data.data.abilities[o].total !== this.actor.data.data.abilities[o].base,
+            isEnhanced: this.actor.data.abilities[o].total !== this.actor.data.abilities[o].base,
           };
           return cur;
         }, {}),
@@ -220,7 +220,7 @@ export class LevelUpForm extends FormApplication {
    * @// TODO: Add better logic for determining this <26-01-22, Furyspark> //
    */
   isFavouredClass() {
-    return this.object.data.data.classType === "base";
+    return this.object.data.classType === "base";
   }
 
   async _updateObject(event, formData) {
@@ -247,8 +247,8 @@ export class LevelUpForm extends FormApplication {
 
     // Add level
     chatData.level = {
-      previous: this.object.data.data.level,
-      new: this.object.data.data.level + 1,
+      previous: this.object.data.level,
+      new: this.object.data.level + 1,
     };
 
     // Update class
@@ -307,7 +307,7 @@ export class LevelUpForm extends FormApplication {
       }
 
       // Show new ability score
-      const hd = this.actor.data.data.attributes.hd.total;
+      const hd = this.actor.data.attributes.hd.total;
       if (typeof hd === "number" && hd % 4 === 0) {
         ex.enabled = true;
         ex.newAbilityScore = {
@@ -361,7 +361,7 @@ export class LevelUpForm extends FormApplication {
     // Manual health
     if (section.choice === "manual") {
       const hpValue = section.manualValue;
-      result.item["data.hp"] = this.object.data.data.hp + hpValue;
+      result.item["data.hp"] = this.object.data.hp + hpValue;
       result.chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Manual",
         add: hpValue,
@@ -371,7 +371,7 @@ export class LevelUpForm extends FormApplication {
     }
     // Roll health
     else if (section.choice === "roll") {
-      const formula = `1d${this.object.data.data.hd}`;
+      const formula = `1d${this.object.data.hd}`;
       const roll = RollPF.safeRoll(formula);
       result.chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Roll",
@@ -379,7 +379,7 @@ export class LevelUpForm extends FormApplication {
         roll: roll,
       };
       if (!Number.isNaN(roll.total)) {
-        result.item["data.hp"] = this.object.data.data.hp + roll.total;
+        result.item["data.hp"] = this.object.data.hp + roll.total;
       }
     }
 
@@ -475,7 +475,7 @@ export class LevelUpForm extends FormApplication {
     // If a level up ability score feature already exists, update it
     else {
       const cb = async function () {
-        const changes = duplicate(item.data.data.changes ?? []);
+        const changes = duplicate(item.data.changes ?? []);
         for (const [key, value] of Object.entries(added)) {
           const change = changes.find((o) => o.subTarget === key);
 

@@ -11,12 +11,6 @@ import { RollPF } from "../roll.js";
  * Override and extend the basic :class:`Item` implementation
  */
 export class ItemPF extends ItemBasePF {
-  // TODO: Remove once all broken _id references are fixed.
-  get _id() {
-    console.error("ItemPF._id is obsolete; use ItemPF.id instead.");
-    return this.id;
-  }
-
   constructor(...args) {
     super(...args);
 
@@ -37,7 +31,7 @@ export class ItemPF extends ItemBasePF {
        */
       this._rollData = null;
 
-    if (this.actions === undefined && this.data.data.actions instanceof Array)
+    if (this.actions === undefined && this.actions instanceof Array)
       /**
        * A {@link Collection} of {@link ItemAction}s.
        *
@@ -55,8 +49,8 @@ export class ItemPF extends ItemBasePF {
 
     // Ensure unique Change IDs
     const actor = this.parentActor;
-    if (actor && data.data?.changes?.length > 0) {
-      const changes = data.data.changes;
+    if (actor && data?.changes?.length > 0) {
+      const changes = data.changes;
       let updated = false;
       for (const c of changes) {
         let i = 0;
@@ -100,8 +94,8 @@ export class ItemPF extends ItemBasePF {
   }
 
   get firstAction() {
-    if (!this.data.data.actions?.length) return undefined;
-    return this.actions.get(this.data.data.actions[0]._id);
+    if (!this.system.actions?.length) return undefined;
+    return this.actions.get(this.system.actions[0]._id);
   }
 
   /**
@@ -136,15 +130,15 @@ export class ItemPF extends ItemBasePF {
   }
 
   get hasAction() {
-    return this.data.data.actions?.length > 0;
+    return this.system.actions?.length > 0;
   }
 
   get isSingleUse() {
-    return this.data.data.uses?.per === "single";
+    return this.system.uses?.per === "single";
   }
 
   get isCharged() {
-    return this.isSingleUse || ["day", "week", "charges"].includes(this.data.data.uses?.per);
+    return this.isSingleUse || ["day", "week", "charges"].includes(this.system.uses?.per);
   }
 
   get charges() {
@@ -156,8 +150,8 @@ export class ItemPF extends ItemBasePF {
     if (link) return link.charges;
 
     // Get own charges
-    if (this.isSingleUse) return this.data.data.quantity;
-    return this.data.data.uses?.value ?? 0;
+    if (this.isSingleUse) return this.system.quantity;
+    return this.system.uses?.value ?? 0;
   }
 
   get maxCharges() {
@@ -169,8 +163,8 @@ export class ItemPF extends ItemBasePF {
     if (link) return link.maxCharges;
 
     // Get own charges
-    if (this.isSingleUse) return this.data.data.quantity;
-    return this.data.data.uses?.max ?? 0;
+    if (this.isSingleUse) return this.system.quantity;
+    return this.system.uses?.max ?? 0;
   }
 
   /**
@@ -179,11 +173,11 @@ export class ItemPF extends ItemBasePF {
    * @returns {number|null} Seconds or null.
    */
   get totalDurationSeconds() {
-    return this.data.data.duration?.totalSeconds ?? null;
+    return this.data.duration?.totalSeconds ?? null;
   }
 
   get auraStrength() {
-    const cl = getProperty(this.data, "data.cl") || 0;
+    const cl = getProperty(this, "system.cl") || 0;
     if (cl < 1) {
       return 0;
     } else if (cl < 6) {
@@ -232,7 +226,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   get fullDescription() {
-    return this.data.data.description.value;
+    return this.data.description.value;
   }
 
   /**
@@ -360,31 +354,31 @@ export class ItemPF extends ItemBasePF {
    */
   prepareData() {
     super.prepareData();
-    const itemData = this.data;
-    const data = itemData.data;
+    const itemData = this.system;
+    const data = itemData;
     const C = CONFIG.PF1;
     const labels = {};
 
     this.prepareLinks();
 
     // Update changes
-    if (this.data.data.changes instanceof Array) {
-      this.changes = this._prepareChanges(this.data.data.changes);
+    if (this.system.changes instanceof Array) {
+      this.changes = this._prepareChanges(this.system.changes);
     }
 
     // Update actions
-    if (this.data.data.actions instanceof Array) {
-      this.actions = this._prepareActions(this.data.data.actions);
+    if (this.system.actions instanceof Array) {
+      this.actions = this._prepareActions(this.system.actions);
     }
 
     // Update script calls
-    if (this.data.data.scriptCalls instanceof Array) {
-      this.scriptCalls = this._prepareScriptCalls(this.data.data.scriptCalls);
+    if (this.system.scriptCalls instanceof Array) {
+      this.scriptCalls = this._prepareScriptCalls(this.system.scriptCalls);
     }
 
     // Update contained items
-    if (this.data.data.inventoryItems instanceof Array) {
-      this.items = this._prepareInventory(this.data.data.inventoryItems);
+    if (this.system.inventoryItems instanceof Array) {
+      this.items = this._prepareInventory(this.system.inventoryItems);
     }
     this.prepareWeight();
 
@@ -402,13 +396,13 @@ export class ItemPF extends ItemBasePF {
    * Prepare this item's {@link ItemWeightData}
    */
   prepareWeight() {
-    const itemData = this.data.data;
+    const itemData = this.system;
 
     // HACK: Migration shim. Allows unmigrated items to have their weight correct.
     {
       const weight = itemData.weight;
       if (weight === undefined || Number.isFinite(weight)) {
-        const sourceData = this.data._source.data,
+        const sourceData = this._source.system,
           sourceWeight = sourceData.baseWeight ?? sourceData.weight ?? 0;
         itemData.weight = { value: sourceWeight };
       }
@@ -418,8 +412,8 @@ export class ItemPF extends ItemBasePF {
     // Determine actual item weight, including sub-items
     const weightReduction = (100 - (itemData.weightReduction ?? 0)) / 100;
     weight.total = (this.items ?? []).reduce((cur, o) => {
-      return cur + o.data.data.weight.total * weightReduction;
-    }, weight.value * this.data.data.quantity);
+      return cur + o.system.weight.total * weightReduction;
+    }, weight.value * this.system.quantity);
 
     // Add contained currency (mainly containers)
     weight.currency ??= 0;
@@ -440,23 +434,23 @@ export class ItemPF extends ItemBasePF {
     super.prepareDerivedData();
 
     // Physical items
-    if (this.data.data.weight !== undefined) {
+    if (this.system.weight !== undefined) {
       // Sync name
-      if (this.data.data.identifiedName === undefined) this.data.data.identifiedName = this.name;
+      if (this.system.identifiedName === undefined) this.system.identifiedName = this.name;
       if (this.showUnidentifiedData) {
         // Set unidentified name for players
-        const unidentifiedName = this.data.data.unidentified.name;
-        if (unidentifiedName) this.data.name = unidentifiedName;
+        const unidentifiedName = this.system.unidentified.name;
+        if (unidentifiedName) this.system.name = unidentifiedName;
         // Set unidentified description for players
-        this.data.data.description.value = this.data.data.description.unidentified;
+        this.system.description.value = this.system.description.unidentified;
       }
       // Prepare unidentified cost
-      if (this.data.data.unidentified.price === undefined) this.data.data.unidentified.price = 0;
+      if (this.system.unidentified.price === undefined) this.system.unidentified.price = 0;
     }
   }
 
   prepareBaseData() {
-    const itemData = this.data.data;
+    const itemData = this.system;
 
     // Initialize tag for items that have tagged template
     const itemTemplate = game.system.template.Item;
@@ -488,31 +482,31 @@ export class ItemPF extends ItemBasePF {
    */
   getLabels() {
     const labels = {};
-    const itemData = this.data;
+    const itemData = this.system;
 
     // Equipped label
     const checkYes = '<i class="fas fa-check"></i>';
     const checkNo = '<i class="fas fa-times"></i>';
     labels.equipped = "";
-    if (itemData.data.equipped === true) labels.equipped = checkYes;
+    if (itemData.equipped === true) labels.equipped = checkYes;
     else labels.equipped = checkNo;
 
     // Carried label
     labels.carried = "";
-    if (itemData.data.carried === true) labels.carried = checkYes;
+    if (itemData.carried === true) labels.carried = checkYes;
     else labels.carried = checkNo;
 
     // Identified label
     labels.identified = "";
-    if (itemData.data.identified === true) labels.identified = checkYes;
+    if (itemData.identified === true) labels.identified = checkYes;
     else labels.identified = checkNo;
 
     // Slot label
-    if (itemData.data.slot) {
+    if (itemData.slot) {
       // Add equipment slot
-      const equipmentType = this.data.data.equipmentType || null;
+      const equipmentType = this.system.equipmentType || null;
       if (equipmentType != null) {
-        const equipmentSlot = this.data.data.slot || null;
+        const equipmentSlot = this.system.slot || null;
         labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
       } else labels.slot = null;
     }
@@ -526,10 +520,10 @@ export class ItemPF extends ItemBasePF {
     for (const [k, i] of Object.entries(this.links)) {
       switch (k) {
         case "charges": {
-          const uses = i.data.data.uses;
+          const uses = i.data.uses;
           for (const [k, v] of Object.entries(uses)) {
             if (["autoDeductCharges", "autoDeductChargesCost"].includes(k)) continue;
-            this.data.data.uses[k] = v;
+            this.data.uses[k] = v;
           }
           break;
         }
@@ -732,7 +726,7 @@ export class ItemPF extends ItemBasePF {
         await super.update(diff, context);
       } else {
         // Determine item index to update in parent
-        const parentInventory = this.parentItem.data.data.inventoryItems || [];
+        const parentInventory = this.parentItem.data.inventoryItems || [];
         const parentItem = parentInventory.find((o) => o._id === this.id);
         const idx = parentInventory.indexOf(parentItem);
 
@@ -764,7 +758,7 @@ export class ItemPF extends ItemBasePF {
         if (diff["data.uses.value"] != null) {
           for (const barKey of ["bar1", "bar2"]) {
             const bar = token.document.getBarAttribute(barKey);
-            if (bar && bar.attribute === `resources.${this.data.data.tag}`) {
+            if (bar && bar.attribute === `resources.${this.data.tag}`) {
               tokenUpdateData[`${barKey}.value`] = diff["data.uses.value"];
             }
           }
@@ -865,15 +859,15 @@ export class ItemPF extends ItemBasePF {
     if (!this.parentActor) return;
 
     // No charges? No charges!
-    if (!["day", "week", "charges"].includes(getProperty(this.data, "data.uses.per"))) return;
+    if (!["day", "week", "charges"].includes(getProperty(this, "system.uses.per"))) return;
 
     const rollData = this.getRollData();
 
-    if (hasProperty(this.data, "data.uses.maxFormula")) {
-      const maxFormula = getProperty(this.data, "data.uses.maxFormula");
+    if (hasProperty(this, "system.uses.maxFormula")) {
+      const maxFormula = getProperty(this, "system.uses.maxFormula");
       if (maxFormula !== "" && !formulaHasDice(maxFormula)) {
         const roll = RollPF.safeRoll(maxFormula, rollData);
-        setProperty(this.data, "data.uses.max", roll.total);
+        setProperty(this, "system.uses.max", roll.total);
       } else if (formulaHasDice(maxFormula)) {
         const msg = game.i18n
           .localize("PF1.WarningNoDiceAllowedInFormula")
@@ -970,13 +964,8 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Roll spell failure chance
-    if (
-      templateData.isSpell &&
-      this.parent != null &&
-      this.parent.spellFailure > 0 &&
-      this.data.data.components.somatic
-    ) {
-      const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.data.spellbook}`);
+    if (templateData.isSpell && this.parent != null && this.parent.spellFailure > 0 && this.data.components.somatic) {
+      const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.data.spellbook}`);
       if (spellbook && spellbook.arcaneSpellFailure) {
         templateData.spellFailure = RollPF.safeRoll("1d100").total;
         templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
@@ -1038,7 +1027,7 @@ export class ItemPF extends ItemBasePF {
     enrichOptions.rollData ??= action ? action.getRollData() : this.getRollData();
     enrichOptions.secrets ??= this.isOwner;
 
-    const itemData = enrichOptions.rollData?.item ?? this.data.data;
+    const itemData = enrichOptions.rollData?.item ?? this.data;
     const actionData = enrichOptions.rollData?.action ?? action?.data ?? {};
 
     // Rich text descriptions
@@ -1188,13 +1177,13 @@ export class ItemPF extends ItemBasePF {
     if (ev && ev.originalEvent) ev = ev.originalEvent;
 
     let action;
-    if (!actionID && this.data.data.actions.length > 1 && !skipDialog) {
+    if (!actionID && this.data.actions.length > 1 && !skipDialog) {
       // @TODO: Make a proper application for selecting an action
       const app = new game.pf1.applications.ActionChooser(this);
       app.render(true);
       return;
-    } else if (actionID || this.data.data.actions.length === 1 || skipDialog) {
-      action = this.actions.get(actionID || this.data.data.actions[0]._id);
+    } else if (actionID || this.data.actions.length === 1 || skipDialog) {
+      action = this.actions.get(actionID || this.data.actions[0]._id);
     } else {
       console.error("This item does not have an action associated with it.");
       return;
@@ -1367,7 +1356,7 @@ export class ItemPF extends ItemBasePF {
    */
   async useConsumable(options = { chatMessage: true }) {
     console.warn("ItemPF.useConsumable is obsolete; use ItemPF.useAttack instead.");
-    const itemData = this.data.data;
+    const itemData = this.data;
     let parts = itemData.damage.parts;
     const data = this.getRollData();
 
@@ -1438,13 +1427,13 @@ export class ItemPF extends ItemBasePF {
    */
   getRollData() {
     const parentActor = this.parentActor;
-    const result = parentActor != null && parentActor.data ? parentActor.getRollData() : {};
+    const result = parentActor ? parentActor.getRollData() : {};
 
-    result.item = deepClone(this.data.data);
+    result.item = deepClone(this.system);
 
     // Add dictionary flag
-    if (this.data.data.tag) {
-      result.item.dFlags = getProperty(result, `dFlags.${this.data.data.tag}`);
+    if (this.system.tag) {
+      result.item.dFlags = getProperty(result, `dFlags.${this.system.tag}`);
     }
 
     // Set aura strength
@@ -1560,9 +1549,9 @@ export class ItemPF extends ItemBasePF {
 
       return true;
     } else if (action === "concentration") {
-      item.parentActor.rollConcentration(item.data.data.spellbook);
+      item.parentActor.rollConcentration(item.data.spellbook);
     } else if (action === "caster-level-check") {
-      item.parentActor.rollCL(item.data.data.spellbook);
+      item.parentActor.rollCL(item.data.spellbook);
     }
 
     return false;
@@ -1869,7 +1858,7 @@ export class ItemPF extends ItemBasePF {
           result[`skill.${s}`] = skl;
         }
       } else {
-        const actorSkills = mergeObject(duplicate(CONFIG.PF1.skills), this.parent.data.data.skills);
+        const actorSkills = mergeObject(duplicate(CONFIG.PF1.skills), this.parent.data.skills);
         for (const [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;
@@ -1923,14 +1912,14 @@ export class ItemPF extends ItemBasePF {
 
     const getActualValue = (identified = true) => {
       let value = 0;
-      if (identified) value = this.data.data.price;
-      else value = this.data.data.unidentified.price;
+      if (identified) value = this.data.price;
+      else value = this.data.unidentified.price;
 
       // Add charge price
-      if (identified) value += (this.data.data.uses?.pricePerUse ?? 0) * (this.data.data.uses?.value ?? 0);
+      if (identified) value += (this.data.uses?.pricePerUse ?? 0) * (this.data.uses?.value ?? 0);
 
       if (inLowestDenomination) value *= 100;
-      if (this.data.data.broken) value *= 0.75; // TODO: Make broken value configurable
+      if (this.data.broken) value *= 0.75; // TODO: Make broken value configurable
       return value;
     };
 
@@ -1940,7 +1929,7 @@ export class ItemPF extends ItemBasePF {
     result += getActualValue(forceUnidentified ? false : !this.showUnidentifiedData) * quantity;
 
     // Modify sell value
-    if (!(this.data.type === "loot" && this.data.data.subType === "tradeGoods")) result *= sellValue;
+    if (!(this.data.type === "loot" && this.data.subType === "tradeGoods")) result *= sellValue;
 
     // Add item's contained currencies at full value
     result += this.getTotalCurrency({ inLowestDenomination });
@@ -2186,8 +2175,8 @@ export class ItemPF extends ItemBasePF {
 
     const sources = [];
 
-    const actorData = this.parentActor?.data.data,
-      itemData = this.data.data,
+    const actorData = this.parentActor?.data,
+      itemData = this.data,
       actionData = action.data;
 
     if (!actorData || !actionData) return sources;
@@ -2196,8 +2185,7 @@ export class ItemPF extends ItemBasePF {
     // Attack type identification
     const isMelee =
       ["mwak", "msak", "mcman"].includes(actionData.actionType) || ["melee", "reach"].includes(actionData.range.units);
-    const isRanged =
-      ["rwak", "rsak", "rcman"].includes(actionData.actionType) || this.data.data.weaponSubtype === "ranged";
+    const isRanged = ["rwak", "rsak", "rcman"].includes(actionData.actionType) || this.data.weaponSubtype === "ranged";
     const isManeuver = ["mcman", "rcman"].includes(actionData.actionType);
 
     const describePart = (value, label, sort = 0) => {
@@ -2293,8 +2281,8 @@ export class ItemPF extends ItemBasePF {
    * Generic damage source retrieval
    */
   get damageSources() {
-    const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.data.actionType);
-    const isWeapon = ["mwak", "rwak"].includes(this.data.data.actionType);
+    const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.actionType);
+    const isWeapon = ["mwak", "rwak"].includes(this.data.actionType);
     const changes = this.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
     const highest = getHighestChanges(changes, { ignoreTarget: true });
     return highest;
@@ -2345,7 +2333,7 @@ export class ItemPF extends ItemBasePF {
 
     // Add special cases specific to the item
     // Broken
-    if (this.data.data.broken) {
+    if (this.data.broken) {
       allChanges.push({
         flavor: game.i18n.localize("PF1.Broken"),
         value: -2,

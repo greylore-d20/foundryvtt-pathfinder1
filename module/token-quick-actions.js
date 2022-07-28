@@ -45,7 +45,7 @@ export class TokenQuickActions {
       const item = actor.items.get(i.item.id);
       const type = item.type;
       const elem = html.find(`#${type}-${item.id}`);
-      const firstAction = item.actions.get(item.data.data.actions?.[0]?._id);
+      const firstAction = item.actions.get(item.data.actions?.[0]?._id);
       if (!firstAction) return;
 
       // Add click handler

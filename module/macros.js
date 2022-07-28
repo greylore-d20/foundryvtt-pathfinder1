@@ -20,7 +20,7 @@ export const createItemMacro = async function (item, actor, slot) {
   actor = actor ? game.actors.get(actor) : getItemOwner(item);
   const command =
     `game.pf1.rollItemMacro("${item.name}", {\n` +
-    `  itemId: "${item._id}",\n` +
+    `  itemId: "${item.id}",\n` +
     `  itemType: "${item.type}",\n` +
     (actor != null ? `  actorId: "${actor.id}",\n` : "") +
     `});`;

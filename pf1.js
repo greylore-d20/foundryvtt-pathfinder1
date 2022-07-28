@@ -19,7 +19,6 @@ import { tinyMCEInit } from "./module/mce/mce.js";
 import { measureDistances, getConditions } from "./module/canvas.js";
 import { TemplateLayerPF } from "./module/measure.js";
 import { MeasuredTemplatePF } from "./module/measure.js";
-import { SightLayerPF } from "./module/low-light-vision.js";
 import { ActorBasePF } from "./module/actor/base.js";
 import { ActorPF } from "./module/actor/entity.js";
 import { ActorCharacterPF } from "./module/actor/types/character.js";
@@ -35,7 +34,6 @@ import { ActorSheetFlags } from "./module/apps/actor-flags.js";
 import { ActorRestDialog } from "./module/apps/actor-rest.js";
 import { SensesSelector } from "./module/apps/senses-selector.js";
 import { SkillEditor } from "./module/apps/skill-editor.js";
-import { AmbientLightPF } from "./module/low-light-vision.js";
 import { CombatPF } from "./module/combat.js";
 import { TokenPF } from "./module/token/token.js";
 import { TokenDocumentPF } from "./module/token/document.js";
@@ -295,8 +293,6 @@ Hooks.once("init", function () {
   // Record Configuration Values
   CONFIG.PF1 = PF1;
   CONFIG.Canvas.layers.templates.layerClass = TemplateLayerPF;
-  CONFIG.Canvas.layers.sight.layerClass = SightLayerPF;
-  CONFIG.AmbientLight.objectClass = AmbientLightPF;
   CONFIG.MeasuredTemplate.objectClass = MeasuredTemplatePF;
   CONFIG.MeasuredTemplate.defaults.angle = 90; // PF1 uses 90 degree angles
   CONFIG.Actor.documentClass = ActorBasePF;
@@ -714,12 +710,12 @@ Hooks.on("updateToken", function (token, updateData, options, userId) {
 
 Hooks.on("controlToken", (token, selected) => {
   // Refresh canvas sight
-  canvas.perception.schedule({
-    lighting: { initialize: true, refresh: true },
-    sight: { initialize: true, refresh: true },
-    sounds: { refresh: true },
-    foreground: { refresh: true },
-  });
+  // canvas.perception.schedule({
+  // lighting: { initialize: true, refresh: true },
+  // sight: { initialize: true, refresh: true },
+  // sounds: { refresh: true },
+  // foreground: { refresh: true },
+  // });
 });
 
 Hooks.on("createItem", (item, options, userId) => {
@@ -809,7 +805,7 @@ Hooks.on("deleteItem", async (item, options, userId) => {
     const isLinkedToken = getProperty(actor.data, "token.actorLink");
     if (isLinkedToken) {
       const promises = [];
-      if (item.data.type === "buff" && item.data.data.active) {
+      if (item.data.type === "buff" && item.data.active) {
         actor.effects.find((e) => e.data.origin?.indexOf(item.data.id) > 0)?.delete();
         const tokens = actor.getActiveTokens();
         for (const token of tokens) {
@@ -905,7 +901,7 @@ Hooks.on("dropActorSheetData", (act, sheet, data) => {
 
 Hooks.on("hotbarDrop", (bar, data, slot) => {
   let macro;
-  if (data.type === "Item") macro = macros.createItemMacro(data.data, data.actor, slot);
+  if (data.type === "Item") macro = macros.createItemMacro(data, data.actor, slot);
   else if (data.type === "skill") macro = macros.createSkillMacro(data.skill, data.actor, slot);
   else if (data.type === "save") macro = macros.createSaveMacro(data.altType, data.actor, slot);
   else if (["defenses", "cmb", "concentration", "cl", "bab"].includes(data.type))

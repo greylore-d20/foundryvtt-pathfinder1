@@ -2,6 +2,6 @@ import { ItemPF } from "../entity.js";
 
 export class ItemConsumablePF extends ItemPF {
   get subType() {
-    return this.data.data.consumableType;
+    return this.data.consumableType;
   }
 }

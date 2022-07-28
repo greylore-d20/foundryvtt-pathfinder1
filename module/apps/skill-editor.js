@@ -30,8 +30,8 @@ export class SkillEditor extends FormApplication {
   }
 
   get skill() {
-    if (this.isSubSkill) return this.actor.data.data.skills[this.skillId]?.subSkills[this.subSkillId];
-    return this.actor.data.data.skills[this.skillId];
+    if (this.isSubSkill) return this.actor.data.skills[this.skillId]?.subSkills[this.subSkillId];
+    return this.actor.data.skills[this.skillId];
   }
   get skillName() {
     return this.isStaticSkill ? CONFIG.PF1.skills[this.skillId] : this.skill.name;

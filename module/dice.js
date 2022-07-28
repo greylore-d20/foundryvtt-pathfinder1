@@ -283,7 +283,7 @@ export class DicePF {
         // Create roll template data
         const rollData = mergeObject(
           {
-            user: game.user._id,
+            user: game.user.id,
             formula: roll.formula,
             tooltip: await roll.getTooltip(),
             total: roll.total,
@@ -293,7 +293,7 @@ export class DicePF {
 
         // Create chat data
         const chatData = {
-          user: game.user._id,
+          user: game.user.id,
           type: CONST.CHAT_MESSAGE_TYPES.ROLL,
           sound: noSound ? null : CONFIG.sounds.dice,
           speaker: speaker,

@@ -91,7 +91,7 @@ export const registerActorItemAttackTests = () => {
               let rolls;
               let prevSize;
               before(async () => {
-                prevSize = actor.data.data.traits.size;
+                prevSize = actor.data.traits.size;
                 await actor.update({ "data.traits.size": "tiny" });
                 roll = await items.aLongsword.useAttack({ skipDialog: true });
                 rolls = roll.data.flags.pf1.metadata.rolls.attacks[0];
@@ -115,7 +115,7 @@ export const registerActorItemAttackTests = () => {
               let rolls;
               let prevSize;
               before(async () => {
-                prevSize = actor.data.data.traits.size;
+                prevSize = actor.data.traits.size;
                 await actor.update({ "data.traits.size": "huge" });
                 roll = await items.aLongsword.useAttack({ skipDialog: true });
                 rolls = roll.data.flags.pf1.metadata.rolls.attacks[0];
@@ -284,7 +284,7 @@ export const registerActorItemAttackTests = () => {
             );
           });
           it("should use ammo", function () {
-            expect(items.arrows.data.data.quantity).to.equal(19);
+            expect(items.arrows.data.quantity).to.equal(19);
           });
         });
 

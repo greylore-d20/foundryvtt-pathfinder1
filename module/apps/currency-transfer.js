@@ -27,10 +27,10 @@ export class CurrencyTransfer extends FormApplication {
 
     // Currency checks
     if (source.container) {
-      source.amount = mergeObject(source.container.data.data.currency, source.amount ?? {});
+      source.amount = mergeObject(source.container.data.currency, source.amount ?? {});
     } else if (source.actor) {
       source.amount = mergeObject(
-        source.alt ? source.actor.data.data.altCurrency : source.actor.data.data.currency,
+        source.alt ? source.actor.data.altCurrency : source.actor.data.currency,
         source.amount ?? {}
       );
     } else if (game.user.isGM) {
@@ -198,8 +198,8 @@ export class CurrencyTransfer extends FormApplication {
     this.order.forEach((c) => (amount[c] = amount[c] ?? 0));
     if (!Object.values(amount).find((a) => a > 0)) return this._failed("PF1.CurrencyInsufficient"), false;
 
-    let sourceCurrency = duplicate(sourceAlt ? sourceDoc?.data.data.altCurrency : sourceDoc?.data.data.currency);
-    const destCurrency = duplicate(destAlt ? destDoc.data.data.altCurrency : destDoc.data.data.currency);
+    let sourceCurrency = duplicate(sourceAlt ? sourceDoc?.data.altCurrency : sourceDoc?.data.currency);
+    const destCurrency = duplicate(destAlt ? destDoc.data.altCurrency : destDoc.data.currency);
     if ((!sourceCurrency && !game.user.isGM) || !destCurrency) return false;
     const originalSource = Object.assign(Object.fromEntries(this.order.map((o) => [o, Infinity])), sourceCurrency);
 

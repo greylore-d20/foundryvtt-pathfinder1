@@ -92,7 +92,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
     // Show whether the item has currency
-    data.hasCurrency = Object.values(this.object.data.data.currency).some((o) => o > 0);
+    data.hasCurrency = Object.values(this.object.data.currency).some((o) => o > 0);
 
     // Prepare inventory
     this._prepareContents(data);
@@ -107,8 +107,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         name: "data.weight.value",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.data.data.weight.converted.total,
-        inputValue: data.item.data.data.weight.converted.value,
+        value: data.item.data.weight.converted.total,
+        inputValue: data.item.data.weight.converted.value,
         decimals: 2,
         id: "data-weight-value",
       });
@@ -121,7 +121,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             name: "data.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: data.item.data.data.price,
+            value: data.item.data.price,
             id: "data-basePrice",
           },
           {
@@ -182,7 +182,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         isBoolean: true,
         name: "data.carried",
         label: game.i18n.localize("PF1.Carried"),
-        value: data.item.data.data.carried,
+        value: data.item.data.carried,
       });
     }
 
@@ -190,7 +190,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
     data.weight = {
-      contents: this.item.data.data.weight.converted.contents,
+      contents: this.item.data.weight.converted.contents,
       units: usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
     };
 
@@ -391,7 +391,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       type: type,
       data: duplicate(header.dataset),
     };
-    delete itemData.data["type"];
+    delete itemData["type"];
     return this.item.createContainerContent(itemData);
   }
 
@@ -547,12 +547,12 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       await this.item.createContainerContent(itemData);
 
       if (actor && actor === this.item.parentActor) {
-        if (actor.items.get(data.data._id)) {
-          await actor.deleteEmbeddedDocuments("Item", [data.data._id]);
+        if (actor.items.get(data._id)) {
+          await actor.deleteEmbeddedDocuments("Item", [data._id]);
         } else {
-          const containerItem = actor.containerItems.find((i) => i.id === data.data._id);
+          const containerItem = actor.containerItems.find((i) => i.id === data._id);
           if (containerItem) {
-            await containerItem.parentItem.deleteContainerContent(data.data._id);
+            await containerItem.parentItem.deleteContainerContent(data._id);
           }
         }
       }
@@ -570,7 +570,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const item = this.item.getContainerContent(itemId);
 
     if (hasProperty(item.data, "data.identified")) {
-      return item.update({ "data.identified": !item.data.data.identified });
+      return item.update({ "data.identified": !item.data.identified });
     }
   }
 
@@ -584,8 +584,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     delete data._id;
     data.name = `${data.name} (${game.i18n.localize("PF1.Copy")})`;
-    data.data.identifiedName = `${item.data.data.identifiedName} (${game.i18n.localize("PF1.Copy")})`;
-    if (data.data.links) data.data.links = {};
+    data.identifiedName = `${item.data.identifiedName} (${game.i18n.localize("PF1.Copy")})`;
+    if (data.links) data.links = {};
 
     return this.item.createContainerContent(data);
   }

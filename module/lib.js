@@ -84,7 +84,7 @@ export const linkData = function (expanded, flattened, key, value) {
  */
 export const getItemOwner = function (item) {
   if (item.actor) return item.actor;
-  if (item._id) return game.actors.find((o) => o.items.get(item._id));
+  if (item.id) return game.actors.find((o) => o.items.get(item.id));
   return null;
 };
 
@@ -583,7 +583,7 @@ export const naturalSort = function (arr, propertyKey = "") {
 };
 
 export const createConsumableSpellDialog = async function (itemData, { allowSpell = true } = {}) {
-  const slcl = CONFIG.Item.documentClasses.spell.getMinimumCasterLevelBySpellData(itemData.data);
+  const slcl = CONFIG.Item.documentClasses.spell.getMinimumCasterLevelBySpellData(itemData);
   const content = await renderTemplate("systems/pf1/templates/internal/create-consumable.hbs", {
     name: itemData.name,
     sl: slcl[0],

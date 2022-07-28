@@ -28,19 +28,19 @@ export function applyChanges() {
 
   // Parse change flags
   for (const i of this.changeItems) {
-    for (const [k, v] of Object.entries(i.data.data.changeFlags)) {
+    for (const [k, v] of Object.entries(i.system.changeFlags)) {
       if (v === true) {
         this.flags[k] = true;
 
         if (k === "loseDexToAC") {
           for (const k2 of ["normal", "touch"]) {
-            getSourceInfo(this.sourceInfo, `data.attributes.ac.${k2}.total`).negative.push({
+            getSourceInfo(this.sourceInfo, `system.attributes.ac.${k2}.total`).negative.push({
               value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
               name: i.name,
               type: i.type,
             });
           }
-          getSourceInfo(this.sourceInfo, "data.attributes.cmd.total").negative.push({
+          getSourceInfo(this.sourceInfo, "system.attributes.cmd.total").negative.push({
             value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),
             name: i.name,
             type: i.type,
@@ -135,48 +135,52 @@ const getSortChangePriority = function () {
 export const getChangeFlat = function (changeTarget, changeType, curData = null) {
   if (changeTarget == null) return null;
 
-  curData = curData ?? this.data.data;
+  curData = curData ?? this.system;
   const result = [];
 
   switch (changeTarget) {
     case "mhp":
-      return "data.attributes.hp.max";
+      return "system.attributes.hp.max";
     case "wounds":
-      return "data.attributes.wounds.max";
+      return "system.attributes.wounds.max";
     case "vigor":
-      return "data.attributes.vigor.max";
+      return "system.attributes.vigor.max";
     case "str":
     case "dex":
     case "con":
     case "int":
     case "wis":
     case "cha":
-      if (changeType === "penalty") return `data.abilities.${changeTarget}.penalty`;
+      if (changeType === "penalty") return `system.abilities.${changeTarget}.penalty`;
       if (["base", "untypedPerm"].includes(changeType))
-        return [`data.abilities.${changeTarget}.total`, `data.abilities.${changeTarget}.base`];
-      return `data.abilities.${changeTarget}.total`;
+        return [`system.abilities.${changeTarget}.total`, `system.abilities.${changeTarget}.base`];
+      return `system.abilities.${changeTarget}.total`;
     case "strMod":
     case "dexMod":
     case "conMod":
     case "intMod":
     case "wisMod":
     case "chaMod":
-      return `data.abilities.${changeTarget.slice(0, 3)}.mod`;
+      return `system.abilities.${changeTarget.slice(0, 3)}.mod`;
     case "carryStr":
-      return "data.details.carryCapacity.bonus.total";
+      return "system.details.carryCapacity.bonus.total";
     case "carryMult":
-      return "data.details.carryCapacity.multiplier.total";
+      return "system.details.carryCapacity.multiplier.total";
     case "ac":
       switch (changeType) {
         case "dodge":
-          return ["data.attributes.ac.normal.total", "data.attributes.ac.touch.total", "data.attributes.cmd.total"];
+          return [
+            "system.attributes.ac.normal.total",
+            "system.attributes.ac.touch.total",
+            "system.attributes.cmd.total",
+          ];
         case "deflection":
           return [
-            "data.attributes.ac.normal.total",
-            "data.attributes.ac.touch.total",
-            "data.attributes.ac.flatFooted.total",
-            "data.attributes.cmd.total",
-            "data.attributes.cmd.flatFootedTotal",
+            "system.attributes.ac.normal.total",
+            "system.attributes.ac.touch.total",
+            "system.attributes.ac.flatFooted.total",
+            "system.attributes.cmd.total",
+            "system.attributes.cmd.flatFootedTotal",
           ];
         case "circumstance":
         case "insight":
@@ -185,102 +189,102 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
         case "profane":
         case "sacred":
           return [
-            "data.attributes.ac.normal.total",
-            "data.attributes.ac.touch.total",
-            "data.attributes.ac.flatFooted.total",
-            "data.attributes.cmd.total",
-            "data.attributes.cmd.flatFootedTotal",
+            "system.attributes.ac.normal.total",
+            "system.attributes.ac.touch.total",
+            "system.attributes.ac.flatFooted.total",
+            "system.attributes.cmd.total",
+            "system.attributes.cmd.flatFootedTotal",
           ];
         default:
           return [
-            "data.attributes.ac.normal.total",
-            "data.attributes.ac.touch.total",
-            "data.attributes.ac.flatFooted.total",
+            "system.attributes.ac.normal.total",
+            "system.attributes.ac.touch.total",
+            "system.attributes.ac.flatFooted.total",
           ];
       }
     case "aac": {
-      const targets = ["data.ac.normal.total"];
+      const targets = ["system.ac.normal.total"];
       switch (changeType) {
         case "base":
-          targets.push("data.ac.normal.base");
+          targets.push("system.ac.normal.base");
           break;
         case "enh":
-          targets.push("data.ac.normal.enh");
+          targets.push("system.ac.normal.enh");
           break;
         default:
-          targets.push("data.ac.normal.misc");
+          targets.push("system.ac.normal.misc");
           break;
       }
       return targets;
     }
     case "sac": {
-      const targets = ["data.ac.shield.total"];
+      const targets = ["system.ac.shield.total"];
       switch (changeType) {
         case "base":
-          targets.push("data.ac.shield.base");
+          targets.push("system.ac.shield.base");
           break;
         case "enh":
-          targets.push("data.ac.shield.enh");
+          targets.push("system.ac.shield.enh");
           break;
         default:
-          targets.push("data.ac.shield.misc");
+          targets.push("system.ac.shield.misc");
           break;
       }
       return targets;
     }
     case "nac": {
-      const targets = ["data.ac.natural.total"];
+      const targets = ["system.ac.natural.total"];
       switch (changeType) {
         case "base":
-          targets.push("data.ac.natural.base");
+          targets.push("system.ac.natural.base");
           break;
         case "enh":
-          targets.push("data.ac.natural.enh");
+          targets.push("system.ac.natural.enh");
           break;
         default:
-          targets.push("data.ac.natural.misc");
+          targets.push("system.ac.natural.misc");
           break;
       }
       return targets;
     }
     case "tac":
-      return "data.attributes.ac.touch.total";
+      return "system.attributes.ac.touch.total";
     case "ffac":
-      return "data.attributes.ac.flatFooted.total";
+      return "system.attributes.ac.flatFooted.total";
     case "ffcmd":
-      return "data.attributes.cmd.flatFootedTotal";
+      return "system.attributes.cmd.flatFootedTotal";
     case "bab":
-      return "data.attributes.bab.total";
+      return "system.attributes.bab.total";
     case "~attackCore":
-      return "data.attributes.attack.shared";
+      return "system.attributes.attack.shared";
     case "attack":
-      return "data.attributes.attack.general";
+      return "system.attributes.attack.general";
     case "mattack":
-      return "data.attributes.attack.melee";
+      return "system.attributes.attack.melee";
     case "rattack":
-      return "data.attributes.attack.ranged";
+      return "system.attributes.attack.ranged";
     case "critConfirm":
-      return "data.attributes.attack.critConfirm";
+      return "system.attributes.attack.critConfirm";
     case "allSavingThrows":
       return [
-        "data.attributes.savingThrows.fort.total",
-        "data.attributes.savingThrows.ref.total",
-        "data.attributes.savingThrows.will.total",
+        "system.attributes.savingThrows.fort.total",
+        "system.attributes.savingThrows.ref.total",
+        "system.attributes.savingThrows.will.total",
       ];
     case "fort":
-      return "data.attributes.savingThrows.fort.total";
+      return "system.attributes.savingThrows.fort.total";
     case "ref":
-      return "data.attributes.savingThrows.ref.total";
+      return "system.attributes.savingThrows.ref.total";
     case "will":
-      return "data.attributes.savingThrows.will.total";
+      return "system.attributes.savingThrows.will.total";
     case "skills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        result.push(`data.skills.${a}.changeBonus`);
+        result.push(`system.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
           for (const b of Object.keys(skl.subSkills)) {
-            result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
+            result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
@@ -288,11 +292,11 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "~skillMods":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        result.push(`data.skills.${a}.mod`);
+        result.push(`system.skills.${a}.mod`);
 
         if (skl.subSkills != null) {
           for (const b of Object.keys(skl.subSkills)) {
-            result.push(`data.skills.${a}.subSkills.${b}.mod`);
+            result.push(`system.skills.${a}.subSkills.${b}.mod`);
           }
         }
       }
@@ -300,11 +304,12 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "strSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "str") result.push(`data.skills.${a}.changeBonus`);
+        if (skl.ability === "str") result.push(`system.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "str") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "str")
+              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
@@ -312,11 +317,12 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "dexSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "dex") result.push(`data.skills.${a}.changeBonus`);
+        if (skl.ability === "dex") result.push(`system.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "dex") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "dex")
+              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
@@ -324,11 +330,12 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "conSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "con") result.push(`data.skills.${a}.changeBonus`);
+        if (skl.ability === "con") result.push(`system.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "con") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "con")
+              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
@@ -336,11 +343,12 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "intSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "int") result.push(`data.skills.${a}.changeBonus`);
+        if (skl.ability === "int") result.push(`system.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "int") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "int")
+              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
@@ -348,11 +356,12 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "wisSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "wis") result.push(`data.skills.${a}.changeBonus`);
+        if (skl.ability === "wis") result.push(`system.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "wis") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "wis")
+              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
@@ -360,111 +369,112 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "chaSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "cha") result.push(`data.skills.${a}.changeBonus`);
+        if (skl.ability === "cha") result.push(`system.skills.${a}.changeBonus`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "cha") result.push(`data.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "cha")
+              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
           }
         }
       }
       return result;
     case "allChecks":
       return [
-        "data.abilities.str.checkMod",
-        "data.abilities.dex.checkMod",
-        "data.abilities.con.checkMod",
-        "data.abilities.int.checkMod",
-        "data.abilities.wis.checkMod",
-        "data.abilities.cha.checkMod",
-        ...(this.data.data.attributes.init.ability ? ["data.attributes.init.total"] : []),
+        "system.abilities.str.checkMod",
+        "system.abilities.dex.checkMod",
+        "system.abilities.con.checkMod",
+        "system.abilities.int.checkMod",
+        "system.abilities.wis.checkMod",
+        "system.abilities.cha.checkMod",
+        ...(this.system.attributes.init.ability ? ["system.attributes.init.total"] : []),
       ];
     case "strChecks":
       return [
-        "data.abilities.str.checkMod",
-        ...(this.data.data.attributes.init.ability === "str" ? ["data.attributes.init.total"] : []),
+        "system.abilities.str.checkMod",
+        ...(this.system.attributes.init.ability === "str" ? ["system.attributes.init.total"] : []),
       ];
     case "dexChecks":
       return [
-        "data.abilities.dex.checkMod",
-        ...(this.data.data.attributes.init.ability === "dex" ? ["data.attributes.init.total"] : []),
+        "system.abilities.dex.checkMod",
+        ...(this.system.attributes.init.ability === "dex" ? ["system.attributes.init.total"] : []),
       ];
     case "conChecks":
       return [
-        "data.abilities.con.checkMod",
-        ...(this.data.data.attributes.init.ability === "con" ? ["data.attributes.init.total"] : []),
+        "system.abilities.con.checkMod",
+        ...(this.system.attributes.init.ability === "con" ? ["system.attributes.init.total"] : []),
       ];
     case "intChecks":
       return [
-        "data.abilities.int.checkMod",
-        ...(this.data.data.attributes.init.ability === "int" ? ["data.attributes.init.total"] : []),
+        "system.abilities.int.checkMod",
+        ...(this.system.attributes.init.ability === "int" ? ["system.attributes.init.total"] : []),
       ];
     case "wisChecks":
       return [
-        "data.abilities.wis.checkMod",
-        ...(this.data.data.attributes.init.ability === "wis" ? ["data.attributes.init.total"] : []),
+        "system.abilities.wis.checkMod",
+        ...(this.system.attributes.init.ability === "wis" ? ["system.attributes.init.total"] : []),
       ];
     case "chaChecks":
       return [
-        "data.abilities.cha.checkMod",
-        ...(this.data.data.attributes.init.ability === "cha" ? ["data.attributes.init.total"] : []),
+        "system.abilities.cha.checkMod",
+        ...(this.system.attributes.init.ability === "cha" ? ["system.attributes.init.total"] : []),
       ];
     case "allSpeeds":
       for (const speedKey of Object.keys(curData.attributes.speed)) {
         const base = curData.attributes.speed[speedKey]?.base;
-        if (base !== undefined) result.push(`data.attributes.speed.${speedKey}.total`);
+        if (base !== undefined) result.push(`system.attributes.speed.${speedKey}.total`);
       }
       return result;
     case "landSpeed":
-      if (changeType === "base") return ["data.attributes.speed.land.total"];
-      return ["data.attributes.speed.land.add", "data.attributes.speed.land.total"];
+      if (changeType === "base") return ["system.attributes.speed.land.total"];
+      return ["system.attributes.speed.land.add", "system.attributes.speed.land.total"];
     case "climbSpeed":
-      if (changeType === "base") return ["data.attributes.speed.climb.total"];
-      return ["data.attributes.speed.climb.add", "data.attributes.speed.climb.total"];
+      if (changeType === "base") return ["system.attributes.speed.climb.total"];
+      return ["system.attributes.speed.climb.add", "system.attributes.speed.climb.total"];
     case "swimSpeed":
-      if (changeType === "base") return ["data.attributes.speed.swim.total"];
-      return ["data.attributes.speed.swim.add", "data.attributes.speed.swim.total"];
+      if (changeType === "base") return ["system.attributes.speed.swim.total"];
+      return ["system.attributes.speed.swim.add", "system.attributes.speed.swim.total"];
     case "burrowSpeed":
-      if (changeType === "base") return ["data.attributes.speed.burrow.total"];
-      return ["data.attributes.speed.burrow.add", "data.attributes.speed.burrow.total"];
+      if (changeType === "base") return ["system.attributes.speed.burrow.total"];
+      return ["system.attributes.speed.burrow.add", "system.attributes.speed.burrow.total"];
     case "flySpeed":
-      if (changeType === "base") return ["data.attributes.speed.fly.total"];
-      return ["data.attributes.speed.fly.add", "data.attributes.speed.fly.total"];
+      if (changeType === "base") return ["system.attributes.speed.fly.total"];
+      return ["system.attributes.speed.fly.add", "system.attributes.speed.fly.total"];
     case "cmb":
-      return "data.attributes.cmb.bonus";
+      return "system.attributes.cmb.bonus";
     case "cmd":
-      if (changeType === "dodge") return "data.attributes.cmd.total";
-      return ["data.attributes.cmd.total", "data.attributes.cmd.flatFootedTotal"];
+      if (changeType === "dodge") return "system.attributes.cmd.total";
+      return ["system.attributes.cmd.total", "system.attributes.cmd.flatFootedTotal"];
     case "init":
-      return "data.attributes.init.total";
+      return "system.attributes.init.total";
     case "acpA":
-      return "data.attributes.acp.armorBonus";
+      return "system.attributes.acp.armorBonus";
     case "acpS":
-      return "data.attributes.acp.shieldBonus";
+      return "system.attributes.acp.shieldBonus";
     case "mDexA":
-      return "data.attributes.mDex.armorBonus";
+      return "system.attributes.mDex.armorBonus";
     case "mDexS":
-      return "data.attributes.mDex.shieldBonus";
+      return "system.attributes.mDex.shieldBonus";
     case "spellResist":
-      return "data.attributes.sr.total";
+      return "system.attributes.sr.total";
     case "damage":
-      return "data.attributes.damage.general";
+      return "system.attributes.damage.general";
     case "wdamage":
-      return "data.attributes.damage.weapon";
+      return "system.attributes.damage.weapon";
     case "sdamage":
-      return "data.attributes.damage.spell";
+      return "system.attributes.damage.spell";
   }
 
   if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)$/)) {
     const sklKey = RegExp.$1;
     if (curData.skills[sklKey] != null) {
-      return `data.skills.${sklKey}.changeBonus`;
+      return `system.skills.${sklKey}.changeBonus`;
     }
   } else if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)\.subSkills\.([a-zA-Z0-9]+)$/)) {
     const sklKey = RegExp.$1;
     const subSklKey = RegExp.$2;
     if (curData.skills[sklKey]?.subSkills?.[subSklKey] != null) {
-      return `data.skills.${sklKey}.subSkills.${subSklKey}.changeBonus`;
+      return `system.skills.${sklKey}.subSkills.${subSklKey}.changeBonus`;
     }
   }
 
@@ -492,26 +502,26 @@ const getAbilityMod = function (ability) {
 };
 
 export const addDefaultChanges = function (changes) {
-  const actorData = this.data.data;
+  const actorData = this.system;
   // Call hook
   const tempChanges = [];
   Hooks.callAll("pf1.addDefaultChanges", this, tempChanges);
   changes.push(...tempChanges.filter((c) => c instanceof game.pf1.documentComponents.ItemChange));
 
   // Class hit points
-  const classes = this.data.items
-    .filter((o) => o.type === "class" && !["racial"].includes(o.data.data.classType))
+  const classes = this.items
+    .filter((o) => o.type === "class" && !["racial"].includes(o.classType))
     .sort((a, b) => {
       return a.sort - b.sort;
     });
-  const racialHD = this.data.items
-    .filter((o) => o.type === "class" && o.data.data.classType === "racial")
+  const racialHD = this.items
+    .filter((o) => o.type === "class" && o.classType === "racial")
     .sort((a, b) => {
       return a.sort - b.sort;
     });
 
   const healthConfig = game.settings.get("pf1", "healthConfig");
-  const cls_options = this.data.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
+  const cls_options = this.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
   const race_options = healthConfig.hitdice.Racial;
   const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
   const continuous = { discrete: false, continuous: true }[healthConfig.continuity];
@@ -537,24 +547,23 @@ export const addDefaultChanges = function (changes) {
     );
   };
   const manual_health = (health_source) => {
-    let health =
-      health_source.data.data.hp + (health_source.data.data.classType === "base") * health_source.data.data.fc.hp.value;
+    let health = health_source.data.hp + (health_source.data.classType === "base") * health_source.data.fc.hp.value;
 
     getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
-      value: health_source.data.data.hp,
+      value: health_source.data.hp,
       name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
     });
     getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
-      value: health_source.data.data.hp,
+      value: health_source.data.hp,
       name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
     });
-    if (health_source.data.data.fc.hp.value > 0) {
+    if (health_source.data.fc.hp.value > 0) {
       getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
-        value: health_source.data.data.fc.hp.value,
+        value: health_source.data.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
       getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
-        value: health_source.data.data.fc.hp.value,
+        value: health_source.data.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
     }
@@ -563,31 +572,31 @@ export const addDefaultChanges = function (changes) {
     push_health(health, health_source);
   };
   const auto_health = (health_source, options, maximized = 0) => {
-    if (health_source.data.hd === 0) return;
+    if (health_source.system.hd === 0) return;
 
-    let die_health = 1 + (health_source.data.data.hd - 1) * options.rate;
+    let die_health = 1 + (health_source.system.hd - 1) * options.rate;
     if (!continuous) die_health = round(die_health);
 
-    const maxed_health = Math.min(health_source.data.data.level, maximized) * health_source.data.data.hd;
-    const level_health = Math.max(0, health_source.data.data.level - maximized) * die_health;
-    const favor_health = (health_source.data.data.classType === "base") * health_source.data.data.fc.hp.value;
+    const maxed_health = Math.min(health_source.system.level, maximized) * health_source.system.hd;
+    const level_health = Math.max(0, health_source.system.level - maximized) * die_health;
+    const favor_health = (health_source.system.classType === "base") * health_source.system.fc.hp.value;
     const health = maxed_health + level_health + favor_health;
 
-    getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
+    getSourceInfo(this.sourceInfo, "system.attributes.hp.max").positive.push({
       value: maxed_health + level_health,
       name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
     });
-    getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
+    getSourceInfo(this.sourceInfo, "system.attributes.vigor.max").positive.push({
       value: maxed_health + level_health,
       name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
     });
-    if (health_source.data.data.fc.hp.value > 0) {
-      getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
-        value: health_source.data.data.fc.hp.value,
+    if (health_source.system.fc.hp.value > 0) {
+      getSourceInfo(this.sourceInfo, "system.attributes.hp.max").positive.push({
+        value: health_source.system.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
-      getSourceInfo(this.sourceInfo, "data.attributes.vigor.max").positive.push({
-        value: health_source.data.data.fc.hp.value,
+      getSourceInfo(this.sourceInfo, "system.attributes.vigor.max").positive.push({
+        value: health_source.system.fc.hp.value,
         name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
       });
     }
@@ -600,7 +609,7 @@ export const addDefaultChanges = function (changes) {
       let maximized = options.maximized;
       for (const hd of health_sources) {
         auto_health(hd, options, maximized);
-        maximized = Math.max(0, maximized - hd.data.data.level);
+        maximized = Math.max(0, maximized - hd.system.level);
       }
     } else health_sources.forEach((race) => manual_health(race));
   };
@@ -617,7 +626,7 @@ export const addDefaultChanges = function (changes) {
     actorData.attributes.savingThrows[a].total = actorData.attributes.savingThrows[a]?.base ?? 0;
 
     const total = allClasses.reduce((cur, cls) => {
-      const base = cls.data.data.savingThrows[a].base;
+      const base = cls.system.savingThrows[a].base;
 
       if (!useFractional) {
         // Add per class change
@@ -631,7 +640,7 @@ export const addDefaultChanges = function (changes) {
           })
         );
       } else {
-        if (cls.data.data.savingThrows[a].good === true) hasGoodSave = true;
+        if (cls.system.savingThrows[a].good === true) hasGoodSave = true;
       }
 
       getSourceInfo(this.sourceInfo, k).positive.push({
@@ -686,12 +695,12 @@ export const addDefaultChanges = function (changes) {
         modifier: "base",
       })
     );
-    getSourceInfo(this.sourceInfo, "data.attributes.hp.max").positive.push({
+    getSourceInfo(this.sourceInfo, "attributes.hp.max").positive.push({
       formula: `@abilities.${hpAbility}.mod * @attributes.hd.total`,
       name: CONFIG.PF1.abilities[hpAbility],
     });
 
-    if (!getProperty(this.data, "data.attributes.wounds.base")) {
+    if (!getProperty(this.system, "attributes.wounds.base")) {
       const woundFormula = `(@abilities.${hpAbility}.total * 2) + @abilities.${hpAbility}.drain`;
       changes.push(
         new game.pf1.documentComponents.ItemChange({
@@ -702,7 +711,7 @@ export const addDefaultChanges = function (changes) {
           modifier: "base",
         })
       );
-      getSourceInfo(this.sourceInfo, "data.attributes.wounds.max").positive.push({
+      getSourceInfo(this.sourceInfo, "attributes.wounds.max").positive.push({
         formula: woundFormula,
         name: CONFIG.PF1.abilities[hpAbility],
       });
@@ -724,7 +733,7 @@ export const addDefaultChanges = function (changes) {
       })
     );
     if (base > 0) {
-      getSourceInfo(this.sourceInfo, `data.attributes.speed.${k}.base`).positive.push({
+      getSourceInfo(this.sourceInfo, `attributes.speed.${k}.base`).positive.push({
         value: base,
         name: game.i18n.localize("PF1.Base"),
       });
@@ -1027,18 +1036,18 @@ export const addDefaultChanges = function (changes) {
     }
   }
   // Add armor bonuses from equipment
-  this.data.items
+  this.items
     .filter((obj) => {
-      return obj.type === "equipment" && obj.data.data.equipped;
+      return obj.type === "equipment" && obj.system.equipped;
     })
     .forEach((item) => {
       let armorTarget = "aac";
-      if (item.data.data.equipmentType === "shield") armorTarget = "sac";
+      if (item.system.equipmentType === "shield") armorTarget = "sac";
       // Push base armor
-      if (item.data.data.armor.value) {
-        let ac = item.data.data.armor.value;
-        if (item.data.data.broken) ac = Math.floor(ac / 2);
-        ac += item.data.data.armor.enh;
+      if (item.system.armor.value) {
+        let ac = item.system.armor.value;
+        if (item.system.broken) ac = Math.floor(ac / 2);
+        ac += item.system.armor.enh;
         changes.push(
           new game.pf1.documentComponents.ItemChange({
             formula: ac,
@@ -1754,7 +1763,7 @@ export const addDefaultChanges = function (changes) {
 };
 
 const resetSkills = function () {
-  const actorData = this.data.data;
+  const actorData = this.system;
   const skills = actorData.skills;
 
   for (const [sklKey, skl] of Object.entries(skills)) {

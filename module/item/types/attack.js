@@ -12,7 +12,7 @@ export class ItemAttackPF extends ItemPF {
   prepareData() {
     super.prepareData();
 
-    const weaponGroups = this.data.data.weaponGroups || { value: [], custom: "" };
+    const weaponGroups = this.system.weaponGroups || { value: [], custom: "" };
 
     weaponGroups.selected = weaponGroups.value.reduce((obj, t) => {
       obj[t] = CONFIG.PF1.weaponGroups[t];
@@ -26,10 +26,10 @@ export class ItemAttackPF extends ItemPF {
         .forEach((c, i) => (weaponGroups.selected[`custom${i + 1}`] = c.trim()));
     }
 
-    weaponGroups.cssClass = isObjectEmpty(weaponGroups.selected) ? "inactive" : "";
+    weaponGroups.cssClass = foundry.utils.isEmpty(weaponGroups.selected) ? "inactive" : "";
   }
 
   get subType() {
-    return this.data.data.attackType;
+    return this.system.attackType;
   }
 }

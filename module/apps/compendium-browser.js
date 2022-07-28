@@ -250,7 +250,7 @@ export class CompendiumBrowser extends Application {
           console.error(err);
           await this.clearEntries();
         }
-        resolve(this._data.data);
+        resolve(this._data);
       });
     });
   }
@@ -264,7 +264,7 @@ export class CompendiumBrowser extends Application {
       await this._fetchMetadata();
     }
 
-    this._data.data = {
+    this._data = {
       filters: this.filters,
       collection: this.items.reduce((cur, o) => {
         cur[o.item._id] = o;
@@ -542,8 +542,8 @@ export class CompendiumBrowser extends Application {
     if (item.items) {
       const race = item.items.filter((o) => o.type === "race")[0];
       if (race != null) {
-        result.item.creatureType = race.data.data.creatureType;
-        result.item.subTypes = race.data.data.subTypes?.map((o) => {
+        result.item.creatureType = race.data.creatureType;
+        result.item.subTypes = race.data.subTypes?.map((o) => {
           this.extraFilters.subTypes[o[0]] = true;
           return o[0];
         });
@@ -738,7 +738,7 @@ export class CompendiumBrowser extends Application {
     if (this.shouldForceRefresh() || !this._data.loaded) await this.loadData();
     await this.updateForceRefreshData({ save: true, refresh: false });
 
-    const data = duplicate(this._data.data);
+    const data = duplicate(this._data);
     data.searchString = this.searchString;
 
     return data;
@@ -1271,7 +1271,7 @@ export class CompendiumBrowser extends Application {
     const key = input.name;
     const value = input.checked;
 
-    const filter = this._data.data.filters.find((o) => o.path === path);
+    const filter = this._data.filters.find((o) => o.path === path);
     if (filter) {
       if (!filter.active) filter.active = {};
     }

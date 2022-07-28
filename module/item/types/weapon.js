@@ -4,8 +4,8 @@ export class ItemWeaponPF extends ItemPF {
   async _preUpdate(update, context) {
     // Set weapon subtype if not present
     const newWeaponType = getProperty(update, "data.weaponType");
-    if (newWeaponType != null && newWeaponType !== this.data.data.weaponType) {
-      const subtype = getProperty(update, "data.weaponSubtype") ?? this.data.data.weaponSubtype ?? "";
+    if (newWeaponType != null && newWeaponType !== this.data.weaponType) {
+      const subtype = getProperty(update, "data.weaponSubtype") ?? this.data.weaponSubtype ?? "";
       const keys = Object.keys(CONFIG.PF1.weaponTypes[newWeaponType]).filter((o) => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
         setProperty(update, "data.weaponSubtype", keys[0]);
@@ -19,11 +19,11 @@ export class ItemWeaponPF extends ItemPF {
     const { weaponTypes } = CONFIG.PF1;
 
     // Type and subtype labels
-    let wType = this.data.data.weaponType;
+    let wType = this.system.weaponType;
     const typeKeys = Object.keys(weaponTypes);
     if (!typeKeys.includes(wType)) wType = typeKeys[0];
 
-    let wSubtype = this.data.data.weaponSubtype;
+    let wSubtype = this.system.weaponSubtype;
     const subtypeKeys = Object.keys(weaponTypes[wType]).filter((o) => !o.startsWith("_"));
     if (!subtypeKeys.includes(wSubtype)) wSubtype = subtypeKeys[0];
 
@@ -44,11 +44,11 @@ export class ItemWeaponPF extends ItemPF {
   }
 
   get isActive() {
-    return this.data.data.equipped;
+    return this.system.equipped;
   }
 
   _prepareWeaponGroups() {
-    const weaponGroups = this.data.data.weaponGroups || { value: [], custom: "" };
+    const weaponGroups = this.system.weaponGroups || { value: [], custom: "" };
 
     weaponGroups.selected = weaponGroups.value.reduce((obj, t) => {
       obj[t] = CONFIG.PF1.weaponGroups[t];
@@ -62,6 +62,6 @@ export class ItemWeaponPF extends ItemPF {
         .forEach((c, i) => (weaponGroups.selected[`custom${i + 1}`] = c.trim()));
     }
 
-    weaponGroups.cssClass = isObjectEmpty(weaponGroups.selected) ? "inactive" : "";
+    weaponGroups.cssClass = foundry.utils.isEmpty(weaponGroups.selected) ? "inactive" : "";
   }
 }

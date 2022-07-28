@@ -17,7 +17,7 @@ export class AttackDialog extends Application {
       sl: this.rollData.sl ?? 0,
     };
     this.flags = {
-      "primary-attack": this.object.item.data.data.primaryAttack === true,
+      "primary-attack": this.object.item.data.primaryAttack === true,
       "cl-check": this.object.data.clCheck === true,
       "measure-template": true,
     };
@@ -79,8 +79,8 @@ export class AttackDialog extends Application {
       hasAttack: this.object.hasAttack,
       hasDamage: this.object.hasDamage,
       hasDamageAbility: this.object.data.ability?.damage ?? "" !== "",
-      isNaturalAttack: this.object.item.data.data.attackType === "natural",
-      isWeaponAttack: this.object.item.data.data.attackType === "weapon",
+      isNaturalAttack: this.object.item.data.attackType === "natural",
+      isWeaponAttack: this.object.item.data.attackType === "weapon",
       isMeleeWeaponAttackAction: this.object.data.actionType === "mwak",
       isRangedWeaponAttackAction: this.object.data.actionType === "rwak",
       isAttack: this.object.item.type === "attack",
@@ -110,8 +110,8 @@ export class AttackDialog extends Application {
   }
 
   _filterAmmo(item) {
-    if (!(item.type === "loot" && item.data.data.subType === "ammo")) return false;
-    if (item.data.data.quantity <= 0) return false;
+    if (!(item.type === "loot" && item.data.subType === "ammo")) return false;
+    if (item.data.quantity <= 0) return false;
 
     const weaponAmmoType = this.object.data.ammoType;
     const ammoType = item.extraType;
@@ -318,7 +318,7 @@ export class AttackDialog extends Application {
   initAmmoUsage() {
     this.ammoUsage = this.getAmmo().reduce((cur, o) => {
       cur[o.data._id] = {
-        quantity: o.data.data.quantity,
+        quantity: o.data.quantity,
         used: 0,
       };
 

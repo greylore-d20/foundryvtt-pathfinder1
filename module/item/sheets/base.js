@@ -84,8 +84,7 @@ export class ItemSheetPF extends ItemSheet {
    */
   async getData() {
     const data = await super.getData();
-    data.data = data.data.data;
-    data.flags = { flags: data.data.flags };
+    data.flags = { flags: data.flags };
     const rollData = this.item.getRollData();
     data.labels = this.item.labels;
 
@@ -106,9 +105,9 @@ export class ItemSheetPF extends ItemSheet {
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
     data.itemName = data.item.name;
-    data.isCharged = ["day", "week", "charges"].includes(data.item.data.data.uses?.per);
-    data.isPhysical = data.item.data.data.quantity !== undefined;
-    data.isNaturalAttack = data.item.data.data.attackType === "natural";
+    data.isCharged = ["day", "week", "charges"].includes(data.item.data.uses?.per);
+    data.isPhysical = data.item.data.quantity !== undefined;
+    data.isNaturalAttack = data.item.data.attackType === "natural";
     data.isSpell = this.item.type === "spell";
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
@@ -132,9 +131,9 @@ export class ItemSheetPF extends ItemSheet {
 
     // Unidentified data
     if (this.item.showUnidentifiedData) {
-      data.itemName = this.item.data.data.unidentified.name || this.item.data.data.identifiedName || this.item.name;
+      data.itemName = this.item.data.unidentified.name || this.item.data.identifiedName || this.item.name;
     } else {
-      data.itemName = this.item.data.data.identifiedName || this.item.name;
+      data.itemName = this.item.data.identifiedName || this.item.name;
     }
 
     // Override description attributes
@@ -147,7 +146,7 @@ export class ItemSheetPF extends ItemSheet {
         isNumber: true,
         name: "data.quantity",
         label: game.i18n.localize("PF1.Quantity"),
-        value: data.item.data.data.quantity,
+        value: data.item.data.quantity,
         decimals: 0,
         id: "data-quantity",
       });
@@ -158,8 +157,8 @@ export class ItemSheetPF extends ItemSheet {
         name: "data.weight.value",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.data.data.weight.converted.total,
-        inputValue: data.item.data.data.weight.converted.value,
+        value: data.item.data.weight.converted.total,
+        inputValue: data.item.data.weight.converted.value,
         decimals: 2,
         id: "data-weight-value",
       });
@@ -216,11 +215,11 @@ export class ItemSheetPF extends ItemSheet {
         label: game.i18n.localize("PF1.HPShort"),
         value: {
           name: "data.hp.value",
-          value: data.item.data.data.hp.value,
+          value: data.item.data.hp.value,
         },
         max: {
           name: "data.hp.max",
-          value: data.item.data.data.hp.max,
+          value: data.item.data.hp.max,
         },
       });
 
@@ -230,7 +229,7 @@ export class ItemSheetPF extends ItemSheet {
         label: game.i18n.localize("PF1.Hardness"),
         name: "data.hardness",
         decimals: 0,
-        value: data.item.data.data.hardness,
+        value: data.item.data.hardness,
       });
 
       // Add carried flag
@@ -238,7 +237,7 @@ export class ItemSheetPF extends ItemSheet {
         isBoolean: true,
         name: "data.carried",
         label: game.i18n.localize("PF1.Carried"),
-        value: data.item.data.data.carried,
+        value: data.item.data.carried,
       });
     }
 
@@ -257,7 +256,7 @@ export class ItemSheetPF extends ItemSheet {
         }, {});
       } else {
         // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = mergeObject(deepClone(CONFIG.PF1.skills), this.actor.data.data.skills);
+        const skills = mergeObject(deepClone(CONFIG.PF1.skills), this.actor.data.skills);
         data.skills = Object.entries(skills).reduce((cur, o) => {
           const key = o[0];
           const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
@@ -269,14 +268,14 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare weapon specific stuff
     if (data.item.type === "weapon") {
-      data.isRanged = data.item.data.data.weaponSubtype === "ranged" || data.item.data.data.properties["thr"] === true;
+      data.isRanged = data.item.data.weaponSubtype === "ranged" || data.item.data.properties["thr"] === true;
 
       // Prepare categories for weapons
       data.weaponCategories = { types: {}, subTypes: {} };
       for (const [k, v] of Object.entries(CONFIG.PF1.weaponTypes)) {
         if (typeof v === "object") data.weaponCategories.types[k] = v._label;
       }
-      const type = data.item.data.data.weaponType;
+      const type = data.item.data.weaponType;
       if (hasProperty(CONFIG.PF1.weaponTypes, type)) {
         for (const [k, v] of Object.entries(CONFIG.PF1.weaponTypes[type])) {
           // Add static targets
@@ -292,7 +291,7 @@ export class ItemSheetPF extends ItemSheet {
       for (const [k, v] of Object.entries(CONFIG.PF1.equipmentTypes)) {
         if (typeof v === "object") data.equipmentCategories.types[k] = v._label;
       }
-      const type = data.item.data.data.equipmentType;
+      const type = data.item.data.equipmentType;
       if (hasProperty(CONFIG.PF1.equipmentTypes, type)) {
         for (const [k, v] of Object.entries(CONFIG.PF1.equipmentTypes[type])) {
           // Add static targets
@@ -314,13 +313,13 @@ export class ItemSheetPF extends ItemSheet {
     if (data.item.type === "spell") {
       let spellbook = null;
       if (this.actor != null) {
-        spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.item.data.data.spellbook}`);
+        spellbook = getProperty(this.actor.data, `data.attributes.spells.spellbooks.${this.item.data.spellbook}`);
       }
 
       data.isPreparedSpell = spellbook != null ? !spellbook.spontaneous && !spellbook.spellPoints?.useSystem : false;
       data.usesSpellpoints = spellbook != null ? spellbook.spellPoints?.useSystem ?? false : false;
       data.isAtWill = data.item.data.atWill;
-      data.spellbooks = deepClone(this.actor?.data.data.attributes?.spells?.spellbooks ?? {});
+      data.spellbooks = deepClone(this.actor?.data.attributes?.spells?.spellbooks ?? {});
 
       const desc = await renderTemplate(
         "systems/pf1/templates/internal/spell-description.hbs",
@@ -330,8 +329,8 @@ export class ItemSheetPF extends ItemSheet {
       data.topDescription = TextEditor.enrichHTML(desc, { rollData: firstAction?.getRollData() ?? rollData });
 
       // Enrich description
-      if (data.data.shortDescription != null) {
-        data.shortDescription = TextEditor.enrichHTML(data.data.shortDescription, {
+      if (data.shortDescription != null) {
+        data.shortDescription = TextEditor.enrichHTML(data.shortDescription, {
           rollData: firstAction?.getRollData() ?? rollData,
           secrets: data.owner,
         });
@@ -340,17 +339,17 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare class specific stuff
     if (data.item.type === "class") {
-      data.isMythicPath = data.data.classType === "mythic";
+      data.isMythicPath = data.classType === "mythic";
 
-      for (const [a, s] of Object.entries(data.data.savingThrows)) {
+      for (const [a, s] of Object.entries(data.savingThrows)) {
         s.label = CONFIG.PF1.savingThrows[a];
       }
-      for (const [a, s] of Object.entries(data.data.fc)) {
+      for (const [a, s] of Object.entries(data.fc)) {
         s.label = CONFIG.PF1.favouredClassBonuses[a];
       }
 
-      data.isBaseClass = data.data.classType === "base";
-      data.isRacialHD = data.data.classType === "racial";
+      data.isBaseClass = data.classType === "base";
+      data.isRacialHD = data.classType === "racial";
 
       if (this.actor != null) {
         const healthConfig = game.settings.get("pf1", "healthConfig");
@@ -369,7 +368,7 @@ export class ItemSheetPF extends ItemSheet {
         }, {});
       } else {
         // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = mergeObject(deepClone(CONFIG.PF1.skills), this.actor.data.data.skills);
+        const skills = mergeObject(deepClone(CONFIG.PF1.skills), this.actor.data.skills);
         data.skills = Object.entries(skills).reduce((cur, o) => {
           const key = o[0];
           const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
@@ -386,8 +385,8 @@ export class ItemSheetPF extends ItemSheet {
       languages: CONFIG.PF1.languages,
     };
     for (const [t, choices] of Object.entries(profs)) {
-      if (hasProperty(data.item.data.data, t)) {
-        const trait = data.data[t];
+      if (hasProperty(data.item.data, t)) {
+        const trait = data[t];
         if (!trait) continue;
         let values = [];
         if (trait.value) {
@@ -419,7 +418,7 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       const buffTargets = getBuffTargets(this.item.actor);
-      data.changes = data.item.data.data.changes.reduce((cur, o) => {
+      data.changes = data.item.data.changes.reduce((cur, o) => {
         const obj = { data: o };
 
         obj.subTargetLabel = buffTargets[o.subTarget]?.label;
@@ -431,8 +430,8 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare stuff for items with context notes
-    if (data.item.data.data.contextNotes) {
-      data.contextNotes = deepClone(data.item.data.data.contextNotes);
+    if (data.item.data.contextNotes) {
+      data.contextNotes = deepClone(data.item.data.contextNotes);
       const noteTargets = getBuffTargets(this.item.actor, "contextNotes");
       data.contextNotes.forEach((o) => {
         o.label = noteTargets[o.subTarget]?.label;
@@ -448,8 +447,8 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Parse notes
-    if (data.item.data.data.attackNotes) {
-      const value = data.item.data.data.attackNotes;
+    if (data.item.data.attackNotes) {
+      const value = data.item.data.attackNotes;
       setProperty(data, "notes.attack", value);
     }
 
@@ -620,7 +619,7 @@ export class ItemSheetPF extends ItemSheet {
    * @private
    */
   _getItemStatus(item) {
-    const itemData = item.data.data;
+    const itemData = item.data;
     if (item.type === "spell") {
       const spellbook = this.item.spellbook;
       if (itemData.preparation.mode === "prepared") {
@@ -653,14 +652,14 @@ export class ItemSheetPF extends ItemSheet {
 
     if (item.type === "weapon") {
       props.push(
-        ...Object.entries(item.data.data.properties)
+        ...Object.entries(item.data.properties)
           .filter((e) => e[1] === true)
           .map((e) => CONFIG.PF1.weaponProperties[e[0]])
       );
     } else if (item.type === "spell") {
       props.push(labels.components, labels.materials);
     } else if (item.type === "equipment") {
-      props.push(CONFIG.PF1.equipmentTypes[item.data.data.equipmentType][item.data.data.equipmentSubtype]);
+      props.push(CONFIG.PF1.equipmentTypes[item.data.equipmentType][item.data.equipmentSubtype]);
       props.push(labels.armor);
     } else if (item.type === "feat") {
       props.push(labels.featType);
@@ -668,11 +667,11 @@ export class ItemSheetPF extends ItemSheet {
 
     // Action type
     if (item.data.actionType) {
-      props.push(CONFIG.PF1.itemActionTypes[item.data.data.actionType]);
+      props.push(CONFIG.PF1.itemActionTypes[item.data.actionType]);
     }
 
     // Action usage
-    if (item.type !== "weapon" && item.data.data.activation && !isObjectEmpty(item.data.data.activation)) {
+    if (item.type !== "weapon" && item.data.activation && !isObjectEmpty(item.data.activation)) {
       props.push(labels.activation, labels.range, labels.target, labels.duration);
     }
 
@@ -889,7 +888,7 @@ export class ItemSheetPF extends ItemSheet {
     }
     // Delete item
     else if (item && a.classList.contains("item-delete")) {
-      const list = (this.document.data.data.scriptCalls || []).filter((o) => o._id !== item.id);
+      const list = (this.document.data.scriptCalls || []).filter((o) => o._id !== item.id);
       return this._onSubmit(event, { updateData: { "data.scriptCalls": list } });
     }
     // Edit item
@@ -977,7 +976,7 @@ export class ItemSheetPF extends ItemSheet {
 
       // Submit data
       if (uuid) {
-        const list = this.document.data.data.scriptCalls ?? [];
+        const list = this.document.data.scriptCalls ?? [];
         await this._onSubmit(event);
         return game.pf1.documentComponents.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
           parent: this.item,
@@ -1025,12 +1024,12 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Case 2 - Data explicitly provided; check same actor for item
-    else if (data.data) {
+    else if (data) {
       dataType = "data";
       if (this.item && this.item.actor) {
-        targetItem = this.item.actor.items.get(data.data._id);
+        targetItem = this.item.actor.items.get(data._id);
       }
-      itemLink = data.data._id;
+      itemLink = data._id;
     }
 
     // Case 3 - Import from World Document
@@ -1085,23 +1084,23 @@ export class ItemSheetPF extends ItemSheet {
       // Re-order
       if (srcItem === item) {
         const targetActionID = event.target?.closest("li.action-part")?.dataset?.itemId;
-        const prevActions = deepClone(this.object.data.data.actions);
+        const prevActions = deepClone(this.object.data.actions);
 
         let targetIdx;
         if (!targetActionID) targetIdx = prevActions.length - 1;
         else targetIdx = prevActions.indexOf(prevActions.find((o) => o._id === targetActionID));
-        const srcIdx = prevActions.indexOf(prevActions.find((o) => o._id === data.data._id));
+        const srcIdx = prevActions.indexOf(prevActions.find((o) => o._id === data._id));
 
         prevActions.splice(srcIdx, 1);
-        prevActions.splice(targetIdx, 0, data.data);
+        prevActions.splice(targetIdx, 0, data);
         await this.object.update({ "data.actions": prevActions });
       }
 
       // Add to another item
       else {
-        const prevActions = deepClone(this.object.data.data.actions ?? []);
-        data.data._id = randomID(16);
-        prevActions.splice(prevActions.length, 0, data.data);
+        const prevActions = deepClone(this.object.data.actions ?? []);
+        data._id = randomID(16);
+        prevActions.splice(prevActions.length, 0, data);
         await this.object.update({ "data.actions": prevActions });
       }
     }
@@ -1300,7 +1299,7 @@ export class ItemSheetPF extends ItemSheet {
       const action = deepClone(this.item.actions.get(li.dataset.itemId).data);
       action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
       action._id = randomID(16);
-      const actionParts = deepClone(this.item.data.data.actions ?? []);
+      const actionParts = deepClone(this.item.data.actions ?? []);
       return this._onSubmit(event, { updateData: { "data.actions": actionParts.concat(action) } });
     }
   }
@@ -1337,7 +1336,7 @@ export class ItemSheetPF extends ItemSheet {
     // Remove a change
     if (a.classList.contains("delete-change")) {
       const li = a.closest(".change");
-      const changes = deepClone(this.item.data.data.changes);
+      const changes = deepClone(this.item.data.changes);
       const change = changes.find((o) => o._id === li.dataset.change);
       changes.splice(changes.indexOf(change), 1);
       return this._onSubmit(event, { updateData: { "data.changes": changes } });
@@ -1375,7 +1374,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new note
     if (a.classList.contains("add-note")) {
-      const contextNotes = this.item.data.data.contextNotes || [];
+      const contextNotes = this.item.data.contextNotes || [];
       await this._onSubmit(event, {
         updateData: { "data.contextNotes": contextNotes.concat([ItemPF.defaultContextNote]) },
       });
@@ -1384,7 +1383,7 @@ export class ItemSheetPF extends ItemSheet {
     // Remove a note
     if (a.classList.contains("delete-note")) {
       const li = a.closest(".context-note");
-      const contextNotes = duplicate(this.item.data.data.contextNotes);
+      const contextNotes = duplicate(this.item.data.contextNotes);
       contextNotes.splice(Number(li.dataset.note), 1);
       await this._onSubmit(event, {
         updateData: { "data.contextNotes": contextNotes },
@@ -1399,7 +1398,7 @@ export class ItemSheetPF extends ItemSheet {
     // Prepare categories and changes to display
     const li = a.closest(".context-note");
     const noteIndex = Number(li.dataset.note);
-    const note = this.item.data.data.contextNotes[noteIndex];
+    const note = this.item.data.contextNotes[noteIndex];
     const categories = getBuffTargetDictionary(this.item.actor, "contextNotes");
 
     const part1 = note?.subTarget?.split(".")[0];

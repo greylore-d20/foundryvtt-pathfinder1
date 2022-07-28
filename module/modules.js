@@ -27,12 +27,12 @@ export function initializeModules() {
           const heavyArmor = token.actor.items.find(
             (item) =>
               item.data.type === "equipment" &&
-              item.data.data.equipmentType === "armor" &&
-              item.data.data.equipped &&
-              item.data.data.equipmentSubtype === "heavyArmor"
+              item.data.equipmentType === "armor" &&
+              item.data.equipped &&
+              item.data.equipmentSubtype === "heavyArmor"
           );
           // Check for heavy load encumbrance
-          const heavyLoad = token.actor.data.data.attributes.encumbrance.level >= 2;
+          const heavyLoad = token.actor.data.attributes.encumbrance.level >= 2;
 
           let runMultiplier = 4;
           if (heavyArmor || heavyLoad) runMultiplier = 3;
@@ -48,7 +48,7 @@ export function initializeModules() {
           const useElevation = this.getSetting("useElevation");
 
           if (useElevation && token.data.elevation > 0) {
-            const flySpeed = token.actor.data.data.attributes.speed.fly.total;
+            const flySpeed = token.actor.data.attributes.speed.fly.total;
             if (flySpeed > 0) {
               return flySpeed;
             }
@@ -58,20 +58,20 @@ export function initializeModules() {
             enhancedTerrain &&
             canvas.terrain.terrainFromGrid(x, y).some((terrain) => terrain.data.environment === "water")
           ) {
-            const swimSpeed = token.actor.data.data.attributes.speed.swim.total;
+            const swimSpeed = token.actor.data.attributes.speed.swim.total;
             if (swimSpeed > 0) {
               return swimSpeed;
             }
           }
 
           if (useElevation && token.data.elevation < 0) {
-            const burrowSpeed = token.actor.data.data.attributes.speed.burrow.total;
+            const burrowSpeed = token.actor.data.attributes.speed.burrow.total;
             if (burrowSpeed > 0) {
               return burrowSpeed;
             }
           }
 
-          return token.actor.data.data.attributes.speed.land.total;
+          return token.actor.data.attributes.speed.land.total;
         }
 
         get settings() {

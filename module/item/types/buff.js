@@ -4,8 +4,8 @@ import { RollPF } from "../../roll.js";
 export class ItemBuffPF extends ItemPF {
   async _preUpdate(changed, options, userId) {
     // Add activation time when not present
-    if (changed.data?.active && changed.data?.duration?.start === undefined) {
-      setProperty(changed, "data.duration.start", game.time.worldTime);
+    if (changed.system?.active && changed.system?.duration?.start === undefined) {
+      setProperty(changed, "system.duration.start", game.time.worldTime);
     }
 
     return super._preUpdate(changed, options, userId);
@@ -13,14 +13,14 @@ export class ItemBuffPF extends ItemPF {
 
   prepareData() {
     const itemData = super.prepareData();
-    const data = itemData.data;
+    const data = itemData;
     const labels = this.labels;
     const C = CONFIG.PF1;
 
     labels.buffType = C.buffTypes[data.buffType];
 
-    if (this.data.data.duration) {
-      const dur = this.data.data.duration;
+    if (this.system.duration) {
+      const dur = this.system.duration;
       const unit = C.timePeriodsShort[dur.units];
       if (unit && dur.value) {
         const val = RollPF.safeTotal(dur.value, this.getRollData());
@@ -33,7 +33,7 @@ export class ItemBuffPF extends ItemPF {
 
   prepareDerivedItemData() {
     super.prepareDerivedItemData();
-    const itemData = this.data.data;
+    const itemData = this.system;
 
     // Add total duration in seconds
     if (itemData.duration.value?.length) {
@@ -68,10 +68,10 @@ export class ItemBuffPF extends ItemPF {
       label: this.name,
       icon: this.img,
       origin: this.uuid,
-      disabled: !this.data.data.active,
+      disabled: !this.data.active,
       flags: {
         pf1: {
-          show: !this.data.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions"),
+          show: !this.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions"),
           origin: { item: this.id },
         },
       },
@@ -85,16 +85,16 @@ export class ItemBuffPF extends ItemPF {
   getRawEffectData() {
     const createData = super.getRawEffectData();
 
-    const hideIcon = this.data.data.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
+    const hideIcon = this.data.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
     createData["flags.pf1.show"] = !hideIcon;
     if (hideIcon) createData.icon = null;
 
     // Add buff durations
-    let durationValue = this.data.data.duration.value ?? null;
+    let durationValue = this.data.duration.value ?? null;
     if (typeof durationValue == "number") durationValue += "";
     if (durationValue) {
       let seconds = 0;
-      switch (this.data.data.duration.units) {
+      switch (this.data.duration.units) {
         case "minute":
         case "hour": {
           seconds = this.totalDurationSeconds;
@@ -126,17 +126,17 @@ export class ItemBuffPF extends ItemPF {
   getRollData() {
     const result = super.getRollData();
 
-    result.item.level = this.data.data.level;
+    result.item.level = this.system.level;
 
     return result;
   }
 
   get isActive() {
-    return this.data.data.active;
+    return this.system.active;
   }
 
   get subType() {
-    return this.data.data.buffType;
+    return this.system.buffType;
   }
 
   /**
@@ -146,6 +146,6 @@ export class ItemBuffPF extends ItemPF {
    * @override
    */
   async setActive(active, context) {
-    return this.update({ "data.active": active }, context);
+    return this.update({ "system.active": active }, context);
   }
 }

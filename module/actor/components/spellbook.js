@@ -32,7 +32,7 @@ export class Spellbook {
    */
   constructor(bookKey, actor) {
     this.actor = actor;
-    this.data = actor.data.data.attributes.spells.spellbooks[bookKey];
+    this.data = actor.system.attributes.spells.spellbooks[bookKey];
   }
 
   /**
@@ -44,7 +44,7 @@ export class Spellbook {
     this.spells.push(spell);
 
     // Basic sanity check
-    const level = spell.data.data.level;
+    const level = spell.system.level;
     if (Math.clamped(level, 0, 9) !== level) {
       console.error("Spell with impossible spell level:", spell);
       return;

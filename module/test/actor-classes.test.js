@@ -49,7 +49,7 @@ export const registerActorItemClassTests = () => {
           });
 
           it("has 1 BAB", function () {
-            expect(actor.data.data.attributes.bab.total).to.equal(1);
+            expect(actor.data.attributes.bab.total).to.equal(1);
           });
 
           describe("has appropriate saving throws", function () {
@@ -57,13 +57,13 @@ export const registerActorItemClassTests = () => {
              * Fort should be 5, Reflex should be 2 and Will should be 2
              */
             it("has appropriate Fortitude", function () {
-              expect(actor.data.data.attributes.savingThrows.fort.total).to.equal(5);
+              expect(actor.data.attributes.savingThrows.fort.total).to.equal(5);
             });
             it("has appropriate Reflex", function () {
-              expect(actor.data.data.attributes.savingThrows.ref.total).to.equal(2);
+              expect(actor.data.attributes.savingThrows.ref.total).to.equal(2);
             });
             it("has appropriate Will", function () {
-              expect(actor.data.data.attributes.savingThrows.will.total).to.equal(2);
+              expect(actor.data.attributes.savingThrows.will.total).to.equal(2);
             });
           });
 
@@ -95,7 +95,7 @@ export const registerActorItemClassTests = () => {
              * HP should be 13
              */
             it("should be 13", function () {
-              expect(actor.data.data.attributes.hp.max).to.equal(13);
+              expect(actor.data.attributes.hp.max).to.equal(13);
             });
           });
         });
@@ -121,9 +121,9 @@ export const registerActorItemClassTests = () => {
             expect(actor.itemTypes.class.find((o) => o === cls.fighter).name).to.equal("Fighter");
             expect(actor.itemTypes.class.find((o) => o === cls.wizard).name).to.equal("Wizard");
             expect(actor.itemTypes.class.find((o) => o === cls.hunter).name).to.equal("Hunter");
-            expect(cls.fighter.data.data.level).to.equal(2);
-            expect(cls.wizard.data.data.level).to.equal(5);
-            expect(cls.hunter.data.data.level).to.equal(9);
+            expect(cls.fighter.data.level).to.equal(2);
+            expect(cls.wizard.data.level).to.equal(5);
+            expect(cls.hunter.data.level).to.equal(9);
           });
 
           describe("has appropriate hit points", function () {
@@ -154,7 +154,7 @@ export const registerActorItemClassTests = () => {
              * HP should be 122
              */
             it("should be 122", function () {
-              expect(actor.data.data.attributes.hp.max).to.equal(122);
+              expect(actor.data.attributes.hp.max).to.equal(122);
             });
           });
 
@@ -185,13 +185,13 @@ export const registerActorItemClassTests = () => {
 
             describe("wounds", function () {
               it("should be 32", function () {
-                expect(actor.data.data.attributes.wounds.max).to.equal(32);
+                expect(actor.data.attributes.wounds.max).to.equal(32);
               });
             });
 
             describe("vigor", function () {
               it("should be 74", function () {
-                expect(actor.data.data.attributes.vigor.max).to.equal(74);
+                expect(actor.data.attributes.vigor.max).to.equal(74);
               });
             });
           });
@@ -207,7 +207,7 @@ export const registerActorItemClassTests = () => {
               });
 
               it("has appropriate BAB", function () {
-                expect(actor.data.data.attributes.bab.total).to.equal(10);
+                expect(actor.data.attributes.bab.total).to.equal(10);
               });
             });
 
@@ -221,7 +221,7 @@ export const registerActorItemClassTests = () => {
               });
 
               it("has appropriate BAB", function () {
-                expect(actor.data.data.attributes.bab.total).to.equal(11);
+                expect(actor.data.attributes.bab.total).to.equal(11);
               });
             });
           });
@@ -237,13 +237,13 @@ export const registerActorItemClassTests = () => {
               });
 
               it("has appropriate Fortitude", function () {
-                expect(actor.data.data.attributes.savingThrows.fort.total).to.equal(13);
+                expect(actor.data.attributes.savingThrows.fort.total).to.equal(13);
               });
               it("has appropriate Reflex", function () {
-                expect(actor.data.data.attributes.savingThrows.ref.total).to.equal(9);
+                expect(actor.data.attributes.savingThrows.ref.total).to.equal(9);
               });
               it("has appropriate Will", function () {
-                expect(actor.data.data.attributes.savingThrows.will.total).to.equal(9);
+                expect(actor.data.attributes.savingThrows.will.total).to.equal(9);
               });
             });
 
@@ -257,13 +257,13 @@ export const registerActorItemClassTests = () => {
               });
 
               it("has appropriate Fortitude", function () {
-                expect(actor.data.data.attributes.savingThrows.fort.total).to.equal(12);
+                expect(actor.data.attributes.savingThrows.fort.total).to.equal(12);
               });
               it("has appropriate Reflex", function () {
-                expect(actor.data.data.attributes.savingThrows.ref.total).to.equal(10);
+                expect(actor.data.attributes.savingThrows.ref.total).to.equal(10);
               });
               it("has appropriate Will", function () {
-                expect(actor.data.data.attributes.savingThrows.will.total).to.equal(10);
+                expect(actor.data.attributes.savingThrows.will.total).to.equal(10);
               });
             });
           });

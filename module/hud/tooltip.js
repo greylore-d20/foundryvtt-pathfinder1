@@ -105,7 +105,7 @@ export class TooltipPF extends Application {
     const data = this.getActorData(token.actor);
     if (!data) return null;
 
-    data.name = token.data.name;
+    data.name = token.name;
     if (
       (game.user.isGM && this.forceHideGMInfo) ||
       (!game.user.isGM && !token.actor.testUserPermission(game.user, "OBSERVER"))
@@ -128,12 +128,12 @@ export class TooltipPF extends Application {
     if (!actor) return null;
 
     const data = {
-      data: actor.data,
-      name: actor.data.name,
+      data: actor.system,
+      name: actor.name,
     };
 
     if (!(game.user.isGM && !this.forceHideGMInfo)) {
-      data.name = getProperty(actor.data, "data.details.tooltip.name") || actor.data.name;
+      data.name = getProperty(actor, "system.details.tooltip.name") || actor.name;
     }
 
     data.isOwner = game.user.isGM || actor.isOwner;
@@ -144,10 +144,9 @@ export class TooltipPF extends Application {
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
-      (!getProperty(actor.data, "data.details.tooltip.hideConditions") &&
-        !getProperty(this.worldConfig, "hideConditions"))
+      (!getProperty(actor, "system.details.tooltip.hideConditions") && !getProperty(this.worldConfig, "hideConditions"))
     ) {
-      const conditions = getProperty(actor.data, "data.attributes.conditions") || {};
+      const conditions = getProperty(actor, "system.attributes.conditions") || {};
       for (const [ck, cv] of Object.entries(conditions)) {
         if (cv === true) {
           data.conditions = data.conditions || [];
@@ -163,15 +162,15 @@ export class TooltipPF extends Application {
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
-      (!getProperty(actor.data, "data.details.tooltip.hideBuffs") && !getProperty(this.worldConfig, "hideBuffs"))
+      (!getProperty(actor, "system.details.tooltip.hideBuffs") && !getProperty(this.worldConfig, "hideBuffs"))
     ) {
-      const buffs = actor.items.filter((i) => i.data.data.active && !i.data.data.hideFromToken);
+      const buffs = actor.items.filter((i) => i.type === "buff" && i.isActive && !i.system.hideFromToken);
       for (const b of buffs) {
         data.buffs = data.buffs || [];
         data.buffs.push({
           label: b.name,
           icon: b.img,
-          level: b.data.data.level,
+          level: b.system.level,
         });
       }
     }
@@ -180,13 +179,13 @@ export class TooltipPF extends Application {
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
-      (!getProperty(actor.data, "data.details.tooltip.hideHeld") && !getProperty(this.worldConfig, "hideHeld"))
+      (!getProperty(actor, "system.details.tooltip.hideHeld") && !getProperty(this.worldConfig, "hideHeld"))
     ) {
       const held = actor.items.filter((i) => {
         if (!["weapon", "equipment"].includes(i.type)) return false;
-        if (!i.data.data.equipped) return false;
+        if (!i.system.equipped) return false;
         if (i.type === "equipment") {
-          if (i.data.data.equipmentType !== "shield") return false;
+          if (i.system.equipmentType !== "shield") return false;
         }
         return true;
       });
@@ -208,8 +207,8 @@ export class TooltipPF extends Application {
     ) {
       const armor = actor.items.filter((i) => {
         if (i.type !== "equipment") return false;
-        if (!i.data.data.equipped) return false;
-        if (i.data.data.equipmentType !== "armor") return false;
+        if (!i.system.equipped) return false;
+        if (i.system.equipmentType !== "armor") return false;
         return true;
       });
 
@@ -226,13 +225,13 @@ export class TooltipPF extends Application {
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
-      (!getProperty(actor.data, "data.details.tooltip.hideClothing") && !getProperty(this.worldConfig, "hideClothing"))
+      (!getProperty(actor, "item.details.tooltip.hideClothing") && !getProperty(this.worldConfig, "hideClothing"))
     ) {
       const clothing = actor.items.filter((i) => {
         if (i.type !== "equipment") return false;
-        if (!i.data.data.equipped) return false;
-        if (i.data.data.equipmentType !== "misc") return false;
-        if (i.data.data.equipmentSubtype !== "clothing") return false;
+        if (!i.system.equipped) return false;
+        if (i.system.equipmentType !== "misc") return false;
+        if (i.system.equipmentSubtype !== "clothing") return false;
         return true;
       });
 

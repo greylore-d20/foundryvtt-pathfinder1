@@ -13,17 +13,17 @@ export class ItemFeatPF extends ItemPF {
   }
 
   get isActive() {
-    return !this.data.data.disabled;
+    return !this.system.disabled;
   }
 
   get subType() {
-    return this.data.data.featType;
+    return this.system.featType;
   }
 
   /** @inheritdoc */
   getLabels() {
     const labels = super.getLabels();
-    const { featType, abilityType } = this.data.data;
+    const { featType, abilityType } = this.system;
 
     labels.featType = PF1.featTypes[featType];
 

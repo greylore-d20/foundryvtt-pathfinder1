@@ -6,15 +6,15 @@ export class ItemContainerPF extends ItemPF {
     super.prepareBaseData();
 
     // HACK: Migration shim
-    if (typeof this.data.data.weight !== "object") {
-      this.data.data.weight = {
-        value: this.data.data.weight,
+    if (typeof this.system.weight !== "object") {
+      this.system.weight = {
+        value: this.system.weight,
       };
     }
 
     // Set base weight to weight of coins, which can be calculated without knowing contained items
-    const weightReduction = (100 - (this.data.data.weightReduction ?? 0)) / 100;
-    this.data.data.weight.currency = this._calculateCoinWeight(this.data) * weightReduction;
+    const weightReduction = (100 - (this.system.weightReduction ?? 0)) / 100;
+    this.system.weight.currency = this._calculateCoinWeight(this.system) * weightReduction;
   }
 
   /** @inheritDoc */
@@ -22,11 +22,11 @@ export class ItemContainerPF extends ItemPF {
     super.prepareWeight();
 
     /** @type {ItemWeightData} */
-    const weight = this.data.data.weight;
+    const weight = this.system.weight;
     // Quantity can be ignored for containers
     weight.contents = this.items.reduce(
-      (total, item) => total + item.data.data.weight.total,
-      this._calculateCoinWeight(this.data)
+      (total, item) => total + item.system.weight.total,
+      this._calculateCoinWeight(this.system)
     );
     weight.converted.contents = game.pf1.utils.convertWeight(weight.contents);
   }
@@ -36,7 +36,7 @@ export class ItemContainerPF extends ItemPF {
     const user = game.user;
     const itemOptions = { temporary: false, renderSheet: false };
 
-    let inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []);
+    let inventory = duplicate(getProperty(this, "system.inventoryItems") || []);
     // Iterate over data to create
     data = data instanceof Array ? data : [data];
     if (!(itemOptions.temporary || itemOptions.noHook)) {
@@ -65,7 +65,7 @@ export class ItemContainerPF extends ItemPF {
       });
     }
 
-    await this.update({ "data.inventoryItems": inventory });
+    await this.update({ "system.inventoryItems": inventory });
   }
 
   getContainerContent(itemId) {
@@ -141,7 +141,7 @@ export class ItemContainerPF extends ItemPF {
       return arr;
     }, []);
     if (!updates.length) return [];
-    let inventory = duplicate(this.data.data.inventoryItems).map((o) => {
+    let inventory = duplicate(this.data.inventoryItems).map((o) => {
       for (const u of updates) {
         if (u._id === o._id) return mergeObject(o, u);
       }
@@ -163,7 +163,7 @@ export class ItemContainerPF extends ItemPF {
 
   /** @inheritdoc */
   getTotalCurrency({ inLowestDenomination = false } = {}) {
-    const currency = this.data.data.currency;
+    const currency = this.data.currency;
     const total = currency.pp * 1000 + currency.gp * 100 + currency.sp * 10 + currency.cp;
     return inLowestDenomination ? total : total / 100;
   }

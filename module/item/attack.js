@@ -25,7 +25,7 @@ export const checkRequirements = async function (shared) {
     return ERR_REQUIREMENT.NO_ACTOR_PERM;
   }
 
-  if (this.type === "feat" && this.data.data.disabled) {
+  if (this.type === "feat" && this.data.disabled) {
     const msg = game.i18n.localize("PF1.ErrorFeatDisabled");
     console.warn(msg);
     ui.notifications.warn(msg);
@@ -137,7 +137,7 @@ export const alterRollData = function (shared, form = {}) {
     let powerAttackMultiplier = shared.rollData.item?.powerAttack?.multiplier;
     if (!powerAttackMultiplier) {
       powerAttackMultiplier = 1;
-      if (this.data.data.attackType === "natural") {
+      if (this.data.attackType === "natural") {
         if (shared.rollData.item?.primaryAttack) powerAttackMultiplier = shared.rollData.action.ability?.damageMult;
         else if (!shared.rollData.item?.primaryAttack) {
           powerAttackMultiplier = shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
@@ -154,7 +154,7 @@ export const alterRollData = function (shared, form = {}) {
     powerAttackBonus = Math.floor(powerAttackBonus * powerAttackMultiplier);
 
     // Get label
-    const label = ["rwak", "rsak"].includes(this.data.data.actionType)
+    const label = ["rwak", "rsak"].includes(this.data.actionType)
       ? game.i18n.localize("PF1.DeadlyAim")
       : game.i18n.localize("PF1.PowerAttack");
 
@@ -274,7 +274,7 @@ export const generateAttacks = function (shared, forceFullAttack = false) {
   if (action.usesAmmo) {
     const ammoId = this.getFlag("pf1", "defaultAmmo");
     const item = this.actor.items.get(ammoId);
-    const quantity = item?.data.data.quantity ?? 0;
+    const quantity = item?.data.quantity ?? 0;
     const abundant = item?.data.flags.pf1?.abundant;
     for (let a = 0; a < allAttacks.length; a++) {
       const atk = allAttacks[a];
@@ -310,7 +310,7 @@ export const subtractAmmo = function (shared, value = 1) {
 
   if (!isObjectEmpty(ammoUsage)) {
     const updateData = Object.entries(ammoUsage).reduce((cur, o) => {
-      const currentValue = this.actor.items.get(o[0]).data.data.quantity;
+      const currentValue = this.actor.items.get(o[0]).data.quantity;
       const obj = {
         _id: o[0],
         "data.quantity": currentValue - o[1],
@@ -779,7 +779,7 @@ export const getMessageData = async function (shared) {
 
   // Add CL notes
   if (this.data.type === "spell" && this.parent) {
-    const clNotes = this.parent.getContextNotesParsed(`spell.cl.${this.data.data.spellbook}`);
+    const clNotes = this.parent.getContextNotesParsed(`spell.cl.${this.data.spellbook}`);
 
     if (clNotes.length) {
       props.push({
@@ -852,11 +852,8 @@ export const getMessageData = async function (shared) {
   // Add spell info
   if (this.type === "spell" && this.parent != null) {
     // Spell failure
-    if (this.parent.spellFailure > 0 && this.data.data.components.somatic) {
-      const spellbook = getProperty(
-        this.parentActor.data,
-        `data.attributes.spells.spellbooks.${this.data.data.spellbook}`
-      );
+    if (this.parent.spellFailure > 0 && this.data.components.somatic) {
+      const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.spellbook}`);
       if (spellbook && spellbook.arcaneSpellFailure) {
         const roll = RollPF.safeRoll("1d100");
         shared.templateData.spellFailure = roll.total;
@@ -912,7 +909,7 @@ export const addGenericPropertyLabels = function (shared) {
 
   // Add actual cost
   const cost = shared.rollData.chargeCost;
-  if (cost && !this.data.data.atWill) {
+  if (cost && !this.data.atWill) {
     if (this.data.type === "spell" && this.useSpellPoints()) {
       properties.push(`${game.i18n.localize("PF1.SpellPointsCost")}: ${cost}`);
     } else {
@@ -921,17 +918,17 @@ export const addGenericPropertyLabels = function (shared) {
   }
 
   // Add info for broken state
-  if (this.data.data.broken) {
+  if (this.data.broken) {
     properties.push(game.i18n.localize("PF1.Broken"));
   }
 
   // Nonlethal
-  if (this.data.data.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
+  if (this.data.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
 
   // Add info for Power Attack to melee, Deadly Aim to ranged attacks
   if (shared.powerAttack) {
-    if (this.data.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
-    if (this.data.data.actionType === "mwak") properties.push(game.i18n.localize("PF1.PowerAttack"));
+    if (this.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
+    if (this.data.actionType === "mwak") properties.push(game.i18n.localize("PF1.PowerAttack"));
   }
 
   // Add info for Point-Blank shot

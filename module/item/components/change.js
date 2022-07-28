@@ -23,7 +23,7 @@ export class ItemChange {
     if (parent instanceof game.pf1.documents.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newChangeData = deepClone(parent.data.data.changes || []);
+      const newChangeData = deepClone(parent.data.changes || []);
       newChangeData.push(...data);
 
       // Update parent
@@ -123,8 +123,8 @@ export class ItemChange {
     if (this.parent != null) {
       data = this.preUpdate(data);
 
-      const rawChange = this.parent.data.data.changes.find((o) => o._id === this._id);
-      const idx = this.parent.data.data.changes.indexOf(rawChange);
+      const rawChange = this.parent.data.changes.find((o) => o._id === this._id);
+      const idx = this.parent.data.changes.indexOf(rawChange);
       if (idx >= 0) {
         data = Object.entries(data).reduce((cur, o) => {
           cur[`data.changes.${idx}.${o[0]}`] = o[1];
@@ -163,7 +163,7 @@ export class ItemChange {
         const modifierChanger = t != null ? t.match(/^data\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/) : null;
         const isModifierChanger = modifierChanger != null;
         const abilityTarget = modifierChanger?.[1];
-        const ability = isModifierChanger ? duplicate(actor.data.data.abilities[abilityTarget]) : null;
+        const ability = isModifierChanger ? duplicate(actor.data.abilities[abilityTarget]) : null;
 
         let value = 0;
         if (this.formula) {
@@ -200,10 +200,10 @@ export class ItemChange {
         switch (operator) {
           case "add":
             {
-              const base = getProperty(actor.data, t) ?? 0;
+              const base = getProperty(actor.system, t) ?? 0;
               if (typeof base === "number") {
                 if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
-                  setProperty(actor.data, t, base + value);
+                  setProperty(actor.system, t, base + value);
                   override[operator][this.modifier] = (prior ?? 0) + value;
 
                   if (this.parent && !addedSourceInfo) {
@@ -218,7 +218,7 @@ export class ItemChange {
                   }
                 } else {
                   const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
-                  setProperty(actor.data, t, base + diff);
+                  setProperty(actor.system, t, base + diff);
                   override[operator][this.modifier] = Math.max(prior ?? 0, value);
 
                   if (this.parent) {
@@ -252,7 +252,7 @@ export class ItemChange {
             break;
 
           case "set":
-            setProperty(actor.data, t, value);
+            setProperty(actor.system, t, value);
             override[operator][this.modifier] = value;
 
             if (this.parent && !addedSourceInfo) {
@@ -275,7 +275,7 @@ export class ItemChange {
             damage: ability.damage,
             penalty: ability.penalty,
           });
-          const newAbility = actor.data.data.abilities[abilityTarget];
+          const newAbility = actor.data.abilities[abilityTarget];
           const mod = getAbilityModifier(newAbility.total, {
             damage: newAbility.damage,
             penalty: newAbility.penalty,

@@ -3,7 +3,7 @@ export class ActiveEffectPF extends ActiveEffect {
     const statusId = this.data["flags.core.statusId"],
       origin = this.data.origin,
       updates = {};
-    if (statusId && this.parent?.data.data.attributes.conditions[statusId] === false) {
+    if (statusId && this.parent?.data.attributes.conditions[statusId] === false) {
       updates[`data.attributes.conditions.${statusId}`] = true;
       await this.parent.update(updates);
       const created = this.parent.effects.find((e) => e.getFlag("core", "statusId") === statusId);
@@ -11,7 +11,7 @@ export class ActiveEffectPF extends ActiveEffect {
     }
     if (origin) {
       const buffItem = this.parent.items.get(origin.split(".")[3]);
-      if (buffItem && !buffItem.data.data.active) await buffItem.setActive(true);
+      if (buffItem && !buffItem.data.active) await buffItem.setActive(true);
     }
     return super.create(data, context);
   }
@@ -23,7 +23,7 @@ export class ActiveEffectPF extends ActiveEffect {
       parentActor = this.parent,
       secondaryContext = statusId || origin ? { render: false } : {},
       returnVal = await super.delete(mergeObject(secondaryContext, context));
-    if (statusId && parentActor.data.data.attributes.conditions[statusId]) {
+    if (statusId && parentActor.data.attributes.conditions[statusId]) {
       const updates = { [`data.attributes.conditions.${statusId}`]: false };
       await parentActor.update(updates, context);
     } else if (origin) {

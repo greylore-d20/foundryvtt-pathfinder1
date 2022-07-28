@@ -54,7 +54,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // BAB iteratives
     const iteratives = game.settings.get("pf1", "displayIteratives");
-    const bab = data.data.attributes.bab.total;
+    const bab = data.attributes.bab.total;
     if (iteratives) {
       const iters = [bab];
       for (let i = bab - 5; i > 0; i -= 5) iters.push(i);
@@ -111,7 +111,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.items.get(itemId);
-    return item.update({ "data.preparation.prepared": !item.data.data.preparation.prepared });
+    return item.update({ "data.preparation.prepared": !item.data.preparation.prepared });
   }
 
   _onLevelUp(event) {
@@ -130,7 +130,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
   async _onConvertCurrency(event) {
     event.preventDefault();
-    const curr = duplicate(this.actor.data.data.currency);
+    const curr = duplicate(this.actor.data.currency);
     const convert = {
       cp: { into: "sp", each: 10 },
       sp: { into: "gp", each: 10 },

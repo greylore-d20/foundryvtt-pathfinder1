@@ -2,11 +2,11 @@ import { ItemPF } from "../entity.js";
 
 export class ItemLootPF extends ItemPF {
   get subType() {
-    return this.data.data.subType;
+    return this.system.subType;
   }
 
   get extraType() {
-    return this.data.data.extraType;
+    return this.system.extraType;
   }
 
   async _preUpdate(update, options, userId) {
@@ -14,11 +14,11 @@ export class ItemLootPF extends ItemPF {
 
     // Reset loot extra type when loot subtype is changed
     if (
-      update.data?.subType !== undefined &&
-      update.data?.subType !== this.data.data.subType &&
-      update.data?.extraType === undefined
+      update.system?.subType !== undefined &&
+      update.system?.subType !== this.data.subType &&
+      update.system?.extraType === undefined
     ) {
-      setProperty(update, "data.extraType", "");
+      setProperty(update, "system.extraType", "");
     }
   }
 
@@ -29,11 +29,11 @@ export class ItemLootPF extends ItemPF {
    * @override
    */
   async setActive(active, context) {
-    return this.update({ "data.equipped": active }, context);
+    return this.update({ "system.equipped": active }, context);
   }
 
   get isActive() {
-    if (this.subType === "gear") return this.data.data.equipped;
+    if (this.subType === "gear") return this.system.equipped;
     return true;
   }
 }

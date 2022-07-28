@@ -28,7 +28,7 @@ export class ItemAction {
     if (parent instanceof game.pf1.documents.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newActionData = deepClone(parent.data.data.actions || []);
+      const newActionData = deepClone(parent.data.actions || []);
       newActionData.push(...data);
 
       // Update parent
@@ -209,7 +209,7 @@ export class ItemAction {
   }
 
   get enhancementBonus() {
-    return this.data.enh?.value ?? this.item.data.data.enh;
+    return this.data.enh?.value ?? this.item.data.enh;
   }
 
   getRollData() {
@@ -347,8 +347,8 @@ export class ItemAction {
   }
 
   async delete() {
-    const actions = deepClone(this.item.data.data.actions);
-    const idx = this.item.data.data.actions.indexOf(this.data);
+    const actions = deepClone(this.item.data.actions);
+    const idx = this.item.data.actions.indexOf(this.data);
     actions.splice(idx, 1);
 
     // Close applications
@@ -363,7 +363,7 @@ export class ItemAction {
   }
 
   async update(updateData, options = {}) {
-    const idx = this.item.data.data.actions.indexOf(this.data);
+    const idx = this.item.data.actions.indexOf(this.data);
     const prevData = deepClone(this.data);
     const newUpdateData = flattenObject(mergeObject(prevData, expandObject(updateData)));
 
@@ -555,7 +555,7 @@ export class ItemAction {
     // Add change bonus
     const changes = this.item.getContextChanges(isRanged ? "rattack" : "mattack");
     // Add masterwork bonus to changes (if applicable)
-    if (["mwak", "rwak", "mcman", "rcman"].includes(this.data.actionType) && this.item.data.data.masterwork) {
+    if (["mwak", "rwak", "mcman", "rcman"].includes(this.data.actionType) && this.item.data.masterwork) {
       changes.push(
         new game.pf1.documentComponents.ItemChange({
           formula: "1",
@@ -604,7 +604,7 @@ export class ItemAction {
       parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
     }
     // Add secondary natural attack penalty
-    if (this.item.data.data.attackType === "natural" && primaryAttack === false) {
+    if (this.item.data.attackType === "natural" && primaryAttack === false) {
       const penalty = -5;
       parts.push(`${penalty}[${game.i18n.localize("PF1.SecondaryAttack")}]`);
     }
@@ -639,9 +639,9 @@ export class ItemAction {
 
     // Determine critical multiplier
     rollData.critMult = 1;
-    if (critical) rollData.critMult = this.data.data.ability.critMult;
+    if (critical) rollData.critMult = this.data.ability.critMult;
     // Determine ability multiplier
-    if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.ability.damageMult;
+    if (this.data.ability.damageMult != null) rollData.ablMult = this.data.ability.damageMult;
 
     // Create effect string
     const effectNotes = this.parent.getContextNotes("attacks.effect").reduce((cur, o) => {
@@ -655,7 +655,7 @@ export class ItemAction {
         });
       return cur;
     }, []);
-    effectNotes.push(...this.data.data.effectNotes);
+    effectNotes.push(...this.data.effectNotes);
     let effectContent = "";
     for (const fx of effectNotes) {
       if (fx.length > 0) {
@@ -678,7 +678,7 @@ export class ItemAction {
    * @param options
    */
   async rollFormula(options = {}) {
-    const itemData = this.data.data;
+    const itemData = this.data;
     if (!itemData.formula) {
       throw new Error(game.i18n.localize("PF1.ErrorNoFormula").format(this.name));
     }
@@ -801,7 +801,7 @@ export class ItemAction {
       });
 
       // Add broken penalty
-      if (this.item.data.data.broken) {
+      if (this.item.data.broken) {
         const label = game.i18n.localize("PF1.Broken");
         parts[0].extra.push(`-2[${label}]`);
       }

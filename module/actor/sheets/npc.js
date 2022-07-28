@@ -122,7 +122,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
    */
   _onRollHealthFormula(event) {
     event.preventDefault();
-    const formula = this.actor.data.data.attributes.hp.formula;
+    const formula = this.actor.data.attributes.hp.formula;
     if (!formula) return;
     const hp = RollPF.safeRoll(formula).total;
     AudioHelper.play({ src: CONFIG.sounds.dice });

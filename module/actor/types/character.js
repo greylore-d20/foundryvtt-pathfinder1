@@ -25,12 +25,12 @@ export class ActorCharacterPF extends ActorPF {
   prepareBaseData() {
     super.prepareBaseData();
 
-    const actorData = this.data.data;
+    const actorData = this.system;
 
     const maxExp = this.getLevelExp(actorData.details.level.value);
     actorData.details.xp.max = maxExp;
 
-    if (!hasProperty(this.data, "data.details.level.value")) return;
+    if (!hasProperty(this, "system.details.level.value")) return;
 
     // Experience bar
     const prior = this.getLevelExp(actorData.details.level.value - 1 || 0),
@@ -41,16 +41,14 @@ export class ActorCharacterPF extends ActorPF {
   }
 
   _updateExp(updateData) {
-    const xpData = updateData.data.details?.xp;
+    const xpData = updateData.details?.xp;
     if (xpData?.value == undefined) return;
 
     // Get total level
     const classes = this.items.filter((o) => o.type === "class");
-    const level = classes
-      .filter((o) => o.data.data.classType !== "mythic")
-      .reduce((cur, o) => cur + o.data.data.level, 0);
+    const level = classes.filter((o) => o.system.classType !== "mythic").reduce((cur, o) => cur + o.system.level, 0);
 
-    const oldData = this.data.data;
+    const oldData = this.system;
 
     // Translate update exp value to number
     let newExp = xpData.value,

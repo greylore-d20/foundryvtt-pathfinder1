@@ -15,8 +15,8 @@ export class ItemBasePF extends Item {
       super(data, context);
     } else if (data.type) {
       const subtyped = { pf1: { subtyped: true } };
-      const cls = CONFIG.Item.documentClasses[data.data?.type ?? data.type] ?? CONFIG.Item.documentClasses.default;
-      if (!cls) console.warn(data.data?.type, data.type);
+      const cls = CONFIG.Item.documentClasses[data?.type ?? data.type] ?? CONFIG.Item.documentClasses.default;
+      if (!cls) console.warn(data?.type, data.type);
       return new cls(data, { ...subtyped, ...context });
     }
   }

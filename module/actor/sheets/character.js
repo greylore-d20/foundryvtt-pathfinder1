@@ -54,7 +54,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // BAB iteratives
     const iteratives = game.settings.get("pf1", "displayIteratives");
-    const bab = data.attributes.bab.total;
+    const bab = data.rollData.attributes.bab.total;
     if (iteratives) {
       const iters = [bab];
       for (let i = bab - 5; i > 0; i -= 5) iters.push(i);
@@ -63,11 +63,11 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // Add level up buttons to classes
     if (
-      this.actor.data.type === "character" &&
+      this.actor.type === "character" &&
       game.settings.get("pf1", "experienceConfig").disableExperienceTracking !== true &&
       data.hasClasses
     ) {
-      const xp = getProperty(this.actor.data, "data.details.xp");
+      const xp = getProperty(this.actor, "system.details.xp");
       if (xp && xp.value >= xp.max) {
         data.levelUp = true;
       }

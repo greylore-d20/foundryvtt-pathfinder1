@@ -12,7 +12,7 @@
           {{itemType}}
         </li>
         <li>
-          {{#unless showUnidentifiedData}}{{lookup config.consumableTypes data.consumableType }}{{/unless}}
+          {{#unless showUnidentifiedData}}{{lookup config.consumableTypes system.consumableType }}{{/unless}}
         </li>
       </ul>
     </div>
@@ -43,7 +43,7 @@
       <div class="form-group stacked">
         {{#if owner}}
         <label class="checkbox">
-          <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
         </label>
         {{/if}}
       </div>
@@ -56,8 +56,8 @@
       {{#unless showUnidentifiedData}}
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
-        <select name="data.consumableType">
-          {{#select data.consumableType}}
+        <select name="system.consumableType">
+          {{#select system.consumableType}}
           {{#each config.consumableTypes as |name type|}}
           <option value="{{type}}">{{name}}</option>
           {{/each}}
@@ -67,7 +67,7 @@
 
       {{#if isGM}}
       <label class="checkbox">
-        <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
+        <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{localize "PF1.Identified"}}
       </label>
       {{/if}}
 

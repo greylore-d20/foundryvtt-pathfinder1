@@ -70,7 +70,7 @@ export const addLowLightVisionToLightConfig = function (app, html) {
   // Create checkbox HTML element
   let checkboxStr = `<div class="form-group"><label>${game.i18n.localize("PF1.DisableLightLowLightVision")}</label>`;
   checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
-  if (getProperty(obj.data, "flags.pf1.disableLowLight")) checkboxStr += " checked";
+  if (getProperty(obj, "flags.pf1.disableLowLight")) checkboxStr += " checked";
   checkboxStr += "/></div>";
   const checkbox = $(checkboxStr);
 
@@ -90,7 +90,7 @@ export const addLowLightVisionToTokenConfig = function (app, html) {
   // Create checkbox HTML element
   let checkboxStr = `<div class="form-group"><label>${game.i18n.localize("PF1.DisableLightLowLightVision")}</label>`;
   checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
-  if (getProperty(obj.data, "flags.pf1.disableLowLight")) checkboxStr += " checked";
+  if (getProperty(obj, "flags.pf1.disableLowLight")) checkboxStr += " checked";
   checkboxStr += "/></div>";
   const checkbox = $(checkboxStr);
 

@@ -74,8 +74,8 @@ let currentHighlight;
 const getAttackReach = function (token, attack, action) {
   const grid = canvas.grid;
   const gridSize = grid.size;
-  const tw = token.data.width;
-  const th = token.data.height;
+  const tw = token.document.width;
+  const th = token.document.height;
   const origin = {
     x: Math.floor((token.x + tw * gridSize - 0.5 * gridSize) / gridSize),
     y: Math.floor((token.y + th * gridSize - 0.5 * gridSize) / gridSize),
@@ -283,7 +283,7 @@ const getReachSquares = function (token, range, minRange = 0, addSquareFunction 
   if (!addSquareFunction) addSquareFunction = shouldAddReachSquare;
 
   // Initialize variables
-  const gridDist = canvas.scene.data.gridDistance;
+  const gridDist = canvas.scene.grid.distance;
   const gridSize = canvas.grid.size;
 
   // Determine token squares
@@ -356,7 +356,7 @@ const shouldAddReachSquare = function (
   tokenRect,
   options = { useReachRule: false }
 ) {
-  const gridDist = canvas.scene.data.gridDistance;
+  const gridDist = canvas.scene.grid.distance;
   const gridSize = canvas.grid.size;
   const p0 = { x: closestTokenSquare[0] * gridSize, y: closestTokenSquare[1] * gridSize };
   const p1 = { x: pos[0] * gridSize, y: pos[1] * gridSize };

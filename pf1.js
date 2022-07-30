@@ -664,7 +664,7 @@ Hooks.on("renderTokenHUD", (app, html, data) => {
 Hooks.on("updateActor", (actor, data, options, userId) => {
   // Call hook for toggling conditions
   {
-    const conditions = getProperty(data, "data.attributes.conditions") || {};
+    const conditions = data.system?.attributes?.conditions || {};
     for (const [k, v] of Object.entries(conditions)) {
       Hooks.callAll("pf1.toggleActorCondition", actor, k, v);
     }
@@ -723,10 +723,10 @@ Hooks.on("createItem", (item, options, userId) => {
   if (userId !== game.user.id) return;
 
   // Show buff if active
-  if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
+  if (item.type === "buff" && getProperty(item, "system.active") === true) {
     // Call hook
     if (actor) {
-      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, true);
+      Hooks.callAll("pf1.toggleActorBuff", actor, item, true);
     }
 
     // Execute script calls
@@ -734,21 +734,21 @@ Hooks.on("createItem", (item, options, userId) => {
   }
   // Simulate toggling a feature on
   if (item.type === "feat") {
-    const disabled = getProperty(item.data, "data.disabled");
+    const disabled = getProperty(item, "system.disabled");
     if (disabled === false) {
       item.executeScriptCalls("toggle", { state: true });
     }
   }
   // Simulate equipping items
   {
-    const equipped = getProperty(item.data, "data.equipped");
+    const equipped = getProperty(item, "system.equipped");
     if (equipped === true) {
       item.executeScriptCalls("equip", { equipped: true });
     }
   }
   // Quantity change
   {
-    const quantity = getProperty(item.data, "data.quantity");
+    const quantity = getProperty(item, "system.quantity");
     if (typeof quantity === "number" && quantity > 0) {
       item.executeScriptCalls("changeQuantity", { quantity: { previous: 0, new: quantity } });
     }
@@ -760,7 +760,7 @@ Hooks.on("preDeleteItem", (item, options, userId) => {
     // Remove linked children with item
     const _getChildren = function (item) {
       const result = [];
-      const itemLinks = getProperty(item.data, "data.links");
+      const itemLinks = getProperty(item, "system.links");
       if (itemLinks) {
         for (const [linkType, links] of Object.entries(itemLinks)) {
           for (const link of links) {
@@ -802,21 +802,21 @@ Hooks.on("deleteItem", async (item, options, userId) => {
 
   if (actor) {
     // Remove token effects for deleted buff
-    const isLinkedToken = getProperty(actor.data, "token.actorLink");
+    const isLinkedToken = getProperty(actor, "prototypeToken.actorLink");
     if (isLinkedToken) {
       const promises = [];
-      if (item.data.type === "buff" && item.data.active) {
-        actor.effects.find((e) => e.data.origin?.indexOf(item.data.id) > 0)?.delete();
+      if (item.type === "buff" && item.system.active) {
+        actor.effects.find((e) => e.data.origin?.indexOf(item.id) > 0)?.delete();
         const tokens = actor.getActiveTokens();
         for (const token of tokens) {
-          promises.push(token.toggleEffect(item.data.img, { active: false }));
+          promises.push(token.toggleEffect(item.img, { active: false }));
         }
       }
       await Promise.all(promises);
     }
 
     // Remove links
-    const itemLinks = getProperty(item.data, "data.links");
+    const itemLinks = getProperty(item, "system.links");
     if (itemLinks) {
       for (const [linkType, links] of Object.entries(itemLinks)) {
         for (const link of links) {
@@ -830,31 +830,31 @@ Hooks.on("deleteItem", async (item, options, userId) => {
     }
 
     // Call buff removal hook
-    if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
-      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, false);
+    if (item.type === "buff" && getProperty(item, "system.active") === true) {
+      Hooks.callAll("pf1.toggleActorBuff", actor, item, false);
     }
   }
 
-  if (item.type === "buff" && getProperty(item.data, "data.active") === true) {
+  if (item.type === "buff" && getProperty(item, "system.active") === true) {
     item.executeScriptCalls("toggle", { state: false });
   }
   // Simulate toggling a feature on
   if (item.type === "feat") {
-    const disabled = getProperty(item.data, "data.disabled");
+    const disabled = getProperty(item, "system.disabled");
     if (disabled === false) {
       item.executeScriptCalls("toggle", { state: false });
     }
   }
   // Simulate equipping items
   {
-    const equipped = getProperty(item.data, "data.equipped");
+    const equipped = getProperty(item, "system.equipped");
     if (equipped === true) {
       item.executeScriptCalls("equip", { equipped: false });
     }
   }
   // Quantity change
   {
-    const quantity = getProperty(item.data, "data.quantity");
+    const quantity = getProperty(item, "system.quantity");
     if (typeof quantity === "number" && quantity > 0) {
       item.executeScriptCalls("changeQuantity", { quantity: { previous: quantity, new: 0 } });
     }
@@ -867,9 +867,9 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
 
   if (actor) {
     // Toggle buff
-    if (item.type === "buff" && getProperty(changedData, "data.active") !== undefined) {
+    if (item.type === "buff" && getProperty(changedData, "system.active") !== undefined) {
       // Call hook
-      Hooks.callAll("pf1.toggleActorBuff", actor, item.data, getProperty(changedData, "data.active"));
+      Hooks.callAll("pf1.toggleActorBuff", actor, item, getProperty(changedData, "system.active"));
     }
   }
 });
@@ -917,9 +917,7 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   // Add vision inputs
   let object = app.object;
   // Prototype token
-  if (object instanceof Actor) object = object.data.token;
-  // Regular token
-  else if (object instanceof TokenDocument) object = object.data;
+  if (object instanceof Actor) object = object.prototypeToken;
 
   // Add static size checkbox
   let newHTML = `<div class="form-group"><label>${game.i18n.localize(

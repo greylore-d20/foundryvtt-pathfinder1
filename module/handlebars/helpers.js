@@ -25,6 +25,7 @@ export const registerHandlebarsHelpers = function () {
       secrets: owner,
       documents: true,
       rollData: rollData,
+      async: false,
     });
 
     // Construct the HTML
@@ -69,7 +70,7 @@ export const registerHandlebarsHelpers = function () {
 
     const actor = action.actor,
       item = action.parent,
-      actorData = actor?.data,
+      actorData = actor?.system,
       actionData = action.data;
 
     const rv = [];
@@ -152,13 +153,13 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("contextNotes", (actor, context, options) => {
     const rollData = options.data.root.rollData;
     const noteObjs = actor.getContextNotes(context);
-    return actor.formatContextNotes(noteObjs, rollData, { roll: false });
+    return actor.formatContextNotes(noteObjs, rollData);
   });
 
   Handlebars.registerHelper("enrich", (content, options) => {
     const owner = Boolean(options.hash["owner"]);
     const rollData = options.hash["rollData"];
-    return new Handlebars.SafeString(TextEditor.enrichHTML(content, { secrets: owner, rollData }));
+    return new Handlebars.SafeString(TextEditor.enrichHTML(content, { secrets: owner, rollData, async: false }));
   });
 
   Handlebars.registerHelper("json-string", (obj) => {

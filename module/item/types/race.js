@@ -11,8 +11,8 @@ export class ItemRacePF extends ItemPF {
 
       const context = {};
       // Ensure actor size is updated to match the race, but only if it's same as old race
-      const actorSize = actor.data.traits.size;
-      if (actorSize !== this.data.size && actor.race.data.size === actorSize) context._pf1SizeChanged = true;
+      const actorSize = actor.system.traits.size;
+      if (actorSize !== this.system.size && actor.race.system.size === actorSize) context._pf1SizeChanged = true;
     }
   }
 
@@ -22,10 +22,10 @@ export class ItemRacePF extends ItemPF {
     if (this.parent?.type === "basic") return;
 
     // Track size change
-    const newSize = getProperty(update, "data.size");
+    const newSize = getProperty(update, "system.size");
     if (this.parent && newSize !== undefined) {
-      const oldSize = this.parent.data.traits.size;
-      if (this.data.size === oldSize && newSize !== oldSize) {
+      const oldSize = this.parent.system.traits.size;
+      if (this.system.size === oldSize && newSize !== oldSize) {
         context._pf1SizeChanged = true;
       }
     }
@@ -37,7 +37,7 @@ export class ItemRacePF extends ItemPF {
     // Change actor size if the old size is same as old race size.
     if (this.parent && context._pf1SizeChanged) {
       if (this.parent.type === "basic") return;
-      this.parent.update({ "data.traits.size": this.data.size });
+      this.parent.update({ "system.traits.size": this.system.size });
     }
   }
 }

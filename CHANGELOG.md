@@ -792,8 +792,8 @@
 ### API
 
 - Added classes to all pf1 dialogs: `add-character-class, apply-hit-points, use-attack, roll-initiative, duplicate-initiative, get-number, get-actor, die-roll, damage-roll, create-consumable`
-- Removed unused `ActorPF.data.creatureType` (!225 by mkahvi) (#1001)
-- Added `ActorPF.data.traits.languages.total` getter to get all the actor's languages, regardless of source (!233 by mkahvi)
+- Removed unused `ActorPF.data.data.creatureType` (!225 by mkahvi) (#1001)
+- Added `ActorPF.data.data.traits.languages.total` getter to get all the actor's languages, regardless of source (!233 by mkahvi)
 - Added `.attack-notes`, `.effect-notes` and `.general-notes` classes to various notes in chat messages (!246 by mkahvi)
 - Uniform item size variables (!252 by mkahvi) (#733)
 

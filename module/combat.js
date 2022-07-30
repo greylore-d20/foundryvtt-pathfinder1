@@ -141,7 +141,7 @@ export class CombatPF extends Combat {
       if (dialogData.d20) d20 = dialogData.d20;
     }
     // Determine formula
-    if (!formula) formula = this._getInitiativeFormula(this.combatant.actor, d20);
+    if (!formula) formula = "1d20";
 
     if (stop) return this;
 
@@ -157,7 +157,7 @@ export class CombatPF extends Combat {
 
         // Produce an initiative roll for the Combatant
         const rollData = c.actor?.getRollData() ?? {};
-        formula = formula || this._getInitiativeFormula(c.actor ? c.actor : null);
+        formula = this._getInitiativeFormula(c.actor ? c.actor : null) || formula;
         rollData.bonus = bonus;
         if (bonus.length > 0 && i === 0) {
           formula += " + @bonus";

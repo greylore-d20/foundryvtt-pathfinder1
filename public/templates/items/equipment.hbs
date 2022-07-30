@@ -48,7 +48,7 @@
       <div class="form-group stacked">
         {{#if owner}}
         <label class="checkbox">
-          <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
         </label>
         {{/if}}
       </div>
@@ -63,8 +63,8 @@
       <div class="form-group">
         <label>{{localize "PF1.Category"}}</label>
         <div class="form-fields">
-          <select name="data.equipmentType">
-            {{#select data.equipmentType}}
+          <select name="system.equipmentType">
+            {{#select system.equipmentType}}
             {{#each equipmentCategories.types as |name type|}}
             <option value="{{type}}">{{name}}</option>
             {{/each}}
@@ -77,8 +77,8 @@
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
         <div class="form-fields">
-          <select name="data.equipmentSubtype">
-            {{#select data.equipmentSubtype}}
+          <select name="system.equipmentSubtype">
+            {{#select system.equipmentSubtype}}
             {{#each equipmentCategories.subTypes as |name type|}}
             <option value="{{type}}">{{name}}</option>
             {{/each}}
@@ -92,8 +92,8 @@
       <div class="form-group">
         <label>{{localize "PF1.Slot"}}</label>
         <div class="form-fields">
-          <select name="data.slot">
-            {{#select data.slot}}
+          <select name="system.slot">
+            {{#select system.slot}}
             {{#each equipmentSlots as |name type|}}
             <option value="{{type}}">{{name}}</option>
             {{/each}}
@@ -102,7 +102,7 @@
         </div>
       </div>
       {{else}}
-      <input type="hidden" name="data.slot" value="{{data.equipmentType}}" />
+      <input type="hidden" name="system.slot" value="{{system.equipmentType}}" />
       {{/if}}
 
       {{!-- Equipment Size --}}
@@ -112,21 +112,21 @@
       <div class="form-group stacked">
         <label>{{localize "PF1.EquipmentStatus"}}</label>
         <label class="checkbox">
-          <input type="checkbox" name="data.equipped" {{checked data.equipped}}/> {{localize "PF1.Equipped"}}
+          <input type="checkbox" name="system.equipped" {{checked system.equipped}}/> {{localize "PF1.Equipped"}}
         </label>
         {{#if isGM}}
         <label class="checkbox">
-          <input type="checkbox" name="data.identified" {{checked data.identified}}/> {{localize "PF1.Identified"}}
+          <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{localize "PF1.Identified"}}
         </label>
         {{/if}}
         <label class="checkbox">
-          <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> {{localize "PF1.Masterwork"}}
+          <input type="checkbox" name="system.masterwork" {{checked system.masterwork}}/> {{localize "PF1.Masterwork"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="data.broken" {{checked data.broken}}/> {{localize "PF1.Broken"}}
+          <input type="checkbox" name="system.broken" {{checked system.broken}}/> {{localize "PF1.Broken"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="data.nonlethal" {{checked data.nonlethal}}/> {{localize "PF1.Nonlethal"}}
+          <input type="checkbox" name="system.nonlethal" {{checked system.nonlethal}}/> {{localize "PF1.Nonlethal"}}
         </label>
     </div>
 
@@ -134,7 +134,7 @@
       <div class="form-group">
         <label>{{localize "PF1.ArmorClass"}}</label>
         <div class="form-fields">
-          <input type="text" name="data.armor.value" value="{{data.armor.value}}" data-dtype="Number"/>
+          <input type="text" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number"/>
         </div>
       </div>
 
@@ -143,7 +143,7 @@
       <div class="form-group">
         <label>{{localize "PF1.EnhancementBonus"}}</label>
         <div class="form-fields">
-          <input type="text" name="data.armor.enh" value="{{data.armor.enh}}" data-dtype="Number"/>
+          <input type="text" name="system.armor.enh" value="{{system.armor.enh}}" data-dtype="Number"/>
         </div>
       </div>
       {{/unless}}
@@ -153,7 +153,7 @@
       <div class="form-group">
         <label>{{localize "PF1.MaxDexterityModifier"}}</label>
         <div class="form-fields">
-          <input type="text" name="data.armor.dex" value="{{data.armor.dex}}" placeholder="{{localize "PF1.Unlimited"}}" data-dtype="Number"/>
+          <input type="text" name="system.armor.dex" value="{{system.armor.dex}}" placeholder="{{localize "PF1.Unlimited"}}" data-dtype="Number"/>
         </div>
       </div>
 
@@ -161,7 +161,7 @@
       <div class="form-group">
         <label>{{localize "PF1.ArmorCheckPenalty"}}</label>
         <div class="form-fields">
-          <input type="text" name="data.armor.acp" value="{{data.armor.acp}}" data-dtype="Number" placeholder="0"/>
+          <input type="text" name="system.armor.acp" value="{{system.armor.acp}}" data-dtype="Number" placeholder="0"/>
         </div>
       </div>
 
@@ -169,7 +169,7 @@
       <div class="form-group">
         <label>{{localize "PF1.ArcaneSpellFailure"}}</label>
         <div class="form-fields">
-          <input type="text" name="data.spellFailure" value="{{data.spellFailure}}" data-dtype="Number" placeholder="0"/>
+          <input type="text" name="system.spellFailure" value="{{system.spellFailure}}" data-dtype="Number" placeholder="0"/>
         </div>
       </div>
 

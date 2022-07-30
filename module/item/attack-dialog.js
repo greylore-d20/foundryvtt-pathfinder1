@@ -17,8 +17,8 @@ export class AttackDialog extends Application {
       sl: this.rollData.sl ?? 0,
     };
     this.flags = {
-      "primary-attack": this.object.item.data.primaryAttack === true,
-      "cl-check": this.object.data.clCheck === true,
+      "primary-attack": this.object.item.system.primaryAttack === true,
+      "cl-check": this.object.clCheck === true,
       "measure-template": true,
     };
     this.attributes = {
@@ -32,7 +32,7 @@ export class AttackDialog extends Application {
       held: this.rollData.item?.held ?? "normal",
     };
     this.conditionals = {};
-    for (const [idx, cData] of Object.entries(this.object.data.conditionals ?? {})) {
+    for (const [idx, cData] of Object.entries(this.object.conditionals ?? {})) {
       this.conditionals[`conditional.${idx}`] = cData.default === true;
     }
 
@@ -79,8 +79,8 @@ export class AttackDialog extends Application {
       hasAttack: this.object.hasAttack,
       hasDamage: this.object.hasDamage,
       hasDamageAbility: this.object.data.ability?.damage ?? "" !== "",
-      isNaturalAttack: this.object.item.data.attackType === "natural",
-      isWeaponAttack: this.object.item.data.attackType === "weapon",
+      isNaturalAttack: this.object.item.system.attackType === "natural",
+      isWeaponAttack: this.object.item.system.attackType === "weapon",
       isMeleeWeaponAttackAction: this.object.data.actionType === "mwak",
       isRangedWeaponAttackAction: this.object.data.actionType === "rwak",
       isAttack: this.object.item.type === "attack",
@@ -103,15 +103,15 @@ export class AttackDialog extends Application {
 
     return ammo.map((o) => {
       return {
-        data: o.data,
+        data: o.toObject(),
         isDefault: this.object.item.getFlag("pf1", "defaultAmmo") === o.id,
       };
     });
   }
 
   _filterAmmo(item) {
-    if (!(item.type === "loot" && item.data.subType === "ammo")) return false;
-    if (item.data.quantity <= 0) return false;
+    if (!(item.type === "loot" && item.system.subType === "ammo")) return false;
+    if (item.system.quantity <= 0) return false;
 
     const weaponAmmoType = this.object.data.ammoType;
     const ammoType = item.extraType;
@@ -317,8 +317,8 @@ export class AttackDialog extends Application {
   // Initializes ammo usage, which help avoid being able to overuse ammo
   initAmmoUsage() {
     this.ammoUsage = this.getAmmo().reduce((cur, o) => {
-      cur[o.data._id] = {
-        quantity: o.data.quantity,
+      cur[o.system._id] = {
+        quantity: o.system.quantity,
         used: 0,
       };
 
@@ -332,7 +332,7 @@ export class AttackDialog extends Application {
         id: o.id,
         label: o.label,
         attackBonus: o.attackBonus,
-        ammo: o.ammo?.data._id,
+        ammo: o.ammo?.system._id,
       };
     });
   }
@@ -341,9 +341,9 @@ export class AttackDialog extends Application {
     if (!this.object.data.usesAmmo) return;
 
     const atk = this.attacks[attackIndex];
-    const curAmmo = atk.ammo?.data._id;
+    const curAmmo = atk.ammo?.system._id;
     const ammoItem = ammoId ? this.object.actor.items.get(ammoId) : null;
-    const abundant = ammoItem?.data.flags?.pf1?.abundant ?? false;
+    const abundant = ammoItem?.system.flags?.pf1?.abundant ?? false;
 
     // Check if ammo exists
     if (ammoId && this.ammoUsage[ammoId] == null) ammoId = null;
@@ -360,7 +360,7 @@ export class AttackDialog extends Application {
     // Don't allow overusage
     if (!abundant && this.ammoUsage[ammoId].used >= this.ammoUsage[ammoId].quantity) return;
 
-    atk.ammo = this.getAmmo().find((o) => o.data._id === ammoId);
+    atk.ammo = this.getAmmo().find((o) => o.system._id === ammoId);
     // Add to ammo usage tracker
     if (curAmmo != null) {
       this.ammoUsage[curAmmo].used--;

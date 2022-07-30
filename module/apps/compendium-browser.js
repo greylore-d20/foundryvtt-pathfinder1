@@ -3,13 +3,13 @@ import { ItemPF } from "../item/entity.js";
 import { SemanticVersion } from "../semver.js";
 
 const NEED_NEW_VERSION = {
-  spells: "0.81.1",
-  items: "0.81.1",
-  bestiary: "0.81.1",
-  feats: "0.81.1",
-  classes: "0.81.1",
-  races: "0.81.1",
-  buffs: "0.81.1",
+  spells: "0.82.0",
+  items: "0.82.0",
+  bestiary: "0.82.0",
+  feats: "0.82.0",
+  classes: "0.82.0",
+  races: "0.82.0",
+  buffs: "0.82.0",
 };
 
 export const COMPENDIUM_TYPES = {
@@ -97,7 +97,7 @@ export class CompendiumBrowser extends Application {
         game.settings.set(
           "pf1",
           "compendiumSaveVersions",
-          mergeObject(cacheVersions, { [this.type]: game.system.data.version })
+          foundry.utils.mergeObject(cacheVersions, { [this.type]: game.system.version })
         );
       } else {
         const settings = game.settings.get("pf1", "compendiumItems");
@@ -109,7 +109,7 @@ export class CompendiumBrowser extends Application {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       template: "systems/pf1/templates/apps/compendium-browser.hbs",
       classes: ["pf1", "app"],
       width: 720,
@@ -380,7 +380,7 @@ export class CompendiumBrowser extends Application {
     for (const i of items) {
       if (!this._filterItems(i)) continue;
       this.packs[p.collection] = p;
-      this.items.push(this._mapEntry(p, i.data));
+      this.items.push(this._mapEntry(p, i));
     }
     this._onProgress(progress);
   }
@@ -507,27 +507,27 @@ export class CompendiumBrowser extends Application {
       },
     };
 
-    result.item.tags = (item.data.tags || []).reduce((cur, o) => {
+    result.item.tags = (item.system.tags || []).reduce((cur, o) => {
       this.extraFilters.tags[o[0]] = true;
       cur.push(o[0]);
       return cur;
     }, []);
 
     result.item.assocations = {
-      class: (item.data.featType === "classFeat" ? getProperty(item.data, "associations.classes") || [] : []).reduce(
-        (cur, o) => {
-          this.extraFilters.associations.class[o[0]] = true;
-          cur.push(o[0]);
-          return cur;
-        },
-        []
-      ),
+      class: (item.system.featType === "classFeat"
+        ? getProperty(item.system, "associations.classes") || []
+        : []
+      ).reduce((cur, o) => {
+        this.extraFilters.associations.class[o[0]] = true;
+        cur.push(o[0]);
+        return cur;
+      }, []),
     };
   }
 
   _mapBestiary(result, item) {
     this.extraFilters = this.extraFilters || {
-      "data.details.cr.total": {},
+      "system.details.cr.total": {},
       subTypes: {},
     };
     result.item.creatureType = "";
@@ -535,15 +535,16 @@ export class CompendiumBrowser extends Application {
 
     // Add CR filters
     if (item.type === "npc") {
-      const cr = getProperty(item, "data.details.cr.total");
-      if (cr && !this.extraFilters["data.details.cr.total"][cr]) this.extraFilters["data.details.cr.total"][cr] = true;
+      const cr = getProperty(item, "system.details.cr.total");
+      if (cr && !this.extraFilters["system.details.cr.total"][cr])
+        this.extraFilters["system.details.cr.total"][cr] = true;
     }
     // Get creature (sub)type
     if (item.items) {
       const race = item.items.filter((o) => o.type === "race")[0];
       if (race != null) {
-        result.item.creatureType = race.data.creatureType;
-        result.item.subTypes = race.data.subTypes?.map((o) => {
+        result.item.creatureType = race.system.creatureType;
+        result.item.subTypes = race.system.subTypes?.map((o) => {
           this.extraFilters.subTypes[o[0]] = true;
           return o[0];
         });
@@ -560,7 +561,7 @@ export class CompendiumBrowser extends Application {
   _mapItems(result, item) {
     this.extraFilters = this.extraFilters || {};
 
-    result.item.weaponProps = Object.entries(getProperty(item.data, "data.properties") || []).reduce((cur, o) => {
+    result.item.weaponProps = Object.entries(getProperty(item.system, "system.properties") || []).reduce((cur, o) => {
       if (o[1]) cur.push(o[0]);
       return cur;
     }, []);
@@ -573,7 +574,7 @@ export class CompendiumBrowser extends Application {
       "learnedAt.subDomain": [],
       "learnedAt.elementalSchool": [],
       "learnedAt.bloodline": [],
-      "data.subschool": [],
+      "system.subschool": [],
       spellTypes: [],
     };
 
@@ -581,54 +582,54 @@ export class CompendiumBrowser extends Application {
 
     // Add class/domain/etc filters
     result.item.learnedAt = {
-      class: (getProperty(item, "data.learnedAt.class") || []).reduce((cur, o) => {
+      class: (getProperty(item, "system.learnedAt.class") || []).reduce((cur, o) => {
         this.extraFilters["learnedAt.class"][o[0]] = true;
         if (!result.item.allSpellLevels.includes(o[1])) result.item.allSpellLevels.push(o[1]);
         cur.push(o[0]);
         return cur;
       }, []),
-      domain: (getProperty(item, "data.learnedAt.domain") || []).reduce((cur, o) => {
+      domain: (getProperty(item, "system.learnedAt.domain") || []).reduce((cur, o) => {
         this.extraFilters["learnedAt.domain"][o[0]] = true;
         if (!result.item.allSpellLevels.includes(o[1])) result.item.allSpellLevels.push(o[1]);
         cur.push(o[0]);
         return cur;
       }, []),
-      subDomain: (getProperty(item, "data.learnedAt.subDomain") || []).reduce((cur, o) => {
+      subDomain: (getProperty(item, "system.learnedAt.subDomain") || []).reduce((cur, o) => {
         this.extraFilters["learnedAt.subDomain"][o[0]] = true;
         if (!result.item.allSpellLevels.includes(o[1])) result.item.allSpellLevels.push(o[1]);
         cur.push(o[0]);
         return cur;
       }, []),
-      elementalSchool: (getProperty(item, "data.learnedAt.elementalSchool") || []).reduce((cur, o) => {
+      elementalSchool: (getProperty(item, "system.learnedAt.elementalSchool") || []).reduce((cur, o) => {
         this.extraFilters["learnedAt.elementalSchool"][o[0]] = true;
         if (!result.item.allSpellLevels.includes(o[1])) result.item.allSpellLevels.push(o[1]);
         cur.push(o[0]);
         return cur;
       }, []),
-      bloodline: (getProperty(item, "data.learnedAt.bloodline") || []).reduce((cur, o) => {
+      bloodline: (getProperty(item, "system.learnedAt.bloodline") || []).reduce((cur, o) => {
         this.extraFilters["learnedAt.bloodline"][o[0]] = true;
         if (!result.item.allSpellLevels.includes(o[1])) result.item.allSpellLevels.push(o[1]);
         cur.push(o[0]);
         return cur;
       }, []),
       spellLevel: {
-        class: (getProperty(item, "data.learnedAt.class") || []).reduce((cur, o) => {
+        class: (getProperty(item, "system.learnedAt.class") || []).reduce((cur, o) => {
           cur[o[0]] = o[1];
           return cur;
         }, {}),
-        domain: (getProperty(item, "data.learnedAt.domain") || []).reduce((cur, o) => {
+        domain: (getProperty(item, "system.learnedAt.domain") || []).reduce((cur, o) => {
           cur[o[0]] = o[1];
           return cur;
         }, {}),
-        subDomain: (getProperty(item, "data.learnedAt.subDomain") || []).reduce((cur, o) => {
+        subDomain: (getProperty(item, "system.learnedAt.subDomain") || []).reduce((cur, o) => {
           cur[o[0]] = o[1];
           return cur;
         }, {}),
-        // "elementalSchool": (getProperty(item, "data.learnedAt.elementalSchool") || []).reduce((cur, o) => {
+        // "elementalSchool": (getProperty(item, "system.learnedAt.elementalSchool") || []).reduce((cur, o) => {
         //   cur[o[0]] = o[1];
         //   return cur;
         // }, {}),
-        bloodline: (getProperty(item, "data.learnedAt.bloodline") || []).reduce((cur, o) => {
+        bloodline: (getProperty(item, "system.learnedAt.bloodline") || []).reduce((cur, o) => {
           cur[o[0]] = o[1];
           return cur;
         }, {}),
@@ -637,12 +638,12 @@ export class CompendiumBrowser extends Application {
 
     // Add subschools
     {
-      const subschool = item.data.subschool;
-      if (subschool) this.extraFilters["data.subschool"][subschool] = true;
+      const subschool = item.system.subschool;
+      if (subschool) this.extraFilters["system.subschool"][subschool] = true;
     }
     // Add spell types
     {
-      const spellTypes = item.data.types ? item.data.types.split(CONFIG.PF1.re.traitSeparator) : [];
+      const spellTypes = item.system.types ? item.system.types.split(CONFIG.PF1.re.traitSeparator) : [];
       result.item.spellTypes = spellTypes;
       for (const st of spellTypes) {
         this.extraFilters["spellTypes"][st] = true;
@@ -652,19 +653,19 @@ export class CompendiumBrowser extends Application {
 
   _mapClasses(result, item) {
     this.extraFilters = this.extraFilters || {
-      "data.hd": {},
-      "data.skillsPerLevel": {},
+      "system.hd": {},
+      "system.skillsPerLevel": {},
     };
 
     // Add HD
     {
-      const hd = item.data.hd;
-      if (hd) this.extraFilters["data.hd"][hd] = true;
+      const hd = item.system.hd;
+      if (hd) this.extraFilters["system.hd"][hd] = true;
     }
     // Add skills per level
     {
-      const s = item.data.skillsPerLevel;
-      if (s) this.extraFilters["data.skillsPerLevel"][s] = true;
+      const s = item.system.skillsPerLevel;
+      if (s) this.extraFilters["system.skillsPerLevel"][s] = true;
     }
   }
 
@@ -675,7 +676,7 @@ export class CompendiumBrowser extends Application {
     result.item.subTypes = [];
 
     // Get subtypes
-    result.item.subTypes = item.data.subTypes.map((o) => {
+    result.item.subTypes = item.system.subTypes.map((o) => {
       this.extraFilters.subTypes[o[0]] = true;
       return o[0];
     });
@@ -687,7 +688,7 @@ export class CompendiumBrowser extends Application {
     };
 
     // Get types
-    this.extraFilters.types[item.data.buffType] = true;
+    this.extraFilters.types[item.system.buffType] = true;
   }
 
   _mapEntry(pack, item) {
@@ -698,10 +699,11 @@ export class CompendiumBrowser extends Application {
       },
       item: {
         _id: item._id,
+        uuid: item.uuid,
         name: item.name,
         type: item.type,
         img: item.img,
-        data: item.data,
+        system: item.system,
         pack: pack.collection,
       },
     };
@@ -769,7 +771,7 @@ export class CompendiumBrowser extends Application {
     this.filters.push(
       ...[
         {
-          path: "data.school",
+          path: "system.school",
           label: game.i18n.localize("PF1.SpellSchool"),
           items: naturalSort(
             Object.entries(CONFIG.PF1.spellSchools).reduce((cur, o) => {
@@ -780,10 +782,10 @@ export class CompendiumBrowser extends Application {
           ),
         },
         {
-          path: "data.subschool",
+          path: "system.subschool",
           label: game.i18n.localize("PF1.SubSchool"),
           items: naturalSort(
-            Object.keys(this.extraFilters["data.subschool"]).reduce((cur, o) => {
+            Object.keys(this.extraFilters["system.subschool"]).reduce((cur, o) => {
               cur.push({ key: o, name: o });
               return cur;
             }, []),
@@ -879,7 +881,7 @@ export class CompendiumBrowser extends Application {
           ],
         },
         {
-          path: "data.weaponType",
+          path: "system.weaponType",
           label: game.i18n.localize("PF1.WeaponType"),
           items: Object.entries(CONFIG.PF1.weaponTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1]._label });
@@ -887,7 +889,7 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "data.weaponSubtype",
+          path: "system.weaponSubtype",
           label: game.i18n.localize("PF1.WeaponSubtype"),
           items: Object.values(CONFIG.PF1.weaponTypes).reduce((cur, o) => {
             cur = cur.concat(
@@ -912,7 +914,7 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "data.equipmentType",
+          path: "system.equipmentType",
           label: game.i18n.localize("PF1.EquipmentType"),
           items: Object.entries(CONFIG.PF1.equipmentTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1]._label });
@@ -920,7 +922,7 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "data.equipmentSubtype",
+          path: "system.equipmentSubtype",
           label: game.i18n.localize("PF1.EquipmentSubtype"),
           items: Object.values(CONFIG.PF1.equipmentTypes).reduce((cur, o) => {
             cur = cur.concat(
@@ -937,7 +939,7 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "data.slot",
+          path: "system.slot",
           label: game.i18n.localize("PF1.Slot"),
           items: Object.values(CONFIG.PF1.equipmentSlots).reduce((cur, o) => {
             cur = cur.concat(
@@ -954,7 +956,7 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "data.consumableType",
+          path: "system.consumableType",
           label: game.i18n.localize("PF1.ConsumableType"),
           items: Object.entries(CONFIG.PF1.consumableTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -962,7 +964,7 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "data.subType",
+          path: "system.subType",
           label: game.i18n.localize("PF1.Misc"),
           items: Object.entries(CONFIG.PF1.lootTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -977,10 +979,10 @@ export class CompendiumBrowser extends Application {
     this.filters.push(
       ...[
         {
-          path: "data.details.cr.total",
+          path: "system.details.cr.total",
           label: "CR",
           items: naturalSort(
-            Object.keys(this.extraFilters["data.details.cr.total"]).reduce((cur, o) => {
+            Object.keys(this.extraFilters["system.details.cr.total"]).reduce((cur, o) => {
               cur.push({ key: o, name: CR.fromNumber(o) });
               return cur;
             }, []),
@@ -1017,7 +1019,7 @@ export class CompendiumBrowser extends Application {
     this.filters.push(
       ...[
         {
-          path: "data.featType",
+          path: "system.featType",
           label: game.i18n.localize("PF1.Type"),
           items: Object.entries(CONFIG.PF1.featTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -1054,7 +1056,7 @@ export class CompendiumBrowser extends Application {
     this.filters.push(
       ...[
         {
-          path: "data.classType",
+          path: "system.classType",
           label: game.i18n.localize("PF1.ClassType"),
           items: Object.entries(CONFIG.PF1.classTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -1062,15 +1064,15 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "data.hd",
+          path: "system.hd",
           label: game.i18n.localize("PF1.HitDie"),
-          items: Object.keys(this.extraFilters["data.hd"]).reduce((cur, o) => {
+          items: Object.keys(this.extraFilters["system.hd"]).reduce((cur, o) => {
             cur.push({ key: o.toString(), name: o.toString() });
             return cur;
           }, []),
         },
         {
-          path: "data.bab",
+          path: "system.bab",
           label: game.i18n.localize("PF1.BAB"),
           items: Object.entries(CONFIG.PF1.classBAB).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -1078,15 +1080,15 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "data.skillsPerLevel",
+          path: "system.skillsPerLevel",
           label: game.i18n.localize("PF1.SkillsPerLevel"),
-          items: Object.keys(this.extraFilters["data.skillsPerLevel"]).reduce((cur, o) => {
+          items: Object.keys(this.extraFilters["system.skillsPerLevel"]).reduce((cur, o) => {
             cur.push({ key: o.toString(), name: o.toString() });
             return cur;
           }, []),
         },
         {
-          path: "data.savingThrows.fort.value",
+          path: "system.savingThrows.fort.value",
           label: game.i18n.localize("PF1.SavingThrowFort"),
           items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -1094,7 +1096,7 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "data.savingThrows.ref.value",
+          path: "system.savingThrows.ref.value",
           label: game.i18n.localize("PF1.SavingThrowRef"),
           items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -1102,7 +1104,7 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "data.savingThrows.will.value",
+          path: "system.savingThrows.will.value",
           label: game.i18n.localize("PF1.SavingThrowWill"),
           items: Object.entries(CONFIG.PF1.classSavingThrows).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -1117,7 +1119,7 @@ export class CompendiumBrowser extends Application {
     this.filters.push(
       ...[
         {
-          path: "data.creatureType",
+          path: "system.creatureType",
           label: game.i18n.localize("PF1.CreatureType"),
           items: naturalSort(
             Object.entries(CONFIG.PF1.creatureTypes).reduce((cur, o) => {
@@ -1146,7 +1148,7 @@ export class CompendiumBrowser extends Application {
     this.filters.push(
       ...[
         {
-          path: "data.buffType",
+          path: "system.buffType",
           label: game.i18n.localize("PF1.Type"),
           items: naturalSort(
             Object.entries(CONFIG.PF1.buffTypes).reduce((cur, o) => {
@@ -1229,8 +1231,7 @@ export class CompendiumBrowser extends Application {
       "text/plain",
       JSON.stringify({
         type: pack.documentClass.documentName,
-        pack: pack.collection,
-        id: li.getAttribute("data-entry-id"),
+        uuid: li.getAttribute("data-uuid"),
       })
     );
   }
@@ -1389,53 +1390,53 @@ export class CompendiumBrowser extends Application {
   getSaveEntries() {
     const result = [];
 
-    const propKeys = ["_id", "name", "img"];
+    const propKeys = ["_id", "name", "img", "uuid"];
 
     switch (this.type) {
       case "spells":
         propKeys.push(
-          "data.learnedAt.class",
-          "data.learnedAt.domain",
-          "data.learnedAt.subDomain",
-          "data.learnedAt.elementalSchool",
-          "data.learnedAt.bloodline",
-          "data.school",
-          "data.subschool",
-          "data.types"
+          "system.learnedAt.class",
+          "system.learnedAt.domain",
+          "system.learnedAt.subDomain",
+          "system.learnedAt.elementalSchool",
+          "system.learnedAt.bloodline",
+          "system.school",
+          "system.subschool",
+          "system.types"
         );
         break;
       case "items":
         propKeys.push(
           "type",
-          "data.properties",
-          "data.weaponType",
-          "data.weaponSubtype",
-          "data.equipmentType",
-          "data.equipmentSubtype",
-          "data.slot",
-          "data.consumableType",
-          "data.subType"
+          "system.properties",
+          "system.weaponType",
+          "system.weaponSubtype",
+          "system.equipmentType",
+          "system.equipmentSubtype",
+          "system.slot",
+          "system.consumableType",
+          "system.subType"
         );
         break;
       case "feats":
-        propKeys.push("data.featType", "data.associations.classes", "data.tags");
+        propKeys.push("system.featType", "system.associations.classes", "system.tags");
         break;
       case "bestiary":
-        propKeys.push("data.details.cr.total");
+        propKeys.push("system.details.cr.total");
         break;
       case "classes":
         propKeys.push(
-          "data.classType",
-          "data.bab",
-          "data.hd",
-          "data.skillsPerLevel",
-          "data.savingThrows.fort.value",
-          "data.savingThrows.ref.value",
-          "data.savingThrows.will.value"
+          "system.classType",
+          "system.bab",
+          "system.hd",
+          "system.skillsPerLevel",
+          "system.savingThrows.fort.value",
+          "system.savingThrows.ref.value",
+          "system.savingThrows.will.value"
         );
         break;
       case "races":
-        propKeys.push("data.creatureType", "data.subTypes");
+        propKeys.push("system.creatureType", "system.subTypes");
         break;
     }
 

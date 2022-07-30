@@ -7,8 +7,8 @@ export class ItemClassPF extends ItemPF {
     await super._preUpdate(update, context, userId);
 
     // Set level marker
-    if (hasProperty(update, "data.level")) {
-      this._prevLevel = this.data.level;
+    if (hasProperty(update, "system.level")) {
+      this._prevLevel = this.system.level;
     }
   }
 
@@ -16,7 +16,7 @@ export class ItemClassPF extends ItemPF {
     await super.update(data, context);
 
     // Update class
-    const newLevel = data["data.level"] || getProperty(data, "data.level");
+    const newLevel = data["system.level"] || getProperty(data, "system.level");
     if (newLevel !== undefined && this.parent) {
       const prevLevel = this._prevLevel;
       if (prevLevel !== undefined) {
@@ -27,7 +27,7 @@ export class ItemClassPF extends ItemPF {
   }
 
   async delete(context = {}) {
-    await this._onLevelChange(this.data.level, 0);
+    await this._onLevelChange(this.system.level, 0);
     return super.delete(context);
   }
 
@@ -37,7 +37,7 @@ export class ItemClassPF extends ItemPF {
 
     // Add items associated to this class
     if (newLevel > curLevel) {
-      const classAssociations = (getProperty(this.data, "data.links.classAssociations") || []).filter((o, index) => {
+      const classAssociations = (getProperty(this, "system.links.classAssociations") || []).filter((o, index) => {
         o.__index = index;
         return o.level > curLevel && o.level <= newLevel;
       });
@@ -73,14 +73,14 @@ export class ItemClassPF extends ItemPF {
         );
 
         const updateData = [];
-        const classUpdateData = { _id: this.data._id };
+        const classUpdateData = { _id: this.id };
         updateData.push(classUpdateData);
         for (const i of items) {
           const co = i.getFlag("pf1", "__co");
           // Set class association flags
           classUpdateData[`flags.pf1.links.classAssociations.${i.id}`] = co.level;
           // Remove temporary flag
-          updateData.push({ _id: i.data._id, "flags.pf1.-=__co": null });
+          updateData.push({ _id: i.id, "flags.pf1.-=__co": null });
         }
         if (updateData.length) {
           await actor.updateEmbeddedDocuments("Item", updateData);

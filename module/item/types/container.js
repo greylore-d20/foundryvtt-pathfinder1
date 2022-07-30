@@ -163,7 +163,7 @@ export class ItemContainerPF extends ItemPF {
 
   /** @inheritdoc */
   getTotalCurrency({ inLowestDenomination = false } = {}) {
-    const currency = this.data.currency;
+    const currency = this.system.currency;
     const total = currency.pp * 1000 + currency.gp * 100 + currency.sp * 10 + currency.cp;
     return inLowestDenomination ? total : total / 100;
   }

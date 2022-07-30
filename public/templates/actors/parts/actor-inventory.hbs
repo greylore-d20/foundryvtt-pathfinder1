@@ -5,9 +5,9 @@
       {{localize "PF1.Currency"}}
       <!-- <a class="currency-convert" title="Convert Currency"><i class="fas fa-coins"></i></a> -->
     </h3>
-    {{#each data.currency as |v k|}}
+    {{#each system.currency as |v k|}}
     <label class="denomination {{k}}">{{ lookup ../config.currencies k }}</label>
-    <span class="text-box direct allow-relative" name="data.currency.{{k}}">{{#if v}}{{v}}{{/if}}</span>
+    <span class="text-box direct allow-relative" name="system.currency.{{k}}">{{#if v}}{{v}}{{/if}}</span>
     <a class="convert-currency" data-type="{{k}}" data-category="currency" title="{{localize "PF1.ConvertCurrency"}}"><i class="fas fa-long-arrow-alt-left"></i></a>
     {{/each}}
   </ol>
@@ -17,9 +17,9 @@
       {{localize "PF1.WeightlessCurrency"}}
       <!-- <a class="currency-convert" title="Convert Currency"><i class="fas fa-coins"></i></a> -->
     </h3>
-    {{#each data.altCurrency as |v k|}}
+    {{#each system.altCurrency as |v k|}}
     <label class="denomination {{k}} alt-currency">{{ lookup ../config.currencies k }}</label>
-    <span class="text-box direct allow-relative" name="data.altCurrency.{{k}}">{{#if v}}{{v}}{{/if}}</span>
+    <span class="text-box direct allow-relative" name="system.altCurrency.{{k}}">{{#if v}}{{v}}{{/if}}</span>
     <a class="convert-currency" data-type="{{k}}" data-category="altCurrency" title="{{localize "PF1.ConvertCurrency"}}"><i class="fas fa-long-arrow-alt-left"></i></a>
     {{/each}}
   </ol>
@@ -75,11 +75,11 @@
       </li>
 
       {{#each section.items as |item iid|}}
-      <li class="item flexrow{{#if item.empty}} disabled{{/if}}" data-item-id="{{item._id}}">
+      <li class="item flexrow{{#if item.empty}} disabled{{/if}}" data-item-id="{{item.id}}">
         <div class="item-name flexrow">
           <div class="item-image rollable" style='background-image: url("{{item.img}}")'></div>
           <h4 class="rollable">
-            {{~#if item.isStack}}({{item.data.quantity}}) {{/if}}
+            {{~#if item.isStack}}({{item.quantity}}) {{/if}}
             {{item.name~}}
           </h4>
         </div>
@@ -140,12 +140,12 @@
         <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
           {{#unless showUnidentifiedData}}
           {{#if item.isCharged}}
-          <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.data.uses.value}}</span>
+          <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.uses.value}}</span>
           <span class="sep"> / </span>
-          <span class="text-box">{{item.data.uses.max}}</span>
+          <span class="text-box">{{item.uses.max}}</span>
           <span class="tooltipcontent">
-            @resources.{{item.tag}}.value : {{item.data.uses.value}}<br>
-            @resources.{{item.tag}}.max : {{item.data.uses.max}}
+            @resources.{{item.tag}}.value : {{item.uses.value}}<br>
+            @resources.{{item.tag}}.max : {{item.uses.max}}
           </span>
           {{/if}}
           {{/unless}}
@@ -175,24 +175,24 @@
 {{#unless isLootSheet}}
 <div class="flexrow tab-footer tooltip">
   <div class="tooltipcontent">
-    @attributes.encumbrance.level : {{data.attributes.encumbrance.level}}<br>
+    @attributes.encumbrance.level : {{system.attributes.encumbrance.level}}<br>
     <br>
-    @details.carryCapacity.bonus.total : {{data.details.carryCapacity.bonus.total}}<br>
-    {{#each sourceDetails.data.details.carryCapacity.bonus.total}}
+    @details.carryCapacity.bonus.total : {{system.details.carryCapacity.bonus.total}}<br>
+    {{#each sourceDetails.system.details.carryCapacity.bonus.total}}
       {{name}} : {{value}}<br>
     {{/each}}
     <br>
-    @details.carryCapacity.multiplier.total : {{data.details.carryCapacity.multiplier.total}}<br>
-    {{#each sourceDetails.data.details.carryCapacity.multiplier.total}}
+    @details.carryCapacity.multiplier.total : {{system.details.carryCapacity.multiplier.total}}<br>
+    {{#each sourceDetails.system.details.carryCapacity.multiplier.total}}
       {{name}} : {{value}}<br>
     {{/each}}
   </div>
 
   <div class="form-group carry-bonus">
     <label>{{localize "PF1.BonusCarryStrength"}}</label>
-    <span class="text-box direct" name="data.details.carryCapacity.bonus.user" data-dtype="Number" data-placeholder="0">{{data.details.carryCapacity.bonus.user}}</span>
+    <span class="text-box direct" name="system.details.carryCapacity.bonus.user" data-dtype="Number" data-placeholder="0">{{system.details.carryCapacity.bonus.user}}</span>
     <label>{{localize "PF1.BonusCarryMultiplier"}}</label>
-    <span class="text-box direct" name="data.details.carryCapacity.multiplier.user" data-dtype="Number" data-placeholder="0">{{data.details.carryCapacity.multiplier.user}}</span>
+    <span class="text-box direct" name="system.details.carryCapacity.multiplier.user" data-dtype="Number" data-placeholder="0">{{system.details.carryCapacity.multiplier.user}}</span>
   </div>
   {{#with encumbrance}}
   <div class="flexrow inventory-tags tag-list">

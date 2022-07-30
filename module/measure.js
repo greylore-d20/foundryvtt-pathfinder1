@@ -31,7 +31,7 @@ export class TemplateLayerPF extends TemplateLayer {
       y: origin.y,
       distance: 1,
       direction: 0,
-      fillColor: game.user.data.color || "#FF0000",
+      fillColor: game.user.color || "#FF0000",
     };
 
     // Apply some type-specific defaults
@@ -66,24 +66,24 @@ export class TemplateLayerPF extends TemplateLayer {
     const ratio = canvas.dimensions.size / dist;
 
     // Update the preview object
-    const type = event.data.preview.data.t;
+    const type = preview.document.t;
     const cellSize = canvas.dimensions.distance;
     // Set direction
     const baseDirection = Math.normalizeDegrees(Math.toDegrees(ray.angle));
     if (snapToGrid && ["cone", "circle"].includes(type)) {
       const halfAngle = CONFIG.MeasuredTemplate.defaults.angle / 2;
-      preview.data.direction = Math.floor((baseDirection + halfAngle / 2) / halfAngle) * halfAngle;
+      preview.document.direction = Math.floor((baseDirection + halfAngle / 2) / halfAngle) * halfAngle;
     } else if (snapToGrid && type === "ray") {
-      preview.data.direction = Math.floor((baseDirection + cellSize / 2) / cellSize) * cellSize;
+      preview.document.direction = Math.floor((baseDirection + cellSize / 2) / cellSize) * cellSize;
     } else {
-      preview.data.direction = baseDirection;
+      preview.document.direction = baseDirection;
     }
     // Set distance
     const baseDistance = ray.distance / ratio;
     if (snapToGrid && ["cone", "circle", "ray"].includes(type)) {
-      preview.data.distance = Math.floor(baseDistance / dist) * dist;
+      preview.document.distance = Math.floor(baseDistance / dist) * dist;
     } else {
-      preview.data.distance = baseDistance;
+      preview.document.distance = baseDistance;
     }
     preview.refresh();
 
@@ -94,7 +94,7 @@ export class TemplateLayerPF extends TemplateLayer {
 
 export class MeasuredTemplatePF extends MeasuredTemplate {
   getHighlightedSquares() {
-    if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone", "ray"].includes(this.data.t)) return [];
+    if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone", "ray"].includes(this.document.t)) return [];
 
     const grid = canvas.grid,
       d = canvas.dimensions;
@@ -102,7 +102,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     if (!this.id || !this.shape) return [];
 
     // Parse rays as per Bresenham's algorithm
-    if (this.data.t === "ray") {
+    if (this.document.t === "ray") {
       const result = [];
 
       const s = d.size;
@@ -142,17 +142,17 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     }
 
     // Get number of rows and columns
-    const nr = Math.ceil((this.data.distance * 1.5) / d.distance / (d.size / grid.h)),
-      nc = Math.ceil((this.data.distance * 1.5) / d.distance / (d.size / grid.w));
+    const nr = Math.ceil((this.document.distance * 1.5) / d.distance / (d.size / grid.h)),
+      nc = Math.ceil((this.document.distance * 1.5) / d.distance / (d.size / grid.w));
 
     // Get the center of the grid position occupied by the template
-    const x = this.data.x,
-      y = this.data.y;
+    const x = this.document.x,
+      y = this.document.y;
 
     const [cx, cy] = grid.getCenter(x, y),
       [col0, row0] = grid.grid.getGridPositionFromPixels(cx, cy),
-      minAngle = (360 + ((this.data.direction - this.data.angle * 0.5) % 360)) % 360,
-      maxAngle = (360 + ((this.data.direction + this.data.angle * 0.5) % 360)) % 360;
+      minAngle = (360 + ((this.document.direction - this.document.angle * 0.5) % 360)) % 360,
+      maxAngle = (360 + ((this.document.direction + this.document.angle * 0.5) % 360)) % 360;
 
     const within_angle = function (min, max, value) {
       min = (360 + (min % 360)) % 360;
@@ -166,17 +166,17 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     const originOffset = { x: 0, y: 0 };
     // Offset measurement for cones
     // Offset is to ensure that cones only start measuring from cell borders, as in https://www.d20pfsrd.com/magic/#Aiming_a_Spell
-    if (this.data.t === "cone") {
+    if (this.document.t === "cone") {
       // Degrees anticlockwise from pointing right. In 45-degree increments from 0 to 360
-      const dir = (this.data.direction >= 0 ? 360 - this.data.direction : -this.data.direction) % 360;
+      const dir = (this.document.direction >= 0 ? 360 - this.document.direction : -this.document.direction) % 360;
       // If we're not on a border for X, offset by 0.5 or -0.5 to the border of the cell in the direction we're looking on X axis
       const xOffset =
-        this.data.x % d.size != 0
+        this.document.x % d.size != 0
           ? Math.sign((1 * Math.round(Math.cos(degtorad(dir)) * 100)) / 100) / 2 // /2 turns from 1/0/-1 to 0.5/0/-0.5
           : 0;
       // Same for Y, but cos Y goes down on screens, we invert
       const yOffset =
-        this.data.y % d.size != 0 ? -Math.sign((1 * Math.round(Math.sin(degtorad(dir)) * 100)) / 100) / 2 : 0;
+        this.document.y % d.size != 0 ? -Math.sign((1 * Math.round(Math.sin(degtorad(dir)) * 100)) / 100) / 2 : 0;
       originOffset.x = xOffset;
       originOffset.y = yOffset;
     }
@@ -190,14 +190,14 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
         const [cellCenterX, cellCenterY] = [gx + d.size * 0.5, gy + d.size * 0.5];
 
         // Determine point of origin
-        const origin = { x: this.data.x, y: this.data.y };
+        const origin = { x: this.document.x, y: this.document.y };
         origin.x += originOffset.x * d.size;
         origin.y += originOffset.y * d.size;
 
         const ray = new Ray(origin, { x: cellCenterX, y: cellCenterY });
 
         const rayAngle = (360 + ((ray.angle / (Math.PI / 180)) % 360)) % 360;
-        if (this.data.t === "cone" && ray.distance > 0 && !within_angle(minAngle, maxAngle, rayAngle)) {
+        if (this.document.t === "cone" && ray.distance > 0 && !within_angle(minAngle, maxAngle, rayAngle)) {
           continue;
         }
 
@@ -205,7 +205,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
         const destination = { x: cellCenterX, y: cellCenterY };
 
         const distance = measureDistance(destination, origin);
-        if (distance <= this.data.distance) {
+        if (distance <= this.document.distance) {
           result.push({ x: gx, y: gy });
         }
       }
@@ -249,7 +249,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
   highlightGrid() {
     if (
       !game.settings.get("pf1", "measureStyle") ||
-      !["circle", "cone", "ray"].includes(this.data.t) ||
+      !["circle", "cone", "ray"].includes(this.document.t) ||
       canvas.grid.type !== CONST.GRID_TYPES.SQUARE
     )
       return super.highlightGrid();
@@ -273,6 +273,6 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
   }
 
   getHighlightLayer() {
-    return canvas.grid.getHighlightLayer(`Template.${this.id}`) ?? canvas.grid.addHighlightLayer(`Template.${this.id}`);
+    return canvas.grid.getHighlightLayer(this.highlightId);
   }
 }

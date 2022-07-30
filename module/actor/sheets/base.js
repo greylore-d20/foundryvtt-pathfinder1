@@ -199,13 +199,14 @@ export class ActorSheetPF extends ActorSheet {
       useBGSkills: game.settings.get("pf1", "allowBackgroundSkills"),
       spellFailure: this.document.spellFailure,
       isGM: game.user.isGM,
-      race: this.document.race != null ? this.document.race.system : null,
+      race: this.document.race != null ? this.document.race.toObject() : null,
       usesAnySpellbook: this.document.system.attributes.spells.usedSpellbooks?.length > 0 ?? false,
       sourceData: {},
       skillsLocked: this._skillsLocked,
     });
     const rollData = this.document.getRollData();
     data.rollData = rollData;
+    data.system = deepClone(this.document.system);
 
     data.hasProficiencies = data.isCharacter || game.settings.get("pf1", "npcProficiencies");
 
@@ -214,10 +215,14 @@ export class ActorSheetPF extends ActorSheet {
     data.hasAltCurrency = Object.values(this.object.system.altCurrency).some((o) => o > 0);
 
     // The Actor and its Items
-    if (this.document.isToken) data.token = duplicate(this.document.token.system);
+    if (this.document.isToken) data.token = this.document.token.toObject();
     else data.token = data.actor.token;
     data.items = this.document.items.map((item) => {
       const i = deepClone(item.system);
+      i.document = item;
+      i.type = item.type;
+      i.id = item.id;
+      i.img = item.img;
       i.labels = item.labels;
       i.hasAttack = item.firstAction?.hasAttack;
       i.hasMultiAttack = item.firstAction?.hasMultiAttack;
@@ -244,20 +249,28 @@ export class ActorSheetPF extends ActorSheet {
     data.labels = this.document.labels || {};
     data.filters = this._filters;
 
+    // Set class info
+    data.classInfo = data.items
+      .filter((o) => o.type === "class")
+      .reduce((cur, o) => {
+        cur[o.tag] = o;
+        return cur;
+      }, {});
+
     // Generic melee and ranged attack bonuses, only present for sheet.
-    const coreAttack = data.attributes.attack.shared + data.attributes.attack.general,
-      meleeAtkAbl = data.abilities[data.attributes.attack.meleeAbility]?.mod ?? 0,
-      rangedAtkAbl = data.abilities[data.attributes.attack.rangedAbility]?.mod ?? 0,
-      cmbAbl = data.abilities[data.attributes.cmbAbility]?.mod ?? 0;
+    const coreAttack = data.system.attributes.attack.shared + data.system.attributes.attack.general,
+      meleeAtkAbl = data.system.abilities[data.system.attributes.attack.meleeAbility]?.mod ?? 0,
+      rangedAtkAbl = data.system.abilities[data.system.attributes.attack.rangedAbility]?.mod ?? 0,
+      cmbAbl = data.system.abilities[data.system.attributes.cmbAbility]?.mod ?? 0;
 
-    const szMod = CONFIG.PF1.sizeMods[data.traits.size],
-      szCMBMod = CONFIG.PF1.sizeSpecialMods[data.traits.size];
+    const szMod = CONFIG.PF1.sizeMods[data.system.traits.size],
+      szCMBMod = CONFIG.PF1.sizeSpecialMods[data.system.traits.size];
 
-    data.attributes.attack.meleeAttackMod = meleeAtkAbl;
-    data.attributes.attack.rangedAttackMod = rangedAtkAbl;
-    data.meleeAttack = coreAttack + szMod + data.attributes.attack.melee + (meleeAtkAbl ?? 0);
-    data.rangedAttack = coreAttack + szMod + data.attributes.attack.ranged + (rangedAtkAbl ?? 0);
-    data.cmbAttack = coreAttack + szCMBMod + data.attributes.cmb.total + (cmbAbl ?? 0);
+    data.system.attributes.attack.meleeAttackMod = meleeAtkAbl;
+    data.system.attributes.attack.rangedAttackMod = rangedAtkAbl;
+    data.meleeAttack = coreAttack + szMod + data.system.attributes.attack.melee + (meleeAtkAbl ?? 0);
+    data.rangedAttack = coreAttack + szMod + data.system.attributes.attack.ranged + (rangedAtkAbl ?? 0);
+    data.cmbAttack = coreAttack + szCMBMod + data.system.attributes.cmb.total + (cmbAbl ?? 0);
 
     // Add inventory value
     {
@@ -273,29 +286,29 @@ export class ActorSheetPF extends ActorSheet {
     else data.sourceDetails = null;
 
     // Ability Scores
-    for (const [a, abl] of Object.entries(data.abilities)) {
+    for (const [a, abl] of Object.entries(data.system.abilities)) {
       abl.label = CONFIG.PF1.abilities[a];
-      abl.sourceDetails = data.sourceDetails != null ? data.sourceDetails.data.abilities[a].total : [];
+      abl.sourceDetails = data.sourceDetails != null ? data.sourceDetails.system.abilities[a].total : [];
       abl.totalLabel = abl.total == null ? "-" : abl.total;
     }
 
     // Armor Class
-    for (const [a, ac] of Object.entries(data.attributes.ac)) {
+    for (const [a, ac] of Object.entries(data.system.attributes.ac)) {
       ac.label = CONFIG.PF1.ac[a];
       ac.valueLabel = CONFIG.PF1.acValueLabels[a];
-      ac.sourceDetails = data.sourceDetails != null ? data.sourceDetails.data.attributes.ac[a].total : [];
+      ac.sourceDetails = data.sourceDetails != null ? data.sourceDetails.system.attributes.ac[a].total : [];
     }
 
     // Saving Throws
-    for (const [a, savingThrow] of Object.entries(data.attributes.savingThrows)) {
+    for (const [a, savingThrow] of Object.entries(data.system.attributes.savingThrows)) {
       savingThrow.label = CONFIG.PF1.savingThrows[a];
       savingThrow.sourceDetails =
-        data.sourceDetails != null ? data.sourceDetails.data.attributes.savingThrows[a].total : [];
+        data.sourceDetails != null ? data.sourceDetails.system.attributes.savingThrows[a].total : [];
     }
 
     // Update skill labels
-    const acp = getProperty(this.document.data, "data.attributes.acp.total");
-    for (const [s, skl] of Object.entries(data.skills)) {
+    const acp = getProperty(this.document, "system.attributes.acp.total");
+    for (const [s, skl] of Object.entries(data.system.skills)) {
       skl.label = CONFIG.PF1.skills[s];
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
@@ -320,18 +333,18 @@ export class ActorSheetPF extends ActorSheet {
       if (skl.ability) {
         skl.sourceDetails.push({
           name: CONFIG.PF1.abilities[skl.ability],
-          value: data.abilities[skl.ability]?.mod ?? 0,
+          value: data.rollData.abilities[skl.ability]?.mod ?? 0,
         });
       }
 
       // Add misc skill bonus source
-      if (data.sourceDetails != null && data.sourceDetails.data.skills[s] != null) {
-        skl.sourceDetails = skl.sourceDetails.concat(data.sourceDetails.data.skills[s].changeBonus);
+      if (data.sourceDetails != null && data.sourceDetails.system.skills[s] != null) {
+        skl.sourceDetails = skl.sourceDetails.concat(data.sourceDetails.system.skills[s].changeBonus);
       }
 
       // Subtract energy drain
       {
-        const energyDrain = getProperty(data, "data.attributes.energyDrain");
+        const energyDrain = getProperty(this.document, "system.attributes.energyDrain");
         if (energyDrain) {
           skl.sourceDetails.push({
             name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
@@ -357,11 +370,13 @@ export class ActorSheetPF extends ActorSheet {
           });
           if (
             data.sourceDetails != null &&
-            data.sourceDetails.data.skills[s] != null &&
-            data.sourceDetails.data.skills[s].subSkills != null &&
-            data.sourceDetails.data.skills[s].subSkills[s2] != null
+            data.sourceDetails.system.skills[s] != null &&
+            data.sourceDetails.system.skills[s].subSkills != null &&
+            data.sourceDetails.system.skills[s].subSkills[s2] != null
           ) {
-            skl2.sourceDetails = skl2.sourceDetails.concat(data.sourceDetails.data.skills[s].subSkills[s2].changeBonus);
+            skl2.sourceDetails = skl2.sourceDetails.concat(
+              data.sourceDetails.system.skills[s].subSkills[s2].changeBonus
+            );
           }
           skl2.untrained = skl2.rt === true && skl2.rank <= 0;
         }
@@ -374,26 +389,26 @@ export class ActorSheetPF extends ActorSheet {
         return obj.type === "spell";
       })
       .forEach((obj) => {
-        obj.isPrepared = obj.data.preparation.mode === "prepared";
+        obj.isPrepared = obj.preparation.mode === "prepared";
       });
 
     // Update traits
-    this._prepareTraits(data.traits);
-    data.senses = this._prepareSenses(data.traits.senses);
+    this._prepareTraits(data.system.traits);
+    data.senses = this._prepareSenses(data.system.traits.senses);
 
     // Prepare owned items
     this._prepareItems(data);
 
     // Compute encumbrance
-    data.encumbrance = this._computeEncumbrance(data);
+    data.encumbrance = this._computeEncumbrance(data.system);
 
     // Prepare skillsets
-    data.skillsets = this._prepareSkillsets(data.skills);
+    data.skillsets = this._prepareSkillsets(data.system.skills);
 
     // Skill rank counting
     const skillRanks = { allowed: 0, used: 0, bgAllowed: 0, bgUsed: 0, sentToBG: 0 };
     // Count used skill ranks
-    for (const skl of Object.values(data.skills)) {
+    for (const skl of Object.values(data.rollData.skills)) {
       if (skl.subSkills != null) {
         for (const subSkl of Object.values(skl.subSkills)) {
           if (data.useBGSkills && skl.background) {
@@ -411,17 +426,17 @@ export class ActorSheetPF extends ActorSheet {
     // Count allowed skill ranks
     const sourceData = [];
     setProperty(data.sourceData, "skillRanks", sourceData);
-    this.document.data.items
+    this.document.items
       .filter((obj) => {
-        return obj.type === "class" && obj.data.classType !== "mythic";
+        return obj.type === "class" && obj.system.classType !== "mythic";
       })
       .forEach((cls) => {
-        const clsLevel = cls.hitDice;
-        const clsSkillsPerLevel = cls.data.skillsPerLevel;
-        const fcSkills = cls.data.fc.skill.value;
+        const clsLevel = cls.system.hitDice;
+        const clsSkillsPerLevel = cls.system.skillsPerLevel;
+        const fcSkills = cls.system.fc.skill.value;
         skillRanks.allowed +=
-          Math.max(1, clsSkillsPerLevel + this.document.data.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills && ["base", "prestige"].includes(cls.data.classType)) skillRanks.bgAllowed += clsLevel * 2;
+          Math.max(1, clsSkillsPerLevel + this.document.system.abilities.int.mod) * clsLevel + fcSkills;
+        if (data.useBGSkills && ["base", "prestige"].includes(cls.classType)) skillRanks.bgAllowed += clsLevel * 2;
 
         sourceData.push({
           name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
@@ -435,17 +450,16 @@ export class ActorSheetPF extends ActorSheet {
         }
       });
     // Count from intelligence
-    if (getProperty(this.actor.data, "data.abilities.int.mod") !== 0) {
+    if (getProperty(this.actor, "system.abilities.int.mod") !== 0) {
       sourceData.push({
         name: game.i18n.localize("PF1.AbilityInt"),
         value:
-          getProperty(this.actor.data, "data.abilities.int.mod") *
-          getProperty(this.actor.data, "data.attributes.hd.total"),
+          getProperty(this.actor, "system.abilities.int.mod") * getProperty(this.actor, "system.attributes.hd.total"),
       });
     }
     // Count from bonus skill rank formula
-    if (this.actor.data.details.bonusSkillRankFormula !== "") {
-      const roll = RollPF.safeRoll(this.actor.data.details.bonusSkillRankFormula, rollData);
+    if (this.actor.system.details.bonusSkillRankFormula !== "") {
+      const roll = RollPF.safeRoll(this.actor.system.details.bonusSkillRankFormula, rollData);
       if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
       skillRanks.allowed += roll.total;
       sourceData.push({
@@ -484,10 +498,10 @@ export class ActorSheetPF extends ActorSheet {
       // By level
       data.featCount = {};
       data.featCount.value = this.actor.items.filter(
-        (o) => o.type === "feat" && o.data.featType === "feat" && !o.data.disabled
+        (o) => o.type === "feat" && o.system.featType === "feat" && !o.system.disabled
       ).length;
       const totalLevels = this.document.items
-        .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.classType))
+        .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.system.classType))
         .reduce((cur, o) => {
           return cur + o.hitDice;
         }, 0);
@@ -498,7 +512,7 @@ export class ActorSheetPF extends ActorSheet {
       });
 
       // Bonus feat formula
-      const featCountRoll = RollPF.safeRoll(this.document.data.details.bonusFeatFormula || "0", rollData);
+      const featCountRoll = RollPF.safeRoll(this.document.system.details.bonusFeatFormula || "0", rollData);
       const changes = this.document.changes.filter((c) => c.subTarget === "bonusFeats");
       const changeBonus = getHighestChanges(
         changes.filter((c) => {
@@ -536,13 +550,10 @@ export class ActorSheetPF extends ActorSheet {
 
     // Fetch the game settings relevant to sheet rendering.
     {
-      const actorType = { character: "pc", npc: "npc" }[this.document.data.type];
+      const actorType = { character: "pc", npc: "npc" }[this.document.type];
       data.healthConfig = game.settings.get("pf1", "healthConfig");
       data.useWoundsAndVigor = data.healthConfig.variants[actorType].useWoundsAndVigor;
     }
-
-    // Get classes
-    data.classes = rollData.classes;
 
     // Determine hidden elements
     this._prepareHiddenElements();
@@ -553,10 +564,10 @@ export class ActorSheetPF extends ActorSheet {
       const magicItems = this.document.items
         .filter((o) => {
           if (o.showUnidentifiedData) return false;
-          if (!o.data.carried) return false;
+          if (!o.system.carried) return false;
 
-          const school = getProperty(o.data, "data.aura.school");
-          const cl = getProperty(o.data, "data.cl");
+          const school = getProperty(o, "system.aura.school");
+          const cl = getProperty(o, "system.cl");
           return typeof school === "string" && school.length > 0 && typeof cl === "number" && cl > 0;
         })
         .map((o) => {
@@ -565,18 +576,18 @@ export class ActorSheetPF extends ActorSheet {
           data.name = o.name;
           data.img = o.img;
           data.id = o.id;
-          data.cl = getProperty(o.data, "data.cl");
-          data.school = getProperty(o.data, "data.aura.school");
+          data.cl = getProperty(o, "system.cl");
+          data.school = getProperty(o, "system.aura.school");
           if (CONFIG.PF1.spellSchools[data.school] != null) {
             data.school = CONFIG.PF1.spellSchools[data.school];
           }
           data.school = `${CONFIG.PF1.auraStrengths[o.auraStrength]} <b>${data.school}</b>`;
           data.identifyDC = 15 + data.cl;
           {
-            const quantity = getProperty(o.data, "data.quantity") || 0;
+            const quantity = getProperty(o, "system.quantity") || 0;
             if (quantity > 1) data.quantity = quantity;
           }
-          data.identified = getProperty(o.data, "data.identified") === true;
+          data.identified = getProperty(o, "system.identified") === true;
 
           return data;
         });
@@ -608,7 +619,7 @@ export class ActorSheetPF extends ActorSheet {
 
   _prepareHiddenElements() {
     // Hide spellbook info
-    const spellbooks = getProperty(this.document.data, "data.attributes.spells.spellbooks");
+    const spellbooks = getProperty(this.document, "system.attributes.spells.spellbooks");
     for (const k of Object.keys(spellbooks)) {
       const key = `spellbook-info_${k}`;
       if (this._hiddenElems[key] == null) this._hiddenElems[key] = true;
@@ -651,7 +662,7 @@ export class ActorSheetPF extends ActorSheet {
           .split(CONFIG.PF1.re.traitSeparator)
           .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
       }
-      trait.cssClass = !isObjectEmpty(trait.selected) ? "" : "inactive";
+      trait.cssClass = !foundry.utils.isEmpty(trait.selected) ? "" : "inactive";
     }
   }
 
@@ -698,7 +709,7 @@ export class ActorSheetPF extends ActorSheet {
    */
   _prepareSpellbook(data, spells, bookKey) {
     const owner = this.document.isOwner;
-    const book = this.document.data.attributes.spells.spellbooks[bookKey];
+    const book = this.document.system.attributes.spells.spellbooks[bookKey];
 
     let min = 0;
     let max = 9;
@@ -738,7 +749,7 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
     spells.forEach((spell) => {
-      const lvl = spell.data.level ?? min;
+      const lvl = spell.level ?? min;
       spellbook[lvl]?.items.push(spell);
     });
 
@@ -798,7 +809,7 @@ export class ActorSheetPF extends ActorSheet {
     const hasTypeFilter = this._typeFilterCount(filters) > 0;
 
     return items.filter((item) => {
-      const data = item.data;
+      const data = item.system;
 
       // Action usage
       for (const f of ["action", "bonus", "reaction"]) {
@@ -809,7 +820,7 @@ export class ActorSheetPF extends ActorSheet {
 
       if (filters.has("prepared")) {
         if (data.level === 0 || ["pact", "innate"].includes(data.preparation.mode)) return true;
-        if (this.document.data.type === "npc") return true;
+        if (this.document.system.type === "npc") return true;
         return data.preparation.prepared;
       }
 
@@ -992,7 +1003,7 @@ export class ActorSheetPF extends ActorSheet {
     /* -------------------------------------------- */
 
     // Submit hit points
-    html.find('input[name="data.attributes.hp.value"]').keypress(this._onSubmitElement.bind(this));
+    html.find('input[name="system.attributes.hp.value"]').keypress(this._onSubmitElement.bind(this));
 
     // Ability Checks
     html.find(".ability-name").click(this._onRollAbilityTest.bind(this));
@@ -1243,12 +1254,12 @@ export class ActorSheetPF extends ActorSheet {
     let maxValue;
     if (name) {
       newEl.setAttribute("name", name);
-      prevValue = getProperty(this.document.data, name) ?? "";
+      prevValue = getProperty(this.document, name) ?? "";
       if (prevValue && typeof prevValue !== "string") prevValue = prevValue.toString();
 
       if (name.endsWith(".value") && !noCap) {
         const maxName = name.replace(/\.value$/, ".max");
-        maxValue = getProperty(this.document.data, maxName);
+        maxValue = getProperty(this.document, maxName);
       }
     }
     newEl.value = prevValue;
@@ -1447,7 +1458,7 @@ export class ActorSheetPF extends ActorSheet {
     this._mouseWheelAdd(event, el);
 
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
-    this.setItemUpdate(item.id, "data.uses.value", value);
+    this.setItemUpdate(item.id, "system.uses.value", value);
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
@@ -1467,11 +1478,11 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event, el);
 
-    const prevValue = getProperty(item.data, "data.preparation.preparedAmount");
+    const prevValue = getProperty(item, "system.preparation.preparedAmount");
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
-    this.setItemUpdate(item.id, "data.preparation.preparedAmount", value);
+    this.setItemUpdate(item.id, "system.preparation.preparedAmount", value);
     if (prevValue < value) {
-      this.setItemUpdate(item.id, "data.preparation.maxAmount", Math.max(prevValue, value));
+      this.setItemUpdate(item.id, "system.preparation.maxAmount", Math.max(prevValue, value));
     }
 
     // Update on lose focus
@@ -1491,11 +1502,11 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event, el);
 
-    const prevValue = getProperty(item.data, "data.preparation.maxAmount");
+    const prevValue = getProperty(item, "system.preparation.maxAmount");
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
-    this.setItemUpdate(item.id, "data.preparation.maxAmount", Math.max(0, value));
+    this.setItemUpdate(item.id, "system.preparation.maxAmount", Math.max(0, value));
     if (prevValue > value) {
-      this.setItemUpdate(item.id, "data.preparation.preparedAmount", Math.min(prevValue, value));
+      this.setItemUpdate(item.id, "system.preparation.preparedAmount", Math.min(prevValue, value));
     }
     if (value < 0) {
       el.tagName.toUpperCase() === "INPUT" ? (el.value = 0) : (el.innerText = 0);
@@ -1557,7 +1568,7 @@ export class ActorSheetPF extends ActorSheet {
       this._pendingUpdates[name] = value;
     }
 
-    this.setItemUpdate(item.id, "data.level", value);
+    this.setItemUpdate(item.id, "system.level", value);
     if (event.originalEvent instanceof MouseEvent) {
       if (!this._submitQueued) {
         $(el).one("mouseleave", (event) => {
@@ -1593,7 +1604,7 @@ export class ActorSheetPF extends ActorSheet {
     const key = a.name;
 
     // Delete the stored condition status if setting to false
-    const newStatus = !getProperty(this.actor.data, key);
+    const newStatus = !getProperty(this.actor, key);
     const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
     const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
     this.actor.update(updateData);
@@ -1633,7 +1644,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
 
     const value = $(event.currentTarget).prop("checked");
-    this.setItemUpdate(item.data._id, "data.active", value);
+    this.setItemUpdate(item.id, "system.active", value);
     this._updateItems();
   }
 
@@ -1704,7 +1715,7 @@ export class ActorSheetPF extends ActorSheet {
 
     elem.prop("readonly", false);
     elem.attr("name", event.currentTarget.dataset.attrName);
-    const value = getProperty(this.document.data, event.currentTarget.dataset.attrName);
+    const value = getProperty(this.document, event.currentTarget.dataset.attrName);
     elem.attr("value", value);
 
     const wheelEvent = event && event instanceof WheelEvent;
@@ -1758,7 +1769,7 @@ export class ActorSheetPF extends ActorSheet {
   async _onArbitrarySkillCreate(event) {
     event.preventDefault();
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
-    const mainSkillData = this.document.data.skills[skillId];
+    const mainSkillData = this.document.system.skills[skillId];
     const skillData = {
       name: game.i18n.format("DOCUMENT.New", { type: game.i18n.localize("PF1.Skill") }),
       ability: mainSkillData.ability,
@@ -1801,7 +1812,7 @@ export class ActorSheetPF extends ActorSheet {
 
     let tag = createTag(skillData.name || "skill");
     let count = 1;
-    while (this.document.data.skills[tag] != null) {
+    while (this.document.system.skills[tag] != null) {
       count++;
       tag = createTag(skillData.name || "skill") + count.toString();
     }
@@ -1841,7 +1852,7 @@ export class ActorSheetPF extends ActorSheet {
   _onArbitrarySkillDelete(event) {
     event.preventDefault();
     const mainSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-main-skill");
-    const skill = this.document.data.skills[mainSkillId];
+    const skill = this.document.system.skills[mainSkillId];
     const subSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-skill");
     const subSkill = skill?.subSkills?.[subSkillId];
     const skillName = `${CONFIG.PF1.skills[mainSkillId] ?? skill.name} (${subSkill.name})`;
@@ -1871,7 +1882,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     if (!this.document.testUserPermission(game.user, "OWNER")) return;
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
-    const skill = this.document.data.skills[skillId];
+    const skill = this.document.system.skills[skillId];
     const skillName = CONFIG.PF1.skills[skillId] ?? skill.name;
 
     const deleteSkill = () => {
@@ -1949,7 +1960,7 @@ export class ActorSheetPF extends ActorSheet {
     }, []);
     const w = new Widget_ItemPicker(
       (alignment) => {
-        this.document.update({ "data.details.alignment": alignment });
+        this.document.update({ "system.details.alignment": alignment });
       },
       { items: items, columns: 3 }
     );
@@ -1973,12 +1984,12 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.document.items.get(itemId);
 
-    const curQuantity = getProperty(item.data, "data.quantity") || 0;
+    const curQuantity = getProperty(item, "system.quantity") || 0;
     let newQuantity = Math.max(0, curQuantity + add);
 
     if (item.type === "container") newQuantity = Math.min(newQuantity, 1);
 
-    this.setItemUpdate(item.id, "data.quantity", newQuantity);
+    this.setItemUpdate(item.id, "system.quantity", newQuantity);
     this._updateItems();
   }
 
@@ -1987,8 +1998,8 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.document.items.get(itemId);
 
-    if (hasProperty(item.data, "data.equipped")) {
-      this.setItemUpdate(item.id, "data.equipped", !item.data.equipped);
+    if (hasProperty(item, "system.equipped")) {
+      this.setItemUpdate(item.id, "system.equipped", !item.system.equipped);
       this._updateItems();
     }
   }
@@ -1998,8 +2009,8 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.document.items.get(itemId);
 
-    if (hasProperty(item.data, "data.carried")) {
-      item.update({ "data.carried": !item.data.carried });
+    if (hasProperty(item, "system.carried")) {
+      item.update({ "system.carried": !item.system.carried });
     }
   }
 
@@ -2014,8 +2025,8 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    if (hasProperty(item.data, "data.identified")) {
-      item.update({ "data.identified": !item.data.identified });
+    if (hasProperty(item, "system.identified")) {
+      item.update({ "system.identified": !item.system.identified });
     }
   }
 
@@ -2028,7 +2039,7 @@ export class ActorSheetPF extends ActorSheet {
     const property = $(a).attr("name") || a.dataset.name;
 
     const updateData = {};
-    updateData[property] = !getProperty(item.data, property);
+    updateData[property] = !getProperty(item, property);
     item.update(updateData);
   }
 
@@ -2082,21 +2093,21 @@ export class ActorSheetPF extends ActorSheet {
     const itemData = {
       name: baseName,
       type: type,
-      data: deepClone(header.dataset),
+      system: deepClone(header.dataset),
     };
-    delete itemData["type"];
+    delete itemData.system["type"];
 
     // Convert some data to numbers
     for (const [k, v] of Object.entries(itemData)) {
       if (!Number.isNaN(parseFloat(v))) itemData[k] = parseFloat(v);
     }
 
-    const getSubtype = (d) => getProperty(d, `data.${d.type}Type`);
+    const getSubtype = (d) => getProperty(d, `system.${d.type}Type`);
     const subtype = getSubtype(itemData);
     const sameSubgroup = (oldItem) => {
-      if (subtype) return subtype === getSubtype(oldItem.data);
+      if (subtype) return subtype === getSubtype(oldItem);
       if (type === "spell") {
-        return itemData.spellbook === oldItem.data.spellbook && itemData.level === oldItem.data.level;
+        return itemData.spellbook === oldItem.system.spellbook && itemData.level === oldItem.system.level;
       }
       // Assume everything else is only categorized by main type
       return true;
@@ -2105,11 +2116,11 @@ export class ActorSheetPF extends ActorSheet {
     // Get old items of same general category
     const oldItems = this.document.items
       .filter((i) => i.type === type && sameSubgroup(i))
-      .sort((a, b) => a.data.sort - b.data.sort);
+      .sort((a, b) => a.sort - b.sort);
 
     if (oldItems.length) {
-      // Ensure new item is at top of the list instead of seemingly random position
-      itemData.sort = oldItems[0].data.sort - 10;
+      // Ensure new item is at the bottom of the list instead of seemingly random position
+      itemData.sort = oldItems[0].sort - 10;
 
       // Ensure no duplicate names occur
       let i = 2;
@@ -2240,10 +2251,10 @@ export class ActorSheetPF extends ActorSheet {
           label: game.i18n.localize("PF1.Split"),
           callback: async (html) => {
             let splitValue = parseInt(html.find(`[name="value"]`).val());
-            splitValue = Math.min(item.data.quantity - 1, Math.max(0, splitValue));
+            splitValue = Math.min(item.system.quantity - 1, Math.max(0, splitValue));
             if (splitValue > 0) {
-              await item.update({ "data.quantity": Math.max(0, item.data.quantity - splitValue) });
-              const data = item.data.toObject();
+              await item.update({ "system.quantity": Math.max(0, item.system.quantity - splitValue) });
+              const data = item.toObject();
               data.quantity = splitValue;
               await CONFIG.Item.documentClass.createDocuments([data], { parent: this.document });
             }
@@ -2258,7 +2269,7 @@ export class ActorSheetPF extends ActorSheet {
     if (event.key === "Enter") {
       const elem = event.currentTarget;
       if (elem.name) {
-        const attr = getProperty(this.document.data, elem.name);
+        const attr = getProperty(this.document.system, elem.name);
         if (typeof attr === "number" && attr === parseFloat(elem.value)) {
           this._onSubmit(event);
         } else if (typeof attr === "string" && attr === elem.value) {
@@ -2401,14 +2412,14 @@ export class ActorSheetPF extends ActorSheet {
       (arr, item) => {
         const document = item.document;
         item.img = item.img || CONST.DEFAULT_TOKEN;
-        item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
-        item.hasUses = item.data.uses && item.data.uses.max > 0;
-        item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "data.uses.per"));
+        item.isStack = item.quantity ? item.quantity > 1 : false;
+        item.hasUses = item.uses && item.uses.max > 0;
+        item.isCharged = ["day", "week", "charges"].includes(item.uses?.per);
         if (document) item.price = document.getValue({ recursive: false, sellValue: 1 });
-        else item.price = item.data.identified === false ? item.data.unidentified.price : item.data.price;
+        else item.price = item.identified === false ? item.unidentified.price : item.price;
 
-        const itemQuantity = getProperty(item, "data.quantity") != null ? getProperty(item, "data.quantity") : 1;
-        const itemCharges = getProperty(item, "data.uses.value") != null ? getProperty(item, "data.uses.value") : 1;
+        const itemQuantity = item.quantity != null ? item.quantity : 1;
+        const itemCharges = item.uses?.value != null ? item.uses.value : 1;
         item.empty = itemQuantity <= 0 || (item.isCharged && itemCharges <= 0);
         if (item.type === "spell") arr[1].push(item);
         else if (item.type === "feat") arr[2].push(item);
@@ -2426,14 +2437,14 @@ export class ActorSheetPF extends ActorSheet {
 
     // Organize Spellbook
     const spellbookData = {};
-    const spellbooks = data.attributes.spells.spellbooks;
+    const spellbooks = data.system.attributes.spells.spellbooks;
     for (const [key, spellbook] of Object.entries(spellbooks)) {
-      let spellbookSpells = spells.filter((obj) => obj.data.spellbook === key);
-      spellbookSpells = this._filterItems(spellbookSpells, getProperty(this._filters, `spellbook-${key}`));
+      let spellbookSpells = spells.filter((obj) => obj.spellbook === key);
+      spellbookSpells = this._filterItems(spellbookSpells, this._filters[`spellbook-${key}`]);
       spellbookData[key] = {
         data: this._prepareSpellbook(data, spellbookSpells, key),
         prepared: spellbookSpells.filter((obj) => {
-          return obj.data.preparation.mode === "prepared" && obj.data.preparation.prepared;
+          return obj.preparation.mode === "prepared" && obj.preparation.prepared;
         }).length,
         orig: spellbook,
       };
@@ -2444,9 +2455,9 @@ export class ActorSheetPF extends ActorSheet {
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
 
     for (const i of items) {
-      const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
-      i.data.quantity = i.data.quantity || 0;
-      i.totalWeight = Math.roundDecimals(i.data.weight.converted.total, 1);
+      const subType = i.type === "loot" ? i.subType || "gear" : i.subType;
+      i.quantity = i.quantity || 0;
+      i.totalWeight = Math.roundDecimals(i.weight.converted.total, 1);
       i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);
@@ -2472,19 +2483,19 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     for (const f of feats) {
-      const k = f.data.featType;
-      if (f.data.abilityType && f.data.abilityType !== "none") {
-        f.abilityType = game.i18n.localize(CONFIG.PF1.abilityTypes[f.data.abilityType].long);
-        f.abilityTypeShort = game.i18n.localize(CONFIG.PF1.abilityTypes[f.data.abilityType].short);
+      const k = f.featType;
+      if (f.abilityType && f.abilityType !== "none") {
+        f.abilityTypeShort = CONFIG.PF1.abilityTypes[f.abilityType].short;
+        f.abilityType = CONFIG.PF1.abilityTypes[f.abilityType].long;
       } else {
-        f.abilityType = "";
         f.abilityTypeShort = "";
+        f.abilityType = "";
       }
       features[k]?.items?.push(f);
     }
     classes.sort((a, b) => b.level - a.level);
     classes.forEach((item) => {
-      if (item.data.classType !== "mythic") item.canLevelUp = true;
+      if (item.classType !== "mythic") item.canLevelUp = true;
     });
 
     // Buffs
@@ -2520,7 +2531,7 @@ export class ActorSheetPF extends ActorSheet {
     };
 
     for (const b of buffs) {
-      const s = b.data.buffType;
+      const s = b.buffType;
       if (!buffSections[s]) continue;
       buffSections[s].items.push(b);
     }
@@ -2579,7 +2590,7 @@ export class ActorSheetPF extends ActorSheet {
     };
 
     for (const a of attacks) {
-      const s = a.data.attackType;
+      const s = a.attackType;
       if (!attackSections[s]) continue;
       attackSections[s].items.push(a);
     }
@@ -2885,7 +2896,7 @@ export class ActorSheetPF extends ActorSheet {
 
   _alterDropItemData(data) {
     if (data.type === "spell") {
-      data.spellbook = this.currentSpellbookKey;
+      data.system.spellbook = this.currentSpellbookKey;
     }
   }
 
@@ -2911,7 +2922,7 @@ export class ActorSheetPF extends ActorSheet {
     // Choose how to import class
     if (
       itemData.type === "class" &&
-      getProperty(itemData, "data.classType") !== "mythic" &&
+      getProperty(itemData, "system.classType") !== "mythic" &&
       !(event && event.shiftKey)
     ) {
       const doReturn = await new Promise((resolve) => {
@@ -2996,9 +3007,9 @@ export class ActorSheetPF extends ActorSheet {
 
     // Show CR field
     if (f === "cr") {
-      const elem = html.find('input[for="data.details.cr"]');
-      elem.attr("value", CR.fromNumber(this.document.data.details.cr.base));
-      elem.attr("name", "data.details.cr.base");
+      const elem = html.find('input[for="system.details.cr"]');
+      elem.attr("value", CR.fromNumber(this.document.system.details.cr.base));
+      elem.attr("name", "system.details.cr.base");
       elem.prop("disabled", false);
       elem.focus();
       elem.select();
@@ -3021,8 +3032,8 @@ export class ActorSheetPF extends ActorSheet {
 
   _updateObject(event, formData) {
     // Translate CR
-    const cr = formData["data.details.cr.base"];
-    if (typeof cr === "string") formData["data.details.cr.base"] = CR.fromString(cr);
+    const cr = formData["system.details.cr.base"];
+    if (typeof cr === "string") formData["system.details.cr.base"] = CR.fromString(cr);
 
     // Update from elements with 'data-name'
     {
@@ -3037,7 +3048,7 @@ export class ActorSheetPF extends ActorSheet {
         if (el.dataset.dtype === "Number") value = Number(value);
         else if (el.dataset.dtype === "Boolean") value = Boolean(value);
 
-        if (getProperty(this.document.data, name) !== value) {
+        if (getProperty(this.document.system, name) !== value) {
           changedData[name] = value;
         }
       }
@@ -3059,7 +3070,7 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   calculateTotalItemValue({ inLowestDenomination = false } = {}) {
-    const items = this.document.items.filter((o) => o.data.price != null);
+    const items = this.document.items.filter((o) => o.system.price != null);
     const total = items.reduce((cur, i) => {
       return cur + i.getValue({ sellValue: 1, inLowestDenomination: true });
     }, 0);
@@ -3067,7 +3078,7 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   calculateSellItemValue({ inLowestDenomination = false } = {}) {
-    const items = this.document.items.filter((o) => o.data.price != null);
+    const items = this.document.items.filter((o) => o.system.price != null);
     const sellMultiplier = this.document.getFlag("pf1", "sellMultiplier") || 0.5;
     const total = items.reduce((cur, i) => {
       return cur + i.getValue({ sellValue: sellMultiplier, inLowestDenomination: true });

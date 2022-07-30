@@ -25,19 +25,19 @@ export class SensesSelector extends DocumentSheet {
    */
   get convertKeys() {
     return {
-      "data.traits.senses.dv": "distance",
-      "data.traits.senses.ts": "distance",
-      "data.traits.senses.bse": "distance",
-      "data.traits.senses.bs": "distance",
+      "system.traits.senses.dv": "distance",
+      "system.traits.senses.ts": "distance",
+      "system.traits.senses.bse": "distance",
+      "system.traits.senses.bs": "distance",
     };
   }
 
   async getData() {
     const data = {
-      data: this.document.data,
+      system: this.document.system,
       converted: Object.entries(this.convertKeys).reduce((cur, o) => {
         if (o[1] === "distance")
-          setProperty(cur, o[0], game.pf1.utils.convertDistance(getProperty(this.document.data, o[0]))[0]);
+          setProperty(cur, o[0], game.pf1.utils.convertDistance(getProperty(this.document, o[0]))[0]);
         return cur;
       }, {}),
       gridUnits: game.settings.get("pf1", "units") === "imperial" ? "ft" : "m",
@@ -55,10 +55,13 @@ export class SensesSelector extends DocumentSheet {
     const result = await super._updateObject(event, formData);
 
     // Refresh canvas perception
-    canvas.perception.schedule({
-      lighting: { initialize: true, refresh: true },
-      sight: { initialize: true, refresh: true },
-    });
+    canvas.perception.update(
+      {
+        initializeLighting: true,
+        initializeVision: true,
+      },
+      true
+    );
     game.socket.emit("system.pf1", { eventType: "redrawCanvas" });
 
     return result;

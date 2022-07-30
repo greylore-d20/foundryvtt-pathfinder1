@@ -28,7 +28,7 @@
 
     {{!-- Action list --}}
     <ol class="items-list">
-      {{#each data.actions as |action i|}}{{> listAction action=action i=i}}{{/each}}
+      {{#each system.actions as |action i|}}{{> listAction action=action i=i}}{{/each}}
     </ol>
   </ol>
 </div>
@@ -39,12 +39,12 @@
   <label>{{localize "PF1.LimitedUses"}}</label>
   <div class="form-fields">
     {{#if isCharged}}
-    <input type="text" name="data.uses.value" value="{{data.uses.value}}" data-dtype="Number"/>
+    <input type="text" name="system.uses.value" value="{{system.uses.value}}" data-dtype="Number"/>
     <span class="sep"> / </span>
-    <input type="text" value="{{data.uses.max}}" disabled data-dtype="Number"/>
+    <input type="text" value="{{system.uses.max}}" disabled data-dtype="Number"/>
     {{/if}}
-    <select name="data.uses.per">
-      {{#select data.uses.per}}
+    <select name="system.uses.per">
+      {{#select system.uses.per}}
       <option value=""></option>
       {{#each config.limitedUsePeriods as |name key|}}
       <option value="{{key}}">{{name}}</option>
@@ -55,12 +55,12 @@
 </div>
 {{#if isCharged}}
 <div class="form-group uses-per">
-  <input class="formula" type="text" name="data.uses.maxFormula" value="{{data.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
+  <input class="formula" type="text" name="system.uses.maxFormula" value="{{system.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
 </div>
 {{#if isPhysical}}
   <div class="form-group">
     <label>{{localize "PF1.PricePerCharge"}}</label>
-    <input type="text" name="data.uses.pricePerUse" value="{{data.uses.pricePerUse}}" placeholder="0" type="Number"/>
+    <input type="text" name="system.uses.pricePerUse" value="{{system.uses.pricePerUse}}" placeholder="0" type="Number"/>
   </div>
 {{/if}}
 {{/if}}
@@ -68,16 +68,16 @@
 
 {{#if hasAction}}
 {{!-- Attack Notes --}}
-<div class="form-group stacked notes attack" data-name="data.attackNotes">
+<div class="form-group stacked notes attack" data-name="system.attackNotes">
   <table>
     <thead>
       <th>{{localize "PF1.AttackNotes"}}</th>
       <th class="entry-control"><a class="add-entry"><i class="fas fa-plus"></i></a></th>
     </thead>
     <tbody>
-      {{#each data.attackNotes as |entry index|}}
+      {{#each system.attackNotes as |entry index|}}
       <tr class="entry" data-index="{{index}}">
-        <td class="nocenter"><input type="text" data-index="{{k}}" value="{{entry}}" name="data.attackNotes.{{index}}" /></td>
+        <td class="nocenter"><input type="text" data-index="{{k}}" value="{{entry}}" name="system.attackNotes.{{index}}" /></td>
         <td class="entry-control"><a class="delete-entry"><i class="fas fa-minus"></i></a></td>
       </tr>
       {{/each}}
@@ -86,16 +86,16 @@
 </div>
 
 {{!-- Effect Notes --}}
-<div class="form-group stacked notes effect" data-name="data.effectNotes">
+<div class="form-group stacked notes effect" data-name="system.effectNotes">
   <table>
     <thead>
       <th>{{localize "PF1.EffectNotes"}}</th>
       <th class="entry-control"><a class="add-entry"><i class="fas fa-plus"></i></a></th>
     </thead>
     <tbody>
-      {{#each data.effectNotes as |entry index|}}
+      {{#each system.effectNotes as |entry index|}}
       <tr class="entry" data-index="{{index}}">
-        <td class="nocenter"><input type="text" data-index="{{k}}" value="{{entry}}" name="data.effectNotes.{{index}}" /></td>
+        <td class="nocenter"><input type="text" data-index="{{k}}" value="{{entry}}" name="system.effectNotes.{{index}}" /></td>
         <td class="entry-control"><a class="delete-entry"><i class="fas fa-minus"></i></a></td>
       </tr>
       {{/each}}

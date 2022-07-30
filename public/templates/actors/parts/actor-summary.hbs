@@ -12,10 +12,10 @@
       {{#if isCharacter}}
       <div class="hd-level character tooltip">
         <span class="tooltipcontent">
-          @attributes.hd.total : {{data.attributes.hd.total}}
-          {{#if data.details.mythicTier}}
+          @attributes.hd.total : {{system.attributes.hd.total}}
+          {{#if system.details.mythicTier}}
           <br />
-          @details.mythicTier : {{data.details.mythicTier}}
+          @details.mythicTier : {{system.details.mythicTier}}
           {{/if}}
         </span>
 
@@ -23,7 +23,7 @@
           <thead>
             <tr>
               <th class="level">{{localize "PF1.Level"}}</th>
-              {{#if data.details.mythicTier}}
+              {{#if system.details.mythicTier}}
               <th class="tier">{{localize "PF1.Tier"}}</th>
               {{/if}}
               {{#unless disableExperience}}
@@ -34,19 +34,19 @@
           <tbody>
             <tr>
               <td class="level">
-                {{data.details.level.value}}
+                {{system.details.level.value}}
               </td>
-              {{#if data.details.mythicTier}}
+              {{#if system.details.mythicTier}}
               <td class="tier">
-                {{data.details.mythicTier}}
+                {{system.details.mythicTier}}
               </td>
               {{/if}}
               {{#unless disableExperience}}
               <td class="experience">
                 <div class="flexrow">
-                  <span class="text-box direct allow-relative no-value-cap" name="data.details.xp.value" data-dtype="Number">{{data.details.xp.value}}</span>
+                  <span class="text-box direct allow-relative no-value-cap" name="system.details.xp.value" data-dtype="Number">{{system.details.xp.value}}</span>
                   <span class="separator"> / </span>
-                  <span class="text-box max readonly">{{data.details.xp.max}}</span>
+                  <span class="text-box max readonly">{{system.details.xp.max}}</span>
                 </div>
               </td>
               {{/unless}}
@@ -56,8 +56,8 @@
 
         {{#unless disableExperience}}
         <div class="xpbar">
-          {{#if data.details.xp.pct}}
-          <span class="bar" style="width: {{data.details.xp.pct}}%"></span>
+          {{#if system.details.xp.pct}}
+          <span class="bar" style="width: {{system.details.xp.pct}}%"></span>
           {{/if}}
         </div>
         {{/unless}}
@@ -68,7 +68,7 @@
           <thead>
             <tr>
               <th class="level">{{localize "PF1.HitDieShort"}}</th>
-              {{#if data.details.mythicTier}}
+              {{#if system.details.mythicTier}}
               <th class="tier">{{localize "PF1.Tier"}}</th>
               {{/if}}
               <th>{{localize "PF1.ChallengeRatingShort"}}</th>
@@ -78,30 +78,30 @@
           <tbody>
             <tr>
               <td class="level">
-                {{data.attributes.hd.total}}
+                {{system.attributes.hd.total}}
               </td>
-              {{#if data.details.mythicTier}}
+              {{#if system.details.mythicTier}}
               <td class="tier">
-                {{data.details.mythicTier}}
+                {{system.details.mythicTier}}
               </td>
               {{/if}}
               <td>
-                <span class="text-box cr-input" name="data.details.cr.base">{{labels.cr}}</span>
+                <span class="text-box cr-input" name="system.details.cr.base">{{labels.cr}}</span>
               </td>
               <td class="experience">
-                {{data.details.xp.value}}
+                {{system.details.xp.value}}
               </td>
             </tr>
           </tbody>
         </table>
 
         <span class="tooltipcontent">
-          @attributes.hd.total : {{data.attributes.hd.total}}<br/>
-          @details.cr.base : {{data.details.cr.base}}<br/>
-          @details.cr.total : {{data.details.cr.total}}
-          {{#if data.details.mythicTier}}
+          @attributes.hd.total : {{system.attributes.hd.total}}<br/>
+          @details.cr.base : {{system.details.cr.base}}<br/>
+          @details.cr.total : {{system.details.cr.total}}
+          {{#if system.details.mythicTier}}
           <br />
-          @details.mythicTier : {{data.details.mythicTier}}
+          @details.mythicTier : {{system.details.mythicTier}}
           {{/if}}
         </span>
       </div>
@@ -111,19 +111,19 @@
     {{!-- Character Summary --}}
     <div class="character-summary flexrow">
       <div>
-        <input type="text" name="data.details.gender" value="{{data.details.gender}}" placeholder="{{localize "PF1.Gender"}}" title="{{localize "PF1.Gender"}}"/>
+        <input type="text" name="system.details.gender" value="{{system.details.gender}}" placeholder="{{localize "PF1.Gender"}}" title="{{localize "PF1.Gender"}}"/>
       </div>
       <div>
-        <input type="text" name="data.details.deity" value="{{data.details.deity}}" placeholder="{{localize "PF1.Deity"}}" title="{{localize "PF1.Deity"}}"/>
+        <input type="text" name="system.details.deity" value="{{system.details.deity}}" placeholder="{{localize "PF1.Deity"}}" title="{{localize "PF1.Deity"}}"/>
       </div>
       <div>
-        <input type="text" name="data.details.age" value="{{data.details.age}}" placeholder="{{localize "PF1.Age"}}" title="{{localize "PF1.Age"}}"/>
+        <input type="text" name="system.details.age" value="{{system.details.age}}" placeholder="{{localize "PF1.Age"}}" title="{{localize "PF1.Age"}}"/>
       </div>
       <div>
-        <input type="text" name="data.details.height" value="{{data.details.height}}" placeholder="{{localize "PF1.Height"}}" title="{{localize "PF1.Height"}}"/>
+        <input type="text" name="system.details.height" value="{{system.details.height}}" placeholder="{{localize "PF1.Height"}}" title="{{localize "PF1.Height"}}"/>
       </div>
       <div>
-        <input type="text" name="data.details.weight" value="{{data.details.weight}}" placeholder="{{localize "PF1.Weight"}}" title="{{localize "PF1.Weight"}}"/>
+        <input type="text" name="system.details.weight" value="{{system.details.weight}}" placeholder="{{localize "PF1.Weight"}}" title="{{localize "PF1.Weight"}}"/>
       </div>
 
       {{!-- Alignment --}}
@@ -154,8 +154,8 @@
 
         {{#if race}}
         <div class="race-info tag-list">
-          <span class="tag type3">{{lookup config.creatureTypes race.data.creatureType}}</span>
-          {{#each race.data.subTypes as |v|}}
+          <span class="tag type3">{{lookup config.creatureTypes race.system.creatureType}}</span>
+          {{#each race.system.subTypes as |v|}}
           <span class="tag">{{v}}</span>
           {{/each}}
         </div>
@@ -179,30 +179,30 @@
       <ul class='flexrow'>
         <li class='flexcol current'>
           <h4 class='sub-header'>{{localize "PF1.Current"}}</h4>
-          <span class="value text-box direct wheel-change allow-relative hp-current-input" name="data.attributes.hp.value" data-dtype="Number">{{data.attributes.hp.value}}</span>
+          <span class="value text-box direct wheel-change allow-relative hp-current-input" name="system.attributes.hp.value" data-dtype="Number">{{system.attributes.hp.value}}</span>
         </li>
         <li class='flexcol maximum'>
           <h4 class='sub-header'>{{localize "PF1.Maximum"}}</h4>
-          <span class="value text-box readonly hp-max">{{data.attributes.hp.max}}</span>
+          <span class="value text-box readonly hp-max">{{system.attributes.hp.max}}</span>
         </li>
         <li class='flexcol temp'>
           <h4 class='sub-header'>{{localize "PF1.TempShort"}}</h4>
-          <span class="value text-box direct allow-relative hp-temp-input" name="data.attributes.hp.temp" data-dtype="Number">{{#if data.attributes.hp.temp}}{{data.attributes.hp.temp}}{{/if}}</span>
+          <span class="value text-box direct allow-relative hp-temp-input" name="system.attributes.hp.temp" data-dtype="Number">{{#if system.attributes.hp.temp}}{{system.attributes.hp.temp}}{{/if}}</span>
         </li>
         <li class='flexcol nonlethal'>
           <h4 class='sub-header'>{{localize "PF1.Nonlethal"}}</h4>
-          <span class="value text-box direct allow-relative hp-nonlethal-input" name="data.attributes.hp.nonlethal" data-dtype="Number">{{#if data.attributes.hp.nonlethal}}{{data.attributes.hp.nonlethal}}{{/if}}</span>
+          <span class="value text-box direct allow-relative hp-nonlethal-input" name="system.attributes.hp.nonlethal" data-dtype="Number">{{#if system.attributes.hp.nonlethal}}{{system.attributes.hp.nonlethal}}{{/if}}</span>
         </li>
       </ul>
       <div class="tooltipcontent">
-        @attributes.hp.value : {{data.attributes.hp.value}}<br/>
-        @attributes.hp.max : {{data.attributes.hp.max}}<br/>
-        @attributes.hp.temp : {{data.attributes.hp.temp}}<br/>
-        @attributes.hp.nonlethal : {{data.attributes.hp.nonlethal}}
+        @attributes.hp.value : {{system.attributes.hp.value}}<br/>
+        @attributes.hp.max : {{system.attributes.hp.max}}<br/>
+        @attributes.hp.temp : {{system.attributes.hp.temp}}<br/>
+        @attributes.hp.nonlethal : {{system.attributes.hp.nonlethal}}
 
-        {{#if sourceDetails.data.attributes.hp.max.length}}
+        {{#if sourceDetails.system.attributes.hp.max.length}}
         <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-        {{#each sourceDetails.data.attributes.hp.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+        {{#each sourceDetails.system.attributes.hp.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
         {{/if}}
       </div>
     </div>
@@ -212,14 +212,14 @@
       {{!-- Vigor --}}
       <div class='flexcol vigor tooltip'>
         <div class="tooltipcontent">
-          @attributes.vigor.min : {{data.attributes.vigor.min}}<br/>
-          @attributes.vigor.value : {{data.attributes.vigor.value}}<br/>
-          @attributes.vigor.max : {{data.attributes.vigor.max}}<br/>
-          @attributes.vigor.temp : {{data.attributes.vigor.temp}}
+          @attributes.vigor.min : {{system.attributes.vigor.min}}<br/>
+          @attributes.vigor.value : {{system.attributes.vigor.value}}<br/>
+          @attributes.vigor.max : {{system.attributes.vigor.max}}<br/>
+          @attributes.vigor.temp : {{system.attributes.vigor.temp}}
 
-          {{#if sourceDetails.data.attributes.vigor.max.length}}
+          {{#if sourceDetails.system.attributes.vigor.max.length}}
           <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.data.attributes.vigor.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+          {{#each sourceDetails.system.attributes.vigor.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
           {{/if}}
         </div>
 
@@ -227,18 +227,18 @@
         <ul class='flexrow'>
           <li class='flexcol current'>
             <h4 class='sub-header'>{{localize "PF1.Current"}}</h4>
-            <span class="value text-box direct allow-relative vigor-current-input" name="data.attributes.vigor.value" data-dtype="Number">
-              {{data.attributes.vigor.value}}
+            <span class="value text-box direct allow-relative vigor-current-input" name="system.attributes.vigor.value" data-dtype="Number">
+              {{system.attributes.vigor.value}}
             </span>
           </li>
           <li class='flexcol maximum'>
             <h4 class='sub-header'>{{localize "PF1.Maximum"}}</h4>
-            <span class="value text-box readonly">{{data.attributes.vigor.max}}</span>
+            <span class="value text-box readonly">{{system.attributes.vigor.max}}</span>
           </li>
           <li class='flexcol temp'>
             <h4 class='sub-header'>{{localize "PF1.TempShort"}}</h4>
-            <span class="value text-box direct allow-relative vigor-temp-input" name="data.attributes.vigor.temp" data-dtype="Number">
-              {{#if data.attributes.vigor.temp}}{{data.attributes.vigor.temp}}{{/if}}
+            <span class="value text-box direct allow-relative vigor-temp-input" name="system.attributes.vigor.temp" data-dtype="Number">
+              {{#if system.attributes.vigor.temp}}{{system.attributes.vigor.temp}}{{/if}}
             </span>
           </li>
         </ul>
@@ -246,13 +246,13 @@
       {{!-- Wounds --}}
       <div class='flexcol wounds tooltip'>
         <div class="tooltipcontent">
-          @attributes.wounds.min : {{data.attributes.wounds.min}}<br/>
-          @attributes.wounds.value : {{data.attributes.wounds.value}}<br/>
-          @attributes.wounds.max : {{data.attributes.wounds.max}}<br/>
+          @attributes.wounds.min : {{system.attributes.wounds.min}}<br/>
+          @attributes.wounds.value : {{system.attributes.wounds.value}}<br/>
+          @attributes.wounds.max : {{system.attributes.wounds.max}}<br/>
 
-          {{#if sourceDetails.data.attributes.wounds.max.length}}
+          {{#if sourceDetails.system.attributes.wounds.max.length}}
           <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.data.attributes.wounds.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+          {{#each sourceDetails.system.attributes.wounds.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
           {{/if}}
         </div>
 
@@ -260,13 +260,13 @@
         <ul class='flexrow'>
           <li class='flexcol current'>
             <h4 class='sub-header'>{{localize "PF1.Current"}}</h4>
-            <span class="value text-box direct allow-relative wounds-current-input" name="data.attributes.wounds.value" data-dtype="Number">
-              {{data.attributes.wounds.value}}
+            <span class="value text-box direct allow-relative wounds-current-input" name="system.attributes.wounds.value" data-dtype="Number">
+              {{system.attributes.wounds.value}}
             </span>
           </li>
           <li class='flexcol maximum'>
             <h4 class='sub-header'>{{localize "PF1.Maximum"}}</h4>
-            <span class="value text-box readonly">{{data.attributes.wounds.max}}</span>
+            <span class="value text-box readonly">{{system.attributes.wounds.max}}</span>
           </li>
         </ul>
       </div>
@@ -277,82 +277,82 @@
       <ul class='flexrow'>
         <li class='flexcol land tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.land.total : {{convertDistance data.attributes.speed.land.total}}
-            {{#if (or sourceDetails.data.attributes.speed.land.base.length sourceDetails.data.attributes.speed.land.add.length)}}
+            @attributes.speed.land.total : {{convertDistance system.attributes.speed.land.total}}
+            {{#if (or sourceDetails.system.attributes.speed.land.base.length sourceDetails.system.attributes.speed.land.add.length)}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.land.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
-              {{#each sourceDetails.data.attributes.speed.land.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.system.attributes.speed.land.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.system.attributes.speed.land.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedLand_Short"}}</h4>
-          <span class="value text-box direct speed" name="data.attributes.speed.land.base" data-dtype="Number">
-            {{#if data.attributes.speed.land.total}}{{convertDistance data.attributes.speed.land.total}}{{/if}}
+          <span class="value text-box direct speed" name="system.attributes.speed.land.base" data-dtype="Number">
+            {{#if system.attributes.speed.land.total}}{{convertDistance system.attributes.speed.land.total}}{{/if}}
           </span>
         </li>
         <li class='flexcol climb tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.climb.total : {{convertDistance data.attributes.speed.climb.total}}
-            {{#if (or sourceDetails.data.attributes.speed.climb.base.length sourceDetails.data.attributes.speed.climb.add.length)}}
+            @attributes.speed.climb.total : {{convertDistance system.attributes.speed.climb.total}}
+            {{#if (or sourceDetails.system.attributes.speed.climb.base.length sourceDetails.system.attributes.speed.climb.add.length)}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.climb.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
-              {{#each sourceDetails.data.attributes.speed.climb.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.system.attributes.speed.climb.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.system.attributes.speed.climb.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedClimb_Short"}}</h4>
-          <span class="value text-box direct speed" name="data.attributes.speed.climb.base" data-dtype="Number">
-            {{#if data.attributes.speed.climb.total}}{{convertDistance data.attributes.speed.climb.total}}{{/if}}
+          <span class="value text-box direct speed" name="system.attributes.speed.climb.base" data-dtype="Number">
+            {{#if system.attributes.speed.climb.total}}{{convertDistance system.attributes.speed.climb.total}}{{/if}}
           </span>
         </li>
         <li class='flexcol swim tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.swim.total : {{convertDistance data.attributes.speed.swim.total}}
-            {{#if (or sourceDetails.data.attributes.swim.land.base.length sourceDetails.data.attributes.swim.land.add.length)}}
+            @attributes.speed.swim.total : {{convertDistance system.attributes.speed.swim.total}}
+            {{#if (or sourceDetails.system.attributes.swim.land.base.length sourceDetails.system.attributes.swim.land.add.length)}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.swim.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
-              {{#each sourceDetails.data.attributes.speed.swim.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.system.attributes.speed.swim.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.system.attributes.speed.swim.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
 
           <h4 class='sub-header'>{{localize "PF1.SpeedSwim_Short"}}</h4>
-          <span class="value text-box direct speed" name="data.attributes.speed.swim.base" data-dtype="Number">
-            {{#if data.attributes.speed.swim.total}}{{convertDistance data.attributes.speed.swim.total}}{{/if}}
+          <span class="value text-box direct speed" name="system.attributes.speed.swim.base" data-dtype="Number">
+            {{#if system.attributes.speed.swim.total}}{{convertDistance system.attributes.speed.swim.total}}{{/if}}
           </span>
         </li>
         <li class='flexcol burrow tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.burrow.total : {{convertDistance data.attributes.speed.burrow.total}}
-            {{#if (or sourceDetails.data.attributes.speed.burrow.base.length sourceDetails.data.attributes.speed.burrow.add.length)}}
+            @attributes.speed.burrow.total : {{convertDistance system.attributes.speed.burrow.total}}
+            {{#if (or sourceDetails.system.attributes.speed.burrow.base.length sourceDetails.system.attributes.speed.burrow.add.length)}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.burrow.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
-              {{#each sourceDetails.data.attributes.speed.burrow.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.system.attributes.speed.burrow.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.system.attributes.speed.burrow.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedBurrow_Short"}}</h4>
-          <span class="value text-box direct speed" name="data.attributes.speed.burrow.base" data-dtype="Number">
-            {{#if data.attributes.speed.burrow.total}}{{convertDistance data.attributes.speed.burrow.total}}{{/if}}
+          <span class="value text-box direct speed" name="system.attributes.speed.burrow.base" data-dtype="Number">
+            {{#if system.attributes.speed.burrow.total}}{{convertDistance system.attributes.speed.burrow.total}}{{/if}}
           </span>
         </li>
         <li class='flexcol fly tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.fly.total : {{data.attributes.speed.fly.total}}<br/>
-            @attributes.speed.fly.maneuverability : "{{data.attributes.speed.fly.maneuverability}}"
-            {{#if (or sourceDetails.data.attributes.speed.fly.base.length sourceDetails.data.attributes.speed.fly.add.length)}}
+            @attributes.speed.fly.total : {{system.attributes.speed.fly.total}}<br/>
+            @attributes.speed.fly.maneuverability : "{{system.attributes.speed.fly.maneuverability}}"
+            {{#if (or sourceDetails.system.attributes.speed.fly.base.length sourceDetails.system.attributes.speed.fly.add.length)}}
               <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.data.attributes.speed.fly.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
-              {{#each sourceDetails.data.attributes.speed.fly.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.system.attributes.speed.fly.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+              {{#each sourceDetails.system.attributes.speed.fly.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedFly_Short"}}</h4>
-          <span class="value text-box direct speed" name="data.attributes.speed.fly.base" data-dtype="Number">
-            {{#if data.attributes.speed.fly.total}}{{convertDistance data.attributes.speed.fly.total}}{{/if}}
+          <span class="value text-box direct speed" name="system.attributes.speed.fly.base" data-dtype="Number">
+            {{#if system.attributes.speed.fly.total}}{{convertDistance system.attributes.speed.fly.total}}{{/if}}
           </span>
         </li>
       </ul>
     </div>
     <div class='flexcol maneuverability-details pseudo-table tooltip'>
       <h3 class='header'>{{localize "PF1.FlyManeuverabilityShort"}}</h3>
-      <select class='value' name="data.attributes.speed.fly.maneuverability">
-        {{#select data.attributes.speed.fly.maneuverability}}
+      <select class='value' name="system.attributes.speed.fly.maneuverability">
+        {{#select system.attributes.speed.fly.maneuverability}}
         {{#each config.flyManeuverabilities as |name type|}}
         <option value="{{type}}">{{name}}</option>
         {{/each}}
@@ -393,14 +393,14 @@
           <tr>
             <td class="tooltip bab">
               <span class="tooltipcontent">
-                @attributes.bab.total : {{data.attributes.bab.total}}
-                {{#if sourceDetails.data.attributes.bab.total.length}}
+                @attributes.bab.total : {{system.attributes.bab.total}}
+                {{#if sourceDetails.system.attributes.bab.total.length}}
                 <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-                {{#each sourceDetails.data.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+                {{#each sourceDetails.system.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
                 {{/if}}
               </span>
 
-              {{data.attributes.bab.total}}
+              {{system.attributes.bab.total}}
             </td>
 
             <td class="tooltip cmb">
@@ -409,15 +409,15 @@
 
             <td class="tooltip initiative">
               <span class="tooltipcontent">
-                @attributes.init.total : {{data.attributes.init.total}}
-                {{#if sourceDetails.data.attributes.init.total.length}}
+                @attributes.init.total : {{system.attributes.init.total}}
+                {{#if sourceDetails.system.attributes.init.total.length}}
                   <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-                  {{#each sourceDetails.data.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+                  {{#each sourceDetails.system.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
                 {{/if}}
 
                 {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
               </span>
-              {{data.attributes.init.total}}
+              {{system.attributes.init.total}}
             </td>
           </tr>
         </tbody>
@@ -473,21 +473,21 @@
 
         {{#if classes.length}}
         {{#each classes as |item iid|}}
-        <li class="item flexrow {{#unless isCharged}}uncharged{{/unless}}" data-item-id="{{item._id}}">
+        <li class="item flexrow {{#unless isCharged}}uncharged{{/unless}}" data-item-id="{{item.id}}">
           <div class="item-name flexrow rollable">
             <div class="item-image" style='background-image: url("{{item.img}}")'></div>
             <h4>{{item.name}}</h4>
           </div>
 
           <div class="item-detail item-feat-level tooltip">
-            <span>{{localize "PF1.Level"}} {{item.data.level}}</span>
-            <span class="tooltipcontent">@classes.{{item.data.tag}}.level : {{item.data.level}}</span>
+            <span>{{localize "PF1.Level"}} {{item.level}}</span>
+            <span class="tooltipcontent">@classes.{{item.tag}}.level : {{item.level}}</span>
           </div>
 
           {{#if ../levelUp}}
             <div class="item-detail item-button">
             {{#if item.canLevelUp}}
-              <button type="button" class="level-up" data-item-id="{{item._id}}">{{localize "PF1.LevelUp.Label"}}</button>
+              <button type="button" class="level-up" data-item-id="{{item.id}}">{{localize "PF1.LevelUp.Label"}}</button>
             {{/if}}
             </div>
           {{/if}}

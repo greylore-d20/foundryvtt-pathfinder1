@@ -16,7 +16,7 @@
 
       <ul class="summary">
         <li>
-          {{lookup config.attackTypes data.attackType }}
+          {{lookup config.attackTypes system.attackType }}
         </li>
       </ul>
     </div>
@@ -35,7 +35,7 @@
 
     {{!-- Description Tab --}}
     <div class="tab flexcol" data-group="primary" data-tab="description">
-      {{roll-editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable}}
+      {{roll-editor content=system.description.value target="system.description.value" button=true owner=owner editable=editable}}
     </div>
 
     {{!-- Details Tab --}}
@@ -46,30 +46,30 @@
 
       <div class="form-group stacked">
         <label class="checkbox">
-          <input type="checkbox" name="data.proficient" {{checked data.proficient}}/> {{localize "PF1.Proficient"}}
+          <input type="checkbox" name="system.proficient" {{checked system.proficient}}/> {{localize "PF1.Proficient"}}
         </label>
 
         {{#unless isNaturalAttack}}
         <label class="checkbox">
-          <input type="checkbox" name="data.masterwork" {{checked data.masterwork}}/> {{localize "PF1.Masterwork"}}
+          <input type="checkbox" name="system.masterwork" {{checked system.masterwork}}/> {{localize "PF1.Masterwork"}}
         </label>
         {{/unless}}
 
         {{#if isNaturalAttack}}
         <label class="checkbox">
-          <input type="checkbox" name="data.primaryAttack" {{checked data.primaryAttack}}/> {{localize "PF1.PrimaryAttack"}}
+          <input type="checkbox" name="system.primaryAttack" {{checked system.primaryAttack}}/> {{localize "PF1.PrimaryAttack"}}
         </label>
         {{/if}}
 
         {{#if owner}}
         <label class="checkbox">
-          <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
         </label>
         {{/if}}
 
         {{#unless isNaturalAttack}}
         <label class="checkbox">
-          <input type="checkbox" name="data.broken" {{checked data.broken}}/> {{localize "PF1.Broken"}}
+          <input type="checkbox" name="system.broken" {{checked system.broken}}/> {{localize "PF1.Broken"}}
         </label>
         {{/unless}}
       </div>
@@ -77,7 +77,7 @@
       <div class="form-group">
         <label>{{localize "PF1.EnhancementBonus"}}</label>
         <div class="form-fields">
-          <input type="text" name="data.enh" value="{{data.enh}}" data-dtype="Number" placeholder="0"/>
+          <input type="text" name="system.enh" value="{{system.enh}}" data-dtype="Number" placeholder="0"/>
         </div>
       </div>
 
@@ -87,8 +87,8 @@
       <div class="form-group">
         <label>{{localize "PF1.AttackType"}}</label>
         <div class="form-fields">
-          <select name="data.attackType">
-            {{#select data.attackType}}
+          <select name="system.attackType">
+            {{#select system.attackType}}
             {{#each config.attackTypes as |name type|}}
             <option value="{{type}}">{{name}}</option>
             {{/each}}
@@ -102,8 +102,8 @@
       <div class="form-group">
         <label>{{localize "PF1.Held"}}</label>
         <div class="form-fields">
-          <select name="data.held">
-            {{#select data.held}}
+          <select name="system.held">
+            {{#select system.held}}
             {{#each config.weaponHoldTypes as |name type|}}
             <option value="{{type}}">{{name}}</option>
             {{/each}}

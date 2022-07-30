@@ -58,8 +58,8 @@ export class LevelUpForm extends FormApplication {
 
   static async addClassWizard(actor, rawData) {
     // Alter initial data
-    setProperty(rawData, "data.hp", 0);
-    setProperty(rawData, "data.level", 0);
+    setProperty(rawData, "system.hp", 0);
+    setProperty(rawData, "system.level", 0);
 
     // Add class item
     let itemData = await actor.createEmbeddedDocuments("Item", [rawData]);
@@ -74,7 +74,7 @@ export class LevelUpForm extends FormApplication {
       const _app = new LevelUpForm(item).render(true);
       Hooks.on("closeLevelUpForm", function _onClose(app) {
         if (app === _app) {
-          if (getProperty(item.data, "data.level") === 0) {
+          if (getProperty(item, "system.level") === 0) {
             actor.deleteEmbeddedDocuments("Item", [item.id]);
           }
           Hooks.off("closeLevelUpForm", _onClose);
@@ -87,8 +87,8 @@ export class LevelUpForm extends FormApplication {
   getData() {
     const result = {};
 
-    result.data = this.object.data.toObject();
-    result.actor = this.actor.data.toObject();
+    result.data = this.object.toObject();
+    result.actor = this.actor.toObject();
     result.config = CONFIG.PF1;
 
     // Add sections
@@ -98,7 +98,7 @@ export class LevelUpForm extends FormApplication {
     // Add summary data
     result.summary = this.getSummaryData();
 
-    result.uuid = `${result.actor._id}.${result.data._id}`;
+    result.uuid = this.object.uuid;
 
     return result;
   }
@@ -120,13 +120,13 @@ export class LevelUpForm extends FormApplication {
 
     // Add health section
     const hpSettings = game.settings.get("pf1", "healthConfig");
-    const hpOptions = this.actor.data.type === "character" ? hpSettings.hitdice.PC : hpSettings.hitdice.NPC;
+    const hpOptions = this.actor.type === "character" ? hpSettings.hitdice.PC : hpSettings.hitdice.NPC;
     if (hpOptions.auto !== true) {
       result.push({
         name: "health",
         label: "PF1.LevelUpForm_Health",
         choice: null,
-        manualValue: Math.ceil(1 + (this.object.data.hd - 1) / 2),
+        manualValue: Math.ceil(1 + (this.object.system.hd - 1) / 2),
         items: [
           {
             img: "systems/pf1/icons/items/inventory/dice.jpg",
@@ -193,10 +193,10 @@ export class LevelUpForm extends FormApplication {
         choice: null,
         abilities: Object.keys(CONFIG.PF1.abilities).reduce((cur, o) => {
           cur[o] = {
-            value: this.actor.data.abilities[o].total,
+            value: this.actor.system.abilities[o].total,
             name: CONFIG.PF1.abilities[o],
             added: 0,
-            isEnhanced: this.actor.data.abilities[o].total !== this.actor.data.abilities[o].base,
+            isEnhanced: this.actor.system.abilities[o].total !== this.actor.system.abilities[o].base,
           };
           return cur;
         }, {}),
@@ -220,7 +220,7 @@ export class LevelUpForm extends FormApplication {
    * @// TODO: Add better logic for determining this <26-01-22, Furyspark> //
    */
   isFavouredClass() {
-    return this.object.data.classType === "base";
+    return this.object.system.classType === "base";
   }
 
   async _updateObject(event, formData) {
@@ -247,12 +247,12 @@ export class LevelUpForm extends FormApplication {
 
     // Add level
     chatData.level = {
-      previous: this.object.data.level,
-      new: this.object.data.level + 1,
+      previous: this.object.system.level,
+      new: this.object.system.level + 1,
     };
 
     // Update class
-    mergeObject(itemData, { "data.level": chatData.level.new });
+    mergeObject(itemData, { "system.level": chatData.level.new });
     const levelingClass = this.object;
     const lvlwaiter = new Promise((resolve) => {
       const hid = Hooks.on("pf1.classLevelChange", function _waiter(actor, item, curLevel, newLevel) {
@@ -280,7 +280,7 @@ export class LevelUpForm extends FormApplication {
 
     // Add new class features to chat data
     {
-      const classAssociations = getProperty(this.object.data, "flags.pf1.links.classAssociations") || {};
+      const classAssociations = getProperty(this.object, "flags.pf1.links.classAssociations") || {};
       const newAssociations = Object.entries(classAssociations).filter((o) => {
         return o[1] === chatData.level.new;
       });
@@ -307,7 +307,7 @@ export class LevelUpForm extends FormApplication {
       }
 
       // Show new ability score
-      const hd = this.actor.data.attributes.hd.total;
+      const hd = this.actor.system.attributes.hd.total;
       if (typeof hd === "number" && hd % 4 === 0) {
         ex.enabled = true;
         ex.newAbilityScore = {
@@ -361,7 +361,7 @@ export class LevelUpForm extends FormApplication {
     // Manual health
     if (section.choice === "manual") {
       const hpValue = section.manualValue;
-      result.item["data.hp"] = this.object.data.hp + hpValue;
+      result.item["system.hp"] = this.object.system.hp + hpValue;
       result.chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Manual",
         add: hpValue,
@@ -371,7 +371,7 @@ export class LevelUpForm extends FormApplication {
     }
     // Roll health
     else if (section.choice === "roll") {
-      const formula = `1d${this.object.data.hd}`;
+      const formula = `1d${this.object.system.hd}`;
       const roll = RollPF.safeRoll(formula);
       result.chatData.hp = {
         label: "PF1.LevelUp.Chat.Health.Roll",
@@ -379,7 +379,7 @@ export class LevelUpForm extends FormApplication {
         roll: roll,
       };
       if (!Number.isNaN(roll.total)) {
-        result.item["data.hp"] = this.object.data.hp + roll.total;
+        result.item["system.hp"] = this.object.system.hp + roll.total;
       }
     }
 
@@ -395,8 +395,8 @@ export class LevelUpForm extends FormApplication {
 
     const id = section.choice;
     if (["hp", "skill", "alt"].includes(id)) {
-      const key = `data.fc.${section.choice}.value`;
-      result.item[key] = getProperty(this.object.data, key) + 1;
+      const key = `system.fc.${section.choice}.value`;
+      result.item[key] = getProperty(this.object, key) + 1;
 
       const fcKey = { hp: "HP", skill: "Skill", alt: "Alt" }[id];
       result.chatData.fc = {
@@ -450,14 +450,14 @@ export class LevelUpForm extends FormApplication {
       newItem.name = game.i18n.localize(newItem.name);
       setProperty(
         newItem,
-        "data.description.value",
-        game.i18n.localize(getProperty(newItem, "data.description.value") ?? "")
+        "system.description.value",
+        game.i18n.localize(getProperty(newItem, "system.description.value") ?? "")
       );
 
       // Add changes
       setProperty(
         newItem,
-        "data.changes",
+        "system.changes",
         Object.entries(added).reduce((cur, o) => {
           const change = mergeObject(game.pf1.documentComponents.ItemChange.defaultData, {
             formula: `${o[1]}`,
@@ -475,7 +475,7 @@ export class LevelUpForm extends FormApplication {
     // If a level up ability score feature already exists, update it
     else {
       const cb = async function () {
-        const changes = duplicate(item.data.changes ?? []);
+        const changes = duplicate(item.system.changes ?? []);
         for (const [key, value] of Object.entries(added)) {
           const change = changes.find((o) => o.subTarget === key);
 
@@ -500,7 +500,7 @@ export class LevelUpForm extends FormApplication {
         }
 
         await item.update({
-          "data.changes": changes,
+          "system.changes": changes,
         });
       };
 
@@ -516,8 +516,8 @@ export class LevelUpForm extends FormApplication {
     const templateData = {
       formData,
       config: CONFIG.PF1,
-      item: this.object.data.toObject(),
-      actor: this.actor.data.toObject(),
+      item: this.object.toObject(),
+      actor: this.actor.toObject(),
     };
 
     return ChatMessage.create({

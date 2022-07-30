@@ -3,9 +3,9 @@
 
 <div class="form-group">
   <label>{{localize "PF1.Tag"}}</label>
-  <input {{#unless data.useCustomTag}}disabled{{/unless}} type="text" name="data.tag" value="{{ data.tag }}"
+  <input {{#unless system.useCustomTag}}disabled{{/unless}} type="text" name="system.tag" value="{{ system.tag }}"
   placeholder="{{localize "PF1.Tag"}}" />
   <label>{{localize "PF1.Custom"}}</label>
-  <input type="checkbox" name="data.useCustomTag" {{checked data.useCustomTag}} />
+  <input type="checkbox" name="system.useCustomTag" {{checked system.useCustomTag}} />
 </div>
 {{/unless}}

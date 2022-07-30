@@ -10,7 +10,7 @@ export class TokenPF extends Token {
       } else call = await super.toggleEffect(effect, { active, overlay });
     } else if (effect && !midUpdate && Object.keys(CONFIG.PF1.conditions).includes(effect.id)) {
       const updates = {};
-      updates["data.attributes.conditions." + effect.id] = !this.actor.data.attributes.conditions[effect.id];
+      updates["system.attributes.conditions." + effect.id] = !this.actor.system.attributes.conditions[effect.id];
       call = await this.actor.update(updates);
     } else if (effect) {
       call = await super.toggleEffect(effect, { active, overlay });
@@ -21,14 +21,14 @@ export class TokenPF extends Token {
 
   get actorVision() {
     return {
-      lowLight: getProperty(this.actor.data, "data.traits.senses.ll.enabled"),
-      lowLightMultiplier: getProperty(this.actor.data, "data.traits.senses.ll.multiplier.dim"),
-      lowLightMultiplierBright: getProperty(this.actor.data, "data.traits.senses.ll.multiplier.bright"),
+      lowLight: getProperty(this.actor, "system.traits.senses.ll.enabled"),
+      lowLightMultiplier: getProperty(this.actor, "system.traits.senses.ll.multiplier.dim"),
+      lowLightMultiplierBright: getProperty(this.actor, "system.traits.senses.ll.multiplier.bright"),
     };
   }
 
   get disableLowLight() {
-    return getProperty(this.data, "flags.pf1.disableLowLight") === true;
+    return getProperty(this, "flags.pf1.disableLowLight") === true;
   }
 
   // Token patch for shared vision

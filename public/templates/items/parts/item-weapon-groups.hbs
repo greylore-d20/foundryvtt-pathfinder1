@@ -1,7 +1,7 @@
-<div class="form-group {{data.weaponGroups.cssClass}} tooltip">
-  <label for="data.weaponGroups">{{localize "PF1.WeaponGroups"}}</label>
+<div class="form-group {{system.weaponGroups.cssClass}} tooltip">
+  <label for="system.weaponGroups">{{localize "PF1.WeaponGroups"}}</label>
   <ul class="traits-list tag-list">
-    {{#each data.weaponGroups.selected as |v k|}}
+    {{#each system.weaponGroups.selected as |v k|}}
       <li class="tag {{k}}">{{v}}</li>
     {{/each}}
   </ul>

@@ -3,12 +3,12 @@ import { ItemPF } from "../entity.js";
 export class ItemWeaponPF extends ItemPF {
   async _preUpdate(update, context) {
     // Set weapon subtype if not present
-    const newWeaponType = getProperty(update, "data.weaponType");
+    const newWeaponType = getProperty(update, "system.weaponType");
     if (newWeaponType != null && newWeaponType !== this.data.weaponType) {
-      const subtype = getProperty(update, "data.weaponSubtype") ?? this.data.weaponSubtype ?? "";
+      const subtype = getProperty(update, "system.weaponSubtype") ?? this.data.weaponSubtype ?? "";
       const keys = Object.keys(CONFIG.PF1.weaponTypes[newWeaponType]).filter((o) => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
-        setProperty(update, "data.weaponSubtype", keys[0]);
+        setProperty(update, "system.weaponSubtype", keys[0]);
       }
     }
   }
@@ -40,7 +40,7 @@ export class ItemWeaponPF extends ItemPF {
    * @override
    */
   async setActive(active, context) {
-    return this.update({ "data.equipped": active }, context);
+    return this.update({ "system.equipped": active }, context);
   }
 
   get isActive() {

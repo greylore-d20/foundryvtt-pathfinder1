@@ -9,17 +9,20 @@ export class ActorCharacterPF extends ActorPF {
   _preCreate(data, user) {
     super._preCreate(data, user);
 
+    const tokenUpdateData = {};
     // Link token data by default
-    if (data.token?.actorLink === undefined) {
-      this.data.token.update({ actorLink: true });
+    if (data.prototypeToken?.actorLink === undefined) {
+      tokenUpdateData["actorLink"] = true;
     }
 
     // Enable vision by default
     if (game.settings.get("pf1", "characterVision")) {
-      if (data.token?.vision === undefined) {
-        this.data.token.update({ vision: true });
+      if (data.prototypeToken?.vision === undefined) {
+        tokenUpdateData["sight.enabled"] = true;
       }
     }
+
+    if (!foundry.utils.isEmpty(tokenUpdateData)) this.prototypeToken.updateSource(tokenUpdateData);
   }
 
   prepareBaseData() {

@@ -978,6 +978,7 @@ export function simplifyFormula(formula, rollData = {}) {
  * @param {...any} args
  */
 export function createInlineFormula(_match, _command, formula, closing, label, ...args) {
+  console.log(arguments);
   const rollData = args.pop();
   if (closing.length === 3) formula += "]";
 
@@ -1010,7 +1011,7 @@ export function createInlineFormula(_match, _command, formula, closing, label, .
  * @param root0.documents
  */
 export function enrichHTMLUnrolled(content, { rollData, secrets, rolls, documents } = {}) {
-  let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData });
+  let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, async: false });
 
   if (!rolls) {
     const html = document.createElement("div");
@@ -1189,16 +1190,16 @@ export const diffObjectAndArray = function (original, other, { inner = false, ke
       const d = [];
       for (let a = 0; a < v0.length; a++) {
         const d2 = diffObjectAndArray(v0[a], v1[a], { inner, keepLength });
-        if (!isObjectEmpty(d2)) d.push(d2);
+        if (!foundry.utils.isEmpty(d2)) d.push(d2);
         else if (keepLength) d.push({});
       }
       if (d.length > 0) return [true, d];
       return [false, d];
     }
     if (t0 === "Object") {
-      if (isObjectEmpty(v0) !== isObjectEmpty(v1)) return [true, v1];
+      if (foundry.utils.isEmpty(v0) !== foundry.utils.isEmpty(v1)) return [true, v1];
       const d = diffObjectAndArray(v0, v1, { inner, keepLength });
-      return [!isObjectEmpty(d), d];
+      return [!foundry.utils.isEmpty(d), d];
     }
     return [v0 !== v1, v1];
   }

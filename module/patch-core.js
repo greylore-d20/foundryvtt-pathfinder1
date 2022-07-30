@@ -145,7 +145,7 @@ OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<
   const origFunc = Combatant.prototype.updateResource;
   Combatant.prototype.updateResource = function () {
     if (!this.actor) return (this.resource = null);
-    return (this.resource = foundry.utils.getProperty(this.actor.data, this.parent.settings.resource) ?? null);
+    return (this.resource = foundry.utils.getProperty(this.actor.system, this.parent.settings.resource) ?? null);
   };
 }
 

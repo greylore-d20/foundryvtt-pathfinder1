@@ -50,10 +50,10 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
     // Challenge Rating
     try {
-      data.labels.cr = CR.fromNumber(getProperty(this.actor.data, "data.details.cr.total"));
+      data.labels.cr = CR.fromNumber(getProperty(this.actor, "system.details.cr.total"));
     } catch (e) {
       try {
-        data.labels.cr = CR.fromNumber(getProperty(this.actor.data, "data.details.cr"));
+        data.labels.cr = CR.fromNumber(getProperty(this.actor, "system.details.cr"));
       } catch (e) {
         data.labels.cr = CR.fromNumber(1);
       }
@@ -83,9 +83,6 @@ export class ActorSheetPFNPC extends ActorSheetPF {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Rollable Health Formula
-    html.find(".health .rollable").click(this._onRollHealthFormula.bind(this));
-
     // Adjust CR
     html.find("span.text-box.cr-input").on("click", (event) => {
       this._onSpanTextInput(event, this._adjustCR.bind(this));
@@ -112,20 +109,5 @@ export class ActorSheetPFNPC extends ActorSheetPF {
         });
       }
     } else this._onSubmit(event);
-  }
-
-  /**
-   * Handle rolling NPC health values using the provided formula
-   *
-   * @param {Event} event     The original click event
-   * @private
-   */
-  _onRollHealthFormula(event) {
-    event.preventDefault();
-    const formula = this.actor.data.attributes.hp.formula;
-    if (!formula) return;
-    const hp = RollPF.safeRoll(formula).total;
-    AudioHelper.play({ src: CONFIG.sounds.dice });
-    this.actor.update({ "data.attributes.hp.value": hp, "data.attributes.hp.max": hp });
   }
 }

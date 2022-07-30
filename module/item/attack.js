@@ -25,14 +25,14 @@ export const checkRequirements = async function (shared) {
     return ERR_REQUIREMENT.NO_ACTOR_PERM;
   }
 
-  if (this.type === "feat" && this.data.disabled) {
+  if (this.type === "feat" && this.system.disabled) {
     const msg = game.i18n.localize("PF1.ErrorFeatDisabled");
     console.warn(msg);
     ui.notifications.warn(msg);
     return ERR_REQUIREMENT.DISABLED;
   }
 
-  const itemQuantity = getProperty(this.data, "data.quantity");
+  const itemQuantity = getProperty(this.system, "system.quantity");
   if (itemQuantity != null && itemQuantity <= 0) {
     const msg = game.i18n.localize("PF1.ErrorNoQuantity");
     console.warn(msg);
@@ -85,7 +85,7 @@ export const createAttackDialog = async function (shared) {
  */
 export const alterRollData = function (shared, form = {}) {
   let formData;
-  if (form instanceof jQuery) formData = new FormDataExtended(form[0].querySelector("form")).toObject();
+  if (form instanceof jQuery) formData = new FormDataExtended(form[0].querySelector("form")).object;
   else formData = form;
   if (formData["d20"]) shared.rollData.d20 = formData["d20"];
   const atkBonus = formData["attack-bonus"];
@@ -137,7 +137,7 @@ export const alterRollData = function (shared, form = {}) {
     let powerAttackMultiplier = shared.rollData.item?.powerAttack?.multiplier;
     if (!powerAttackMultiplier) {
       powerAttackMultiplier = 1;
-      if (this.data.attackType === "natural") {
+      if (this.system.attackType === "natural") {
         if (shared.rollData.item?.primaryAttack) powerAttackMultiplier = shared.rollData.action.ability?.damageMult;
         else if (!shared.rollData.item?.primaryAttack) {
           powerAttackMultiplier = shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
@@ -154,7 +154,7 @@ export const alterRollData = function (shared, form = {}) {
     powerAttackBonus = Math.floor(powerAttackBonus * powerAttackMultiplier);
 
     // Get label
-    const label = ["rwak", "rsak"].includes(this.data.actionType)
+    const label = ["rwak", "rsak"].includes(this.system.actionType)
       ? game.i18n.localize("PF1.DeadlyAim")
       : game.i18n.localize("PF1.PowerAttack");
 
@@ -196,7 +196,7 @@ export const alterRollData = function (shared, form = {}) {
   shared.concentrationCheck = formData["concentration"];
 
   // Conditional defaults for fast-forwarding
-  if (!shared.conditionals && isObjectEmpty(formData)) {
+  if (!shared.conditionals && foundry.utils.isEmpty(formData)) {
     shared.conditionals = shared.action.data.conditionals?.reduce((arr, con, i) => {
       if (con.default) arr.push(i);
       return arr;
@@ -308,12 +308,12 @@ export const subtractAmmo = function (shared, value = 1) {
     }
   }
 
-  if (!isObjectEmpty(ammoUsage)) {
+  if (!foundry.utils.isEmpty(ammoUsage)) {
     const updateData = Object.entries(ammoUsage).reduce((cur, o) => {
       const currentValue = this.actor.items.get(o[0]).data.quantity;
       const obj = {
         _id: o[0],
-        "data.quantity": currentValue - o[1],
+        "system.quantity": currentValue - o[1],
       };
 
       cur.push(obj);
@@ -404,7 +404,7 @@ export const handleConditionals = function (shared) {
 export const checkAttackRequirements = function (shared) {
   // Enforce zero charge cost on cantrips/orisons, but make sure they have at least 1 charge
   if (
-    this.data.type === "spell" &&
+    this.system.type === "spell" &&
     shared.rollData.item?.level === 0 &&
     shared.rollData.item?.preparation?.preparedAmount > 0
   ) {
@@ -417,7 +417,7 @@ export const checkAttackRequirements = function (shared) {
   if (this.isCharged) {
     cost = shared.action.chargeCost;
     let uses = this.charges;
-    if (this.data.type === "spell") {
+    if (this.system.type === "spell") {
       if (this.useSpellPoints()) {
         uses = this.getSpellUses();
       } else {
@@ -778,8 +778,8 @@ export const getMessageData = async function (shared) {
   }
 
   // Add CL notes
-  if (this.data.type === "spell" && this.parent) {
-    const clNotes = this.parent.getContextNotesParsed(`spell.cl.${this.data.spellbook}`);
+  if (this.system.type === "spell" && this.parent) {
+    const clNotes = this.parent.getContextNotesParsed(`spell.cl.${this.system.spellbook}`);
 
     if (clNotes.length) {
       props.push({
@@ -809,8 +809,8 @@ export const getMessageData = async function (shared) {
       hasExtraText: extraText.length > 0,
       properties: props,
       hasProperties: props.length > 0,
-      item: this.data,
-      actor: this.parentActor.data,
+      item: this.toObject(),
+      actor: this.parentActor,
       hasSave: shared.action.hasSave,
       rollData: shared.rollData,
       save: {
@@ -852,8 +852,11 @@ export const getMessageData = async function (shared) {
   // Add spell info
   if (this.type === "spell" && this.parent != null) {
     // Spell failure
-    if (this.parent.spellFailure > 0 && this.data.components.somatic) {
-      const spellbook = getProperty(this.parentActor.data, `data.attributes.spells.spellbooks.${this.data.spellbook}`);
+    if (this.parent.spellFailure > 0 && this.system.components.somatic) {
+      const spellbook = getProperty(
+        this.parentActor.data,
+        `system.attributes.spells.spellbooks.${this.system.spellbook}`
+      );
       if (spellbook && spellbook.arcaneSpellFailure) {
         const roll = RollPF.safeRoll("1d100");
         shared.templateData.spellFailure = roll.total;
@@ -909,8 +912,8 @@ export const addGenericPropertyLabels = function (shared) {
 
   // Add actual cost
   const cost = shared.rollData.chargeCost;
-  if (cost && !this.data.atWill) {
-    if (this.data.type === "spell" && this.useSpellPoints()) {
+  if (cost && !this.system.atWill) {
+    if (this.system.type === "spell" && this.useSpellPoints()) {
       properties.push(`${game.i18n.localize("PF1.SpellPointsCost")}: ${cost}`);
     } else {
       properties.push(`${game.i18n.localize("PF1.ChargeCost")}: ${cost}`);
@@ -918,17 +921,17 @@ export const addGenericPropertyLabels = function (shared) {
   }
 
   // Add info for broken state
-  if (this.data.broken) {
+  if (this.system.broken) {
     properties.push(game.i18n.localize("PF1.Broken"));
   }
 
   // Nonlethal
-  if (this.data.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
+  if (this.system.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
 
   // Add info for Power Attack to melee, Deadly Aim to ranged attacks
   if (shared.powerAttack) {
-    if (this.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
-    if (this.data.actionType === "mwak") properties.push(game.i18n.localize("PF1.PowerAttack"));
+    if (this.system.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
+    if (this.system.actionType === "mwak") properties.push(game.i18n.localize("PF1.PowerAttack"));
   }
 
   // Add info for Point-Blank shot
@@ -1062,13 +1065,13 @@ export const executeScriptCalls = async function (shared) {
     return {
       get(obj, prop) {
         if (prop == "chatMessage" || prop == "fullAttack")
-          deprecationWarning("data." + prop, "shared.attackData." + prop);
+          deprecationWarning("system." + prop, "shared.attackData." + prop);
         else deprecationWarning(propName, redirect);
         return Reflect.get(...arguments);
       },
       set(obj, prop, value) {
         if (prop == "chatMessage" || prop == "fullAttack")
-          deprecationWarning("data." + prop, "shared.attackData." + prop);
+          deprecationWarning("system." + prop, "shared.attackData." + prop);
         else deprecationWarning(propName, redirect);
         return Reflect.set(...arguments);
       },
@@ -1080,9 +1083,9 @@ export const executeScriptCalls = async function (shared) {
   shared.scriptData = await this.executeScriptCalls("use", {
     attackData,
     // Deprecated for V10
-    data: new Proxy({ chatMessage: shared.chatMessage, fullAttack: shared.fullAttack }, handlerMaker("data")),
-    attacks: new Proxy(shared.chatAttacks ?? [], handlerMaker("attacks", "shared.attackData.chatAttacks")),
-    template: new Proxy(shared.template ?? {}, handlerMaker("template")),
+    // data: new Proxy({ chatMessage: shared.chatMessage, fullAttack: shared.fullAttack }, handlerMaker("system.)),
+    // attacks: new Proxy(shared.chatAttacks ?? [], handlerMaker("attacks", "shared.attackData.chatAttacks")),
+    // template: new Proxy(shared.template ?? {}, handlerMaker("template")),
     // End deprecated
   });
 };

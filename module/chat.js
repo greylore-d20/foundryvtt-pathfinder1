@@ -36,8 +36,8 @@ export const createCustomChatMessage = async function (
 };
 
 export const hideRollInfo = function (app, html, data) {
-  const whisper = app.data.whisper || [];
-  const isBlind = whisper.length && app.data.blind;
+  const whisper = app.whisper || [];
+  const isBlind = whisper.length && app.blind;
   const isVisible = whisper.length ? whisper.includes(game.user.id) || (app.isAuthor && !isBlind) : true;
   if (!isVisible) {
     html.find(".dice-formula").text("???");
@@ -91,7 +91,7 @@ export const hideGMSensitiveInfo = function (app, html, data) {
   // Handle adding of GM-sensitive info
   if (game.user.isGM) {
     // Show identified info box for GM if item was unidentified when rolled
-    const identifiedInfo = app.data.flags.pf1?.identifiedInfo ?? {};
+    const identifiedInfo = app.flags.pf1?.identifiedInfo ?? {};
     const { identified = true } = identifiedInfo;
     if (!identified && app.hasItemSource) {
       const cardContent = html.find(".card-content");
@@ -127,7 +127,7 @@ export const hideGMSensitiveInfo = function (app, html, data) {
     });
   });
 
-  const speaker = app.data.speaker;
+  const speaker = app.speaker;
   let actor = null;
   if (speaker != null) {
     if (speaker.token) {

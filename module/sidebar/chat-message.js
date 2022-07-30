@@ -1,6 +1,6 @@
 export class ChatMessagePF extends ChatMessage {
   get isRoll() {
-    return this.data.type === CONST.CHAT_MESSAGE_TYPES.ROLL || this.getFlag("pf1", "noRollRender");
+    return this.type === CONST.CHAT_MESSAGE_TYPES.ROLL || this.getFlag("pf1", "noRollRender");
   }
 
   /**
@@ -9,9 +9,9 @@ export class ChatMessagePF extends ChatMessage {
    * @type {ItemPF|undefined|null} - Null is returned if no item is linked, undefined if item is not found, and ItemPF otherwise.
    */
   get itemSource() {
-    const itemId = this.data.flags?.pf1?.metadata?.item;
+    const itemId = this.system.flags?.pf1?.metadata?.item;
     if (itemId) {
-      const actor = this.constructor.getSpeakerActor(this.data.speaker);
+      const actor = this.constructor.getSpeakerActor(this.system.speaker);
       return actor?.items.get(itemId);
     }
     return null;
@@ -21,7 +21,7 @@ export class ChatMessagePF extends ChatMessage {
    * @type {boolean} True if item source is defined, regardless if that item source still exists.
    */
   get hasItemSource() {
-    return this.data.flags?.pf1?.metadata?.item !== undefined;
+    return this.system.flags?.pf1?.metadata?.item !== undefined;
   }
 
   /**
@@ -30,7 +30,7 @@ export class ChatMessagePF extends ChatMessage {
    * @type {MeasuredTemplatePF}
    */
   get measureTemplate() {
-    const templateId = this.data.flags?.pf1?.metadata?.template;
+    const templateId = this.system.flags?.pf1?.metadata?.template;
     if (!templateId) return null;
     const template = canvas.templates.get(templateId);
     return template || null;
@@ -40,7 +40,7 @@ export class ChatMessagePF extends ChatMessage {
    * @returns {TokenPF[]} The tokens which were targeted with this chat card.
    */
   get targets() {
-    const targetIds = this.data.flags?.pf1?.metadata?.targets ?? [];
+    const targetIds = this.system.flags?.pf1?.metadata?.targets ?? [];
     return canvas.tokens.placeables.filter((o) => targetIds.includes(o.id));
   }
 }

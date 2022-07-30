@@ -62,7 +62,7 @@ export class ItemActionSheet extends FormApplication {
     data.damageTypes = game.pf1.damageTypes.toRecord();
 
     // Set tag
-    data.tag = createTag(data.name);
+    data.tag = createTag(data.action.name);
 
     // Include CONFIG values
     data.config = CONFIG.PF1;
@@ -74,16 +74,16 @@ export class ItemActionSheet extends FormApplication {
 
     data.isCharged = this.action.isCharged;
     if (this.action.hasRange) {
-      data.canInputRange = ["ft", "mi", "spec"].includes(data.range.units);
-      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.range.minUnits);
+      data.canInputRange = ["ft", "mi", "spec"].includes(data.data.range.units);
+      data.canInputMinRange = ["ft", "mi", "spec"].includes(data.data.range.minUnits);
     }
     if (data.duration != null) {
-      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.duration.units);
+      data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.data.duration.units);
     }
 
     // Action Details
     data.itemName = data.item.name;
-    data.itemEnh = data.item.data.enh || 0;
+    data.itemEnh = data.item.system.enh || 0;
     data.isSpell = this.item.type === "spell";
     data.canUseAmmo = this.action.data.usesAmmo !== undefined;
     data.owned = this.item.actor != null;
@@ -92,16 +92,16 @@ export class ItemActionSheet extends FormApplication {
     data.isGM = game.user.isGM;
     data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
     data.hasActivationType =
-      (game.settings.get("pf1", "unchainedActionEconomy") && data.unchainedAction.activation.type) ||
-      (!game.settings.get("pf1", "unchainedActionEconomy") && data.activation.type);
+      (game.settings.get("pf1", "unchainedActionEconomy") && data.data.unchainedAction.activation.type) ||
+      (!game.settings.get("pf1", "unchainedActionEconomy") && data.data.activation.type);
 
     // Show additional ranged properties
-    data.showMaxRangeIncrements = data.range.units === "ft";
+    data.showMaxRangeIncrements = data.action.range.units === "ft";
 
     // Prepare attack specific stuff
     if (data.item.type === "attack") {
-      data.isWeaponAttack = data.item.data.attackType === "weapon";
-      data.isNaturalAttack = data.item.data.attackType === "natural";
+      data.isWeaponAttack = data.item.system.attackType === "weapon";
+      data.isNaturalAttack = data.item.system.attackType === "natural";
     }
 
     // Add distance units

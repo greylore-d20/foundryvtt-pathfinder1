@@ -79,13 +79,13 @@ export class ExperienceDistributor extends FormApplication {
     addListener('button[name="cancel"]', "click", this._onCancel.bind(this));
   }
 
-  _onDrop(event) {
+  async _onDrop(event) {
     event.preventDefault();
-    const data = JSON.parse(event.dataTransfer.getData("text/plain")) ?? {};
+    const data = TextEditor.getDragEventData(event);
 
     // Add actor
     if (data.type === "Actor") {
-      const actor = game.actors.get(data.id);
+      const actor = await Actor.implementation.fromDropData(data);
 
       // Prevent duplicate characters (not NPCs)
       if (actor.type !== "character" || this.object.find((o) => o.actor === actor) == null) {
@@ -137,7 +137,7 @@ export class ExperienceDistributor extends FormApplication {
           if (o.value === 0 || !Number.isFinite(o.value)) return null;
           return {
             _id: o.actor.id,
-            "data.details.xp.value": o.actor.data.details.xp.value + Math.floor(o.value),
+            "system.details.xp.value": o.actor.system.details.xp.value + Math.floor(o.value),
           };
         })
         .filter((o) => o != null);
@@ -174,7 +174,7 @@ export class ExperienceDistributor extends FormApplication {
   static getActorData(actor) {
     if (!(actor instanceof Actor)) return null;
     const type = actor.type;
-    const xp = type === "npc" ? actor.data.details.xp.value ?? 0 : 0;
+    const xp = type === "npc" ? actor.system.details.xp.value ?? 0 : 0;
 
     return {
       id: randomID(16),
@@ -187,7 +187,7 @@ export class ExperienceDistributor extends FormApplication {
 
   static shouldActorBeToggled(actor) {
     const isPC = actor.type === "character";
-    const isDefeated = actor.data.attributes.hp.value < 0;
+    const isDefeated = actor.system.attributes.hp.value < 0;
 
     if (!isPC && !isDefeated) return false;
 

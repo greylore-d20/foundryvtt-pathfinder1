@@ -30,8 +30,8 @@ export class SkillEditor extends FormApplication {
   }
 
   get skill() {
-    if (this.isSubSkill) return this.actor.data.skills[this.skillId]?.subSkills[this.subSkillId];
-    return this.actor.data.skills[this.skillId];
+    if (this.isSubSkill) return this.actor.system.skills[this.skillId]?.subSkills[this.subSkillId];
+    return this.actor.system.skills[this.skillId];
   }
   get skillName() {
     return this.isStaticSkill ? CONFIG.PF1.skills[this.skillId] : this.skill.name;
@@ -77,7 +77,7 @@ export class SkillEditor extends FormApplication {
       { inplace: false }
     );
     // Actor data
-    data.actorData = this.actor.data.toObject();
+    data.actorData = this.actor.toObject();
 
     // Referenced documents
     data.journals = this._getDocuments(game.journal);

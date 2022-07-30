@@ -43,18 +43,18 @@
     </div>
     <div class="rollable"><img src="icons/dice/d20black.svg"></div>
     <span class="text-box skill-mod" title="{{localize "PF1.SkillModTooltip"}}">{{numberFormat subSkill.mod decimals=0 sign=true}}</span>
-    <span class="text-box skill-rank" name="data.skills.{{s}}.subSkills.{{b}}.rank" data-dtype="Number" title="{{localize "PF1.SkillRankPlural"}}" data-placeholder="{{localize "PF1.Rank"}}">{{#if subSkill.rank}}{{subSkill.rank}}{{/if}}</span>
+    <span class="text-box skill-rank" name="system.skills.{{s}}.subSkills.{{b}}.rank" data-dtype="Number" title="{{localize "PF1.SkillRankPlural"}}" data-placeholder="{{localize "PF1.Rank"}}">{{#if subSkill.rank}}{{subSkill.rank}}{{/if}}</span>
     <label class="checkbox skill-cs">
       <abbr title="{{localize "PF1.CSTooltip"}}">{{localize "PF1.CS"}}</abbr> <input type="checkbox" disabled {{checked subSkill.cs}}/>
     </label>
     <label class="checkbox skill-acp">
-      <abbr title="{{localize "PF1.ACPTooltip"}}">{{localize "PF1.ACP"}}</abbr> <input type="checkbox" name="data.skills.{{s}}.subSkills.{{b}}.acp"{{#if @root.skillsLocked}} disabled{{/if}} {{checked subSkill.acp}}/>
+      <abbr title="{{localize "PF1.ACPTooltip"}}">{{localize "PF1.ACP"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.subSkills.{{b}}.acp"{{#if @root.skillsLocked}} disabled{{/if}} {{checked subSkill.acp}}/>
     </label>
     <label class="checkbox skill-rt">
-      <abbr title="{{localize "PF1.RTTooltip"}}">{{localize "PF1.RT"}}</abbr> <input type="checkbox" name="data.skills.{{s}}.subSkills.{{b}}.rt"{{#if @root.skillsLocked}} disabled{{/if}} {{checked subSkill.rt}}/>
+      <abbr title="{{localize "PF1.RTTooltip"}}">{{localize "PF1.RT"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.subSkills.{{b}}.rt"{{#if @root.skillsLocked}} disabled{{/if}} {{checked subSkill.rt}}/>
     </label>
     <div class="skill-ability">
-      <select class="skill-ability" name="data.skills.{{s}}.subSkills.{{b}}.ability" data-dtype="String"{{#if @root.skillsLocked}} disabled{{/if}}>
+      <select class="skill-ability" name="system.skills.{{s}}.subSkills.{{b}}.ability" data-dtype="String"{{#if @root.skillsLocked}} disabled{{/if}}>
         {{#select subSkill.ability}}
         <option value=''><!-- None --></option>
         {{#each ../../config.abilitiesShort as |ability a|}}
@@ -99,18 +99,18 @@
     </div>
     <div class="rollable"><img src="icons/dice/d20black.svg"></div>
     <span class="text-box skill-mod" title="{{localize "PF1.SkillModTooltip"}}">{{numberFormat skill.mod decimals=0 sign=true}}</span>
-    <span class="text-box skill-rank" name="data.skills.{{s}}.rank" data-dtype="Number" title="{{localize "PF1.SkillRankPlural"}}" data-placeholder="{{localize "PF1.Rank"}}">{{#if skill.rank}}{{skill.rank}}{{/if}}</span>
+    <span class="text-box skill-rank" name="system.skills.{{s}}.rank" data-dtype="Number" title="{{localize "PF1.SkillRankPlural"}}" data-placeholder="{{localize "PF1.Rank"}}">{{#if skill.rank}}{{skill.rank}}{{/if}}</span>
     <label class="checkbox skill-cs">
       <abbr title="{{localize "PF1.CSTooltip"}}">{{localize "PF1.CS"}}</abbr> <input type="checkbox" disabled {{checked skill.cs}}/>
     </label>
     <label class="checkbox skill-acp">
-      <abbr title="{{localize "PF1.ACPTooltip"}}">{{localize "PF1.ACP"}}</abbr> <input type="checkbox" name="data.skills.{{s}}.acp"{{#if @root.skillsLocked}} disabled{{/if}} {{checked skill.acp}}/>
+      <abbr title="{{localize "PF1.ACPTooltip"}}">{{localize "PF1.ACP"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.acp"{{#if @root.skillsLocked}} disabled{{/if}} {{checked skill.acp}}/>
     </label>
     <label class="checkbox skill-rt">
-      <abbr title="{{localize "PF1.RTTooltip"}}">{{localize "PF1.RT"}}</abbr> <input type="checkbox" name="data.skills.{{s}}.rt"{{#if @root.skillsLocked}} disabled{{/if}} {{checked skill.rt}}/>
+      <abbr title="{{localize "PF1.RTTooltip"}}">{{localize "PF1.RT"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.rt"{{#if @root.skillsLocked}} disabled{{/if}} {{checked skill.rt}}/>
     </label>
     <div class="skill-ability">
-      <select class="skill-ability" name="data.skills.{{s}}.ability" data-dtype="String"{{#if @root.skillsLocked}} disabled{{/if}}>
+      <select class="skill-ability" name="system.skills.{{s}}.ability" data-dtype="String"{{#if @root.skillsLocked}} disabled{{/if}}>
         {{#select skill.ability}}
         <option value=''><!-- None --></option>
         {{#each ../config.abilitiesShort as |ability a|}}

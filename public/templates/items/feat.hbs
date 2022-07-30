@@ -15,7 +15,7 @@
         </li>
         <li>
           <label>
-            <input type="checkbox" name="data.disabled" {{checked data.disabled}}> {{localize "PF1.Disabled"}}
+            <input type="checkbox" name="system.disabled" {{checked system.disabled}}> {{localize "PF1.Disabled"}}
           </label>
         </li>
       </ul>
@@ -47,16 +47,16 @@
       <div class="form-group select">
         <label>{{localize "PF1.Type"}}</label>
         <div class="form-fields">
-          <select name="data.featType" value="{{data.featType}}">
-            {{#select data.featType}}
+          <select name="system.featType" value="{{system.featType}}">
+            {{#select system.featType}}
             {{#each config.featTypes as |type a|}}
             <option value="{{a}}">{{type}}</option>
             {{/each}}
             {{/select}}
           </select>
 
-          <select name="data.abilityType" value="{{data.abilityType}}">
-            {{#select data.abilityType}}
+          <select name="system.abilityType" value="{{system.abilityType}}">
+            {{#select system.abilityType}}
             <option value="none"></option>
             {{#each config.abilityTypes as |type a|}}
             <option value="{{a}}">{{localize type.short}}</option>
@@ -72,14 +72,14 @@
       {{!-- Feat Tags --}}
       <div class="form-group stacked">
         <div class="data-selector">
-          <a class="entry-selector" for="data.tags" data-fields="{{localize "PF1.Tags"}}" data-dtypes="String"><i class="fas fa-edit"></i></a>
-          <label for="data.tags">{{localize "PF1.Tags"}}</label>
+          <a class="entry-selector" for="system.tags" data-fields="{{localize "PF1.Tags"}}" data-dtypes="String"><i class="fas fa-edit"></i></a>
+          <label for="system.tags">{{localize "PF1.Tags"}}</label>
         </div>
 
         {{#if isClassFeature}}
         <div class="data-selector">
-          <a class="entry-selector" for="data.associations.classes" data-fields="{{localize "PF1.ClassPlural"}}" data-dtypes="String"><i class="fas fa-edit"></i></a>
-          <label for="data.associations.classes">{{localize "PF1.ClassPlural"}}</label>
+          <a class="entry-selector" for="system.associations.classes" data-fields="{{localize "PF1.ClassPlural"}}" data-dtypes="String"><i class="fas fa-edit"></i></a>
+          <label for="system.associations.classes">{{localize "PF1.ClassPlural"}}</label>
         </div>
         {{/if}}
       </div>
@@ -88,7 +88,7 @@
       <div class="form-group">
         <label>{{localize "PF1.CROffset"}}</label>
         <div class="form-fields">
-          <input type="text" name="data.crOffset" class="formula" value="{{data.crOffset}}" placeholder="{{localize "PF1.Formula"}}" />
+          <input type="text" name="system.crOffset" class="formula" value="{{system.crOffset}}" placeholder="{{localize "PF1.Formula"}}" />
         </div>
       </div>
       {{/if}}
@@ -97,13 +97,13 @@
         {{#if owner}}
         {{#unless isTemplate}}
         <label class="checkbox">
-          <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
         </label>
         {{/unless}}
         {{/if}}
 
         <label class="checkbox">
-          <input type="checkbox" name="data.nonlethal" {{checked data.nonlethal}}/> {{localize "PF1.Nonlethal"}}
+          <input type="checkbox" name="system.nonlethal" {{checked system.nonlethal}}/> {{localize "PF1.Nonlethal"}}
         </label>
       </div>
 
@@ -115,7 +115,7 @@
         {{#each skills as |skill key|}}
         <li class="item flexrow" data-skill="{{key}}">
           <label class="checkbox skill-cs">
-            <input type="checkbox" name="data.classSkills.{{key}}" {{checked skill.classSkill}} /> {{skill.name}}
+            <input type="checkbox" name="system.classSkills.{{key}}" {{checked skill.classSkill}} /> {{skill.name}}
           </label>
         </li>
         {{/each}}

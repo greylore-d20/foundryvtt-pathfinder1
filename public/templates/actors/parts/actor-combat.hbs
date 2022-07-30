@@ -25,17 +25,17 @@
       <tr>
         <td class="bab tooltip">
           <span class="tooltipcontent">
-            @attributes.bab.total : {{data.attributes.bab.total}}
-            {{#if sourceDetails.data.attributes.bab.total.length}}
+            @attributes.bab.total : {{system.attributes.bab.total}}
+            {{#if sourceDetails.system.attributes.bab.total.length}}
             <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-            {{#each sourceDetails.data.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{#each sourceDetails.system.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </span>
 
           {{#if iteratives}}
           {{iteratives}}
           {{else}}
-          {{numberFormat data.attributes.bab.total decimals=0 sign=true}}
+          {{numberFormat system.attributes.bab.total decimals=0 sign=true}}
           {{/if}}
         </td>
 
@@ -46,20 +46,20 @@
         <td class="generic-melee tooltip">
           <span class="tooltipcontent">
             …<br/>
-            + @attributes.attack.shared : {{data.attributes.attack.shared}}<br/>
-            + @attributes.attack.general : {{data.attributes.attack.general}}<br/>
-            + @attributes.attack.melee : {{data.attributes.attack.melee}}<br/>
-            + @abilities.{{data.attributes.attack.meleeAbility}}.mod : {{data.attributes.attack.meleeAttackMod}}<br/>
+            + @attributes.attack.shared : {{system.attributes.attack.shared}}<br/>
+            + @attributes.attack.general : {{system.attributes.attack.general}}<br/>
+            + @attributes.attack.melee : {{system.attributes.attack.melee}}<br/>
+            + @abilities.{{system.attributes.attack.meleeAbility}}.mod : {{system.attributes.attack.meleeAttackMod}}<br/>
             <br/>{{localize "PF1.FromSources"}}<br/>
-            {{#if sourceDetails.data.attributes.attack.shared.length}}
-            {{#each sourceDetails.data.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{#if sourceDetails.system.attributes.attack.shared.length}}
+            {{#each sourceDetails.system.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
-            {{#if (ne @root.data.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeMods @root.data.traits.size }}<br/>{{/if}}
-            {{#if sourceDetails.data.attributes.attack.general.length}}
-            {{#each sourceDetails.data.attributes.attack.general as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{#if (ne @root.system.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeMods @root.system.traits.size }}<br/>{{/if}}
+            {{#if sourceDetails.system.attributes.attack.general.length}}
+            {{#each sourceDetails.system.attributes.attack.general as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
-            {{#if sourceDetails.data.attributes.attack.melee.length}}
-            {{#each sourceDetails.data.attributes.attack.melee as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{#if sourceDetails.system.attributes.attack.melee.length}}
+            {{#each sourceDetails.system.attributes.attack.melee as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </span>
           {{numberFormat meleeAttack decimals=0 sign=true}}
@@ -68,20 +68,20 @@
         <td class="generic-ranged tooltip">
           <span class="tooltipcontent">
             …<br/>
-            + @attributes.attack.shared : {{data.attributes.attack.shared}}<br/>
-            + @attributes.attack.general : {{data.attributes.attack.general}}<br/>
-            + @attributes.attack.ranged : {{data.attributes.attack.ranged}}<br/>
-            + @abilities.{{data.attributes.attack.rangedAbility}}.mod : {{data.attributes.attack.rangedAttackMod}}<br/>
+            + @attributes.attack.shared : {{system.attributes.attack.shared}}<br/>
+            + @attributes.attack.general : {{system.attributes.attack.general}}<br/>
+            + @attributes.attack.ranged : {{system.attributes.attack.ranged}}<br/>
+            + @abilities.{{system.attributes.attack.rangedAbility}}.mod : {{system.attributes.attack.rangedAttackMod}}<br/>
             <br/>{{localize "PF1.FromSources"}}<br/>
-            {{#if sourceDetails.data.attributes.attack.shared.length}}
-            {{#each sourceDetails.data.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{#if sourceDetails.system.attributes.attack.shared.length}}
+            {{#each sourceDetails.system.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
-            {{#if (ne @root.data.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeMods @root.data.traits.size }}<br/>{{/if}}
-            {{#if sourceDetails.data.attributes.attack.general.length}}
-            {{#each sourceDetails.data.attributes.attack.general as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{#if (ne @root.system.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeMods @root.system.traits.size }}<br/>{{/if}}
+            {{#if sourceDetails.system.attributes.attack.general.length}}
+            {{#each sourceDetails.system.attributes.attack.general as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
-            {{#if sourceDetails.data.attributes.attack.ranged.length}}
-            {{#each sourceDetails.data.attributes.attack.ranged as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{#if sourceDetails.system.attributes.attack.ranged.length}}
+            {{#each sourceDetails.system.attributes.attack.ranged as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </span>
 
@@ -90,16 +90,16 @@
 
         <td class="initiative tooltip">
           <span class="tooltipcontent">
-            @attributes.init.total : {{data.attributes.init.total}}
-            {{#if sourceDetails.data.attributes.init.total.length}}
+            @attributes.init.total : {{system.attributes.init.total}}
+            {{#if sourceDetails.system.attributes.init.total.length}}
             <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-            {{#each sourceDetails.data.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            {{#each sourceDetails.system.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
 
             {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
           </span>
 
-          {{data.attributes.init.total}}
+          {{system.attributes.init.total}}
         </td>
       </tr>
     </tbody>
@@ -159,7 +159,7 @@
         </li>
 
         {{#each section.items as |item iid|}}
-        <li class="item flexrow" data-item-id="{{item._id}}">
+        <li class="item flexrow" data-item-id="{{item.id}}">
           <div class="item-name flexrow rollable">
             <div class="item-image" style='background-image: url("{{item.img}}")'></div>
             <h4>
@@ -169,7 +169,7 @@
 
           {{#if section.showTypes}}
           <div class="item-detail item-type">
-            <span>{{lookup ../../config.attackTypes item.data.attackType}}</span>
+            <span>{{lookup ../../config.attackTypes item.attackType}}</span>
           </div>
           {{/if}}
 
@@ -197,16 +197,16 @@
                 <br/>
                 {{localize "PF1.Details"}}:<br/>
                 {{#with item.document.firstAction}}
-                  {{#each data.damage.parts as |pt ix|}}
+                  {{#each system.damage.parts as |pt ix|}}
                     {{pt.[0]}}{{#if pt.[1]}} [{{damageTypes pt.[1]}}]{{/if}}<br/>
                   {{/each}}
-                  {{#if data.damage.nonCritParts}}
-                    {{#each data.damage.nonCritParts as |pt|}}
+                  {{#if system.damage.nonCritParts}}
+                    {{#each system.damage.nonCritParts as |pt|}}
                       {{pt.[0]}}{{#if pt.[1]}} [{{pt.[1]}}]{{/if}}<br/>
                     {{/each}}
                   {{/if}}
-                  {{#if data.ability.damage}}
-                    {{abilityMod data.ability.damage @root.rollData data.ability.damageMult}} [{{lookup @root.config.abilities data.ability.damage}}]<br/>
+                  {{#if system.ability.damage}}
+                    {{abilityMod system.ability.damage @root.rollData system.ability.damageMult}} [{{lookup @root.config.abilities system.ability.damage}}]<br/>
                   {{/if}}
                   {{#each allDamageSources}}
                     {{#if @first}}<br>{{/if}}
@@ -250,12 +250,12 @@
 
           <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
             {{#if item.isCharged}}
-            <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.data.uses.value}}</span>
+            <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.uses.value}}</span>
             <span class="sep"> / </span>
-            <span class="text-box">{{item.data.uses.max}}</span>
+            <span class="text-box">{{item.uses.max}}</span>
             <span class="tooltipcontent">
-              @resources.{{item.tag}}.value : {{item.data.uses.value}}<br>
-              @resources.{{item.tag}}.max : {{item.data.uses.max}}
+              @resources.{{item.tag}}.value : {{item.uses.value}}<br>
+              @resources.{{item.tag}}.max : {{item.uses.max}}
             </span>
             {{/if}}
           </div>
@@ -290,13 +290,13 @@
     {{!-- Natural Armor --}}
     <li class="natural-armor flexrow">
       <h3>{{localize "PF1.BuffTarACNatural"}}</h3>
-      <span class="text-box direct" name="data.attributes.naturalAC" data-dtype="Number">{{data.attributes.naturalAC}}</span>
+      <span class="text-box direct" name="system.attributes.naturalAC" data-dtype="Number">{{system.attributes.naturalAC}}</span>
     </li>
 
     <li class="flexrow">
       <h3>{{localize "PF1.SpellResistance"}}</h3>
-      <input class="formula" name="data.attributes.sr.formula" type="text" placeholder="{{localize "PF1.Formula"}}"
-        value="{{#if data.attributes.sr.formula}}{{data.attributes.sr.formula}}{{/if}}"/>
+      <input class="formula" name="system.attributes.sr.formula" type="text" placeholder="{{localize "PF1.Formula"}}"
+        value="{{#if system.attributes.sr.formula}}{{system.attributes.sr.formula}}{{/if}}"/>
     </li>
   </ul>
 
@@ -305,22 +305,22 @@
   <div class="attributes defense-notes flexcol scroll-primary" data-scroll-index="defense-notes">
     <div class="flexrow">
       <label><h3>{{localize "PF1.SaveNotes"}}</h3></label>
-      <textarea class="context-text" name="data.attributes.saveNotes" placeholder="{{localize "PF1.SaveNotes"}}">{{data.attributes.saveNotes}}</textarea>
+      <textarea class="context-text" name="system.attributes.saveNotes" placeholder="{{localize "PF1.SaveNotes"}}">{{system.attributes.saveNotes}}</textarea>
     </div>
     <hr>
     <div class="flexrow">
       <label><h3>{{localize "PF1.ACNotes"}}</h3></label>
-      <textarea class="context-text" name="data.attributes.acNotes" placeholder="{{localize "PF1.ACNotes"}}">{{data.attributes.acNotes}}</textarea>
+      <textarea class="context-text" name="system.attributes.acNotes" placeholder="{{localize "PF1.ACNotes"}}">{{system.attributes.acNotes}}</textarea>
     </div>
     <hr>
     <div class="flexrow">
       <label><h3>{{localize "PF1.CMDNotes"}}</h3></label>
-      <textarea class="context-text" name="data.attributes.cmdNotes" placeholder="{{localize "PF1.CMDNotes"}}">{{data.attributes.cmdNotes}}</textarea>
+      <textarea class="context-text" name="system.attributes.cmdNotes" placeholder="{{localize "PF1.CMDNotes"}}">{{system.attributes.cmdNotes}}</textarea>
     </div>
     <hr>
     <div class="flexrow">
       <label><h3>{{localize "PF1.SpellResistanceNotes"}}</h3></label>
-      <textarea class="context-text" name="data.attributes.srNotes" placeholder="{{localize "PF1.SpellResistanceNotes"}}">{{data.attributes.srNotes}}</textarea>
+      <textarea class="context-text" name="system.attributes.srNotes" placeholder="{{localize "PF1.SpellResistanceNotes"}}">{{system.attributes.srNotes}}</textarea>
     </div>
     <hr>
   </div>

@@ -2,9 +2,9 @@
 <div class="flexrow buffs-conditions">
   {{#each config.conditions as |value con|}}
   <div class="condition">
-    <a class="checkbox {{#if (lookup ../data.attributes.conditions con)}}active{{/if}}" name="data.attributes.conditions.{{con}}">
+    <a class="checkbox {{#if (lookup ../system.attributes.conditions con)}}active{{/if}}" name="system.attributes.conditions.{{con}}">
       <img src="{{lookup ../config.conditionTextures con}}" width="32" height="32">
-      {{!--  <input type="checkbox" name="data.attributes.conditions.{{con}}" {{checked (lookup ../data.attributes.conditions con)}}/>  --}}
+      {{!--  <input type="checkbox" name="system.attributes.conditions.{{con}}" {{checked (lookup ../system.attributes.conditions con)}}/>  --}}
       <span>{{lookup ../config.conditions con}}</span>
     </a>
   </div>
@@ -54,7 +54,7 @@
         </li>
 
         {{#each section.items as |item iid|}}
-        <li class="item flexrow" data-item-id="{{item._id}}">
+        <li class="item flexrow" data-item-id="{{item.id}}">
           <div class="item-name flexrow rollable">
               <div class="item-image" style='background-image: url("{{item.img}}")'></div>
               <h4>{{item.name}}</h4>
@@ -65,11 +65,11 @@
           </div>
 
           <div class="item-detail item-level">
-            <span class="text-box" data-dtype="Number">{{#if item.data.level}}{{item.data.level}}{{/if}}</span>
+            <span class="text-box" data-dtype="Number">{{#if item.level}}{{item.level}}{{/if}}</span>
           </div>
 
           <div class="item-detail item-active">
-            <input type="checkbox" {{checked item.data.active}}/>
+            <input type="checkbox" {{checked item.active}}/>
           </div>
 
           {{#if ../../owner}}

@@ -46,7 +46,7 @@
 
       {{#if owner}}
       <label class="checkbox">
-        <input type="checkbox" name="data.showInQuickbar" {{checked data.showInQuickbar}} />
+        <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}} />
         {{localize "PF1.ShowInQuickbar"}}
       </label>
       {{/if}}
@@ -64,8 +64,8 @@
       <div class="form-group">
         <label>{{localize "PF1.Category"}}</label>
         <div class="form-fields">
-          <select name="data.weaponType">
-            {{#select data.weaponType}}
+          <select name="system.weaponType">
+            {{#select system.weaponType}}
             {{#each weaponCategories.types as |name type|}}
             <option value="{{ type }}">{{ name }}</option>
             {{/each}}
@@ -78,8 +78,8 @@
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
         <div class="form-fields">
-          <select name="data.weaponSubtype">
-            {{#select data.weaponSubtype}}
+          <select name="system.weaponSubtype">
+            {{#select system.weaponSubtype}}
             {{#each weaponCategories.subTypes as |name type|}}
             <option value="{{ type }}">{{ name }}</option>
             {{/each}}
@@ -95,8 +95,8 @@
       <div class="form-group">
         <label>{{localize "PF1.Held"}}</label>
         <div class="form-fields">
-          <select name="data.held">
-            {{#select data.held}}
+          <select name="system.held">
+            {{#select system.held}}
             {{#each config.weaponHoldTypes as |name type|}}
             <option value="{{ type }}">{{ name }}</option>
             {{/each}}
@@ -112,18 +112,18 @@
       <div class="form-group stacked">
         <label>{{localize "PF1.EquipmentStatus"}}</label>
         <label class="checkbox">
-          <input type="checkbox" name="data.equipped" {{checked data.equipped}} /> {{localize "PF1.Equipped"}}
+          <input type="checkbox" name="system.equipped" {{checked system.equipped}} /> {{localize "PF1.Equipped"}}
         </label>
         {{#if isGM}}
         <label class="checkbox">
-          <input type="checkbox" name="data.identified" {{checked data.identified}} /> {{localize "PF1.Identified"}}
+          <input type="checkbox" name="system.identified" {{checked system.identified}} /> {{localize "PF1.Identified"}}
         </label>
         {{/if}}
         <label class="checkbox">
-          <input type="checkbox" name="data.masterwork" {{checked data.masterwork}} /> {{localize "PF1.Masterwork"}}
+          <input type="checkbox" name="system.masterwork" {{checked system.masterwork}} /> {{localize "PF1.Masterwork"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="data.broken" {{checked data.broken}} /> {{localize "PF1.Broken"}}
+          <input type="checkbox" name="system.broken" {{checked system.broken}} /> {{localize "PF1.Broken"}}
         </label>
       </div>
 
@@ -133,7 +133,7 @@
         <label>{{localize "PF1.WeaponProperties"}}</label>
         {{#each config.weaponProperties as |name prop|}}
         <label class="checkbox">
-          <input type="checkbox" name="data.properties.{{ prop }}" {{checked (lookup ../data.properties prop)}}/>
+          <input type="checkbox" name="system.properties.{{ prop }}" {{checked (lookup ../system.properties prop)}}/>
           {{ name }}
         </label>
         {{/each}}
@@ -142,7 +142,7 @@
       <div class="form-group">
         <label>{{localize "PF1.EnhancementBonus"}}</label>
         <div class="form-fields">
-          <input type="text" name="data.enh" value="{{ data.enh }}" data-dtype="Number" placeholder="0" />
+          <input type="text" name="system.enh" value="{{ system.enh }}" data-dtype="Number" placeholder="0" />
         </div>
       </div>
 

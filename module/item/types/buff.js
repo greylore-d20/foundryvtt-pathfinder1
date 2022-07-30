@@ -85,16 +85,16 @@ export class ItemBuffPF extends ItemPF {
   getRawEffectData() {
     const createData = super.getRawEffectData();
 
-    const hideIcon = this.data.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
+    const hideIcon = this.system.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
     createData["flags.pf1.show"] = !hideIcon;
     if (hideIcon) createData.icon = null;
 
     // Add buff durations
-    let durationValue = this.data.duration.value ?? null;
+    let durationValue = this.system.duration.value ?? null;
     if (typeof durationValue == "number") durationValue += "";
     if (durationValue) {
       let seconds = 0;
-      switch (this.data.duration.units) {
+      switch (this.system.duration.units) {
         case "minute":
         case "hour": {
           seconds = this.totalDurationSeconds;

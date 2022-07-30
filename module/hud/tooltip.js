@@ -110,12 +110,12 @@ export class TooltipPF extends Application {
       (game.user.isGM && this.forceHideGMInfo) ||
       (!game.user.isGM && !token.actor.testUserPermission(game.user, "OBSERVER"))
     ) {
-      const tooltipName = getProperty(token.actor.data, "data.details.tooltip.name");
-      data.name = tooltipName || token.data.name;
+      const tooltipName = getProperty(token.actor, "system.details.tooltip.name");
+      data.name = tooltipName || token.name;
 
       if (
         (this.worldConfig.hideActorName === true && !tooltipName) ||
-        getProperty(token.actor.data, "data.details.tooltip.hideName") === true
+        getProperty(token.actor, "system.details.tooltip.hideName") === true
       ) {
         data.name = this.worldConfig.hideActorNameReplacement || "???";
       }
@@ -203,7 +203,7 @@ export class TooltipPF extends Application {
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
-      (!getProperty(actor.data, "data.details.tooltip.hideArmor") && !getProperty(this.worldConfig, "hideArmor"))
+      (!getProperty(actor, "system.details.tooltip.hideArmor") && !getProperty(this.worldConfig, "hideArmor"))
     ) {
       const armor = actor.items.filter((i) => {
         if (i.type !== "equipment") return false;

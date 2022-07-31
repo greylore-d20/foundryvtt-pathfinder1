@@ -228,10 +228,10 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
         if (result.includes(t)) continue;
 
         const tokenData = {
-          x: Math.round(t.x / d.size),
-          y: Math.round(t.y / d.size),
-          width: Math.round(t.width / d.size),
-          height: Math.round(t.height / d.size),
+          x: Math.round(t.document.x / d.size),
+          y: Math.round(t.document.y / d.size),
+          width: t.document.width,
+          height: t.document.height,
         };
         const squareData = {
           x: Math.round(s.x / d.size),

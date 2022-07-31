@@ -30,7 +30,7 @@ export function applyChanges() {
   for (const i of this.changeItems) {
     for (const [k, v] of Object.entries(i.system.changeFlags)) {
       if (v === true) {
-        this.flags[k] = true;
+        this.changeFlags[k] = true;
 
         if (k === "loseDexToAC") {
           for (const k2 of ["normal", "touch"]) {
@@ -62,7 +62,7 @@ export function applyChanges() {
       if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
     }
 
-    change.applyChange(this, flats, this.flags);
+    change.applyChange(this, flats, this.changeFlags);
 
     // Apply continuous changes
     for (const cc of continuousChanges) {
@@ -74,7 +74,7 @@ export function applyChanges() {
         if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
       }
 
-      cc.applyChange(this, flats, this.flags);
+      cc.applyChange(this, flats, this.changeFlags);
     }
 
     this.refreshDerivedData();
@@ -1223,7 +1223,7 @@ export const addDefaultChanges = function (changes) {
             modifier: "penalty",
           })
         );
-        this.flags["loseDexToAC"] = true;
+        this.changeFlags["loseDexToAC"] = true;
 
         for (const k of [
           "system.attributes.ac.normal.total",
@@ -1426,7 +1426,7 @@ export const addDefaultChanges = function (changes) {
             continuous: true,
           })
         );
-        this.flags["loseDexToAC"] = true;
+        this.changeFlags["loseDexToAC"] = true;
         getSourceInfo(this.sourceInfo, "system.abilities.dex.total").negative.push({
           name: game.i18n.localize("PF1.CondPinned"),
           value: game.i18n.localize("PF1.DenyDexBonus"),
@@ -1481,7 +1481,7 @@ export const addDefaultChanges = function (changes) {
             flavor: game.i18n.localize("PF1.CondCowering"),
           })
         );
-        this.flags["loseDexToAC"] = true;
+        this.changeFlags["loseDexToAC"] = true;
 
         for (const k of [
           "system.attributes.ac.normal.total",
@@ -1664,7 +1664,7 @@ export const addDefaultChanges = function (changes) {
             name: game.i18n.localize("PF1.CondStunned"),
           });
         }
-        this.flags["loseDexToAC"] = true;
+        this.changeFlags["loseDexToAC"] = true;
         getSourceInfo(this.sourceInfo, "system.attributes.ac.normal.total").negative.push({
           name: game.i18n.localize("PF1.CondStunned"),
           value: game.i18n.localize("PF1.ChangeFlagLoseDexToAC"),

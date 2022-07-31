@@ -359,7 +359,7 @@ export class ItemAction {
     await Promise.all(promises);
 
     // Delete action
-    return this.item.update({ "data.actions": actions });
+    return this.item.update({ "system.actions": actions });
   }
 
   async update(updateData, options = {}) {
@@ -387,7 +387,7 @@ export class ItemAction {
       }
     }
 
-    await this.item.update({ [`data.actions.${idx}`]: expandObject(newUpdateData) });
+    await this.item.update({ [`system.actions.${idx}`]: expandObject(newUpdateData) });
     await this.sheet?.render();
   }
 
@@ -522,13 +522,13 @@ export class ItemAction {
     // Define Roll parts
     let parts = [];
 
-    this.actor.sourceDetails["data.attributes.attack.shared"]
+    this.actor.sourceDetails["system.attributes.attack.shared"]
       ?.reverse()
       .forEach((s) => parts.push(`${s.value}[${s.name}]`));
 
     // CMB specific modifiers
     if (isCMB) {
-      this.actor.sourceDetails["data.attributes.cmb.bonus"]
+      this.actor.sourceDetails["system.attributes.cmb.bonus"]
         ?.reverse()
         .forEach((s) => parts.push(`${s.value}[${s.name}]`));
     }

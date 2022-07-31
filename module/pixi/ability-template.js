@@ -102,8 +102,8 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         if (now - moveTime <= 20) return;
         const center = event.data.getLocalPosition(this.layer);
         const pos = canvas.grid.getSnappedPosition(center.x, center.y, 2);
-        this.data.x = pos.x;
-        this.data.y = pos.y;
+        this.document.x = pos.x;
+        this.document.y = pos.y;
         this.refresh();
         canvas.app.render();
         moveTime = now;
@@ -118,7 +118,7 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         canvas.app.view.onwheel = null;
         // Clear highlight
         this.active = false;
-        const hl = canvas.grid.getHighlightLayer(`Template.${this.id}`);
+        const hl = canvas.grid.getHighlightLayer(this.highlightId);
         hl.clear();
         _clear();
 
@@ -133,14 +133,13 @@ export class AbilityTemplate extends MeasuredTemplatePF {
       handlers.lc = async (event) => {
         handlers.rc(event, false);
 
-        // Confirm final snapped position
-        this.data.update(this.data);
-
         // Create the template
         const result = {
           result: true,
           place: async () => {
-            const doc = (await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [this.data.toObject()]))[0];
+            const doc = (
+              await canvas.scene.createEmbeddedDocuments("MeasuredTemplate", [this.document.toObject(false)])
+            )[0];
             this.document = doc;
             return doc;
           },
@@ -158,25 +157,25 @@ export class AbilityTemplate extends MeasuredTemplatePF {
         event.stopPropagation();
         let delta, snap;
         if (event.ctrlKey) {
-          if (this.data.t === "rect") {
+          if (this.document.t === "rect") {
             delta = Math.sqrt(canvas.dimensions.distance * canvas.dimensions.distance);
           } else {
             delta = canvas.dimensions.distance;
           }
           this.data.distance += delta * -Math.sign(event.deltaY);
         } else {
-          if (pfStyle && this.data.t === "cone") {
+          if (pfStyle && this.document.t === "cone") {
             delta = 90;
             snap = event.shiftKey ? delta : 45;
           } else {
             delta = canvas.grid.type > CONST.GRID_TYPES.SQUARE ? 30 : 15;
             snap = event.shiftKey ? delta : 5;
           }
-          if (this.data.t === "rect") {
+          if (this.document.t === "rect") {
             snap = Math.sqrt(Math.pow(5, 2) + Math.pow(5, 2));
-            this.data.distance += snap * -Math.sign(event.deltaY);
+            this.document.distance += snap * -Math.sign(event.deltaY);
           } else {
-            this.data.direction += snap * Math.sign(event.deltaY);
+            this.document.direction += snap * Math.sign(event.deltaY);
           }
         }
         this.refresh();

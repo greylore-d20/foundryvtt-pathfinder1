@@ -33,12 +33,12 @@ export class ItemSpellPF extends ItemPF {
       // Swap non-psychic components for psychic ones
       if (this.spellbook?.psychic === true) {
         if (this.data.components?.verbal === true) {
-          updates["data.components.verbal"] = false;
-          updates["data.components.thought"] = true;
+          updates["system.components.verbal"] = false;
+          updates["system.components.thought"] = true;
         }
         if (this.data.components?.somatic === true) {
-          updates["data.components.somatic"] = false;
-          updates["data.components.emotion"] = true;
+          updates["system.components.somatic"] = false;
+          updates["system.components.emotion"] = true;
         }
       }
     }
@@ -95,7 +95,7 @@ export class ItemSpellPF extends ItemPF {
     }
 
     // Add charges
-    if (this.isCharged && !this.data.atWill) {
+    if (this.isCharged && !this.system.atWill) {
       if (this.useSpellPoints()) {
         props.push(`${game.i18n.localize("PF1.SpellPoints")}: ${this.charges}/${this.maxCharges}`);
       } else {
@@ -133,7 +133,7 @@ export class ItemSpellPF extends ItemPF {
     }
 
     if (
-      getProperty(this.data, "data.preparation.mode") !== "atwill" &&
+      getProperty(this, "system.preparation.mode") !== "atwill" &&
       this.getSpellUses() < this.chargeCost &&
       this.autoDeductCharges
     ) {
@@ -320,11 +320,13 @@ export class ItemSpellPF extends ItemPF {
     components = components.map((o) => {
       if (o === compKeys.M) {
         if (df === 2) o = `${compKeys.M}/${compKeys.DF}`;
-        if (getProperty(srcData, "data.materials.value")) o = `${o} (${getProperty(srcData, "data.materials.value")})`;
+        if (getProperty(srcData, "system.materials.value"))
+          o = `${o} (${getProperty(srcData, "system.materials.value")})`;
       }
       if (o === compKeys.F) {
         if (df === 3) o = `${compKeys.F}/${compKeys.DF}`;
-        if (getProperty(srcData, "data.materials.focus")) o = `${o} (${getProperty(srcData, "data.materials.focus")})`;
+        if (getProperty(srcData, "system.materials.focus"))
+          o = `${o} (${getProperty(srcData, "system.materials.focus")})`;
       }
       return o;
     });
@@ -378,27 +380,27 @@ export class ItemSpellPF extends ItemPF {
     const materialPrice = origData.materials?.gpValue ?? 0;
 
     // Set consumable type
-    data["data.consumableType"] = type;
+    data["system.consumableType"] = type;
 
     // Set name
     if (type === "wand") {
       data.name = game.i18n.localize("PF1.CreateItemWandOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
-      data["data.price"] = 0;
-      data["data.uses.pricePerUse"] =
+      data["system.price"] = 0;
+      data["system.uses.pricePerUse"] =
         Math.floor(((Math.max(0.5, origData.sl) * origData.cl * 750 + materialPrice) / 50) * 100) / 100;
-      data["data.hardness"] = 5;
-      data["data.hp.max"] = 5;
-      data["data.hp.value"] = 5;
+      data["system.hardness"] = 5;
+      data["system.hp.max"] = 5;
+      data["system.hp.value"] = 5;
       action.name = game.i18n.localize("PF1.Use");
       action.img = data.img;
     } else if (type === "potion") {
       data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
-      data["data.price"] = Math.max(0.5, origData.sl) * origData.cl * 50 + materialPrice;
-      data["data.hardness"] = 1;
-      data["data.hp.max"] = 1;
-      data["data.hp.value"] = 1;
+      data["system.price"] = Math.max(0.5, origData.sl) * origData.cl * 50 + materialPrice;
+      data["system.hardness"] = 1;
+      data["system.hp.max"] = 1;
+      data["system.hp.value"] = 1;
       action.range = {
         value: 0,
         units: "personal",
@@ -408,22 +410,22 @@ export class ItemSpellPF extends ItemPF {
     } else if (type === "scroll") {
       data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
-      data["data.price"] = Math.max(0.5, origData.sl) * origData.cl * 25 + materialPrice;
-      data["data.hardness"] = 0;
-      data["data.hp.max"] = 1;
-      data["data.hp.value"] = 1;
+      data["system.price"] = Math.max(0.5, origData.sl) * origData.cl * 25 + materialPrice;
+      data["system.hardness"] = 0;
+      data["system.hp.max"] = 1;
+      data["system.hp.value"] = 1;
       action.name = game.i18n.localize("PF1.Use");
       action.img = data.img;
     }
 
     // Set charges
     if (type === "wand") {
-      data["data.uses.maxFormula"] = "50";
-      data["data.uses.value"] = 50;
-      data["data.uses.max"] = 50;
-      data["data.uses.per"] = "charges";
+      data["system.uses.maxFormula"] = "50";
+      data["system.uses.value"] = 50;
+      data["system.uses.max"] = 50;
+      data["system.uses.per"] = "charges";
     } else {
-      data["data.uses.per"] = "single";
+      data["system.uses.per"] = "single";
     }
     // Set activation method
     action.activation.type = "standard";
@@ -465,7 +467,7 @@ export class ItemSpellPF extends ItemPF {
     action.effectNotes = actionData.effectNotes;
     action.attackBonus = actionData.attackBonus;
     action.critConfirmBonus = actionData.critConfirmBonus;
-    data["data.aura.school"] = origData.school;
+    data["system.aura.school"] = origData.school;
 
     // Replace attack and effect formula data
     for (const arrKey of ["attackNotes", "effectNotes"]) {
@@ -478,10 +480,10 @@ export class ItemSpellPF extends ItemPF {
     }
 
     // Set Caster Level
-    data["data.cl"] = origData.cl;
+    data["system.cl"] = origData.cl;
 
     // Set description
-    data["data.description.value"] = this._replaceConsumableConversionString(
+    data["system.description.value"] = this._replaceConsumableConversionString(
       await renderTemplate("systems/pf1/templates/internal/consumable-description.hbs", {
         origData: origData,
         data: data,
@@ -496,7 +498,7 @@ export class ItemSpellPF extends ItemPF {
     );
 
     // Create and return synthetic item data
-    data["data.actions"] = [action];
+    data["system.actions"] = [action];
     return new ItemPF(expandObject(data)).toObject();
   }
 
@@ -584,8 +586,8 @@ export class ItemSpellPF extends ItemPF {
 
     // Set casting time label
     const act = game.settings.get("pf1", "unchainedActionEconomy")
-      ? getProperty(firstAction, "data.unchainedAction.activation")
-      : getProperty(firstAction, "data.activation");
+      ? getProperty(firstAction, "system.unchainedAction.activation")
+      : getProperty(firstAction, "system.activation");
     if (act != null) {
       const activationCost = act.cost;
       const activationType = act.type;

@@ -213,8 +213,8 @@ export class ItemPF extends ItemBasePF {
 
   getName(forcePlayerPerspective = false) {
     if (game.user.isGM && !forcePlayerPerspective) return this.name;
-    if (getProperty(this.system, "system.identified") === false && getProperty(this.system, "system.unidentified.name"))
-      return getProperty(this.system, "system.unidentified.name");
+    if (getProperty(this, "system.identified") === false && getProperty(this, "system.unidentified.name"))
+      return getProperty(this, "system.unidentified.name");
     return this.name;
   }
 
@@ -414,11 +414,16 @@ export class ItemPF extends ItemBasePF {
     }
 
     const weight = itemData.weight;
+
+    // Make sure there is a weight value
+    weight.value ??= 0;
+    weight.total ??= 0;
+
     // Determine actual item weight, including sub-items
     const weightReduction = (100 - (itemData.weightReduction ?? 0)) / 100;
     weight.total = (this.items ?? []).reduce((cur, o) => {
       return cur + o.system.weight.total * weightReduction;
-    }, weight.value * this.system.quantity);
+    }, weight.value * itemData.quantity);
 
     // Add contained currency (mainly containers)
     weight.currency ??= 0;
@@ -587,7 +592,7 @@ export class ItemPF extends ItemBasePF {
       let item = null;
       if (prior && prior.has(o._id)) {
         item = prior.get(o._id);
-        item.update(o);
+        item.updateSource(o);
         item.prepareData();
       } else {
         item = new CONFIG.Item.documentClass(o);
@@ -642,11 +647,10 @@ export class ItemPF extends ItemBasePF {
       ];
 
       for (const path of keepPaths) {
-        keepUpdateArray(baseData, data, path);
+        keepUpdateArray(this, data, path);
         linkData(srcData, data, path, data[path]);
       }
     }
-    console.log(this.toObject(), duplicate(srcData), duplicate(data));
 
     // Update price from base price
     if (data["system.basePrice"] != null) {
@@ -668,12 +672,12 @@ export class ItemPF extends ItemBasePF {
 
       if (this.type === "spell") {
         if (data["system.preparation.maxAmount"] != null) target = "max";
-        charges = data["system.preparation.preparedAmount"];
-        maxCharges = data["system.preparation.maxAmount"];
+        charges = data["system.preparation.preparedAmount"] ?? this.charges;
+        maxCharges = data["system.preparation.maxAmount"] ?? this.maxCharges;
       } else {
         if (data["system.uses.max"] != null) target = "max";
-        charges = data["system.uses.value"];
-        maxCharges = data["system.uses.max"];
+        charges = data["system.uses.value"] ?? this.charges;
+        maxCharges = data["system.uses.max"] ?? this.maxCharges;
       }
 
       if (target === "value" && charges > maxCharges) maxCharges = charges;
@@ -840,7 +844,7 @@ export class ItemPF extends ItemBasePF {
 
     // Call _onUpdate for changed items
     for (let a = 0; a < (changed.system?.inventoryItems ?? []).length; a++) {
-      const itemUpdateData = changed.data?.inventoryItems[a];
+      const itemUpdateData = changed.system?.inventoryItems[a];
       const memoryItemData = this._memoryVariables?.["system.inventoryItems"]?.[a];
       if (!memoryItemData) continue;
 
@@ -927,7 +931,7 @@ export class ItemPF extends ItemBasePF {
     const templateData = {
       actor: this.parent,
       tokenId: token ? token.uuid : null,
-      item: this.system,
+      item: this.toObject(),
       labels: this.labels,
       hasAttack: this.hasAttack,
       hasMultiAttack: this.hasMultiAttack,
@@ -935,7 +939,7 @@ export class ItemPF extends ItemBasePF {
       isVersatile: this.isVersatile,
       isSpell: this.system.type === "spell",
       name: (identified ? rollData.identifiedName : rollData.item.unidentified?.name) || this.name,
-      description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
+      description: identified ? this.fullDescription : itemChatData.unidentifiedDescription,
       rollData: rollData,
       hasExtraProperties: false,
       extraProperties: [],

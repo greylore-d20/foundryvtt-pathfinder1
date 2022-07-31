@@ -93,8 +93,7 @@ export class ItemSheetPF extends ItemSheet {
     data.items = [];
     if (this.item.items != null) {
       data.items = this.item.items.map((i) => {
-        i.data.labels = i.labels;
-        return i.data;
+        return i.toObject();
       });
     }
 
@@ -1493,7 +1492,7 @@ export class ItemSheetPF extends ItemSheet {
     elem.removeAttr("readonly");
     elem.attr("name", event.currentTarget.dataset.attrName);
     const { inputValue } = event.currentTarget.dataset;
-    let value = inputValue ?? getProperty(this.item.system, event.currentTarget.dataset.attrName);
+    let value = inputValue ?? getProperty(this.item, event.currentTarget.dataset.attrName);
     elem.attr("value", value);
     elem.select();
 

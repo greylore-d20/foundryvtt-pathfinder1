@@ -74,25 +74,27 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     data.filters = this._filters;
 
     // The item's items
-    data.items = this.item.items.map((i) => {
-      i.data.labels = i.labels;
-      i.data.hasAttack = i.hasAttack;
-      i.data.hasMultiAttack = i.hasMultiAttack;
-      i.data.hasDamage = i.hasDamage;
-      i.data.hasRange = i.hasRange;
-      i.data.hasEffect = i.hasEffect;
-      i.data.hasAction = i.hasAction || i.isCharged;
-      i.data.showUnidentifiedData = i.showUnidentifiedData;
+    data.items = this.item.items.reduce((cur, i) => {
+      const data = i.toObject();
+      cur.push(data);
+      data.document = i;
+      data.labels = i.labels;
+      data.hasAttack = i.hasAttack;
+      data.hasMultiAttack = i.hasMultiAttack;
+      data.hasDamage = i.hasDamage;
+      data.hasRange = i.hasRange;
+      data.hasEffect = i.hasEffect;
+      data.hasAction = i.hasAction || i.isCharged;
+      data.showUnidentifiedData = i.showUnidentifiedData;
       if (i.showUnidentifiedData)
-        i.data.name =
-          getProperty(i.data, "data.unidentified.name") || getProperty(i.data, "data.identifiedName") || i.data.name;
-      else i.data.name = getProperty(i.data, "data.identifiedName") || i.data.name;
-      return i.data;
-    });
+        data.name = getProperty(i, "system.unidentified.name") || getProperty(i, "system.identifiedName") || i.name;
+      else data.name = getProperty(i, "system.identifiedName") || i.name;
+      return cur;
+    }, []);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
     // Show whether the item has currency
-    data.hasCurrency = Object.values(this.object.data.currency).some((o) => o > 0);
+    data.hasCurrency = Object.values(this.object.system.currency).some((o) => o > 0);
 
     // Prepare inventory
     this._prepareContents(data);
@@ -104,11 +106,11 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       // Add weight
       data.descriptionAttributes.push({
         isNumber: true,
-        name: "data.weight.value",
+        name: "system.weight.value",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.data.weight.converted.total,
-        inputValue: data.item.data.weight.converted.value,
+        value: data.item.system.weight.converted.total,
+        inputValue: data.item.system.weight.converted.value,
         decimals: 2,
         id: "data-weight-value",
       });
@@ -118,10 +120,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         data.descriptionAttributes.push(
           {
             isNumber: true,
-            name: "data.basePrice",
+            name: "system.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: data.item.data.price,
+            value: data.item.system.price,
             id: "data-basePrice",
           },
           {
@@ -129,7 +131,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             name: "data.unidentified.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
-            value: getProperty(data.item.data, "data.unidentified.price"),
+            value: getProperty(data.item, "system.unidentified.price"),
             id: "data-unidentifiedBasePrice",
           }
         );
@@ -137,19 +139,19 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         if (data.showUnidentifiedData) {
           data.descriptionAttributes.push({
             isNumber: true,
-            name: "data.unidentified.basePrice",
+            name: "system.unidentified.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: getProperty(data.item, "data.unidentified.price"),
+            value: getProperty(data.item, "system.unidentified.price"),
             id: "data-basePrice",
           });
         } else {
           data.descriptionAttributes.push({
             isNumber: true,
-            name: "data.basePrice",
+            name: "system.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: data.item.data.price,
+            value: data.item.system.price,
             id: "data-basePrice",
           });
         }
@@ -160,12 +162,12 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         isRange: true,
         label: game.i18n.localize("PF1.HPShort"),
         value: {
-          name: "data.hp.value",
-          value: getProperty(data.item.data, "data.hp.value"),
+          name: "system.hp.value",
+          value: getProperty(data.item, "system.hp.value"),
         },
         max: {
-          name: "data.hp.max",
-          value: getProperty(data.item.data, "data.hp.max"),
+          name: "system.hp.max",
+          value: getProperty(data.item, "system.hp.max"),
         },
       });
 
@@ -173,16 +175,16 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       data.descriptionAttributes.push({
         isNumber: true,
         label: game.i18n.localize("PF1.Hardness"),
-        name: "data.hardness",
-        value: getProperty(data.item.data, "data.hardness"),
+        name: "system.hardness",
+        value: getProperty(data.item, "system.hardness"),
       });
 
       // Add carried flag
       data.descriptionAttributes.push({
         isBoolean: true,
-        name: "data.carried",
+        name: "system.carried",
         label: game.i18n.localize("PF1.Carried"),
-        value: data.item.data.carried,
+        value: data.item.system.carried,
       });
     }
 
@@ -190,7 +192,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
     data.weight = {
-      contents: this.item.data.weight.converted.contents,
+      contents: this.item.system.weight.converted.contents,
       units: usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
     };
 
@@ -293,13 +295,13 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     // Partition items by category
     const items = data.items.reduce((arr, item) => {
       item.img = item.img || DEFAULT_TOKEN;
-      item.isStack = item.data.quantity ? item.data.quantity > 1 : false;
-      item.hasUses = item.data.uses && item.data.uses.max > 0;
-      item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "data.uses.per"));
-      item.price = item.data.identified === false ? item.data.unidentified.price : item.data.price;
+      item.isStack = item.system.quantity ? item.system.quantity > 1 : false;
+      item.hasUses = item.system.uses && item.system.uses.max > 0;
+      item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "system.uses.per"));
+      item.price = item.system.identified === false ? item.system.unidentified.price : item.system.price;
 
-      const itemQuantity = getProperty(item, "data.quantity") != null ? getProperty(item, "data.quantity") : 1;
-      const itemCharges = getProperty(item, "data.uses.value") != null ? getProperty(item, "data.uses.value") : 1;
+      const itemQuantity = getProperty(item, "system.quantity") ?? 1;
+      const itemCharges = getProperty(item, "system.uses.value") ?? 1;
       item.empty = itemQuantity <= 0 || (item.isCharged && itemCharges <= 0);
       arr.push(item);
       return arr;
@@ -307,9 +309,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Organize Inventory
     for (const i of items) {
-      const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
-      i.data.quantity = i.data.quantity || 0;
-      i.totalWeight = Math.roundDecimals(i.data.weight.converted.total, 2);
+      const subType = i.type === "loot" ? i.system.subType || "gear" : i.system.subType;
+      i.system.quantity = i.system.quantity || 0;
+      i.totalWeight = Math.roundDecimals(i.document.system.weight.converted.total, 2);
       let usystem = game.settings.get("pf1", "weightUnits"); // override
       if (usystem === "default") usystem = game.settings.get("pf1", "units");
       i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
@@ -389,9 +391,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const itemData = {
       name: `New ${typeName.capitalize()}`,
       type: type,
-      data: duplicate(header.dataset),
+      system: duplicate(header.dataset),
     };
-    delete itemData["type"];
+    delete itemData["system.type"];
     return this.item.createContainerContent(itemData);
   }
 
@@ -463,7 +465,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       const item = this.item.getContainerContent(elem.dataset.itemId);
       dragData = {
         type: "Item",
-        data: item.data,
+        data: item.toObject(),
         containerId: this.item.id,
       };
     }
@@ -522,18 +524,12 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   async _onDropItem(event, data) {
     if (!this.item.isOwner) return false;
 
-    let actor;
-    if (data.tokenId) {
-      actor = game.actors.tokens[data.tokenId];
-    } else if (data.actorId) {
-      actor = game.actors.get(data.actorId);
-    }
-
     const item = await ItemPF.fromDropData(data);
-    const itemData = duplicate(item.data);
+    const actor = item.parentActor;
+    const itemData = item.toObject();
 
     // Sort item
-    if (data.containerId === this.item.id) return this._onSortItem(event, itemData);
+    if (itemData.system.containerId === this.item.id) return this._onSortItem(event, itemData);
 
     // Create consumable from spell
     if (itemData.type === "spell") {
@@ -543,16 +539,16 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }
 
     // Create or transfer item
-    if (ItemPF.isInventoryItem(item.data.type)) {
+    if (ItemPF.isInventoryItem(item.type)) {
       await this.item.createContainerContent(itemData);
 
       if (actor && actor === this.item.parentActor) {
-        if (actor.items.get(data._id)) {
-          await actor.deleteEmbeddedDocuments("Item", [data._id]);
+        if (actor.items.get(item.id)) {
+          await actor.deleteEmbeddedDocuments("Item", [item.id]);
         } else {
-          const containerItem = actor.containerItems.find((i) => i.id === data._id);
+          const containerItem = actor.containerItems.find((i) => i.id === item.id);
           if (containerItem) {
-            await containerItem.parentItem.deleteContainerContent(data._id);
+            await containerItem.parentItem.deleteContainerContent(item.id);
           }
         }
       }

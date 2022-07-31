@@ -52,7 +52,7 @@ export class ItemContainerPF extends ItemPF {
     }
 
     // Add to updates
-    const items = data.map((o) => (options.raw ? o : new ItemPF(o).data));
+    const items = data.map((o) => (options.raw ? o : new ItemPF(o).toObject()));
     inventory.push(...items);
 
     // Filter items with duplicate _id
@@ -82,7 +82,7 @@ export class ItemContainerPF extends ItemPF {
     const ids = new Set(data);
 
     // Iterate over elements of the collection
-    const inventory = duplicate(getProperty(this.data, "data.inventoryItems") || []).filter((d) => {
+    const inventory = duplicate(getProperty(this, "system.inventoryItems") || []).filter((d) => {
       if (!ids.has(d._id)) return true;
 
       // Call pre-update hooks to ensure the update is allowed to proceed
@@ -99,7 +99,7 @@ export class ItemContainerPF extends ItemPF {
     }, []);
 
     // Trigger the Socket workflow
-    await this.update({ "data.inventoryItems": inventory });
+    await this.update({ "system.inventoryItems": inventory });
   }
 
   async updateContainerContents(data) {
@@ -122,7 +122,7 @@ export class ItemContainerPF extends ItemPF {
 
       // Diff the update against current data
       if (options.diff) {
-        update = diffObject(d.data, expandObject(update));
+        update = diffObject(d, expandObject(update));
         if (isObjectEmpty(update)) return arr;
         update["_id"] = d.id;
       }
@@ -141,7 +141,7 @@ export class ItemContainerPF extends ItemPF {
       return arr;
     }, []);
     if (!updates.length) return [];
-    let inventory = duplicate(this.data.inventoryItems).map((o) => {
+    let inventory = duplicate(this.system.inventoryItems).map((o) => {
       for (const u of updates) {
         if (u._id === o._id) return mergeObject(o, u);
       }
@@ -158,7 +158,7 @@ export class ItemContainerPF extends ItemPF {
       });
     }
 
-    await this.update({ "data.inventoryItems": inventory });
+    await this.update({ "system.inventoryItems": inventory });
   }
 
   /** @inheritdoc */

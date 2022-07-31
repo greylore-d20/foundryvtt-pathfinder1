@@ -1482,7 +1482,8 @@ export class ActorSheetPF extends ActorSheet {
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "system.preparation.preparedAmount", value);
     if (prevValue < value) {
-      this.setItemUpdate(item.id, "system.preparation.maxAmount", Math.max(prevValue, value));
+      const maxValue = item.system.preparation.maxAmount;
+      this.setItemUpdate(item.id, "system.preparation.maxAmount", Math.max(maxValue, value));
     }
 
     // Update on lose focus
@@ -1506,7 +1507,8 @@ export class ActorSheetPF extends ActorSheet {
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "system.preparation.maxAmount", Math.max(0, value));
     if (prevValue > value) {
-      this.setItemUpdate(item.id, "system.preparation.preparedAmount", Math.min(prevValue, value));
+      const curValue = item.system.preparation.preparedAmount;
+      this.setItemUpdate(item.id, "system.preparation.preparedAmount", Math.min(curValue, value));
     }
     if (value < 0) {
       el.tagName.toUpperCase() === "INPUT" ? (el.value = 0) : (el.innerText = 0);

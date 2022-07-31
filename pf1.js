@@ -342,22 +342,22 @@ Hooks.once("init", function () {
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("PF1", ActorSheetPFCharacter, {
+  Actors.registerSheet("pf1", ActorSheetPFCharacter, {
     label: "PF1.Sheet.PC",
     types: ["character"],
     makeDefault: true,
   });
-  Actors.registerSheet("PF1", ActorSheetPFNPC, { label: "PF1.Sheet.NPC", types: ["npc"], makeDefault: true });
-  Actors.registerSheet("PF1", ActorSheetPFNPCLite, { label: "PF1.Sheet.NPCLite", types: ["npc"], makeDefault: false });
-  Actors.registerSheet("PF1", ActorSheetPFNPCLoot, { label: "PF1.Sheet.NPCLoot", types: ["npc"], makeDefault: false });
-  Actors.registerSheet("PF1", ActorSheetPFBasic, { label: "PF1.Sheet.Basic", types: ["basic"], makeDefault: true });
+  Actors.registerSheet("pf1", ActorSheetPFNPC, { label: "PF1.Sheet.NPC", types: ["npc"], makeDefault: true });
+  Actors.registerSheet("pf1", ActorSheetPFNPCLite, { label: "PF1.Sheet.NPCLite", types: ["npc"], makeDefault: false });
+  Actors.registerSheet("pf1", ActorSheetPFNPCLoot, { label: "PF1.Sheet.NPCLoot", types: ["npc"], makeDefault: false });
+  Actors.registerSheet("pf1", ActorSheetPFBasic, { label: "PF1.Sheet.Basic", types: ["basic"], makeDefault: true });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("PF1", ItemSheetPF, {
+  Items.registerSheet("pf1", ItemSheetPF, {
     label: "PF1.Sheet.Item",
     types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack", "race"],
     makeDefault: true,
   });
-  Items.registerSheet("PF1", ItemSheetPF_Container, {
+  Items.registerSheet("pf1", ItemSheetPF_Container, {
     label: "PF1.Sheet.Container",
     types: ["container"],
     makeDefault: true,

@@ -78,7 +78,7 @@
       <div class="form-group">
         <label>{{attr.label}}</label>
         {{#if attr.fakeName}}
-          <div data-action="input-text" data-for=".{{attr.id}}-description-input" data-attr-name="{{attr.name}}" {{#if attr.inputValue}}data-input-value="{{attr.inputValue}}"{{/if}}>
+          <div data-action="input-text" data-for=".{{attr.id}}-description-input" data-attr-name="{{attr.name}}" {{#if (or attr.inputValue (eq attr.inputValue 0))}}data-input-value="{{attr.inputValue}}"{{/if}}>
           <input class="{{#if attr.id}}{{attr.id}}-description-input{{/if}}" type="number" readonly data-dtype="Number" value="{{numberFormat attr.value decimals=attr.decimals}}"/>
         </div>
         {{else}}

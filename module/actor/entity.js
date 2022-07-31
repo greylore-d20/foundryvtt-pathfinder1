@@ -353,7 +353,7 @@ export class ActorPF extends ActorBasePF {
 
   prepareData() {
     this.sourceInfo = {};
-    this.flags = {};
+    this.changeFlags = {};
 
     // Prepare data
     super.prepareData();
@@ -469,7 +469,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Reset HD
-    setProperty(this.system, "attributes.hd.total", this.system.details.level.value);
+    setProperty(this, "system.attributes.hd.total", this.system.details.level.value);
 
     // Reset class skills
     {
@@ -1195,7 +1195,7 @@ export class ActorPF extends ActorBasePF {
       let acAblMod = abilities[acAbl]?.mod ?? 0;
       let acTouchAblMod = abilities[acTouchAbl]?.mod ?? 0;
       const cmdDexAblMod = abilities[cmdDexAbl]?.mod ?? 0;
-      if (this.flags["loseDexToAC"]) {
+      if (this.changeFlags["loseDexToAC"]) {
         acAblMod = Math.min(acAblMod, 0);
         acTouchAblMod = Math.min(acTouchAblMod, 0);
       }
@@ -1235,20 +1235,20 @@ export class ActorPF extends ActorBasePF {
       const armorItems = this.items.filter((o) => o.type === "equipment");
       let reducedSpeed = false;
       const sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
-      if (attributes.encumbrance.level >= 1 && !this.flags["noEncumbrance"]) {
+      if (attributes.encumbrance.level >= 1 && !this.changeFlags["noEncumbrance"]) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.Encumbrance");
       }
       if (
         armorItems.filter((o) => o.system.equipmentSubtype === "mediumArmor" && o.system.equipped).length &&
-        !this.flags["mediumArmorFullSpeed"]
+        !this.changeFlags["mediumArmorFullSpeed"]
       ) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.EquipTypeMedium");
       }
       if (
         armorItems.filter((o) => o.system.equipmentSubtype === "heavyArmor" && o.system.equipped).length &&
-        !this.flags["heavyArmorFullSpeed"]
+        !this.changeFlags["heavyArmorFullSpeed"]
       ) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.EquipTypeHeavy");
@@ -1749,8 +1749,7 @@ export class ActorPF extends ActorBasePF {
         const size = CONFIG.PF1.tokenSizes[sizeKey];
         const tokens = this.getActiveTokens(false, true).filter((o) => {
           if (o.getFlag("pf1", "staticSize")) return false;
-          console.log(o);
-          if (!o.data.actorLink) return false;
+          if (!o.actorLink) return false;
           return true;
         });
         tokens.forEach((o) => {
@@ -2793,7 +2792,7 @@ export class ActorPF extends ActorBasePF {
 
         const actorType = { character: "pc", npc: "npc" }[a.type];
         const useWoundsAndVigor = healthConfig.variants[actorType]?.useWoundsAndVigor ?? false,
-          hp = !useWoundsAndVigor ? a.data.attributes.hp : a.data.attributes.vigor,
+          hp = !useWoundsAndVigor ? a.system.attributes.hp : a.system.attributes.vigor,
           tmp = hp.temp || 0;
 
         const update = {};
@@ -2882,10 +2881,10 @@ export class ActorPF extends ActorBasePF {
           _id: isToken ? tok.id : actor.id,
           name: isToken ? tok.name : actor.name,
           isToken,
-          dr: actor.data.traits.dr.match(sliceReg),
-          eres: actor.data.traits.eres.match(sliceReg),
-          di: [...actor.data.traits.di.value, ...(actor.data.traits.di.custom.match(sliceReg2) ?? [])],
-          dv: [...actor.data.traits.dv.value, ...(actor.data.traits.dv.custom.match(sliceReg2) ?? [])],
+          dr: actor.system.traits.dr.match(sliceReg),
+          eres: actor.system.traits.eres.match(sliceReg),
+          di: [...actor.system.traits.di.value, ...(actor.system.traits.di.custom.match(sliceReg2) ?? [])],
+          dv: [...actor.system.traits.dv.value, ...(actor.system.traits.dv.custom.match(sliceReg2) ?? [])],
           checked: true,
         };
       });
@@ -3476,7 +3475,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add denied Dex to AC
-    setProperty(result, "conditions.loseDexToAC", this.flags.loseDexToAC);
+    setProperty(result, "conditions.loseDexToAC", this.changeFlags?.loseDexToAC ?? false);
 
     // Return cached data, if applicable
     if (skipRefresh) return result;
@@ -3496,7 +3495,7 @@ export class ActorPF extends ActorBasePF {
 
     // Determine equipped armor type
     {
-      const armorId = this.equipment.armor.id;
+      const armorId = this.equipment?.armor?.id;
       const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
       const armor = armorId ? this.items.get(armorId) : null;
       if (armor) {
@@ -3517,7 +3516,7 @@ export class ActorPF extends ActorBasePF {
 
     // Determine equipped shield type
     {
-      const shieldId = this.equipment.shield.id;
+      const shieldId = this.equipment?.shield?.id;
       const shield = shieldId ? this.items.get(shieldId) : null;
       const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
       if (shield) {
@@ -3550,15 +3549,17 @@ export class ActorPF extends ActorBasePF {
     result.range = this.constructor.getReach(this.system.traits.size, this.system.traits.stature);
 
     // Add class info
-    result.classes = this.items
-      .filter((o) => o.type === "class")
-      .reduce((cur, o) => {
-        cur[o.system.tag] = {
-          level: o.system.level,
-        };
+    if (this.items) {
+      result.classes = this.items
+        .filter((o) => o.type === "class")
+        .reduce((cur, o) => {
+          cur[o.system.tag] = {
+            level: o.system.level,
+          };
 
-        return cur;
-      }, {});
+          return cur;
+        }, {});
+    }
 
     this._rollData = result;
 

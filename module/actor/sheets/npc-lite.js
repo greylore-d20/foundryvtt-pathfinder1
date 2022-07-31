@@ -24,10 +24,10 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
     const [attacks] = data.items.reduce(
       (arr, item) => {
         item.img = item.img || foundry.data.ItemData.DEFAULT_ICON;
-        item.hasUses = item.data.uses && item.data.uses.max > 0;
-        item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "data.uses.per"));
+        item.hasUses = item.uses && item.uses.max > 0;
+        item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "uses.per"));
 
-        const itemCharges = getProperty(item, "data.uses.value") != null ? getProperty(item, "data.uses.value") : 1;
+        const itemCharges = getProperty(item, "uses.value") != null ? getProperty(item, "uses.value") : 1;
 
         if (item.type === "attack") arr[0].push(item);
         return arr;

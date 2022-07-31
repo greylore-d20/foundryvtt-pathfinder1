@@ -323,7 +323,7 @@ export const targetSavingThrowClick = async function (app, html, actor, event) {
   const save = elem.dataset.savingThrow;
 
   const message = await actor.rollSavingThrow(save, { event, skipDialog: getSkipActionPrompt() });
-  const total = message?.roll?.total;
+  const total = message?.rolls?.[0]?.total;
 
   // Replace saving throw value on original chat card's target
   if (total != null) {

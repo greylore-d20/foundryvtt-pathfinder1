@@ -186,6 +186,7 @@ export class ItemClassPF extends ItemPF {
 
       if (!classData.classType) console.warn(`${this.name} lacks class type`, this);
       const isBaseClass = (classData.classType || "base") === "base";
+      if (!this.actor.classes) return;
       actor.classes[tag] = {
         level: classData.level,
         name: this.name,

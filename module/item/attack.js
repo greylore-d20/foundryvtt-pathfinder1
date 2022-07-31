@@ -804,7 +804,7 @@ export const getMessageData = async function (shared) {
       extraText: extraText,
       identified: identified,
       name: name,
-      description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
+      description: identified ? this.fullDescription : itemChatData.unidentifiedDescription,
       actionDescription: itemChatData.actionDescription,
       hasExtraText: extraText.length > 0,
       properties: props,
@@ -881,11 +881,12 @@ export const getMessageData = async function (shared) {
     if (targets.length) {
       shared.templateData.targets = targets.map((o) => {
         return {
-          actorData: o.actor?.data,
-          tokenData: o.data,
+          actorData: o.actor?.toObject(false),
+          tokenData: o.document?.toObject(false),
           uuid: o.document.uuid,
         };
       });
+      console.log(shared.templateData.targets);
     }
   }
 

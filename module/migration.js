@@ -931,6 +931,16 @@ const _migrateEquipmentSize = function (ent, updateData) {
 const _migrateItemWeight = function (ent, updateData) {
   const baseWeight = getProperty(ent, "data.baseWeight"),
     weight = getProperty(ent, "data.weight");
+
+  // Skip items of inappropriate type
+  if (!game.system.template.Item[ent.type].templates.includes("physicalItem")) {
+    if (weight !== undefined) {
+      // Ensure inappropriate items don't have spurious weight, which breaks data prep
+      updateData["data.-=weight"] = null;
+    }
+    return;
+  }
+
   if (Number.isFinite(weight)) {
     updateData["data.weight.value"] = weight;
   } else if (weight == null || typeof weight !== "object") {

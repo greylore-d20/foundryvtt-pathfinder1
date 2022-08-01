@@ -933,7 +933,7 @@ const _migrateItemWeight = function (ent, updateData) {
     weight = getProperty(ent, "data.weight");
   if (Number.isFinite(weight)) {
     updateData["data.weight.value"] = weight;
-  } else if (typeof weight !== "object") {
+  } else if (weight == null || typeof weight !== "object") {
     // Convert any other values to just 0 weight, e.g. null
     updateData["data.weight.value"] = 0;
   }

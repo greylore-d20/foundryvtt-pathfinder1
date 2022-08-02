@@ -20,7 +20,7 @@ export const registerActorItemAttackTests = () => {
       let actor;
       const messages = [];
       before(async () => {
-        actor = await createTestActor({ data: { abilities: { str: { value: 18 } } } }, { temporary: false });
+        actor = await createTestActor({ system: { abilities: { str: { value: 18 } } } }, { temporary: false });
         shared.actor = actor;
       });
       after(async () => {
@@ -47,7 +47,7 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.wLongsword.useAttack({ skipDialog: true });
-            rolls = roll.data.flags.pf1.metadata.rolls.attacks[0];
+            rolls = roll.flags.pf1.metadata.rolls.attacks[0];
             messages.push(roll);
           });
 
@@ -69,7 +69,7 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.aLongsword.useAttack({ skipDialog: true });
-            rolls = roll.data.flags.pf1.metadata.rolls.attacks[0];
+            rolls = roll.flags.pf1.metadata.rolls.attacks[0];
             messages.push(roll);
           });
 
@@ -91,14 +91,14 @@ export const registerActorItemAttackTests = () => {
               let rolls;
               let prevSize;
               before(async () => {
-                prevSize = actor.data.traits.size;
-                await actor.update({ "data.traits.size": "tiny" });
+                prevSize = actor.system.traits.size;
+                await actor.update({ "system.traits.size": "tiny" });
                 roll = await items.aLongsword.useAttack({ skipDialog: true });
-                rolls = roll.data.flags.pf1.metadata.rolls.attacks[0];
+                rolls = roll.flags.pf1.metadata.rolls.attacks[0];
                 messages.push(roll);
               });
               after(async () => {
-                await actor.update({ "data.traits.size": prevSize });
+                await actor.update({ "system.traits.size": prevSize });
               });
 
               it("should have the correct attack formula", function () {
@@ -115,14 +115,14 @@ export const registerActorItemAttackTests = () => {
               let rolls;
               let prevSize;
               before(async () => {
-                prevSize = actor.data.traits.size;
-                await actor.update({ "data.traits.size": "huge" });
+                prevSize = actor.system.traits.size;
+                await actor.update({ "system.traits.size": "huge" });
                 roll = await items.aLongsword.useAttack({ skipDialog: true });
-                rolls = roll.data.flags.pf1.metadata.rolls.attacks[0];
+                rolls = roll.flags.pf1.metadata.rolls.attacks[0];
                 messages.push(roll);
               });
               after(async () => {
-                await actor.update({ "data.traits.size": prevSize });
+                await actor.update({ "system.traits.size": prevSize });
               });
 
               it("should have the correct attack formula", function () {
@@ -145,7 +145,7 @@ export const registerActorItemAttackTests = () => {
             await actor.createEmbeddedDocuments("Item", {
               type: "attack",
               name: "Bite",
-              data: {
+              system: {
                 attackType: "natural",
                 primaryAttack: true,
                 actions: [
@@ -174,7 +174,7 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.bite.useAttack({ skipDialog: true });
-            rolls = roll.data.flags.pf1.metadata.rolls.attacks[0];
+            rolls = roll.flags.pf1.metadata.rolls.attacks[0];
             messages.push(roll);
           });
 
@@ -194,9 +194,9 @@ export const registerActorItemAttackTests = () => {
             let roll;
             let rolls;
             before(async () => {
-              await items.bite.update({ data: { primaryAttack: false } });
+              await items.bite.update({ system: { primaryAttack: false } });
               roll = await items.bite.useAttack({ skipDialog: true });
-              rolls = roll.data.flags.pf1.metadata.rolls.attacks[0];
+              rolls = roll.flags.pf1.metadata.rolls.attacks[0];
               messages.push(roll);
             });
 
@@ -253,10 +253,10 @@ export const registerActorItemAttackTests = () => {
             expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
           });
           it("should have the correct attack formula", function () {
-            expect(roll.data.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal("1d20 + 2[Dexterity]");
+            expect(roll.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal("1d20 + 2[Dexterity]");
           });
           it("should have the correct damage formula", function () {
-            expect(roll.data.flags.pf1.metadata.rolls.attacks[0].damage[0].roll.formula).to.equal(
+            expect(roll.flags.pf1.metadata.rolls.attacks[0].damage[0].roll.formula).to.equal(
               "1d8 + min(4,0)[Strength]"
             );
           });
@@ -284,7 +284,7 @@ export const registerActorItemAttackTests = () => {
             );
           });
           it("should use ammo", function () {
-            expect(items.arrows.data.quantity).to.equal(19);
+            expect(items.arrows.system.quantity).to.equal(19);
           });
         });
 
@@ -292,7 +292,7 @@ export const registerActorItemAttackTests = () => {
           let roll;
           before(async () => {
             items.fighterClass = await addCompendiumItemToActor(actor, "pf1.classes", "Fighter", {
-              data: { level: 10 },
+              system: { level: 10 },
             });
             roll = await items.longbow.useAttack({ skipDialog: true });
             messages.push(roll);
@@ -305,7 +305,7 @@ export const registerActorItemAttackTests = () => {
             expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
           });
           it("should have the correct attack formula", function () {
-            expect(roll.data.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal(
+            expect(roll.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal(
               "1d20 + 10[Base Attack Bonus] + 2[Dexterity]"
             );
             // TODO: Add test for iterative attacks

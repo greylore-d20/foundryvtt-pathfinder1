@@ -52,7 +52,7 @@ export const registerActorBasicTests = () => {
           });
 
           it("should have the correct subject", function () {
-            expect(roll?.data.flags.pf1?.subject?.core === "bab");
+            expect(roll?.flags.pf1?.subject?.core === "bab");
           });
         });
 
@@ -173,7 +173,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should have the correct subject", function () {
-              expect(roll?.data.flags.pf1?.subject?.skill).to.equal("per");
+              expect(roll?.flags.pf1?.subject?.skill).to.equal("per");
             });
           });
 
@@ -181,7 +181,7 @@ export const registerActorBasicTests = () => {
             /** @type {ChatMessagePF} */
             let roll;
             before(async () => {
-              await actor.update({ "data.skills.crf.subSkills": { crf1: { name: "foo", ability: "int", rank: 1 } } });
+              await actor.update({ "system.skills.crf.subSkills": { crf1: { name: "foo", ability: "int", rank: 1 } } });
               roll = await actor.rollSkill("crf.subSkills.crf1", { skipDialog: true });
               messages.push(roll);
             });
@@ -195,7 +195,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should have the correct subject", function () {
-              expect(roll?.data.flags.pf1?.subject?.skill).to.equal("crf.subSkills.crf1");
+              expect(roll?.flags.pf1?.subject?.skill).to.equal("crf.subSkills.crf1");
             });
           });
 
@@ -207,7 +207,7 @@ export const registerActorBasicTests = () => {
             before(async () => {
               items.push(await addCompendiumItemToActor(actor, "pf1.armors-and-shields", "Full Plate"));
               items.push(await addCompendiumItemToActor(actor, "pf1.classes", "Warpriest"));
-              await actor.update({ "data.skills.clm.rank": 3 });
+              await actor.update({ "system.skills.clm.rank": 3 });
               roll = await actor.rollSkill("clm", { skipDialog: true });
               messages.push(roll);
             });
@@ -216,7 +216,7 @@ export const registerActorBasicTests = () => {
                 "Item",
                 items.map((i) => i.id)
               );
-              await actor.update({ "data.skills.clm.rank": 0 });
+              await actor.update({ "system.skills.clm.rank": 0 });
             });
 
             it("should have the correct formula", function () {
@@ -230,7 +230,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should have the correct subject", function () {
-              expect(roll?.data.flags.pf1?.subject?.skill).to.equal("clm");
+              expect(roll?.flags.pf1?.subject?.skill).to.equal("clm");
             });
           });
         });

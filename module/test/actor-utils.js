@@ -20,7 +20,7 @@ export const createTestActor = async (data = {}, options = {}) => {
     {
       name: "Dummy",
       type: "character",
-      data: {
+      system: {
         abilities: {
           str: { value: 12 },
           dex: { value: 14 },

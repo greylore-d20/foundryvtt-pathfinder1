@@ -190,8 +190,8 @@ export const registerActorItemClassTests = () => {
             });
 
             describe("vigor", function () {
-              it("should be 74", function () {
-                expect(actor.system.attributes.vigor.max).to.equal(74);
+              it("should be 81", function () {
+                expect(actor.system.attributes.vigor.max).to.equal(81);
               });
             });
           });

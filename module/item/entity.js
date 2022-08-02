@@ -1982,7 +1982,7 @@ export class ItemPF extends ItemBasePF {
     const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
     if (!coinWeightDivisor) return 0;
     return (
-      Object.values(getProperty(data, "system.currency") || {}).reduce((cur, amount) => {
+      Object.values(getProperty(data, "currency") || {}).reduce((cur, amount) => {
         return cur + amount;
       }, 0) / coinWeightDivisor
     );

@@ -2713,7 +2713,7 @@ export class ActorPF extends ActorBasePF {
   async setCondition(key, enabled) {
     key = `system.attributes.conditions.${key}`;
 
-    const newStatus = !getProperty(this.system, key);
+    const newStatus = !getProperty(this, key);
     if (newStatus !== enabled) return;
     const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
     const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
@@ -2727,7 +2727,7 @@ export class ActorPF extends ActorBasePF {
    */
   hasCondition(key) {
     key = `system.attributes.conditions.${key}`;
-    return getProperty(this.system, key) === true;
+    return getProperty(this, key) === true;
   }
 
   /* -------------------------------------------- */

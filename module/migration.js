@@ -122,6 +122,7 @@ export const migrateCompendium = async function (pack) {
 
   // Iterate over compendium entries - applying fine-tuned migration functions
   console.log(`Migrating ${doc} documents in Compendium ${pack.collection}`);
+  const updates = [];
   for (const ent of content) {
     try {
       let updateData = null;
@@ -130,11 +131,17 @@ export const migrateCompendium = async function (pack) {
       else if (doc === "Scene") updateData = await migrateSceneData(ent.toObject());
       expandObject(updateData);
       updateData["_id"] = ent.id;
-      await ent.update(updateData);
-      console.log(`Migrated ${doc} document ${ent.name} in Compendium ${pack.collection}`);
+      updates.push(updateData);
     } catch (err) {
       console.error(`Error migrating ${doc} document ${ent.name} in Compendium ${pack.collection}`, err);
     }
+  }
+  try {
+    if (doc === "Item") await Item.updateDocuments(updates, { pack: pack.collection });
+    else if (doc === "Actor") await Actor.updateDocuments(updates, { pack: pack.collection });
+    else if (doc === "Scene") await Scene.updateDocuments(updates, { pack: pack.collection });
+  } catch (err) {
+    console.error(`Error migrating Compendium ${pack.collection}`, err);
   }
   console.log(`Migrated all ${doc} documents from Compendium ${pack.collection}`);
 };
@@ -259,10 +266,12 @@ export const migrateItemData = function (item) {
   _migrateItemRange(item, updateData);
   _migrateWeaponData(item, updateData);
   _migrateItemLinks(item, updateData);
+  _migrateClassAssociations(item, updateData);
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
   _migrateItemActions(item, updateData);
+  _migrateItemWeight(item, updateData);
 
   // Migrate action data
   const alreadyHasActions = item.data.actions instanceof Array && item.data.actions.length > 0;
@@ -292,6 +301,7 @@ export const migrateItemActionData = function (action, item) {
 
   _migrateActionDamageType(action, item);
   _migrateActionConditionals(action, item);
+  _migrateActionEnhOverride(action, item);
 
   // Return the migrated update data
   return action;
@@ -870,8 +880,10 @@ const _migrateItemChanges = function (ent, updateData) {
       }
     }
 
-    // Alter the changes list
-    updateData["data.changes"] = newChanges;
+    // Alter the changes list, but only if at least one of them is nonzero length
+    if (newChanges.length !== 0 && changes.length !== 0) {
+      updateData["data.changes"] = newChanges;
+    }
   }
 
   // Migrate context notes
@@ -891,8 +903,10 @@ const _migrateItemChanges = function (ent, updateData) {
       }
     }
 
-    // Alter the context note list
-    updateData["data.contextNotes"] = newNotes;
+    // Alter the context note list, but only if at least one of them is nonzero length
+    if (newNotes.length !== 0 && notes.length !== 0) {
+      updateData["data.contextNotes"] = newNotes;
+    }
   }
 };
 
@@ -909,6 +923,24 @@ const _migrateEquipmentSize = function (ent, updateData) {
   const size = getProperty(ent, "data.size");
   if (!size) {
     updateData["data.size"] = "med";
+  }
+};
+
+// Migrate .weight number to .weight.value
+// Migrate .baseWeight that was briefly introduced in 0.81
+const _migrateItemWeight = function (ent, updateData) {
+  const baseWeight = getProperty(ent, "data.baseWeight"),
+    weight = getProperty(ent, "data.weight");
+  if (Number.isFinite(weight)) {
+    updateData["data.weight.value"] = weight;
+  }
+
+  // If baseWeight exists and looks reasonable, use it for base weight instead
+  if (baseWeight !== undefined) {
+    if (Number.isFinite(baseWeight) && baseWeight > 0) {
+      updateData["data.weight.value"] = baseWeight;
+    }
+    updateData["data.-=baseWeight"] = null;
   }
 };
 
@@ -944,7 +976,7 @@ const _migrateSpellCosts = function (ent, updateData) {
 };
 
 const _migrateLootEquip = function (ent, updateData) {
-  if (ent.type === "loot" && !hasProperty(ent, "equipped")) {
+  if (ent.type === "loot" && !hasProperty(ent, "data.equipped")) {
     updateData["data.equipped"] = false;
   }
 };
@@ -992,6 +1024,25 @@ const _migrateItemLinks = function (ent, updateData) {
   }
 };
 
+const _migrateClassAssociations = function (ent, updateData) {
+  if (ent.type !== "class") return;
+  const _assoc = ent.data?.links?.classAssociations;
+  if (_assoc === undefined) return;
+
+  let modified = false;
+  const newAssociations = deepClone(_assoc);
+  for (const assoc of newAssociations) {
+    if (assoc.hiddenLinks !== undefined) {
+      delete assoc.hiddenLinks;
+      modified = true;
+    }
+  }
+
+  if (modified) {
+    updateData["data.links.classAssociations"] = newAssociations;
+  }
+};
+
 const _migrateProficiencies = function (ent, updateData) {
   // Add proficiency objects to items able to grant proficiencies
   if (["feat", "class", "race"].includes(ent.type)) {
@@ -1025,7 +1076,9 @@ const _migrateItemNotes = function (ent, updateData) {
  */
 const _migrateSpellData = function (item, updateData) {
   if (item.type === "spell") {
-    updateData["data.description.-=value"] = null;
+    if (item.data.description?.value !== undefined) {
+      updateData["data.description.-=value"] = null;
+    }
   }
 };
 
@@ -1078,6 +1131,7 @@ const _migrateActionDamageType = function (action, item) {
       if (typeof damageType === "string") {
         const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
         damageTypeData.values = _Action_ConvertDamageType(damageType);
+        if (damageTypeData.values.length === 0) damageTypeData.custom = damageType;
         damagePart[1] = damageTypeData;
       }
       // Convert array to object
@@ -1109,11 +1163,29 @@ const _migrateActionConditionals = function (action, item) {
       if (modifier.target === "damage" && !modifier.damageType) {
         const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
         damageTypeData.values = _Action_ConvertDamageType(modifier.type);
+        if (damageTypeData.values.length === 0) damageTypeData.custom = modifier.type;
         modifier.damageType = damageTypeData;
         modifier.type = "";
       }
     }
   }
+};
+
+const _migrateActionEnhOverride = function (action, item) {
+  if (typeof action.enh !== "object") {
+    action.enh = { value: action.enh ?? null };
+  }
+
+  // Set to null if disabled.
+  if (action.enh.override == false) {
+    action.enh.value = null;
+  }
+  // Reset odd values to null, too.
+  else if (action.enh.value !== null && typeof action.enh.value !== "number") {
+    action.enh.value = null;
+  }
+  // Delete now unused .override toggle
+  delete action.enh.override;
 };
 
 const _migrateActorCR = function (ent, updateData, linked) {
@@ -1437,6 +1509,10 @@ const _Action_ConvertDamageType = function (damageTypeString) {
       tests: ["pos", "positive"],
       result: "positive",
     },
+    {
+      tests: ["u", "untyped", "untype"],
+      result: "untyped",
+    },
   ];
 
   const damageTypes = damageTypeString.split(separator).map((o) => o.toLowerCase());
@@ -1450,5 +1526,5 @@ const _Action_ConvertDamageType = function (damageTypeString) {
   }
 
   if (result.length > 0) return result;
-  return ["untyped"];
+  return [];
 };

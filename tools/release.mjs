@@ -3,21 +3,22 @@ import { releaseLog } from "./changelog.mjs";
 import yargs from "yargs";
 import git from "simple-git";
 
-const argv = yargs(process.argv.slice(2))
+yargs(process.argv.slice(2))
   .demandCommand(1, 1)
   .command("major", "Bump version to next major", async () => {
     await inc("major");
-    commitTag();
+    await commitTag();
   })
   .command("minor", "Bump version to next minor", async () => {
     await inc("minor");
-    commitTag();
+    await commitTag();
   })
   .command("patch", "Bump version to next patch", async () => {
     await inc("patch");
-    commitTag();
+    await commitTag();
   })
-  .help().argv;
+  .help()
+  .parse();
 
 /**
  * Gets the current system version
@@ -75,10 +76,13 @@ async function inc(importance) {
 /**
  * Commits current changes to the manifest and creates a new annotated tag
  */
-function commitTag() {
+async function commitTag() {
   const version = getTagVersion();
   if (version) {
-    git().commit(`Release v${version}`, ["public/system.json"]).addAnnotatedTag(`v${version}`, `Release v${version}`);
+    console.log(`Committing manifest and changelog for version ${version}`);
+    await git().commit(`Release v${version}`, ["public/system.json", "CHANGELOG.md", "changelogs"]);
+    console.log(`Creating tag v${version}`);
+    await git().addAnnotatedTag(`v${version}`, `Release v${version}`);
   } else {
     throw new Error("Could not determine version!");
   }

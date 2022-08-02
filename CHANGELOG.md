@@ -1,5 +1,50 @@
 # Changelog
 
+## 0.81.1 - 2022-7-27
+
+### Bug Fixes
+
+- Wounds & Vigor variant rule did not work with apply damage buttons. ([793](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/793))
+- Spell resistance notes were not added to spell chat cards
+- Combat tab attack tooltips falsely displayed secondary attack penalty. ([1501](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1501))
+- Item weight editing did not properly function. ([1505](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1505))
+- Secondary natural attack penalty applied to some non-natural attacks. ([1515](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1515))
+- Combat tab damage tooltips displayed no data.
+- Slide down item summary did not resolve roll data for inline rolls. ([1551](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1551))
+- Migration caused loot type items to be automatically unequipped.
+- Loot sheets didn't show the correct value of charged items
+- Initiative dialog did not respect base dice ([1534](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1534))
+- Cantrips/orisons incorrectly used charges on prepared spellcasters ([1544](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1544))
+- Fix unlinked tokens not drawing their buff and condition icons ([1550](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1550))
+- Conditionals couldn't be dragged onto other actions ([1525](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1525))
+- Fix conditionals only applying to all attacks or first attack ([1522](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1522))
+- Fix size conditional modifiers not being ported over to actions ([1495](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1495))
+- Unknown damage types were migrated to untyped, rather than a custom damage type ([1498](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1498))
+- Trying to open a basic actor's vision permissions threw an error ([1576](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1576))
+
+### Changelog
+
+- Item chat cards now use the description matching their identification state; an info block containing the identified description is added for GMs
+- Containers focus contents tab initially. ([1563](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1563))
+- New player characters have vision enabled for their token regardless of default token settings (optional).
+- Actions now have a tag, and can be accessed via the `action` variable within use script calls
+- Added fighter weapon group selection to attacks and weapons ([1332](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1332))
+
+### Compendium
+
+- Add missing class ability Speak with animals of Nature Mystery
+- Missing class ability Earth Glide of Oracle added
+- Missing class ability Life Link of Oracle added
+- Safe Curing class ability fixed
+- Stone Stability class ability of Oracle name and tag fixed
+- Healing Domain class ability corrected
+- Retribution Hex added
+- Add Track class ability of the inquisitor and replace it in the inquisitor class
+
+### API
+
+- Customizing point buy ability cost table allows point buy calculator to go outside of normal 7 to 18 range.
+
 ## 0.81.0 - 2022-6-16
 
 ### Bug Fixes

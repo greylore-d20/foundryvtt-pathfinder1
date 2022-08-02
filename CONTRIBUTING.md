@@ -40,6 +40,18 @@ To create a development setup:
   - This can be set up in the repository's settings, under "Repository" > "Mirroring repositories" and adding "Pull" mirroring.
 - Clone the forked repository into a local directory using `git clone` or another git client of your choice.
 - Install JavaScript dependencies with `npm ci`.
+- In an optional, but recommended step, create a `foundryconfig.json` and insert a configuration specific to your setup:
+
+```json5
+{
+  dataPath: "<path to your home directory>/.local/share/FoundryVTT>",
+  appPath: "<path to your Foundry installation>",
+  routePrefix: "<your routePrefix for Foundry, or leave this out if you do not use one>",
+  openBrowser: true, // Open a web browser when running `npm run build:serve`; defaults to false
+}
+```
+
+- Run `npm run link jsconfig` to create a `jsconfig.json` file.
 
 To build the system, you now have multiple options:
 
@@ -51,10 +63,12 @@ To build the system, you now have multiple options:
 - Run `npm run build:serve`.
   This builds the system _and_ starts a Vite development server, which serves as a proxy for a Foundry server running on port `30000`.
   File changes will either trigger a reload of the browser page, or be hot reloaded (in case of less or handlebars files).
-  This is the recommended development setup.
+  _This is the recommended development setup._
 
 After the system has been built at least once, you can also run `npm run serve` to directly start the development server.
 This will not trigger a build and therefore not mirror any changes to compendium, language, or help files, handlebars template files, or any other static content stored in `public`, but does allow rapidly starting an environment to test JavaScript changes.
+
+If you entered a `dataPath` in your `foundryconfig.json` and want to create a symlink from Foundry's `Data/systems/pf1` directory to the generated `dist` directory, run `npm run link dist`.
 
 Installing the system's dependencies will also install a git commit hook, which will automatically lint and format files before they are committed.
 If committing changes is not possible due to ESLint or Prettier encountering non-fixable problems, change the code in question to follow the rules setup for that file type.
@@ -63,13 +77,13 @@ If committing changes is not possible due to ESLint or Prettier encountering non
 
 The system provides extra tooling to deal with compendiums, including their compilation to and from JSON.
 Source files for all pack entries are stored in `packs`, with each compendium in its own directory.
-When `npm run prebuild` is run – which happens automatically when invoking `npm run build` – the compendiums are compiled into a `.db` file, which is then stored in `public/packs`.
+When `npm run packs:compile` is run – which happens automatically when invoking `npm run build` – the compendiums are compiled into a `.db` file, which is then stored in `public/packs`.
 From there, the actual build process copies the `.db` files into the `dist` directory.
 
 Compendium content can be edited from within Foundry, so that changes are stored in their respective `.db` files.
-To then transfer these changes to the compendium's source files, run `npm run extractPacks`.
+To then transfer these changes to the compendium's source files, run `npm run packs:extract`.
 This will extract the contents of `dist/packs/*.db` into their respective directories.
-If Foundry's `Data/systems/pf1` is symlinked to `dist`, you can change content in Foundry, close the server, and then run `npm run extractPacks` to immediately see the changes in the source files.
+If Foundry's `Data/systems/pf1` is symlinked to `dist`, you can change content in Foundry, close the server, and then run `npm run packs:extract` to immediately see the changes in the source files.
 
 ### Documentation
 

@@ -18,8 +18,8 @@
 
       {{!-- Weight --}}
       <div class="form-group">
-        <label>{{localize "PF1.Weight"}} ({{data.weightUnits}})</label>
-        <input class="select-on-click" type="text" name="data.weightConverted" value="{{numberFormat data.weightConverted decimals=2}}" data-dtype="Number"/>
+        <label>{{localize "PF1.Weight"}} ({{data.weight.units}})</label>
+        <input class="select-on-click" type="text" name="data.weight.converted" value="{{numberFormat data.weight.converted decimals=2}}" data-dtype="Number"/>
       </div>
 
       {{!-- Price --}}
@@ -78,7 +78,7 @@
       <div class="form-group">
         <label>{{attr.label}}</label>
         {{#if attr.fakeName}}
-        <div data-action="input-text" data-for=".{{attr.id}}-description-input" data-attr-name="{{attr.name}}">
+          <div data-action="input-text" data-for=".{{attr.id}}-description-input" data-attr-name="{{attr.name}}" {{#if attr.inputValue}}data-input-value="{{attr.inputValue}}"{{/if}}>
           <input class="{{#if attr.id}}{{attr.id}}-description-input{{/if}}" type="number" readonly data-dtype="Number" value="{{numberFormat attr.value decimals=attr.decimals}}"/>
         </div>
         {{else}}

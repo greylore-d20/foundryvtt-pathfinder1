@@ -209,7 +209,7 @@ export class ItemAction {
   }
 
   get enhancementBonus() {
-    return this.data.enh?.override ? this.data.enh?.value ?? 0 : this.item.data.data.enh ?? 0;
+    return this.data.enh?.value ?? this.item.data.data.enh;
   }
 
   getRollData() {
@@ -312,8 +312,7 @@ export class ItemAction {
       spellArea: "",
       conditionals: [],
       enh: {
-        override: false,
-        value: 0,
+        value: null,
       },
     };
   }
@@ -643,8 +642,6 @@ export class ItemAction {
     if (critical) rollData.critMult = this.data.data.ability.critMult;
     // Determine ability multiplier
     if (this.data.data.ability.damageMult != null) rollData.ablMult = this.data.ability.damageMult;
-    if (this.data.data.attackType === "natural" && primaryAttack === false && rollData.ablMult > 0)
-      rollData.ablMult = 0.5;
 
     // Create effect string
     const effectNotes = this.parent.getContextNotes("attacks.effect").reduce((cur, o) => {
@@ -728,8 +725,6 @@ export class ItemAction {
     if (critical) rollData.critMult = this.data.ability.critMult;
     // Determine ability multiplier
     if (rollData.ablMult == null) rollData.ablMult = rollData.action?.ability.damageMult;
-    if (this.item.data.data.attackType === "natural" && primaryAttack === false && rollData.ablMult > 0)
-      rollData.ablMult = 0.5;
 
     // Define Roll parts
     let parts = this.data.damage.parts.map((p) => {
@@ -883,6 +878,7 @@ export class ItemAction {
     const result = {};
     if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
     if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
+    result["size"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.size._label);
     if (this.item.type === "spell" || this.hasSave)
       result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
     // Only add Misc target if subTargets are available
@@ -916,7 +912,7 @@ export class ItemAction {
       }
       if (this.hasMultiAttack) {
         for (const [k, v] of Object.entries(this.data.attackParts)) {
-          result[`attack.${Number(k) + 1}`] = v[1];
+          result[`attack_${Number(k) + 1}`] = v[1];
         }
       }
     }

@@ -56,7 +56,7 @@ export class ItemBuffPF extends ItemPF {
     }
   }
 
-  //Creates a simple ActiveEffect from a buff item. Returns the effect
+  // Creates a simple ActiveEffect from a buff item. Returns the effect
   async toEffect({ noCreate = false } = {}) {
     if (!this.parent) return;
 

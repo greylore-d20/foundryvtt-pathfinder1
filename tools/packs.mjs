@@ -5,6 +5,7 @@ import url from "node:url";
 import yargs from "yargs";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+const __filename = url.fileURLToPath(import.meta.url);
 const PACK_SRC = "../packs";
 const PACK_CACHE = "../public/packs";
 const TEMPLATE_EXCEPTION_PATHS = {
@@ -21,34 +22,41 @@ const resolveCache = (...file) => path.resolve(__dirname, PACK_CACHE, ...file);
 /** Helper function that resolves a path from the pack dist directory */
 const resolveDist = (...file) => path.resolve(__dirname, "../dist/packs", ...file);
 
-const argv = yargs(process.argv.slice(2))
-  .demandCommand(1, 1)
-  .command(
-    "extract [packs...]",
-    `Extract packs from cache to source`,
-    () => {},
-    async (argv) => {
-      const options = {
-        reset: !argv.keepDeleted ?? true,
-        keepIds: !argv.resetIds ?? true,
-      };
-      if (argv.packs?.length) {
-        const results = await Promise.allSettled(argv.packs.map((pack) => extractPack(`${pack}.db`, options)));
-        results
-          .filter((res) => res.status === "rejected")
-          .forEach((res) => console.error(`Error: ${res.reason.message}`));
-      } else {
-        await extractAllPacks(options);
-      }
-    }
-  )
-  // Option to overwrite the default `reset` option
-  .option("keepDeleted", { alias: "k", type: "boolean" })
-  // Option to overwrite the default `keepIds` option
-  .option("resetIds", { alias: "r", type: "boolean" })
-  .command("compile", `Compile json files from source into db files in cache`, async () => {
-    await compileAllPacks();
-  }).argv;
+// Only handle commands if this script was executed directly
+if (process.argv[1] === __filename) {
+  yargs(process.argv.slice(2))
+    .demandCommand(1, 1)
+    .command({
+      command: "extract [packs...]",
+      describe: `Extract packs from cache to source`,
+      handler: async (argv) => {
+        const options = {
+          reset: !argv.keepDeleted ?? true,
+          keepIds: !argv.resetIds ?? true,
+        };
+        if (argv.packs?.length) {
+          const results = await Promise.allSettled(argv.packs.map((pack) => extractPack(`${pack}.db`, options)));
+          results
+            .filter((res) => res.status === "rejected")
+            .forEach((res) => console.error(`Error: ${res.reason.message}`));
+        } else {
+          await extractAllPacks(options);
+        }
+      },
+    })
+    // Option to overwrite the default `reset` option
+    .option("keepDeleted", { alias: "k", type: "boolean" })
+    // Option to overwrite the default `keepIds` option
+    .option("resetIds", { alias: "r", type: "boolean" })
+    .command({
+      command: "compile",
+      describe: `Compile json files from source into db files in cache`,
+      handler: async () => {
+        await compileAllPacks();
+      },
+    })
+    .parse();
+}
 
 /**
  * Sluggify a string.

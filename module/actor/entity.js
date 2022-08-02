@@ -277,16 +277,6 @@ export class ActorPF extends ActorBasePF {
     return [...skills, ...subSkills];
   }
 
-  /**
-   * The VisionPermissionSheet instance for this actor
-   *
-   * @type {VisionPermissionSheet}
-   */
-  get visionPermissionSheet() {
-    if (!this._visionPermissionSheet) this._visionPermissionSheet = new VisionPermissionSheet(this);
-    return this._visionPermissionSheet;
-  }
-
   _prepareContainerItems(items) {
     const collection = [];
 
@@ -1989,7 +1979,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (options.bonus?.length) {
-      parts.push(`+ ${options.bonus}`);
+      parts.push(`${options.bonus}`);
     }
 
     const props = [];
@@ -2471,7 +2461,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (options.bonus?.length) {
-      parts.push(`+ ${options.bonus}`);
+      parts.push(`${options.bonus}`);
     }
 
     // Roll saving throw
@@ -3398,7 +3388,7 @@ export class ActorPF extends ActorBasePF {
     });
     const weight = physicalItems.reduce((cur, o) => {
       if (!o.data.data.carried) return cur;
-      return cur + o.data.data.weight * o.data.data.quantity;
+      return cur + o.data.data.weight.total;
     }, this._calculateCoinWeight());
 
     return game.pf1.utils.convertWeight(weight);
@@ -3745,13 +3735,25 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    const deleteContext = mergeObject({ render: !toCreate.length && !toUpdate.length }, context);
-    const createContext = mergeObject({ render: !toUpdate.length }, context);
+    // Create sub-contexts and disable render if more updates are done
+    const deleteContext = deepClone(context);
+    if (context.render !== false) deleteContext.render = !toCreate.length && !toUpdate.length;
+    const createContext = deepClone(context);
+    if (context.render !== false) createContext.render = !toUpdate.length;
 
     if (toDelete.length) await this.deleteEmbeddedDocuments("ActiveEffect", toDelete, deleteContext);
     if (toCreate.length) await this.createEmbeddedDocuments("ActiveEffect", toCreate, createContext);
     if (toUpdate.length) await this.updateEmbeddedDocuments("ActiveEffect", toUpdate, context);
     this._states.togglingStatusIcons = false;
+
+    // Special case for unlinked tokens, which don't seem to draw their effects on an actor update
+    const tokens = this.getActiveTokens();
+    for (const token of tokens) {
+      const linked = token.data.actorLink;
+      if (!linked) {
+        token.drawEffects();
+      }
+    }
   }
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }

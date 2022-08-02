@@ -182,7 +182,7 @@ export const alterRollData = function (shared, form = {}) {
   });
 
   // Apply secondary attack penalties
-  if (shared.rollData.item.primaryAttack === false) {
+  if (shared.rollData.item.attackType === "natural" && shared.rollData.item.primaryAttack === false) {
     const attackBonus = shared.rollData.action.naturalAttack?.secondary?.attackBonus || "-5";
     const damageMult = shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
     shared.attackBonus.push(`(${attackBonus})[${game.i18n.localize("PF1.SecondaryAttack")}]`);
@@ -794,7 +794,7 @@ export const getMessageData = async function (shared) {
     this.parentActor?.token ?? canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.parentActor?.id);
   const identified = Boolean(shared.rollData.item?.identified ?? true);
   const name = identified
-    ? `${shared.rollData.item.identifiedName} (${shared.action.name})`
+    ? `${shared.rollData.item.identifiedName || this.name} (${shared.action.name})`
     : shared.rollData.item.unidentified?.name || this.name;
   shared.templateData = mergeObject(
     shared.templateData,

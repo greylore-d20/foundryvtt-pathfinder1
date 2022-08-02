@@ -1,6 +1,8 @@
 import * as chokidar from "chokidar";
 import path from "node:path";
 import fs from "fs-extra";
+import { ViteLoggerPF } from "./vite-logger.mjs";
+import { removePrefix } from "./foundry-config.mjs";
 
 /** @type {import ("vite").ViteDevServer} */
 let server;
@@ -20,6 +22,7 @@ export default function handlebarsReload() {
     },
 
     configResolved(config) {
+      const logger = new ViteLoggerPF(config.logger);
       const watchPath = path.resolve(config.publicDir, "**/*.hbs");
       watcher = chokidar.watch(watchPath);
       // Clean up base dir to determine file placement within Foundry
@@ -36,14 +39,14 @@ export default function handlebarsReload() {
             .split(path.sep)
             .join(path.posix.sep)
             .replace(/^\/+|\/+$/g, "");
-          const foundryPath = `${foundryBaseDir}/${filepathUrl}`;
+          const foundryPath = `${removePrefix(foundryBaseDir)}/${filepathUrl}`;
 
           // Shortened relative path for display purposes
           const fileFromRoot = path.relative(config.root, file);
 
           // Trigger hot reload within dev server/Foundry
           const content = await fs.readFile(file, { encoding: "utf8" });
-          config.logger.info(`Reload ${fileFromRoot} as ${foundryPath}`);
+          logger.info(`Reload ${fileFromRoot} as ${foundryPath}`);
           server.ws.send({
             type: "custom",
             event: "hotHandle:update",
@@ -53,7 +56,7 @@ export default function handlebarsReload() {
           // Also copy template to `dist` to persist the change
           const distFile = path.resolve(config.build.outDir, path.relative(config.publicDir, file));
           await fs.copy(file, distFile);
-          config.logger.info(`Copied ${fileFromRoot} to ${path.relative(config.root, distFile)}`);
+          logger.info(`Copied ${fileFromRoot} to ${path.relative(config.root, distFile)}`);
         }
       });
     },

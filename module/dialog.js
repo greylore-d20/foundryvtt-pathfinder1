@@ -1,4 +1,4 @@
-import { isGMActive } from "./lib";
+import { isGMActive } from "./lib.js";
 
 /**
  * @param root0

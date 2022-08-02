@@ -99,7 +99,6 @@ import { ChatAttack } from "./module/misc/chat-attack.js";
 import { TokenQuickActions } from "./module/token-quick-actions.js";
 import { initializeSocket } from "./module/socket.js";
 import { SemanticVersion } from "./module/semver.js";
-import { registerTests } from "./module/test";
 import { ChangeLogWindow } from "./module/apps/change-log.js";
 import { HelpBrowserPF } from "./module/apps/help-browser.js";
 import { addReachListeners } from "./module/misc/attack-reach.js";
@@ -381,9 +380,10 @@ Hooks.once("init", function () {
   Hooks.callAll("pf1.postInit");
 });
 
-Hooks.on("quenchReady", () => {
-  registerTests();
-});
+// Load Quench test in development environment
+if (import.meta.env.DEV) {
+  await import("./module/test");
+}
 
 /* -------------------------------------------- */
 /*  Foundry VTT Setup                           */
@@ -546,7 +546,7 @@ Hooks.once("ready", async function () {
   });
 
   // Migrate data
-  const NEEDS_MIGRATION_VERSION = "0.81.0";
+  const NEEDS_MIGRATION_VERSION = "0.81.1";
   let PREVIOUS_MIGRATION_VERSION = game.settings.get("pf1", "systemMigrationVersion");
   if (typeof PREVIOUS_MIGRATION_VERSION === "number") {
     PREVIOUS_MIGRATION_VERSION = PREVIOUS_MIGRATION_VERSION.toString() + ".0";
@@ -663,12 +663,6 @@ Hooks.on("renderAmbientLightConfig", (app, html) => {
 
 Hooks.on("renderTokenHUD", (app, html, data) => {
   TokenQuickActions.addTop3Attacks(app, html, data);
-});
-
-Hooks.on("preCreateActor", (actor, data, options, userId) => {
-  if (data.type === "character") {
-    actor.data._source.token.actorLink = true;
-  }
 });
 
 Hooks.on("updateActor", (actor, data, options, userId) => {

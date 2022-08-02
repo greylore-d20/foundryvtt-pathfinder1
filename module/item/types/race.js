@@ -5,7 +5,7 @@ export class ItemRacePF extends ItemPF {
     const actor = this.parent instanceof Actor ? this.parent : null;
 
     // Overwrite race
-    if (actor && actor.race && this.type === "race") {
+    if (actor && actor.race) {
       // Delete previous race
       await actor.race.delete();
 

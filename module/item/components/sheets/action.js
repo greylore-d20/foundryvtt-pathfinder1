@@ -83,6 +83,7 @@ export class ItemActionSheet extends FormApplication {
 
     // Action Details
     data.itemName = data.item.name;
+    data.itemEnh = data.item.data.data.enh || 0;
     data.isSpell = this.item.type === "spell";
     data.canUseAmmo = this.action.data.usesAmmo !== undefined;
     data.owned = this.item.actor != null;
@@ -172,8 +173,8 @@ export class ItemActionSheet extends FormApplication {
 
     // Drag conditional
     if (elem.dataset?.conditional) {
-      const conditional = this.object.data.conditionals[elem.dataset?.conditional];
-      event.dataTransfer.setData("text/plain", JSON.stringify(conditional));
+      const conditional = this.object.conditionals.get(elem.dataset?.conditional);
+      event.dataTransfer.setData("text/plain", JSON.stringify(conditional.data));
     }
   }
 

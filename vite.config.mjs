@@ -1,9 +1,16 @@
+import path from "node:path";
+import url from "node:url";
+
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
-import path from "node:path";
 import { copy } from "@guanghechen/rollup-plugin-copy";
-import handlebarsReload from "./tools/handlebars-reload.mjs";
 
+import { resolveUrl, FOUNDRY_CONFIG } from "./tools/foundry-config.mjs";
+import handlebarsReload from "./tools/handlebars-reload.mjs";
+import langReload from "./tools/lang-reload.mjs";
+import rewriteFoundryImports from "./tools/foundry-imports.mjs";
+
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 /**
  * Returns an absolute path
  *
@@ -19,20 +26,21 @@ const COPY_FILES = ["CREDITS.md", "LICENSE.txt", "CHANGELOG.md", "OGL.txt", "hel
 const config = defineConfig(({ command, mode }) => {
   return {
     root: ".",
-    base: "/systems/pf1/",
+    base: resolveUrl("systems/pf1/"),
     publicDir: resolve("public"),
     server: {
       port: 30001,
-      open: true,
+      open: FOUNDRY_CONFIG.openBrowser ?? false,
       proxy: {
-        "^(?!/systems/pf1)": "http://localhost:30000/",
-        "/socket.io": {
+        [`^(?!${resolveUrl("systems/pf1")})`]: "http://localhost:30000/",
+        [resolveUrl("socket.io/")]: {
           target: "ws://localhost:30000",
           ws: true,
         },
       },
     },
     build: {
+      target: "es2022",
       // Slower than esbuild, but required for options
       minify: mode === "development" ? false : "terser",
       // Keep class and function symbol names for sane console output
@@ -72,12 +80,14 @@ const config = defineConfig(({ command, mode }) => {
       },
     },
     plugins: [
+      rewriteFoundryImports(),
       visualizer({
         sourcemap: true,
         template: "treemap",
       }),
       copy({ targets: [{ src: COPY_FILES, dest: resolve("dist") }], hook: "writeBundle" }),
       handlebarsReload(),
+      langReload(),
     ],
   };
 });

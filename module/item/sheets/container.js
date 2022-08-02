@@ -1,6 +1,6 @@
 import { ItemSheetPF } from "./base.js";
 import { ItemPF } from "../entity.js";
-import { convertWeight, splitCurrency } from "../../lib.js";
+import { splitCurrency } from "../../lib.js";
 import { getSkipActionPrompt } from "../../settings.js";
 import { createConsumableSpellDialog } from "../../lib.js";
 import { CurrencyTransfer } from "../../apps/currency-transfer.js";
@@ -31,6 +31,13 @@ export class ItemSheetPF_Container extends ItemSheetPF {
      * @type {object[]}
      */
     this._itemUpdates = [];
+
+    /**
+     * Override item sheet initial tab.
+     * Assumes first tab definitionis the main tab.
+     */
+    this.options.tabs[0].initial = "contents"; // Doesn't actually do anything
+    this._tabs[0].active = "contents"; // Actual override
   }
 
   static get defaultOptions() {
@@ -97,11 +104,13 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       // Add weight
       data.descriptionAttributes.push({
         isNumber: true,
-        name: "data.baseWeight",
+        name: "data.weight.value",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.data.data.weightConverted,
-        id: "data-baseWeight",
+        value: data.item.data.data.weight.converted.total,
+        inputValue: data.item.data.data.weight.converted.value,
+        decimals: 2,
+        id: "data-weight-value",
       });
 
       // Add price
@@ -178,14 +187,12 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }
 
     // Get contents weight
-    data.contentsWeight = this.item.items.reduce((cur, o) => {
-      return cur + o.data.data.weight * o.data.data.quantity;
-    }, 0);
-    data.contentsWeight += this.item._calculateCoinWeight(this.item.data);
-    data.contentsWeight = Math.round(convertWeight(data.contentsWeight) * 10) / 10;
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
-    data.weightUnits = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+    data.weight = {
+      contents: this.item.data.data.weight.converted.contents,
+      units: usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
+    };
 
     // Get contents value
     const cpValue =
@@ -302,8 +309,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     for (const i of items) {
       const subType = i.type === "loot" ? i.data.subType || "gear" : i.data.subType;
       i.data.quantity = i.data.quantity || 0;
-      i.data.weight = i.data.weight || 0;
-      i.totalWeight = Math.round(convertWeight(i.data.quantity * i.data.weight) * 10) / 10;
+      i.totalWeight = Math.roundDecimals(i.data.weight.converted.total, 2);
       let usystem = game.settings.get("pf1", "weightUnits"); // override
       if (usystem === "default") usystem = game.settings.get("pf1", "units");
       i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
@@ -577,7 +583,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const data = duplicate(item.data);
 
     delete data._id;
-    data.name = `${data.name} (Copy)`;
+    data.name = `${data.name} (${game.i18n.localize("PF1.Copy")})`;
+    data.data.identifiedName = `${item.data.data.identifiedName} (${game.i18n.localize("PF1.Copy")})`;
     if (data.data.links) data.data.links = {};
 
     return this.item.createContainerContent(data);

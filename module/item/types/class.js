@@ -1,5 +1,5 @@
 import { ItemPF } from "../entity.js";
-import { createTag } from "../../lib";
+import { createTag } from "../../lib.js";
 import { RollPF } from "../../roll.js";
 
 export class ItemClassPF extends ItemPF {

@@ -701,7 +701,7 @@ export const addDefaultChanges = function (changes) {
       name: CONFIG.PF1.abilities[hpAbility],
     });
 
-    if (!getProperty(this.system, "system.attributes.wounds.base")) {
+    if (!getProperty(this, "system.attributes.wounds.base")) {
       const woundFormula = `(@abilities.${hpAbility}.total * 2) + @abilities.${hpAbility}.drain`;
       changes.push(
         new game.pf1.documentComponents.ItemChange({

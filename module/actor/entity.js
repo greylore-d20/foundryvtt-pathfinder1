@@ -2150,8 +2150,8 @@ export class ActorPF extends ActorBasePF {
     );
 
     // Add ability modifier
-    const atkAbl = getProperty(this.system, `system.attributes.attack.${options.melee ? "melee" : "ranged"}Ability`);
-    changes.push(`${getProperty(this.system, `system.abilities.${atkAbl}.mod`)}[${CONFIG.PF1.abilities[atkAbl]}]`);
+    const atkAbl = getProperty(this, `system.attributes.attack.${options.melee ? "melee" : "ranged"}Ability`);
+    changes.push(`${getProperty(this, `system.abilities.${atkAbl}.mod`)}[${CONFIG.PF1.abilities[atkAbl]}]`);
 
     const size = this.system.traits.size ?? "med";
     rollData.sizeBonus = CONFIG.PF1.sizeMods[size];
@@ -2698,7 +2698,7 @@ export class ActorPF extends ActorBasePF {
   async toggleCondition(key) {
     key = `system.attributes.conditions.${key}`;
 
-    const newStatus = !getProperty(this.system, key);
+    const newStatus = !getProperty(this, key);
     const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
     const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
     await this.update(updateData);
@@ -3227,7 +3227,7 @@ export class ActorPF extends ActorBasePF {
           });
       }
 
-      const spellbookNotes = getProperty(this.system, `system.attributes.spells.spellbooks.${spellbookKey}.clNotes`);
+      const spellbookNotes = getProperty(this, `system.attributes.spells.spellbooks.${spellbookKey}.clNotes`);
       if (spellbookNotes.length) {
         result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
       }

@@ -32,7 +32,7 @@ export const checkRequirements = async function (shared) {
     return ERR_REQUIREMENT.DISABLED;
   }
 
-  const itemQuantity = getProperty(this.system, "system.quantity");
+  const itemQuantity = getProperty(this, "system.quantity");
   if (itemQuantity != null && itemQuantity <= 0) {
     const msg = game.i18n.localize("PF1.ErrorNoQuantity");
     console.warn(msg);
@@ -274,8 +274,8 @@ export const generateAttacks = function (shared, forceFullAttack = false) {
   if (action.usesAmmo) {
     const ammoId = this.getFlag("pf1", "defaultAmmo");
     const item = this.actor.items.get(ammoId);
-    const quantity = item?.data.quantity ?? 0;
-    const abundant = item?.data.flags.pf1?.abundant;
+    const quantity = item?.system.quantity ?? 0;
+    const abundant = item?.flags.pf1?.abundant;
     for (let a = 0; a < allAttacks.length; a++) {
       const atk = allAttacks[a];
       if (abundant || quantity >= a + 1) atk.ammo = ammoId;
@@ -310,7 +310,7 @@ export const subtractAmmo = function (shared, value = 1) {
 
   if (!foundry.utils.isEmpty(ammoUsage)) {
     const updateData = Object.entries(ammoUsage).reduce((cur, o) => {
-      const currentValue = this.actor.items.get(o[0]).data.quantity;
+      const currentValue = this.actor.items.get(o[0]).system.quantity;
       const obj = {
         _id: o[0],
         "system.quantity": currentValue - o[1],

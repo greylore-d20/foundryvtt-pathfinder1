@@ -328,12 +328,9 @@ export class ItemPF extends ItemBasePF {
     if (link) return link.addCharges(value);
 
     // Add own charges
-    if (getProperty(this.system, "system.uses.per") === "single" && getProperty(this.system, "system.quantity") == null)
-      return;
+    if (getProperty(this, "system.uses.per") === "single" && getProperty(this, "system.quantity") == null) return;
 
-    const prevValue = this.isSingleUse
-      ? getProperty(this.system, "system.quantity")
-      : getProperty(this.system, "system.uses.value");
+    const prevValue = this.isSingleUse ? getProperty(this, "system.quantity") : getProperty(this, "system.uses.value");
 
     if (this.isSingleUse) await this.update({ "system.quantity": prevValue + value });
     else await this.update({ "system.uses.value": prevValue + value });
@@ -347,7 +344,7 @@ export class ItemPF extends ItemBasePF {
    * @type {boolean}
    */
   get showUnidentifiedData() {
-    return !game.user.isGM && getProperty(this.system, "system.identified") === false;
+    return !game.user.isGM && getProperty(this, "system.identified") === false;
   }
 
   /* -------------------------------------------- */
@@ -1745,7 +1742,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   async getLinkedItems(type, extraData = false) {
-    const items = getProperty(this.system, `data.links.${type}`);
+    const items = getProperty(this, `system..links.${type}`);
     if (!items) return [];
 
     const result = [];
@@ -1760,7 +1757,7 @@ export class ItemPF extends ItemBasePF {
   async getAllLinkedItems() {
     const result = [];
 
-    for (const items of Object.values(getProperty(this.system, "system.links"))) {
+    for (const items of Object.values(getProperty(this, "system.links"))) {
       for (const l of items) {
         const item = await this.getLinkItem(l);
         if (item) result.push(item);
@@ -1777,7 +1774,7 @@ export class ItemPF extends ItemBasePF {
    */
   async removeItemLink(id) {
     const updateData = {};
-    for (const [k, linkItems] of Object.entries(getProperty(this.system, "system.links") || {})) {
+    for (const [k, linkItems] of Object.entries(getProperty(this, "system.links") || {})) {
       const items = duplicate(linkItems);
       for (let a = 0; a < items.length; a++) {
         const item = items[a];
@@ -2000,7 +1997,7 @@ export class ItemPF extends ItemBasePF {
    */
   async addItemBooleanFlag(flagName, context = {}) {
     flagName = String(flagName);
-    const flags = getProperty(this.system, "system.flags.boolean") ?? {};
+    const flags = getProperty(this, "system.flags.boolean") ?? {};
 
     if (Array.isArray(flags)) throw new Error(`${this.name} [${this.id}] requires migration.`);
 
@@ -2020,7 +2017,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async removeItemBooleanFlag(flagName, context = {}) {
-    const flags = getProperty(this.system, "system.flags.boolean") ?? {};
+    const flags = getProperty(this, "system.flags.boolean") ?? {};
 
     if (flags[flagName] !== undefined) {
       await this.update({ [`data.flags.boolean.-=${flagName}`]: null }, context);
@@ -2035,7 +2032,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {boolean} Whether the flag was found on this item.
    */
   hasItemBooleanFlag(flagName) {
-    const flags = getProperty(this.system, "system.flags.boolean") ?? {};
+    const flags = getProperty(this, "system.flags.boolean") ?? {};
     return flags[flagName] === true;
   }
 
@@ -2045,7 +2042,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {string[]}
    */
   getItemBooleanFlags() {
-    const flags = getProperty(this.system, "system.flags.boolean") ?? {};
+    const flags = getProperty(this, "system.flags.boolean") ?? {};
     return Object.keys(flags);
   }
 
@@ -2059,7 +2056,7 @@ export class ItemPF extends ItemBasePF {
    */
   async setItemDictionaryFlag(flagName, value, context = {}) {
     flagName = String(flagName);
-    const flags = duplicate(getProperty(this.system, "system.flags.dictionary") ?? {});
+    const flags = duplicate(getProperty(this, "system.flags.dictionary") ?? {});
 
     if (flags[flagName] !== value) {
       await this.update({ [`data.flags.dictionary.${flagName}`]: value }, context);
@@ -2077,7 +2074,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async removeItemDictionaryFlag(flagName, context = {}) {
-    const flags = getProperty(this.system, "system.flags.dictionary") ?? {};
+    const flags = getProperty(this, "system.flags.dictionary") ?? {};
 
     if (flags[flagName] !== undefined) {
       await this.update({ [`data.flags.dictionary.-=${flagName}`]: null }, context);
@@ -2092,7 +2089,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {object} The value stored in the flag.
    */
   getItemDictionaryFlag(flagName) {
-    const flags = getProperty(this.system, "system.flags.dictionary") || {};
+    const flags = getProperty(this, "system.flags.dictionary") || {};
     return flags[flagName];
   }
 
@@ -2102,7 +2099,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {object[]}
    */
   getItemDictionaryFlags() {
-    const flags = getProperty(this.system, "system.flags.dictionary") || {};
+    const flags = getProperty(this, "system.flags.dictionary") || {};
     return flags;
   }
 

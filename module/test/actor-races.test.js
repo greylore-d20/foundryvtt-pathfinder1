@@ -43,13 +43,13 @@ export const registerActorItemRaceTests = () => {
 
         describe("has Elf stats", function () {
           it("has appropriate Dex", function () {
-            expect(actor.data.abilities.dex.total).to.equal(16);
+            expect(actor.system.abilities.dex.total).to.equal(16);
           });
           it("has appropriate Int", function () {
-            expect(actor.data.abilities.int.total).to.equal(15);
+            expect(actor.system.abilities.int.total).to.equal(15);
           });
           it("has appropriate Con", function () {
-            expect(actor.data.abilities.con.total).to.equal(14);
+            expect(actor.system.abilities.con.total).to.equal(14);
           });
         });
       });

@@ -26,12 +26,13 @@ const runSocketFunction = async function (args, senderId) {
         break;
       }
       case "redrawCanvas":
-        canvas.perception.update({
-          lighting: { initialize: true, refresh: true },
-          sight: { initialize: true, refresh: true },
-          sounds: { refresh: true },
-          foreground: { refresh: true },
-        });
+        canvas.perception.update(
+          {
+            initializeLighting: true,
+            initializeVision: true,
+          },
+          true
+        );
         break;
       case "currencyTransfer": {
         if (!isFirstGM) return;

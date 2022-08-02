@@ -2,6 +2,7 @@ import { customRolls } from "./sidebar/chat-message.js";
 import { sortArrayByName } from "./lib.js";
 import { parseRollStringVariable } from "./roll.js";
 import { RollPF } from "./roll.js";
+import { patchCore as patchLowLightVision } from "./low-light-vision.js";
 
 /**
  *
@@ -163,3 +164,6 @@ OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<
     return cls.fromData(data);
   };
 }
+
+// Call patch functions
+patchLowLightVision();

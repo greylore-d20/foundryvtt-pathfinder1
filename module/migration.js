@@ -16,7 +16,7 @@ export const migrateWorld = async function () {
     return ui.notifications.error(msg);
   }
   game.pf1.isMigrating = true;
-  const startMessage = game.i18n.format("PF1.Migration.Start", { version: game.system.data.version });
+  const startMessage = game.i18n.format("PF1.Migration.Start", { version: game.system.version });
   ui.notifications.info(startMessage, {
     permanent: true,
   });
@@ -37,7 +37,7 @@ export const migrateWorld = async function () {
   for (const a of game.actors.contents) {
     try {
       const updateData = migrateActorData(a.toObject());
-      if (!foundry.utils.isObjectEmpty(updateData)) {
+      if (!foundry.utils.isEmpty(updateData)) {
         console.log(`Migrating Actor document ${a.name}`);
         await a.update(updateData, { enforceTypes: false });
       }
@@ -51,7 +51,7 @@ export const migrateWorld = async function () {
   for (const i of game.items.contents) {
     try {
       const updateData = migrateItemData(i.toObject());
-      if (!foundry.utils.isObjectEmpty(updateData)) {
+      if (!foundry.utils.isEmpty(updateData)) {
         console.log(`Migrating Item document ${i.name}`);
         await i.update(updateData, { enforceTypes: false });
       }
@@ -65,7 +65,7 @@ export const migrateWorld = async function () {
   for (const s of game.scenes.contents) {
     try {
       const updateData = await migrateSceneData(s.toObject());
-      if (!foundry.utils.isObjectEmpty(updateData)) {
+      if (!foundry.utils.isEmpty(updateData)) {
         console.log(`Migrating Scene document ${s.name}`);
         await s.update(updateData, { enforceTypes: false });
         // If we do not do this, then synthetic token actors remain in cache
@@ -92,13 +92,13 @@ export const migrateWorld = async function () {
   }
 
   // Set the migration as complete
-  await game.settings.set("pf1", "systemMigrationVersion", game.system.data.version);
+  await game.settings.set("pf1", "systemMigrationVersion", game.system.version);
   const infoElem =
     ui.notifications.queue.find((o) => o.permanent && o.message == startMessage) ||
     ui.notifications.active.find((o) => o.hasClass("permanent") && o[0].innerText === startMessage);
   if (infoElem) removeNotification(infoElem);
   // Remove migration notification
-  ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.data.version }));
+  ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.version }));
   console.log("System Migration completed.");
   game.pf1.isMigrating = false;
   Hooks.callAll("pf1.migrationFinished");
@@ -211,6 +211,7 @@ export const migrateActorData = function (actor, token) {
   _migrateSpellbookUsage(actor, updateData, linked);
   _migrateActorHP(actor, updateData, linked);
   _migrateActorSenses(actor, updateData, linked, token);
+  _migrateActorVision(actor, updateData, linked, token);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -220,7 +221,7 @@ export const migrateActorData = function (actor, token) {
     const itemUpdate = migrateItemData(itemData);
 
     // Update the Owned Item
-    if (!isObjectEmpty(itemUpdate)) {
+    if (!foundry.utils.isEmpty(itemUpdate)) {
       itemUpdate._id = itemData._id;
       arr.push(expandObject(itemUpdate));
     }
@@ -274,15 +275,15 @@ export const migrateItemData = function (item) {
   _migrateItemWeight(item, updateData);
 
   // Migrate action data
-  const alreadyHasActions = item.data.actions instanceof Array && item.data.actions.length > 0;
-  const itemActionData = alreadyHasActions ? item.data.actions : updateData["data.actions"];
+  const alreadyHasActions = item.system.actions instanceof Array && item.system.actions.length > 0;
+  const itemActionData = alreadyHasActions ? item.system.actions : updateData["system.actions"];
   // The following check is necessary to filter out items with no possible actions
   if (itemActionData instanceof Array) {
     const actionDataList = [];
     for (const action of itemActionData) {
       actionDataList.push(migrateItemActionData(action, item));
     }
-    updateData["data.actions"] = actionDataList;
+    updateData["system.actions"] = actionDataList;
   }
 
   // Return the migrated update data
@@ -297,7 +298,7 @@ export const migrateItemData = function (item) {
  * @returns {object} The resulting action data.
  */
 export const migrateItemActionData = function (action, item) {
-  action = mergeObject(game.pf1.documentComponents.ItemAction.defaultData, action);
+  action = foundry.utils.mergeObject(game.pf1.documentComponents.ItemAction.defaultData, action);
 
   _migrateActionDamageType(action, item);
   _migrateActionConditionals(action, item);
@@ -326,19 +327,21 @@ export const migrateSceneData = async function (scene) {
       t.actorId = null;
       t.actorData = {};
     } else if (!t.actorLink) {
-      const mergedData = mergeObject(game.actors.get(t.actorId).toObject(), t.actorData, { inplace: false });
+      const mergedData = foundry.utils.mergeObject(game.actors.get(t.actorId).toObject(), t.actorData, {
+        inplace: false,
+      });
       const update = migrateActorData(mergedData, token);
       ["items", "effects"].forEach((embeddedName) => {
         if (!update[embeddedName]?.length) return;
         const updates = new Map(update[embeddedName].map((u) => [u._id, u]));
         mergedData[embeddedName].forEach((original) => {
           const update = updates.get(original._id);
-          if (update) mergeObject(original, update);
+          if (update) foundry.utils.mergeObject(original, update);
         });
         delete update[embeddedName];
       });
 
-      mergeObject(t.actorData, update);
+      foundry.utils.mergeObject(t.actorData, update);
     }
     tokens.push(t);
   }
@@ -351,27 +354,27 @@ const _migrateCharacterLevel = function (ent, updateData, linked) {
   const arr = ["details.level.value", "details.level.min", "details.level.max", "details.mythicTier"];
   if (!linked) return; // skip unlinked tokens
   for (const k of arr) {
-    const value = getProperty(ent.data, k);
+    const value = getProperty(ent.system, k);
     if (value == null) {
-      updateData["data." + k] = 0;
+      updateData["system." + k] = 0;
     }
   }
 };
 
 const _migrateActorEncumbrance = function (ent, updateData, linked) {
   const arr = {
-    "attributes.encumbrance.level": "attributes.encumbrance.-=level",
-    "attributes.encumbrance.levels.light": "attributes.encumbrance.levels.-=light",
-    "attributes.encumbrance.levels.medium": "attributes.encumbrance.levels.-=medium",
-    "attributes.encumbrance.levels.heavy": "attributes.encumbrance.levels.-=heavy",
-    "attributes.encumbrance.levels.carry": "attributes.encumbrance.levels.-=carry",
-    "attributes.encumbrance.levels.drag": "attributes.encumbrance.levels.-=drag",
-    "attributes.encumbrance.carriedWeight": "attributes.encumbrance.-=carriedWeight",
+    "system.attributes.encumbrance.level": "attributes.encumbrance.-=level",
+    "system.attributes.encumbrance.levels.light": "attributes.encumbrance.levels.-=light",
+    "system.attributes.encumbrance.levels.medium": "attributes.encumbrance.levels.-=medium",
+    "system.attributes.encumbrance.levels.heavy": "attributes.encumbrance.levels.-=heavy",
+    "system.attributes.encumbrance.levels.carry": "attributes.encumbrance.levels.-=carry",
+    "system.attributes.encumbrance.levels.drag": "attributes.encumbrance.levels.-=drag",
+    "system.attributes.encumbrance.carriedWeight": "attributes.encumbrance.-=carriedWeight",
   };
   for (const [key, updateKey] of Object.entries(arr)) {
-    const value = getProperty(ent.data, key);
+    const value = getProperty(ent, key);
     if (value !== undefined) {
-      updateData["data." + updateKey] = null;
+      updateData["system." + updateKey] = null;
     }
   }
 };
@@ -384,21 +387,21 @@ const _migrateActorEncumbrance = function (ent, updateData, linked) {
  * @param linked
  */
 const _migrateFlagsArrayToObject = function (ent, updateData) {
-  const flags = ent.data.flags;
+  const flags = ent.flags;
   if (!flags) return;
   const bflags = flags.boolean,
     dflags = flags.dictionary;
 
   if (Array.isArray(bflags)) {
     // Compatibility with old data: Convert old array into actual dictionary.
-    updateData["data.flags.boolean"] = bflags.reduce((flags, flag) => {
+    updateData["system.flags.boolean"] = bflags.reduce((flags, flag) => {
       flags[flag] = true;
       return flags;
     }, {});
   }
 
   if (Array.isArray(dflags)) {
-    updateData["data.flags.dictionary"] = dflags.reduce((flags, [key, value]) => {
+    updateData["system.flags.dictionary"] = dflags.reduce((flags, [key, value]) => {
       flags[key] = value;
       return flags;
     }, {});
@@ -406,7 +409,7 @@ const _migrateFlagsArrayToObject = function (ent, updateData) {
 };
 
 const _migrateActorNoteArrays = function (ent, updateData) {
-  const list = ["data.attributes.acNotes", "data.attributes.cmdNotes", "data.attributes.srNotes"];
+  const list = ["system.attributes.acNotes", "system.attributes.cmdNotes", "system.attributes.srNotes"];
   for (const k of list) {
     const value = getProperty(ent, k);
     const hasValue = hasProperty(ent, k);
@@ -425,34 +428,34 @@ const _migrateActorSpeed = function (ent, updateData, linked) {
     "attributes.speed.burrow",
   ];
   for (const k of arr) {
-    let value = getProperty(ent.data, k);
+    let value = getProperty(ent.system, k);
     if (!linked && value === undefined) continue; // skip with unlinked tokens
     if (typeof value === "string") value = parseInt(value);
     if (typeof value === "number") {
-      updateData[`data.${k}.base`] = value;
+      updateData[`system.${k}.base`] = value;
     } else if (value === null) {
-      updateData[`data.${k}.base`] = 0;
+      updateData[`system.${k}.base`] = 0;
     } else if (value?.total !== undefined) {
       // Delete derived data
-      updateData[`data.${k}.-=total`] = null;
+      updateData[`system.${k}.-=total`] = null;
     }
 
     // Add maneuverability
-    if (k === "attributes.speed.fly" && getProperty(ent.data, `${k}.maneuverability`) === undefined) {
-      updateData[`data.${k}.maneuverability`] = "average";
+    if (k === "attributes.speed.fly" && getProperty(ent.system, `${k}.maneuverability`) === undefined) {
+      updateData[`system.${k}.maneuverability`] = "average";
     }
   }
 };
 
 const _migrateActorSpellbookSlots = function (ent, updateData, linked) {
-  for (const spellbookSlot of Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {})) {
-    if (getProperty(ent, `data.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`) == null) {
-      updateData[`data.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`] = true;
+  for (const spellbookSlot of Object.keys(getProperty(ent, "system.attributes.spells.spellbooks") || {})) {
+    if (getProperty(ent, `system.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`) == null) {
+      updateData[`system.attributes.spells.spellbooks.${spellbookSlot}.autoSpellLevels`] = true;
     }
 
     for (let a = 0; a < 10; a++) {
-      const baseKey = `data.attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.base`;
-      const maxKey = `data.attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.max`;
+      const baseKey = `system.attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.base`;
+      const maxKey = `system.attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.max`;
       const base = getProperty(ent, baseKey);
       const max = getProperty(ent, maxKey);
 
@@ -467,7 +470,7 @@ const _migrateActorSpellbookSlots = function (ent, updateData, linked) {
           if (newBase !== base) updateData[baseKey] = newBase;
         } else {
           // Remove pointless default value not present in new actors either
-          updateData[`data.attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.-=base`] = null;
+          updateData[`system.attributes.spells.spellbooks.${spellbookSlot}.spells.spell${a}.-=base`] = null;
         }
       }
     }
@@ -476,14 +479,17 @@ const _migrateActorSpellbookSlots = function (ent, updateData, linked) {
 
 const _migrateActorBaseStats = function (ent, updateData) {
   const keys = [
-    "data.attributes.hp.base",
-    "data.attributes.hd.base",
-    "data.attributes.savingThrows.fort.value",
-    "data.attributes.savingThrows.ref.value",
-    "data.attributes.savingThrows.will.value",
+    "system.attributes.hp.base",
+    "system.attributes.hd.base",
+    "system.attributes.savingThrows.fort.value",
+    "system.attributes.savingThrows.ref.value",
+    "system.attributes.savingThrows.will.value",
   ];
   for (const k of keys) {
-    if (k === "data.attributes.hp.base" && !(getProperty(ent, "items") || []).filter((o) => o.type === "class").length)
+    if (
+      k === "system.attributes.hp.base" &&
+      !(getProperty(ent, "items") || []).filter((o) => o.type === "class").length
+    )
       continue;
     if (getProperty(ent, k) !== undefined) {
       const kList = k.split(".");
@@ -494,15 +500,15 @@ const _migrateActorBaseStats = function (ent, updateData) {
 };
 
 const _migrateUnusedActorCreatureType = function (ent, updateData) {
-  const type = getProperty(ent, "data.attributes.creatureType");
-  if (type != undefined) updateData["data.attributes.-=creatureType"] = null;
+  const type = getProperty(ent, "system.attributes.creatureType");
+  if (type != undefined) updateData["system.attributes.-=creatureType"] = null;
 };
 
 const _migrateActorSpellbookDCFormula = function (ent, updateData, linked) {
-  const spellbooks = Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {});
+  const spellbooks = Object.keys(getProperty(ent, "system.attributes.spells.spellbooks") || {});
 
   for (const k of spellbooks) {
-    const key = `data.attributes.spells.spellbooks.${k}.baseDCFormula`;
+    const key = `system.attributes.spells.spellbooks.${k}.baseDCFormula`;
     const curFormula = getProperty(ent, key);
     if (!linked && curFormula === undefined) continue; // skip with unlinked tokens
     if (curFormula == null) updateData[key] = "10 + @sl + @ablMod";
@@ -510,10 +516,10 @@ const _migrateActorSpellbookDCFormula = function (ent, updateData, linked) {
 };
 
 const _migrateActorSpellbookName = function (ent, updateData) {
-  const spellbooks = Object.entries(getProperty(ent, "data.attributes.spells.spellbooks") || {});
+  const spellbooks = Object.entries(getProperty(ent, "system.attributes.spells.spellbooks") || {});
   for (const [bookId, book] of spellbooks) {
     if (book.altName !== undefined) {
-      const key = `data.attributes.spells.spellbooks.${bookId}`;
+      const key = `system.attributes.spells.spellbooks.${bookId}`;
       updateData[`${key}.-=altName`] = null;
       if (book.altName.length) updateData[`${key}.name`] = book.altName;
     }
@@ -521,10 +527,10 @@ const _migrateActorSpellbookName = function (ent, updateData) {
 };
 
 const _migrateActorSpellbookCL = function (ent, updateData) {
-  const spellbooks = Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {});
+  const spellbooks = Object.keys(getProperty(ent, "system.attributes.spells.spellbooks") || {});
 
   for (const k of spellbooks) {
-    const key = `data.attributes.spells.spellbooks.${k}.cl`;
+    const key = `system.attributes.spells.spellbooks.${k}.cl`;
     const curBase = parseInt(getProperty(ent, key + ".base"));
     const curFormula = getProperty(ent, key + ".formula");
     if (curBase > 0) {
@@ -536,10 +542,10 @@ const _migrateActorSpellbookCL = function (ent, updateData) {
 };
 
 const _migrateActorConcentration = function (ent, updateData) {
-  const spellbooks = Object.keys(getProperty(ent, "data.attributes.spells.spellbooks") || {});
+  const spellbooks = Object.keys(getProperty(ent, "system.attributes.spells.spellbooks") || {});
   for (const k of spellbooks) {
     // Delete unused .concentration from old actors
-    const key = `data.attributes.spells.spellbooks.${k}`;
+    const key = `system.attributes.spells.spellbooks.${k}`;
     const oldValue = getProperty(ent, `${key}.concentration`);
     const isString = typeof oldValue === "string";
     if (Number.isFinite(oldValue) || isString) updateData[`${key}.-=concentration`] = null;
@@ -555,117 +561,117 @@ const _migrateActorConcentration = function (ent, updateData) {
 
 const _migrateActorHPAbility = function (ent, updateData) {
   // Set HP ability
-  if (getProperty(ent, "data.attributes.hpAbility") === undefined) {
-    updateData["data.attributes.hpAbility"] = "con";
+  if (getProperty(ent, "system.attributes.hpAbility") === undefined) {
+    updateData["system.attributes.hpAbility"] = "con";
   }
 
   // Set Fortitude save ability
-  if (getProperty(ent, "data.attributes.savingThrows.fort.ability") === undefined) {
-    updateData["data.attributes.savingThrows.fort.ability"] = "con";
+  if (getProperty(ent, "system.attributes.savingThrows.fort.ability") === undefined) {
+    updateData["system.attributes.savingThrows.fort.ability"] = "con";
   }
 
   // Set Reflex save ability
-  if (getProperty(ent, "data.attributes.savingThrows.ref.ability") === undefined) {
-    updateData["data.attributes.savingThrows.ref.ability"] = "dex";
+  if (getProperty(ent, "system.attributes.savingThrows.ref.ability") === undefined) {
+    updateData["system.attributes.savingThrows.ref.ability"] = "dex";
   }
 
   // Set Will save ability
-  if (getProperty(ent, "data.attributes.savingThrows.will.ability") === undefined) {
-    updateData["data.attributes.savingThrows.will.ability"] = "wis";
+  if (getProperty(ent, "system.attributes.savingThrows.will.ability") === undefined) {
+    updateData["system.attributes.savingThrows.will.ability"] = "wis";
   }
 };
 
 const _migrateItemArrayTypes = function (ent, updateData) {
-  const conditionals = getProperty(ent, "data.conditionals");
+  const conditionals = getProperty(ent, "system.conditionals");
   if (conditionals != null && !(conditionals instanceof Array)) {
-    updateData["data.conditionals"] = [];
+    updateData["system.conditionals"] = [];
   }
 
-  const contextNotes = getProperty(ent, "data.contextNotes");
+  const contextNotes = getProperty(ent, "system.contextNotes");
   if (contextNotes != null && !(contextNotes instanceof Array)) {
-    if (contextNotes instanceof Object) updateData["data.contextNotes"] = Object.values(contextNotes);
-    else updateData["data.contextNotes"] = [];
+    if (contextNotes instanceof Object) updateData["system.contextNotes"] = Object.values(contextNotes);
+    else updateData["system.contextNotes"] = [];
   }
 };
 
 const _migrateItemSpellUses = function (ent, updateData) {
-  if (getProperty(ent.data, "preparation") === undefined) return;
+  if (getProperty(ent.system, "preparation") === undefined) return;
 
-  const value = getProperty(ent.data, "preparation.maxAmount");
-  if (typeof value !== "number") updateData["data.preparation.maxAmount"] = 0;
+  const value = getProperty(ent.system, "preparation.maxAmount");
+  if (typeof value !== "number") updateData["system.preparation.maxAmount"] = 0;
 };
 
 const _migrateWeaponImprovised = function (ent, updateData) {
   if (ent.type !== "weapon") return;
 
-  const value = getProperty(ent.data, "weaponType");
+  const value = getProperty(ent.system, "weaponType");
   if (value === "improv") {
-    updateData["data.weaponType"] = "misc";
-    updateData["data.properties.imp"] = true;
+    updateData["system.weaponType"] = "misc";
+    updateData["system.properties.imp"] = true;
   }
 };
 
 const _migrateWeaponData = function (ent, updateData) {
   if (ent.type !== "weapon") return;
 
-  if (getProperty(ent.data, "weaponData") !== undefined) {
-    const subtype = ent.data.weaponSubtype;
+  if (getProperty(ent.system, "weaponData") !== undefined) {
+    const subtype = ent.system.weaponSubtype;
     const isMelee = subtype !== "ranged";
 
     // Generate missing data
 
     // TODO: Respect character configuration if present
-    //getProperty(this.data, "data.attributes.attack.meleeAbility") || "str";
-    //getProperty(this.data, "data.attributes.attack.rangedAbility") || "dex";
-    const atkAbl = getProperty(ent.data, "ability.attack");
+    //getProperty(this, "system.attributes.attack.meleeAbility") || "str";
+    //getProperty(this, "system.attributes.attack.rangedAbility") || "dex";
+    const atkAbl = getProperty(ent, "system.ability.attack");
     if (atkAbl == null || atkAbl === "") {
-      updateData["data.ability.attack"] = isMelee ? "str" : "dex";
+      updateData["system.ability.attack"] = isMelee ? "str" : "dex";
     }
-    const dmgAbl = getProperty(ent.data, "ability.damage");
+    const dmgAbl = getProperty(ent, "system.ability.damage");
     if (dmgAbl == null || dmgAbl === "") {
-      updateData["data.ability.damage"] = "str";
+      updateData["system.ability.damage"] = "str";
     }
-    if (getProperty(ent.data, "ability.damageMult") == null) {
-      updateData["data.ability.damageMult"] = subtype === "2h" ? 1.5 : 1;
+    if (getProperty(ent, "system.ability.damageMult") == null) {
+      updateData["system.ability.damageMult"] = subtype === "2h" ? 1.5 : 1;
     }
-    if (getProperty(ent.data, "attackType") == null) {
-      updateData["data.attackType"] = "weapon";
+    if (getProperty(ent, "system.attackType") == null) {
+      updateData["system.attackType"] = "weapon";
     }
 
     // Activation
-    updateData["data.actionType"] = isMelee ? "mwak" : "rwak";
-    updateData["data.activation.type"] = "attack";
-    updateData["data.duration.units"] = "inst";
+    updateData["system.actionType"] = isMelee ? "mwak" : "rwak";
+    updateData["system.activation.type"] = "attack";
+    updateData["system.duration.units"] = "inst";
 
     // BAB iteratives
-    updateData["data.formulaicAttacks.count.formula"] = "ceil(@attributes.bab.total / 5) - 1";
-    updateData["data.formulaicAttacks.bonus.formula"] = "@formulaicAttack * -5";
+    updateData["system.formulaicAttacks.count.formula"] = "ceil(@attributes.bab.total / 5) - 1";
+    updateData["system.formulaicAttacks.bonus.formula"] = "@formulaicAttack * -5";
 
     // Preserve weapon data if present
 
     // Criticals
-    updateData["data.ability.critRange"] = getProperty(ent.data, "weaponData.critRange") ?? 20;
-    updateData["data.ability.critMult"] = getProperty(ent.data, "weaponData.critMult") ?? 2;
+    updateData["system.ability.critRange"] = getProperty(ent, "system.weaponData.critRange") ?? 20;
+    updateData["system.ability.critMult"] = getProperty(ent, "system.weaponData.critMult") ?? 2;
 
     // Range
     if (isMelee) {
-      const isReach = getProperty(ent.data, "properties.rch") ?? false;
-      updateData["data.range.units"] = isReach ? "reach" : "melee";
+      const isReach = getProperty(ent, "system.properties.rch") ?? false;
+      updateData["system.range.units"] = isReach ? "reach" : "melee";
     } else {
-      updateData["data.range.units"] = "ft";
+      updateData["system.range.units"] = "ft";
     }
-    const range = getProperty(ent.data, "weaponData.range") ?? null;
+    const range = getProperty(ent, "system.weaponData.range") ?? null;
     if (range !== undefined) {
-      updateData["data.range.value"] = range;
+      updateData["system.range.value"] = range;
     }
 
-    const maxRange = getProperty(ent.data, "weaponData.maxRangeIncrements");
-    if (maxRange !== undefined) updateData["data.range.maxIncrements"] = maxRange;
+    const maxRange = getProperty(ent, "system.weaponData.maxRangeIncrements");
+    if (maxRange !== undefined) updateData["system.range.maxIncrements"] = maxRange;
 
     // Damage
-    const damageRoll = getProperty(ent.data, "weaponData.damageRoll")?.trim();
-    const damageType = getProperty(ent.data, "weaponData.damageType")?.trim();
-    const damageBonusFormula = getProperty(ent.data, "weaponData.damageFormula")?.trim();
+    const damageRoll = getProperty(ent, "system.weaponData.damageRoll")?.trim();
+    const damageType = getProperty(ent, "system.weaponData.damageType")?.trim();
+    const damageBonusFormula = getProperty(ent, "system.weaponData.damageFormula")?.trim();
 
     if (damageRoll !== undefined) {
       let roll = damageRoll || "1d4";
@@ -677,48 +683,48 @@ const _migrateWeaponData = function (ent, updateData) {
         roll = `sizeRoll(${dieCount}, ${dieSides}, @size)`;
       }
       if (damageBonusFormula != null && damageBonusFormula.length) roll = `${roll} + ${damageBonusFormula}`;
-      updateData["data.damage.parts"] = [[roll, damageType || ""]];
+      updateData["system.damage.parts"] = [[roll, damageType || ""]];
     }
 
     // Attack bonus
-    updateData["data.attackBonus"] = getProperty(ent.data, "weaponData.attackFormula")?.trim() ?? "";
+    updateData["system.attackBonus"] = getProperty(ent, "system.weaponData.attackFormula")?.trim() ?? "";
 
     // Flag show in quickbar
-    updateData["data.showInQuickbar"] = false;
+    updateData["system.showInQuickbar"] = false;
 
     // Remove legacy data
-    updateData["data.-=weaponData"] = null;
+    updateData["system.-=weaponData"] = null;
   }
 };
 
 const _migrateSpellDescription = function (ent, updateData) {
   if (ent.type !== "spell") return;
 
-  const curValue = getProperty(ent.data, "shortDescription");
+  const curValue = getProperty(ent, "system.shortDescription");
   if (curValue != null) return;
 
-  const obj = getProperty(ent.data, "description.value");
+  const obj = getProperty(ent, "system.description.value");
   if (typeof obj !== "string") return;
   const html = $(`<div>${obj}</div>`);
   const elem = html.find("h2").next();
-  if (elem.length === 1) updateData["data.shortDescription"] = elem.prop("outerHTML");
-  else updateData["data.shortDescription"] = html.prop("innerHTML");
+  if (elem.length === 1) updateData["system.shortDescription"] = elem.prop("outerHTML");
+  else updateData["system.shortDescription"] = html.prop("innerHTML");
 };
 
 const _migrateSpellDivineFocus = function (ent, updateData) {
   if (ent.type !== "spell") return;
 
-  const value = getProperty(ent.data, "components.divineFocus");
-  if (typeof value === "boolean") updateData["data.components.divineFocus"] = value === true ? 1 : 0;
+  const value = getProperty(ent, "system.components.divineFocus");
+  if (typeof value === "boolean") updateData["system.components.divineFocus"] = value === true ? 1 : 0;
 };
 
 const _migrateClassDynamics = function (ent, updateData) {
   if (ent.type !== "class") return;
 
-  const bab = getProperty(ent.data, "bab");
-  if (typeof bab === "number") updateData["data.bab"] = "low";
+  const bab = getProperty(ent, "system.bab");
+  if (typeof bab === "number") updateData["system.bab"] = "low";
 
-  const stKeys = ["data.savingThrows.fort.value", "data.savingThrows.ref.value", "data.savingThrows.will.value"];
+  const stKeys = ["system.savingThrows.fort.value", "system.savingThrows.ref.value", "system.savingThrows.will.value"];
   for (const key of stKeys) {
     const value = getProperty(ent, key);
     if (typeof value === "number") updateData[key] = "low";
@@ -728,51 +734,51 @@ const _migrateClassDynamics = function (ent, updateData) {
 const _migrateClassType = function (ent, updateData) {
   if (ent.type !== "class") return;
 
-  if (getProperty(ent.data, "classType") == null) updateData["data.classType"] = "base";
+  if (getProperty(ent, "system.classType") == null) updateData["system.classType"] = "base";
 };
 
 const _migrateWeaponCategories = function (ent, updateData) {
   if (ent.type !== "weapon") return;
 
   // Change category
-  const type = getProperty(ent.data, "weaponType");
+  const type = getProperty(ent, "system.weaponType");
   if (type === "misc") {
-    updateData["data.weaponType"] = "misc";
-    updateData["data.weaponSubtype"] = "other";
+    updateData["system.weaponType"] = "misc";
+    updateData["system.weaponSubtype"] = "other";
   } else if (type === "splash") {
-    updateData["data.weaponType"] = "misc";
-    updateData["data.weaponSubtype"] = "splash";
+    updateData["system.weaponType"] = "misc";
+    updateData["system.weaponSubtype"] = "splash";
   }
 
   const changeProp = ["simple", "martial", "exotic"].includes(type);
-  if (changeProp && getProperty(ent.data, "weaponSubtype") == null) {
-    updateData["data.weaponSubtype"] = "1h";
+  if (changeProp && getProperty(ent, "system.weaponSubtype") == null) {
+    updateData["system.weaponSubtype"] = "1h";
   }
 
   // Change light property
-  const lgt = getProperty(ent.data, "properties.lgt");
+  const lgt = getProperty(ent, "system.properties.lgt");
   if (lgt != null) {
-    updateData["data.properties.-=lgt"] = null;
+    updateData["system.properties.-=lgt"] = null;
     if (lgt === true && changeProp) {
-      updateData["data.weaponSubtype"] = "light";
+      updateData["system.weaponSubtype"] = "light";
     }
   }
 
   // Change two-handed property
-  const two = getProperty(ent.data, "properties.two");
+  const two = getProperty(ent, "system.properties.two");
   if (two != null) {
-    updateData["data.properties.-=two"] = null;
+    updateData["system.properties.-=two"] = null;
     if (two === true && changeProp) {
-      updateData["data.weaponSubtype"] = "2h";
+      updateData["system.weaponSubtype"] = "2h";
     }
   }
 
   // Change melee property
-  const melee = getProperty(ent.data, "weaponData.isMelee");
+  const melee = getProperty(ent, "system.weaponData.isMelee");
   if (melee != null) {
-    updateData["data.weaponData.-=isMelee"] = null;
+    updateData["system.weaponData.-=isMelee"] = null;
     if (melee === false && changeProp) {
-      updateData["data.weaponSubtype"] = "ranged";
+      updateData["system.weaponSubtype"] = "ranged";
     }
   }
 };
@@ -780,85 +786,85 @@ const _migrateWeaponCategories = function (ent, updateData) {
 const _migrateEquipmentCategories = function (ent, updateData) {
   if (ent.type !== "equipment") return;
 
-  const oldType = getProperty(ent.data, "armor.type");
+  const oldType = getProperty(ent, "system.armor.type");
   if (oldType == null) return;
 
   if (oldType === "clothing") {
-    updateData["data.equipmentType"] = "misc";
-    updateData["data.equipmentSubtype"] = "clothing";
+    updateData["system.equipmentType"] = "misc";
+    updateData["system.equipmentSubtype"] = "clothing";
   } else if (oldType === "shield") {
-    updateData["data.equipmentType"] = "shield";
-    updateData["data.equipmentSubtype"] = "lightShield";
-    updateData["data.slot"] = "shield";
+    updateData["system.equipmentType"] = "shield";
+    updateData["system.equipmentSubtype"] = "lightShield";
+    updateData["system.slot"] = "shield";
   } else if (oldType === "misc") {
-    updateData["data.equipmentType"] = "misc";
-    updateData["data.equipmentSubtype"] = "wondrous";
+    updateData["system.equipmentType"] = "misc";
+    updateData["system.equipmentSubtype"] = "wondrous";
   } else if (["light", "medium", "heavy"].includes(oldType)) {
-    updateData["data.equipmentType"] = "armor";
-    updateData["data.equipmentSubtype"] = `${oldType}Armor`;
+    updateData["system.equipmentType"] = "armor";
+    updateData["system.equipmentSubtype"] = `${oldType}Armor`;
   }
 
-  updateData["data.armor.-=type"] = null;
+  updateData["system.armor.-=type"] = null;
 };
 
 const _migrateItemSize = function (ent, updateData, linked) {
   // Convert custom sizing in weapons
   if (ent.type === "weapon") {
-    const wdSize = getProperty(ent, "data.weaponData.size");
+    const wdSize = getProperty(ent, "system.weaponData.size");
     if (wdSize) {
       // Move old
-      updateData["data.size"] = wdSize;
-      updateData["data.weaponData.-=size"] = null;
+      updateData["system.size"] = wdSize;
+      updateData["system.weaponData.-=size"] = null;
       return;
     }
   }
   // Convert any other instances
-  if (!getProperty(ent, "data.size")) {
+  if (!getProperty(ent, "system.size")) {
     // Fill in missing
-    updateData["data.size"] = "med";
+    updateData["system.size"] = "med";
   }
 };
 
 const _migrateAbilityTypes = function (ent, updateData) {
   if (ent.type !== "feat") return;
 
-  if (getProperty(ent, "data.abilityType") == null) {
-    updateData["data.abilityType"] = "none";
+  if (getProperty(ent, "system.abilityType") == null) {
+    updateData["system.abilityType"] = "none";
   }
   // Fix buggy value
-  if (getProperty(ent, "data.abilityType") === "n/a") {
-    updateData["data.abilityType"] = "none";
+  if (getProperty(ent, "system.abilityType") === "n/a") {
+    updateData["system.abilityType"] = "none";
   }
 };
 
 const _migrateClassLevels = function (ent, updateData) {
-  const level = getProperty(ent, "data.levels");
-  if (typeof level === "number" && getProperty(ent, "data.level") == null) {
-    updateData["data.level"] = level;
-    updateData["data.-=levels"] = null;
+  const level = getProperty(ent, "system.levels");
+  if (typeof level === "number" && getProperty(ent, "system.level") == null) {
+    updateData["system.level"] = level;
+    updateData["system.-=levels"] = null;
   }
 };
 
 const _migrateSavingThrowTypes = function (ent, updateData) {
-  if (getProperty(ent, "data.save.type") == null && typeof getProperty(ent, "data.save.description") === "string") {
-    const desc = getProperty(ent, "data.save.description");
-    if (desc.match(/REF/i)) updateData["data.save.type"] = "ref";
-    else if (desc.match(/FORT/i)) updateData["data.save.type"] = "fort";
-    else if (desc.match(/WILL/i)) updateData["data.save.type"] = "will";
+  if (getProperty(ent, "system.save.type") == null && typeof getProperty(ent, "system.save.description") === "string") {
+    const desc = getProperty(ent, "system.save.description");
+    if (desc.match(/REF/i)) updateData["system.save.type"] = "ref";
+    else if (desc.match(/FORT/i)) updateData["system.save.type"] = "fort";
+    else if (desc.match(/WILL/i)) updateData["system.save.type"] = "will";
   }
 };
 
 const _migrateCR = function (ent, updateData) {
   // Migrate CR offset
-  const crOffset = getProperty(ent, "data.crOffset");
+  const crOffset = getProperty(ent, "system.crOffset");
   if (typeof crOffset === "number") {
-    updateData["data.crOffset"] = crOffset.toString();
+    updateData["system.crOffset"] = crOffset.toString();
   }
 };
 
 const _migrateItemChanges = function (ent, updateData) {
   // Migrate changes
-  const changes = getProperty(ent, "data.changes");
+  const changes = getProperty(ent, "system.changes");
   if (changes != null && changes instanceof Array) {
     const newChanges = [];
     for (const c of changes) {
@@ -882,17 +888,19 @@ const _migrateItemChanges = function (ent, updateData) {
 
     // Alter the changes list, but only if at least one of them is nonzero length
     if (newChanges.length !== 0 && changes.length !== 0) {
-      updateData["data.changes"] = newChanges;
+      updateData["system.changes"] = newChanges;
     }
   }
 
   // Migrate context notes
-  const notes = getProperty(ent, "data.contextNotes");
+  const notes = getProperty(ent, "system.contextNotes");
   if (notes != null && notes instanceof Array) {
     const newNotes = [];
     for (const n of notes) {
       if (n instanceof Array) {
-        newNotes.push(mergeObject(ItemPF.defaultContextNote, { text: n[0], subTarget: n[2] }, { inplace: false }));
+        newNotes.push(
+          foundry.utils.mergeObject(ItemPF.defaultContextNote, { text: n[0], subTarget: n[2] }, { inplace: false })
+        );
       } else {
         newNotes.push(n);
       }
@@ -905,128 +913,128 @@ const _migrateItemChanges = function (ent, updateData) {
 
     // Alter the context note list, but only if at least one of them is nonzero length
     if (newNotes.length !== 0 && notes.length !== 0) {
-      updateData["data.contextNotes"] = newNotes;
+      updateData["system.contextNotes"] = newNotes;
     }
   }
 };
 
 const _migrateTemplateSize = function (ent, updateData) {
-  const measureSize = getProperty(ent, "data.measureTemplate.size");
+  const measureSize = getProperty(ent, "system.measureTemplate.size");
   if (typeof measureSize === "number") {
-    updateData["data.measureTemplate.size"] = measureSize.toString();
+    updateData["system.measureTemplate.size"] = measureSize.toString();
   }
 };
 
 const _migrateEquipmentSize = function (ent, updateData) {
   if (ent.type !== "equipment") return;
 
-  const size = getProperty(ent, "data.size");
+  const size = getProperty(ent, "system.size");
   if (!size) {
-    updateData["data.size"] = "med";
+    updateData["system.size"] = "med";
   }
 };
 
 // Migrate .weight number to .weight.value
 // Migrate .baseWeight that was briefly introduced in 0.81
 const _migrateItemWeight = function (ent, updateData) {
-  const baseWeight = getProperty(ent, "data.baseWeight"),
-    weight = getProperty(ent, "data.weight");
+  const baseWeight = getProperty(ent, "system.baseWeight"),
+    weight = getProperty(ent, "system.weight");
   if (Number.isFinite(weight)) {
-    updateData["data.weight.value"] = weight;
+    updateData["system.weight.value"] = weight;
   }
 
   // If baseWeight exists and looks reasonable, use it for base weight instead
   if (baseWeight !== undefined) {
     if (Number.isFinite(baseWeight) && baseWeight > 0) {
-      updateData["data.weight.value"] = baseWeight;
+      updateData["system.weight.value"] = baseWeight;
     }
-    updateData["data.-=baseWeight"] = null;
+    updateData["system.-=baseWeight"] = null;
   }
 };
 
 const _migrateTags = function (ent, updateData) {
   if (!["class"].includes(ent.type)) return;
 
-  const tag = getProperty(ent, "data.tag");
+  const tag = getProperty(ent, "system.tag");
   if (!tag && ent.name) {
-    updateData["data.tag"] = createTag(ent.name);
+    updateData["system.tag"] = createTag(ent.name);
   }
 };
 
 const _migrateSpellCosts = function (ent, updateData) {
   if (ent.type !== "spell") return;
 
-  const spellPointCost = getProperty(ent, "data.spellPoints.cost");
+  const spellPointCost = getProperty(ent, "system.spellPoints.cost");
   if (spellPointCost == null) {
-    updateData["data.spellPoints.cost"] = "1 + @sl";
+    updateData["system.spellPoints.cost"] = "1 + @sl";
   }
 
-  const slotCost = getProperty(ent, "data.slotCost");
+  const slotCost = getProperty(ent, "system.slotCost");
   if (slotCost == null) {
-    updateData["data.slotCost"] = 1;
+    updateData["system.slotCost"] = 1;
   }
 
   // Migrate level 0 spell charge deduction in a specific version
   if (
-    !SemanticVersion.fromString(game.system.data.version).isHigherThan(SemanticVersion.fromString("0.77.11")) &&
-    getProperty(ent, "data.level") === 0
+    !SemanticVersion.fromString(game.system.version).isHigherThan(SemanticVersion.fromString("0.77.11")) &&
+    getProperty(ent, "system.level") === 0
   ) {
-    updateData["data.preparation.autoDeductCharges"] = false;
+    updateData["system.preparation.autoDeductCharges"] = false;
   }
 };
 
 const _migrateLootEquip = function (ent, updateData) {
-  if (ent.type === "loot" && !hasProperty(ent, "data.equipped")) {
-    updateData["data.equipped"] = false;
+  if (ent.type === "loot" && !hasProperty(ent, "system.equipped")) {
+    updateData["system.equipped"] = false;
   }
 };
 
 const _migrateUnchainedActionEconomy = function (ent, updateData) {
   // Determine existing data
-  const curAction = getProperty(ent, "data.activation");
-  const unchainedAction = getProperty(ent, "data.unchainedAction.activation");
+  const curAction = getProperty(ent, "system.activation");
+  const unchainedAction = getProperty(ent, "system.unchainedAction.activation");
   if (!curAction || (curAction && !curAction.type)) return;
   if (unchainedAction && unchainedAction.type) return;
 
   // Create unchained action economy data
   if (CONFIG.PF1.abilityActivationTypes_unchained[curAction.type] != null) {
-    updateData["data.unchainedAction.activation.cost"] = curAction.cost;
-    updateData["data.unchainedAction.activation.type"] = curAction.type;
+    updateData["system.unchainedAction.activation.cost"] = curAction.cost;
+    updateData["system.unchainedAction.activation.type"] = curAction.type;
   }
   if (["swift", "attack"].includes(curAction.type)) {
-    updateData["data.unchainedAction.activation.cost"] = 1;
-    updateData["data.unchainedAction.activation.type"] = curAction.type === "attack" ? "attack" : "action";
+    updateData["system.unchainedAction.activation.cost"] = 1;
+    updateData["system.unchainedAction.activation.type"] = curAction.type === "attack" ? "attack" : "action";
   }
   if (curAction.type === "standard") {
-    updateData["data.unchainedAction.activation.cost"] = 2;
-    updateData["data.unchainedAction.activation.type"] = "action";
+    updateData["system.unchainedAction.activation.cost"] = 2;
+    updateData["system.unchainedAction.activation.type"] = "action";
   }
   if (curAction.type === "full" || curAction.type === "round") {
-    updateData["data.unchainedAction.activation.cost"] = 3 * (curAction.cost || 1);
-    updateData["data.unchainedAction.activation.type"] = "action";
+    updateData["system.unchainedAction.activation.cost"] = 3 * (curAction.cost || 1);
+    updateData["system.unchainedAction.activation.type"] = "action";
   }
   if (curAction.type === "immediate") {
-    updateData["data.unchainedAction.activation.type"] = "reaction";
-    updateData["data.unchainedAction.activation.cost"] = 1;
+    updateData["system.unchainedAction.activation.type"] = "reaction";
+    updateData["system.unchainedAction.activation.cost"] = 1;
   }
 };
 
 const _migrateItemRange = function (ent, updateData) {
   // Set max range increment
-  if (getProperty(ent, "data.range.maxIncrements") === undefined) {
-    updateData["data.range.maxIncrements"] = 1;
+  if (getProperty(ent, "system.range.maxIncrements") === undefined) {
+    updateData["system.range.maxIncrements"] = 1;
   }
 };
 
 const _migrateItemLinks = function (ent, updateData) {
-  if (["attack", "consumable", "equipment"].includes(ent.type) && !hasProperty(ent, "data.links.charges")) {
-    updateData["data.links.charges"] = [];
+  if (["attack", "consumable", "equipment"].includes(ent.type) && !hasProperty(ent, "system.links.charges")) {
+    updateData["system.links.charges"] = [];
   }
 };
 
 const _migrateClassAssociations = function (ent, updateData) {
   if (ent.type !== "class") return;
-  const _assoc = ent.data?.links?.classAssociations;
+  const _assoc = ent.system?.links?.classAssociations;
   if (_assoc === undefined) return;
 
   let modified = false;
@@ -1039,7 +1047,7 @@ const _migrateClassAssociations = function (ent, updateData) {
   }
 
   if (modified) {
-    updateData["data.links.classAssociations"] = newAssociations;
+    updateData["system.links.classAssociations"] = newAssociations;
   }
 };
 
@@ -1047,8 +1055,8 @@ const _migrateProficiencies = function (ent, updateData) {
   // Add proficiency objects to items able to grant proficiencies
   if (["feat", "class", "race"].includes(ent.type)) {
     for (const prof of ["armorProf", "weaponProf"]) {
-      if (!hasProperty(ent, `data.${prof}`))
-        updateData[`data.${prof}`] = {
+      if (!hasProperty(ent, `system.${prof}`))
+        updateData[`system.${prof}`] = {
           value: [],
           custom: "",
         };
@@ -1057,7 +1065,7 @@ const _migrateProficiencies = function (ent, updateData) {
 };
 
 const _migrateItemNotes = function (ent, updateData) {
-  const list = ["data.attackNotes", "data.effectNotes"];
+  const list = ["system.attackNotes", "system.effectNotes"];
   for (const k of list) {
     const value = getProperty(ent, k);
     const hasValue = hasProperty(ent, k);
@@ -1076,15 +1084,16 @@ const _migrateItemNotes = function (ent, updateData) {
  */
 const _migrateSpellData = function (item, updateData) {
   if (item.type === "spell") {
-    if (item.data.description?.value !== undefined) {
-      updateData["data.description.-=value"] = null;
+    if (item.system.description?.value !== undefined) {
+      updateData["system.description.-=value"] = null;
     }
   }
 };
 
 const _migrateItemActions = function (item, updateData) {
-  const hasOldAction = !!item.data.actionType || !!item.data.activation?.type || !!item.data.measureTemplate?.type;
-  const alreadyHasActions = item.data.actions instanceof Array && item.data.actions.length > 0;
+  const hasOldAction =
+    !!item.system.actionType || !!item.system.activation?.type || !!item.system.measureTemplate?.type;
+  const alreadyHasActions = item.system.actions instanceof Array && item.system.actions.length > 0;
   if ((!hasOldAction && item.type !== "spell") || alreadyHasActions) return;
 
   // Transfer data to an action
@@ -1108,16 +1117,16 @@ const _migrateItemActions = function (item, updateData) {
   // Add spell data
   if (item.type === "spell") {
     // Transfer spell duration
-    actionData.duration.value = item.data.spellDuration;
+    actionData.duration.value = item.system.spellDuration;
     // Transfer spell point cost
-    const oldSpellPointCostFormula = item.data.spellPoints?.cost;
+    const oldSpellPointCostFormula = item.system.spellPoints?.cost;
     if (oldSpellPointCostFormula) actionData.uses.autoDeductChargesCost = oldSpellPointCostFormula;
   }
   // Clean out old attack and effect notes
-  updateData["data.attackNotes"] = [];
-  updateData["data.effectNotes"] = [];
+  updateData["system.attackNotes"] = [];
+  updateData["system.effectNotes"] = [];
 
-  updateData["data.actions"] = [actionData];
+  updateData["system.actions"] = [actionData];
 };
 
 const _migrateActionDamageType = function (action, item) {
@@ -1190,54 +1199,54 @@ const _migrateActionEnhOverride = function (action, item) {
 
 const _migrateActorCR = function (ent, updateData, linked) {
   // Migrate base CR
-  const cr = getProperty(ent, "data.details.cr");
+  const cr = getProperty(ent, "system.details.cr");
   if (!linked && cr === undefined) return; // skip with unlinked tokens
   if (typeof cr === "number") {
-    updateData["data.details.cr.base"] = cr;
+    updateData["system.details.cr.base"] = cr;
   } else if (cr == null) {
-    updateData["data.details.cr.base"] = 1;
+    updateData["system.details.cr.base"] = 1;
   }
 
   // Remove derived data if present
-  if (getProperty(ent, "data.details.cr.total") !== undefined) {
-    updateData["data.details.cr.-=total"] = null;
+  if (getProperty(ent, "system.details.cr.total") !== undefined) {
+    updateData["system.details.cr.-=total"] = null;
   }
 };
 
 const _migrateAttackAbility = function (ent, updateData, linked) {
-  const cmbAbl = getProperty(ent, "data.attributes.cmbAbility");
-  if (cmbAbl === undefined && linked) updateData["data.attributes.cmbAbility"] = "str";
+  const cmbAbl = getProperty(ent, "system.attributes.cmbAbility");
+  if (cmbAbl === undefined && linked) updateData["system.attributes.cmbAbility"] = "str";
 
-  const meleeAbl = getProperty(ent, "data.attributes.attack.meleeAbility");
-  if (meleeAbl === undefined && linked) updateData["data.attributes.attack.meleeAbility"] = "str";
+  const meleeAbl = getProperty(ent, "system.attributes.attack.meleeAbility");
+  if (meleeAbl === undefined && linked) updateData["system.attributes.attack.meleeAbility"] = "str";
 
-  const rangedAbl = getProperty(ent, "data.attributes.attack.rangedAbility");
-  if (rangedAbl === undefined && linked) updateData["data.attributes.attack.rangedAbility"] = "dex";
+  const rangedAbl = getProperty(ent, "system.attributes.attack.rangedAbility");
+  if (rangedAbl === undefined && linked) updateData["system.attributes.attack.rangedAbility"] = "dex";
 };
 
 const _migrateActorTokenVision = function (ent, updateData) {
-  const vision = getProperty(ent, "data.attributes.vision");
+  const vision = getProperty(ent, "system.attributes.vision");
   if (!vision) return;
 
-  updateData["data.attributes.-=vision"] = null;
+  updateData["system.attributes.-=vision"] = null;
   updateData["token.flags.pf1.lowLightVision"] = vision.lowLight;
   if (!getProperty(ent, "token.brightSight")) updateData["token.brightSight"] = vision.darkvision ?? 0;
 };
 
 const _migrateActorSpellbookUsage = function (ent, updateData, linked) {
-  const spellbookUsage = getProperty(ent, "data.attributes.spells.usedSpellbooks");
+  const spellbookUsage = getProperty(ent, "system.attributes.spells.usedSpellbooks");
   if (spellbookUsage !== undefined) {
-    updateData["data.attributes.spells.-=usedSpellbooks"] = null;
+    updateData["system.attributes.spells.-=usedSpellbooks"] = null;
   }
 };
 
 const _migrateActorNullValues = function (ent, updateData) {
   // Prepare test data
-  const entries = { "data.attributes.energyDrain": getProperty(ent, "data.attributes.energyDrain") };
-  for (const [k, a] of Object.entries(getProperty(ent.data, "data.abilities") || {})) {
-    entries[`data.abilities.${k}.damage`] = a.damage;
-    entries[`data.abilities.${k}.drain`] = a.drain;
-    entries[`data.abilities.${k}.penalty`] = a.penalty;
+  const entries = { "system.attributes.energyDrain": getProperty(ent, "system.attributes.energyDrain") };
+  for (const [k, a] of Object.entries(getProperty(ent, "system.abilities") || {})) {
+    entries[`system.abilities.${k}.damage`] = a.damage;
+    entries[`system.abilities.${k}.drain`] = a.drain;
+    entries[`system.abilities.${k}.penalty`] = a.penalty;
   }
 
   // Set null values to 0
@@ -1249,61 +1258,61 @@ const _migrateActorNullValues = function (ent, updateData) {
 };
 
 const _migrateActorSpellbookDomainSlots = function (ent, updateData) {
-  const spellbooks = getProperty(ent, "data.attributes.spells.spellbooks") || {};
+  const spellbooks = getProperty(ent, "system.attributes.spells.spellbooks") || {};
 
   for (const [k, b] of Object.entries(spellbooks)) {
     if (b.domainSlotValue !== undefined) continue;
-    const key = `data.attributes.spells.spellbooks.${k}.domainSlotValue`;
+    const key = `system.attributes.spells.spellbooks.${k}.domainSlotValue`;
     updateData[key] = 1;
   }
 };
 
 const _migrateActorStatures = function (ent, updateData) {
-  const stature = getProperty(ent, "data.traits.stature");
+  const stature = getProperty(ent, "system.traits.stature");
 
   if (stature === undefined) {
-    updateData["data.traits.stature"] = "tall";
+    updateData["system.traits.stature"] = "tall";
   }
 };
 
 const _migrateActorDefenseAbility = function (ent, updateData) {
-  const normalACAbl = getProperty(ent, "data.attributes.ac.normal.ability");
-  if (normalACAbl === undefined) updateData["data.attributes.ac.normal.ability"] = "dex";
-  const touchACAbl = getProperty(ent, "data.attributes.ac.touch.ability");
-  if (touchACAbl === undefined) updateData["data.attributes.ac.touch.ability"] = "dex";
+  const normalACAbl = getProperty(ent, "system.attributes.ac.normal.ability");
+  if (normalACAbl === undefined) updateData["system.attributes.ac.normal.ability"] = "dex";
+  const touchACAbl = getProperty(ent, "system.attributes.ac.touch.ability");
+  if (touchACAbl === undefined) updateData["system.attributes.ac.touch.ability"] = "dex";
 
   // CMD
-  const cmdDexAbl = getProperty(ent, "data.attributes.cmd.dexAbility");
-  if (cmdDexAbl === undefined) updateData["data.attributes.cmd.dexAbility"] = "dex";
-  const cmdStrAbl = getProperty(ent, "data.attributes.cmd.strAbility");
-  if (cmdStrAbl === undefined) updateData["data.attributes.cmd.strAbility"] = "str";
+  const cmdDexAbl = getProperty(ent, "system.attributes.cmd.dexAbility");
+  if (cmdDexAbl === undefined) updateData["system.attributes.cmd.dexAbility"] = "dex";
+  const cmdStrAbl = getProperty(ent, "system.attributes.cmd.strAbility");
+  if (cmdStrAbl === undefined) updateData["system.attributes.cmd.strAbility"] = "str";
 };
 
 const _migrateActorInitAbility = function (ent, updateData) {
-  const abl = getProperty(ent, "data.attributes.init.ability");
+  const abl = getProperty(ent, "system.attributes.init.ability");
 
   if (abl === undefined) {
-    updateData["data.attributes.init.ability"] = "dex";
+    updateData["system.attributes.init.ability"] = "dex";
   }
 };
 
 const _migrateActorCMBRevamp = function (ent, updateData, linked) {
-  if (getProperty(ent, "data.attributes.cmb.total") !== undefined) {
-    updateData["data.attributes.cmb.-=total"] = null;
+  if (getProperty(ent, "system.attributes.cmb.total") !== undefined) {
+    updateData["system.attributes.cmb.-=total"] = null;
   }
 };
 
 const _migrateActorChangeRevamp = function (ent, updateData) {
   // Skills
-  Object.keys(getProperty(ent, "data.skills") ?? {}).forEach((s) => {
-    const path = `data.skills.${s}.`;
+  Object.keys(getProperty(ent, "system.skills") ?? {}).forEach((s) => {
+    const path = `system.skills.${s}.`;
     if (getProperty(ent, path + "changeBonus") !== undefined) {
       updateData[path + "-=changeBonus"] = null;
     }
 
     // Check for subskill
-    Object.keys(getProperty(ent, `data.skills.${s}.subSkills`) ?? {}).forEach((s2) => {
-      const subPath = `data.skills.${s}.subSkills.${s2}.`;
+    Object.keys(getProperty(ent, `system.skills.${s}.subSkills`) ?? {}).forEach((s2) => {
+      const subPath = `system.skills.${s}.subSkills.${s2}.`;
       if (getProperty(ent, subPath + "changeBonus") !== undefined) {
         updateData[subPath + "-=changeBonus"] = null;
       }
@@ -1312,19 +1321,19 @@ const _migrateActorChangeRevamp = function (ent, updateData) {
 
   // Remove derived data
   const derivedKeys = {
-    "attributes.hp.max": "attributes.hp.-=max",
-    "attributes.ac.normal.total": "attributes.ac.normal.-=total",
-    "attributes.ac.touch.total": "attributes.ac.touch.-=total",
-    "attributes.ac.flatFooted.total": "attributes.ac.flatFooted.-=total",
-    "attributes.cmd.total": "attributes.cmd.-=total",
-    "attributes.cmd.flatFootedTotal": "attributes.cmd.-=flatFootedTotal",
-    "attributes.sr.total": "attributes.sr.-=total",
-    "attributes.init.total": "attributes.init.-=total",
+    "system.attributes.hp.max": "attributes.hp.-=max",
+    "system.attributes.ac.normal.total": "attributes.ac.normal.-=total",
+    "system.attributes.ac.touch.total": "attributes.ac.touch.-=total",
+    "system.attributes.ac.flatFooted.total": "attributes.ac.flatFooted.-=total",
+    "system.attributes.cmd.total": "attributes.cmd.-=total",
+    "system.attributes.cmd.flatFootedTotal": "attributes.cmd.-=flatFootedTotal",
+    "system.attributes.sr.total": "attributes.sr.-=total",
+    "system.attributes.init.total": "attributes.init.-=total",
   };
 
   Object.entries(derivedKeys).forEach(([key, updateKey]) => {
-    if (getProperty(ent.data, key) !== undefined) {
-      updateData["data." + updateKey] = null;
+    if (getProperty(ent, key) !== undefined) {
+      updateData["system." + updateKey] = null;
     }
   });
 };
@@ -1332,15 +1341,15 @@ const _migrateActorChangeRevamp = function (ent, updateData) {
 const _migrateActorConditions = function (ent, updateData) {
   // Migrate fear to shaken
   {
-    const cond = getProperty(ent, "data.conditions.fear");
+    const cond = getProperty(ent, "system.conditions.fear");
     if (cond !== undefined) {
-      if (cond === true) updateData["data.attributes.conditions.shaken"] = true;
-      updateData["data.conditions.-=fear"] = null;
+      if (cond === true) updateData["system.attributes.conditions.shaken"] = true;
+      updateData["system.conditions.-=fear"] = null;
     }
-    const condAlt = getProperty(ent, "data.attributes.conditions.fear");
+    const condAlt = getProperty(ent, "system.attributes.conditions.fear");
     if (condAlt !== undefined) {
-      if (condAlt === true) updateData["data.attributes.conditions.shaken"] = true;
-      updateData["data.attributes.conditions.-=fear"] = null;
+      if (condAlt === true) updateData["system.attributes.conditions.shaken"] = true;
+      updateData["system.attributes.conditions.-=fear"] = null;
     }
   }
 };
@@ -1354,49 +1363,49 @@ const _migrateActorConditions = function (ent, updateData) {
  * @param linked
  */
 const _migrateActorSkillRanks = function (ent, updateData, linked) {
-  const skills = getProperty(ent, "data.skills");
+  const skills = getProperty(ent, "system.skills");
   if (!skills) return; // Unlinked with no skill overrides of any kind
   for (const [key, data] of Object.entries(skills)) {
     if (!linked && data.rank === undefined) continue; // Unlinked with no override
-    if (!Number.isFinite(data.rank)) updateData[`data.skills.${key}.rank`] = 0;
+    if (!Number.isFinite(data.rank)) updateData[`system.skills.${key}.rank`] = 0;
     for (const [subKey, subData] of Object.entries(data.subSkills ?? {})) {
       if (!linked && subData.rank === undefined) continue; // Unlinked with no override
-      if (!Number.isFinite(subData.rank)) updateData[`data.skills.${key}.subSkills.${subKey}.rank`] = 0;
+      if (!Number.isFinite(subData.rank)) updateData[`system.skills.${key}.subSkills.${subKey}.rank`] = 0;
     }
   }
 };
 
 const _migrateCarryBonus = function (ent, updateData, linked) {
-  if (getProperty(ent, "data.details.carryCapacity.bonus.user") === undefined) {
-    let bonus = getProperty(ent, "data.abilities.str.carryBonus");
+  if (getProperty(ent, "system.details.carryCapacity.bonus.user") === undefined) {
+    let bonus = getProperty(ent, "system.abilities.str.carryBonus");
     if (bonus !== undefined || linked) {
       bonus = bonus || 0;
-      updateData["data.details.carryCapacity.bonus.user"] = bonus;
+      updateData["system.details.carryCapacity.bonus.user"] = bonus;
     }
-    updateData["data.abilities.str.-=carryBonus"] = null;
+    updateData["system.abilities.str.-=carryBonus"] = null;
   }
-  if (getProperty(ent, "data.details.carryCapacity.multiplier.user") === undefined) {
-    let mult = getProperty(ent, "data.abilities.str.carryMultiplier");
+  if (getProperty(ent, "system.details.carryCapacity.multiplier.user") === undefined) {
+    let mult = getProperty(ent, "system.abilities.str.carryMultiplier");
     if (mult !== undefined || linked) {
       mult = mult || 1;
-      updateData["data.details.carryCapacity.multiplier.user"] = mult - 1;
+      updateData["system.details.carryCapacity.multiplier.user"] = mult - 1;
     }
-    updateData["data.abilities.str.-=carryMultiplier"] = null;
+    updateData["system.abilities.str.-=carryMultiplier"] = null;
   }
 };
 
 const _migrateBuggedValues = function (ent, updateData, linked) {
   // Convert to integers
   const convertToInt = [
-    "data.details.xp.value",
-    "data.currency.pp",
-    "data.currency.gp",
-    "data.currency.sp",
-    "data.currency.cp",
-    "data.altCurrency.pp",
-    "data.altCurrency.gp",
-    "data.altCurrency.sp",
-    "data.altCurrency.cp",
+    "system.details.xp.value",
+    "system.currency.pp",
+    "system.currency.gp",
+    "system.currency.sp",
+    "system.currency.cp",
+    "system.altCurrency.pp",
+    "system.altCurrency.gp",
+    "system.altCurrency.sp",
+    "system.altCurrency.cp",
   ];
   for (const key of convertToInt) {
     const oldValue = getProperty(ent, key),
@@ -1411,14 +1420,14 @@ const _migrateSpellbookUsage = function (ent, updateData, linked) {
   const usedSpellbooks = ent.items
     .filter((i) => i.type === "spell")
     .reduce((cur, i) => {
-      if (!i.data.spellbook) return cur;
-      if (cur.includes(i.data.spellbook)) return cur;
-      cur.push(i.data.spellbook);
+      if (!i.system.spellbook) return cur;
+      if (cur.includes(i.system.spellbook)) return cur;
+      cur.push(i.system.spellbook);
       return cur;
     }, []);
 
   for (const bookKey of usedSpellbooks) {
-    const path = `data.attributes.spells.spellbooks.${bookKey}.inUse`;
+    const path = `system.attributes.spells.spellbooks.${bookKey}.inUse`;
     if (getProperty(ent, path) !== true) {
       updateData[path] = true;
     }
@@ -1427,7 +1436,7 @@ const _migrateSpellbookUsage = function (ent, updateData, linked) {
 
 const _migrateActorHP = function (ent, updateData, linked) {
   // Migrate HP, Wounds and Vigor values from absolutes to relatives, which is a change in 0.80.16
-  for (const k of ["data.attributes.hp", "data.attributes.wounds", "data.attributes.vigor"]) {
+  for (const k of ["system.attributes.hp", "system.attributes.wounds", "system.attributes.vigor"]) {
     if (getProperty(ent, `${k}.offset`) == null) {
       const max = getProperty(ent, `${k}.max`) ?? 0;
       const value = getProperty(ent, `${k}.value`) ?? 0;
@@ -1437,11 +1446,11 @@ const _migrateActorHP = function (ent, updateData, linked) {
 };
 
 const _migrateActorSenses = function (ent, updateData, linked, token) {
-  const oldSenses = getProperty(ent, "data.traits.senses");
+  const oldSenses = getProperty(ent, "system.traits.senses");
   if (typeof oldSenses === "string") {
-    const tokenData = token != null ? token.data : ent.token;
+    const tokenData = token ?? ent.prototypeToken;
 
-    updateData["data.traits.senses"] = {
+    updateData["system.traits.senses"] = {
       dv: tokenData.brightSight,
       ts: 0,
       bs: 0,
@@ -1461,6 +1470,8 @@ const _migrateActorSenses = function (ent, updateData, linked, token) {
     };
   }
 };
+
+const _migrateActorVision = function (ent, updateData, linked, token) {};
 
 const _Action_ConvertDamageType = function (damageTypeString) {
   const separator = /(?:\s*\/\s*|\s+and\s+|\s+or\s+)/i;

@@ -483,5 +483,9 @@ module.exports = {
     KeybindingsConfig: "readonly",
     quench: "readonly",
     JQuery: "readonly",
+    VisionMode: "readonly",
+    LightSource: "readonly",
+    VisionSource: "readonly",
+    Color: "readonly",
   },
 };

@@ -43,7 +43,7 @@
 
   <ol class="items-list changes">
   {{#each changes as |change a|}}
-    <li class="item change flexrow" data-change="{{change.system._id}}">
+    <li class="item change flexrow" data-change="{{change.data._id}}">
       <div class="item-name item-formula flexrow">
         {{#unless isScript}}
         <input class="change-formula formula" type="text" name="system.changes.{{a}}.formula" value="{{lookup this.data "formula"}}" placeholder="{{localize "PF1.Formula"}}" required/>

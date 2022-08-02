@@ -31,93 +31,35 @@ export class TokenPF extends Token {
     return getProperty(this, "flags.pf1.disableLowLight") === true;
   }
 
-  // Token patch for shared vision
-  // _isVisionSource() {
-  // if (!canvas.sight.tokenVision || !this.hasSight) return false;
-
-  // // Only display hidden tokens for the GM
-  // const isGM = game.user.isGM;
-  // if (this.data.hidden && !isGM) return false;
-
-  // // Always display controlled tokens which have vision
-  // if (this._controlled) return true;
-
-  // // Otherwise vision is ignored for GM users
-  // if (isGM) return false;
-
-  // // If a non-GM user controls no other tokens with sight, display sight anyways
-  // const canObserve = this.actor && hasTokenVision(this);
-  // if (!canObserve) return false;
-  // const others = this.layer.controlled.filter((t) => !t.data.hidden && t.hasSight);
-  // return !others.length || game.settings.get("pf1", "sharedVisionMode") === "1";
-  // }
-
   // Token#observer patch to make use of vision permission settings
   get observer() {
     return game.user.isGM || hasTokenVision(this);
   }
 
-  /**
-   * @override
-   * Update an emitted light source associated with this Token.
-   * @param {boolean} [defer]           Defer refreshing the LightingLayer to manually call that refresh later.
-   * @param {boolean} [deleted]         Indicate that this light source has been deleted.
-   */
-  // updateLightSource({ defer = false, deleted = false } = {}) {
-  // // Prepare data
-  // const origin = this.getMovementAdjustedPoint(this.center, { offsetX: 50, offsetY: 50 });
-  // const sourceId = this.sourceId;
-  // const d = canvas.dimensions;
-  // const isLightSource = this.emitsLight && !this.data.hidden;
+  updateVisionSource(...args) {
+    // Don't apply vision with custom vision rules flag set
+    if (this.document.flags?.pf1?.customVisionRules) return super.updateVisionSource(...args);
 
-  // // Initialize a light source
-  // if (isLightSource && !deleted) {
-  // let dim = this.getLightRadius(this.data.light.dim);
-  // let bright = this.getLightRadius(this.data.light.bright);
-  // if (this.data.light.luminosity >= 0 && !this.disableLowLight) {
-  // dim *= canvas.sight.lowLightMultiplier().dim;
-  // bright *= canvas.sight.lowLightMultiplier().bright;
-  // }
+    // Set bright vision from actor senses
+    if (["character", "npc"].includes(this.actor?.type)) {
+      const { dv, bs, bse, ts } = this.actor.system.traits.senses;
+      if (this.actor.system.attributes?.conditions?.pf1_blind === true) {
+        this.document.sight.range = 0;
+        this.document.sight.visionMode = "blindness";
+        this.document.sight.saturation = 0;
+      } else if (dv > 0) {
+        this.document.sight.range = game.pf1.utils.convertDistance(dv)[0];
+        this.document.sight.visionMode = "darkvision";
+        this.document.sight.saturation = -1;
+      } else {
+        this.document.sight.range = 0;
+        this.document.sight.visionMode = "basic";
+        this.document.sight.saturation = 0;
+      }
+    }
 
-  // const lightConfig = foundry.utils.mergeObject(this.data.light.toObject(false), {
-  // x: origin.x,
-  // y: origin.y,
-  // dim: Math.clamped(dim, 0, d.maxR),
-  // bright: Math.clamped(bright, 0, d.maxR),
-  // z: this.document.getFlag("core", "priority"),
-  // seed: this.document.getFlag("core", "animationSeed"),
-  // rotation: this.data.rotation,
-  // });
-  // this.light.initialize(lightConfig);
-  // canvas.lighting.sources.set(sourceId, this.light);
-  // }
-
-  // // Remove a light source
-  // else canvas.lighting.sources.delete(sourceId);
-
-  // // Schedule a perception update
-  // if (!defer && (isLightSource || deleted)) {
-  // canvas.perception.schedule({
-  // lighting: { refresh: true },
-  // sight: { refresh: true },
-  // });
-  // }
-  // }
-
-  // updateVisionSource(...args) {
-  // // Don't apply vision with custom vision rules flag set
-  // if (this.data.flags?.pf1?.customVisionRules) return super.updateVisionSource(...args);
-
-  // // Set bright vision from actor senses
-  // if (["character", "npc"].includes(this.actor?.type)) {
-  // const { dv, bs, bse, ts } = this.actor.data.traits.senses;
-  // const highestVision = Math.max(dv, bs, bse, ts);
-  // this.data.brightSight = game.pf1.utils.convertDistance(highestVision)[0];
-  // this.data.brightSight = game.pf1.utils.convertDistance(highestVision)[0] || 0;
-  // }
-
-  // super.updateVisionSource(...args);
-  // }
+    super.updateVisionSource(...args);
+  }
 
   _onUpdate(data, options, user) {
     if (options.render === false) return;

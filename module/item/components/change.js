@@ -23,11 +23,11 @@ export class ItemChange {
     if (parent instanceof game.pf1.documents.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newChangeData = deepClone(parent.data.changes || []);
+      const newChangeData = deepClone(parent.system.changes || []);
       newChangeData.push(...data);
 
       // Update parent
-      await parent.update({ "data.changes": newChangeData });
+      await parent.update({ "system.changes": newChangeData });
 
       // Return results
       return data.map((o) => parent.changes.get(o._id));
@@ -123,11 +123,11 @@ export class ItemChange {
     if (this.parent != null) {
       data = this.preUpdate(data);
 
-      const rawChange = this.parent.data.changes.find((o) => o._id === this._id);
-      const idx = this.parent.data.changes.indexOf(rawChange);
+      const rawChange = this.parent.system.changes.find((o) => o._id === this._id);
+      const idx = this.parent.system.changes.indexOf(rawChange);
       if (idx >= 0) {
         data = Object.entries(data).reduce((cur, o) => {
-          cur[`data.changes.${idx}.${o[0]}`] = o[1];
+          cur[`system.changes.${idx}.${o[0]}`] = o[1];
           return cur;
         }, {});
         return this.parent.update(data, options);

@@ -508,7 +508,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Post process data
     for (const l of data.links.list) {
-      const items = getProperty(this.item.system, `system.links.${l.id}`) || [];
+      const items = getProperty(this.item, `system.links.${l.id}`) || [];
       for (let a = 0; a < items.length; a++) {
         const i = items[a];
         i._index = a;
@@ -724,7 +724,7 @@ export class ItemSheetPF extends ItemSheet {
       delete formData[e[0]];
 
       if (!formData[`system.links.${linkType}`])
-        formData[`system.links.${linkType}`] = deepClone(getProperty(this.item.system, `system.links.${linkType}`));
+        formData[`system.links.${linkType}`] = deepClone(getProperty(this.item, `system.links.${linkType}`));
 
       setProperty(formData[`system.links.${linkType}`][index], subPath, value);
     }
@@ -1003,43 +1003,29 @@ export class ItemSheetPF extends ItemSheet {
     if (linkType === "links") linkType = "children";
 
     // Try to extract the data
-    let data;
-    try {
-      data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
-      if (data.type !== "Item") return;
-    } catch (err) {
-      return false;
-    }
+    const data = TextEditor.getDragEventData(event.originalEvent);
+    if (!data.type) return;
 
-    let targetItem;
-    let dataType = "";
-    let itemLink = "";
+    const targetItem = await fromUuid(data.uuid);
+    if (!targetItem) return;
 
+    let dataType, itemLink;
     // Case 1 - Import from a Compendium pack
-    if (data.pack) {
+    if (targetItem.pack) {
       dataType = "compendium";
-      const pack = game.packs.find((p) => p.collection === data.pack);
-      const packItem = await pack.getDocument(data.id);
-      if (packItem != null) {
-        targetItem = packItem;
-        itemLink = `${pack.collection}.${packItem._id}`;
-      }
+      itemLink = `${targetItem.pack}.${targetItem.id}`;
     }
 
-    // Case 2 - Data explicitly provided; check same actor for item
-    else if (data) {
+    // Case 2 - Import from same actor
+    else if (targetItem.parent instanceof Actor && targetItem.parent === this.document.parentActor) {
       dataType = "data";
-      if (this.item && this.item.actor) {
-        targetItem = this.item.actor.items.get(data._id);
-      }
-      itemLink = data._id;
+      itemLink = targetItem.id;
     }
 
     // Case 3 - Import from World Document
     else {
       dataType = "world";
-      targetItem = game.items.get(data.id);
-      itemLink = `world.${data.id}`;
+      itemLink = `world.${targetItem.id}`;
     }
 
     await this.item.createItemLink(linkType, dataType, targetItem, itemLink);
@@ -1195,33 +1181,6 @@ export class ItemSheetPF extends ItemSheet {
     } else {
       this.actor.items.get(itemId).sheet.render(true, { focus: true });
     }
-  }
-
-  /**
-   * @param {string} linkType - The type of link.
-   * @param {string} dataType - Either "compendium", "data" or "world".
-   * @param {object} itemData - The (new) item's data.
-   * @param {string} itemLink - The link identifier for the item.
-   * @param {object} [data] - The raw data from a drop event.
-   * @returns {boolean} Whether a link to the item is possible here.
-   */
-  canCreateLink(linkType, dataType, itemData, itemLink, data = null) {
-    const actor = this.item.actor;
-    const sameActor = actor != null && data != null && data.actorId === actor._id;
-
-    // Don't create link to self
-    const itemId = itemLink.split(".").slice(-1)[0];
-    if (itemId === this.item._id) return false;
-
-    // Don't create existing links
-    const links = getProperty(this.item.system, `system.links.${linkType}`) || [];
-    if (links.filter((o) => o.id === itemLink).length) return false;
-
-    if (["children", "charges", "ammunition"].includes(linkType) && sameActor) return true;
-
-    if (linkType === "classAssociations" && dataType === "compendium") return true;
-
-    return false;
   }
 
   /**
@@ -1432,7 +1391,7 @@ export class ItemSheetPF extends ItemSheet {
     if (a.classList.contains("delete-link")) {
       const li = a.closest(".links-item");
       const group = a.closest('div[data-group="links"]');
-      let links = duplicate(getProperty(this.item.system, `system.links.${group.dataset.tab}`) || []);
+      let links = duplicate(getProperty(this.item, `system.links.${group.dataset.tab}`) || []);
       const link = links.find((o) => o.id === li.dataset.link);
       links = links.filter((o) => o !== link);
 
@@ -1534,13 +1493,13 @@ export class ItemSheetPF extends ItemSheet {
     const key = a.closest(".notes").dataset.name;
 
     if (a.classList.contains("add-entry")) {
-      const notes = getProperty(this.document.data, key) ?? [];
+      const notes = getProperty(this.document, key) ?? [];
       const updateData = {};
       updateData[key] = notes.concat("");
       return this._onSubmit(event, { updateData });
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
-      const notes = duplicate(getProperty(this.document.data, key));
+      const notes = duplicate(getProperty(this.document, key));
       notes.splice(index, 1);
 
       const updateData = {};

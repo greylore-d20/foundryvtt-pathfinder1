@@ -537,7 +537,10 @@ export class ActorPF extends ActorBasePF {
     book.label = `PF1.SpellBook${bookKey.capitalize()}`;
     if (book.class) {
       if (book.class === "_hd") book.label = "PF1.SpellBookSpelllike";
-      else book.label = this.items.find((o) => o.type === "class" && o.system.tag === book.class).name;
+      else {
+        const bookClass = this.items.find((o) => o.type === "class" && o.system.tag === book.class);
+        if (bookClass != null) book.label = bookClass.name;
+      }
     }
     if (book.name) book.label = book.name;
 
@@ -1740,6 +1743,15 @@ export class ActorPF extends ActorBasePF {
 
     if (game.user.id === userId && hasProperty(data, "system.attributes.conditions")) {
       this.toggleConditionStatusIcons({ render: false });
+      // Redraw canvas on condition toggle
+      canvas.perception.update(
+        {
+          initializeLighting: true,
+          initializeVision: true,
+        },
+        true
+      );
+      game.socket.emit("system.pf1", { eventType: "redrawCanvas" });
     }
 
     // Resize token(s)

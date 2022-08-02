@@ -708,16 +708,6 @@ Hooks.on("updateToken", function (token, updateData, options, userId) {
   token.actor?.sheet?.render();
 });
 
-Hooks.on("controlToken", (token, selected) => {
-  // Refresh canvas sight
-  // canvas.perception.schedule({
-  // lighting: { initialize: true, refresh: true },
-  // sight: { initialize: true, refresh: true },
-  // sounds: { refresh: true },
-  // foreground: { refresh: true },
-  // });
-});
-
 Hooks.on("createItem", (item, options, userId) => {
   const actor = item.parent instanceof ActorPF ? item.parent : null;
   if (userId !== game.user.id) return;
@@ -997,6 +987,16 @@ Hooks.on("deleteCombat", (combat, options, userId) => {
       app.close();
     }
   }
+});
+
+Hooks.on("controlToken", () => {
+  // Refresh lighting to (un)apply low-light vision parameters to them
+  canvas.perception.update(
+    {
+      initializeLighting: true,
+    },
+    true
+  );
 });
 
 /* ------------------------------- */

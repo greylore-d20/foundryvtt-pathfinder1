@@ -530,7 +530,8 @@ export class ItemPF extends ItemBasePF {
     for (const [k, i] of Object.entries(this.links)) {
       switch (k) {
         case "charges": {
-          const uses = i.data.uses;
+          const uses = i.system.uses;
+          if (!uses) break;
           for (const [k, v] of Object.entries(uses)) {
             if (["autoDeductCharges", "autoDeductChargesCost"].includes(k)) continue;
             this.system.uses[k] = v;
@@ -1709,10 +1710,10 @@ export class ItemPF extends ItemBasePF {
   async createItemLink(linkType, dataType, targetItem, itemLink) {
     if (this.canCreateItemLink(linkType, dataType, targetItem, itemLink)) {
       const updateData = {};
-      const _links = duplicate(getProperty(this.system, `data.links.${linkType}`) || []);
+      const _links = duplicate(getProperty(this, `system.links.${linkType}`) || []);
       const link = this.generateInitialLinkData(linkType, dataType, targetItem, itemLink);
       _links.push(link);
-      updateData[`data.links.${linkType}`] = _links;
+      updateData[`system.links.${linkType}`] = _links;
 
       // Call link creation hook
       await this.update(updateData);

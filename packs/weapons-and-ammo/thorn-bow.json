@@ -67,6 +67,8 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
+          "critParts": [],
+          "nonCritParts": [],
           "parts": [
             [
               "sizeRoll(1, 6, @size) + min(@abilities.str.mod, 0)[Strength]",
@@ -75,9 +77,7 @@
                 "custom": ""
               }
             ]
-          ],
-          "critParts": [],
-          "nonCritParts": []
+          ]
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -87,7 +87,7 @@
           "bonus": {
             "formula": "@formulaicAttack * -5"
           },
-          "label": null
+          "label": ""
         },
         "formula": "",
         "ability": {
@@ -124,7 +124,9 @@
         "enh": {
           "override": false,
           "value": 0
-        }
+        },
+        "tag": "",
+        "ammoType": "arrow"
       }
     ],
     "uses": {
@@ -138,6 +140,9 @@
     },
     "tag": "thornBow",
     "scriptCalls": [],
+    "weaponGroups": {
+      "value": []
+    },
     "weaponType": "exotic",
     "weaponSubtype": "ranged",
     "ammoType": "arrow"

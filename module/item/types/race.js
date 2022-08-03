@@ -5,14 +5,16 @@ export class ItemRacePF extends ItemPF {
     const actor = this.parent instanceof Actor ? this.parent : null;
 
     // Overwrite race
-    if (actor && actor.race) {
-      // Delete previous race
-      await actor.race.delete();
+    if (actor) {
+      const oldRace = actor.items.find((o) => o.type === "race" && o !== this);
+      if (oldRace) {
+        oldRace.delete();
 
-      const context = {};
-      // Ensure actor size is updated to match the race, but only if it's same as old race
-      const actorSize = actor.system.traits.size;
-      if (actorSize !== this.system.size && actor.race.system.size === actorSize) context._pf1SizeChanged = true;
+        const context = {};
+        // Ensure actor size is updated to match the race, but only if it's same as old race
+        const actorSize = actor.system.traits.size;
+        if (actorSize !== this.system.size && oldRace.system.size === actorSize) context._pf1SizeChanged = true;
+      }
     }
   }
 
@@ -39,5 +41,21 @@ export class ItemRacePF extends ItemPF {
       if (this.parent.type === "basic") return;
       this.parent.update({ "system.traits.size": this.system.size });
     }
+  }
+
+  _onDelete(data, context, userId) {
+    super._onDelete(data, context, userId);
+
+    if (this.parent?.race === this) this.parent._race = null;
+  }
+
+  /**
+   * @override
+   */
+  prepareBaseData() {
+    super.prepareBaseData();
+    const actor = this.actor;
+    // Self-register on actor
+    if (actor) actor._race = this;
   }
 }

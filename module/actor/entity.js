@@ -93,6 +93,11 @@ export class ActorPF extends ActorBasePF {
        * @type {object}
        */
       this._states = {};
+
+    /**
+     * Race cache
+     */
+    this._race = undefined;
   }
 
   _preCreate(data, options, user) {
@@ -213,9 +218,11 @@ export class ActorPF extends ActorBasePF {
       }, 0);
   }
 
+  /**
+   * @returns {ItemRacePF|undefined}
+   */
   get race() {
-    if (this.items == null) return null;
-    return this.items.filter((o) => o.type === "race")[0];
+    return this._race;
   }
 
   get typeColor() {
@@ -1864,31 +1871,33 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   getSkillInfo(skillId) {
-    let skl,
-      sklName,
-      parentSkill,
-      isCustom = false;
-    const skillParts = skillId.split("."),
-      isSubSkill = skillParts[1] === "subSkills" && skillParts.length === 3;
+    let skill, skillName, parentSkill;
+    const [mainSkillId, subSkillDelim, subSkillId] = skillId.split(".", 3),
+      isSubSkill = subSkillDelim === "subSkills" && !!subSkillId,
+      mainSkill = this.system.skills[mainSkillId];
+    if (!mainSkill) return null;
+
     if (isSubSkill) {
-      skillId = skillParts[0];
-      skl = this.system.skills[skillId].subSkills[skillParts[2]];
-      if (!skl) return null;
-      sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
-      parentSkill = this.getSkillInfo(skillId);
+      skill = mainSkill.subSkills[subSkillId];
+      if (!skill) return null;
+      skillName = `${CONFIG.PF1.skills[mainSkillId]} (${skill.name})`;
+      parentSkill = this.getSkillInfo(mainSkillId);
     } else {
-      skl = this.system.skills[skillId];
-      if (!skl) return null;
-      if (skl.name != null) {
-        sklName = skl.name;
-        isCustom = true;
-      } else sklName = CONFIG.PF1.skills[skillId];
+      skill = mainSkill;
+      skillName = skill.name ?? CONFIG.PF1.skills[skillId];
     }
 
-    const result = duplicate(skl);
+    const result = duplicate(skill);
     result.id = skillId;
-    result.name = sklName;
-    result.bonus = skl.mod; // deprecated; backwards compatibility
+    result.name = skillName;
+
+    // .bonus is deprecated; backwards compatibility
+    Object.defineProperty(result, "bonus", {
+      get: function () {
+        console.warn("skill.bonus was deprecated in Jul 2021 with getSkill(), please use .mod instead");
+        return this.mod;
+      },
+    });
 
     if (parentSkill) result.parentSkill = parentSkill;
 
@@ -3828,12 +3837,12 @@ export class ActorPF extends ActorBasePF {
   getFeatCount() {
     const result = { max: 0, value: 0 };
     result.value = this.items.filter((o) => {
-      return o.type === "feat" && o.data.featType === "feat" && !o.data.disabled;
+      return o.type === "feat" && o.system.featType === "feat" && !o.system.disabled;
     }).length;
 
     // Add feat count by level
     const totalLevels = this.items
-      .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.data.classType))
+      .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.system.classType))
       .reduce((cur, o) => {
         return cur + o.hitDice;
       }, 0);

@@ -692,11 +692,6 @@ export class ItemSheetPF extends ItemSheet {
 
   /* -------------------------------------------- */
 
-  setPosition(position = {}) {
-    // if ( this._sheetTab === "details" ) position.height = "auto";
-    return super.setPosition(position);
-  }
-
   /* -------------------------------------------- */
   /*  Form Submission                             */
   /* -------------------------------------------- */

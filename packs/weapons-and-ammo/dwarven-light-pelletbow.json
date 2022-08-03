@@ -67,6 +67,8 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
+          "critParts": [],
+          "nonCritParts": [],
           "parts": [
             [
               "sizeRoll(1, 4, @size)",
@@ -75,9 +77,7 @@
                 "custom": ""
               }
             ]
-          ],
-          "critParts": [],
-          "nonCritParts": []
+          ]
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -87,7 +87,7 @@
           "bonus": {
             "formula": "@formulaicAttack * -5"
           },
-          "label": null
+          "label": ""
         },
         "formula": "",
         "ability": {
@@ -117,14 +117,16 @@
           }
         },
         "nonlethal": false,
-        "usesAmmo": false,
+        "usesAmmo": true,
         "spellEffect": "",
         "spellArea": "",
         "conditionals": [],
         "enh": {
           "override": false,
           "value": 0
-        }
+        },
+        "tag": "",
+        "ammoType": "slingBullet"
       }
     ],
     "uses": {

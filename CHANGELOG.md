@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.81.2 - 2022-8-3
+
+### Compendium
+
+- Oracle Waves Mystery Blizzard class ability added
+- Stone Stability class ability of Oracle fixed
+- Waves Mystery spells in description fixed
+- Projectile weapons weren't market as using a specific ammo type
+- Changed subschool and type of minor phantom object spell according to second printing errata of advanced race guide
+
 ## 0.81.1 - 2022-7-27
 
 ### Bug Fixes

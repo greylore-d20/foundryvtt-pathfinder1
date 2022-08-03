@@ -153,25 +153,14 @@ export class ActorPF extends ActorBasePF {
     }
     // Show compendium entry
     else if (action === "open-compendium-entry") {
-      const entryKey = button.dataset.compendiumEntry;
-      const documentType = button.dataset.documentType;
-      const parts = entryKey.split(".");
+      const uuid = button.dataset.compendiumEntry;
+      const document = await fromUuid(uuid);
 
-      // World entry
-      if (parts.length === 1 && documentType) {
-        const collectionName = CONFIG[documentType].documentClass.collectionName;
-        const collection = game[collectionName];
-        const entry = collection.get(parts[0]);
-        entry.sheet.render(true, { focus: true });
-        return;
+      if (document instanceof JournalEntryPage) {
+        document.parent.sheet.render(true, { pageId: document.id });
+      } else {
+        document.sheet.render(true);
       }
-
-      // Compendium entry
-      const packKey = parts.slice(0, 2).join(".");
-      const entryId = parts.slice(-1)[0];
-      const pack = game.packs.get(packKey);
-      const entry = await pack.getDocument(entryId);
-      entry.sheet.render(true, { focus: true });
     }
   }
 

@@ -12,6 +12,7 @@ export class SkillEditor extends FormApplication {
       width: 380,
       template: "systems/pf1/templates/apps/skill-editor.hbs",
       closeOnSubmit: true,
+      dragDrop: [{ dragSelector: null, dropSelector: "*" }],
     });
   }
   get title() {
@@ -37,25 +38,6 @@ export class SkillEditor extends FormApplication {
     return this.isStaticSkill ? CONFIG.PF1.skills[this.skillId] : this.skill.name;
   }
 
-  /**
-   * Get the alphabetized Documents which can be chosen as a configuration for the skill
-   *
-   * @param {WorldCollection} collection
-   * @returns {object[]}
-   * @private
-   */
-  _getDocuments(collection) {
-    const documents = collection
-      .filter((doc) => {
-        return doc.testUserPermission(game.user, "LIMITED");
-      })
-      .map((doc) => {
-        return { id: doc.id, name: doc.name };
-      });
-    documents.sort((a, b) => a.name.localeCompare(b.name));
-    return documents;
-  }
-
   async getData(options) {
     const data = await super.getData(options);
 
@@ -76,11 +58,19 @@ export class SkillEditor extends FormApplication {
       },
       { inplace: false }
     );
+
     // Actor data
     data.actorData = this.actor.toObject();
 
     // Referenced documents
-    data.journals = this._getDocuments(game.journal);
+    try {
+      const document = await fromUuid(data.skill.journal);
+      data.journal = document.toObject();
+      data.journal.uuid = data.skill.journal;
+      data.journal.documentType = document instanceof JournalEntryPage ? "JournalEntryPage" : "JournalEntry";
+    } catch (err) {
+      data.journal = null;
+    }
 
     return data;
   }
@@ -106,5 +96,42 @@ export class SkillEditor extends FormApplication {
     await super.close(...args);
 
     this._callbacks.forEach((fn) => fn());
+  }
+
+  async _onDrop(event) {
+    event.preventDefault();
+
+    // Retrieve the dropped Journal Entry Page
+    const data = TextEditor.getDragEventData(event);
+    if (data.type !== "JournalEntryPage" && data.type !== "JournalEntry") return;
+    const document = await CONFIG[data.type].documentClass.implementation.fromDropData(data);
+    if (!document) return;
+
+    // Add Journal Entry Page reference
+    await this._updateObject(event, { "skill.journal": document.uuid });
+    this.render();
+  }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    // Open compendium page
+    html.find(".compendium-entry").on("click", this._openCompendiumEntry.bind(this));
+  }
+
+  async _openCompendiumEntry(event) {
+    event.preventDefault();
+    const elem = event.currentTarget;
+
+    // Gather data
+    const uuid = elem.dataset.compendiumEntry;
+    const document = await fromUuid(uuid);
+
+    // Open document
+    if (document instanceof JournalEntryPage) {
+      document.parent.sheet.render(true, { pageId: document.id });
+    } else {
+      document.sheet.render(true);
+    }
   }
 }

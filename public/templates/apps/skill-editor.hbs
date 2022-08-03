@@ -44,11 +44,17 @@
   {{#unless skill.static}}
   <div class="form-group">
     <label>{{localize "DOCUMENT.JournalEntry"}}</label>
-    <div class="form-fields">
-      <select name="skill.journal">
-        {{ selectOptions journals selected=skill.journal blank="" nameAttr="id" labelAttr="name"}}
-      </select>
+    {{#if journal}}
+    <div class="compendium-entry flexrow" data-compendium-entry="{{journal.uuid}}" data-document-type="{{journal.documentType}}">
+      <a class="compendium-page">
+        <span>{{journal.name}}</span>
+        <i class="fas fa-book compendium-icon"></i>
+      </a>
+      <div class="compendium-controls">
+        <a class="delete"><i class="fas fa-trash"></i></a>
+      </div>
     </div>
+    {{/if}}
   </div>
   {{/unless}}
 

@@ -487,5 +487,6 @@ module.exports = {
     LightSource: "readonly",
     VisionSource: "readonly",
     Color: "readonly",
+    JournalEntryPage: "readonly",
   },
 };

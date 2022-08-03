@@ -211,7 +211,7 @@ export const migrateActorData = function (actor, token) {
   _migrateSpellbookUsage(actor, updateData, linked);
   _migrateActorHP(actor, updateData, linked);
   _migrateActorSenses(actor, updateData, linked, token);
-  _migrateActorVision(actor, updateData, linked, token);
+  _migrateActorSkillJournals(actor, updateData, linked);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -1484,7 +1484,20 @@ const _migrateActorSenses = function (ent, updateData, linked, token) {
   }
 };
 
-const _migrateActorVision = function (ent, updateData, linked, token) {};
+const _migrateActorSkillJournals = function (ent, updateData, linked) {
+  const reOldJournalFormat = /^[a-zA-Z0-9]+$/;
+  for (const [skillKey, skill] of Object.entries(ent.system.skills ?? {})) {
+    for (const [subSkillKey, subSkill] of Object.entries(skill.subSkills ?? {})) {
+      if (subSkill.journal?.match(reOldJournalFormat)) {
+        updateData[`system.skills.${skillKey}.subSkills.${subSkillKey}.journal`] = `JournalEntry.${subSkill.journal}`;
+      }
+    }
+
+    if (skill.journal?.match(reOldJournalFormat)) {
+      updateData[`system.skills.${skillKey}.journal`] = `JournalEntry.${skill.journal}`;
+    }
+  }
+};
 
 const _Action_ConvertDamageType = function (damageTypeString) {
   const separator = /(?:\s*\/\s*|\s+and\s+|\s+or\s+)/i;

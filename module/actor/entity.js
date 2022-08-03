@@ -1862,31 +1862,33 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   getSkillInfo(skillId) {
-    let skl,
-      sklName,
-      parentSkill,
-      isCustom = false;
-    const skillParts = skillId.split("."),
-      isSubSkill = skillParts[1] === "subSkills" && skillParts.length === 3;
+    let skill, skillName, parentSkill;
+    const [mainSkillId, subSkillDelim, subSkillId] = skillId.split(".", 3),
+      isSubSkill = subSkillDelim === "subSkills" && !!subSkillId,
+      mainSkill = this.data.data.skills[mainSkillId];
+    if (!mainSkill) return null;
+
     if (isSubSkill) {
-      skillId = skillParts[0];
-      skl = this.data.data.skills[skillId].subSkills[skillParts[2]];
-      if (!skl) return null;
-      sklName = `${CONFIG.PF1.skills[skillId]} (${skl.name})`;
-      parentSkill = this.getSkillInfo(skillId);
+      skill = mainSkill.subSkills[subSkillId];
+      if (!skill) return null;
+      skillName = `${CONFIG.PF1.skills[mainSkillId]} (${skill.name})`;
+      parentSkill = this.getSkillInfo(mainSkillId);
     } else {
-      skl = this.data.data.skills[skillId];
-      if (!skl) return null;
-      if (skl.name != null) {
-        sklName = skl.name;
-        isCustom = true;
-      } else sklName = CONFIG.PF1.skills[skillId];
+      skill = mainSkill;
+      skillName = skill.name ?? CONFIG.PF1.skills[skillId];
     }
 
-    const result = duplicate(skl);
+    const result = duplicate(skill);
     result.id = skillId;
-    result.name = sklName;
-    result.bonus = skl.mod; // deprecated; backwards compatibility
+    result.name = skillName;
+
+    // .bonus is deprecated; backwards compatibility
+    Object.defineProperty(result, "bonus", {
+      get: function () {
+        console.warn("skill.bonus was deprecated in Jul 2021 with getSkill(), please use .mod instead");
+        return this.mod;
+      },
+    });
 
     if (parentSkill) result.parentSkill = parentSkill;
 

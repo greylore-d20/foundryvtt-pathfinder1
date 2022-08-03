@@ -203,46 +203,46 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
           ];
       }
     case "aac": {
-      const targets = ["system.attributes.ac.normal.total"];
+      const targets = ["system.ac.normal.total"];
       switch (changeType) {
         case "base":
-          targets.push("system.attributes.ac.normal.base");
+          targets.push("system.ac.normal.base");
           break;
         case "enh":
-          targets.push("system.attributes.ac.normal.enh");
+          targets.push("system.ac.normal.enh");
           break;
         default:
-          targets.push("system.attributes.ac.normal.misc");
+          targets.push("system.ac.normal.misc");
           break;
       }
       return targets;
     }
     case "sac": {
-      const targets = ["system.attributes.ac.shield.total"];
+      const targets = ["system.ac.shield.total"];
       switch (changeType) {
         case "base":
-          targets.push("system.attributes.ac.shield.base");
+          targets.push("system.ac.shield.base");
           break;
         case "enh":
-          targets.push("system.attributes.ac.shield.enh");
+          targets.push("system.ac.shield.enh");
           break;
         default:
-          targets.push("system.attributes.ac.shield.misc");
+          targets.push("system.ac.shield.misc");
           break;
       }
       return targets;
     }
     case "nac": {
-      const targets = ["system.attributes.ac.natural.total"];
+      const targets = ["system.ac.natural.total"];
       switch (changeType) {
         case "base":
-          targets.push("system.attributes.ac.natural.base");
+          targets.push("system.ac.natural.base");
           break;
         case "enh":
-          targets.push("system.attributes.ac.natural.enh");
+          targets.push("system.ac.natural.enh");
           break;
         default:
-          targets.push("system.attributes.ac.natural.misc");
+          targets.push("system.ac.natural.misc");
           break;
       }
       return targets;
@@ -1045,7 +1045,7 @@ export const addDefaultChanges = function (changes) {
       let armorTarget = "aac";
       if (item.system.equipmentType === "shield") armorTarget = "sac";
       // Push base armor
-      if (item.system.armor.value) {
+      if (item.system.armor.value || item.system.armor.enh) {
         let ac = item.system.armor.value + item.system.armor.enh;
         if (item.system.broken) ac = Math.floor(ac / 2);
         changes.push(

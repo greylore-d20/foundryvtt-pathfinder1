@@ -63,14 +63,14 @@ export class ItemEquipmentPF extends ItemPF {
       switch (data.equipmentType) {
         case "shield": {
           const subtype = data.equipmentSubtype;
-          let shieldType = actorData.equipment.shield.type;
+          let shieldType = actor.equipment.shield.type;
           if (subtype === "other" && shieldType < 1) shieldType = 1;
           else if (subtype === "lightShield" && shieldType < 2) shieldType = 2;
           else if (subtype === "heavyShield" && shieldType < 3) shieldType = 3;
           else if (subtype === "towerShield" && shieldType < 4) shieldType = 4;
-          if (actorData.equipment.shield.type !== shieldType) {
-            actorData.equipment.shield.type = shieldType;
-            actorData.equipment.shield.id = this.id;
+          if (actor.equipment.shield.type !== shieldType) {
+            actor.equipment.shield.type = shieldType;
+            actor.equipment.shield.id = this.id;
           }
           break;
         }

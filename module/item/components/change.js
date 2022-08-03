@@ -91,7 +91,7 @@ export class ItemChange {
       case "aac":
       case "sac":
       case "nac":
-        return ["data.attributes.ac.normal.total", "data.attributes.ac.flatFooted.total"];
+        return ["system.attributes.ac.normal.total", "system.attributes.ac.flatFooted.total"];
     }
 
     // Return default targets

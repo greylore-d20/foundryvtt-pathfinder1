@@ -1176,7 +1176,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Combine AC types
-    for (const k of ["system.ac.normal.total", "system.ac.shield.total", "system.ac.natural.total"]) {
+    for (const k of ["ac.normal.total", "ac.shield.total", "ac.natural.total"]) {
       const v = getProperty(actorData, k);
       if (v) {
         for (const k2 of ["normal", "flatFooted"]) {
@@ -3530,8 +3530,8 @@ export class ActorPF extends ActorBasePF {
       const shield = shieldId ? this.items.get(shieldId) : null;
       const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
       if (shield) {
-        this.shield.type = this.equipment.shield.type;
-        const shieldData = shield.data;
+        result.shield.type = this.equipment.shield.type;
+        const shieldData = shield.system;
         const enhAC = shieldData.armor.enh ?? 0,
           baseAC = shieldData.armor.value ?? 0,
           fullAC = baseAC + enhAC;

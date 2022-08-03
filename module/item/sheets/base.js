@@ -674,7 +674,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Action usage
-    if (item.type !== "weapon" && item.system.activation && !isObjectEmpty(item.system.activation)) {
+    if (item.type !== "weapon" && item.system.activation && !foundry.utils.isEmpty(item.system.activation)) {
       props.push(labels.activation, labels.range, labels.target, labels.duration);
     }
 

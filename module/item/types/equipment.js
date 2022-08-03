@@ -57,7 +57,7 @@ export class ItemEquipmentPF extends ItemPF {
     if (data.equipped === true) {
       const actor = this.actor;
       // Guard against weirdness with unlinked data (data is undefined at this state), and also basic test for if this item has actor.
-      if (!actor?.system) return;
+      if (!actor?.system || !actor?.equipment) return;
 
       const actorData = actor.system;
       switch (data.equipmentType) {

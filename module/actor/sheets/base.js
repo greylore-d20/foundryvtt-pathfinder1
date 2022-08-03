@@ -2096,7 +2096,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemData = {
       name: baseName,
       type: type,
-      system: deepClone(header.dataset),
+      system: duplicate(header.dataset),
     };
     delete itemData.system["type"];
 
@@ -2130,6 +2130,11 @@ export class ActorSheetPF extends ActorSheet {
       while (oldItems.find((i) => i.name === itemData.name)) {
         itemData.name = `${baseName} (${i++})`;
       }
+    }
+
+    // Ensure variable type is correct
+    if (type === "spell") {
+      if (typeof itemData.system?.level === "string") itemData.system.level = parseInt(itemData.system.level);
     }
 
     return this.document.createEmbeddedDocuments("Item", [itemData]);

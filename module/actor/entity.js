@@ -2362,7 +2362,7 @@ export class ActorPF extends ActorBasePF {
       const tokens = this.isToken ? [this.token] : this.getActiveTokens();
       const createData = tokens.reduce((arr, t) => {
         if (t.inCombat) return arr;
-        arr.push({ tokenId: t.id, actorId: this.id, hidden: t.data.hidden });
+        arr.push({ tokenId: t.id, actorId: this.id, hidden: t.hidden });
         return arr;
       }, []);
       // Add special combatant if there are no tokens

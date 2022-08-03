@@ -1114,7 +1114,7 @@ const _migrateItemActions = function (item, updateData) {
   const removeKeys = ["_id", "name", "img"];
   for (const k of Object.keys(actionData)) {
     if (!removeKeys.includes(k)) {
-      if (item.data[k] != null) actionData[k] = deepClone(item.data[k]);
+      if (item.system[k] != null) actionData[k] = deepClone(item.system[k]);
     }
   }
 

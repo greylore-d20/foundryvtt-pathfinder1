@@ -55,13 +55,15 @@
       {{#if owner}}
       <div class="form-group">
         <label>{{localize "PF1.SpellBook"}}</label>
-        <select name="data.spellbook">
-          {{#select data.spellbook}}
-          {{#each spellbooks as |spellbook a|}}
-          <option value="{{a}}">{{localize spellbook.label}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.spellbook">
+            {{#select data.spellbook}}
+            {{#each spellbooks as |spellbook a|}}
+            <option value="{{a}}">{{localize spellbook.label}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
       {{else}}
       <input type="hidden" name="data.spellbook" value="primary"/>
@@ -70,13 +72,15 @@
       {{!-- Spell Level --}}
       <div class="form-group">
         <label>{{localize "PF1.SpellLevel"}}</label>
-        <select name="data.level" data-dtype="Number">
-          {{#select data.level}}
-          {{#each config.spellLevels as |name lvl|}}
-          <option value="{{lvl}}">{{name}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.level" data-dtype="Number">
+            {{#select data.level}}
+            {{#each config.spellLevels as |name lvl|}}
+            <option value="{{lvl}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
 
       <div class="form-group stacked">
@@ -106,25 +110,31 @@
       {{!-- Spell School --}}
       <div class="form-group">
         <label>{{localize "PF1.SpellSchool"}}</label>
-        <select name="data.school">
-          {{#select data.school}}
-          {{#each config.spellSchools as |name sch|}}
-          <option value="{{sch}}">{{name}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.school">
+            {{#select data.school}}
+            {{#each config.spellSchools as |name sch|}}
+            <option value="{{sch}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
 
       {{!-- Subschool --}}
       <div class="form-group flexrow">
         <label>{{localize "PF1.SubSchool"}}</label>
-        <input type="text" name="data.subschool" value="{{data.subschool}}" Placeholder="{{localize "PF1.SubSchoolExample"}}"/>
+        <div class="form-fields">
+          <input type="text" name="data.subschool" value="{{data.subschool}}" Placeholder="{{localize "PF1.SubSchoolExample"}}"/>
+        </div>
       </div>
 
       {{!-- Descriptors --}}
       <div class="form-group flexrow">
         <label>{{localize "PF1.DescriptorPlural"}}</label>
-        <input type="text" name="data.types" value="{{data.types}}" Placeholder="{{localize "PF1.SpellTypesExample"}}"/>
+        <div class="form-fields">
+          <input type="text" name="data.types" value="{{data.types}}" Placeholder="{{localize "PF1.SpellTypesExample"}}"/>
+        </div>
       </div>
 
       {{!-- Misc --}}
@@ -181,44 +191,50 @@
       </div>
 
       {{!-- Divine Focus --}}
-      <div class="divine-focus form-group stacked">
+      <div class="divine-focus form-group">
         <label>{{localize "PF1.SpellComponentDivineFocus"}}</label>
-        <select name="data.components.divineFocus" data-dtype="Number">
-          {{#select data.components.divineFocus}}
-          {{#each config.divineFocus as |name value|}}
-          <option value="{{value}}">{{name}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
+        <div class="form-fields">
+          <select name="data.components.divineFocus" data-dtype="Number">
+            {{#select data.components.divineFocus}}
+            {{#each config.divineFocus as |name value|}}
+            <option value="{{value}}">{{name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </div>
       </div>
 
       {{!-- Misc Components --}}
-      <div class="misc-components form-group stacked">
+      <div class="misc-components form-group">
         <label>{{localize "PF1.SpellComponentsMisc"}}</label>
-        <input type="text" name="data.components.value" value="{{data.components.value}}"/>
+        <div class="form-fields">
+          <input type="text" name="data.components.value" value="{{data.components.value}}"/>
+        </div>
       </div>
 
       {{!-- Material Components --}}
       {{#if data.components.material}}
       <h3>{{localize "PF1.SpellcastingMaterials"}}</h3>
       <div class="form-group">
+        <label>{{localize "PF1.Description"}}</label>
         <div class="form-fields">
-          <label>{{localize "PF1.Description"}}</label>
           <input class="materials" type="text" name="data.materials.value" value="{{data.materials.value}}"/>
         </div>
       </div>
       <div class="form-group">
+        <label>{{localize "PF1.Value"}}</label>
         <div class="form-fields">
-          <label>{{localize "PF1.Value"}}</label>
-          <input type="text" data-dtype="Number" name="data.materials.gpValue" value="{{data.materials.gpValue}}"/>
+          <input type="text" data-dtype="Number" name="data.materials.gpValue" value="{{data.materials.gpValue}}" placeholder="0" />
         </div>
       </div>
       {{/if}}
 
       {{#if data.components.focus}}
-      <div class="form-group stacked">
+      <div class="form-group">
         <label>{{localize "PF1.SpellcastingFocus"}}</label>
-        <input class="focus" type="text" name="data.materials.focus" value="{{data.materials.focus}}"/>
+        <div class="form-fields">
+          <input class="focus" type="text" name="data.materials.focus" value="{{data.materials.focus}}"/>
+        </div>
       </div>
       {{/if}}
 
@@ -258,16 +274,16 @@
 
       {{!-- Caster Level Offset --}}
       <div class="form-group">
+        <label>{{localize "PF1.CasterLevelOffset"}}</label>
         <div class="form-fields">
-          <label>{{localize "PF1.CasterLevelOffset"}}</label>
           <input type="text" name="data.clOffset" value="{{data.clOffset}}" data-dtype="Number"/>
         </div>
       </div>
 
       {{!-- Spell Level Offset --}}
       <div class="form-group">
+        <label>{{localize "PF1.SpellLevelOffset"}}</label>
         <div class="form-fields">
-          <label>{{localize "PF1.SpellLevelOffset"}}</label>
           <input type="text" name="data.slOffset" value="{{data.slOffset}}" data-dtype="Number"/>
         </div>
       </div>
@@ -275,8 +291,8 @@
       {{!-- Spell Slot Cost --}}
       {{#unless usesSpellpoints}}
       <div class="form-group">
+        <label>{{localize "PF1.SpellSlotCost"}}</label>
         <div class="form-fields">
-          <label>{{localize "PF1.SpellSlotCost"}}</label>
           <input type="text" name="data.slotCost" value="{{data.slotCost}}" data-dtype="Number"/>
         </div>
       </div>

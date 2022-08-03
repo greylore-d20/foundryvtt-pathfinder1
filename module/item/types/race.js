@@ -8,7 +8,7 @@ export class ItemRacePF extends ItemPF {
     if (actor) {
       const oldRace = actor.items.find((o) => o.type === "race" && o !== this);
       if (oldRace) {
-        oldRace.delete();
+        await oldRace.delete();
 
         const context = {};
         // Ensure actor size is updated to match the race, but only if it's same as old race

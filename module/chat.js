@@ -56,29 +56,15 @@ export const hideRollInfo = function (app, html, data) {
  * @param {ChatMessagePFIdentifiedInfo} info - An object containing the item's identified info
  * @returns {string} HTML string containing the info block
  */
-const getIdentifiedBlock = (info) => `
-<div class="gm-sensitive-always identified-info">
-  <section class="item-description">
-    <header class="flexrow description-header">
-      <h3 class="item-name">${info.name} </h3>
-      <div class="description-metadata">
-        <i class="fas fa-user-secret"></i>
-      </div>
-    </header>
-    ${info.description}
-  </section>
-  ${
-    info.actionName
-      ? `
-  <hr>
-  <section class="action-description">
-    <h3 class="action-name">${info.actionName}</h3>
-    ${info.actionDescription}
-  </section>`
-      : ``
-  }
-</div>
-  `;
+const getIdentifiedBlock = (info) => {
+  const hasCombinedName = info.actionName && !info.actionDescription;
+  return (
+    _templateCache["systems/pf1/templates/chat/parts/gm-description.hbs"]?.(
+      { ...info, hasCombinedName },
+      { allowProtoMethodsByDefault: true, allowProtoPropertiesByDefault: true }
+    ) ?? ""
+  );
+};
 
 /**
  * Add GM-sensitive info for GMs and hide GM-sensitive info for players

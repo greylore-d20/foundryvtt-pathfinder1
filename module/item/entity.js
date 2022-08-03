@@ -450,8 +450,6 @@ export class ItemPF extends ItemBasePF {
         // Set unidentified description for players
         this.data.data.description.value = this.data.data.description.unidentified;
       }
-      // Prepare unidentified cost
-      if (this.data.data.unidentified.price === undefined) this.data.data.unidentified.price = 0;
     }
   }
 

@@ -886,7 +886,7 @@ export class ItemSheetPF extends ItemSheet {
     }
     // Delete item
     else if (item && a.classList.contains("item-delete")) {
-      const list = (this.document.data.scriptCalls || []).filter((o) => o._id !== item.id);
+      const list = (this.document.system.scriptCalls || []).filter((o) => o._id !== item.id);
       return this._onSubmit(event, { updateData: { "system.scriptCalls": list } });
     }
     // Edit item

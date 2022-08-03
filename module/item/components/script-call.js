@@ -22,11 +22,11 @@ export class ItemScriptCall {
     if (parent instanceof game.pf1.documents.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newScriptCallData = deepClone(parent.data.scriptCalls || []);
+      const newScriptCallData = deepClone(parent.system.scriptCalls || []);
       newScriptCallData.push(...data);
 
       // Update parent
-      await parent.update({ "data.scriptCalls": newScriptCallData });
+      await parent.update({ "system.scriptCalls": newScriptCallData });
 
       // Return results
       return data.map((o) => parent.scriptCalls.get(o._id));
@@ -72,11 +72,11 @@ export class ItemScriptCall {
 
   async update(data, options = {}) {
     if (this.parent != null) {
-      const rawChange = this.parent.data.scriptCalls.find((o) => o._id === this.id);
-      const idx = this.parent.data.scriptCalls.indexOf(rawChange);
+      const rawChange = this.parent.system.scriptCalls.find((o) => o._id === this.id);
+      const idx = this.parent.system.scriptCalls.indexOf(rawChange);
       if (idx >= 0) {
         data = Object.entries(data).reduce((cur, o) => {
-          cur[`data.scriptCalls.${idx}.${o[0]}`] = o[1];
+          cur[`system.scriptCalls.${idx}.${o[0]}`] = o[1];
           return cur;
         }, {});
         return this.parent.update(data, options);

@@ -436,7 +436,8 @@ export class ActorSheetPF extends ActorSheet {
         const fcSkills = cls.system.fc.skill.value;
         skillRanks.allowed +=
           Math.max(1, clsSkillsPerLevel + this.document.system.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills && ["base", "prestige"].includes(cls.classType)) skillRanks.bgAllowed += clsLevel * 2;
+        if (data.useBGSkills && ["base", "prestige"].includes(cls.system.classType))
+          skillRanks.bgAllowed += clsLevel * 2;
 
         sourceData.push({
           name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),

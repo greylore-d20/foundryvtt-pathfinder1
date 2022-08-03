@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.81.3 - 2022-8-4
+
+### Bug Fixes
+
+- Spell chat cards did not include description texts
+
+### Compendium
+
+- Add and fix compendium entries that was supposed to have happened last patch
+
 ## 0.81.2 - 2022-8-3
 
 ### Compendium

@@ -886,7 +886,6 @@ export const getMessageData = async function (shared) {
           uuid: o.document.uuid,
         };
       });
-      console.log(shared.templateData.targets);
     }
   }
 

@@ -6,69 +6,69 @@
  */
 
 // Import Modules
-import { PF1, CONFIG_OVERRIDES } from "./module/config.js";
+import { PF1, CONFIG_OVERRIDES } from "./module/config.mjs";
 import {
   registerSystemSettings,
   registerClientSettings,
   migrateSystemSettings,
   getSkipActionPrompt,
-} from "./module/settings.js";
-import { preloadHandlebarsTemplates } from "./module/handlebars/templates.js";
-import { registerHandlebarsHelpers } from "./module/handlebars/helpers.js";
-import { tinyMCEInit } from "./module/mce/mce.js";
-import { measureDistances, getConditions } from "./module/canvas.js";
-import { TemplateLayerPF } from "./module/measure.js";
-import { MeasuredTemplatePF } from "./module/measure.js";
-import { ActorBasePF } from "./module/actor/base.js";
-import { ActorPF } from "./module/actor/entity.js";
-import { ActorCharacterPF } from "./module/actor/types/character.js";
-import { ActorNPCPF } from "./module/actor/types/npc.js";
-import { BasicActorPF } from "./module/actor/types/basic.js";
-import { ActorSheetPF } from "./module/actor/sheets/base.js";
-import { ActorSheetPFCharacter } from "./module/actor/sheets/character.js";
-import { ActorSheetPFNPC } from "./module/actor/sheets/npc.js";
-import { ActorSheetPFNPCLite } from "./module/actor/sheets/npc-lite.js";
-import { ActorSheetPFNPCLoot } from "./module/actor/sheets/npc-loot.js";
-import { ActorSheetPFBasic } from "./module/actor/sheets/basic.js";
-import { ActorSheetFlags } from "./module/apps/actor-flags.js";
-import { ActorRestDialog } from "./module/apps/actor-rest.js";
-import { SensesSelector } from "./module/apps/senses-selector.js";
-import { SkillEditor } from "./module/apps/skill-editor.js";
-import { CombatPF } from "./module/combat.js";
-import { TokenPF } from "./module/token/token.js";
-import { TokenDocumentPF } from "./module/token/document.js";
-import { EntrySelector } from "./module/apps/entry-selector.js";
-import { LevelUpForm } from "./module/apps/level-up.js";
-import { PointBuyCalculator } from "./module/apps/point-buy-calculator.js";
-import { ScriptEditor } from "./module/apps/script-editor.js";
-import { SidebarPF } from "./module/apps/sidebar.js";
-import { ActorTraitSelector } from "./module/apps/trait-selector.js";
-import { ExperienceDistributor } from "./module/apps/xp-distributor.js";
-import { DamageTypeSelector } from "./module/apps/damage-type-selector.js";
-import { ActiveEffectPF } from "./module/ae/entity.js";
-import { ItemPF } from "./module/item/entity.js";
-import { ItemAttackPF } from "./module/item/types/attack.js";
-import { ItemBuffPF } from "./module/item/types/buff.js";
-import { ItemClassPF } from "./module/item/types/class.js";
-import { ItemConsumablePF } from "./module/item/types/consumable.js";
-import { ItemContainerPF } from "./module/item/types/container.js";
-import { ItemEquipmentPF } from "./module/item/types/equipment.js";
-import { ItemFeatPF } from "./module/item/types/feat.js";
-import { ItemLootPF } from "./module/item/types/loot.js";
-import { ItemRacePF } from "./module/item/types/race.js";
-import { ItemSpellPF } from "./module/item/types/spell.js";
-import { ItemWeaponPF } from "./module/item/types/weapon.js";
-import { ItemBasePF } from "./module/item/base.js";
-import { ItemSheetPF } from "./module/item/sheets/base.js";
-import { ItemSheetPF_Container } from "./module/item/sheets/container.js";
-import { getChangeFlat, getSourceInfo } from "./module/actor/apply-changes.js";
-import { CompendiumDirectoryPF } from "./module/sidebar/compendium.js";
-import { CompendiumBrowser } from "./module/apps/compendium-browser.js";
-import "./module/patch-core.js";
-import { DicePF } from "./module/dice.js";
-import { RollPF } from "./module/roll.js";
-import { AbilityTemplate } from "./module/pixi/ability-template.js";
-import { AttackDialog } from "./module/item/attack-dialog.js";
+} from "./module/documents/settings.mjs";
+import { preloadHandlebarsTemplates } from "./module/handlebars/templates.mjs";
+import { registerHandlebarsHelpers } from "./module/handlebars/helpers.mjs";
+import { tinyMCEInit } from "./module/mce/mce.mjs";
+import { measureDistances, getConditions } from "./module/utils/canvas.mjs";
+import { TemplateLayerPF } from "./module/canvas/measure.mjs";
+import { MeasuredTemplatePF } from "./module/canvas/measure.mjs";
+import { ActorBasePF } from "./module/documents/actor/actor-base.mjs";
+import { ActorPF } from "./module/documents/actor/actor-pf.mjs";
+import { ActorCharacterPF } from "./module/documents/actor/actor-character.mjs";
+import { ActorNPCPF } from "./module/documents/actor/actor-npc.mjs";
+import { BasicActorPF } from "./module/documents/actor/actor-basic.mjs";
+import { ActorSheetPF } from "./module/applications/actor/actor-sheet.mjs";
+import { ActorSheetPFCharacter } from "./module/applications/actor/character-sheet.mjs";
+import { ActorSheetPFNPC } from "./module/applications/actor/npc-sheet.mjs";
+import { ActorSheetPFNPCLite } from "./module/applications/actor/npc-lite-sheet.mjs";
+import { ActorSheetPFNPCLoot } from "./module/applications/actor/npc-loot-sheet.mjs";
+import { ActorSheetPFBasic } from "./module/applications/actor/basic-sheet.mjs";
+import { ActorSheetFlags } from "./module/applications/actor/actor-flags.mjs";
+import { ActorRestDialog } from "./module/applications/actor/actor-rest.mjs";
+import { SensesSelector } from "./module/applications/senses-selector.mjs";
+import { SkillEditor } from "./module/applications/skill-editor.mjs";
+import { CombatPF } from "./module/documents/combat.mjs";
+import { TokenPF } from "./module/canvas/token.mjs";
+import { TokenDocumentPF } from "./module/documents/token.mjs";
+import { EntrySelector } from "./module/applications/entry-selector.mjs";
+import { LevelUpForm } from "./module/applications/level-up.mjs";
+import { PointBuyCalculator } from "./module/applications/point-buy-calculator.mjs";
+import { ScriptEditor } from "./module/applications/script-editor.mjs";
+import { SidebarPF } from "./module/applications/sidebar.mjs";
+import { ActorTraitSelector } from "./module/applications/trait-selector.mjs";
+import { ExperienceDistributor } from "./module/applications/xp-distributor.mjs";
+import { DamageTypeSelector } from "./module/applications/damage-type-selector.mjs";
+import { ActiveEffectPF } from "./module/documents/active-effect.mjs";
+import { ItemPF } from "./module/documents/item/item-pf.mjs";
+import { ItemAttackPF } from "./module/documents/item/item-attack.mjs";
+import { ItemBuffPF } from "./module/documents/item/item-buff.mjs";
+import { ItemClassPF } from "./module/documents/item/item-class.mjs";
+import { ItemConsumablePF } from "./module/documents/item/item-consumable.mjs";
+import { ItemContainerPF } from "./module/documents/item/item-container.mjs";
+import { ItemEquipmentPF } from "./module/documents/item/item-equipment.mjs";
+import { ItemFeatPF } from "./module/documents/item/item-feat.mjs";
+import { ItemLootPF } from "./module/documents/item/item-loot.mjs";
+import { ItemRacePF } from "./module/documents/item/item-race.mjs";
+import { ItemSpellPF } from "./module/documents/item/item-spell.mjs";
+import { ItemWeaponPF } from "./module/documents/item/item-weapon.mjs";
+import { ItemBasePF } from "./module/documents/item/item-base.mjs";
+import { ItemSheetPF } from "./module/applications/item/item-sheet.mjs";
+import { ItemSheetPF_Container } from "./module/applications/item/container-sheet.mjs";
+import { getChangeFlat, getSourceInfo } from "./module/documents/actor/lib/apply-changes.mjs";
+import { CompendiumDirectoryPF } from "./module/compendium-directory.mjs";
+import { CompendiumBrowser } from "./module/applications/compendium-browser.mjs";
+import "./module/patch-core.mjs";
+import { DicePF } from "./module/dice/dice.mjs";
+import { RollPF } from "./module/dice/roll.mjs";
+import { AbilityTemplate } from "./module/canvas/ability-template.mjs";
+import { AttackDialog } from "./module/applications/attack-dialog.mjs";
 import {
   getItemOwner,
   sizeDieExt,
@@ -90,39 +90,52 @@ import {
   isMinimumCoreVersion,
   refreshActors,
   diffObjectAndArray,
-} from "./module/lib.js";
-import { getAbilityModifier } from "./module/actor/lib.mjs";
-import { ChatMessagePF, customRolls } from "./module/sidebar/chat-message.js";
-import { ChatAttack } from "./module/misc/chat-attack.js";
-import { TokenQuickActions } from "./module/token-quick-actions.js";
-import { initializeSocket } from "./module/socket.js";
-import { SemanticVersion } from "./module/semver.js";
-import { ChangeLogWindow } from "./module/apps/change-log.js";
-import { HelpBrowserPF } from "./module/apps/help-browser.js";
-import { addReachListeners } from "./module/misc/attack-reach.js";
-import { TooltipPF } from "./module/hud/tooltip.js";
-import { dialogGetNumber, dialogGetActor } from "./module/dialog.js";
-import * as chat from "./module/chat.js";
-import * as migrations from "./module/migration.js";
-import * as macros from "./module/macros.js";
-import * as controls from "./module/controls.js";
-import * as ItemAttack from "./module/item/attack.js";
-import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/low-light-vision.js";
-import { initializeModules } from "./module/modules.js";
-import { ItemChange } from "./module/item/components/change.js";
-import { ItemScriptCall } from "./module/item/components/script-call.js";
-import { ItemAction } from "./module/item/components/action.js";
-import { ItemActionSheet } from "./module/item/components/sheets/action.js";
-import { ItemConditional, ItemConditionalModifier } from "./module/item/components/conditionals.js";
-import { ActionChooser } from "./module/apps/action-chooser.js";
-import { Widget_CategorizedItemPicker } from "./module/widgets/categorized-item-picker.js";
-import { CurrencyTransfer } from "./module/apps/currency-transfer.js";
-import { BaseRegistry } from "./module/registry/base-registry.js";
-import { DamageTypes } from "./module/registry/damage-types.js";
-import { ScriptCalls } from "./module/registry/script-call.js";
+} from "./module/utils/lib.mjs";
+import { getAbilityModifier } from "./module/documents/actor/lib/lib.mjs";
+import { ChatMessagePF, customRolls } from "./module/documents/chat-message.mjs";
+import { ChatAttack } from "./module/attack/chat-attack.mjs";
+import { TokenQuickActions } from "./module/canvas/token-quick-actions.mjs";
+import { initializeSocket } from "./module/socket.mjs";
+import { SemanticVersion } from "./module/utils/semver.mjs";
+import { ChangeLogWindow } from "./module/applications/change-log.mjs";
+import { HelpBrowserPF } from "./module/applications/help-browser.mjs";
+import { addReachListeners } from "./module/canvas/attack-reach.mjs";
+import { TooltipPF } from "./module/applications/tooltip.mjs";
+import { dialogGetNumber, dialogGetActor } from "./module/utils/dialog.mjs";
+import * as chat from "./module/utils/chat.mjs";
+import * as migrations from "./module/migration.mjs";
+import * as macros from "./module/documents/macros.mjs";
+import * as controls from "./module/documents/controls.mjs";
+import * as ItemAttack from "./module/attack/attack.mjs";
+import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/canvas/low-light-vision.mjs";
+import { initializeModules } from "./module/modules.mjs";
+import { ItemChange } from "./module/components/change.mjs";
+import { ItemScriptCall } from "./module/components/script-call.mjs";
+import { ItemAction } from "./module/components/action.mjs";
+import { ItemActionSheet } from "./module/applications/component/action-sheet.mjs";
+import { ItemConditional, ItemConditionalModifier } from "./module/components/conditionals.mjs";
+import { ActionChooser } from "./module/applications/action-chooser.mjs";
+import { Widget_CategorizedItemPicker } from "./module/applications/categorized-item-picker.mjs";
+import { CurrencyTransfer } from "./module/applications/currency-transfer.mjs";
+import { BaseRegistry } from "./module/registry/base-registry.mjs";
+import { DamageTypes } from "./module/registry/damage-types.mjs";
+import { ScriptCalls } from "./module/registry/script-call.mjs";
+
+// import * as applications from "./module/applications/_module.mjs";
+export * as applications from "./module/applications/_module.mjs";
+// import * as attack from "./module/attack/_module.mjs";
+export * as attack from "./module/attack/_module.mjs";
+export * as config from "./module/config.mjs";
+// import * as canvas from "./module/canvas/_module.mjs";
+export * as canvas from "./module/canvas/_module.mjs";
+// import * as dice from "./module/dice/_module.mjs";
+export * as dice from "./module/dice/_module.mjs";
+// import * as components from "./module/components/_module.mjs";
+export * as components from "./module/components/_module.mjs";
+export * as documents from "./module/documents/_module.mjs";
 
 import "./less/pf1.less";
-import "./module/hmr.js";
+import "./module/hmr.mjs";
 
 // OBSOLETE: Add String.format
 if (!String.prototype.format) {
@@ -378,7 +391,7 @@ Hooks.once("init", function () {
 
 // Load Quench test in development environment
 if (import.meta.env.DEV) {
-  await import("./module/test");
+  await import("./module/test/index.mjs");
 }
 
 /* -------------------------------------------- */

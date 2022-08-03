@@ -1,6 +1,6 @@
-import { ActorPF } from "./module/actor/entity";
-import { ItemPF } from "./module/item/entity";
-import { ChatMessagePF } from "./module/sidebar/chat-message";
+import { ActorPF } from "./module/documents/actor/actor-pf.mjs";
+import { ItemPF } from "./module/documents/item/item-pf.mjs";
+import { ChatMessagePF } from "./module/documents/chat-message.mjs";
 
 export {};
 

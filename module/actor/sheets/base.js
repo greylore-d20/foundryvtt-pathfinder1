@@ -1677,7 +1677,7 @@ export class ActorSheetPF extends ActorSheet {
     // Check whether pseudo-item belongs to another collection
     const collection = li.attr("data-item-collection") ?? "items";
     const item = this.document[collection].get(li.attr("data-item-id"));
-    const { description, shortDescription, properties } = item.getChatData();
+    const { description, properties } = item.getChatData();
 
     // Toggle summary
     if (li.hasClass("expanded")) {
@@ -1685,10 +1685,6 @@ export class ActorSheetPF extends ActorSheet {
       summary.slideUp(200, () => summary.remove());
     } else {
       const div = $(`<div class="item-summary">${description}</div>`);
-      // Add text description to spells
-      if (shortDescription?.length) {
-        div.append(shortDescription);
-      }
       const props = $(`<div class="item-properties tag-list"></div>`);
       properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
       div.append(props);

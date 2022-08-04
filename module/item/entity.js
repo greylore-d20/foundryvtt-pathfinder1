@@ -1034,12 +1034,15 @@ export class ItemPF extends ItemBasePF {
 
     // Rich text descriptions
     data.identifiedDescription = TextEditor.enrichHTML(itemData.description.value, enrichOptions);
+    if (itemData.shortDescription) {
+      data.identifiedDescription = `${data.identifiedDescription}${TextEditor.enrichHTML(
+        itemData.shortDescription,
+        enrichOptions
+      )}`;
+    }
     data.unidentifiedDescription = TextEditor.enrichHTML(itemData.description.unidentified, enrichOptions);
     data.description = this.showUnidentifiedData ? data.unidentifiedDescription : data.identifiedDescription;
     data.actionDescription = TextEditor.enrichHTML(actionData.description, enrichOptions);
-    // Add text description for spells
-    data.shortDescription =
-      "shortDescription" in itemData ? TextEditor.enrichHTML(itemData.shortDescription, enrichOptions) : undefined;
 
     // General equipment properties
     const props = [];
@@ -2397,9 +2400,8 @@ export class ItemPF extends ItemBasePF {
  *
  * @typedef {object} ChatData
  * @property {string} description - The item's enriched description as appropriate for the current user
- * @property {string} identifiedDescription - The item's enriched description when identified
+ * @property {string} identifiedDescription - The item's full enriched description when identified
  * @property {string} unidentifiedDescription - The item's enriched description when unidentified
  * @property {string} [actionDescription] - The enriched description of a specific action
- * @property {string} [shortDescription] - The enriched short text description (available e.g. for spells)
  * @property {string[]} properties - Additional properties/labels for the item and the action
  */

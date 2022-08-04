@@ -97,7 +97,7 @@ export class ActorPF extends ActorBasePF {
     /**
      * Race cache
      */
-    this._race = undefined;
+    this._race ??= null;
   }
 
   _preCreate(data, options, user) {
@@ -208,7 +208,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @returns {ItemRacePF|undefined}
+   * @returns {ItemRacePF|null}
    */
   get race() {
     return this._race;

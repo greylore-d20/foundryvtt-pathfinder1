@@ -317,8 +317,8 @@ export class AttackDialog extends Application {
   // Initializes ammo usage, which help avoid being able to overuse ammo
   initAmmoUsage() {
     this.ammoUsage = this.getAmmo().reduce((cur, o) => {
-      cur[o.system._id] = {
-        quantity: o.system.quantity,
+      cur[o.data._id] = {
+        quantity: o.data.system.quantity,
         used: 0,
       };
 
@@ -332,7 +332,7 @@ export class AttackDialog extends Application {
         id: o.id,
         label: o.label,
         attackBonus: o.attackBonus,
-        ammo: o.ammo?.system._id,
+        ammo: o.ammo?.data._id,
       };
     });
   }
@@ -341,7 +341,7 @@ export class AttackDialog extends Application {
     if (!this.object.data.usesAmmo) return;
 
     const atk = this.attacks[attackIndex];
-    const curAmmo = atk.ammo?.system._id;
+    const curAmmo = atk.ammo?.data._id;
     const ammoItem = ammoId ? this.object.actor.items.get(ammoId) : null;
     const abundant = ammoItem?.system.flags?.pf1?.abundant ?? false;
 
@@ -360,7 +360,7 @@ export class AttackDialog extends Application {
     // Don't allow overusage
     if (!abundant && this.ammoUsage[ammoId].used >= this.ammoUsage[ammoId].quantity) return;
 
-    atk.ammo = this.getAmmo().find((o) => o.system._id === ammoId);
+    atk.ammo = this.getAmmo().find((o) => o.data._id === ammoId);
     // Add to ammo usage tracker
     if (curAmmo != null) {
       this.ammoUsage[curAmmo].used--;

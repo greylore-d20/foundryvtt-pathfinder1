@@ -338,7 +338,7 @@ export class ItemSpellPF extends ItemPF {
    * @returns {number[]} An array containing the spell level and caster level.
    */
   static getMinimumCasterLevelBySpellData(itemData) {
-    const learnedAt = getProperty(itemData, "learnedAt.class").reduce((cur, o) => {
+    const learnedAt = getProperty(itemData, "system.learnedAt.class").reduce((cur, o) => {
       const classes = o[0].split("/");
       for (const cls of classes) cur.push([cls, o[1]]);
       return cur;
@@ -367,7 +367,7 @@ export class ItemSpellPF extends ItemPF {
   }
 
   static async toConsumable(origData, type) {
-    const actionData = origData.actions?.[0] ?? {};
+    const actionData = origData.system.actions?.[0] ?? {};
     const data = {
       type: "consumable",
       name: origData.name,

@@ -153,7 +153,7 @@
             {{#each @root.ammo as |ammo|}}
               <li class="ammo-item{{#if ammo.isDefault}} default{{/if}}" data-id="{{ammo.data._id}}">
                 <img src="{{ammo.data.img}}"></img>
-                <span>{{ammo.data.name}} ({{ammo.data.quantity}})</span>
+                <span>{{ammo.data.name}} ({{ammo.data.system.quantity}})</span>
 
                 <div class="controls">
                   <a data-type="set-default" title="{{localize "PF1.Default"}}"><i class="fas fa-cog"></i></a>

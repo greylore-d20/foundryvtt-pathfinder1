@@ -28,7 +28,7 @@ export class Attack {
   /**
    * @returns {Promise<number>} - 0 when successful, otherwise one of the ERR_REQUIREMENT constants.
    */
-  async checkRequirements() {
+  checkRequirements() {
     const actor = this.item.parent;
     if (actor && !actor.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
@@ -65,7 +65,7 @@ export class Attack {
   /**
    * @returns {object} The roll data object for this attack.
    */
-  async getRollData() {
+  getRollData() {
     const rollData = duplicate(this.shared.action.getRollData());
     rollData.d20 = this.shared.dice !== "1d20" ? this.shared.dice : "";
 
@@ -82,7 +82,7 @@ export class Attack {
    *
    * @returns {ItemAttack_Dialog_Result|boolean}
    */
-  async createAttackDialog() {
+  createAttackDialog() {
     const dialog = new pf1.applications.AttackDialog(this.shared.action, this.shared.rollData);
     return dialog.show();
   }
@@ -92,7 +92,7 @@ export class Attack {
    *
    * @param {JQuery | object} form - The attack dialog's jQuery form data or FormData object
    */
-  async alterRollData(form = {}) {
+  alterRollData(form = {}) {
     let formData;
     if (form instanceof jQuery) formData = new FormDataExtended(form[0].querySelector("form")).object;
     else formData = form;
@@ -334,7 +334,7 @@ export class Attack {
 
   /**
    */
-  async handleConditionals() {
+  handleConditionals() {
     if (this.shared.conditionals) {
       const conditionalData = {};
       for (const i of this.shared.conditionals) {
@@ -407,7 +407,7 @@ export class Attack {
    *
    * @returns {number} 0 if successful, otherwise one of the ERR_REQUIREMENT constants.
    */
-  async checkAttackRequirements() {
+  checkAttackRequirements() {
     // Enforce zero charge cost on cantrips/orisons, but make sure they have at least 1 charge
     if (
       this.item.system.type === "spell" &&
@@ -603,7 +603,7 @@ export class Attack {
   /**
    * Adds a ChatAttack entry for effect notes to an attack's shared context.
    */
-  async addEffectNotes() {
+  addEffectNotes() {
     const attack = new ChatAttack(this.shared.action, {
       rollData: this.shared.rollData,
       primaryAttack: this.shared.primaryAttack,
@@ -733,7 +733,7 @@ export class Attack {
   /**
    * Adds an attack's chat card data to the shared object.
    */
-  async getMessageData() {
+  getMessageData() {
     if (this.shared.chatAttacks.length === 0) return;
 
     // Create chat template data
@@ -907,7 +907,7 @@ export class Attack {
    *
    * @returns {string[]} The resulting property labels.
    */
-  async addGenericPropertyLabels() {
+  addGenericPropertyLabels() {
     const properties = [];
 
     // Add actual cost
@@ -967,7 +967,7 @@ export class Attack {
    *
    * @returns {string[]} The resulting property labels.
    */
-  async addCombatPropertyLabels() {
+  addCombatPropertyLabels() {
     const properties = [];
 
     // Add round info
@@ -981,7 +981,7 @@ export class Attack {
    *
    * @returns {object} The resulting metadata object.
    */
-  async generateChatMetadata() {
+  generateChatMetadata() {
     const metadata = {};
 
     metadata.item = this.item.id;
@@ -1095,7 +1095,7 @@ export class Attack {
 
     // Create message
     const template = "systems/pf1/templates/chat/attack-roll.hbs";
-    this.shared.templateData.damageTypes = pf1.damageTypes.toRecord();
+    this.shared.templateData.damageTypes = pf1.registry.damageTypes.toRecord();
 
     // Show chat message
     let result;

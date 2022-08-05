@@ -22,6 +22,22 @@ export const COMPENDIUM_TYPES = {
   buffs: "Item",
 };
 
+/**
+ * An object containing the compendium browsers the system loads on init.
+ *
+ * @type {Record<keyof typeof COMPENDIUM_TYPES, CompendiumBrowser>}
+ */
+export const compendiums = {};
+
+/**
+ * Initializes compendiums browsers, creating an instance for each type.
+ */
+export function initializeCompendiumBrowsers() {
+  for (const key of Object.keys(COMPENDIUM_TYPES)) {
+    compendiums[key] = new CompendiumBrowser({ type: key });
+  }
+}
+
 export class CompendiumBrowser extends Application {
   constructor(...args) {
     super(...args);

@@ -59,7 +59,7 @@ export class ItemActionSheet extends FormApplication {
     data.item = this.item;
     data.actor = this.actor;
     data.data = foundry.utils.mergeObject(this.action.constructor.defaultData, this.action.data, { inplace: false });
-    data.damageTypes = pf1.damageTypes.toRecord();
+    data.damageTypes = pf1.registry.damageTypes.toRecord();
 
     // Set tag
     data.tag = createTag(data.action.name);

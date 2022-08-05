@@ -846,15 +846,15 @@ export const PF1 = {
 
   /* -------------------------------------------- */
 
-  // /**
-  //  * The damage types
-  //  */
-  // get damageTypes() {
-  //   return pf1.damageTypes.reduce((cur, o) => {
-  //     cur[o.id] = game.i18n.localize(o.name);
-  //     return cur;
-  //   }, {});
-  // },
+  /**
+   * The damage types
+   */
+  get damageTypes() {
+    return pf1.registry.damageTypes.reduce((cur, o) => {
+      cur[o.id] = game.i18n.localize(o.name);
+      return cur;
+    }, {});
+  },
 
   /* -------------------------------------------- */
 

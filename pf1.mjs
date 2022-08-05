@@ -63,7 +63,7 @@ import { ItemSheetPF } from "./module/applications/item/item-sheet.mjs";
 import { ItemSheetPF_Container } from "./module/applications/item/container-sheet.mjs";
 import { getChangeFlat, getSourceInfo } from "./module/documents/actor/utils/apply-changes.mjs";
 import { CompendiumDirectoryPF } from "./module/compendium-directory.mjs";
-import { CompendiumBrowser } from "./module/applications/compendium-browser.mjs";
+import { CompendiumBrowser, initializeCompendiumBrowsers } from "./module/applications/compendium-browser.mjs";
 import "./module/patch-core.mjs";
 import { DicePF } from "./module/dice/dice.mjs";
 import { RollPF } from "./module/dice/roll.mjs";
@@ -184,7 +184,7 @@ Hooks.once("init", function () {
     documents: { ActorPF, ItemPF, TokenDocumentPF },
     get entities() {
       // OBSOLETION WARNING
-      console.error("pf1.entities is obsolete; please use pf1.documents instead.");
+      console.error("game.pf1.entities is obsolete; please use game.pf1.documents instead.");
       return this.documents;
     },
     applications: {
@@ -222,7 +222,7 @@ Hooks.once("init", function () {
       Widget_CategorizedItemPicker,
       CurrencyTransfer,
     },
-    compendiums: {},
+    compendiums: applications.compendiums,
     // Rolling
     DicePF,
     rollPreProcess: {
@@ -614,16 +614,8 @@ Hooks.once("ready", async function () {
   // Migrate system settings
   await migrateSystemSettings();
 
-  // Create compendium browsers
-  pf1.compendiums = {
-    spells: new CompendiumBrowser({ type: "spells" }),
-    items: new CompendiumBrowser({ type: "items" }),
-    bestiary: new CompendiumBrowser({ type: "bestiary" }),
-    feats: new CompendiumBrowser({ type: "feats" }),
-    classes: new CompendiumBrowser({ type: "classes" }),
-    races: new CompendiumBrowser({ type: "races" }),
-    buffs: new CompendiumBrowser({ type: "buffs" }),
-  };
+  // Populate `pf1.applications.compendiums`
+  initializeCompendiumBrowsers();
 
   // Show changelog
   if (!game.settings.get("pf1", "dontShowChangelog")) {

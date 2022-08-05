@@ -6,4 +6,3 @@ export { ActorPF } from "./actor-pf.mjs";
 
 export * as changes from "./utils/apply-changes.mjs";
 export * as spellbook from "./utils/spellbook.mjs";
-export * as utils from "./utils/lib.mjs";

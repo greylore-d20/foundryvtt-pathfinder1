@@ -8,6 +8,7 @@ export * as actor from "./actor/_module.mjs";
 export * as item from "./item/_module.mjs";
 export * as component from "./component/_module.mjs";
 export * as settings from "./settings/_module.mjs";
+export { compendiums } from "./compendium-browser.mjs";
 
 export { ActionChooser } from "./action-chooser.mjs";
 export { AttackDialog } from "./attack-dialog.mjs";

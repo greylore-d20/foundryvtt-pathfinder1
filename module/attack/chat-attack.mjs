@@ -162,7 +162,7 @@ export class ChatAttack {
         extraParts.push(`@critConfirmBonus[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
       }
 
-      const ccKey = pf1.utils.getChangeFlat.call(this.action.item, "critConfirm");
+      const ccKey = pf1.documents.actor.changes.getChangeFlat.call(this.action.item, "critConfirm");
       this.action.item.parentActor?.sourceDetails[ccKey]?.forEach((c) => extraParts.push(`(${c.value})[${c.name}]`));
 
       // Add conditionals for critical confirmation

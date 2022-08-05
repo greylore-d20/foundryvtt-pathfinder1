@@ -1,3 +1,11 @@
+import { normalDie, sizeDieExt, sizeReach } from "./lib.mjs";
+
+export const rollPreProcess = {
+  sizeRoll: sizeDieExt,
+  sizeReach: sizeReach,
+  roll: normalDie,
+};
+
 export * as handlebars from "./handlebars/_module.mjs";
 export * as canvas from "./canvas.mjs";
 export * as chat from "./chat.mjs";
@@ -21,4 +29,5 @@ export {
   getFirstActiveGM,
   refreshActors,
   diffObjectAndArray,
+  sizeRoll,
 } from "./lib.mjs";

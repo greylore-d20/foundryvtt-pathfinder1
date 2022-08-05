@@ -534,7 +534,7 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   async _prepareScriptCalls(data) {
-    const categories = pf1.scriptCalls.filter((o) => {
+    const categories = pf1.registry.scriptCalls.filter((o) => {
       if (!o.data.itemTypes.includes(this.document.type)) return false;
       return !(o.hidden === true && !game.user.isGM);
     });
@@ -1276,7 +1276,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Open new window
-    const app = new pf1.applications.ItemActionSheet(action);
+    const app = new pf1.applications.component.ItemActionSheet(action);
     app.render(true);
   }
 

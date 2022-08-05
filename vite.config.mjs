@@ -63,7 +63,7 @@ const config = defineConfig(({ command, mode }) => {
       reportCompressedSize: true,
       lib: {
         name: "pf1",
-        entry: resolve("pf1.js"),
+        entry: resolve("pf1.mjs"),
         formats: ["es"],
         fileName: () => "pf1.js",
       },

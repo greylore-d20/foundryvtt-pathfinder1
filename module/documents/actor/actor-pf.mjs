@@ -1,5 +1,5 @@
 import { ActorBasePF } from "./actor-base.mjs";
-import { getAbilityModifier } from "./lib/lib.mjs";
+import { getAbilityModifier } from "@utils";
 import { DicePF } from "../../dice/dice.mjs";
 import { ItemPF } from "../item/item-pf.mjs";
 import { createTag, enrichHTMLUnrolled, fractionalToString } from "../../utils/lib.mjs";
@@ -13,10 +13,10 @@ import {
   getSourceInfo,
   setSourceInfoByName,
   getHighestChanges,
-} from "./lib/apply-changes.mjs";
+} from "./utils/apply-changes.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 import { VisionPermissionSheet } from "../../applications/vision-permission.mjs";
-import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./lib/spellbook.mjs";
+import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
 import { ItemChange } from "../../components/change.mjs";
 
 /**

@@ -5,6 +5,13 @@ import { ItemChange } from "./components/change.mjs";
 import { SemanticVersion } from "./utils/semver.mjs";
 
 /**
+ * An indicator for whether the system is currently migrating the world.
+ *
+ * @type {boolean}
+ */
+export let isMigrating = false;
+
+/**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
  *
  * @returns {Promise}      A Promise which resolves once the migration is completed
@@ -15,7 +22,7 @@ export const migrateWorld = async function () {
     console.error(msg);
     return ui.notifications.error(msg);
   }
-  game.pf1.isMigrating = true;
+  isMigrating = true;
   const startMessage = game.i18n.format("PF1.Migration.Start", { version: game.system.version });
   ui.notifications.info(startMessage, {
     permanent: true,
@@ -100,7 +107,7 @@ export const migrateWorld = async function () {
   // Remove migration notification
   ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.version }));
   console.log("System Migration completed.");
-  game.pf1.isMigrating = false;
+  isMigrating = false;
   Hooks.callAll("pf1.migrationFinished");
 };
 
@@ -298,7 +305,7 @@ export const migrateItemData = function (item) {
  * @returns {object} The resulting action data.
  */
 export const migrateItemActionData = function (action, item) {
-  action = foundry.utils.mergeObject(game.pf1.documentComponents.ItemAction.defaultData, action);
+  action = foundry.utils.mergeObject(pf1.components.ItemAction.defaultData, action);
 
   _migrateActionDamageType(action, item);
   _migrateActionConditionals(action, item);
@@ -1110,7 +1117,7 @@ const _migrateItemActions = function (item, updateData) {
   if ((!hasOldAction && item.type !== "spell") || alreadyHasActions) return;
 
   // Transfer data to an action
-  const actionData = game.pf1.documentComponents.ItemAction.defaultData;
+  const actionData = pf1.components.ItemAction.defaultData;
   const removeKeys = ["_id", "name", "img"];
   for (const k of Object.keys(actionData)) {
     if (!removeKeys.includes(k)) {
@@ -1151,14 +1158,14 @@ const _migrateActionDamageType = function (action, item) {
       // Convert damage types
       const damageType = damagePart[1];
       if (typeof damageType === "string") {
-        const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
+        const damageTypeData = pf1.components.ItemAction.defaultDamageType;
         damageTypeData.values = _Action_ConvertDamageType(damageType);
         if (damageTypeData.values.length === 0) damageTypeData.custom = damageType;
         damagePart[1] = damageTypeData;
       }
       // Convert array to object
       else if (damageType instanceof Array) {
-        const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
+        const damageTypeData = pf1.components.ItemAction.defaultDamageType;
         damageTypeData.values = damageType;
         damagePart[1] = damageTypeData;
       }
@@ -1183,7 +1190,7 @@ const _migrateActionConditionals = function (action, item) {
 
       // Convert modifier damage type
       if (modifier.target === "damage" && !modifier.damageType) {
-        const damageTypeData = game.pf1.documentComponents.ItemAction.defaultDamageType;
+        const damageTypeData = pf1.components.ItemAction.defaultDamageType;
         damageTypeData.values = _Action_ConvertDamageType(modifier.type);
         if (damageTypeData.values.length === 0) damageTypeData.custom = modifier.type;
         modifier.damageType = damageTypeData;

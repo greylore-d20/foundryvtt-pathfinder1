@@ -57,3 +57,5 @@ export class ScriptCalls extends BaseRegistry {
     },
   ].map((d) => ({ ...d, module: "pf1" }));
 }
+
+export const scriptCalls = new ScriptCalls();

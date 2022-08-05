@@ -126,3 +126,5 @@ export class DamageTypes extends BaseRegistry {
     },
   ].map((d) => ({ ...d, module: "pf1" }));
 }
+
+export const damageTypes = new DamageTypes();

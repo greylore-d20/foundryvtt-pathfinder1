@@ -140,7 +140,7 @@ export const registerActorItemAttackTests = () => {
       describe("attack with natural attack", function () {
         const items = {};
         before(async () => {
-          const rawActionData = game.pf1.documentComponents.ItemAction.defaultData;
+          const rawActionData = pf1.components.ItemAction.defaultData;
           items.bite = (
             await actor.createEmbeddedDocuments("Item", {
               type: "attack",

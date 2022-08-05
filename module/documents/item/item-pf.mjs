@@ -1,11 +1,19 @@
 import { DicePF, formulaHasDice } from "../../dice/dice.mjs";
 import { ItemBasePF } from "./item-base.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
-import { createTag, linkData, convertDistance, calculateRange, keepUpdateArray, diffObjectAndArray } from "../../utils/lib.mjs";
+import {
+  createTag,
+  linkData,
+  convertDistance,
+  calculateRange,
+  keepUpdateArray,
+  diffObjectAndArray,
+} from "../../utils/lib.mjs";
 import { ItemChange } from "../../components/change.mjs";
 import { ItemAction } from "../../components/action.mjs";
-import { getHighestChanges } from "../actor/lib/apply-changes.mjs";
+import { getHighestChanges } from "../actor/utils/apply-changes.mjs";
 import { RollPF } from "../../dice/roll.mjs";
+import { Attack } from "../../attack/attack.mjs";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -546,7 +554,7 @@ export class ItemPF extends ItemBasePF {
         change = prior.get(c._id);
         change.data = c;
         change.prepareData();
-      } else change = new game.pf1.documentComponents.ItemChange(c, this);
+      } else change = new pf1.components.ItemChange(c, this);
       collection.set(c._id || change.data._id, change);
     }
     return collection;
@@ -561,7 +569,7 @@ export class ItemPF extends ItemBasePF {
         action = prior.get(o._id);
         action.data = o;
         action.prepareData();
-      } else action = new game.pf1.documentComponents.ItemAction(o, this);
+      } else action = new pf1.components.ItemAction(o, this);
       collection.set(o._id || action.data._id, action);
     }
     return collection;
@@ -575,7 +583,7 @@ export class ItemPF extends ItemBasePF {
       if (prior && prior.has(s.id)) {
         scriptCall = prior.get(s.id);
         scriptCall.data = s;
-      } else scriptCall = new game.pf1.documentComponents.ItemScriptCall(s, this);
+      } else scriptCall = new pf1.components.ItemScriptCall(s, this);
       collection.set(s._id || scriptCall.data._id, scriptCall);
     }
     return collection;
@@ -1216,20 +1224,18 @@ export class ItemPF extends ItemBasePF {
       action,
     };
 
-    const _callFn = (fnName, ...args) => {
-      return game.pf1.ItemAttack[fnName].call(this, shared, ...args);
-    };
+    const attack = new Attack(this, shared);
 
     // Check requirements for item
-    let reqErr = await _callFn("checkRequirements");
+    let reqErr = await attack.checkRequirements();
     if (reqErr > 0) return { err: game.pf1.ItemAttack.ERR_REQUIREMENT, code: reqErr };
 
     // Get new roll data
-    shared.rollData = await _callFn("getRollData");
+    shared.rollData = await attack.getRollData();
 
     // Show attack dialog, if appropriate
     if (!skipDialog) {
-      const result = await _callFn("createAttackDialog");
+      const result = await attack.createAttackDialog();
 
       // Stop if result is a boolean (i.e. when closed is clicked on the dialog)
       if (typeof result !== "object") return;
@@ -1237,10 +1243,10 @@ export class ItemPF extends ItemBasePF {
       // Alter roll data
       shared.fullAttack = result.fullAttack;
       shared.attacks = result.attacks;
-      await _callFn("alterRollData", result.html);
+      await attack.alterRollData(result.html);
     } else {
-      shared.attacks = await _callFn("generateAttacks");
-      await _callFn("alterRollData");
+      shared.attacks = await attack.generateAttacks();
+      await attack.alterRollData();
     }
 
     // Filter out attacks without ammo usage
@@ -1255,19 +1261,19 @@ export class ItemPF extends ItemBasePF {
     // Limit attacks to 1 if not full rounding
     if (!shared.fullAttack) shared.attacks = shared.attacks.slice(0, 1);
     // Handle conditionals
-    await _callFn("handleConditionals");
+    await attack.handleConditionals();
 
     // Check attack requirements, post-dialog
-    reqErr = await _callFn("checkAttackRequirements");
+    reqErr = await attack.checkAttackRequirements();
     if (reqErr > 0) return { err: game.pf1.ItemAttack.ERR_REQUIREMENT, code: reqErr };
 
     // Generate chat attacks
-    await _callFn("generateChatAttacks");
+    await attack.generateChatAttacks();
 
     // Prompt measure template
     let measureResult;
     if (shared.useMeasureTemplate && canvas.scene) {
-      measureResult = await _callFn("promptMeasureTemplate");
+      measureResult = await attack.promptMeasureTemplate();
       if (!measureResult.result) return;
     }
 
@@ -1282,27 +1288,27 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Call script calls
-    await _callFn("executeScriptCalls");
+    await attack.executeScriptCalls();
     if (shared.scriptData?.reject) {
       await measureResult?.delete();
       return;
     }
 
     // Handle Dice So Nice
-    await _callFn("handleDiceSoNice");
+    await attack.handleDiceSoNice();
 
     // Subtract uses
-    await _callFn("subtractAmmo");
+    await attack.subtractAmmo();
     if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
       await this.addCharges(-shared.rollData.chargeCost);
 
     // Retrieve message data
-    await _callFn("getMessageData");
+    await attack.getMessageData();
 
     // Post message
     let result;
     if (shared.scriptData?.hideChat !== true) {
-      result = await _callFn("postMessage");
+      result = await attack.postMessage();
     } else return;
 
     // Deselect targets

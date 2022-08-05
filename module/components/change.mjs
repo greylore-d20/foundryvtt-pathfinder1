@@ -1,6 +1,6 @@
-import { getChangeFlat, getSourceInfo } from "../documents/actor/lib/apply-changes.mjs";
+import { getChangeFlat, getSourceInfo } from "../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
-import { getAbilityModifier } from "../documents/actor/lib/lib.mjs";
+import { getAbilityModifier } from "@utils";
 
 export class ItemChange {
   constructor(data, parent) {

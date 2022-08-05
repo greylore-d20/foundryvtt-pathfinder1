@@ -260,7 +260,7 @@ export class ItemActionSheet extends FormApplication {
     // Add new conditional
     if (a.classList.contains("add-conditional")) {
       await this._onSubmit(event); // Submit any unsaved changes
-      return game.pf1.documentComponents.ItemConditional.create([{}], { parent: this.object });
+      return pf1.components.ItemConditional.create([{}], { parent: this.object });
     }
 
     // Remove a conditional
@@ -276,7 +276,7 @@ export class ItemActionSheet extends FormApplication {
       await this._onSubmit(event);
       const li = a.closest(".conditional");
       const conditional = this.object.conditionals.get(li.dataset.conditional);
-      return game.pf1.documentComponents.ItemConditionalModifier.create([{}], { parent: conditional });
+      return pf1.components.ItemConditionalModifier.create([{}], { parent: conditional });
     }
 
     // Remove a conditional modifier
@@ -307,7 +307,7 @@ export class ItemActionSheet extends FormApplication {
     // Add new damage component
     if (a.classList.contains("add-damage")) {
       // Get initial data
-      const damageTypeBase = game.pf1.documentComponents.ItemAction.defaultDamageType;
+      const damageTypeBase = pf1.components.ItemAction.defaultDamageType;
       const initialData = ["", damageTypeBase];
 
       // Add data

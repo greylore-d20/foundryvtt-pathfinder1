@@ -1,5 +1,5 @@
-import { convertDistance, calculateRange, simplifyFormula } from "../utils/lib.mjs";
-import { RollPF } from "../dice/roll.mjs";
+import { convertDistance, calculateRange, simplifyFormula } from "../lib.mjs";
+import { RollPF } from "../../dice/roll.mjs";
 
 export const registerHandlebarsHelpers = function () {
   /**

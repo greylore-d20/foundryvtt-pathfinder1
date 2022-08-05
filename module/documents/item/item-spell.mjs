@@ -372,7 +372,7 @@ export class ItemSpellPF extends ItemPF {
       type: "consumable",
       name: origData.name,
     };
-    const action = game.pf1.documentComponents.ItemAction.defaultData;
+    const action = pf1.components.ItemAction.defaultData;
 
     const slcl = this.getMinimumCasterLevelBySpellData(origData);
     if (origData.sl == null) origData.sl = slcl[0];

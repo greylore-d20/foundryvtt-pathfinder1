@@ -6,8 +6,6 @@
  * assumed to get replaced by their proper translation when the system is loaded.
  *
  * The PF1 object may be adjusted to influence the system's behaviour during runtime.
- *
- * @module config
  */
 export const PF1 = ({
   re: {
@@ -848,15 +846,15 @@ export const PF1 = ({
 
   /* -------------------------------------------- */
 
-  /**
-   * The damage types
-   */
-  get damageTypes() {
-    return game.pf1.damageTypes.reduce((cur, o) => {
-      cur[o.id] = game.i18n.localize(o.name);
-      return cur;
-    }, {});
-  },
+  // /**
+  //  * The damage types
+  //  */
+  // get damageTypes() {
+  //   return game.pf1.damageTypes.reduce((cur, o) => {
+  //     cur[o.id] = game.i18n.localize(o.name);
+  //     return cur;
+  //   }, {});
+  // },
 
   /* -------------------------------------------- */
 

@@ -1,5 +1,5 @@
 import { ActorPF } from "../documents/actor/actor-pf.mjs";
-import { getAbilityModifier } from "../documents/actor/lib/lib.mjs";
+import { getAbilityModifier } from "@utils";
 import { PF1 } from "../config.mjs";
 import { createTestActor } from "./actor-utils.mjs";
 

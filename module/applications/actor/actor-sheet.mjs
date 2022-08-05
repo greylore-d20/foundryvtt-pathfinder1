@@ -9,7 +9,7 @@ import { dialogGetActor } from "../../utils/dialog.mjs";
 import { applyAccessibilitySettings } from "../../utils/chat.mjs";
 import { LevelUpForm } from "../level-up.mjs";
 import { CurrencyTransfer } from "../currency-transfer.mjs";
-import { getHighestChanges } from "../../documents/actor/lib/apply-changes.mjs";
+import { getHighestChanges } from "../../documents/actor/utils/apply-changes.mjs";
 import { PF1 } from "../../config.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 

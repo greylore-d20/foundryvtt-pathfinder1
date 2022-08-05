@@ -882,7 +882,7 @@ export class ItemSheetPF extends ItemSheet {
     // Create item
     if (a.classList.contains("item-create")) {
       await this._onSubmit(event);
-      return game.pf1.documentComponents.ItemScriptCall.create([{ category, type: "script" }], { parent: this.item });
+      return pf1.components.ItemScriptCall.create([{ category, type: "script" }], { parent: this.item });
     }
     // Delete item
     else if (item && a.classList.contains("item-delete")) {
@@ -976,7 +976,7 @@ export class ItemSheetPF extends ItemSheet {
       if (uuid) {
         const list = this.document.system.scriptCalls ?? [];
         await this._onSubmit(event);
-        return game.pf1.documentComponents.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
+        return pf1.components.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
           parent: this.item,
         });
       }
@@ -1218,7 +1218,7 @@ export class ItemSheetPF extends ItemSheet {
           : game.i18n.localize("PF1.Use"),
       };
       await this._onSubmit(event);
-      return game.pf1.documentComponents.ItemAction.create([newActionData], { parent: this.item });
+      return pf1.components.ItemAction.create([newActionData], { parent: this.item });
     }
 
     // Edit action
@@ -1287,7 +1287,7 @@ export class ItemSheetPF extends ItemSheet {
     // Add new change
     if (a.classList.contains("add-change")) {
       await this._onSubmit(event);
-      return game.pf1.documentComponents.ItemChange.create([{}], { parent: this.item });
+      return pf1.components.ItemChange.create([{}], { parent: this.item });
     }
 
     // Remove a change

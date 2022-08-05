@@ -1,5 +1,5 @@
 import { calculateRange, convertDistance } from "../utils/lib.mjs";
-import { getHighestChanges } from "../documents/actor/lib/apply-changes.mjs";
+import { getHighestChanges } from "../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
 import { keepUpdateArray, createTag } from "../utils/lib.mjs";
 
@@ -340,7 +340,7 @@ export class ItemAction {
         conditional = prior.get(o._id);
         conditional.data = o;
         conditional.prepareData();
-      } else conditional = new game.pf1.documentComponents.ItemConditional(o, this);
+      } else conditional = new pf1.components.ItemConditional(o, this);
       collection.set(o._id || conditional.data._id, conditional);
     }
     return collection;
@@ -557,7 +557,7 @@ export class ItemAction {
     // Add masterwork bonus to changes (if applicable)
     if (["mwak", "rwak", "mcman", "rcman"].includes(this.data.actionType) && this.item.system.masterwork) {
       changes.push(
-        new game.pf1.documentComponents.ItemChange({
+        new pf1.components.ItemChange({
           formula: "1",
           operator: "add",
           subTarget: "attack",
@@ -570,7 +570,7 @@ export class ItemAction {
     // Add enhancement bonus to changes
     if (this.enhancementBonus) {
       changes.push(
-        new game.pf1.documentComponents.ItemChange({
+        new pf1.components.ItemChange({
           formula: this.enhancementBonus.toString(),
           operator: "add",
           subTarget: "attack",
@@ -775,7 +775,7 @@ export class ItemAction {
       // Add enhancement bonus to changes
       if (this.enhancementBonus) {
         changes.push(
-          new game.pf1.documentComponents.ItemChange({
+          new pf1.components.ItemChange({
             formula: this.enhancementBonus.toString(),
             operator: "add",
             subTarget: "damage",

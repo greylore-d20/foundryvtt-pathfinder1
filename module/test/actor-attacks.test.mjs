@@ -60,7 +60,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
+            expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
           });
         });
 
@@ -82,7 +82,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
+            expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
           });
 
           describe("size changes", function () {
@@ -140,7 +140,7 @@ export const registerActorItemAttackTests = () => {
       describe("attack with natural attack", function () {
         const items = {};
         before(async () => {
-          const rawActionData = pf1.components.ItemAction.defaultData;
+          const rawActionData = pf1.documentComponents.ItemAction.defaultData;
           items.bite = (
             await actor.createEmbeddedDocuments("Item", {
               type: "attack",
@@ -187,7 +187,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
+            expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
           });
 
           describe("as secondary attack", function () {
@@ -250,7 +250,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
+            expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
           });
           it("should have the correct attack formula", function () {
             expect(roll.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal("1d20 + 2[Dexterity]");
@@ -302,7 +302,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
+            expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
           });
           it("should have the correct attack formula", function () {
             expect(roll.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal(

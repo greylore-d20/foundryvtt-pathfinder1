@@ -28,7 +28,7 @@ export class ItemContainerPF extends ItemPF {
       (total, item) => total + item.system.weight.total,
       this._calculateCoinWeight(this.system)
     );
-    weight.converted.contents = game.pf1.utils.convertWeight(weight.contents);
+    weight.converted.contents = pf1.utils.convertWeight(weight.contents);
   }
 
   async createContainerContent(data, options = { raw: false }) {

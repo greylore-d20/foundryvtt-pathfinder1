@@ -17,10 +17,10 @@ export const registerSystemControls = () => {
     name: "PF1.KEYBINDINGS.SkipConfirmPrompt.Name",
     uneditable: SHIFT_KEYS,
     onDown: () => {
-      game.pf1.skipConfirmPrompt = true;
+      pf1.skipConfirmPrompt = true;
     },
     onUp: () => {
-      game.pf1.skipConfirmPrompt = false;
+      pf1.skipConfirmPrompt = false;
     },
   });
 
@@ -29,10 +29,10 @@ export const registerSystemControls = () => {
     hint: game.i18n.localize("PF1.KEYBINDINGS.ForceShowItem.Hint"),
     uneditable: CTRL_KEYS,
     onDown: () => {
-      game.pf1.forceShowItem = true;
+      pf1.forceShowItem = true;
     },
     onUp: () => {
-      game.pf1.forceShowItem = false;
+      pf1.forceShowItem = false;
     },
   });
 
@@ -40,16 +40,16 @@ export const registerSystemControls = () => {
     name: "PF1.KEYBINDINGS.HideTokenTooltip.Name",
     hint: game.i18n.localize("PF1.KEYBINDINGS.HideTokenTooltip.Hint"),
     uneditable: CTRL_KEYS,
-    onDown: () => game.pf1.controls._hideTokenTooltip(true),
-    onUp: () => game.pf1.controls._hideTokenTooltip(false),
+    onDown: () => pf1.controls._hideTokenTooltip(true),
+    onUp: () => pf1.controls._hideTokenTooltip(false),
   });
 
   game.keybindings.register("pf1", "hideTokenTooltipGMInfo", {
     name: "PF1.KEYBINDINGS.HideTokenTooltipGMInfo.Name",
     uneditable: SHIFT_KEYS,
     restricted: true,
-    onDown: () => game.pf1.controls._hideTokenTooltipGMInfo(true),
-    onUp: () => game.pf1.controls._hideTokenTooltipGMInfo(false),
+    onDown: () => pf1.controls._hideTokenTooltipGMInfo(true),
+    onUp: () => pf1.controls._hideTokenTooltipGMInfo(false),
   });
 };
 
@@ -60,8 +60,8 @@ export const registerSystemControls = () => {
  * @returns {Promise<void>|void} A Promise that is resolved when the tooltip render handling is done
  */
 export const _hideTokenTooltipGMInfo = (keyDown) => {
-  game.pf1.tokenTooltip.hideGMInfo = keyDown;
-  return game.pf1.tooltip?.refresh();
+  pf1.tokenTooltip.hideGMInfo = keyDown;
+  return pf1.tooltip?.refresh();
 };
 
 /**
@@ -71,7 +71,7 @@ export const _hideTokenTooltipGMInfo = (keyDown) => {
  * @returns {Promise<void>|void} A Promise that is resolved when the tooltip render handling is done
  */
 export const _hideTokenTooltip = (keyDown) => {
-  if (game.settings.get("pf1", "tooltipConfig")?.hideWithoutKey === true) game.pf1.tokenTooltip.hide = !keyDown;
-  else game.pf1.tokenTooltip.hide = keyDown;
-  return game.pf1.tooltip?.refresh();
+  if (game.settings.get("pf1", "tooltipConfig")?.hideWithoutKey === true) pf1.tokenTooltip.hide = !keyDown;
+  else pf1.tokenTooltip.hide = keyDown;
+  return pf1.tooltip?.refresh();
 };

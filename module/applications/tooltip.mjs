@@ -300,7 +300,7 @@ export class TooltipPF extends Application {
 
   show() {
     if (this.objects.length === 0) return;
-    if (game.pf1.tokenTooltip.hide) return;
+    if (pf1.tokenTooltip.hide) return;
     if (getProperty(this.config, "disable") === true || getProperty(this.worldConfig, "disable") === true) return;
 
     this.element.css("visibility", "visible");
@@ -342,37 +342,37 @@ export class TooltipPF extends Application {
   tokenHover(token, hovering) {
     // Show token tooltip
     if (hovering) {
-      const p = game.pf1.tooltip.mousePos;
+      const p = pf1.tooltip.mousePos;
       const el = document.elementFromPoint(p.x, p.y);
       // This check is required to prevent hovering over tokens under application windows
       if (el?.id === "board") {
-        game.pf1.tooltip.bind(token);
+        pf1.tooltip.bind(token);
       }
     }
     // Hide token tooltip
-    else game.pf1.tooltip.unbind(token);
+    else pf1.tooltip.unbind(token);
   }
 
   static toggle(enable) {
     if (enable) {
-      if (!game.pf1.tooltip) {
-        game.pf1.tooltip = new TooltipPF();
-        Hooks.on("hoverToken", game.pf1.tooltip.tokenHover);
+      if (!pf1.tooltip) {
+        pf1.tooltip = new TooltipPF();
+        Hooks.on("hoverToken", pf1.tooltip.tokenHover);
       }
-      game.pf1.tooltip?.setPosition();
+      pf1.tooltip?.setPosition();
     } else {
-      if (game.pf1.tooltip) {
-        Hooks.off("hoverToken", game.pf1.tooltip.tokenHover);
-        game.pf1.tooltip = null;
+      if (pf1.tooltip) {
+        Hooks.off("hoverToken", pf1.tooltip.tokenHover);
+        pf1.tooltip = null;
       }
     }
   }
 
   async refresh() {
-    this.forceHideGMInfo = game.pf1.tokenTooltip.hideGMInfo;
+    this.forceHideGMInfo = pf1.tokenTooltip.hideGMInfo;
     await this.render();
 
-    const hide = game.pf1.tokenTooltip.hide;
+    const hide = pf1.tokenTooltip.hide;
     if (hide) this.hide();
     else this.show();
   }

@@ -19,7 +19,7 @@ export class ItemScriptCall {
   static async create(data, context) {
     const { parent } = context;
 
-    if (parent instanceof game.pf1.documents.ItemPF) {
+    if (parent instanceof pf1.documents.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
       const newScriptCallData = deepClone(parent.system.scriptCalls || []);

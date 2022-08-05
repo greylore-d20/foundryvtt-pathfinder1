@@ -95,7 +95,7 @@ export class RollPF extends Roll {
         const options = { flavor: group.flavor ? group.flavor.slice(1, -1) : undefined };
 
         const terms = [];
-        if (fn in pf1.utils) {
+        if (fn in pf1.rollPreProcess) {
           const fnParams = group.terms
             // .slice(2, -1)
             .reduce((cur, s) => {
@@ -115,7 +115,7 @@ export class RollPF extends Roll {
               return RollPF.safeRoll(o, this.data).total;
             });
 
-          return pf1.utils[fn](...fnParams);
+          return pf1.rollPreProcess[fn](...fnParams);
         } else if (fn in Math) {
           const args = this._splitMathArgs(expression);
           terms.push(new MathTerm({ fn, terms: args, options }));

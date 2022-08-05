@@ -48,7 +48,7 @@ export class TokenPF extends Token {
         this.document.sight.visionMode = "blindness";
         this.document.sight.saturation = 0;
       } else if (dv > 0) {
-        this.document.sight.range = game.pf1.utils.convertDistance(dv)[0];
+        this.document.sight.range = pf1.utils.convertDistance(dv)[0];
         this.document.sight.visionMode = "darkvision";
         this.document.sight.saturation = -1;
       } else {

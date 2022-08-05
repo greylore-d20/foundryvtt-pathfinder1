@@ -459,7 +459,7 @@ export class LevelUpForm extends FormApplication {
         newItem,
         "system.changes",
         Object.entries(added).reduce((cur, o) => {
-          const change = mergeObject(pf1.components.ItemChange.defaultData, {
+          const change = mergeObject(pf1.documentComponents.ItemChange.defaultData, {
             formula: `${o[1]}`,
             subTarget: o[0],
             modifier: "untypedPerm",
@@ -491,7 +491,7 @@ export class LevelUpForm extends FormApplication {
 
           // Add new change
           changes.push(
-            mergeObject(pf1.components.ItemChange.defaultData, {
+            mergeObject(pf1.documentComponents.ItemChange.defaultData, {
               subTarget: key,
               formula: `${value}`,
               modifier: "untypedPerm",

@@ -534,7 +534,7 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   async _prepareScriptCalls(data) {
-    const categories = game.pf1.scriptCalls.filter((o) => {
+    const categories = pf1.scriptCalls.filter((o) => {
       if (!o.data.itemTypes.includes(this.document.type)) return false;
       return !(o.hidden === true && !game.user.isGM);
     });
@@ -726,7 +726,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Handle weight to ensure `weight.value` is in lbs
     if (formData["system.weight.value"]) {
-      formData["system.weight.value"] = game.pf1.utils.convertWeightBack(formData["system.weight.value"]);
+      formData["system.weight.value"] = pf1.utils.convertWeightBack(formData["system.weight.value"]);
     }
 
     // Change relative values
@@ -869,7 +869,7 @@ export class ItemSheetPF extends ItemSheet {
     const a = event.currentTarget;
     const target = a.dataset.actionTarget;
 
-    game.pf1.compendiums[target].render(true, { focus: true });
+    pf1.compendiums[target].render(true, { focus: true });
   }
 
   async _onScriptCallControl(event) {
@@ -882,7 +882,7 @@ export class ItemSheetPF extends ItemSheet {
     // Create item
     if (a.classList.contains("item-create")) {
       await this._onSubmit(event);
-      return pf1.components.ItemScriptCall.create([{ category, type: "script" }], { parent: this.item });
+      return pf1.documentComponents.ItemScriptCall.create([{ category, type: "script" }], { parent: this.item });
     }
     // Delete item
     else if (item && a.classList.contains("item-delete")) {
@@ -976,7 +976,7 @@ export class ItemSheetPF extends ItemSheet {
       if (uuid) {
         const list = this.document.system.scriptCalls ?? [];
         await this._onSubmit(event);
-        return pf1.components.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
+        return pf1.documentComponents.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
           parent: this.item,
         });
       }
@@ -987,7 +987,7 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
-    game.pf1.helpBrowser.openUrl(a.dataset.url);
+    pf1.helpBrowser.openUrl(a.dataset.url);
   }
 
   async _onLinksDrop(event) {
@@ -1218,7 +1218,7 @@ export class ItemSheetPF extends ItemSheet {
           : game.i18n.localize("PF1.Use"),
       };
       await this._onSubmit(event);
-      return pf1.components.ItemAction.create([newActionData], { parent: this.item });
+      return pf1.documentComponents.ItemAction.create([newActionData], { parent: this.item });
     }
 
     // Edit action
@@ -1276,7 +1276,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Open new window
-    const app = new game.pf1.applications.ItemActionSheet(action);
+    const app = new pf1.applications.ItemActionSheet(action);
     app.render(true);
   }
 
@@ -1287,7 +1287,7 @@ export class ItemSheetPF extends ItemSheet {
     // Add new change
     if (a.classList.contains("add-change")) {
       await this._onSubmit(event);
-      return pf1.components.ItemChange.create([{}], { parent: this.item });
+      return pf1.documentComponents.ItemChange.create([{}], { parent: this.item });
     }
 
     // Remove a change
@@ -1479,7 +1479,7 @@ export class ItemSheetPF extends ItemSheet {
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,
     };
-    new game.pf1.applications.EntrySelector(this.item, options).render(true);
+    new pf1.applications.EntrySelector(this.item, options).render(true);
   }
 
   _onEntryControl(event) {

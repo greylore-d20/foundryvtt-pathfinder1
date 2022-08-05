@@ -25,7 +25,7 @@ export class ItemAction {
   static async create(data, context = {}) {
     const { parent } = context;
 
-    if (parent instanceof game.pf1.documents.ItemPF) {
+    if (parent instanceof pf1.documents.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
       const newActionData = deepClone(parent.system.actions || []);
@@ -340,7 +340,7 @@ export class ItemAction {
         conditional = prior.get(o._id);
         conditional.data = o;
         conditional.prepareData();
-      } else conditional = new pf1.components.ItemConditional(o, this);
+      } else conditional = new pf1.documentComponents.ItemConditional(o, this);
       collection.set(o._id || conditional.data._id, conditional);
     }
     return collection;
@@ -557,7 +557,7 @@ export class ItemAction {
     // Add masterwork bonus to changes (if applicable)
     if (["mwak", "rwak", "mcman", "rcman"].includes(this.data.actionType) && this.item.system.masterwork) {
       changes.push(
-        new pf1.components.ItemChange({
+        new pf1.documentComponents.ItemChange({
           formula: "1",
           operator: "add",
           subTarget: "attack",
@@ -570,7 +570,7 @@ export class ItemAction {
     // Add enhancement bonus to changes
     if (this.enhancementBonus) {
       changes.push(
-        new pf1.components.ItemChange({
+        new pf1.documentComponents.ItemChange({
           formula: this.enhancementBonus.toString(),
           operator: "add",
           subTarget: "attack",
@@ -775,7 +775,7 @@ export class ItemAction {
       // Add enhancement bonus to changes
       if (this.enhancementBonus) {
         changes.push(
-          new pf1.components.ItemChange({
+          new pf1.documentComponents.ItemChange({
             formula: this.enhancementBonus.toString(),
             operator: "add",
             subTarget: "damage",

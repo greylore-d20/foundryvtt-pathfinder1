@@ -36,8 +36,8 @@ export class CompendiumDirectoryPF extends CompendiumDirectory {
   _onBrowseCompendium(event, type) {
     event.preventDefault();
 
-    if (game.pf1.isMigrating) return ui.notifications.warn(game.i18n.localize("PF1.Migration.Ongoing"));
+    if (pf1.isMigrating) return ui.notifications.warn(game.i18n.localize("PF1.Migration.Ongoing"));
 
-    game.pf1.compendiums[type]._render(true);
+    pf1.compendiums[type]._render(true);
   }
 }

@@ -1272,19 +1272,20 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Replace span with input element
-    const allowRelative = el.classList.contains("allow-relative");
+    const allowRelative = el.classList.contains("allow-relative"),
+      clearValue = parseFloat(el.dataset.clearValue || "0");
     parent.replaceChild(newEl, el);
     let changed = false;
     newEl.addEventListener("keypress", (event) => {
       if (event.key !== "Enter") return;
       changed = true;
       if (allowRelative) {
-        const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue);
+        const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue, clearValue);
         newEl.value = number;
       }
 
       if (newEl.value.toString() === prevValue.toString()) {
-        this._render();
+        this.render();
       } else if (typeof callback === "function") {
         callback.call(this, event);
       }
@@ -1293,12 +1294,12 @@ export class ActorSheetPF extends ActorSheet {
       if (!changed) {
         changed = true;
         if (allowRelative && parseFloat(prevValue) !== parseFloat(newEl.value)) {
-          const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue);
+          const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue, clearValue);
           newEl.value = number;
         }
 
         if (newEl.value.toString() === prevValue.toString()) {
-          this._render();
+          this.render();
         } else if (typeof callback === "function") {
           callback.call(this, event);
         }
@@ -1531,10 +1532,8 @@ export class ActorSheetPF extends ActorSheet {
     this._mouseWheelAdd(event, el);
 
     // Get base value
-    let value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
-    if (el.dataset.dtype && el.dataset.dtype.toUpperCase() === "STRING") {
-      value = el.tagName.toUpperCase() === "INPUT" ? el.value : el.innerText;
-    }
+    const rawValue = el.tagName.toUpperCase() === "INPUT" ? el.value : el.innerText;
+    let value = el.dataset.dtype?.toUpperCase() === "STRING" ? rawValue : Number(rawValue);
 
     // Adjust value if needed
     const name = el.getAttribute("name");

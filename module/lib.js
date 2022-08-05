@@ -643,7 +643,16 @@ export const createConsumableSpell = async function (itemData, type) {
   return data;
 };
 
-export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxValue = null) {
+/**
+ * Adjusts a string to a number, allowing relative adjustments.
+ *
+ * @param {number} initialValue - The initial number to use for relative operations.
+ * @param {string} cmdStr - The exact string inputted by the user.
+ * @param {number} [maxValue=null] - The maximum allowed value for this variable.
+ * @param {number} [clearValue=null] - What to change the variable to if the user simply erased the value.
+ * @returns {number} The resulting new value.
+ */
+export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxValue = null, clearValue = null) {
   let result = initialValue;
 
   if (cmdStr.match(/(=)?([+-]+)?(\d+)/)) {
@@ -653,6 +662,8 @@ export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxVa
     const rawValue = parseInt(RegExp.$3, 10);
     const value = isNegative ? -rawValue : rawValue;
     result = isAbsolute ? value : initialValue + value;
+  } else if (cmdStr === "" && clearValue != null) {
+    result = clearValue;
   } else {
     result = parseFloat(cmdStr || "0");
   }

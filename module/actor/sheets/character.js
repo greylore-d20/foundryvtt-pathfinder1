@@ -45,12 +45,13 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     const xpSettings = game.settings.get("pf1", "experienceConfig");
 
     // Experience Tracking
-    data["disableExperience"] = xpSettings.disableExperienceTracking;
+    data.disableExperience = xpSettings.disableExperienceTracking;
+    data.minimumExperience = this.actor.getLevelExp(Math.max(0, (this.actor.system.details.level.value ?? 0) - 1));
 
     data.hasClasses = this.actor.items.filter((o) => o.type === "class").length > 0;
 
     const hpSettings = game.settings.get("pf1", "healthConfig");
-    data["woundThresholds"] = hpSettings.variants.pc;
+    data.woundThresholds = hpSettings.variants.pc;
 
     // BAB iteratives
     const iteratives = game.settings.get("pf1", "displayIteratives");
@@ -58,7 +59,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     if (iteratives) {
       const iters = [bab];
       for (let i = bab - 5; i > 0; i -= 5) iters.push(i);
-      data["iteratives"] = `+${iters.join(" / +")}`;
+      data.iteratives = `+${iters.join(" / +")}`;
     }
 
     // Add level up buttons to classes

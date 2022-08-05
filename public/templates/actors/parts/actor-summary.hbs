@@ -44,7 +44,8 @@
               {{#unless disableExperience}}
               <td class="experience">
                 <div class="flexrow">
-                  <span class="text-box direct allow-relative no-value-cap" name="system.details.xp.value" data-dtype="Number">{{system.details.xp.value}}</span>
+                  <span class="text-box direct allow-relative no-value-cap" name="system.details.xp.value"
+                    {{#if minimumExperience}}data-clear-value="{{minimumExperience}}"{{/if}} data-dtype="Number">{{system.details.xp.value}}</span>
                   <span class="separator"> / </span>
                   <span class="text-box max readonly">{{system.details.xp.max}}</span>
                 </div>

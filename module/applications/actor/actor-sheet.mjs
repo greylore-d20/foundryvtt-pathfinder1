@@ -690,7 +690,7 @@ export class ActorSheetPF extends ActorSheet {
       }
 
       if (typeof v === "number" && v > 0) {
-        const converted = pf1.utils.convertDistance(v);
+        const converted = game.pf1.utils.convertDistance(v);
         result[k] = `${CONFIG.PF1.senses[k]} ${converted[0]} ${converted[1]}`;
         continue;
       }
@@ -1629,7 +1629,7 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const target = a.dataset.actionTarget;
 
-    pf1.compendiums[target].render(true, { focus: true });
+    game.pf1.compendiums[target].render(true, { focus: true });
   }
 
   _onRollConcentration(event) {
@@ -1837,7 +1837,7 @@ export class ActorSheetPF extends ActorSheet {
    */
   _editSkill(skillId, subSkillId) {
     return new Promise((resolve) => {
-      const app = new pf1.applications.SkillEditor(this.document, skillId, subSkillId);
+      const app = new game.pf1.applications.SkillEditor(this.document, skillId, subSkillId);
       app.addCallback(resolve);
       app.render(true);
     });
@@ -1948,10 +1948,10 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const app = Object.values(this.document.apps).find((o) => {
-      return o instanceof pf1.applications.SensesSelector && o._element;
+      return o instanceof game.pf1.applications.SensesSelector && o._element;
     });
     if (app) app.render(true, { focus: true });
-    else new pf1.applications.SensesSelector(this.document).render(true);
+    else new game.pf1.applications.SensesSelector(this.document).render(true);
   }
 
   async _onControlAlignment(event) {

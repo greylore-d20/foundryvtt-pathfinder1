@@ -117,7 +117,7 @@ export const registerHandlebarsHelpers = function () {
     const rv = [];
     const { custom, values } = typeInfo;
     if (custom) rv.push(custom);
-    values.forEach((dtId) => rv.push(game.i18n.localize(pf1.damageTypes.get(dtId)?.name ?? "PF1.Undefined")));
+    values.forEach((dtId) => rv.push(game.i18n.localize(game.pf1.damageTypes.get(dtId)?.name ?? "PF1.Undefined")));
     return rv.join(", ");
   });
 

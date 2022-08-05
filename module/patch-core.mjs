@@ -50,10 +50,10 @@ import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs"
 {
   const fn = KeyboardManager.prototype._onAlt;
   KeyboardManager.prototype._onAlt = function (event, up, modifiers) {
-    if (!pf1.tooltip) return;
-    if (!up) pf1.tooltip.lock.new = true;
+    if (!game.pf1.tooltip) return;
+    if (!up) game.pf1.tooltip.lock.new = true;
     fn.call(this, event, up, modifiers);
-    if (!up) pf1.tooltip.lock.new = false;
+    if (!up) game.pf1.tooltip.lock.new = false;
   };
 }
 

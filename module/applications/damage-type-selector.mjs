@@ -28,7 +28,7 @@ export class DamageTypeSelector extends FormApplication {
   async getData(options) {
     const data = await super.getData(options);
 
-    const damageTypes = pf1.damageTypes;
+    const damageTypes = game.pf1.damageTypes;
     data.damageTypes = damageTypes.filter((o) => !o.isModifier).map((o) => o.toJSON());
 
     // Add damage type categories

@@ -1171,7 +1171,7 @@ export class ActorPF extends ActorBasePF {
     // Set speed labels
     this.labels.speed = {};
     for (const [key, obj] of Object.entries(attributes.speed ?? {})) {
-      const dist = pf1.utils.convertDistance(obj.total);
+      const dist = game.pf1.utils.convertDistance(obj.total);
       this.labels.speed[key] = `${dist[0]} ${CONFIG.PF1.measureUnitsShort[dist[1]]}`;
     }
 
@@ -2879,7 +2879,7 @@ export class ActorPF extends ActorBasePF {
       return Promise.all(promises);
     };
 
-    if (pf1.skipConfirmPrompt ? !forceDialog : forceDialog) {
+    if (game.pf1.skipConfirmPrompt ? !forceDialog : forceDialog) {
       if (value < 0) {
         healingInvert = -1;
         value = -1 * value;
@@ -3371,7 +3371,7 @@ export class ActorPF extends ActorBasePF {
       heavy = Math.floor(table[table.length - 1] * Math.pow(4, multiplierCount) * carryMultiplier);
     }
     // Convert to world unit system
-    heavy = pf1.utils.convertWeight(heavy);
+    heavy = game.pf1.utils.convertWeight(heavy);
 
     return {
       light: Math.floor(heavy / 3),
@@ -3390,7 +3390,7 @@ export class ActorPF extends ActorBasePF {
       return cur + o.system.weight.total;
     }, this._calculateCoinWeight());
 
-    return pf1.utils.convertWeight(weight);
+    return game.pf1.utils.convertWeight(weight);
   }
 
   /**
@@ -3789,7 +3789,7 @@ export class ActorPF extends ActorBasePF {
       this.system.abilities[k].mod = newMod;
 
       // Store previous ability score
-      if (!pf1.isMigrating && this._initialized && this._prevAbilityScores) {
+      if (!game.pf1.isMigrating && this._initialized && this._prevAbilityScores) {
         const prevMod = this._prevAbilityScores?.[k].mod ?? 0;
         const diffMod = newMod - prevMod;
         const result = this.system.abilities[k].mod + diffMod;

@@ -48,7 +48,7 @@ export const registerActorBasicTests = () => {
           });
 
           it("should produce a ChatMessage", function () {
-            expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
+            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
           });
 
           it("should have the correct subject", function () {
@@ -72,7 +72,7 @@ export const registerActorBasicTests = () => {
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
+            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
           });
         });
 
@@ -92,7 +92,7 @@ export const registerActorBasicTests = () => {
           });
 
           it("should be a ChatMessage", function () {
-            expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
+            expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
           });
         });
 
@@ -113,7 +113,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
+              expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
             });
           });
 
@@ -130,7 +130,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
+              expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
             });
           });
 
@@ -147,7 +147,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof pf1.chat.ChatMessagePF).to.be.true;
+              expect(roll instanceof game.pf1.chat.ChatMessagePF).to.be.true;
             });
           });
         });

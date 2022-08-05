@@ -305,7 +305,7 @@ export const migrateItemData = function (item) {
  * @returns {object} The resulting action data.
  */
 export const migrateItemActionData = function (action, item) {
-  action = foundry.utils.mergeObject(pf1.documentComponents.ItemAction.defaultData, action);
+  action = foundry.utils.mergeObject(pf1.components.ItemAction.defaultData, action);
 
   _migrateActionDamageType(action, item);
   _migrateActionConditionals(action, item);
@@ -1117,7 +1117,7 @@ const _migrateItemActions = function (item, updateData) {
   if ((!hasOldAction && item.type !== "spell") || alreadyHasActions) return;
 
   // Transfer data to an action
-  const actionData = pf1.documentComponents.ItemAction.defaultData;
+  const actionData = pf1.components.ItemAction.defaultData;
   const removeKeys = ["_id", "name", "img"];
   for (const k of Object.keys(actionData)) {
     if (!removeKeys.includes(k)) {
@@ -1158,14 +1158,14 @@ const _migrateActionDamageType = function (action, item) {
       // Convert damage types
       const damageType = damagePart[1];
       if (typeof damageType === "string") {
-        const damageTypeData = pf1.documentComponents.ItemAction.defaultDamageType;
+        const damageTypeData = pf1.components.ItemAction.defaultDamageType;
         damageTypeData.values = _Action_ConvertDamageType(damageType);
         if (damageTypeData.values.length === 0) damageTypeData.custom = damageType;
         damagePart[1] = damageTypeData;
       }
       // Convert array to object
       else if (damageType instanceof Array) {
-        const damageTypeData = pf1.documentComponents.ItemAction.defaultDamageType;
+        const damageTypeData = pf1.components.ItemAction.defaultDamageType;
         damageTypeData.values = damageType;
         damagePart[1] = damageTypeData;
       }
@@ -1190,7 +1190,7 @@ const _migrateActionConditionals = function (action, item) {
 
       // Convert modifier damage type
       if (modifier.target === "damage" && !modifier.damageType) {
-        const damageTypeData = pf1.documentComponents.ItemAction.defaultDamageType;
+        const damageTypeData = pf1.components.ItemAction.defaultDamageType;
         damageTypeData.values = _Action_ConvertDamageType(modifier.type);
         if (damageTypeData.values.length === 0) damageTypeData.custom = modifier.type;
         modifier.damageType = damageTypeData;

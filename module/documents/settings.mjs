@@ -53,7 +53,7 @@ export const registerSystemSettings = function () {
     default: HealthConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   // Experience configuration
@@ -71,7 +71,7 @@ export const registerSystemSettings = function () {
     default: ExperienceConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   // Accessibility configuration
@@ -91,7 +91,7 @@ export const registerSystemSettings = function () {
     default: AccessibilityConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => pf1.utils.refreshActors(),
+    onChange: () => game.pf1.utils.refreshActors(),
   });
 
   // Tooltip configuration
@@ -133,7 +133,7 @@ export const registerSystemSettings = function () {
     config: false,
     onChange: (settings) => {
       TooltipPF.toggle(!settings.disable);
-      pf1.tooltip?.setPosition();
+      game.pf1.tooltip?.setPosition();
     },
   });
 
@@ -166,7 +166,7 @@ export const registerSystemSettings = function () {
     config: false,
     default: "",
     type: String,
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   /**
@@ -183,7 +183,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricUnits"),
     },
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   game.settings.register("pf1", "distanceUnits", {
@@ -198,7 +198,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialDistanceUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricDistanceUnits"),
     },
-    onChange: () => pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   game.settings.register("pf1", "weightUnits", {
@@ -213,7 +213,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialWeightUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricWeightUnits"),
     },
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   /**
@@ -226,7 +226,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   /**
@@ -239,7 +239,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   /**
@@ -338,7 +338,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: 50,
     type: Number,
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
   /**
@@ -463,7 +463,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
+    onChange: () => game.pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   /**
@@ -634,7 +634,7 @@ export const migrateSystemSettings = async function () {
 
 export const getSkipActionPrompt = function () {
   return (
-    (game.settings.get("pf1", "skipActionDialogs") && !pf1.skipConfirmPrompt) ||
-    (!game.settings.get("pf1", "skipActionDialogs") && pf1.skipConfirmPrompt)
+    (game.settings.get("pf1", "skipActionDialogs") && !game.pf1.skipConfirmPrompt) ||
+    (!game.settings.get("pf1", "skipActionDialogs") && game.pf1.skipConfirmPrompt)
   );
 };

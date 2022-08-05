@@ -19,7 +19,7 @@ import { getSkipActionPrompt } from "./settings.mjs";
 export const createItemMacro = async function (item, actor, slot) {
   actor = actor ? game.actors.get(actor) : getItemOwner(item);
   const command =
-    `pf1.rollItemMacro("${item.name}", {\n` +
+    `game.pf1.rollItemMacro("${item.name}", {\n` +
     `  itemId: "${item.id}",\n` +
     `  itemType: "${item.type}",\n` +
     (actor != null ? `  actorId: "${actor.id}",\n` : "") +
@@ -54,7 +54,7 @@ export const createSkillMacro = async function (skillId, actorId, slot) {
   if (!actor) return;
 
   const skillInfo = actor.getSkillInfo(skillId);
-  const command = `pf1.rollSkillMacro("${actorId}", "${skillId}");`;
+  const command = `game.pf1.rollSkillMacro("${actorId}", "${skillId}");`;
   const name = game.i18n.format("PF1.RollSkillMacroName", { 0: actor.name, 1: skillInfo.name });
   let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
   if (!macro) {
@@ -87,7 +87,7 @@ export const createSaveMacro = async function (saveId, actorId, slot) {
   const saveName = game.i18n.localize("PF1.SavingThrow" + saveId.substr(0, 1).toUpperCase() + saveId.substr(1));
   if (!actor) return;
 
-  const command = `pf1.rollSaveMacro("${actorId}", "${saveId}");`;
+  const command = `game.pf1.rollSaveMacro("${actorId}", "${saveId}");`;
 
   const name = game.i18n.format("PF1.RollSaveMacroName", { 0: actor.name, 1: saveName });
   let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
@@ -138,8 +138,8 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
   }
 
   const command = altType
-    ? `pf1.rollActorAttributeMacro("${actorId}", "${type}", "${altType}");`
-    : `pf1.rollActorAttributeMacro("${actorId}", "${type}");`;
+    ? `game.pf1.rollActorAttributeMacro("${actorId}", "${type}", "${altType}");`
+    : `game.pf1.rollActorAttributeMacro("${actorId}", "${type}");`;
   let name, img;
   switch (type) {
     case "defenses":
@@ -214,7 +214,7 @@ export const rollItemMacro = function (itemName, { itemId, itemType, actorId } =
   }
 
   // Trigger the item roll
-  if (!pf1.forceShowItem && item.hasAction) {
+  if (!game.pf1.forceShowItem && item.hasAction) {
     return item.useAttack({ skipDialog: getSkipActionPrompt() });
   }
   return item.roll();

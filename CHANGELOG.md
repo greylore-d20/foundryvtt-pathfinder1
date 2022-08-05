@@ -286,8 +286,8 @@
 
 ### API
 
-- pf1.utils.measureReachDistance obsoleted.
-- pf1.utils.measureDistance introduced.
+- game.pf1.utils.measureReachDistance obsoleted.
+- game.pf1.utils.measureDistance introduced.
 
 ## 0.80.13 - 2022-3-12
 
@@ -455,7 +455,7 @@
 
 - Remove unused ActorPF.useSpell ([1221](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1221))
 - Created a class for attack dialogs
-- Make pf1.ItemAttack actually moddable ([1220](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1220))
+- Make game.pf1.ItemAttack actually moddable ([1220](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1220))
 
 ## 0.80.4 - 2022-1-8
 
@@ -513,7 +513,7 @@
 
 ### API
 
-- Untangled items' useAttack and put the individual functions in pf1.ItemAttack
+- Untangled items' useAttack and put the individual functions in game.pf1.ItemAttack
 
 ## 0.80.1 - 2021-12-19
 
@@ -1321,7 +1321,7 @@ Initial release for Foundry 0.8.x
 - ActorSheetPF#importItem doesn't error if `event` isn't passed anymore
 - An error prevented modules from extending PF1 classes under some circumstances (e.g. Forge hosting)
 - `ActorSheetPF#currentPrimaryTab` will now report tabs that aren't inventory as well
-- Add `pf1.utils` containing dialogGetActor, dialogGetNumber, createTag, getItemOwner, getActorFromId, getChangeFlat, convertDistance, convertWeight, convertWeightBack, and measureReachDistance
+- Add `game.pf1.utils` containing dialogGetActor, dialogGetNumber, createTag, getItemOwner, getActorFromId, getChangeFlat, convertDistance, convertWeight, convertWeightBack, and measureReachDistance
 
 ### Localization
 
@@ -3327,7 +3327,7 @@ Initial release for Foundry 0.8.x
 - Add or update some items to the following compendiums:
   - Magic Items
   - Common Buffs
-- Add macro'able function to show an actor's defenses as a chatlog (pf1.rollDefenses()) (see [documentation](https://furyspark.gitlab.io/foundryvtt-pathfinder1-doc/advanced/macros/))
+- Add macro'able function to show an actor's defenses as a chatlog (game.pf1.rollDefenses()) (see [documentation](https://furyspark.gitlab.io/foundryvtt-pathfinder1-doc/advanced/macros/))
 
 ## 0.21
 

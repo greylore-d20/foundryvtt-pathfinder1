@@ -11,7 +11,7 @@ export class ItemConditional {
   static async create(data, context = {}) {
     const { parent } = context;
 
-    if (parent instanceof pf1.documentComponents.ItemAction) {
+    if (parent instanceof pf1.components.ItemAction) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
       const newConditionalData = deepClone(parent.data.conditionals || []);
@@ -56,7 +56,7 @@ export class ItemConditional {
         modifier = prior.get(o._id);
         modifier.data = o;
         modifier.prepareData();
-      } else modifier = new pf1.documentComponents.ItemConditionalModifier(o, this);
+      } else modifier = new pf1.components.ItemConditionalModifier(o, this);
       collection.set(o._id || modifier.data._id, modifier);
     }
     return collection;
@@ -92,7 +92,7 @@ export class ItemConditionalModifier {
   static async create(data, context = {}) {
     const { parent } = context;
 
-    if (parent instanceof pf1.documentComponents.ItemConditional) {
+    if (parent instanceof pf1.components.ItemConditional) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
       const newConditionalModifierData = deepClone(parent.data.modifiers || []);
@@ -115,7 +115,7 @@ export class ItemConditionalModifier {
       target: "",
       subTarget: "",
       type: "",
-      damageType: pf1.documentComponents.ItemAction.defaultDamageType,
+      damageType: pf1.components.ItemAction.defaultDamageType,
       critical: "",
     };
   }

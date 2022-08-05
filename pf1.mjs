@@ -146,6 +146,8 @@ globalThis.pf1 = {
   utils,
   registry,
   migrations,
+  tooltip: null,
+  controls,
 };
 
 // OBSOLETE: Add String.format
@@ -182,7 +184,7 @@ Hooks.once("init", function () {
     documents: { ActorPF, ItemPF, TokenDocumentPF },
     get entities() {
       // OBSOLETION WARNING
-      console.error("game.pf1.entities is obsolete; please use game.pf1.documents instead.");
+      console.error("pf1.entities is obsolete; please use pf1.documents instead.");
       return this.documents;
     },
     applications: {
@@ -300,8 +302,22 @@ Hooks.once("init", function () {
     // Variables controlled by control configuration
     skipConfirmPrompt: false,
     tokenTooltip: {
-      hide: false,
-      hideGMInfo: false,
+      get hide() {
+        console.warn("game.pf1.tokenTooltip.hide is obsolete. Use pf1.tooltip.forceHide instead.");
+        return pf1.tooltip.forceHide;
+      },
+      set hide(value) {
+        console.warn("game.pf1.tokenTooltip.hide is obsolete. Use pf1.tooltip.forceHide instead.");
+        pf1.tooltip.forceHide = value;
+      },
+      get hideGMInfo() {
+        console.warn("game.pf1.tokenTooltip.hideGMInfo is obsolete. Use pf1.tooltip.forceHideGMInfo instead.");
+        return pf1.tooltip.forceHideGMInfo;
+      },
+      set hideGMInfo(value) {
+        console.warn("game.pf1.tokenTooltip.hideGMInfo is obsolete. Use pf1.tooltip.forceHideGMInfo instead.");
+        pf1.tooltip.forceHideGMInfo = value;
+      },
     },
     forceShowItem: false,
     // Function library
@@ -408,9 +424,6 @@ Hooks.once("init", function () {
 
   // Initialize module integrations
   initializeModules();
-
-  // Token tooltip status
-  game.pf1.tokenTooltip.hide = game.settings.get("pf1", "tooltipConfig")?.hideWithoutKey ?? false;
 
   // Call post-init hook
   Hooks.callAll("pf1.postInit");
@@ -560,7 +573,7 @@ Hooks.once("setup", function () {
   tinyMCEInit();
 
   // Register controls
-  game.pf1.controls.registerSystemControls();
+  controls.registerSystemControls();
 
   Hooks.callAll("pf1.postSetup");
 });
@@ -572,13 +585,12 @@ Hooks.once("setup", function () {
  */
 Hooks.once("ready", async function () {
   // Create tooltip
-  game.pf1.tooltip = null;
   const ttconf = game.settings.get("pf1", "tooltipConfig");
   const ttwconf = game.settings.get("pf1", "tooltipWorldConfig");
   if (!ttconf.disable && !ttwconf.disable) TooltipPF.toggle(true);
 
   window.addEventListener("resize", () => {
-    game.pf1.tooltip?.setPosition();
+    pf1.tooltip?.setPosition();
   });
 
   // Migrate data
@@ -603,7 +615,7 @@ Hooks.once("ready", async function () {
   await migrateSystemSettings();
 
   // Create compendium browsers
-  game.pf1.compendiums = {
+  pf1.compendiums = {
     spells: new CompendiumBrowser({ type: "spells" }),
     items: new CompendiumBrowser({ type: "items" }),
     bestiary: new CompendiumBrowser({ type: "bestiary" }),
@@ -737,12 +749,12 @@ Hooks.on("createToken", (token, options, userId) => {
 
 Hooks.on("preDeleteToken", (token, options, userId) => {
   // Hide token tooltip on token deletion
-  game.pf1.tooltip?.unbind(token.object);
+  pf1.tooltip?.unbind(token.object);
 });
 
 Hooks.on("updateToken", function (token, updateData, options, userId) {
   // Hide token tooltip on token update
-  game.pf1.tooltip?.unbind(token);
+  pf1.tooltip?.unbind(token);
 
   // Update token's actor sheet (if any)
   token.actor?.sheet?.render();
@@ -988,7 +1000,7 @@ Hooks.on("renderSidebarTab", (app, html) => {
       const chlog = Object.values(ui.windows).find((o) => o.id == "changelog") ?? new ChangeLogWindow();
       chlog.render(true, { focus: true });
     });
-    helpButton.click(() => game.pf1.helpBrowser.openUrl("Help/Home"));
+    helpButton.click(() => pf1.helpBrowser.openUrl("Help/Home"));
   }
 });
 

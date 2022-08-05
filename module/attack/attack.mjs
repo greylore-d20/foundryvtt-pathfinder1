@@ -83,7 +83,7 @@ export class Attack {
    * @returns {ItemAttack_Dialog_Result|boolean}
    */
   async createAttackDialog() {
-    const dialog = new game.pf1.applications.AttackDialog(this.shared.action, this.shared.rollData);
+    const dialog = new pf1.applications.AttackDialog(this.shared.action, this.shared.rollData);
     return dialog.show();
   }
 
@@ -453,11 +453,11 @@ export class Attack {
    */
   async generateChatAttacks() {
     // Normal attack(s)
-    if (this.shared.action.hasAttack) await game.pf1.ItemAttack.addAttacks.call(this, shared);
+    if (this.shared.action.hasAttack) await this.addAttacks();
     // Damage only
-    else if (this.shared.action.hasDamage) await game.pf1.ItemAttack.addDamage.call(this, shared);
+    else if (this.shared.action.hasDamage) await this.addDamage();
     // Effect notes only
-    else await game.pf1.ItemAttack.addEffectNotes.call(this, shared);
+    else await this.addEffectNotes();
 
     // Add attack cards
     this.shared.attacks.forEach((attack) => {
@@ -649,7 +649,7 @@ export class Attack {
 
     // Create template
     this.shared.template = null;
-    const template = game.pf1.AbilityTemplate.fromData(templateOptions);
+    const template = pf1.AbilityTemplate.fromData(templateOptions);
     let result;
     if (template) {
       const sheetRendered = this.item.parent?.sheet?._element != null;
@@ -764,12 +764,12 @@ export class Attack {
     const itemChatData = this.item.getChatData({ rollData: this.shared.rollData }, { actionId: this.shared.action.id });
 
     // Get properties
-    const properties = [...itemChatData.properties, ...game.pf1.ItemAttack.addGenericPropertyLabels.call(this, shared)];
+    const properties = [...itemChatData.properties, ...this.addGenericPropertyLabels()];
     if (properties.length > 0) props.push({ header: game.i18n.localize("PF1.InfoShort"), value: properties });
 
     // Get combat properties
     if (game.combat) {
-      const combatProps = game.pf1.ItemAttack.addCombatPropertyLabels.call(this, shared);
+      const combatProps = this.addCombatPropertyLabels();
 
       if (combatProps.length > 0) {
         props.push({ header: game.i18n.localize("PF1.CombatInfo_Header"), value: combatProps });
@@ -872,7 +872,7 @@ export class Attack {
     }
 
     // Generate metadata
-    const metadata = game.pf1.ItemAttack.generateChatMetadata.call(this, shared);
+    const metadata = this.generateChatMetadata();
 
     // Get target info
     if (!game.settings.get("pf1", "disableAttackCardTargets")) {
@@ -1046,7 +1046,7 @@ export class Attack {
    */
   async executeScriptCalls() {
     // Extra options for script call
-    const attackData = shared;
+    const attackData = this.shared;
 
     // Deprecated for V10
     const actorName = this.item.parentActor.name;
@@ -1079,11 +1079,6 @@ export class Attack {
     // Execute script call
     this.shared.scriptData = await this.item.executeScriptCalls("use", {
       attackData,
-      // Deprecated for V10
-      // data: new Proxy({ chatMessage: shared.chatMessage, fullAttack: shared.fullAttack }, handlerMaker("system.)),
-      // attacks: new Proxy(shared.chatAttacks ?? [], handlerMaker("attacks", "shared.attackData.chatAttacks")),
-      // template: new Proxy(shared.template ?? {}, handlerMaker("template")),
-      // End deprecated
     });
   }
 
@@ -1100,7 +1095,7 @@ export class Attack {
 
     // Create message
     const template = "systems/pf1/templates/chat/attack-roll.hbs";
-    this.shared.templateData.damageTypes = game.pf1.damageTypes.toRecord();
+    this.shared.templateData.damageTypes = pf1.damageTypes.toRecord();
 
     // Show chat message
     let result;

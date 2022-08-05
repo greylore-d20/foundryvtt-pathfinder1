@@ -438,8 +438,8 @@ export class ItemPF extends ItemBasePF {
     let usystem = game.settings.get("pf1", "weightUnits"); // override
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
     weight.converted = {
-      value: game.pf1.utils.convertWeight(weight.value),
-      total: game.pf1.utils.convertWeight(weight.total),
+      value: pf1.utils.convertWeight(weight.value),
+      total: pf1.utils.convertWeight(weight.total),
     };
     weight.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
     itemData.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
@@ -1192,7 +1192,7 @@ export class ItemPF extends ItemBasePF {
     let action;
     if (!actionID && this.system.actions.length > 1 && !skipDialog) {
       // @TODO: Make a proper application for selecting an action
-      const app = new game.pf1.applications.ActionChooser(this);
+      const app = new pf1.applications.ActionChooser(this);
       app.render(true);
       return;
     } else if (actionID || this.system.actions.length === 1 || skipDialog) {
@@ -1228,7 +1228,7 @@ export class ItemPF extends ItemBasePF {
 
     // Check requirements for item
     let reqErr = await attack.checkRequirements();
-    if (reqErr > 0) return { err: game.pf1.ItemAttack.ERR_REQUIREMENT, code: reqErr };
+    if (reqErr > 0) return { err: pf1.ItemAttack.ERR_REQUIREMENT, code: reqErr };
 
     // Get new roll data
     shared.rollData = await attack.getRollData();
@@ -1265,7 +1265,7 @@ export class ItemPF extends ItemBasePF {
 
     // Check attack requirements, post-dialog
     reqErr = await attack.checkAttackRequirements();
-    if (reqErr > 0) return { err: game.pf1.ItemAttack.ERR_REQUIREMENT, code: reqErr };
+    if (reqErr > 0) return { err: pf1.ItemAttack.ERR_REQUIREMENT, code: reqErr };
 
     // Generate chat attacks
     await attack.generateChatAttacks();

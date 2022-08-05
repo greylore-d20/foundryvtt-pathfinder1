@@ -43,7 +43,7 @@ const runSocketFunction = async function (args, senderId) {
         if (args.data.destContainer) dest = dest.items.get(args.data.destContainer);
         const amount = args.data.amount;
 
-        game.pf1.applications.CurrencyTransfer.transfer(
+        pf1.applications.CurrencyTransfer.transfer(
           source,
           dest,
           amount,
@@ -68,7 +68,7 @@ const runSocketFunction = async function (args, senderId) {
         break;
       }
       case "refreshActorSheets":
-        game.pf1.utils.refreshActors({ renderOnly: true });
+        pf1.utils.refreshActors({ renderOnly: true });
         break;
     }
   } catch (err) {

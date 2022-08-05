@@ -21,7 +21,7 @@ export const createCustomChatMessage = async function (
   chatData.content = await renderTemplate(chatTemplate, chatTemplateData);
 
   // Handle different roll modes
-  game.pf1.chat.ChatMessagePF.applyRollMode(chatData, chatData.rollMode ?? game.settings.get("core", "rollMode"));
+  pf1.chat.ChatMessagePF.applyRollMode(chatData, chatData.rollMode ?? game.settings.get("core", "rollMode"));
 
   // Dice So Nice integration
   if (chatData.roll != null && rolls.length === 0) rolls = [chatData.roll];
@@ -32,7 +32,7 @@ export const createCustomChatMessage = async function (
     }
   }
 
-  return game.pf1.chat.ChatMessagePF.create(chatData);
+  return pf1.chat.ChatMessagePF.create(chatData);
 };
 
 export const hideRollInfo = function (app, html, data) {
@@ -286,7 +286,7 @@ export const addTargetCallbacks = function (app, html) {
 
       _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
         if (!t?.actor) return;
-        game.pf1.chat.events.targetACClick(app, html, t.actor, event);
+        pf1.chat.events.targetACClick(app, html, t.actor, event);
       });
     });
     elem.find(".saving-throws .click").on("click", (event) => {
@@ -294,7 +294,7 @@ export const addTargetCallbacks = function (app, html) {
 
       _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
         if (!t?.actor) return;
-        game.pf1.chat.events.targetSavingThrowClick(app, html, t.actor, event);
+        pf1.chat.events.targetSavingThrowClick(app, html, t.actor, event);
       });
     });
   }

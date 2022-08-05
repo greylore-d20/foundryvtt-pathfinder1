@@ -528,7 +528,7 @@ export const addDefaultChanges = function (changes) {
 
   const push_health = (value, source) => {
     changes.push(
-      new pf1.Components.ItemChange({
+      new pf1.components.ItemChange({
         formula: value,
         target: "misc",
         subTarget: "mhp",

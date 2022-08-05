@@ -59,7 +59,7 @@ export class ItemActionSheet extends FormApplication {
     data.item = this.item;
     data.actor = this.actor;
     data.data = foundry.utils.mergeObject(this.action.constructor.defaultData, this.action.data, { inplace: false });
-    data.damageTypes = game.pf1.damageTypes.toRecord();
+    data.damageTypes = pf1.damageTypes.toRecord();
 
     // Set tag
     data.tag = createTag(data.action.name);
@@ -230,7 +230,7 @@ export class ItemActionSheet extends FormApplication {
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,
     };
-    new game.pf1.applications.EntrySelector(this.object, options).render(true);
+    new pf1.applications.EntrySelector(this.object, options).render(true);
   }
 
   _onEntryControl(event) {
@@ -346,7 +346,7 @@ export class ItemActionSheet extends FormApplication {
       }
     }
 
-    const app = new game.pf1.applications.DamageTypeSelector(targetObj, dataPath);
+    const app = new pf1.applications.DamageTypeSelector(targetObj, dataPath);
     app.render(true);
   }
 

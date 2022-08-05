@@ -1,18 +1,38 @@
 {
   "_id": "b8xMDIYXwftLYTaU",
-  "name": "Trap Sense (Sor)",
+  "name": "Trap Sense (SOR)",
   "type": "feat",
   "img": "systems/pf1/icons/items/inventory/hook-hand.jpg",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p>At 3rd level, you develop a sixth sense that helps you avoid traps. You gain a +2 bonus on&nbsp;<a href=\"https://www.d20pfsrd.com/skills/perception\">Perception</a>&nbsp;checks made to notice traps. You also gain a +1 bonus on&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Reflex\">Reflex</a>&nbsp;saves to avoid traps and a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Dodge-Bonus\">dodge bonus</a>&nbsp;to AC against attacks made by traps. These bonuses increase by +1 at 7th level and for every four&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/sorcerer\">sorcerer</a>&nbsp;levels you gain thereafter (to a maximum of +5 at 19th level). This bonus stacks with that provided by a&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue\">rogue’s</a>&nbsp;<a href=\"https://www.d20pfsrd.com/classes/core-classes/rogue#TOC-Trap-Sense-Ex-\">trap sense</a>&nbsp;and similar abilities.</p>"
     },
     "tags": [],
     "actions": [],
+    "uses": {
+      "per": ""
+    },
     "attackNotes": [],
     "effectNotes": [],
     "changes": [],
-    "contextNotes": [],
+    "contextNotes": [
+      {
+        "text": "+[[2]] to notice traps",
+        "subTarget": "skill.per"
+      },
+      {
+        "text": "+[[min(5, 1 + floor((@classes.sorcerer.level - 3) / 4))]] vs traps",
+        "subTarget": "ref"
+      },
+      {
+        "text": "+[[min(5, 1 + floor((@classes.sorcerer.level - 3) / 4))]] dodge vs traps",
+        "subTarget": "ac"
+      }
+    ],
     "links": {
       "children": [],
       "charges": []
@@ -32,13 +52,59 @@
     "featType": "classFeat",
     "associations": {
       "classes": [["Sorcerer"]]
+    },
+    "classSkills": {
+      "acr": false,
+      "apr": false,
+      "art": false,
+      "blf": false,
+      "clm": false,
+      "crf": false,
+      "dip": false,
+      "dev": false,
+      "dis": false,
+      "esc": false,
+      "fly": false,
+      "han": false,
+      "hea": false,
+      "int": false,
+      "kar": false,
+      "kdu": false,
+      "ken": false,
+      "kge": false,
+      "khi": false,
+      "klo": false,
+      "kna": false,
+      "kno": false,
+      "kpl": false,
+      "kre": false,
+      "lin": false,
+      "lor": false,
+      "per": false,
+      "prf": false,
+      "pro": false,
+      "rid": false,
+      "sen": false,
+      "slt": false,
+      "spl": false,
+      "ste": false,
+      "sur": false,
+      "swm": false,
+      "umd": false
     }
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.81.3",
+    "coreVersion": "10.277",
+    "createdTime": null,
+    "modifiedTime": 1659671008167,
+    "lastModifiedBy": "PoIR9pEzkZzq4MMu"
+  },
+  "permission": {
+    "default": 0
+  }
 }

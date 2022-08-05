@@ -5,7 +5,7 @@ export class EntrySelector extends FormApplication {
     // Prepare data and convert it into format compatible with the editor
     this.isFlag = this.options.flag === true;
     this.isFlat = this.options.flat === true;
-    const data = deepClone(getProperty(this.object.data, this.attribute) ?? (this.isFlag ? {} : []));
+    const data = deepClone(getProperty(this.object, this.attribute) ?? (this.isFlag ? {} : []));
 
     this.originalEntries = data;
     this.entries = this.isFlag ? (this.isFlat ? Object.keys(data).map((d) => [d]) : Object.entries(data)) : data;
@@ -15,13 +15,16 @@ export class EntrySelector extends FormApplication {
     return mergeObject(super.defaultOptions, {
       id: "entry-selector",
       classes: ["pf1", "entry"],
-      title: "Entry Selector",
       template: "systems/pf1/templates/apps/entry-selector.hbs",
       width: 320,
       height: "auto",
       closeOnSubmit: false,
       submitOnClose: false,
     });
+  }
+
+  get title() {
+    return game.i18n.localize("PF1.Application.EntrySelector.Title");
   }
 
   get attribute() {
@@ -95,14 +98,14 @@ export class EntrySelector extends FormApplication {
         else obj.push("");
       }
       this.entries.push(obj);
-      this._render(false);
+      return this.render();
     }
 
     if (a.classList.contains("delete-entry")) {
       const tr = a.closest("tr");
       const index = parseInt(tr.dataset.index);
       this.entries.splice(index, 1);
-      this._render(false);
+      return this.render();
     }
   }
 

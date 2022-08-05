@@ -243,8 +243,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare feat specific stuff
     if (data.item.type === "feat") {
-      data.isClassFeature = getProperty(this.item.system, "system.featType") === "classFeat";
-      data.isTemplate = getProperty(this.item.system, "system.featType") === "template";
+      data.isClassFeature = getProperty(this.item, "system.featType") === "classFeat";
+      data.isTemplate = getProperty(this.item, "system.featType") === "template";
     }
 
     if (["class", "feat", "race"].includes(data.item.type)) {
@@ -1402,7 +1402,7 @@ export class ItemSheetPF extends ItemSheet {
       this.item._cleanLink(link, group.dataset.tab);
       game.socket.emit("system.pf1", {
         eventType: "cleanItemLink",
-        actorUUID: this.item.actor.uuid,
+        actorUUID: this.item.actor?.uuid,
         itemUUID: this.item.uuid,
         link: link,
         linkType: group.dataset.tab,

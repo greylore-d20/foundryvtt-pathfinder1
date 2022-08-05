@@ -3,7 +3,11 @@
   "name": "Witch's Bottle",
   "type": "feat",
   "img": "systems/pf1/icons/skills/violet_02.jpg",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p>Once per day, the witch can perform a 10-minute ritual to create a potion imbued with the power of one of her hexes. Any creature that consumes this potion is affected by the hex as if cast by its creator. The witch can’t use that hex until the potion is consumed or rendered inert.</p>\n<p>Only hexes that can target a creature other than the witch can be distilled in this way. The potion remains potent until consumed or rendered inert by the witch as a free action.</p>\n<p>A witch must have the cauldron hex to select this hex.</p>"
     },
@@ -14,6 +18,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 10,
           "type": "minute"
@@ -105,8 +110,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -139,11 +143,18 @@
     },
     "abilityType": "su"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.81.3",
+    "coreVersion": "10.277",
+    "createdTime": null,
+    "modifiedTime": 1659670360114,
+    "lastModifiedBy": "PoIR9pEzkZzq4MMu"
+  },
+  "permission": {
+    "default": 0
+  }
 }

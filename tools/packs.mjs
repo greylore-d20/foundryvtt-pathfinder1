@@ -214,11 +214,14 @@ function sanitizePackEntry(entry, documentType = "") {
   }
   // Adhere to template data
   if (templateData) {
-    adhereTemplate(entry.data, templateData[documentType]?.[entry.type], { keepDefaults: false, documentType });
+    adhereTemplate(entry.system ?? entry.data, templateData[documentType]?.[entry.type], {
+      keepDefaults: false,
+      documentType,
+    });
     // Adhere actor's items to template data
     if (documentType === "Actor" && entry.items?.length > 0) {
       for (const i of entry.items) {
-        adhereTemplate(i.data, templateData.Item[i.type], { keepDefaults: false, documentType: "Item" });
+        adhereTemplate(i.system ?? i.data, templateData.Item[i.type], { keepDefaults: false, documentType: "Item" });
       }
     }
   }

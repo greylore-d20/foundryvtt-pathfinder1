@@ -201,7 +201,11 @@ export class ItemChange {
         switch (operator) {
           case "add":
             {
-              const base = getProperty(actor, t) ?? 0;
+              const base = getProperty(actor, t);
+
+              // Don't change non-existing values, such as removed ability scores
+              if (base == null) continue;
+
               if (typeof base === "number") {
                 if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
                   setProperty(actor, t, base + value);

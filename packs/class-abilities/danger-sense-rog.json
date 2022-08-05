@@ -1,0 +1,115 @@
+{
+  "name": "Danger Sense (ROG)",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/tiring-critical.jpg",
+  "effects": [],
+  "flags": {},
+  "system": {
+    "description": {
+      "value": "<p>At 3rd level, a rogue gains a +1 bonus on&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Reflex\">Reflex</a>&nbsp;saves to avoid traps and a +1&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Dodge-Bonus\">dodge bonus</a>&nbsp;to AC against attacks made by traps. In addition, she gains a +1 bonus on&nbsp;<a href=\"https://www.d20pfsrd.com/skills/perception\">Perception</a> checks to avoid being surprised by a foe. These bonuses increase by 1 every 3 rogue levels thereafter (to a maximum of +6 at 18th level).</p>\n<p>This ability counts as <a href=\"https://www.d20pfsrd.com/classes/unchained-classes/ROGUE-unchained/#TOC-Trap-Sense-Ex-\">trap sense</a>&nbsp;for the purpose of any feat or class prerequisite, and can be replaced by any archetype class feature that replaces&nbsp;<a href=\"https://www.d20pfsrd.com/classes/unchained-classes/ROGUE-unchained/#TOC-Trap-Sense-Ex-\">trap sense</a>. The bonuses gained from this ability stack with those gained from&nbsp;<a href=\"https://www.d20pfsrd.com/classes/unchained-classes/ROGUE-unchained/#TOC-Trap-Sense-Ex-\">trap sense</a>&nbsp;(from another class).</p>"
+    },
+    "tags": [],
+    "actions": [],
+    "uses": {
+      "per": ""
+    },
+    "attackNotes": [],
+    "effectNotes": [],
+    "changes": [],
+    "contextNotes": [
+      {
+        "subTarget": "ref",
+        "target": "savingThrows",
+        "text": "+[[@classes.rogueUnchained.level < 3 ? 1 : (floor(@classes.rogueUnchained.level / 3))]] vs Traps"
+      },
+      {
+        "subTarget": "skill.per",
+        "target": "skill",
+        "text": "+[[@classes.rogueUnchained.level < 3 ? 1 : (floor(@classes.rogueUnchained.level / 3))]] to avoid being surprised by a foe"
+      },
+      {
+        "subTarget": "ac",
+        "target": "misc",
+        "text": "+[[@classes.rogueUnchained.level < 3 ? 1 : (floor(@classes.rogueUnchained.level / 3))]] vs attacks made by traps"
+      }
+    ],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "classFeat_dangerSense",
+    "useCustomTag": true,
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "languages": {
+      "value": []
+    },
+    "scriptCalls": [],
+    "featType": "classFeat",
+    "associations": {
+      "classes": [["Rogue (Unchained)"]]
+    },
+    "abilityType": "ex",
+    "classSkills": {
+      "acr": false,
+      "apr": false,
+      "art": false,
+      "blf": false,
+      "clm": false,
+      "crf": false,
+      "dip": false,
+      "dev": false,
+      "dis": false,
+      "esc": false,
+      "fly": false,
+      "han": false,
+      "hea": false,
+      "int": false,
+      "kar": false,
+      "kdu": false,
+      "ken": false,
+      "kge": false,
+      "khi": false,
+      "klo": false,
+      "kna": false,
+      "kno": false,
+      "kpl": false,
+      "kre": false,
+      "lin": false,
+      "lor": false,
+      "per": false,
+      "prf": false,
+      "pro": false,
+      "rid": false,
+      "sen": false,
+      "slt": false,
+      "spl": false,
+      "ste": false,
+      "sur": false,
+      "swm": false,
+      "umd": false
+    }
+  },
+  "ownership": {
+    "default": 0,
+    "PoIR9pEzkZzq4MMu": 3
+  },
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.81.3",
+    "coreVersion": "10.277",
+    "createdTime": 1659671441651,
+    "modifiedTime": 1659671511945,
+    "lastModifiedBy": "PoIR9pEzkZzq4MMu"
+  },
+  "folder": null,
+  "sort": 0,
+  "_id": "sTlu3zgAEDdJnER5",
+  "permission": {
+    "default": 0
+  }
+}

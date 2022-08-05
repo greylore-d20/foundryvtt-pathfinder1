@@ -1,6 +1,12 @@
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
-import { createTag, CR, createConsumableSpellDialog, adjustNumberByStringCommand, splitCurrency } from "../../utils/lib.mjs";
+import {
+  createTag,
+  CR,
+  createConsumableSpellDialog,
+  adjustNumberByStringCommand,
+  splitCurrency,
+} from "../../utils/lib.mjs";
 import { PointBuyCalculator } from "../point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "../item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";

@@ -7,7 +7,7 @@
  *
  * The PF1 object may be adjusted to influence the system's behaviour during runtime.
  */
-export const PF1 = ({
+export const PF1 = {
   re: {
     traitSeparator: /\s*[;]\s*/g,
   },
@@ -2156,7 +2156,7 @@ export const PF1 = ({
   },
 
   keepItemLinksOnCopy: ["classAssociations"],
-});
+};
 
 /**
  * Non-PF1 config entries

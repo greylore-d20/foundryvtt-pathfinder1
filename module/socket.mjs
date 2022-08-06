@@ -43,14 +43,7 @@ const runSocketFunction = async function (args, senderId) {
         if (args.data.destContainer) dest = dest.items.get(args.data.destContainer);
         const amount = args.data.amount;
 
-        pf1.applications.CurrencyTransfer.transfer(
-          source,
-          dest,
-          amount,
-          args.data.sourceAlt,
-          args.data.destAlt,
-          false
-        );
+        pf1.applications.CurrencyTransfer.transfer(source, dest, amount, args.data.sourceAlt, args.data.destAlt, false);
         break;
       }
       case "alterChatTargetAttribute":

@@ -36,8 +36,7 @@ export class SensesSelector extends DocumentSheet {
     const data = {
       system: this.document.system,
       converted: Object.entries(this.convertKeys).reduce((cur, o) => {
-        if (o[1] === "distance")
-          setProperty(cur, o[0], pf1.utils.convertDistance(getProperty(this.document, o[0]))[0]);
+        if (o[1] === "distance") setProperty(cur, o[0], pf1.utils.convertDistance(getProperty(this.document, o[0]))[0]);
         return cur;
       }, {}),
       gridUnits: game.settings.get("pf1", "units") === "imperial" ? "ft" : "m",

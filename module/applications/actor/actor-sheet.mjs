@@ -1629,7 +1629,7 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const target = a.dataset.actionTarget;
 
-    pf1.compendiums[target].render(true, { focus: true });
+    pf1.applications.compendiums[target].render(true, { focus: true });
   }
 
   _onRollConcentration(event) {

@@ -168,6 +168,7 @@ if (!String.prototype.format) {
 /*  Foundry VTT Initialization                  */
 /* -------------------------------------------- */
 Hooks.once("init", function () {
+  globalThis.pf1 = Object.assign(game.system, globalThis.pf1);
   console.log(`PF1 | Initializing Pathfinder 1 System`);
 
   // Redirect notifications to console before Notifications is ready
@@ -177,7 +178,7 @@ Hooks.once("init", function () {
   registerClientSettings();
 
   // Create a PF1 namespace within the game global
-  const oldPf1 = {
+  game.pf1 = {
     polymorphism: { ActorBasePF, ItemBasePF },
     documents: { ActorPF, ItemPF, TokenDocumentPF },
     get entities() {
@@ -361,20 +362,6 @@ Hooks.once("init", function () {
     weapon: ItemWeaponPF,
     // etc.
   };
-  game.pf1 = new Proxy(oldPf1, {
-    get(obj, property) {
-      const propertyInNewApi = property in globalThis.pf1;
-      if (!propertyInNewApi)
-        console.warn(`You are accessing ${property} on "game.pf1", which has been deprecated in favor of "pf1".`);
-      return Reflect.get(obj, property);
-    },
-    set(obj, property, value) {
-      const propertyInNewApi = property in globalThis.pf1;
-      if (!propertyInNewApi)
-        console.warn(`You are accessing ${property} "game.pf1", which has been deprecated in favor of "pf1".`);
-      return Reflect.set(obj, property, value);
-    },
-  });
   CONFIG.Combat.documentClass = CombatPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.documentClass = ChatMessagePF;

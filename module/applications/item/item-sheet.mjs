@@ -869,7 +869,7 @@ export class ItemSheetPF extends ItemSheet {
     const a = event.currentTarget;
     const target = a.dataset.actionTarget;
 
-    pf1.compendiums[target].render(true, { focus: true });
+    pf1.applications.compendiums[target].render(true, { focus: true });
   }
 
   async _onScriptCallControl(event) {

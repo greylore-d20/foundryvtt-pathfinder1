@@ -3789,7 +3789,7 @@ export class ActorPF extends ActorBasePF {
       this.system.abilities[k].mod = newMod;
 
       // Store previous ability score
-      if (!pf1.isMigrating && this._initialized && this._prevAbilityScores) {
+      if (!pf1.migrations.isMigrating && this._initialized && this._prevAbilityScores) {
         const prevMod = this._prevAbilityScores?.[k].mod ?? 0;
         const diffMod = newMod - prevMod;
         const result = this.system.abilities[k].mod + diffMod;

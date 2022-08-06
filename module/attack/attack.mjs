@@ -410,7 +410,7 @@ export class Attack {
   checkAttackRequirements() {
     // Enforce zero charge cost on cantrips/orisons, but make sure they have at least 1 charge
     if (
-      this.item.system.type === "spell" &&
+      this.item.type === "spell" &&
       this.shared.rollData.item?.level === 0 &&
       this.shared.rollData.item?.preparation?.preparedAmount > 0
     ) {
@@ -872,7 +872,7 @@ export class Attack {
     }
 
     // Generate metadata
-    const metadata = await this.generateChatMetadata();
+    const metadata = this.generateChatMetadata();
 
     // Get target info
     if (!game.settings.get("pf1", "disableAttackCardTargets")) {

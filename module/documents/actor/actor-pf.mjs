@@ -3812,7 +3812,6 @@ export class ActorPF extends ActorBasePF {
     data.effects = [];
 
     // Update data
-    this.system.update(data, { recursive: false });
     return this.update(data, { diff: false, recursive: false });
   }
 

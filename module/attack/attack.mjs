@@ -872,7 +872,7 @@ export class Attack {
     }
 
     // Generate metadata
-    const metadata = this.generateChatMetadata();
+    const metadata = await this.generateChatMetadata();
 
     // Get target info
     if (!game.settings.get("pf1", "disableAttackCardTargets")) {

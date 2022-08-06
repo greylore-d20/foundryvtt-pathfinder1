@@ -286,7 +286,7 @@ export const addTargetCallbacks = function (app, html) {
 
       _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
         if (!t?.actor) return;
-        pf1.chat.events.targetACClick(app, html, t.actor, event);
+        pf1.utils.chat.targetACClick(app, html, t.actor, event);
       });
     });
     elem.find(".saving-throws .click").on("click", (event) => {
@@ -294,7 +294,7 @@ export const addTargetCallbacks = function (app, html) {
 
       _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
         if (!t?.actor) return;
-        pf1.chat.events.targetSavingThrowClick(app, html, t.actor, event);
+        pf1.utils.chat.targetSavingThrowClick(app, html, t.actor, event);
       });
     });
   }

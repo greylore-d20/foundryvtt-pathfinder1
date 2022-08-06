@@ -3716,11 +3716,11 @@ export class ActorPF extends ActorBasePF {
         if (!obj.active) toDelete.push(existing.id);
         else {
           const existingData = existing.toObject();
-          const mergedData = mergeObject(existingData, obj.item.getRawEffectData(), { inplace: false });
+          const mergedData = foundry.utils.mergeObject(existingData, obj.item.getRawEffectData(), { inplace: false });
           const hideIcon = obj.item.system.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
           if (hideIcon) mergedData.icon = null;
-          const diffData = diffObject(existingData, mergedData);
-          if (!isObjectEmpty(diffData)) {
+          const diffData = foundry.utils.diffObject(existingData, mergedData);
+          if (!foundry.utils.isEmpty(diffData)) {
             diffData._id = existing.id;
             toUpdate.push(diffData);
           }
@@ -3761,7 +3761,7 @@ export class ActorPF extends ActorBasePF {
     // Special case for unlinked tokens, which don't seem to draw their effects on an actor update
     const tokens = this.getActiveTokens();
     for (const token of tokens) {
-      const linked = token.actorLink;
+      const linked = token.document.actorLink;
       if (!linked) {
         token.drawEffects();
       }

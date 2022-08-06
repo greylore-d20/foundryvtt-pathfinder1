@@ -71,9 +71,6 @@ import { AbilityTemplate } from "./module/canvas/ability-template.mjs";
 import { AttackDialog } from "./module/applications/attack-dialog.mjs";
 import {
   getItemOwner,
-  sizeDieExt,
-  sizeReach,
-  normalDie,
   getActorFromId,
   createTag,
   measureDistance,
@@ -130,6 +127,7 @@ import * as dice from "./module/dice/_module.mjs";
 import * as components from "./module/components/_module.mjs";
 import * as utils from "./module/utils/_module.mjs";
 import * as registry from "./module/registry/_module.mjs";
+import * as rollPreProcess from "./module/utils/roll-preprocess.mjs";
 export { applications, documents, attack, _canvas as canvas, dice, components, utils, registry, PF1 as config };
 
 import "./less/pf1.less";
@@ -226,9 +224,7 @@ Hooks.once("init", function () {
     // Rolling
     DicePF,
     rollPreProcess: {
-      sizeRoll: sizeDieExt,
-      sizeReach: sizeReach,
-      roll: normalDie,
+      ...rollPreProcess,
     },
     //Chat
     chat: {

@@ -420,7 +420,7 @@ export class Attack {
 
     // Determine charge cost
     let cost = 0;
-    if (this.item.isCharged) {
+    if (this.shared.action.isCharged) {
       cost = this.shared.action.chargeCost;
       let uses = this.item.charges;
       if (this.item.system.type === "spell") {
@@ -649,7 +649,7 @@ export class Attack {
 
     // Create template
     this.shared.template = null;
-    const template = pf1.AbilityTemplate.fromData(templateOptions);
+    const template = pf1.canvas.AbilityTemplate.fromData(templateOptions);
     let result;
     if (template) {
       const sheetRendered = this.item.parent?.sheet?._element != null;

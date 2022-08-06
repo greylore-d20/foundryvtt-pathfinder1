@@ -330,10 +330,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     /* -------------------------------------------- */
 
     // Owned Item management
-    html.find(".item-create").click((ev) => this._onItemCreate(ev));
-    html.find(".item-edit").click(this._onItemEdit.bind(this));
-    html.find(".item-delete").click(this._onItemDelete.bind(this));
-    html.find(".item-take").click(this._onItemTake.bind(this));
+    html.find(`.tab[data-tab="contents"] .item-create`).click((ev) => this._onItemCreate(ev));
+    html.find(`.tab[data-tab="contents"] .item-edit`).click(this._onItemEdit.bind(this));
+    html.find(`.tab[data-tab="contents"] .item-delete`).click(this._onItemDelete.bind(this));
+    html.find(`.tab[data-tab="contents"] .item-take`).click(this._onItemTake.bind(this));
 
     // Quick edit item
     html.find(".item .item-name h4").contextmenu(this._onItemEdit.bind(this));
@@ -591,9 +591,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.item.getContainerContent(itemId);
 
-    const curQuantity = getProperty(item.data, "data.quantity") || 0;
+    const curQuantity = getProperty(item, "system.quantity") || 0;
     const newQuantity = Math.max(0, curQuantity + add);
-    return item.update({ "data.quantity": newQuantity });
+    return item.update({ "system.quantity": newQuantity });
   }
 
   async _quickItemActionControl(event) {

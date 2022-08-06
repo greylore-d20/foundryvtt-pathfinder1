@@ -1,3 +1,5 @@
+import { createTag } from "../utils/lib.mjs";
+
 export class SkillEditor extends FormApplication {
   constructor(actor, skillId, subSkillId, options = {}) {
     super(actor, options);
@@ -11,7 +13,7 @@ export class SkillEditor extends FormApplication {
     return mergeObject(super.defaultOptions, {
       width: 380,
       template: "systems/pf1/templates/apps/skill-editor.hbs",
-      closeOnSubmit: true,
+      closeOnSubmit: false,
       dragDrop: [{ dragSelector: null, dropSelector: "*" }],
     });
   }
@@ -37,11 +39,13 @@ export class SkillEditor extends FormApplication {
   get skillName() {
     return this.isStaticSkill ? CONFIG.PF1.skills[this.skillId] : this.skill.name;
   }
+  get skillTag() {
+    if (this.isStaticSkill) return this.skillId;
+    return this.isSubSkill ? this.subSkillId : this.skillId;
+  }
 
   async getData(options) {
     const data = await super.getData(options);
-
-    const isStaticSkill = this.isStaticSkill;
 
     // Configuration
     data.config = CONFIG.PF1;
@@ -54,7 +58,8 @@ export class SkillEditor extends FormApplication {
         subSkillId: this.subSkillId,
         isSubSkill: this.isSubSkill,
         name: this.skillName,
-        static: isStaticSkill,
+        static: this.isStaticSkill,
+        tag: this.skillTag,
       },
       { inplace: false }
     );
@@ -86,8 +91,32 @@ export class SkillEditor extends FormApplication {
     const data = expandObject(formData);
     const skillData = mergeObject(this.skill, data.skill, { inplace: false });
     delete data.skill;
-    if (this.isSubSkill) setProperty(data, `data.skills.${this.skillId}.subSkills.${this.subSkillId}`, skillData);
-    else setProperty(data, `data.skills.${this.skillId}`, skillData);
+
+    // Change skill tag
+    let tag;
+    if (!this.isStaticSkill) {
+      tag = skillData.tag;
+      delete skillData.tag;
+      if (!tag) {
+        ui.notifications.warn("Skill tag can't be empty.");
+        return;
+      }
+
+      if (this.isSubSkill && tag !== this.subSkillId)
+        setProperty(data, `system.skills.${this.skillId}.subSkills.-=${this.subSkillId}`, null);
+      else if (tag !== this.skillId) setProperty(data, `system.skills.-=${this.skillId}`, null);
+    }
+
+    // Update skill data
+    const tagOrId = tag || (this.isSubSkill ? this.subSkillId : this.skillId);
+    if (this.isSubSkill) setProperty(data, `system.skills.${this.skillId}.subSkills.${tagOrId}`, skillData);
+    else setProperty(data, `system.skills.${tagOrId}`, skillData);
+
+    // Change application's id by tag
+    if (tag) {
+      if (this.isSubSkill) this.subSkillId = tag;
+      else this.skillId = tag;
+    }
 
     await this.object.update(data);
   }
@@ -108,20 +137,27 @@ export class SkillEditor extends FormApplication {
     if (!document) return;
 
     // Add Journal Entry Page reference
-    await this._updateObject(event, { "skill.journal": document.uuid });
-    this.render();
+    await this._onSubmit(event, { updateData: { "skill.journal": document.uuid } });
+    await this.render();
   }
 
   activateListeners(html) {
     super.activateListeners(html);
 
     // Open compendium page
-    html.find(".compendium-entry").on("click", this._openCompendiumEntry.bind(this));
+    html.find(".compendium-page").on("click", this._openCompendiumEntry.bind(this));
+    html.find(".compendium-controls a").on("click", this._onCompendiumControls.bind(this));
+
+    // Submit
+    html.find(`button[type="submit"]`).on("click", (event) => {
+      event.preventDefault();
+      this.close({ submit: true });
+    });
   }
 
   async _openCompendiumEntry(event) {
     event.preventDefault();
-    const elem = event.currentTarget;
+    const elem = event.currentTarget.closest(".compendium-entry");
 
     // Gather data
     const uuid = elem.dataset.compendiumEntry;
@@ -132,6 +168,16 @@ export class SkillEditor extends FormApplication {
       document.parent.sheet.render(true, { pageId: document.id });
     } else {
       document.sheet.render(true);
+    }
+  }
+
+  async _onCompendiumControls(event) {
+    event.preventDefault();
+    const elem = event.currentTarget;
+
+    if (elem.classList.contains("delete")) {
+      await this._onSubmit(event, { updateData: { "skill.journal": null } });
+      await this.render();
     }
   }
 }

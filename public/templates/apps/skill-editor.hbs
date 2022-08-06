@@ -6,6 +6,15 @@
     </div>
   </div>
 
+  {{#unless skill.static}}
+  <div class="form-group">
+    <label>{{localize "PF1.Tag"}}</label>
+    <div class="form-fields">
+      <input type="text" name="skill.tag" value="{{skill.tag}}" data-dtype="String" />
+    </div>
+  </div>
+  {{/unless}}
+
   <div class="form-group">
     <label>{{localize "PF1.Rank"}}</label>
     <div class="form-fields">

@@ -20,7 +20,7 @@ export class ItemChange {
   static async create(data, context) {
     const { parent } = context;
 
-    if (parent instanceof pf1.documents.ItemPF) {
+    if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
       const newChangeData = deepClone(parent.system.changes || []);
@@ -201,10 +201,13 @@ export class ItemChange {
         switch (operator) {
           case "add":
             {
-              const base = getProperty(actor, t);
+              let base = getProperty(actor, t);
 
-              // Don't change non-existing values, such as removed ability scores
-              if (base == null) continue;
+              // Don't change non-existing ability scores
+              if (base == null) {
+                if (t.match(/^system\.abilities/)) continue;
+                base = 0;
+              }
 
               if (typeof base === "number") {
                 if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {

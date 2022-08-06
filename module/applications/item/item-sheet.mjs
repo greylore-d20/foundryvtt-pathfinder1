@@ -529,8 +529,8 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _prepareItemFlags(data) {
-    setProperty(data, "flags.boolean", getProperty(data.item.system, "system.flags.boolean") ?? {});
-    setProperty(data, "flags.dictionary", getProperty(data.item.system, "system.flags.dictionary") ?? {});
+    setProperty(data, "flags.boolean", getProperty(data.item, "system.flags.boolean") ?? {});
+    setProperty(data, "flags.dictionary", getProperty(data.item, "system.flags.dictionary") ?? {});
   }
 
   async _prepareScriptCalls(data) {

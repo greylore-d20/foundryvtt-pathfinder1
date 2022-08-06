@@ -113,8 +113,8 @@ export class ItemActionSheet extends FormApplication {
     }
 
     // Prepare stuff for actions with conditionals
-    if (data.conditionals) {
-      for (const conditional of data.conditionals) {
+    if (data.data.conditionals) {
+      for (const conditional of data.data.conditionals) {
         for (const modifier of conditional.modifiers) {
           modifier.targets = this.object.getConditionalTargets();
           modifier.subTargets = this.object.getConditionalSubTargets(modifier.target);

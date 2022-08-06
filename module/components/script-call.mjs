@@ -19,7 +19,7 @@ export class ItemScriptCall {
   static async create(data, context) {
     const { parent } = context;
 
-    if (parent instanceof pf1.documents.ItemPF) {
+    if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
       const newScriptCallData = deepClone(parent.system.scriptCalls || []);
@@ -137,7 +137,7 @@ export class ItemScriptCall {
     const body = `await (async () => {
       ${await this.getScriptBody()}
     })()`;
-    const fn = ItemScriptCall.AsyncFunction("item", "actor", "token", "shared", ...Object.keys(extraParams), body);
+    const fn = this.constructor.AsyncFunction("item", "actor", "token", "shared", ...Object.keys(extraParams), body);
     try {
       return await fn.call(this, item, actor, token, shared, ...Object.values(extraParams));
     } catch (err) {

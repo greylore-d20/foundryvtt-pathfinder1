@@ -290,7 +290,8 @@ export const migrateItemData = function (item) {
     for (const action of itemActionData) {
       actionDataList.push(migrateItemActionData(action, item));
     }
-    updateData["system.actions"] = actionDataList;
+
+    updateData["system.actions"] = actionDataList.filter(filterItemActions);
   }
 
   // Return the migrated update data
@@ -1571,4 +1572,16 @@ const _Action_ConvertDamageType = function (damageTypeString) {
 
   if (result.length > 0) return result;
   return [];
+};
+
+/**
+ * Filters out actions during migration.
+ * @param {object} action - The data of the action in question.
+ * @returns {boolean} `true` to keep action, `false` to discard action.
+ */
+export const filterItemActions = function (action) {
+  if (action.activation?.type) return true;
+  if (action.actionType) return true;
+
+  return false;
 };

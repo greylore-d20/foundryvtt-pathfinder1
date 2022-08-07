@@ -168,7 +168,6 @@ if (!String.prototype.format) {
 /*  Foundry VTT Initialization                  */
 /* -------------------------------------------- */
 Hooks.once("init", function () {
-  globalThis.pf1 = Object.assign(game.system, globalThis.pf1);
   console.log(`PF1 | Initializing Pathfinder 1 System`);
 
   // Redirect notifications to console before Notifications is ready
@@ -178,7 +177,7 @@ Hooks.once("init", function () {
   registerClientSettings();
 
   // Create a PF1 namespace within the game global
-  game.pf1 = {
+  const oldPf1 = {
     polymorphism: { ActorBasePF, ItemBasePF },
     documents: { ActorPF, ItemPF, TokenDocumentPF },
     get entities() {
@@ -325,6 +324,28 @@ Hooks.once("init", function () {
     // Singleton instance of the help browser
     helpBrowser: new HelpBrowserPF(),
   };
+  game.pf1 = new Proxy(oldPf1, {
+    get(obj, property) {
+      console.warn(
+        [
+          "You are accessing game.pf1, which will be restructured to match globalThis.pf1 in the future.",
+          `Please check whether ${property} and its contents are still available, or use globalThis.pf1 instead.`,
+          new Error().stack,
+        ].join("\n")
+      );
+      return Reflect.get(obj, property);
+    },
+    set(obj, property, value) {
+      console.warn(
+        [
+          "You are accessing game.pf1, which will be restructured to match globalThis.pf1 in the future.",
+          `Please check whether ${property} and its contents are still available, or use globalThis.pf1 instead.`,
+          new Error().stack,
+        ].join("\n")
+      );
+      return Reflect.set(obj, property, value);
+    },
+  });
 
   // Global exports
   globalThis.RollPF = RollPF;

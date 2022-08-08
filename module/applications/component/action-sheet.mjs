@@ -214,6 +214,10 @@ export class ItemActionSheet extends FormApplication {
         }
       }
 
+      // Renew conditional ID
+      data._id = randomID(16);
+
+      // Append conditional
       const conditionals = deepClone(action.data.conditionals || []).concat(data);
       await this.object.update({ conditionals: conditionals });
     }

@@ -27,7 +27,10 @@ export class ActiveEffectPF extends ActiveEffect {
       const updates = { [`system.attributes.conditions.${statusId}`]: false };
       await parentActor.update(updates, context);
     } else if (origin) {
-      parentActor.items.get(origin)?.setActive(false, context);
+      const item = parentActor.items.get(origin);
+      if (!(context.type === "delete" && context.document === item)) {
+        item?.setActive(false, context);
+      }
     }
     return returnVal;
   }

@@ -13,6 +13,20 @@ export class ItemWeaponPF extends ItemPF {
     }
   }
 
+  async _preDelete(options, user) {
+    if (user.id === game.user.id) {
+      if (this.isActive) {
+        this.executeScriptCalls("equip", { equipped: false });
+      }
+
+      if (this.system.quantity > 0) {
+        this.executeScriptCalls("changeQuantity", { quantity: { previous: this.system.quantity, new: 0 } });
+      }
+    }
+
+    return super._preDelete(options, user);
+  }
+
   prepareData() {
     super.prepareData();
     const labels = this.labels;

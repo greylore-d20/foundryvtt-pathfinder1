@@ -2,6 +2,16 @@ import { ItemPF } from "./item-pf.mjs";
 import { PF1 } from "../../config.mjs";
 
 export class ItemFeatPF extends ItemPF {
+  async _preDelete(options, user) {
+    if (user.id === game.user.id) {
+      if (this.isActive) {
+        this.executeScriptCalls("toggle", { state: false });
+      }
+    }
+
+    return super._preDelete(options, user);
+  }
+
   /**
    * @param {boolean} active
    * @param {object} context Optional update context

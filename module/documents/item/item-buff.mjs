@@ -11,6 +11,23 @@ export class ItemBuffPF extends ItemPF {
     return super._preUpdate(changed, options, userId);
   }
 
+  async _preDelete(options, user) {
+    // Delete associated effect
+    const effect = this.effect;
+    if (effect) {
+      await effect.delete({ type: "delete", document: this });
+    }
+
+    // Run script call(s)
+    if (user.id === game.user.id) {
+      if (this.isActive) {
+        this.executeScriptCalls("toggle", { state: false });
+      }
+    }
+
+    return super._preDelete(options, user);
+  }
+
   prepareData() {
     const itemData = super.prepareData();
     const data = itemData;
@@ -137,6 +154,10 @@ export class ItemBuffPF extends ItemPF {
 
   get subType() {
     return this.system.buffType;
+  }
+
+  get effect() {
+    return this.parentActor?.effects.find((o) => o.origin?.indexOf(`Item.${this.id}`) > 0);
   }
 
   /**

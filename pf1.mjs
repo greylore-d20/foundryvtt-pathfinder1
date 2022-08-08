@@ -145,6 +145,7 @@ globalThis.pf1 = {
   registry,
   migrations,
   tooltip: null,
+  helpBrowser: new HelpBrowserPF(),
   controls,
 };
 
@@ -839,20 +840,6 @@ Hooks.on("deleteItem", async (item, options, userId) => {
   const actor = item.parent instanceof ActorPF ? item.parent : null;
 
   if (actor) {
-    // Remove token effects for deleted buff
-    const isLinkedToken = getProperty(actor, "prototypeToken.actorLink");
-    if (isLinkedToken) {
-      const promises = [];
-      if (item.type === "buff" && item.system.active) {
-        actor.effects.find((e) => e.data.origin?.indexOf(item.id) > 0)?.delete();
-        const tokens = actor.getActiveTokens();
-        for (const token of tokens) {
-          promises.push(token.toggleEffect(item.img, { active: false }));
-        }
-      }
-      await Promise.all(promises);
-    }
-
     // Remove links
     const itemLinks = getProperty(item, "system.links");
     if (itemLinks) {
@@ -870,31 +857,6 @@ Hooks.on("deleteItem", async (item, options, userId) => {
     // Call buff removal hook
     if (item.type === "buff" && getProperty(item, "system.active") === true) {
       Hooks.callAll("pf1.toggleActorBuff", actor, item, false);
-    }
-  }
-
-  if (item.type === "buff" && getProperty(item, "system.active") === true) {
-    item.executeScriptCalls("toggle", { state: false });
-  }
-  // Simulate toggling a feature on
-  if (item.type === "feat") {
-    const disabled = getProperty(item, "system.disabled");
-    if (disabled === false) {
-      item.executeScriptCalls("toggle", { state: false });
-    }
-  }
-  // Simulate equipping items
-  {
-    const equipped = getProperty(item, "system.equipped");
-    if (equipped === true) {
-      item.executeScriptCalls("equip", { equipped: false });
-    }
-  }
-  // Quantity change
-  {
-    const quantity = getProperty(item, "system.quantity");
-    if (typeof quantity === "number" && quantity > 0) {
-      item.executeScriptCalls("changeQuantity", { quantity: { previous: quantity, new: 0 } });
     }
   }
 });

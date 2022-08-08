@@ -2,7 +2,7 @@ import { ActorBasePF } from "./actor-base.mjs";
 import { getAbilityModifier } from "@utils";
 import { DicePF } from "../../dice/dice.mjs";
 import { ItemPF } from "../item/item-pf.mjs";
-import { createTag, enrichHTMLUnrolled, fractionalToString } from "../../utils/lib.mjs";
+import { createTag, fractionalToString } from "../../utils/lib.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
 import { LinkFunctions } from "../../utils/links.mjs";
 import { getSkipActionPrompt } from "../settings.mjs";
@@ -15,7 +15,6 @@ import {
   getHighestChanges,
 } from "./utils/apply-changes.mjs";
 import { RollPF } from "../../dice/roll.mjs";
-import { VisionPermissionSheet } from "../../applications/vision-permission.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
 import { ItemChange } from "../../components/change.mjs";
 

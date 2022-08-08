@@ -218,8 +218,8 @@ export class ItemAction {
 
   getRollData() {
     const result = this.item.getRollData();
-    result.action = deepClone(this.data);
 
+    result.action = deepClone(this.data);
     result.dc = this.hasSave ? this.getDC(result) : 0;
 
     return result;
@@ -305,6 +305,7 @@ export class ItemAction {
         critMultiplier: 1,
       },
       naturalAttack: {
+        primaryAttack: true,
         secondary: {
           attackBonus: "-5",
           damageMult: 0.5,

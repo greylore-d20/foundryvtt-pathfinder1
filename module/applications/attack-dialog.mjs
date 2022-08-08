@@ -17,7 +17,7 @@ export class AttackDialog extends Application {
       sl: this.rollData.sl ?? 0,
     };
     this.flags = {
-      "primary-attack": this.object.item.system.primaryAttack === true,
+      "primary-attack": this.object.data.naturalAttack.primaryAttack === true,
       "cl-check": this.object.clCheck === true,
       "measure-template": true,
     };

@@ -125,7 +125,8 @@ export class Attack {
     }
 
     // Primary attack
-    if (formData["primary-attack"] != null) this.shared.rollData.item.primaryAttack = formData["primary-attack"];
+    if (formData["primary-attack"] != null)
+      setProperty(this.shared.rollData, "action.naturalAttack.primaryAttack", formData["primary-attack"]);
 
     // Use measure template
     if (formData["measure-template"] != null) this.shared.useMeasureTemplate = formData["measure-template"];
@@ -147,9 +148,9 @@ export class Attack {
       if (!powerAttackMultiplier) {
         powerAttackMultiplier = 1;
         if (this.item.system.attackType === "natural") {
-          if (this.shared.rollData.item?.primaryAttack)
+          if (this.shared.rollData.action?.naturalAttack.primaryAttack)
             powerAttackMultiplier = this.shared.rollData.action.ability?.damageMult;
-          else if (!this.shared.rollData.item?.primaryAttack) {
+          else {
             powerAttackMultiplier = this.shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
           }
         } else {
@@ -192,7 +193,7 @@ export class Attack {
     });
 
     // Apply secondary attack penalties
-    if (this.shared.rollData.item.attackType === "natural" && this.shared.rollData.item.primaryAttack === false) {
+    if (this.shared.rollData.item.attackType === "natural" && this.shared.rollData.action?.naturalAttack.primaryAttack === false) {
       const attackBonus = this.shared.rollData.action.naturalAttack?.secondary?.attackBonus || "-5";
       const damageMult = this.shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
       this.shared.attackBonus.push(`(${attackBonus})[${game.i18n.localize("PF1.SecondaryAttack")}]`);

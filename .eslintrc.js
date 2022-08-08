@@ -488,5 +488,6 @@ module.exports = {
     VisionSource: "readonly",
     Color: "readonly",
     JournalEntryPage: "readonly",
+    pf1: "readonly",
   },
 };

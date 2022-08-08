@@ -3,14 +3,19 @@ import { ChatAttack } from "./chat-attack.mjs";
 import { createCustomChatMessage } from "../utils/chat.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
-export const ERR_REQUIREMENT = {
+/**
+ * Error states for when an item does not meet the requirements for an attack.
+ *
+ * @enum
+ */
+export const ERR_REQUIREMENT = /** @type {const} */ ({
   NO_ACTOR_PERM: 1,
   DISABLED: 2,
-  INSUFFUCIENT_QUANTITY: 3,
+  INSUFFICIENT_QUANTITY: 3,
   INSUFFICIENT_CHARGES: 4,
   MISSING_AMMO: 5,
   INSUFFICIENT_AMMO: 6,
-};
+});
 
 export class Attack {
   /**
@@ -51,7 +56,7 @@ export class Attack {
       const msg = game.i18n.localize("PF1.ErrorNoQuantity");
       console.warn(msg);
       ui.notifications.warn(msg);
-      return ERR_REQUIREMENT.INSUFFUCIENT_QUANTITY;
+      return ERR_REQUIREMENT.INSUFFICIENT_QUANTITY;
     }
 
     if (this.item.isCharged && this.item.charges < this.shared.chargeCost) {

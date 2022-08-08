@@ -14,6 +14,10 @@ export class ItemAction {
     this.prepareData();
   }
 
+  get description() {
+    return this.data.description;
+  }
+
   /**
    * Creates an action.
    *

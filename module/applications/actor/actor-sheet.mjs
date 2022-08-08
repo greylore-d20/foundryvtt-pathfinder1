@@ -816,50 +816,25 @@ export class ActorSheetPF extends ActorSheet {
     const hasTypeFilter = this._typeFilterCount(filters) > 0;
 
     return items.filter((item) => {
-      const data = item.system;
-
-      // Action usage
-      for (const f of ["action", "bonus", "reaction"]) {
-        if (filters.has(f)) {
-          if (data.activation && data.activation.type !== f) return false;
-        }
-      }
-
-      if (filters.has("prepared")) {
-        if (data.level === 0 || ["pact", "innate"].includes(data.preparation.mode)) return true;
-        if (this.document.system.type === "npc") return true;
-        return data.preparation.prepared;
-      }
-
-      // Equipment-specific filters
-      if (filters.has("equipped")) {
-        if (data.equipped && data.equipped !== true) return false;
-      }
-
-      // Whether active
-      if (filters.has("active")) {
-        if (!data.active) return false;
-      }
-
       if (item.type === "feat") {
-        if (hasTypeFilter && !filters.has(`type-${data.featType}`)) return false;
+        if (hasTypeFilter && !filters.has(`type-${item.featType}`)) return false;
       }
 
       if (ItemPF.isInventoryItem(item.type)) {
         if (hasTypeFilter && item.type !== "loot" && !filters.has(`type-${item.type}`)) return false;
-        else if (hasTypeFilter && item.type === "loot" && !filters.has(`type-${data.subType}`)) return false;
+        else if (hasTypeFilter && item.type === "loot" && !filters.has(`type-${item.subType}`)) return false;
       }
 
       if (item.type === "spell") {
-        if (hasTypeFilter && !filters.has(`type-${data.level}`)) return false;
+        if (hasTypeFilter && !filters.has(`type-${item.level}`)) return false;
       }
 
       if (item.type === "buff") {
-        if (hasTypeFilter && !filters.has(`type-${data.buffType}`)) return false;
+        if (hasTypeFilter && !filters.has(`type-${item.buffType}`)) return false;
       }
 
       if (item.type === "attack") {
-        if (hasTypeFilter && !filters.has(`type-${data.attackType}`)) return false;
+        if (hasTypeFilter && !filters.has(`type-${item.attackType}`)) return false;
       }
 
       return true;

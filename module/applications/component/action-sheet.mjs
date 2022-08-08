@@ -73,6 +73,8 @@ export class ItemActionSheet extends FormApplication {
     data.isCombatManeuver = ["mcman", "rcman"].includes(data.actionType);
 
     data.isCharged = this.action.isCharged;
+    data.isSelfCharged = this.action.isSelfCharged;
+    data.showMaxChargeFormula = ["day", "week", "charges"].includes(data.data.uses.self.per);
     if (this.action.hasRange) {
       data.canInputRange = ["ft", "mi", "spec"].includes(data.data.range.units);
       data.canInputMinRange = ["ft", "mi", "spec"].includes(data.data.range.minUnits);

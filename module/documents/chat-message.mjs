@@ -21,7 +21,7 @@ export class ChatMessagePF extends ChatMessage {
    * @type {boolean} True if item source is defined, regardless if that item source still exists.
    */
   get hasItemSource() {
-    return this.system.flags?.pf1?.metadata?.item !== undefined;
+    return this.flags?.pf1?.metadata?.item !== undefined;
   }
 
   /**

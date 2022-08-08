@@ -23,6 +23,8 @@ export class Attack {
     this.item = item;
     /** @type {object} */
     this.shared = shared;
+    /** @type {ItemAction} */
+    this.action = shared.action;
   }
 
   /**
@@ -54,6 +56,13 @@ export class Attack {
 
     if (this.item.isCharged && this.item.charges < this.shared.chargeCost) {
       const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.item.name);
+      console.warn(msg);
+      ui.notifications.warn(msg);
+      return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
+    }
+
+    if (this.action.isSelfCharged && this.action.data.uses.self?.value < 1) {
+      const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(`${this.item.name}: ${this.action.name}`);
       console.warn(msg);
       ui.notifications.warn(msg);
       return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
@@ -193,7 +202,10 @@ export class Attack {
     });
 
     // Apply secondary attack penalties
-    if (this.shared.rollData.item.attackType === "natural" && this.shared.rollData.action?.naturalAttack.primaryAttack === false) {
+    if (
+      this.shared.rollData.item.attackType === "natural" &&
+      this.shared.rollData.action?.naturalAttack.primaryAttack === false
+    ) {
       const attackBonus = this.shared.rollData.action.naturalAttack?.secondary?.attackBonus || "-5";
       const damageMult = this.shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
       this.shared.attackBonus.push(`(${attackBonus})[${game.i18n.localize("PF1.SecondaryAttack")}]`);

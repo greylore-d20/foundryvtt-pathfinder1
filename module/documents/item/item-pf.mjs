@@ -1302,6 +1302,8 @@ export class ItemPF extends ItemBasePF {
     await attack.subtractAmmo();
     if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
       await this.addCharges(-shared.rollData.chargeCost);
+    if (shared.action.isSelfCharged)
+      await shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 });
 
     // Retrieve message data
     await attack.getMessageData();

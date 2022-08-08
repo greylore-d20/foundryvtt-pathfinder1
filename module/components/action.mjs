@@ -95,6 +95,10 @@ export class ItemAction {
     return this.item.isCharged;
   }
 
+  get isSelfCharged() {
+    return ["single", "day", "week", "charges"].includes(this.data.uses.self?.per);
+  }
+
   get chargeCost() {
     const formula = this.data.uses.autoDeductChargesCost;
     if (!(typeof formula === "string" && formula.length > 0)) return 1;
@@ -259,6 +263,11 @@ export class ItemAction {
       uses: {
         autoDeductCharges: true,
         autoDeductChargesCost: "1",
+        self: {
+          value: 0,
+          maxFormula: "",
+          per: null,
+        },
       },
       measureTemplate: {
         type: "",
@@ -327,12 +336,19 @@ export class ItemAction {
 
     // Parse formulaic attacks
     if (this.hasAttack) {
-      this.parseFormulaicAttacks({ formula: getProperty(this.data, "data.formulaicAttacks.count.formula") });
+      this.parseFormulaicAttacks({ formula: getProperty(this.data, "formulaicAttacks.count.formula") });
     }
 
     // Update conditionals
     if (this.data.conditionals instanceof Array) {
       this.conditionals = this._prepareConditionals(this.data.conditionals);
+    }
+
+    // Prepare max personal charges
+    if (this.data.uses.self?.per) {
+      const maxFormula = this.data.uses.self.per === "single" ? "1" : this.data.uses.self.maxFormula;
+      const maxUses = RollPF.safeTotal(maxFormula, this.getRollData());
+      setProperty(this.data, "uses.self.max", maxUses);
     }
   }
 

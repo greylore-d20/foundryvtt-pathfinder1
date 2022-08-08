@@ -61,30 +61,32 @@
       {{/if}}
 
       {{!-- Weapon Type --}}
-      <div class="form-group">
-        <label>{{localize "PF1.Category"}}</label>
-        <div class="form-fields">
-          <select name="system.weaponType">
-            {{#select system.weaponType}}
-            {{#each weaponCategories.types as |name type|}}
-            <option value="{{ type }}">{{ name }}</option>
-            {{/each}}
-            {{/select}}
-          </select>
+      <div class="container">
+        <div class="form-group">
+          <label>{{localize "PF1.Category"}}</label>
+          <div class="form-fields">
+            <select name="system.weaponType">
+              {{#select system.weaponType}}
+              {{#each weaponCategories.types as |name type|}}
+              <option value="{{ type }}">{{ name }}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
         </div>
-      </div>
 
-      {{!-- Weapon Subtype --}}
-      <div class="form-group">
-        <label>{{localize "PF1.Type"}}</label>
-        <div class="form-fields">
-          <select name="system.weaponSubtype">
-            {{#select system.weaponSubtype}}
-            {{#each weaponCategories.subTypes as |name type|}}
-            <option value="{{ type }}">{{ name }}</option>
-            {{/each}}
-            {{/select}}
-          </select>
+        {{!-- Weapon Subtype --}}
+        <div class="form-group">
+          <label>{{localize "PF1.Type"}}</label>
+          <div class="form-fields">
+            <select name="system.weaponSubtype">
+              {{#select system.weaponSubtype}}
+              {{#each weaponCategories.subTypes as |name type|}}
+              <option value="{{ type }}">{{ name }}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
         </div>
       </div>
 

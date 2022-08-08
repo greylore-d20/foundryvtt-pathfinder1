@@ -3898,7 +3898,6 @@ export class ActorPF extends ActorBasePF {
     }
 
     const itemUpdates = [];
-    const spellbookUses = {};
     // Restore daily uses of spells, feats, etc.
     if (restoreDailyUses === true) {
       // Update spellbooks
@@ -3911,12 +3910,11 @@ export class ActorPF extends ActorBasePF {
 
       // Update charged items
       for (const item of this.items) {
-        const itemUpdate = { _id: item.id };
+        const itemUpdate = {};
         const itemData = item.system;
 
         if (itemData.uses && itemData.uses.per === "day" && itemData.uses.value !== itemData.uses.max) {
           itemUpdate["system.uses.value"] = itemData.uses.max;
-          itemUpdates.push(itemUpdate);
         } else if (item.type === "spell") {
           const spellbook = getProperty(actorData, `attributes.spells.spellbooks.${itemData.spellbook}`),
             isSpontaneous = spellbook.spontaneous;
@@ -3936,6 +3934,31 @@ export class ActorPF extends ActorBasePF {
               ] = sbUses;
             }
           }
+        }
+
+        // Update charged actions
+        if (item.system.actions?.length > 0) {
+          const actions = deepClone(item.system.actions);
+          let _changed = false;
+          for (const actionData of actions) {
+            if (actionData.uses.self?.per === "day") {
+              const maxUses = actionData.uses.self.max || 0;
+              if (actionData.uses.self.value < maxUses) {
+                actionData.uses.self.value = maxUses;
+                _changed = true;
+              }
+            }
+          }
+
+          if (_changed) {
+            itemUpdate["system.actions"] = actions;
+          }
+        }
+
+        // Append update to queue
+        if (!foundry.utils.isEmpty(itemUpdate)) {
+          itemUpdate._id = item.id;
+          itemUpdates.push(itemUpdate);
         }
       }
 

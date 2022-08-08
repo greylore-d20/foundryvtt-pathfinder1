@@ -747,6 +747,7 @@ export const PF1 = {
     drug: "PF1.ConsumableTypeDrug",
     scroll: "PF1.ConsumableTypeScroll",
     wand: "PF1.ConsumableTypeWand",
+    rod: "PF1.ConsumableTypeRod",
     staff: "PF1.ConsumableTypeStaff",
     misc: "PF1.Misc",
   },

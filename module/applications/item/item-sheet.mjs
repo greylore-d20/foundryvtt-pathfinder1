@@ -1,4 +1,4 @@
-import { getBuffTargetDictionary, getBuffTargets, diffObjectAndArray } from "../../utils/lib.mjs";
+import { getBuffTargetDictionary, getBuffTargets, adjustNumberByStringCommand } from "../../utils/lib.mjs";
 import { ItemPF } from "../../documents/item/item-pf.mjs";
 import { ScriptEditor } from "../script-editor.mjs";
 import { ActorTraitSelector } from "../trait-selector.mjs";
@@ -22,6 +22,15 @@ export class ItemSheetPF extends ItemSheet {
      * @type {Application[]}
      */
     this._openApplications = [];
+
+    /**
+     * Track action updates from the item sheet.
+     *
+     * @property
+     * @private
+     * @type {object[]}
+     */
+    this._actionUpdates = [];
   }
 
   /* -------------------------------------------- */
@@ -464,6 +473,9 @@ export class ItemSheetPF extends ItemSheet {
     // Add links
     await this._prepareLinks(data);
 
+    // Add actions
+    this._prepareActions(data);
+
     return data;
   }
 
@@ -526,6 +538,22 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     await this.item.updateLinkItems();
+  }
+
+  _prepareActions(data) {
+    const result = [];
+
+    for (const d of data.system.actions) {
+      const doc = this.object.actions.get(d._id);
+      const obj = {
+        data: d,
+        isSelfCharged: doc.isSelfCharged,
+      };
+
+      result.push(obj);
+    }
+
+    data.actions = result;
   }
 
   _prepareItemFlags(data) {
@@ -785,7 +813,10 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".item .item-name h4").on("click", (event) => this._onItemSummary(event));
 
     // Everything below here is only needed if the sheet is editable
-    if (!this.isEditable) return;
+    if (!this.isEditable) {
+      html.find("span.text-box").addClass("readonly");
+      return;
+    }
 
     // Trigger form submission from textarea elements.
     html.find("textarea").change(this._onSubmit.bind(this));
@@ -845,6 +876,14 @@ export class ItemSheetPF extends ItemSheet {
     // Action control
     html.find(".action-controls a").on("click", this._onActionControl.bind(this));
 
+    // Modify action charges
+    html
+      .find(".action-parts .item-uses span.text-box.value")
+      .on("wheel", this._setActionUses.bind(this))
+      .on("click", (event) => {
+        this._onSpanTextInput(event, this._setActionUses.bind(this));
+      });
+
     /* -------------------------------------------- */
     /*  Links
     /* -------------------------------------------- */
@@ -860,6 +899,152 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".script-calls .items-list .item").contextmenu(this._onScriptCallEdit.bind(this));
 
     html.find(".script-calls .inventory-list[data-category]").on("drop", this._onScriptCallDrop.bind(this));
+  }
+
+  _onSpanTextInput(event, callback = null) {
+    const el = event.currentTarget;
+    const parent = el.parentElement;
+
+    // Replace span element with an input (text) element
+    const newEl = document.createElement(`INPUT`);
+    newEl.type = "text";
+    if (el.dataset?.dtype) newEl.dataset.dtype = el.dataset.dtype;
+
+    // Set value of new input element
+    let prevValue = el.innerText;
+    if (el.classList.contains("placeholder")) prevValue = "";
+
+    const noCap = el.classList.contains("no-value-cap");
+
+    const name = el.getAttribute("name");
+    let maxValue;
+    if (name) {
+      newEl.setAttribute("name", name);
+      prevValue = getProperty(this.document, name) ?? "";
+      if (prevValue && typeof prevValue !== "string") prevValue = prevValue.toString();
+
+      if (name.endsWith(".value") && !noCap) {
+        const maxName = name.replace(/\.value$/, ".max");
+        maxValue = getProperty(this.document, maxName);
+      }
+    }
+    newEl.value = prevValue;
+
+    // Toggle classes
+    const forbiddenClasses = ["placeholder", "direct", "allow-relative"];
+    for (const cls of el.classList) {
+      if (!forbiddenClasses.includes(cls)) newEl.classList.add(cls);
+    }
+
+    // Replace span with input element
+    const allowRelative = el.classList.contains("allow-relative"),
+      clearValue = parseFloat(el.dataset.clearValue || "0");
+    parent.replaceChild(newEl, el);
+    let changed = false;
+    newEl.addEventListener("keypress", (event) => {
+      if (event.key !== "Enter") return;
+      changed = true;
+      if (allowRelative) {
+        const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue, clearValue);
+        newEl.value = number;
+      }
+
+      if (newEl.value.toString() === prevValue.toString()) {
+        this.render();
+      } else if (typeof callback === "function") {
+        callback.call(this, event);
+      }
+    });
+    newEl.addEventListener("focusout", (event) => {
+      if (!changed) {
+        changed = true;
+        if (allowRelative && parseFloat(prevValue) !== parseFloat(newEl.value)) {
+          const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue, clearValue);
+          newEl.value = number;
+        }
+
+        if (newEl.value.toString() === prevValue.toString()) {
+          this.render();
+        } else if (typeof callback === "function") {
+          callback.call(this, event);
+        }
+      }
+    });
+
+    // Select text inside new element
+    newEl.focus();
+    newEl.select();
+  }
+
+  _mouseWheelAdd(event, el) {
+    const isInput = el.tagName.toUpperCase() === "INPUT";
+    const { originalEvent } = event;
+
+    if (originalEvent && originalEvent instanceof WheelEvent && originalEvent.ctrlKey) {
+      event.preventDefault();
+      const value = (isInput ? parseFloat(el.value) : parseFloat(el.innerText)) || 0;
+      if (Number.isNaN(value)) return;
+
+      const increase = -Math.sign(originalEvent.deltaY);
+      const amount = parseFloat(el.dataset.wheelStep) || 1;
+
+      if (isInput) {
+        el.value = value + amount * increase;
+      } else {
+        el.innerText = (value + amount * increase).toString();
+      }
+    }
+  }
+
+  _setActionUses(event) {
+    if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
+    const el = event.currentTarget;
+    const actionId = el.closest(".item").dataset.itemId;
+    const action = this.document.actions.get(actionId);
+
+    this._mouseWheelAdd(event, el);
+
+    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
+    this.setActionUpdate(action.id, "uses.self.value", value);
+
+    // Update on lose focus
+    if (event.originalEvent instanceof MouseEvent) {
+      const hasEvent = ($._data(el, "events")?.mouseout?.length ?? 0) > 0;
+      if (!hasEvent) {
+        $(el).one("mouseleave", (event) => {
+          this._updateActions();
+        });
+      }
+    } else this._updateActions();
+  }
+
+  setActionUpdate(id, key, value) {
+    let obj = this._actionUpdates.filter((o) => {
+      return o._id === id;
+    })[0];
+    if (obj == null) {
+      obj = { _id: id };
+      this._actionUpdates.push(obj);
+    }
+
+    obj[key] = value;
+  }
+
+  async _updateActions() {
+    const promises = [];
+
+    const updates = this._actionUpdates;
+    this._actionUpdates = [];
+
+    // Memorize variables in document
+    for (const d of updates) {
+      const action = this.document.actions.get(d._id);
+      if (!action) {
+        console.error("Item update for non-existing item:", d._id, d);
+        continue;
+      }
+      await action.update(d);
+    }
   }
 
   /* -------------------------------------------- */
@@ -1068,15 +1253,15 @@ export class ItemSheetPF extends ItemSheet {
       // Re-order
       if (srcItem === item) {
         const targetActionID = event.target?.closest("li.action-part")?.dataset?.itemId;
-        const prevActions = deepClone(this.object.system.actions);
+        const prevActions = deepClone(item.system.actions);
 
         let targetIdx;
         if (!targetActionID) targetIdx = prevActions.length - 1;
         else targetIdx = prevActions.indexOf(prevActions.find((o) => o._id === targetActionID));
-        const srcIdx = prevActions.indexOf(prevActions.find((o) => o._id === data._id));
+        const srcIdx = prevActions.indexOf(prevActions.find((o) => o._id === data.data._id));
 
         prevActions.splice(srcIdx, 1);
-        prevActions.splice(targetIdx, 0, data);
+        prevActions.splice(targetIdx, 0, data.data);
         await this.object.update({ "system.actions": prevActions });
       }
 
@@ -1084,7 +1269,7 @@ export class ItemSheetPF extends ItemSheet {
       else {
         const prevActions = deepClone(this.object.system.actions ?? []);
         data._id = randomID(16);
-        prevActions.splice(prevActions.length, 0, data);
+        prevActions.splice(prevActions.length, 0, data.data);
         await this.object.update({ "system.actions": prevActions });
       }
     }

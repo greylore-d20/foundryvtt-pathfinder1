@@ -60,50 +60,52 @@
       {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
 
       {{!-- Equipment Type --}}
-      <div class="form-group">
-        <label>{{localize "PF1.Category"}}</label>
-        <div class="form-fields">
-          <select name="system.equipmentType">
-            {{#select system.equipmentType}}
-            {{#each equipmentCategories.types as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
-          </select>
+      <div class="container">
+        <div class="form-group">
+          <label>{{localize "PF1.Category"}}</label>
+          <div class="form-fields">
+            <select name="system.equipmentType">
+              {{#select system.equipmentType}}
+              {{#each equipmentCategories.types as |name type|}}
+              <option value="{{type}}">{{name}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
         </div>
-      </div>
 
-      {{!-- Equipment Subtype --}}
-      <div class="form-group">
-        <label>{{localize "PF1.Type"}}</label>
-        <div class="form-fields">
-          <select name="system.equipmentSubtype">
-            {{#select system.equipmentSubtype}}
-            {{#each equipmentCategories.subTypes as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
-          </select>
+        {{!-- Equipment Subtype --}}
+        <div class="form-group">
+          <label>{{localize "PF1.Type"}}</label>
+          <div class="form-fields">
+            <select name="system.equipmentSubtype">
+              {{#select system.equipmentSubtype}}
+              {{#each equipmentCategories.subTypes as |name type|}}
+              <option value="{{type}}">{{name}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
         </div>
-      </div>
 
-      {{!-- Equipment Slot --}}
-      {{#if hasMultipleSlots}}
-      <div class="form-group">
-        <label>{{localize "PF1.Slot"}}</label>
-        <div class="form-fields">
-          <select name="system.slot">
-            {{#select system.slot}}
-            {{#each equipmentSlots as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
-          </select>
+        {{!-- Equipment Slot --}}
+        {{#if hasMultipleSlots}}
+        <div class="form-group">
+          <label>{{localize "PF1.Slot"}}</label>
+          <div class="form-fields">
+            <select name="system.slot">
+              {{#select system.slot}}
+              {{#each equipmentSlots as |name type|}}
+              <option value="{{type}}">{{name}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </div>
         </div>
+        {{else}}
+        <input type="hidden" name="system.slot" value="{{system.equipmentType}}" />
+        {{/if}}
       </div>
-      {{else}}
-      <input type="hidden" name="system.slot" value="{{system.equipmentType}}" />
-      {{/if}}
 
       {{!-- Equipment Size --}}
       {{> "systems/pf1/templates/items/parts/item-size.hbs" allowAutoResizing=true}}
@@ -128,48 +130,50 @@
         <label class="checkbox">
           <input type="checkbox" name="system.nonlethal" {{checked system.nonlethal}}/> {{localize "PF1.Nonlethal"}}
         </label>
-    </div>
+      </div>
 
       {{!-- Armor Class --}}
-      <div class="form-group">
-        <label>{{localize "PF1.ArmorClass"}}</label>
-        <div class="form-fields">
-          <input type="text" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number"/>
+      <div class="container">
+        <div class="form-group">
+          <label>{{localize "PF1.ArmorClass"}}</label>
+          <div class="form-fields">
+            <input type="text" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number"/>
+          </div>
         </div>
-      </div>
 
-      {{!-- Enhancement Bonus --}}
-      {{#unless showUnidentifiedData}}
-      <div class="form-group">
-        <label>{{localize "PF1.EnhancementBonus"}}</label>
-        <div class="form-fields">
-          <input type="text" name="system.armor.enh" value="{{system.armor.enh}}" data-dtype="Number"/>
+        {{!-- Enhancement Bonus --}}
+        {{#unless showUnidentifiedData}}
+        <div class="form-group">
+          <label>{{localize "PF1.EnhancementBonus"}}</label>
+          <div class="form-fields">
+            <input type="text" name="system.armor.enh" value="{{system.armor.enh}}" data-dtype="Number"/>
+          </div>
         </div>
-      </div>
-      {{/unless}}
+        {{/unless}}
 
-      {{!-- Dexterity Modifier --}}
-      {{#unless showUnidentifiedData}}
-      <div class="form-group">
-        <label>{{localize "PF1.MaxDexterityModifier"}}</label>
-        <div class="form-fields">
-          <input type="text" name="system.armor.dex" value="{{system.armor.dex}}" placeholder="{{localize "PF1.Unlimited"}}" data-dtype="Number"/>
+        {{!-- Dexterity Modifier --}}
+        {{#unless showUnidentifiedData}}
+        <div class="form-group">
+          <label>{{localize "PF1.MaxDexterityModifier"}}</label>
+          <div class="form-fields">
+            <input type="text" name="system.armor.dex" value="{{system.armor.dex}}" placeholder="{{localize "PF1.Unlimited"}}" data-dtype="Number"/>
+          </div>
         </div>
-      </div>
 
-      {{!-- Armor Check Penalty --}}
-      <div class="form-group">
-        <label>{{localize "PF1.ArmorCheckPenalty"}}</label>
-        <div class="form-fields">
-          <input type="text" name="system.armor.acp" value="{{system.armor.acp}}" data-dtype="Number" placeholder="0"/>
+        {{!-- Armor Check Penalty --}}
+        <div class="form-group">
+          <label>{{localize "PF1.ArmorCheckPenalty"}}</label>
+          <div class="form-fields">
+            <input type="text" name="system.armor.acp" value="{{system.armor.acp}}" data-dtype="Number" placeholder="0"/>
+          </div>
         </div>
-      </div>
 
-      {{!-- Spell Failure --}}
-      <div class="form-group">
-        <label>{{localize "PF1.ArcaneSpellFailure"}}</label>
-        <div class="form-fields">
-          <input type="text" name="system.spellFailure" value="{{system.spellFailure}}" data-dtype="Number" placeholder="0"/>
+        {{!-- Spell Failure --}}
+        <div class="form-group">
+          <label>{{localize "PF1.ArcaneSpellFailure"}}</label>
+          <div class="form-fields">
+            <input type="text" name="system.spellFailure" value="{{system.spellFailure}}" data-dtype="Number" placeholder="0"/>
+          </div>
         </div>
       </div>
 

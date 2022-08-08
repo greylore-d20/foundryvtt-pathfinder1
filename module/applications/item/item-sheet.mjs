@@ -541,6 +541,7 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _prepareActions(data) {
+    if (!data.system.actions) return [];
     const result = [];
 
     for (const d of data.system.actions) {

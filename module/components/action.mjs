@@ -25,7 +25,7 @@ export class ItemAction {
   static async create(data, context = {}) {
     const { parent } = context;
 
-    if (parent instanceof pf1.documents.ItemPF) {
+    if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
       const newActionData = deepClone(parent.system.actions || []);

@@ -341,10 +341,11 @@ export class ItemSheetPF extends ItemSheet {
       });
 
       // Enrich description
-      if (data.shortDescription != null) {
-        data.shortDescription = TextEditor.enrichHTML(data.shortDescription, {
+      if (data.system.shortDescription != null) {
+        data.shortDescription = await TextEditor.enrichHTML(data.system.shortDescription, {
           rollData: firstAction?.getRollData() ?? rollData,
           secrets: data.owner,
+          async: true,
         });
       }
     }

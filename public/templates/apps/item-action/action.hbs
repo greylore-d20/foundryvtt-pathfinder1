@@ -47,7 +47,6 @@
   {{/if}}
 
   {{#if hasAttackRoll }}
-
   {{!-- Attack Name --}}
   <div class="form-group">
     <label>{{localize "PF1.AttackName"}}</label>
@@ -100,8 +99,10 @@
       </select>
     </div>
   </div>
+  {{/if}}
 </div>
 
+{{#if hasAttackRoll}}
 <div class="container">
   <h4 class="attack-header">
     {{localize "PF1.ExtraAttacks"}}

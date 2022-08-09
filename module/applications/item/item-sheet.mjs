@@ -693,15 +693,13 @@ export class ItemSheetPF extends ItemSheet {
       props.push(labels.components, labels.materials);
     } else if (item.type === "equipment") {
       // Obfuscate wondrous item as clothing or other, if unidentified
-      if (item.system.equipmentSubtype === "wondrous") {
-        if (!item.showUnidentifiedData) {
-          props.push(CONFIG.PF1.equipmentTypes[item.system.equipmentType][item.system.equipmentSubtype]);
+      if (!item.showUnidentifiedData || item.system.equipmentType !== "misc") {
+        props.push(CONFIG.PF1.equipmentTypes[item.system.equipmentType][item.system.equipmentSubtype]);
+      } else {
+        if (item.system.slot === "slotless") {
+          props.push(CONFIG.PF1.equipmentTypes[item.system.equipmentType]["other"]);
         } else {
-          if (item.system.slot === "slotless") {
-            props.push(CONFIG.PF1.equipmentTypes[item.system.equipmentType]["other"]);
-          } else {
-            props.push(CONFIG.PF1.equipmentTypes[item.system.equipmentType]["clothing"]);
-          }
+          props.push(CONFIG.PF1.equipmentTypes[item.system.equipmentType]["clothing"]);
         }
       }
       // Add AC

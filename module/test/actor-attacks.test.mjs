@@ -194,7 +194,8 @@ export const registerActorItemAttackTests = () => {
             let roll;
             let rolls;
             before(async () => {
-              await items.bite.update({ system: { primaryAttack: false } });
+              const action = items.bite.firstAction;
+              await action.update({ naturalAttack: { primaryAttack: false } });
               roll = await items.bite.useAttack({ skipDialog: true });
               rolls = roll.flags.pf1.metadata.rolls.attacks[0];
               messages.push(roll);

@@ -58,7 +58,7 @@ export class ItemEquipmentPF extends ItemPF {
     labels.equipmentSubtype = C.equipmentTypes[eType][eSubtype];
 
     // AC labels
-    const ac = (data.armor.value || 0) + (data.armor.enh || 0);
+    const ac = this.showUnidentifiedData ? data.armor.value || 0 : (data.armor.value || 0) + (data.armor.enh || 0);
     labels.armor = ac > 0 ? `${ac} AC` : "";
     if (data.armor.dex === "") data.armor.dex = null;
     else if (typeof data.armor.dex === "string" && /\d+/.test(data.armor.dex)) {

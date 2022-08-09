@@ -152,7 +152,6 @@
         {{/unless}}
 
         {{!-- Dexterity Modifier --}}
-        {{#unless showUnidentifiedData}}
         <div class="form-group">
           <label>{{localize "PF1.MaxDexterityModifier"}}</label>
           <div class="form-fields">
@@ -178,6 +177,7 @@
       </div>
 
       {{!-- Advanced Tag --}}
+      {{#unless showUnidentifiedData}}
       {{> "systems/pf1/templates/items/parts/item-tag.hbs"}}
       {{/unless}}
     </div>

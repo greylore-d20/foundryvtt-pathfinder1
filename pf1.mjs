@@ -327,22 +327,22 @@ Hooks.once("init", function () {
   };
   game.pf1 = new Proxy(oldPf1, {
     get(obj, property) {
-      console.warn(
+      foundry.utils.logCompatibilityWarning(
         [
           "You are accessing game.pf1, which will be restructured to match globalThis.pf1 in the future.",
           `Please check whether ${property} and its contents are still available, or use globalThis.pf1 instead.`,
-          new Error().stack,
-        ].join("\n")
+        ].join("\n"),
+        { since: "PF1 0.82.0", until: "PF1 0.83.0" }
       );
       return Reflect.get(obj, property);
     },
     set(obj, property, value) {
-      console.warn(
+      foundry.utils.logCompatibilityWarning(
         [
           "You are accessing game.pf1, which will be restructured to match globalThis.pf1 in the future.",
           `Please check whether ${property} and its contents are still available, or use globalThis.pf1 instead.`,
-          new Error().stack,
-        ].join("\n")
+        ].join("\n"),
+        { since: "PF1 0.82.0", until: "PF1 0.83.0" }
       );
       return Reflect.set(obj, property, value);
     },

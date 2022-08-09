@@ -563,7 +563,7 @@ export class ActorPF extends ActorBasePF {
         const value = book.cl.base || 0;
         total += value;
         clTotal += value;
-        getSourceInfo(this.sourceInfo, key).positive.push({ name: game.i18n.localize("PF1.Base"), value: value });
+        setSourceInfoByName(this.sourceInfo, key, game.i18n.localize("PF1.Base"), value);
       }
       // Add HD
       if (book.class === "_hd") {
@@ -581,7 +581,7 @@ export class ActorPF extends ActorBasePF {
         setSourceInfoByName(this.sourceInfo, key, rollData.classes[book.class].name, value);
       }
 
-      // set auto spell level calculation offset
+      // Set auto spell level calculation offset
       if (book.autoSpellLevelCalculation) {
         const autoFormula = book.cl.autoSpellLevelCalculationFormula || "0";
         const autoBonus = RollPF.safeTotal(autoFormula, rollData);
@@ -633,6 +633,8 @@ export class ActorPF extends ActorBasePF {
         );
       }
 
+      const prevTotal = book.cl.total ?? 0;
+      clTotal += prevTotal;
       book.cl.total = clTotal;
     }
 
@@ -643,8 +645,34 @@ export class ActorPF extends ActorBasePF {
       const concFormula = book.concentrationFormula;
       const formulaRoll = concFormula.length ? RollPF.safeRoll(concFormula, rollData).total : 0;
       const classAbilityMod = actorData.abilities[book.ability]?.mod ?? 0;
-      const concentration = clTotal + classAbilityMod + formulaRoll - rollData.attributes.energyDrain;
-      book.concentration = { total: concentration };
+      const concentration = clTotal + classAbilityMod + formulaRoll;
+      const prevTotal = book.concentration.total ?? 0;
+
+      // Set source info
+      setSourceInfoByName(
+        this.sourceInfo,
+        `system.attributes.spells.spellbooks.${bookKey}.concentration.total`,
+        game.i18n.localize("PF1.CasterLevel"),
+        clTotal,
+        false
+      );
+      setSourceInfoByName(
+        this.sourceInfo,
+        `system.attributes.spells.spellbooks.${bookKey}.concentration.total`,
+        game.i18n.localize("PF1.SpellcastingAbility"),
+        classAbilityMod,
+        false
+      );
+      setSourceInfoByName(
+        this.sourceInfo,
+        `system.attributes.spells.spellbooks.${bookKey}.concentration.total`,
+        game.i18n.localize("PF1.ByBonus"),
+        formulaRoll,
+        false
+      );
+
+      // Apply value
+      book.concentration = { total: prevTotal + concentration };
     }
 
     const getAbilityBonus = (a) => (a !== 0 ? ActorPF.getSpellSlotIncrease(spellSlotAbilityMod, a) : 0);
@@ -1454,6 +1482,7 @@ export class ActorPF extends ActorBasePF {
     sourceDetails["system.attributes.ac.flatFooted.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
     sourceDetails["system.attributes.cmd.total"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
     sourceDetails["system.attributes.cmd.flatFootedTotal"].push({ name: game.i18n.localize("PF1.Base"), value: 10 });
+    // Add ability score data
     for (const [a, abl] of Object.entries(actorData.abilities)) {
       sourceDetails[`system.abilities.${a}.total`].push({ name: game.i18n.localize("PF1.Base"), value: abl.value });
       // Add ability penalty, damage and drain
@@ -1583,10 +1612,14 @@ export class ActorPF extends ActorBasePF {
       "abilities.int.checkMod": 0,
       "abilities.wis.checkMod": 0,
       "abilities.cha.checkMod": 0,
-      "attributes.spells.spellbooks.primary.concentration": 0,
-      "attributes.spells.spellbooks.secondary.concentration": 0,
-      "attributes.spells.spellbooks.tertiary.concentration": 0,
-      "attributes.spells.spellbooks.spelllike.concentration": 0,
+      "attributes.spells.spellbooks.primary.concentration.total": 0,
+      "attributes.spells.spellbooks.secondary.concentration.total": 0,
+      "attributes.spells.spellbooks.tertiary.concentration.total": 0,
+      "attributes.spells.spellbooks.spelllike.concentration.total": 0,
+      "attributes.spells.spellbooks.primary.cl.total": 0,
+      "attributes.spells.spellbooks.secondary.cl.total": 0,
+      "attributes.spells.spellbooks.tertiary.cl.total": 0,
+      "attributes.spells.spellbooks.spelllike.cl.total": 0,
       "details.carryCapacity.bonus.total": 0,
       "details.carryCapacity.multiplier.total": 0,
     };
@@ -2182,6 +2215,13 @@ export class ActorPF extends ActorBasePF {
     const allowed = Hooks.call("actorRoll", this, "cl", spellbookKey, options);
     if (allowed === false) return;
 
+    // Set up roll parts
+    const parts = [];
+
+    const describePart = (value, label) => parts.push(`${value}[${label}]`);
+    const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
+    srcDetails(this.sourceDetails[`system.attributes.spells.spellbooks.${spellbookKey}.cl.total`]);
+
     // Add contextual caster level string
     const notes = this.getContextNotesParsed(`spell.cl.${spellbookKey}`);
 
@@ -2193,9 +2233,8 @@ export class ActorPF extends ActorBasePF {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     return DicePF.d20Roll({
       actor: this,
-      event: event,
       dice: options.dice,
-      parts: [`@cl[${game.i18n.localize("PF1.CasterLevel")}]`],
+      parts,
       data: rollData,
       subject: { core: "cl", spellbook: spellbookKey },
       title: game.i18n.localize("PF1.CasterLevelCheck"),
@@ -2218,6 +2257,13 @@ export class ActorPF extends ActorBasePF {
     const allowed = Hooks.call("actorRoll", this, "concentration", spellbookKey, options);
     if (allowed === false) return;
 
+    // Set up roll parts
+    const parts = [];
+
+    const describePart = (value, label) => parts.push(`${value}[${label}]`);
+    const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
+    srcDetails(this.sourceDetails[`system.attributes.spells.spellbooks.${spellbookKey}.concentration.total`]);
+
     // Add contextual concentration string
     const notes = this.getContextNotesParsed(`spell.concentration.${spellbookKey}`);
 
@@ -2235,12 +2281,7 @@ export class ActorPF extends ActorBasePF {
     rollData.formulaBonus = formulaRoll;
 
     return DicePF.d20Roll({
-      event: event,
-      parts: [
-        `@cl[${game.i18n.localize("PF1.CasterLevel")}] + @mod[${
-          CONFIG.PF1.abilities[spellbook.ability]
-        }] + @formulaBonus[${game.i18n.localize("PF1.ByBonus")}]`,
-      ],
+      parts,
       dice: options.dice,
       data: rollData,
       subject: { core: "concentration", spellbook: spellbookKey },
@@ -3202,7 +3243,7 @@ export class ActorPF extends ActorBasePF {
       }
 
       const spellbookNotes = getProperty(
-        this.system,
+        this,
         `system.attributes.spells.spellbooks.${spellbookKey}.concentrationNotes`
       );
       if (spellbookNotes.length) {
@@ -3254,7 +3295,12 @@ export class ActorPF extends ActorBasePF {
 
     return noteObjects.reduce((cur, o) => {
       for (const note of o.notes) {
-        cur.push(TextEditor.enrichHTML(note, { rollData: o.item != null ? o.item.getRollData() : this.getRollData() }));
+        cur.push(
+          TextEditor.enrichHTML(note, {
+            rollData: o.item != null ? o.item.getRollData() : this.getRollData(),
+            async: false,
+          })
+        );
       }
 
       return cur;
@@ -3564,6 +3610,7 @@ export class ActorPF extends ActorBasePF {
         .reduce((cur, o) => {
           cur[o.system.tag] = {
             level: o.system.level,
+            name: o.name,
           };
 
           return cur;

@@ -463,6 +463,20 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       return "system.attributes.damage.weapon";
     case "sdamage":
       return "system.attributes.damage.spell";
+    case "concentration":
+      return [
+        "system.attributes.spells.spellbooks.primary.concentration.total",
+        "system.attributes.spells.spellbooks.secondary.concentration.total",
+        "system.attributes.spells.spellbooks.tertiary.concentration.total",
+        "system.attributes.spells.spellbooks.spelllike.concentration.total",
+      ];
+    case "cl":
+      return [
+        "system.attributes.spells.spellbooks.primary.cl.total",
+        "system.attributes.spells.spellbooks.secondary.cl.total",
+        "system.attributes.spells.spellbooks.tertiary.cl.total",
+        "system.attributes.spells.spellbooks.spelllike.cl.total",
+      ];
   }
 
   if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)$/)) {

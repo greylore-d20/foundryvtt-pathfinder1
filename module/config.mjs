@@ -1841,6 +1841,8 @@ export const PF1 = {
     spellResist: { label: "PF1.SpellResistance", category: "defense", sort: 190000 },
     bonusFeats: { label: "PF1.BuffTarBonusFeats", category: "misc", sort: 200000 },
     bonusSkillRanks: { label: "PF1.BuffTarBonusSkillRanks", category: "skills", sort: 210000 },
+    concentration: { label: "PF1.Concentration", category: "spell", sort: 220000 },
+    cl: { label: "PF1.CasterLevel", category: "spell", sort: 230000 },
   },
 
   buffTargetCategories: {
@@ -1850,10 +1852,11 @@ export const PF1 = {
     damage: { label: "PF1.Damage" },
     ability: { label: "PF1.AbilityScore" },
     abilityChecks: { label: "PF1.BuffTarAbilityChecks" },
+    health: { label: "PF1.Health" },
     skills: { label: "PF1.Skills" },
     skill: { label: "PF1.BuffTarSpecificSkill" },
     speed: { label: "PF1.Speed" },
-    health: { label: "PF1.Health" },
+    spell: { label: "PF1.BuffTarSpells" },
     misc: { label: "PF1.Misc" },
   },
 

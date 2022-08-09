@@ -3,8 +3,30 @@
     <table class="spellcasting-summary">
       <thead>
         <tr>
-          <th class="spellcasting-concentration rollable" data-drag="concentration"><i class="fas fa-dice"></i> {{localize "PF1.Concentration"}}</th>
-          <th class="spellcasting-cl rollable" data-drag="cl"><i class="fas fa-dice"></i> {{localize "PF1.CasterLevel"}}</th>
+          <th class="spellcasting-concentration rollable tooltip" data-drag="concentration">
+            <i class="fas fa-dice"></i> {{localize "PF1.Concentration"}}
+            <span class="tooltipcontent">
+              @attributes.spells.spellbooks.{{spellbookIndex}}.concentration.total : {{spellbook.orig.concentration.total}}
+              {{#with (lookup sourceDetails.system.attributes.spells.spellbooks spellbookIndex)}}
+              {{#if concentration.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each concentration.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{/if}}
+              {{/with}}
+            </span>
+          </th>
+          <th class="spellcasting-cl rollable tooltip" data-drag="cl">
+            <i class="fas fa-dice"></i> {{localize "PF1.CasterLevel"}}
+            <span class="tooltipcontent">
+              @attributes.spells.spellbooks.{{spellbookIndex}}.cl.total : {{spellbook.orig.cl.total}}
+              {{#with (lookup sourceDetails.system.attributes.spells.spellbooks spellbookIndex)}}
+              {{#if cl.total.length}}
+              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              {{#each cl.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+              {{/if}}
+              {{/with}}
+            </span>
+          </th>
         </tr>
       </thead>
       <tbody>

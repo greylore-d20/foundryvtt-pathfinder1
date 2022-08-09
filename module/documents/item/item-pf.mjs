@@ -1282,7 +1282,7 @@ export class ItemPF extends ItemBasePF {
     if (rollMode) shared.rollMode = rollMode;
 
     // Call itemUse hook and determine whether the item can be used based off that
-    const allowed = Hooks.call("itemUse", this, "attack", { ev, skipDialog, dice });
+    const allowed = Hooks.call("itemUse", this, "attack", { ev, skipDialog, dice, shared });
     if (allowed === false) {
       await measureResult?.delete();
       return;

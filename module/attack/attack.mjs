@@ -1109,6 +1109,7 @@ export class Attack {
       skipDialog: this.shared.skipDialog,
       chatData: this.shared.chatData,
       templateData: this.shared.templateData,
+      shared: this.shared,
     });
 
     // Create message

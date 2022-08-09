@@ -30,13 +30,6 @@ export class ActorSheetPF extends ActorSheet {
     super(...args);
 
     /**
-     * The scroll position on the active tab
-     *
-     * @type {number}
-     */
-    this._scrollTab = {};
-
-    /**
      * Track the set of item filters which are applied
      *
      * @type {Set}
@@ -113,6 +106,12 @@ export class ActorSheetPF extends ActorSheet {
      * @private
      */
     this._skillsLocked = true;
+
+    /**
+     * @type {string[]} IDs of expanded items.
+     * @private
+     */
+    this._expandedItems = [];
   }
 
   static get defaultOptions() {
@@ -121,10 +120,9 @@ export class ActorSheetPF extends ActorSheet {
         ".combat-attacks",
         ".inventory-list",
         ".skills-list",
-        ".feats-body",
         ".traits",
         ".actor-notes",
-        ".editor-content[data-edit='data.details.biography.value']",
+        ".editor-content[data-edit='system.details.biography.value']",
       ],
       dragDrop: [
         { dragSelector: "li.item[data-item-id]" },
@@ -1646,32 +1644,47 @@ export class ActorSheetPF extends ActorSheet {
   /* -------------------------------------------- */
 
   /**
-   * Toggle inline display of an item's summary/description by expanding or hiding info div
-   *
    * @param {JQuery.ClickEvent<HTMLElement>} event - The click event on the item
    * @private
    */
   _onItemSummary(event) {
     event.preventDefault();
     const li = $(event.currentTarget).parents(".item");
+    this.openItemSummary(li);
+  }
+
+  /**
+   * Toggle inline display of an item's summary/description by expanding or hiding info div
+   *
+   * @param {JQuery<HTMLElement>} elem - The element to open. Likely will have the `item` class in CSS.
+   * @param {boolean} [instant=false] - Whether to instantly show the expansion (true), or animate it (false)
+   */
+  openItemSummary(elem, { instant = false } = {}) {
     // Check whether pseudo-item belongs to another collection
-    const collection = li.attr("data-item-collection") ?? "items";
-    const item = this.document[collection].get(li.attr("data-item-id"));
+    const collection = elem.attr("data-item-collection") ?? "items";
+    const itemId = elem.attr("data-item-id");
+    const item = this.document[collection].get(itemId);
     const { description, properties } = item.getChatData();
 
     // Toggle summary
-    if (li.hasClass("expanded")) {
-      const summary = li.children(".item-summary");
-      summary.slideUp(200, () => summary.remove());
+    this._expandedItems = this._expandedItems.filter((o) => o !== itemId);
+    if (elem.hasClass("expanded")) {
+      const summary = elem.children(".item-summary");
+      if (instant) summary.remove();
+      else summary.slideUp(200, () => summary.remove());
     } else {
       const div = $(`<div class="item-summary">${description}</div>`);
       const props = $(`<div class="item-properties tag-list"></div>`);
       properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
       div.append(props);
-      li.append(div.hide());
-      div.slideDown(200);
+      if (instant) elem.append(div);
+      else {
+        elem.append(div.hide());
+        div.slideDown(200);
+      }
+      this._expandedItems.push(itemId);
     }
-    li.toggleClass("expanded");
+    elem.toggleClass("expanded");
   }
 
   /**
@@ -2785,7 +2798,7 @@ export class ActorSheetPF extends ActorSheet {
     // Trick to avoid error on elements with changing name
     let focus = this.element.find(":focus");
     focus = focus.length ? focus[0] : null;
-    if (focus && focus.name.match(/^data\.skills\.(?:[a-zA-Z0-9]*)\.name$/)) focus.blur();
+    if (focus && focus.name.match(/^system\.skills\.(?:[a-zA-Z0-9]*)\.name$/)) focus.blur();
 
     const result = await super._render(...args);
 
@@ -2796,6 +2809,18 @@ export class ActorSheetPF extends ActorSheet {
     applyAccessibilitySettings(this, this.element, {}, game.settings.get("pf1", "accessibilityConfig"));
 
     return result;
+  }
+
+  async _renderInner(...args) {
+    const html = await super._renderInner(...args);
+
+    // Re-open item summaries
+    for (const itemId of this._expandedItems) {
+      const elem = html.find(`[data-item-id="${itemId}"]`);
+      if (elem) this.openItemSummary(elem, { instant: true });
+    }
+
+    return html;
   }
 
   async _onSubmit(event, { updateData = null, preventClose = false, preventRender = false } = {}) {

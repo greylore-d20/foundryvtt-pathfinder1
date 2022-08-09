@@ -39,7 +39,7 @@
     "*.md": "prettier --write"
   },
   "scripts": {
-    "prebuild": "npm run packs:compile",
+    "prebuild": "npm run link jsconfig && npm run packs:compile",
     "build": "vite build",
     "build:watch": "npm run prebuild && vite build --mode development --watch",
     "build:serve": "npm run build && vite serve",

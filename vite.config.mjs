@@ -4,6 +4,7 @@ import url from "node:url";
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import { copy } from "@guanghechen/rollup-plugin-copy";
+import { terser } from "rollup-plugin-terser";
 
 import { resolveUrl, FOUNDRY_CONFIG } from "./tools/foundry-config.mjs";
 import handlebarsReload from "./tools/handlebars-reload.mjs";
@@ -39,18 +40,12 @@ const config = defineConfig(({ command, mode }) => {
         },
       },
     },
+    esbuild: {
+      minifySyntax: true,
+      minifyWhitespace: true,
+    },
     build: {
       target: "es2022",
-      // Slower than esbuild, but required for options
-      minify: mode === "development" ? false : "terser",
-      // Keep class and function symbol names for sane console output
-      terserOptions:
-        mode === "development"
-          ? undefined
-          : {
-              keep_classnames: true,
-              keep_fnames: true,
-            },
       outDir: resolve("dist"),
       emptyOutDir: true,
       sourcemap: true,
@@ -59,6 +54,7 @@ const config = defineConfig(({ command, mode }) => {
           // Relative paths start with a `../`, resulting in the `pf1` missing
           sourcemapPathTransform: (relative) => path.join("/systems/pf1/pf1/", relative),
         },
+        plugins: [terser({ mangle: { keep_classnames: true, keep_fnames: true } })],
       },
       reportCompressedSize: true,
       lib: {

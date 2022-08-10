@@ -343,7 +343,7 @@ export class AttackDialog extends Application {
     const atk = this.attacks[attackIndex];
     const curAmmo = atk.ammo?.data._id;
     const ammoItem = ammoId ? this.object.actor.items.get(ammoId) : null;
-    const abundant = ammoItem?.system.flags?.pf1?.abundant ?? false;
+    const abundant = ammoItem?.flags?.pf1?.abundant ?? false;
 
     // Check if ammo exists
     if (ammoId && this.ammoUsage[ammoId] == null) ammoId = null;

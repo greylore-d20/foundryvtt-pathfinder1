@@ -490,6 +490,47 @@ export class Attack {
   }
 
   /**
+   * Determines conditional parts used in a specific attack.
+   *
+   * @param {object} atk - The attack used.
+   * @param {number} [index=0] - The index of the attack, in order of enabled attacks.
+   * @returns {object} The conditional parts used.
+   */
+  _getConditionalParts(atk, { index = 0 }) {
+    const result = {};
+
+    const conditionalTemplates = {
+      "attack.normal": "attack.;id;.normal",
+      "attack.crit": "attack.;id;.crit",
+      "damage.normal": "damage.;id;.normal",
+      "damage.crit": "damage.;id;.crit",
+      "damage.nonCrit": "damage.;id;.nonCrit",
+    };
+    const addPart = (id) => {
+      for (const [templateKey, templateStr] of Object.entries(conditionalTemplates)) {
+        if (!result[templateKey]) result[templateKey] = [];
+
+        const parsedStr = templateStr.replace(";id;", id);
+        result[templateKey].push(...(this.shared.conditionalPartsCommon[parsedStr] ?? []));
+      }
+    };
+
+    addPart(`attack_${index}`);
+    addPart("allAttack");
+    addPart("allDamage");
+
+    if (atk.id === "rapid-shot") {
+      addPart("rapidShotAttack");
+      addPart("rapidShotDamage");
+    } else if (atk.id === "haste-attack") {
+      addPart("hasteAttack");
+      addPart("hasteDamage");
+    }
+
+    return result;
+  }
+
+  /**
    * Adds ChatAttack entries to an attack's shared context.
    */
   async addAttacks() {
@@ -497,28 +538,7 @@ export class Attack {
       const atk = this.shared.attacks[a];
 
       // Combine conditional modifiers for attack and damage
-      const conditionalParts = {
-        "attack.normal": [
-          ...(this.shared.conditionalPartsCommon[`attack.attack_${a}.normal`] ?? []),
-          ...(this.shared.conditionalPartsCommon["attack.allAttack.normal"] ?? []),
-        ], //`
-        "attack.crit": [
-          ...(this.shared.conditionalPartsCommon[`attack.attack_${a}.crit`] ?? []),
-          ...(this.shared.conditionalPartsCommon["attack.allAttack.crit"] ?? []),
-        ], //`
-        "damage.normal": [
-          ...(this.shared.conditionalPartsCommon[`damage.attack_${a}.normal`] ?? []),
-          ...(this.shared.conditionalPartsCommon["damage.allDamage.normal"] ?? []),
-        ], //`
-        "damage.crit": [
-          ...(this.shared.conditionalPartsCommon[`damage.attack_${a}.crit`] ?? []),
-          ...(this.shared.conditionalPartsCommon["damage.allDamage.crit"] ?? []),
-        ], //`
-        "damage.nonCrit": [
-          ...(this.shared.conditionalPartsCommon[`damage.attack_${a}.nonCrit`] ?? []),
-          ...(this.shared.conditionalPartsCommon["damage.allDamage.nonCrit"] ?? []),
-        ], //`
-      };
+      const conditionalParts = this._getConditionalParts(atk, { index: a });
 
       this.shared.rollData.attackCount = a;
 

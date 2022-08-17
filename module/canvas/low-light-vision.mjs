@@ -56,11 +56,12 @@ export const patchCore = function () {
     // Compute data attributes
     this.colorRGB = Color.from(this.data.color)?.rgb;
     this.radius = Math.max(Math.abs(dim), Math.abs(bright));
-    this.ratio = Math.clamped(Math.abs(bright) / this.radius, 0, 1);
+    this.ratio = Math.clamped(Math.abs(this.data.bright) / this.radius, 0, 1);
     this.isDarkness = this.data.luminosity < 0;
 
     // Compute the source polygon
-    this.los = this._createLOS();
+    this.los = this._createPolygon();
+    this._flags.renderSoftEdges &&= this.los.edges.size > 0 || this.data.angle < 360;
 
     // Initialize or update meshes with the los points array
     this._initializeMeshes(this.los);
@@ -68,9 +69,8 @@ export const patchCore = function () {
     // Update shaders if the animation type or the constrained wall option changed
     const updateShaders = "animation.type" in changes || "walls" in changes;
     if (updateShaders) this._initializeShaders();
-
-    // Record status flags
-    if (updateShaders || this.constructor._appearanceKeys.some((k) => k in changes)) {
+    else if (this.constructor._appearanceKeys.some((k) => k in changes)) {
+      // Record status flags
       for (const k of Object.keys(this._resetUniforms)) {
         this._resetUniforms[k] = true;
       }

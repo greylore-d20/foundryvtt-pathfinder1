@@ -7,8 +7,8 @@ export class CompendiumDirectoryPF extends CompendiumDirectory {
     });
   }
 
-  getData(options) {
-    const data = super.getData(options);
+  async getData(options) {
+    const data = await super.getData(options);
 
     for (const p of Object.values(data.packs)) {
       for (const pack of p.packs) {

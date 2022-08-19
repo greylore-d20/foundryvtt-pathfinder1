@@ -1,6 +1,6 @@
 {{!-- Damage type indicators --}}
 {{#if (or data.values.length data.custom)}}
-<div class="damage-type-visual"{{#if name}} data-name="{{name}}"{{/if}}>
+<div class="damage-type-visual">
   {{#each data.values as |d|}}
   <div class="damage-type" title="{{localize (lookup (lookup ../damageTypes d) "name")}}">
     {{#if (lookup (lookup ../damageTypes d) "icon")}}

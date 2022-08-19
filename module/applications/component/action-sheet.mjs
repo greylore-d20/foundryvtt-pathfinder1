@@ -337,23 +337,28 @@ export class ItemActionSheet extends FormApplication {
   async _onClickDamageType(event) {
     event.preventDefault();
     const clickedElement = event.currentTarget;
-    let dataPath = clickedElement.dataset.name;
-    let targetObj = this.object;
 
-    // Check for conditional
-    {
-      const conditionalElement = clickedElement.closest(".conditional");
-      const modifierElement = clickedElement.closest(".conditional-modifier");
-      if (conditionalElement && modifierElement) {
-        const conditional = this.object.conditionals.get(conditionalElement.dataset.conditional);
-        const modifier = conditional.modifiers.get(modifierElement.dataset.modifier);
-        targetObj = modifier;
-        dataPath = "damageType";
-      }
+    // Check for normal damage part
+    const damageIndex = clickedElement.closest(".damage-part")?.dataset.damagePart;
+    const damagePart = clickedElement.closest(".damage")?.dataset.key;
+    if (damageIndex != null && damagePart != null) {
+      const app = new pf1.applications.DamageTypeSelector(
+        this.object,
+        `${damagePart}.${damageIndex}.1`,
+        getProperty(this.object.data, damagePart)[0][1]
+      );
+      return app.render(true);
     }
 
-    const app = new pf1.applications.DamageTypeSelector(targetObj, dataPath);
-    app.render(true);
+    // Check for conditional
+    const conditionalElement = clickedElement.closest(".conditional");
+    const modifierElement = clickedElement.closest(".conditional-modifier");
+    if (conditionalElement && modifierElement) {
+      const conditional = this.object.conditionals.get(conditionalElement.dataset.conditional);
+      const modifier = conditional.modifiers.get(modifierElement.dataset.modifier);
+      const app = new pf1.applications.DamageTypeSelector(modifier, "damageType", modifier.data.damageType);
+      return app.render(true);
+    }
   }
 
   async _onAttackControl(event) {

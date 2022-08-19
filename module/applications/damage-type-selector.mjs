@@ -1,8 +1,8 @@
 export class DamageTypeSelector extends FormApplication {
-  constructor(object, dataPath, options = {}) {
+  constructor(object, dataPath, data, options = {}) {
     super(object, options);
     this._dataPath = dataPath;
-    this._data = deepClone(getProperty(object.data, this._dataPath));
+    this._data = deepClone(data);
     if (!this._data) this._data = [];
   }
 

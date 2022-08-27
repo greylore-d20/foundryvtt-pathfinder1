@@ -2,42 +2,6 @@ import { convertDistance, calculateRange, simplifyFormula } from "../lib.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
 export const registerHandlebarsHelpers = function () {
-  /**
-   * Render a MCE editor container with an optional toggle button
-   */
-  Handlebars.registerHelper("roll-editor", function (options) {
-    const action = options.data.root.action;
-    const item = options.data.root.item;
-    const actor = options.data.root.actor;
-    let rollData;
-    if (action) rollData = action.getRollData();
-    if (item && !rollData) rollData = item.getRollData();
-    if (actor && !rollData) rollData = actor.getRollData();
-    if (!rollData) rollData = {};
-
-    // Create editor
-    const target = options.hash["target"];
-    if (!target) throw new Error("You must define the name of a target field.");
-
-    // Enrich the content
-    const owner = Boolean(options.hash["owner"]);
-    const content = TextEditor.enrichHTML(options.hash["content"] || "", {
-      secrets: owner,
-      documents: true,
-      rollData: rollData,
-      async: false,
-    });
-
-    // Construct the HTML
-    const editor = $(`<div class="editor"><div class="editor-content" data-edit="${target}">${content}</div></div>`);
-
-    // Append edit button
-    const button = Boolean(options.hash["button"]);
-    const editable = Boolean(options.hash["editable"]);
-    if (button && editable) editor.append($('<a class="editor-edit"><i class="fas fa-edit"></i></a>'));
-    return new Handlebars.SafeString(editor[0].outerHTML);
-  });
-
   Handlebars.registerHelper("convertDistance", (value) => (Number.isFinite(value) ? convertDistance(value)[0] : value));
   Handlebars.registerHelper("distanceUnit", (type) => convertDistance(0, type)[1]);
 

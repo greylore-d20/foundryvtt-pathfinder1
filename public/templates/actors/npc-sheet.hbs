@@ -63,13 +63,13 @@
 
       {{!-- Biography Tab --}}
       <div class="tab biography flexcol" data-group="primary" data-tab="biography">
-        {{roll-editor content=system.details.biography.value target="system.details.biography.value" button=true owner=owner editable=editable}}
+        {{editor biographyHTML target="system.details.biography.value" button=true owner=owner editable=editable engine="prosemirror" collaborate=false}}
       </div>
 
       {{!-- Notes Tab --}}
       <div class="tab actor-notes flexcol" data-group="primary" data-tab="notes">
         <div class="primary-content">
-          {{roll-editor content=system.details.notes.value target="system.details.notes.value" button=true owner=owner editable=editable}}
+          {{editor notesHTML target="system.details.notes.value" button=true owner=owner editable=editable engine="prosemirror" collaborate=false}}
         </div>
 
         {{#if table_magicItems}}

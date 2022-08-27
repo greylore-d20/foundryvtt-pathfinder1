@@ -60,6 +60,7 @@ export class ItemActionSheet extends FormApplication {
     data.actor = this.actor;
     data.data = foundry.utils.mergeObject(this.action.constructor.defaultData, this.action.data, { inplace: false });
     data.damageTypes = pf1.registry.damageTypes.toRecord();
+    data.rollData = this.object.getRollData();
 
     // Set tag
     data.tag = createTag(data.action.name);
@@ -96,6 +97,13 @@ export class ItemActionSheet extends FormApplication {
     data.hasActivationType =
       (game.settings.get("pf1", "unchainedActionEconomy") && data.data.unchainedAction.activation.type) ||
       (!game.settings.get("pf1", "unchainedActionEconomy") && data.data.activation.type);
+
+    // Add description
+    data.descriptionHTML = TextEditor.enrichHTML(data.data.description, {
+      secrets: data.owner,
+      rollData: data.rollData,
+      async: false,
+    });
 
     // Show additional ranged properties
     data.showMaxRangeIncrements = data.action.range.units === "ft";

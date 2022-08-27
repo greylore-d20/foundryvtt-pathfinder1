@@ -138,6 +138,20 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    // Add descriptions
+    data.descriptionHTML = {
+      identified: TextEditor.enrichHTML(data.system.description.value, {
+        secrets: data.owned,
+        rollData: rollData,
+        async: false,
+      }),
+      unidentified: TextEditor.enrichHTML(data.system.description.unidentified, {
+        secrets: data.owned,
+        rollData: rollData,
+        async: false,
+      }),
+    };
+
     // Unidentified data
     if (this.item.showUnidentifiedData) {
       data.itemName = this.item.system.unidentified.name || this.item.system.identifiedName || this.item.name;

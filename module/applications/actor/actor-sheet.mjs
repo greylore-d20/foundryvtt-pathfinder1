@@ -218,6 +218,18 @@ export class ActorSheetPF extends ActorSheet {
     data.hasCurrency = Object.values(this.object.system.currency).some((o) => o > 0);
     data.hasAltCurrency = Object.values(this.object.system.altCurrency).some((o) => o > 0);
 
+    // Enrich descriptions
+    data.biographyHTML = TextEditor.enrichHTML(data.system.details.biography.value, {
+      secrets: isOwner,
+      rollData: data.rollData,
+      async: false,
+    });
+    data.notesHTML = TextEditor.enrichHTML(data.system.details.notes.value, {
+      secrets: isOwner,
+      rollData: data.rollData,
+      async: false,
+    });
+
     // The Actor and its Items
     if (this.document.isToken) data.token = this.document.token.toObject();
     else data.token = data.actor.token;

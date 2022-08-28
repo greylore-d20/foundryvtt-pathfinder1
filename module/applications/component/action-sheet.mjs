@@ -99,10 +99,10 @@ export class ItemActionSheet extends FormApplication {
       (!game.settings.get("pf1", "unchainedActionEconomy") && data.data.activation.type);
 
     // Add description
-    data.descriptionHTML = TextEditor.enrichHTML(data.data.description, {
+    data.descriptionHTML = await TextEditor.enrichHTML(data.data.description, {
       secrets: data.owner,
       rollData: data.rollData,
-      async: false,
+      async: true,
     });
 
     // Show additional ranged properties

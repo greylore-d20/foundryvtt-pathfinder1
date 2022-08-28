@@ -219,15 +219,15 @@ export class ActorSheetPF extends ActorSheet {
     data.hasAltCurrency = Object.values(this.object.system.altCurrency).some((o) => o > 0);
 
     // Enrich descriptions
-    data.biographyHTML = TextEditor.enrichHTML(data.system.details.biography.value, {
+    data.biographyHTML = await TextEditor.enrichHTML(data.system.details.biography.value, {
       secrets: isOwner,
       rollData: data.rollData,
-      async: false,
+      async: true,
     });
-    data.notesHTML = TextEditor.enrichHTML(data.system.details.notes.value, {
+    data.notesHTML = await TextEditor.enrichHTML(data.system.details.notes.value, {
       secrets: isOwner,
       rollData: data.rollData,
-      async: false,
+      async: true,
     });
 
     // The Actor and its Items
@@ -2810,7 +2810,7 @@ export class ActorSheetPF extends ActorSheet {
     // Trick to avoid error on elements with changing name
     let focus = this.element.find(":focus");
     focus = focus.length ? focus[0] : null;
-    if (focus && focus.name.match(/^system\.skills\.(?:[a-zA-Z0-9]*)\.name$/)) focus.blur();
+    if (focus?.name?.match(/^system\.skills\.(?:[a-zA-Z0-9]*)\.name$/)) focus.blur();
 
     const result = await super._render(...args);
 

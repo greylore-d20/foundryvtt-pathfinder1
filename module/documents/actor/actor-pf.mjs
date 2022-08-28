@@ -925,9 +925,6 @@ export class ActorPF extends ActorBasePF {
       cache.books[bookKey].addSpell(spell);
     });
 
-    // Include the data in output as is
-    this._spellbookCache = cache;
-
     return cache;
   }
 

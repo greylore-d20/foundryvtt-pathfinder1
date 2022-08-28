@@ -140,15 +140,15 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add descriptions
     data.descriptionHTML = {
-      identified: TextEditor.enrichHTML(data.system.description.value, {
+      identified: await TextEditor.enrichHTML(data.system.description.value, {
         secrets: data.owned,
         rollData: rollData,
-        async: false,
+        async: true,
       }),
-      unidentified: TextEditor.enrichHTML(data.system.description.unidentified, {
+      unidentified: await TextEditor.enrichHTML(data.system.description.unidentified, {
         secrets: data.owned,
         rollData: rollData,
-        async: false,
+        async: true,
       }),
     };
 
@@ -349,9 +349,9 @@ export class ItemSheetPF extends ItemSheet {
         this.document.spellDescriptionData
       );
       const firstAction = this.item.firstAction;
-      data.topDescription = TextEditor.enrichHTML(desc, {
+      data.topDescription = await TextEditor.enrichHTML(desc, {
         rollData: firstAction?.getRollData() ?? rollData,
-        async: false,
+        async: true,
       });
 
       // Enrich description

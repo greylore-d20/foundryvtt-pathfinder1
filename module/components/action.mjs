@@ -998,6 +998,6 @@ export class ItemAction {
   async use(options = {}) {
     options.actionID = this.id;
 
-    return this.item.useAttack(options);
+    return this.item.use(options);
   }
 }

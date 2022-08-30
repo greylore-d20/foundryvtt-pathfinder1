@@ -143,7 +143,7 @@ export class ItemSpellPF extends ItemPF {
     }
 
     // Invoke the Item roll
-    return this.useAttack({ ev, skipDialog, chatMessage, rollMode });
+    return this.use({ ev, skipDialog, chatMessage, rollMode });
   }
 
   async addSpellUses(value, data = null) {

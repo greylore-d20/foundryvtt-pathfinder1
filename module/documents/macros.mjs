@@ -215,7 +215,7 @@ export const rollItemMacro = function (itemName, { itemId, itemType, actorId } =
 
   // Trigger the item roll
   if (!pf1.forceShowItem && item.hasAction) {
-    return item.useAttack({ skipDialog: getSkipActionPrompt() });
+    return item.use({ skipDialog: getSkipActionPrompt() });
   }
   return item.roll();
 };

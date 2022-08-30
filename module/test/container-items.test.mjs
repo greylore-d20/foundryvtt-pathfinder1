@@ -113,7 +113,7 @@ export const registerContainerItemTests = () => {
             describe("should be usable from inside the container and", function () {
               let roll;
               before(async () => {
-                roll = await items.alchemistsFire.useAttack({ skipDialog: true });
+                roll = await items.alchemistsFire.use({ skipDialog: true });
                 messages.push(roll);
               });
 

@@ -46,7 +46,7 @@ export const registerActorItemAttackTests = () => {
           let roll;
           let rolls;
           before(async () => {
-            roll = await items.wLongsword.useAttack({ skipDialog: true });
+            roll = await items.wLongsword.use({ skipDialog: true });
             rolls = roll.flags.pf1.metadata.rolls.attacks[0];
             messages.push(roll);
           });
@@ -68,7 +68,7 @@ export const registerActorItemAttackTests = () => {
           let roll;
           let rolls;
           before(async () => {
-            roll = await items.aLongsword.useAttack({ skipDialog: true });
+            roll = await items.aLongsword.use({ skipDialog: true });
             rolls = roll.flags.pf1.metadata.rolls.attacks[0];
             messages.push(roll);
           });
@@ -93,7 +93,7 @@ export const registerActorItemAttackTests = () => {
               before(async () => {
                 prevSize = actor.system.traits.size;
                 await actor.update({ "system.traits.size": "tiny" });
-                roll = await items.aLongsword.useAttack({ skipDialog: true });
+                roll = await items.aLongsword.use({ skipDialog: true });
                 rolls = roll.flags.pf1.metadata.rolls.attacks[0];
                 messages.push(roll);
               });
@@ -117,7 +117,7 @@ export const registerActorItemAttackTests = () => {
               before(async () => {
                 prevSize = actor.system.traits.size;
                 await actor.update({ "system.traits.size": "huge" });
-                roll = await items.aLongsword.useAttack({ skipDialog: true });
+                roll = await items.aLongsword.use({ skipDialog: true });
                 rolls = roll.flags.pf1.metadata.rolls.attacks[0];
                 messages.push(roll);
               });
@@ -173,7 +173,7 @@ export const registerActorItemAttackTests = () => {
           let roll;
           let rolls;
           before(async () => {
-            roll = await items.bite.useAttack({ skipDialog: true });
+            roll = await items.bite.use({ skipDialog: true });
             rolls = roll.flags.pf1.metadata.rolls.attacks[0];
             messages.push(roll);
           });
@@ -196,7 +196,7 @@ export const registerActorItemAttackTests = () => {
             before(async () => {
               const action = items.bite.firstAction;
               await action.update({ naturalAttack: { primaryAttack: false } });
-              roll = await items.bite.useAttack({ skipDialog: true });
+              roll = await items.bite.use({ skipDialog: true });
               rolls = roll.flags.pf1.metadata.rolls.attacks[0];
               messages.push(roll);
             });
@@ -238,7 +238,7 @@ export const registerActorItemAttackTests = () => {
         });
 
         it("should not be able to attack without arrows", async function () {
-          expect(await items.longbow.useAttack({ skipDialog: true })).to.be.undefined;
+          expect(await items.longbow.use({ skipDialog: true })).to.be.undefined;
           expect(errorNotifications.pop()).to.be.equal(game.i18n.localize("PF1.AmmoDepleted"));
         });
 
@@ -246,7 +246,7 @@ export const registerActorItemAttackTests = () => {
           let roll;
           before(async () => {
             await items.longbow.firstAction.update({ usesAmmo: false });
-            roll = await items.longbow.useAttack({ skipDialog: true });
+            roll = await items.longbow.use({ skipDialog: true });
             messages.push(roll);
           });
 
@@ -270,7 +270,7 @@ export const registerActorItemAttackTests = () => {
             items.arrows = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Arrow");
             await items.longbow.update({ "flags.pf1.defaultAmmo": items.arrows.id });
             await items.arrows.update({ "flags.pf1.abundant": false });
-            roll = await items.longbow.useAttack({ skipDialog: true, chatMessage: false });
+            roll = await items.longbow.use({ skipDialog: true, chatMessage: false });
           });
 
           it("should be an object", function () {
@@ -295,7 +295,7 @@ export const registerActorItemAttackTests = () => {
             items.fighterClass = await addCompendiumItemToActor(actor, "pf1.classes", "Fighter", {
               system: { level: 10 },
             });
-            roll = await items.longbow.useAttack({ skipDialog: true });
+            roll = await items.longbow.use({ skipDialog: true });
             messages.push(roll);
           });
           after(async () => {

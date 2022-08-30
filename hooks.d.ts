@@ -14,7 +14,7 @@
  * ```
  * @example Stopping a process by returning `false`
  * ```javascript
- * Hooks.on("pf1PostItemAttack", () => {
+ * Hooks.on("pf1PreDisplayActionUse", () => {
  *  return false; // No chat message will be posted
  * });
  * ```

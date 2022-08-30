@@ -1,5 +1,6 @@
 import { ChatMessagePF } from "../documents/chat-message.mjs";
 import { RollPF } from "./roll.mjs";
+import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 export const formulaHasDice = function (formula) {
   return formula.match(/[0-9)][dD]/) || formula.match(/[dD][0-9(]/);
@@ -60,7 +61,8 @@ export class DicePF {
     originalOptions = {},
   }) {
     // Call pre-roll handlers
-    Hooks.call("pf1.preRoll", ...arguments);
+    callOldNamespaceHookAll("pf1.preRoll", "pf1PreRoll", ...arguments);
+    if (Hooks.callAll("pf1PreRoll", ...arguments) === false) return;
 
     // Handle input arguments
     flavor = flavor || title;

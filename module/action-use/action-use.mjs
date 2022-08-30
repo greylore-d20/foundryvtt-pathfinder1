@@ -1,14 +1,21 @@
-import { createTag, convertDistance } from "../utils/lib.mjs";
+import { createTag, convertDistance } from "@utils";
 import { ChatAttack } from "./chat-attack.mjs";
-import { createCustomChatMessage } from "../utils/chat.mjs";
+import { createCustomChatMessage } from "@utils/chat.mjs";
 import { RollPF } from "../dice/roll.mjs";
+import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
+
+// Documentation/type imports
+/** @typedef {import("@item/item-pf.mjs").SharedActionData} SharedActionData */
+/** @typedef {import("@item/item-pf.mjs").ItemPF} ItemPF */
+/** @typedef {import("@component/action.mjs").ItemAction} ItemAction */
 
 /**
  * Error states for when an item does not meet the requirements for an attack.
  *
- * @enum
+ * @enum {number}
+ * @readonly
  */
-export const ERR_REQUIREMENT = /** @type {const} */ ({
+export const ERR_REQUIREMENT = Object.freeze({
   NO_ACTOR_PERM: 1,
   DISABLED: 2,
   INSUFFICIENT_QUANTITY: 3,
@@ -17,26 +24,42 @@ export const ERR_REQUIREMENT = /** @type {const} */ ({
   INSUFFICIENT_AMMO: 6,
 });
 
-export class Attack {
+/**
+ *
+ */
+export class ActionUse {
   /**
    *
-   * @param {ItemPF} item
-   * @param {object} [shared]
+   * @param {Partial<SharedActionData>} [shared={}] - The shared context for this action use
    */
-  constructor(item, shared = {}) {
-    /** @type {ItemPF} */
-    this.item = item;
-    /** @type {object} */
+  constructor(shared = {}) {
+    /** @type {SharedActionData} */
     this.shared = shared;
-    /** @type {ItemAction} */
-    this.action = shared.action;
+  }
+
+  /**
+   * The item this action use is based on.
+   *
+   * @type {ItemPF}
+   */
+  get item() {
+    return this.shared.item;
+  }
+
+  /**
+   * The action this action use is based on.
+   *
+   * @type {ItemAction}
+   */
+  get action() {
+    return this.shared.action;
   }
 
   /**
    * @returns {Promise<number>} - 0 when successful, otherwise one of the ERR_REQUIREMENT constants.
    */
   checkRequirements() {
-    const actor = this.item.parent;
+    const actor = this.item.parentActor;
     if (actor && !actor.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
       console.warn(msg);
@@ -86,11 +109,6 @@ export class Attack {
     return rollData;
   }
 
-  /**
-   * @typedef {object} ItemAttack_Dialog_Result
-   * @property {boolean} fullAttack - Whether it's a full attack (true) or a single attack (false)
-   * @property {JQuery} html - The html containing user input and selections.
-   */
   /**
    * Creates and renders an attack roll dialog, and returns a result.
    *
@@ -243,7 +261,7 @@ export class Attack {
    * Generates attacks for an item's action.
    *
    * @param {boolean} [forceFullAttack=false] - Generate full attack data, e.g. as base data for an {@link AttackDialog}
-   * @returns {ItemAttack_AttackData[]} The generated default attacks.
+   * @returns {Promise<ItemAttack_AttackData[]> | ItemAttack_AttackData[]} The generated default attacks.
    */
   generateAttacks(forceFullAttack = false) {
     const rollData = this.shared.rollData;
@@ -423,7 +441,7 @@ export class Attack {
   /**
    * Checks all requirements to make the attack. This is after the attack dialog's data has been parsed.
    *
-   * @returns {number} 0 if successful, otherwise one of the ERR_REQUIREMENT constants.
+   * @returns {Promise<number> | number} 0 if successful, otherwise one of the ERR_REQUIREMENT constants.
    */
   checkAttackRequirements() {
     // Enforce zero charge cost on cantrips/orisons, but make sure they have at least 1 charge
@@ -1124,24 +1142,26 @@ export class Attack {
    * Posts the attack's chat card.
    */
   async postMessage() {
-    Hooks.call("itemUse", this, "postAttack", {
+    // Old hook data + callAll
+    const hookData = {
       ev: this.shared.event,
       skipDialog: this.shared.skipDialog,
       chatData: this.shared.chatData,
       templateData: this.shared.templateData,
       shared: this.shared,
-    });
+    };
+    callOldNamespaceHookAll("itemUse", "pf1ItemUse", this.item, "postAttack", hookData);
 
-    // Create message
-    const template = "systems/pf1/templates/chat/attack-roll.hbs";
+    this.shared.template ||= "systems/pf1/templates/chat/attack-roll.hbs";
     this.shared.templateData.damageTypes = pf1.registry.damageTypes.toRecord();
+    if (Hooks.call("pf1PreDisplayActionUse", this.action, this.shared) === false) return;
 
     // Show chat message
     let result;
     if (this.shared.chatAttacks.length > 0) {
       if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true)
-        result = await createCustomChatMessage(template, this.shared.templateData, this.shared.chatData);
-      else result = { template: template, data: this.shared.templateData, chatData: this.shared.chatData };
+        result = await createCustomChatMessage(this.shared.template, this.shared.templateData, this.shared.chatData);
+      else result = { template: this.shared.template, data: this.shared.templateData, chatData: this.shared.chatData };
     } else {
       if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true) result = this.item.roll();
       else result = { descriptionOnly: true };
@@ -1150,3 +1170,9 @@ export class Attack {
     return result;
   }
 }
+
+/**
+ * @typedef {object} ItemAttack_Dialog_Result
+ * @property {boolean} fullAttack - Whether it's a full attack (true) or a single attack (false)
+ * @property {JQuery} html - The html containing user input and selections.
+ */

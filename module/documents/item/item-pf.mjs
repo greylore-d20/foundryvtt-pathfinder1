@@ -13,7 +13,8 @@ import { ItemChange } from "../../components/change.mjs";
 import { ItemAction } from "../../components/action.mjs";
 import { getHighestChanges } from "../actor/utils/apply-changes.mjs";
 import { RollPF } from "../../dice/roll.mjs";
-import { Attack } from "../../attack/attack.mjs";
+import { ActionUse } from "@actionUse/action-use.mjs";
+import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -759,7 +760,7 @@ export class ItemPF extends ItemBasePF {
     if (actor) {
       // Update tokens
       const promises = [];
-      const tokens = canvas.tokens.placeables.filter((token) => token.actor?.id === actor.id);
+      const tokens = canvas?.tokens?.placeables?.filter((token) => token.actor?.id === actor.id) ?? [];
       for (const token of tokens) {
         const tokenUpdateData = {};
 
@@ -908,24 +909,33 @@ export class ItemPF extends ItemBasePF {
   /* -------------------------------------------- */
 
   /**
-   * Roll the item to Chat, creating a chat card which contains follow up attack or damage roll options
+   * Display the chat card for an Item as a message in chat
    *
-   * @param altChatData
-   * @param {object} options
-   * @param {boolean} options.addDC
-   * @param {string|undefined} options.rollMode Roll mode override.
-   * @returns {Promise|undefined}
+   * @deprecated Use {@link displayCard} instead.
+   * @param {object} [altChatData={}] - Optional data that will be merged into the chat data object.
+   * @returns {Promise<ChatMessage | void>}
    */
-  async roll(altChatData = {}, { rollMode } = {}) {
+  async roll(altChatData = {}) {
+    foundry.utils.logCompatibilityWarning(`ActorPF#roll has been deprecated in favor of ActorPF#displayCard`, {
+      since: "PF1 0.82.0",
+      until: "PF1 0.83.0",
+    });
+    return this.displayCard(altChatData);
+  }
+
+  /**
+   * Display the chat card for an Item as a message in chat
+   *
+   * @param {object} [altChatData={}] - Optional data that will be merged into the chat data object.
+   * @returns {Promise<ChatMessage | void>}
+   */
+  async displayCard(altChatData = {}) {
     const actor = this.parent;
     if (actor && !actor.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
-
-    const allowed = Hooks.call("itemUse", this, "description", { altChatData });
-    if (allowed === false) return;
 
     // Basic template rendering data
     const token = this.parentActor.token;
@@ -1007,6 +1017,8 @@ export class ItemPF extends ItemBasePF {
         altChatData
       )
     );
+
+    if (Hooks.call("pf1DisplayCard", this, { template, templateData, chatData }) === false) return;
 
     // Create the chat message
     return createCustomChatMessage(template, templateData, chatData);
@@ -1125,74 +1137,79 @@ export class ItemPF extends ItemBasePF {
   /* -------------------------------------------- */
 
   /**
-   * @param {object} options
-   * @param {Event} options.ev
-   * @param {boolean} options.skipDialog
-   * @param {boolean} options.chatMessage
-   * @param {string|undefined} options.rollMode Roll mode override
+   * @deprecated Use {@link use ItemPF#use} instead.
+   * @param options
+   * @returns {Promise<*>}
    */
-  async use({ ev = null, skipDialog = false, chatMessage = true, rollMode } = {}) {
-    if (this.hasAction) {
-      return this.useAttack({ ev, skipDialog, chatMessage, rollMode });
-    }
-
-    // Use
-    const useScriptCalls = this.scriptCalls.filter((o) => o.category === "use");
-    let shared;
-    if (useScriptCalls.length > 0) {
-      shared = await this.executeScriptCalls("use", {
-        attackData: { event: ev, skipDialog, chatMessage, rollMode },
-        // Deprecated for V10
-        attacks: [],
-        template: undefined,
-        data: { chatMessage },
-        // End Deprecated
-      });
-      if (shared.reject) return shared;
-      if (shared.hideChat !== true) await this.roll();
-    }
-    // Show a chat card if this item doesn't have 'use' type script call(s)
-    else {
-      if (chatMessage) return this.roll(undefined, { rollMode });
-      else return { descriptionOnly: true }; // nothing to show for printing description
-    }
-
-    // Deduct charges
-    if (this.isCharged) {
-      if (this.charges < this.chargeCost) {
-        if (this.isSingleUse) {
-          const msg = game.i18n.localize("PF1.ErrorNoQuantity");
-          console.warn(msg);
-          return ui.notifications.warn(msg);
-        }
-        const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
-        console.warn(msg);
-        return ui.notifications.warn(msg);
-      }
-      if (this.autoDeductCharges) {
-        await this.addCharges(-this.chargeCost);
-      }
-    }
-
-    return shared;
+  useAttack(options) {
+    foundry.utils.logCompatibilityWarning("ItemPF#useAttack has been deprecated in favor of ItemPF#use", {
+      since: "PF1 0.82.0",
+      until: "PF1 0.84.0",
+    });
+    return this.use(options);
   }
 
   /**
+   * Use an attack, using {@link SharedActionData}
    *
-   * @param {object} options
-   * @param {Event} options.ev
-   * @param {boolean} options.skipDialog
-   * @param {boolean} options.chatMessage
-   * @param {string} options.dice Die roll override.
-   * @param {string|undefined} options.rollMode Roll mode override.
-   * @param options.actionID
+   * @see {@link SharedActionData}
+   * @param {string} [actionID=""] - The ID of the action to use, defaults to the first action
+   * @param {Event | null} [ev=null] - The event that triggered the use, if any
+   * @param {boolean} [skipDialog=false] - Whether to skip the dialog for this action
+   * @param {boolean} [chatMessage=true] - Whether to send a chat message for this action
+   * @param {string} [dice="1d20"] - The base dice to roll for this action
+   * @param {string} [rollMode] - The roll mode to use for the chat message
+   * @returns {Promise<SharedActionData | void | ChatMessage | *>}
    */
-  async useAttack({ actionID = "", ev = null, skipDialog = false, chatMessage = true, dice = "1d20", rollMode } = {}) {
+  async use({ actionID = "", ev = null, skipDialog = false, chatMessage = true, dice = "1d20", rollMode } = {}) {
+    // Old use method
+    if (!this.hasAction) {
+      // Use
+      const useScriptCalls = this.scriptCalls.filter((o) => o.category === "use");
+      let shared;
+      if (useScriptCalls.length > 0) {
+        shared = await this.executeScriptCalls("use", {
+          attackData: { event: ev, skipDialog, chatMessage, rollMode },
+          // Deprecated for V10
+          attacks: [],
+          template: undefined,
+          data: { chatMessage },
+          // End Deprecated
+        });
+        if (shared.reject) return shared;
+        if (shared.hideChat !== true) await this.displayCard();
+      }
+      // Show a chat card if this item doesn't have 'use' type script call(s)
+      else {
+        if (chatMessage) return this.displayCard({ rollMode });
+        else return { descriptionOnly: true }; // nothing to show for printing description
+      }
+
+      // Deduct charges
+      if (this.isCharged) {
+        if (this.charges < this.chargeCost) {
+          if (this.isSingleUse) {
+            const msg = game.i18n.localize("PF1.ErrorNoQuantity");
+            console.warn(msg);
+            return ui.notifications.warn(msg);
+          }
+          const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
+          console.warn(msg);
+          return ui.notifications.warn(msg);
+        }
+        if (this.autoDeductCharges) {
+          await this.addCharges(-this.chargeCost);
+        }
+      }
+
+      return shared;
+    }
+
     if (ev && ev.originalEvent) ev = ev.originalEvent;
 
+    /** @type {ItemAction | undefined} */
     let action;
     if (!actionID && this.system.actions.length > 1 && !skipDialog) {
-      // @TODO: Make a proper application for selecting an action
       const app = new pf1.applications.ActionChooser(this);
       app.render(true);
       return;
@@ -1204,6 +1221,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Prepare variables
+    /** @type {SharedActionData} */
     const shared = {
       event: ev,
       rollData: {},
@@ -1222,21 +1240,26 @@ export class ItemPF extends ItemBasePF {
       casterLevelCheck: false,
       concentrationCheck: false,
       scriptData: {},
-      action,
     };
 
-    const attack = new Attack(this, shared);
+    // Prevent reassigning the ActionUse's item and action
+    Object.defineProperties(shared, {
+      action: { value: action, writable: false, enumerable: true },
+      item: { value: this, writable: false, enumerable: true },
+    });
+
+    const actionUse = new ActionUse(shared);
 
     // Check requirements for item
-    let reqErr = await attack.checkRequirements();
+    let reqErr = await actionUse.checkRequirements();
     if (reqErr > 0) return { err: pf1.attack.ERR_REQUIREMENT, code: reqErr };
 
     // Get new roll data
-    shared.rollData = await attack.getRollData();
+    shared.rollData = await actionUse.getRollData();
 
     // Show attack dialog, if appropriate
     if (!skipDialog) {
-      const result = await attack.createAttackDialog();
+      const result = await actionUse.createAttackDialog();
 
       // Stop if result is a boolean (i.e. when closed is clicked on the dialog)
       if (typeof result !== "object") return;
@@ -1244,10 +1267,10 @@ export class ItemPF extends ItemBasePF {
       // Alter roll data
       shared.fullAttack = result.fullAttack;
       shared.attacks = result.attacks;
-      await attack.alterRollData(result.html);
+      await actionUse.alterRollData(result.html);
     } else {
-      shared.attacks = await attack.generateAttacks();
-      await attack.alterRollData();
+      shared.attacks = await actionUse.generateAttacks();
+      await actionUse.alterRollData();
     }
 
     // Filter out attacks without ammo usage
@@ -1262,19 +1285,19 @@ export class ItemPF extends ItemBasePF {
     // Limit attacks to 1 if not full rounding
     if (!shared.fullAttack) shared.attacks = shared.attacks.slice(0, 1);
     // Handle conditionals
-    await attack.handleConditionals();
+    await actionUse.handleConditionals();
 
     // Check attack requirements, post-dialog
-    reqErr = await attack.checkAttackRequirements();
+    reqErr = await actionUse.checkAttackRequirements();
     if (reqErr > 0) return { err: pf1.attack.ERR_REQUIREMENT, code: reqErr };
 
     // Generate chat attacks
-    await attack.generateChatAttacks();
+    await actionUse.generateChatAttacks();
 
     // Prompt measure template
     let measureResult;
     if (shared.useMeasureTemplate && canvas.scene) {
-      measureResult = await attack.promptMeasureTemplate();
+      measureResult = await actionUse.promptMeasureTemplate();
       if (!measureResult.result) return;
     }
 
@@ -1282,36 +1305,42 @@ export class ItemPF extends ItemBasePF {
     if (rollMode) shared.rollMode = rollMode;
 
     // Call itemUse hook and determine whether the item can be used based off that
-    const allowed = Hooks.call("itemUse", this, "attack", { ev, skipDialog, dice, shared });
+    let allowed = Hooks.call("pf1PreActionUse", action, shared);
+    allowed = callOldNamespaceHook("itemUse", "pf1PreUseAttack", allowed, this, "attack", {
+      ev,
+      skipDialog,
+      dice,
+      shared,
+    });
     if (allowed === false) {
       await measureResult?.delete();
       return;
     }
 
     // Call script calls
-    await attack.executeScriptCalls();
+    await actionUse.executeScriptCalls();
     if (shared.scriptData?.reject) {
       await measureResult?.delete();
       return;
     }
 
     // Handle Dice So Nice
-    await attack.handleDiceSoNice();
+    await actionUse.handleDiceSoNice();
 
     // Subtract uses
-    await attack.subtractAmmo();
+    await actionUse.subtractAmmo();
     if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
       await this.addCharges(-shared.rollData.chargeCost);
     if (shared.action.isSelfCharged)
       await shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 });
 
     // Retrieve message data
-    await attack.getMessageData();
+    await actionUse.getMessageData();
 
     // Post message
     let result;
     if (shared.scriptData?.hideChat !== true) {
-      result = await attack.postMessage();
+      result = await actionUse.postMessage();
     } else return;
 
     // Deselect targets
@@ -1364,79 +1393,6 @@ export class ItemPF extends ItemBasePF {
   /* -------------------------------------------- */
 
   /**
-   * Use a consumable item
-   *
-   * @param options
-   */
-  async useConsumable(options = { chatMessage: true }) {
-    console.warn("ItemPF.useConsumable is obsolete; use ItemPF.useAttack instead.");
-    const itemData = this.system;
-    let parts = itemData.damage.parts;
-    const data = this.getRollData();
-
-    const allowed = Hooks.call("itemUse", this, "consumable", options);
-    if (allowed === false) return;
-
-    // Add effect string
-    let effectStr = "";
-    if (typeof itemData.effectNotes === "string" && itemData.effectNotes.length) {
-      effectStr = DicePF.messageRoll({
-        data: data,
-        msgStr: itemData.effectNotes,
-      });
-    }
-
-    parts = parts.map((obj) => {
-      return obj[0];
-    });
-    // Submit the roll to chat
-    if (effectStr === "") {
-      await RollPF.create(parts.join(" + ")).toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.parentActor }),
-        flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
-      });
-    } else {
-      const chatTemplate = "systems/pf1/templates/chat/roll-ext.hbs";
-      const chatTemplateData = { hasExtraText: true, extraText: effectStr };
-      // Execute the roll
-      const roll = await RollPF.create(parts.join("+"), data).evaluate();
-
-      // Create roll template data
-      const rollData = mergeObject(
-        {
-          user: game.user.id,
-          formula: roll.formula,
-          tooltip: await roll.getTooltip(),
-          total: roll.total,
-        },
-        chatTemplateData || {}
-      );
-
-      // Create chat data
-      const chatData = {
-        user: game.user.id,
-        type: CONST.CHAT_MESSAGE_TYPES.CHAT,
-        rollMode: game.settings.get("core", "rollMode"),
-        sound: CONFIG.sounds.dice,
-        speaker: ChatMessage.getSpeaker({ actor: this.parent }),
-        flavor: game.i18n.localize("PF1.UsesItem").format(this.name),
-        description: this.fullDescription,
-        roll: roll,
-        content: await renderTemplate(chatTemplate, rollData),
-      };
-      // Handle different roll modes
-      ChatMessage.applyRollMode(chatData, chatData.rollMode);
-
-      // Send message
-      if (options.chatMessage) ChatMessage.create(chatData);
-
-      return roll;
-    }
-  }
-
-  /* -------------------------------------------- */
-
-  /**
    * @returns {object} An object with data to be used in rolls in relation to this item.
    */
   getRollData() {
@@ -1457,7 +1413,8 @@ export class ItemPF extends ItemBasePF {
 
     this._rollData = result.item;
 
-    Hooks.callAll("pf1.getRollData", this, result, true);
+    if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
+    callOldNamespaceHookAll("pf1.getRollData", "pf1GetRollData", this, result, true);
 
     return result;
   }
@@ -1724,7 +1681,8 @@ export class ItemPF extends ItemBasePF {
 
       // Call link creation hook
       await this.update(updateData);
-      Hooks.callAll("createItemLink", this, link, linkType);
+      callOldNamespaceHookAll("createItemLink", "pf1CreateItemLink", this, link, linkType);
+      Hooks.callAll("pf1CreateItemLink", this, link, linkType);
 
       /**
        * @TODO This is a really shitty way of re-rendering the actor sheet, so I should change this method at some point,
@@ -2387,12 +2345,12 @@ export class ItemPF extends ItemBasePF {
 }
 
 /**
+ * @typedef {object} ItemWeightData
  * An item's `weight` data. The only property to be stored is `value`, from which all other values are derived.
- *
+ * @see {@link ItemPF.prepareWeight} for generation
  * @remarks A weight property is considered "effective" if it is the value that is added to its parent's weight.
  *          An item with a weight of 10 lbs in a container with 50% weight reduction would increase
  *          the container's effective `weight.total` by 5 lbs, but increases the container's `weight.contents` weight by 10 lbs.
- * @typedef {object} ItemWeightData
  * @property {number} value - The weight of a single item instance, in lbs
  * @property {number} total - The effective total weight of the item (including quantity and contents), in lbs
  * @property {number} [currency] - Effective weight of contained currency for containers, in lbs
@@ -2401,16 +2359,41 @@ export class ItemPF extends ItemBasePF {
  * @property {number} converted.value - The weight of a single item instance, in world units
  * @property {number} converted.total - The effective total weight of the item (including quantity and contents), in world units
  * @property {number} [converted.contents] - Weight of contained items and currency, in world units
- * @see {@link ItemPF.prepareWeight} for generation
  */
 
 /**
- * Data required to render an item's summary or chat card, including descriptions and properties/tags/labels
- *
  * @typedef {object} ChatData
+ * Data required to render an item's summary or chat card, including descriptions and properties/tags/labels
  * @property {string} description - The item's enriched description as appropriate for the current user
  * @property {string} identifiedDescription - The item's full enriched description when identified
  * @property {string} unidentifiedDescription - The item's enriched description when unidentified
  * @property {string} [actionDescription] - The enriched description of a specific action
  * @property {string[]} properties - Additional properties/labels for the item and the action
+ */
+
+/**
+ * @typedef {object} SharedActionData
+ * A common data object used to store and share data between stages of an action's usage.
+ * @property {Event | null} event - The event that triggered the action. Defaults to `null`.
+ * @property {object} rollData - The singular rollData object used for all rolls in the action
+ * @property {boolean} skipDialog - Whether the user-facing dialog should get skipped. Defaults to `false`.
+ * @property {boolean} chatMessage - Whether a chat message should be created at the end of the action's usage. Defaults to `true`.
+ * @property {string} dice - The base dice used for the action's attack rolls. Defaults to `"1d20"`.
+ * @property {boolean} fullAttack - Whether the action is a full attack. Defaults to `true`.
+ * @property {string[]} attackBonus - Bonus values to be added to the attack roll formula
+ * @property {string[]} damageBonus - Bonus values to be added to the damage roll formula
+ * @property {object[]} attacks - Array of attacks
+ * @property {import("@actionUse/chat-attack.mjs").ChatAttack[]} chatAttacks - Array of chat attacks for this action's use
+ * @property {string} rollMode - The roll mode to be used for the creation of the chat message. Defaults to the `core.rollMode` setting.
+ * @property {boolean} useMeasureTemplate - Whether to use a measure template
+ * @property {object[] | null} conditionals
+ * @property {object} conditionalPartsCommon
+ * @property {boolean} casterLevelCheck
+ * @property {boolean} concentrationCheck
+ * @property {object} scriptData
+ * @property {ItemAction} action - The {@link ItemAction} this use is based on
+ * @property {ItemPF} item - The {@link ItemPF} this use is based on
+ * @property {object} chatData - Data to be passed to {@link ChatMessage.create}, excluding `content` rendered using {@link templateData} and {@link template}.
+ * @property {string} [template] - The template to be used for the creation of the chat message.
+ * @property {object} templateData - Data used to render the chat card, passed to {@link foundry.utils.renderTemplate}.
  */

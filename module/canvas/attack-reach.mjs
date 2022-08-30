@@ -52,9 +52,8 @@ export class SquareHighlight {
 }
 
 /**
- * An object containing highlights belonging to a specific attack
- *
  * @typedef {object} AttackReachHighlight
+ * An object containing highlights belonging to a specific attack
  * @property {SquareHighlight} normal - Highlight for normal range
  * @property {SquareHighlight} reach - Highlight for reach range
  * @property {SquareHighlight[]} extra - Additional highlights

@@ -61,7 +61,7 @@ export class ScriptEditor extends FormApplication {
   _openHelpBrowser(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    pf1.helpBrowser.openUrl(a.dataset.url);
+    pf1.applications.helpBrowser.openUrl(a.dataset.url);
   }
 
   _updateObject(event, formData) {

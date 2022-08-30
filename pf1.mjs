@@ -87,10 +87,11 @@ import {
   isMinimumCoreVersion,
   refreshActors,
   diffObjectAndArray,
+  moduleToObject,
 } from "./module/utils/lib.mjs";
 import { getAbilityModifier } from "@utils";
 import { ChatMessagePF, customRolls } from "./module/documents/chat-message.mjs";
-import { ChatAttack } from "./module/attack/chat-attack.mjs";
+import { ChatAttack } from "./module/action-use/chat-attack.mjs";
 import { TokenQuickActions } from "./module/canvas/token-quick-actions.mjs";
 import { initializeSocket } from "./module/socket.mjs";
 import { SemanticVersion } from "./module/utils/semver.mjs";
@@ -103,7 +104,7 @@ import * as chat from "./module/utils/chat.mjs";
 import * as migrations from "./module/migration.mjs";
 import * as macros from "./module/documents/macros.mjs";
 import * as controls from "./module/documents/controls.mjs";
-import * as ItemAttack from "./module/attack/attack.mjs";
+import * as ItemAttack from "./module/action-use/action-use.mjs";
 import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/canvas/low-light-vision.mjs";
 import { initializeModules } from "./module/modules.mjs";
 import { ItemChange } from "./module/components/change.mjs";
@@ -117,37 +118,49 @@ import { CurrencyTransfer } from "./module/applications/currency-transfer.mjs";
 import { BaseRegistry } from "./module/registry/base-registry.mjs";
 import { DamageTypes } from "./module/registry/damage-types.mjs";
 import { ScriptCalls } from "./module/registry/script-call.mjs";
+import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
+
+import "./less/pf1.less";
+import "./module/hmr.mjs";
 
 // New API
 import * as applications from "./module/applications/_module.mjs";
 import * as documents from "./module/documents/_module.mjs";
-import * as attack from "./module/attack/_module.mjs";
+import * as actionUse from "./module/action-use/_module.mjs"; // TODO: Change dir name?
 import * as _canvas from "./module/canvas/_module.mjs";
 import * as dice from "./module/dice/_module.mjs";
 import * as components from "./module/components/_module.mjs";
 import * as utils from "./module/utils/_module.mjs";
 import * as registry from "./module/registry/_module.mjs";
 import * as rollPreProcess from "./module/utils/roll-preprocess.mjs";
-export { applications, documents, attack, _canvas as canvas, dice, components, utils, registry, PF1 as config };
 
-import "./less/pf1.less";
-import "./module/hmr.mjs";
-
-globalThis.pf1 = {
+// ESM exports, to be kept in sync with globalThis.pf1
+export {
+  actionUse,
   applications,
-  attack,
-  config: PF1,
-  canvas: _canvas,
-  dice,
+  _canvas as canvas,
   components,
+  PF1 as config,
+  dice,
   documents,
-  utils,
-  registry,
   migrations,
-  tooltip: null,
-  helpBrowser: new HelpBrowserPF(),
-  controls,
+  registry,
+  utils,
 };
+
+globalThis.pf1 = moduleToObject({
+  actionUse,
+  applications,
+  canvas: _canvas,
+  components,
+  config: PF1,
+  dice,
+  documents,
+  migrations,
+  registry,
+  tooltip: null,
+  utils,
+});
 
 // OBSOLETE: Add String.format
 if (!String.prototype.format) {
@@ -431,7 +444,8 @@ Hooks.once("init", function () {
   initializeModules();
 
   // Call post-init hook
-  Hooks.callAll("pf1.postInit");
+  callOldNamespaceHookAll("pf1.postInit", "pf1PostInit");
+  Hooks.callAll("pf1PostInit");
 });
 
 // Load Quench test in development environment
@@ -580,7 +594,8 @@ Hooks.once("setup", function () {
   // Register controls
   controls.registerSystemControls();
 
-  Hooks.callAll("pf1.postSetup");
+  callOldNamespaceHookAll("pf1.postSetup", "pf1PostSetup");
+  Hooks.callAll("pf1PostSetup");
 });
 
 /* -------------------------------------------- */
@@ -635,7 +650,8 @@ Hooks.once("ready", async function () {
     }
   }
 
-  Hooks.callAll("pf1.postReady");
+  callOldNamespaceHookAll("pf1.postReady", "pf1PostReady");
+  Hooks.callAll("pf1PostReady");
 });
 
 /* -------------------------------------------- */
@@ -715,7 +731,8 @@ Hooks.on("updateActor", (actor, data, options, userId) => {
   {
     const conditions = data.system?.attributes?.conditions || {};
     for (const [k, v] of Object.entries(conditions)) {
-      Hooks.callAll("pf1.toggleActorCondition", actor, k, v);
+      callOldNamespaceHookAll("pf1.toggleActorCondition", "pf1ToggleActorCondition", actor, k, v);
+      Hooks.callAll("pf1ToggleActorCondition", actor, k, v);
     }
   }
 });
@@ -765,7 +782,8 @@ Hooks.on("createItem", (item, options, userId) => {
   if (item.type === "buff" && getProperty(item, "system.active") === true) {
     // Call hook
     if (actor) {
-      Hooks.callAll("pf1.toggleActorBuff", actor, item, true);
+      callOldNamespaceHookAll("pf1.toggleActorBuff", "pf1ToggleActorBuff", actor, item, true);
+      Hooks.callAll("pf1ToggleActorBuff", actor, item, true);
     }
 
     // Execute script calls
@@ -856,7 +874,8 @@ Hooks.on("deleteItem", async (item, options, userId) => {
 
     // Call buff removal hook
     if (item.type === "buff" && getProperty(item, "system.active") === true) {
-      Hooks.callAll("pf1.toggleActorBuff", actor, item, false);
+      callOldNamespaceHookAll("pf1.toggleActorBuff", "pf1ToggleActorBuff", actor, item, false);
+      Hooks.callAll("pf1ToggleActorBuff", actor, item, false);
     }
   }
 });
@@ -869,7 +888,14 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
     // Toggle buff
     if (item.type === "buff" && getProperty(changedData, "system.active") !== undefined) {
       // Call hook
-      Hooks.callAll("pf1.toggleActorBuff", actor, item, getProperty(changedData, "system.active"));
+      callOldNamespaceHookAll(
+        "pf1.toggleActorBuff",
+        "pf1ToggleActorBuff",
+        actor,
+        item,
+        getProperty(changedData, "system.active")
+      );
+      Hooks.callAll("pf1ToggleActorBuff", actor, item, getProperty(changedData, "system.active"));
     }
   }
 });
@@ -958,7 +984,7 @@ Hooks.on("renderSidebarTab", (app, html) => {
       const chlog = Object.values(ui.windows).find((o) => o.id == "changelog") ?? new ChangeLogWindow();
       chlog.render(true, { focus: true });
     });
-    helpButton.click(() => pf1.helpBrowser.openUrl("Help/Home"));
+    helpButton.click(() => pf1.applications.helpBrowser.openUrl("Help/Home"));
   }
 });
 

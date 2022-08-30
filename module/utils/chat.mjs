@@ -1,5 +1,4 @@
 import { getSkipActionPrompt } from "../documents/settings.mjs";
-import { alterChatTargetAttribute } from "../socket.mjs";
 import Color from "color";
 
 /* -------------------------------------------- */
@@ -21,7 +20,7 @@ export const createCustomChatMessage = async function (
   chatData.content = await renderTemplate(chatTemplate, chatTemplateData);
 
   // Handle different roll modes
-  pf1.documents.ChatMessagePF.applyRollMode(chatData, chatData.rollMode ?? game.settings.get("core", "rollMode"));
+  ChatMessage.implementation.applyRollMode(chatData, chatData.rollMode ?? game.settings.get("core", "rollMode"));
 
   // Dice So Nice integration
   if (chatData.roll != null && rolls.length === 0) rolls = [chatData.roll];
@@ -32,7 +31,7 @@ export const createCustomChatMessage = async function (
     }
   }
 
-  return pf1.documents.ChatMessagePF.create(chatData);
+  return ChatMessage.implementation.create(chatData);
 };
 
 export const hideRollInfo = function (app, html, data) {

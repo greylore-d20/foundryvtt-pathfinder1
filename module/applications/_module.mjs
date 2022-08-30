@@ -8,7 +8,6 @@ export * as actor from "./actor/_module.mjs";
 export * as item from "./item/_module.mjs";
 export * as component from "./component/_module.mjs";
 export * as settings from "./settings/_module.mjs";
-export { compendiums } from "./compendium-browser.mjs";
 
 export { ActionChooser } from "./action-chooser.mjs";
 export { AttackDialog } from "./attack-dialog.mjs";
@@ -31,3 +30,6 @@ export { TooltipPF } from "./tooltip.mjs";
 export { ActorTraitSelector } from "./trait-selector.mjs";
 export { VisionPermissionSheet } from "./vision-permission.mjs";
 export { ExperienceDistributor } from "./xp-distributor.mjs";
+
+export { compendiums } from "./compendium-browser.mjs";
+export { helpBrowser } from "./help-browser.mjs";

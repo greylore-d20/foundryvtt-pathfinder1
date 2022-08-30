@@ -1,3 +1,5 @@
+import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
+
 export class ExperienceDistributor extends FormApplication {
   /**
    * @constructs ExperienceDistributor
@@ -128,7 +130,8 @@ export class ExperienceDistributor extends FormApplication {
 
       for (const actorData of characters) {
         const result = { value: value };
-        Hooks.callAll("pf1.gainXp", actorData.actor, result);
+        callOldNamespaceHookAll("pf1.gainXp", "pf1GainXp", actorData.actor, result);
+        Hooks.callAll("pf1GainXp", actorData.actor, result);
         actorData.value = result.value;
       }
 

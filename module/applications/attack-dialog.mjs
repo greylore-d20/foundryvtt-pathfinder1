@@ -1,4 +1,4 @@
-import { Attack } from "../attack/attack.mjs";
+import { ActionUse } from "../action-use/action-use.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
 export class AttackDialog extends Application {
@@ -294,7 +294,7 @@ export class AttackDialog extends Application {
   }
 
   initAttacks() {
-    this.attacks = new Attack(this.object.item, { rollData: this.rollData })
+    this.attacks = new ActionUse({ rollData: this.rollData, item: this.object.item })
       .generateAttacks(true)
       .map(({ label, attackBonus }) => ({
         label: label,

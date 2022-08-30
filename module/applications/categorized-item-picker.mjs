@@ -1,19 +1,24 @@
+/**
+ * @typedef {object} Widget_CategorizedItemPicker~Item
+ * @property {string} key - The key of the item.
+ * @property {string} [label] - The label of the item.
+ * @property {string} [icon] - The icon of the item.
+ */
+
+/**
+ * @typedef {object} Widget_CategorizedItemPicker~Category
+ * @property {string} key - The key of the category.
+ * @property {string} label - The label of the category.
+ * @property {Widget_CategorizedItemPicker~Item[]} items - All the items associated with this category.
+ */
+
+/**
+ * Item picker widget.
+ */
 export class Widget_CategorizedItemPicker extends Application {
   constructor(options, categories, callback, selected) {
     super(options);
 
-    /**
-     * @typedef {object} Widget_CategorizedItemPicker~Item
-     * @property {string} key - The key of the item.
-     * @property {string} [label] - The label of the item.
-     * @property {string} [icon] - The icon of the item.
-     */
-    /**
-     * @typedef {object} Widget_CategorizedItemPicker~Category
-     * @property {string} key - The key of the category.
-     * @property {string} label - The label of the category.
-     * @property {Widget_CategorizedItemPicker~Item[]} items - All the items associated with this category.
-     */
     /**
      * Objects containing category and item data.
      *

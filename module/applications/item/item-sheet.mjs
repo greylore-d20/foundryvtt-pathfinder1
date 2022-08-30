@@ -4,6 +4,7 @@ import { ScriptEditor } from "../script-editor.mjs";
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { Widget_CategorizedItemPicker } from "../categorized-item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
+import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -1198,7 +1199,7 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
-    pf1.helpBrowser.openUrl(a.dataset.url);
+    pf1.applications.helpBrowser.openUrl(a.dataset.url);
   }
 
   async _onLinksDrop(event) {
@@ -1605,7 +1606,8 @@ export class ItemSheetPF extends ItemSheet {
       updateData[`system.links.${group.dataset.tab}`] = links;
 
       // Call hook for deleting a link
-      Hooks.callAll("deleteItemLink", this.item, link, group.dataset.tab);
+      callOldNamespaceHookAll("deleteItemLink", "pf1DeleteItemLink", this.item, link, group.dataset.tab);
+      Hooks.callAll("pf1DeleteItemLink", this.item, link, group.dataset.tab);
 
       await this._onSubmit(event, { updateData });
 

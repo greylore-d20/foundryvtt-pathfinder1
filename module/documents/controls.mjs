@@ -40,16 +40,16 @@ export const registerSystemControls = () => {
     name: "PF1.KEYBINDINGS.HideTokenTooltip.Name",
     hint: game.i18n.localize("PF1.KEYBINDINGS.HideTokenTooltip.Hint"),
     uneditable: CTRL_KEYS,
-    onDown: () => pf1.controls._hideTokenTooltip(true),
-    onUp: () => pf1.controls._hideTokenTooltip(false),
+    onDown: () => pf1.documents.controls._hideTokenTooltip(true),
+    onUp: () => pf1.documents.controls._hideTokenTooltip(false),
   });
 
   game.keybindings.register("pf1", "hideTokenTooltipGMInfo", {
     name: "PF1.KEYBINDINGS.HideTokenTooltipGMInfo.Name",
     uneditable: SHIFT_KEYS,
     restricted: true,
-    onDown: () => pf1.controls._hideTokenTooltipGMInfo(true),
-    onUp: () => pf1.controls._hideTokenTooltipGMInfo(false),
+    onDown: () => pf1.documents.controls._hideTokenTooltipGMInfo(true),
+    onUp: () => pf1.documents.controls._hideTokenTooltipGMInfo(false),
   });
 };
 

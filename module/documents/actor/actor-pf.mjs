@@ -17,6 +17,7 @@ import {
 import { RollPF } from "../../dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
 import { ItemChange } from "../../components/change.mjs";
+import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 /**
  * Extend the base Actor class to implement additional game system logic.
@@ -403,7 +404,8 @@ export class ActorPF extends ActorBasePF {
     this.resources ??= {};
 
     this._resetInherentTotals();
-    Hooks.callAll("pf1.prepareBaseActorData", this);
+    callOldNamespaceHookAll("pf1.prepareBaseActorData", "pf1PrepareBaseActorData", this);
+    Hooks.callAll("pf1PrepareBaseActorData", this);
 
     // Update total level and mythic tier
     const classes = this.items.filter((o) => o.type === "class");
@@ -1117,7 +1119,8 @@ export class ActorPF extends ActorBasePF {
   }
 
   prepareSpecificDerivedData() {
-    Hooks.callAll("pf1.prepareDerivedActorData", this);
+    callOldNamespaceHookAll("pf1.prepareDerivedActorData", "pf1PrepareDerivedActorData", this);
+    Hooks.callAll("pf1PrepareDerivedActorData", this);
 
     this.refreshDerivedData();
 
@@ -1929,7 +1932,7 @@ export class ActorPF extends ActorBasePF {
    * @param {string} skillId      The skill id (e.g. "per", or "prf.subSkills.prf1")
    * @param {object} options      Options which configure how the skill check is rolled
    */
-  rollSkill(
+  async rollSkill(
     skillId,
     options = {
       event: null,
@@ -1947,7 +1950,8 @@ export class ActorPF extends ActorBasePF {
       return ui.notifications.warn(msg);
     }
 
-    const allowed = Hooks.call("actorRoll", this, "skill", skillId, options);
+    let allowed = Hooks.call("pf1PreActorRollSkill", this, skillId, options);
+    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollSkill", allowed, this, "skill", skillId, options);
     if (allowed === false) return;
 
     const skl = this.getSkillInfo(skillId);
@@ -2013,7 +2017,7 @@ export class ActorPF extends ActorBasePF {
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    return DicePF.d20Roll({
+    const result = await DicePF.d20Roll({
       actor: this,
       event: options.event,
       fastForward: options.skipDialog === true,
@@ -2032,6 +2036,9 @@ export class ActorPF extends ActorBasePF {
       compendiumEntryType: "JournalEntry",
       originalOptions: options,
     });
+
+    Hooks.callAll("pf1ActorRollSkill", this, result, skillId);
+    return result;
   }
 
   /* -------------------------------------------- */
@@ -2048,17 +2055,18 @@ export class ActorPF extends ActorBasePF {
     this.rollAbilityTest(abilityId, options);
   }
 
-  rollBAB(options = { chatMessage: true, noSound: false, dice: "1d20" }) {
+  async rollBAB(options = { chatMessage: true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
 
-    const allowed = Hooks.call("actorRoll", this, "bab", null, options);
+    let allowed = Hooks.call("pf1PreActorRollBab", this, options);
+    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollBab", allowed, this, "bab", null, options);
     if (allowed === false) return;
 
-    return DicePF.d20Roll({
+    const result = await DicePF.d20Roll({
       actor: this,
       event: options.event,
       parts: [`@mod[${game.i18n.localize("PF1.BABAbbr")}]`],
@@ -2073,16 +2081,20 @@ export class ActorPF extends ActorBasePF {
       noSound: options.noSound,
       originalOptions: options,
     });
+
+    Hooks.callAll("pf1ActorRollBab", this, result);
+    return result;
   }
 
-  rollCMB(options = { ranged: false, ability: null, chatMessage: true, noSound: false, dice: "1d20" }) {
+  async rollCMB(options = { ranged: false, ability: null, chatMessage: true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
 
-    const allowed = Hooks.call("actorRoll", this, "cmb", null, options);
+    let allowed = Hooks.call("pf1PreActorRollCmb", this, options);
+    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollCmb", allowed, this, "cmb", null, options);
     if (allowed === false) return;
 
     // Add contextual notes
@@ -2121,7 +2133,7 @@ export class ActorPF extends ActorBasePF {
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    return DicePF.d20Roll({
+    const result = await DicePF.d20Roll({
       actor: this,
       event: options.event,
       parts,
@@ -2137,6 +2149,9 @@ export class ActorPF extends ActorBasePF {
       noSound: options.noSound,
       originalOptions: options,
     });
+
+    Hooks.callAll("pf1ActorRollCmb", this, result);
+    return result;
   }
 
   rollAttack(options = { melee: true, chatMessage: true, noSound: false, dice: "1d20" }) {
@@ -2204,12 +2219,13 @@ export class ActorPF extends ActorBasePF {
     });
   }
 
-  rollCL(spellbookKey, options = { chatMessage: true, noSound: false, dice: "1d20" }) {
+  async rollCL(spellbookKey, options = { chatMessage: true, noSound: false, dice: "1d20" }) {
     const spellbook = this.system.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
 
-    const allowed = Hooks.call("actorRoll", this, "cl", spellbookKey, options);
+    let allowed = Hooks.call("pf1PreActorRollCl", this, spellbookKey, options);
+    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollCl", allowed, this, "cl", spellbookKey, options);
     if (allowed === false) return;
 
     // Set up roll parts
@@ -2228,7 +2244,7 @@ export class ActorPF extends ActorBasePF {
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    return DicePF.d20Roll({
+    const result = await DicePF.d20Roll({
       actor: this,
       dice: options.dice,
       parts,
@@ -2243,15 +2259,27 @@ export class ActorPF extends ActorBasePF {
       noSound: options.noSound,
       originalOptions: options,
     });
+
+    Hooks.callAll("pf1ActorRollCl", this, result, spellbookKey);
+    return result;
   }
 
-  rollConcentration(spellbookKey, options = { chatMessage: true, noSound: false, dice: "1d20" }) {
+  async rollConcentration(spellbookKey, options = { chatMessage: true, noSound: false, dice: "1d20" }) {
     const spellbook = this.system.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
     rollData.mod = this.system.abilities[spellbook.ability]?.mod ?? 0;
 
-    const allowed = Hooks.call("actorRoll", this, "concentration", spellbookKey, options);
+    let allowed = Hooks.call("pf1PreActorRollConcentration", this, spellbookKey, options);
+    allowed = Hooks.call(
+      "actorRoll",
+      "pf1PreActorRollConcentration",
+      allowed,
+      this,
+      "concentration",
+      spellbookKey,
+      options
+    );
     if (allowed === false) return;
 
     // Set up roll parts
@@ -2277,7 +2305,7 @@ export class ActorPF extends ActorBasePF {
       formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
     rollData.formulaBonus = formulaRoll;
 
-    return DicePF.d20Roll({
+    const result = await DicePF.d20Roll({
       parts,
       dice: options.dice,
       data: rollData,
@@ -2291,6 +2319,9 @@ export class ActorPF extends ActorBasePF {
       noSound: options.noSound,
       originalOptions: options,
     });
+
+    Hooks.callAll("pf1ActorRollConcentration", this, result, spellbookKey);
+    return result;
   }
 
   getDefenseHeaders() {
@@ -2426,7 +2457,7 @@ export class ActorPF extends ActorBasePF {
       : { combat, messages: [] };
   }
 
-  rollSavingThrow(
+  async rollSavingThrow(
     savingThrowId,
     options = {
       event: null,
@@ -2449,7 +2480,8 @@ export class ActorPF extends ActorBasePF {
       return ui.notifications.warn(msg);
     }
 
-    const allowed = Hooks.call("actorRoll", this, "save", savingThrowId, options);
+    let allowed = Hooks.call("pf1PreActorRollSave", this, savingThrowId, options);
+    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollSave", allowed, this, "save", savingThrowId, options);
     if (allowed === false) return;
 
     // Add contextual notes
@@ -2505,7 +2537,7 @@ export class ActorPF extends ActorBasePF {
     const props = this.getDefenseHeaders();
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     const label = CONFIG.PF1.savingThrows[savingThrowId];
-    return DicePF.d20Roll({
+    const result = await DicePF.d20Roll({
       actor: this,
       event: options.event,
       parts,
@@ -2523,6 +2555,9 @@ export class ActorPF extends ActorBasePF {
       noSound: options.noSound,
       originalOptions: options,
     });
+
+    Hooks.callAll("pf1ActorRollSave", this, result, savingThrowId);
+    return result;
   }
 
   /* -------------------------------------------- */
@@ -2534,14 +2569,15 @@ export class ActorPF extends ActorBasePF {
    * @param {string} abilityId    The ability ID (e.g. "str")
    * @param {object} options      Options which configure how ability tests are rolled
    */
-  rollAbilityTest(abilityId, options = { chatMessage: true, noSound: false, dice: "1d20" }) {
+  async rollAbilityTest(abilityId, options = { chatMessage: true, noSound: false, dice: "1d20" }) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
 
-    const allowed = Hooks.call("actorRoll", this, "ability", abilityId, options);
+    let allowed = Hooks.call("pf1PreActorRollAbility", this, abilityId, options);
+    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollAbility", allowed, this, "ability", abilityId, options);
     if (allowed === false) return;
 
     // Add contextual notes
@@ -2574,7 +2610,7 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
-    return DicePF.d20Roll({
+    const result = DicePF.d20Roll({
       actor: this,
       event: options.event,
       parts,
@@ -2589,6 +2625,9 @@ export class ActorPF extends ActorBasePF {
       noSound: options.noSound,
       originalOptions: options,
     });
+
+    Hooks.callAll("pf1ActorRollAbility", this, result, abilityId);
+    return result;
   }
 
   /**
@@ -3617,7 +3656,8 @@ export class ActorPF extends ActorBasePF {
     this._rollData = result;
 
     // Call hook
-    Hooks.callAll("pf1.getRollData", this, result, true);
+    if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
+    callOldNamespaceHookAll("pf1.getRollData", "pf1GetRollData", this, result, true);
 
     return result;
   }
@@ -3910,7 +3950,16 @@ export class ActorPF extends ActorBasePF {
     return this.itemFlags.boolean[flagName] != null;
   }
 
-  async performRest({ restoreHealth = true, longTermCare = false, restoreDailyUses = true, hours = 8 } = {}) {
+  /**
+   * Perform all changes related to an actor resting, including restoring HP, ability scores, item uses, etc.
+   *
+   * @see {@link hookEvents!pf1PreActorRest pf1PreActorRest hook}
+   * @see {@link hookEvents!pf1ActorRest pf1ActorRest hook}
+   * @param {Partial<ActorRestOptions>} options - Options affecting an actor's resting
+   * @returns {Promise<ActorRestData | void>} Updates applied to the actor, if resting was completed
+   */
+  async performRest(options = {}) {
+    const { restoreHealth = true, longTermCare = false, restoreDailyUses = true, hours = 8 } = options;
     const actorData = this.system;
 
     const updateData = {};
@@ -4021,22 +4070,16 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    const proceed = Hooks.call(
-      "actorRest",
-      this,
-      {
-        restoreHealth,
-        longTermCare,
-        restoreDailyUses,
-        hours,
-      },
-      updateData,
-      itemUpdates
-    );
-    if (proceed === false) return false;
+    options = { restoreHealth, restoreDailyUses, longTermCare, hours };
+    let allowed = Hooks.call("pf1PreActorRest", this, options, updateData, itemUpdates);
+    allowed = callOldNamespaceHook("actorRest", "pf1ActorRest", allowed, this, options, updateData, itemUpdates);
+    if (allowed === false) return;
 
     await this.updateEmbeddedDocuments("Item", itemUpdates);
-    return this.update(updateData);
+    await this.update(updateData);
+
+    Hooks.callAll("pf1ActorRest", this, options, updateData, itemUpdates);
+    return { options, updateData, itemUpdates };
   }
 
   /**
@@ -4098,3 +4141,19 @@ export class ActorPF extends ActorBasePF {
     return this.items.find((o) => o.system.tag === tag);
   }
 }
+
+/**
+ * @typedef {object} ActorRestOptions
+ * Options given to {@link ActorPF.performRest} affecting an actor's resting.
+ * @property {boolean} restoreHealth - Whether the actor's health should be restored. Defaults to `true`.
+ * @property {boolean} restoreDailyUses - Whether daily uses of spells and abilities should be restored. Defaults to `true`.
+ * @property {boolean} longTermCare - Whether additional hit and ability score points should be restored through the Heal skill. Defaults to `false`.
+ * @property {number} hours - The number of hours the actor will rest. Defaults to `8`.
+ */
+
+/**
+ * @typedef {object} ActorRestData
+ * @property {ActorRestOptions} options - Options for resting
+ * @property {object} updateData - Updates applied to the actor
+ * @property {object[]} itemUpdates - Updates applied to the actor's items
+ */

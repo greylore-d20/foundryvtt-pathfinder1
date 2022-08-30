@@ -226,6 +226,8 @@ export class ItemAction {
     result.action = deepClone(this.data);
     result.dc = this.hasSave ? this.getDC(result) : 0;
 
+    if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
+
     return result;
   }
 

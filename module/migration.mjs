@@ -3,6 +3,7 @@ import { ExperienceConfig } from "./applications/settings/experience.mjs";
 import { createTag } from "./utils/lib.mjs";
 import { ItemChange } from "./components/change.mjs";
 import { SemanticVersion } from "./utils/semver.mjs";
+import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 /**
  * An indicator for whether the system is currently migrating the world.
@@ -108,7 +109,8 @@ export const migrateWorld = async function () {
   ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.version }));
   console.log("System Migration completed.");
   isMigrating = false;
-  Hooks.callAll("pf1.migrationFinished");
+  callOldNamespaceHookAll("pf1.migrationFinished", "pf1MigrationFinished");
+  Hooks.callAll("pf1MigrationFinished");
 };
 
 /* -------------------------------------------- */
@@ -1583,6 +1585,7 @@ const _Action_ConvertDamageType = function (damageTypeString) {
 
 /**
  * Filters out actions during migration.
+ *
  * @param {object} action - The data of the action in question.
  * @returns {boolean} `true` to keep action, `false` to discard action.
  */

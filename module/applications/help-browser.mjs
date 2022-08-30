@@ -2,12 +2,6 @@ import MarkdownIt from "markdown-it";
 import MarkDownItAnchor from "markdown-it-anchor";
 
 /**
- * @typedef {object} HistoryEntry
- * @property {string} url - URL of this history entry
- * @property {number} [scrollTop] - Scroll position of this history entry
- */
-
-/**
  * An {@link Application} displaying documentation for the Pathfinder 1e system within Foundry.
  *
  * @augments Application
@@ -208,3 +202,11 @@ const pf1HelpImageRenderer = (defaultRenderer) => (tokens, idx, options, env, se
   token.attrSet("src", foundry.utils.getRoute(`systems/pf1/${foundrySrc}`));
   return defaultRenderer(tokens, idx, options, env, self);
 };
+
+export const helpBrowser = new HelpBrowserPF();
+
+/**
+ * @typedef {object} HistoryEntry
+ * @property {string} url - URL of this history entry
+ * @property {number} [scrollTop] - Scroll position of this history entry
+ */

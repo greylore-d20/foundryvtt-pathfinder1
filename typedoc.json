@@ -1,10 +1,12 @@
 {
   "out": "docs",
   "tsconfig": "jsconfig.json",
-  "name": "pf1",
+  "name": "Pathfinder 1e for Foundry VTT",
   "logLevel": "Error",
   "emit": "docs",
   "basePath": ".",
-  "externalPattern": ["@foundry/**/*.mjs"],
-  "entryPoints": ["pf1.mjs"]
+  "externalPattern": ["@foundry/**/*.mjs", "node_modules/**/*"],
+  "excludeExternals": true,
+  "internalModule": "types",
+  "entryPoints": ["pf1.mjs", "hooks.d.ts"]
 }

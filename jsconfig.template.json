@@ -11,12 +11,15 @@
     "baseUrl": ".",
     "paths": {
       "@actor/*": ["./module/documents/actor/*"],
-      "@item": ["./module/documents/item/*"],
+      "@item/*": ["./module/documents/item/*"],
+      "@component/*": ["./module/components/*"],
+      "@config": ["./module/config.mjs"],
+      "@actionUse/*": ["./module/action-use/*"],
       "@utils": ["./module/utils/lib.mjs"],
       "@utils/*": ["./module/utils/*"]
     },
     "types": ["@league-of-foundry-developers/foundry-vtt-types", "@ethaks/fvtt-quench"]
   },
-  "include": ["**/*.mjs", "**/*.js", "global.d.ts"],
+  "include": ["**/*.mjs", "**/*.js", "**/*.d.ts"],
   "exclude": ["node_modules", "dist", "foundry"]
 }

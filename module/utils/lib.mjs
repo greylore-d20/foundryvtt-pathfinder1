@@ -1089,3 +1089,22 @@ export function getAbilityModifier(score = null, options = {}) {
   }
   return 0;
 }
+
+/**
+ * Recursively transforms an ES module to a regular, writable object.
+ *
+ * @template T
+ * @param {T} module - The ES module to transform.
+ * @returns {T} The transformed module.
+ */
+export function moduleToObject(module) {
+  const result = {};
+  for (const key in module) {
+    if (Object.prototype.toString.call(module[key]) === "[object Module]") {
+      result[key] = moduleToObject(module[key]);
+    } else {
+      result[key] = module[key];
+    }
+  }
+  return result;
+}

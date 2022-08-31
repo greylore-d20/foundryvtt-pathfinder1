@@ -1152,7 +1152,7 @@ export class ActionUse {
     };
     callOldNamespaceHookAll("itemUse", "pf1ItemUse", this.item, "postAttack", hookData);
 
-    this.shared.template ||= "systems/pf1/templates/chat/attack-roll.hbs";
+    this.shared.chatTemplate ||= "systems/pf1/templates/chat/attack-roll.hbs";
     this.shared.templateData.damageTypes = pf1.registry.damageTypes.toRecord();
     if (Hooks.call("pf1PreDisplayActionUse", this.action, this.shared) === false) return;
 
@@ -1160,8 +1160,12 @@ export class ActionUse {
     let result;
     if (this.shared.chatAttacks.length > 0) {
       if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true)
-        result = await createCustomChatMessage(this.shared.template, this.shared.templateData, this.shared.chatData);
-      else result = { template: this.shared.template, data: this.shared.templateData, chatData: this.shared.chatData };
+        result = await createCustomChatMessage(
+          this.shared.chatTemplate,
+          this.shared.templateData,
+          this.shared.chatData
+        );
+      else result = this.shared;
     } else {
       if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true) result = this.item.roll();
       else result = { descriptionOnly: true };

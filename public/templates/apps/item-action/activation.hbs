@@ -109,9 +109,9 @@
 </div>
 
 {{!-- Uses and charges --}}
-<h3 class="form-header">{{localize "PF1.Ammunition"}}</h3>
 {{#unless isSpell}}
 {{#if canUseAmmo}}
+<h3 class="form-header">{{localize "PF1.Ammunition"}}</h3>
 <div class="form-group">
   <label class="checkbox">
     <input type="checkbox" name="usesAmmo" {{checked data.usesAmmo}} /> {{localize "PF1.UsesAmmo"}}

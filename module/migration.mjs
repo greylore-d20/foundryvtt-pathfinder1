@@ -246,11 +246,19 @@ export const migrateActorData = function (actor, token) {
 /**
  * Migrate a single Item document to incorporate latest data model changes
  *
- * @param {Actor} item   The item data to derive an update from
+ * @param {object} item    The item data to derive an update from
+ * @param _d
  * @returns {object}       The updateData to apply
  */
-export const migrateItemData = function (item) {
+export const migrateItemData = function (item, _d = 0) {
   const updateData = {};
+
+  // Migrate data to system
+  if (item.system == null && item.data != null) {
+    item = deepClone(item);
+    item.system = item.data;
+    delete item.data;
+  }
 
   _migrateItemArrayTypes(item, updateData);
   _migrateItemSpellUses(item, updateData);
@@ -294,6 +302,21 @@ export const migrateItemData = function (item) {
     }
 
     updateData["system.actions"] = actionDataList.filter(filterItemActions);
+  }
+
+  // Migrate container items
+  if (item.system?.inventoryItems instanceof Array) {
+    updateData["system.inventoryItems"] = item.system.inventoryItems.map((o) => {
+      const data = mergeObject(o, expandObject(migrateItemData(o, _d + 1)), { inplace: false });
+
+      // Migrate data to system
+      if (data.data != null) {
+        data.system = mergeObject(data.data, data.system);
+        delete data.data;
+      }
+
+      return data;
+    });
   }
 
   // Return the migrated update data

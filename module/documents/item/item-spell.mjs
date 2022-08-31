@@ -105,17 +105,6 @@ export class ItemSpellPF extends ItemPF {
   }
 
   /**
-   * @param {object} options
-   * @param {Event} options.ev
-   * @param {boolean} options.skipDialog
-   * @param {boolean} options.chatMessage
-   * @param {string|undefined} options.rollMode
-   */
-  async use({ ev = null, skipDialog = false, chatMessage = true, rollMode } = {}) {
-    return this.useSpell(ev, { skipDialog, chatMessage, rollMode });
-  }
-
-  /**
    * Cast a Spell, consuming a spell slot of a certain level
    *
    * @param {MouseEvent} ev - The click event
@@ -125,7 +114,7 @@ export class ItemSpellPF extends ItemPF {
    * @param {string|undefined} options.rollMode Roll mode override
    * @returns {Promise<ChatMessage|void|null>} The chat message created by the spell's usage
    */
-  async useSpell(ev, { skipDialog = false, chatMessage = true, rollMode } = {}) {
+  async use({ skipDialog = false, chatMessage = true, rollMode, ev = null } = {}) {
     if (!this.testUserPermission(game.user, "OWNER")) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
@@ -143,7 +132,7 @@ export class ItemSpellPF extends ItemPF {
     }
 
     // Invoke the Item roll
-    return this.use({ ev, skipDialog, chatMessage, rollMode });
+    return super.use({ ev, skipDialog, chatMessage, rollMode });
   }
 
   async addSpellUses(value, data = null) {

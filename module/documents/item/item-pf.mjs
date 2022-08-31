@@ -147,7 +147,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   get isSingleUse() {
-    return this.system.uses?.per === "single" || (this.isPhysical && this.system.uses?.per == null);
+    return this.system.uses?.per === "single" || (this.isPhysical && !this.hasAction);
   }
 
   get isCharged() {

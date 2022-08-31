@@ -15,7 +15,7 @@ export class ItemLootPF extends ItemPF {
     // Reset loot extra type when loot subtype is changed
     if (
       update.system?.subType !== undefined &&
-      update.system?.subType !== this.data.subType &&
+      update.system?.subType !== this.system.subType &&
       update.system?.extraType === undefined
     ) {
       setProperty(update, "system.extraType", "");

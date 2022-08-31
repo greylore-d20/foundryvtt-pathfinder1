@@ -42,51 +42,45 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
-      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
-
-      {{#if owner}}
-      <label class="checkbox">
-        <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}} />
-        {{localize "PF1.ShowInQuickbar"}}
-      </label>
-      {{/if}}
-
       {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
 
       <h3 class="form-header">Weapon Details</h3>
       {{#if (and owner owned)}}
+      <label class="checkbox">
+        <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}} />
+        {{localize "PF1.ShowInQuickbar"}}
+      </label>
+
       <div class="form-group">
         <button type="button" name="create-attack">{{localize "PF1.CreateAttack"}}</button>
       </div>
       {{/if}}
 
       {{!-- Weapon Type --}}
-      <div class="container">
-        <div class="form-group">
-          <label>{{localize "PF1.Category"}}</label>
-          <div class="form-fields">
-            <select name="system.weaponType">
-              {{#select system.weaponType}}
-              {{#each weaponCategories.types as |name type|}}
-              <option value="{{ type }}">{{ name }}</option>
-              {{/each}}
-              {{/select}}
-            </select>
-          </div>
+      <div class="form-group">
+        <label>{{localize "PF1.Category"}}</label>
+        <div class="form-fields">
+          <select name="system.weaponType">
+            {{#select system.weaponType}}
+            {{#each weaponCategories.types as |name type|}}
+            <option value="{{ type }}">{{ name }}</option>
+            {{/each}}
+            {{/select}}
+          </select>
         </div>
+      </div>
 
-        {{!-- Weapon Subtype --}}
-        <div class="form-group">
-          <label>{{localize "PF1.Type"}}</label>
-          <div class="form-fields">
-            <select name="system.weaponSubtype">
-              {{#select system.weaponSubtype}}
-              {{#each weaponCategories.subTypes as |name type|}}
-              <option value="{{ type }}">{{ name }}</option>
-              {{/each}}
-              {{/select}}
-            </select>
-          </div>
+      {{!-- Weapon Subtype --}}
+      <div class="form-group">
+        <label>{{localize "PF1.Type"}}</label>
+        <div class="form-fields">
+          <select name="system.weaponSubtype">
+            {{#select system.weaponSubtype}}
+            {{#each weaponCategories.subTypes as |name type|}}
+            <option value="{{ type }}">{{ name }}</option>
+            {{/each}}
+            {{/select}}
+          </select>
         </div>
       </div>
 
@@ -111,8 +105,8 @@
       {{> "systems/pf1/templates/items/parts/item-weapon-groups.hbs"}}
 
       {{!-- Equipment Status --}}
+      <h3 class="form-header">{{localize "PF1.EquipmentStatus"}}</h3>
       <div class="form-group stacked">
-        <label>{{localize "PF1.EquipmentStatus"}}</label>
         <label class="checkbox">
           <input type="checkbox" name="system.equipped" {{checked system.equipped}} /> {{localize "PF1.Equipped"}}
         </label>
@@ -131,8 +125,8 @@
 
       {{#unless showUnidentifiedData}}
       {{!-- Weapon Properties --}}
+      <h3 class="form-header">{{localize "PF1.WeaponProperties"}}</h3>
       <div class="form-group stacked weapon-properties">
-        <label>{{localize "PF1.WeaponProperties"}}</label>
         {{#each config.weaponProperties as |name prop|}}
         <label class="checkbox">
           <input type="checkbox" name="system.properties.{{ prop }}" {{checked (lookup ../system.properties prop)}}/>

@@ -160,6 +160,42 @@ globalThis.pf1 = moduleToObject({
   registry,
   tooltip: null,
   utils,
+  // OBSOLETE until 0.83.0
+  get rollActorAttributeMacro() {
+    foundry.utils.logCompatibilityWarning("You are accessing pf1.rollActorAttributeMacro, which is deprecated.", {
+      since: "PF1 0.82.0",
+      until: "PF1 0.83.0",
+    });
+    return macros.rollActorAttributeMacro;
+  },
+  get rollItemMacro() {
+    foundry.utils.logCompatibilityWarning("You are accessing pf1.rollItemMacro, which is deprecated.", {
+      since: "PF1 0.82.0",
+      until: "PF1 0.83.0",
+    });
+    return macros.rollItemMacro;
+  },
+  get rollSkillMacro() {
+    foundry.utils.logCompatibilityWarning("You are accessing pf1.rollSkillMacro, which is deprecated.", {
+      since: "PF1 0.82.0",
+      until: "PF1 0.83.0",
+    });
+    return macros.rollSkillMacro;
+  },
+  get rollSaveMacro() {
+    foundry.utils.logCompatibilityWarning("You are accessing pf1.rollSaveMacro, which is deprecated.", {
+      since: "PF1 0.82.0",
+      until: "PF1 0.83.0",
+    });
+    return macros.rollSaveMacro;
+  },
+  get rollDefenses() {
+    foundry.utils.logCompatibilityWarning("You are accessing pf1.rollDefenses, which is deprecated.", {
+      since: "PF1 0.82.0",
+      until: "PF1 0.83.0",
+    });
+    return macros.rollDefenses;
+  },
 });
 
 // OBSOLETE: Add String.format

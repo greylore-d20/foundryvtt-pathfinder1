@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.82.1 - 2022-9-1
+
+### Bug Fixes
+
+- Fix darkvision not detecting creatures outside light sources
+- Dragging items to reoganize caused them to duplicate instead ([1645](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1645))
+- Various item descriptions weren't displayed or editable ([1646](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1646))
+- Subskill creation was buggy ([1647](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1647))
+- Script changes in worlds where they aren't allowed now show the item in question in the console ([1643](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1643))
+
 ## 0.82.0 - 2022-9-1
 
 ### Bug Fixes

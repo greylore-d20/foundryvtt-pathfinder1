@@ -531,7 +531,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const itemData = item.toObject();
 
     // Sort item
-    if (itemData.system.containerId === this.item.id) return this._onSortItem(event, itemData);
+    if (data.containerId === this.item.id) return this._onSortItem(event, itemData);
 
     // Create consumable from spell
     if (itemData.type === "spell") {
@@ -692,13 +692,13 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     // Get the drop target
     const dropTarget = event.target.closest(".item");
     const targetId = dropTarget ? dropTarget.dataset.itemId : null;
-    const target = siblings.find((s) => s.data._id === targetId);
+    const target = siblings.find((s) => s._id === targetId);
 
     // Perform the sort
     const sortUpdates = SortingHelpers.performIntegerSort(source, { target: target, siblings });
     const updateData = sortUpdates.map((u) => {
       const update = u.update;
-      update._id = u.target.data._id;
+      update._id = u.target._id;
       return update;
     });
 
@@ -711,8 +711,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
    */
   _getSortSiblings(source) {
     return this.item.items.filter((i) => {
-      if (ItemPF.isInventoryItem(source.data.type)) return ItemPF.isInventoryItem(i.data.type);
-      return i.data.type === source.data.type && i.data._id !== source.data._id;
+      if (ItemPF.isInventoryItem(source.type)) return ItemPF.isInventoryItem(i.type);
+      return i.type === source.type && i.data._id !== source._id;
     });
   }
 

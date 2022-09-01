@@ -133,7 +133,7 @@ export class ItemContainerPF extends ItemPF {
       // Diff the update against current data
       if (options.diff) {
         update = diffObject(d, expandObject(update));
-        if (isObjectEmpty(update)) return arr;
+        if (foundry.utils.isEmpty(update)) return arr;
         update["_id"] = d.id;
       }
 

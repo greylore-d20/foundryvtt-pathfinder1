@@ -254,6 +254,7 @@ export class ActorSheetPF extends ActorSheet {
         },
         { inplace: false }
       );
+      i.sort = item.sort;
       i.showUnidentifiedData = item.showUnidentifiedData;
       if (i.showUnidentifiedData)
         i.name =
@@ -2878,20 +2879,14 @@ export class ActorSheetPF extends ActorSheet {
    * @override
    */
   async _onDropItem(event, data) {
-    if (!this.document.isOwner) return false;
+    if (!this.actor.isOwner) return false;
 
     const item = await ItemPF.implementation.fromDropData(data);
-    const itemData = item.toJSON();
+    const itemData = item.toObject();
 
     // Handle item sorting within the same actor
-    const sameActor =
-      (data.actorId === this.actor.id || (this.actor.isToken && data.tokenId === this.actor.token.id)) &&
-      !data.containerId;
-    if (sameActor) {
-      const dropTarget = event.target.closest("li[data-item-id]");
-      if (dropTarget?.dataset?.itemId === item.id) return; // item dropped onto itself
-      return this._onSortItem(event, itemData);
-    }
+    const sameActor = item.parent?.uuid === this.actor.uuid && !data.containerId;
+    if (sameActor) return this._onSortItem(event, itemData);
 
     // Remove from container
     if (data.containerId) {

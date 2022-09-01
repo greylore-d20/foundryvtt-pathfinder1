@@ -13,17 +13,13 @@ import { getSkipActionPrompt } from "./settings.mjs";
  *
  * @param {object} item     The item data
  * @param {string} actor    The actor ID
+ * @param data
  * @param {number} slot     The hotbar slot to use
  * @returns {Promise<User>} The updated User
  */
-export const createItemMacro = async function (item, actor, slot) {
-  actor = actor ? game.actors.get(actor) : getItemOwner(item);
-  const command =
-    `pf1.rollItemMacro("${item.name}", {\n` +
-    `  itemId: "${item.id}",\n` +
-    `  itemType: "${item.type}",\n` +
-    (actor != null ? `  actorId: "${actor.id}",\n` : "") +
-    `});`;
+export const createItemMacro = async function (data, slot) {
+  const item = await fromUuid(data.uuid);
+  const command = `const item = await fromUuid("${item.uuid}");\nreturn item.use();`;
   let macro = game.macros.contents.find((m) => m.name === item.name && m.data.command === command);
   if (!macro) {
     macro = await Macro.create(
@@ -54,7 +50,7 @@ export const createSkillMacro = async function (skillId, actorId, slot) {
   if (!actor) return;
 
   const skillInfo = actor.getSkillInfo(skillId);
-  const command = `pf1.rollSkillMacro("${actorId}", "${skillId}");`;
+  const command = `const actor = await fromUuid("${actor.uuid}");\nreturn actor.rollSkill("${skillId}");`;
   const name = game.i18n.format("PF1.RollSkillMacroName", { 0: actor.name, 1: skillInfo.name });
   let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
   if (!macro) {
@@ -87,8 +83,7 @@ export const createSaveMacro = async function (saveId, actorId, slot) {
   const saveName = game.i18n.localize("PF1.SavingThrow" + saveId.substr(0, 1).toUpperCase() + saveId.substr(1));
   if (!actor) return;
 
-  const command = `pf1.rollSaveMacro("${actorId}", "${saveId}");`;
-
+  const command = `const actor = await fromUuid("${actor.uuid}");\nreturn actor.rollSavingThrow("${saveId}");`;
   const name = game.i18n.format("PF1.RollSaveMacroName", { 0: actor.name, 1: saveName });
   let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
   if (!macro) {
@@ -137,28 +132,32 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
       break;
   }
 
-  const command = altType
-    ? `pf1.rollActorAttributeMacro("${actorId}", "${type}", "${altType}");`
-    : `pf1.rollActorAttributeMacro("${actorId}", "${type}");`;
-  let name, img;
+  let name,
+    img,
+    command = `const actor = await fromUuid("${actor.uuid}");\n`;
   switch (type) {
     case "defenses":
+      command += `return actor.rollDefenses();`;
       name = game.i18n.format("PF1.RollDefensesMacroName", { 0: actor.name });
       img = "systems/pf1/icons/items/armor/shield-light-metal.png";
       break;
     case "cmb":
+      command += `return actor.rollCMB();`;
       name = game.i18n.format("PF1.RollCMBMacroName", { 0: actor.name });
       img = "systems/pf1/icons/feats/improved-grapple.jpg";
       break;
     case "cl":
+      command += `return actor.rollCL("${altType}");`;
       name = game.i18n.format("PF1.RollCLMacroName", { 0: actor.name, 1: altTypeLabel });
       img = "systems/pf1/icons/spells/wind-grasp-eerie-3.jpg";
       break;
     case "concentration":
+      command += `return actor.rollConcentration("${altType}");`;
       name = game.i18n.format("PF1.RollConcentrationMacroName", { 0: actor.name, 1: altTypeLabel });
       img = "systems/pf1/icons/skills/light_01.jpg";
       break;
     case "bab":
+      command += `return actor.rollBAB();`;
       name = game.i18n.format("PF1.RollBABMacroName", { 0: actor.name });
       img = "systems/pf1/icons/skills/yellow_08.jpg";
       break;

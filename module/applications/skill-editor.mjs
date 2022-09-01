@@ -104,7 +104,7 @@ export class SkillEditor extends FormApplication {
 
       if (this.isSubSkill && tag !== this.subSkillId)
         setProperty(data, `system.skills.${this.skillId}.subSkills.-=${this.subSkillId}`, null);
-      else if (tag !== this.skillId) setProperty(data, `system.skills.-=${this.skillId}`, null);
+      else if (!this.isSubSkill && tag !== this.skillId) setProperty(data, `system.skills.-=${this.skillId}`, null);
     }
 
     // Update skill data

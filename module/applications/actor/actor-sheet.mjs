@@ -1794,7 +1794,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     const updateData = {};
-    updateData[`data.skills.${skillId}.subSkills.${tag}`] = skillData;
+    updateData[`system.skills.${skillId}.subSkills.${tag}`] = skillData;
     if (this.document.testUserPermission(game.user, "OWNER")) await this.document.update(updateData);
 
     return this._editSkill(skillId, tag);
@@ -1823,7 +1823,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     const updateData = {};
-    updateData[`data.skills.${tag}`] = skillData;
+    updateData[`system.skills.${tag}`] = skillData;
     if (this.document.testUserPermission(game.user, "OWNER")) await this.document.update(updateData);
 
     return this._editSkill(tag);

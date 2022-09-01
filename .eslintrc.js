@@ -489,5 +489,6 @@ module.exports = {
     Color: "readonly",
     JournalEntryPage: "readonly",
     pf1: "readonly",
+    DetectionMode: "readonly",
   },
 };

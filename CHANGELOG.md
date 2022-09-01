@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.82.0 - 2022-9-1
+
+### Bug Fixes
+
+- Features didn't show their activation type on actor sheets ([1603](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1603))
+- Specific conditional modifiers weren't applying to haste or rapid fire ([1619](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1619))
+- Container items weren't being migrated ([1641](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1641))
+- The action description tab always had a scrollbar, even when not necessary ([1592](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1592))
+- Duplicated conditional modifiers didn't get a new ID, resulting in some bugs ([1610](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1610))
+- Editing action descriptions caused it to be enriched within the editor ([1568](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1568))
+- Clearing a character's experience points field now resets it to the minimum for this level again ([10](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/10))
+
+### Changelog
+
+- Show some non-magical information on unidentified items ([1614](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1614))
+- Move primary attack flag from item to action
+- Actions can now have individual charges ([1531](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1531))
+- Add concentration and caster level bonuses as changes
+- Keep expanded item summaries open on actor sheet render ([1613](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1613))
+- FoundryVTT 10 compatibility update
+
+### API
+
+- Add `shared` as a parameter to the `itemUse` hook ([1612](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1612))
+
 ## 0.81.3 - 2022-8-4
 
 ### Bug Fixes

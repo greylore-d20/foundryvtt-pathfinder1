@@ -79,7 +79,6 @@ pages:
   stage: build
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
-    - if: $CI_COMMIT_BRANCH == "v10-api"
   cache:
     <<: *global_cache
   before_script:

@@ -9,9 +9,9 @@ export class ChatMessagePF extends ChatMessage {
    * @type {ItemPF|undefined|null} - Null is returned if no item is linked, undefined if item is not found, and ItemPF otherwise.
    */
   get itemSource() {
-    const itemId = this.system.flags?.pf1?.metadata?.item;
+    const itemId = this.flags?.pf1?.metadata?.item;
     if (itemId) {
-      const actor = this.constructor.getSpeakerActor(this.system.speaker);
+      const actor = this.constructor.getSpeakerActor(this.speaker);
       return actor?.items.get(itemId);
     }
     return null;

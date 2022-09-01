@@ -170,7 +170,8 @@ export class ItemChange {
         if (this.formula) {
           if (operator === "script") {
             if (!game.settings.get("pf1", "allowScriptChanges")) {
-              ui.notifications?.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"));
+              ui.notifications?.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), { console: false });
+              console.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), this.parent);
               value = 0;
               operator = "add";
             } else {

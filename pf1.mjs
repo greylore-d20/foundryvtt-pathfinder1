@@ -161,40 +161,40 @@ globalThis.pf1 = moduleToObject({
   tooltip: null,
   utils,
   // OBSOLETE until 0.83.0
-  get rollActorAttributeMacro() {
+  rollActorAttributeMacro(...args) {
     foundry.utils.logCompatibilityWarning("You are accessing pf1.rollActorAttributeMacro, which is deprecated.", {
       since: "PF1 0.82.0",
       until: "PF1 0.83.0",
     });
-    return macros.rollActorAttributeMacro;
+    return macros.rollActorAttributeMacro(...args);
   },
-  get rollItemMacro() {
+  rollItemMacro(...args) {
     foundry.utils.logCompatibilityWarning("You are accessing pf1.rollItemMacro, which is deprecated.", {
       since: "PF1 0.82.0",
       until: "PF1 0.83.0",
     });
-    return macros.rollItemMacro;
+    return macros.rollItemMacro(...args);
   },
-  get rollSkillMacro() {
+  rollSkillMacro(...args) {
     foundry.utils.logCompatibilityWarning("You are accessing pf1.rollSkillMacro, which is deprecated.", {
       since: "PF1 0.82.0",
       until: "PF1 0.83.0",
     });
-    return macros.rollSkillMacro;
+    return macros.rollSkillMacro(...args);
   },
-  get rollSaveMacro() {
+  rollSaveMacro(...args) {
     foundry.utils.logCompatibilityWarning("You are accessing pf1.rollSaveMacro, which is deprecated.", {
       since: "PF1 0.82.0",
       until: "PF1 0.83.0",
     });
-    return macros.rollSaveMacro;
+    return macros.rollSaveMacro(...args);
   },
-  get rollDefenses() {
+  rollDefenses(...args) {
     foundry.utils.logCompatibilityWarning("You are accessing pf1.rollDefenses, which is deprecated.", {
       since: "PF1 0.82.0",
       until: "PF1 0.83.0",
     });
-    return macros.rollDefenses;
+    return macros.rollDefenses(...args);
   },
 });
 

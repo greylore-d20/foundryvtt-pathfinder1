@@ -17,9 +17,7 @@ export class ActorCharacterPF extends ActorPF {
 
     // Enable vision by default
     if (game.settings.get("pf1", "characterVision")) {
-      if (data.prototypeToken?.vision === undefined) {
-        tokenUpdateData["sight.enabled"] = true;
-      }
+      setProperty(data, "prototypeToken.sight.enabled", true);
     }
 
     if (!foundry.utils.isEmpty(tokenUpdateData)) this.prototypeToken.updateSource(tokenUpdateData);

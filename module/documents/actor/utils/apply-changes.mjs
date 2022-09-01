@@ -568,10 +568,21 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
   }
 
   // Call hooks to enable modules to add or adjust the result array
-  callOldNamespaceHookAll("pf1.getChangeFlat", "pf1GetChangeFlat", changeTarget, changeType, result);
+  callOldNamespaceHookAll("pf1.getChangeFlat", "pf1GetChangeFlat", changeTarget, changeType, { keys: result });
   Hooks.callAll("pf1GetChangeFlat", changeTarget, changeType, result, curData);
 
-  return result;
+  // Return results directly when deprecation is removed
+  return result.map((key) => {
+    const fixedKey = key.replace("data.", "system.");
+    if (key.startsWith("data.")) {
+      foundry.utils.logCompatibilityWarning(
+        `Change targets pointing towards "data." (${key}) are deprecated. Use "system." (${fixedKey}) instead.`,
+        { since: "PF1 0.82.0", until: "PF1 0.83.0" }
+      );
+      return fixedKey;
+    }
+    return key;
+  });
 };
 
 const getBabTotal = function (d) {

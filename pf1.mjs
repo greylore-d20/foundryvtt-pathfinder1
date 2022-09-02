@@ -641,7 +641,7 @@ Hooks.once("ready", async function () {
   if (!game.settings.get("pf1", "dontShowChangelog")) {
     const v = game.settings.get("pf1", "changelogVersion") || "0.0.1";
     const changelogVersion = SemanticVersion.fromString(v);
-    const curVersion = SemanticVersion.fromString(game.system.data.version);
+    const curVersion = SemanticVersion.fromString(game.system.version);
 
     if (curVersion.isHigherThan(changelogVersion)) {
       const app = new ChangeLogWindow(changelogVersion);

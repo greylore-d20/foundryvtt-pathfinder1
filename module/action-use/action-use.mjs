@@ -1150,7 +1150,7 @@ export class ActionUse {
       templateData: this.shared.templateData,
       shared: this.shared,
     };
-    callOldNamespaceHookAll("itemUse", "pf1ItemUse", this.item, "postAttack", hookData);
+    callOldNamespaceHookAll("itemUse", "pf1PreDisplayActionUse", this.item, "postAttack", hookData);
 
     this.shared.chatTemplate ||= "systems/pf1/templates/chat/attack-roll.hbs";
     this.shared.templateData.damageTypes = pf1.registry.damageTypes.toRecord();

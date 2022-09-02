@@ -150,18 +150,14 @@ OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<
   };
 }
 
-// Patch the `fromJSON` method used by Foundry to allow rolls from builds with a renamed roll class
+// Patch the `fromData` method used by Foundry to allow rolls from builds with a renamed roll class
 // to still be created from JSON for tooltips etc.
 // Introduced in v0.81.1 for Foundry v9.269
-// TODO: Remove when enough time has passed
 {
-  const origFunc = Roll.fromJSON;
-  Roll.fromJSON = function (json) {
-    const data = JSON.parse(json);
-    const className = data.class === "RollPF$1" ? "RollPF" : data.class;
-    const cls = CONFIG.Dice.rolls.find((cls) => cls.name === className);
-    if (!cls) throw new Error(`Unable to recreate ${data.class} instance from provided data`);
-    return cls.fromData(data);
+  const origFunc = Roll.fromData;
+  Roll.fromData = function (data, ...args) {
+    if (data.class === "RollPF$1") data.class = "RollPF";
+    return origFunc.call(this, data, ...args);
   };
 }
 

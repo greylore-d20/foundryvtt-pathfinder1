@@ -61,7 +61,8 @@ export const patchCore = function () {
 
     // Compute the source polygon
     this.los = this._createPolygon();
-    this._flags.renderSoftEdges &&= this.los.edges.size > 0 || this.data.angle < 360;
+    this._flags.renderSoftEdges =
+      canvas.performance.lightSoftEdges && (!!this.los.rays?.length || this.data.angle < 360);
 
     // Initialize or update meshes with the los points array
     this._initializeMeshes(this.los);

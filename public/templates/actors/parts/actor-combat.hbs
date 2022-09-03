@@ -197,16 +197,16 @@
                 <br/>
                 {{localize "PF1.Details"}}:<br/>
                 {{#with item.document.firstAction}}
-                  {{#each system.damage.parts as |pt ix|}}
+                  {{#each data.damage.parts as |pt ix|}}
                     {{pt.[0]}}{{#if pt.[1]}} [{{damageTypes pt.[1]}}]{{/if}}<br/>
                   {{/each}}
-                  {{#if system.damage.nonCritParts}}
-                    {{#each system.damage.nonCritParts as |pt|}}
+                  {{#if data.damage.nonCritParts}}
+                    {{#each data.damage.nonCritParts as |pt|}}
                       {{pt.[0]}}{{#if pt.[1]}} [{{pt.[1]}}]{{/if}}<br/>
                     {{/each}}
                   {{/if}}
-                  {{#if system.ability.damage}}
-                    {{abilityMod system.ability.damage @root.rollData system.ability.damageMult}} [{{lookup @root.config.abilities system.ability.damage}}]<br/>
+                  {{#if data.ability.damage}}
+                    {{abilityMod data.ability.damage @root.rollData data.ability.damageMult}} [{{lookup @root.config.abilities data.ability.damage}}]<br/>
                   {{/if}}
                   {{#each allDamageSources}}
                     {{#if @first}}<br>{{/if}}

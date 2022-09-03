@@ -220,6 +220,19 @@ export class ItemAction {
     return this.data.enh?.value ?? this.item.system.enh;
   }
 
+  /**
+   * An array of changes affecting this action's damage
+   *
+   * @type {ItemChange[]}
+   */
+  get damageSources() {
+    const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.actionType);
+    const isWeapon = ["mwak", "rwak"].includes(this.data.actionType);
+    const changes = this.parent.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
+    const highest = getHighestChanges(changes, { ignoreTarget: true });
+    return highest;
+  }
+
   getRollData() {
     const result = this.item.getRollData();
 
@@ -528,8 +541,8 @@ export class ItemAction {
 
     rollData.item.primaryAttack = primaryAttack;
 
-    const isRanged = ["rwak", "rsak", "rcman"].includes(itemData.actionType);
-    const isCMB = ["mcman", "rcman"].includes(itemData.actionType);
+    const isRanged = ["rwak", "rsak", "rcman"].includes(actionData.actionType);
+    const isCMB = ["mcman", "rcman"].includes(actionData.actionType);
 
     // Determine size bonus
     rollData.sizeBonus = !isCMB

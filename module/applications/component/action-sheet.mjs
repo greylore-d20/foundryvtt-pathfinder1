@@ -70,8 +70,8 @@ export class ItemActionSheet extends FormApplication {
 
     // Action Details
     data.hasAttackRoll = this.action.hasAttack;
-    data.isHealing = data.actionType === "heal";
-    data.isCombatManeuver = ["mcman", "rcman"].includes(data.actionType);
+    data.isHealing = data.data.actionType === "heal";
+    data.isCombatManeuver = ["mcman", "rcman"].includes(data.data.actionType);
 
     data.isCharged = this.action.isCharged;
     data.isSelfCharged = this.action.isSelfCharged;

@@ -1,5 +1,5 @@
-import { getBuffTargetDictionary, getBuffTargets, adjustNumberByStringCommand } from "../../utils/lib.mjs";
-import { ItemPF } from "../../documents/item/item-pf.mjs";
+import { adjustNumberByStringCommand, getBuffTargetDictionary, getBuffTargets } from "@utils";
+import { ItemPF } from "@item/item-pf.mjs";
 import { ScriptEditor } from "../script-editor.mjs";
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { Widget_CategorizedItemPicker } from "../categorized-item-picker.mjs";
@@ -113,7 +113,7 @@ export class ItemSheetPF extends ItemSheet {
     // Item Type, Status, and Details
     data.itemType = this._getItemType(data.item);
     data.itemStatus = this._getItemStatus(data.item);
-    data.itemProperties = this._getItemProperties(data.item);
+    data.itemProperties = this._getItemProperties();
     data.itemName = data.item.name;
     data.isCharged = ["day", "week", "charges"].includes(data.item.system.uses?.per);
     data.isPhysical = data.item.system.quantity !== undefined;
@@ -132,8 +132,7 @@ export class ItemSheetPF extends ItemSheet {
       data.auraStrength = auraStrength;
 
       if (CONFIG.PF1.auraStrengths[auraStrength] != null) {
-        const auraStrength_name = CONFIG.PF1.auraStrengths[auraStrength];
-        data.auraStrength_name = auraStrength_name;
+        data.auraStrength_name = CONFIG.PF1.auraStrengths[auraStrength];
 
         data.labels.identify = game.i18n.localize("PF1.IdentifyDCNumber").format(15 + rollData.item.cl);
       }
@@ -688,14 +687,14 @@ export class ItemSheetPF extends ItemSheet {
   /* -------------------------------------------- */
 
   /**
-   * Get the Array of item properties which are used in the small sidebar of the description tab
+   * Get an array of item properties which are used in the small sidebar of the description tab
    *
-   * @param item
-   * @returns {Array}
+   * @returns {string[]}
    * @private
    */
-  _getItemProperties(item) {
+  _getItemProperties() {
     const props = [];
+    const item = this.item;
     const labels = this.item.labels;
 
     if (item.type === "weapon") {
@@ -724,8 +723,9 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Action type
-    if (item.system.actionType) {
-      props.push(CONFIG.PF1.itemActionTypes[item.system.actionType]);
+    const itemActionTypes = item.actionTypes;
+    if (itemActionTypes) {
+      props.push(...itemActionTypes.map((o) => CONFIG.PF1.itemActionTypes[o]));
     }
 
     // Action usage

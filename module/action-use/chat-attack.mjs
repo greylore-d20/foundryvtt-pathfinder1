@@ -245,7 +245,7 @@ export class ChatAttack {
       notes.push(...this.action.data.attackNotes);
     }
     // Add CMB notes
-    if (["mcman", "rcman"].includes(this.action.item?.system.actionType)) {
+    if (["mcman", "rcman"].includes(this.action.data.actionType)) {
       notes.push(...(this.action.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
     }
 

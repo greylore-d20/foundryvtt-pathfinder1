@@ -317,6 +317,17 @@ export class ItemPF extends ItemBasePF {
     return this.constructor.getTypeColor(this.type, 1);
   }
 
+  /**
+   * An array containing all action types from this item's actions.
+   *
+   * @see {@link config.itemActionTypes}
+   * @type {string[]}
+   */
+  get actionTypes() {
+    const actionTypes = this.actions?.map((action) => action.data.actionType).filter(Boolean) ?? [];
+    return [...new Set(actionTypes)];
+  }
+
   static get defaultContextNote() {
     return {
       text: "",
@@ -2252,13 +2263,15 @@ export class ItemPF extends ItemBasePF {
 
   /**
    * Generic damage source retrieval
+   *
+   * @deprecated
    */
   get damageSources() {
-    const isSpell = ["msak", "rsak", "spellsave"].includes(this.system.actionType);
-    const isWeapon = ["mwak", "rwak"].includes(this.system.actionType);
-    const changes = this.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
-    const highest = getHighestChanges(changes, { ignoreTarget: true });
-    return highest;
+    foundry.utils.logCompatibilityWarning("ItemPF.damageSources is deprecated, use ItemAction.damageSources instead", {
+      since: "PF1 0.82.2",
+      until: "PF1 0.83.0",
+    });
+    return this.firstAction?.damageSources ?? [];
   }
 
   getAllDamageSources(actionId) {
@@ -2292,7 +2305,7 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    const allChanges = [...this.damageSources, ...fakeCondChanges];
+    const allChanges = [...action.damageSources, ...fakeCondChanges];
 
     // Add enhancement bonus
     if (action.enhancementBonus) {

@@ -197,7 +197,7 @@ export class ActionUse {
       powerAttackBonus = Math.floor(powerAttackBonus * powerAttackMultiplier);
 
       // Get label
-      const label = ["rwak", "rsak"].includes(this.item.system.actionType)
+      const label = ["rwak", "rsak"].includes(this.action.data.actionType)
         ? game.i18n.localize("PF1.DeadlyAim")
         : game.i18n.localize("PF1.PowerAttack");
 
@@ -986,8 +986,8 @@ export class ActionUse {
 
     // Add info for Power Attack to melee, Deadly Aim to ranged attacks
     if (this.shared.powerAttack) {
-      if (this.item.system.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
-      if (this.item.system.actionType === "mwak") properties.push(game.i18n.localize("PF1.PowerAttack"));
+      if (this.action.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));
+      if (this.action.data.actionType === "mwak") properties.push(game.i18n.localize("PF1.PowerAttack"));
     }
 
     // Add info for Point-Blank shot

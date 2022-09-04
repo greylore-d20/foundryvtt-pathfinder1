@@ -2829,8 +2829,14 @@ export class ActorSheetPF extends ActorSheet {
 
     // Re-open item summaries
     for (const itemId of this._expandedItems) {
-      const elem = html.find(`[data-item-id="${itemId}"]`);
-      if (elem) this.openItemSummary(elem, { instant: true });
+      // Only display summaries of items that are still present
+      if (this.object.items.has(itemId)) {
+        const elem = html.find(`[data-item-id="${itemId}"]`);
+        if (elem) this.openItemSummary(elem, { instant: true });
+      } else {
+        // Delete itemIds belonging to items no longer found in the actor
+        this._expandedItems.findSplice((o) => o === itemId);
+      }
     }
 
     return html;

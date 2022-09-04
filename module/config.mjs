@@ -2551,6 +2551,27 @@ export const PF1 = {
   },
 
   keepItemLinksOnCopy: ["classAssociations"],
+
+  defaultIcons: {
+    items: {
+      attack: "icons/svg/explosion.svg",
+      buff: "icons/svg/ice-aura.svg",
+      class: "icons/svg/paralysis.svg",
+      consumable: "icons/svg/tankard.svg",
+      container: "icons/svg/barrel.svg",
+      equipment: "icons/svg/combat.svg",
+      feat: "icons/svg/book.svg",
+      loot: "icons/svg/item-bag.svg",
+      race: "icons/svg/wing.svg",
+      spell: "icons/svg/daze.svg",
+      weapon: "icons/svg/sword.svg",
+    },
+    actors: {
+      character: "icons/svg/mystery-man.svg",
+      npc: "icons/svg/terror.svg",
+      basic: "icons/svg/castle.svg",
+    },
+  },
 };
 
 /**

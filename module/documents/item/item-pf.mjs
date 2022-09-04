@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { DicePF, formulaHasDice } from "../../dice/dice.mjs";
 import { ItemBasePF } from "./item-base.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
@@ -55,6 +56,12 @@ export class ItemPF extends ItemBasePF {
 
   _preCreate(data, options, user) {
     super._preCreate(data, options, user);
+
+    // Set typed image
+    if (data.img === undefined) {
+      const image = PF1.defaultIcons.items[this.type];
+      if (image) this.updateSource({ img: image });
+    }
 
     // Ensure unique Change IDs
     const actor = this.parentActor;

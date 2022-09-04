@@ -105,6 +105,12 @@ export class ActorPF extends ActorBasePF {
 
     const updates = this.preCreateData(data, options, user);
 
+    // Set typed image
+    if (data.img === undefined) {
+      const image = PF1.defaultIcons.actors[this.type];
+      if (image) this.updateSource({ img: image });
+    }
+
     if (Object.keys(updates).length) return this.updateSource(updates);
   }
 
@@ -1740,6 +1746,8 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
+    this._syncTokenImage(update);
+
     if (!update.system) return; // No system updates.
 
     const oldData = this.system;
@@ -1794,6 +1802,24 @@ export class ActorPF extends ActorBasePF {
 
     // Update experience
     this._updateExp(update);
+  }
+
+  /**
+   * Sync images in _preUpdate when moving away from default
+   *
+   * @param {object} update Update data
+   */
+  _syncTokenImage(update) {
+    // No image update
+    if (!update.img) return;
+    // Explicit token image update
+    if (update.prototypeToken?.texture?.src !== undefined) return;
+    // Old token image mismatch with default
+    if (this.prototypeToken.texture.src !== PF1.defaultIcons.actors[this.type]) return;
+    // Portrait and token image mismatch
+    if (this.img !== this.prototypeToken.texture.src) return;
+
+    this.updateSource({ "prototypeToken.texture.src": update.img });
   }
 
   _onUpdate(updateData, options, userId, context = {}) {

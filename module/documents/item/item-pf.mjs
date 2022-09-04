@@ -2131,7 +2131,7 @@ export class ItemPF extends ItemBasePF {
         });
       });
 
-    const sources = this.attackSources;
+    const sources = this.getAttackSources(actionId);
     const totalBonus = sources.reduce((f, s) => f + s.value, 0);
 
     return attacks.map((a, i) => a + totalBonus + condBonuses[i]);
@@ -2163,7 +2163,7 @@ export class ItemPF extends ItemBasePF {
       actionData = action.data;
 
     if (!actorData || !actionData) return sources;
-    const rollData = this.getRollData();
+    const rollData = action.getRollData();
 
     // Attack type identification
     const isMelee =
@@ -2233,7 +2233,9 @@ export class ItemPF extends ItemBasePF {
 
     // Add secondary natural attack penalty
     if (actionData.naturalAttack.primaryAttack !== true && itemData.attackType === "natural") {
-      describePart(-5, game.i18n.localize("PF1.SecondaryAttack"), -400);
+      const attackBonus = actionData.naturalAttack?.secondary?.attackBonus || "-5";
+      const secondaryModifier = RollPF.safeTotal(`${attackBonus}`, rollData);
+      describePart(secondaryModifier, game.i18n.localize("PF1.SecondaryAttack"), -400);
     }
 
     // Conditional modifiers

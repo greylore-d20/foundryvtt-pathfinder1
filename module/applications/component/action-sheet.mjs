@@ -80,7 +80,7 @@ export class ItemActionSheet extends FormApplication {
       data.canInputRange = ["ft", "mi", "spec"].includes(data.data.range.units);
       data.canInputMinRange = ["ft", "mi", "spec"].includes(data.data.range.minUnits);
     }
-    if (data.duration != null) {
+    if (data.data.duration != null) {
       data.canInputDuration = !["", "inst", "perm", "seeText"].includes(data.data.duration.units);
     }
 

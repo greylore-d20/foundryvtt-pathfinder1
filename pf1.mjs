@@ -750,8 +750,8 @@ Hooks.on("createToken", (token, options, userId) => {
   if (token.actor.effects?.size) {
     const updates = [];
     for (const effect of token.actor.effects) {
-      if (!effect.data.origin) continue;
-      const effectItemId = effect.data.origin.match(/Item\.(\w+)/)?.pop();
+      if (!effect.origin) continue;
+      const effectItemId = effect.origin.match(/Item\.(\w+)/)?.pop();
       const foundItem = token.actor.items.get(effectItemId);
       if (foundItem) {
         updates.push({ _id: effect.id, origin: foundItem.uuid });

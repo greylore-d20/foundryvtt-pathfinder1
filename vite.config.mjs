@@ -51,8 +51,11 @@ const config = defineConfig(({ command, mode }) => {
       sourcemap: true,
       rollupOptions: {
         output: {
-          // Relative paths start with a `../`, resulting in the `pf1` missing
-          sourcemapPathTransform: (relative) => path.join("/systems/pf1/pf1/", relative),
+          sourcemapPathTransform: (relative) => {
+            // Relative paths start with a `../`, which moves the path out of the `systems/pf1` directory.
+            if (relative.startsWith("../")) relative = relative.replace("../", "");
+            return relative;
+          },
         },
         plugins: [terser({ mangle: { keep_classnames: true, keep_fnames: true } })],
       },

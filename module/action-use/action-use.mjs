@@ -847,7 +847,7 @@ export class ActionUse {
     // Parse template data
     const token =
       this.item.parentActor?.token ??
-      canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.item.parentActor?.id);
+      canvas.tokens?.placeables.find((t) => t.actor && t.actor.id === this.item.parentActor?.id);
     const identified = Boolean(this.shared.rollData.item?.identified ?? true);
     const name = identified
       ? `${this.shared.rollData.item.identifiedName || this.item.name} (${this.shared.action.name})`

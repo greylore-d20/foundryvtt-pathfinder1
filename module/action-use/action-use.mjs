@@ -459,7 +459,7 @@ export class ActionUse {
     if (this.shared.action.isCharged) {
       cost = this.shared.action.chargeCost;
       let uses = this.item.charges;
-      if (this.item.system.type === "spell") {
+      if (this.item.type === "spell") {
         if (this.item.useSpellPoints()) {
           uses = this.item.getSpellUses();
         } else {
@@ -833,7 +833,7 @@ export class ActionUse {
     }
 
     // Add CL notes
-    if (this.item.system.type === "spell" && this.item.parent) {
+    if (this.item.type === "spell" && this.item.parent) {
       const clNotes = this.item.parent.getContextNotesParsed(`spell.cl.${this.item.system.spellbook}`);
 
       if (clNotes.length) {
@@ -969,7 +969,7 @@ export class ActionUse {
     // Add actual cost
     const cost = this.shared.rollData.chargeCost;
     if (cost && !this.item.system.atWill) {
-      if (this.item.system.type === "spell" && this.item.useSpellPoints()) {
+      if (this.item.type === "spell" && this.item.useSpellPoints()) {
         properties.push(`${game.i18n.localize("PF1.SpellPointsCost")}: ${cost}`);
       } else {
         properties.push(`${game.i18n.localize("PF1.ChargeCost")}: ${cost}`);

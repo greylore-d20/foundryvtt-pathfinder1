@@ -963,7 +963,7 @@ export class ItemPF extends ItemBasePF {
       hasMultiAttack: this.hasMultiAttack,
       hasAction: this.hasAction,
       isVersatile: this.isVersatile,
-      isSpell: this.system.type === "spell",
+      isSpell: this.type === "spell",
       name: (identified ? rollData.identifiedName : rollData.item.unidentified?.name) || this.name,
       description: identified ? this.fullDescription : itemChatData.unidentifiedDescription,
       rollData: rollData,
@@ -1004,7 +1004,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Render the chat card template
-    const templateType = ["consumable"].includes(this.system.type) ? this.system.type : "item";
+    const templateType = ["consumable"].includes(this.type) ? this.type : "item";
     const template = `systems/pf1/templates/chat/${templateType}-card.hbs`;
 
     // Determine metadata
@@ -1078,10 +1078,7 @@ export class ItemPF extends ItemBasePF {
 
     // General equipment properties
     const props = [];
-    if (
-      Object.prototype.hasOwnProperty.call(itemData, "equipped") &&
-      ["weapon", "equipment"].includes(this.system.type)
-    ) {
+    if (Object.prototype.hasOwnProperty.call(itemData, "equipped") && ["weapon", "equipment"].includes(this.type)) {
       props.push(itemData.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped"));
     }
 

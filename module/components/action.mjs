@@ -636,7 +636,7 @@ export class ItemAction {
     }
 
     // Add proficiency penalty
-    if (this.item.system.type === "attack" && !itemData.proficient) {
+    if (this.item.type === "attack" && !itemData.proficient) {
       parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
     }
     // Add secondary natural attack penalty

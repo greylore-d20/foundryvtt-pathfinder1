@@ -3061,7 +3061,7 @@ export class ActorPF extends ActorBasePF {
     data = data ?? this.system;
 
     const hpconf = game.settings.get("pf1", "healthConfig").variants;
-    const conf = this.system.type === "npc" ? hpconf.npc : hpconf.pc;
+    const conf = this.type === "npc" ? hpconf.npc : hpconf.pc;
     const override = data.attributes.woundThresholds.override ?? -1;
     return override >= 0 && conf.allowWoundThresholdOverride ? override : conf.useWoundThresholds;
   }

@@ -227,7 +227,7 @@ export const migrateActorData = function (actor, token) {
   const items = actor.items.reduce((arr, i) => {
     // Migrate the Owned Item
     const itemData = i instanceof CONFIG.Item.documentClass ? i.toObject() : i;
-    const itemUpdate = migrateItemData(itemData);
+    const itemUpdate = migrateItemData(itemData, actor);
 
     // Update the Owned Item
     if (!foundry.utils.isEmpty(itemUpdate)) {
@@ -247,10 +247,11 @@ export const migrateActorData = function (actor, token) {
  * Migrate a single Item document to incorporate latest data model changes
  *
  * @param {object} item    The item data to derive an update from
+ * @param actor
  * @param _d
  * @returns {object}       The updateData to apply
  */
-export const migrateItemData = function (item, _d = 0) {
+export const migrateItemData = function (item, actor = null, _d = 0) {
   const updateData = {};
 
   // Migrate data to system
@@ -288,7 +289,7 @@ export const migrateItemData = function (item, _d = 0) {
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
-  _migrateItemActions(item, updateData);
+  _migrateItemActions(item, updateData, actor);
   _migrateItemWeight(item, updateData);
 
   // Migrate action data
@@ -307,7 +308,7 @@ export const migrateItemData = function (item, _d = 0) {
   // Migrate container items
   if (item.system?.inventoryItems instanceof Array) {
     updateData["system.inventoryItems"] = item.system.inventoryItems.map((o) => {
-      const data = mergeObject(o, expandObject(migrateItemData(o, _d + 1)), { inplace: false });
+      const data = mergeObject(o, expandObject(migrateItemData(o, actor, _d + 1)), { inplace: false });
 
       // Migrate data to system
       if (data.data != null) {
@@ -1137,7 +1138,7 @@ const _migrateSpellData = function (item, updateData) {
   }
 };
 
-const _migrateItemActions = function (item, updateData) {
+const _migrateItemActions = function (item, updateData, actor = null) {
   const hasOldAction =
     !!item.system.actionType || !!item.system.activation?.type || !!item.system.measureTemplate?.type;
   const alreadyHasActions = item.system.actions instanceof Array && item.system.actions.length > 0;
@@ -1163,11 +1164,21 @@ const _migrateItemActions = function (item, updateData) {
   actionData.description = "";
   // Add spell data
   if (item.type === "spell") {
+    // Make sure it has an activation type
+    actionData.activation.type ||= "standard";
+
     // Transfer spell duration
     actionData.duration.value = item.system.spellDuration;
+
     // Transfer spell point cost
-    const oldSpellPointCostFormula = item.system.spellPoints?.cost;
-    if (oldSpellPointCostFormula) actionData.uses.autoDeductChargesCost = oldSpellPointCostFormula;
+    if (actor != null) {
+      const spellbookKey = item.system.spellbook;
+      const spellbook = actor.system.attributes?.spells?.spellbooks?.[spellbookKey];
+      if (spellbook.spellPoints?.useSystem) {
+        const oldSpellPointCostFormula = item.system.spellPoints?.cost;
+        if (oldSpellPointCostFormula) actionData.uses.autoDeductChargesCost = oldSpellPointCostFormula;
+      }
+    }
   }
   // Clean out old attack and effect notes
   updateData["system.attackNotes"] = [];

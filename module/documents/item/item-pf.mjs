@@ -996,7 +996,7 @@ export class ItemPF extends ItemBasePF {
 
     // Roll spell failure chance
     if (templateData.isSpell && this.parent != null && this.parent.spellFailure > 0 && this.system.components.somatic) {
-      const spellbook = getProperty(this.parent.data, `data.attributes.spells.spellbooks.${this.system.spellbook}`);
+      const spellbook = getProperty(this.parent, `system.attributes.spells.spellbooks.${this.system.spellbook}`);
       if (spellbook && spellbook.arcaneSpellFailure) {
         templateData.spellFailure = RollPF.safeRoll("1d100").total;
         templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;

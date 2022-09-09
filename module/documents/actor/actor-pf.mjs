@@ -1789,7 +1789,6 @@ export class ActorPF extends ActorBasePF {
         const size = CONFIG.PF1.tokenSizes[sizeKey];
         const tokens = this.getActiveTokens(false, true).filter((o) => {
           if (o.getFlag("pf1", "staticSize")) return false;
-          if (!o.actorLink) return false;
           return true;
         });
         tokens.forEach((o) => {

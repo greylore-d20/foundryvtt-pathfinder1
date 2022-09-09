@@ -137,7 +137,17 @@
 <h3 class="form-header">{{localize "PF1.LimitedUses"}}</h3>
 <h4 class="form-header">{{localize "PF1.Item"}}</h4>
 <div class="form-group stacked">
-  <label>{{#if isSpell}}{{localize "PF1.SpellPointsCost"}}{{else}}{{localize "PF1.AutoDeductCharges"}}{{/if}}</label>
+  <label>
+    {{#if isSpell}}
+    {{#if usesSpellPoints}}
+    {{localize "PF1.SpellPointsCost"}}
+    {{else}}
+    {{localize "PF1.SpellSlotCost"}}
+    {{/if}}
+    {{else}}
+    {{localize "PF1.AutoDeductCharges"}}
+    {{/if}}
+  </label>
   <div class="flexrow">
     <input type="checkbox" name="uses.autoDeductCharges" {{checked data.uses.autoDeductCharges}}/>
     {{#if data.uses.autoDeductCharges}}<input class="formula" type="text" name="uses.autoDeductChargesCost" placeholder="{{localize "PF1.DeductChargeFormulaPlaceholder"}}"

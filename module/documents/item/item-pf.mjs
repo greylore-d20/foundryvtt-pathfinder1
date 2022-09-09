@@ -1217,7 +1217,7 @@ export class ItemPF extends ItemBasePF {
 
     /** @type {ItemAction | undefined} */
     let action;
-    if (!actionID && this.system.actions.length > 1 && !skipDialog) {
+    if (!actionID && this.system.actions.length > 1 && skipDialog === false) {
       const app = new pf1.applications.ActionChooser(this);
       app.render(true);
       return;

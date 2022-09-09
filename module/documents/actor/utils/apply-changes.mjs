@@ -537,10 +537,10 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       result.push("system.attributes.damage.spell");
       break;
     case "bonusFeats":
-      result.push("system.details.bonus.feats");
+      result.push("system.details.feats.bonus");
       break;
     case "bonusSkillRanks":
-      result.push("system.details.bonus.skills");
+      result.push("system.details.skills.bonus");
       break;
     case "concentration":
       result.push(

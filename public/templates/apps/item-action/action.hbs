@@ -14,12 +14,14 @@
   {{/if}}
 </div>
 
+{{#if (or (eq item.type "attack") (eq item.type "weapon"))}}
 <div class="form-group">
   <label>{{localize "PF1.EnhancementBonusOverride"}}</label>
   <div class="form-fields">
     <input type="number" min="0" step="1" name="enh.value" value="{{data.enh.value}}" data-dtype="Number" placeholder="{{itemEnh}}" />
   </div>
 </div>
+{{/if}}
 
 {{!-- Action Type --}}
 <div class="form-group select">

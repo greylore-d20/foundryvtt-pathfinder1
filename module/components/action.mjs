@@ -365,6 +365,11 @@ export class ItemAction {
       const maxUses = RollPF.safeTotal(maxFormula, this.getRollData());
       setProperty(this.data, "uses.self.max", maxUses);
     }
+
+    // Remove enhancement bonus override, if wrong type
+    if (this.data.enh?.value != null && !["weapon", "attack"].includes(this.item.type)) {
+      setProperty(this.data, "enh.value", null);
+    }
   }
 
   _prepareConditionals(conditionals) {

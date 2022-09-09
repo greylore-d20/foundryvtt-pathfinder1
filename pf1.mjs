@@ -445,7 +445,7 @@ Hooks.once("init", function () {
     CONFIG.Canvas.detectionModes[mode.ID] = new mode({
       id: mode.ID,
       label: mode.LABEL,
-      type: DetectionMode.DETECTION_TYPES.SIGHT,
+      type: mode.DETECTION_TYPE || DetectionMode.DETECTION_TYPES.SIGHT,
     });
   }
 

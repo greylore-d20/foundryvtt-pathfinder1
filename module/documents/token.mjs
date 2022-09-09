@@ -71,5 +71,41 @@ export class TokenDocumentPF extends TokenDocument {
         seeInvMode.range = this.sight.range;
       }
     }
+
+    // Set blind sense detection mode
+    const blindSenseId = "blindSense";
+    const blindSenseMode = this.detectionModes.find((m) => m.id === blindSenseId);
+    if (!blindSenseMode && this.actor?.system?.traits?.senses?.bse) {
+      this.detectionModes.push({ id: blindSenseId, enabled: true, range: this.actor.system.traits.senses.bse });
+    } else if (blindSenseMode != null) {
+      if (!this.actor?.system?.traits?.senses?.bse) {
+        this.detectionModes.splice(this.detectionModes.indexOf(blindSenseMode, 1));
+      } else {
+        blindSenseMode.range = this.actor.system.traits.senses.bse;
+      }
+    }
+
+    // Set blind sight detection mode
+    const blindSightId = "blindSight";
+    const blindSightMode = this.detectionModes.find((m) => m.id === blindSightId);
+    if (!blindSightMode && this.actor?.system?.traits?.senses?.bs) {
+      this.detectionModes.push({ id: blindSightId, enabled: true, range: this.actor.system.traits.senses.bs });
+    } else if (blindSightMode != null) {
+      if (!this.actor?.system?.traits?.senses?.bs) {
+        this.detectionModes.splice(this.detectionModes.indexOf(blindSightMode, 1));
+      } else {
+        blindSightMode.range = this.actor.system.traits.senses.bs;
+      }
+    }
+
+    this.detectionModes.sort(this._sortDetectionModes.bind(this));
+  }
+
+  _sortDetectionModes(a, b) {
+    if (a.id === DetectionMode.BASIC_MODE_ID) return -1;
+    if (b.id === DetectionMode.BASIC_MODE_ID) return 1;
+
+    const src = { a: CONFIG.Canvas.detectionModes[a.id], b: CONFIG.Canvas.detectionModes[b.id] };
+    return (src.a.constructor.PRIORITY ?? 0) - (src.b.constructor.PRIORITY ?? 0);
   }
 }

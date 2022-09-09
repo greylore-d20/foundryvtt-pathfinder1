@@ -491,5 +491,7 @@ module.exports = {
     pf1: "readonly",
     DetectionMode: "readonly",
     DetectionModeInvisibility: "readonly",
+    GlowOverlayFilter: "readonly",
+    OutlineOverlayFilter: "readonly",
   },
 };

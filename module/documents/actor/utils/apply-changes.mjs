@@ -536,6 +536,12 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "sdamage":
       result.push("system.attributes.damage.spell");
       break;
+    case "bonusFeats":
+      result.push("system.details.bonus.feats");
+      break;
+    case "bonusSkillRanks":
+      result.push("system.details.bonus.skills");
+      break;
     case "concentration":
       result.push(
         "system.attributes.spells.spellbooks.primary.concentration.total",

@@ -56,3 +56,10 @@ export class DetectionModeBlindSightPF extends DetectionModeBlindSensePF {
     }));
   }
 }
+
+export class DetectionModeTremorPF extends DetectionModeTremor {
+  static ID = "feelTremor";
+  static LABEL = "DETECTION.FeelTremor";
+  static DETECTION_TYPE = DetectionMode.DETECTION_TYPES.MOVE;
+  static PRIORITY = 201000;
+}

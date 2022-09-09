@@ -491,6 +491,7 @@ module.exports = {
     pf1: "readonly",
     DetectionMode: "readonly",
     DetectionModeInvisibility: "readonly",
+    DetectionModeTremor: "readonly",
     GlowOverlayFilter: "readonly",
     OutlineOverlayFilter: "readonly",
   },

@@ -98,6 +98,20 @@ export class TokenDocumentPF extends TokenDocument {
       }
     }
 
+    // Set tremor sense detection mode
+    const tremorSenseId = "feelTremor";
+    const tremorSenseMode = this.detectionModes.find((m) => m.id === tremorSenseId);
+    if (!blindSightMode && this.actor?.system?.traits?.senses?.ts) {
+      this.detectionModes.push({ id: tremorSenseId, enabled: true, range: this.actor.system.traits.senses.ts });
+    } else if (tremorSenseMode != null) {
+      if (!this.actor?.system?.traits?.senses?.ts) {
+        this.detectionModes.splice(this.detectionModes.indexOf(tremorSenseMode, 1));
+      } else {
+        tremorSenseMode.range = this.actor.system.traits.senses.ts;
+      }
+    }
+
+    // Sort detection modes
     this.detectionModes.sort(this._sortDetectionModes.bind(this));
   }
 

@@ -437,6 +437,18 @@ Hooks.once("init", function () {
     makeDefault: true,
   });
 
+  // Alter configuration
+  CONFIG.specialStatusEffects.BLIND = "pf1_blind";
+
+  // Register detection modes
+  for (const mode of Object.values(pf1.canvas.detectionModes)) {
+    CONFIG.Canvas.detectionModes[mode.ID] = new mode({
+      id: mode.ID,
+      label: mode.LABEL,
+      type: DetectionMode.DETECTION_TYPES.SIGHT,
+    });
+  }
+
   // Initialize socket listener
   initializeSocket();
 

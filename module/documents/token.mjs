@@ -48,4 +48,41 @@ export class TokenDocumentPF extends TokenDocument {
 
     return data;
   }
+
+  /**
+   * Refresh sight and detection modes according to the actor's senses associated with this token.
+   */
+  refreshDetectionModes() {
+    // Prepare sight
+    const darkvisionRange = this.actor?.system?.traits?.senses?.dv ?? 0;
+    if (darkvisionRange > 0) {
+      this.sight.range = pf1.utils.convertDistance(darkvisionRange)[0];
+      this.sight.visionMode = "darkvision";
+      this.sight.saturation = -1;
+    }
+    // Prepare normal sight
+    else {
+      this.sight.range = 0;
+      this.sight.visionMode = "basic";
+      this.sight.saturation = 0;
+    }
+
+    // Set basic detection mode
+    const basicId = DetectionMode.BASIC_MODE_ID;
+    const basicMode = this.detectionModes.find((m) => m.id === basicId);
+    if (!basicMode) this.detectionModes.push({ id: basicId, enabled: true, range: this.sight.range });
+
+    // Set see invisibility detection mode
+    const seeInvId = "seeInvisibility";
+    const seeInvMode = this.detectionModes.find((m) => m.id === seeInvId);
+    if (!seeInvMode && this.actor?.system?.traits?.senses?.si) {
+      this.detectionModes.push({ id: seeInvId, enabled: true, range: this.sight.range });
+    } else if (seeInvMode != null) {
+      if (!this.actor?.system?.traits?.senses?.si) {
+        this.detectionModes.splice(this.detectionModes.indexOf(seeInvMode, 1));
+      } else {
+        seeInvMode.range = this.sight.range;
+      }
+    }
+  }
 }

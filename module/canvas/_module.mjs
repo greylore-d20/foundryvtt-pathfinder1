@@ -4,3 +4,4 @@ export * as lowLightVision from "./low-light-vision.mjs";
 export { MeasuredTemplatePF, TemplateLayerPF } from "./measure.mjs";
 export { TokenPF } from "./token.mjs";
 export { TokenQuickActions } from "./token-quick-actions.mjs";
+export * as detectionModes from "./detection-modes.mjs";

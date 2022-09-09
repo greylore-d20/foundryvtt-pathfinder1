@@ -36,44 +36,13 @@ export class TokenPF extends Token {
     return game.user.isGM || hasTokenVision(this);
   }
 
-  updateVisionSource(...args) {
-    // Don't apply vision with custom vision rules flag set
-    if (this.document.flags?.pf1?.customVisionRules) return super.updateVisionSource(...args);
-
-    // Set bright vision from actor senses
-    const basicId = DetectionMode.BASIC_MODE_ID;
-    let basicMode = this.detectionModes.find((o) => o.id === basicId);
-    if (!basicMode) {
-      basicMode = {
-        id: basicId,
-        enabled: true,
-        range: null,
-      };
-      this.detectionModes.push(basicMode);
-    }
-    if (["character", "npc"].includes(this.actor?.type)) {
-      const { dv, bs, bse, ts } = this.actor.system.traits.senses;
-      if (this.actor.system.attributes?.conditions?.pf1_blind === true) {
-        this.document.sight.range = 0;
-        this.document.sight.visionMode = "basic";
-        this.document.sight.saturation = 0;
-      } else if (dv > 0) {
-        this.document.sight.range = pf1.utils.convertDistance(dv)[0];
-        this.document.sight.visionMode = "darkvision";
-        this.document.sight.saturation = -1;
-      } else {
-        this.document.sight.range = 0;
-        this.document.sight.visionMode = "basic";
-        this.document.sight.saturation = 0;
-      }
-      basicMode.range = this.document.sight.range;
-    }
-
-    super.updateVisionSource(...args);
-  }
-
   _onUpdate(data, options, user) {
     if (options.render === false) return;
     else super._onUpdate(data, options, user);
+  }
+
+  updateVisionSource(...args) {
+    this.document.refreshDetectionModes();
+    super.updateVisionSource(...args);
   }
 }

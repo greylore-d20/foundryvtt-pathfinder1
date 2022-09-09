@@ -490,5 +490,6 @@ module.exports = {
     JournalEntryPage: "readonly",
     pf1: "readonly",
     DetectionMode: "readonly",
+    DetectionModeInvisibility: "readonly",
   },
 };

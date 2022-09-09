@@ -104,33 +104,6 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
-  /**
-   * Cast a Spell, consuming a spell slot of a certain level
-   *
-   * @param {...any} args
-   * @see {@link ItemPF#use}
-   */
-  async use(...args) {
-    if (!this.testUserPermission(game.user, "OWNER")) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
-    }
-
-    if (
-      getProperty(this, "system.preparation.mode") !== "atwill" &&
-      this.getSpellUses() < this.chargeCost &&
-      this.autoDeductCharges
-    ) {
-      const msg = game.i18n.localize("PF1.ErrorNoSpellsLeft");
-      console.warn(msg);
-      return ui.notifications.warn(msg);
-    }
-
-    // Invoke the Item roll
-    return super.use(...args);
-  }
-
   async addSpellUses(value, data = null) {
     console.warn("ItemPF.addSpellUses() is deprecated in favor of ItemSpellPF.addUses()");
     return this.addUses(value, data);
@@ -183,10 +156,6 @@ export class ItemSpellPF extends ItemPF {
   get isCharged() {
     if (this.system.atWill) return false;
     return true;
-  }
-
-  get autoDeductCharges() {
-    return getProperty(this, "system.preparation.autoDeductCharges") === true;
   }
 
   get charges() {

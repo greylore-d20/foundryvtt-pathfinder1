@@ -463,7 +463,7 @@ export class ActionUse {
         if (this.item.useSpellPoints()) {
           uses = this.item.getSpellUses();
         } else {
-          cost = 1;
+          cost = this.shared.action.chargeCost;
         }
       }
       // Add charge cost from conditional modifiers

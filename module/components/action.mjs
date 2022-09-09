@@ -100,6 +100,7 @@ export class ItemAction {
   }
 
   get chargeCost() {
+    if (!this.autoDeductCharges) return 0;
     const formula = this.data.uses.autoDeductChargesCost;
     if (!(typeof formula === "string" && formula.length > 0)) return 1;
     const cost = RollPF.safeRoll(formula, this.getRollData()).total;

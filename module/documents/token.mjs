@@ -62,10 +62,10 @@ export class TokenDocumentPF extends TokenDocument {
     // Set see invisibility detection mode
     const seeInvId = "seeInvisibility";
     const seeInvMode = this.detectionModes.find((m) => m.id === seeInvId);
-    if (!seeInvMode && this.actor?.system?.traits?.senses?.si) {
+    if (!seeInvMode && (this.actor?.system?.traits?.senses?.si || this.actor?.system?.traits?.senses?.tr)) {
       this.detectionModes.push({ id: seeInvId, enabled: true, range: this.sight.range });
     } else if (seeInvMode != null) {
-      if (!this.actor?.system?.traits?.senses?.si) {
+      if (!(this.actor?.system?.traits?.senses?.si || this.actor?.system?.traits?.senses?.tr)) {
         this.detectionModes.splice(this.detectionModes.indexOf(seeInvMode, 1));
       } else {
         seeInvMode.range = this.sight.range;

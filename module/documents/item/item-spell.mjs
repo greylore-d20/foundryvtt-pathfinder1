@@ -60,7 +60,7 @@ export class ItemSpellPF extends ItemPF {
         result.sl = this.spellLevel || 0;
         result.classLevel =
           spellbook.class === "_hd"
-            ? result.attributes.hd.total
+            ? result.attributes.hd?.total ?? result.details.level.value
             : spellbook.class?.length > 0
             ? getProperty(result, `classes.${spellbook.class}.level`) || 0 // `
             : 0;

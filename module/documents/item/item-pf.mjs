@@ -1260,7 +1260,7 @@ export class ItemPF extends ItemBasePF {
 
     // Check requirements for item
     let reqErr = await actionUse.checkRequirements();
-    if (reqErr > 0) return { err: pf1.attack.ERR_REQUIREMENT, code: reqErr };
+    if (reqErr > 0) return { err: pf1.actionUse.ERR_REQUIREMENT, code: reqErr };
 
     // Get new roll data
     shared.rollData = await actionUse.getRollData();
@@ -1297,7 +1297,7 @@ export class ItemPF extends ItemBasePF {
 
     // Check attack requirements, post-dialog
     reqErr = await actionUse.checkAttackRequirements();
-    if (reqErr > 0) return { err: pf1.attack.ERR_REQUIREMENT, code: reqErr };
+    if (reqErr > 0) return { err: pf1.actionUse.ERR_REQUIREMENT, code: reqErr };
 
     // Generate chat attacks
     await actionUse.generateChatAttacks();

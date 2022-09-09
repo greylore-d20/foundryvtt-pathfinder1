@@ -910,7 +910,7 @@ export class ActionUse {
       // Spell failure
       if (this.item.parent.spellFailure > 0 && this.item.system.components.somatic) {
         const spellbook = getProperty(
-          this.item.parentActor.data,
+          this.item.parentActor,
           `system.attributes.spells.spellbooks.${this.item.system.spellbook}`
         );
         if (spellbook && spellbook.arcaneSpellFailure) {

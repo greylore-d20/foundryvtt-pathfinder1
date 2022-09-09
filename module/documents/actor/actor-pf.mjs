@@ -2501,7 +2501,6 @@ export class ActorPF extends ActorBasePF {
       // Get damage bonus
       changeBonus = getHighestChanges(
         changes.filter((c) => {
-          c.applyChange(this);
           return !["set", "="].includes(c.operator);
         }),
         { ignoreTarget: true }

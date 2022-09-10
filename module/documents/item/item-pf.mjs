@@ -1089,13 +1089,11 @@ export class ItemPF extends ItemBasePF {
       dynamicLabels.level = labels.sl || "";
       // Range
       if (actionData.range != null) {
-        const range = calculateRange(actionData.range.value, actionData.range.units),
+        const range = action.getRange({ type: "max" }),
           units = actionData.range.units === "mi" ? "mi" : "ft";
         const distanceValues = convertDistance(range, units);
         dynamicLabels.range =
-          distanceValues[0] > 0
-            ? game.i18n.format("PF1.RangeNote", { 0: `${distanceValues[0]} ${distanceValues[1]}` })
-            : null;
+          range > 0 ? game.i18n.format("PF1.RangeNote", { 0: `${range} ${distanceValues[1]}` }) : null;
       }
 
       // Add Difficulty Modifier (DC) label

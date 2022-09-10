@@ -267,11 +267,13 @@
       {{/unless}}
 
       {{#unless isAtWill}}
+      {{#unless usesSpellpoints}}
       <div class="spell-misc form-group stacked">
         <label class="checkbox">
           <input type="checkbox" name="system.preparation.autoDeductCharges" {{checked system.preparation.autoDeductCharges}}/> {{localize "PF1.AutoDeductCharges"}}
         </label>
       </div>
+      {{/unless}}
       {{/unless}}
 
       <h3 class="form-header">{{localize "PF1.Offsets"}}</h3>

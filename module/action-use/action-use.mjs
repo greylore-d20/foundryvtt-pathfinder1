@@ -447,6 +447,7 @@ export class ActionUse {
     // Enforce zero charge cost on cantrips/orisons, but make sure they have at least 1 charge
     if (
       this.item.type === "spell" &&
+      !this.item.useSpellPoints() &&
       this.shared.rollData.item?.level === 0 &&
       this.shared.rollData.item?.preparation?.preparedAmount > 0
     ) {
@@ -457,13 +458,11 @@ export class ActionUse {
     // Determine charge cost
     let cost = 0;
     if (this.shared.action.isCharged) {
-      cost = this.shared.action.chargeCost;
+      cost = this.shared.action.getChargeCost({ rollData: this.shared.rollData });
       let uses = this.item.charges;
       if (this.item.type === "spell") {
         if (this.item.useSpellPoints()) {
           uses = this.item.getSpellUses();
-        } else {
-          cost = this.shared.action.chargeCost;
         }
       }
       // Add charge cost from conditional modifiers
@@ -886,17 +885,12 @@ export class ActionUse {
 
     // Add range info
     {
-      const range = this.shared.action.range;
+      const range = this.shared.action.getRange({ type: "max", rollData: this.shared.rollData });
       if (range != null) {
         this.shared.templateData.range = range;
-        if (typeof range === "string") {
-          this.shared.templateData.range = RollPF.safeRoll(range, this.shared.rollData).total;
-          this.shared.templateData.rangeFormula = range;
-        }
         let usystem = game.settings.get("pf1", "distanceUnits"); // override
         if (usystem === "default") usystem = game.settings.get("pf1", "units");
-        this.shared.templateData.rangeLabel =
-          usystem === "metric" ? `${this.shared.templateData.range} m` : `${this.shared.templateData.range} ft.`;
+        this.shared.templateData.rangeLabel = usystem === "metric" ? `${range} m` : `${range} ft.`;
 
         const rangeUnits = this.shared.action.data.range.units;
         if (["melee", "touch", "reach", "close", "medium", "long"].includes(rangeUnits)) {

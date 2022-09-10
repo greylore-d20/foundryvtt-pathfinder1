@@ -107,7 +107,7 @@ export class ItemActionSheet extends FormApplication {
     });
 
     // Show additional ranged properties
-    data.showMaxRangeIncrements = data.action.range.units === "ft";
+    data.showMaxRangeIncrements = data.data.range.units === "ft";
 
     // Prepare attack specific stuff
     if (data.item.type === "attack") {

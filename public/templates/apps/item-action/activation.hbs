@@ -135,15 +135,12 @@
 {{/unless}}
 
 <h3 class="form-header">{{localize "PF1.LimitedUses"}}</h3>
+{{#if (or (eq isSpell false) (eq usesSpellPoints true))}}
 <h4 class="form-header">{{localize "PF1.Item"}}</h4>
 <div class="form-group stacked">
   <label>
     {{#if isSpell}}
-    {{#if usesSpellPoints}}
     {{localize "PF1.SpellPointsCost"}}
-    {{else}}
-    {{localize "PF1.SpellSlotCost"}}
-    {{/if}}
     {{else}}
     {{localize "PF1.AutoDeductCharges"}}
     {{/if}}
@@ -154,6 +151,7 @@
       value="{{data.uses.autoDeductChargesCost}}" />{{/if}}
   </div>
 </div>
+{{/if}}
 
 <h4 class="form-header">{{localize "PF1.Action"}}</h4>
 <div class="form-group stacked">

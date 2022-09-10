@@ -18,6 +18,30 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
+  /**
+   * Returns the spell's effective spell level, after counting in offsets.
+   *
+   * @param {number} [bonus=0] - Another bonus to account for.
+   * @returns {number} The spell's effective spell level.
+   */
+  getEffectiveSpellLevel(bonus = 0) {
+    const slOffset = this.system.slOffset ?? 0;
+    const spellLevel = this.system.level;
+    return Math.max(0, spellLevel + slOffset + bonus);
+  }
+
+  /**
+   * Returns the spell's effective caster level, after counting in offsets.
+   *
+   * @param {number} [bonus=0] - Another bonus to account for.
+   * @returns {number} The spell's effective caster level.
+   */
+  getEffectiveCasterLevel(bonus = 0) {
+    const clOffset = this.system.clOffset ?? 0;
+    const casterLevel = this.spellbook?.cl.total ?? 0;
+    return Math.max(0, casterLevel + clOffset + bonus);
+  }
+
   prepareDerivedItemData() {
     super.prepareDerivedItemData();
 

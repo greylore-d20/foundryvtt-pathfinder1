@@ -88,6 +88,7 @@ export class ItemAction {
   }
 
   get autoDeductCharges() {
+    if (this.item.type === "spell" && !this.item.useSpellPoints()) return true;
     return this.isCharged && this.data.uses.autoDeductCharges === true;
   }
 
@@ -99,36 +100,91 @@ export class ItemAction {
     return ["single", "day", "week", "charges"].includes(this.data.uses.self?.per);
   }
 
+  /**
+   * @deprecated
+   * @returns {number} Cost in charges for this action.
+   */
   get chargeCost() {
+    foundry.utils.logCompatibilityWarning("Action.chargeCost is deprecated. Please use Action#getChargeCost instead.", {
+      since: "0.82.2",
+      until: "0.83.0",
+    });
+    return this.getChargeCost();
+  }
+
+  /**
+   * @param {object} [options] - Additional options to configure behavior.
+   * @param {object} [options.rollData=null] - Pre-determined roll data to pass for determining the charge cost.
+   * @returns {number} Cost in charges for this action.
+   */
+  getChargeCost({ rollData = null } = {}) {
     if (!this.autoDeductCharges) return 0;
+
+    if (this.item.type === "spell" && !this.item.useSpellPoints()) return 1;
+
     const formula = this.data.uses.autoDeductChargesCost;
     if (!(typeof formula === "string" && formula.length > 0)) return 1;
-    const cost = RollPF.safeRoll(formula, this.getRollData()).total;
+
+    if (!rollData) rollData = this.getRollData();
+    const cost = RollPF.safeRoll(formula, rollData).total;
     return this.item.isSingleUse ? Math.max(-1, Math.min(1, cost)) : cost;
   }
 
-  // Returns range (in system configured units)
+  /**
+   * @deprecated
+   * @returns {number} The action's range (in system configured units)
+   */
   get range() {
-    const range = this.data.range.value;
-    const rangeType = this.data.range.units;
-
-    if (rangeType == null) return null;
-
-    return calculateRange(range, rangeType, this.getRollData());
+    foundry.utils.logCompatibilityWarning("Action.range is deprecated. Please use Action#getRange instead.", {
+      since: "0.82.2",
+      until: "0.83.0",
+    });
+    return this.getRange({ type: "single" });
   }
 
+  /**
+   * @deprecated
+   * @returns {number} The action's minimum range.
+   */
   get minRange() {
-    const rng = this.data.range;
-    if (rng.minUnits !== "" && rng.minValue !== null) {
-      const rollData = this.getRollData();
-      const formula = { melee: "@range.melee", reach: "@range.reach" }[rng.minUnits] ?? (rng.minValue || "0");
-      return convertDistance(RollPF.safeRoll(formula, rollData).total)[0];
-    }
-    return 0;
+    foundry.utils.logCompatibilityWarning("Action.minRange is deprecated. Please use Action#getRange instead.", {
+      since: "0.82.2",
+      until: "0.83.0",
+    });
+    return this.getRange({ type: "min" });
   }
 
+  /**
+   * @deprecated
+   * @returns {number} The action's maximum range (range multiplied by range increments).
+   */
   get maxRange() {
-    return this.data.range.maxIncrements * this.range;
+    foundry.utils.logCompatibilityWarning("Action.maxRange is deprecated. Please use Action#getRange instead.", {
+      since: "0.82.2",
+      until: "0.83.0",
+    });
+    return this.getRange({ type: "max" });
+  }
+
+  /**
+   * @param {object} [options] - Additional options to configure behavior.
+   * @param {string} [options.type="single"] - What type of range to query. Either "single" (for a single range increment), "max" or "min".
+   * @param {object} [options.rollData=null] - Specific roll data to pass.
+   * @returns {number|null} The given range, in system configured units, or `null` if no range is applicable.
+   */
+  getRange({ type = "single", rollData = null } = {}) {
+    const range = type === "min" ? this.data.range.minValue : this.data.range.value;
+    const rangeType = type === "min" ? this.data.range.minUnits : this.data.range.units;
+    if (!rangeType) {
+      if (type === "min") return 0;
+      return null;
+    }
+
+    if (!rollData) rollData = this.getRollData();
+    const singleIncrementRange = calculateRange(range, rangeType, rollData);
+
+    if (["single", "min"].includes(type)) return singleIncrementRange;
+    return singleIncrementRange * this.data.range.maxIncrements;
   }
 
   get hasTemplate() {

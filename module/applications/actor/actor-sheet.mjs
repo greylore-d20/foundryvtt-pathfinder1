@@ -249,8 +249,8 @@ export class ActorSheetPF extends ActorSheet {
       i.range = mergeObject(
         item.firstAction?.data?.range ?? {},
         {
-          min: item.firstAction?.minRange,
-          max: item.firstAction?.maxRange,
+          min: item.firstAction?.getRange({ type: "min" }),
+          max: item.firstAction?.getRange({ type: "max" }),
         },
         { inplace: false }
       );

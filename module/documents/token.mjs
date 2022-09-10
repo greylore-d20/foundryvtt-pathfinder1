@@ -40,7 +40,7 @@ export class TokenDocumentPF extends TokenDocument {
    * Refresh sight and detection modes according to the actor's senses associated with this token.
    */
   refreshDetectionModes() {
-    if (!["character", "npc"].includes(this.actor.type)) return;
+    if (!["character", "npc"].includes(this.actor?.type)) return;
     if (this.getFlag("pf1", "customVisionRules")) return;
 
     // Reset sight properties

@@ -62,4 +62,9 @@ export class DetectionModeTremorPF extends DetectionModeTremor {
   static LABEL = "DETECTION.FeelTremor";
   static DETECTION_TYPE = DetectionMode.DETECTION_TYPES.MOVE;
   static PRIORITY = 201000;
+
+  constructor(data = {}, ...args) {
+    data.walls = false;
+    super(data, ...args);
+  }
 }

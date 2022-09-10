@@ -44,7 +44,7 @@ export class TokenDocumentPF extends TokenDocument {
     if (this.getFlag("pf1", "customVisionRules")) return;
 
     // Reset sight properties
-    this.sight.color = "";
+    this.sight.color = null;
     this.sight.attenuation = 0;
     this.sight.brightness = 0;
     this.sight.contrast = 0;

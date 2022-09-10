@@ -58,6 +58,7 @@ export class TokenDocumentPF extends TokenDocument {
     const basicId = DetectionMode.BASIC_MODE_ID;
     const basicMode = this.detectionModes.find((m) => m.id === basicId);
     if (!basicMode) this.detectionModes.push({ id: basicId, enabled: true, range: this.sight.range });
+    else basicMode.range = this.sight.range;
 
     // Set see invisibility detection mode
     const seeInvId = "seeInvisibility";

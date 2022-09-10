@@ -965,18 +965,33 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   newHTML += "/></div>";
   html.find('.tab[data-tab="appearance"] > *:nth-child(3)').after(newHTML);
 
+  // Disable vision elements if custom vision is disabled
+  const enableCustomVision = getProperty(object, "flags.pf1.customVisionRules") === true;
+  if (!enableCustomVision) {
+    const tabElem = html.find(`.tab[data-tab="vision"]`);
+    tabElem.find(`input, select`).prop("disabled", true);
+    tabElem.find("a").unbind();
+  }
   // Add custom vision checkbox
   newHTML = `<div class="form-group" title="${game.i18n.localize(
     "PF1.CustomVisionRules.Description"
   )}"><label>${game.i18n.localize(
     "PF1.CustomVisionRules.Label"
   )}</label><input type="checkbox" name="flags.pf1.customVisionRules" data-dtype="Boolean"`;
-  if (getProperty(object, "flags.pf1.customVisionRules")) newHTML += " checked";
+  if (enableCustomVision) newHTML += " checked";
   newHTML += "/></div>";
   html.find(`.tab[data-tab="vision"]`).append(newHTML);
+  // Add listener for custom vision rules checkbox
+  html.find(`.tab[data-tab="vision"] input[name="flags.pf1.customVisionRules"]`).on("change", async (event) => {
+    await app._onSubmit(event, { preventClose: true });
+    return app.render();
+  });
 
   // Add disable low-light vision checkbox
   addLowLightVisionToTokenConfig(app, html);
+
+  // Resize windows
+  app.setPosition();
 });
 
 // Render Sidebar

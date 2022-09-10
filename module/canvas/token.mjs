@@ -38,7 +38,12 @@ export class TokenPF extends Token {
 
   _onUpdate(data, options, user) {
     if (options.render === false) return;
-    else super._onUpdate(data, options, user);
+
+    if (hasProperty(data, "flags.pf1.customVisionRules")) {
+      // Make sure this token's perception changes
+      data.sight ||= {};
+    }
+    return super._onUpdate(data, options, user);
   }
 
   updateVisionSource(...args) {

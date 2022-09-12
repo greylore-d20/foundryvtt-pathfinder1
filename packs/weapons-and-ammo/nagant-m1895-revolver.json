@@ -3,12 +3,18 @@
   "name": "Nagant M1895 Revolver",
   "type": "weapon",
   "img": "icons/weapons/guns/gun-pistol-brass.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Pathfinder #71: Rasputin Must Die! pg. 64</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 400 gp <strong>Weight</strong> 4 lbs.</p><p><strong>Damage</strong> 1d8 (medium); <strong>Critical</strong> x4; <strong>Range</strong> 80 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p><p><strong>Misfire</strong> 1; <strong>Capacity</strong> 7</p><p><strong>Category</strong> One-Handed; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This  firearm is identical in operation  to the advanced firearms revolver  (<em>Ultimate Combat</em> 139), though it  has a capacity of 7 instead of 6.</p>"
     },
     "tags": [],
-    "weight": 4,
+    "weight": {
+      "value": 4
+    },
     "price": 400,
     "hardness": 10,
     "identifiedName": "Nagant M1895 Revolver",
@@ -19,6 +25,7 @@
         "name": "Attack",
         "img": "icons/weapons/guns/gun-pistol-brass.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -46,6 +53,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -107,6 +119,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -118,8 +131,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -137,11 +149,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758282,
+    "modifiedTime": 1663018759915,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

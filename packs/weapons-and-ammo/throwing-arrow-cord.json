@@ -3,7 +3,11 @@
   "name": "Throwing Arrow Cord",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/throwing-arrow-cord.PNG",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ranged Tactics Toolbox pg. 19</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> - <strong>Weight</strong> -</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> 60 ft.; <strong>Type</strong> P; <strong>Special</strong> -</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Martial</p><h3 class=\"framing\">Description</h3><p>This simple fiber or leather cord has a knot at either end. One end is wound once around the notch of a throwing arrow (see New Ammunition, below). The cord runs taut along the shaft to the front of the arrow, where you hold the arrow to throw. The remainder of the cord wraps around your hand. The cord dramatically increases the throwing arrow's range. Attaching the cord to a throwing arrow is a move action that requires two hands and provokes attacks of opportunity. The Rapid Reload feat can be taken for throwing arrow cords, allowing you to load a throwing arrow as a free action.</p>"
     },
@@ -21,6 +25,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/throwing-arrow-cord.PNG",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -48,6 +53,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -109,6 +119,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -120,8 +131,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -139,11 +149,15 @@
     "weaponType": "martial",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758411,
+    "modifiedTime": 1663018759933,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,12 +3,18 @@
   "name": "Dogslicer",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/dogslicer.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 18</em>, <em>Rise of the Runelords Player's Guide pg. 11</em>, <em>Pathfinder Campaign Setting pg. 209</em>, <em>Inner Sea World Guide pg. 290</em>, <em>Adventurer's Armory pg. 0</em>, <em>Advanced Race Guide pg. 117</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 8 gp <strong>Weight</strong> 1 lb.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> 19-20/x2; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> fragile</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Martial</p><p><strong>Weapon Groups</strong> Blades, Light</p><h3 class=\"framing\">Description</h3><p>This short, curved blade was created by goblins, who often drill numerous holes into it in an attempt to reduce its weight. Most dogslicers are sized for Small creatures.</p>"
     },
     "tags": [],
-    "weight": 1,
+    "weight": {
+      "value": 1
+    },
     "price": 8,
     "hp": {
       "max": "2",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/dogslicer.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +155,15 @@
     },
     "weaponType": "martial"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758691,
+    "modifiedTime": 1663018759956,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

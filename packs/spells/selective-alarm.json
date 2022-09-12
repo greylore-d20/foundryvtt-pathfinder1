@@ -3,7 +3,11 @@
   "name": "Selective Alarm",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "up to 20-ft.-radius emanation centered on a point in space",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -152,11 +162,15 @@
     "sr": false,
     "shortDescription": "<p>This spell functions as <i>alarm</i>, except that you can tweak the spell to be more discerning in what types of creatures or objects trigger the <i>alarm</i>. Instead of being triggered whenever a creature of Tiny size or larger enters the warded area, you can set whatever triggering conditions you wish, as long as they are based on observable phenomenon. For example, you could cause the selective <i>alarm</i> to trigger when creatures of a certain race (such as orcs, bugbears, or kobolds) enter the area, or whenever a group of four or more creatures enters the area together, or when a metal object is brought into the area. You can't choose triggering conditions that rely on unobservable information, such as having it triggered when creatures of a certain alignment enter the area, nor could you have the <i>alarm</i> be triggered by \"something worth more than 5,000 gp\" entering the area, or even \"a weapon\" entering the area, because an item's value and classification as a weapon is subjective, and might vary from one person to the next.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018730136,
+    "modifiedTime": 1663018744584,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

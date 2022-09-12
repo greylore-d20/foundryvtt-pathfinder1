@@ -3,12 +3,18 @@
   "name": "Spear-Sling",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/spear-sling.PNG",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ranged Tactics Toolbox pg. 18</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 50 gp <strong>Weight</strong> 2 lbs.</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x3; <strong>Range</strong> see text; <strong>Type</strong> P; <strong>Special</strong> see text</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Martial</p><h3 class=\"framing\">Description</h3><p>A spear-sling consists of a hollow tube with a loop of elastic material, such as rubber or sinew, attached to one end. The wielder draws a harpoon, javelin, shortspear, or spear through the tube, pulling the loop taut. Releasing the loop propels the shaft forward like a bow does an arrow. A harpoon, javelin, shortspear, spear, or other weapon shot from a spear-sling is treated as a projectile weapon instead of a thrown weapon, increasing its maximum range and allowing it to be used underwater. Using a spear-sling requires two hands. Loading a spear-sling is a standard action (a move action if the wielder has the Rapid Reload feat) that provokes attacks of opportunity.</p><p></p><p> A spear-sling is made with a particular strength rating, like a composite longbow. Each point of Strength bonus granted by the sling's strength rating adds 50 gp to its cost. If you have a negative Strength modifier, apply it to damage rolls when you use a spear-sling.</p>"
     },
     "tags": [],
-    "weight": 2,
+    "weight": {
+      "value": 2
+    },
     "price": 50,
     "hp": {
       "max": "5",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/spear-sling.PNG",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -144,11 +156,15 @@
     "weaponType": "martial",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758377,
+    "modifiedTime": 1663018759924,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

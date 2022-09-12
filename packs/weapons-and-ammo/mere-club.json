@@ -3,12 +3,18 @@
   "name": "Mere Club",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/club-mere.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 17</em>, <em>Adventurer's Armory pg. 4</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 2 gp <strong>Weight</strong> 2 lbs.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B or P; <strong>Special</strong> fragile</p><p><strong>Category</strong> One-Handed; <strong>Proficiency</strong> Simple</p><p><strong>Weapon Groups</strong> Close; Hammers</p><h3 class=\"framing\">Description</h3><p>A Stone Age weapon traditionally made of carved stone, a mere (MEH-reh) is a short, flat-sided, sharp-pointed club.</p>"
     },
     "tags": [],
-    "weight": 2,
+    "weight": {
+      "value": 2
+    },
     "price": 2,
     "hp": {
       "max": "5",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/club-mere.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +155,15 @@
     },
     "weaponSubtype": "1h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758496,
+    "modifiedTime": 1663018759940,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

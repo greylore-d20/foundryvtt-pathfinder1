@@ -3,7 +3,11 @@
   "name": "Crushing Wheel",
   "type": "weapon",
   "img": "icons/commodities/wood/wood-carved-runes.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Belkzen, Hold of the Orc Hordes pg. 39</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 500 gp <strong>Weight</strong> -</p><p><strong>Damage</strong> 4d6; <strong>Critical</strong> -; <strong>Range</strong> -; <strong>Type</strong> B</p><p><strong>Crew</strong> 4; <strong>Aim</strong> 0; <strong>Load</strong> 0; <strong>Speed</strong> 0 ft.</p><p><strong>Category</strong> Close Assault; <strong>Proficiency</strong> Siege Engine</p><h3 class=\"framing\">Description</h3><p>The bulk of this weapon is a steel roller nearly 10 feet wide. Handles or a harness project from the axle, allowing four orcs or one Large beast to push the crushing wheel from behind. As a full-round action, its crew can roll the crushing wheel over creatures in front of it. This functions as the trample monster ability except as noted here. Creatures that are overrun fall prone and take 4d6 points of damage. Targets that succeed at a DC 15 Reflex saving throw take only half damage and avoid falling prone. A crushing wheel has a hardness of 10 and 100 hit points.</p><p></p><p>A crushing wheel is a Large siege engine.</p>"
     },
@@ -22,6 +26,7 @@
         "name": "Attack",
         "img": "icons/commodities/wood/wood-carved-runes.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -49,6 +54,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -110,6 +120,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -121,8 +132,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -137,14 +147,21 @@
     },
     "tag": "crushingWheel",
     "scriptCalls": [],
+    "weaponGroups": {
+      "value": []
+    },
     "weaponType": "misc",
     "weaponSubtype": "other"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758251,
+    "modifiedTime": 1663018759912,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

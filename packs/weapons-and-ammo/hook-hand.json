@@ -3,12 +3,18 @@
   "name": "Hook Hand",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/hook-hand.PNG",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Villain Codex pg. 188</em>, <em>Pirates of the Inner Sea pg. 19</em>, <em>Skull and Shackles Player's Guide pg. 6</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 10 gp <strong>Weight</strong> 1 lb.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> disarm</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Simple</p><h3 class=\"framing\">Description</h3><p>Pirates who lose a hand in the course of their adventures sometimes attach hooks to their wrists. Hook hands can't be disarmed. They generally don't interfere with day-to-day activities, but can't be used for tasks that would require an actual hand (such as completing somatic components, drawing arrows, or holding a weapon with both hands).</p>"
     },
     "tags": [],
-    "weight": 1,
+    "weight": {
+      "value": 1
+    },
     "price": 10,
     "hp": {
       "max": "2",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/hook-hand.PNG",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -142,11 +154,15 @@
       "value": ["close"]
     }
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758269,
+    "modifiedTime": 1663018759913,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Opportunistic Loyalty",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "immediate"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -142,11 +152,15 @@
     },
     "shortDescription": "<p>Cast this spell when a creature within range casts a spell that provides an effect for its allies (such as <i>bless</i> or prayer). You are considered an ally of the caster for the purposes of that spell. Although you are momentarily considered an ally, the caster need not target you if the spell requires that the caster select one or more allies to be affected by the spell (as does haste). This spell does not allow a target spell to affect more creatures than described in its target entry. If this spell would raise the total number of affected targets above that allowed by the target spell, <i>opportunistic loyalty</i> has no effect.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018731291,
+    "modifiedTime": 1663018744700,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,12 +3,18 @@
   "name": "Amentum",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/ammentum.PNG",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ranged Tactics Toolbox pg. 0</em>, <em>Ultimate Combat pg. 144</em>, <em>Ultimate Equipment pg. 19</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> - <strong>Weight</strong> 1 lb.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> 50 ft.; <strong>Type</strong> P; <strong>Special</strong> performance</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Martial</p><p><strong>Weapon Groups</strong> Spears; Thrown</p><h3 class=\"framing\">Description</h3><p>An amentum is a long leather thong that attaches to a standard javelin. Before throwing, the amentum is wound about the javelin's shaft. You then throw the javelin while gripping the amentum, imparting spin on the weapon and greatly improving its range. Attaching an amentum to a javelin is a move action, and winding it is a full-round action. Javelins can be stored with amenta already wound about them. A javelin wound with an amentum is considered a martial weapon.</p>"
     },
     "tags": [],
-    "weight": 1,
+    "weight": {
+      "value": 1
+    },
     "hp": {
       "max": "5",
       "value": "5"
@@ -22,6 +28,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/ammentum.PNG",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -49,6 +56,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -110,6 +122,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -121,8 +134,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +155,15 @@
     "weaponType": "martial",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758316,
+    "modifiedTime": 1663018759918,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

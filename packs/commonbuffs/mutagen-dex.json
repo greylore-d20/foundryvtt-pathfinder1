@@ -3,7 +3,11 @@
   "name": "Mutagen, Dex",
   "type": "buff",
   "img": "icons/tools/laboratory/vial-orange.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "changes": [
       {
@@ -38,10 +42,6 @@
       }
     ],
     "contextNotes": [],
-    "duration": {
-      "units": "minute",
-      "value": "@item.level * 10"
-    },
     "links": {
       "children": []
     },
@@ -52,13 +52,21 @@
     },
     "scriptCalls": [],
     "level": "1",
+    "duration": {
+      "value": "@item.level * 10",
+      "units": "minute"
+    },
     "hideFromToken": true
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018729304,
+    "modifiedTime": 1663018729407,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

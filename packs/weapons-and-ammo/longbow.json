@@ -3,12 +3,18 @@
   "name": "Longbow",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/longbow.PNG",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ranged Tactics Toolbox pg. 0</em>, <em>PRPG Core Rulebook pg. 143</em>, <em>Ultimate Equipment pg. 19</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 75 gp <strong>Weight</strong> 3 lbs.</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x3; <strong>Range</strong> 100 ft.; <strong>Type</strong> P; <strong>Special</strong> -</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Martial</p><p><strong>Weapon Groups</strong> Bows</p><h3 class=\"framing\">Description</h3><p>At almost 5 feet in height, a longbow is made up of one solid piece of carefully curved wood. You need two hands to use a bow, regardless of its size. A longbow can't be used while mounted. If you have a penalty for low Strength, apply it to damage rolls when you use a longbow. You can apply your Strength modifier to damage rolls when you use a composite longbow, but not a regular longbow. A longbow fires arrows.</p>"
     },
     "tags": [],
-    "weight": 3,
+    "weight": {
+      "value": 3
+    },
     "price": 75,
     "hp": {
       "max": "5",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/longbow.PNG",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -67,8 +79,6 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
-          "critParts": [],
-          "nonCritParts": [],
           "parts": [
             [
               "sizeRoll(1, 8, @size) + min(@abilities.str.mod, 0)[Strength]",
@@ -77,7 +87,9 @@
                 "custom": ""
               }
             ]
-          ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,10 +135,8 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         },
-        "tag": "",
         "ammoType": "arrow"
       }
     ],
@@ -147,11 +158,15 @@
     "weaponSubtype": "ranged",
     "ammoType": "arrow"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758451,
+    "modifiedTime": 1663018759937,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

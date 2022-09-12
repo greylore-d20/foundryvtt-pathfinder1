@@ -3,7 +3,11 @@
   "name": "Impossible Angles",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "contiguous area up to one 5-foot cube/caster level (S)",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +156,15 @@
     },
     "shortDescription": "<p>You cause the surrounding area to appear to distort. The angles and corners of the area subtly twist and contort, creating unnatural and impossible shapes. Any creature entering the area must succeed at a Will save or become disoriented. Disoriented characters treat the area as difficult terrain and are sickened. In addition, whenever a disoriented creature uses an action to move (including taking a 5-foot step if it can do so in difficult terrain), roll 1d8 to see which direction it moves, in a similar manner to determining where a splash weapon lands on a miss (<i>Pathfinder RPG Core Rulebook</i> 202). On a 1, the creature moves in its intended direction, with 2 through 8 rotating around the creature's starting square in a clockwise direction. Only the creature's first  5 feet of movement each round are affected in this way-it can move normally for any remaining movement, either from the same action or from later actions, as the creature acclimatizes to the distortion. An affected creature can attempt a new Will save each round to end the disoriented effect. A creature that leaves the area and re-enters must attempt the saving throw again, even if it succeeded at its initial save.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018733106,
+    "modifiedTime": 1663018744837,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Earthmaul",
   "type": "weapon",
   "img": "systems/pf1/icons/feats/martial-weapon-proficiency.jpg",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Belkzen, Hold of the Orc Hordes pg. 39</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 1,000 gp <strong>Weight</strong> -</p><p><strong>Damage</strong> 6d6; <strong>Critical</strong> -; <strong>Range</strong> -; <strong>Type</strong> B</p><p><strong>Crew</strong> 3; <strong>Aim</strong> 0; <strong>Load</strong> 3; <strong>Speed</strong> 0 ft.</p><p><strong>Category</strong> Close Assault; <strong>Proficiency</strong> Siege Engine</p><h3 class=\"framing\">Description</h3><p>This war machine is fitted with an enormous hammer. When dropped into the horizontal position, it functions like a sideways-mounted catapult, and is capable of clearing wide swaths of enemies. Although it doesn't use ammunition, the earthmaul must effectively be reloaded by winding the torsion. When the earthmaul is activated, creatures on the ground in a 15-foot cone take 6d6 points of damage, are knocked 10 feet in the direction of the swing, and fall prone. A successful DC 20 Reflex saving throw halves the damage and negates the additional effects. An earthmaul has a hardness of 5 and 100 hit points.</p><p></p><p>An earthmaul is a Huge siege engine.</p>"
     },
@@ -17,6 +21,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/feats/martial-weapon-proficiency.jpg",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -44,6 +49,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -105,6 +115,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -116,8 +127,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -129,14 +139,21 @@
     },
     "tag": "earthmaul",
     "scriptCalls": [],
+    "weaponGroups": {
+      "value": []
+    },
     "weaponType": "misc",
     "weaponSubtype": "other"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758408,
+    "modifiedTime": 1663018759932,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

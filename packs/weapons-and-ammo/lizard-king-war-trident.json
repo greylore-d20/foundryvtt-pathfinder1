@@ -3,12 +3,18 @@
   "name": "Lizard King War Trident",
   "type": "weapon",
   "img": "icons/weapons/polearms/trident-silver-blue.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Classic Monsters Revisited pg. 38</em></p>\n<h3 class=\"framing\"><img style=\"margin: 3px 3px 0px 3px;\" title=\"3.5 Material\" src=\"https://www.aonprd.com/images/ThreeFiveSymbol.gif\" />Statistics</h3>\n<p><strong>Cost</strong> 20 gp <strong>Weight</strong> 12 lbs.</p>\n<p><strong>Damage</strong> see text (small), see text (medium); <strong>Critical</strong> x3; <strong>Range</strong> 10 ft.; <strong>Type</strong> P; <strong>Special</strong> brace</p>\n<p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Martial</p>\n<h3 class=\"framing\">Description</h3>\n<p>Upon his 100th birthday, a lizard king's status is officially acknowledged, and he is honored with the presentation of a special weapon, the war trident, reserved exclusively for the use of his kind. These large, two-handed tridents are much heavier than normal (12 pounds) in order to take advantage of their wielders' great strength, and as a result they lose their range increment but deal 1d10 points of damage and have a x3 critical hit multiplier. In addition, extensive ritualistic practice with this weapon gives the lizard king the Improved Critical (war trident) feat as a bonus feat. A war trident is worth 20 gp, although most are masterwork and many are inlaid with precious metals and fetch higher prices.</p>"
     },
     "tags": [],
-    "weight": 12,
+    "weight": {
+      "value": 12
+    },
     "price": 20,
     "hardness": 10,
     "identifiedName": "Lizard King War Trident",
@@ -19,6 +25,7 @@
         "name": "Attack",
         "img": "icons/weapons/polearms/trident-silver-blue.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -46,6 +53,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -107,6 +119,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -118,8 +131,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -132,14 +144,21 @@
     "tag": "lizardKingWarTrident",
     "scriptCalls": [],
     "held": "2h",
+    "weaponGroups": {
+      "value": []
+    },
     "weaponType": "martial",
     "weaponSubtype": "2h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758393,
+    "modifiedTime": 1663018759930,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Songbird",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "swift"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -142,11 +152,15 @@
     "sr": false,
     "shortDescription": "<p>You conjure uplifting music from the wilds of Elysium, Heaven, or Nirvana to bolster other musical activities.  If you cast <i>songbird</i> during the same round in which you attempt a Perform check, <i>songbird</i> acts as accompaniment and grants a +3 bonus on that Perform check.  If you cast <i>songbird</i> in the same round in which you activate a bardic performance, that round of bardic performance does not count against your total rounds of bardic performance available for the day.  If you cast <i>songbird</i> in the same round in which you cast a spell with the sonic descriptor, that spell's save DC increases by 1.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018730888,
+    "modifiedTime": 1663018744653,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Create Holds",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +155,15 @@
     "sr": false,
     "shortDescription": "<p>You create a path of handholds on earthen, plaster, stone, or wooden walls (not on walls made of metal or other, harder materials). The handholds are created in pairs and are approximately 3 feet apart, located in a specific path indicated by your gestures while casting the spell. The handholds' path can span up to 30 feet out from you plus an additional 10 feet per 3 caster levels (maximum 90 feet at 18th level). The handholds protrude approximately 6 inches from the wall, measure 10 inches lengthwise, and are perfectly suited for gripping with fingers or claws. At the end of the spell's duration, any creature being supported by the handholds immediately begins to fall.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018730722,
+    "modifiedTime": 1663018744608,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

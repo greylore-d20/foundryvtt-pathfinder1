@@ -3,7 +3,11 @@
   "name": "Freedom's Toast",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +156,15 @@
     },
     "shortDescription": "<p>When the caster hoists a flagon and delivers a toast to freedom, the target is transported up to 15 feet from its position to a space of your choice, though that space must be within your line of sight. If the target was prone at the time of casting, you can choose for the target to be standing upon reaching the destination. Furthermore, if the target was bound with nonmagical ropes, manacles, or other restraints, those restraints are not transported with the target, effectively freeing the target from those restraints. If the target is bound by magical restraints, you can bar those restraints from being transported with the target with a successful caster level check against a DC based on the restraints' caster level (DC = 11 + the restraining magic item's or spell's caster level).</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018734788,
+    "modifiedTime": 1663018744929,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

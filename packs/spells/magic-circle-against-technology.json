@@ -3,7 +3,11 @@
   "name": "Magic Circle Against Technology",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "10-ft.-radius emanation from touched creature",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -144,11 +154,15 @@
     "sr": false,
     "shortDescription": "<p>All creatures within the area gain the effects of a <i>Protection from Technology</i> spell. Creatures in the area, or that later enter the area, receive only one attempt to suppress technological effects that are controlling them. If a creature succeed at this save, such effects are suppressed as long as the creature remains in the area. Creatures that leave the area and then return are not protected. Robots receive a saving throw and spell resistance to avoid being kept at bay, but the deflection and resistance bonuses and the protection from mental control apply to non-technological creatures in the area even if a robot succeeds at its saving throw and is thus able to enter the area.</p><p>This spell is not cumulative with <i>Protection from Technology</i> and vice versa.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018734834,
+    "modifiedTime": 1663018744934,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

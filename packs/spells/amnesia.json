@@ -3,7 +3,11 @@
   "name": "Amnesia",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "round"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +153,15 @@
     },
     "shortDescription": "<p>You cause the target to lose most of its memories; its skills, its past, and even its name become mysteries to it. While the target can build new memories, it has trouble accessing those gained before falling victim to the spell. The target can still speak and read any languages it knows and perform basic tasks, but it loses all class abilities, feats, and skill ranks gained before being affected by <i>amnesia</i>. It retains its base attack bonus, saving throws bonuses, Combat Maneuver Bonus, Combat Maneuver Defense, total experience points, Hit Dice, and hit points. If the target gains a character level while suffering from <i>amnesia</i>, it can use any abilities gained by that class level normally. If the class level it gained was from a class in which it already has levels, it gains the abilities of a 1st-level character of that class, even though it is technically of a higher level in that class. If the <i>amnesia</i> is cured, the target regains the full abilities of the class, including those gained from any levels taken while suffering from this condition. <i>Amnesia</i> can be removed only by <i>heal</i>, <i>limited <i>wish</i></i>, <i>miracle</i>, <i>psychic</i> surgeryOA, or <i>wish</i>.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018736301,
+    "modifiedTime": 1663018745002,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

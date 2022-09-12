@@ -3,12 +3,18 @@
   "name": "Light Steel Shield",
   "type": "weapon",
   "img": "systems/pf1/icons/items/armor/shield-light-metal.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p>You can bash an opponent with a shield, using it as an off-hand weapon. Used this way, a shield is a martial bludgeoning weapon. If you use your shield as a weapon, you lose its AC bonus until your next turn. An enhancement bonus on a shield does not improve the effectiveness of a shield bash made with it, but the shield can be made into a magic weapon in its own right.</p>"
     },
     "tags": [],
-    "weight": 6,
+    "weight": {
+      "value": 6
+    },
     "price": 9,
     "hardness": 10,
     "changes": [],
@@ -18,6 +24,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/armor/shield-light-metal.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -45,6 +52,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -106,6 +118,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -117,8 +130,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -129,13 +141,20 @@
       "children": []
     },
     "scriptCalls": [],
+    "weaponGroups": {
+      "value": []
+    },
     "weaponType": "martial"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758455,
+    "modifiedTime": 1663018759937,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

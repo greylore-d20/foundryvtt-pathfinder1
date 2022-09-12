@@ -3,7 +3,11 @@
   "name": "Keep Watch",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -141,11 +151,15 @@
     },
     "shortDescription": "<p>This spell enables the subjects to stand watch or keep vigil throughout the night without any ill effects. The subjects suffer no fatigue and gain all the usual benefits of a full night's rest. The subjects gain hit points as though from resting, wizards may prepare their spells as though they had slept for 8 hours, and so on. Effects that rely on actual <i>sleep</i> or dreaming are ineffective, though the subjects are still susceptible to effects that would put them to <i>sleep</i>, such as <i>sleep</i> or <i>deep slumber</i>. Any vigorous activity, including fighting, immediately ends the effect, and the affected creatures must either have the spell cast on them again or <i>sleep</i> for the remaining hours to avoid fatigue and gain the benefits of a full night's rest.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735925,
+    "modifiedTime": 1663018744997,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

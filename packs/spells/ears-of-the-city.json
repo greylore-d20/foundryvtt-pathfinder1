@@ -3,7 +3,11 @@
   "name": "Ears of the City",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +156,15 @@
     },
     "shortDescription": "<p>The target of this spell sees and hears a stream of past scenes and pieces of conversations related to local people and events. The flashes are so brief that it is impossible to identify individual people or places, but when the target concentrates on a particular topic or individual, she can piece together a coherent narrative told in a multitude of changing voices in her mind.  Each round for the duration of the spell, the target can attempt a Diplomacy check to gather information as though she had spent 1d4 hours talking to local people. Since the information gathering doesn't involve actual interaction with people, only observation, the target can use her Perception skill instead of her Diplomacy skill. While thus concentrating, the target is effectively blind and deaf.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018732387,
+    "modifiedTime": 1663018744787,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

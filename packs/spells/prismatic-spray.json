@@ -3,7 +3,11 @@
   "name": "Prismatic Spray",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "cone-shaped burst",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -135,11 +145,15 @@
     },
     "shortDescription": "<p>This spell causes seven shimmering, multicolored beams of light to spray from your hand. Each beam has a different power. Creatures in the area of the spell with 8 HD or less are automatically blinded for 2d4 rounds. Every creature in the area is randomly struck by one or more beams, which have additional effects.</p>  <table border ='1'><tr><th>1d8</th><th>Color of Beam</th></tr><tr><td>1</td><td>Red 20 points fire damage (Reflex half )</td></tr><tr><td>2</td><td>Orange 40 points acid damage (Reflex half )</td></tr><tr><td>3</td><td>Yellow 80 points electricity damage (Reflex half)</td></tr><tr><td>4</td><td>Green Poison (Frequency 1/rd. for 6 rd.; Init. effect death; Sec. effect 1 Con/rd.; Cure 2 consecutive Fort saves)*</td></tr><tr><td>5</td><td>Blue Flesh to stone (Fortitude negates)</td></tr><tr><td>6</td><td>Indigo Insane, as insanity spell (Will negates)</td></tr><tr><td>7</td><td>Violet Sent to another plane (Will negates)</td></tr><tr><td>8</td><td>Struck by Roll twice more, ignoring any \"8\" two rays results</td></tr><tr><td>* See poisons on page 557.</td></tr></table>   </p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018734102,
+    "modifiedTime": 1663018744886,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

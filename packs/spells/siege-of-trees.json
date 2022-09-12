@@ -3,7 +3,11 @@
   "name": "Siege of Trees",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 10,
           "type": "minute"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -137,11 +147,15 @@
     "sr": false,
     "shortDescription": "<p>You imbue inanimate plants with limited mobility and a semblance of life. Each plant targeted acts as a light catapult (see page 162) until the end of the spell's duration, though you must spend a standard action to aim each of these tree catapults before the first time they fire, and anytime thereafter when you want the trees to fire at a new target. The catapult uses your caster level as its targeting bonus. With a free action, you can command one or all of the trees under your command to stop firing. You do not need to supply ammunition to these tree catapults; they will automatically load themselves with rocks and boulders in the area, digging them deep from the ground if need be. You can supply the trees ammunition if you desire. The tree will not load flaming ammunition, and these catapult trees cannot be affected by <i>energy siege shot</i> (see page 228) if the energy selected is fire.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018732475,
+    "modifiedTime": 1663018744800,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

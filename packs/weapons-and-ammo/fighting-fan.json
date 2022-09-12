@@ -3,7 +3,11 @@
   "name": "Fighting Fan",
   "type": "weapon",
   "img": "icons/weapons/fist/glove-spiked.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 20</em>, <em>Ultimate Combat pg. 130</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 5 gp <strong>Weight</strong> -</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x3; <strong>Range</strong> -; <strong>Type</strong> P; <strong>Special</strong> distracting, monk</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Close; Monk</p><h3 class=\"framing\">Description</h3><p>Made to resemble a courtier's fan, this device consists of silk paper stretched and folded over a folding frame of hardened steel. Folding fans are typically wielded in pairs using a technique that distracts the opponent. The fans sport sharp tips, which can be poisoned. For a list of appropriate poisons, see Poisons on page 110.</p>"
     },
@@ -22,6 +26,7 @@
         "name": "Attack",
         "img": "icons/weapons/fist/glove-spiked.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -49,6 +54,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -110,6 +120,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -121,8 +132,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -142,11 +152,15 @@
     },
     "weaponType": "exotic"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758600,
+    "modifiedTime": 1663018759945,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

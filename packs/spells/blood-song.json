@@ -3,7 +3,11 @@
   "name": "Blood Song",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 2,
           "type": "minute"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -139,11 +149,15 @@
     },
     "shortDescription": "<p>This spell functions as <i>imbue with spell ability</i>, with the following exceptions: only bard spells of the conjuration (healing), enchantment, and transmutation schools can be transferred; the imbued spells last for 1 day; and the subject isn't beholden to any principles regarding the imbued spells' use.  As part of the casting, the caster must shed some of his blood (or an equivalent humor). If the caster isn't susceptible to bleed damage, regardless of the reason, he can't cast <i>blood song</i>. For each spell that is imbued using <i>blood song</i>, the caster loses 5 hit points, which can't be regained by any means until the spell ends or is discharged.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735759,
+    "modifiedTime": 1663018744975,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

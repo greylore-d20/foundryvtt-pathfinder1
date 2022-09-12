@@ -3,7 +3,11 @@
   "name": "Interposing Hand",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +155,15 @@
     },
     "shortDescription": "<p><i>Interposing hand</i> creates a Large magic hand that appears between you and one opponent. This floating, disembodied hand then moves to remain between the two of you, regardless of where you move or how the opponent tries to get around it, providing cover (+4 AC) for you against that opponent. Nothing can fool the hand-it sticks with the selected opponent in spite of <i>darkness,</i> invisibility, polymorphing, or any other attempt at hiding or disguise. The hand does not pursue an opponent, however.</p><p>An <i>interposing hand</i> is 10 feet long and about that wide with its fingers outstretched. It has as many hit points as you do when you're undamaged, and is AC 20 (-1 size, +11 natural). It takes damage as a normal creature, but most magical effects that don't cause damage do not affect it.</p><p>The hand never provokes attacks of opportunity from opponents.</p><p>It cannot push through a <i>Wall of Force or</i> enter an <i>antimagic field</i>, but it suffers the full effect of a <i>prismatic wall</i> or <i>prismatic sphere.</i> The hand makes saving throws as its caster.</p><p><i>Disintegrate</i> or a successful <i>dispel magic</i> destroys it.</p><p>Any creature weighing 2,000 pounds or less that tries to push past the hand is slowed to half its normal speed. The hand cannot reduce the speed of a creature weighing more than 2,000 pounds, but it still affects the creature's attacks.</p><p>Directing the spell to a new target is a move action.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735940,
+    "modifiedTime": 1663018744998,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Web",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +156,15 @@
     "sr": false,
     "shortDescription": "<p><i>Web</i> creates a many-layered mass of strong, sticky strands. These strands trap those caught in them. The strands are similar to spider<i>web</i>s but far larger and tougher. These masses must be anchored to two or more solid and diametrically opposed points or else the <i>web</i> collapses upon itself and disappears. Creatures caught within a <i>web</i> become grappled by the sticky fibers. Attacking a creature in a <i>web</i> doesn't cause you to become grappled.</p><p>Anyone in the effect's area when the spell is cast must make a Reflex save. If this save succeeds, the creature is inside the <i>web</i> but is otherwise unaffected. If the save fails, the creature gains the grappled condition, but can break free by making a combat maneuver check or Escape Artist check as a standard action against the DC of this spell. The entire area of the <i>web</i> is considered difficult terrain. Anyone moving through the <i>web</i>s must make a combat maneuver check or Escape Artist check as part of their move action, with a DC equal to the spell's DC. Creatures that fail lose their movement and become grappled in the first square of <i>web</i>bing that they enter.</p><p>If you have at least 5 feet of <i>web</i> between you and an opponent, it provides cover. If you have at least 20 feet of <i>web</i> between you, it provides total cover.</p><p>The strands of a <i>web</i> spell are flammable. A <i>flaming weapon</i> can slash them away as easily as a hand brushes away cob<i>web</i>s. Any fire can set the <i>web</i>s alight and burn away one 5-foot square in 1 round. All creatures within flaming <i>web</i>s take 2d4 points of fire damage from the flames.</p><p><i>Web</i> can be made permanent with a <i>permanency</i> spell. A permanent <i>web</i> that is damaged (but not destroyed) regrows in 10 minutes.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018733552,
+    "modifiedTime": 1663018744857,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

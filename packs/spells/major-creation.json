@@ -3,7 +3,11 @@
   "name": "Major Creation",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 10,
           "type": "minute"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -149,11 +159,15 @@
     "sr": false,
     "shortDescription": "<p>This spell functions like <i>minor creation,</i> except that you can also create an object of mineral nature: stone, crystal, metal, or the like. The duration of the created item varies with its relative hardness and rarity, as indicated on the following table.</p><p> <table><tr><th>Hardness and Rarity Examples</th><th>Duration</th></tr><tr><td>Vegetable matter</td><td>2 hr./level</td></tr><tr><td>Stone, crystal, base metals</td><td>1 hr./level</td></tr><tr><td>Precious metals</td><td>20 min./level</td></tr><tr><td>Gems</td><td>10 min./level</td></tr><tr><td>Rare metal*</td><td>1 round/level</td></tr><tr><td colspan=\"2\">*Includes adamantine, alchemical silver, and mithral. You can't use major creation to create a cold iron item.</td></tr></table> </p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018731999,
+    "modifiedTime": 1663018744778,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

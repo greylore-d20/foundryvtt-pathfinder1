@@ -3,7 +3,11 @@
   "name": "Scoop",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -22,6 +27,7 @@
           }
         },
         "duration": {
+          "value": null,
           "units": ""
         },
         "target": {
@@ -37,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -90,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -101,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -138,11 +149,15 @@
     },
     "shortDescription": "<p>You will a small vessel of force into existence. As a move action, you can direct the container up to 15 feet per round in any direction, though the spell ends if the distance between you and the container ever exceeds the spell's range. You can dip the container to pick up or drop a liquid as a move action. The vessel holds up to 1 pint of liquid or small objects, weighing up to 5 pounds. You can also gather up a pint of liquid or small objects spread cross a surface with 1 minute of careful concentration.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018730837,
+    "modifiedTime": 1663018744639,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

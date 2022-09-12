@@ -3,7 +3,11 @@
   "name": "Entice Fey, Lesser",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 10,
           "type": "minute"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -155,11 +165,15 @@
     "sr": false,
     "shortDescription": "<p>This spell functions as <i>lesser planar ally</i>, except that you entice a fey of 6 HD or fewer to lend you its aid with an offering of music or something else it finds appealing. Like <i>lesser planar ally</i>, this spell is unpredictable, and the fey who answers the calling is up to the whims of nature and the fey, not your own choice. You must succeed at a Knowledge (nature) check or Perform check (DC = 20 + target's HD) in addition to the spell's material component to entice the fey into appearing, after which you can negotiate for the service and your payment. The maximum HD of fey that you can call with that casting is equal to the result of your check - 20. For example, if your check result is a 24, the maximum HD for the called fey is 4. A high result doesn't allow you to break the HD maximum for the spell, and a result of 20 or less means you can't call a fey at all. If the fey doesn't like the sound of your offer, it can simply choose to refuse, in which case you don't expend any of the material components for the spell, either the offerings or the payment.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018732997,
+    "modifiedTime": 1663018744821,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

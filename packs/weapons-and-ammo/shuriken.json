@@ -3,13 +3,19 @@
   "name": "Shuriken",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/shuriken.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong>&nbsp;<em>Ranged Tactics Toolbox pg. 33</em>,&nbsp;<em>PRPG Core Rulebook pg. 143</em>,&nbsp;<em>Ultimate Equipment pg. 21</em></p>\n<h3 class=\"framing\"><img style=\"margin: 3px 3px 0px 3px;\" title=\"PFS Legal\" src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" />Statistics</h3>\n<p><strong>Cost</strong>&nbsp;1 gp&nbsp;<strong>Weight</strong>&nbsp;1/2 lb.</p>\n<p><strong>Damage</strong>&nbsp;1 (small), 1d2 (medium);&nbsp;<strong>Critical</strong>&nbsp;x2;&nbsp;<strong>Range</strong>&nbsp;10 ft.;&nbsp;<strong>Type</strong>&nbsp;P;&nbsp;<strong>Special</strong>&nbsp;monk</p>\n<p><strong>Category</strong>&nbsp;Ranged;&nbsp;<strong>Proficiency</strong>&nbsp;Exotic</p>\n<h3 class=\"framing\">Description</h3>\n<p>A shuriken is a small piece of metal with sharpened edges, designed for throwing. A shuriken can't be used as a melee weapon. Although they are thrown weapons, shuriken are treated as ammunition for the purposes of drawing them and crafting masterwork or otherwise special versions of them, and of what happens to them after they are thrown.</p>"
     },
     "tags": [],
     "quantity": 5,
-    "weight": 0.1,
+    "weight": {
+      "value": 0.1
+    },
     "price": 0.2,
     "hp": {
       "max": "1",
@@ -28,6 +34,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/shuriken.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -55,6 +62,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -116,6 +128,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -127,8 +140,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -148,11 +160,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758258,
+    "modifiedTime": 1663018759913,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

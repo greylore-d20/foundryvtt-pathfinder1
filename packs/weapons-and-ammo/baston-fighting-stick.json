@@ -3,12 +3,18 @@
   "name": "Baston Fighting Stick",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/quarterstaff.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Merchant's Manifest pg. 11</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 10 gp <strong>Weight</strong> 2 lbs.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B; <strong>Special</strong> Monk, see text</p><p><strong>Category</strong> One-Handed; <strong>Proficiency</strong> Simple</p><h3 class=\"framing\">Description</h3><p>These weapons are treated sticks of wood, either left bare or covered in elaborate decorative designs. Baston fighting sticks vary in length from 2 to 4 feet, with thicknesses varying between 1 to 3 inches. In most applications, these weapons are similar to clubs or quarterstaffs, but in the hands of a trained expert, they truly shine. A creature with the Combat Reflexes feat treats the weapon as having the blocking and performance weapon special features (<em>Pathfinder RPG Ultimate Equipment</em> 22).</p>"
     },
     "tags": [],
-    "weight": 2,
+    "weight": {
+      "value": 2
+    },
     "price": 10,
     "hardness": 10,
     "identifiedName": "Baston Fighting Stick",
@@ -19,6 +25,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/quarterstaff.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -46,6 +53,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -107,6 +119,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -118,8 +131,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -131,13 +143,20 @@
     },
     "tag": "bastonFightingStick",
     "scriptCalls": [],
+    "weaponGroups": {
+      "value": []
+    },
     "weaponSubtype": "1h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758712,
+    "modifiedTime": 1663018759958,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

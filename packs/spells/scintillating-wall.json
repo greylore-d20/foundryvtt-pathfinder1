@@ -3,7 +3,11 @@
   "name": "Scintillating Wall",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +156,15 @@
     "sr": false,
     "shortDescription": "<p>You create a vibrant wall of hypnotic light and color. The wall does not impede movement or line of sight in any way. Creatures moving through the wall must succeed at a Will save or become fascinated. Each round, on its turn, a fascinated creature can attempt a new saving throw to end the effect as a full-round action that does not provoke attacks of opportunity. A creature that succeeds at the save against the fascination effect is no longer affected if it remains within the wall, but it must attempt a new saving throw if it leaves the area and later moves through the wall again. Creatures adjacent to the wall and creatures moving through the wall that succeed at their save against fascination are dazzled.  If you create the wall so that it appears in the same space as one or more creatures, each affected creature must succeed at a Fortitude save or become blinded. Creatures that successfully save against the blindness are subject to the fascination effect unless they leave the wall within 1 round of casting the spell.  <i>Scintillating wall</i> can be made permanent with a <i>permanency</i> spell cast by a caster of 13th level or higher, at a cost of 12,500 gp.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018736360,
+    "modifiedTime": 1663018745009,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

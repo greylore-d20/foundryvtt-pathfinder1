@@ -3,7 +3,11 @@
   "name": "Paladin's Sacrifice",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "immediate"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -135,11 +145,15 @@
     },
     "shortDescription": "<p>You open up a brief but powerful divine conduit between you and another creature, taking on the damage and any other effects that creature suffers. When a creature in range is hit by an attack or fails a saving throw, you can cast this spell and the wounds and/or effects are magically transmitted to you instead of the target. You are affected as if you were hit by the attack or failed the saving throw, taking all the damage and suffering all of the adverse effects. Any resistances or immunities you have are applied normally, but you cannot otherwise reduce or negate the damage or effects in any way.</p><p>If you use this spell against an effect that also targets you or includes you in its area, you suffer the effects for both yourself and the target you spared, potentially taking damage or suffering other consequences twice.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735725,
+    "modifiedTime": 1663018744973,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

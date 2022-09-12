@@ -3,7 +3,11 @@
   "name": "Shifting Shadows",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "20-ft.-radius emanation centered on a point in space",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +155,15 @@
     "sr": false,
     "shortDescription": "<p>Waves of shifting shadows obscure the appearance of all creatures caught within the emanation, making it harder to tell friends from foes.  This spell does not cause affected creatures to risk accidentally attacking their allies, but it does require them to concentrate harder to keep track of their allies and foes. While this spell is in effect, every creature in the area can treat any other creature in the area as an allied threatening creature for the purpose of flanking. Further, whenever a creature in the area would provoke an attack of opportunity from an enemy, that creatures' allies in the area must succeed at a Reflex save or lose one attack of opportunity for that round as they suppress the instinct to attack a vulnerable target that might be an ally. The shadows do not hinder precision-based attacks or create areas of dim light.  Creatures under the effect of <i>true seeing</i> are not affected by this spell. Creatures with scent or keen scent, creatures that are blind, and creatures that operate effectively without vision (such as creatures with blindsight or blindsense) are also not affected by this spell.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018734766,
+    "modifiedTime": 1663018744927,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

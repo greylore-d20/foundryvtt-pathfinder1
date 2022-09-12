@@ -3,7 +3,11 @@
   "name": "Fire of Judgment",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "swift"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -135,11 +145,15 @@
     },
     "shortDescription": "<p>After casting this spell, the next creature you attack using your smite evil class ability is engulfed in flames of positive energy. At the start of its turn, the target takes 1d6 points of damage, and takes an additional 1d6 points of damage each time it attacks a creature other than you. If the creature is an outsider with the evil subtype, an evil-aligned dragon, or an undead creature this damage increases to 1d10. With a successful saving throw, a creature is affected by this spell for only 1 round. This damage is divine in nature and bypasses any DR the creature possesses.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018734849,
+    "modifiedTime": 1663018744938,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Fable Tapestry",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "round"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -144,11 +154,15 @@
     },
     "shortDescription": "<p>The spell weaves shadows and colors from your kapenia into the shape of legendary characters from Varisian folktales.  This spell functions as <i>shadow conjuration</i> emulating <i>summon monster I</i>, except as noted here. You can summon only one copy of the same character at the same time, even with multiple castings of this spell. The shadow creatures are 40% real and are drawn from the list below.    <table border ='1'><tr><th>Character</th><th>Source</th></tr><tr><td>Anelda the beautiful (freelance thief)</td><td>NPC Codex 147</td></tr><tr><td>Old Mother Toad (fey giant toad)</td><td>Bestiary 3 116</td></tr><tr><td>Sonnorae the storyteller (con artist)</td><td>NPC Codex 29</td></tr><tr><td>Vyushbaro the savior (carousing champion)</td><td>NPC Codex 47</td></tr><tr><td>Winter's Son (evasive slip)</td><td>NPC Codex 65</td></tr><tr><td>Zykomso the slaver (bearded devil)</td><td>Bestiary 73</td></tr></table>   </p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018734194,
+    "modifiedTime": 1663018744896,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

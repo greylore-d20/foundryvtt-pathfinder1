@@ -15,11 +15,23 @@ const TEMPLATE_EXCEPTION_PATHS = {
 const templateData = loadDocumentTemplates();
 const manifest = loadManifest();
 
-/** Helper function that resolves a path from the pack source directory */
+/**
+ * Helper function that resolves a path from the pack source directory
+ *
+ * @param {...any} file
+ */
 const resolveSource = (...file) => path.resolve(__dirname, PACK_SRC, ...file);
-/** Helper function that resolves a path from the pack cache directory */
+/**
+ * Helper function that resolves a path from the pack cache directory
+ *
+ * @param {...any} file
+ */
 const resolveCache = (...file) => path.resolve(__dirname, PACK_CACHE, ...file);
-/** Helper function that resolves a path from the pack dist directory */
+/**
+ * Helper function that resolves a path from the pack dist directory
+ *
+ * @param {...any} file
+ */
 const resolveDist = (...file) => path.resolve(__dirname, "../dist/packs", ...file);
 
 // Only handle commands if this script was executed directly
@@ -207,7 +219,7 @@ function loadManifest() {
  */
 function sanitizePackEntry(entry, documentType = "") {
   // Reset permissions to default
-  entry.permission = { default: 0 };
+  entry.ownership = { default: 0 };
   // Remove non-system/non-core flags
   for (const key of Object.keys(entry.flags ?? {})) {
     if (!["pf1"].includes(key)) delete entry.flags[key];
@@ -277,7 +289,9 @@ async function extractPack(filename, options) {
       try {
         const prev = fs.readJsonSync(entryFilepath);
         if (prev?._id) doc._id = prev._id;
-      } catch (_) {}
+      } catch (_err) {
+        // No previous ID found, continue with new ID
+      }
     }
 
     await fs.writeJson(entryFilepath, doc, { spaces: 2 });

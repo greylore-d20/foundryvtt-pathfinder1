@@ -3,7 +3,11 @@
   "name": "Batrachian Surge",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "swift"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -142,11 +152,15 @@
     },
     "shortDescription": "<p>You tap into your latent amphibian strengths, unlocking a short-lived physical talent. Armor or gear you are wearing adjusts to your new shape for the duration of the spell. When you cast <i>batrachian surge</i>, choose one of the following features to gain its associated benefits. You can have only one <i>batrachian surge</i> spell active on you at a time.  <b>Gills</b>: Your throat expands, and gill slits appear along your neck. You can breathe underwater.  <b>Leaping</b>: Your legs elongate and become especially muscular. You are always treated as having a running start when attempting Acrobatics checks to jump, and you gain a competence bonus on Acrobatics checks to jump equal to your caster level.  <b>Swimming</b>: You grow a large tadpole tail, and your other limbs shrink slightly. You gain a swim speed equal to your base land speed.  <b>Tongue</b>: Your tongue extends to the length of your body. Increase your reach by 5 feet when delivering touch spells. This increased reach doesn't stack with any other spells or abilities that affect your reach.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018736299,
+    "modifiedTime": 1663018745002,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

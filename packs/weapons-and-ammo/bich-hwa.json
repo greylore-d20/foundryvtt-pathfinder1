@@ -3,12 +3,18 @@
   "name": "Bich'hwa",
   "type": "weapon",
   "img": "icons/weapons/swords/scimitar-guard.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Pathfinder Campaign Setting pg. 209</em>, <em>Pathfinder #9: Escape from Old Korvosa pg. 83</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/ThreeFiveSymbol.gif\" title=\"3.5 Material\" style=\"margin: 3px 3px 0px 3px\">Statistics</h3><p><strong>Cost</strong> 5 gp <strong>Weight</strong> 2 lbs.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> 19-20/x2; <strong>Range</strong> -; <strong>Type</strong> P or S; <strong>Special</strong> monk</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>Also known as the waveblade or \"scorpion's tail,\" this short, double-curved blade has no hilt but features a knuckle guard and can easily be used in either hand. A bich'hwa provides a +2 bonus on any roll made to keep from being disarmed in combat. This weapon is a special monk weapon for the use of f lurry of blows and other monk abilities.</p>"
     },
     "tags": [],
-    "weight": 2,
+    "weight": {
+      "value": 2
+    },
     "price": 5,
     "hp": {
       "max": "2",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "icons/weapons/swords/scimitar-guard.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -138,13 +150,20 @@
     },
     "tag": "bichhwa",
     "scriptCalls": [],
+    "weaponGroups": {
+      "value": []
+    },
     "weaponType": "exotic"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758698,
+    "modifiedTime": 1663018759957,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

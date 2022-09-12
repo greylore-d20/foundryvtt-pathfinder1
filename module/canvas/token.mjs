@@ -50,4 +50,82 @@ export class TokenPF extends Token {
     this.document.refreshDetectionModes();
     super.updateVisionSource(...args);
   }
+
+  /**
+   * @param {object} data         Resource data for this bar
+   * @returns {number|null}       The number to boost the bar by, if any.
+   * @protected
+   */
+  _getBarBoost(data) {
+    if (data.attribute === "attributes.hp") return { value: this.actor.system.attributes.hp.temp, color: 0xc0d6e4 };
+    if (data.attribute === "attributes.vigor")
+      return { value: this.actor.system.attributes.vigor.temp, color: 0xc0d6e4 };
+    return null;
+  }
+
+  _getBarUnderline(data) {
+    if (data.attribute === "attributes.hp")
+      return { value: this.actor.system.attributes.hp.nonlethal, color: 0x7d2828 };
+    return null;
+  }
+
+  /**
+   * Draw a single resource bar, given provided data.
+   *
+   * @param {number} number       The Bar number>
+   * @param {PIXI.Graphics} bar   The Bar container.
+   * @param {object} data         Resource data for this bar.
+   * @protected
+   */
+  _drawBar(number, bar, data) {
+    // Get boost value (such as temporary hit points
+    const boost = this._getBarBoost(data);
+    const underline = this._getBarUnderline(data);
+
+    const val = Number(data.value);
+    data.max = Math.max(data.max, (boost?.value ?? 0) + val);
+    const pct = Math.clamped(val, 0, data.max) / data.max;
+
+    // Determine sizing
+    let h = Math.max(canvas.dimensions.size / 12, 8);
+    const w = this.w;
+    const bs = Math.clamped(h / 8, 1, 2);
+    if (this.document.height >= 2) h *= 1.6; // Enlarge the bar for large tokens
+
+    // Determine the color to use
+    const blk = 0x000000;
+    let color;
+    if (number === 0) color = PIXI.utils.rgb2hex([1 - pct / 2, pct, 0]);
+    else color = PIXI.utils.rgb2hex([0.5 * pct, 0.7 * pct, 0.5 + pct / 2]);
+
+    // Draw the bar
+    bar.clear();
+    // Draw background of bar
+    bar.beginFill(blk, 0.5).lineStyle(bs, blk, 1.0).drawRoundedRect(0, 0, this.w, h, 3);
+    // Draw bar boost
+    if (boost?.value > 0) {
+      const pct = Math.clamped(val + boost.value, 0, data.max) / data.max;
+      bar
+        .beginFill(boost.color, 1.0)
+        .lineStyle(bs, blk, 1.0)
+        .drawRoundedRect(0, 0, pct * w, h, 2);
+    }
+    // Draw normal value
+    bar
+      .beginFill(color, 1.0)
+      .lineStyle(bs, blk, 1.0)
+      .drawRoundedRect(0, 0, pct * w, h, 2);
+    // Draw bar underline
+    if (underline?.value > 0) {
+      const pct = Math.clamped(underline.value, 0, data.max) / data.max;
+      bar
+        .beginFill(underline.color, 1.0)
+        .lineStyle(bs, blk, 1.0)
+        .drawRoundedRect(0, h / 2, pct * w, h / 2, 2);
+    }
+
+    // Set position
+    const posY = number === 0 ? this.h - h : 0;
+    bar.position.set(0, posY);
+  }
 }

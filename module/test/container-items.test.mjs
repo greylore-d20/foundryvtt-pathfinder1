@@ -18,6 +18,7 @@ export const registerContainerItemTests = () => {
       let actor;
       const messages = [];
       const items = {};
+      let settingUnits, settingWeightUnits;
 
       const configurations = [
         { units: "imperial", weightUnits: "default" },
@@ -30,12 +31,19 @@ export const registerContainerItemTests = () => {
         // Use permanent actor to allow testing regular item creation calls
         actor = await createTestActor({}, { temporary: false });
         shared.actor = actor;
+
+        settingUnits = game.settings.get("pf1", "units");
+        settingWeightUnits = game.settings.get("pf1", "weightUnits");
       });
       after(async () => {
         await actor.delete();
 
         // Clean messages
         await CONFIG.ChatMessage.documentClass.deleteDocuments(messages.map((o) => o.id));
+
+        // Reset settings
+        await game.settings.set("pf1", "units", settingUnits);
+        await game.settings.set("pf1", "weightUnits", settingWeightUnits);
       });
 
       describe("basic container item", function () {

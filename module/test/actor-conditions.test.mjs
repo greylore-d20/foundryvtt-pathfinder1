@@ -43,7 +43,7 @@ export const registerActorConditionsTests = () => {
             expect(actor.sourceDetails["system.attributes.savingThrows.fort.total"])
               .to.be.an("array")
               .that.deep.includes({
-                name: "Fear (any)",
+                name: "Shaken",
                 value: -2,
               });
           });
@@ -53,7 +53,7 @@ export const registerActorConditionsTests = () => {
             expect(actor.sourceDetails["system.attributes.savingThrows.ref.total"])
               .to.be.an("array")
               .that.deep.includes({
-                name: "Fear (any)",
+                name: "Shaken",
                 value: -2,
               });
           });
@@ -63,7 +63,7 @@ export const registerActorConditionsTests = () => {
             expect(actor.sourceDetails["system.attributes.savingThrows.will.total"])
               .to.be.an("array")
               .that.deep.includes({
-                name: "Fear (any)",
+                name: "Shaken",
                 value: -2,
               });
           });
@@ -72,7 +72,7 @@ export const registerActorConditionsTests = () => {
         it("lowered attack", function () {
           expect(actor.system.attributes.attack.general).to.equal(-2);
           expect(actor.sourceDetails["system.attributes.attack.general"]).to.be.an("array").that.deep.includes({
-            name: "Fear (any)",
+            name: "Shaken",
             value: -2,
           });
         });
@@ -85,7 +85,7 @@ export const registerActorConditionsTests = () => {
           ]) {
             expect(actor.system.skills[skill].mod).to.equal(value);
             expect(actor.sourceDetails[`system.skills.${skill}.changeBonus`]).to.be.an("array").that.deep.includes({
-              name: "Fear (any)",
+              name: "Shaken",
               value: -2,
             });
           }
@@ -95,7 +95,7 @@ export const registerActorConditionsTests = () => {
           for (const ability of Object.keys(PF1.abilities)) {
             expect(actor.system.abilities[ability].checkMod).to.equal(-2);
             expect(actor.sourceDetails[`system.abilities.${ability}.checkMod`]).to.be.an("array").that.deep.includes({
-              name: "Fear (any)",
+              name: "Shaken",
               value: -2,
             });
           }
@@ -238,7 +238,7 @@ export const registerActorConditionsTests = () => {
           for (const ability of ["str", "dex"]) {
             const baseModifier = getAbilityModifier(actor.system.abilities[ability].value);
             expect(actor.system.abilities[ability].mod).to.equal(baseModifier - 1);
-            expect(actor.sourceDetails[`system.abilities.${ability}.total`]).to.be.an("array").that.deep.includes({
+            expect(actor.sourceDetails[`system.abilities.${ability}.penalty`]).to.be.an("array").that.deep.includes({
               name: "Fatigued",
               value: -2,
             });
@@ -255,7 +255,7 @@ export const registerActorConditionsTests = () => {
           for (const ability of ["str", "dex"]) {
             const baseModifier = getAbilityModifier(actor.system.abilities[ability].value);
             expect(actor.system.abilities[ability].mod).to.equal(baseModifier - 3);
-            expect(actor.sourceDetails[`system.abilities.${ability}.total`]).to.be.an("array").that.deep.includes({
+            expect(actor.sourceDetails[`system.abilities.${ability}.penalty`]).to.be.an("array").that.deep.includes({
               name: "Exhausted",
               value: -6,
             });

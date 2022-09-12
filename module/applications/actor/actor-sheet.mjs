@@ -305,8 +305,12 @@ export class ActorSheetPF extends ActorSheet {
     // Ability Scores
     for (const [a, abl] of Object.entries(data.system.abilities)) {
       abl.label = CONFIG.PF1.abilities[a];
-      abl.sourceDetails = data.sourceDetails != null ? data.sourceDetails.system.abilities[a].total : [];
       abl.totalLabel = abl.total == null ? "-" : abl.total;
+
+      abl.sourceDetails = [
+        ...(data.sourceDetails?.system?.abilities?.[a]?.total ?? []),
+        ...(data.sourceDetails?.system?.abilities?.[a]?.penalty ?? []),
+      ];
     }
 
     // Armor Class

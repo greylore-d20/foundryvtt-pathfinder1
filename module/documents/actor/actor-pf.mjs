@@ -438,7 +438,7 @@ export class ActorPF extends ActorBasePF {
         } else {
           this.system.abilities[ab].total = value - this.system.abilities[ab].drain;
           this.system.abilities[ab].penalty =
-            (this.system.abilities[ab].penalty || 0) + (this.system.abilities[ab].userPenalty || 0);
+            (this.system.abilities[ab].penalty || 0) - Math.abs(this.system.abilities[ab].userPenalty || 0);
           this.system.abilities[ab].base = this.system.abilities[ab].total;
         }
       }

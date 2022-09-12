@@ -8,7 +8,7 @@ import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
  */
 export function applyChanges() {
   this.changeOverrides = {};
-  const c = Array.from(this.changes);
+  const changes = Array.from(this.changes);
 
   const priority = getSortChangePriority.call(this);
   const _sortChanges = function (a, b) {
@@ -25,7 +25,7 @@ export function applyChanges() {
   };
 
   // Organize changes by priority
-  c.sort((a, b) => _sortChanges.call(this, a, b));
+  changes.sort((a, b) => _sortChanges.call(this, a, b));
 
   // Parse change flags
   for (const i of this.changeItems) {
@@ -53,17 +53,18 @@ export function applyChanges() {
   this.refreshDerivedData();
 
   // Determine continuous changes
-  const continuousChanges = c.filter((o) => o.continuous === true);
+  const continuousChanges = changes.filter((o) => o.continuous === true);
 
   // Apply all changes
-  for (const change of c) {
+  for (let a = 0; a < changes.length; a++) {
+    const change = changes[a];
     let flats = getChangeFlat.call(this, change.subTarget, change.modifier);
     if (!(flats instanceof Array)) flats = [flats];
     for (const f of flats) {
       if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
     }
 
-    change.applyChange(this, flats, this.changeFlags);
+    change.applyChange(this, flats, { applySourceInfo: false });
 
     // Apply continuous changes
     for (const cc of continuousChanges) {
@@ -75,10 +76,15 @@ export function applyChanges() {
         if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
       }
 
-      cc.applyChange(this, flats, this.changeFlags);
+      cc.applyChange(this, flats, { applySourceInfo: false });
     }
 
     this.refreshDerivedData();
+  }
+
+  // Apply source info for changes
+  for (const change of changes) {
+    change.applySourceInfo(this);
   }
 
   resetSkills.call(this);
@@ -638,7 +644,7 @@ export const addDefaultChanges = function (changes) {
         target: "misc",
         subTarget: "mhp",
         modifier: "untypedPerm",
-        source: source.name,
+        flavor: source.name,
       })
     );
     changes.push(
@@ -647,32 +653,13 @@ export const addDefaultChanges = function (changes) {
         target: "misc",
         subTarget: "vigor",
         modifier: "untypedPerm",
-        source: source.name,
+        flavor: source.name,
       })
     );
   };
   const manual_health = (health_source) => {
     let health =
       health_source.system.hp + (health_source.system.classType === "base") * health_source.system.fc.hp.value;
-
-    getSourceInfo(this.sourceInfo, "system.attributes.hp.max").positive.push({
-      value: health_source.system.hp,
-      name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
-    });
-    getSourceInfo(this.sourceInfo, "system.attributes.vigor.max").positive.push({
-      value: health_source.system.hp,
-      name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
-    });
-    if (health_source.system.fc.hp.value > 0) {
-      getSourceInfo(this.sourceInfo, "system.attributes.hp.max").positive.push({
-        value: health_source.system.fc.hp.value,
-        name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
-      });
-      getSourceInfo(this.sourceInfo, "system.attributes.vigor.max").positive.push({
-        value: health_source.system.fc.hp.value,
-        name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
-      });
-    }
 
     if (!continuous) health = round(health);
     push_health(health, health_source);
@@ -687,25 +674,6 @@ export const addDefaultChanges = function (changes) {
     const level_health = Math.max(0, health_source.system.level - maximized) * die_health;
     const favor_health = (health_source.system.classType === "base") * health_source.system.fc.hp.value;
     const health = maxed_health + level_health + favor_health;
-
-    getSourceInfo(this.sourceInfo, "system.attributes.hp.max").positive.push({
-      value: maxed_health + level_health,
-      name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
-    });
-    getSourceInfo(this.sourceInfo, "system.attributes.vigor.max").positive.push({
-      value: maxed_health + level_health,
-      name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: health_source.name }),
-    });
-    if (health_source.system.fc.hp.value > 0) {
-      getSourceInfo(this.sourceInfo, "system.attributes.hp.max").positive.push({
-        value: health_source.system.fc.hp.value,
-        name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
-      });
-      getSourceInfo(this.sourceInfo, "system.attributes.vigor.max").positive.push({
-        value: health_source.system.fc.hp.value,
-        name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: health_source.name }),
-      });
-    }
 
     push_health(health, health_source);
   };
@@ -728,7 +696,6 @@ export const addDefaultChanges = function (changes) {
   const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses") === true;
   for (const a of Object.keys(actorData.attributes.savingThrows)) {
     let hasGoodSave = false;
-    const k = `system.attributes.savingThrows.${a}.total`;
     actorData.attributes.savingThrows[a].total = actorData.attributes.savingThrows[a]?.base ?? 0;
 
     const total = allClasses.reduce((cur, cls) => {
@@ -748,11 +715,6 @@ export const addDefaultChanges = function (changes) {
       } else {
         if (cls.system.savingThrows[a].good === true) hasGoodSave = true;
       }
-
-      getSourceInfo(this.sourceInfo, k).positive.push({
-        value: useFractional ? fractionalToString(base) : base,
-        name: cls.name,
-      });
       return cur + base;
     }, 0);
 
@@ -782,10 +744,6 @@ export const addDefaultChanges = function (changes) {
           flavor: game.i18n.localize("PF1.SavingThrowGoodFractionalBonus"),
         })
       );
-      getSourceInfo(this.sourceInfo, k).positive.push({
-        value: fractionalToString(total),
-        name: game.i18n.localize("PF1.SavingThrowGoodFractionalBonus"),
-      });
     }
   }
 
@@ -799,15 +757,11 @@ export const addDefaultChanges = function (changes) {
         target: "misc",
         subTarget: "mhp",
         modifier: "base",
+        flavor: CONFIG.PF1.abilities[hpAbility],
       })
     );
-    getSourceInfo(this.sourceInfo, "system.attributes.hp.max").positive.push({
-      formula: `@abilities.${hpAbility}.mod * @attributes.hd.total`,
-      name: CONFIG.PF1.abilities[hpAbility],
-    });
 
     if (!getProperty(this, "system.attributes.wounds.base")) {
-      const woundFormula = `(@abilities.${hpAbility}.total * 2) + @abilities.${hpAbility}.drain`;
       changes.push(
         new pf1.components.ItemChange({
           formula: (d) => d.abilities[hpAbility].total * 2 + d.abilities[hpAbility].drain,
@@ -815,12 +769,9 @@ export const addDefaultChanges = function (changes) {
           target: "misc",
           subTarget: "wounds",
           modifier: "base",
+          flavor: CONFIG.PF1.abilities[hpAbility],
         })
       );
-      getSourceInfo(this.sourceInfo, "system.attributes.wounds.max").positive.push({
-        formula: woundFormula,
-        name: CONFIG.PF1.abilities[hpAbility],
-      });
     }
   }
 
@@ -836,14 +787,9 @@ export const addDefaultChanges = function (changes) {
         modifier: "base",
         operator: "set",
         priority: 1001,
+        flavor: game.i18n.localize("PF1.Base"),
       })
     );
-    if (base > 0) {
-      getSourceInfo(this.sourceInfo, `system.attributes.speed.${k}.base`).positive.push({
-        value: base,
-        name: game.i18n.localize("PF1.Base"),
-      });
-    }
   }
 
   // Add base attack modifiers shared by all attacks
@@ -856,12 +802,9 @@ export const addDefaultChanges = function (changes) {
         target: "attack",
         subTarget: "~attackCore",
         modifier: "untypedPerm",
+        flavor: game.i18n.localize("PF1.BAB"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.attributes.attack.shared").positive.push({
-      formula: "@attributes.bab.total",
-      name: game.i18n.localize("PF1.BAB"),
-    });
     // Energy drain to attack
     changes.push(
       new pf1.components.ItemChange({
@@ -870,12 +813,9 @@ export const addDefaultChanges = function (changes) {
         target: "attack",
         subTarget: "~attackCore",
         modifier: "untypedPerm",
+        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.attributes.attack.shared").negative.push({
-      formula: "-@attributes.energyDrain",
-      name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
-    });
     // ACP to attack
     changes.push(
       new pf1.components.ItemChange({
@@ -884,12 +824,9 @@ export const addDefaultChanges = function (changes) {
         target: "attack",
         subTarget: "~attackCore",
         modifier: "penalty",
+        flavor: game.i18n.localize("PF1.ArmorCheckPenalty"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.attributes.attack.shared").negative.push({
-      formula: "-@attributes.acp.attackPenalty",
-      name: game.i18n.localize("PF1.ArmorCheckPenalty"),
-    });
   }
 
   // Add variables to CMD
@@ -902,14 +839,9 @@ export const addDefaultChanges = function (changes) {
         target: "misc",
         subTarget: "cmd",
         modifier: "untypedPerm",
+        flavor: game.i18n.localize("PF1.BAB"),
       })
     );
-    for (const k of ["total", "flatFootedTotal"]) {
-      getSourceInfo(this.sourceInfo, `system.attributes.cmd.${k}`).positive.push({
-        formula: "@attributes.bab.total",
-        name: game.i18n.localize("PF1.BAB"),
-      });
-    }
     // Strength or substitute to CMD
     const strAbl = actorData.attributes.cmd.strAbility;
     if (strAbl in CONFIG.PF1.abilities) {
@@ -919,14 +851,9 @@ export const addDefaultChanges = function (changes) {
           target: "misc",
           subTarget: "cmd",
           modifier: "untypedPerm",
+          flavor: CONFIG.PF1.abilities[strAbl],
         })
       );
-      for (const k of ["total", "flatFootedTotal"]) {
-        getSourceInfo(this.sourceInfo, `system.attributes.cmd.${k}`).positive.push({
-          formula: `@abilities.${strAbl}.mod`,
-          name: CONFIG.PF1.abilities[strAbl],
-        });
-      }
     }
     // Energy Drain to CMD
     changes.push(
@@ -936,15 +863,9 @@ export const addDefaultChanges = function (changes) {
         target: "misc",
         subTarget: "cmd",
         modifier: "untypedPerm",
-        source: game.i18n.localize("PF1.CondTypeEnergyDrain"),
+        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       })
     );
-    for (const k of ["total", "flatFootedTotal"]) {
-      getSourceInfo(this.sourceInfo, `system.attributes.cmd.${k}`).negative.push({
-        formula: "-@attributes.energyDrain",
-        name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
-      });
-    }
   }
 
   // Add Dexterity Modifier to Initiative
@@ -959,12 +880,9 @@ export const addDefaultChanges = function (changes) {
           subTarget: "init",
           modifier: "untypedPerm",
           priority: -100,
+          flavor: CONFIG.PF1.abilities[abl],
         })
       );
-      getSourceInfo(this.sourceInfo, "system.attributes.init.total").positive.push({
-        formula: `@abilities.${abl}.mod`,
-        name: CONFIG.PF1.abilities[abl],
-      });
     }
 
     // Add ACP penalty
@@ -977,12 +895,9 @@ export const addDefaultChanges = function (changes) {
           subTarget: "init",
           modifier: "penalty",
           priority: -100,
+          flavor: game.i18n.localize("PF1.ArmorCheckPenalty"),
         })
       );
-      getSourceInfo(this.sourceInfo, "system.attributes.init.total").negative.push({
-        formula: "-@attributes.acp.attackPenalty",
-        name: game.i18n.localize("PF1.ArmorCheckPenalty"),
-      });
     }
   }
 
@@ -1001,10 +916,6 @@ export const addDefaultChanges = function (changes) {
           flavor: CONFIG.PF1.abilities[abl],
         })
       );
-      getSourceInfo(this.sourceInfo, "system.attributes.savingThrows.fort.total").positive.push({
-        formula: `@abilities.${abl}.mod`,
-        name: CONFIG.PF1.abilities[abl],
-      });
     }
     // Ability Mod to Reflex
     abl = actorData.attributes.savingThrows.ref.ability;
@@ -1019,10 +930,6 @@ export const addDefaultChanges = function (changes) {
           flavor: CONFIG.PF1.abilities[abl],
         })
       );
-      getSourceInfo(this.sourceInfo, "system.attributes.savingThrows.ref.total").positive.push({
-        formula: `@abilities.${abl}.mod`,
-        name: CONFIG.PF1.abilities[abl],
-      });
     }
     // Ability Mod to Will
     abl = actorData.attributes.savingThrows.will.ability;
@@ -1037,10 +944,6 @@ export const addDefaultChanges = function (changes) {
           flavor: CONFIG.PF1.abilities[abl],
         })
       );
-      getSourceInfo(this.sourceInfo, "system.attributes.savingThrows.will.total").positive.push({
-        formula: `@abilities.${abl}.mod`,
-        name: CONFIG.PF1.abilities[abl],
-      });
     }
     // Energy Drain
     changes.push(
@@ -1053,12 +956,6 @@ export const addDefaultChanges = function (changes) {
         flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       })
     );
-    for (const k of Object.keys(actorData.attributes.savingThrows)) {
-      getSourceInfo(this.sourceInfo, `system.attributes.savingThrows.${k}.total`).positive.push({
-        formula: "-@attributes.energyDrain",
-        name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
-      });
-    }
   }
   // Spell Resistance
   {
@@ -1070,12 +967,9 @@ export const addDefaultChanges = function (changes) {
         subTarget: "spellResist",
         modifier: "base",
         priority: 1000,
+        flavor: game.i18n.localize("PF1.Base"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.attributes.sr.total").positive.push({
-      formula: sr,
-      name: game.i18n.localize("PF1.Base"),
-    });
   }
   {
     // Carry capacity strength bonus
@@ -1087,12 +981,9 @@ export const addDefaultChanges = function (changes) {
         subTarget: "carryStr",
         modifier: "untyped",
         priority: 1000,
+        flavor: game.i18n.localize("PF1.Custom"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.details.carryCapacity.bonus.total").positive.push({
-      formula: cStr.toString(),
-      name: game.i18n.localize("PF1.Custom"),
-    });
     // Carry capacity multiplier
     const cMultBase = actorData.details.carryCapacity.multiplier.base ?? 1;
     changes.push(
@@ -1102,12 +993,9 @@ export const addDefaultChanges = function (changes) {
         subTarget: "carryMult",
         modifier: "base",
         priority: 1000,
+        flavor: game.i18n.localize("PF1.Base"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.details.carryCapacity.multiplier.total").positive.push({
-      formula: cMultBase.toString(),
-      name: game.i18n.localize("PF1.Base"),
-    });
     const cMult = actorData.details.carryCapacity.multiplier.user || 0;
     changes.push(
       new pf1.components.ItemChange({
@@ -1116,12 +1004,9 @@ export const addDefaultChanges = function (changes) {
         subTarget: "carryMult",
         modifier: "untyped",
         priority: 1000,
+        flavor: game.i18n.localize("PF1.Custom"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.details.carryCapacity.multiplier.total").positive.push({
-      formula: cMult.toString(),
-      name: game.i18n.localize("PF1.Custom"),
-    });
   }
   // Natural armor
   {
@@ -1129,17 +1014,11 @@ export const addDefaultChanges = function (changes) {
     changes.push(
       new pf1.components.ItemChange({
         formula: ac,
-        target: "ac",
         subTarget: "nac",
         modifier: "base",
+        flavor: game.i18n.localize("PF1.EquipTypeNatural"),
       })
     );
-    for (const k of ["normal", "flatFooted"]) {
-      getSourceInfo(this.sourceInfo, `system.attributes.ac.${k}.total`).positive.push({
-        formula: ac.toString(),
-        name: game.i18n.localize("PF1.BuffTarACNatural"),
-      });
-    }
   }
   // Add armor bonuses from equipment
   this.items
@@ -1154,28 +1033,25 @@ export const addDefaultChanges = function (changes) {
         let ac = item.system.armor.value + item.system.armor.enh;
         if (item.system.broken) ac = Math.floor(ac / 2);
         changes.push(
-          new pf1.components.ItemChange({
-            formula: item.system.armor.value,
-            target: "ac",
-            subTarget: armorTarget,
-            modifier: "base",
-          })
+          new pf1.components.ItemChange(
+            {
+              formula: item.system.armor.value,
+              subTarget: armorTarget,
+              modifier: "base",
+            },
+            item
+          )
         );
         changes.push(
-          new pf1.components.ItemChange({
-            formula: item.system.armor.enh,
-            target: "ac",
-            subTarget: armorTarget,
-            modifier: "enhancement",
-          })
+          new pf1.components.ItemChange(
+            {
+              formula: item.system.armor.enh,
+              subTarget: armorTarget,
+              modifier: "enhancement",
+            },
+            item
+          )
         );
-        for (const k of ["normal", "flatFooted"]) {
-          getSourceInfo(this.sourceInfo, `system.attributes.ac.${k}.total`).positive.push({
-            value: ac,
-            name: item.name,
-            type: item.type,
-          });
-        }
       }
     });
 
@@ -1191,12 +1067,9 @@ export const addDefaultChanges = function (changes) {
           target: "skill",
           subTarget: "skill.fly",
           modifier: "racial",
+          flavor: game.i18n.localize("PF1.FlyManeuverability"),
         })
       );
-      getSourceInfo(this.sourceInfo, "system.skills.fly.changeBonus").positive.push({
-        value: flyValue,
-        name: game.i18n.localize("PF1.FlyManeuverability"),
-      });
     }
   }
   // Add swim and climb skill bonuses based on having speeds for them
@@ -1209,12 +1082,9 @@ export const addDefaultChanges = function (changes) {
         subTarget: "skill.clm",
         modifier: "racial",
         priority: -1,
+        flavor: game.i18n.localize("PF1.SpeedClimb"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.skills.clm.changeBonus").positive.push({
-      formula: "@attributes.speed.climb.total > 0 ? 8 : 0",
-      name: game.i18n.localize("PF1.SpeedClimb"),
-    });
 
     changes.push(
       new pf1.components.ItemChange({
@@ -1224,12 +1094,9 @@ export const addDefaultChanges = function (changes) {
         subTarget: "skill.swm",
         modifier: "racial",
         priority: -1,
+        flavor: game.i18n.localize("PF1.SpeedSwim"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.skills.swm.changeBonus").positive.push({
-      formula: "@attributes.speed.swim.total > 0 ? 8 : 0",
-      name: game.i18n.localize("PF1.SpeedSwim"),
-    });
   }
 
   // Add energy drain to skills
@@ -1244,13 +1111,6 @@ export const addDefaultChanges = function (changes) {
         flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       })
     );
-    const flats = getChangeFlat.call(this, "skills", "untyped");
-    for (const f of flats) {
-      getSourceInfo(this.sourceInfo, f).positive.push({
-        formula: "-@attributes.energyDrain",
-        name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
-      });
-    }
   }
 
   // Add size bonuses to various attributes
@@ -1263,14 +1123,9 @@ export const addDefaultChanges = function (changes) {
         target: "ac",
         subTarget: "ac",
         modifier: "size",
+        flavor: game.i18n.localize("PF1.BonusModifierSize"),
       })
     );
-    for (const k of ["normal", "touch", "flatFooted"]) {
-      getSourceInfo(this.sourceInfo, `system.attributes.ac.${k}.total`).positive.push({
-        value: CONFIG.PF1.sizeMods[sizeKey],
-        type: "size",
-      });
-    }
     // Stealth skill
     changes.push(
       new pf1.components.ItemChange({
@@ -1278,12 +1133,9 @@ export const addDefaultChanges = function (changes) {
         target: "skill",
         subTarget: "skill.ste",
         modifier: "size",
+        flavor: game.i18n.localize("PF1.BonusModifierSize"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.skills.ste.changeBonus").positive.push({
-      value: CONFIG.PF1.sizeStealthMods[sizeKey],
-      type: "size",
-    });
     // Fly skill
     changes.push(
       new pf1.components.ItemChange({
@@ -1291,12 +1143,9 @@ export const addDefaultChanges = function (changes) {
         target: "skill",
         subTarget: "skill.fly",
         modifier: "size",
+        flavor: game.i18n.localize("PF1.BonusModifierSize"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.skills.fly.changeBonus").positive.push({
-      value: CONFIG.PF1.sizeFlyMods[sizeKey],
-      type: "size",
-    });
     // CMD
     changes.push(
       new pf1.components.ItemChange({
@@ -1304,14 +1153,9 @@ export const addDefaultChanges = function (changes) {
         target: "misc",
         subTarget: "cmd",
         modifier: "size",
+        flavor: game.i18n.localize("PF1.BonusModifierSize"),
       })
     );
-    for (const k of ["total", "flatFootedTotal"]) {
-      getSourceInfo(this.sourceInfo, `system.attributes.cmd.${k}`).positive.push({
-        value: CONFIG.PF1.sizeSpecialMods[sizeKey],
-        type: "size",
-      });
-    }
   }
 
   // Add conditions
@@ -1323,9 +1167,13 @@ export const addDefaultChanges = function (changes) {
 
     // Add changes
     for (const change of mechanic.changes ?? []) {
+      // Alter change data
       const changeData = deepClone(change);
       changeData.flavor = CONFIG.PF1.conditions[con];
-      changes.push(new pf1.components.ItemChange(changeData));
+
+      // Create change object
+      const changeObj = new pf1.components.ItemChange(changeData);
+      changes.push(changeObj);
     }
 
     // Set flags
@@ -1340,31 +1188,23 @@ export const addDefaultChanges = function (changes) {
       new pf1.components.ItemChange({
         formula: (d) => -d.attributes.energyDrain * 5,
         operator: "function",
-        target: "misc",
         subTarget: "mhp",
         modifier: "untyped",
         priority: -750,
+        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.attributes.hp.max").negative.push({
-      formula: "-(@attributes.energyDrain * 5)",
-      name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
-    });
 
     changes.push(
       new pf1.components.ItemChange({
         formula: (d) => -d.attributes.energyDrain * 5,
         operator: "function",
-        target: "misc",
         subTarget: "vigor",
         modifier: "untyped",
         priority: -750,
+        flavor: game.i18n.localize("PF1.CondTypeEnergyDrain"),
       })
     );
-    getSourceInfo(this.sourceInfo, "system.attributes.vigor.max").negative.push({
-      formula: "-(@attributes.energyDrain * 5)",
-      name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
-    });
   }
 };
 

@@ -3120,8 +3120,8 @@ export class ActorPF extends ActorBasePF {
       if (!(flats instanceof Array)) flats = [flats];
       for (const k of flats) {
         if (!k) continue;
-        const curValue = getProperty(this.system, k) ?? 0;
-        setProperty(this.system, k, curValue - penalty);
+        const curValue = getProperty(this, k) ?? 0;
+        setProperty(this, k, curValue - penalty);
       }
     }
   }

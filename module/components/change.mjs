@@ -140,15 +140,15 @@ export class ItemChange {
    *
    * @param {ActorPF} actor - The actor to apply the change's data to.
    * @param {string[]} [targets] - Property paths to target on the actor's data.
+   * @param {object} [options] - Optional options to change the behavior of this function.
+   * @param {boolean} [options.applySourceInfo=true] - Whether to add the changes to the actor's source information.
    */
-  applyChange(actor, targets = null) {
+  applyChange(actor, targets = null, { applySourceInfo = true } = {}) {
     // Prepare change targets
     if (!targets) {
       targets = getChangeFlat.call(actor, this.subTarget, this.modifier);
       if (!(targets instanceof Array)) targets = [targets];
     }
-    const sourceInfoTargets = this.getSourceInfoTargets(actor);
-    let addedSourceInfo = false;
 
     const rollData = this.parent ? this.parent.getRollData({ refresh: true }) : actor.getRollData({ refresh: true });
 
@@ -214,47 +214,9 @@ export class ItemChange {
                 if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
                   setProperty(actor, t, base + value);
                   override[operator][this.modifier] = (prior ?? 0) + value;
-
-                  if (this.parent && !addedSourceInfo) {
-                    for (const si of sourceInfoTargets) {
-                      getSourceInfo(actor.sourceInfo, si).positive.push({
-                        value: value,
-                        name: this.parent.name,
-                        type: this.parent.type,
-                      });
-                    }
-                    addedSourceInfo = true;
-                  }
                 } else {
                   const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
                   setProperty(actor, t, base + diff);
-                  override[operator][this.modifier] = Math.max(prior ?? 0, value);
-
-                  if (this.parent) {
-                    for (const si of sourceInfoTargets) {
-                      const sInfo = getSourceInfo(actor.sourceInfo, si).positive;
-
-                      let doAdd = true;
-                      sInfo.forEach((o) => {
-                        if (o.modifier === this.modifier) {
-                          if (o.value < value) {
-                            sInfo.splice(sInfo.indexOf(o), 1);
-                          } else {
-                            doAdd = false;
-                          }
-                        }
-                      });
-
-                      if (doAdd) {
-                        sInfo.push({
-                          value: value,
-                          name: this.parent.name,
-                          type: this.parent.type,
-                          modifier: this.modifier,
-                        });
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -263,20 +225,10 @@ export class ItemChange {
           case "set":
             setProperty(actor, t, value);
             override[operator][this.modifier] = value;
-
-            if (this.parent && !addedSourceInfo) {
-              for (const si of sourceInfoTargets) {
-                getSourceInfo(actor.sourceInfo, si).positive.push({
-                  value: value,
-                  operator: "set",
-                  name: this.parent.name,
-                  type: this.parent.type,
-                });
-              }
-              addedSourceInfo = true;
-            }
             break;
         }
+
+        if (applySourceInfo) this.applySourceInfo(actor, value);
 
         // Adjust ability modifier
         if (isModifierChanger) {
@@ -296,6 +248,80 @@ export class ItemChange {
           );
         }
       }
+    }
+  }
+
+  applySourceInfo(actor) {
+    const sourceInfoTargets = this.getSourceInfoTargets(actor);
+    let value = this.value;
+
+    switch (this.operator) {
+      case "add":
+      case "function":
+        if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
+          const sourceInfoGroup = value >= 0 ? "positive" : "negative";
+          for (const si of sourceInfoTargets) {
+            getSourceInfo(actor.sourceInfo, si)[sourceInfoGroup].push({
+              value: value,
+              name: this.parent ? this.parent.name : this.flavor,
+              type: this.parent ? this.parent.type : null,
+              change: this,
+            });
+          }
+        } else {
+          for (const si of sourceInfoTargets) {
+            const sourceInfoGroup = value >= 0 ? "positive" : "negative";
+            const sInfo = getSourceInfo(actor.sourceInfo, si)[sourceInfoGroup];
+
+            // Remove entries with lower values
+            let doAdd = true;
+            sInfo.forEach((o) => {
+              const hasSameParent = o.change?.parent === this.parent;
+              const isEnh =
+                (o.change?.modifier === "base" && this.modifier === "enhancement") ||
+                (o.change?.modifier === "enhancement" && this.modifier === "base");
+              const hasSameTarget = o.change?.subTarget === this.subTarget;
+              const alterBase = hasSameParent && isEnh && hasSameTarget;
+
+              if (o.modifier === this.modifier || alterBase) {
+                if (alterBase) {
+                  if (o.change?.modifier === "base") {
+                    o.value += value;
+                    doAdd = false;
+                  } else {
+                    value += o.value;
+                    sInfo.splice(sInfo.indexOf(o), 1);
+                  }
+                } else if (o.value < value) {
+                  sInfo.splice(sInfo.indexOf(o), 1);
+                } else {
+                  doAdd = false;
+                }
+              }
+            });
+
+            if (doAdd) {
+              sInfo.push({
+                value: value,
+                name: this.parent ? this.parent.name : this.flavor,
+                type: this.parent ? this.parent.type : null,
+                change: this,
+              });
+            }
+          }
+        }
+        break;
+      case "set":
+        for (const si of sourceInfoTargets) {
+          getSourceInfo(actor.sourceInfo, si).positive.push({
+            value: value,
+            operator: "set",
+            name: this.parent ? this.parent.name : this.flavor,
+            type: this.parent ? this.parent.type : null,
+            change: this,
+          });
+        }
+        break;
     }
   }
 

@@ -1705,6 +1705,7 @@ export const PF1 = {
     dazed: "PF1.CondDazed",
     pf1_sleep: "PF1.CondSleep",
     cowering: "PF1.CondCowering",
+    squeezing: "PF1.CondSqueezing",
   },
 
   conditionMechanics: {
@@ -2016,6 +2017,20 @@ export const PF1 = {
         },
       ],
     },
+    squeezing: {
+      changes: [
+        {
+          formula: -4,
+          subTarget: "ac",
+          modifier: "penalty",
+        },
+        {
+          formula: -4,
+          subTarget: "attack",
+          modifier: "penalty",
+        },
+      ],
+    },
   },
 
   conditionTextures: {
@@ -2044,6 +2059,7 @@ export const PF1 = {
     dazed: "systems/pf1/icons/conditions/dazed.png",
     pf1_sleep: "systems/pf1/icons/conditions/sleep.png",
     cowering: "systems/pf1/icons/conditions/screaming.png",
+    squeezing: "systems/pf1/icons/conditions/squeezing.png",
   },
 
   buffTypes: {

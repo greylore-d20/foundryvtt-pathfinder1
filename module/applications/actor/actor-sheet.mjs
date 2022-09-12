@@ -359,17 +359,6 @@ export class ActorSheetPF extends ActorSheet {
         skl.sourceDetails = skl.sourceDetails.concat(data.sourceDetails.system.skills[s].changeBonus);
       }
 
-      // Subtract energy drain
-      {
-        const energyDrain = getProperty(this.document, "system.attributes.energyDrain");
-        if (energyDrain) {
-          skl.sourceDetails.push({
-            name: game.i18n.localize("PF1.CondTypeEnergyDrain"),
-            value: -Math.abs(energyDrain),
-          });
-        }
-      }
-
       skl.untrained = skl.rt === true && skl.rank <= 0;
       if (skl.subSkills != null) {
         for (const [s2, skl2] of Object.entries(skl.subSkills)) {

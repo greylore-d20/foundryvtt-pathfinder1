@@ -3,7 +3,11 @@
   "name": "Corpse Lanterns",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -140,11 +150,15 @@
     "sr": false,
     "shortDescription": "<p>This spell functions as <i>dancing lights</i>, except it summons up to four spheres of light, each of which glows a sickly pale green. These <i>corpse lanterns</i> shed dim light in a 20-foot radius, and do not increase the light level in areas of normal light or bright light. In dim or normal light, the radiance of <i>corpse lanterns</i> provides a strange contrast, giving all creatures in the area a -5 penalty on Stealth checks. In addition, the hue interferes with illusion (pattern) spells, giving all creatures in the illuminated area a +2 bonus on any saving throws against such spells. Unlike <i>dancing lights</i>, you may have more than one <i>corpse lanterns</i> spell active at a time, but you may only move one set in any given round.</p><p>Moving the <i>corpse lanterns</i> does not require concentration.</p><p><i>Corpse lanterns</i> can be made permanent on an area with a <i>permanency</i> spell by a caster of at least 11th level for the cost of 7,500 gp.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735722,
+    "modifiedTime": 1663018744973,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

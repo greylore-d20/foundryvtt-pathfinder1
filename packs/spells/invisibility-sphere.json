@@ -3,7 +3,11 @@
   "name": "Invisibility Sphere",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "10-ft.-radius emanation around the creature",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +153,15 @@
     },
     "shortDescription": "<p>This spell functions like <i>invisibility</i>, except that this spell confers <i>invisibility</i> upon all creatures within 10 feet of the recipient at the time the spell is cast. The center of the effect is mobile with the recipient.</p><p>Those affected by this spell can see each other and themselves as if unaffected by the spell. Any affected creature moving out of the area becomes visible, but creatures moving into the area after the spell is cast do not become invisible.</p><p>Affected creatures (other than the recipient) who attack negate the <i>invisibility</i> only for themselves. If the spell recipient attacks, the <i>invisibility</i> sphere ends.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735958,
+    "modifiedTime": 1663018744999,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

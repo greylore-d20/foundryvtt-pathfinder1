@@ -3,7 +3,11 @@
   "name": "Aroden's Spellbane",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "10-ft.-radius emanation, centered on you",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -140,11 +150,15 @@
     "sr": false,
     "shortDescription": "<p>One of many spells originally created by the Last Azlanti before he became a god, Aroden's <i>spellbane</i> creates an area within which spells selected by you simply do not function.</p><p>Select one spell per five caster levels at the time of casting.</p><p>The spells selected cannot be changed after the spell is cast. Aroden's <i>spellbane</i> otherwise functions like <i>antimagic field</i>, except its emanation only prevents the functioning of the selected spells. Only the exact spells mentioned are affected-a <i>spellbane</i> set to prevent the casting of summon nature's ally II would not prevent castings of summon nature's ally I or summon nature's ally III. If you move into an area where a previously cast spell you have selected as a banned spell is in effect, that spell is affected as if by <i>antimagic field</i>. If the spell affects a summoned creature that has spell resistance, you must make a caster level check against the creature's spell resistance to make it wink out.</p><p>Aroden's <i>spellbane</i> can even negate an <i>antimagic field</i>, another Aroden's <i>spellbane</i>, or any spell that specifies immunity to <i>antimagic field</i> (such as <i>Wall of Force</i>, <i><i>prismatic</i> sphere</i>, and <i>prismatic</i> wall). Multiple <i>spellbane</i> effects can overlap.</p><p>Their effects stack, preventing the functioning of every spell targeted by any of the multiple <i>spellbane</i> emanations. Spell effects created by artifacts or deities cannot be suppressed by Aroden's <i>spellbane</i>.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018730754,
+    "modifiedTime": 1663018744612,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

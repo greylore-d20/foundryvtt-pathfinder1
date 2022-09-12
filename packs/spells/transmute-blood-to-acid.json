@@ -3,7 +3,11 @@
   "name": "Transmute Blood To Acid",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -149,11 +159,15 @@
     },
     "shortDescription": "<p>You transmute blood in the target's body to acid, dealing 1d6 points of acid damage/2 levels (maximum 12d6) each round.</p><p>The creature is staggered and sickened by the debilitating pain. A successful Fortitude save each round halves the damage and negates the staggered condition for 1 round. If this damage reduces the creature to 0 or fewer hit points, it dissolves, leaving only the barest trace of remains. A dissolved creature's equipment is unaffected.</p><p>Anyone who strikes the target with a non-reach melee weapon, natural weapon, or unarmed attack takes 3d6 points of acid damage as the acidic blood sprays on the attacker. If the attack is from a piercing or slashing manufactured weapon, the weapon also takes this damage.</p><p>This spell has no effect on creatures immune to critical hits or bleed effects.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018733570,
+    "modifiedTime": 1663018744859,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

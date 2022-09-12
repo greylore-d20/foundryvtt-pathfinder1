@@ -3,7 +3,11 @@
   "name": "Threefold Aspect",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +153,15 @@
     "sr": false,
     "shortDescription": "<p><i>Threefold aspect</i> allows you to shift your appearance between your natural age and three idealized age categories: young adult (youth/maiden), adulthood (father/mother), or elderly (elder/crone). In each case, your appearance is your own at the appropriate age, rather than that of a new individual.</p><p>You may change between these three aspects or your actual age as a standard action. As the young adult, you gain a +2 enhancement bonus to Dexterity and Constitution, but suffer a -2 penalty to Wisdom. In the adult aspect, you gain a +2 enhancement bonus to Wisdom and Intelligence, but take a -2 penalty to Dexterity. As the elderly aspect, you gain a +4 enhancement bonus to Wisdom and Intelligence, but take a -2 penalty to Strength and Dexterity. As enhancement bonuses, these stack with any bonuses or penalties you may have from your actual age (which are untyped bonuses)-the bonuses granted by this spell represent your idealized form in this threefold aspect rather than simply duplicating your ability scores at any one particular age.</p><p><i>True seeing</i> reveals your natural appearance overlaid with that your aspect, recognizing both as part of your true self.</p><p>Individuals who study you closely and have interacted with you at another apparent age recognize a resemblance (as though family) with a successful DC 20 Perception check.</p><p><i>Threefold aspect</i> does not alter your clothing or equipment, and does not heal any deformity or injury unrelated to age.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735865,
+    "modifiedTime": 1663018744986,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,12 +3,18 @@
   "name": "Sling Glove",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/sling-glove.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Adventurer's Armory pg. 5</em>, <em>Legacy of Fire Player's Guide pg. 23</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 5 gp <strong>Weight</strong> 2 lbs.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> 50 ft.; <strong>Type</strong> B; <strong>Special</strong> -</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Thrown</p><h3 class=\"framing\">Description</h3><p>This curved, scooped-shaped, 2-foot-long wicker basket attaches to your wrist, allowing you to throw fist-sized stones at great speed merely by whipping your arm forward. Loading a sling glove is a free action that does not provoke an attack of opportunity so long as you have a free hand. You take -4 penalty when throwing a stone at an adjacent target and cannot use the weapon to attack creatures in your space.</p>"
     },
     "tags": [],
-    "weight": 2,
+    "weight": {
+      "value": 2
+    },
     "price": 5,
     "hp": {
       "max": "5",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/sling-glove.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +157,15 @@
     "weaponSubtype": "ranged",
     "ammoType": "slingBullet"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758596,
+    "modifiedTime": 1663018759944,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

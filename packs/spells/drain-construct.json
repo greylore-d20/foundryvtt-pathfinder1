@@ -3,7 +3,11 @@
   "name": "Drain Construct",
   "type": "spell",
   "img": "icons/magic/control/silhouette-hold-beam-blue.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "icons/magic/control/silhouette-hold-beam-blue.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1 + @sl",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -134,11 +144,15 @@
     "sr": false,
     "shortDescription": "<p><span id=\"ctl00_MainContent_DataListTypes_ctl00_LabelName\">You weaken a target construct, temporarily sapping its animating force and limiting its normal functionality. If the construct fails its saving throw, for the duration of this spell, it loses any damage reduction and fast healing it had and its base speed is reduced by half. Additionally, the construct takes a &ndash;4 penalty to Strength while this spell is in effect. This penalty increases by 2 for every 3 caster levels beyond 3rd (maximum &ndash;14). If the construct is normally immune to magic, this spell&rsquo;s sapping effect is less penetrating and the construct receives a +4 bonus on its saving throw.</span></p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018736357,
+    "modifiedTime": 1663018745008,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

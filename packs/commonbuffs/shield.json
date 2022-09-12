@@ -3,7 +3,11 @@
   "name": "Shield",
   "type": "buff",
   "img": "systems/pf1/icons/spells/protect-blue-1.jpg",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 5600000,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p>An invisible shield of force hovers in front of you, with the following effects:</p>\n<ul>\n<li>+4 Shield Bonus to AC</li>\n<li>Negates Magic Missile attacks direct at you</li>\n</ul>\n<p>These bonuses apply to incorporeal touch attacks.</p>"
     },
@@ -21,10 +25,6 @@
       }
     ],
     "contextNotes": [],
-    "duration": {
-      "units": "minute",
-      "value": "@item.level"
-    },
     "links": {
       "children": []
     },
@@ -33,13 +33,21 @@
       "dictionary": []
     },
     "scriptCalls": [],
-    "level": "1"
+    "level": "1",
+    "duration": {
+      "value": "@item.level",
+      "units": "minute"
+    }
   },
-  "effects": [],
-  "folder": null,
-  "sort": 5600000,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018729312,
+    "modifiedTime": 1663018729408,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

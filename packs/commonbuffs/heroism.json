@@ -3,7 +3,11 @@
   "name": "Heroism",
   "type": "buff",
   "img": "systems/pf1/icons/skills/yellow_17.jpg",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 5800000,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p>You gain a +2 <a href=\"https://www.d20pfsrd.com/basics-ability-scores/glossary#TOC-Morale-Bonus\">morale bonus</a> on attack rolls, saves, and skill checks.</p>"
     },
@@ -41,10 +45,6 @@
       }
     ],
     "contextNotes": [],
-    "duration": {
-      "units": "minute",
-      "value": "@item.level * 10"
-    },
     "links": {
       "children": []
     },
@@ -53,13 +53,21 @@
       "dictionary": []
     },
     "scriptCalls": [],
-    "level": "5"
+    "level": "5",
+    "duration": {
+      "value": "@item.level * 10",
+      "units": "minute"
+    }
   },
-  "effects": [],
-  "folder": null,
-  "sort": 5800000,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018729314,
+    "modifiedTime": 1663018729408,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Stoke the Inner Fire",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -139,11 +149,15 @@
     "sr": false,
     "shortDescription": "<p>You increase the natural heat within your body, transferring it to your weapons and armor. As a swift action, you may grant one of your natural or manufactured weapons the <i>flaming</i> special ability for 1 round. If you have the fire subtype, your weapon instead gains the <i>flaming</i> burst special ability. If the weapon leaves your hand for any reason, it loses the <i>flaming</i> (or <i>flaming</i> burst) special ability until you spend a swift action to activate it again. You can only have <i>Stoke the Inner Fire</i> active on one weapon at a time, and spending a swift action to imbue a second weapon with the spell's power immediately ends its effect on the first weapon.  The spell also builds a wall of searing heat between your armor and your flesh. Anyone striking you with a natural weapon or unarmed strike takes 1 point of fire damage. A creature that grapples you or is grappled by you takes 1 point of fire damage each round the grapple persists. If you have the fire subtype, these damage values increase to 1d6 points of fire damage each. Removing your armor causes this wall of heat to dissipate and ends these effects.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018732566,
+    "modifiedTime": 1663018744807,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

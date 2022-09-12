@@ -3,7 +3,11 @@
   "name": "Canopic Conversion",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "round"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +155,15 @@
     },
     "shortDescription": "<p>This spell eviscerates the target, drawing forth its life essence as well as its internal organs. The target takes 1d6 hit points of damage per caster level (maximum 20d6). If this damage kills the target, the spell pulls the creature's organs into a set of 4 canopic jars and seals them; 1d4 rounds later, the corpse revives as a mummy (if 8 HD or fewer) or an advanced mummy (if 9 HD or more).</p><p>The mummy is not under your control, but the canopic jars give the bearer certain powers over it. Anyone holding one of the jars can communicate with the mummy as if the two shared a common language. The bearer gains the benefits of <i>Protection from Evil</i> and <i>sanctuary</i>, but only against that mummy. Unsealing or breaking a jar is a standard action, which dissipates its power (and protection) but lets the bearer issue a short command to the mummy, similar to a <i>suggestion</i> spell (Will DC 23 negates). You (and only you) may unseal all 4 jars in a 10-minute ritual to control the mummy with an similar to <i>geas</i> (Will DC 23 negates); most casters typically include a restriction that the mummy will not harm them, as unsealing the jars leaves them vulnerable.</p><p>The pharaohs of ancient Osirion sometimes used this spell to punish their enemies. The Risen Guard does not use the spell (though they have access to it), preferring trustworthy living guardians for the Ruby Prince. The Whispering Way may have copies of the spell.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018732063,
+    "modifiedTime": 1663018744784,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

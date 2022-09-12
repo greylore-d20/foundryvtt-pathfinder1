@@ -3,12 +3,18 @@
   "name": "Two-Bladed Sword",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/sword-two-bladed.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 21</em>, <em>PRPG Core Rulebook pg. 143</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 100 gp <strong>Weight</strong> 10 lbs.</p><p><strong>Damage</strong> 1d6/1d6 (small), 1d8/1d8 (medium); <strong>Critical</strong> 19-20/x2; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> double</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Blades, Heavy; Double</p><h3 class=\"framing\">Description</h3><p>A two-bladed sword is a double weapon-twin blades extend from either side of a central, short haft, allowing the wielder to attack with graceful but deadly flourishes.</p>"
     },
     "tags": [],
-    "weight": 10,
+    "weight": {
+      "value": 10
+    },
     "price": 100,
     "hp": {
       "max": "10",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/sword-two-bladed.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +157,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "2h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758268,
+    "modifiedTime": 1663018759913,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

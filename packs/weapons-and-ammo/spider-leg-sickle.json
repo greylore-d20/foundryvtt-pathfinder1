@@ -3,12 +3,18 @@
   "name": "Spider-Leg Sickle",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/sickle.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>The House on Hook Street pg. 13</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 15 gp <strong>Weight</strong> 2 lbs.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> P; <strong>Special</strong> trip</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Simple</p><h3 class=\"framing\">Description</h3><p>This wickedly curved sickle is cast in the form of a segmented spider's leg. It has the same statistics as a normal sickle and can trip opponents, but deals piercing damage rather than slashing damage. The leatherwrapped handle contains a hollow recess that can hold a single dose of poison. Filling the reservoir is a full-round action that carries the usual risks of poisoning yourself. Once filled, the reservoir keeps the blade saturated and viable for up to 2 hours. The first successful attack made with the spider-leg sickle during this time administers and expends the dose of poison. Mog-Lathar's deacons carry masterwork versions of these weapons. The cult uses blue whinnis poison, and within the radius of the <em>dreamstone</em>'s effects the unconsciousness effect may trigger lucid dreaming.</p>"
     },
     "tags": [],
-    "weight": 2,
+    "weight": {
+      "value": 2
+    },
     "price": 15,
     "hp": {
       "max": 2,
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/sickle.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -134,13 +146,20 @@
       "children": []
     },
     "tag": "spiderlegSickle",
-    "scriptCalls": []
+    "scriptCalls": [],
+    "weaponGroups": {
+      "value": []
+    }
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758714,
+    "modifiedTime": 1663018759958,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

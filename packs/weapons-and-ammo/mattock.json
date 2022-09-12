@@ -3,12 +3,18 @@
   "name": "Mattock",
   "type": "weapon",
   "img": "icons/weapons/axes/pickaxe-stone-simple.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 19</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 12 gp <strong>Weight</strong> 12 lbs.</p><p><strong>Damage</strong> 1d6 (small), 2d4 (medium); <strong>Critical</strong> x4; <strong>Range</strong> -; <strong>Type</strong> P; <strong>Special</strong> fragile</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Martial</p><p><strong>Weapon Groups</strong> Axes</p><h3 class=\"framing\">Description</h3><p>A mattock resembles a two-handed pick, but with a chisel-like blade instead of a point.</p>"
     },
     "tags": [],
-    "weight": 12,
+    "weight": {
+      "value": 12
+    },
     "price": 12,
     "hardness": 10,
     "identifiedName": "Mattock",
@@ -19,6 +25,7 @@
         "name": "Attack",
         "img": "icons/weapons/axes/pickaxe-stone-simple.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -46,6 +53,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -107,6 +119,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -118,8 +131,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -138,11 +150,15 @@
     "weaponType": "martial",
     "weaponSubtype": "2h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758663,
+    "modifiedTime": 1663018759953,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

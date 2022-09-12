@@ -3,12 +3,18 @@
   "name": "Light Crossbow (Underwater)",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/crossbow-light.PNG",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ranged Tactics Toolbox pg. 0</em>, <em>Advanced Race Guide pg. 195</em>, <em>Ultimate Equipment pg. 17</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 70 gp <strong>Weight</strong> 4 lbs.</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> 19-20/x2; <strong>Range</strong> 80 ft.; <strong>Type</strong> P; <strong>Special</strong> -</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Simple</p><p><strong>Weapon Groups</strong> Crossbows</p><h3 class=\"framing\">Description</h3><p>An underwater light crossbow functions like its normal counterpart above water, and can be used underwater. When fired underwater, the crossbow has a range increment of 20 feet. Anyone proficient with a normal light crossbow can use an underwater light crossbow.</p>"
     },
     "tags": [],
-    "weight": 4,
+    "weight": {
+      "value": 4
+    },
     "price": 70,
     "hp": {
       "max": "5",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/crossbow-light.PNG",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -67,8 +79,6 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
-          "critParts": [],
-          "nonCritParts": [],
           "parts": [
             [
               "sizeRoll(1, 8, @size)",
@@ -77,7 +87,9 @@
                 "custom": ""
               }
             ]
-          ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,10 +135,8 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         },
-        "tag": "",
         "ammoType": "bolt"
       }
     ],
@@ -146,11 +157,15 @@
     "weaponSubtype": "ranged",
     "ammoType": "bolt"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758360,
+    "modifiedTime": 1663018759923,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,12 +3,18 @@
   "name": "Revolver",
   "type": "weapon",
   "img": "icons/weapons/guns/gun-pistol-flintlock-metal.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 43</em>, <em>Ultimate Combat pg. 139</em></p>\n<h3 class=\"framing\">Statistics</h3>\n<p><strong>Cost</strong> 4,000 gp <strong>Weight</strong> 4 lbs.</p>\n<p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x4; <strong>Range</strong> 20 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p>\n<p><strong>Misfire</strong> 1; <strong>Capacity</strong> 6</p>\n<p><strong>Category</strong> One-Handed; <strong>Proficiency</strong> Exotic</p>\n<h3 class=\"framing\">Description</h3>\n<p>A revolver is a pistol with a revolving cylinder containing six chambers. Each chamber can hold a metal cartridge, and when one cartridge is fired, the cylinder automatically rotates (no extra hand or action required), readying the next chamber for firing. A revolver uses metal cartridges as ammunition.</p>\n<p><strong>This is an advanced firearm.</strong></p>"
     },
     "tags": [],
-    "weight": 4,
+    "weight": {
+      "value": 4
+    },
     "price": 4000,
     "hp": {
       "max": "10",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "icons/weapons/guns/gun-pistol-flintlock-metal.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -144,11 +156,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758303,
+    "modifiedTime": 1663018759916,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Statue",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "round"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +156,15 @@
     },
     "shortDescription": "<p>A <i>statue</i> spell turns the subject to solid stone, along with any garments and equipment worn or carried. In <i>statue</i> form, the subject gains hardness 8. The subject retains its own hit points.</p><p>The subject can see, hear, and smell normally, but it does not need to eat or breathe. Feeling is limited to those sensations that can affect the granite-hard substance of the individual's body.</p><p>Chipping is equal to a mere scratch, but breaking off one of the <i>statue</i>'s arms constitutes serious damage. The subject of a <i>statue</i> spell can return to its normal state, act, and then return instantly to the <i>statue</i> state (a free action) if it so desires as long as the spell duration is in effect.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018733021,
+    "modifiedTime": 1663018744827,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

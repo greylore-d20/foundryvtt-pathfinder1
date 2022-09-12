@@ -3,7 +3,11 @@
   "name": "Spirit-Bound Blade",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -140,11 +150,15 @@
     "sr": false,
     "shortDescription": "<p>You focus emotional energy and weave it into a shroud of hardened ectoplasm around the weapon you touch, infusing it with a ghostly glow and great power. The weapon becomes a <i>ghost touch</i> weapon, and gains one of the following additional benefits, depending on the type of emotion you  infuse into the weapon. If a special ability wouldn't apply to the chosen weapon (such as <i>vicious</i> on a ranged weapon), the weapon doesn't gain that benefit.  <b>Anger</b>: The weapon also gains the <i>vicious</i> special ability.  <b>Dedication</b>: The weapon also gains the <i>returning</i> special ability.  <b>Despair</b>: The weapon also gains the cruelUE special ability.  <b>Fear</b>: The weapon also gains the menacingUE special ability.  <b>Hatred</b>: The weapon also gains the cunningUE special ability.  <b>Jealousy</b>: The weapon also gains the mimeticUE special ability.  <b>Zeal</b>: The weapon also gains the <i>keen</i> special ability.  If you are a spiritualist and the type of emotional energy you choose matches the emotional focus of your phantom, the weapon grants its wielder a +2 bonus on skill checks with both skills you gain Skill Focus in from your phantom's emotional focus.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018732393,
+    "modifiedTime": 1663018744788,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,12 +3,18 @@
   "name": "Great Club",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/greatclub.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><em>This larger, bulkier version of the common club is heavy enough that you can’t wield it with one hand. It may be ornate and carved, reinforced with metal, or a simple branch from a tree. Like simple clubs, greatclubs have many names, such as cudgels, bludgeons, shillelaghs, and more.</em></p>"
     },
     "tags": [],
-    "weight": 8,
+    "weight": {
+      "value": 8
+    },
     "price": 5,
     "hardness": 5,
     "changes": [],
@@ -18,6 +24,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/greatclub.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -45,6 +52,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -106,6 +118,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -117,8 +130,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -130,14 +142,21 @@
     },
     "scriptCalls": [],
     "held": "2h",
+    "weaponGroups": {
+      "value": []
+    },
     "weaponType": "martial",
     "weaponSubtype": "2h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758504,
+    "modifiedTime": 1663018759941,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

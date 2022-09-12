@@ -3,7 +3,11 @@
   "name": "Holy Javelin",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -142,11 +152,15 @@
     },
     "shortDescription": "<p>You create a shimmering javelin of holy energy to hurl at an enemy as a ranged touched attack. The javelin deals 1d6 points of damage to an evil creature on a successful attack; it dissipates harmlessly against creatures of any other alignment. Each time a creature starts its turn while impaled by the javelin, it takes another 1d6 points of damage. For every 4 caster levels you have, the javelin remains in the creature for an additional round (to a maximum of 5 rounds at 18th level). While the creature remains impaled, it takes a -2 penalty on attack rolls and skill checks. As a move action, the creature (or another adjacent creature)  can attempt to pull the javelin out (causing it to immediately disappear) with a DC 12 Strength check.  The <i>holy javelin</i> glows like a torch, and this light clearly indicates the impaled creature's location, even if it turns invisible. Since this light is not a light effect, just the glow of a conjured javelin, darkness spells always suppress it, even if they are lower level.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018732563,
+    "modifiedTime": 1663018744807,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,12 +3,18 @@
   "name": "Cylinder Rifle",
   "type": "weapon",
   "img": "icons/weapons/guns/gun-wood.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>People of the Wastes pg. 15</em></p>\n<h3 class=\"framing\"><img style=\"margin: 3px 3px 0px 3px;\" title=\"PFS Legal\" src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" />Statistics</h3>\n<p><strong>Cost</strong> 6,000 gp <strong>Weight</strong> 12 lbs.</p>\n<p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x4; <strong>Range</strong> 40 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p>\n<p><strong>Misfire</strong> 1-3 (10 ft.); <strong>Capacity</strong> 8</p>\n<p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p>\n<h3 class=\"framing\">Description</h3>\n<p>This long-barreled early firearm has a slim horizontal disk with eight uncovered slots, each of which can hold one bullet and 1 dose of black powder (but not alchemical cartridges).</p>\n<p>Each time the weapon is fired, the disk rotates to load the next available shot. Misfiring with a cylinder rifle causes rogue sparks to cause the gun to erratically fire all the remaining bullets loaded in the disk, and each stray bullet has a 50% chance to hit the wielder, dealing 1d6 points of damage.</p>\n<p>Reloading a cylinder rifle requires two full-round actions, regardless of the number of slots being loaded. The @Compendium[pf1.feats.11ClnanF4PdEPd9g]{Rapid Reload} feat reduces this to a single full-round action.</p>"
     },
     "tags": [],
-    "weight": 12,
+    "weight": {
+      "value": 12
+    },
     "price": 6000,
     "hp": {
       "max": "10",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "icons/weapons/guns/gun-wood.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +158,15 @@
     "weaponSubtype": "ranged",
     "ammoType": "gunBullet"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758613,
+    "modifiedTime": 1663018759946,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

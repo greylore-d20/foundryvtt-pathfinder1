@@ -3,12 +3,18 @@
   "name": "Madu (Leather/Steel)",
   "type": "weapon",
   "img": "systems/pf1/icons/items/armor/madu.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 20</em>, <em>Legacy of Fire Player's Guide pg. 22</em>, <em>Adventurer's Armory pg. 4</em>, <em>Ultimate Combat pg. 144</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 40 gp/50 gp <strong>Weight</strong> 5 lbs./6 lbs.</p><p><strong>Damage</strong> 1d3 (small), 1d4 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> P; <strong>Special</strong> performance</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Blades, Light; Close</p><h3 class=\"framing\">Description</h3><p>The madu is a round, light leather shield with two animal horns-usually from an antelope-extending from opposite sides. If you are proficient with the madu, you may use it to fight defensively with a -2 penalty instead of the normal -4, and your attack penalty for using Combat Expertise improves by +1 (minimum -1 penalty). You cannot hold anything else in the hand that bears a madu. If you are not proficient with the it, treat it as a light spiked shield. A madu can't be disarmed. It can be crafted entirely out of metal, but both versions offer the same basic protection and attack benefits, though they respond differently to some spells and effects. A druid can use a leather madu, but not a steel madu.</p>"
     },
     "tags": [],
-    "weight": 5,
+    "weight": {
+      "value": 5
+    },
     "price": 40,
     "hp": {
       "max": "2",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/armor/madu.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +155,15 @@
     },
     "weaponType": "exotic"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758437,
+    "modifiedTime": 1663018759936,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

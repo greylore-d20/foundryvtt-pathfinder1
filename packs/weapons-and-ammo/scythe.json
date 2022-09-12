@@ -3,12 +3,18 @@
   "name": "Scythe",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/scythe.PNG",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 19</em>, <em>PRPG Core Rulebook pg. 143</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 18 gp <strong>Weight</strong> 10 lbs.</p><p><strong>Damage</strong> 1d6 (small), 2d4 (medium); <strong>Critical</strong> x4; <strong>Range</strong> -; <strong>Type</strong> P or S; <strong>Special</strong> trip</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Martial</p><p><strong>Weapon Groups</strong> Blades, Heavy</p><h3 class=\"framing\">Description</h3><p>This weapon consists of a long wooden shaft with protruding handles and a sharp curved blade set at a right angle. Derived from a farm tool used to mow down crops, a scythe requires two hands to use, and is unwieldy but capable of inflicting grievous wounds. Its connotations as a symbol of death due to its association with reaping also make the scythe a particularly intimidating weapon.</p>"
     },
     "tags": [],
-    "weight": 10,
+    "weight": {
+      "value": 10
+    },
     "price": 18,
     "hp": {
       "max": "10",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/scythe.PNG",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +157,15 @@
     "weaponType": "martial",
     "weaponSubtype": "2h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758658,
+    "modifiedTime": 1663018759951,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Depilate",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "round"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +153,15 @@
     },
     "shortDescription": "<p>This simple jinx causes a target's hair or fur to fall out in patchy clumps, leaving the creature disheveled and less commanding. A jinxed creature takes a -2 penalty on all Diplomacy, Intimidate, and Perform checks until the hair begins to regrow 1 week later, or until the damage can be concealed with a successful Disguise or Heal check (the DC is equal to the original save DC of the spell). A successful <i>break enchantment</i>, <i>remove curse</i>, or similar effect instantly regrows the target's hair or fur and removes the spell's effects.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735294,
+    "modifiedTime": 1663018744956,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

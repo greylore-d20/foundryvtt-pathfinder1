@@ -3,7 +3,11 @@
   "name": "Vampiric Hunger",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "round"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -144,11 +154,15 @@
     },
     "shortDescription": "<p>The target of this spell grows the fangs of a vampire, as well as a thirst for blood. For the duration of this spell, the target gains the ability to drain an opponent's blood during a grapple; if the target establishes or maintains a pin, it drains blood, dealing 1d4 points of Constitution damage. Each round it drains blood in this way, the target heals 5 hit points or gains 5 temporary hit points for the duration of the spell (up to a maximum number of temporary hit points equal to its full normal hit points). If the target does not drain blood in this way while under the effects of this spell, it becomes exhausted at the end of the spell's duration.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735327,
+    "modifiedTime": 1663018744959,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

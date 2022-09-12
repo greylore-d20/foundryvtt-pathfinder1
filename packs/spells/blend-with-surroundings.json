@@ -3,7 +3,11 @@
   "name": "Blend with Surroundings",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "round"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -150,11 +160,15 @@
     },
     "shortDescription": "<p>This spell changes the appearance of the affected creature so that it better blends in with its surroundings. As chosen by you, the affected creature takes on the appearance of a statue, furniture, a tree, a bush, a rock, or another object of similar size. As long as the target stays still, it gains a +20 bonus on Stealth checks, and it can use Stealth even if it is being observed. The target's armor blends in perfectly with the illusory shape, and the target's armor check penalty on Stealth checks is negated for the duration of the spell. If the target moves at all while this spell is in effect, the spell ends.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018730102,
+    "modifiedTime": 1663018744581,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

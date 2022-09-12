@@ -3,7 +3,11 @@
   "name": "Aspect of the Stag",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -142,11 +152,15 @@
     "sr": false,
     "shortDescription": "<p>When you cast this spell, you take on an aspect of a stag, including some of its physical characteristics. Your features become elongated and sinewy, and you grow a set of antlers you can use for defense. You gain a +2 dodge bonus to AC against attacks of opportunity, your base speed increases by 20 ft., you can move through any undergrowth (including magically manipulated undergrowth) at your normal speed, and can even make a 5-foot step within such terrain.</p><p>Furthermore, when you are hit with an attack of opportunity, you can make a single attack with your antlers against the opponent that hit you as an immediate action. This attack uses your highest base attack bonus plus your Strength or Dexterity bonus (your choice) and deals 1d8 points of piercing damage (if you are Medium; 1d6 points of damage if Small) plus your Strength modifier on a successful hit. The antlers have a critical multiplier of 19-20/x2.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018730137,
+    "modifiedTime": 1663018744584,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

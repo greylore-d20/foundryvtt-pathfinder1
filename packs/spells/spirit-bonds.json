@@ -3,7 +3,11 @@
   "name": "Spirit Bonds",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "hour"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -150,11 +160,15 @@
     "sr": false,
     "shortDescription": "<p>You heighten your awareness of up to one willing creature or object per 3 caster levels, each of which must be within 30 feet of you during the entire hour you spend preparing spells and casting <i>spirit bonds</i>. By concentrating on one of these creatures or objects as a full-round action, you can learn its direction and relative distance from your location, provided that it is on the same plane. In the case of a creature, you can also learn the state of its emotion or health aura as a full-round action (see page 198 of <i>Pathfinder RPG Occult Adventures</i> for more information about auras). In the case of an object, you can also get a sense of how damaged it is, similar to reading the health aura of a creature, or, in the case of a magic item that must be activated, you can learn when it was last activated (a full-round action in either case).  Additionally, at any time during the spell's duration, you can deliver a single message to any of the creatures that participated in the spell. This message is delivered telepathically regardless of range and can be up to 25 words in length. Delivering a message in this way severs your connection with that character, and you can no longer learn information about that creature through this spell, but doing so does not impact the remaining duration you have linked to other creatures or objects.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018734049,
+    "modifiedTime": 1663018744877,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Create Greater Undead",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "hour"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +156,15 @@
     "sr": false,
     "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.c1e7f0ct04k270wy]{create undead}, except that you can create more powerful and intelligent sorts of undead: shadows, wraiths, spectres, and devourers. The type or types of undead created is based on caster level, as shown below.</p>\n<table>\n<tbody>\n<tr>\n<th>Caster Level</th>\n<th>Undead Created</th>\n</tr>\n<tr>\n<td>15th or lower</td>\n<td>Shadow</td>\n</tr>\n<tr>\n<td>16th-17th</td>\n<td>Wraith</td>\n</tr>\n<tr>\n<td>18th-19th</td>\n<td>Spectre</td>\n</tr>\n<tr>\n<td>20th or higher</td>\n<td>Devourer</td>\n</tr>\n</tbody>\n</table>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018733534,
+    "modifiedTime": 1663018744855,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

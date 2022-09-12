@@ -3,12 +3,18 @@
   "name": "M1914 Grenade (Concussion)",
   "type": "weapon",
   "img": "icons/weapons/thrown/bomb-fuse-black.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Pathfinder #71: Rasputin Must Die! pg. 64</em></p>\n<h3 class=\"framing\">Statistics</h3>\n<p><strong>Cost</strong> 50 gp <strong>Weight</strong> 1 lb.</p>\n<p><strong>Damage</strong> 3d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> 20 ft.; <strong>Type</strong> B; <strong>Special</strong> see description</p>\n<p><strong>Category</strong> Explosive; <strong>Proficiency</strong> Exotic</p>\n<h3 class=\"framing\">Description</h3>\n<p>This time-delayed concussion grenade is a mainstay of trench warfare. The device appears to be little more than a metal cylinder tapering to a handle containing a spring-loaded lever. To detonate the device, you disengage the safety pin while depressing the handle's lever, which releases the firing pin when thrown. The device detonates at the beginning of your next turn, hopefully in the area you targeted.</p>\n<p>The device relies on a concussive blast to deal damage, and all creatures within a 20-foot radius take 3d6 points of bludgeoning damage (Reflex DC 15 for half ).</p>"
     },
     "tags": [],
-    "weight": 1,
+    "weight": {
+      "value": 1
+    },
     "price": 50,
     "hp": {
       "max": "10",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "icons/weapons/thrown/bomb-fuse-black.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -138,14 +150,21 @@
     },
     "tag": "m1914GrenadeConcussion",
     "scriptCalls": [],
+    "weaponGroups": {
+      "value": []
+    },
     "weaponType": "misc",
     "weaponSubtype": "other"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758419,
+    "modifiedTime": 1663018759934,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,12 +3,18 @@
   "name": "Flask Pike",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/boarding-pike.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Giant Hunter's Handbook pg. 24</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 30 gp <strong>Weight</strong> 9 lbs.</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x3; <strong>Range</strong> -; <strong>Type</strong> P; <strong>Special</strong> reach, see text</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This pike has a hollow spot near its tip into which a flask can be strapped. If the flask is filled with an alchemical splash weapon and you hit a creature with the pike, the target is also hit with the splash weapon. This uses up the contents of the flask. Because of the added weight of a flask, attacks with the flask pike take a -2 penalty when it's loaded with one. Reloading the flask pike is a full-round action that provokes attacks of opportunity.</p>"
     },
     "tags": [],
-    "weight": 9,
+    "weight": {
+      "value": 9
+    },
     "price": 30,
     "hp": {
       "max": "10",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/boarding-pike.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +157,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "2h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758652,
+    "modifiedTime": 1663018759950,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

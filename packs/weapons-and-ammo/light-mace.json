@@ -3,12 +3,18 @@
   "name": "Light Mace",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/mace-light.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 17</em>, <em>PRPG Core Rulebook pg. 142</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 5 gp <strong>Weight</strong> 4 lbs.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B; <strong>Special</strong> -</p><p><strong>Category</strong> Light; <strong>Proficiency</strong> Simple</p><p><strong>Weapon Groups</strong> Hammers</p><h3 class=\"framing\">Description</h3><p>A mace is made up of an ornate metal head attached to a simple wooden or metal shaft. The mace's head is usually flanged to cause more pain or damage. Some more primitive maces are made with stone bound to a wooden haft with leather straps.</p>"
     },
     "tags": [],
-    "weight": 4,
+    "weight": {
+      "value": 4
+    },
     "price": 5,
     "hp": {
       "max": 2,
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/mace-light.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -139,11 +151,15 @@
       "value": ["hammers"]
     }
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758617,
+    "modifiedTime": 1663018759946,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

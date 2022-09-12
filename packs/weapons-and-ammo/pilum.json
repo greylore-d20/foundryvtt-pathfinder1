@@ -3,12 +3,18 @@
   "name": "Pilum",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/pilum.PNG",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ranged Tactics Toolbox pg. 0</em>, <em>Adventurer's Armory pg. 4</em>, <em>Advanced Player's Guide pg. 179</em>, <em>Ultimate Equipment pg. 19</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 5 gp <strong>Weight</strong> 4 lbs.</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x2; <strong>Range</strong> 20 ft.; <strong>Type</strong> P; <strong>Special</strong> see text</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Martial</p><p><strong>Weapon Groups</strong> Spears; Thrown</p><h3 class=\"framing\">Description</h3><p>The tip of this heavy javelin is designed to break off and embed itself into a shield once it hits. Like ammunition, a thrown pilum that hits its target is destroyed. If you hit a shieldbearing opponent with a pilum, he loses the AC bonuses from that shield until he takes a standard action to pry the remnants of the pilum from his shield.</p>"
     },
     "tags": [],
-    "weight": 4,
+    "weight": {
+      "value": 4
+    },
     "price": 5,
     "hp": {
       "max": 5,
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/pilum.PNG",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -141,11 +153,15 @@
     "weaponType": "martial",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758342,
+    "modifiedTime": 1663018759921,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

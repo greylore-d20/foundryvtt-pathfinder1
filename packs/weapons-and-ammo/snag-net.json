@@ -3,12 +3,18 @@
   "name": "Snag Net",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/net.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ranged Tactics Toolbox pg. 33</em>, <em>Advanced Race Guide pg. 201</em>, <em>Ultimate Equipment pg. 21</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 30 gp <strong>Weight</strong> 10 lbs.</p><p><strong>Damage</strong> - (small), - (medium); <strong>Critical</strong> -; <strong>Range</strong> 10 ft.; <strong>Type</strong> P; <strong>Special</strong> trip, see text</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Thrown</p><h3 class=\"framing\">Description</h3><p>This short, wide net is covered in barbed loops and slipknots. It works like a typical net, except it has the trip weapon special feature. If you entangle an opponent and hold the trailing rope, on your turn in place of a melee attack you may make a combat maneuver check to trip against that opponent; if you succeed, you may trip your opponent or deal 1 point of piercing damage to it. The concentration DC to cast while entangled in a snag net is 17 + the spell's level. The Escape Artist DC to escape a snag net is 22.</p>"
     },
     "tags": [],
-    "weight": 10,
+    "weight": {
+      "value": 10
+    },
     "price": 30,
     "hp": {
       "max": "5",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/net.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -144,11 +156,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758734,
+    "modifiedTime": 1663018759965,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

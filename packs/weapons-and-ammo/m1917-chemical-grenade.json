@@ -3,12 +3,18 @@
   "name": "M1917 Chemical Grenade",
   "type": "weapon",
   "img": "icons/weapons/thrown/bomb-fuse-cloth-pink.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Pathfinder #71: Rasputin Must Die! pg. 64</em></p>\n<h3 class=\"framing\">Statistics</h3>\n<p><strong>Cost</strong> 100 gp <strong>Weight</strong> 2 lbs.</p>\n<p><strong>Damage</strong> see description (medium); <strong>Critical</strong> -; <strong>Range</strong> 20 ft.; <strong>Type</strong> acid; <strong>Special</strong> see description</p>\n<p><strong>Category</strong> Explosive; <strong>Proficiency</strong> Exotic</p>\n<h3 class=\"framing\">Description</h3>\n<p>The M1917 is a modified M1914 grenade specially modified and enlarged to release a cloud of toxic gas upon detonation. Resembling an overlarge metal can with a small lever and handle protruding from the bottom, the grenade is armed by pulling back on a metal firing pin held in place by the handle's depressed lever, which is released when thrown.</p>\n<p>At the beginning of your next turn, the grenade spews forth a cloud of mustard gas (see the sidebar on this page) in a 20-foot radius. The cloud disperses naturally after 4 rounds; a strong wind (21+ mph) disperses the cloud in 1 round.</p>"
     },
     "tags": [],
-    "weight": 2,
+    "weight": {
+      "value": 2
+    },
     "price": 100,
     "hp": {
       "max": "10",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "icons/weapons/thrown/bomb-fuse-cloth-pink.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -103,6 +115,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -114,8 +127,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -130,14 +142,21 @@
     },
     "tag": "m1917ChemicalGrenade",
     "scriptCalls": [],
+    "weaponGroups": {
+      "value": []
+    },
     "weaponType": "misc",
     "weaponSubtype": "other"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758659,
+    "modifiedTime": 1663018759951,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Signifer's Rally",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -144,11 +154,15 @@
     },
     "shortDescription": "<p>You <i>teleport</i> up to one ally per five caster levels to your location.</p><p>You determine which allies you want to <i>teleport</i> at the time of casting; these allies have 1 round to decide to allow or refuse your spell, and they <i>teleport</i> immediately upon accepting. Allies are <i>teleport</i>ed as if you had cast <i>teleport</i> on them (your current location is at least \"studied carefully\" for this purpose), appearing in a puff of brimstone in a space adjacent to you. If you are in combat and your allies were not, your allies may roll initiative upon arrival but are not considered flat-footed even though they have not taken any actions. The spell does not function in areas warded against intrusion by evil creatures (such as a <i>magic circle against evil</i> effect).</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018736457,
+    "modifiedTime": 1663018745024,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

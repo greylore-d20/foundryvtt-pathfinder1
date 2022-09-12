@@ -3,12 +3,18 @@
   "name": "Mancatcher",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/mancatcher.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 21</em>, <em>Adventurer's Armory pg. 4</em>, <em>Advanced Player's Guide pg. 179</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 15 gp <strong>Weight</strong> 10 lbs.</p><p><strong>Damage</strong> 1 (small), 1d2 (medium); <strong>Critical</strong> -; <strong>Range</strong> -; <strong>Type</strong> P; <strong>Special</strong> reach, see text</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Polearms</p><h3 class=\"framing\">Description</h3><p>This polearm consists of two curved metal bands that close around a target when you attack, allowing you to bind an opponent. A mancatcher is built to capture a creature of a particular size category (such as Small or Medium) and doesn't work on creatures of the wrong size. Make a touch attack to hit an opponent and a combat maneuver check to grapple him (without the -4 penalty for not having two hands free); success means you and the target are grappled. Once the target is grappled, you can perform a move or damage grapple action against him. The mancatcher has hardness 10 and 5 hit points; breaking it requires a DC 26 Strength check. If you drop the mancatcher, the target can free himself as a standard action.</p>"
     },
     "tags": [],
-    "weight": 10,
+    "weight": {
+      "value": 10
+    },
     "price": 15,
     "hp": {
       "max": "10",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/mancatcher.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +157,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "2h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758648,
+    "modifiedTime": 1663018759950,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

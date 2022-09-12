@@ -3,7 +3,11 @@
   "name": "Heavy Catapult",
   "type": "weapon",
   "img": "icons/weapons/artillery/catapult-simple.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Combat pg. 162</em>, <em>PRPG Core Rulebook pg. 434</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 1,000 gp <strong>Weight</strong> -</p><p><strong>Damage</strong> 8d6; <strong>Critical</strong> x2; <strong>Range</strong> 300 ft. (100 ft. min.); <strong>Type</strong> B</p><p><strong>Crew</strong> 4; <strong>Aim</strong> 3; <strong>Load</strong> 3; <strong>Speed</strong> 0 ft.</p><p><strong>Category</strong> Indirect-Fire (Gargantuan); <strong>Proficiency</strong> Siege Engine</p><h3 class=\"framing\">Description</h3><p>Catapults are stone-throwing siege engines powered by winched arms that run through torsion skeins, and hold their payload in a cup that swings up and over the weapon when released. Catapults can hurl a variety of different types of ammunition (the damage given is for stone projectiles; other types of ammunition can be found later in this chapter). They are indirect-fire siege engines.</p><p></p><p> <em>Light</em>: These catapults are Large and often mounted on wheels. The targeting DC of a light catapult is 15. Light catapults have a hardness of 5 and 50 hit points. Light catapult stones cost 10 gp and weigh 50 pounds each. <em>Standard</em>: These Huge siege engines are too large to be transported to the battlefield in one piece, and require assembly. They typically hurl large stones indirectly at a target (targeting DC 20). Standard catapults have a hardness of 5 and 100 hit points. Standard catapult stones cost 15 gp and weigh 75 pounds each. <em>Heavy</em>: These Gargantuan siege engines are too large to be transported to the battlefield in one piece, and require assembly. They typically hurl large stones indirectly at a target (targeting DC 25). Heavy catapults have a hardness of 5 and 200 hit points. Heavy catapult stones cost 25 gp and weigh 90 pounds each.</p>"
     },
@@ -22,6 +26,7 @@
         "name": "Attack",
         "img": "icons/weapons/artillery/catapult-simple.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -49,6 +54,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -110,6 +120,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -121,8 +132,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -137,14 +147,21 @@
     },
     "tag": "heavyCatapult",
     "scriptCalls": [],
+    "weaponGroups": {
+      "value": []
+    },
     "weaponType": "exotic",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758811,
+    "modifiedTime": 1663018759971,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Deceptive Redundancy",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -142,11 +152,15 @@
     "sr": false,
     "shortDescription": "<p>You create a contingent ward that defies those who would dispel your magic, convincing them that their spell worked. When a spell such as <i>dispel magic</i> would end one of your spells that's affecting you, you can dismiss <i>deceptive redundancy</i> as an immediate action to attempt an opposed caster level check against the spellcaster. If you succeed, the dispelling effect fails to end your spell, and your spell's aura becomes difficult to detect for 1 round per caster level. Any divination attempted during this time fails to perceive the spell's aura unless the caster succeeds at a caster level check (DC = 15 + your caster level). <i>Deceptive redundancy</i> is most effective when hiding auras for spells that don't have easily perceived effects, rather than visually obvious spells such as <i>enlarge person</i> or <i>fire shield</i>.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018734816,
+    "modifiedTime": 1663018744932,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

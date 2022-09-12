@@ -3,7 +3,11 @@
   "name": "Wall of Force",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +156,15 @@
     "sr": false,
     "shortDescription": "<p>A <i>Wall of Force</i> creates an invisible wall of pure force. The wall cannot move and is not easily destroyed. A <i>Wall of Force</i> is immune to <i>dispel magic</i>, although a mage's disjunction can still dispel it.</p><p>A <i>Wall of Force</i> can be damaged by spells as normal, except for <i>disintegrate</i>, which automatically destroys it. It can be damaged by weapons and supernatural abilities, but a <i>Wall of Force</i> has hardness 30 and a number of hit points equal to 20 per caster level. Contact with a <i>sphere of annihilation</i> or <i>rod of cancellation</i> instantly destroys a <i>Wall of Force</i>.</p><p>Breath weapons and spells cannot pass through a <i>Wall of Force</i> in either direction, although <i>dimension door</i>, <i>teleport</i>, and similar effects can bypass the barrier. It blocks ethereal creatures as well as material ones (though ethereal creatures can usually circumvent the wall by going around it, through material floors and ceilings). Gaze attacks can operate through a <i>Wall of Force</i>.</p><p>The caster can form the wall into a flat, vertical plane whose area is up to one 10-foot square per level. The wall must be continuous and unbroken when formed. If its surface is broken by any object or creature, the spell fails.</p><p><i>Wall of Force</i> can be made permanent with a <i>permanency</i> spell.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018732960,
+    "modifiedTime": 1663018744817,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

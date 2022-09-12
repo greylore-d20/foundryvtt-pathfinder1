@@ -3,12 +3,18 @@
   "name": "Horse Bow",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/orc-hornbow.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Merchant's Manifest pg. 24</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 150 gp <strong>Weight</strong> 3 lbs.</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x3; <strong>Range</strong> 110 ft.; <strong>Type</strong> P; <strong>Special</strong> -</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>The horse bow functions like a composite longbow, but it is designed to be used on horseback. A rider using a horse bow can make ranged attacks while mounted; furthermore, she does not take a penalty to attack rolls when her mount is taking a double move action, and she takes only a -4 penalty on attack rolls when her mount is running. The price of this item is for a default horse bow; each point of Strength bonus granted by the horse bow adds 150 gp to its cost.</p>"
     },
     "tags": [],
-    "weight": 3,
+    "weight": {
+      "value": 3
+    },
     "price": 150,
     "hp": {
       "max": "5",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/orc-hornbow.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -67,8 +79,6 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
-          "critParts": [],
-          "nonCritParts": [],
           "parts": [
             [
               "sizeRoll(1, 8, @size) + min(@abilities.str.mod, 0)",
@@ -77,7 +87,9 @@
                 "custom": ""
               }
             ]
-          ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,10 +135,8 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         },
-        "tag": "",
         "ammoType": "arrow"
       }
     ],
@@ -147,11 +158,15 @@
     "weaponSubtype": "ranged",
     "ammoType": "arrow"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758706,
+    "modifiedTime": 1663018759957,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

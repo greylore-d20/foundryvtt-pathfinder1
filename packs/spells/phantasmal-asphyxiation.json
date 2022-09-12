@@ -3,7 +3,11 @@
   "name": "Phantasmal Asphyxiation",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -148,11 +158,15 @@
     },
     "shortDescription": "<p>Your target must succeed at a Will save or believe it can no longer breathe. An affected target must attempt a Fortitude save each round at the beginning of its turn. The first time it fails the Fortitude save, it is staggered until the next time it attempts a save against the spell. If the target fails a second Fortitude save in a row, it falls unconscious for the spell's remaining duration. The target breathes normally while unconscious, but is shaken for 1 minute upon awakening. If the target succeeds at two Fortitude saves in a row, it shakes off the spell's effects entirely. Otherwise, the target continues to attempt a save each round until it falls unconscious or the spell ends. This spell has no effect on creatures that don't need to breathe.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018731360,
+    "modifiedTime": 1663018744740,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

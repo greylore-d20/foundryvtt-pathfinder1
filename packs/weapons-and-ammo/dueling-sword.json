@@ -3,12 +3,18 @@
   "name": "Dueling Sword",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/sword-dueling.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><em>These slightly curved swords measure just over 3 feet in length.</em></p>\n<p>An&nbsp;<a href=\"https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/sword-dueling\">dueling sword</a> can be used as a martial weapon (in which case it functions as a @Compendium[pf1.weapons-and-ammo.zWRlna42PMJVX6un]{longsword}), but if you have the feat @Compendium[pf1.feats.BJBC4lbo7xGWPsKJ]{Exotic Weapon Proficiency (dueling sword)}, you can use the @Compendium[pf1.feats.vWiTqHC4Y3Xn1Pme]{Weapon Finesse} feat to apply your <a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Dexterity-Dex-\">Dexterity</a>&nbsp;modifier instead of your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Strength-Str-\">Strength</a>&nbsp;modifier to&nbsp;<a href=\"https://www.d20pfsrd.com/gamemastering/combat#TOC-Attack-Roll\">attack rolls</a>&nbsp;with a&nbsp;<a href=\"https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/sword-dueling\">dueling sword</a>&nbsp;sized for you, even though it isn&rsquo;t a light weapon. You can also wield a&nbsp;<a href=\"https://www.d20pfsrd.com/equipment/weapons/weapon-descriptions/sword-dueling\">dueling sword</a>&nbsp;in two hands to apply 1-1/2 times your&nbsp;<a href=\"https://www.d20pfsrd.com/basics-ability-scores/ability-scores#TOC-Strength-Str-\">Strength</a>&nbsp;bonus to damage rolls.</p>"
     },
     "tags": [],
-    "weight": 3,
+    "weight": {
+      "value": 3
+    },
     "price": 20,
     "hp": {
       "max": 5,
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/sword-dueling.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -140,11 +152,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "1h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758651,
+    "modifiedTime": 1663018759950,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

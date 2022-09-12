@@ -3,7 +3,11 @@
   "name": "Meticulous Match",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 10,
           "type": "minute"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +153,15 @@
     },
     "shortDescription": "<p>You compare two similar items and know if they are identical to one another or not. The spell can indicate an identical match, a categorical match, or no match. For instance, blood samples are identical if they are from the same creature. They are categorical if they are from the same species. There is no match if they are from different species, or if one sample is merely stage blood.  Alternatively, you can compare dissimilar items and know if they have a potential relationship. For instance, you can compare a creature's tooth against a bite mark and know if that creature could have caused the bite mark.  This spell is not infallible-an identical match can result from comparing items or creatures that are duplicates of one another. For instance, a knife might have an identical match with a stab wound if an identical knife was used to inflict the wound, and twins might have identical blood or tissues.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018731331,
+    "modifiedTime": 1663018744732,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,12 +3,18 @@
   "name": "Split-Blade Sword",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/split-blade-sword.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Martial Arts Handbook pg. 30</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 200 gp <strong>Weight</strong> 8 lbs</p><p><strong>Damage</strong> 1d10 (small), 2d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> Disarm, trip, see text</p><p><strong>Category</strong> One-Handed; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Blades, Heavy</p><h3 class=\"framing\">Description</h3><p>Patterned after the fiery blades masterfully wielded by Sarenite angels, the split-blade sword is both a holy symbol and a difficult-yet-effective weapon. A split-blade sword resembles a large scimitar whose blade splits into two about two-thirds of the way toward the tip. If your Dexterity score is less than 15, you take a -2 penalty on attacks rolls with a split-blade sword, as you're unable to maneuver its unusual blade.</p>"
     },
     "tags": [],
-    "weight": 8,
+    "weight": {
+      "value": 8
+    },
     "price": 200,
     "hp": {
       "max": "5",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/split-blade-sword.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -144,11 +156,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "1h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758687,
+    "modifiedTime": 1663018759955,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

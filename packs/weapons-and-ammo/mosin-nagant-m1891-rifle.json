@@ -3,12 +3,18 @@
   "name": "Mosin-Nagant M1891 Rifle",
   "type": "weapon",
   "img": "icons/weapons/guns/rifle-brown.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Pathfinder #71: Rasputin Must Die! pg. 64</em></p>\n<h3 class=\"framing\">Statistics</h3>\n<p><strong>Cost</strong> 500 gp <strong>Weight</strong> 9 lbs.</p>\n<p><strong>Damage</strong> 1d10 (medium); <strong>Critical</strong> x4; <strong>Range</strong> 80 ft.; <strong>Type</strong> B and P; <strong>Special</strong> -</p>\n<p><strong>Misfire</strong> 1; <strong>Capacity</strong> 5</p>\n<p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p>\n<h3 class=\"framing\">Description</h3>\n<p>This bolt-action rifle is the mainstay of Russian military forces. It is similar to the advanced firearms rif le with the following differences. It uses the same 7.62 54mmR ammunition as the Madsen machine gun, and is fed from a 5-round internal, nondetachable magazine that is typically loaded with 5-round stripper clips (loading it is a move action).</p>\n<p>Without stripper clips, you may only reload up to 2 rounds of ammunition as a move action. Ammunition is typically sold in groups of 5 rounds.</p>\n<p>The rifle has a lug for the attachment of a socket bayonet, and can be equipped with a unique sidemount scope system (see below).</p>"
     },
     "tags": [],
-    "weight": 9,
+    "weight": {
+      "value": 9
+    },
     "price": 500,
     "hp": {
       "max": "10",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "icons/weapons/guns/rifle-brown.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +157,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758671,
+    "modifiedTime": 1663018759953,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

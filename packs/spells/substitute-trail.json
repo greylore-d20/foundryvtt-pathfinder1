@@ -3,7 +3,11 @@
   "name": "Substitute Trail",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -140,11 +150,15 @@
     "sr": false,
     "shortDescription": "<p>This spell can affect any creatures with which you interacted in the last 24 hours. You alter the trails left by the chosen creatures, making it appear that another creature with which you are familiar left the trail instead (you must have met the creature with which you are familiar). If a tracker exceeds the DC of the skill check to follow the trail by an amount equal to  your caster level, the tracker recognizes that the trail has been manipulated by this spell, although it cannot see the trail's true nature unless it uses magical means, such as <i>true seeing</i>.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018730721,
+    "modifiedTime": 1663018744608,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

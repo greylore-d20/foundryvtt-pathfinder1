@@ -3,12 +3,18 @@
   "name": "Halfling Stitched Sling",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/sling.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Halflings of Golarion pg. 22</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> - <strong>Weight</strong> 1 lb.</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B; <strong>Special</strong> disarm, trip</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>Technically not a unique kind of weapon, a stitched sling is a sling, staff sling, or double sling whose cup is sewn closed around the ammunition, creating a weak sort of light flail. The ammunition sewn into the sling is irrelevant to the type and amount of damage it causes. A stitched sling cannot be used to fire ammunition unless the thread or cord holding the cup closed is cut open (a full-round action that provokes attacks of opportunity).</p>"
     },
     "tags": [],
-    "weight": 1,
+    "weight": {
+      "value": 1
+    },
     "hp": {
       "max": "5",
       "value": "5"
@@ -22,6 +28,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/sling.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -49,6 +56,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -66,8 +78,6 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
-          "critParts": [],
-          "nonCritParts": [],
           "parts": [
             [
               "sizeRoll(1, 6, @size)",
@@ -76,7 +86,9 @@
                 "custom": ""
               }
             ]
-          ]
+          ],
+          "critParts": [],
+          "nonCritParts": []
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -110,6 +122,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -121,10 +134,8 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         },
-        "tag": "",
         "ammoType": ""
       }
     ],
@@ -146,11 +157,15 @@
     "weaponSubtype": "ranged",
     "ammoType": "slingBullet"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758444,
+    "modifiedTime": 1663018759936,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

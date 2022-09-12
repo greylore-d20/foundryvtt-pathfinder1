@@ -3,7 +3,11 @@
   "name": "Speak with Soul",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "minute"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -147,11 +157,15 @@
     "sr": false,
     "shortDescription": "<p>You commune with the soul of a dead creature. To cast this spell, you must be at the soul's place of death or be in the soul's presence, whether it is contained in a receptacle, powers an intelligent magic item, or other possibilities. The soul can attempt a Will save to resist the spell as if it were alive.  A soul contacted this way can speak normally in any language it knows. Unlike <i>speak with dead</i> and similar spells, you are not limited to asking questions and can engage in normal conversation with the soul (and vice versa). The soul isn't an undead creature and isn't compelled to speak or be truthful. Generally, the soul only knows what it knew in life, although souls that persisted with awareness of their surroundings after death may have more to offer.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018732567,
+    "modifiedTime": 1663018744807,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

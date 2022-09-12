@@ -3,7 +3,11 @@
   "name": "Bless",
   "type": "buff",
   "img": "systems/pf1/icons/skills/light_04.jpg",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 100001,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p>You have a +1 morale bonus to attack rolls and saves against fear effects.</p>"
     },
@@ -32,10 +36,6 @@
         "text": "+[[1]] Morale vs Fear effects"
       }
     ],
-    "duration": {
-      "units": "minute",
-      "value": "@item.level"
-    },
     "links": {
       "children": []
     },
@@ -44,13 +44,21 @@
       "dictionary": []
     },
     "scriptCalls": [],
-    "level": "1"
+    "level": "1",
+    "duration": {
+      "value": "@item.level",
+      "units": "minute"
+    }
   },
-  "effects": [],
-  "folder": null,
-  "sort": 100001,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018729297,
+    "modifiedTime": 1663018729407,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

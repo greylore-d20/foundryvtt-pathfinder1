@@ -3,7 +3,11 @@
   "name": "Throwing Shield",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/shield-throwing.PNG",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ranged Tactics Toolbox pg. 33</em>, <em>Adventurer's Armory pg. 5</em>, <em>Ultimate Combat pg. 145</em>, <em>Ultimate Equipment pg. 21</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> +50 gp <strong>Weight</strong> -</p><p><strong>Damage</strong> 1d4 (small), 1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> 20 ft.; <strong>Type</strong> B; <strong>Special</strong> performance, trip</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Thrown</p><h3 class=\"framing\">Description</h3><p>This shield is designed for throwing and has specially designed straps that allow you to unclasp and throw it as a free action. Tower shields cannot be throwing shields. Neither a shield's enhancement bonus to AC nor its shield spikes apply on your attack or damage rolls. A throwing shield can't be disarmed.</p>"
     },
@@ -22,6 +26,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/shield-throwing.PNG",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -49,6 +54,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -110,6 +120,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -121,8 +132,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +153,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758708,
+    "modifiedTime": 1663018759957,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

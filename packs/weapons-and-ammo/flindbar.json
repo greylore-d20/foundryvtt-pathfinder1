@@ -3,12 +3,18 @@
   "name": "Flindbar",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/flindbar.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Monster Codex pg. 93</em>, <em>Classic Monsters Revisited pg. 14</em></p><h3 class=\"framing\">Statistics</h3><p><strong>Cost</strong> 9 gp <strong>Weight</strong> 6 lbs.</p><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> B and P; <strong>Special</strong> disarm, trip</p><p><strong>Category</strong> One-Handed; <strong>Proficiency</strong> Exotic</p><h3 class=\"framing\">Description</h3><p>This one-handed weapon is similar to a nunchaku in that it consists of a pair of bars linked with heavy chain. However, a flindbar's bars are made of iron and are capped with a ring of spikes or studs. Since it's much heaver than a nunchaku, it is not a light weapon.</p>"
     },
     "tags": [],
-    "weight": 6,
+    "weight": {
+      "value": 6
+    },
     "price": 9,
     "hp": {
       "max": "5",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/flindbar.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -144,11 +156,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "1h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758663,
+    "modifiedTime": 1663018759953,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Circle of Clarity",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -144,11 +154,15 @@
     },
     "shortDescription": "<p>You create a magical emanation that interferes with all figments and glamers within it, giving creatures a +4 bonus on saving throws to recognize them as illusions. The emanation negates concealment less than total concealment within the area. Perception checks to notice creatures or objects within the area gain a bonus equal to half your caster level (maximum +10). The spell is stationary if cast on a point in space. It is mobile if centered on a creature or object, though creatures or attended objects can negate the spell with a saving throw or spell resistance.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018736341,
+    "modifiedTime": 1663018745007,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

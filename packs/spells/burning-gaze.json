@@ -3,7 +3,11 @@
   "name": "Burning Gaze",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -151,11 +161,15 @@
     },
     "shortDescription": "<p>Your eyes burn like hot coals, allowing you to set objects or foes alight with a glance.</p><p>As a standard action as long as this spell's effects persist, you may direct your <i>burning gaze</i> against a single creature or object within 30 feet of your location. Targeted creatures must succeed at a Fortitude save or take 1d6 points of fire damage. Unattended objects do not get a save. Creatures damaged by the spell must make a Reflex save or catch fire.</p><p>Each round, burning creatures may attempt a Reflex save to quench the flames; failure results in another 1d6 points of fire damage. Flammable items worn by a creature must also save or take the same damage as the creature. If a creature or object is already on fire, it suffers no additional effects from <i>burning gaze</i>.</p><p>Note that this spell does not grant an actual gaze attack- foes and allies are not in danger of catching on fire simply by meeting your gaze.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018730222,
+    "modifiedTime": 1663018744592,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

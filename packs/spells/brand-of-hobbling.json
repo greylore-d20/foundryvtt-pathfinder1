@@ -3,7 +3,11 @@
   "name": "Brand of Hobbling",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "round"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -137,11 +147,15 @@
     },
     "shortDescription": "<p>This spell etches a symbol of chains, a particular prison, or a lawful institution on the target, dealing 1d6 points of damage. The mark can be placed on any exposed portion of the creature, typically on the head or forearm. While the recipient is branded in this way, all of its movement speeds are reduced by half (rounded down to the next 5-foot increment). A Brand of Hobbling can be hidden by clothing or removed by scraping the brand away (the latter deals 1d6 points of damage, though the brand returns if that damage is healed), but in either case the effects of a Brand of Hobbling continue to function.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735157,
+    "modifiedTime": 1663018744939,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

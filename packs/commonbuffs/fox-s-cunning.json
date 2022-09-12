@@ -3,7 +3,11 @@
   "name": "Fox's Cunning",
   "type": "buff",
   "img": "systems/pf1/icons/spells/runes-royal-1.jpg",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 100001,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p>The subject has a +4 enhancement bonus to Intelligence.</p>"
     },
@@ -21,10 +25,6 @@
       }
     ],
     "contextNotes": [],
-    "duration": {
-      "units": "minute",
-      "value": "@item.level"
-    },
     "links": {
       "children": []
     },
@@ -33,13 +33,21 @@
       "dictionary": []
     },
     "scriptCalls": [],
-    "level": "3"
+    "level": "3",
+    "duration": {
+      "value": "@item.level",
+      "units": "minute"
+    }
   },
-  "effects": [],
-  "folder": null,
-  "sort": 100001,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018729282,
+    "modifiedTime": 1663018729406,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

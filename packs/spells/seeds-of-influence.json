@@ -3,7 +3,11 @@
   "name": "Seeds of Influence",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -147,11 +157,15 @@
     },
     "shortDescription": "<p>You leave a magical trace in the mind of a creature with an attitude of at least indifferent toward you. The target takes a cumulative -2 penalty on its Will save to negate the spell for each step by which its attitude is better than indifferent.  The target takes a -2 penalty on saving throws against divination spells you cast. You can target that creature with mind-affecting spells of a spell level lower than <i>Seeds of Influence</i> as if those spells were modified by Enlarge Spell (the modified spell doesn't take longer to cast and doesn't use a higher-level spell slot). Whenever the target succeeds at a saving throw against a divination or mind-affecting spell you cast, <i>Seeds of Influence</i> ends for that target. A creature can  be subject to only one <i>Seeds of Influence</i> spell at a time; later castings of <i>Seeds of Influence</i> remove any previous casting.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018730947,
+    "modifiedTime": 1663018744674,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,12 +3,18 @@
   "name": "Lasso",
   "type": "weapon",
   "img": "systems/pf1/icons/items/weapons/lasso.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ranged Tactics Toolbox pg. 33</em>, <em>Adventurer's Armory pg. 3</em>, <em>Advanced Player's Guide pg. 178</em>, <em>Ultimate Equipment pg. 21</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 1 sp <strong>Weight</strong> 5 lbs.</p><p><strong>Damage</strong> - (small), - (medium); <strong>Critical</strong> -; <strong>Range</strong> -; <strong>Type</strong> -; <strong>Special</strong> see text</p><p><strong>Category</strong> Ranged; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Thrown</p><h3 class=\"framing\">Description</h3><p>This thrown weapon is a length of rope with a simple open knot on one end that allows you entangle a foe like you would using a net. The DC to cast a spell while entangled with a lasso is 10 + the spell level being cast. An entangled creature can slip free with a successful DC 15 Escape Artist check as a full-round action. The lasso has 2 hit points and AC 10, and requires a DC 23 Strength check to break it. On a successful hit, the lasso tightens; to use it again you must spend a standard action sliding the knot to enlarge the loop.</p>"
     },
     "tags": [],
-    "weight": 5,
+    "weight": {
+      "value": 5
+    },
     "price": 0.1,
     "hp": {
       "max": 5,
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "systems/pf1/icons/items/weapons/lasso.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": null,
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -141,11 +153,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "ranged"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758438,
+    "modifiedTime": 1663018759936,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

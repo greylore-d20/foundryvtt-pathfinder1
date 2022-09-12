@@ -3,7 +3,11 @@
   "name": "Gift of the Deep",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -140,11 +150,15 @@
     },
     "shortDescription": "<p>You give the targets the appearance and many of the abilities of sahuagin mutants, with effects as described below. Choose one benefit for all targets of this spell. This spell has no effect on sahuagin that are already mutants or already under the effects of <i>Gift of the Deep</i>.  <i>Four-Armed</i>: The sahuagin sprouts an extra pair of arms-which can be used to make claw attacks (dealing 1d4 points of damage), or to wield weapons or hold items. It gains the benefits of the Multiattack and Multiweapon Fighting feats.  <i>Malenti</i>: The sahuagin's features shift to resemble those of an aquatic elf. It loses its light blindness as well as its claw and bite attacks. The sahuagin gains a +4 enhancement bonus to Dexterity and Charisma, and a +10 circumstance bonus on Disguise checks to appear to be an aquatic elf.  <i>Prehistoric</i>: The sahuagin grows in size, as <i>enlarge person</i>. It also gains a +2 enhancement bonus to its natural armor.  <i>Shark-Blooded</i>: The sahuagin's tail elongates and melds with its legs. Its mouth enlarges, increasing its bite damage by one size category (to 1d6 for a typical sahuagin). Its swim speed increases by 20 feet, but its land speed is reduced to 5 feet. The sahuagin can't be tripped.  <i>Sightless</i>: The sahuagin is blinded, but gains the benefits of the Blind Fight feat and blindsense with a range of 90 feet.  <i>Spined</i>: Spines grow on the sahuagin's scales. Any creature that successfully grapples with it, is grappled by it, or hits it with an unarmed strike or natural weapon takes 1d4 points of piercing damage. The sahuagin also gains the benefits of the Improved Grapple feat.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018734147,
+    "modifiedTime": 1663018744891,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

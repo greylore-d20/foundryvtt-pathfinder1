@@ -3,7 +3,11 @@
   "name": "Hollow Heroism",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -149,11 +159,15 @@
     "spellbook": "",
     "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.vqfrp8t0c1lw1jna]{Heroism}, except that you can reverse the spell by issuing a special command as a standard action if you are within medium range (100 feet + 10 feet per caster level) of the target. The target loses the bonuses and instead takes a -2 penalty on attack rolls, saving throws, and skill checks until the spell's duration ends (no save). Attempts to identify hollow <em>heroism</em> with a skill check incorrectly identify it as <em>heroism</em> (see the ruse descriptor on page 192).</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735737,
+    "modifiedTime": 1663018744975,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

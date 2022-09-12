@@ -3,7 +3,11 @@
   "name": "Shadow Transmutation",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +156,15 @@
     },
     "shortDescription": "<p>You suffuse one subject's body with energy from the Shadow Plane, altering its form to match a creature from the Shadow Plane. Shadow transmutation can mimic any of the following spells: <i>animal growth</i>, <i>anthropomorphic</i> animalUM, <i>enlarge person</i>, <i>fins to</i> feetARG, longarmACG, <i>polymorph</i>, <i>reduce person</i>, and <i>stone fist</i>. If using <i>shadow transmutation</i> as <i>polymorph</i>, the target does not gain any sensory abilities that its new form has (such as low-light vision or darkvision) and the speed of any movement types gained from the spell cannot exceed the target's base speed or natural speed with those movement types (whichever is higher). A creature under the effects of <i>shadow transmutation</i> deals normal damage and has all the normal abilities and weaknesses of whatever form it assumes using the spell.  Any creature that interacts with a target under the effects of the spell (including attacking or being attacked by that creature) can attempt a Will save to recognize the target's true nature. Creatures that succeed at their Will saves to disbelieve  the illusion take one-fifth (20%) of the normal damage from the target's natural attacks or special abilities granted by the target's shadowy form (if any), and the target's special abilities that don't deal damage have only a 20% chance of working against them. Creatures that succeed at their saves see the <i>shadow transmutation</i> as transparent images superimposed over the target.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018733517,
+    "modifiedTime": 1663018744850,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

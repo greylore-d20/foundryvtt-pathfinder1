@@ -3,12 +3,18 @@
   "name": "Double-Chained Kama",
   "type": "weapon",
   "img": "icons/weapons/sickles/sickle-blue-purple.webp",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "description": {
       "value": "<p><strong>Source</strong> <em>Ultimate Equipment pg. 20</em>, <em>Ultimate Combat pg. 131</em></p><h3 class=\"framing\"><img src=\"https://www.aonprd.com/images/PathfinderSocietySymbol.gif\" title=\"PFS Legal\" style=\"margin:3px 3px 0px 3px;\">Statistics</h3><p><strong>Cost</strong> 8 gp <strong>Weight</strong> 4 lbs.</p><p><strong>Damage</strong> 1d4/1d4 (small), 1d6/1d6 (medium); <strong>Critical</strong> x2; <strong>Range</strong> -; <strong>Type</strong> S; <strong>Special</strong> double, monk, reach, trip</p><p><strong>Category</strong> Two-Handed; <strong>Proficiency</strong> Exotic</p><p><strong>Weapon Groups</strong> Double</p><h3 class=\"framing\">Description</h3><p>This weapon comprises a pair of kama connected with an 8-foot length of chain. The wielder can attack as if armed with a single kama in each hand or extend the chain to make a single reach attack. By swinging the chain, the wielder can whip the kama about to disarm or trip opponents. Furthermore, if one of the weapons is dropped, the wielder can retrieve it as a free action by pulling on the chain.</p>"
     },
     "tags": [],
-    "weight": 4,
+    "weight": {
+      "value": 4
+    },
     "price": 8,
     "hp": {
       "max": "10",
@@ -23,6 +29,7 @@
         "name": "Attack",
         "img": "icons/weapons/sickles/sickle-blue-purple.webp",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "attack"
@@ -50,6 +57,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -111,6 +123,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -122,8 +135,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -145,11 +157,15 @@
     "weaponType": "exotic",
     "weaponSubtype": "2h"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018758720,
+    "modifiedTime": 1663018759962,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

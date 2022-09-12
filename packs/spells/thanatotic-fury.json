@@ -3,7 +3,11 @@
   "name": "Thanatotic Fury",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -143,11 +153,15 @@
     "sr": false,
     "shortDescription": "<p>You may cast this spell only if you have the giant subtype. When casting this spell, you channel the fury and the abilities of thanatotic titans, gaining some of their abilities for a short period of time. When you hit a creature capable of casting divine spells, that creature must succeed at a Will saving throw or be unable to cast divine spells for 1d4 rounds and be shaken for the same duration. If the save is successful, the target is instead shaken for only 1 round.  Additionally, your attacks are treated as epic and evil for the purposes of overcoming damage reduction.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018736338,
+    "modifiedTime": 1663018745006,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

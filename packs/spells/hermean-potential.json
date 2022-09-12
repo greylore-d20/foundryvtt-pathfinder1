@@ -3,7 +3,11 @@
   "name": "Hermean Potential",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "standard"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -146,11 +156,15 @@
     "sr": false,
     "shortDescription": "<p>You gift the target with the ability to perfect its actions via mental clarity. On the next attack roll, saving throw, ability check, or sk<i>ill</i> check the target attempts, it rolls twice and takes the more favorable result. For every 5 caster levels you have, the target can roll twice on an additional attack roll, saving throw, ability check, or sk<i>ill</i> check (to a maximum of 5 rolls at 20th level).  <i>Hermean potential</i> is countered and dispelled by <i>ill</i> omenAPG, but does not itself counter or dispel <i>ill</i> omen.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018734191,
+    "modifiedTime": 1663018744896,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -3,7 +3,11 @@
   "name": "Charge Object",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 10,
           "type": "minute"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -141,11 +151,15 @@
     "sr": false,
     "shortDescription": "<p>You charge an item with minor psychic energy. The item can be detected by the <i>detect psychic significance</i> spell. If you wish, you can imprint the item with your ownership history. Spells such as <i>object reading</i> a nd u ses o f t he p sychometry o ccult skill unlock (see page 196) can reveal any information about yourself you impart into the object, including your name, alignment, profession, and a summary of your experiences with the item. You can't impart false information into the object, but you can omit any details you'd prefer not to divulge. If the target object is already psychically charged, you can add more information to it, but you can't use <i>charge object</i> t o e rase existing psychic information.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018731854,
+    "modifiedTime": 1663018744761,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

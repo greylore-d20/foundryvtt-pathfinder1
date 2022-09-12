@@ -3,7 +3,11 @@
   "name": "Symbol of Weakness",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 10,
           "type": "minute"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -150,11 +160,15 @@
     },
     "shortDescription": "<p>This spell functions like <i>symbol of death</i>, except that every creature within 60 feet of a <i>Symbol of Weakness</i> instead suffers crippling weakness that deals 3d6 points of Strength damage.</p><p>Unlike <i>symbol of death</i>, <i>Symbol of Weakness</i> has no hit point limit; once triggered, a <i>Symbol of Weakness</i> simply remains active for 10 minutes per caster level. A creature can only be affected by this symbol once.</p><p><i>Note</i>: Magic traps such as <i>Symbol of Weakness</i> are hard to detect and disable. While any character can use Perception to find a symbol, only a character with the trapfinding class feature can use Disable Device to disarm it. The DC in each case is 25 + spell level, or 32 for <i>Symbol of Weakness</i>.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018736375,
+    "modifiedTime": 1663018745011,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

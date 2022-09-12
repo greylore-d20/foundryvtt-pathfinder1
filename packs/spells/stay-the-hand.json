@@ -3,7 +3,11 @@
   "name": "Stay the Hand",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "data": {
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "flags": {},
+  "system": {
     "tags": [],
     "actions": [
       {
@@ -11,6 +15,7 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
+        "tag": "",
         "activation": {
           "cost": 1,
           "type": "immediate"
@@ -38,6 +43,11 @@
         "uses": {
           "autoDeductCharges": true,
           "autoDeductChargesCost": "1",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": null
+          },
           "per": "",
           "value": 0,
           "maxFormula": ""
@@ -91,6 +101,7 @@
           "critMultiplier": 1
         },
         "naturalAttack": {
+          "primaryAttack": true,
           "secondary": {
             "attackBonus": "-5",
             "damageMult": 0.5
@@ -102,8 +113,7 @@
         "spellArea": "",
         "conditionals": [],
         "enh": {
-          "override": false,
-          "value": 0
+          "value": null
         }
       }
     ],
@@ -138,11 +148,15 @@
     },
     "shortDescription": "<p>You cause a creature's arm to waver and prevent it from striking another creature. You can cast this spell when the target is about to make a melee attack against another creature. On a failed saving throw, the target does not follow through with its attack, and its entire action is wasted for the round. On a successful saving throw, the target can make its attack, forcing its strike though the compulsion but losing both accuracy and power, taking a -5 penalty on its attack and damage rolls. Whether or not the target makes its initial save or not, it is subject to a -2 penalty on attack and damage rolls against the creature it originally targeted for the duration of the spell.</p>"
   },
-  "effects": [],
-  "folder": null,
-  "sort": 0,
-  "permission": {
+  "ownership": {
     "default": 0
   },
-  "flags": {}
+  "_stats": {
+    "systemId": "pf1",
+    "systemVersion": "0.82.1",
+    "coreVersion": "10.285",
+    "createdTime": 1663018735876,
+    "modifiedTime": 1663018744987,
+    "lastModifiedBy": "DbeAbHwpEqczKjsD"
+  }
 }

@@ -1707,6 +1707,317 @@ export const PF1 = {
     cowering: "PF1.CondCowering",
   },
 
+  conditionMechanics: {
+    pf1_blind: {
+      changes: [
+        {
+          formula: -2,
+          subTarget: "ac",
+          modifier: "penalty",
+        },
+      ],
+      flags: ["loseDexToAC"],
+    },
+    dazzled: {
+      changes: [
+        {
+          formula: -1,
+          subTarget: "attack",
+          modifier: "penalty",
+        },
+      ],
+    },
+    pf1_deaf: {
+      changes: [
+        {
+          formula: -4,
+          subTarget: "init",
+          modifier: "penalty",
+        },
+      ],
+    },
+    entangled: {
+      changes: [
+        {
+          formula: -4,
+          subTarget: "dex",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "attack",
+          modifier: "penalty",
+        },
+      ],
+    },
+    grappled: {
+      changes: [
+        {
+          formula: -4,
+          subTarget: "dex",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "attack",
+          modifier: "penalty",
+        },
+      ],
+    },
+    helpless: {
+      changes: [
+        {
+          formula: 0,
+          subTarget: "dex",
+          modifier: "untypedPerm",
+          operator: "set",
+          priority: 1001,
+          continuous: true,
+        },
+      ],
+    },
+    pf1_sleep: {
+      changes: [
+        {
+          formula: 0,
+          subTarget: "dex",
+          modifier: "untypedPerm",
+          operator: "set",
+          priority: 1001,
+          continuous: true,
+        },
+      ],
+    },
+    paralyzed: {
+      changes: [
+        {
+          formula: 0,
+          subTarget: "dex",
+          modifier: "untypedPerm",
+          operator: "set",
+          priority: 1001,
+          continuous: true,
+        },
+        {
+          formula: 0,
+          subTarget: "str",
+          modifier: "untypedPerm",
+          operator: "set",
+          priority: 1001,
+          continuous: true,
+        },
+      ],
+    },
+    pf1_prone: {
+      changes: [
+        {
+          formula: -4,
+          subTarget: "mattack",
+          modifier: "penalty",
+        },
+      ],
+    },
+    pinned: {
+      changes: [
+        {
+          formula: "min(0, @abilities.dex.mod)",
+          subTarget: "dexMod",
+          modifier: "untyped",
+          operator: "set",
+          priority: 1001,
+          continuous: true,
+        },
+        {
+          formula: -4,
+          subTarget: "ac",
+          modifier: "penalty",
+        },
+        {
+          formula: -4,
+          subTarget: "cmd",
+          modifier: "penalty",
+        },
+      ],
+      flags: ["loseDexToAC"],
+    },
+    cowering: {
+      changes: [
+        {
+          formula: -2,
+          subTarget: "ac",
+          modifier: "penalty",
+        },
+      ],
+    },
+    shaken: {
+      changes: [
+        {
+          formula: -2,
+          subTarget: "attack",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "allSavingThrows",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "skills",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "allChecks",
+          modifier: "penalty",
+        },
+      ],
+    },
+    frightened: {
+      changes: [
+        {
+          formula: -2,
+          subTarget: "attack",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "allSavingThrows",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "skills",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "allChecks",
+          modifier: "penalty",
+        },
+      ],
+    },
+    panicked: {
+      changes: [
+        {
+          formula: -2,
+          subTarget: "attack",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "allSavingThrows",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "skills",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "allChecks",
+          modifier: "penalty",
+        },
+      ],
+    },
+    sickened: {
+      changes: [
+        {
+          formula: -2,
+          subTarget: "attack",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "wdamage",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "allSavingThrows",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "skills",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "allChecks",
+          modifier: "penalty",
+        },
+      ],
+    },
+    nauseated: {
+      changes: [
+        {
+          formula: -2,
+          subTarget: "attack",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "wdamage",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "allSavingThrows",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "skills",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "allChecks",
+          modifier: "penalty",
+        },
+      ],
+    },
+    stunned: {
+      changes: [
+        {
+          formula: -2,
+          subTarget: "ac",
+          modifier: "penalty",
+        },
+      ],
+    },
+    exhausted: {
+      changes: [
+        {
+          formula: -6,
+          subTarget: "str",
+          modifier: "penalty",
+        },
+        {
+          formula: -6,
+          subTarget: "dex",
+          modifier: "penalty",
+        },
+      ],
+    },
+    fatigued: {
+      changes: [
+        {
+          formula: -2,
+          subTarget: "str",
+          modifier: "penalty",
+        },
+        {
+          formula: -2,
+          subTarget: "dex",
+          modifier: "penalty",
+        },
+      ],
+    },
+  },
+
   conditionTextures: {
     bleed: "systems/pf1/icons/conditions/bleed.png",
     pf1_blind: "systems/pf1/icons/conditions/blind.png",

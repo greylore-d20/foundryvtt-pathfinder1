@@ -1,6 +1,5 @@
 import { ActorBasePF } from "./actor-base.mjs";
 import { getAbilityModifier } from "@utils";
-import { DicePF } from "../../dice/dice.mjs";
 import { ItemPF } from "../item/item-pf.mjs";
 import { createTag, fractionalToString } from "../../utils/lib.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
@@ -18,7 +17,6 @@ import { RollPF } from "../../dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
 import { ItemChange } from "../../components/change.mjs";
 import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs";
-import { D20RollPF } from "../../dice/d20roll.mjs";
 
 /**
  * Extend the base Actor class to implement additional game system logic.

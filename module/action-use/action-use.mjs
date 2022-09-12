@@ -1095,40 +1095,9 @@ export class ActionUse {
    * @returns {object} The resulting data from the script calls.
    */
   async executeScriptCalls() {
-    // Extra options for script call
-    const attackData = this.shared;
-
-    // Deprecated for V10
-    const actorName = this.item.parentActor.name;
-    const itemName = this.item.name;
-    const deprecationWarning = function (propName, newName) {
-      console.warn(
-        `${actorName}'s ${itemName} is using the deprecated "${propName}". Use "${
-          newName ? newName : "shared.attackData." + propName
-        }" instead.`
-      );
-    };
-    const handlerMaker = function (propName, redirect) {
-      return {
-        get(obj, prop) {
-          if (prop == "chatMessage" || prop == "fullAttack")
-            deprecationWarning("system." + prop, "shared.attackData." + prop);
-          else deprecationWarning(propName, redirect);
-          return Reflect.get(...arguments);
-        },
-        set(obj, prop, value) {
-          if (prop == "chatMessage" || prop == "fullAttack")
-            deprecationWarning("system." + prop, "shared.attackData." + prop);
-          else deprecationWarning(propName, redirect);
-          return Reflect.set(...arguments);
-        },
-      };
-    };
-    // End deprecated
-
     // Execute script call
     this.shared.scriptData = await this.item.executeScriptCalls("use", {
-      attackData,
+      attackData: this.shared,
     });
   }
 

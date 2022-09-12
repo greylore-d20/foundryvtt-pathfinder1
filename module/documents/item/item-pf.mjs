@@ -1150,7 +1150,7 @@ export class ItemPF extends ItemBasePF {
   useAttack(options) {
     foundry.utils.logCompatibilityWarning("ItemPF#useAttack has been deprecated in favor of ItemPF#use", {
       since: "PF1 0.82.0",
-      until: "PF1 0.84.0",
+      until: "PF1 0.83.0",
     });
     return this.use(options);
   }
@@ -1176,11 +1176,6 @@ export class ItemPF extends ItemBasePF {
       if (useScriptCalls.length > 0) {
         shared = await this.executeScriptCalls("use", {
           attackData: { event: ev, skipDialog, chatMessage, rollMode },
-          // Deprecated for V10
-          attacks: [],
-          template: undefined,
-          data: { chatMessage },
-          // End Deprecated
         });
         if (shared.reject) return shared;
         if (shared.hideChat !== true) await this.displayCard();
@@ -2342,15 +2337,6 @@ export class ItemPF extends ItemBasePF {
    */
   setActive(active, context) {
     throw new Error(`Item type ${this.type} does not support ItemPF#setActive`);
-  }
-
-  /**
-   * @param {...any} args
-   * @deprecated
-   */
-  static toConsumable(...args) {
-    console.warn("ItemPF.toConsumable() is deprecated in favor of ItemSpellPF.toConsumable()");
-    return CONFIG.Item.documentClasses.spell.toConsumable(...args);
   }
 }
 

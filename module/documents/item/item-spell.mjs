@@ -128,11 +128,6 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
-  async addSpellUses(value, data = null) {
-    console.warn("ItemPF.addSpellUses() is deprecated in favor of ItemSpellPF.addUses()");
-    return this.addUses(value, data);
-  }
-
   async addUses(value, data = null) {
     if (!this.parent) return;
     if (this.system.atWill) return;

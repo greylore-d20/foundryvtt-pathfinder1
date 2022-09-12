@@ -1910,14 +1910,6 @@ export class ActorPF extends ActorBasePF {
     result.id = skillId;
     result.name = skillName;
 
-    // .bonus is deprecated; backwards compatibility
-    Object.defineProperty(result, "bonus", {
-      get: function () {
-        console.warn("skill.bonus was deprecated in Jul 2021 with getSkill(), please use .mod instead");
-        return this.mod;
-      },
-    });
-
     if (parentSkill) result.parentSkill = parentSkill;
 
     return result;

@@ -632,6 +632,11 @@ export const migrateSystemSettings = async function () {
   // Currently empty, since the last option was removed (2022-06-06)
 };
 
+/**
+ * Returns whether the user's settings and key presses signal that dialogs should be skipped.
+ *
+ * @returns {boolean}
+ */
 export const getSkipActionPrompt = function () {
   return (
     (game.settings.get("pf1", "skipActionDialogs") && !pf1.skipConfirmPrompt) ||

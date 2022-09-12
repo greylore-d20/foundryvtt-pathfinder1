@@ -1611,14 +1611,14 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
-    this.document.rollConcentration(spellbookKey);
+    this.document.rollConcentration(spellbookKey, { skipDialog: getSkipActionPrompt() });
   }
 
   _onRollCL(event) {
     event.preventDefault();
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
-    this.document.rollCL(spellbookKey);
+    this.document.rollCL(spellbookKey, { skipDialog: getSkipActionPrompt() });
   }
 
   _setItemActive(event) {
@@ -2287,27 +2287,27 @@ export class ActorSheetPF extends ActorSheet {
   _onRollAbilityTest(event) {
     event.preventDefault();
     const ability = event.currentTarget.closest(".ability").dataset.ability;
-    this.document.rollAbilityTest(ability, { event: event });
+    this.document.rollAbilityTest(ability, { skipDialog: getSkipActionPrompt() });
   }
 
   _onRollBAB(event) {
     event.preventDefault();
-    this.document.rollBAB({ event: event });
+    this.document.rollBAB({ skipDialog: getSkipActionPrompt() });
   }
 
   _onRollMelee(event) {
     event.preventDefault();
-    this.document.rollAttack({ event: event, melee: true });
+    this.document.rollAttack({ melee: true, skipDialog: getSkipActionPrompt() });
   }
 
   _onRollRanged(event) {
     event.preventDefault();
-    this.document.rollAttack({ event: event, melee: false });
+    this.document.rollAttack({ melee: false, skipDialog: getSkipActionPrompt() });
   }
 
   _onRollCMB(event) {
     event.preventDefault();
-    this.document.rollCMB({ event: event });
+    this.document.rollCMB({ skipDialog: getSkipActionPrompt() });
   }
 
   _onRollInitiative(event) {
@@ -2322,7 +2322,7 @@ export class ActorSheetPF extends ActorSheet {
   _onRollSavingThrow(event) {
     event.preventDefault();
     const savingThrow = event.currentTarget.parentElement.dataset.savingthrow;
-    this.document.rollSavingThrow(savingThrow, { event: event, skipDialog: getSkipActionPrompt() });
+    this.document.rollSavingThrow(savingThrow, { skipDialog: getSkipActionPrompt() });
   }
 
   /* -------------------------------------------- */
@@ -2638,14 +2638,14 @@ export class ActorSheetPF extends ActorSheet {
   _onRollSkillCheck(event) {
     event.preventDefault();
     const skill = event.currentTarget.parentElement.dataset.skill;
-    this.document.rollSkill(skill, { event: event, skipDialog: getSkipActionPrompt() });
+    this.document.rollSkill(skill, { skipDialog: getSkipActionPrompt() });
   }
 
   _onRollSubSkillCheck(event) {
     event.preventDefault();
     const mainSkill = event.currentTarget.parentElement.dataset.mainSkill;
     const skill = event.currentTarget.parentElement.dataset.skill;
-    this.document.rollSkill(`${mainSkill}.subSkills.${skill}`, { event: event, skipDialog: getSkipActionPrompt() });
+    this.document.rollSkill(`${mainSkill}.subSkills.${skill}`, { skipDialog: getSkipActionPrompt() });
   }
 
   /**

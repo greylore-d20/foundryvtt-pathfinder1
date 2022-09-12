@@ -14,7 +14,7 @@
  * ```
  * @example Stopping a process by returning `false`
  * ```javascript
- * Hooks.on("pf1PreDisplayActionUse", () => {
+ * Hooks.on("pf1PreActorRollSkill", () => {
  *  return false; // No chat message will be posted
  * });
  * ```
@@ -182,11 +182,11 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.call}
        * @param actor - The actor rolling a skill
-       * @param skill - The ID of the skill being rolled
        * @param options - Additional options for the roll
+       * @param skill - The ID of the skill being rolled
        * @returns Explicitly return `false` to prevent the actor from rolling the skill.
        */
-      pf1PreActorRollSkill: (actor: ActorPF, skill: string, options: RollOptionsPF) => boolean;
+      pf1PreActorRollSkill: (actor: ActorPF, options: ActorRollOptions, skill: string) => boolean;
 
       /**
        * A hook event fired by the system after an {@link ActorPF} rolled a skill.
@@ -194,10 +194,11 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.callAll}
        * @param actor - The actor who rolled a skill
+       * @param result - The roll result, either as {@link ChatMessage} if one was created, or as object containing
+       *  data that would have been used to create one.
        * @param skill - The ID of the skill that was rolled
-       * @param roll - The roll result
        */
-      pf1ActorRollSkill: (actor: ActorPF, roll: ChatMessage | Roll, skill: string) => void;
+      pf1ActorRollSkill: (actor: ActorPF, result: ChatMessage | object, skill: string) => void;
 
       /**
        * A hook event fired by the system when an {@link ActorPF} rolls their BAB.
@@ -208,7 +209,7 @@ declare global {
        * @param options - Additional options for the roll
        * @returns Explicitly return `false` to prevent the actor from rolling their BAB.
        */
-      pf1PreActorRollBab: (actor: ActorPF, options: RollOptionsPF) => boolean;
+      pf1PreActorRollBab: (actor: ActorPF, options: ActorRollOptions) => boolean;
 
       /**
        * A hook event fired by the system after an {@link ActorPF} rolled their BAB.
@@ -216,9 +217,10 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.callAll}
        * @param actor - The actor who rolled their BAB
-       * @param roll - The roll result
+       * @param result - The roll result, either as {@link ChatMessage} if one was created, or as object containing
+       *  data that would have been used to create one.
        */
-      pf1ActorRollBab: (actor: ActorPF, roll: ChatMessage | Roll) => void;
+      pf1ActorRollBab: (actor: ActorPF, result: ChatMessage | object) => void;
 
       /**
        * A hook event fired by the system when an {@link ActorPF} rolls their CMB.
@@ -229,7 +231,7 @@ declare global {
        * @param options - Additional options for the roll
        * @returns Explicitly return `false` to prevent the actor from rolling their CMB.
        */
-      pf1PreActorRollCmb: (actor: ActorPF, options: RollOptionsPF) => boolean;
+      pf1PreActorRollCmb: (actor: ActorPF, options: ActorRollOptions) => boolean;
 
       /**
        * A hook event fired by the system after an {@link ActorPF} rolled their CMB.
@@ -237,9 +239,10 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.callAll}
        * @param actor - The actor who rolled their CMB
-       * @param roll - The roll result
+       * @param result - The roll result, either as {@link ChatMessage} if one was created, or as object containing
+       *  data that would have been used to create one.
        */
-      pf1ActorRollCmb: (actor: ActorPF, roll: ChatMessage | Roll) => void;
+      pf1ActorRollCmb: (actor: ActorPF, result: ChatMessage | object) => void;
 
       /**
        * A hook event fired by the system when an {@link ActorPF} rolls a caster level check.
@@ -247,11 +250,11 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.call}
        * @param actor - The actor rolling a caster level check
-       * @param spellbook - The key of the spellbook whose caster level is rolled
        * @param options - Additional options for the roll
+       * @param spellbook - The key of the spellbook whose caster level is rolled
        * @returns Explicitly return `false` to prevent the actor from rolling the caster level check.
        */
-      pf1PreActorRollCl: (actor: ActorPF, spellbook: string, options: RollOptionsPF) => boolean;
+      pf1PreActorRollCl: (actor: ActorPF, options: ActorRollOptions, spellbook: string) => boolean;
 
       /**
        * A hook event fired by the system after an {@link ActorPF} rolled a caster level check.
@@ -259,10 +262,11 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.callAll}
        * @param actor - The actor who rolled a caster level check
-       * @param roll - The roll result
+       * @param result - The roll result, either as {@link ChatMessage} if one was created, or as object containing
+       *  data that would have been used to create one.
        * @param spellbook - The key of the spellbook whose caster level was rolled
        */
-      pf1ActorRollCl: (actor: ActorPF, roll: ChatMessage | Roll, spellbook: string) => void;
+      pf1ActorRollCl: (actor: ActorPF, result: ChatMessage | object, spellbook: string) => void;
 
       /**
        * A hook event fired by the system when an {@link ActorPF} rolls a concentration check.
@@ -270,11 +274,11 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.call}
        * @param actor - The actor rolling a concentration check
-       * @param spellbook - The key of the spellbook whose concentration is rolled
        * @param options - Additional options for the roll
+       * @param spellbook - The key of the spellbook whose concentration is rolled
        * @returns Explicitly return `false` to prevent the actor from rolling the concentration check.
        */
-      pf1PreActorRollConcentration: (actor: ActorPF, spellbook: string, options: RollOptionsPF) => boolean;
+      pf1PreActorRollConcentration: (actor: ActorPF, options: ActorRollOptions, spellbook: string) => boolean;
 
       /**
        * A hook event fired by the system after an {@link ActorPF} rolled a concentration check.
@@ -282,10 +286,11 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.callAll}
        * @param actor - The actor who rolled a concentration check
-       * @param roll - The roll result
+       * @param result - The roll result, either as {@link ChatMessage} if one was created, or as object containing
+       *  data that would have been used to create one.
        * @param spellbook - The key of the spellbook whose concentration was rolled
        */
-      pf1ActorRollConcentration: (actor: ActorPF, roll: ChatMessage | Roll, spellbook: string) => void;
+      pf1ActorRollConcentration: (actor: ActorPF, result: ChatMessage | object, spellbook: string) => void;
 
       /**
        * A hook event fired by the system when an {@link ActorPF} rolls a save.
@@ -293,11 +298,11 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.call}
        * @param actor - The actor rolling a save
-       * @param save - The key of the save being rolled
        * @param options - Additional options for the roll
+       * @param save - The key of the save being rolled
        * @returns Explicitly return `false` to prevent the actor from rolling the save.
        */
-      pf1PreActorRollSave: (actor: ActorPF, save: "fort" | "ref" | "will", options: RollOptionsPF) => boolean;
+      pf1PreActorRollSave: (actor: ActorPF, options: ActorRollOptions, save: "fort" | "ref" | "will") => boolean;
 
       /**
        * A hook event fired by the system after an {@link ActorPF} rolled a save.
@@ -305,10 +310,11 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.callAll}
        * @param actor - The actor who rolled a save
-       * @param roll - The roll result
+       * @param result - The roll result, either as {@link ChatMessage} if one was created, or as object containing
+       *  data that would have been used to create one.
        * @param save - The key of the save that was rolled
        */
-      pf1ActorRollSave: (actor: ActorPF, roll: ChatMessage | Roll, save: "fort" | "ref" | "will") => void;
+      pf1ActorRollSave: (actor: ActorPF, result: ChatMessage | object, save: "fort" | "ref" | "will") => void;
 
       /**
        * A hook event fired by the system when an {@link ActorPF} rolls an ability check.
@@ -316,11 +322,11 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.call}
        * @param actor - The actor rolling an ability check
-       * @param ability - The key of the ability being rolled
        * @param options - Additional options for the roll
+       * @param ability - The key of the ability being rolled
        * @returns Explicitly return `false` to prevent the actor from rolling the ability check.
        */
-      pf1PreActorRollAbility: (actor: ActorPF, ability: string, options: RollOptionsPF) => boolean;
+      pf1PreActorRollAbility: (actor: ActorPF, options: ActorRollOptions, ability: string) => boolean;
 
       /**
        * A hook event fired by the system after an {@link ActorPF} rolled an ability check.
@@ -328,10 +334,43 @@ declare global {
        * @group Actor Rolls
        * @remarks Called by {@link Hooks.callAll}
        * @param actor - The actor who rolled an ability check
-       * @param roll - The roll result
+       * @param result - The roll result, either as {@link ChatMessage} if one was created, or as object containing
+       *  data that would have been used to create one.
        * @param ability - The key of the ability that was rolled
        */
-      pf1ActorRollAbility: (actor: ActorPF, roll: ChatMessage | Roll, ability: string) => void;
+      pf1ActorRollAbility: (actor: ActorPF, result: ChatMessage | object, ability: string) => void;
+
+      /**
+       * A hook event fired by the system when an {@link ActorPF} rolls a generic attack.
+       *
+       * @group Actor Rolls
+       * @remarks Called by {@link Hooks.call}
+       * @param actor - The actor rolling an attack
+       * @param options - Additional options for the roll
+       * @returns Explicitly return `false` to prevent the actor from rolling the attack.
+       */
+      pf1PreActorRollAttack: (
+        actor: ActorPF,
+        options: ActorRollOptions & {
+          /**
+           * Whether the attack is a melee attack.
+           *
+           * @defaultValue `true`
+           */
+          melee: boolean;
+        }
+      ) => boolean;
+
+      /**
+       * A hook event fired by the system after an {@link ActorPF} rolled a generic attack.
+       *
+       * @group Actor Rolls
+       * @remarks Called by {@link Hooks.callAll}
+       * @param actor - The actor who rolled an attack
+       * @param result - The roll result, either as {@link ChatMessage} if one was created, or as object containing
+       *  data that would have been used to create one.
+       */
+      pf1ActorRollAttack: (actor: ActorPF, result: ChatMessage | object) => void;
 
       // ------------------------- //
       //            Item           //
@@ -500,6 +539,7 @@ declare global {
        * A hook event fired by the system when a generic dice roll is made.
        *
        * @see {@link pf1!dice.DicePF.d20Roll DicePF.d20Roll}
+       * @deprecated Use `PreActorRoll*` hooks instead.
        * @group Dice
        * @remarks Called by {@link Hooks.call}
        * @param data - Data used for the roll.
@@ -574,17 +614,6 @@ interface ItemLink {
   level?: number;
 }
 
-// TODO: These should be defined in their relevant files, not in here
-interface RollOptionsPF {
-  event: Event;
-  skipDialog?: boolean;
-  staticRoll?: number;
-  chatMessage?: boolean;
-  noSound?: boolean;
-  dice?: string;
-  bonus?: string;
-}
-
 // Initialization
 export declare const pf1PostInit: Hooks.StaticCallbacks["pf1PostInit"];
 export declare const pf1PostSetup: Hooks.StaticCallbacks["pf1PostSetup"];
@@ -607,6 +636,7 @@ export declare const pf1PreActorRollCl: Hooks.StaticCallbacks["pf1PreActorRollCl
 export declare const pf1PreActorRollConcentration: Hooks.StaticCallbacks["pf1PreActorRollConcentration"];
 export declare const pf1PreActorRollSave: Hooks.StaticCallbacks["pf1PreActorRollSave"];
 export declare const pf1PreActorRollAbility: Hooks.StaticCallbacks["pf1PreActorRollAbility"];
+export declare const pf1PreActorRollAttack: Hooks.StaticCallbacks["pf1PreActorRollAttack"];
 
 export declare const pf1ActorRollSkill: Hooks.StaticCallbacks["pf1ActorRollSkill"];
 export declare const pf1ActorRollBab: Hooks.StaticCallbacks["pf1ActorRollBab"];
@@ -615,6 +645,7 @@ export declare const pf1ActorRollCl: Hooks.StaticCallbacks["pf1ActorRollCl"];
 export declare const pf1ActorRollConcentration: Hooks.StaticCallbacks["pf1ActorRollConcentration"];
 export declare const pf1ActorRollSave: Hooks.StaticCallbacks["pf1ActorRollSave"];
 export declare const pf1ActorRollAbility: Hooks.StaticCallbacks["pf1ActorRollAbility"];
+export declare const pf1ActorRollAttack: Hooks.StaticCallbacks["pf1ActorRollAttack"];
 
 // Item
 export declare const pf1ClassLevelChange: Hooks.StaticCallbacks["pf1ClassLevelChange"];

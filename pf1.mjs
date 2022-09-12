@@ -6,7 +6,7 @@
  */
 
 // Import Modules
-import { PF1, CONFIG_OVERRIDES } from "./module/config.mjs";
+import { PF1 } from "./module/config.mjs";
 import {
   registerSystemSettings,
   registerClientSettings,
@@ -400,7 +400,10 @@ Hooks.once("init", function () {
   CONFIG.Combat.documentClass = CombatPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.documentClass = ChatMessagePF;
-  CONFIG.Dice.rolls.splice(0, 0, RollPF);
+  CONFIG.Dice.rolls.splice(0, 0, dice.RollPF);
+  CONFIG.Dice.RollPF = dice.RollPF;
+  CONFIG.Dice.rolls.push(dice.D20RollPF);
+  CONFIG.Dice.rolls.D20RollPF = dice.D20RollPF;
 
   CONFIG.time.roundTime = 6;
 

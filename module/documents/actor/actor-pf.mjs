@@ -18,6 +18,7 @@ import { RollPF } from "../../dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
 import { ItemChange } from "../../components/change.mjs";
 import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs";
+import { D20RollPF } from "../../dice/d20roll.mjs";
 
 /**
  * Extend the base Actor class to implement additional game system logic.
@@ -1926,32 +1927,20 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Roll a Skill Check
-   * Prompt the user for input regarding Take 10/Take 20 and any Situational Bonus
    *
    * @param {string} skillId      The skill id (e.g. "per", or "prf.subSkills.prf1")
-   * @param {object} options      Options which configure how the skill check is rolled
+   * @param {ActorRollOptions} [options={}]      Options which configure how the skill check is rolled
+   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
-  async rollSkill(
-    skillId,
-    options = {
-      event: null,
-      skipDialog: false,
-      staticRoll: null,
-      chatMessage: true,
-      noSound: false,
-      dice: "1d20",
-      bonus: null,
-    }
-  ) {
+  async rollSkill(skillId, options = {}) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
 
-    let allowed = Hooks.call("pf1PreActorRollSkill", this, skillId, options);
-    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollSkill", allowed, this, "skill", skillId, options);
-    if (allowed === false) return;
+    if (callOldNamespaceHook("actorRoll", "pf1PreActorRollSkill", undefined, this, "skill", skillId, options) === false)
+      return;
 
     const skl = this.getSkillInfo(skillId);
 
@@ -2010,91 +1999,73 @@ export class ActorPF extends ActorBasePF {
       parts.push(`${c.value}[${c.flavor}]`);
     }
 
-    if (options.bonus?.length) {
-      parts.push(`${options.bonus}`);
-    }
-
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    const result = await DicePF.d20Roll({
-      actor: this,
-      event: options.event,
-      fastForward: options.skipDialog === true,
-      staticRoll: options.staticRoll,
-      parts,
-      dice: options.dice,
-      data: rollData,
-      subject: { skill: skillId },
-      title: game.i18n.localize("PF1.SkillCheck").format(skl.name),
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      chatMessage: options.chatMessage,
-      noSound: options.noSound,
-      compendiumEntry: CONFIG.PF1.skillCompendiumEntries[skillId] ?? skl.journal,
-      compendiumEntryType: "JournalEntry",
-      originalOptions: options,
-    });
 
-    Hooks.callAll("pf1ActorRollSkill", this, result, skillId);
+    const rollOptions = {
+      ...options,
+      parts,
+      rollData,
+      flavor: game.i18n.localize("PF1.SkillCheck").format(skl.name),
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      compendium: { entry: CONFIG.PF1.skillCompendiumEntries[skillId] ?? skl.journal, type: "JournalEntry" },
+      subject: { skill: skillId },
+      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+    };
+    if (Hooks.call("pf1PreActorRollSkill", this, rollOptions, skillId) === false) return;
+    const result = await pf1.dice.d20Roll(rollOptions);
+    if (result) Hooks.callAll("pf1ActorRollSkill", this, result, skillId);
     return result;
   }
 
   /* -------------------------------------------- */
 
   /**
-   * Roll a generic ability test or saving throw.
-   * Prompt the user for input on which variety of roll they want to do.
+   * Roll a 1d20 adding the actor's BAB
    *
-   * @param {string} abilityId     The ability id (e.g. "str")
-   * @param {object} options      Options which configure how ability tests or saving throws are rolled
+   * @param {ActorRollOptions} [options]
+   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
-  rollAbility(abilityId, options = { noSound: false, dice: "1d20" }) {
-    console.warn("ActorPF.rollAbility is obsolete; use ActorPF.rollAbilityTest instead.");
-    this.rollAbilityTest(abilityId, options);
-  }
-
-  async rollBAB(options = { chatMessage: true, noSound: false, dice: "1d20" }) {
+  async rollBAB(options = {}) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
 
-    let allowed = Hooks.call("pf1PreActorRollBab", this, options);
-    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollBab", allowed, this, "bab", null, options);
-    if (allowed === false) return;
-
-    const result = await DicePF.d20Roll({
-      actor: this,
-      event: options.event,
-      parts: [`@mod[${game.i18n.localize("PF1.BABAbbr")}]`],
-      dice: options.dice,
-      data: { mod: this.system.attributes.bab.total },
+    if (callOldNamespaceHook("actorRoll", "pf1PreActorRollBab", undefined, this, "bab", null, options) === false)
+      return;
+    const rollOptions = {
+      ...options,
+      parts: [`${this.system.attributes.bab.total}[${game.i18n.localize("PF1.BABAbbr")}]`],
       subject: { core: "bab" },
-      title: game.i18n.localize("PF1.BAB"),
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      takeTwenty: false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
-      chatMessage: options.chatMessage,
-      noSound: options.noSound,
-      originalOptions: options,
-    });
-
+      flavor: game.i18n.localize("PF1.BAB"),
+      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+    };
+    if (Hooks.call("pf1PreActorRollBab", this, rollOptions) === false) return;
+    const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollBab", this, result);
     return result;
   }
 
-  async rollCMB(options = { ranged: false, ability: null, chatMessage: true, noSound: false, dice: "1d20" }) {
+  /**
+   * Roll a basic CMB check for this actor
+   *
+   * @param {ActorRollOptions & {ranged: boolean, ability: string | null}} [options={}]
+   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   */
+  async rollCMB(options = {}) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
 
-    let allowed = Hooks.call("pf1PreActorRollCmb", this, options);
-    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollCmb", allowed, this, "cmb", null, options);
-    if (allowed === false) return;
+    options.ranged ??= false;
+    options.ability ??= null;
+
+    if (callOldNamespaceHook("actorRoll", "pf1PreActorRollCmb", undefined, this, "cmb", null, options) === false)
+      return;
 
     // Add contextual notes
     const rollData = this.getRollData();
@@ -2132,33 +2103,37 @@ export class ActorPF extends ActorBasePF {
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    const result = await DicePF.d20Roll({
-      actor: this,
-      event: options.event,
-      parts,
-      dice: options.dice,
-      data: rollData,
-      subject: { core: "cmb" },
-      title: game.i18n.localize("PF1.CMB"),
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      takeTwenty: false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      chatMessage: options.chatMessage,
-      noSound: options.noSound,
-      originalOptions: options,
-    });
 
+    const rollOptions = {
+      ...options,
+      parts,
+      rollData,
+      subject: { core: "cmb" },
+      flavor: game.i18n.localize("PF1.CMB"),
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+    };
+    if (Hooks.call("pf1PreActorRollCmb", this, options) === false) return;
+    const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollCmb", this, result);
     return result;
   }
 
-  rollAttack(options = { melee: true, chatMessage: true, noSound: false, dice: "1d20" }) {
+  /**
+   * Roll a generic attack
+   *
+   * @param {ActorRollOptions & {melee?: boolean}} [options={}]
+   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   */
+  async rollAttack(options = {}) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
+
+    // Default to melee attacks
+    options.melee ??= true;
 
     const sources = [
       ...this.sourceDetails["system.attributes.attack.shared"],
@@ -2200,32 +2175,36 @@ export class ActorPF extends ActorBasePF {
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    return DicePF.d20Roll({
-      actor: this,
-      event: options.event,
+
+    const rollOptions = {
+      ...options,
       parts: changes,
-      dice: options.dice,
-      data: rollData,
+      rollData,
       subject: { core: "attack" },
-      title: game.i18n.localize(`PF1.${options.melee ? "Melee" : "Ranged"}`),
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      takeTwenty: false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
+      flavor: game.i18n.localize(`PF1.${options.melee ? "Melee" : "Ranged"}`),
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      chatMessage: options.chatMessage,
-      noSound: options.noSound,
-      originalOptions: options,
-    });
+      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+    };
+    if (Hooks.call("pf1PreActorRollAttack", this, rollOptions) === false) return;
+    const result = await pf1.dice.d20Roll(rollOptions);
+    Hooks.callAll("pf1ActorRollAttack", this, result);
+    return result;
   }
 
-  async rollCL(spellbookKey, options = { chatMessage: true, noSound: false, dice: "1d20" }) {
+  /**
+   * Roll a Caster Level check using a particular spellbook of this actor
+   *
+   * @param {string} spellbookKey
+   * @param {ActorRollOptions} [options={}]
+   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   */
+  async rollCL(spellbookKey, options = {}) {
     const spellbook = this.system.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
 
-    let allowed = Hooks.call("pf1PreActorRollCl", this, spellbookKey, options);
-    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollCl", allowed, this, "cl", spellbookKey, options);
-    if (allowed === false) return;
+    if (callOldNamespaceHook("actorRoll", "pf1PreActorRollCl", undefined, this, "cl", spellbookKey, options) === false)
+      return;
 
     // Set up roll parts
     const parts = [];
@@ -2243,43 +2222,47 @@ export class ActorPF extends ActorBasePF {
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    const result = await DicePF.d20Roll({
-      actor: this,
-      dice: options.dice,
-      parts,
-      data: rollData,
-      subject: { core: "cl", spellbook: spellbookKey },
-      title: game.i18n.localize("PF1.CasterLevelCheck"),
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      takeTwenty: false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      chatMessage: options.chatMessage,
-      noSound: options.noSound,
-      originalOptions: options,
-    });
 
+    const rollOptions = {
+      ...options,
+      parts,
+      rollData,
+      subject: { core: "cl", spellbook: spellbookKey },
+      flavor: game.i18n.localize("PF1.CasterLevelCheck"),
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+    };
+    if (Hooks.call("pf1PreActorRollCl", this, spellbookKey, rollOptions) === false) return;
+    const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollCl", this, result, spellbookKey);
     return result;
   }
 
-  async rollConcentration(spellbookKey, options = { chatMessage: true, noSound: false, dice: "1d20" }) {
+  /**
+   * Roll a concentration check using a particular spellbook of this actor
+   *
+   * @param {string} spellbookKey
+   * @param {ActorRollOptions} [options={}]
+   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   */
+  async rollConcentration(spellbookKey, options = {}) {
     const spellbook = this.system.attributes.spells.spellbooks[spellbookKey];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
     rollData.mod = this.system.abilities[spellbook.ability]?.mod ?? 0;
 
-    let allowed = Hooks.call("pf1PreActorRollConcentration", this, spellbookKey, options);
-    allowed = Hooks.call(
-      "actorRoll",
-      "pf1PreActorRollConcentration",
-      allowed,
-      this,
-      "concentration",
-      spellbookKey,
-      options
-    );
-    if (allowed === false) return;
+    if (
+      Hooks.call(
+        "actorRoll",
+        "pf1PreActorRollConcentration",
+        undefined,
+        this,
+        "concentration",
+        spellbookKey,
+        options
+      ) === false
+    )
+      return;
 
     // Set up roll parts
     const parts = [];
@@ -2304,21 +2287,17 @@ export class ActorPF extends ActorBasePF {
       formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
     rollData.formulaBonus = formulaRoll;
 
-    const result = await DicePF.d20Roll({
+    const rollOptions = {
+      ...options,
       parts,
-      dice: options.dice,
-      data: rollData,
+      rollData,
       subject: { core: "concentration", spellbook: spellbookKey },
-      title: game.i18n.localize("PF1.ConcentrationCheck"),
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      takeTwenty: false,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
+      flavor: game.i18n.localize("PF1.ConcentrationCheck"),
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      chatMessage: options.chatMessage,
-      noSound: options.noSound,
-      originalOptions: options,
-    });
-
+      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+    };
+    if (Hooks.call("pf1PreActorRollConcentration", this, rollOptions, spellbookKey) === false) return;
+    const result = pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollConcentration", this, result, spellbookKey);
     return result;
   }
@@ -2456,32 +2435,25 @@ export class ActorPF extends ActorBasePF {
       : { combat, messages: [] };
   }
 
-  async rollSavingThrow(
-    savingThrowId,
-    options = {
-      event: null,
-      chatMessage: true,
-      noSound: false,
-      skipDialog: false,
-      skipPrompt: null,
-      dice: "1d20",
-      bonus: null,
-    }
-  ) {
-    if (typeof options.skipPrompt === "boolean") {
-      console.warn(`The 'skipPrompt' option in ActorPF.rollSavingThrow is deprecated in favor of 'skipDialog'`);
-      options.skipDialog = options.skipPrompt;
-    }
-
+  /**
+   * Roll a specific saving throw
+   *
+   * @param {string} savingThrowId
+   * @param {ActorRollOptions} [options={}]
+   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   */
+  async rollSavingThrow(savingThrowId, options = {}) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
 
-    let allowed = Hooks.call("pf1PreActorRollSave", this, savingThrowId, options);
-    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollSave", allowed, this, "save", savingThrowId, options);
-    if (allowed === false) return;
+    if (
+      callOldNamespaceHook("actorRoll", "pf1PreActorRollSave", undefined, this, "save", savingThrowId, options) ===
+      false
+    )
+      return;
 
     // Add contextual notes
     const rollData = this.getRollData();
@@ -2527,33 +2499,22 @@ export class ActorPF extends ActorBasePF {
       );
     }
 
-    if (options.bonus?.length) {
-      parts.push(`${options.bonus}`);
-    }
-
     // Roll saving throw
     const props = this.getDefenseHeaders();
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     const label = CONFIG.PF1.savingThrows[savingThrowId];
-    const result = await DicePF.d20Roll({
-      actor: this,
-      event: options.event,
-      parts,
-      dice: options.dice,
-      situational: true,
-      data: rollData,
-      subject: { save: savingThrowId },
-      title: game.i18n.localize("PF1.SavingThrowRoll").format(label),
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      takeTwenty: false,
-      fastForward: options.skipDialog,
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      chatMessage: options.chatMessage,
-      noSound: options.noSound,
-      originalOptions: options,
-    });
 
+    const rollOptions = {
+      ...options,
+      parts,
+      rollData,
+      flavor: game.i18n.localize("PF1.SavingThrow").format(label),
+      subject: { save: savingThrowId },
+      chatTemplateData: { hasProperties: props.length > 0, properties: props },
+      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+    };
+    if (Hooks.call("pf1PreActorRollSave", this, options, savingThrowId) === false) return;
+    const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollSave", this, result, savingThrowId);
     return result;
   }
@@ -2565,18 +2526,21 @@ export class ActorPF extends ActorBasePF {
    * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
    *
    * @param {string} abilityId    The ability ID (e.g. "str")
-   * @param {object} options      Options which configure how ability tests are rolled
+   * @param {object} [options={}]      Options which configure how ability tests are rolled
+   * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
-  async rollAbilityTest(abilityId, options = { chatMessage: true, noSound: false, dice: "1d20" }) {
+  async rollAbilityTest(abilityId, options = {}) {
     if (!this.isOwner) {
       const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
       console.warn(msg);
       return ui.notifications.warn(msg);
     }
 
-    let allowed = Hooks.call("pf1PreActorRollAbility", this, abilityId, options);
-    allowed = callOldNamespaceHook("actorRoll", "pf1PreActorRollAbility", allowed, this, "ability", abilityId, options);
-    if (allowed === false) return;
+    if (
+      callOldNamespaceHook("actorRoll", "pf1PreActorRollAbility", undefined, this, "ability", abilityId, options) ===
+      false
+    )
+      return;
 
     // Add contextual notes
     const rollData = this.getRollData();
@@ -2608,22 +2572,17 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
-    const result = DicePF.d20Roll({
-      actor: this,
-      event: options.event,
+    const rollOptions = {
+      ...options,
       parts,
-      dice: options.dice,
-      data: rollData,
+      rollData,
+      flavor: game.i18n.localize("PF1.AbilityTest").format(label),
       subject: { ability: abilityId },
-      title: game.i18n.localize("PF1.AbilityTest").format(label),
-      speaker: ChatMessage.getSpeaker({ actor: this }),
-      chatTemplate: "systems/pf1/templates/chat/roll-ext.hbs",
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      chatMessage: options.chatMessage,
-      noSound: options.noSound,
-      originalOptions: options,
-    });
-
+      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+    };
+    if (Hooks.call("pf1PreActorRollAbility", this, options, abilityId) === false);
+    const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollAbility", this, result, abilityId);
     return result;
   }

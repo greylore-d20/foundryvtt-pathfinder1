@@ -1,11 +1,15 @@
 import { ChatMessagePF } from "../documents/chat-message.mjs";
 import { RollPF } from "./roll.mjs";
-import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
+import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs";
+import { D20RollPF } from "./d20roll.mjs";
 
 export const formulaHasDice = function (formula) {
   return formula.match(/[0-9)][dD]/) || formula.match(/[dD][0-9(]/);
 };
 
+/**
+ * @deprecated Use {@link D20RollPF} instead
+ */
 export class DicePF {
   /**
    * A standardized helper function for managing game system rolls.
@@ -13,6 +17,7 @@ export class DicePF {
    * Holding SHIFT, ALT, or CTRL when the attack is rolled will "fast-forward".
    * This chooses the default options of a normal attack with no bonus, Advantage, or Disadvantage respectively
    *
+   * @deprecated Use {@link pf1.dice.d20Roll} instead
    * @param {Event} event           The triggering event which initiated the roll
    * @param {Array} parts           The dice roll component parts, excluding the initial d20
    * @param {string} dice           The initial d20
@@ -60,9 +65,13 @@ export class DicePF {
     compendiumEntryType = null,
     originalOptions = {},
   }) {
+    foundry.utils.logCompatibilityWarning(`DicePF.d20Roll has been deprecated in favor of pf1.dice.d20Roll`, {
+      since: "PF1 0.82.2",
+      until: "PF1 0.83.0",
+    });
     // Call pre-roll handlers
     callOldNamespaceHookAll("pf1.preRoll", "pf1PreRoll", ...arguments);
-    if (Hooks.callAll("pf1PreRoll", ...arguments) === false) return;
+    if (callOldNamespaceHook("pf1PreRoll", "pf1PreActorRoll*", undefined, ...arguments) === false) return;
 
     // Handle input arguments
     flavor = flavor || title;
@@ -252,6 +261,10 @@ export class DicePF {
     chatMessage = true,
     noSound = false,
   }) {
+    foundry.utils.logCompatibilityWarning(`DicePF.damageRoll has been deprecated in favor of pf1.dice.d20Roll`, {
+      since: "PF1 0.82.2",
+      until: "PF1 0.83.0",
+    });
     flavor = flavor || title;
     const rollMode = game.settings.get("core", "rollMode");
     let rolled = false;

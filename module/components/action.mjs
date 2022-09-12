@@ -588,7 +588,6 @@ export class ItemAction {
 
   /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
-   * Rely upon the DicePF.d20Roll logic for the core implementation
    *
    * @param root0
    * @param root0.data

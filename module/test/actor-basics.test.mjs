@@ -39,12 +39,12 @@ export const registerActorBasicTests = () => {
           /** @type {ChatMessagePF} */
           let roll;
           before(async () => {
-            roll = await actor.rollBAB();
+            roll = await actor.rollBAB({ skipDialog: true });
             messages.push(roll);
           });
 
           it("should have the correct formula", function () {
-            expect(roll?.roll?.formula).to.equal("1d20 + 0[BAB]");
+            expect(roll?.rolls[0]?.formula).to.equal("1d20 + 0[BAB]");
           });
 
           it("should produce a ChatMessage", function () {
@@ -63,12 +63,12 @@ export const registerActorBasicTests = () => {
           /** @type {ChatMessage} */
           let roll;
           before(async () => {
-            roll = await actor.rollCMB();
+            roll = await actor.rollCMB({ skipDialog: true });
             messages.push(roll);
           });
 
           it("should have the correct formula", function () {
-            expect(roll?.roll?.formula).to.equal("1d20 + 1[Strength]");
+            expect(roll?.rolls[0]?.formula).to.equal("1d20 + 1[Strength]");
           });
 
           it("should be a ChatMessage", function () {
@@ -83,12 +83,12 @@ export const registerActorBasicTests = () => {
           /** @type {ChatMessage} */
           let roll;
           before(async () => {
-            roll = await actor.rollAttack();
+            roll = await actor.rollAttack({ skipDialog: true });
             messages.push(roll);
           });
 
           it("should have the correct formula", function () {
-            expect(roll?.roll?.formula).to.equal("1d20 + 1[Strength]");
+            expect(roll?.rolls[0]?.formula).to.equal("1d20 + 1[Strength]");
           });
 
           it("should be a ChatMessage", function () {
@@ -109,7 +109,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should have the correct formula", function () {
-              expect(roll?.roll?.formula).to.equal("1d20 + 3[Constitution]");
+              expect(roll?.rolls[0]?.formula).to.equal("1d20 + 3[Constitution]");
             });
 
             it("should be a ChatMessage", function () {
@@ -126,7 +126,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should have the correct formula", function () {
-              expect(roll?.roll?.formula).to.equal("1d20 + 2[Dexterity]");
+              expect(roll?.rolls[0]?.formula).to.equal("1d20 + 2[Dexterity]");
             });
 
             it("should be a ChatMessage", function () {
@@ -143,7 +143,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should have the correct formula", function () {
-              expect(roll?.roll?.formula).to.equal("1d20 + 2[Wisdom]");
+              expect(roll?.rolls[0]?.formula).to.equal("1d20 + 2[Wisdom]");
             });
 
             it("should be a ChatMessage", function () {
@@ -165,7 +165,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should have the correct formula", function () {
-              expect(roll.roll.formula).to.equal("1d20 + 2[Wisdom]");
+              expect(roll.rolls[0].formula).to.equal("1d20 + 2[Wisdom]");
             });
 
             it("should be a ChatMessage", function () {
@@ -187,7 +187,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should have the correct formula", function () {
-              expect(roll.roll.formula).to.equal("1d20 + 1[Intelligence] + 1[Skill Ranks]");
+              expect(roll.rolls[0].formula).to.equal("1d20 + 1[Intelligence] + 1[Skill Ranks]");
             });
 
             it("should be a ChatMessage", function () {
@@ -220,7 +220,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should have the correct formula", function () {
-              expect(roll.roll.formula).to.equal(
+              expect(roll.rolls[0].formula).to.equal(
                 "1d20 + 1[Strength] + 3[Skill Ranks] + 3[Class Skill] +  - 6[Armor Check Penalty]"
               );
             });
@@ -265,7 +265,7 @@ export const registerActorBasicTests = () => {
           });
 
           it("should have the correct formula", function () {
-            expect(roll.roll.formula).to.equal("1d20 + 2[Initiative] + 0.02[Tiebreaker]");
+            expect(roll.rolls[0].formula).to.equal("1d20 + 2[Initiative] + 0.02[Tiebreaker]");
           });
         });
 

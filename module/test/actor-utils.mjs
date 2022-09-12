@@ -36,7 +36,7 @@ export const createTestActor = async (data = {}, options = {}) => {
   const { temporary = false, prepareData = true } = options;
   /** @type {ActorPF} */
   const actor = await CONFIG.Actor.documentClass.create(createData, { temporary });
-  if (temporary && prepareData) actor.prepareData();
+  if (temporary && prepareData) actor.reset();
   return actor;
 };
 
@@ -55,7 +55,7 @@ export const addCompendiumItemToActor = async (actor, packName, itemName, extraD
   const data = mergeObject(packItemData, extraData ?? {});
   const isTemporaryActor = !actor.id;
   const item = await CONFIG.Item.documentClass.create(data, { parent: actor, temporary: isTemporaryActor });
-  if (isTemporaryActor) actor.prepareData();
+  if (isTemporaryActor) actor.reset();
   return item;
 };
 

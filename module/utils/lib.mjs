@@ -961,12 +961,12 @@ export function calculateRange(formula, type = "ft", rollData = {}) {
  */
 export function refreshActors(options = { renderOnly: false, renderForEveryone: false }) {
   game.actors.contents.forEach((o) => {
-    if (!options.renderOnly) o.prepareData();
+    if (!options.renderOnly) o.reset();
     if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
   });
   Object.values(game.actors.tokens).forEach((o) => {
     if (o) {
-      if (!options.renderOnly) o.prepareData();
+      if (!options.renderOnly) o.reset();
       if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
     }
   });

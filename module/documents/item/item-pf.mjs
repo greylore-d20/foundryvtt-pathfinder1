@@ -609,7 +609,7 @@ export class ItemPF extends ItemBasePF {
       if (prior && prior.has(o._id)) {
         item = prior.get(o._id);
         item.updateSource(o);
-        item.prepareData();
+        item.reset();
       } else {
         item = new CONFIG.Item.documentClass(o);
         item.parentItem = this;

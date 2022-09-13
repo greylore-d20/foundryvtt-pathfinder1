@@ -1,5 +1,46 @@
 # Changelog
 
+## 0.82.2 - 2022-9-13
+
+### Bug Fixes
+
+- Melee bonuses were applied to ranged attacks ([1638](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1638))
+- Actor sheets' combat tabs provided no damage details for attacks ([1638](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1638))
+- Rolls with old class RollPF$1 were not initialized ([1651](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1651))
+- Action sheets' usage tabs provided no input fields for durations ([1660](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1660))
+- Actions could not be used when the game canvas was disabled
+- Document types were not detected correctly.
+- Change for bonus skill ranks and feats had no effect ([1650](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1650))
+- Hide enhancement bonus override for actions outside of weapons and attacks ([1663](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1663))
+- Saving throw totals increased after every roll in certain cases ([1669](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1669))
+- Spell point costs were incorrectly migrated into spell slot costs ([1658](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1658))
+- Spells with multiple actions had their action chooser prompt repeat itself
+- Fix auto deduct charges checkbox being ignored on actions ([1496](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1496))
+- Actor sheets could get stuck when an item with an expanded summary was deleted
+
+### Changelog
+
+- Improve See Invisibility detection mode for PF1
+- Add the squeezing condition ([1012](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1012))
+- Show nonlethal damage and temporary hit points on hit point bars
+- Add blindsense and blindsight mechanics
+- Add tremorsense mechanics
+
+### API
+
+- BREAKING: Change parameters of action use hooks to only include `ActionUse` instance
+- Deprecate DicePF#d20Roll in favor of pf1.dice.d20Roll
+- Deprecate pf1PreRoll hook in favor of using pf1PreActorRoll\* hooks
+- BREAKING: Remove deprecated ActorPF#rollAbility
+- Introduce uniform options interface for actor roll methods
+- BREAKING: Standardize actor (pre) roll hook arguments order
+- Add getAbilityModifier to API
+- Add `pf1MigrationStarted` hook
+- BREAKING: Remove deprecated properties from script call arguments
+- BREAKING: Remove deprecated bonus property from ActorPF#getSkillInfo result
+- BREAKING: Remove deprecated ItemPF#toConsumable
+- BREAKING: Remove deprecated ItemSpellPF#addSpellUses
+
 ## 0.82.1 - 2022-9-1
 
 ### Bug Fixes

@@ -505,7 +505,14 @@ declare global {
       //         Migration         //
       // ------------------------- //
       /**
-       * A hook event fired by the system when it has finished its {@link pf1!migration migration}.
+       * A hook event fired by the system when it starts its {@link pf1!migrations.migrateWorld migration}.
+       *
+       * @group Migration
+       * @remarks Called by {@link Hooks.callAll}
+       */
+      pf1MigrationStarted: () => void;
+      /**
+       * A hook event fired by the system when it has finished its {@link pf1!migrations.migrateWorld migration}.
        *
        * @group Migration
        * @remarks Called by {@link Hooks.callAll}
@@ -660,6 +667,7 @@ export declare const pf1GetChangeFlat: Hooks.StaticCallbacks["pf1GetChangeFlat"]
 export declare const pf1AddDefaultChanges: Hooks.StaticCallbacks["pf1AddDefaultChanges"];
 
 // Migration
+export declare const pf1MigrationStarted: Hooks.StaticCallbacks["pf1MigrationStarted"];
 export declare const pf1MigrationFinished: Hooks.StaticCallbacks["pf1MigrationFinished"];
 
 // Sheet Events

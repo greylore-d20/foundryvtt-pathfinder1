@@ -10,7 +10,9 @@ import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
  *
  * @type {boolean}
  */
-export let isMigrating = false;
+// As the `pf1` global does not use this ES module but a cloned copy, this value
+// only exists for the documentation. Always use `pf1.migrations.isMigrating` instead!
+export let isMigrating = false; // eslint-disable-line prefer-const -- pf1.migrations.isMigrating is changed at runtime
 
 /**
  * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
@@ -23,7 +25,15 @@ export const migrateWorld = async function () {
     console.error(msg);
     return ui.notifications.error(msg);
   }
-  isMigrating = true;
+
+  if (pf1.migrations.isMigrating) {
+    const msg = game.i18n.localize("PF1.Migration.AlreadyInProgress");
+    return ui.notifications.error(msg);
+  } else {
+    pf1.migrations.isMigrating = true;
+    Hooks.callAll("pf1MigrationStarted");
+  }
+
   const startMessage = game.i18n.format("PF1.Migration.Start", { version: game.system.version });
   ui.notifications.info(startMessage, {
     permanent: true,
@@ -108,7 +118,7 @@ export const migrateWorld = async function () {
   // Remove migration notification
   ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.version }));
   console.log("System Migration completed.");
-  isMigrating = false;
+  pf1.migrations.isMigrating = false;
   callOldNamespaceHookAll("pf1.migrationFinished", "pf1MigrationFinished");
   Hooks.callAll("pf1MigrationFinished");
 };

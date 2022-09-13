@@ -7,6 +7,7 @@ import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 // Documentation/type imports
 /** @typedef {import("@item/item-pf.mjs").SharedActionData} SharedActionData */
 /** @typedef {import("@item/item-pf.mjs").ItemPF} ItemPF */
+/** @typedef {import("@actor/actor-pf.mjs").ActorPF} ActorPF */
 /** @typedef {import("@component/action.mjs").ItemAction} ItemAction */
 
 /**
@@ -29,30 +30,40 @@ export const ERR_REQUIREMENT = Object.freeze({
  */
 export class ActionUse {
   /**
+   * The actor this action use is based on.
    *
-   * @param {Partial<SharedActionData>} [shared={}] - The shared context for this action use
+   * @type {ActorPF}
    */
-  constructor(shared = {}) {
-    /** @type {SharedActionData} */
-    this.shared = shared;
-  }
-
+  actor;
   /**
    * The item this action use is based on.
    *
    * @type {ItemPF}
    */
-  get item() {
-    return this.shared.item;
-  }
-
+  item;
   /**
    * The action this action use is based on.
    *
    * @type {ItemAction}
    */
-  get action() {
-    return this.shared.action;
+  action;
+  /**
+   * The shared data object holding all relevant data for this action use.
+   *
+   * @type {SharedActionData}
+   */
+  shared;
+
+  /**
+   * @param {Partial<SharedActionData>} [shared={}] - The shared context for this action use
+   */
+  constructor(shared = {}) {
+    Object.defineProperties(this, {
+      shared: { value: shared },
+      item: { value: shared.item },
+      action: { value: shared.action },
+      actor: { value: shared.item.parentActor },
+    });
   }
 
   /**
@@ -1117,7 +1128,7 @@ export class ActionUse {
 
     this.shared.chatTemplate ||= "systems/pf1/templates/chat/attack-roll.hbs";
     this.shared.templateData.damageTypes = pf1.registry.damageTypes.toRecord();
-    if (Hooks.call("pf1PreDisplayActionUse", this.action, this.shared) === false) return;
+    if (Hooks.call("pf1PreDisplayActionUse", this) === false) return;
 
     // Show chat message
     let result;

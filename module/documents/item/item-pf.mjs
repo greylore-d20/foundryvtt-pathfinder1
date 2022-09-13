@@ -1306,7 +1306,7 @@ export class ItemPF extends ItemBasePF {
     if (rollMode) shared.rollMode = rollMode;
 
     // Call itemUse hook and determine whether the item can be used based off that
-    let allowed = Hooks.call("pf1PreActionUse", action, shared);
+    let allowed = Hooks.call("pf1PreActionUse", actionUse);
     allowed = callOldNamespaceHook("itemUse", "pf1PreUseAttack", allowed, this, "attack", {
       ev,
       skipDialog,

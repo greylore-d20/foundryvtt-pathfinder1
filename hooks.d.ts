@@ -28,6 +28,7 @@ import { ItemSheetPF_Container } from "./module/applications/item/container-shee
 import { ItemAction } from "@component/action.mjs";
 import { ItemChange } from "@component/change.mjs";
 import { ItemClassPF } from "@item/item-class.mjs";
+import { ActionUse } from "@actionUse/action-use.mjs";
 
 import * as actorPF from "@actor/actor-pf.mjs";
 import * as itemPF from "@item/item-pf.mjs";
@@ -422,22 +423,20 @@ declare global {
        *
        * @group Actions
        * @remarks Called by {@link Hooks.call}
-       * @param action - The action that is to be used.
-       * @param data - Data related to the action's use.
+       * @param actionUse - The {@link ActionUse} instance containing all data relevant to the action use.
        * @returns Explicitly return `false` to prevent the action from being used.
        */
-      pf1PreActionUse: (action: ItemAction, shared: itemPF.SharedActionData) => boolean;
+      pf1PreActionUse: (actionUse: ActionUse) => boolean;
 
       /**
        * A hook event fired by the system when an action is used, before the chat message is created.
        *
        * @group Actions
        * @remarks Called by {@link Hooks.call}
-       * @param action - The action that is to be used.
-       * @param data - Data related to the action's use.
+       * @param actionUse - The {@link ActionUse} instance containing all data relevant to the action use.
        * @returns Explicitly return `false` to prevent the action's usage chat card being displayed.
        */
-      pf1PreDisplayActionUse: (action: ItemAction, data: itemPF.SharedActionData) => boolean;
+      pf1PreDisplayActionUse: (actionUse: ActionUse) => boolean;
 
       // ------------------------- //
       //          Changes          //

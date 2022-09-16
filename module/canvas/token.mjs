@@ -63,6 +63,13 @@ export class TokenPF extends Token {
     return null;
   }
 
+  /**
+   * Determines the length of the underline (bottom half-height bar overlay) on a token bar.
+   *
+   * @param {object} data         Resource data for this bar
+   * @returns {number|null}       The value of the bar underline, if any.
+   * @protected
+   */
   _getBarUnderline(data) {
     if (data.attribute === "attributes.hp")
       return { value: this.actor.system.attributes.hp.nonlethal, color: 0x7d2828 };
@@ -81,10 +88,12 @@ export class TokenPF extends Token {
     // Get boost value (such as temporary hit points
     const boost = this._getBarBoost(data);
     const underline = this._getBarUnderline(data);
+    const boostlessMax = data.max;
 
     const val = Number(data.value);
     data.max = Math.max(data.max, (boost?.value ?? 0) + val);
     const pct = Math.clamped(val, 0, data.max) / data.max;
+    const boostlessPct = Math.clamped(val, 0, boostlessMax) / boostlessMax;
 
     // Determine sizing
     let h = Math.max(canvas.dimensions.size / 12, 8);
@@ -95,8 +104,8 @@ export class TokenPF extends Token {
     // Determine the color to use
     const blk = 0x000000;
     let color;
-    if (number === 0) color = PIXI.utils.rgb2hex([1 - pct / 2, pct, 0]);
-    else color = PIXI.utils.rgb2hex([0.5 * pct, 0.7 * pct, 0.5 + pct / 2]);
+    if (number === 0) color = PIXI.utils.rgb2hex([1 - boostlessPct / 2, boostlessPct, 0]);
+    else color = PIXI.utils.rgb2hex([0.5 * boostlessPct, 0.7 * boostlessPct, 0.5 + boostlessPct / 2]);
 
     // Draw the bar
     bar.clear();

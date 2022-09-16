@@ -22,7 +22,7 @@ export class DetectionModeBlindSensePF extends DetectionMode {
   static PRIORITY = 200100;
 
   constructor(data = {}, ...args) {
-    data.walls = false;
+    data.walls = true;
     super(data, ...args);
   }
 

@@ -58,8 +58,8 @@ export class ItemPF extends ItemBasePF {
 
     // Ensure unique Change IDs
     const actor = this.parentActor;
-    if (actor && data?.changes?.length > 0) {
-      const changes = data.changes;
+    if (actor && data?.system?.changes?.length > 0) {
+      const changes = data.system.changes;
       let updated = false;
       for (const c of changes) {
         let i = 0;
@@ -72,7 +72,7 @@ export class ItemPF extends ItemBasePF {
           else c._id = ItemChange.defaultData._id;
         }
       }
-      if (updated) this.system.update({ "system.changes": changes });
+      if (updated) this.updateSource({ "system.changes": changes });
     }
 
     let updates = {};
@@ -80,7 +80,7 @@ export class ItemPF extends ItemBasePF {
       updates = this.preCreateData(data, options, user);
     }
 
-    if (Object.keys(updates).length) return this.system.update(updates);
+    if (Object.keys(updates).length) return this.updateSource(updates);
   }
 
   /**

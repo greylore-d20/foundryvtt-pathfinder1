@@ -1030,12 +1030,12 @@ export const addDefaultChanges = function (changes) {
       if (item.system.equipmentType === "shield") armorTarget = "sac";
       // Push base armor
       if (item.system.armor.value || item.system.armor.enh) {
-        let ac = item.system.armor.value + item.system.armor.enh;
-        if (item.system.broken) ac = Math.floor(ac / 2);
+        const baseAC = item.system.broken ? Math.floor(item.system.armor.value / 2) : item.system.armor.value;
+        const enhAC = item.system.armor.enh;
         changes.push(
           new pf1.components.ItemChange(
             {
-              formula: item.system.armor.value,
+              formula: baseAC,
               subTarget: armorTarget,
               modifier: "base",
             },
@@ -1045,7 +1045,7 @@ export const addDefaultChanges = function (changes) {
         changes.push(
           new pf1.components.ItemChange(
             {
-              formula: item.system.armor.enh,
+              formula: enhAC,
               subTarget: armorTarget,
               modifier: "enhancement",
             },

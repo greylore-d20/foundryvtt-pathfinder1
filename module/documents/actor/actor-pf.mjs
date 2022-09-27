@@ -2498,7 +2498,7 @@ export class ActorPF extends ActorBasePF {
       ...options,
       parts,
       rollData,
-      flavor: game.i18n.localize("PF1.SavingThrow").format(label),
+      flavor: game.i18n.localize("PF1.SavingThrowRoll").format(label),
       subject: { save: savingThrowId },
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),

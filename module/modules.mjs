@@ -26,10 +26,10 @@ export function initializeModules() {
           // Search through items for pieces of heavy armor that is equipped
           const heavyArmor = token.actor.items.find(
             (item) =>
-              item.data.type === "equipment" &&
-              item.data.equipmentType === "armor" &&
-              item.data.equipped &&
-              item.data.equipmentSubtype === "heavyArmor"
+              item.type === "equipment" &&
+              item.equipmentType === "armor" &&
+              item.equipped &&
+              item.equipmentSubtype === "heavyArmor"
           );
           // Check for heavy load encumbrance
           const heavyLoad = token.actor.system.attributes.encumbrance.level >= 2;
@@ -47,7 +47,7 @@ export function initializeModules() {
           const [y, x] = canvas.grid.grid.getGridPositionFromPixels(token.x, token.y);
           const useElevation = this.getSetting("useElevation");
 
-          if (useElevation && token.data.elevation > 0) {
+          if (useElevation && token.document.elevation > 0) {
             const flySpeed = token.actor.system.attributes.speed.fly.total;
             if (flySpeed > 0) {
               return flySpeed;
@@ -64,7 +64,7 @@ export function initializeModules() {
             }
           }
 
-          if (useElevation && token.data.elevation < 0) {
+          if (useElevation && token.document.elevation < 0) {
             const burrowSpeed = token.actor.system.attributes.speed.burrow.total;
             if (burrowSpeed > 0) {
               return burrowSpeed;

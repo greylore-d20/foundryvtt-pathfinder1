@@ -217,6 +217,7 @@ export class ItemChange {
                 } else {
                   const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
                   setProperty(actor, t, base + diff);
+                  override[operator][this.modifier] = Math.max(prior ?? 0, value);
                 }
               }
             }

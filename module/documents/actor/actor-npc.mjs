@@ -45,7 +45,7 @@ export class ActorNPCPF extends ActorPF {
       (o) => o.type === "feat" && o.system.featType === "template" && !o.system.disabled
     );
     return templates.reduce((cur, o) => {
-      const crOffset = o.data.crOffset;
+      const crOffset = o.system.crOffset;
       if (typeof crOffset === "string" && crOffset.length)
         cur += RollPF.safeRoll(crOffset, this.getRollData(data)).total;
       return cur;

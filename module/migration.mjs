@@ -301,6 +301,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateSpellData(item, updateData);
   _migrateItemActions(item, updateData, actor);
   _migrateItemWeight(item, updateData);
+  _migrateItemHealth(item, updateData);
 
   // Migrate action data
   const alreadyHasActions = item.system.actions instanceof Array && item.system.actions.length > 0;
@@ -1008,6 +1009,12 @@ const _migrateItemWeight = function (ent, updateData) {
     }
     updateData["system.-=baseWeight"] = null;
   }
+};
+
+const _migrateItemHealth = function (ent, updateData) {
+  const hp = getProperty(ent, "system.hp");
+  if (typeof hp.max === "string") updateData["system.hp.max"] = parseInt(hp.max);
+  if (typeof hp.value === "string") updateData["system.hp.value"] = parseInt(hp.value);
 };
 
 const _migrateTags = function (ent, updateData) {

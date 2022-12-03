@@ -496,6 +496,13 @@ export class ItemPF extends ItemBasePF {
   }
 
   prepareBaseData() {
+    // Set visible name
+    if (this.showUnidentifiedData) {
+      this.name = this.system.unidentified?.name || this._source.name;
+    } else {
+      this.name = this.system.identifiedName || this._source.name;
+    }
+
     const itemData = this.system;
 
     // Initialize tag for items that have tagged template

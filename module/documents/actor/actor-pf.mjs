@@ -3587,18 +3587,7 @@ export class ActorPF extends ActorBasePF {
     result.range = this.constructor.getReach(this.system.traits.size, this.system.traits.stature);
 
     // Add class info
-    if (this.items) {
-      result.classes = this.items
-        .filter((o) => o.type === "class")
-        .reduce((cur, o) => {
-          cur[o.system.tag] = {
-            level: o.system.level,
-            name: o.name,
-          };
-
-          return cur;
-        }, {});
-    }
+    result.classes = this.classes;
 
     this._rollData = result;
 

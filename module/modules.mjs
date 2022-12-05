@@ -46,9 +46,10 @@ export function initializeModules() {
         getBaseSpeed(token) {
           const [y, x] = canvas.grid.grid.getGridPositionFromPixels(token.x, token.y);
           const useElevation = this.getSetting("useElevation");
+          const speeds = token.actor.system.attributes.speed;
 
           if (useElevation && token.document.elevation > 0) {
-            const flySpeed = token.actor.system.attributes.speed.fly.total;
+            const flySpeed = speeds.fly.total;
             if (flySpeed > 0) {
               return flySpeed;
             }
@@ -58,20 +59,20 @@ export function initializeModules() {
             enhancedTerrain &&
             canvas.terrain.terrainFromGrid(x, y).some((terrain) => terrain.data.environment === "water")
           ) {
-            const swimSpeed = token.actor.system.attributes.speed.swim.total;
+            const swimSpeed = speeds.swim.total;
             if (swimSpeed > 0) {
               return swimSpeed;
             }
           }
 
           if (useElevation && token.document.elevation < 0) {
-            const burrowSpeed = token.actor.system.attributes.speed.burrow.total;
+            const burrowSpeed = speeds.burrow.total;
             if (burrowSpeed > 0) {
               return burrowSpeed;
             }
           }
 
-          return token.actor.system.attributes.speed.land.total;
+          return speeds.land.total;
         }
 
         get settings() {

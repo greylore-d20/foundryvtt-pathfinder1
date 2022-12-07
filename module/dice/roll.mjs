@@ -3,6 +3,24 @@ export class RollPF extends Roll {
     return Math.floor(this.total / 2);
   }
 
+  /**
+   * Return an Array of the individual DiceTerm instances contained within this Roll.
+   * Override to recognize dice in SizeRollTerm.
+   *
+   * @override
+   * @returns {DiceTerm[]}
+   */
+  get dice() {
+    return this._dice.concat(
+      this.terms.reduce((dice, t) => {
+        if (t instanceof DiceTerm) dice.push(t);
+        else if (t instanceof PoolTerm) dice = dice.concat(t.dice);
+        else if (t instanceof pf1.dice.terms.SizeRollTerm) dice = dice.concat(t.dice);
+        return dice;
+      }, [])
+    );
+  }
+
   static safeRoll(formula, data = {}, context, options = { suppressError: false }) {
     let roll;
     try {
@@ -42,6 +60,14 @@ export class RollPF extends Roll {
       // Attach string terms as flavor texts to numeric terms, if appropriate
       const priorNumeric = prior instanceof NumericTerm;
       if (prior && priorNumeric && term instanceof StringTerm && term.term.match(/\[(.+)\]/)) {
+        prior.options.flavor = RegExp.$1;
+        return terms;
+      }
+
+      // Attach string terms as flavor texts to size roll terms, if appropriate
+      // TODO: Review the need for this bit with Foundry v10, according to staff it will no longer be required.
+      const priorSizeRoll = prior instanceof pf1.dice.terms.SizeRollTerm;
+      if (prior && priorSizeRoll && term instanceof StringTerm && term.term.match(/\[(.+)\]/)) {
         prior.options.flavor = RegExp.$1;
         return terms;
       }
@@ -95,7 +121,11 @@ export class RollPF extends Roll {
         const options = { flavor: group.flavor ? group.flavor.slice(1, -1) : undefined };
 
         const terms = [];
-        if (fn in pf1.utils.rollPreProcess) {
+        if (fn === "sizeRoll") {
+          // TODO: Make more generic
+          const args = this._splitMathArgs(expression);
+          terms.push(new pf1.dice.terms.SizeRollTerm({ terms: args, options }));
+        } else if (fn in pf1.utils.rollPreProcess) {
           const fnParams = group.terms
             // .slice(2, -1)
             .reduce((cur, s) => {

@@ -401,6 +401,7 @@ Hooks.once("init", function () {
   CONFIG.ui.compendium = CompendiumDirectoryPF;
   CONFIG.ChatMessage.documentClass = ChatMessagePF;
   CONFIG.Dice.rolls.splice(0, 0, dice.RollPF);
+  CONFIG.Dice.termTypes.SizeRollTerm = dice.terms.SizeRollTerm;
   CONFIG.Dice.RollPF = dice.RollPF;
   CONFIG.Dice.rolls.push(dice.D20RollPF);
   CONFIG.Dice.rolls.D20RollPF = dice.D20RollPF;

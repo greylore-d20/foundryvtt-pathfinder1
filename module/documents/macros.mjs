@@ -19,7 +19,7 @@ import { getSkipActionPrompt } from "./settings.mjs";
  */
 export const createItemMacro = async function (data, slot) {
   const item = await fromUuid(data.uuid);
-  const command = `const item = await fromUuid("${item.uuid}");\nreturn item.use();`;
+  const command = `(await fromUuid("${item.uuid}")).use();`;
   let macro = game.macros.contents.find((m) => m.name === item.name && m.data.command === command);
   if (!macro) {
     macro = await Macro.create(

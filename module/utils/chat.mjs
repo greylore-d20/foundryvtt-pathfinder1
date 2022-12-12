@@ -140,6 +140,10 @@ export const hideGMSensitiveInfo = function (app, html, data) {
   if (game.settings.get("pf1", "obscureInlineRolls")) {
     // Turn rolls into raw strings
     html.find(".inline-roll").each((a, elem) => {
+      if (!elem.dataset.roll) {
+        return;
+      }
+
       const roll = Roll.fromJSON(unescape(elem.dataset.roll));
       const parent = elem.parentNode;
       parent.insertBefore($(`<span>${roll.total}</span>`)[0], elem);

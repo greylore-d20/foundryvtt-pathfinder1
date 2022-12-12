@@ -199,10 +199,10 @@
         @attributes.hp.value : {{system.attributes.hp.value}}<br/>
         @attributes.hp.max : {{system.attributes.hp.max}}<br/>
         @attributes.hp.temp : {{system.attributes.hp.temp}}<br/>
-        @attributes.hp.nonlethal : {{system.attributes.hp.nonlethal}}
+        @attributes.hp.nonlethal : {{system.attributes.hp.nonlethal}}<br>
 
         {{#if sourceDetails.system.attributes.hp.max.length}}
-        <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+        <br/>{{localize "PF1.FromSources"}}:<br/>
         {{#each sourceDetails.system.attributes.hp.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
         {{/if}}
       </div>
@@ -216,10 +216,10 @@
           @attributes.vigor.min : {{system.attributes.vigor.min}}<br/>
           @attributes.vigor.value : {{system.attributes.vigor.value}}<br/>
           @attributes.vigor.max : {{system.attributes.vigor.max}}<br/>
-          @attributes.vigor.temp : {{system.attributes.vigor.temp}}
+          @attributes.vigor.temp : {{system.attributes.vigor.temp}}<br>
 
           {{#if sourceDetails.system.attributes.vigor.max.length}}
-          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+          <br/>{{localize "PF1.FromSources"}}:<br/>
           {{#each sourceDetails.system.attributes.vigor.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
           {{/if}}
         </div>
@@ -252,7 +252,7 @@
           @attributes.wounds.max : {{system.attributes.wounds.max}}<br/>
 
           {{#if sourceDetails.system.attributes.wounds.max.length}}
-          <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+          <br/>{{localize "PF1.FromSources"}}:<br/>
           {{#each sourceDetails.system.attributes.wounds.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
           {{/if}}
         </div>
@@ -278,9 +278,10 @@
       <ul class='flexrow'>
         <li class='flexcol land tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.land.total : {{convertDistance system.attributes.speed.land.total}}
+            @attributes.speed.land.total : {{convertDistance system.attributes.speed.land.total}}<br>
+
             {{#if (or sourceDetails.system.attributes.speed.land.base.length sourceDetails.system.attributes.speed.land.add.length)}}
-              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              <br/>{{localize "PF1.FromSources"}}:<br/>
               {{#each sourceDetails.system.attributes.speed.land.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
               {{#each sourceDetails.system.attributes.speed.land.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
@@ -292,9 +293,10 @@
         </li>
         <li class='flexcol climb tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.climb.total : {{convertDistance system.attributes.speed.climb.total}}
+            @attributes.speed.climb.total : {{convertDistance system.attributes.speed.climb.total}}<br>
+
             {{#if (or sourceDetails.system.attributes.speed.climb.base.length sourceDetails.system.attributes.speed.climb.add.length)}}
-              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              <br/>{{localize "PF1.FromSources"}}:<br/>
               {{#each sourceDetails.system.attributes.speed.climb.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
               {{#each sourceDetails.system.attributes.speed.climb.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
@@ -306,9 +308,10 @@
         </li>
         <li class='flexcol swim tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.swim.total : {{convertDistance system.attributes.speed.swim.total}}
+            @attributes.speed.swim.total : {{convertDistance system.attributes.speed.swim.total}}<br>
+
             {{#if (or sourceDetails.system.attributes.swim.land.base.length sourceDetails.system.attributes.swim.land.add.length)}}
-              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              <br/>{{localize "PF1.FromSources"}}:<br/>
               {{#each sourceDetails.system.attributes.speed.swim.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
               {{#each sourceDetails.system.attributes.speed.swim.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
@@ -321,9 +324,10 @@
         </li>
         <li class='flexcol burrow tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.burrow.total : {{convertDistance system.attributes.speed.burrow.total}}
+            @attributes.speed.burrow.total : {{convertDistance system.attributes.speed.burrow.total}}<br>
+
             {{#if (or sourceDetails.system.attributes.speed.burrow.base.length sourceDetails.system.attributes.speed.burrow.add.length)}}
-              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              <br/>{{localize "PF1.FromSources"}}:<br/>
               {{#each sourceDetails.system.attributes.speed.burrow.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
               {{#each sourceDetails.system.attributes.speed.burrow.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
@@ -336,9 +340,9 @@
         <li class='flexcol fly tooltip'>
           <div class="tooltipcontent">
             @attributes.speed.fly.total : {{system.attributes.speed.fly.total}}<br/>
-            @attributes.speed.fly.maneuverability : "{{system.attributes.speed.fly.maneuverability}}"
+            @attributes.speed.fly.maneuverability : "{{system.attributes.speed.fly.maneuverability}}"<br>
             {{#if (or sourceDetails.system.attributes.speed.fly.base.length sourceDetails.system.attributes.speed.fly.add.length)}}
-              <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+              <br/>{{localize "PF1.FromSources"}}:<br/>
               {{#each sourceDetails.system.attributes.speed.fly.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
               {{#each sourceDetails.system.attributes.speed.fly.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
             {{/if}}
@@ -394,9 +398,10 @@
           <tr>
             <td class="tooltip bab">
               <span class="tooltipcontent">
-                @attributes.bab.total : {{system.attributes.bab.total}}
+                @attributes.bab.total : {{system.attributes.bab.total}}<br>
+
                 {{#if sourceDetails.system.attributes.bab.total.length}}
-                <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                <br/>{{localize "PF1.FromSources"}}:<br/>
                 {{#each sourceDetails.system.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
                 {{/if}}
               </span>
@@ -410,9 +415,10 @@
 
             <td class="tooltip initiative">
               <span class="tooltipcontent">
-                @attributes.init.total : {{system.attributes.init.total}}
+                @attributes.init.total : {{system.attributes.init.total}}<br>
+
                 {{#if sourceDetails.system.attributes.init.total.length}}
-                  <br/><br/>{{localize "PF1.FromSources"}}:<br/>
+                  <br/>{{localize "PF1.FromSources"}}:<br/>
                   {{#each sourceDetails.system.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
                 {{/if}}
 

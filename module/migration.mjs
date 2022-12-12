@@ -179,6 +179,13 @@ const _migrateWorldSettings = async function () {
     if (game.settings.settings.get("pf1", "experienceRate") !== undefined)
       game.settings.settings.delete("pf1.experienceRate");
   }
+
+  const tooltipWorldConfig = game.settings.get("pf1", "tooltipWorldConfig");
+  if (tooltipWorldConfig.hideActorName !== undefined) {
+    // 1 (All) for true, -2 (None) for false
+    tooltipWorldConfig.hideActorNameByDisposition == tooltipWorldConfig.hideActorName ? 1 : -2;
+    game.settings.set("pf1", "tooltipWorldConfig", tooltipWorldConfig);
+  }
 };
 
 /* -------------------------------------------- */

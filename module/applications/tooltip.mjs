@@ -115,8 +115,9 @@ export class TooltipPF extends Application {
       data.name = tooltipName || token.name;
 
       if (
-        (this.worldConfig.hideActorName === true && !tooltipName) ||
-        getProperty(token.actor, "system.details.tooltip.hideName") === true
+        !tooltipName ||
+        getProperty(token.actor, "system.details.tooltip.hideName") === true ||
+        token.document.disposition < this.worldConfig.hideActorNameByDisposition
       ) {
         data.name = this.worldConfig.hideActorNameReplacement || "???";
       }

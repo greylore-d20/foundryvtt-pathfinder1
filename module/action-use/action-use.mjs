@@ -838,7 +838,11 @@ export class ActionUse {
       const combatProps = this.addCombatPropertyLabels();
 
       if (combatProps.length > 0) {
-        props.push({ header: game.i18n.localize("PF1.CombatInfo_Header"), value: combatProps });
+        props.push({
+          header: game.i18n.localize("PF1.CombatInfo_Header"),
+          value: combatProps,
+          css: "combat-properties",
+        });
       }
     }
 

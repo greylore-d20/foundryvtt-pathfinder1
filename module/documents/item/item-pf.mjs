@@ -989,7 +989,11 @@ export class ItemPF extends ItemBasePF {
       combatProps.push(game.i18n.localize("PF1.CombatInfo_Round").format(game.combat.round));
 
       if (combatProps.length > 0) {
-        templateData.extraProperties.push({ header: game.i18n.localize("PF1.CombatInfo_Header"), value: combatProps });
+        templateData.extraProperties.push({
+          header: game.i18n.localize("PF1.CombatInfo_Header"),
+          value: combatProps,
+          css: "combat-properties",
+        });
         templateData.hasExtraProperties = true;
       }
     }

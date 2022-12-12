@@ -871,10 +871,18 @@ const _migrateItemSize = function (ent, updateData, linked) {
       return;
     }
   }
-  // Convert any other instances
-  if (!getProperty(ent, "system.size")) {
-    // Fill in missing
-    updateData["system.size"] = "med";
+
+  const oldSize = getProperty(ent, "system.size");
+  if (["spell", "class", "buff", "feat"].includes(ent.type)) {
+    // Remove size from abstract items
+    if (oldSize !== undefined) {
+      updateData["system.-=size"] = null;
+    }
+  } else {
+    // Add default size to everything else if not present
+    if (oldSize === undefined) {
+      updateData["system.size"] = "med";
+    }
   }
 };
 

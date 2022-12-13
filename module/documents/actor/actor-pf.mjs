@@ -530,7 +530,11 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Set spellbook label
-    book.label = `PF1.SpellBook${bookKey.capitalize()}`;
+    book.label = book.name || `PF1.SpellBook${bookKey.capitalize()}`;
+
+    // Do not process spellbooks that are not in use
+    if (!book.inUse) return;
+
     if (book.class) {
       if (book.class === "_hd") book.label = "PF1.SpellBookSpelllike";
       else {
@@ -538,7 +542,6 @@ export class ActorPF extends ActorBasePF {
         if (bookClass != null) book.label = bookClass.name;
       }
     }
-    if (book.name) book.label = book.name;
 
     rollData ??= this.getRollData({ refresh: true });
     cache ??= this._generateSpellbookCache();

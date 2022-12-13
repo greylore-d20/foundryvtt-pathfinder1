@@ -32,9 +32,9 @@ export class AttackDialog extends Application {
       held: this.rollData.item?.held ?? "normal",
     };
     this.conditionals = {};
-    for (const [idx, cData] of Object.entries(this.object.conditionals ?? {})) {
-      this.conditionals[`conditional.${idx}`] = cData.default === true;
-    }
+    this.object.conditionals?.contents.forEach((conditional, idx) => {
+      this.conditionals[`conditional.${idx}`] = conditional.data.default === true;
+    });
 
     // Callback for AttackDialog.show()
     this._callbacks = {

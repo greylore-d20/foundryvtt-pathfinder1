@@ -2105,12 +2105,12 @@ export class ItemPF extends Item {
       ["rwak", "rsak", "rcman"].includes(actionData.actionType) || this.system.weaponSubtype === "ranged";
     const isManeuver = action.isCombatManeuver;
 
-    const describePart = (value, label, sort = 0) => {
-      sources.push({ value, label, sort });
+    const describePart = (value, name, modifier, sort = 0) => {
+      sources.push({ value, name, modifier, sort });
     };
 
     // BAB is last for some reason, array is reversed to try make it the first.
-    const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
+    const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, d.modifier, -10));
 
     // Unreliable melee/ranged identification
     const sizeBonus = !isManeuver ? PF1.sizeMods[rollData.traits.size] : PF1.sizeSpecialMods[rollData.traits.size];

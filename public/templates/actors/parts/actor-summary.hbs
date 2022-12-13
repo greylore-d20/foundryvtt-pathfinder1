@@ -12,10 +12,10 @@
       {{#if isCharacter}}
       <div class="hd-level character tooltip">
         <span class="tooltipcontent">
-          @attributes.hd.total : {{system.attributes.hd.total}}
+          <span class="span2 align-left">@attributes.hd.total :</span><span class="span1 align-right"> {{system.attributes.hd.total}}</span>
           {{#if system.details.mythicTier}}
           <br />
-          @details.mythicTier : {{system.details.mythicTier}}
+          <span class="span2 align-left">@details.mythicTier :</span><span class="span1 align-right">{{system.details.mythicTier}}</span>
           {{/if}}
         </span>
 
@@ -97,12 +97,11 @@
         </table>
 
         <span class="tooltipcontent">
-          @attributes.hd.total : {{system.attributes.hd.total}}<br/>
-          @details.cr.base : {{system.details.cr.base}}<br/>
-          @details.cr.total : {{system.details.cr.total}}
+          <span class="span2 align-left">@attributes.hd.total :</span><span class="span1 align-right"> {{system.attributes.hd.total}}</span>
+          <span class="span2 align-left">@details.cr.base :</span><span class="span1 align-right"> {{system.details.cr.base}}</span>
+          <span class="span2 align-left">@details.cr.total :</span><span class="span1 align-right"> {{system.details.cr.total}}</span>
           {{#if system.details.mythicTier}}
-          <br />
-          @details.mythicTier : {{system.details.mythicTier}}
+          <span class="span2 align-left">@details.mythicTier :</span><span class="span1 align-right"> {{system.details.mythicTier}}</span>
           {{/if}}
         </span>
       </div>
@@ -195,15 +194,12 @@
         </li>
       </ul>
       <div class="tooltipcontent">
-        @attributes.hp.value : {{system.attributes.hp.value}}<br/>
-        @attributes.hp.max : {{system.attributes.hp.max}}<br/>
-        @attributes.hp.temp : {{system.attributes.hp.temp}}<br/>
-        @attributes.hp.nonlethal : {{system.attributes.hp.nonlethal}}<br>
+        <span class="span2 align-left">@attributes.hp.value :</span><span class="span1 align-right"> {{system.attributes.hp.value}}</span>
+        <span class="span2 align-left">@attributes.hp.max :</span><span class="span1 align-right"> {{system.attributes.hp.max}}</span>
+        <span class="span2 align-left">@attributes.hp.temp :</span><span class="span1 align-right"> {{system.attributes.hp.temp}}</span>
+        <span class="span2 align-left">@attributes.hp.nonlethal :</span><span class="span1 align-right"> {{system.attributes.hp.nonlethal}}</span>
 
-        {{#if sourceDetails.system.attributes.hp.max.length}}
-        <br/>{{localize "PF1.FromSources"}}:<br/>
-        {{#each sourceDetails.system.attributes.hp.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-        {{/if}}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.hp.max }}
       </div>
     </div>
     {{else}}
@@ -212,15 +208,12 @@
       {{!-- Vigor --}}
       <div class='flexcol vigor tooltip'>
         <div class="tooltipcontent">
-          @attributes.vigor.min : {{system.attributes.vigor.min}}<br/>
-          @attributes.vigor.value : {{system.attributes.vigor.value}}<br/>
-          @attributes.vigor.max : {{system.attributes.vigor.max}}<br/>
-          @attributes.vigor.temp : {{system.attributes.vigor.temp}}<br>
+          <span class="span2 align-left">@attributes.vigor.min :</span><span class="span1 align-right"> {{system.attributes.vigor.min}}</span>
+          <span class="span2 align-left">@attributes.vigor.value :</span><span class="span1 align-right"> {{system.attributes.vigor.value}}</span>
+          <span class="span2 align-left">@attributes.vigor.max :</span><span class="span1 align-right"> {{system.attributes.vigor.max}}</span>
+          <span class="span2 align-left">@attributes.vigor.temp :</span><span class="span1 align-right"> {{system.attributes.vigor.temp}}</span>
 
-          {{#if sourceDetails.system.attributes.vigor.max.length}}
-          <br/>{{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.system.attributes.vigor.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-          {{/if}}
+          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.vigor.max }}
         </div>
 
         <h3 class='header'>{{localize "PF1.Vigor"}}</h3>
@@ -246,14 +239,11 @@
       {{!-- Wounds --}}
       <div class='flexcol wounds tooltip'>
         <div class="tooltipcontent">
-          @attributes.wounds.min : {{system.attributes.wounds.min}}<br/>
-          @attributes.wounds.value : {{system.attributes.wounds.value}}<br/>
-          @attributes.wounds.max : {{system.attributes.wounds.max}}<br/>
+          <span class="span2 align-left">@attributes.wounds.min :</span><span class="span1 align-right"> {{system.attributes.wounds.min}}</span>
+          <span class="span2 align-left">@attributes.wounds.value :</span><span class="span1 align-right"> {{system.attributes.wounds.value}}</span>
+          <span class="span2 align-left">@attributes.wounds.max :</span><span class="span1 align-right"> {{system.attributes.wounds.max}}</span>
 
-          {{#if sourceDetails.system.attributes.wounds.max.length}}
-          <br/>{{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.system.attributes.wounds.max as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-          {{/if}}
+          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.wounds.max }}
         </div>
 
         <h3 class='header'>{{localize "PF1.Wounds"}}</h3>
@@ -277,12 +267,13 @@
       <ul class='flexrow'>
         <li class='flexcol land tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.land.total : {{convertDistance system.attributes.speed.land.total}}<br>
-
-            {{#if (or sourceDetails.system.attributes.speed.land.base.length sourceDetails.system.attributes.speed.land.add.length)}}
-              <br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.system.attributes.speed.land.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
-              {{#each sourceDetails.system.attributes.speed.land.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+            <span class="span2 align-left">@attributes.speed.land.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.land.total}}</span>
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.base forceLabel=1 isDistance=1 skipLabel=0}}
+            
+            {{#if sourceDetails.system.attributes.speed.land.base.length}}
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.add skipLabel=1 skipLine=1 isDistance=1}}
+            {{else}}
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.add skipLabel=0 skipLine=0 isDistance=1}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedLand_Short"}}</h4>
@@ -292,12 +283,13 @@
         </li>
         <li class='flexcol climb tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.climb.total : {{convertDistance system.attributes.speed.climb.total}}<br>
-
-            {{#if (or sourceDetails.system.attributes.speed.climb.base.length sourceDetails.system.attributes.speed.climb.add.length)}}
-              <br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.system.attributes.speed.climb.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
-              {{#each sourceDetails.system.attributes.speed.climb.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+            <span class="span2 align-left">@attributes.speed.climb.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.climb.total}}</span>
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.base forceLabel=1 isDistance=1 skipLabel=0}}
+            
+            {{#if sourceDetails.system.attributes.speed.climb.base.length}}
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.add skipLabel=1 skipLine=1 isDistance=1}}
+            {{else}}
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.add skipLabel=0 skipLine=0 isDistance=1}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedClimb_Short"}}</h4>
@@ -307,12 +299,13 @@
         </li>
         <li class='flexcol swim tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.swim.total : {{convertDistance system.attributes.speed.swim.total}}<br>
-
-            {{#if (or sourceDetails.system.attributes.swim.land.base.length sourceDetails.system.attributes.swim.land.add.length)}}
-              <br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.system.attributes.speed.swim.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
-              {{#each sourceDetails.system.attributes.speed.swim.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+            <span class="span2 align-left">@attributes.speed.swim.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.swim.total}}</span>
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.base forceLabel=1 isDistance=1 skipLabel=0}}
+            
+            {{#if sourceDetails.system.attributes.speed.swim.base.length}}
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.add skipLabel=1 skipLine=1 isDistance=1}}
+            {{else}}
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.add skipLabel=0 skipLine=0 isDistance=1}}
             {{/if}}
           </div>
 
@@ -323,12 +316,13 @@
         </li>
         <li class='flexcol burrow tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.burrow.total : {{convertDistance system.attributes.speed.burrow.total}}<br>
-
-            {{#if (or sourceDetails.system.attributes.speed.burrow.base.length sourceDetails.system.attributes.speed.burrow.add.length)}}
-              <br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.system.attributes.speed.burrow.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
-              {{#each sourceDetails.system.attributes.speed.burrow.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+            <span class="span2 align-left">@attributes.speed.burrow.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.burrow.total}}</span>
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.base forceLabel=1 isDistance=1 skipLabel=0}}
+            
+            {{#if sourceDetails.system.attributes.speed.burrow.base.length}}
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.add skipLabel=1 skipLine=1 isDistance=1}}
+            {{else}}
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.add skipLabel=0 skipLine=0 isDistance=1}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedBurrow_Short"}}</h4>
@@ -338,12 +332,14 @@
         </li>
         <li class='flexcol fly tooltip'>
           <div class="tooltipcontent">
-            @attributes.speed.fly.total : {{system.attributes.speed.fly.total}}<br/>
-            @attributes.speed.fly.maneuverability : "{{system.attributes.speed.fly.maneuverability}}"<br>
-            {{#if (or sourceDetails.system.attributes.speed.fly.base.length sourceDetails.system.attributes.speed.fly.add.length)}}
-              <br/>{{localize "PF1.FromSources"}}:<br/>
-              {{#each sourceDetails.system.attributes.speed.fly.base as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
-              {{#each sourceDetails.system.attributes.speed.fly.add as |src|}}{{src.name}}: {{convertDistance src.value}}<br/>{{/each}}
+            <span class="span2 align-left">@attributes.speed.fly.total :</span><span class="span1 align-right"> {{system.attributes.speed.fly.total}}</span>
+            <span class="span2 align-left">@attributes.speed.fly.maneuverability :</span><span class="span1 align-right"> "{{system.attributes.speed.fly.maneuverability}}"</span>
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.base forceLabel=1 isDistance=1 skipLabel=0}}
+            
+            {{#if sourceDetails.system.attributes.speed.fly.base.length}}
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.add skipLabel=1 skipLine=1 isDistance=1}}
+            {{else}}
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.add skipLabel=0 skipLine=0 isDistance=1}}
             {{/if}}
           </div>
           <h4 class='sub-header'>{{localize "PF1.SpeedFly_Short"}}</h4>
@@ -381,13 +377,27 @@
       <table>
         <thead>
           <tr>
-            <th class="attribute bab" data-attribute="bab">
+            <th class="attribute bab tooltip" data-attribute="bab">
+              <span class="tooltipcontent">
+                <span class="span2 align-left">@attributes.bab.total :</span><span class="span1 align-right"> {{system.attributes.bab.total}}</span>
+                {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.bab.total }}
+              </span>
+
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.BABAbbr"}}</span></a>
             </th>
-            <th class="attribute cmb" data-attribute="cmb">
+            <th class="attribute cmb tooltip" data-attribute="cmb">
+              {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
+
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a>
             </th>
-            <th class="attribute initiative" data-attribute="initiative">
+            <th class="attribute initiative tooltip" data-attribute="initiative">
+              <span class="tooltipcontent">
+                <span class="span2 align-left">@attributes.init.total :</span><span class="span1 align-right"> {{system.attributes.init.total}}</span>
+                {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.init.total }}
+
+                {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
+              </span>
+
               <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
             </th>
           </tr>
@@ -395,34 +405,15 @@
 
         <tbody>
           <tr>
-            <td class="tooltip bab">
-              <span class="tooltipcontent">
-                @attributes.bab.total : {{system.attributes.bab.total}}<br>
-
-                {{#if sourceDetails.system.attributes.bab.total.length}}
-                <br/>{{localize "PF1.FromSources"}}:<br/>
-                {{#each sourceDetails.system.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-                {{/if}}
-              </span>
-
+            <td class="bab">
               {{system.attributes.bab.total}}
             </td>
 
-            <td class="tooltip cmb">
-              {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
+            <td class="cmb">
+              {{numberFormat system.attributes.cmb.total decimals=0 sign=true}}
             </td>
 
-            <td class="tooltip initiative">
-              <span class="tooltipcontent">
-                @attributes.init.total : {{system.attributes.init.total}}<br>
-
-                {{#if sourceDetails.system.attributes.init.total.length}}
-                  <br/>{{localize "PF1.FromSources"}}:<br/>
-                  {{#each sourceDetails.system.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-                {{/if}}
-
-                {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
-              </span>
+            <td class="initiative">
               {{system.attributes.init.total}}
             </td>
           </tr>
@@ -487,7 +478,7 @@
 
           <div class="item-detail item-feat-level tooltip">
             <span>{{localize "PF1.Level"}} {{item.level}}</span>
-            <span class="tooltipcontent">@classes.{{item.tag}}.level : {{item.level}}</span>
+            <span class="tooltipcontent"><span class="span2">@classes.{{item.tag}}.level :</span><span class="span1"> {{item.level}}</span></span>
           </div>
 
           {{#if ../levelUp}}

@@ -1623,6 +1623,7 @@ export class ActorPF extends Actor {
           for (const src of grp) {
             if (!src.operator) src.operator = "add";
             const srcInfo = this.constructor._translateSourceInfo(src.type, src.subtype, src.name);
+            const srcMod = PF1.bonusModifiers[src.modifier] || src.modifier || "";
             let srcValue =
               src.value != null
                 ? src.value
@@ -1633,6 +1634,7 @@ export class ActorPF extends Actor {
             if (!(src.operator === "add" && srcValue === 0) || src.ignoreNull === false) {
               sourceDetails[changeTarget].push({
                 name: srcInfo.replace(/[[\]]/g, ""),
+                modifier: srcMod,
                 value: srcValue,
               });
             }

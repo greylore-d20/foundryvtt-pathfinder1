@@ -77,8 +77,8 @@
           <span class="sep"> / </span>
           <span class="text-box">{{item.uses.max}}</span>
           <span class="tooltipcontent">
-            @resources.{{item.tag}}.value : {{item.uses.value}}<br>
-            @resources.{{item.tag}}.max : {{item.uses.max}}
+            <span class="span2">@resources.{{item.tag}}.value :</span><span class="span1"> {{item.uses.value}}</span>
+            <span class="span2">@resources.{{item.tag}}.max :</span><span class="span1"> {{item.uses.max}}</span>
           </span>
           {{/if}}
         </div>
@@ -90,7 +90,7 @@
         {{else if section.isClass}}
         <div class="item-detail item-feat-level tooltip">
           <span>{{localize "PF1.Level"}} {{item.level}}</span>
-          <span class="tooltipcontent">@classes.{{item.tag}}.level : {{item.level}}</span>
+          <span class="tooltipcontent"><span class="span2">@classes.{{item.tag}}.level :</span><span class="span1"> {{item.level}}</span></span>
         </div>
         {{/if}}
 
@@ -112,12 +112,7 @@
 <hr>
 <div class="tab-footer flexcol tooltip">
   <span class="tooltipcontent">
-    {{#if sourceData.bonusFeats}}
-    {{localize "PF1.FromSources"}}:<br/>
-    {{#each sourceData.bonusFeats as |src|}}
-    {{src.name}}: {{src.value}}<br/>
-    {{/each}}
-    {{/if}}
+    {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceData.bonusFeats skipLine=1}}
   </span>
   <div class="flexrow form-group">
     <label>{{localize "PF1.BonusFeatFormula"}}</label>

@@ -53,6 +53,39 @@ form {
   opacity: 0;
   transition: opacity 0.3s;
 
+  /* Setup tooltips as a grid */
+  display: grid;
+  grid-template-columns: min-content 1fr min-content;
+  grid-auto-rows: min-content;
+  gap: 1px 3px;
+  align-items: center;
+
+  .span1 {
+    white-space: nowrap;
+  }
+  .span2 {
+    grid-column: span 2;
+    white-space: nowrap;
+  }
+  .span3 {
+    grid-column-start: 1;
+    grid-column-end: span 3;
+  }
+
+  .tooltipcontent-context {
+    grid-column: span 3;
+  }
+  .align-right {
+    text-align: right;
+  }
+  .align-rightspaced {
+    text-align: right;
+    padding-inline: 15px 15px;
+  }
+  .align-left {
+    text-align: left;
+  }
+
   .entity-link.content-link,
   .inline-preroll.inline-formula {
     background-color: rgba(255, 255, 255, 0.1);

@@ -21,15 +21,10 @@
   <li class="sub-skill {{#if subSkill.untrained}}untrained{{/if}}" data-skill="{{b}}" data-main-skill="{{s}}">
     <div class="skill-name tooltip">
       <span class="tooltipcontent">
-        @skills.{{s}}.subSkills.{{b}}.mod : {{subSkill.mod}}<br>
-        @skills.{{s}}.subSkills.{{b}}.rank : {{subSkill.rank}}<br>
+        <span class="span2 align-left">@skills.{{s}}.subSkills.{{b}}.mod :</span><span class="span1 align-right"> {{subSkill.mod}}</span>
+        <span class="span2 align-left">@skills.{{s}}.subSkills.{{b}}.rank :</span><span class="span1 align-right"> {{subSkill.rank}}</span>
 
-        {{#if subSkill.sourceDetails.length}}
-        <br/>{{localize "PF1.FromSources"}}:<br/>
-        {{#each subSkill.sourceDetails as |src|}}
-        {{src.name}}: {{src.value}}<br/>
-        {{/each}}
-        {{/if}}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=subSkill.sourceDetails }}
 
         {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target=(concat "skill." s ".subSkills." b)}}
       </span>
@@ -74,15 +69,10 @@
   <li class="skill {{#if skill.untrained}}untrained{{/if}}" data-skill="{{s}}">
     <div class="skill-name tooltip">
       <span class="tooltipcontent">
-        @skills.{{s}}.mod : {{skill.mod}}<br>
-        @skills.{{s}}.rank : {{skill.rank}}<br>
+        <span class="span2 align-left">@skills.{{s}}.mod :</span><span class="span1 align-right"> {{skill.mod}}</span>
+        <span class="span2 align-left">@skills.{{s}}.rank :</span><span class="span1 align-right"> {{skill.rank}}</span>
 
-        {{#if skill.sourceDetails.length}}
-        <br/>{{localize "PF1.FromSources"}}:<br/>
-        {{#each skill.sourceDetails as |src|}}
-        {{src.name}}: {{src.value}}<br/>
-        {{/each}}
-        {{/if}}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=skill.sourceDetails }}
 
         {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target=(concat "skill." s)}}
       </span>

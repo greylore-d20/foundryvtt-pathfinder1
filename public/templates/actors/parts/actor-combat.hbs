@@ -3,19 +3,60 @@
   <table>
     <thead>
       <tr>
-        <th class="attribute bab" data-attribute="bab">
+        <th class="attribute bab tooltip" data-attribute="bab">
+          <span class="tooltipcontent">
+            <span class="span2 align-left">@attributes.bab.total :</span><span class="span1 align-right"> &nbsp;{{system.attributes.bab.total}}</span>
+            
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.bab.total }}
+          </span>
+
           <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.BABAbbr"}}</span></a>
         </th>
-        <th class="attribute cmb" data-attribute="cmb">
+        <th class="attribute cmb tooltip" data-attribute="cmb">
+          {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
+
           <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a>
         </th>
-        <th class="attribute attack melee" data-attribute="melee">
+        <th class="attribute attack melee tooltip" data-attribute="melee">
+          <span class="tooltipcontent">
+            <span class="span3">…</span>
+            <span class="span2 align-left">+ @attributes.attack.shared :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.shared}}</span>
+            <span class="span2 align-left">+ @attributes.attack.general :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.general}}</span>
+            <span class="span2 align-left">+ @attributes.attack.melee :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.melee}}</span>
+            
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.shared }}
+            {{#if genericAttacks.melee.ability}}<span class="span1 align-left">{{lookup @root.config.abilities genericAttacks.melee.ability}} :</span><span class="span1 align-rightspaced"> {{numberFormat genericAttacks.melee.abilityMod decimals=0 sign=true}}</span><span class="span1 align-right"></span>{{/if}}
+            {{#if (ne @root.system.traits.size "med")}}<span class="span1 align-left">{{localize "PF1.Size"}} : </span><span class="span1 align-rightspaced">{{lookup @root.config.sizeMods @root.system.traits.size }}</span><span class="span1 align-right"></span>{{/if}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=1 skipLabel=1}}
+
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.melee skipLine=1 skipLabel=1}}
+          </span>
           <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Melee"}}</span></a>
         </th>
-        <th class="attribute attack ranged" data-attribute="ranged">
+        <th class="attribute attack ranged tooltip" data-attribute="ranged">
+          <span class="tooltipcontent">
+            <span class="span3">…</span>
+            <span class="span2 align-left">+ @attributes.attack.shared :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.shared}}</span>
+            <span class="span2 align-left">+ @attributes.attack.general :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.general}}</span>
+            <span class="span2 align-left">+ @attributes.attack.ranged :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.ranged}}</span>
+
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.shared }}
+            {{#if genericAttacks.ranged.ability}}<span class="span1 align-left">{{lookup @root.config.abilities genericAttacks.ranged.ability}} :</span><span class="span1 align-rightspaced"> {{numberFormat genericAttacks.ranged.abilityMod decimals=0 sign=true}}</span><span class="span1 align-right"></span>{{/if}}
+            {{#if (ne @root.system.traits.size "med")}}<span class="span1 align-left">{{localize "PF1.Size"}} :</span> <span class="span1 align-rightspaced"> &nbsp;{{lookup @root.config.sizeMods @root.system.traits.size }}</span><span class="span1 align-right"></span>{{/if}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=1 skipLabel=1}}
+
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.ranged skipLine=1 skipLabel=1}}
+          </span>
           <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Ranged"}}</span></a>
         </th>
-        <th class="attribute initiative" data-attribute="initiative">
+        <th class="attribute initiative tooltip" data-attribute="initiative">
+          <span class="tooltipcontent">
+            <span class="span2 align-left">@attributes.init.total :</span><span class="span1 align-right"> &nbsp;{{system.attributes.init.total}}</span>
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.init.total }}
+
+            {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
+          </span>
+
           <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
         </th>
       </tr>
@@ -23,15 +64,7 @@
 
     <tbody>
       <tr>
-        <td class="bab tooltip">
-          <span class="tooltipcontent">
-            @attributes.bab.total : {{system.attributes.bab.total}}
-            {{#if sourceDetails.system.attributes.bab.total.length}}
-            <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-            {{#each sourceDetails.system.attributes.bab.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-            {{/if}}
-          </span>
-
+        <td class="bab">
           {{#if iteratives}}
           {{iteratives}}
           {{else}}
@@ -39,66 +72,19 @@
           {{/if}}
         </td>
 
-        <td class="cmb tooltip">
-          {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
+        <td class="cmb">
+          {{numberFormat system.attributes.cmb.total decimals=0 sign=true}}
         </td>
 
-        <td class="generic-melee tooltip">
-          <span class="tooltipcontent">
-            …<br/>
-            + @attributes.attack.shared : {{system.attributes.attack.shared}}<br/>
-            + @attributes.attack.general : {{system.attributes.attack.general}}<br/>
-            + @attributes.attack.melee : {{system.attributes.attack.melee}}<br/>
-            <br/>{{localize "PF1.FromSources"}}<br/>
-            {{#if sourceDetails.system.attributes.attack.shared.length}}
-            {{#each sourceDetails.system.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-            {{/if}}
-            {{#if genericAttacks.melee.ability}}{{lookup @root.config.abilities genericAttacks.melee.ability}} : {{genericAttacks.melee.abilityMod}}<br/>{{/if}}
-            {{#if (ne @root.system.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeMods @root.system.traits.size }}<br/>{{/if}}
-            {{#if sourceDetails.system.attributes.attack.general.length}}
-            {{#each sourceDetails.system.attributes.attack.general as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-            {{/if}}
-            {{#if sourceDetails.system.attributes.attack.melee.length}}
-            {{#each sourceDetails.system.attributes.attack.melee as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-            {{/if}}
-          </span>
+        <td class="generic-melee">
           {{numberFormat genericAttacks.melee.modifier decimals=0 sign=true}}
         </td>
 
-        <td class="generic-ranged tooltip">
-          <span class="tooltipcontent">
-            …<br/>
-            + @attributes.attack.shared : {{system.attributes.attack.shared}}<br/>
-            + @attributes.attack.general : {{system.attributes.attack.general}}<br/>
-            + @attributes.attack.ranged : {{system.attributes.attack.ranged}}<br/>
-            <br/>{{localize "PF1.FromSources"}}<br/>
-            {{#if sourceDetails.system.attributes.attack.shared.length}}
-            {{#each sourceDetails.system.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-            {{/if}}
-            {{#if genericAttacks.ranged.ability}}{{lookup @root.config.abilities genericAttacks.ranged.ability}} : {{genericAttacks.ranged.abilityMod}}<br/>{{/if}}
-            {{#if (ne @root.system.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeMods @root.system.traits.size }}<br/>{{/if}}
-            {{#if sourceDetails.system.attributes.attack.general.length}}
-            {{#each sourceDetails.system.attributes.attack.general as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-            {{/if}}
-            {{#if sourceDetails.system.attributes.attack.ranged.length}}
-            {{#each sourceDetails.system.attributes.attack.ranged as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-            {{/if}}
-          </span>
-
+        <td class="generic-ranged">
           {{numberFormat genericAttacks.ranged.modifier decimals=0 sign=true}}
         </td>
 
-        <td class="initiative tooltip">
-          <span class="tooltipcontent">
-            @attributes.init.total : {{system.attributes.init.total}}
-            {{#if sourceDetails.system.attributes.init.total.length}}
-            <br/><br/>{{localize "PF1.FromSources"}}:<br/>
-            {{#each sourceDetails.system.attributes.init.total as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
-            {{/if}}
-
-            {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
-          </span>
-
+        <td class="initiative">
           {{system.attributes.init.total}}
         </td>
       </tr>
@@ -177,14 +163,13 @@
             {{#if item.hasAttack}}
             <label>{{actionAttacks item.document.firstAction @root.rollData}}</label>
             <span class="tooltipcontent">
-              {{#each item.document.attackArray~}}
-                {{numberFormat this decimals=0 sign=true}}{{#unless @last}}/{{/unless}}
-              {{~/each}}<br/>
-              <br/>
-              {{localize "PF1.Details"}}:<br/>
-              {{#each item.document.attackSources}}
-                {{label}} : {{value}}<br/>
-              {{/each}}
+              <span class="span3">
+                {{#each item.document.attackArray~}}
+                  {{numberFormat this decimals=0 sign=true}}{{#unless @last}}/{{/unless}}
+                {{~/each}}
+              </span>
+              
+              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=item.document.attackSources label="PF1.Details"}}
             </span>
             {{/if}}
           </div>
@@ -193,30 +178,29 @@
             {{#if item.hasDamage}}
               <label class="resolved-formula">{{actionDamage item.document.firstAction @root.rollData}}</label>
               <span class="tooltipcontent">
-                {{actionDamage item.document.firstAction @root.rollData}}<br/>
-                <br/>
-                {{localize "PF1.Details"}}:<br/>
+                <span class="span3">{{actionDamage item.document.firstAction @root.rollData}}</span>
+                <span class="span3"><br/>{{localize "PF1.Details"}}:</span>
                 {{#with item.document.firstAction}}
                   {{#each data.damage.parts as |pt ix|}}
-                    {{pt.formula}}{{#if pt.type}} [{{damageTypes pt.type}}]{{/if}}<br/>
+                    <span class="span1 align-left">{{pt.formula}}</span><span class="span1 align-rightspaced">&nbsp;</span><span class="span1 align-right">{{#if pt.type}} [{{damageTypes pt.type}}]{{/if}}</span>
                   {{/each}}
                   {{#if data.damage.nonCritParts}}
                     {{#each data.damage.nonCritParts as |pt|}}
-                      {{pt.formula}}{{#if pt.type}} [{{damageTypes pt.type}}]{{/if}}<br/>
+                      <span class="span1 align-left">{{pt.formula}}</span><span class="span1 align-rightspaced">&nbsp;</span><span class="span1 align-right">{{#if pt.type}} [{{damageTypes pt.type}}]{{/if}}</span>
                     {{/each}}
                   {{/if}}
                   {{#if data.ability.damage}}
-                    {{abilityMod data.ability.damage @root.rollData data.ability.damageMult}} [{{lookup @root.config.abilities data.ability.damage}}]<br/>
+                    <span class="span1 align-left">{{abilityMod data.ability.damage @root.rollData data.ability.damageMult}}</span><span class="span1 align-rightspaced">&nbsp;</span><span class="span1 align-right"> [{{lookup @root.config.abilities data.ability.damage}}]</span>
                   {{/if}}
                   {{#each allDamageSources}}
-                    {{#if @first}}<br>{{/if}}
-                    {{flavor}} : {{value}} [{{#if type}}{{type}}{{else}}{{lookup @root.config.bonusModifiers modifier}}{{/if}}]<br>
+                    {{#if @first}}<span class="span3"><br></span>{{/if}}
+                    <span class="span1 align-left">{{flavor}} :</span><span class="span1 align-rightspaced"> {{value}}</span> <span class="span1 align-right"> [{{#if type}}{{type}}{{else}}{{lookup @root.config.bonusModifiers modifier}}{{/if}}]</span>
                   {{/each}}
                   {{#if (optionalConditionals item)}}
-                    <br/>+ {{localize "PF1.Conditionals"}}<br/>
+                    <span class="span3">+ {{localize "PF1.Conditionals"}}</span>
                   {{/if}}
                   {{#if damage.critParts}}
-                    <br/>+ {{localize "PF1.CritDamageBonusFormula"}}<br/>
+                    <span class="span3">+ {{localize "PF1.CritDamageBonusFormula"}}</span>
                   {{/if}}
                 {{/with}}
               </span>
@@ -228,10 +212,9 @@
             <label>{{actionRange item.document.firstAction @root.rollData}}</label>
               {{#if (or (gt item.range.maxIncrements 1) (ne item.range.minUnits ""))}}
               <span class="tooltipcontent">
-                {{localize "PF1.MaximumRangeIncrements"}}: {{item.range.maxIncrements}}<br>
-                <br>
-                {{localize "PF1.Range"}}:
-                {{item.range.min}} {{distanceUnit "ft"}} – {{item.range.max}} {{distanceUnit item.range.units}}
+                <span class="span3">{{localize "PF1.MaximumRangeIncrements"}} : {{item.range.maxIncrements}}</span>
+                <span class="span2 align-left">{{localize "PF1.Range"}} :</span><span class="span1 align-right">
+                {{item.range.min}} {{distanceUnit "ft"}} – {{item.range.max}} {{distanceUnit item.range.units}}</span>
               </span>
               {{/if}}
             {{/if}}
@@ -253,8 +236,8 @@
             <span class="sep"> / </span>
             <span class="text-box readonly">{{item.uses.max}}</span>
             <span class="tooltipcontent">
-              @resources.{{item.tag}}.value : {{item.uses.value}}<br>
-              @resources.{{item.tag}}.max : {{item.uses.max}}
+              <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.uses.value}}</span>
+              <span class="span2 align-left">@resources.{{item.tag}}.max :</span><span class="span1 align-right"> {{item.uses.max}}</span>
             </span>
             {{/if}}
           </div>

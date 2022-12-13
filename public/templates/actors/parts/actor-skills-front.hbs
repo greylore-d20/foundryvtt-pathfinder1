@@ -11,12 +11,7 @@
   <ol class="form-group">
     <li class="flexrow skill-rank-info tooltip">
       <span class="tooltipcontent">
-        {{#if sourceData.skillRanks}}
-        {{localize "PF1.FromSources"}}:<br/>
-        {{#each sourceData.skillRanks as |src|}}
-        {{src.name}}: {{src.value}}<br/>
-        {{/each}}
-        {{/if}}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceData.skillRanks label="PF1.FromSources" skipLine=1}}
       </span>
       <table class="skill-ranks">
         <thead>
@@ -38,12 +33,7 @@
   <ol class="form-group tooltip">
     <li class="flexrow skill-rank-info">
       <span class="tooltipcontent">
-        {{#if sourceData.skillRanks}}
-        {{localize "PF1.FromSources"}}:<br/>
-        {{#each sourceData.skillRanks as |src|}}
-        {{src.name}}: {{src.value}}<br/>
-        {{/each}}
-        {{/if}}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceData.skillRanks label="PF1.FromSources" skipLine=1}}
       </span>
       <table class="skill-ranks">
         <thead>

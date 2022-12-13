@@ -262,6 +262,7 @@ export class ItemChange {
             getSourceInfo(actor.sourceInfo, si)[sourceInfoGroup].push({
               value: value,
               name: this.parent ? this.parent.name : this.flavor,
+              modifier: this.modifier,
               type: this.parent ? this.parent.type : null,
               change: this,
             });
@@ -302,6 +303,7 @@ export class ItemChange {
               sInfo.push({
                 value: value,
                 name: this.parent ? this.parent.name : this.flavor,
+                modifier: this.modifier,
                 type: this.parent ? this.parent.type : null,
                 change: this,
               });
@@ -315,6 +317,7 @@ export class ItemChange {
             value: value,
             operator: "set",
             name: this.parent ? this.parent.name : this.flavor,
+            modifier: this.modifier,
             type: this.parent ? this.parent.type : null,
             change: this,
           });

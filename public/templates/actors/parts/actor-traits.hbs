@@ -9,8 +9,8 @@
       {{/select}}
     </select>
     <span class="tooltipcontent">
-      @traits.size : {{system.traits.size}}<br>
-      @size : {{@root.rollData.size}}
+      <span class="span2 align-left">@traits.size :</span><span class="span1 align-right"> {{system.traits.size}}</span>
+      <span class="span2 align-left">@size :</span><span class="span1 align-right"> {{@root.rollData.size}}</span>
     </span>
   </div>
 
@@ -24,7 +24,7 @@
       {{/select}}
     </select>
     <span class="tooltipcontent">
-      @traits.stature : {{system.traits.stature}}
+      <span class="span2 align-left">@traits.stature :</span><span class="span1 align-right"> {{system.traits.stature}}</span>
     </span>
   </div>
 
@@ -194,7 +194,7 @@
       <input type="checkbox" name="system.attributes.quadruped" {{checked system.attributes.quadruped}}/>
     </label>
     <span class="tooltipcontent">
-      @attributes.quadruped : {{system.attributes.quadruped}}<br>
+      <span class="span2 align-left">@attributes.quadruped :</span><span class="span1 align-right"> {{system.attributes.quadruped}}</span>
     </span>
   </div>
 
@@ -203,7 +203,7 @@
     <input class="select-on-click" type="text" name="system.attributes.energyDrain" value="{{system.attributes.energyDrain}}"
                                                           placeholder="0" data-dtype="Number" />
     <span class="tooltipcontent">
-      @attributes.energyDrain : {{system.attributes.energyDrain}}<br>
+      <span class="span2 align-left">@attributes.energyDrain :</span><span class="span1 align-right"> {{system.attributes.energyDrain}}</span>
     </span>
   </div>
 

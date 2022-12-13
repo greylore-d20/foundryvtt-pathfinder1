@@ -146,8 +146,8 @@
           <span class="sep"> / </span>
           <span class="text-box">{{item.uses.max}}</span>
           <span class="tooltipcontent">
-            @resources.{{item.tag}}.value : {{item.uses.value}}<br>
-            @resources.{{item.tag}}.max : {{item.uses.max}}
+            <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.uses.value}}</span>
+            <span class="span2 align-left">@resources.{{item.tag}}.max :</span><span class="span1 align-right"> {{item.uses.max}}</span>
           </span>
           {{/if}}
           {{/unless}}
@@ -177,17 +177,14 @@
 {{#unless isLootSheet}}
 <div class="flexrow tab-footer tooltip">
   <div class="tooltipcontent">
-    @attributes.encumbrance.level : {{system.attributes.encumbrance.level}}<br>
-    <br>
-    @details.carryCapacity.bonus.total : {{system.details.carryCapacity.bonus.total}}<br>
-    {{#each sourceDetails.system.details.carryCapacity.bonus.total}}
-      {{name}} : {{value}}<br>
-    {{/each}}
-    <br>
-    @details.carryCapacity.multiplier.total : {{system.details.carryCapacity.multiplier.total}}<br>
-    {{#each sourceDetails.system.details.carryCapacity.multiplier.total}}
-      {{name}} : {{value}}<br>
-    {{/each}}
+    <span class="span2 align-left">@attributes.encumbrance.level :</span><span class="span1 align-right"> {{system.attributes.encumbrance.level}}</span>
+    <span class="span3"><br/></span>
+    <span class="span2 align-left">@details.carryCapacity.bonus.total :</span><span class="span1 align-right"> {{system.details.carryCapacity.bonus.total}}</span>
+    {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.details.carryCapacity.bonus.total}}
+    
+    <span class="span3"><br/></span>
+    <span class="span2 align-left">@details.carryCapacity.multiplier.total :</span><span class="span1 align-right"> {{system.details.carryCapacity.multiplier.total}}</span>
+    {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.details.carryCapacity.multiplier.total}}
   </div>
 
   <div class="form-group carry-bonus">

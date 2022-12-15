@@ -211,10 +211,12 @@ export class ItemChange {
               }
 
               if (typeof base === "number") {
-                if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
+                if (CONFIG.PF1.stackingBonusModifiers.includes(this.modifier)) {
+                  // Add stacking bonus
                   setProperty(actor, t, base + value);
                   override[operator][this.modifier] = (prior ?? 0) + value;
                 } else {
+                  // Use higher value only
                   const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
                   setProperty(actor, t, base + diff);
                   override[operator][this.modifier] = Math.max(prior ?? 0, value);
@@ -259,7 +261,7 @@ export class ItemChange {
     switch (this.operator) {
       case "add":
       case "function":
-        if (CONFIG.PF1.stackingBonusModifiers.indexOf(this.modifier) !== -1) {
+        if (CONFIG.PF1.stackingBonusModifiers.includes(this.modifier)) {
           const sourceInfoGroup = value >= 0 ? "positive" : "negative";
           for (const si of sourceInfoTargets) {
             getSourceInfo(actor.sourceInfo, si)[sourceInfoGroup].push({
@@ -276,25 +278,25 @@ export class ItemChange {
 
             // Remove entries with lower values
             let doAdd = true;
-            sInfo.forEach((o) => {
-              const hasSameParent = o.change?.parent === this.parent;
+            sInfo.forEach((infoEntry) => {
+              const hasSameParent = infoEntry.change?.parent === this.parent;
               const isEnh =
-                (o.change?.modifier === "base" && this.modifier === "enhancement") ||
-                (o.change?.modifier === "enhancement" && this.modifier === "base");
-              const hasSameTarget = o.change?.subTarget === this.subTarget;
+                (infoEntry.change?.modifier === "base" && this.modifier === "enhancement") ||
+                (infoEntry.change?.modifier === "enhancement" && this.modifier === "base");
+              const hasSameTarget = infoEntry.change?.subTarget === this.subTarget;
               const alterBase = hasSameParent && isEnh && hasSameTarget;
 
-              if (o.modifier === this.modifier || alterBase) {
+              if (infoEntry.change.modifier === this.modifier || alterBase) {
                 if (alterBase) {
-                  if (o.change?.modifier === "base") {
-                    o.value += value;
+                  if (infoEntry.change?.modifier === "base") {
+                    infoEntry.value += value;
                     doAdd = false;
                   } else {
-                    value += o.value;
-                    sInfo.splice(sInfo.indexOf(o), 1);
+                    value += infoEntry.value;
+                    sInfo.splice(sInfo.indexOf(infoEntry), 1);
                   }
-                } else if (o.value < value) {
-                  sInfo.splice(sInfo.indexOf(o), 1);
+                } else if (infoEntry.value < value) {
+                  sInfo.splice(sInfo.indexOf(infoEntry), 1);
                 } else {
                   doAdd = false;
                 }

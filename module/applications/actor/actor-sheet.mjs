@@ -2258,7 +2258,7 @@ export class ActorSheetPF extends ActorSheet {
             if (splitValue > 0) {
               await item.update({ "system.quantity": Math.max(0, item.system.quantity - splitValue) });
               const data = item.toObject();
-              data.quantity = splitValue;
+              data.system.quantity = splitValue;
               await CONFIG.Item.documentClass.createDocuments([data], { parent: this.document });
             }
           },

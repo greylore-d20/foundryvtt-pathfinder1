@@ -2051,7 +2051,9 @@ export class ActorSheetPF extends ActorSheet {
 
     delete data.id;
     data.name = `${data.name} (Copy)`;
-    data.identifiedName = data.name;
+    if (item.isPhysical) {
+      data.identifiedName = data.name;
+    }
     if (data.links) data.links = {};
 
     this.document.createEmbeddedDocuments("Item", [data]);

@@ -965,7 +965,7 @@ export class ItemPF extends ItemBasePF {
       isVersatile: this.isVersatile,
       isSpell: this.type === "spell",
       name: (identified ? rollData.identifiedName : rollData.item.unidentified?.name) || this.name,
-      description: identified ? this.fullDescription : itemChatData.unidentifiedDescription,
+      description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
       rollData: rollData,
       hasExtraProperties: false,
       extraProperties: [],

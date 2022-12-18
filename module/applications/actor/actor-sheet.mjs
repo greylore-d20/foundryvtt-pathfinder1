@@ -1413,7 +1413,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
 
     if (item == null) return;
-    return item.roll();
+    return item.displayCard();
   }
 
   _mouseWheelAdd(event, el) {

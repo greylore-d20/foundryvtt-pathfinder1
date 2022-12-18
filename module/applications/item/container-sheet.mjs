@@ -728,7 +728,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const item = this.item.getContainerContent(itemId);
 
     if (item == null) return;
-    return item.roll();
+    return item.displayCard();
   }
 
   /** Item Search */

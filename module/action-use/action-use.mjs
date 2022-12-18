@@ -874,7 +874,7 @@ export class ActionUse {
         extraText: extraText,
         identified: identified,
         name: name,
-        description: identified ? this.item.fullDescription : itemChatData.unidentifiedDescription,
+        description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
         actionDescription: itemChatData.actionDescription,
         hasExtraText: extraText.length > 0,
         properties: props,

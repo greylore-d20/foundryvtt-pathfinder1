@@ -804,7 +804,7 @@ export class ActorPF extends ActorBasePF {
           const lvlSlots = slots[level];
           for (const spell of levelSpells) {
             if (Number.isFinite(spell.maxCharges)) {
-              const slotCost = spell.system.slotCost ?? 1;
+              const slotCost = spell.slotCost;
               const subtract = { domain: 0, uses: 0 };
               if (spell.isDomain) {
                 subtract.domain = Math.min(spell.maxCharges, lvlSlots.domain);
@@ -863,8 +863,9 @@ export class ActorPF extends ActorBasePF {
             let dSlots = slots[spellLevel].domain;
             const used =
               bookInfo.level[spellLevel]?.spells.reduce((acc, i) => {
-                const { preparation, atWill, domain, slotCost } = i.system;
+                const { preparation, atWill, domain } = i.system;
                 if (!atWill && preparation.spontaneousPrepared) {
+                  const slotCost = i.slotCost;
                   if (domain && dSlots > 0) dSlots -= slotCost;
                   else acc += slotCost;
                 }

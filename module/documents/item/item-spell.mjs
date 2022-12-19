@@ -686,4 +686,18 @@ export class ItemSpellPF extends ItemPF {
     }
     return data;
   }
+
+  /**
+   * Number of slots the spell takes to prepare.
+   *
+   * Quick access to .system.slotCost with additional considerations such as at-will toggle.
+   *
+   * Defaults to 1 if the data is not present, 0 if the spell is at-will.
+   *
+   * @type {number}
+   */
+  get slotCost() {
+    if (this.system.atWill) return 0;
+    return this.system.slotCost ?? 1;
+  }
 }

@@ -12,7 +12,7 @@ export class TooltipPF extends Application {
       if (this.onMouse && !this.hidden) this._setPosition();
     });
 
-    this.objects = [];
+    this.object = null;
 
     this.forceHideGMInfo = false;
     this.forceHide = false;
@@ -56,34 +56,19 @@ export class TooltipPF extends Application {
 
   bind(object) {
     if (this.lock.new) return;
-
-    if (this.objects.indexOf(object) === -1) {
-      this.objects.push(object);
-      this.render(true);
-    }
+    this.object = object;
+    this.render(true);
   }
 
   unbind(object) {
     if (this.lock.old) return;
-
-    const idx = this.objects.indexOf(object);
-    if (idx >= 0) {
-      this.objects.splice(idx, 1);
-      if (this.objects.length === 0) {
-        this.hide();
-      } else {
-        this.render();
-      }
-    }
-  }
-
-  clearBinds() {
-    this.objects = [];
+    this.object = null;
     this.hide();
   }
 
-  get object() {
-    return this.objects[0];
+  clearBind() {
+    this.object = null;
+    this.hide();
   }
 
   async getData() {
@@ -301,7 +286,7 @@ export class TooltipPF extends Application {
   }
 
   show() {
-    if (this.objects.length === 0) return;
+    if (!this.object) return;
     if (this.forceHide) return;
     if (getProperty(this.config, "disable") === true || getProperty(this.worldConfig, "disable") === true) return;
 
@@ -324,12 +309,12 @@ export class TooltipPF extends Application {
       let loadedContentCount = 0;
       loadableContent.one("load", () => {
         loadedContentCount++;
-        if (loadedContentCount === loadableContentCount && this.objects.length === 1) {
+        if (loadedContentCount === loadableContentCount && this.object) {
           this._setPosition();
           this.show();
         }
       });
-    } else if (this.objects.length === 1) {
+    } else if (this.object) {
       this._setPosition();
       this.show();
     }
@@ -337,7 +322,7 @@ export class TooltipPF extends Application {
 
   activateListeners(html) {
     html.find(".controls .close").click(() => {
-      this.clearBinds();
+      this.clearBind();
     });
   }
 

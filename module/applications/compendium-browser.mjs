@@ -810,7 +810,7 @@ export class CompendiumBrowser extends Application {
         },
         {
           path: "spellTypes",
-          label: game.i18n.localize("PF1.TypePlural"),
+          label: game.i18n.localize("PF1.DescriptorPlural"),
           items: naturalSort(
             Object.keys(this.extraFilters["spellTypes"]).reduce((cur, o) => {
               cur.push({ key: o, name: o });

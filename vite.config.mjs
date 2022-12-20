@@ -40,11 +40,8 @@ const config = defineConfig(({ command, mode }) => {
         },
       },
     },
-    esbuild: {
-      minifySyntax: true,
-      minifyWhitespace: true,
-    },
     build: {
+      minify: false,
       target: "es2022",
       outDir: resolve("dist"),
       emptyOutDir: true,

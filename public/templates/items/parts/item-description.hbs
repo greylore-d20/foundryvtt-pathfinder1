@@ -9,64 +9,6 @@
   <div class="flexrow description-container">
     <div class="item-properties">
       {{#if isPhysical}}
-      {{#unless descriptionAttributes}}
-      {{!-- Quantity --}}
-      <div class="form-group">
-        <label>{{localize "PF1.Quantity"}}</label>
-        <input class="select-on-click" type="text" name="system.quantity" value="{{system.quantity}}" data-dtype="Number"/>
-      </div>
-
-      {{!-- Weight --}}
-      <div class="form-group">
-        <label>{{localize "PF1.Weight"}} ({{system.weight.units}})</label>
-        <input class="select-on-click" type="text" name="system.weight.converted" value="{{numberFormat system.weight.converted decimals=2}}" data-dtype="Number"/>
-      </div>
-
-      {{!-- Price --}}
-      {{#if showIdentifyDescription}}
-      <div class="form-group">
-        <label>{{localize "PF1.Price"}} ({{system.priceUnits}})</label>
-        <input class="select-on-click" type="text" name="system.price" value="{{numberFormat system.price decimals=2}}" data-dtype="Number"/>
-      </div>
-
-      <div class="form-group">
-        <label>{{localize "PF1.UnidentifiedPriceShort"}}</label>
-        <input class="select-on-click" type="text" name="system.unidentified.price" value="{{numberFormat system.unidentified.price decimals=2}}" data-dtype="Number"/>
-      </div>
-      {{else}}
-      {{#if showUnidentifiedData}}
-      <div class="form-group">
-        <label>{{localize "PF1.Price"}} ({{system.priceUnits}})</label>
-        <input class="select-on-click" type="text" name="system.unidentified.price" value="{{system.unidentified.price}}" data-dtype="Number"/>
-      </div>
-      {{else}}
-      <div class="form-group">
-        <label>{{localize "PF1.Price"}} ({{system.priceUnits}})</label>
-        <input class="select-on-click" type="text" name="system.price" value="{{system.price}}" data-dtype="Number"/>
-      </div>
-      {{/if}}
-      {{/if}}
-
-      {{!-- Hit Points --}}
-      <div class="form-group">
-        <label>{{localize "PF1.HPShort"}}</label>
-        <input class="select-on-click" type="text" name="system.hp.value" value="{{system.hp.value}}" data-dtype="Number" style="flex: 0 0 32px"/>
-        <span>/</span>
-        <input class="select-on-click" type="text" name="system.hp.max" value="{{system.hp.max}}" data-dtype="Number" style="flex: 0 0 32px"/>
-      </div>
-
-      {{!-- Hardness --}}
-      <div class="form-group">
-        <label>{{localize "PF1.Hardness"}}</label>
-        <input class="select-on-click" type="text" name="system.hardness" value="{{system.hardness}}" data-dtype="Number"/>
-      </div>
-
-      {{!-- Carried Flag --}}
-      <div class="form-group">
-        <label>{{localize "PF1.Carried"}}</label>
-        <input type="checkbox" name="system.carried" {{checked system.carried}}/>
-      </div>
-      {{else}}
       {{#each descriptionAttributes as |attr|}}
       {{#if attr.isBoolean}}
       <div class="form-group">
@@ -121,7 +63,6 @@
         </div>
       {{/if}}
       {{/each}}
-      {{/unless}}
       {{/if}}
 
       {{!-- Properties --}}

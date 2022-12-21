@@ -530,14 +530,14 @@ export class CompendiumBrowser extends Application {
     }, []);
 
     result.item.assocations = {
-      class: (item.system.featType === "classFeat"
-        ? getProperty(item.system, "associations.classes") || []
-        : []
-      ).reduce((cur, o) => {
-        this.extraFilters.associations.class[o[0]] = true;
-        cur.push(o[0]);
-        return cur;
-      }, []),
+      class: (item.system.subType === "classFeat" ? getProperty(item.system, "associations.classes") || [] : []).reduce(
+        (cur, o) => {
+          this.extraFilters.associations.class[o[0]] = true;
+          cur.push(o[0]);
+          return cur;
+        },
+        []
+      ),
     };
   }
 
@@ -704,7 +704,7 @@ export class CompendiumBrowser extends Application {
     };
 
     // Get types
-    this.extraFilters.types[item.system.buffType] = true;
+    this.extraFilters.types[item.system.subType] = true;
   }
 
   _mapEntry(pack, item) {
@@ -897,7 +897,7 @@ export class CompendiumBrowser extends Application {
           ],
         },
         {
-          path: "system.weaponType",
+          path: "system.subType",
           label: game.i18n.localize("PF1.WeaponType"),
           items: Object.entries(CONFIG.PF1.weaponTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1]._label });
@@ -930,7 +930,7 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "system.equipmentType",
+          path: "system.subType",
           label: game.i18n.localize("PF1.EquipmentType"),
           items: Object.entries(CONFIG.PF1.equipmentTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1]._label });
@@ -972,7 +972,7 @@ export class CompendiumBrowser extends Application {
           }, []),
         },
         {
-          path: "system.consumableType",
+          path: "system.subType",
           label: game.i18n.localize("PF1.ConsumableType"),
           items: Object.entries(CONFIG.PF1.consumableTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -1035,7 +1035,7 @@ export class CompendiumBrowser extends Application {
     this.filters.push(
       ...[
         {
-          path: "system.featType",
+          path: "system.subType",
           label: game.i18n.localize("PF1.Type"),
           items: Object.entries(CONFIG.PF1.featTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -1072,7 +1072,7 @@ export class CompendiumBrowser extends Application {
     this.filters.push(
       ...[
         {
-          path: "system.classType",
+          path: "system.subType",
           label: game.i18n.localize("PF1.ClassType"),
           items: Object.entries(CONFIG.PF1.classTypes).reduce((cur, o) => {
             cur.push({ key: o[0], name: o[1] });
@@ -1164,7 +1164,7 @@ export class CompendiumBrowser extends Application {
     this.filters.push(
       ...[
         {
-          path: "system.buffType",
+          path: "system.subType",
           label: game.i18n.localize("PF1.Type"),
           items: naturalSort(
             Object.entries(CONFIG.PF1.buffTypes).reduce((cur, o) => {
@@ -1425,24 +1425,21 @@ export class CompendiumBrowser extends Application {
         propKeys.push(
           "type",
           "system.properties",
-          "system.weaponType",
           "system.weaponSubtype",
-          "system.equipmentType",
           "system.equipmentSubtype",
           "system.slot",
-          "system.consumableType",
           "system.subType"
         );
         break;
       case "feats":
-        propKeys.push("system.featType", "system.associations.classes", "system.tags");
+        propKeys.push("system.subType", "system.associations.classes", "system.tags");
         break;
       case "bestiary":
         propKeys.push("system.details.cr.total");
         break;
       case "classes":
         propKeys.push(
-          "system.classType",
+          "system.subType",
           "system.bab",
           "system.hd",
           "system.skillsPerLevel",

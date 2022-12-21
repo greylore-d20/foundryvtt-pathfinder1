@@ -1,10 +1,6 @@
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemLootPF extends ItemPF {
-  get subType() {
-    return this.system.subType;
-  }
-
   get extraType() {
     return this.system.extraType;
   }

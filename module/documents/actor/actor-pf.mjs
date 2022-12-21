@@ -247,8 +247,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   static _getChangeItemSubtype(item) {
-    if (item.type === "buff") return item.system.buffType;
-    if (item.type === "feat") return item.system.featType;
+    if (item.type === "buff" || item.type === "feat") return item.system.subType;
     return "";
   }
 
@@ -516,7 +515,7 @@ export class ActorPF extends ActorBasePF {
    */
   hasArmorProficiency(item, proficiencyName) {
     // Check for item type
-    if (item.type !== "equipment" || !["armor", "shield"].includes(item.system.equipmentType)) return true;
+    if (item.type !== "equipment" || !["armor", "shield"].includes(item.system.subType)) return true;
 
     // Custom proficiencies
     const customProficiencies =
@@ -1383,7 +1382,7 @@ export class ActorPF extends ActorBasePF {
         return obj.type === "equipment" && obj.system.equipped;
       })
       .forEach((obj) => {
-        const eqType = obj.system.equipmentType;
+        const eqType = obj.system.subType;
         const isShieldOrArmor = ["armor", "shield"].includes(eqType);
         let itemACP = Math.abs(obj.system.armor.acp);
         if (obj.system.masterwork === true && isShieldOrArmor) itemACP = Math.max(0, itemACP - 1);
@@ -1891,7 +1890,7 @@ export class ActorPF extends ActorBasePF {
     attackData["type"] = "attack";
     attackData["name"] = item.name;
     attackData["img"] = item.img;
-    attackData["system.attackType"] = "weapon";
+    attackData["system.subType"] = "weapon";
     attackData["system.masterwork"] = item.system.masterwork;
     attackData["system.enh"] = item.system.enh;
     attackData["system.broken"] = item.system.broken;
@@ -3874,12 +3873,12 @@ export class ActorPF extends ActorBasePF {
   getFeatCount() {
     const result = { max: 0, value: 0 };
     result.value = this.items.filter((o) => {
-      return o.type === "feat" && o.system.featType === "feat" && !o.system.disabled;
+      return o.type === "feat" && o.system.subType === "feat" && !o.system.disabled;
     }).length;
 
     // Add feat count by level
     const totalLevels = this.items
-      .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.system.classType))
+      .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.system.subType))
       .reduce((cur, o) => {
         return cur + o.hitDice;
       }, 0);

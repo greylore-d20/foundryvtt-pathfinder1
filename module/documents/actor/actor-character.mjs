@@ -47,7 +47,7 @@ export class ActorCharacterPF extends ActorPF {
 
     // Get total level
     const classes = this.items.filter((o) => o.type === "class");
-    const level = classes.filter((o) => o.system.classType !== "mythic").reduce((cur, o) => cur + o.system.level, 0);
+    const level = classes.filter((o) => o.system.subType !== "mythic").reduce((cur, o) => cur + o.system.level, 0);
 
     const oldData = this.system;
 

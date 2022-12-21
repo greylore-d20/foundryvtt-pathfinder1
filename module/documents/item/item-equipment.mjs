@@ -4,13 +4,13 @@ import { PF1 } from "@config";
 export class ItemEquipmentPF extends ItemPF {
   async _preUpdate(update, context) {
     // Set equipment subtype and slot
-    const type = update.system?.equipmentType;
-    if (type !== undefined && type !== this.system.equipmentType) {
+    const type = update.system?.subType;
+    if (type !== undefined && type !== this.system.subType) {
       // Set subtype
       const subtype = update.system?.equipmentSubtype ?? this.system.equipmentSubtype ?? "";
       const subtypes = Object.keys(CONFIG.PF1.equipmentTypes[type]).filter((o) => !o.startsWith("_"));
       if (!subtype || !subtypes.includes(subtype)) {
-        setProperty(update, "system.equipmentSubtype", subtypes[0]);
+        update.system.equipmentSubtype = subtypes[0];
       }
 
       // Set slot
@@ -87,7 +87,7 @@ export class ItemEquipmentPF extends ItemPF {
       const shieldTypes = CONFIG.PF1.shieldTypes,
         armorTypes = CONFIG.PF1.armorTypes;
 
-      switch (data.equipmentType) {
+      switch (data.subType) {
         case "shield": {
           const subtype = data.equipmentSubtype;
           let shieldType = actor.equipment.shield.type;

@@ -112,8 +112,8 @@ export class ItemActionSheet extends FormApplication {
 
     // Prepare attack specific stuff
     if (data.item.type === "attack") {
-      data.isWeaponAttack = data.item.system.attackType === "weapon";
-      data.isNaturalAttack = data.item.system.attackType === "natural";
+      data.isWeaponAttack = data.item.system.subType === "weapon";
+      data.isNaturalAttack = data.item.system.subType === "natural";
     }
 
     // Add distance units

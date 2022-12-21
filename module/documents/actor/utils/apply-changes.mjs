@@ -621,12 +621,12 @@ export const addDefaultChanges = function (changes) {
 
   // Class hit points
   const classes = this.items
-    .filter((o) => o.type === "class" && !["racial"].includes(o.classType))
+    .filter((o) => o.type === "class" && !["racial"].includes(o.subType))
     .sort((a, b) => {
       return a.sort - b.sort;
     });
   const racialHD = this.items
-    .filter((o) => o.type === "class" && o.classType === "racial")
+    .filter((o) => o.type === "class" && o.subType === "racial")
     .sort((a, b) => {
       return a.sort - b.sort;
     });
@@ -658,8 +658,7 @@ export const addDefaultChanges = function (changes) {
     );
   };
   const manual_health = (health_source) => {
-    let health =
-      health_source.system.hp + (health_source.system.classType === "base") * health_source.system.fc.hp.value;
+    let health = health_source.system.hp + (health_source.system.subType === "base") * health_source.system.fc.hp.value;
 
     if (!continuous) health = round(health);
     push_health(health, health_source);
@@ -672,7 +671,7 @@ export const addDefaultChanges = function (changes) {
 
     const maxed_health = Math.min(health_source.system.level, maximized) * health_source.system.hd;
     const level_health = Math.max(0, health_source.system.level - maximized) * die_health;
-    const favor_health = (health_source.system.classType === "base") * health_source.system.fc.hp.value;
+    const favor_health = (health_source.system.subType === "base") * health_source.system.fc.hp.value;
     const health = maxed_health + level_health + favor_health;
 
     push_health(health, health_source);
@@ -1027,7 +1026,7 @@ export const addDefaultChanges = function (changes) {
     })
     .forEach((item) => {
       let armorTarget = "aac";
-      if (item.system.equipmentType === "shield") armorTarget = "sac";
+      if (item.system.subType === "shield") armorTarget = "sac";
       // Push base armor
       if (item.system.armor.value || item.system.armor.enh) {
         const baseAC = item.system.broken ? Math.floor(item.system.armor.value / 2) : item.system.armor.value;

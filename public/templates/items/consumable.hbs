@@ -12,7 +12,7 @@
           {{itemType}}
         </li>
         <li>
-          {{#unless showUnidentifiedData}}{{lookup config.consumableTypes system.consumableType }}{{/unless}}
+          {{#unless showUnidentifiedData}}{{lookup config.consumableTypes system.subType }}{{/unless}}
         </li>
       </ul>
     </div>
@@ -56,8 +56,8 @@
       {{#unless showUnidentifiedData}}
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
-        <select name="system.consumableType">
-          {{#select system.consumableType}}
+        <select name="system.subType">
+          {{#select system.subType}}
           {{#each config.consumableTypes as |name type|}}
           <option value="{{type}}">{{name}}</option>
           {{/each}}

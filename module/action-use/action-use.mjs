@@ -190,7 +190,7 @@ export class ActionUse {
       let powerAttackMultiplier = this.shared.rollData.item?.powerAttack?.multiplier;
       if (!powerAttackMultiplier) {
         powerAttackMultiplier = 1;
-        if (this.item.system.attackType === "natural") {
+        if (this.item.system.subType === "natural") {
           if (this.shared.rollData.action?.naturalAttack.primaryAttack)
             powerAttackMultiplier = this.shared.rollData.action.ability?.damageMult;
           else {
@@ -237,7 +237,7 @@ export class ActionUse {
 
     // Apply secondary attack penalties
     if (
-      this.shared.rollData.item.attackType === "natural" &&
+      this.shared.rollData.item.subType === "natural" &&
       this.shared.rollData.action?.naturalAttack.primaryAttack === false
     ) {
       const attackBonus = this.shared.rollData.action.naturalAttack?.secondary?.attackBonus || "-5";

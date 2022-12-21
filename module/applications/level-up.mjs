@@ -220,7 +220,7 @@ export class LevelUpForm extends FormApplication {
    * @// TODO: Add better logic for determining this <26-01-22, Furyspark> //
    */
   isFavouredClass() {
-    return this.object.system.classType === "base";
+    return this.object.system.subType === "base";
   }
 
   async _updateObject(event, formData) {

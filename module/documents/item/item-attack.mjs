@@ -28,8 +28,4 @@ export class ItemAttackPF extends ItemPF {
 
     weaponGroups.cssClass = foundry.utils.isEmpty(weaponGroups.selected) ? "inactive" : "";
   }
-
-  get subType() {
-    return this.system.attackType;
-  }
 }

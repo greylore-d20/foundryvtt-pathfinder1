@@ -137,7 +137,7 @@ export class ItemClassPF extends ItemPF {
         : CONFIG.PF1.classSavingThrowFormulas;
 
       for (const save of Object.keys(CONFIG.PF1.savingThrows)) {
-        const classType = itemData.classType || "base";
+        const classType = itemData.subType || "base";
         let formula;
         const saveData = itemData.savingThrows[save];
         const saveType = saveData.value;
@@ -180,14 +180,14 @@ export class ItemClassPF extends ItemPF {
       let healthConfig = game.settings.get("pf1", "healthConfig");
       const hasPlayerOwner = this.hasPlayerOwner;
       healthConfig =
-        classData.classType === "racial"
+        classData.subType === "racial"
           ? healthConfig.hitdice.Racial
           : hasPlayerOwner
           ? healthConfig.hitdice.PC
           : healthConfig.hitdice.NPC;
 
-      if (!classData.classType) console.warn(`${this.name} lacks class type`, this);
-      const isBaseClass = (classData.classType || "base") === "base";
+      if (!classData.subType) console.warn(`${this.name} lacks class type`, this);
+      const isBaseClass = (classData.subType || "base") === "base";
       if (!this.actor.classes) return;
       actor.classes[tag] = {
         level: classData.level,
@@ -209,10 +209,6 @@ export class ItemClassPF extends ItemPF {
         },
       };
     }
-  }
-
-  get subType() {
-    return this.system.classType;
   }
 
   get hitDice() {

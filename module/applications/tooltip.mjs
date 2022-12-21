@@ -172,7 +172,7 @@ export class TooltipPF extends Application {
         if (!["weapon", "equipment"].includes(i.type)) return false;
         if (!i.system.equipped) return false;
         if (i.type === "equipment") {
-          if (i.system.equipmentType !== "shield") return false;
+          if (i.system.subType !== "shield") return false;
         }
         return true;
       });
@@ -195,7 +195,7 @@ export class TooltipPF extends Application {
       const armor = actor.items.filter((i) => {
         if (i.type !== "equipment") return false;
         if (!i.system.equipped) return false;
-        if (i.system.equipmentType !== "armor") return false;
+        if (i.system.subType !== "armor") return false;
         return true;
       });
 
@@ -217,7 +217,7 @@ export class TooltipPF extends Application {
       const clothing = actor.items.filter((i) => {
         if (i.type !== "equipment") return false;
         if (!i.system.equipped) return false;
-        if (i.system.equipmentType !== "misc") return false;
+        if (i.system.subType !== "misc") return false;
         if (i.system.equipmentSubtype !== "clothing") return false;
         return true;
       });

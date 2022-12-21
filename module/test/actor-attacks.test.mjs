@@ -146,7 +146,7 @@ export const registerActorItemAttackTests = () => {
               type: "attack",
               name: "Bite",
               system: {
-                attackType: "natural",
+                subType: "natural",
                 primaryAttack: true,
                 actions: [
                   mergeObject(rawActionData, {

@@ -1,10 +1,6 @@
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemConsumablePF extends ItemPF {
-  get subType() {
-    return this.system.consumableType;
-  }
-
   async _preDelete(options, user) {
     if (user.id === game.user.id) {
       if (this.system.quantity > 0) {

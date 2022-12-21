@@ -118,7 +118,7 @@ export class ItemSheetPF extends ItemSheet {
     data.isCharged = ["day", "week", "charges"].includes(data.system.uses?.per);
     data.defaultChargeFormula = this.item.getDefaultChargeFormula();
     data.isPhysical = data.system.quantity !== undefined;
-    data.isNaturalAttack = data.system.attackType === "natural";
+    data.isNaturalAttack = data.system.subType === "natural";
     data.isSpell = this.item.type === "spell";
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
@@ -267,8 +267,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare feat specific stuff
     if (data.item.type === "feat") {
-      data.isClassFeature = getProperty(this.item, "system.featType") === "classFeat";
-      data.isTemplate = getProperty(this.item, "system.featType") === "template";
+      data.isClassFeature = getProperty(this.item, "system.subType") === "classFeat";
+      data.isTemplate = getProperty(this.item, "system.subType") === "template";
     }
 
     if (["class", "feat", "race"].includes(data.item.type)) {
@@ -299,7 +299,7 @@ export class ItemSheetPF extends ItemSheet {
       for (const [k, v] of Object.entries(CONFIG.PF1.weaponTypes)) {
         if (typeof v === "object") data.weaponCategories.types[k] = v._label;
       }
-      const type = data.system.weaponType;
+      const type = data.system.subType;
       if (hasProperty(CONFIG.PF1.weaponTypes, type)) {
         for (const [k, v] of Object.entries(CONFIG.PF1.weaponTypes[type])) {
           // Add static targets
@@ -315,7 +315,7 @@ export class ItemSheetPF extends ItemSheet {
       for (const [k, v] of Object.entries(CONFIG.PF1.equipmentTypes)) {
         if (typeof v === "object") data.equipmentCategories.types[k] = v._label;
       }
-      const type = data.system.equipmentType;
+      const type = data.system.subType;
       if (hasProperty(CONFIG.PF1.equipmentTypes, type)) {
         for (const [k, v] of Object.entries(CONFIG.PF1.equipmentTypes[type])) {
           // Add static targets
@@ -367,7 +367,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare class specific stuff
     if (data.item.type === "class") {
-      data.isMythicPath = data.system.classType === "mythic";
+      data.isMythicPath = data.system.subType === "mythic";
 
       for (const [a, s] of Object.entries(data.system.savingThrows)) {
         s.label = CONFIG.PF1.savingThrows[a];
@@ -376,8 +376,8 @@ export class ItemSheetPF extends ItemSheet {
         s.label = CONFIG.PF1.favouredClassBonuses[a];
       }
 
-      data.isBaseClass = data.system.classType === "base";
-      data.isRacialHD = data.system.classType === "racial";
+      data.isBaseClass = data.system.subType === "base";
+      data.isRacialHD = data.system.subType === "racial";
 
       if (this.actor != null) {
         const healthConfig = game.settings.get("pf1", "healthConfig");
@@ -708,19 +708,19 @@ export class ItemSheetPF extends ItemSheet {
       props.push(labels.components, labels.materials);
     } else if (item.type === "equipment") {
       // Obfuscate wondrous item as clothing or other, if unidentified
-      if (!item.showUnidentifiedData || item.system.equipmentType !== "misc") {
-        props.push(CONFIG.PF1.equipmentTypes[item.system.equipmentType][item.system.equipmentSubtype]);
+      if (!item.showUnidentifiedData || item.system.subType !== "misc") {
+        props.push(CONFIG.PF1.equipmentTypes[item.system.subType][item.system.equipmentSubtype]);
       } else {
         if (item.system.slot === "slotless") {
-          props.push(CONFIG.PF1.equipmentTypes[item.system.equipmentType]["other"]);
+          props.push(CONFIG.PF1.equipmentTypes[item.system.subType]["other"]);
         } else {
-          props.push(CONFIG.PF1.equipmentTypes[item.system.equipmentType]["clothing"]);
+          props.push(CONFIG.PF1.equipmentTypes[item.system.subType]["clothing"]);
         }
       }
       // Add AC
       props.push(labels.armor);
     } else if (item.type === "feat") {
-      props.push(labels.featType);
+      props.push(labels.subType);
     }
 
     // Action type

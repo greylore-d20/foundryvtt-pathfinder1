@@ -546,7 +546,7 @@ export class ItemPF extends ItemBasePF {
     // Slot label
     if (itemData.slot) {
       // Add equipment slot
-      const equipmentType = this.system.equipmentType || null;
+      const equipmentType = this.system.subType || null;
       if (equipmentType != null) {
         const equipmentSlot = this.system.slot || null;
         labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
@@ -2168,8 +2168,8 @@ export class ItemPF extends ItemBasePF {
       ["rwak", "rsak", "rcman"].includes(actionData.actionType) || this.system.weaponSubtype === "ranged";
     const isManeuver = ["mcman", "rcman"].includes(actionData.actionType);
 
-    const describePart = (value, label, sort = 0) => {
-      sources.push({ value, label, sort });
+    const describePart = (value, name, sort = 0) => {
+      sources.push({ value, name, sort });
     };
 
     // BAB is last for some reason, array is reversed to try make it the first.
@@ -2228,7 +2228,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Add secondary natural attack penalty
-    if (actionData.naturalAttack.primaryAttack !== true && itemData.attackType === "natural") {
+    if (actionData.naturalAttack.primaryAttack !== true && itemData.subType === "natural") {
       const attackBonus = actionData.naturalAttack?.secondary?.attackBonus || "-5";
       const secondaryModifier = RollPF.safeTotal(`${attackBonus}`, rollData);
       describePart(secondaryModifier, game.i18n.localize("PF1.SecondaryAttack"), -400);

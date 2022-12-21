@@ -724,7 +724,7 @@ export class ItemAction {
       parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
     }
     // Add secondary natural attack penalty
-    if (this.item.system.attackType === "natural" && primaryAttack === false) {
+    if (this.item.system.subType === "natural" && primaryAttack === false) {
       const penalty = -5;
       parts.push(`${penalty}[${game.i18n.localize("PF1.SecondaryAttack")}]`);
     }

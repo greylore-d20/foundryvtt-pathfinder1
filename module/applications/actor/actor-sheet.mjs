@@ -422,7 +422,7 @@ export class ActorSheetPF extends ActorSheet {
     setProperty(data.sourceData, "skillRanks", sourceData);
     this.document.items
       .filter((obj) => {
-        return obj.type === "class" && obj.system.classType !== "mythic";
+        return obj.type === "class" && obj.system.subType !== "mythic";
       })
       .forEach((cls) => {
         const clsLevel = cls.system.hitDice;
@@ -430,8 +430,7 @@ export class ActorSheetPF extends ActorSheet {
         const fcSkills = cls.system.fc.skill.value;
         skillRanks.allowed +=
           Math.max(1, clsSkillsPerLevel + this.document.system.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills && ["base", "prestige"].includes(cls.system.classType))
-          skillRanks.bgAllowed += clsLevel * 2;
+        if (data.useBGSkills && ["base", "prestige"].includes(cls.system.subType)) skillRanks.bgAllowed += clsLevel * 2;
 
         sourceData.push({
           name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
@@ -493,10 +492,10 @@ export class ActorSheetPF extends ActorSheet {
       // By level
       data.featCount = {};
       data.featCount.value = this.actor.items.filter(
-        (o) => o.type === "feat" && o.system.featType === "feat" && !o.system.disabled
+        (o) => o.type === "feat" && o.system.subType === "feat" && !o.system.disabled
       ).length;
       const totalLevels = this.document.items
-        .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.system.classType))
+        .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.system.subType))
         .reduce((cur, o) => {
           return cur + o.hitDice;
         }, 0);
@@ -810,8 +809,8 @@ export class ActorSheetPF extends ActorSheet {
     const hasTypeFilter = this._typeFilterCount(filters) > 0;
 
     return items.filter((item) => {
-      if (item.type === "feat") {
-        if (hasTypeFilter && !filters.has(`type-${item.featType}`)) return false;
+      if (["feat", "buff", "attack"].includes(item.type)) {
+        if (hasTypeFilter && !filters.has(`type-${item.subType}`)) return false;
       }
 
       if (ItemPF.isInventoryItem(item.type)) {
@@ -821,14 +820,6 @@ export class ActorSheetPF extends ActorSheet {
 
       if (item.type === "spell") {
         if (hasTypeFilter && !filters.has(`type-${item.level}`)) return false;
-      }
-
-      if (item.type === "buff") {
-        if (hasTypeFilter && !filters.has(`type-${item.buffType}`)) return false;
-      }
-
-      if (item.type === "attack") {
-        if (hasTypeFilter && !filters.has(`type-${item.attackType}`)) return false;
       }
 
       return true;
@@ -2478,7 +2469,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     for (const f of feats) {
-      const k = f.featType;
+      const k = f.subType;
       if (f.abilityType && f.abilityType !== "none") {
         f.abilityTypeShort = CONFIG.PF1.abilityTypes[f.abilityType].short;
         f.abilityType = CONFIG.PF1.abilityTypes[f.abilityType].long;
@@ -2490,7 +2481,7 @@ export class ActorSheetPF extends ActorSheet {
     }
     classes.sort((a, b) => b.level - a.level);
     classes.forEach((item) => {
-      if (item.classType !== "mythic") item.canLevelUp = true;
+      if (item.subType !== "mythic") item.canLevelUp = true;
     });
 
     // Buffs
@@ -2526,7 +2517,7 @@ export class ActorSheetPF extends ActorSheet {
     };
 
     for (const b of buffs) {
-      const s = b.buffType;
+      const s = b.subType;
       if (!buffSections[s]) continue;
       buffSections[s].items.push(b);
     }
@@ -2585,7 +2576,7 @@ export class ActorSheetPF extends ActorSheet {
     };
 
     for (const a of attacks) {
-      const s = a.attackType;
+      const s = a.subType;
       if (!attackSections[s]) continue;
       attackSections[s].items.push(a);
     }
@@ -2919,7 +2910,7 @@ export class ActorSheetPF extends ActorSheet {
     // Choose how to import class
     if (
       itemData.type === "class" &&
-      getProperty(itemData, "system.classType") !== "mythic" &&
+      getProperty(itemData, "system.subType") !== "mythic" &&
       !(event && event.shiftKey)
     ) {
       const doReturn = await new Promise((resolve) => {

@@ -34,7 +34,7 @@ export class ItemBuffPF extends ItemPF {
     const labels = super.getLabels({ actionId });
 
     const itemData = this.system;
-    labels.buffType = PF1.buffTypes[itemData.buffType];
+    labels.subType = PF1.buffTypes[itemData.subType];
 
     if (this.system.duration) {
       const dur = this.system.duration;
@@ -152,10 +152,6 @@ export class ItemBuffPF extends ItemPF {
 
   get isActive() {
     return this.system.active;
-  }
-
-  get subType() {
-    return this.system.buffType;
   }
 
   get effect() {

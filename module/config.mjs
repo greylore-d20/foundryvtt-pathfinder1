@@ -75,7 +75,7 @@ export const PF1 = {
       description: {
         value: "PF1.LevelUp.AbilityScore.Item.Desc",
       },
-      featType: "misc",
+      subType: "misc",
     },
     type: "feat",
   },

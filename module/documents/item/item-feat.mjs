@@ -26,10 +26,6 @@ export class ItemFeatPF extends ItemPF {
     return !this.system.disabled;
   }
 
-  get subType() {
-    return this.system.featType;
-  }
-
   /** @inheritDoc */
   getLabels({ actionId } = {}) {
     const labels = super.getLabels({ actionId });

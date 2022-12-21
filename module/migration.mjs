@@ -310,6 +310,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateItemChargeCost(item, updateData);
   _migrateItemWeight(item, updateData);
   _migrateItemHealth(item, updateData);
+  _migrateItemType(item, updateData);
 
   // Migrate action data
   const alreadyHasActions = item.system.actions instanceof Array && item.system.actions.length > 0;
@@ -1698,4 +1699,12 @@ export const filterItemActions = function (action) {
   if (action.actionType) return true;
 
   return false;
+};
+
+const _migrateItemType = function (ent, updateData) {
+  const type = ent.type;
+  const oldType = ent.system[`${type}Type`];
+  if (oldType == null) return;
+  updateData["system.subType"] = oldType;
+  updateData[`system.-=${type}Type`] = null;
 };

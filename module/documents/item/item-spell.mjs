@@ -383,7 +383,7 @@ export class ItemSpellPF extends ItemPF {
     rollData.cl = cl;
 
     // Set consumable type
-    data["system.consumableType"] = type;
+    data["system.subType"] = type;
 
     // Set name
     if (type === "wand") {

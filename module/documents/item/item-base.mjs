@@ -25,6 +25,6 @@ export class ItemBasePF extends Item {
    * @returns {string} Item subtype.
    */
   get subType() {
-    return null;
+    return this.system.subType;
   }
 }

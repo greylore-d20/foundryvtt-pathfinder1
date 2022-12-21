@@ -16,7 +16,7 @@
 
       <ul class="summary">
         <li>
-          {{lookup config.classTypes system.classType}}
+          {{lookup config.classTypes system.subType}}
         </li>
         <li class="tooltip">
           <span class="tooltipcontent">@classes.{{item.system.tag}}.level : {{system.level}}</span>
@@ -50,8 +50,8 @@
       <div class="form-group">
         <label>{{localize "PF1.ClassType"}}</label>
         <div class="form-fields">
-          <select name="system.classType">
-            {{#select system.classType}}
+          <select name="system.subType">
+            {{#select system.subType}}
             {{#each config.classTypes as |name type|}}
             <option value="{{type}}">{{name}}</option>
             {{/each}}

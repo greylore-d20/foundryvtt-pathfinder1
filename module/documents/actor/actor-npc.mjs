@@ -42,7 +42,7 @@ export class ActorNPCPF extends ActorPF {
 
     // Gather CR from templates
     const templates = this.items.filter(
-      (o) => o.type === "feat" && o.system.featType === "template" && !o.system.disabled
+      (o) => o.type === "feat" && o.system.subType === "template" && !o.system.disabled
     );
     return templates.reduce((cur, o) => {
       const crOffset = o.system.crOffset;

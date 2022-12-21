@@ -80,7 +80,7 @@
         "attackParts": [],
         "formulaicAttacks": {
           "count": {
-            "formula": "min(3, floor((@cl + 1) / 4)) - 1"
+            "formula": "clamped(floor((@cl - 3) / 4)), 0, 2)"
           },
           "bonus": {
             "formula": ""

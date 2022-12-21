@@ -23,19 +23,12 @@ export function initializeModules() {
 
         getRanges(token) {
           const baseSpeed = convertDistance(this.getBaseSpeed(token))[0];
-          // Search through items for pieces of heavy armor that is equipped
-          const heavyArmor = token.actor.items.find(
-            (item) =>
-              item.type === "equipment" &&
-              item.equipmentType === "armor" &&
-              item.equipped &&
-              item.equipmentSubtype === "heavyArmor"
-          );
-          // Check for heavy load encumbrance
-          const heavyLoad = token.actor.system.attributes.encumbrance.level >= 2;
+          const rollData = token.actor.getRollData(),
+            inHeavyArmor = rollData.armor.type >= 3,
+            inHeavyLoad = rollData.attributes.encumbrance.level >= 2;
 
           let runMultiplier = 4;
-          if (heavyArmor || heavyLoad) runMultiplier = 3;
+          if (inHeavyArmor || inHeavyLoad) runMultiplier = 3;
           return [
             { range: baseSpeed, color: "walk" },
             { range: baseSpeed * 2, color: "dash" },

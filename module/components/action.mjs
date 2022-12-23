@@ -217,7 +217,7 @@ export class ItemAction {
    * @type {boolean}
    */
   get hasRange() {
-    return this.data.range?.units != null;
+    return !!this.data.range?.units;
   }
 
   /* -------------------------------------------- */

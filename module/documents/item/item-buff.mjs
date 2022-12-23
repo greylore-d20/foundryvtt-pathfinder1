@@ -77,7 +77,7 @@ export class ItemBuffPF extends ItemPF {
   async toEffect({ noCreate = false } = {}) {
     if (!this.parent) return;
 
-    const existing = this.parent.effects.find((e) => e.data.origin == this.uuid);
+    const existing = this.parent.effects.find((e) => e.origin == this.uuid);
     if (existing || noCreate) return existing;
 
     // Add a new effect
@@ -85,10 +85,10 @@ export class ItemBuffPF extends ItemPF {
       label: this.name,
       icon: this.img,
       origin: this.uuid,
-      disabled: !this.data.active,
+      disabled: !this.isActive,
       flags: {
         pf1: {
-          show: !this.data.hideFromToken && !game.settings.get("pf1", "hideTokenConditions"),
+          show: !this.system.hideFromToken && !game.settings.get("pf1", "hideTokenConditions"),
           origin: { item: this.id },
         },
       },

@@ -1,0 +1,34 @@
+export class ItemDirectoryPF extends ItemDirectory {
+  /**
+   * Enrich default options for detecting identified/unidentified name changes
+   *
+   * @override
+   */
+  static get defaultOptions() {
+    const options = super.defaultOptions;
+    options.renderUpdateKeys.push("system.identifiedName", "system.unidentified.name");
+    return options;
+  }
+
+  /**
+   * Overridee Foundry's render to catch unidentified name changes (Foundry's "k in d" doesn't work).
+   *
+   * @override
+   */
+  _render(force = false, context = {}) {
+    // Only re-render the sidebar directory for certain types of updates
+    const { action, data, documentType } = context;
+    if (action && !["create", "update", "delete"].includes(action)) return this;
+    if (
+      documentType !== "Folder" &&
+      action === "update" &&
+      !data.some((d) => this.options.renderUpdateKeys.some((k) => getProperty(d, k) !== undefined))
+    )
+      return;
+
+    // Re-build the tree and render
+    this.initialize();
+    // Skip ItemDirectory & SidebarDirectory _render, both of which use k in d culling
+    return SidebarTab.prototype._render.call(this, force, context);
+  }
+}

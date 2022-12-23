@@ -31,5 +31,7 @@ export { ActorTraitSelector } from "./trait-selector.mjs";
 export { VisionPermissionSheet } from "./vision-permission.mjs";
 export { ExperienceDistributor } from "./xp-distributor.mjs";
 
+export { ItemDirectoryPF } from "./sidebar/items-directory.mjs";
+
 export { compendiums } from "./compendium-browser.mjs";
 export { helpBrowser } from "./help-browser.mjs";

@@ -61,6 +61,7 @@ import { ItemWeaponPF } from "./module/documents/item/item-weapon.mjs";
 import { ItemBasePF } from "./module/documents/item/item-base.mjs";
 import { ItemSheetPF } from "./module/applications/item/item-sheet.mjs";
 import { ItemSheetPF_Container } from "./module/applications/item/container-sheet.mjs";
+
 import { getChangeFlat, getSourceInfo } from "./module/documents/actor/utils/apply-changes.mjs";
 import { CompendiumDirectoryPF } from "./module/compendium-directory.mjs";
 import { CompendiumBrowser, initializeCompendiumBrowsers } from "./module/applications/compendium-browser.mjs";
@@ -115,6 +116,7 @@ import { ItemConditional, ItemConditionalModifier } from "./module/components/co
 import { ActionChooser } from "./module/applications/action-chooser.mjs";
 import { Widget_CategorizedItemPicker } from "./module/applications/categorized-item-picker.mjs";
 import { CurrencyTransfer } from "./module/applications/currency-transfer.mjs";
+import { ItemDirectoryPF } from "./module/applications/_module.mjs";
 import { BaseRegistry } from "./module/registry/base-registry.mjs";
 import { DamageTypes } from "./module/registry/damage-types.mjs";
 import { ScriptCalls } from "./module/registry/script-call.mjs";
@@ -363,6 +365,8 @@ Hooks.once("init", function () {
 
   // Global exports
   globalThis.RollPF = RollPF;
+
+  CONFIG.ui.items = ItemDirectoryPF;
 
   // Record Configuration Values
   CONFIG.PF1 = PF1;

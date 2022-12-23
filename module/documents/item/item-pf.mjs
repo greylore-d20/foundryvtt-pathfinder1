@@ -185,7 +185,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   getDefaultChargeFormula() {
-    return this.system.uses.autoDeductChargesCost || "1";
+    return this.system.uses?.autoDeductChargesCost || "1";
   }
 
   get maxCharges() {

@@ -955,7 +955,6 @@ Hooks.on("hotbarDrop", (bar, data, slot) => {
 
 // Render TokenConfig
 Hooks.on("renderTokenConfig", async (app, html) => {
-  const TokenData = foundry.data.TokenData;
   // Add vision inputs
   let object = app.object;
   // Prototype token

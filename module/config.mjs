@@ -577,6 +577,13 @@ export const PF1 = {
     1600,
   ],
 
+  /**
+   * Encumbrance levels for light, medium, and heavy loads.
+   *
+   * @see {@link pf1!documents.actor.ActorPF._computeEncumbrance ActorPF.system.encumbrance.level}
+   * @readonly
+   * @enum {number}
+   */
   encumbranceLevels: {
     light: 0,
     medium: 1,
@@ -820,6 +827,13 @@ export const PF1 = {
     natural: "Natural Armor",
   },
 
+  /**
+   * Resultant armor types for an actor's worn armor as per their roll data
+   *
+   * @see {@link pf1!documents.actor.ActorPF.getRollData ActorRollData.armor.type}
+   * @readonly
+   * @enum {number}
+   */
   armorTypes: {
     none: 0,
     light: 1,
@@ -827,6 +841,13 @@ export const PF1 = {
     heavy: 3,
   },
 
+  /**
+   * Resultant shield types for an actor's worn shield
+   *
+   * @see {@link pf1!documents.actor.ActorPF.getRollData ActorRollData.shield.type}
+   * @readonly
+   * @enum {number}
+   */
   shieldTypes: {
     none: 0,
     other: 1, // buckler

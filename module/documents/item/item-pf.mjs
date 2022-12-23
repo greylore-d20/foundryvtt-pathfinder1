@@ -425,9 +425,6 @@ export class ItemPF extends ItemBasePF {
     }
     this.prepareWeight();
 
-    // Prepare labels
-    this.labels = this.prepareLabels();
-
     if (!this.actor) {
       this.prepareDerivedItemData();
     }
@@ -519,21 +516,13 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   * Returns this item's default labels, using the item's data and the first action's data, if one is present.
-   *
-   * @returns {Record<string, string>} This item's labels
-   */
-  prepareLabels() {
-    const action = this.firstAction;
-    return { ...this.getLabels(), ...(action?.getLabels() ?? {}) };
-  }
-
-  /**
    * Returns labels for this item
    *
+   * @param options
+   * @param options.actionId
    * @returns {Record<string, string>} This item's labels
    */
-  getLabels() {
+  getLabels({ actionId } = {}) {
     const labels = {};
     const itemData = this.system;
 
@@ -564,7 +553,8 @@ export class ItemPF extends ItemBasePF {
       } else labels.slot = null;
     }
 
-    return labels;
+    const action = actionId ? this.actions.get(actionId) : this.firstAction;
+    return { ...labels, ...(action?.getLabels() ?? {}) };
   }
 
   prepareLinks() {
@@ -970,7 +960,7 @@ export class ItemPF extends ItemBasePF {
       actor: this.parent,
       tokenId: token ? token.uuid : null,
       item: this.toObject(),
-      labels: this.labels,
+      labels: this.getLabels(),
       hasAttack: this.hasAttack,
       hasMultiAttack: this.hasMultiAttack,
       hasAction: this.hasAction,
@@ -1071,7 +1061,7 @@ export class ItemPF extends ItemBasePF {
     const data = {};
     const { actionId = null } = options;
     const action = actionId ? this.actions.get(actionId) : this.firstAction;
-    const labels = { ...this.getLabels(), ...(action?.getLabels() ?? {}) };
+    const labels = this.getLabels({ actionId });
 
     enrichOptions.rollData ??= action ? action.getRollData() : this.getRollData();
     enrichOptions.secrets ??= this.isOwner;

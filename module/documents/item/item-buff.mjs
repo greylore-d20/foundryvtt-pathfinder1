@@ -28,13 +28,12 @@ export class ItemBuffPF extends ItemPF {
     return super._preDelete(options, user);
   }
 
-  prepareData() {
-    const itemData = super.prepareData();
-    const data = itemData;
-    const labels = this.labels;
-    const C = CONFIG.PF1;
+  getLabels({ actionId } = {}) {
+    const labels = super.getLabels({ actionId });
 
-    labels.buffType = C.buffTypes[data.buffType];
+    const itemData = this.system;
+    const C = CONFIG.PF1;
+    labels.buffType = C.buffTypes[itemData.buffType];
 
     if (this.system.duration) {
       const dur = this.system.duration;

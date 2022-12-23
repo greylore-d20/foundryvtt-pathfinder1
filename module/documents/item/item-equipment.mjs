@@ -39,13 +39,11 @@ export class ItemEquipmentPF extends ItemPF {
     return this.system.equipmentType;
   }
 
-  prepareData() {
-    const itemData = super.prepareData();
-    const data = itemData;
-    const labels = this.labels;
+  getLabels({ actionId } = {}) {
+    const labels = super.getLabels({ actionId });
+    const itemData = this.system;
     const C = CONFIG.PF1;
 
-    // Type and subtype labels
     let eType = this.subType;
     const typeKeys = Object.keys(C.equipmentTypes);
     if (!typeKeys.includes(eType)) eType = typeKeys[0];
@@ -57,9 +55,18 @@ export class ItemEquipmentPF extends ItemPF {
     labels.equipmentType = C.equipmentTypes[eType]._label;
     labels.equipmentSubtype = C.equipmentTypes[eType][eSubtype];
 
-    // AC labels
-    const ac = this.showUnidentifiedData ? data.armor.value || 0 : (data.armor.value || 0) + (data.armor.enh || 0);
+    const ac = this.showUnidentifiedData
+      ? itemData.armor.value || 0
+      : (itemData.armor.value || 0) + (itemData.armor.enh || 0);
     labels.armor = ac > 0 ? `${ac} AC` : "";
+  }
+
+  prepareData() {
+    const itemData = super.prepareData();
+    const data = itemData;
+    const C = CONFIG.PF1;
+
+    // AC labels
     if (data.armor.dex === "") data.armor.dex = null;
     else if (typeof data.armor.dex === "string" && /\d+/.test(data.armor.dex)) {
       data.armor.dex = parseInt(data.armor.dex);

@@ -239,18 +239,19 @@ export class ActorSheetPF extends ActorSheet {
       i.type = item.type;
       i.id = item.id;
       i.img = item.img;
-      i.labels = item.labels;
-      i.hasAttack = item.firstAction?.hasAttack;
-      i.hasMultiAttack = item.firstAction?.hasMultiAttack;
-      i.hasDamage = item.firstAction?.hasDamage;
-      i.hasRange = item.firstAction?.hasRange;
-      i.hasEffect = item.firstAction?.hasEffect;
+      const firstAction = item.firstAction;
+      i.labels = item.getLabels({ actionId: firstAction?.id });
+      i.hasAttack = firstAction?.hasAttack;
+      i.hasMultiAttack = firstAction?.hasMultiAttack;
+      i.hasDamage = firstAction?.hasDamage;
+      i.hasRange = firstAction?.hasRange;
+      i.hasEffect = firstAction?.hasEffect;
       i.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
       i.range = mergeObject(
-        item.firstAction?.data?.range ?? {},
+        firstAction?.data?.range ?? {},
         {
-          min: item.firstAction?.getRange({ type: "min" }),
-          max: item.firstAction?.getRange({ type: "max" }),
+          min: firstAction?.getRange({ type: "min" }),
+          max: firstAction?.getRange({ type: "max" }),
         },
         { inplace: false }
       );
@@ -263,7 +264,7 @@ export class ActorSheetPF extends ActorSheet {
       return i;
     });
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-    data.labels = this.document.labels || {};
+    data.labels = this.document.getLabels();
     data.filters = this._filters;
 
     // Set class info

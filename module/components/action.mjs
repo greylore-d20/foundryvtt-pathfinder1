@@ -412,8 +412,6 @@ export class ItemAction {
   }
 
   prepareData() {
-    this.labels = {};
-
     // Parse formulaic attacks
     if (this.hasAttack) {
       this.parseFormulaicAttacks({ formula: getProperty(this.data, "formulaicAttacks.count.formula") });
@@ -550,7 +548,26 @@ export class ItemAction {
 
     // Difficulty Class
     if (this.hasSave) {
-      labels.save = `DC ${this.getDC()}`;
+      labels.save = game.i18n.format("PF1.DCThreshold", { threshold: this.getDC() });
+    }
+
+    if (this.hasRange) {
+      const sourceUnits = actionData.range.units;
+      const rangeLabel = CONFIG.PF1.distanceUnits[sourceUnits];
+      if (["personal", "touch", "melee", "reach"].includes(sourceUnits)) {
+        labels.range = rangeLabel;
+      } else {
+        const range = this.getRange({ type: "single", rollData });
+        if (range > 0) {
+          let system = game.settings.get("pf1", "distanceUnits");
+          if (system === "default") system = game.settings.get("pf1", "units");
+          const rangeUnit = system === "metric" ? "m" : "ft";
+          labels.range = `${range} ${rangeUnit}`;
+        }
+        if (["close", "medium", "long"].includes(sourceUnits)) {
+          labels.range += ` (${rangeLabel})`;
+        }
+      }
     }
 
     return labels;

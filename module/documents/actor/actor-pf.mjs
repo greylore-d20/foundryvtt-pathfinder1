@@ -1210,19 +1210,6 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    // Set labels
-    this.labels = {};
-    this.labels.race =
-      this.race == null ? game.i18n.localize("PF1.Race") : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
-    this.labels.alignment = CONFIG.PF1.alignments[data.details.alignment];
-
-    // Set speed labels
-    this.labels.speed = {};
-    for (const [key, obj] of Object.entries(attributes.speed ?? {})) {
-      const dist = pf1.utils.convertDistance(obj.total);
-      this.labels.speed[key] = `${dist[0]} ${CONFIG.PF1.measureUnitsShort[dist[1]]}`;
-    }
-
     // Combine AC types
     for (const k of ["ac.normal.total", "ac.shield.total", "ac.natural.total"]) {
       const v = getProperty(actorData, k);
@@ -1337,6 +1324,25 @@ export class ActorPF extends ActorBasePF {
     }
 
     this.updateSpellbookInfo();
+  }
+
+  // Unused
+  getLabels() {
+    const labels = {};
+    // Race
+    labels.race = this.race
+      ? game.i18n.localize("PF1.Race")
+      : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
+    labels.alignment = CONFIG.PF1.alignments[this.system.details.alignment];
+
+    // Speed
+    labels.speed = {};
+    for (const [key, obj] of Object.entries(this.system.attributes.speed ?? {})) {
+      const dist = pf1.utils.convertDistance(obj.total);
+      labels.speed[key] = `${dist[0]} ${CONFIG.PF1.measureUnitsShort[dist[1]]}`;
+    }
+
+    return labels;
   }
 
   /**

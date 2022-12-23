@@ -27,9 +27,9 @@ export class ItemWeaponPF extends ItemPF {
     return super._preDelete(options, user);
   }
 
-  prepareData() {
-    super.prepareData();
-    const labels = this.labels;
+  getLabels({ actionId } = {}) {
+    const labels = super.getLabels({ actionId });
+
     const { weaponTypes } = CONFIG.PF1;
 
     // Type and subtype labels
@@ -43,6 +43,10 @@ export class ItemWeaponPF extends ItemPF {
 
     labels.weaponType = weaponTypes[wType]._label;
     labels.weaponSubtype = weaponTypes[wType][wSubtype];
+  }
+
+  prepareData() {
+    super.prepareData();
 
     this._prepareWeaponGroups();
   }

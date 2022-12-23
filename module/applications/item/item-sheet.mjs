@@ -97,7 +97,7 @@ export class ItemSheetPF extends ItemSheet {
     data.system = data.item.system;
     data.flags = { flags: data.flags };
     const rollData = this.item.getRollData();
-    data.labels = this.item.labels;
+    data.labels = this.item.getLabels();
 
     // Include sub-items
     data.items = [];
@@ -696,7 +696,7 @@ export class ItemSheetPF extends ItemSheet {
   _getItemProperties() {
     const props = [];
     const item = this.item;
-    const labels = this.item.labels;
+    const labels = this.item.getLabels();
 
     if (item.type === "weapon") {
       props.push(

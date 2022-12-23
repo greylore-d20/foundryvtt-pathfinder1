@@ -2,20 +2,20 @@ import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
 export class ItemSpellPF extends ItemPF {
-  prepareData() {
-    const itemData = super.prepareData();
-    const data = itemData;
-    const labels = this.labels;
-    const C = CONFIG.PF1;
+  getLabels({ actionId, rollData } = {}) {
+    const labels = super.getLabels({ actionId, rollData });
 
-    // Spell Level,  School, and Components
-    if (itemData.type === "spell") {
-      labels.level = C.spellLevels[data.level];
-      labels.school = C.spellSchools[data.school];
-      labels.components = this.getSpellComponents()
-        .map((o) => o[0])
-        .join(" ");
-    }
+    const C = CONFIG.PF1;
+    const itemData = this.system;
+
+    // Spell Level, School, and Components
+    labels.level = C.spellLevels[itemData.level];
+    labels.school = C.spellSchools[itemData.school];
+    labels.components = this.getSpellComponents()
+      .map((o) => o[0])
+      .join(" ");
+
+    return labels;
   }
 
   /**

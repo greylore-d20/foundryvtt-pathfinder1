@@ -53,6 +53,10 @@ const config = defineConfig(({ command, mode }) => {
             if (relative.startsWith("../")) relative = relative.replace("../", "");
             return relative;
           },
+          assetFileNames: (assetInfo) => {
+            // Forcibly rename style file so that it does not share Foundry's CSS file name
+            if (assetInfo.name === "style.css") return "pf1.css";
+          },
         },
         plugins: [terser({ mangle: { keep_classnames: true, keep_fnames: true } })],
       },

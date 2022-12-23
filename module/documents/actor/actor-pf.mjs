@@ -393,9 +393,10 @@ export class ActorPF extends ActorBasePF {
 
     // Reset equipment info
     this.equipment = {
-      shield: { type: 0, id: undefined },
-      armor: { type: 0, id: undefined },
+      shield: { type: CONFIG.PF1.shieldTypes.none, id: undefined },
+      armor: { type: CONFIG.PF1.armorTypes.none, id: undefined },
     };
+
     // Reset class info
     this.classes = {};
 
@@ -1263,7 +1264,7 @@ export class ActorPF extends ActorBasePF {
       const armorItems = this.items.filter((o) => o.type === "equipment");
       let reducedSpeed = false;
       const sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
-      if (attributes.encumbrance.level >= 1 && !this.changeFlags["noEncumbrance"]) {
+      if (attributes.encumbrance.level >= CONFIG.PF1.encumbranceLevels.medium && !this.changeFlags["noEncumbrance"]) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.Encumbrance");
       }
@@ -1295,7 +1296,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add encumbrance source details
     switch (attributes.encumbrance.level) {
-      case 1:
+      case CONFIG.PF1.encumbranceLevels.medium:
         getSourceInfo(this.sourceInfo, "system.attributes.acp.total").negative.push({
           name: game.i18n.localize("PF1.Encumbrance"),
           value: 3,
@@ -1305,7 +1306,7 @@ export class ActorPF extends ActorBasePF {
           value: 3,
         });
         break;
-      case 2:
+      case CONFIG.PF1.encumbranceLevels.heavy:
         getSourceInfo(this.sourceInfo, "system.attributes.acp.total").negative.push({
           name: game.i18n.localize("PF1.Encumbrance"),
           value: 6,
@@ -3350,10 +3351,10 @@ export class ActorPF extends ActorBasePF {
     encumbrance.carriedWeight = Math.round(carriedWeight * 10) / 10;
 
     // Determine load level
-    let encLevel = 0;
+    let encLevel = CONFIG.PF1.encumbranceLevels.light;
     if (carriedWeight > 0) {
-      if (carriedWeight > encumbrance.levels.light) encLevel++;
-      if (carriedWeight > encumbrance.levels.medium) encLevel++;
+      if (carriedWeight > encumbrance.levels.medium) encLevel = CONFIG.PF1.encumbranceLevels.heavy;
+      else if (carriedWeight > encumbrance.levels.light) encLevel = CONFIG.PF1.encumbranceLevels.medium;
     }
     encumbrance.level = encLevel;
 
@@ -3363,11 +3364,11 @@ export class ActorPF extends ActorBasePF {
     };
 
     switch (encumbrance.level) {
-      case 1:
+      case CONFIG.PF1.encumbranceLevels.medium:
         result.acp = 3;
         result.maxDexBonus = 3;
         break;
-      case 2:
+      case CONFIG.PF1.encumbranceLevels.heavy:
         result.acp = 6;
         result.maxDexBonus = 1;
         break;

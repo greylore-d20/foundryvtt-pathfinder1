@@ -74,14 +74,17 @@ export class ItemEquipmentPF extends ItemPF {
       if (!actor?.system || !actor?.equipment) return;
 
       const actorData = actor.system;
+      const shieldTypes = CONFIG.PF1.shieldTypes,
+        armorTypes = CONFIG.PF1.armorTypes;
+
       switch (data.equipmentType) {
         case "shield": {
           const subtype = data.equipmentSubtype;
           let shieldType = actor.equipment.shield.type;
-          if (subtype === "other" && shieldType < 1) shieldType = 1;
-          else if (subtype === "lightShield" && shieldType < 2) shieldType = 2;
-          else if (subtype === "heavyShield" && shieldType < 3) shieldType = 3;
-          else if (subtype === "towerShield" && shieldType < 4) shieldType = 4;
+          if (subtype === "other" && shieldType < shieldTypes.other) shieldType = shieldTypes.other;
+          else if (subtype === "lightShield" && shieldType < shieldTypes.light) shieldType = shieldTypes.light;
+          else if (subtype === "heavyShield" && shieldType < shieldTypes.heavy) shieldType = shieldTypes.heavy;
+          else if (subtype === "towerShield" && shieldType < shieldTypes.tower) shieldType = shieldTypes.tower;
           if (actor.equipment.shield.type !== shieldType) {
             actor.equipment.shield.type = shieldType;
             actor.equipment.shield.id = this.id;
@@ -91,9 +94,9 @@ export class ItemEquipmentPF extends ItemPF {
         case "armor": {
           const subtype = data.equipmentSubtype;
           let armorType = actor.equipment.armor.type;
-          if (subtype === "lightArmor" && armorType < 1) armorType = 1;
-          else if (subtype === "mediumArmor" && armorType < 2) armorType = 2;
-          else if (subtype === "heavyArmor" && armorType < 3) armorType = 3;
+          if (subtype === "lightArmor" && armorType < armorTypes.light) armorType = armorTypes.light;
+          else if (subtype === "mediumArmor" && armorType < armorTypes.medium) armorType = armorTypes.medium;
+          else if (subtype === "heavyArmor" && armorType < armorTypes.heavy) armorType = armorTypes.heavy;
           if (armorType !== actor.equipment.armor.type) {
             actor.equipment.armor.type = armorType;
             actor.equipment.armor.id = this.id;

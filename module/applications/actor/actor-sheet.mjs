@@ -879,8 +879,8 @@ export class ActorSheetPF extends ActorSheet {
         heavy: Math.max(0, Math.min(((carriedWeight - load.medium) * 100) / (load.heavy - load.medium), 99.5)),
       },
       encumbered: {
-        light: actorData.attributes.encumbrance.level >= 1,
-        medium: actorData.attributes.encumbrance.level >= 2,
+        light: actorData.attributes.encumbrance.level >= CONFIG.PF1.encumbranceLevels.medium,
+        medium: actorData.attributes.encumbrance.level >= CONFIG.PF1.encumbranceLevels.heavy,
         heavy: actorData.attributes.encumbrance.carriedWeight >= actorData.attributes.encumbrance.levels.heavy,
       },
       light: actorData.attributes.encumbrance.levels.light,

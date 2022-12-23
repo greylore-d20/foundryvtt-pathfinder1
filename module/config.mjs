@@ -577,6 +577,12 @@ export const PF1 = {
     1600,
   ],
 
+  encumbranceLevels: {
+    light: 0,
+    medium: 1,
+    heavy: 2,
+  },
+
   /**
    * Encumbrance multipliers applied due to a creature's size for bi- and
    * quadrupedal creatures.
@@ -812,6 +818,21 @@ export const PF1 = {
     armor: "Armor",
     shield: "Shield",
     natural: "Natural Armor",
+  },
+
+  armorTypes: {
+    none: 0,
+    light: 1,
+    medium: 2,
+    heavy: 3,
+  },
+
+  shieldTypes: {
+    none: 0,
+    other: 1, // buckler
+    light: 2,
+    heavy: 3,
+    tower: 4,
   },
 
   /**

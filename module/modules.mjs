@@ -24,8 +24,8 @@ export function initializeModules() {
         getRanges(token) {
           const baseSpeed = convertDistance(this.getBaseSpeed(token))[0];
           const rollData = token.actor.getRollData(),
-            inHeavyArmor = rollData.armor.type >= 3,
-            inHeavyLoad = rollData.attributes.encumbrance.level >= 2;
+            inHeavyArmor = rollData.armor.type >= pf1.config.armorTypes.heavy,
+            inHeavyLoad = rollData.attributes.encumbrance.level >= pf1.config.encumbranceLevels.heavy;
 
           let runMultiplier = 4;
           if (inHeavyArmor || inHeavyLoad) runMultiplier = 3;

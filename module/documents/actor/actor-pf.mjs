@@ -369,7 +369,7 @@ export class ActorPF extends ActorBasePF {
     const disableActiveEffects = [],
       disableBuffs = [];
     for (const ae of temporaryEffects) {
-      const re = ae.data.origin?.match(/Item\.(?<itemId>\w+)/);
+      const re = ae.origin?.match(/Item\.(?<itemId>\w+)/);
       const item = this.items.get(re?.groups.itemId);
       if (!item || item.type !== "buff") {
         disableActiveEffects.push({ _id: ae.id, active: false });

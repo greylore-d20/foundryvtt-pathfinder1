@@ -3,12 +3,12 @@ import { ItemPF } from "./item-pf.mjs";
 export class ItemWeaponPF extends ItemPF {
   async _preUpdate(update, context) {
     // Set weapon subtype if not present
-    const newWeaponType = getProperty(update, "system.weaponType");
-    if (newWeaponType != null && newWeaponType !== this.data.weaponType) {
-      const subtype = getProperty(update, "system.weaponSubtype") ?? this.data.weaponSubtype ?? "";
+    const newWeaponType = update.system?.weaponType;
+    if (newWeaponType != null && newWeaponType !== this.system.weaponType) {
+      const subtype = update.system.weaponSubtype ?? this.system.weaponSubtype ?? "";
       const keys = Object.keys(CONFIG.PF1.weaponTypes[newWeaponType]).filter((o) => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
-        setProperty(update, "system.weaponSubtype", keys[0]);
+        update.system.weaponSubtype = keys[0];
       }
     }
   }

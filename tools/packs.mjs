@@ -218,8 +218,12 @@ function loadManifest() {
  * @returns {object} The sanitized content.
  */
 function sanitizePackEntry(entry, documentType = "") {
-  // Reset permissions to default
-  entry.ownership = { default: 0 };
+  // Delete unwanted fields
+  delete entry.ownership;
+  delete entry.folder;
+  delete entry._stats;
+  if ("effects" in entry && entry.effects.length === 0) delete entry.effects;
+
   // Remove non-system/non-core flags
   for (const key of Object.keys(entry.flags ?? {})) {
     if (!["pf1"].includes(key)) delete entry.flags[key];

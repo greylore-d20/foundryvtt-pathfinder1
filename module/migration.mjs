@@ -307,6 +307,8 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
   _migrateItemActions(item, updateData, actor);
+  _migrateItemActionChargeUsage(item, updateData);
+  _migrateItemChargeCost(item, updateData);
   _migrateItemWeight(item, updateData);
   _migrateItemHealth(item, updateData);
 
@@ -1056,12 +1058,12 @@ const _migrateSpellCosts = function (ent, updateData) {
     updateData["system.slotCost"] = 1;
   }
 
-  // Migrate level 0 spell charge deduction in a specific version
-  if (
-    !SemanticVersion.fromString(game.system.version).isHigherThan(SemanticVersion.fromString("0.77.11")) &&
-    getProperty(ent, "system.level") === 0
-  ) {
-    updateData["system.preparation.autoDeductCharges"] = false;
+  const autoDeduct = ent.system.preparation?.autoDeductCharges;
+  if (autoDeduct !== undefined) {
+    if (autoDeduct === false) {
+      updateData["system.uses.autoDeductChargesCost"] = "0";
+    }
+    updateData["system.preparation.-=autoDeductCharges"] = null;
   }
 };
 
@@ -1219,6 +1221,39 @@ const _migrateItemActions = function (item, updateData, actor = null) {
   updateData["system.effectNotes"] = [];
 
   updateData["system.actions"] = [actionData];
+};
+
+const _migrateItemActionChargeUsage = function (item, updateData) {
+  if (!(item.system.actions?.length > 0)) return;
+
+  const actions = updateData["system.actions"] ?? item.system.actions;
+  let updatedActions = false;
+
+  for (const action of actions) {
+    if (action.uses?.autoDeductCharges !== undefined) {
+      updatedActions = true;
+      if (action.uses.autoDeductCharges === false) {
+        action.uses.autoDeductChargesCost = "0";
+      } else if (action.uses.autoDeductChargesCost === "1") action.uses.autoDeductChargesCost = "";
+      delete action.uses.autoDeductCharges;
+    }
+  }
+
+  if (updatedActions) {
+    updateData["system.actions"] = actions;
+  }
+};
+
+const _migrateItemChargeCost = function (item, updateData) {
+  const toggle = item.system.uses?.autoDeductCharges;
+  if (toggle === undefined) return;
+
+  // Mimic old setting by setting cost to 0
+  if (toggle === false) {
+    updateData["system.uses.autoDeductChargesCost"] = "0";
+  }
+
+  updateData["system.uses.-=autoDeductCharges"] = null;
 };
 
 const _migrateActionDamageType = function (action, item) {

@@ -116,6 +116,7 @@ export class ItemSheetPF extends ItemSheet {
     data.itemProperties = this._getItemProperties();
     data.itemName = data.item.name;
     data.isCharged = ["day", "week", "charges"].includes(data.item.system.uses?.per);
+    data.defaultChargeFormula = this.item.getDefaultChargeFormula();
     data.isPhysical = data.item.system.quantity !== undefined;
     data.isNaturalAttack = data.item.system.attackType === "natural";
     data.isSpell = this.item.type === "spell";

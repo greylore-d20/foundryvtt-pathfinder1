@@ -267,13 +267,27 @@
       {{/unless}}
 
       {{#unless isAtWill}}
-      {{#unless usesSpellpoints}}
-      <div class="spell-misc form-group stacked">
-        <label class="checkbox">
-          <input type="checkbox" name="system.preparation.autoDeductCharges" {{checked system.preparation.autoDeductCharges}}/> {{localize "PF1.AutoDeductCharges"}}
-        </label>
+      {{#if usesSpellpoints}}
+      <div class="form-group spellpoint-cost">
+        <label>{{localize "PF1.SpellPointsCost"}}</label>
+        <div class="form-fields">
+          <input type="text" class="formula" name="system.spellPoints.cost" value="{{system.spellPoints.cost}}" placeholder="{{defaultChargeFormula}}">
+        </div>
       </div>
-      {{/unless}}
+      {{else}}
+      <div class="form-group charge-cost">
+        <label>
+          {{#if isSpell}}
+          {{localize "PF1.CastsPerDayUsedFormula"}}
+          {{else}}
+          {{localize "PF1.ChargeCostFormula"}}
+          {{/if}}
+        </label>
+        <div class="form-fields">
+          <input type="text" class="formula" name="system.uses.autoDeductChargesCost" value="{{system.uses.autoDeductChargesCost}}" placeholder="{{defaultChargeFormula}}">
+        </div>
+      </div>
+      {{/if}}
       {{/unless}}
 
       <h3 class="form-header">{{localize "PF1.Offsets"}}</h3>
@@ -299,7 +313,7 @@
       <div class="form-group">
         <label>{{localize "PF1.SpellSlotCost"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.slotCost" value="{{system.slotCost}}" data-dtype="Number"/>
+          <input type="text" name="system.slotCost" value="{{system.slotCost}}" placeholder="1" data-dtype="Number"/>
         </div>
       </div>
       {{/unless}}

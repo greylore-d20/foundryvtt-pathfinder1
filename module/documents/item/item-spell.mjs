@@ -185,6 +185,33 @@ export class ItemSpellPF extends ItemPF {
     return this.getSpellUses(true);
   }
 
+  /**
+   * Get default charge cost for spell actions.
+   *
+   * @param options
+   * @param options.rollData
+   * @returns {number} Number for default cost.
+   */
+  getDefaultChargeCost({ rollData } = {}) {
+    if (this.system.atWill) return 0;
+
+    if (this.useSpellPoints()) {
+      rollData ??= this.getRollData();
+      const formula = this.getDefaultChargeFormula();
+      return RollPF.safeRoll(formula, rollData).total;
+    } else {
+      return super.getDefaultChargeCost({ rollData });
+    }
+  }
+
+  getDefaultChargeFormula() {
+    if (this.useSpellPoints()) {
+      return this.system.spellPoints.cost || "0";
+    } else {
+      return super.getDefaultChargeFormula();
+    }
+  }
+
   get spellLevel() {
     return this.system.level + (this.system.slOffset || 0);
   }
@@ -251,8 +278,6 @@ export class ItemSpellPF extends ItemPF {
   }
 
   useSpellPoints() {
-    if (!this.parent) return false;
-
     return this.spellbook?.spellPoints?.useSystem ?? false;
   }
 

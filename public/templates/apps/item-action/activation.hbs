@@ -135,23 +135,25 @@
 {{/unless}}
 
 <h3 class="form-header">{{localize "PF1.LimitedUses"}}</h3>
-{{#if (or (eq isSpell false) (eq usesSpellPoints true))}}
 <h4 class="form-header">{{localize "PF1.Item"}}</h4>
-<div class="form-group stacked">
+<div class="form-group">
   <label>
-    {{#if isSpell}}
+    {{#if usesSpellPoints}}
     {{localize "PF1.SpellPointsCost"}}
+    {{else if isSpell}}
+    {{localize "PF1.CastsPerDayUsedFormula"}}
     {{else}}
-    {{localize "PF1.AutoDeductCharges"}}
+    {{localize "PF1.ChargeCost"}}
     {{/if}}
   </label>
-  <div class="flexrow">
-    <input type="checkbox" name="uses.autoDeductCharges" {{checked data.uses.autoDeductCharges}}/>
-    {{#if data.uses.autoDeductCharges}}<input class="formula" type="text" name="uses.autoDeductChargesCost" placeholder="{{localize "PF1.DeductChargeFormulaPlaceholder"}}"
-      value="{{data.uses.autoDeductChargesCost}}" />{{/if}}
+  <div class="form-fields">
+    {{#if usesSpellPoints}}
+    <input class="formula" type="text" name="uses.spellPointCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.spellPointCost}}" />
+    {{else}}
+    <input class="formula" type="text" name="uses.autoDeductChargesCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.autoDeductChargesCost}}" />
+    {{/if}}
   </div>
 </div>
-{{/if}}
 
 <h4 class="form-header">{{localize "PF1.Action"}}</h4>
 <div class="form-group stacked">

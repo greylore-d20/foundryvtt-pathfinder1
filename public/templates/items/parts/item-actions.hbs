@@ -69,6 +69,12 @@
 <div class="form-group uses-per">
   <input class="formula" type="text" name="system.uses.maxFormula" value="{{system.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
 </div>
+<div class="form-group charges-per-use">
+  <label>{{localize "PF1.ChargeCostFormula"}}</label>
+  <div class="form-fields">
+    <input class="formula" type="text" name="system.uses.autoDeductChargesCost" value="{{system.uses.autoDeductChargesCost}}" placeholder="{{defaultChargeFormula}}">
+  </div>
+</div>
 {{#if isPhysical}}
   <div class="form-group">
     <label>{{localize "PF1.PricePerCharge"}}</label>

@@ -455,21 +455,9 @@ export class ActionUse {
    * @returns {Promise<number> | number} 0 if successful, otherwise one of the ERR_REQUIREMENT constants.
    */
   checkAttackRequirements() {
-    // Enforce zero charge cost on cantrips/orisons, but make sure they have at least 1 charge
-    if (
-      this.item.type === "spell" &&
-      !this.item.useSpellPoints() &&
-      this.shared.rollData.item?.level === 0 &&
-      this.shared.rollData.item?.preparation?.preparedAmount > 0
-    ) {
-      this.shared.rollData.chargeCost = 0;
-      return 0;
-    }
-
     // Determine charge cost
-    let cost = 0;
-    if (this.shared.action.isCharged) {
-      cost = this.shared.action.getChargeCost({ rollData: this.shared.rollData });
+    let cost = this.shared.action.getChargeCost({ rollData: this.shared.rollData });
+    if (cost != 0) {
       let uses = this.item.charges;
       if (this.item.type === "spell") {
         if (this.item.useSpellPoints()) {

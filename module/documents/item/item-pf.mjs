@@ -167,6 +167,27 @@ export class ItemPF extends ItemBasePF {
     return this.system.uses?.value ?? 0;
   }
 
+  get autoDeductCharges() {
+    return this.getDefaultChargeCost() > 0;
+  }
+
+  /**
+   * Get default charge cost for all actions.
+   *
+   * @param options
+   * @param options.rollData
+   * @returns {number} Number for default cost.
+   */
+  getDefaultChargeCost({ rollData } = {}) {
+    rollData ??= this.getRollData();
+    const formula = this.getDefaultChargeFormula();
+    return RollPF.safeRoll(formula, rollData).total;
+  }
+
+  getDefaultChargeFormula() {
+    return this.system.uses.autoDeductChargesCost || "1";
+  }
+
   get maxCharges() {
     // No actor? No charges!
     if (!this.parentActor) return 0;

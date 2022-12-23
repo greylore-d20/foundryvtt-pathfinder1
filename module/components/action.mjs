@@ -88,8 +88,7 @@ export class ItemAction {
   }
 
   get autoDeductCharges() {
-    if (this.item.type === "spell" && !this.item.useSpellPoints()) return true;
-    return this.isCharged && this.data.uses.autoDeductCharges === true;
+    return this.getChargeCost() > 0;
   }
 
   get isCharged() {
@@ -118,14 +117,22 @@ export class ItemAction {
    * @returns {number} Cost in charges for this action.
    */
   getChargeCost({ rollData = null } = {}) {
-    if (!this.autoDeductCharges) return 0;
+    if (!this.isCharged) return 0;
 
-    if (this.item.type === "spell" && !this.item.useSpellPoints()) return 1;
+    const isSpell = this.item.type === "spell";
+    const isSpellpointSpell = isSpell && this.item.useSpellPoints();
 
-    const formula = this.data.uses.autoDeductChargesCost;
-    if (!(typeof formula === "string" && formula.length > 0)) return 1;
+    let formula = !isSpellpointSpell ? this.data.uses.autoDeductChargesCost : this.data.uses.spellPointCost;
+    if (typeof formula !== "string") {
+      console.warn(this.item.name, "action", this.name, "has invalid charge formula:", formula, this);
+      formula = this.item.getDefaultChargeFormula();
+    }
+    // Fall back to item formula if action formula is empty
+    else if (formula.length === 0) {
+      formula = this.item.getDefaultChargeFormula();
+    }
 
-    if (!rollData) rollData = this.getRollData();
+    rollData ??= this.getRollData();
     const cost = RollPF.safeRoll(formula, rollData).total;
     return this.item.isSingleUse ? Math.max(-1, Math.min(1, cost)) : cost;
   }
@@ -333,8 +340,7 @@ export class ItemAction {
         minUnits: "",
       },
       uses: {
-        autoDeductCharges: true,
-        autoDeductChargesCost: "1",
+        autoDeductChargesCost: "",
         self: {
           value: 0,
           maxFormula: "",

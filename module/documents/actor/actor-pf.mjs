@@ -2763,6 +2763,11 @@ export class ActorPF extends ActorBasePF {
     const chatData = {
       speaker: ChatMessage.getSpeaker({ actor: this }),
       rollMode,
+      flags: {
+        core: {
+          canPopout: true,
+        },
+      },
     };
 
     const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, chatData);

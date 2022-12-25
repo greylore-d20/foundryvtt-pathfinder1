@@ -481,7 +481,6 @@ export class ItemPF extends ItemBasePF {
       total: pf1.utils.convertWeight(weight.total),
     };
     weight.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
-    itemData.priceUnits = game.i18n.localize("PF1.CurrencyGP").toLowerCase();
   }
 
   prepareDerivedData() {

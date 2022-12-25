@@ -96,7 +96,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {string[]} The keys of data variables to memorize between updates, for e.g. determining the difference in update.
    */
   get memoryVariables() {
-    return ["system.quantity", "system.level", "system.inventoryItems"];
+    return ["quantity", "level", "inventoryItems"];
   }
 
   get isPhysical() {
@@ -813,7 +813,7 @@ export class ItemPF extends ItemBasePF {
     this._memoryVariables = {};
     for (const k of memKeys) {
       if (hasProperty(this, k)) {
-        this._memoryVariables[k] = deepClone(getProperty(this, k));
+        this._memoryVariables[k] = deepClone(getProperty(this.system, k));
       }
     }
 
@@ -847,10 +847,11 @@ export class ItemPF extends ItemBasePF {
       }
 
       // Call 'changeQuantity' script calls
-      if (this._memoryVariables?.["system.quantity"] !== undefined) {
+      const oldQuantity = this._memoryVariables?.quantity;
+      if (oldQuantity !== undefined) {
         const quantity = {
-          previous: this._memoryVariables["system.quantity"],
-          new: getProperty(this, "system.quantity"),
+          previous: oldQuantity,
+          new: this.system.quantity,
         };
         if (quantity.new != null && quantity.new !== quantity.previous) {
           this.executeScriptCalls("changeQuantity", { quantity });
@@ -858,10 +859,11 @@ export class ItemPF extends ItemBasePF {
       }
 
       // Call 'changeLevel' script calls
-      if (this._memoryVariables?.["system.level"] !== undefined) {
+      const oldLevel = this._memoryVariables?.level;
+      if (oldLevel !== undefined && changed.system?.level !== undefined) {
         const level = {
-          previous: parseInt(this._memoryVariables["system.level"]),
-          new: parseInt(getProperty(this, "system.level")),
+          previous: parseInt(oldLevel),
+          new: parseInt(this.system.level),
         };
         for (const [k, v] of Object.entries(level)) {
           if (Number.isNaN(v)) level[k] = null;
@@ -875,7 +877,7 @@ export class ItemPF extends ItemBasePF {
     // Call _onUpdate for changed items
     for (let a = 0; a < (changed.system?.inventoryItems ?? []).length; a++) {
       const itemUpdateData = changed.system?.inventoryItems[a];
-      const memoryItemData = this._memoryVariables?.["system.inventoryItems"]?.[a];
+      const memoryItemData = this._memoryVariables?.inventoryItems?.[a];
       if (!memoryItemData) continue;
 
       const diffData = diffObjectAndArray(memoryItemData, itemUpdateData, { keepLength: true });

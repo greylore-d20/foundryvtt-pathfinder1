@@ -71,7 +71,7 @@ export const PF1 = {
   levelAbilityScoreFeature: {
     img: "systems/pf1/icons/skills/affliction_10.jpg",
     name: "PF1.LevelUp.AbilityScore.Item.Name",
-    data: {
+    system: {
       description: {
         value: "PF1.LevelUp.AbilityScore.Item.Desc",
       },

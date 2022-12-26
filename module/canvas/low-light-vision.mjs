@@ -5,12 +5,13 @@
  * @param {jQuery} html - The jQuery of the inner html
  */
 export const addLowLightVisionToLightConfig = function (app, html) {
-  const obj = app.object;
+  /** @type {AmbientLightDocument} */
+  const light = app.object;
 
   // Create checkbox HTML element
   let checkboxStr = `<div class="form-group"><label>${game.i18n.localize("PF1.DisableLightLowLightVision")}</label>`;
   checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
-  if (getProperty(obj, "flags.pf1.disableLowLight")) checkboxStr += " checked";
+  if (light.getFlag("pf1", "disableLowLight")) checkboxStr += " checked";
   checkboxStr += "/></div>";
   const checkbox = $(checkboxStr);
 
@@ -25,12 +26,13 @@ export const addLowLightVisionToLightConfig = function (app, html) {
  * @param {jQuery} html - The jQuery of the inner html
  */
 export const addLowLightVisionToTokenConfig = function (app, html) {
-  const obj = app.object;
+  /** @type {TokenDocument} */
+  const token = app.object;
 
   // Create checkbox HTML element
   let checkboxStr = `<div class="form-group"><label>${game.i18n.localize("PF1.DisableLightLowLightVision")}</label>`;
   checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
-  if (getProperty(obj, "flags.pf1.disableLowLight")) checkboxStr += " checked";
+  if (token.getFlag("pf1", "disableLowLight")) checkboxStr += " checked";
   checkboxStr += "/></div>";
   const checkbox = $(checkboxStr);
 
@@ -85,6 +87,8 @@ export const patchCore = function () {
   LightSource.prototype.getRadius = function () {
     const result = { dim: this.data.dim, bright: this.data.bright };
     const multiplier = { dim: 1, bright: 1 };
+
+    if (this.object?.document.getFlag("pf1", "disableLowLight")) return result;
 
     const relevantTokens = canvas.tokens.placeables.filter((o) => {
       return o.actor?.testUserPermission(game.user, "OBSERVER");

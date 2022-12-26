@@ -28,7 +28,7 @@ export class TokenPF extends Token {
   }
 
   get disableLowLight() {
-    return getProperty(this, "flags.pf1.disableLowLight") === true;
+    return this.document.getFlag("pf1", "disableLowLight") === true;
   }
 
   // Token#observer patch to make use of vision permission settings

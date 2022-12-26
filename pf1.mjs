@@ -972,8 +972,12 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   const enableCustomVision = getProperty(object, "flags.pf1.customVisionRules") === true;
   if (!enableCustomVision) {
     const tabElem = html.find(`.tab[data-tab="vision"]`);
-    tabElem.find(`input, select`).prop("disabled", true);
-    tabElem.find("a").unbind();
+    // Disable vision mode selection
+    tabElem.find("select[name='sight.visionMode']").prop("disabled", true);
+    // Disable detection mode tab entirely
+    const dmTab = tabElem.find(".tab[data-tab='detection']");
+    dmTab.find("input,select").prop("disabled", true);
+    dmTab.find("a.action-button").unbind();
   }
   // Add custom vision checkbox
   newHTML = `<div class="form-group" title="${game.i18n.localize(

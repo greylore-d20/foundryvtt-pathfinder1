@@ -37,21 +37,27 @@ export class TokenDocumentPF extends TokenDocument {
 
     // Reset sight properties
     this.sight.visionMode = "basic";
-    this.sight.range = 0;
+    const baseRange = this.sight.range;
 
     // Prepare sight
     const darkvisionRange = this.actor?.system?.traits?.senses?.dv ?? 0;
     if (darkvisionRange > 0) {
-      this.sight.range = pf1.utils.convertDistance(darkvisionRange)[0];
+      // Apply greater of darkvision and basic guaranteed vision
+      this.sight.range = Math.max(baseRange, pf1.utils.convertDistance(darkvisionRange)[0]);
       this.sight.visionMode = "darkvision";
-      this.sight.saturation = -1;
+      // Copy over darkvision configuration to current mode (since we don't do .update on visionMode)
+      const dvConf = CONFIG.Canvas.visionModes.darkvision.vision.defaults;
+      this.sight.saturation = dvConf.saturation;
+      this.sight.attenuation = dvConf.attenuation;
+      this.sight.brightness = dvConf.brightness;
+      this.sight.contrast = dvConf.contrast;
     }
 
     // Set basic detection mode
     const basicId = DetectionMode.BASIC_MODE_ID;
     const basicMode = this.detectionModes.find((m) => m.id === basicId);
-    if (!basicMode) this.detectionModes.push({ id: basicId, enabled: true, range: this.sight.range });
-    else basicMode.range = this.sight.range;
+    if (!basicMode) this.detectionModes.push({ id: basicId, enabled: true, range: baseRange });
+    else basicMode.range = baseRange;
 
     // Set see invisibility detection mode
     const seeInvId = "seeInvisibility";
@@ -69,39 +75,42 @@ export class TokenDocumentPF extends TokenDocument {
     // Set blind sense detection mode
     const blindSenseId = "blindSense";
     const blindSenseMode = this.detectionModes.find((m) => m.id === blindSenseId);
-    if (!blindSenseMode && this.actor?.system?.traits?.senses?.bse) {
-      this.detectionModes.push({ id: blindSenseId, enabled: true, range: this.actor.system.traits.senses.bse });
+    const blindSenseRange = this.actor?.system?.traits?.senses?.bse;
+    if (!blindSenseMode && blindSenseRange) {
+      this.detectionModes.push({ id: blindSenseId, enabled: true, range: blindSenseRange });
     } else if (blindSenseMode != null) {
-      if (!this.actor?.system?.traits?.senses?.bse) {
+      if (!blindSenseRange) {
         this.detectionModes.splice(this.detectionModes.indexOf(blindSenseMode, 1));
       } else {
-        blindSenseMode.range = this.actor.system.traits.senses.bse;
+        blindSenseMode.range = blindSenseRange;
       }
     }
 
     // Set blind sight detection mode
     const blindSightId = "blindSight";
     const blindSightMode = this.detectionModes.find((m) => m.id === blindSightId);
-    if (!blindSightMode && this.actor?.system?.traits?.senses?.bs) {
-      this.detectionModes.push({ id: blindSightId, enabled: true, range: this.actor.system.traits.senses.bs });
+    const blindSightRange = this.actor?.system?.traits?.senses?.bs;
+    if (!blindSightMode && blindSightRange) {
+      this.detectionModes.push({ id: blindSightId, enabled: true, range: blindSightRange });
     } else if (blindSightMode != null) {
-      if (!this.actor?.system?.traits?.senses?.bs) {
+      if (!blindSightRange) {
         this.detectionModes.splice(this.detectionModes.indexOf(blindSightMode, 1));
       } else {
-        blindSightMode.range = this.actor.system.traits.senses.bs;
+        blindSightMode.range = blindSightRange;
       }
     }
 
     // Set tremor sense detection mode
     const tremorSenseId = "feelTremor";
     const tremorSenseMode = this.detectionModes.find((m) => m.id === tremorSenseId);
-    if (!blindSightMode && this.actor?.system?.traits?.senses?.ts) {
-      this.detectionModes.push({ id: tremorSenseId, enabled: true, range: this.actor.system.traits.senses.ts });
+    const tremorSenseRange = this.actor?.system?.traits?.senses?.ts;
+    if (!blindSightMode && tremorSenseRange) {
+      this.detectionModes.push({ id: tremorSenseId, enabled: true, range: tremorSenseRange });
     } else if (tremorSenseMode != null) {
-      if (!this.actor?.system?.traits?.senses?.ts) {
+      if (!tremorSenseRange) {
         this.detectionModes.splice(this.detectionModes.indexOf(tremorSenseMode, 1));
       } else {
-        tremorSenseMode.range = this.actor.system.traits.senses.ts;
+        tremorSenseMode.range = tremorSenseRange;
       }
     }
 

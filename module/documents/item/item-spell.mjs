@@ -56,11 +56,11 @@ export class ItemSpellPF extends ItemPF {
     if (actor) {
       // Swap non-psychic components for psychic ones
       if (this.spellbook?.psychic === true) {
-        if (this.data.components?.verbal === true) {
+        if (this.system.components?.verbal === true) {
           updates["system.components.verbal"] = false;
           updates["system.components.thought"] = true;
         }
-        if (this.data.components?.somatic === true) {
+        if (this.system.components?.somatic === true) {
           updates["system.components.somatic"] = false;
           updates["system.components.emotion"] = true;
         }

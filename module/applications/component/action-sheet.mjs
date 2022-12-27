@@ -373,7 +373,7 @@ export class ItemActionSheet extends FormApplication {
       const app = new pf1.applications.DamageTypeSelector(
         this.object,
         `${damagePart}.${damageIndex}.1`,
-        getProperty(this.object.data, damagePart)[0][1]
+        getProperty(this.object.data, damagePart)[damageIndex][1]
       );
       return app.render(true);
     }

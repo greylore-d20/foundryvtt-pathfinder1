@@ -1492,6 +1492,11 @@ export const PF1 = {
    */
   backgroundSkills: ["apr", "art", "crf", "han", "ken", "kge", "khi", "kno", "lin", "lor", "prf", "pro", "slt"],
 
+  /**
+   * Array of skills that are only shown with background skills optional rule enabled.
+   */
+  backgroundOnlySkills: ["lor", "art"],
+
   /* -------------------------------------------- */
 
   /**

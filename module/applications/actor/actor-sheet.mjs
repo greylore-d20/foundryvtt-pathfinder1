@@ -787,7 +787,8 @@ export class ActorSheetPF extends ActorSheet {
 
     keys.forEach((a) => {
       const skl = skillset[a];
-      result.all.skills[a] = skl;
+      // Include all bute Lore and Artistry in all
+      if (!CONFIG.PF1.backgroundOnlySkills.includes(a)) result.all.skills[a] = skl;
       if (skl.background) result.background.skills[a] = skl;
       else result.adventure.skills[a] = skl;
     });

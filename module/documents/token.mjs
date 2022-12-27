@@ -1,4 +1,29 @@
 export class TokenDocumentPF extends TokenDocument {
+  _preCreate(data, options, userId) {
+    this._preCreateSetSize();
+  }
+
+  /**
+   * Handle actor size during token creation.
+   */
+  _preCreateSetSize() {
+    if (!this.actor) return;
+
+    // Apply token size
+    if (this.getFlag("pf1", "staticSize")) return;
+    const sizeConf = CONFIG.PF1.tokenSizes[this.actor.system.traits?.size];
+    if (!sizeConf) return;
+
+    this.updateSource({
+      width: sizeConf.w,
+      height: sizeConf.h,
+      texture: {
+        scaleY: sizeConf.scale,
+        scaleX: sizeConf.scale,
+      },
+    });
+  }
+
   // Todo: Declare this in TokenDocumentPF when/ if TokenDocument.getData calls the constructor's method
   getTrackedAttributes(data, path = []) {
     const attr = super.getTrackedAttributes(data, path);

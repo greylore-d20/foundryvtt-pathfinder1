@@ -10,13 +10,17 @@ export class SkillEditor extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    const options = super.defaultOptions;
+    return {
+      ...options,
       width: 380,
       template: "systems/pf1/templates/apps/skill-editor.hbs",
       closeOnSubmit: false,
       dragDrop: [{ dragSelector: null, dropSelector: "*" }],
-    });
+      classes: [...options.classes, "pf1", "skill-editor"],
+    };
   }
+
   get title() {
     return `${game.i18n.localize("PF1.EditSkill")}: ${this.skillName}`;
   }
@@ -87,30 +91,27 @@ export class SkillEditor extends FormApplication {
   async _updateObject(event, formData) {
     event.preventDefault();
 
-    // Relocate skill data to what would fit within the actor's data structure
-    const data = expandObject(formData);
-    const skillData = mergeObject(this.skill, data.skill, { inplace: false });
-    delete data.skill;
+    // Setup base update data
+    const updateData = { system: { skills: {} } };
+    const skillCoreUpdateData = updateData.system.skills;
 
-    // Change skill tag
-    let tag;
+    const { skill: newData, tag } = expandObject(formData);
+
+    // Track old IDs for rename related data deletion
+    const oldSubSkillId = this.subSkillId,
+      oldSkillId = this.skillId;
+
+    // Preserve some data
+    newData.journal ??= this.skill.journal;
+    newData.custom ??= this.skill.custom;
     if (!this.isStaticSkill) {
-      tag = skillData.tag;
-      delete skillData.tag;
-      if (!tag) {
-        ui.notifications.warn("Skill tag can't be empty.");
-        return;
-      }
-
-      if (this.isSubSkill && tag !== this.subSkillId)
-        setProperty(data, `system.skills.${this.skillId}.subSkills.-=${this.subSkillId}`, null);
-      else if (!this.isSubSkill && tag !== this.skillId) setProperty(data, `system.skills.-=${this.skillId}`, null);
+      newData.background ??= this.skill.background;
     }
 
-    // Update skill data
-    const tagOrId = tag || (this.isSubSkill ? this.subSkillId : this.skillId);
-    if (this.isSubSkill) setProperty(data, `system.skills.${this.skillId}.subSkills.${tagOrId}`, skillData);
-    else setProperty(data, `system.skills.${tagOrId}`, skillData);
+    // Basic sanity check
+    if (!this.isStaticSkill && !tag) {
+      return void ui.notifications.error("Skill tag can't be empty.");
+    }
 
     // Change application's id by tag
     if (tag) {
@@ -118,7 +119,29 @@ export class SkillEditor extends FormApplication {
       else this.skillId = tag;
     }
 
-    await this.object.update(data);
+    if (this.isSubSkill) {
+      skillCoreUpdateData[this.skillId] = { subSkills: { [this.subSkillId]: newData } };
+      if (!this.isStaticSkill && oldSubSkillId !== this.subSkillId) {
+        // Delete old skill
+        skillCoreUpdateData[this.skillId].subSkills[`-=${oldSubSkillId}`] = null;
+        // Check for attempts to overwrite skills
+        if (this.subSkillId in this.object.system.skills[this.skillId].subSkills) {
+          return void ui.notifications.error("Subskill tag conflicts with existing skill.");
+        }
+      }
+    } else {
+      skillCoreUpdateData[this.skillId] = newData;
+      if (!this.isStaticSkill && oldSkillId !== this.skillId) {
+        // Delete old skill
+        skillCoreUpdateData[`-=${oldSkillId}`] = null;
+        // Check for attempts to overwrite skills
+        if (this.skillId in this.object.system.skills) {
+          return void ui.notifications.error("Skill tag conflicts with existing skill.");
+        }
+      }
+    }
+
+    await this.object.update(updateData);
   }
 
   async close(...args) {
@@ -151,7 +174,9 @@ export class SkillEditor extends FormApplication {
     // Submit
     html.find(`button[type="submit"]`).on("click", (event) => {
       event.preventDefault();
-      this.close({ submit: true });
+      const valid = this.element[0].querySelector("form").checkValidity();
+      if (valid) this.close({ submit: true });
+      else ui.notifications.error("Form has invalid data"); // TODO: i18n and better error communication
     });
   }
 

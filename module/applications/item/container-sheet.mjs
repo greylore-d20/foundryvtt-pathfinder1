@@ -567,8 +567,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.item.getContainerContent(itemId);
 
-    if (hasProperty(item.data, "data.identified")) {
-      return item.update({ "data.identified": !item.data.identified });
+    const isIdentified = item.system.identified;
+    if (isIdentified !== undefined) {
+      return item.update({ "system.identified": !isIdentified });
     }
   }
 

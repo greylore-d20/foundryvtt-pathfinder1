@@ -594,17 +594,17 @@ export class ItemSpellPF extends ItemPF {
       .sort()
       .join(", ");
 
+    const isUnchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
+
     // Set casting time label
-    const act = game.settings.get("pf1", "unchainedActionEconomy")
-      ? getProperty(firstAction, "system.unchainedAction.activation")
-      : getProperty(firstAction, "system.activation");
+    const act = firstAction.activation;
     if (act != null) {
       const activationCost = act.cost;
       const activationType = act.type;
-      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
+      const activationTypes = isUnchainedActionEconomy
         ? CONFIG.PF1.abilityActivationTypes_unchained
         : CONFIG.PF1.abilityActivationTypes;
-      const activationTypesPlurals = game.settings.get("pf1", "unchainedActionEconomy")
+      const activationTypesPlurals = isUnchainedActionEconomy
         ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
         : CONFIG.PF1.abilityActivationTypesPlurals;
 

@@ -29,6 +29,16 @@ export class ItemAction {
     return ["mcman", "rcman"].includes(this.data.actionType);
   }
 
+  /*
+   * General activation accessor that removes determining which action economy is in use.
+   */
+  get activation() {
+    if (game.settings.get("pf1", "unchainedActionEconomy")) {
+      return this.data.unchainedAction.activation ?? {};
+    }
+    return this.data.activation ?? {};
+  }
+
   /**
    * Creates an action.
    *
@@ -531,18 +541,18 @@ export class ItemAction {
     const labels = {};
     const rollData = options.rollData ?? this.getRollData();
 
+    const isUnchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
+
     // Activation method
     if (actionData.activation) {
-      const activationTypes = game.settings.get("pf1", "unchainedActionEconomy")
+      const activationTypes = isUnchainedActionEconomy
         ? CONFIG.PF1.abilityActivationTypes_unchained
         : CONFIG.PF1.abilityActivationTypes;
-      const activationTypesPlural = game.settings.get("pf1", "unchainedActionEconomy")
+      const activationTypesPlural = isUnchainedActionEconomy
         ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
         : CONFIG.PF1.abilityActivationTypesPlurals;
 
-      const activation = game.settings.get("pf1", "unchainedActionEconomy")
-        ? actionData.unchainedAction.activation || {}
-        : actionData.activation || {};
+      const activation = this.activation;
       if (activation && activation.cost > 1 && activationTypesPlural[activation.type] != null) {
         labels.activation = [activation.cost.toString(), activationTypesPlural[activation.type]].filterJoin(" ");
       } else if (activation) {

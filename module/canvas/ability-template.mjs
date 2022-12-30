@@ -195,12 +195,6 @@ export class AbilityTemplate extends MeasuredTemplatePF {
     if (!this.template) return;
     if (!canvas.scene) return;
 
-    super.refresh();
-
-    if (this.active) {
-      this.highlightGrid();
-    }
-
-    return this;
+    return super.refresh();
   }
 }

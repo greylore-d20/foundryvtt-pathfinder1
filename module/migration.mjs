@@ -442,7 +442,7 @@ const _migrateActorEncumbrance = function (ent, updateData, linked) {
  * @param linked
  */
 const _migrateFlagsArrayToObject = function (ent, updateData) {
-  const flags = ent.flags;
+  const flags = ent.system.flags;
   if (!flags) return;
   const bflags = flags.boolean,
     dflags = flags.dictionary;

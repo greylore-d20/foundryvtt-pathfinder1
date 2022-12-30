@@ -145,9 +145,12 @@ export const migrateCompendium = async function (pack) {
       if (doc === "Item") updateData = migrateItemData(ent.toObject());
       else if (doc === "Actor") updateData = migrateActorData(ent.toObject());
       else if (doc === "Scene") updateData = await migrateSceneData(ent.toObject());
-      expandObject(updateData);
-      updateData["_id"] = ent.id;
-      updates.push(updateData);
+
+      if (!foundry.utils.isEmpty(updateData)) {
+        updateData = expandObject(updateData);
+        updateData._id = ent.id;
+        updates.push(updateData);
+      }
     } catch (err) {
       console.error(`Error migrating ${doc} document ${ent.name} in Compendium ${pack.collection}`, err);
     }

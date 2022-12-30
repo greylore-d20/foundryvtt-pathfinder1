@@ -264,6 +264,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     // Clear existing highlight
     const hl = this.getHighlightLayer();
     hl.clear();
+    if (!this.isVisible) return;
 
     // Get grid squares to highlight
     const highlightSquares = this.getHighlightedSquares();

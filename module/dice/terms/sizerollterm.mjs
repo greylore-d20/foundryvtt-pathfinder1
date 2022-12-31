@@ -102,4 +102,12 @@ export class SizeRollTerm extends RollTerm {
 
     return this;
   }
+
+  /** @inheritDoc */
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      roll: this.roll?.toJSON(),
+    };
+  }
 }

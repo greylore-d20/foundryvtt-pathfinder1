@@ -1040,7 +1040,7 @@ export class ActionUse {
     metadata.item = this.item.id;
     metadata.template = this.shared.template ? this.shared.template.id : null;
     metadata.rolls = {
-      attacks: {},
+      attacks: [],
     };
 
     // Get template for later variables
@@ -1054,35 +1054,29 @@ export class ActionUse {
     }
 
     // Add attack rolls
-    for (let a = 0; a < this.shared.chatAttacks.length; a++) {
-      const atk = this.shared.chatAttacks[a];
-      const attackRolls = { attack: null, damage: {}, critConfirm: null, critDamage: {} };
+    for (let attackIndex = 0; attackIndex < this.shared.chatAttacks.length; attackIndex++) {
+      const chatAttack = this.shared.chatAttacks[attackIndex];
+      const attackRolls = { attack: null, damage: [], critConfirm: null, critDamage: [] };
       // Add attack roll
-      if (atk.attack.roll) attackRolls.attack = atk.attack.roll.toJSON();
+      if (chatAttack.attack) attackRolls.attack = chatAttack.attack.toJSON();
       // Add damage rolls
-      if (atk.damage.rolls.length) {
-        for (let b = 0; b < atk.damage.rolls.length; b++) {
-          const r = atk.damage.rolls[b];
-          attackRolls.damage[b] = {
-            damageType: r.damageType,
-            roll: r.roll.toJSON(),
-          };
+      if (chatAttack.damage.rolls.length) {
+        for (let damageIndex = 0; damageIndex < chatAttack.damage.rolls.length; damageIndex++) {
+          const damageRoll = chatAttack.damage.rolls[damageIndex];
+          attackRolls.damage[damageIndex] = damageRoll.toJSON();
         }
       }
       // Add critical confirmation roll
-      if (atk.critConfirm.roll) attackRolls.critConfirm = atk.critConfirm.roll.toJSON();
+      if (chatAttack.critConfirm) attackRolls.critConfirm = chatAttack.critConfirm.toJSON();
       // Add critical damage rolls
-      if (atk.critDamage.rolls.length) {
-        for (let b = 0; b < atk.critDamage.rolls.length; b++) {
-          const r = atk.critDamage.rolls[b];
-          attackRolls.critDamage[b] = {
-            damageType: r.damageType,
-            roll: r.roll.toJSON(),
-          };
+      if (chatAttack.critDamage.rolls.length) {
+        for (let damageIndex = 0; damageIndex < chatAttack.critDamage.rolls.length; damageIndex++) {
+          const damageRoll = chatAttack.critDamage.rolls[damageIndex];
+          attackRolls.critDamage[damageIndex] = damageRoll.toJSON();
         }
       }
 
-      metadata.rolls.attacks[a] = attackRolls;
+      metadata.rolls.attacks[attackIndex] = attackRolls;
     }
 
     // Add miscellaneous metadata

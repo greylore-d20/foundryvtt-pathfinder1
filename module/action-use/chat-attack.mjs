@@ -6,20 +6,10 @@ export class ChatAttack {
     this.setAction(action);
     this.label = label;
 
-    this.attack = {
-      flavor: "",
-      total: 0,
-      isCrit: false,
-      isFumble: false,
-      roll: null,
-    };
-    this.critConfirm = {
-      flavor: "",
-      total: 0,
-      isCrit: false,
-      isFumble: false,
-      roll: null,
-    };
+    /** @type {D20RollPF | null} */
+    this.attack = null;
+    /** @type {D20RollPF | null} */
+    this.critConfirm = null;
     this.hasAttack = false;
     this.hasCritConfirm = false;
 
@@ -27,19 +17,18 @@ export class ChatAttack {
       flavor: "",
       tooltip: "",
       total: 0,
+      /** @type {DamageRoll[]} */
       rolls: [],
-      parts: [],
     };
     this.critDamage = {
       flavor: "",
       tooltip: "",
       total: 0,
+      /** @type {DamageRoll[]} */
       rolls: [],
-      parts: [],
     };
     this.hasDamage = false;
     this.hasRange = action.item.hasRange;
-    this.minimumDamage = false;
     this.nonlethal = false;
     this.damageRows = [];
 
@@ -155,9 +144,9 @@ export class ChatAttack {
 
     this.hasAttack = true;
     this.notesOnly = false;
-    let data = this.attack;
+    /** @type {D20RollPF} */
+    let roll;
     if (critical === true) {
-      data = this.critConfirm;
       if (this.rollData.critConfirmBonus !== 0) {
         extraParts.push(`@critConfirmBonus[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
       }
@@ -180,23 +169,20 @@ export class ChatAttack {
 
     // Roll attack
     if (!noAttack) {
-      const roll = await this.action.rollAttack({
+      roll = await this.action.rollAttack({
         data: this.rollData,
         bonus: bonus,
         extraParts: extraParts,
       });
-      data.roll = roll;
+
+      if (critical === true) this.critConfirm = roll;
+      else this.attack = roll;
+
       const d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
       let critType = 0;
       const isCmb = ["mcman", "rcman"].includes(this.action.data.actionType);
       if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;
       else if (d20 === 1) critType = 2;
-
-      data.total = roll.total;
-      data.isCrit = critType === 1;
-      data.isFumble = critType === 2;
-      data.isNat20 = d20 === 20;
-      data.formula = roll.formula;
 
       // Add crit confirm
       if (!critical && !isCmb && d20 >= this.critRange && this.rollData.action.ability.critMult > 1) {
@@ -209,7 +195,7 @@ export class ChatAttack {
     }
 
     // Add tooltip
-    data.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
+    roll.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
 
     if (this.attackNotes === "") this.addAttackNotes();
   }
@@ -229,7 +215,7 @@ export class ChatAttack {
 
     const notes = [];
     // Add actor notes
-    if (this.action.item != null && this.action.item.actor != null) {
+    if (this.action.item?.actor != null) {
       notes.push(...this.action.item.actor.getContextNotesParsed("attacks.attack"));
       if ((typeMap[type]?.length || 0) > 0)
         typeMap[type].forEach((subTarget) =>
@@ -237,7 +223,7 @@ export class ChatAttack {
         );
     }
     // Add item notes
-    if (this.action.item != null && this.action.item.system.attackNotes) {
+    if (this.action.item?.system.attackNotes) {
       notes.push(...this.action.item.system.attackNotes);
     }
     // Add action notes
@@ -269,27 +255,19 @@ export class ChatAttack {
     const repeatCount = critical ? Math.max(1, rollData.critMult - 1) : 1;
     for (let repeat = 0; repeat < repeatCount; ++repeat) {
       if (critical) rollData.critCount++;
-      const rolls = await this.action.rollDamage({
+      data.rolls = await this.action.rollDamage({
         data: rollData,
         extraParts: extraParts,
         critical: critical,
         conditionalParts,
       });
-      data.rolls = rolls;
-      // Add damage parts
-      for (const roll of rolls) {
-        const dtype = roll.damageType;
-        data.parts.push(new DamagePart(roll.roll.total, dtype, roll.roll, roll.type));
-      }
     }
 
-    // Consolidate damage parts based on damage type
-    let tooltips = "";
-
     // Add tooltip
-    for (const p of Object.values(data.parts)) {
+    let tooltips = "";
+    for (const roll of data.rolls) {
       tooltips += await renderTemplate("systems/pf1/templates/internal/damage-tooltip.hbs", {
-        part: p,
+        part: roll,
       });
     }
 
@@ -301,20 +279,18 @@ export class ChatAttack {
     }
 
     // Determine total damage
-    let totalDamage = data.parts.reduce((cur, p) => {
-      return cur + p.amount;
+    let totalDamage = data.rolls.reduce((cur, p) => {
+      return cur + p.total;
     }, 0);
     if (critical) {
-      totalDamage = this.damage.parts.reduce((cur, p) => {
-        return cur + p.amount;
+      totalDamage = this.damage.rolls.reduce((cur, p) => {
+        return cur + p.total;
       }, totalDamage);
     }
 
     // Handle minimum damage rule
-    let minimumDamage = false;
     if (totalDamage < 1) {
       totalDamage = 1;
-      minimumDamage = true;
       flavor = game.i18n.localize("PF1.Nonlethal");
       this.nonlethal = true;
     }
@@ -369,14 +345,14 @@ export class ChatAttack {
 
     // Determine damage rows for chat cards
     // this.damageRows = [];
-    for (let a = 0; a < Math.max(this.damage.parts.length, this.critDamage.parts.length); a++) {
+    for (let a = 0; a < Math.max(this.damage.rolls.length, this.critDamage.rolls.length); a++) {
       this.damageRows.push({ normal: null, crit: null });
     }
-    for (let a = 0; a < this.damage.parts.length; a++) {
-      this.damageRows[a].normal = this.damage.parts[a];
+    for (let a = 0; a < this.damage.rolls.length; a++) {
+      this.damageRows[a].normal = this.damage.rolls[a];
     }
-    for (let a = 0; a < this.critDamage.parts.length; a++) {
-      this.damageRows[a].crit = this.critDamage.parts[a];
+    for (let a = 0; a < this.critDamage.rolls.length; a++) {
+      this.damageRows[a].crit = this.critDamage.rolls[a];
     }
 
     return this;

@@ -1,4 +1,32 @@
 export class ChatMessagePF extends ChatMessage {
+  /**
+   * Replaces all roll data object in a given object with {@link Roll} instances
+   *
+   * @param {object} maybeRollObject - The object to replace roll data objects with {@link Roll} instances
+   * @returns {object} The object with all roll data objects replaced with {@link Roll} instances
+   * @private
+   */
+  static _initRollObject(maybeRollObject) {
+    // If object is an array, map to roll objects
+    if (Array.isArray(maybeRollObject)) {
+      return maybeRollObject.map((o) => this._initRollObject(o));
+    }
+
+    // If this is a roll object, initialize it
+    if (maybeRollObject != null && typeof maybeRollObject === "object" && "class" in maybeRollObject) {
+      return Roll.fromData(maybeRollObject);
+    }
+
+    // If object is a regular object, recurse into it to find roll to initialise
+    if (typeof maybeRollObject === "object" && maybeRollObject != null) {
+      for (const [k, v] of Object.entries(maybeRollObject)) {
+        maybeRollObject[k] = this._initRollObject(v);
+      }
+    }
+    // Return object in which all roll data has been replaced by Roll instances
+    return maybeRollObject;
+  }
+
   get isRoll() {
     return this.type === CONST.CHAT_MESSAGE_TYPES.ROLL || this.getFlag("pf1", "noRollRender");
   }
@@ -42,6 +70,19 @@ export class ChatMessagePF extends ChatMessage {
   get targets() {
     const targetIds = this.system.flags?.pf1?.metadata?.targets ?? [];
     return canvas.tokens.placeables.filter((o) => targetIds.includes(o.id));
+  }
+
+  /** @inheritDoc */
+  prepareDerivedData() {
+    super.prepareDerivedData();
+
+    /**
+     * An object containing Pathfinder specific rolls for this chat message,
+     * with a structure grouping them by their purpose.
+     *
+     * @type {object}
+     */
+    this.systemRolls = this.constructor._initRollObject(this.flags?.pf1?.metadata?.rolls ?? {});
   }
 }
 

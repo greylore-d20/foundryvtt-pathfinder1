@@ -2,6 +2,8 @@ import { calculateRange, convertDistance } from "../utils/lib.mjs";
 import { getHighestChanges } from "../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
 import { keepUpdateArray, createTag } from "../utils/lib.mjs";
+import { DamageRoll } from "../dice/damage-roll.mjs";
+import { D20RollPF } from "../dice/d20roll.mjs";
 
 export class ItemAction {
   constructor(data, parent) {
@@ -717,7 +719,7 @@ export class ItemAction {
       parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
     }
 
-    const roll = await RollPF.create(
+    const roll = await new D20RollPF(
       [rollData.d20 || "1d20", ...parts.filter((p) => !!p)].join("+"),
       rollData
     ).evaluate({ async: true });

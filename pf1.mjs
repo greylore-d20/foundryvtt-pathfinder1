@@ -405,6 +405,8 @@ Hooks.once("init", function () {
   CONFIG.Dice.RollPF = dice.RollPF;
   CONFIG.Dice.rolls.push(dice.D20RollPF);
   CONFIG.Dice.rolls.D20RollPF = dice.D20RollPF;
+  CONFIG.Dice.rolls.push(dice.DamageRoll);
+  CONFIG.Dice.rolls.DamageRoll = dice.DamageRoll;
 
   CONFIG.time.roundTime = 6;
 

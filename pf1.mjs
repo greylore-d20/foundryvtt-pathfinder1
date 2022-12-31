@@ -1057,8 +1057,7 @@ Hooks.on("getCompendiumDirectoryPFEntryContext", (html, entryOptions) => {
     icon: '<i class="fas fa-low-vision"></i>',
     callback: (li) => {
       const pack = game.packs.get(li.data("pack"));
-      const config = game.settings.get("core", "compendiumConfiguration")[pack.collection];
-      const disabled = getProperty(config, "pf1.disabled") === true;
+      const disabled = pack.config.pf1?.disabled;
       pack.configure({ "pf1.disabled": !disabled });
     },
   });

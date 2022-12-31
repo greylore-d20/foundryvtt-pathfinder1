@@ -10,8 +10,7 @@ export class CompendiumDirectoryPF extends CompendiumDirectory {
 
     for (const p of Object.values(data.packs)) {
       for (const pack of p.packs) {
-        const config = game.settings.get("core", "compendiumConfiguration")[pack.collection];
-        const disabled = getProperty(config, "pf1.disabled") === true;
+        const disabled = pack.config.pf1?.disabled === true;
         setProperty(pack, "pf1.disabled", disabled);
       }
     }

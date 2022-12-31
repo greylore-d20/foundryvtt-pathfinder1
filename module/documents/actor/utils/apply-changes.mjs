@@ -761,7 +761,7 @@ export const addDefaultChanges = function (changes) {
       })
     );
 
-    if (!getProperty(this, "system.attributes.wounds.base")) {
+    if (!this.system.attributes.wounds?.base) {
       changes.push(
         new pf1.components.ItemChange({
           formula: (d) => d.abilities[hpAbility].total * 2 + d.abilities[hpAbility].drain,

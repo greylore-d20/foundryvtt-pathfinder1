@@ -20,10 +20,11 @@ export class TokenPF extends Token {
   }
 
   get actorVision() {
+    const ll = this.actor.system.traits?.senses?.ll ?? {};
     return {
-      lowLight: getProperty(this.actor, "system.traits.senses.ll.enabled"),
-      lowLightMultiplier: getProperty(this.actor, "system.traits.senses.ll.multiplier.dim"),
-      lowLightMultiplierBright: getProperty(this.actor, "system.traits.senses.ll.multiplier.bright"),
+      lowLight: ll.enabled,
+      lowLightMultiplier: ll.multiplier?.dim,
+      lowLightMultiplierBright: ll.multiplier?.bright,
     };
   }
 

@@ -128,7 +128,7 @@ export class TooltipPF extends Application {
     };
 
     if (!(game.user.isGM && !this.forceHideGMInfo)) {
-      data.name = getProperty(actor, "system.details.tooltip.name") || actor.name;
+      data.name = actor.system.details?.tooltip?.name || actor.name;
     }
 
     data.isOwner = game.user.isGM || actor.isOwner;
@@ -139,15 +139,15 @@ export class TooltipPF extends Application {
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
-      (!getProperty(actor, "system.details.tooltip.hideConditions") && !getProperty(this.worldConfig, "hideConditions"))
+      (!actor.system.details?.tooltip?.hideConditions && !this.worldConfig?.hideConditions)
     ) {
-      const conditions = getProperty(actor, "system.attributes.conditions") || {};
-      for (const [ck, cv] of Object.entries(conditions)) {
-        if (cv === true) {
+      const conditions = actor.system.attributes?.conditions || {};
+      for (const [conditionId, active] of Object.entries(conditions)) {
+        if (active === true) {
           data.conditions = data.conditions || [];
           data.conditions.push({
-            label: CONFIG.PF1.conditions[ck],
-            icon: CONFIG.PF1.conditionTextures[ck],
+            label: CONFIG.PF1.conditions[conditionId],
+            icon: CONFIG.PF1.conditionTextures[conditionId],
           });
         }
       }
@@ -157,7 +157,7 @@ export class TooltipPF extends Application {
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
-      (!getProperty(actor, "system.details.tooltip.hideBuffs") && !getProperty(this.worldConfig, "hideBuffs"))
+      (!actor.system.details?.tooltip?.hideBuffs && !this.worldConfig.hideBuffs)
     ) {
       const buffs = actor.items.filter((i) => i.type === "buff" && i.isActive && !i.system.hideFromToken);
       for (const b of buffs) {
@@ -174,7 +174,7 @@ export class TooltipPF extends Application {
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
-      (!getProperty(actor, "system.details.tooltip.hideHeld") && !getProperty(this.worldConfig, "hideHeld"))
+      (!actor.system.details?.tooltip?.hideHeld && !this.worldConfig.hideHeld)
     ) {
       const held = actor.items.filter((i) => {
         if (!["weapon", "equipment"].includes(i.type)) return false;
@@ -198,7 +198,7 @@ export class TooltipPF extends Application {
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
-      (!getProperty(actor, "system.details.tooltip.hideArmor") && !getProperty(this.worldConfig, "hideArmor"))
+      (!actor.system.details?.tooltip?.hideArmor && !this.worldConfig.hideArmor)
     ) {
       const armor = actor.items.filter((i) => {
         if (i.type !== "equipment") return false;
@@ -220,7 +220,7 @@ export class TooltipPF extends Application {
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
-      (!getProperty(actor, "item.details.tooltip.hideClothing") && !getProperty(this.worldConfig, "hideClothing"))
+      (!getProperty(actor, "item.details.tooltip.hideClothing") && !this.worldConfig.hideClothing)
     ) {
       const clothing = actor.items.filter((i) => {
         if (i.type !== "equipment") return false;
@@ -243,12 +243,11 @@ export class TooltipPF extends Application {
   }
 
   getPortrait(data, url) {
-    if (getProperty(this.config, "portrait.hide") === true || getProperty(this.worldConfig, "portrait.hide") === true)
-      return;
+    if (this.config.portrait?.hide === true || this.worldConfig.portrait?.hide === true) return;
 
     data.portrait = {
-      maxWidth: getProperty(this.config, "portrait.maxSize.width") || 100,
-      maxHeight: getProperty(this.config, "portrait.maxSize.height") || 100,
+      maxWidth: this.config.portrait?.maxSize?.width || 100,
+      maxHeight: this.config.portrait?.maxSize?.height || 100,
       url: url,
     };
   }
@@ -296,7 +295,7 @@ export class TooltipPF extends Application {
   show() {
     if (!this.object) return;
     if (this.forceHide) return;
-    if (getProperty(this.config, "disable") === true || getProperty(this.worldConfig, "disable") === true) return;
+    if (this.config.disable === true || this.worldConfig.disable === true) return;
 
     this.element.css("visibility", "visible");
   }

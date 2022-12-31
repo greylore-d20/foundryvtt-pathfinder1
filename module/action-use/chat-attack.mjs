@@ -62,7 +62,7 @@ export class ChatAttack {
 
   get critRange() {
     if (this.action.item.system.broken) return 20;
-    return getProperty(this.action, "data.ability.critRange") || 20;
+    return this.action.data.ability?.critRange || 20;
   }
 
   /**

@@ -50,10 +50,10 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
     // Challenge Rating
     try {
-      data.labels.cr = CR.fromNumber(getProperty(this.actor, "system.details.cr.total"));
+      data.labels.cr = CR.fromNumber(this.actor.system.details?.cr?.total);
     } catch (e) {
       try {
-        data.labels.cr = CR.fromNumber(getProperty(this.actor, "system.details.cr"));
+        data.labels.cr = CR.fromNumber(this.actor.system.details?.cr);
       } catch (e) {
         data.labels.cr = CR.fromNumber(1);
       }

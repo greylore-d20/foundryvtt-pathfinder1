@@ -75,21 +75,21 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     data.filters = this._filters;
 
     // The item's items
-    data.items = this.item.items.reduce((cur, i) => {
-      const data = i.toObject();
+    data.items = this.item.items.reduce((cur, item) => {
+      const data = item.toObject();
       cur.push(data);
-      data.document = i;
-      data.labels = i.getLabels();
-      data.hasAttack = i.hasAttack;
-      data.hasMultiAttack = i.hasMultiAttack;
-      data.hasDamage = i.hasDamage;
-      data.hasRange = i.hasRange;
-      data.hasEffect = i.hasEffect;
-      data.hasAction = i.hasAction || i.isCharged;
-      data.showUnidentifiedData = i.showUnidentifiedData;
-      if (i.showUnidentifiedData)
-        data.name = getProperty(i, "system.unidentified.name") || getProperty(i, "system.identifiedName") || i.name;
-      else data.name = getProperty(i, "system.identifiedName") || i.name;
+      data.document = item;
+      data.labels = item.getLabels();
+      data.hasAttack = item.hasAttack;
+      data.hasMultiAttack = item.hasMultiAttack;
+      data.hasDamage = item.hasDamage;
+      data.hasRange = item.hasRange;
+      data.hasEffect = item.hasEffect;
+      data.hasAction = item.hasAction || item.isCharged;
+      data.showUnidentifiedData = item.showUnidentifiedData;
+      if (item.showUnidentifiedData)
+        data.name = item.system.unidentified?.name || item.system.identifiedName || item.name;
+      else data.name = item.system.identifiedName || item.name;
       return cur;
     }, []);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -132,7 +132,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             name: "system.unidentified.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
-            value: getProperty(data.item, "system.unidentified.price"),
+            value: data.item.system.unidentified?.price,
             id: "data-unidentifiedBasePrice",
           }
         );
@@ -143,7 +143,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             name: "system.unidentified.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: getProperty(data.item, "system.unidentified.price"),
+            value: data.item.system.unidentified?.price,
             id: "data-basePrice",
           });
         } else {
@@ -164,11 +164,11 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         label: game.i18n.localize("PF1.HPShort"),
         value: {
           name: "system.hp.value",
-          value: getProperty(data.item, "system.hp.value"),
+          value: data.item.system.hp?.value,
         },
         max: {
           name: "system.hp.max",
-          value: getProperty(data.item, "system.hp.max"),
+          value: data.item.system.hp?.max,
         },
       });
 
@@ -177,7 +177,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         isNumber: true,
         label: game.i18n.localize("PF1.Hardness"),
         name: "system.hardness",
-        value: getProperty(data.item, "system.hardness"),
+        value: data.item.system.hardness,
       });
 
       // Add carried flag
@@ -294,11 +294,11 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       item.img = item.img || DEFAULT_TOKEN;
       item.isStack = item.system.quantity ? item.system.quantity > 1 : false;
       item.hasUses = item.system.uses && item.system.uses.max > 0;
-      item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "system.uses.per"));
+      item.isCharged = ["day", "week", "charges"].includes(item.system.uses?.per);
       item.price = item.system.identified === false ? item.system.unidentified.price : item.system.price;
 
-      const itemQuantity = getProperty(item, "system.quantity") ?? 1;
-      const itemCharges = getProperty(item, "system.uses.value") ?? 1;
+      const itemQuantity = item.system.quantity ?? 1;
+      const itemCharges = item.system.uses?.value ?? 1;
       item.empty = itemQuantity <= 0 || (item.isCharged && itemCharges <= 0);
       arr.push(item);
       return arr;
@@ -592,7 +592,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.item.getContainerContent(itemId);
 
-    const curQuantity = getProperty(item, "system.quantity") || 0;
+    const curQuantity = item.system.quantity || 0;
     const newQuantity = Math.max(0, curQuantity + add);
     return item.update({ "system.quantity": newQuantity });
   }

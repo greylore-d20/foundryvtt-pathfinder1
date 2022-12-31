@@ -75,7 +75,7 @@ export class ItemPF extends ItemBasePF {
       if (updated) this.updateSource({ "system.changes": changes });
     }
 
-    let updates = this.preCreateData(data, options, user);
+    const updates = this.preCreateData(data, options, user);
 
     if (Object.keys(updates).length) return this.updateSource(updates);
   }
@@ -220,7 +220,7 @@ export class ItemPF extends ItemBasePF {
    * @type {number} Number from 0 to 4. 0 for no aura and 1-4 matching CONFIG.PF1.auraStrengths.
    */
   get auraStrength() {
-    const cl = getProperty(this, "system.cl") || 0;
+    const cl = this.system.cl || 0;
     if (cl < 1) {
       return 0;
     } else if (cl < 6) {
@@ -255,8 +255,9 @@ export class ItemPF extends ItemBasePF {
 
   getName(forcePlayerPerspective = false) {
     if (game.user.isGM && !forcePlayerPerspective) return this.name;
-    if (getProperty(this, "system.identified") === false && getProperty(this, "system.unidentified.name"))
-      return getProperty(this, "system.unidentified.name");
+    if (this.system.identified === false && this.system.unidentified?.name) {
+      return this.system.unidentified.name;
+    }
     return this.name;
   }
 
@@ -377,13 +378,13 @@ export class ItemPF extends ItemBasePF {
    */
   async addCharges(value) {
     // Add link charges
-    const link = getProperty(this, "links.charges");
+    const link = this.links.charges;
     if (link) return link.addCharges(value);
 
     // Add own charges
-    if (getProperty(this, "system.uses.per") === "single" && getProperty(this, "system.quantity") == null) return;
+    if (this.system.uses?.per === "single" && this.system.quantity == null) return;
 
-    const prevValue = this.isSingleUse ? getProperty(this, "system.quantity") : getProperty(this, "system.uses.value");
+    const prevValue = this.isSingleUse ? this.system.quantity : this.system.uses?.value;
 
     if (this.isSingleUse) await this.update({ "system.quantity": prevValue + value });
     else await this.update({ "system.uses.value": prevValue + value });
@@ -397,7 +398,7 @@ export class ItemPF extends ItemBasePF {
    * @type {boolean}
    */
   get showUnidentifiedData() {
-    return !game.user.isGM && getProperty(this, "system.identified") === false;
+    return !game.user.isGM && this.system.identified === false;
   }
 
   /* -------------------------------------------- */
@@ -699,10 +700,10 @@ export class ItemPF extends ItemBasePF {
 
     // Update price from base price
     if (data["system.basePrice"] != null) {
-      linkData(srcData, data, "system.price", getProperty(srcData, "system.basePrice") || 0);
+      linkData(srcData, data, "system.price", srcData.system.basePrice || 0);
     }
     if (data["system.unidentified.basePrice"] != null) {
-      linkData(srcData, data, "system.unidentified.price", getProperty(srcData, "system.unidentified.basePrice") || 0);
+      linkData(srcData, data, "system.unidentified.price", srcData.system.unidentified?.basePrice || 0);
     }
 
     // Update name
@@ -728,7 +729,7 @@ export class ItemPF extends ItemBasePF {
       if (target === "value" && charges > maxCharges) maxCharges = charges;
       else if (target === "max" && maxCharges < charges) charges = maxCharges;
 
-      const link = getProperty(this, "links.charges");
+      const link = this.links.charges;
       if (!link) {
         if (this.type === "spell") {
           if (charges !== undefined) linkData(srcData, data, "system.preparation.preparedAmount", charges);
@@ -740,7 +741,7 @@ export class ItemPF extends ItemBasePF {
       } else {
         // Update charges for linked items
         if (data["system.uses.value"] != null) {
-          if (link && getProperty(link, "links.charges") == null) {
+          if (link && link.links?.charges == null) {
             await link.update({ "system.uses.value": data["system.uses.value"] });
           }
         }
@@ -830,9 +831,9 @@ export class ItemPF extends ItemBasePF {
       // Call 'toggle' script calls
       {
         let state = null;
-        if (this.type === "buff") state = getProperty(changed, "system.active");
+        if (this.type === "buff") state = changed.system.active;
         if (this.type === "feat" && hasProperty(changed, "system.disabled"))
-          state = getProperty(changed, "system.disabled") === true ? false : true;
+          state = changed.system?.disabled === true ? false : true;
         if (state != null) {
           this.executeScriptCalls("toggle", { state });
         }
@@ -840,7 +841,7 @@ export class ItemPF extends ItemBasePF {
 
       // Call 'equip' script calls
       {
-        const equipped = getProperty(changed, "system.equipped");
+        const equipped = changed.system?.equipped;
         if (equipped != null) {
           this.executeScriptCalls("equip", { equipped });
         }
@@ -896,7 +897,7 @@ export class ItemPF extends ItemBasePF {
     if (!this.parentActor) return;
 
     // No charges? No charges!
-    if (!["day", "week", "charges"].includes(getProperty(this, "system.uses.per"))) return;
+    if (!["day", "week", "charges"].includes(this.system.uses?.per)) return;
 
     const rollData = this.getRollData();
 
@@ -1016,7 +1017,7 @@ export class ItemPF extends ItemBasePF {
 
     // Roll spell failure chance
     if (templateData.isSpell && this.parent != null && this.parent.spellFailure > 0 && this.system.components.somatic) {
-      const spellbook = getProperty(this.parent, `system.attributes.spells.spellbooks.${this.system.spellbook}`);
+      const spellbook = this.parent.system.attributes?.spells?.spellbooks?.[this.system.spellbook];
       if (spellbook && spellbook.arcaneSpellFailure) {
         templateData.spellFailure = RollPF.safeRoll("1d100").total;
         templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
@@ -1940,7 +1941,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async removeItemBooleanFlag(flagName, context = {}) {
-    const flags = getProperty(this, "system.flags.boolean") ?? {};
+    const flags = this.system.flags?.boolean ?? {};
 
     if (flags[flagName] !== undefined) {
       await this.update({ [`system.flags.boolean.-=${flagName}`]: null }, context);
@@ -1955,7 +1956,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {boolean} Whether the flag was found on this item.
    */
   hasItemBooleanFlag(flagName) {
-    const flags = getProperty(this, "system.flags.boolean") ?? {};
+    const flags = this.system.flags?.boolean ?? {};
     return flags[flagName] === true;
   }
 
@@ -1965,7 +1966,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {string[]}
    */
   getItemBooleanFlags() {
-    const flags = getProperty(this, "system.flags.boolean") ?? {};
+    const flags = this.system.flags?.boolean ?? {};
     return Object.keys(flags);
   }
 
@@ -1999,7 +2000,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async removeItemDictionaryFlag(flagName, context = {}) {
-    const flags = getProperty(this, "system.flags.dictionary") ?? {};
+    const flags = this.system.flags?.dictionary ?? {};
 
     if (flags[flagName] !== undefined) {
       await this.update({ [`system.flags.dictionary.-=${flagName}`]: null }, context);
@@ -2014,7 +2015,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {object} The value stored in the flag.
    */
   getItemDictionaryFlag(flagName) {
-    const flags = getProperty(this, "system.flags.dictionary") || {};
+    const flags = this.system.flags?.dictionary || {};
     return flags[flagName];
   }
 
@@ -2024,7 +2025,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {object[]}
    */
   getItemDictionaryFlags() {
-    const flags = getProperty(this, "system.flags.dictionary") || {};
+    const flags = this.system.flags?.dictionary || {};
     return flags;
   }
 
@@ -2147,7 +2148,7 @@ export class ItemPF extends ItemBasePF {
     effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, -800));
 
     if (actionData.ability.attack) {
-      const ablMod = getProperty(actorData, `abilities.${actionData.ability.attack}.mod`) ?? 0;
+      const ablMod = actorData.abilities?.[actionData.ability.attack]?.mod ?? 0;
       describePart(ablMod, CONFIG.PF1.abilities[actionData.ability.attack], -50);
     }
 

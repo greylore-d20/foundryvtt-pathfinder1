@@ -286,22 +286,22 @@ export class ActorPF extends ActorBasePF {
     const bFlags = {};
     const dFlags = {};
 
-    for (const i of items) {
+    for (const item of items) {
       // Process boolean flags
-      if (i.isActive) {
-        const flags = getProperty(i, "system.flags.boolean") || {};
-        for (const f of Object.keys(flags)) {
-          bFlags[f] ??= { sources: [] };
-          bFlags[f].sources.push(i);
+      if (item.isActive) {
+        const flags = item.system.flags?.boolean || {};
+        for (const flag of Object.keys(flags)) {
+          bFlags[flag] ??= { sources: [] };
+          bFlags[flag].sources.push(item);
         }
       }
 
       // Process dictionary flags
-      const tag = i.system.tag;
+      const tag = item.system.tag;
       if (tag) {
-        const flags = getProperty(i, "system.flags.dictionary") || {};
+        const flags = item.system.flags?.dictionary || {};
         for (const [key, value] of Object.entries(flags)) {
-          setProperty(dFlags, `${tag}.${key}`, i.isActive ? value : 0);
+          setProperty(dFlags, `${tag}.${key}`, item.isActive ? value : 0);
         }
       }
     }
@@ -474,7 +474,7 @@ export class ActorPF extends ActorBasePF {
     this._prepareClassSkills();
 
     // Reset HD
-    setProperty(this, "system.attributes.hd.total", this.system.details.level.value);
+    setProperty(this.system, "attributes.hd.total", this.system.details.level.value);
   }
 
   /**
@@ -1288,10 +1288,9 @@ export class ActorPF extends ActorBasePF {
       }
       if (reducedSpeed) {
         for (const speedKey of Object.keys(this.system.attributes.speed)) {
-          const key = `system.attributes.speed.${speedKey}.total`;
-          const value = getProperty(this, key);
-          setProperty(this, key, this.constructor.getReducedMovementSpeed(value));
-          if (value > 0) {
+          const speedValue = this.system.attributes.speed[speedKey].total;
+          this.system.attributes.speed[speedKey].total = this.constructor.getReducedMovementSpeed(speedValue);
+          if (speedValue > 0) {
             getSourceInfo(this.sourceInfo, `system.attributes.speed.${speedKey}.add`).negative.push(sInfo);
           }
         }
@@ -1384,8 +1383,9 @@ export class ActorPF extends ActorBasePF {
         let itemACP = Math.abs(obj.system.armor.acp);
         if (obj.system.masterwork === true && isShieldOrArmor) itemACP = Math.max(0, itemACP - 1);
 
-        if (isShieldOrArmor)
-          itemACP = Math.max(0, itemACP + (getProperty(this, `system.attributes.acp.${eqType}Bonus`) ?? 0));
+        if (isShieldOrArmor) {
+          itemACP = Math.max(0, itemACP + (this.system.attributes?.acp?.[`${eqType}Bonus`] ?? 0));
+        }
 
         let brokenACP = 0;
         if (obj.system.broken) {
@@ -1422,7 +1422,7 @@ export class ActorPF extends ActorBasePF {
         if (obj.system.armor.dex !== null && isShieldOrArmor) {
           const mDex = Number.parseInt(obj.system.armor.dex, 10);
           if (Number.isInteger(mDex)) {
-            const mod = getProperty(this, `system.attributes.mDex.${eqType}Bonus`) ?? 0;
+            const mod = this.system.attributes?.mDex?.[`${eqType}Bonus`] ?? 0;
             const itemMDex = mDex + mod;
             mdex[eqType] = Math.min(itemMDex, mdex[eqType] ?? Number.POSITIVE_INFINITY);
 
@@ -1748,7 +1748,7 @@ export class ActorPF extends ActorBasePF {
     const newSize = update.system.traits?.size;
     if (newSize !== undefined && oldData.traits.size !== undefined) {
       const size = CONFIG.PF1.tokenSizes[newSize];
-      if (!this.isToken && !getProperty(this, "prototypeToken.flags.pf1.staticSize")) {
+      if (!this.isToken && !this.prototypeToken.flags?.pf1?.staticSize) {
         if (!update.token) update.token = {};
         update.token.width = size.w;
         update.token.height = size.h;
@@ -1796,10 +1796,10 @@ export class ActorPF extends ActorBasePF {
     this._updateExp(update);
   }
 
-  _onUpdate(data, options, userId, context = {}) {
-    super._onUpdate(data, options, userId, context);
+  _onUpdate(updateData, options, userId, context = {}) {
+    super._onUpdate(updateData, options, userId, context);
 
-    if (game.user.id === userId && hasProperty(data, "system.attributes.conditions")) {
+    if (game.user.id === userId && hasProperty(updateData, "system.attributes.conditions")) {
       this.toggleConditionStatusIcons({ render: false });
       // Redraw canvas on condition toggle
       canvas.perception.update(
@@ -1814,7 +1814,7 @@ export class ActorPF extends ActorBasePF {
 
     // Resize token(s)
     if (game.user.id === userId) {
-      const sizeKey = getProperty(data, "system.traits.size");
+      const sizeKey = updateData.system?.traits?.size;
       if (sizeKey) {
         const size = CONFIG.PF1.tokenSizes[sizeKey];
         const tokens = this.getActiveTokens(false, true).filter((o) => {
@@ -2229,8 +2229,8 @@ export class ActorPF extends ActorBasePF {
     );
 
     // Add ability modifier
-    const atkAbl = getProperty(this, `system.attributes.attack.${options.melee ? "melee" : "ranged"}Ability`);
-    changes.push(`${getProperty(this, `system.abilities.${atkAbl}.mod`)}[${CONFIG.PF1.abilities[atkAbl]}]`);
+    const atkAbl = this.system.attributes?.attack?.[`${options.melee ? "melee" : "ranged"}Ability`];
+    changes.push(`${this.system.abilities[atkAbl].mod}[${CONFIG.PF1.abilities[atkAbl]}]`);
 
     const size = this.system.traits.size ?? "med";
     rollData.sizeBonus = CONFIG.PF1.sizeMods[size];
@@ -2730,24 +2730,24 @@ export class ActorPF extends ActorBasePF {
         : this.token ?? canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.id);
 
     // Create message
-    const d = this.system;
+    const actorData = this.system;
     const data = {
       actor: this,
       name: this.name,
       tokenId: this.token ? `${this.token.uuid}` : null,
       ac: {
-        normal: d.attributes.ac.normal.total,
-        touch: d.attributes.ac.touch.total,
-        flatFooted: d.attributes.ac.flatFooted.total,
+        normal: actorData.attributes.ac.normal.total,
+        touch: actorData.attributes.ac.touch.total,
+        flatFooted: actorData.attributes.ac.flatFooted.total,
         notes: acNotes,
       },
       cmd: {
-        normal: d.attributes.cmd.total,
-        flatFooted: d.attributes.cmd.flatFootedTotal,
+        normal: actorData.attributes.cmd.total,
+        flatFooted: actorData.attributes.cmd.flatFootedTotal,
         notes: cmdNotes,
       },
       misc: {
-        sr: d.attributes.sr.total,
+        sr: actorData.attributes.sr.total,
         srNotes: srNotes,
         drNotes: drNotes,
         energyResistance: energyResistance,
@@ -2755,10 +2755,10 @@ export class ActorPF extends ActorBasePF {
       tokenUuid: token?.document.uuid,
     };
     // Add regeneration and fast healing
-    if ((getProperty(d, "traits.fastHealing") || "").length || (getProperty(d, "traits.regen") || "").length) {
+    if ((actorData.traits?.fastHealing || "").length || (actorData.traits?.regen || "").length) {
       data.regen = {
-        regen: d.traits.regen,
-        fastHealing: d.traits.fastHealing,
+        regen: actorData.traits.regen,
+        fastHealing: actorData.traits.fastHealing,
       };
     }
 
@@ -2828,8 +2828,7 @@ export class ActorPF extends ActorBasePF {
    * @param {string} key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
    */
   hasCondition(key) {
-    key = `system.attributes.conditions.${key}`;
-    return getProperty(this, key) === true;
+    return this.system.attributes?.conditions?.[key] === true;
   }
 
   /* -------------------------------------------- */
@@ -3299,11 +3298,8 @@ export class ActorPF extends ActorBasePF {
           });
       }
 
-      const spellbookNotes = getProperty(
-        this,
-        `system.attributes.spells.spellbooks.${spellbookKey}.concentrationNotes`
-      );
-      if (spellbookNotes.length) {
+      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[spellbookKey]?.concentrationNotes;
+      if (spellbookNotes?.length) {
         result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
       }
 
@@ -3322,8 +3318,8 @@ export class ActorPF extends ActorBasePF {
           });
       }
 
-      const spellbookNotes = getProperty(this, `system.attributes.spells.spellbooks.${spellbookKey}.clNotes`);
-      if (spellbookNotes.length) {
+      const spellbookNotes = this.system.attributes?.spells?.spellbooks?.[spellbookKey]?.clNotes;
+      if (spellbookNotes?.length) {
         result.push({ notes: spellbookNotes.split(/[\n\r]+/), item: null });
       }
 
@@ -4003,10 +3999,10 @@ export class ActorPF extends ActorBasePF {
     // Restore daily uses of spells, feats, etc.
     if (restoreDailyUses === true) {
       // Update spellbooks
-      for (const [sbKey, sb] of Object.entries(getProperty(actorData, `attributes.spells.spellbooks`) || {})) {
-        for (let a = 0; a < 10; a++) {
-          updateData[`system.attributes.spells.spellbooks.${sbKey}.spells.spell${a}.value`] =
-            getProperty(sb, `spells.spell${a}.max`) || 0;
+      for (const [bookId, spellbook] of Object.entries(actorData.attributes?.spells?.spellbooks ?? {})) {
+        for (let level = 0; level < 10; level++) {
+          updateData[`system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`] =
+            spellbook.spells[`spell${level}`]?.max || 0;
         }
       }
 
@@ -4018,7 +4014,7 @@ export class ActorPF extends ActorBasePF {
         if (itemData.uses && itemData.uses.per === "day" && itemData.uses.value !== itemData.uses.max) {
           itemUpdate["system.uses.value"] = itemData.uses.max;
         } else if (item.type === "spell") {
-          const spellbook = getProperty(actorData, `attributes.spells.spellbooks.${itemData.spellbook}`),
+          const spellbook = actorData.attributes?.spells?.spellbooks?.[itemData.spellbook],
             isSpontaneous = spellbook.spontaneous;
           if (!isSpontaneous) {
             if (itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {

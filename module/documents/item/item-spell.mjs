@@ -78,7 +78,7 @@ export class ItemSpellPF extends ItemPF {
       if (spellbook != null) {
         const spellAbility = spellbook.ability;
         let ablMod = "";
-        if (spellAbility !== "") ablMod = getProperty(this.parent, `system.abilities.${spellAbility}.mod`);
+        if (spellAbility !== "") ablMod = this.parent?.system.abilities?.[spellAbility]?.mod;
 
         result.cl = this.casterLevel || 0;
         result.sl = this.spellLevel || 0;
@@ -133,8 +133,8 @@ export class ItemSpellPF extends ItemPF {
     const spellbook = this.spellbook;
     if (!spellbook) return;
     const isSpontaneous = spellbook.spontaneous,
-      spellbookKey = getProperty(this, "system.spellbook") || "primary",
-      spellLevel = getProperty(this, "system.level");
+      spellbookKey = this.system.spellbook || "primary",
+      spellLevel = this.system.level;
 
     if (this.useSpellPoints()) {
       const curUses = this.getSpellUses();
@@ -143,8 +143,8 @@ export class ItemSpellPF extends ItemPF {
       return this.parent.update(updateData);
     } else {
       const newCharges = isSpontaneous
-        ? Math.max(0, (getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0) + value)
-        : Math.max(0, (getProperty(this, "system.preparation.preparedAmount") || 0) + value);
+        ? Math.max(0, (spellbook.spells?.[`spell${spellLevel}`]?.value || 0) + value)
+        : Math.max(0, (this.system.preparation?.preparedAmount || 0) + value);
 
       if (!isSpontaneous) {
         const key = "system.preparation.preparedAmount";
@@ -263,8 +263,8 @@ export class ItemSpellPF extends ItemPF {
     } else {
       if (isSpontaneous) {
         if (itemData.preparation.spontaneousPrepared === true) {
-          if (max) return getProperty(spellbook, `spells.spell${spellLevel}.max`) || 0;
-          return getProperty(spellbook, `spells.spell${spellLevel}.value`) || 0;
+          if (max) return spellbook.spells?.[`spell${spellLevel}`]?.max || 0;
+          return spellbook.spells?.[`spell${spellLevel}`]?.value || 0;
         }
       } else {
         if (max) return itemData.preparation?.maxAmount ?? 0;
@@ -302,8 +302,8 @@ export class ItemSpellPF extends ItemPF {
       else if (key === "material" && value) components.push(compKeys.M);
       else if (key === "focus" && value) components.push(compKeys.F);
     }
-    if (getProperty(srcData, "components.divineFocus") === 1) components.push(compKeys.DF);
-    const df = getProperty(srcData, "components.divineFocus");
+    if (srcData.components?.divineFocus === 1) components.push(compKeys.DF);
+    const df = srcData.components?.divineFocus;
     // Sort components
     const componentsOrder = [compKeys.V, compKeys.S, compKeys.T, compKeys.E, compKeys.M, compKeys.F, compKeys.DF];
     components.sort((a, b) => {
@@ -316,13 +316,15 @@ export class ItemSpellPF extends ItemPF {
     components = components.map((o) => {
       if (o === compKeys.M) {
         if (df === 2) o = `${compKeys.M}/${compKeys.DF}`;
-        if (getProperty(srcData, "system.materials.value"))
-          o = `${o} (${getProperty(srcData, "system.materials.value")})`;
+        if (srcData.materials?.value) {
+          o = `${o} (${srcData.materials?.value})`;
+        }
       }
       if (o === compKeys.F) {
         if (df === 3) o = `${compKeys.F}/${compKeys.DF}`;
-        if (getProperty(srcData, "system.materials.focus"))
-          o = `${o} (${getProperty(srcData, "system.materials.focus")})`;
+        if (srcData.materials?.focus) {
+          o = `${o} (${srcData.materials?.focus})`;
+        }
       }
       return o;
     });
@@ -334,7 +336,7 @@ export class ItemSpellPF extends ItemPF {
    * @returns {number[]} An array containing the spell level and caster level.
    */
   static getMinimumCasterLevelBySpellData(itemData) {
-    const learnedAt = getProperty(itemData, "system.learnedAt.class").reduce((cur, o) => {
+    const learnedAt = itemData.system.learnedAt?.class?.reduce((cur, o) => {
       const classes = o[0].split("/");
       for (const cls of classes) cur.push([cls, o[1]]);
       return cur;
@@ -547,8 +549,8 @@ export class ItemSpellPF extends ItemPF {
     const actionData = firstAction?.data ?? {};
 
     const label = {
-      school: (CONFIG.PF1.spellSchools[getProperty(srcData, "school")] || "").toLowerCase(),
-      subschool: getProperty(srcData, "subschool") || "",
+      school: (CONFIG.PF1.spellSchools[srcData.school] || "").toLowerCase(),
+      subschool: srcData.subschool || "",
       types: "",
     };
     const data = {
@@ -557,37 +559,37 @@ export class ItemSpellPF extends ItemPF {
     };
 
     // Set subschool and types label
-    const types = getProperty(srcData, "types");
+    const types = srcData.types;
     if (typeof types === "string" && types.length > 0) {
       label.types = types.split(reSplit).join(", ");
     }
     // Set information about when the spell is learned
     data.learnedAt = {};
-    data.learnedAt.class = (getProperty(srcData, "learnedAt.class") || [])
+    data.learnedAt.class = (srcData.learnedAt?.class || [])
       .map((o) => {
         return `${o[0]} ${o[1]}`;
       })
       .sort()
       .join(", ");
-    data.learnedAt.domain = (getProperty(srcData, "learnedAt.domain") || [])
+    data.learnedAt.domain = (srcData.learnedAt?.domain || [])
       .map((o) => {
         return `${o[0]} ${o[1]}`;
       })
       .sort()
       .join(", ");
-    data.learnedAt.subDomain = (getProperty(srcData, "learnedAt.subDomain") || [])
+    data.learnedAt.subDomain = (srcData.learnedAt?.subDomain || [])
       .map((o) => {
         return `${o[0]} ${o[1]}`;
       })
       .sort()
       .join(", ");
-    data.learnedAt.elementalSchool = (getProperty(srcData, "learnedAt.elementalSchool") || [])
+    data.learnedAt.elementalSchool = (srcData.learnedAt?.elementalSchool || [])
       .map((o) => {
         return `${o[0]} ${o[1]}`;
       })
       .sort()
       .join(", ");
-    data.learnedAt.bloodline = (getProperty(srcData, "learnedAt.bloodline") || [])
+    data.learnedAt.bloodline = (srcData.learnedAt?.bloodline || [])
       .map((o) => {
         return `${o[0]} ${o[1]}`;
       })

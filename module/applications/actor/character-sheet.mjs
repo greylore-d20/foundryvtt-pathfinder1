@@ -68,7 +68,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
       game.settings.get("pf1", "experienceConfig").disableExperienceTracking !== true &&
       data.hasClasses
     ) {
-      const xp = getProperty(this.actor, "system.details.xp");
+      const xp = this.actor.system.details?.xp;
       if (xp && xp.value >= xp.max) {
         data.levelUp = true;
       }

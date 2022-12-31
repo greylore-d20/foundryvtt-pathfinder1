@@ -47,7 +47,7 @@ export class ItemClassPF extends ItemPF {
     await super.update(data, context);
 
     // Update class
-    const newLevel = data["system.level"] || getProperty(data, "system.level");
+    const newLevel = updateData["system.level"] || getProperty(updateData, "system.level");
     if (newLevel !== undefined && this.parent) {
       const prevLevel = this._prevLevel;
       if (prevLevel !== undefined) {

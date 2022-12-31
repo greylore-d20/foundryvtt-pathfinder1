@@ -409,7 +409,7 @@ export const registerSystemSettings = function () {
     onChange: () => {
       const promises = [];
       const actors = [
-        ...Array.from(game.actors.contents.filter((o) => getProperty(o.data, "token.actorLink"))),
+        ...Array.from(game.actors.contents.filter((actor) => actor.prototypeToken.actorLink)),
         ...Object.values(game.actors.tokens).filter((a) => a != null),
       ];
       for (const actor of actors) {

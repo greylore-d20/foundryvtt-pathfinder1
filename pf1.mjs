@@ -825,7 +825,7 @@ Hooks.on("createItem", (item, options, userId) => {
   if (userId !== game.user.id) return;
 
   // Show buff if active
-  if (item.type === "buff" && getProperty(item, "system.active") === true) {
+  if (item.type === "buff" && item.system.active === true) {
     // Call hook
     if (actor) {
       callOldNamespaceHookAll("pf1.toggleActorBuff", "pf1ToggleActorBuff", actor, item, true);
@@ -837,21 +837,21 @@ Hooks.on("createItem", (item, options, userId) => {
   }
   // Simulate toggling a feature on
   if (item.type === "feat") {
-    const disabled = getProperty(item, "system.disabled");
+    const disabled = item.system.disabled;
     if (disabled === false) {
       item.executeScriptCalls("toggle", { state: true });
     }
   }
   // Simulate equipping items
   {
-    const equipped = getProperty(item, "system.equipped");
+    const equipped = item.system.equipped;
     if (equipped === true) {
       item.executeScriptCalls("equip", { equipped: true });
     }
   }
   // Quantity change
   {
-    const quantity = getProperty(item, "system.quantity");
+    const quantity = item.system.quantity;
     if (typeof quantity === "number" && quantity > 0) {
       item.executeScriptCalls("changeQuantity", { quantity: { previous: 0, new: quantity } });
     }
@@ -863,7 +863,7 @@ Hooks.on("preDeleteItem", (item, options, userId) => {
     // Remove linked children with item
     const _getChildren = function (item) {
       const result = [];
-      const itemLinks = getProperty(item, "system.links");
+      const itemLinks = item.system.links;
       if (itemLinks) {
         for (const [linkType, links] of Object.entries(itemLinks)) {
           for (const link of links) {
@@ -905,7 +905,7 @@ Hooks.on("deleteItem", async (item, options, userId) => {
 
   if (actor) {
     // Remove links
-    const itemLinks = getProperty(item, "system.links");
+    const itemLinks = item.system.links;
     if (itemLinks) {
       for (const [linkType, links] of Object.entries(itemLinks)) {
         for (const link of links) {
@@ -919,7 +919,7 @@ Hooks.on("deleteItem", async (item, options, userId) => {
     }
 
     // Call buff removal hook
-    if (item.type === "buff" && getProperty(item, "system.active") === true) {
+    if (item.type === "buff" && item.system.active === true) {
       callOldNamespaceHookAll("pf1.toggleActorBuff", "pf1ToggleActorBuff", actor, item, false);
       Hooks.callAll("pf1ToggleActorBuff", actor, item, false);
     }
@@ -932,16 +932,11 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
 
   if (actor) {
     // Toggle buff
-    if (item.type === "buff" && getProperty(changedData, "system.active") !== undefined) {
+    const isActive = changedData.system?.active;
+    if (item.type === "buff" && isActive !== undefined) {
       // Call hook
-      callOldNamespaceHookAll(
-        "pf1.toggleActorBuff",
-        "pf1ToggleActorBuff",
-        actor,
-        item,
-        getProperty(changedData, "system.active")
-      );
-      Hooks.callAll("pf1ToggleActorBuff", actor, item, getProperty(changedData, "system.active"));
+      callOldNamespaceHookAll("pf1.toggleActorBuff", "pf1ToggleActorBuff", actor, item, isActive);
+      Hooks.callAll("pf1ToggleActorBuff", actor, item, isActive);
     }
   }
 });
@@ -986,20 +981,22 @@ Hooks.on("hotbarDrop", (bar, data, slot) => {
 // Render TokenConfig
 Hooks.on("renderTokenConfig", async (app, html) => {
   // Add vision inputs
-  let object = app.object;
+  let token = app.object;
   // Prototype token
-  if (object instanceof Actor) object = object.prototypeToken;
+  if (token instanceof Actor) token = token.prototypeToken;
+
+  const flags = token.flags?.pf1;
 
   // Add static size checkbox
   let newHTML = `<div class="form-group"><label>${game.i18n.localize(
     "PF1.StaticSize"
   )}</label><input type="checkbox" name="flags.pf1.staticSize" data-dtype="Boolean"`;
-  if (getProperty(object, "flags.pf1.staticSize")) newHTML += " checked";
+  if (flags?.staticSize) newHTML += " checked";
   newHTML += "/></div>";
   html.find('.tab[data-tab="appearance"] > *:nth-child(3)').after(newHTML);
 
   // Disable vision elements if custom vision is disabled
-  const enableCustomVision = getProperty(object, "flags.pf1.customVisionRules") === true;
+  const enableCustomVision = flags?.customVisionRules === true;
   if (!enableCustomVision) {
     const tabElem = html.find(`.tab[data-tab="vision"]`);
     // Disable vision mode selection

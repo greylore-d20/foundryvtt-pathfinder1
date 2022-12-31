@@ -565,7 +565,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Post process data
     for (const l of data.links.list) {
-      const items = getProperty(this.item, `system.links.${l.id}`) || [];
+      const items = this.item.system.links?.[l.id] || [];
       for (let a = 0; a < items.length; a++) {
         const i = items[a];
         i._index = a;
@@ -603,8 +603,10 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _prepareItemFlags(data) {
-    setProperty(data, "flags.boolean", getProperty(data.item, "system.flags.boolean") ?? {});
-    setProperty(data, "flags.dictionary", getProperty(data.item, "system.flags.dictionary") ?? {});
+    const flags = data.item.system.flags ?? {};
+    data.flags ??= {};
+    data.flags.boolean = flags.boolean ?? {};
+    data.flags.dictionary = flags.dictionary ?? {};
   }
 
   async _prepareScriptCalls(data) {
@@ -766,11 +768,7 @@ export class ItemSheetPF extends ItemSheet {
     // Tags
     const tags = item.system.tags;
     if (tags != null) {
-      props.push(
-        ...tags.map((o) => {
-          return o[0];
-        })
-      );
+      props.push(...tags.map(([tag]) => tag));
     }
 
     return props.filter((p) => !!p);
@@ -805,7 +803,7 @@ export class ItemSheetPF extends ItemSheet {
       delete formData[e[0]];
 
       if (!formData[`system.links.${linkType}`])
-        formData[`system.links.${linkType}`] = deepClone(getProperty(this.item, `system.links.${linkType}`));
+        formData[`system.links.${linkType}`] = deepClone(this.item.system.links?.[linkType]);
 
       setProperty(formData[`system.links.${linkType}`][index], subPath, value);
     }
@@ -1577,7 +1575,7 @@ export class ItemSheetPF extends ItemSheet {
     if (a.classList.contains("delete-link")) {
       const li = a.closest(".links-item");
       const group = a.closest('div[data-group="links"]');
-      let links = duplicate(getProperty(this.item, `system.links.${group.dataset.tab}`) || []);
+      let links = deepClone(this.item.system.links?.[group.dataset.tab] ?? []);
       const link = links.find((o) => o.id === li.dataset.link);
       links = links.filter((o) => o !== link);
 

@@ -43,7 +43,7 @@ export class ItemContainerPF extends ItemPF {
     const user = game.user;
     const itemOptions = { temporary: false, renderSheet: false };
 
-    let inventory = duplicate(getProperty(this, "system.inventoryItems") || []);
+    let inventory = deepClone(this.system.inventoryItems ?? []);
     // Iterate over data to create
     data = data instanceof Array ? data : [data];
     if (!(itemOptions.temporary || itemOptions.noHook)) {
@@ -89,12 +89,12 @@ export class ItemContainerPF extends ItemPF {
     const ids = new Set(data);
 
     // Iterate over elements of the collection
-    const inventory = duplicate(getProperty(this, "system.inventoryItems") || []).filter((d) => {
-      if (!ids.has(d._id)) return true;
+    const inventory = deepClone(this.system.inventoryItems ?? []).filter((item) => {
+      if (!ids.has(item._id)) return true;
 
       // Call pre-update hooks to ensure the update is allowed to proceed
       if (!options.noHook) {
-        const allowed = Hooks.call(`preDelete${embeddedName}`, this, d, options, user.id);
+        const allowed = Hooks.call(`preDelete${embeddedName}`, this, item, options, user.id);
         if (allowed === false) {
           console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
           return true;

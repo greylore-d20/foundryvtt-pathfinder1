@@ -256,10 +256,8 @@ export class ActorSheetPF extends ActorSheet {
       );
       i.sort = item.sort;
       i.showUnidentifiedData = item.showUnidentifiedData;
-      if (i.showUnidentifiedData)
-        i.name =
-          getProperty(item, "system.unidentified.name") || getProperty(item, "system.identifiedName") || item.name;
-      else i.name = getProperty(item, "system.identifiedName") || item.name;
+      if (i.showUnidentifiedData) i.name = item.system.unidentified?.name || item.system.identifiedName || item.name;
+      else i.name = item.system.identifiedName || item.name;
       return i;
     });
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -330,8 +328,8 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Update skill labels
-    const acp = getProperty(this.document, "system.attributes.acp.total");
-    for (const [s, skl] of Object.entries(data.system.skills)) {
+    const acp = this.document.system.attributes?.acp?.total;
+    for (const [s, skl] of Object.entries(data.system.skills ?? {})) {
       skl.label = CONFIG.PF1.skills[s];
       skl.arbitrary = CONFIG.PF1.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
@@ -454,11 +452,11 @@ export class ActorSheetPF extends ActorSheet {
         }
       });
     // Count from intelligence
-    if (getProperty(this.actor, "system.abilities.int.mod") !== 0) {
+    const intMod = this.actor.system.abilities?.int?.mod;
+    if (intMod !== 0) {
       sourceData.push({
         name: game.i18n.localize("PF1.AbilityInt"),
-        value:
-          getProperty(this.actor, "system.abilities.int.mod") * getProperty(this.actor, "system.attributes.hd.total"),
+        value: intMod * this.actor.system.attributes?.hd?.total,
       });
     }
     // Count from bonus skill rank formula
@@ -567,32 +565,32 @@ export class ActorSheetPF extends ActorSheet {
     // Create a table of magic items
     {
       const magicItems = this.document.items
-        .filter((o) => {
-          if (o.showUnidentifiedData) return false;
-          if (!o.system.carried) return false;
+        .filter((item) => {
+          if (item.showUnidentifiedData) return false;
+          if (!item.system.carried) return false;
 
-          const school = getProperty(o, "system.aura.school");
-          const cl = getProperty(o, "system.cl");
+          const school = item.system.aura?.school;
+          const cl = item.system.cl;
           return typeof school === "string" && school.length > 0 && typeof cl === "number" && cl > 0;
         })
-        .map((o) => {
+        .map((item) => {
           const data = {};
 
-          data.name = o.name;
-          data.img = o.img;
-          data.id = o.id;
-          data.cl = getProperty(o, "system.cl");
-          data.school = getProperty(o, "system.aura.school");
+          data.name = item.name;
+          data.img = item.img;
+          data.id = item.id;
+          data.cl = item.system.cl;
+          data.school = item.system.aura?.school;
           if (CONFIG.PF1.spellSchools[data.school] != null) {
             data.school = CONFIG.PF1.spellSchools[data.school];
           }
-          data.school = `${CONFIG.PF1.auraStrengths[o.auraStrength]} <b>${data.school}</b>`;
+          data.school = `${CONFIG.PF1.auraStrengths[item.auraStrength]} <b>${data.school}</b>`;
           data.identifyDC = 15 + data.cl;
           {
-            const quantity = getProperty(o, "system.quantity") || 0;
+            const quantity = item.system.quantity || 0;
             if (quantity > 1) data.quantity = quantity;
           }
-          data.identified = getProperty(o, "system.identified") === true;
+          data.identified = item.system.identified === true;
 
           return data;
         });
@@ -623,7 +621,7 @@ export class ActorSheetPF extends ActorSheet {
 
   _prepareHiddenElements() {
     // Hide spellbook info
-    const spellbooks = getProperty(this.document, "system.attributes.spells.spellbooks");
+    const spellbooks = this.document.system.attributes?.spells?.spellbooks ?? {};
     for (const k of Object.keys(spellbooks)) {
       const key = `spellbook-info_${k}`;
       if (this._hiddenElems[key] == null) this._hiddenElems[key] = true;
@@ -729,7 +727,7 @@ export class ActorSheetPF extends ActorSheet {
     // Reduce spells to the nested spellbook structure
     const spellbook = {};
     for (let level = 0; level < 10; level++) {
-      const spellLevel = getProperty(book, `spells.spell${level}`);
+      const spellLevel = book.spells?.[`spell${level}`];
       if (!spellLevel) {
         console.error(`Bad data for spell level ${level} in spellbook "${bookKey}" for actor "${this.actor.name}"`);
         continue;
@@ -1454,7 +1452,7 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event, el);
 
-    const prevValue = getProperty(item, "system.preparation.preparedAmount");
+    const prevValue = item.system.preparation?.preparedAmount;
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "system.preparation.preparedAmount", value);
     if (prevValue < value) {
@@ -1479,7 +1477,7 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event, el);
 
-    const prevValue = getProperty(item, "system.preparation.maxAmount");
+    const prevValue = item.system.preparation?.maxAmount;
     const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "system.preparation.maxAmount", Math.max(0, value));
     if (prevValue > value) {
@@ -1970,7 +1968,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.document.items.get(itemId);
 
-    const curQuantity = getProperty(item, "system.quantity") || 0;
+    const curQuantity = item.system.quantity || 0;
     let newQuantity = Math.max(0, curQuantity + add);
 
     if (item.type === "container") newQuantity = Math.min(newQuantity, 1);
@@ -2912,11 +2910,7 @@ export class ActorSheetPF extends ActorSheet {
       else return false;
     }
     // Choose how to import class
-    if (
-      itemData.type === "class" &&
-      getProperty(itemData, "system.subType") !== "mythic" &&
-      !(event && event.shiftKey)
-    ) {
+    if (itemData.type === "class" && itemData.system.subType !== "mythic" && !(event && event.shiftKey)) {
       const doReturn = await new Promise((resolve) => {
         new Dialog(
           {

@@ -244,11 +244,8 @@ export class ItemChange {
             damage: newAbility.damage,
             penalty: newAbility.penalty,
           });
-          setProperty(
-            actor,
-            `system.abilities.${abilityTarget}.mod`,
-            getProperty(actor, `system.abilities.${abilityTarget}.mod`) - (prevMod - mod)
-          );
+
+          actor.system.abilities[abilityTarget].mod = actor.system.abilities[abilityTarget].mod - (prevMod - mod);
         }
       }
     }

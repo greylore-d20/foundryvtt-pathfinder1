@@ -936,9 +936,9 @@ export function calculateRangeFormula(formula, type = "ft", rollData = {}) {
   switch (type) {
     case "melee":
     case "touch":
-      return getProperty(rollData, "range.melee") ?? 0;
+      return rollData.range?.melee ?? 0;
     case "reach":
-      return getProperty(rollData, "range.reach") ?? 0;
+      return rollData.range?.reach ?? 0;
     case "close":
       return RollPF.safeRoll(CONFIG.PF1.spellRangeFormulas.close, rollData).total;
     case "medium":

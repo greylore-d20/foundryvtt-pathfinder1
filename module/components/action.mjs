@@ -885,7 +885,7 @@ export class ItemAction {
     });
     // Add critical damage parts
     if (critical === true) {
-      if (getProperty(this.data, "damage.critParts") != null) {
+      if (this.data.damage?.critParts != null) {
         parts = parts.concat(
           this.data.damage.critParts.map((p) => {
             return { base: p[0], extra: [], damageType: p[1], type: "crit" };
@@ -900,7 +900,7 @@ export class ItemAction {
     }
     // Add non-critical damage parts
     if (critical === false) {
-      if (getProperty(this.data, "damage.nonCritParts") != null) {
+      if (this.data.damage?.nonCritParts != null) {
         parts = parts.concat(
           this.data.damage.nonCritParts.map((p) => {
             return { base: p[0], extra: [], damageType: p[1], type: "nonCrit" };

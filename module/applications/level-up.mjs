@@ -74,7 +74,7 @@ export class LevelUpForm extends FormApplication {
       const _app = new LevelUpForm(item).render(true);
       Hooks.on("closeLevelUpForm", function _onClose(app) {
         if (app === _app) {
-          if (getProperty(item, "system.level") === 0) {
+          if (item.system.level === 0) {
             actor.deleteEmbeddedDocuments("Item", [item.id]);
           }
           Hooks.off("closeLevelUpForm", _onClose);

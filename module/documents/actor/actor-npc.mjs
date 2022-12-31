@@ -17,12 +17,14 @@ export class ActorNPCPF extends ActorPF {
     setProperty(this.system, "details.cr.total", this.getCR());
 
     // Reset experience value
+    let newXP = 0;
     try {
-      const crTotal = getProperty(this.system, "details.cr.total") || 0;
-      setProperty(this.system, "details.xp.value", this.getCRExp(crTotal));
+      const crTotal = this.system.details?.cr?.total || 0;
+      newXP = this.getCRExp(crTotal);
     } catch (e) {
-      setProperty(this.system, "details.xp.value", this.getCRExp(1));
+      newXP = this.getCRExp(1);
     }
+    setProperty(this.system, "details.xp.value", newXP);
   }
 
   hasArmorProficiency(item, proficiencyName) {

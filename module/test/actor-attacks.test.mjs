@@ -47,7 +47,7 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.wLongsword.use({ skipDialog: true });
-            rolls = roll.flags.pf1.metadata.rolls.attacks[0];
+            rolls = roll.systemRolls.attacks[0];
             messages.push(roll);
           });
 
@@ -56,7 +56,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should have the correct damage formula", function () {
-            expect(rolls.damage[0].roll.formula).to.equal("1d8 + 4[Strength]");
+            expect(rolls.damage[0].formula).to.equal("1d8 + 4[Strength]");
           });
 
           it("should be a ChatMessage", function () {
@@ -69,7 +69,7 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.aLongsword.use({ skipDialog: true });
-            rolls = roll.flags.pf1.metadata.rolls.attacks[0];
+            rolls = roll.systemRolls.attacks[0];
             messages.push(roll);
           });
 
@@ -78,7 +78,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should have the correct damage formula", function () {
-            expect(rolls.damage[0].roll.formula).to.equal("1d8 + 4[Strength]");
+            expect(rolls.damage[0].formula).to.equal("1d8 + 4[Strength]");
           });
 
           it("should be a ChatMessage", function () {
@@ -94,7 +94,7 @@ export const registerActorItemAttackTests = () => {
                 prevSize = actor.system.traits.size;
                 await actor.update({ "system.traits.size": "tiny" });
                 roll = await items.aLongsword.use({ skipDialog: true });
-                rolls = roll.flags.pf1.metadata.rolls.attacks[0];
+                rolls = roll.systemRolls.attacks[0];
                 messages.push(roll);
               });
               after(async () => {
@@ -106,7 +106,7 @@ export const registerActorItemAttackTests = () => {
               });
 
               it("should have the correct damage formula", function () {
-                expect(rolls.damage[0].roll.formula).to.equal("1d4 + 4[Strength]");
+                expect(rolls.damage[0].formula).to.equal("1d4 + 4[Strength]");
               });
             });
 
@@ -118,7 +118,7 @@ export const registerActorItemAttackTests = () => {
                 prevSize = actor.system.traits.size;
                 await actor.update({ "system.traits.size": "huge" });
                 roll = await items.aLongsword.use({ skipDialog: true });
-                rolls = roll.flags.pf1.metadata.rolls.attacks[0];
+                rolls = roll.systemRolls.attacks[0];
                 messages.push(roll);
               });
               after(async () => {
@@ -130,7 +130,7 @@ export const registerActorItemAttackTests = () => {
               });
 
               it("should have the correct damage formula", function () {
-                expect(rolls.damage[0].roll.formula).to.equal("3d6 + 4[Strength]");
+                expect(rolls.damage[0].formula).to.equal("3d6 + 4[Strength]");
               });
             });
           });
@@ -174,7 +174,7 @@ export const registerActorItemAttackTests = () => {
           let rolls;
           before(async () => {
             roll = await items.bite.use({ skipDialog: true });
-            rolls = roll.flags.pf1.metadata.rolls.attacks[0];
+            rolls = roll.systemRolls.attacks[0];
             messages.push(roll);
           });
 
@@ -183,7 +183,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should have the correct damage formula", function () {
-            expect(rolls.damage[0].roll.formula).to.equal("1d6 + 6[Strength]");
+            expect(rolls.damage[0].formula).to.equal("1d6 + 6[Strength]");
           });
 
           it("should be a ChatMessage", function () {
@@ -197,16 +197,16 @@ export const registerActorItemAttackTests = () => {
               const action = items.bite.firstAction;
               await action.update({ naturalAttack: { primaryAttack: false } });
               roll = await items.bite.use({ skipDialog: true });
-              rolls = roll.flags.pf1.metadata.rolls.attacks[0];
+              rolls = roll.systemRolls.attacks[0];
               messages.push(roll);
             });
 
             it("should have the correct attack formula", function () {
-              expect(rolls.attack.formula).to.equal("1d20 + 4[Strength] + (-5)[Secondary Attack]");
+              expect(rolls.attack.formula).to.equal("1d20 + 4[Strength] + -5[Secondary Attack]");
             });
 
             it("should have the correct damage formula", function () {
-              expect(rolls.damage[0].roll.formula).to.equal("1d6 + 2[Strength]");
+              expect(rolls.damage[0].formula).to.equal("1d6 + 2[Strength]");
             });
           });
         });
@@ -254,12 +254,10 @@ export const registerActorItemAttackTests = () => {
             expect(roll instanceof pf1.documents.ChatMessagePF).to.be.true;
           });
           it("should have the correct attack formula", function () {
-            expect(roll.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal("1d20 + 2[Dexterity]");
+            expect(roll.systemRolls.attacks[0].attack.formula).to.equal("1d20 + 2[Dexterity]");
           });
           it("should have the correct damage formula", function () {
-            expect(roll.flags.pf1.metadata.rolls.attacks[0].damage[0].roll.formula).to.equal(
-              "1d8 + min(4,0)[Strength]"
-            );
+            expect(roll.systemRolls.attacks[0].damage[0].formula).to.equal("1d8 + 0[Strength]");
           });
         });
 
@@ -280,8 +278,8 @@ export const registerActorItemAttackTests = () => {
             expect(roll.chatData["flags.pf1.metadata"].rolls.attacks[0].attack.formula).to.equal("1d20 + 2[Dexterity]");
           });
           it("should have the correct damage formula", function () {
-            expect(roll.chatData["flags.pf1.metadata"].rolls.attacks[0].damage[0].roll.formula).to.equal(
-              "1d8 + min(4,0)[Strength]"
+            expect(roll.chatData["flags.pf1.metadata"].rolls.attacks[0].damage[0].formula).to.equal(
+              "sizeRoll(1, 8, 4) + min(4,0)[Strength]"
             );
           });
           it("should use ammo", function () {
@@ -306,9 +304,7 @@ export const registerActorItemAttackTests = () => {
             expect(roll instanceof pf1.documents.ChatMessagePF).to.be.true;
           });
           it("should have the correct attack formula", function () {
-            expect(roll.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal(
-              "1d20 + 10[Base Attack Bonus] + 2[Dexterity]"
-            );
+            expect(roll.systemRolls.attacks[0].attack.formula).to.equal("1d20 + 10[Base Attack Bonus] + 2[Dexterity]");
             // TODO: Add test for iterative attacks
             // TODO: Add test for additional ammo usage
           });
@@ -317,4 +313,13 @@ export const registerActorItemAttackTests = () => {
     },
     { displayName: "PF1: Actor Attack Item Tests" }
   );
+};
+
+const ROLL_TYPES = {
+  ATTACK: "attack",
+  DAMAGE: "damage",
+};
+const getMessageRoll = (message, { type = ROLL_TYPES.ATTACK, attack = 0, index = 0 } = {}) => {
+  const roll = message.flags.pf1.metadata.rolls.attacks[attack][type][index];
+  return Roll.fromJSON(roll);
 };

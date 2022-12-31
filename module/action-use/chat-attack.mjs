@@ -76,14 +76,12 @@ export class ChatAttack {
   setAction(action) {
     if (action == null) {
       this.rollData = this._rollData;
-      this.attackType = "";
       this.action = null;
       return;
     }
 
     this.action = action;
     this.rollData = mergeObject(this.action.getRollData(), this._rollData, { inplace: false });
-    this.attackType = getProperty(action.data, "data.attackType") ?? "";
     this.isHealing = action.isHealing;
 
     this.setRollData();

@@ -115,10 +115,10 @@ export class ItemSheetPF extends ItemSheet {
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties();
     data.itemName = data.item.name;
-    data.isCharged = ["day", "week", "charges"].includes(data.item.system.uses?.per);
+    data.isCharged = ["day", "week", "charges"].includes(data.system.uses?.per);
     data.defaultChargeFormula = this.item.getDefaultChargeFormula();
-    data.isPhysical = data.item.system.quantity !== undefined;
-    data.isNaturalAttack = data.item.system.attackType === "natural";
+    data.isPhysical = data.system.quantity !== undefined;
+    data.isNaturalAttack = data.system.attackType === "natural";
     data.isSpell = this.item.type === "spell";
     data.owned = this.item.actor != null;
     data.parentOwned = this.actor != null;
@@ -170,7 +170,7 @@ export class ItemSheetPF extends ItemSheet {
         isNumber: true,
         name: "system.quantity",
         label: game.i18n.localize("PF1.Quantity"),
-        value: data.item.system.quantity,
+        value: data.system.quantity,
         decimals: 0,
         id: "data-quantity",
       });
@@ -181,8 +181,8 @@ export class ItemSheetPF extends ItemSheet {
         name: "system.weight.value",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.item.system.weight.converted.total,
-        inputValue: data.item.system.weight.converted.value,
+        value: data.system.weight.converted.total,
+        inputValue: data.system.weight.converted.value,
         decimals: 2,
         id: "data-weight-value",
       });
@@ -239,11 +239,11 @@ export class ItemSheetPF extends ItemSheet {
         label: game.i18n.localize("PF1.HPShort"),
         value: {
           name: "system.hp.value",
-          value: data.item.system.hp.value,
+          value: data.system.hp.value,
         },
         max: {
           name: "system.hp.max",
-          value: data.item.system.hp.max,
+          value: data.system.hp.max,
         },
       });
 
@@ -253,7 +253,7 @@ export class ItemSheetPF extends ItemSheet {
         label: game.i18n.localize("PF1.Hardness"),
         name: "system.hardness",
         decimals: 0,
-        value: data.item.system.hardness,
+        value: data.system.hardness,
       });
 
       // Add carried flag
@@ -261,7 +261,7 @@ export class ItemSheetPF extends ItemSheet {
         isBoolean: true,
         name: "system.carried",
         label: game.i18n.localize("PF1.Carried"),
-        value: data.item.system.carried,
+        value: data.system.carried,
       });
     }
 
@@ -292,14 +292,14 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare weapon specific stuff
     if (data.item.type === "weapon") {
-      data.isRanged = data.item.system.weaponSubtype === "ranged" || data.item.system.properties["thr"] === true;
+      data.isRanged = data.system.weaponSubtype === "ranged" || data.system.properties["thr"] === true;
 
       // Prepare categories for weapons
       data.weaponCategories = { types: {}, subTypes: {} };
       for (const [k, v] of Object.entries(CONFIG.PF1.weaponTypes)) {
         if (typeof v === "object") data.weaponCategories.types[k] = v._label;
       }
-      const type = data.item.system.weaponType;
+      const type = data.system.weaponType;
       if (hasProperty(CONFIG.PF1.weaponTypes, type)) {
         for (const [k, v] of Object.entries(CONFIG.PF1.weaponTypes[type])) {
           // Add static targets
@@ -315,7 +315,7 @@ export class ItemSheetPF extends ItemSheet {
       for (const [k, v] of Object.entries(CONFIG.PF1.equipmentTypes)) {
         if (typeof v === "object") data.equipmentCategories.types[k] = v._label;
       }
-      const type = data.item.system.equipmentType;
+      const type = data.system.equipmentType;
       if (hasProperty(CONFIG.PF1.equipmentTypes, type)) {
         for (const [k, v] of Object.entries(CONFIG.PF1.equipmentTypes[type])) {
           // Add static targets
@@ -342,7 +342,7 @@ export class ItemSheetPF extends ItemSheet {
 
       data.isPreparedSpell = spellbook != null ? !spellbook.spontaneous && !spellbook.spellPoints?.useSystem : false;
       data.usesSpellpoints = spellbook != null ? spellbook.spellPoints?.useSystem ?? false : false;
-      data.isAtWill = data.item.system.atWill;
+      data.isAtWill = data.system.atWill;
       data.spellbooks = deepClone(this.actor?.system.attributes?.spells?.spellbooks ?? {});
 
       const desc = await renderTemplate(
@@ -413,8 +413,8 @@ export class ItemSheetPF extends ItemSheet {
       languages: CONFIG.PF1.languages,
     };
     for (const [t, choices] of Object.entries(profs)) {
-      if (hasProperty(data.item.system, t)) {
-        const trait = data[t];
+      if (t in data.system) {
+        const trait = data.system[t];
         if (!trait) continue;
         let values = [];
         if (trait.value) {
@@ -446,7 +446,7 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       const buffTargets = getBuffTargets(this.item.actor);
-      data.changes = data.item.system.changes.reduce((cur, o) => {
+      data.changes = data.system.changes.reduce((cur, o) => {
         const obj = { data: o };
 
         obj.subTargetLabel = buffTargets[o.subTarget]?.label;
@@ -458,8 +458,8 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare stuff for items with context notes
-    if (data.item.system.contextNotes) {
-      data.contextNotes = deepClone(data.item.system.contextNotes);
+    if (data.system.contextNotes) {
+      data.contextNotes = deepClone(data.system.contextNotes);
       const noteTargets = getBuffTargets(this.item.actor, "contextNotes");
       data.contextNotes.forEach((o) => {
         o.label = noteTargets[o.subTarget]?.label;
@@ -475,8 +475,8 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Parse notes
-    if (data.item.system.attackNotes) {
-      const value = data.item.system.attackNotes;
+    if (data.system.attackNotes) {
+      const value = data.system.attackNotes;
       setProperty(data, "notes.attack", value);
     }
 

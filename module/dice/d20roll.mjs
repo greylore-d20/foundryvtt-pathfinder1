@@ -129,6 +129,7 @@ export class D20RollPF extends RollPF {
 
     const dialogOptions = options.dialogOptions || {};
     dialogOptions.subject = options.subject;
+    dialogOptions.jQuery = false;
 
     const html = await renderTemplate(template, renderData);
 
@@ -165,12 +166,11 @@ export class D20RollPF extends RollPF {
    * A callback applying the user's input from the dialog to the roll and its options.
    *
    * @protected
-   * @param {JQuery | HTMLElement} html - The dialog's submitted HTML
+   * @param {HTMLElement} html - The dialog's submitted HTML
    * @param {number | null} [staticRoll] - A static roll result to use instead of rolling the dice
    * @returns {D20RollPF} This roll
    */
   _onDialogSubmit(html, staticRoll) {
-    if (html instanceof jQuery) html = html[0];
     const form = html.querySelector("form");
     if (form) {
       if (form.bonus.value) {

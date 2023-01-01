@@ -755,9 +755,10 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Tags
-    if (getProperty(item.system, "system.tags") != null) {
+    const tags = item.system.tags;
+    if (tags != null) {
       props.push(
-        ...getProperty(item.system, "system.tags").map((o) => {
+        ...tags.map((o) => {
           return o[0];
         })
       );

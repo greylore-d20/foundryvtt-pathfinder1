@@ -577,7 +577,7 @@ export class CompendiumBrowser extends Application {
   _mapItems(result, item) {
     this.extraFilters = this.extraFilters || {};
 
-    result.item.weaponProps = Object.entries(getProperty(item.system, "system.properties") || []).reduce((cur, o) => {
+    result.item.weaponProps = Object.entries(item.system.properties || []).reduce((cur, o) => {
       if (o[1]) cur.push(o[0]);
       return cur;
     }, []);

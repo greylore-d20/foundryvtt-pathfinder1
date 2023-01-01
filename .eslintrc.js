@@ -424,7 +424,6 @@ module.exports = {
     filterObject: "readonly",
     flattenObject: "readonly",
     expandObject: "readonly",
-    isObjectEmpty: "readonly",
     mergeObject: "readonly",
     diffObject: "readonly",
     hasProperty: "readonly",

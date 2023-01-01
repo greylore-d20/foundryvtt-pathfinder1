@@ -431,7 +431,7 @@ export class ItemSheetPF extends ItemSheet {
             .split(CONFIG.PF1.re.traitSeparator)
             .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
         }
-        trait.cssClass = !isObjectEmpty(trait.selected) ? "" : "inactive";
+        trait.cssClass = !foundry.utils.isEmpty(trait.selected) ? "" : "inactive";
       }
     }
 

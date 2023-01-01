@@ -1483,7 +1483,7 @@ export class ItemSheetPF extends ItemSheet {
     // Find existing window
     for (const app of Object.values(this.item.apps)) {
       if (app.object === action) {
-        app.render(true, { focus: true, editable: !this.isEditable });
+        app.render(true, { focus: true });
         return;
       }
     }

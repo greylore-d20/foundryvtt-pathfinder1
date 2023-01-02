@@ -237,17 +237,13 @@ export class ItemChange {
 
       // Adjust ability modifier
       if (isModifierChanger) {
-        const prevMod = getAbilityModifier(ability.total, {
-          damage: ability.damage,
-          penalty: ability.penalty,
-        });
         const newAbility = actor.system.abilities[abilityTarget];
         const mod = getAbilityModifier(newAbility.total, {
           damage: newAbility.damage,
           penalty: newAbility.penalty,
         });
 
-        actor.system.abilities[abilityTarget].mod = actor.system.abilities[abilityTarget].mod - (prevMod - mod);
+        actor.system.abilities[abilityTarget].mod = mod;
       }
     }
   }

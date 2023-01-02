@@ -6,16 +6,16 @@ export class ItemDirectoryPF extends ItemDirectory {
    */
   static get defaultOptions() {
     const options = super.defaultOptions;
-    options.renderUpdateKeys.push("system.identifiedName", "system.unidentified.name");
+    options.renderUpdateKeys.push("system.identifiedName", "system.unidentified.name", "system.identified");
     return options;
   }
 
   /**
-   * Overridee Foundry's render to catch unidentified name changes (Foundry's "k in d" doesn't work).
+   * Override Foundry's render to catch unidentified name changes (Foundry's "k in d" doesn't work).
    *
    * @override
    */
-  _render(force = false, context = {}) {
+  async _render(force = false, context = {}) {
     // Only re-render the sidebar directory for certain types of updates
     const { action, data, documentType } = context;
     if (action && !["create", "update", "delete"].includes(action)) return this;

@@ -286,7 +286,7 @@ export class ItemChange {
               const hasSameTarget = infoEntry.change?.subTarget === this.subTarget;
               const alterBase = hasSameParent && isEnh && hasSameTarget;
 
-              if (infoEntry.change.modifier === this.modifier || alterBase) {
+              if (infoEntry.change?.modifier === this.modifier || alterBase) {
                 if (alterBase) {
                   if (infoEntry.change?.modifier === "base") {
                     infoEntry.value += value;

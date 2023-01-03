@@ -363,9 +363,18 @@ export class ActorPF extends ActorBasePF {
    * @param {DocumentModificationContext} context
    */
   async expireActiveEffects(context = {}) {
-    const temporaryEffects = this.temporaryEffects.filter(
-      (ae) => Number.isFinite(ae.duration?.remaining) && ae.duration?.remaining <= 0
-    );
+    const worldTime = game.time.worldTime;
+    const temporaryEffects = this.temporaryEffects.filter((ae) => {
+      const { seconds, startTime } = ae.duration;
+      // Calculate remaining duration.
+      // AE.duration.remaining is updated by Foundry only in combat and is unreliable.
+      if (seconds > 0) {
+        const elapsed = worldTime - startTime,
+          remaining = seconds - elapsed;
+        return remaining <= 0;
+      }
+      return false;
+    });
     const disableActiveEffects = [],
       disableBuffs = [];
     for (const ae of temporaryEffects) {

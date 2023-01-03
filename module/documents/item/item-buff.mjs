@@ -121,7 +121,7 @@ export class ItemBuffPF extends ItemPF {
           const turns = RollPF.safeRoll(durationValue, this.getRollData()).total;
           if (turns > 0) {
             createData.duration.turns = turns;
-            seconds = turns * 6;
+            seconds = turns * CONFIG.time.roundTime;
           }
           break;
         }
@@ -129,7 +129,7 @@ export class ItemBuffPF extends ItemPF {
           const rounds = RollPF.safeRoll(durationValue, this.getRollData()).total;
           if (rounds > 0) {
             createData.duration.rounds = rounds;
-            seconds = rounds * 6;
+            seconds = rounds * CONFIG.time.roundTime;
           }
           break;
         }

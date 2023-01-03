@@ -190,6 +190,24 @@ export class ItemActionSheet extends FormApplication {
     }
   }
 
+  /**
+   * Foundry defauts to isGM check.
+   *
+   * @override
+   */
+  _canDragStart(selector) {
+    return this.isEditable;
+  }
+
+  /**
+   * Foundry defauts to isGM check.
+   *
+   * @override
+   */
+  _canDragDrop(selector) {
+    return this.isEditable;
+  }
+
   async _onDrop(event) {
     event.preventDefault();
     event.stopPropagation();

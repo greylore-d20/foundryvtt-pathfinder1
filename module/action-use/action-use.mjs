@@ -759,13 +759,13 @@ export class ActionUse {
         for (const atk of this.shared.chatAttacks) {
           // Create PoolTerm for attack and damage rolls
           const attackPool = new PoolTerm();
-          if (atk.attack.roll) attackPool.rolls.push(atk.attack.roll);
-          attackPool.rolls.push(...(atk.damage?.rolls?.map((dmgRoll) => dmgRoll.roll) ?? []));
+          if (atk.attack) attackPool.rolls.push(atk.attack);
+          attackPool.rolls.push(...(atk.damage?.rolls ?? []));
 
           // Create PoolTerm for crit confirmation and crit damage rolls
           const critPool = new PoolTerm();
-          if (atk.hasCritConfirm) critPool.rolls.push(atk.critConfirm.roll);
-          critPool.rolls.push(...(atk.critDamage?.rolls?.map((dmgRoll) => dmgRoll.roll) ?? []));
+          if (atk.hasCritConfirm) critPool.rolls.push(atk.critConfirm);
+          critPool.rolls.push(...(atk.critDamage?.rolls ?? []));
 
           // Add non-empty pools to the array of rolls to be displayed
           if (attackPool.rolls.length) pools.push(attackPool);

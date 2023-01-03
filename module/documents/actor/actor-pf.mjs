@@ -474,26 +474,31 @@ export class ActorPF extends ActorBasePF {
       this.system.attributes.bab.total = Math.floor(v);
     }
 
+    this._prepareClassSkills();
+
     // Reset HD
     setProperty(this, "system.attributes.hd.total", this.system.details.level.value);
+  }
 
-    // Reset class skills
-    {
-      const skillSet = new Set();
-      this.items
-        .filter((actorItems) => ["class", "race", "feat"].includes(actorItems.type))
-        .forEach((relevantActorItems) => {
-          for (const [classSkillName, isClassSkill] of Object.entries(relevantActorItems.system.classSkills || {})) {
-            if (isClassSkill === true) skillSet.add(classSkillName);
-          }
-        });
-
-      for (const [k, s] of Object.entries(this.system.skills)) {
-        if (!s) continue;
-        this.system.skills[k].cs = skillSet.has(k);
-        for (const k2 of Object.keys(s.subSkills ?? {})) {
-          setProperty(s, `subSkills.${k2}.cs`, skillSet.has(k));
+  // Reset class skills
+  _prepareClassSkills() {
+    const skillSet = new Set();
+    this.items
+      .filter((actorItems) => ["class", "race", "feat"].includes(actorItems.type))
+      .forEach((relevantActorItems) => {
+        for (const [classSkillName, isClassSkill] of Object.entries(relevantActorItems.system.classSkills || {})) {
+          if (isClassSkill === true) skillSet.add(classSkillName);
         }
+      });
+
+    for (const [skillKey, skillData] of Object.entries(this.system.skills)) {
+      if (!skillData) {
+        console.warn(`Bad skill data for "${skillKey}"`, this);
+        continue;
+      }
+      this.system.skills[skillKey].cs = skillSet.has(skillKey);
+      for (const k2 of Object.keys(skillData.subSkills ?? {})) {
+        setProperty(skillData, `subSkills.${k2}.cs`, skillSet.has(skillKey));
       }
     }
   }
@@ -1640,10 +1645,10 @@ export class ActorPF extends ActorBasePF {
     try {
       const skillKeys = getChangeFlat.call(this, "skills", "skills");
       for (const k of skillKeys) {
-        keys[k] = 0;
+        keys[k.replace(/^system\./, "")] = 0;
       }
     } catch (err) {
-      console.warn("Could not determine skills for an unknown actor in the creation process", this);
+      console.error("Could not determine skills for an actor", this);
     }
 
     return keys;

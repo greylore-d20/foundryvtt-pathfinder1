@@ -585,8 +585,8 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
 
   // Return results directly when deprecation is removed
   return result.map((key) => {
-    const fixedKey = key.replace("data.", "system.");
     if (key.startsWith("data.")) {
+      const fixedKey = key.replace("data.", "system.");
       foundry.utils.logCompatibilityWarning(
         `Change targets pointing towards "data." (${key}) are deprecated. Use "system." (${fixedKey}) instead.`,
         { since: "PF1 0.82.0", until: "PF1 0.83.0" }
@@ -1213,7 +1213,10 @@ const resetSkills = function () {
   const skills = actorData.skills;
 
   for (const [sklKey, skl] of Object.entries(skills)) {
-    if (!skl) continue;
+    if (!skl) {
+      console.warn(`Bad skill data for "${sklKey}"`, this);
+      continue;
+    }
 
     let acpPenalty = skl.acp ? actorData.attributes.acp.total : 0;
     let ablMod = actorData.abilities[skl.ability]?.mod || 0;
@@ -1225,15 +1228,16 @@ const resetSkills = function () {
 
     // Parse sub-skills
     for (const [subSklKey, subSkl] of Object.entries(skl.subSkills || {})) {
-      if (!subSkl) continue;
-      const subSkill = skl.subSkills?.[subSklKey];
-      if (!subSkill) continue;
+      if (!subSkl) {
+        console.warn(`Bad subskill data for "${sklKey}.${subSklKey}"`, this);
+        continue;
+      }
 
       acpPenalty = subSkl.acp ? actorData.attributes.acp.total : 0;
       ablMod = actorData.abilities[subSkl.ability]?.mod || 0;
       specificSkillBonus = subSkl.changeBonus || 0;
       sklValue = subSkl.rank + (subSkl.cs && subSkl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
-      subSkill.mod = sklValue;
+      subSkl.mod = sklValue;
     }
   }
 };

@@ -110,7 +110,7 @@ export class SkillEditor extends FormApplication {
 
     // Basic sanity check
     if (!this.isStaticSkill && !tag) {
-      return void ui.notifications.error("Skill tag can't be empty.");
+      return void ui.notifications.error(game.i18n.localize("PF1.ErrorEmptySkillTag"));
     }
 
     // Change application's id by tag
@@ -126,7 +126,9 @@ export class SkillEditor extends FormApplication {
         skillCoreUpdateData[this.skillId].subSkills[`-=${oldSubSkillId}`] = null;
         // Check for attempts to overwrite skills
         if (this.subSkillId in this.object.system.skills[this.skillId].subSkills) {
-          return void ui.notifications.error("Subskill tag conflicts with existing skill.");
+          return void ui.notifications.error(
+            game.i18n.format("PF1.ErrorSkillTagAlreadyExists", { tag: `${this.skillId}.subSkills.${this.subSkillId}` })
+          );
         }
       }
     } else {
@@ -136,7 +138,7 @@ export class SkillEditor extends FormApplication {
         skillCoreUpdateData[`-=${oldSkillId}`] = null;
         // Check for attempts to overwrite skills
         if (this.skillId in this.object.system.skills) {
-          return void ui.notifications.error("Skill tag conflicts with existing skill.");
+          return void ui.notifications.error(game.i18n.format("PF1.ErrorSkillTagAlreadyExists", { tag: this.skillId }));
         }
       }
     }
@@ -174,9 +176,8 @@ export class SkillEditor extends FormApplication {
     // Submit
     html.find(`button[type="submit"]`).on("click", (event) => {
       event.preventDefault();
-      const valid = this.element[0].querySelector("form").checkValidity();
+      const valid = this.element[0].querySelector("form").reportValidity();
       if (valid) this.close({ submit: true });
-      else ui.notifications.error("Form has invalid data"); // TODO: i18n and better error communication
     });
   }
 

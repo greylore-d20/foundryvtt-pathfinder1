@@ -1326,13 +1326,17 @@ export class ActorPF extends ActorBasePF {
     this.updateSpellbookInfo();
   }
 
-  // Unused
+  /**
+   * Returns this actor's labels
+   *
+   * @returns {Record<string, string>}
+   */
   getLabels() {
     const labels = {};
     // Race
     labels.race = this.race
-      ? game.i18n.localize("PF1.Race")
-      : game.i18n.localize("PF1.RaceTitle").format(this.race.name);
+      ? game.i18n.localize("PF1.RaceTitle").format(this.race.name)
+      : game.i18n.localize("PF1.Race");
     labels.alignment = CONFIG.PF1.alignments[this.system.details.alignment];
 
     // Speed

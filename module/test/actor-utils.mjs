@@ -82,10 +82,7 @@ export const unitTest_renderActorSheet = (shared, context, options = { altName: 
     });
 
     it("sheet should render", async function () {
-      await sheet.render(true);
-      await new Promise((resolve) => {
-        window.setTimeout(resolve, 100);
-      });
+      await sheet._render(true);
       await sheet.close();
     });
   });

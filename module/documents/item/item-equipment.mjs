@@ -1,4 +1,5 @@
 import { ItemPF } from "./item-pf.mjs";
+import { PF1 } from "@config";
 
 export class ItemEquipmentPF extends ItemPF {
   async _preUpdate(update, context) {
@@ -39,26 +40,28 @@ export class ItemEquipmentPF extends ItemPF {
     return this.system.equipmentType;
   }
 
+  /** @inheritDoc */
   getLabels({ actionId } = {}) {
     const labels = super.getLabels({ actionId });
     const itemData = this.system;
-    const C = CONFIG.PF1;
 
     let eType = this.subType;
-    const typeKeys = Object.keys(C.equipmentTypes);
+    const typeKeys = Object.keys(PF1.equipmentTypes);
     if (!typeKeys.includes(eType)) eType = typeKeys[0];
 
     let eSubtype = this.system.equipmentSubtype;
-    const subtypeKeys = Object.keys(C.equipmentTypes[eType]).filter((o) => !o.startsWith("_"));
+    const subtypeKeys = Object.keys(PF1.equipmentTypes[eType]).filter((o) => !o.startsWith("_"));
     if (!subtypeKeys.includes(eSubtype)) eSubtype = subtypeKeys[0];
 
-    labels.equipmentType = C.equipmentTypes[eType]._label;
-    labels.equipmentSubtype = C.equipmentTypes[eType][eSubtype];
+    labels.equipmentType = PF1.equipmentTypes[eType]._label;
+    labels.equipmentSubtype = PF1.equipmentTypes[eType][eSubtype];
 
     const ac = this.showUnidentifiedData
       ? itemData.armor.value || 0
       : (itemData.armor.value || 0) + (itemData.armor.enh || 0);
     labels.armor = ac > 0 ? `${ac} AC` : "";
+
+    return labels;
   }
 
   prepareData() {

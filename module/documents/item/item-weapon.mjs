@@ -27,6 +27,7 @@ export class ItemWeaponPF extends ItemPF {
     return super._preDelete(options, user);
   }
 
+  /** @inheritDoc */
   getLabels({ actionId } = {}) {
     const labels = super.getLabels({ actionId });
 
@@ -43,8 +44,11 @@ export class ItemWeaponPF extends ItemPF {
 
     labels.weaponType = weaponTypes[wType]._label;
     labels.weaponSubtype = weaponTypes[wType][wSubtype];
+
+    return labels;
   }
 
+  /** @inheritDoc */
   prepareData() {
     super.prepareData();
 

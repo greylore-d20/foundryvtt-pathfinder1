@@ -1,5 +1,6 @@
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
+import { PF1 } from "@config";
 
 export class ItemBuffPF extends ItemPF {
   async _preUpdate(changed, options, userId) {
@@ -28,23 +29,25 @@ export class ItemBuffPF extends ItemPF {
     return super._preDelete(options, user);
   }
 
+  /** @inheritDoc */
   getLabels({ actionId } = {}) {
     const labels = super.getLabels({ actionId });
 
     const itemData = this.system;
-    const C = CONFIG.PF1;
-    labels.buffType = C.buffTypes[itemData.buffType];
+    labels.buffType = PF1.buffTypes[itemData.buffType];
 
     if (this.system.duration) {
       const dur = this.system.duration;
-      const unit = C.timePeriodsShort[dur.units];
+      const unit = PF1.timePeriodsShort[dur.units];
       if (unit && dur.value) {
         const val = RollPF.safeTotal(dur.value, this.getRollData());
         labels.duration = [val, unit].filterJoin(" ");
       } else {
-        labels.duration = null;
+        labels.duration = "";
       }
     }
+
+    return labels;
   }
 
   prepareDerivedItemData() {

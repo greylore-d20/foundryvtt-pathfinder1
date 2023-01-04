@@ -518,8 +518,8 @@ export class ItemPF extends ItemBasePF {
   /**
    * Returns labels for this item
    *
-   * @param options
-   * @param options.actionId
+   * @param {object} [options={}] - Additional options
+   * @param {string} [options.actionId] - ID of one of this item's actions to get labels for; defaults to first action
    * @returns {Record<string, string>} This item's labels
    */
   getLabels({ actionId } = {}) {

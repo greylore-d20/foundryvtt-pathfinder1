@@ -1,5 +1,5 @@
 import { ItemPF } from "./item-pf.mjs";
-import { PF1 } from "../../config.mjs";
+import { PF1 } from "@config";
 
 export class ItemFeatPF extends ItemPF {
   async _preDelete(options, user) {
@@ -30,7 +30,7 @@ export class ItemFeatPF extends ItemPF {
     return this.system.featType;
   }
 
-  /** @inheritdoc */
+  /** @inheritDoc */
   getLabels({ actionId } = {}) {
     const labels = super.getLabels({ actionId });
     const { featType, abilityType } = this.system;

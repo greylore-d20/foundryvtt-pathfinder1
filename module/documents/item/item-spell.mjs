@@ -1,16 +1,16 @@
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
+import { PF1 } from "@config";
 
 export class ItemSpellPF extends ItemPF {
+  /** @inheritDoc */
   getLabels({ actionId, rollData } = {}) {
-    const labels = super.getLabels({ actionId, rollData });
-
-    const C = CONFIG.PF1;
+    const labels = super.getLabels({ actionId });
     const itemData = this.system;
 
     // Spell Level, School, and Components
-    labels.level = C.spellLevels[itemData.level];
-    labels.school = C.spellSchools[itemData.school];
+    labels.level = PF1.spellLevels[itemData.level];
+    labels.school = PF1.spellSchools[itemData.school];
     labels.components = this.getSpellComponents()
       .map((o) => o[0])
       .join(" ");

@@ -267,14 +267,6 @@ export class ActorSheetPF extends ActorSheet {
     data.labels = this.document.getLabels();
     data.filters = this._filters;
 
-    // Set class info
-    data.classInfo = data.items
-      .filter((o) => o.type === "class")
-      .reduce((cur, o) => {
-        cur[o.tag] = o;
-        return cur;
-      }, {});
-
     // Generic melee and ranged attack bonuses, only present for sheet.
     const coreAttack = data.system.attributes.attack.shared + data.system.attributes.attack.general,
       meleeAtkAbl = data.system.abilities[data.system.attributes.attack.meleeAbility]?.mod ?? 0,
@@ -393,15 +385,6 @@ export class ActorSheetPF extends ActorSheet {
         }
       }
     }
-
-    // Control items
-    data.items
-      .filter((obj) => {
-        return obj.type === "spell";
-      })
-      .forEach((obj) => {
-        obj.isPrepared = obj.preparation.mode === "prepared";
-      });
 
     // Update traits
     this._prepareTraits(data.system.traits);

@@ -888,6 +888,7 @@ export const PF1 = {
     base: "PF1.BonusModifierBase",
     enh: "PF1.BonusModifierEnhancement",
     dodge: "PF1.BonusModifierDodge",
+    haste: "PF1.BonusModifierHaste",
     inherent: "PF1.BonusModifierInherent",
     deflection: "PF1.BonusModifierDeflection",
     morale: "PF1.BonusModifierMorale",

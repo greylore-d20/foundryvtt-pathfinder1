@@ -120,6 +120,7 @@ const getSortChangePriority = function () {
       "base",
       "enh",
       "dodge",
+      "haste",
       "inherent",
       "deflection",
       "morale",
@@ -189,6 +190,7 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
     case "ac":
       switch (changeType) {
         case "dodge":
+        case "haste":
           result.push(
             "system.attributes.ac.normal.total",
             "system.attributes.ac.touch.total",
@@ -521,7 +523,7 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       result.push("system.attributes.cmb.bonus");
       break;
     case "cmd":
-      if (changeType === "dodge") {
+      if (["dodge", "haste"].includes(changeType)) {
         result.push("system.attributes.cmd.total");
         break;
       }

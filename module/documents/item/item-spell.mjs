@@ -372,10 +372,15 @@ export class ItemSpellPF extends ItemPF {
     };
     const action = pf1.components.ItemAction.defaultData;
 
-    const slcl = this.getMinimumCasterLevelBySpellData(origData);
-    if (origData.sl == null) origData.sl = slcl[0];
-    if (origData.cl == null) origData.cl = slcl[1];
-    const materialPrice = origData.materials?.gpValue ?? 0;
+    const [minLevel, minCl] = this.getMinimumCasterLevelBySpellData(origData);
+    const level = origData.sl ?? minLevel ?? 1;
+    const cl = origData.cl ?? minCl ?? 1;
+    const materialPrice = origData.system.materials?.gpValue ?? 0;
+
+    // Fill in pseudo roll data object
+    const rollData = origData.system;
+    rollData.sl = level;
+    rollData.cl = cl;
 
     // Set consumable type
     data["system.consumableType"] = type;
@@ -386,7 +391,7 @@ export class ItemSpellPF extends ItemPF {
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
       data["system.price"] = 0;
       data["system.uses.pricePerUse"] =
-        Math.floor(((Math.max(0.5, origData.sl) * origData.cl * 750 + materialPrice) / 50) * 100) / 100;
+        Math.floor(((Math.max(0.5, level) * cl * 750 + materialPrice) / 50) * 100) / 100;
       data["system.hardness"] = 5;
       data["system.hp.max"] = 5;
       data["system.hp.value"] = 5;
@@ -395,7 +400,7 @@ export class ItemSpellPF extends ItemPF {
     } else if (type === "potion") {
       data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
-      data["system.price"] = Math.max(0.5, origData.sl) * origData.cl * 50 + materialPrice;
+      data["system.price"] = Math.max(0.5, level) * cl * 50 + materialPrice;
       data["system.hardness"] = 1;
       data["system.hp.max"] = 1;
       data["system.hp.value"] = 1;
@@ -408,7 +413,7 @@ export class ItemSpellPF extends ItemPF {
     } else if (type === "scroll") {
       data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
-      data["system.price"] = Math.max(0.5, origData.sl) * origData.cl * 25 + materialPrice;
+      data["system.price"] = Math.max(0.5, level) * cl * 25 + materialPrice;
       data["system.hardness"] = 0;
       data["system.hp.max"] = 1;
       data["system.hp.value"] = 1;
@@ -437,7 +442,7 @@ export class ItemSpellPF extends ItemPF {
       if (["close", "medium", "long"].includes(actionData.range.units)) {
         action.range = {
           units: "ft",
-          value: RollPF.safeTotal(CONFIG.PF1.spellRangeFormulas[actionData.range.units], origData).toString(),
+          value: RollPF.safeTotal(CONFIG.PF1.spellRangeFormulas[actionData.range.units], rollData).toString(),
         };
       } else {
         action.range = actionData.range;
@@ -447,7 +452,7 @@ export class ItemSpellPF extends ItemPF {
     // Set damage formula
     action.actionType = origData.actionType;
     for (const d of actionData.damage?.parts ?? []) {
-      action.damage.parts.push([this._replaceConsumableConversionString(d[0], origData), d[1]]);
+      action.damage.parts.push([this._replaceConsumableConversionString(d[0], rollData), d[1]]);
     }
 
     // Set saves
@@ -465,7 +470,6 @@ export class ItemSpellPF extends ItemPF {
     action.effectNotes = actionData.effectNotes;
     action.attackBonus = actionData.attackBonus;
     action.critConfirmBonus = actionData.critConfirmBonus;
-    data["system.aura.school"] = origData.school;
 
     // Replace attack and effect formula data
     for (const arrKey of ["attackNotes", "effectNotes"]) {
@@ -473,12 +477,13 @@ export class ItemSpellPF extends ItemPF {
       if (!arr) continue;
       for (let a = 0; a < arr.length; a++) {
         const note = arr[a];
-        arr[a] = this._replaceConsumableConversionString(note, origData);
+        arr[a] = this._replaceConsumableConversionString(note, rollData);
       }
     }
 
     // Set Caster Level
-    data["system.cl"] = origData.cl;
+    data["system.cl"] = cl;
+    data["system.aura.school"] = origData.system.school;
 
     // Set description
     data["system.description.value"] = this._replaceConsumableConversionString(
@@ -488,11 +493,11 @@ export class ItemSpellPF extends ItemPF {
         isWand: type === "wand",
         isPotion: type === "potion",
         isScroll: type === "scroll",
-        sl: origData.sl,
-        cl: origData.cl,
+        sl: level,
+        cl: cl,
         config: CONFIG.PF1,
       }),
-      origData
+      rollData
     );
 
     // Create and return synthetic item data

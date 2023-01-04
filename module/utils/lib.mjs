@@ -431,17 +431,18 @@ export const naturalSort = function (arr, propertyKey = "") {
 };
 
 export const createConsumableSpellDialog = async function (itemData, { allowSpell = true } = {}) {
-  const slcl = CONFIG.Item.documentClasses.spell.getMinimumCasterLevelBySpellData(itemData);
+  const [sl, cl] = CONFIG.Item.documentClasses.spell.getMinimumCasterLevelBySpellData(itemData);
   const content = await renderTemplate("systems/pf1/templates/internal/create-consumable.hbs", {
     name: itemData.name,
-    sl: slcl[0],
-    cl: slcl[1],
+    sl,
+    cl,
   });
 
   const getData = function (html) {
     const data = itemData;
-    data.sl = parseInt(html.find(`[name="sl"]`).val());
-    data.cl = parseInt(html.find(`[name="cl"]`).val()) || 1;
+    const formData = expandObject(new FormDataExtended(html.querySelector("form")).object);
+    data.sl = formData.sl ?? 1;
+    data.cl = formData.cl ?? 1;
     // NaN check here to allow SL 0
     if (Number.isNaN(data.sl)) data.sl = 1;
     return data;
@@ -480,7 +481,7 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
       default: "potion",
     };
     if (!allowSpell) delete dialogData.buttons.spell;
-    new Dialog(dialogData, { classes: ["dialog", "pf1", "create-consumable"] }).render(true);
+    new Dialog(dialogData, { classes: ["dialog", "pf1", "create-consumable"], jQuery: false }).render(true);
   });
 };
 

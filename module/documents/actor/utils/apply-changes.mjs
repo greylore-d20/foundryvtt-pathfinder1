@@ -1212,32 +1212,32 @@ const resetSkills = function () {
   const actorData = this.system;
   const skills = actorData.skills;
 
-  for (const [sklKey, skl] of Object.entries(skills)) {
-    if (!skl) {
-      console.warn(`Bad skill data for "${sklKey}"`, this);
+  for (const [skillKey, skill] of Object.entries(skills)) {
+    if (!skill) {
+      console.warn(`Bad skill data for "${skillKey}"`, this);
       continue;
     }
 
-    let acpPenalty = skl.acp ? actorData.attributes.acp.total : 0;
-    let ablMod = actorData.abilities[skl.ability]?.mod || 0;
-    let specificSkillBonus = skl.changeBonus || 0;
+    let acpPenalty = skill.acp ? actorData.attributes.acp.total : 0;
+    let ablMod = actorData.abilities[skill.ability]?.mod || 0;
+    let specificSkillBonus = skill.changeBonus || 0;
 
     // Parse main skills
-    let sklValue = skl.rank + (skl.cs && skl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
-    skl.mod = sklValue;
+    let sklValue = skill.rank + (skill.cs && skill.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
+    skill.mod = sklValue;
 
     // Parse sub-skills
-    for (const [subSklKey, subSkl] of Object.entries(skl.subSkills || {})) {
-      if (!subSkl) {
-        console.warn(`Bad subskill data for "${sklKey}.${subSklKey}"`, this);
+    for (const [subSkillKey, subSkill] of Object.entries(skill.subSkills || {})) {
+      if (!subSkill) {
+        console.warn(`Bad subskill data for "${skillKey}.${subSkillKey}"`, this);
         continue;
       }
 
-      acpPenalty = subSkl.acp ? actorData.attributes.acp.total : 0;
-      ablMod = actorData.abilities[subSkl.ability]?.mod || 0;
-      specificSkillBonus = subSkl.changeBonus || 0;
-      sklValue = subSkl.rank + (subSkl.cs && subSkl.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
-      subSkl.mod = sklValue;
+      acpPenalty = subSkill.acp ? actorData.attributes.acp.total : 0;
+      ablMod = actorData.abilities[subSkill.ability]?.mod || 0;
+      specificSkillBonus = subSkill.changeBonus || 0;
+      sklValue = subSkill.rank + (subSkill.cs && subSkill.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
+      subSkill.mod = sklValue;
     }
   }
 };

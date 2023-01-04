@@ -480,7 +480,11 @@ export class ActorPF extends ActorBasePF {
     setProperty(this, "system.attributes.hd.total", this.system.details.level.value);
   }
 
-  // Reset class skills
+  /**
+   * Reset class skills.
+   *
+   * @protected
+   */
   _prepareClassSkills() {
     const skillSet = new Set();
     this.items

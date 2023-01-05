@@ -1226,7 +1226,7 @@ const _migrateItemActions = function (item, updateData, actor = null) {
 const _migrateItemActionChargeUsage = function (item, updateData) {
   if (!(item.system.actions?.length > 0)) return;
 
-  const actions = updateData["system.actions"] ?? item.system.actions;
+  const actions = updateData["system.actions"] ?? deepClone(item.system.actions);
   let updatedActions = false;
 
   for (const action of actions) {
@@ -1246,14 +1246,24 @@ const _migrateItemActionChargeUsage = function (item, updateData) {
 
 const _migrateItemChargeCost = function (item, updateData) {
   const toggle = item.system.uses?.autoDeductCharges;
-  if (toggle === undefined) return;
-
-  // Mimic old setting by setting cost to 0
-  if (toggle === false) {
-    updateData["system.uses.autoDeductChargesCost"] = "0";
+  if (toggle !== undefined) {
+    // Mimic old setting by setting cost to 0
+    if (toggle === false) {
+      updateData["system.uses.autoDeductChargesCost"] = "0";
+    }
+    updateData["system.uses.-=autoDeductCharges"] = null;
   }
-
-  updateData["system.uses.-=autoDeductCharges"] = null;
+  // Special handling for cantrips if the above didn't match
+  else if (item.system.level === 0 && item.system.uses?.autoDeductChargesCost === undefined) {
+    const defaultAction = item.system.actions?.[0];
+    // Check for presence of obsoleted autoDeductCharges in first action
+    if (
+      defaultAction?.uses.autoDeductCharges === true &&
+      updateData["system.uses.autoDeductChargesCost"] === undefined
+    ) {
+      updateData["system.uses.autoDeductChargesCost"] = "0";
+    }
+  }
 };
 
 const _migrateActionDamageType = function (action, item) {

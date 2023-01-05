@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.82.4 - 2023-1-6
+
+### Bug Fixes
+
+- Fix migration not running for v0.82.3
+
 ## 0.82.3 - 2023-1-6
 
 ### Bug Fixes

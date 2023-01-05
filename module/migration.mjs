@@ -307,7 +307,6 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
   _migrateItemActions(item, updateData, actor);
-  _migrateItemActionChargeUsage(item, updateData);
   _migrateItemChargeCost(item, updateData);
   _migrateItemWeight(item, updateData);
   _migrateItemHealth(item, updateData);
@@ -358,6 +357,7 @@ export const migrateItemActionData = function (action, item) {
   _migrateActionConditionals(action, item);
   _migrateActionEnhOverride(action, item);
   _migrateActionPrimaryAttack(action, item);
+  _migrateActionChargeUsage(action, item);
 
   // Return the migrated update data
   return action;
@@ -1223,24 +1223,12 @@ const _migrateItemActions = function (item, updateData, actor = null) {
   updateData["system.actions"] = [actionData];
 };
 
-const _migrateItemActionChargeUsage = function (item, updateData) {
-  if (!(item.system.actions?.length > 0)) return;
-
-  const actions = updateData["system.actions"] ?? deepClone(item.system.actions);
-  let updatedActions = false;
-
-  for (const action of actions) {
-    if (action.uses?.autoDeductCharges !== undefined) {
-      updatedActions = true;
-      if (action.uses.autoDeductCharges === false) {
-        action.uses.autoDeductChargesCost = "0";
-      } else if (action.uses.autoDeductChargesCost === "1") action.uses.autoDeductChargesCost = "";
-      delete action.uses.autoDeductCharges;
-    }
-  }
-
-  if (updatedActions) {
-    updateData["system.actions"] = actions;
+const _migrateActionChargeUsage = function (action, item) {
+  if (action.uses?.autoDeductCharges !== undefined) {
+    if (action.uses.autoDeductCharges === false) {
+      action.uses.autoDeductChargesCost = "0";
+    } else if (action.uses.autoDeductChargesCost === "1") action.uses.autoDeductChargesCost = "";
+    delete action.uses.autoDeductCharges;
   }
 };
 

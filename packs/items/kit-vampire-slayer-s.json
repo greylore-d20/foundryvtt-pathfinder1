@@ -268,7 +268,127 @@
           },
           "attackBonus": "",
           "showInQuickbar": false,
-          "-=weaponData": null
+          "-=weaponData": null,
+          "unchainedAction": {
+            "activation": {
+              "cost": 1,
+              "type": "attack"
+            }
+          },
+          "attackNotes": [],
+          "effectNotes": [],
+          "actions": [
+            {
+              "_id": "z361DvIRq7oxOh0z",
+              "name": "Attack",
+              "img": "systems/pf1/icons/items/weapons/wooden-stake.png",
+              "description": "",
+              "tag": "",
+              "activation": {
+                "cost": 1,
+                "type": "attack"
+              },
+              "unchainedAction": {
+                "activation": {
+                  "cost": 1,
+                  "type": ""
+                }
+              },
+              "duration": {
+                "value": null,
+                "units": "inst"
+              },
+              "target": {
+                "value": ""
+              },
+              "range": {
+                "value": 10,
+                "units": "melee",
+                "maxIncrements": 1,
+                "minValue": null,
+                "minUnits": ""
+              },
+              "uses": {
+                "autoDeductChargesCost": "",
+                "self": {
+                  "value": 0,
+                  "maxFormula": "",
+                  "per": null
+                }
+              },
+              "measureTemplate": {
+                "type": "",
+                "size": "",
+                "overrideColor": false,
+                "customColor": "",
+                "overrideTexture": false,
+                "customTexture": ""
+              },
+              "attackName": "",
+              "actionType": "mwak",
+              "attackBonus": "",
+              "critConfirmBonus": "",
+              "damage": {
+                "parts": [
+                  [
+                    "sizeRoll(1, 4, @size)",
+                    {
+                      "values": ["piercing"],
+                      "custom": ""
+                    }
+                  ]
+                ],
+                "critParts": [],
+                "nonCritParts": []
+              },
+              "attackParts": [],
+              "formulaicAttacks": {
+                "count": {
+                  "formula": "ceil(@attributes.bab.total / 5) - 1"
+                },
+                "bonus": {
+                  "formula": "@formulaicAttack * -5"
+                },
+                "label": null
+              },
+              "formula": "",
+              "ability": {
+                "attack": "str",
+                "damage": "str",
+                "damageMult": 1,
+                "critRange": "20",
+                "critMult": "2"
+              },
+              "save": {
+                "dc": "",
+                "type": "",
+                "description": ""
+              },
+              "effectNotes": [],
+              "attackNotes": [],
+              "soundEffect": "",
+              "powerAttack": {
+                "multiplier": "",
+                "damageBonus": 2,
+                "critMultiplier": 1
+              },
+              "naturalAttack": {
+                "primaryAttack": true,
+                "secondary": {
+                  "attackBonus": "-5",
+                  "damageMult": 0.5
+                }
+              },
+              "nonlethal": false,
+              "usesAmmo": false,
+              "spellEffect": "",
+              "spellArea": "",
+              "conditionals": [],
+              "enh": {
+                "value": null
+              }
+            }
+          ]
         }
       },
       {
@@ -666,10 +786,6 @@
           }
         }
       }
-    ],
-    "flags": {
-      "boolean": [],
-      "dictionary": []
-    }
+    ]
   }
 }

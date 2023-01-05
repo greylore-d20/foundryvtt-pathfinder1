@@ -10,7 +10,7 @@ const PACK_SRC = "../packs";
 const PACK_CACHE = "../public/packs";
 const TEMPLATE_EXCEPTION_PATHS = {
   Actor: [],
-  Item: ["classSkills"],
+  Item: ["classSkills", "uses.autoDeductChargesCost"],
 };
 const templateData = loadDocumentTemplates();
 const manifest = loadManifest();
@@ -105,7 +105,12 @@ function adhereTemplate(object, source, options = {}) {
   for (const k of Object.keys(object)) {
     if (
       !sourceKeys.includes(k) &&
-      (!options.documentType || !TEMPLATE_EXCEPTION_PATHS[options.documentType].includes(path.join(".")))
+      (!options.documentType ||
+        !TEMPLATE_EXCEPTION_PATHS[options.documentType].find((exceptionPath) => {
+          const basePath = path.join(".");
+          const specificPath = `${basePath}.${k}`;
+          return exceptionPath === basePath || exceptionPath === specificPath;
+        }))
     ) {
       delete object[k];
       continue;

@@ -10,7 +10,7 @@ const PACK_SRC = "../packs";
 const PACK_CACHE = "../public/packs";
 const TEMPLATE_EXCEPTION_PATHS = {
   Actor: [],
-  Item: ["classSkills", "uses.autoDeductChargesCost"],
+  Item: ["classSkills", "uses.autoDeductChargesCost", "flags.dictionary", "flags.boolean"],
 };
 const templateData = loadDocumentTemplates();
 const manifest = loadManifest();

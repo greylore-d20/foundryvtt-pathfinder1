@@ -1,5 +1,82 @@
 # Changelog
 
+## 0.82.3 - 2023-1-6
+
+### Bug Fixes
+
+- D20 roll messages were not serialized properly, resulting in missing data ([1715](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1715))
+- Saving throw chat card flavors did not include their type ([1720](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1720))
+- Spell descriptions in chat lacked CL data ([1721](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1721))
+- Spells lost their description when converted to a consumable ([1817](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1817))
+- Class data in actor roll data was incomplete ([1751](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1751))
+- Action sheet became uneditable if re-opened while already open. ([1591](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1591))
+- ItemAction.hasRange sometimes incorrectly returned true ([1676](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1676))
+- Migration did not convert item dictionary and boolean flags correctly. ([1704](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1704))
+- Disable low-light vision in light sources did not function. ([1736](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1736))
+- Hidden Line, Circle and Cone templates were visible to players. ([1742](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1742))
+- Damage type selector displayed types for primary damage instance even for secondary instances. ([1765](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1765))
+- Weapon, Armor, and Language proficiency tags were not rendered on item sheets. ([1789](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1789))
+- Roll dialogs were missing subject in dialog data for programmatic identification. ([1801](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1801))
+- Splitting item stack gave wrong quantity to the new stack. ([1812](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1812))
+- Token tooltip would under certain circumstances stop functioning. ([1847](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1847))
+- Added ability scores feature data was incorrect. ([1864](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1864))
+- Conditional modifier drag & drop was only possible as GM ([1891](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1891))
+- Lore and Artistry skills were shown even with background skills disabled. ([439](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/439))
+- Consumable generation did not fill aura school correctly. ([1710](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1710))
+- Non-stacking bonuses stacked with each other ([1749](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1749))
+- Unidentified items displayed their identified name in items directory. ([1091](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1091))
+- Unidentified items displayed their identified name in sheet title. ([1787](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1787))
+- Conditional modifiers did not respect their default state in attack dialogs ([1674](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1674))
+- Certain items with no actions and no resources generated actor resources. ([1738](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1738))
+- Spell school and level were missing from spell sheet header. ([1790](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1790))
+- Spell school and components were missing from spells tab. ([1772](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1772))
+- Ninja gained Uncanny Dodge at level 3 instead of 4 ([1730](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1730))
+- Psychic spellbooks did not correctly convert spell components.
+- Quick actions could glitch out for items with an expanded summary ([1755](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1755))
+- Fixes Rogue getting Uncanny Dodge at level 3 instead of 4
+- Scorching Ray incorrectly capped out at 4 rays instead of 3 ([1802](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1802))
+- Skill tag renames could overwrite existing skills. ([1729](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1729))
+- Skill modifier would continually increment when skill was edited. ([1785](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1785))
+- Cantrips no longer deduct charges by default ([1680](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1680))
+- Newly placed tokens did not match actor size ([1679](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1679))
+- Blindsense and blindsight incorrectly detected through walls ([1677](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1677))
+- Prevent health bar from changing color due to temp hp overflow ([1690](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1690))
+- Broken armor didn't halve their base AC
+- Duplicated items incorrectly retained the same change IDs
+- Conditional modifiers using `@powerAttackBonus` could produce errors when Power Attack was inactive ([1759](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1759))
+- Negative modifiers were omitted from critical damage rolls ([1778](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1778))
+- Large number of vision settings were disabled without custom vision rules ([1681](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1681))
+- sizeRoll did not accept inner complex formulas. ([491](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/491))
+- sizeRoll could not have flavor. ([1419](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1419))
+- Standardize sheet tooltip line formatting
+
+### Changelog
+
+- Token Tooltip's Actor Names can be hidden by disposition now
+- Items & Actions can now have separate use costs per action
+- Actions inherit their use cost from their parent Item
+- Auto Deduct Charges toggle has been phased out for formulas
+
+### Compendium
+
+- Add unchained Still Mind as a class ability and use it for the Unchained Monk
+- Missing Lore Keeper class ability of Oracle added
+- Missing Renewed Vitality (UC) rage power of Unchained Barbarian added ([!778](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/!778))
+- Missing feat Improved Steal added
+- Artistry and Lore are now correctly marked as class skills for classes. ([448](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/448))
+- Nightmare Subdomain typo fixed
+- Nightmare subdomain typo ([!760](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/!760))
+
+### Localization
+
+- Added French Translation of Help
+- Fixes a wrong translation of class features into German
+
+### API
+
+- Add combat-properties css class to chat cards ([1727](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1727))
+- Added SizeRollTerm to handle sizeRoll() function.
+
 ## 0.82.2 - 2022-9-13
 
 ### Bug Fixes

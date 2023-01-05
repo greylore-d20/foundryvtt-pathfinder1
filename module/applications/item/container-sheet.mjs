@@ -79,7 +79,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       const data = i.toObject();
       cur.push(data);
       data.document = i;
-      data.labels = i.labels;
+      data.labels = i.getLabels();
       data.hasAttack = i.hasAttack;
       data.hasMultiAttack = i.hasMultiAttack;
       data.hasDamage = i.hasDamage;

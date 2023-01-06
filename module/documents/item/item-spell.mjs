@@ -211,6 +211,48 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
+  /**
+   * @inheritdoc
+   */
+  async recharge({ value, period = "day", exact = false, maximize = true, commit = true, rollData, context } = {}) {
+    const itemData = this.system,
+      spellbook = this.spellbook,
+      isSpontaneous = spellbook.spontaneous;
+
+    if (period == "week") {
+      // Spells do not recharge per week
+      if (exact) return;
+      // When not recharging with exact period, downgrade to "day" which is normal spell restoration period
+      period = "day";
+    }
+
+    // Spells do not restore on non-day period
+    if (!["day", "any"].includes(period)) return;
+
+    if (!spellbook) return;
+
+    // Spontaneous spells do not record charges in spell.
+    if (spellbook.spontaneous) return;
+
+    // Spellpoints are not on spells
+    if (spellbook.spellPoints?.useSystem ?? false) return;
+
+    const updateData = { system: { preparation: {} } };
+
+    const prep = itemData.preparation;
+    if (prep.preparedAmount == prep.maxAmount) return;
+
+    if (maximize) value = prep.maxAmount;
+    value = Math.clamped(value, 0, prep.maxAmount);
+
+    if (!Number.isFinite(value)) return;
+
+    updateData.system.preparation.preparedAmount = prep.maxAmount;
+
+    if (commit) this.update(updateData, context);
+    return updateData;
+  }
+
   get spellLevel() {
     return this.system.level + (this.system.slOffset || 0);
   }

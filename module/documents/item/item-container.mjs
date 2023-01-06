@@ -248,4 +248,12 @@ export class ItemContainerPF extends ItemPF {
 
     return result;
   }
+
+  /**
+   * @remarks This item type can not be recharged.
+   * @override
+   */
+  recharge() {
+    return;
+  }
 }

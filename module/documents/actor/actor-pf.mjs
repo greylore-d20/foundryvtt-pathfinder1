@@ -4104,15 +4104,11 @@ export class ActorPF extends ActorBasePF {
 
     // Update charged items
     for (const item of this.items) {
-      const itemUpdate = {};
+      const itemUpdate = (await item.recharge({ period: "day", commit: false })) ?? {};
+      itemUpdate.system ??= {};
+
       const itemData = item.system;
-
-      if (itemData.uses && itemData.uses.per === "day") {
-        // Skip already fully charged
-        if (itemData.uses.value === itemData.uses.max) continue;
-
-        itemUpdate["system.uses.value"] = itemData.uses.max;
-      } else if (item.type === "spell") {
+      if (item.type === "spell") {
         const bookId = itemData.spellbook,
           level = itemData.level;
 
@@ -4236,8 +4232,8 @@ export class ActorPF extends ActorBasePF {
     allowed = callOldNamespaceHook("actorRest", "pf1PreActorRest", allowed, this, options, updateData, itemUpdates);
     if (allowed === false) return;
 
-    await this.updateEmbeddedDocuments("Item", itemUpdates);
-    await this.update(updateData);
+    if (itemUpdates.length) await this.updateEmbeddedDocuments("Item", itemUpdates);
+    if (!foundry.utils.isEmpty(updateData.system)) await this.update(updateData);
 
     Hooks.callAll("pf1ActorRest", this, options, updateData, itemUpdates);
     return { options, updateData, itemUpdates };

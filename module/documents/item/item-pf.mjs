@@ -212,6 +212,67 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Recharges item's uses, if any.
+   *
+   * @param {object} options Options
+   * @param {string} [options.period="day"] Recharge period. Use "any" to ignore item's configuration.
+   * @param {boolean} [options.exact=false] Use exact time period. Otherwise "week" for example will also recharge items with "day" period.
+   * @param {number} [options.value] Recharge to specific value, respecting maximum and minimum bounds.
+   * @param {boolean} [options.maximize=false] Recharge to full regardless of recharge formula.
+   * @param {boolean} [options.commit=true] Commit update directly. If false, returns the update data instead.
+   * @param {object} [options.rollData] Roll data instance to use for formulas.
+   * @param {object} [options.context] Update context
+   * @returns {Promise<this|object|undefined>} Promise for the update, update data object, or undefined (no update needed).
+   */
+  async recharge({ value, period = "day", exact = false, maximize = false, commit = true, rollData, context } = {}) {
+    const itemData = this.system;
+    if (!itemData.uses?.per) return;
+
+    // Cancel if charges are managed by different item.
+    if (this.links.charges) return;
+
+    // No update when period does not match usage
+    if (period === "week" && !exact) {
+      // Recharge "day" with "week" with inexact recharging
+      if (!["day", "week"].includes(itemData.uses.per)) return;
+    }
+    // Otherwise test if "any" period is used
+    else if (itemData.uses.per !== period && period !== "any") return;
+
+    const updateData = { system: { uses: {} } };
+    const staticValue = value !== undefined;
+
+    // No specific value given
+    if (!staticValue) {
+      const formula = itemData.uses?.rechargeFormula || "";
+      // Default to maximizing value
+      if (!formula) maximize = true;
+      else {
+        rollData ??= this.getRollData();
+        const roll = RollPF.safeRoll(formula, rollData, "recharge");
+        value = roll.total;
+
+        // Cancel if formula produced invalid value
+        if (!Number.isFinite(value)) return;
+      }
+    }
+
+    // Maximize value regardless what value is
+    if (maximize) value = itemData.uses.max;
+
+    // Clamp charge value to
+    value = Math.clamped(value, 0, itemData.uses.max);
+
+    // Cancel pointless update
+    if (value === itemData.uses.value) return;
+
+    updateData.system.uses.value = value;
+
+    if (commit) return this.update(updateData, context);
+    return updateData;
+  }
+
+  /**
    * Returns total duration in seconds or null.
    *
    * @returns {number|null} Seconds or null.

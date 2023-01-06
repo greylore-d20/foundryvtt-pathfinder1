@@ -279,4 +279,12 @@ export class ItemClassPF extends ItemPF {
     }
     return itemData.mythicTier;
   }
+
+  /**
+   * @remarks This item type can not be recharged.
+   * @override
+   */
+  recharge() {
+    return;
+  }
 }

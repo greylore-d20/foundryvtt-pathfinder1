@@ -85,6 +85,14 @@
     <input class="formula" type="text" name="system.uses.autoDeductChargesCost" value="{{system.uses.autoDeductChargesCost}}" placeholder="{{defaultChargeFormula}}">
   </div>
 </div>
+{{#if (or (eq system.uses.per "day") (eq system.uses.per "week"))}}
+<div class="form-group charges-per-rest">
+  <label>{{localize "PF1.RechargeFormula"}}</label>
+  <div class="form-fields">
+    <input class="formula" type="text" name="system.uses.rechargeFormula" value="{{system.uses.rechargeFormula}}" placeholder="@item.uses.max">
+  </div>
+</div>
+{{/if}}
 {{#if isPhysical}}
   <div class="form-group">
     <label>{{localize "PF1.PricePerCharge"}}</label>

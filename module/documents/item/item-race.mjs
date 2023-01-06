@@ -59,4 +59,12 @@ export class ItemRacePF extends ItemPF {
     // Self-register on actor
     if (actor) actor.race = this;
   }
+
+  /**
+   * @remarks This item type can not be recharged.
+   * @override
+   */
+  recharge() {
+    return;
+  }
 }

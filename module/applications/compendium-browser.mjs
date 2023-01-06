@@ -3,10 +3,10 @@ import { ItemPF } from "../documents/item/item-pf.mjs";
 import { SemanticVersion } from "../utils/semver.mjs";
 
 const NEED_NEW_VERSION = {
-  spells: "0.82.0",
-  items: "0.82.0",
-  bestiary: "0.82.0",
-  feats: "0.82.0",
+  spells: "0.82.6",
+  items: "0.82.6",
+  bestiary: "0.82.6",
+  feats: "0.82.6",
   classes: "0.82.6",
   races: "0.82.6",
   buffs: "0.82.0",

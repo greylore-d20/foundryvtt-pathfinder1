@@ -7,6 +7,7 @@ import {
   adjustNumberByStringCommand,
   splitCurrency,
 } from "../../utils/lib.mjs";
+import { getWeightSystem } from "@utils";
 import { PointBuyCalculator } from "../point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "../item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
@@ -848,17 +849,12 @@ export class ActorSheetPF extends ActorSheet {
       medium: actorData.attributes.encumbrance.levels.medium,
       heavy: actorData.attributes.encumbrance.levels.heavy,
     };
-    let carryLabel;
-    let usystem = game.settings.get("pf1", "weightUnits"); // override
-    if (usystem === "default") usystem = game.settings.get("pf1", "units");
-    switch (usystem) {
-      case "metric":
-        carryLabel = game.i18n.format("PF1.CarryLabelKg", { kg: carriedWeight });
-        break;
-      default:
-        carryLabel = game.i18n.format("PF1.CarryLabel", { lbs: carriedWeight });
-        break;
-    }
+    const usystem = getWeightSystem();
+    const carryLabel =
+      usystem === "metric"
+        ? game.i18n.format("PF1.CarryLabelKg", { kg: carriedWeight })
+        : game.i18n.format("PF1.CarryLabel", { lbs: carriedWeight });
+
     const enc = {
       pct: {
         light: Math.max(0, Math.min((carriedWeight * 100) / load.light, 99.5)),
@@ -2456,8 +2452,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Organize Inventory
-    let usystem = game.settings.get("pf1", "weightUnits"); // override
-    if (usystem === "default") usystem = game.settings.get("pf1", "units");
+    const usystem = getWeightSystem();
 
     for (const i of items) {
       const subType = i.type === "loot" ? i.subType || "gear" : i.subType;

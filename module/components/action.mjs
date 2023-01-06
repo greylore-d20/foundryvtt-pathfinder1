@@ -4,6 +4,7 @@ import { RollPF } from "../dice/roll.mjs";
 import { keepUpdateArray, createTag } from "../utils/lib.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
 import { D20RollPF } from "../dice/d20roll.mjs";
+import { getDistanceSystem } from "@utils";
 
 export class ItemAction {
   constructor(data, parent) {
@@ -577,9 +578,8 @@ export class ItemAction {
       } else {
         const range = this.getRange({ type: "single", rollData });
         if (range > 0) {
-          let system = game.settings.get("pf1", "distanceUnits");
-          if (system === "default") system = game.settings.get("pf1", "units");
-          const rangeUnit = system === "metric" ? "m" : "ft";
+          const usystem = getDistanceSystem();
+          const rangeUnit = usystem === "metric" ? "m" : "ft";
           labels.range = `${range} ${rangeUnit}`;
         }
         if (["close", "medium", "long"].includes(sourceUnits)) {

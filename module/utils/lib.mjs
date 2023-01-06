@@ -149,8 +149,7 @@ export const getActorFromId = function (id) {
  * @returns {Array.<number, string>} An array containing the converted value in index 0 and the new unit key in index 1 (for use in CONFIG.PF1.measureUnits, for example)
  */
 export const convertDistance = function (value, type = "ft") {
-  let system = game.settings.get("pf1", "distanceUnits"); // override
-  if (system === "default") system = game.settings.get("pf1", "units");
+  const system = getDistanceSystem();
   switch (system) {
     case "metric":
       switch (type) {
@@ -172,8 +171,7 @@ export const convertDistance = function (value, type = "ft") {
  * @returns {number} The resulting value.
  */
 export const convertDistanceBack = function (value, type = "ft") {
-  let system = game.settings.get("pf1", "distanceUnits"); // override
-  if (system === "default") system = game.settings.get("pf1", "units");
+  const system = getDistanceSystem();
   switch (system) {
     case "metric":
       switch (type) {
@@ -185,6 +183,24 @@ export const convertDistanceBack = function (value, type = "ft") {
     default:
       return [value, type];
   }
+};
+
+/**
+ * @returns {"metric"|"imperial"} Effective system of units
+ */
+export const getDistanceSystem = () => {
+  let system = game.settings.get("pf1", "distanceUnits"); // override
+  if (system === "default") system = game.settings.get("pf1", "units");
+  return system;
+};
+
+/**
+ * @returns {"metric"|"imperial"} Effective system of units
+ */
+export const getWeightSystem = () => {
+  let system = game.settings.get("pf1", "weightUnits"); // override
+  if (system === "default") system = game.settings.get("pf1", "units");
+  return system;
 };
 
 /**
@@ -248,8 +264,7 @@ export const measureDistance = function (
  * @returns {number} The converted value. In the case of the metric system, converts to kg.
  */
 export const convertWeight = function (value) {
-  let system = game.settings.get("pf1", "weightUnits"); // override
-  if (system === "default") system = game.settings.get("pf1", "units");
+  const system = getWeightSystem();
   switch (system) {
     case "metric":
       return Math.round((value / 2) * 100) / 100; // 1 kg is not exactly 2 lb but this conversion is officially used by Paizo/BBE
@@ -265,8 +280,7 @@ export const convertWeight = function (value) {
  * @returns {number} The converted value. In the case of the metric system, converts from kg.
  */
 export const convertWeightBack = function (value) {
-  let system = game.settings.get("pf1", "weightUnits"); // override
-  if (system === "default") system = game.settings.get("pf1", "units");
+  const system = getWeightSystem();
   switch (system) {
     case "metric":
       return Math.round(value * 2 * 100) / 100; // 1 kg is not exactly 2 lb but this conversion is officially used by Paizo/BBE

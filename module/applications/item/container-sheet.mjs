@@ -5,6 +5,7 @@ import { getSkipActionPrompt } from "../../documents/settings.mjs";
 import { createConsumableSpellDialog } from "../../utils/lib.mjs";
 import { CurrencyTransfer } from "../currency-transfer.mjs";
 import { callOldNamespaceHook } from "@utils/hooks.mjs";
+import { getWeightSystem } from "@utils";
 
 export class ItemSheetPF_Container extends ItemSheetPF {
   constructor(...args) {
@@ -190,8 +191,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }
 
     // Get contents weight
-    let usystem = game.settings.get("pf1", "weightUnits"); // override
-    if (usystem === "default") usystem = game.settings.get("pf1", "units");
+    const usystem = getWeightSystem();
     data.weight = {
       contents: this.item.system.weight.converted.contents,
       units: usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
@@ -309,8 +309,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       const subType = i.type === "loot" ? i.system.subType || "gear" : i.system.subType;
       i.system.quantity = i.system.quantity || 0;
       i.totalWeight = Math.roundDecimals(i.document.system.weight.converted.total, 2);
-      let usystem = game.settings.get("pf1", "weightUnits"); // override
-      if (usystem === "default") usystem = game.settings.get("pf1", "units");
+      const usystem = getWeightSystem();
       i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);

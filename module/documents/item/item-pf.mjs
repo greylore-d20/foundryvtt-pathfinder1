@@ -10,6 +10,7 @@ import {
   keepUpdateArray,
   diffObjectAndArray,
 } from "../../utils/lib.mjs";
+import { getWeightSystem } from "@utils";
 import { ItemChange } from "../../components/change.mjs";
 import { ItemAction } from "../../components/action.mjs";
 import { getHighestChanges } from "../actor/utils/apply-changes.mjs";
@@ -487,8 +488,7 @@ export class ItemPF extends ItemBasePF {
     weight.total += weight.currency;
 
     // Convert weight according metric system (lb vs kg)
-    let usystem = game.settings.get("pf1", "weightUnits"); // override
-    if (usystem === "default") usystem = game.settings.get("pf1", "units");
+    const usystem = getWeightSystem();
     weight.converted = {
       value: pf1.utils.convertWeight(weight.value),
       total: pf1.utils.convertWeight(weight.total),

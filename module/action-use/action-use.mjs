@@ -3,6 +3,7 @@ import { ChatAttack } from "./chat-attack.mjs";
 import { createCustomChatMessage } from "@utils/chat.mjs";
 import { RollPF } from "../dice/roll.mjs";
 import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
+import { getDistanceSystem } from "@utils";
 
 // Documentation/type imports
 /** @typedef {import("@item/item-pf.mjs").SharedActionData} SharedActionData */
@@ -884,8 +885,7 @@ export class ActionUse {
       const range = this.shared.action.getRange({ type: "max", rollData: this.shared.rollData });
       if (range != null) {
         this.shared.templateData.range = range;
-        let usystem = game.settings.get("pf1", "distanceUnits"); // override
-        if (usystem === "default") usystem = game.settings.get("pf1", "units");
+        const usystem = getDistanceSystem();
         this.shared.templateData.rangeLabel = usystem === "metric" ? `${range} m` : `${range} ft.`;
 
         const rangeUnits = this.shared.action.data.range.units;

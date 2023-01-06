@@ -1,3 +1,5 @@
+import { getDistanceSystem } from "@utils";
+
 export class SensesSelector extends DocumentSheet {
   static get defaultOptions() {
     const options = super.defaultOptions;
@@ -39,7 +41,7 @@ export class SensesSelector extends DocumentSheet {
         if (type === "distance") setProperty(cur, path, pf1.utils.convertDistance(getProperty(this.document, path))[0]);
         return cur;
       }, {}),
-      gridUnits: game.settings.get("pf1", "units") === "imperial" ? "ft" : "m",
+      gridUnits: getDistanceSystem() === "imperial" ? "ft" : "m",
     };
     return data;
   }

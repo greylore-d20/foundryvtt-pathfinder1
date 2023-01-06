@@ -1,6 +1,7 @@
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 import { PF1 } from "@config";
+import { getDistanceSystem } from "@utils";
 
 export class ItemSpellPF extends ItemPF {
   /** @inheritDoc */
@@ -648,8 +649,7 @@ export class ItemSpellPF extends ItemPF {
 
       if (rangeUnit != null && rangeUnit !== "none") {
         label.range = (CONFIG.PF1.distanceUnits[rangeUnit] || "").toLowerCase();
-        let units = game.settings.get("pf1", "distanceUnits"); // override
-        if (units === "default") units = game.settings.get("pf1", "units");
+        const units = getDistanceSystem();
         if (rangeUnit === "close")
           label.range = `${label.range} ${game.i18n.localize(
             units == "metric" ? "PF1.SpellRangeShortMetric" : "PF1.SpellRangeShort"

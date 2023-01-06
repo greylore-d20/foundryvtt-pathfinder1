@@ -16,6 +16,8 @@ export {
   diffObjectAndArray,
   findInCompendia,
   getAbilityModifier,
+  getDistanceSystem,
+  getWeightSystem,
   getActorFromId,
   getFirstActiveGM,
   getItemOwner,

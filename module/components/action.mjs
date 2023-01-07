@@ -125,12 +125,10 @@ export class ItemAction {
     const isSpellpointSpell = isSpell && this.item.useSpellPoints();
 
     let formula = !isSpellpointSpell ? this.data.uses.autoDeductChargesCost : this.data.uses.spellPointCost;
-    if (typeof formula !== "string") {
-      console.warn(this.item.name, "action", this.name, "has invalid charge formula:", formula, this);
+    if (!formula) {
       formula = this.item.getDefaultChargeFormula();
-    }
-    // Fall back to item formula if action formula is empty
-    else if (formula.length === 0) {
+    } else if (typeof formula !== "string") {
+      console.warn(this.item.name, "action", this.name, "has invalid charge formula:", formula, this);
       formula = this.item.getDefaultChargeFormula();
     }
 

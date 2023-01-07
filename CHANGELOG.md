@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.82.5 - 2023-1-7
+
+### Bug Fixes
+
+- Spurious "invalid charge formula" errors in actions. ([1901](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1901))
+- Spellpoints would cause cost of undefined errors. ([1902](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1902))
+- Crit multipliers larger than 2 were ignored ([1905](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1905))
+
 ## 0.82.4 - 2023-1-6
 
 ### Bug Fixes

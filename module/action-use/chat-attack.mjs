@@ -253,12 +253,14 @@ export class ChatAttack {
     const repeatCount = critical ? Math.max(1, rollData.critMult - 1) : 1;
     for (let repeat = 0; repeat < repeatCount; ++repeat) {
       if (critical) rollData.critCount++;
-      data.rolls = await this.action.rollDamage({
-        data: rollData,
-        extraParts: extraParts,
-        critical: critical,
-        conditionalParts,
-      });
+      data.rolls.push(
+        ...(await this.action.rollDamage({
+          data: rollData,
+          extraParts: extraParts,
+          critical: critical,
+          conditionalParts,
+        }))
+      );
     }
 
     // Add tooltip

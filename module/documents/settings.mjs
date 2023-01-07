@@ -307,7 +307,7 @@ export const registerSystemSettings = function () {
     name: "SETTINGS.pf1SharedVisionModeN",
     hint: "SETTINGS.pf1SharedVisionModeH",
     scope: "world",
-    config: true,
+    config: false, // Hidden as it is unused; TODO: Re-implement #187's setting usage or remove setting/feature completely
     default: "0",
     type: String,
     choices: {

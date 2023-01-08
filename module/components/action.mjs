@@ -585,9 +585,9 @@ export class ItemAction {
       extraAttacks = Math.min(50, Math.max(0, xaroll.total)); // Arbitrarily clamp attacks
     }
     if (xaroll?.err) {
-      const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
+      const msg = game.i18n.format("PF1.ErrorItemFormula", { item: this.name, actor: this.actor?.name });
       console.warn(msg, xaroll.err, exAtkCountFormula);
-      ui.notifications.warn(msg);
+      ui.notifications.warn(msg, { console: false });
     }
 
     // Test bonus attack formula
@@ -598,9 +598,9 @@ export class ItemAction {
         RollPF.safeRoll(exAtkBonusFormula, rollData);
       }
     } catch (err) {
-      const msg = game.i18n.localize("PF1.ErrorItemFormula").format(this.name, this.actor?.name);
+      const msg = game.i18n.format("PF1.ErrorItemFormula", { item: this.name, actor: this.actor?.name });
       console.warn(msg, err, exAtkBonusFormula);
-      ui.notifications.warn(msg);
+      ui.notifications.warn(msg, { console: false });
     }
 
     // Update item
@@ -800,7 +800,7 @@ export class ItemAction {
   async rollFormula(options = {}) {
     const itemData = this.data;
     if (!itemData.formula) {
-      throw new Error(game.i18n.localize("PF1.ErrorNoFormula").format(this.name));
+      throw new Error(game.i18n.format("PF1.ErrorNoFormula", { name: this.name }));
     }
 
     // Define Roll Data

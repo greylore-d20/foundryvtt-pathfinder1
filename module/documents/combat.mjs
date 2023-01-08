@@ -198,7 +198,7 @@ export class CombatPF extends Combat {
               alias: c.token?.name,
             },
             flags: { pf1: { subject: { core: "init" } } },
-            flavor: game.i18n.localize("PF1.RollsForInitiative").format(c.token?.name ?? c.actor.name),
+            flavor: game.i18n.format("PF1.RollsForInitiative", { name: c.token?.name ?? c.actor.name }),
             roll: roll,
             content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", templateData),
           },

@@ -72,38 +72,32 @@ export class ActionUse {
   checkRequirements() {
     const actor = this.item.parentActor;
     if (actor && !actor.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
-      console.warn(msg);
-      ui.notifications.warn(msg);
+      ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: actor.name }));
       return ERR_REQUIREMENT.NO_ACTOR_PERM;
     }
 
     if (this.item.type === "feat" && this.item.system.disabled) {
-      const msg = game.i18n.localize("PF1.ErrorFeatDisabled");
-      console.warn(msg);
-      ui.notifications.warn(msg);
+      ui.notifications.warn(game.i18n.localize("PF1.ErrorFeatDisabled"));
       return ERR_REQUIREMENT.DISABLED;
     }
 
     const itemQuantity = getProperty(this, "system.quantity");
     if (itemQuantity != null && itemQuantity <= 0) {
-      const msg = game.i18n.localize("PF1.ErrorNoQuantity");
-      console.warn(msg);
-      ui.notifications.warn(msg);
+      ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
       return ERR_REQUIREMENT.INSUFFICIENT_QUANTITY;
     }
 
     if (this.item.isCharged && this.item.charges < this.shared.chargeCost) {
-      const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.item.name);
-      console.warn(msg);
-      ui.notifications.warn(msg);
+      ui.notifications.warn(game.i18n.format("PF1.ErrorInsufficientCharges", { name: this.item.name }));
       return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
     }
 
     if (this.action.isSelfCharged && this.action.data.uses.self?.value < 1) {
-      const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(`${this.item.name}: ${this.action.name}`);
-      console.warn(msg);
-      ui.notifications.warn(msg);
+      ui.notifications.warn(
+        game.i18n.format("PF1.ErrorInsufficientCharges", {
+          name: `${this.item.name}: ${this.action.name}`,
+        })
+      );
       return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
     }
 
@@ -316,7 +310,7 @@ export class ActionUse {
               attackBonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
               // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering
               label: action.formulaicAttacks.label
-                ? action.formulaicAttacks.label.format(i + 1)
+                ? action.formulaicAttacks.label.replace("{0}", i + 1)
                 : game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
             });
           }
@@ -392,9 +386,9 @@ export class ActionUse {
           // Due to being its own roll, this will only correctly work for static formulae.
           const conditionalRoll = RollPF.safeRoll(modifier.formula, this.shared.rollData);
           if (conditionalRoll.err) {
-            const msg = game.i18n.format("PF1.WarningConditionalRoll", { number: i + 1, name: conditional.name });
-            console.warn(msg);
-            ui.notifications.warn(msg);
+            ui.notifications.warn(
+              game.i18n.format("PF1.WarningConditionalRoll", { number: i + 1, name: conditional.name })
+            );
             // Skip modifier to avoid multiple errors from one non-evaluating entry
             continue;
           } else conditionalData[[tag, i].join(".")] = RollPF.safeRoll(modifier.formula, this.shared.rollData).total;
@@ -469,9 +463,7 @@ export class ActionUse {
 
       // Cancel usage on insufficient charges
       if (cost > uses) {
-        const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.item.name);
-        console.warn(msg);
-        ui.notifications.warn(msg);
+        ui.notifications.warn(game.i18n.format("PF1.ErrorInsufficientCharges", { name: this.item.name }));
         return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
       }
     }
@@ -875,8 +867,8 @@ export class ActionUse {
           dc: this.shared.saveDC,
           type: this.shared.save,
           label: game.i18n.format("PF1.SavingThrowButtonLabel", {
-            0: CONFIG.PF1.savingThrows[this.shared.save],
-            1: this.shared.saveDC.toString(),
+            type: CONFIG.PF1.savingThrows[this.shared.save],
+            dc: this.shared.saveDC.toString(),
           }),
           gmSensitiveLabel: game.i18n.format("PF1.SavingThrowButtonLabelGMSensitive", {
             save: CONFIG.PF1.savingThrows[this.shared.save],
@@ -1024,7 +1016,7 @@ export class ActionUse {
     const properties = [];
 
     // Add round info
-    properties.push(game.i18n.localize("PF1.CombatInfo_Round").format(game.combat.round));
+    properties.push(game.i18n.format("PF1.CombatInfo_Round", { round: game.combat.round }));
 
     return properties;
   }

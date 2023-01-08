@@ -387,7 +387,7 @@ export class ItemSpellPF extends ItemPF {
 
     // Set name
     if (type === "wand") {
-      data.name = game.i18n.localize("PF1.CreateItemWandOf").format(origData.name);
+      data.name = game.i18n.format("PF1.CreateItemWandOf", { name: origData.name });
       data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
       data["system.price"] = 0;
       data["system.uses.pricePerUse"] =
@@ -398,7 +398,7 @@ export class ItemSpellPF extends ItemPF {
       action.name = game.i18n.localize("PF1.Use");
       action.img = data.img;
     } else if (type === "potion") {
-      data.name = game.i18n.localize("PF1.CreateItemPotionOf").format(origData.name);
+      data.name = game.i18n.format("PF1.CreateItemPotionOf", { name: origData.name });
       data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
       data["system.price"] = Math.max(0.5, level) * cl * 50 + materialPrice;
       data["system.hardness"] = 1;
@@ -411,7 +411,7 @@ export class ItemSpellPF extends ItemPF {
       action.name = game.i18n.localize("PF1.Drink");
       action.img = data.img;
     } else if (type === "scroll") {
-      data.name = game.i18n.localize("PF1.CreateItemScrollOf").format(origData.name);
+      data.name = game.i18n.format("PF1.CreateItemScrollOf", { name: origData.name });
       data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
       data["system.price"] = Math.max(0.5, level) * cl * 25 + materialPrice;
       data["system.hardness"] = 0;

@@ -902,11 +902,12 @@ export class ItemPF extends ItemBasePF {
         const roll = RollPF.safeRoll(maxFormula, rollData);
         setProperty(this, "system.uses.max", roll.total);
       } else if (formulaHasDice(maxFormula)) {
-        const msg = game.i18n
-          .localize("PF1.WarningNoDiceAllowedInFormula")
-          .format(game.i18n.localize("PF1.ChargePlural"), this.name);
-        console.warn(msg);
-        ui.notifications.warn(msg);
+        ui.notifications.warn(
+          game.i18n.format("PF1.WarningNoDiceAllowedInFormula", {
+            context: game.i18n.localize("PF1.ChargePlural"),
+            item: this.name,
+          })
+        );
       }
     }
   }
@@ -954,9 +955,7 @@ export class ItemPF extends ItemBasePF {
   async displayCard(altChatData = {}) {
     const actor = this.parent;
     if (actor && !actor.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(actor.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
+      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: actor.name }));
     }
 
     // Basic template rendering data
@@ -997,7 +996,7 @@ export class ItemPF extends ItemBasePF {
     if (game.combat) {
       const combatProps = [];
       // Add round info
-      combatProps.push(game.i18n.localize("PF1.CombatInfo_Round").format(game.combat.round));
+      combatProps.push(game.i18n.format("PF1.CombatInfo_Round", { round: game.combat.round }));
 
       if (combatProps.length > 0) {
         templateData.extraProperties.push({
@@ -1108,7 +1107,7 @@ export class ItemPF extends ItemBasePF {
           units = actionData.range.units === "mi" ? "mi" : "ft";
         const distanceValues = convertDistance(range, units);
         dynamicLabels.range =
-          range > 0 ? game.i18n.format("PF1.RangeNote", { 0: `${range} ${distanceValues[1]}` }) : null;
+          range > 0 ? game.i18n.format("PF1.RangeNote", { distance: range, units: distanceValues[1] }) : null;
       }
 
       // Add Difficulty Modifier (DC) label
@@ -1205,13 +1204,9 @@ export class ItemPF extends ItemBasePF {
       if (this.isCharged) {
         if (this.charges < this.chargeCost) {
           if (this.isSingleUse) {
-            const msg = game.i18n.localize("PF1.ErrorNoQuantity");
-            console.warn(msg);
-            return ui.notifications.warn(msg);
+            return void ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
           }
-          const msg = game.i18n.localize("PF1.ErrorInsufficientCharges").format(this.name);
-          console.warn(msg);
-          return ui.notifications.warn(msg);
+          return void ui.notifications.warn(game.i18n.format("PF1.ErrorInsufficientCharges", { name: this.name }));
         }
         if (this.autoDeductCharges) {
           await this.addCharges(-this.chargeCost);
@@ -1628,15 +1623,17 @@ export class ItemPF extends ItemBasePF {
         // Prevent the closing of charge link loops
         if (targetLinks.length > 0) {
           ui.notifications.warn(
-            game.i18n.localize("PF1.WarningCannotCreateChargeLink").format(this.name, targetItem.name)
+            game.i18n.format("PF1.WarningCannotCreateChargeLink", { source: this.name, target: targetItem.name })
           );
           return false;
         } else if (targetItem.links.charges != null) {
           // Prevent the linking of one item to multiple resource pools
           ui.notifications.warn(
-            game.i18n
-              .localize("PF1.WarningCannotCreateChargeLink2")
-              .format(this.name, targetItem.name, targetItem.links.charges.name)
+            game.i18n.format("PF1.WarningCannotCreateChargeLink2", {
+              source: this.name,
+              target: targetItem.name,
+              deeptarget: targetItem.links.charges.name,
+            })
           );
           return false;
         }

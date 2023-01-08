@@ -287,7 +287,7 @@ export class CompendiumBrowser extends Application {
         return cur;
       }, {}),
       labels: {
-        itemCount: game.i18n.localize("PF1.TotalItems").format(this.items.length),
+        itemCount: game.i18n.format("PF1.TotalItems", { count: this.items.length }),
       },
     };
   }
@@ -1342,7 +1342,7 @@ export class CompendiumBrowser extends Application {
     }
     this.element
       .find('span[data-type="filterItemCount"]')
-      .text(game.i18n.localize("PF1.FilteredItems").format(itemCount));
+      .text(game.i18n.format("PF1.FilteredItems", { count: itemCount }));
   }
 
   _passesFilters(item) {

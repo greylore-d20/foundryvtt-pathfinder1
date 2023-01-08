@@ -286,9 +286,11 @@ export class ActorSheetPF extends ActorSheet {
     {
       const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true });
       const totalValue = splitCurrency(cpValue);
-      data.labels.totalValue = game.i18n
-        .localize("PF1.ItemContainerTotalItemValue")
-        .format(totalValue.gp, totalValue.sp, totalValue.cp);
+      data.labels.totalValue = game.i18n.format("PF1.ItemContainerTotalItemValue", {
+        gp: totalValue.gp,
+        sp: totalValue.sp,
+        cp: totalValue.cp,
+      });
     }
 
     // Hit point sources
@@ -525,11 +527,12 @@ export class ActorSheetPF extends ActorSheet {
       }, 0);
       data.featCount.byFormula = featCountRoll.total + changeBonus;
       if (featCountRoll.err) {
-        const msg = game.i18n
-          .localize("PF1.ErrorActorFormula")
-          .format(game.i18n.localize("PF1.BonusFeatFormula"), this.document.name);
-        console.error(msg);
-        ui.notifications.error(msg);
+        ui.notifications.error(
+          game.i18n.format("PF1.ErrorActorFormula", {
+            error: game.i18n.localize("PF1.BonusFeatFormula"),
+            name: this.document.name,
+          })
+        );
       }
       if (featCountRoll.total !== 0) {
         sourceData.push({
@@ -596,13 +599,12 @@ export class ActorSheetPF extends ActorSheet {
     // Prepare (interactive) labels
     {
       data.labels.firstClass = game.i18n
-        .localize("PF1.Info_FirstClass")
-        .format(
-          `<a data-action="compendium" data-action-target="classes" title="${game.i18n.localize(
+        .format("PF1.Info_FirstClass", {
+          html: `<a data-action="compendium" data-action-target="classes" title="${game.i18n.localize(
             "PF1.OpenCompendium"
-          )}">${game.i18n.localize("PF1.Info_FirstClass_Compendium")}</a>`
-        )
-        .replace(/[\n\r]+/, "<br>");
+          )}">${game.i18n.localize("PF1.Info_FirstClass_Compendium")}</a>`,
+        })
+        .replace(/\n+/, "<br>");
     }
 
     // Return data to the sheet
@@ -847,10 +849,10 @@ export class ActorSheetPF extends ActorSheet {
     if (usystem === "default") usystem = game.settings.get("pf1", "units");
     switch (usystem) {
       case "metric":
-        carryLabel = game.i18n.localize("PF1.CarryLabelKg").format(carriedWeight);
+        carryLabel = game.i18n.format("PF1.CarryLabelKg", { kg: carriedWeight });
         break;
       default:
-        carryLabel = game.i18n.localize("PF1.CarryLabel").format(carriedWeight);
+        carryLabel = game.i18n.format("PF1.CarryLabel", { lbs: carriedWeight });
         break;
     }
     const enc = {
@@ -1847,7 +1849,7 @@ export class ActorSheetPF extends ActorSheet {
     } else {
       const msg = `<p>${game.i18n.localize("PF1.DeleteSkillConfirmation")}</p>`;
       Dialog.confirm({
-        title: game.i18n.localize("PF1.DeleteSkillTitle").format(skillName),
+        title: game.i18n.format("PF1.DeleteSkillTitle", { name: skillName }),
         content: msg,
         yes: () => {
           deleteSkill();
@@ -1875,7 +1877,7 @@ export class ActorSheetPF extends ActorSheet {
     } else {
       const msg = `<p>${game.i18n.localize("PF1.DeleteSkillConfirmation")}</p>`;
       Dialog.confirm({
-        title: game.i18n.localize("PF1.DeleteSkillTitle").format(skillName),
+        title: game.i18n.format("PF1.DeleteSkillTitle", { name: skillName }),
         content: msg,
         yes: () => {
           deleteSkill();
@@ -1996,9 +1998,7 @@ export class ActorSheetPF extends ActorSheet {
   async _quickIdentifyItem(event) {
     event.preventDefault();
     if (!game.user.isGM) {
-      const msg = game.i18n.localize("PF1.ErrorCantIdentify");
-      console.error(msg);
-      return ui.notifications.error(msg);
+      return void ui.notifications.error(game.i18n.localize("PF1.ErrorCantIdentify"));
     }
     // const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
@@ -2159,7 +2159,7 @@ export class ActorSheetPF extends ActorSheet {
 
       const msg = `<p>${game.i18n.localize("PF1.DeleteItemConfirmation")}</p>`;
       Dialog.confirm({
-        title: game.i18n.localize("PF1.DeleteItemTitle").format(item.name),
+        title: game.i18n.format("PF1.DeleteItemTitle", { name: item.name }),
         content: msg,
         yes: () => {
           item.delete();
@@ -2229,7 +2229,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
 
     new Dialog({
-      title: game.i18n.format("PF1.Dialog.SplitItem.Title", { 0: item.name }),
+      title: game.i18n.format("PF1.Dialog.SplitItem.Title", { name: item.name }),
       content: `<p>${game.i18n.format("PF1.Dialog.SplitItem.Desc")}</p><input type="text" name="value" value="1" />`,
       buttons: {
         split: {

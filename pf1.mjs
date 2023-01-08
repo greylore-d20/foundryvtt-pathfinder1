@@ -174,6 +174,11 @@ if (!String.prototype.format) {
    * @returns {string} String with `{<number>}` elements replaced.
    */
   String.prototype.format = function (...args) {
+    foundry.utils.logCompatibilityWarning("String.format() is deprecated and will be removed in future PF1 release.", {
+      since: "PF1 0.82.6",
+      until: "PF1 0.83.0",
+    });
+
     return this.replace(/{(\d+)}/g, function (match, number) {
       return args[number] != null ? args[number] : match;
     });

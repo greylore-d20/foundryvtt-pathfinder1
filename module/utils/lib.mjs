@@ -450,7 +450,7 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
 
   return new Promise((resolve) => {
     const dialogData = {
-      title: game.i18n.localize("PF1.CreateItemForSpell").format(itemData.name),
+      title: game.i18n.format("PF1.CreateItemForSpell", { name: itemData.name }),
       content,
       itemData,
       buttons: {

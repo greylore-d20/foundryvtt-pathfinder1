@@ -52,7 +52,7 @@ export class ItemClassPF extends ItemPF {
         if (!item) {
           const msg = `Could not find class association: ${co.id}`;
           console.warn(co.id, msg, this);
-          ui.notifications?.warn(msg);
+          ui.notifications?.warn(msg, { console: false });
           continue;
         }
 

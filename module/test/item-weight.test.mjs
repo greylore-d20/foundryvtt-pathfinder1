@@ -161,6 +161,7 @@ const getPresentationForWeight = (weight) => `${Math.roundDecimals(convertWeight
 const getCarriedPresentationForWeight = (weight) => {
   let usystem = game.settings.get("pf1", "weightUnits"); // override
   if (usystem === "default") usystem = game.settings.get("pf1", "units");
-  const weightLabel = usystem === "metric" ? "PF1.CarryLabelKg" : "PF1.CarryLabel";
-  return game.i18n.localize(weightLabel).format(Math.roundDecimals(convertWeight(weight), 1));
+  const displayWeight = Math.roundDecimals(convertWeight(weight), 1);
+  if (usystem === "metric") game.i18n.format("PF1.CarryLabelKg", { kg: displayWeight });
+  else return game.i18n.format("PF1.CarryLabel", { lbs: displayWeight });
 };

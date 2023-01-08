@@ -51,7 +51,7 @@ export const createSkillMacro = async function (skillId, actorId, slot) {
 
   const skillInfo = actor.getSkillInfo(skillId);
   const command = `const actor = await fromUuid("${actor.uuid}");\nreturn actor.rollSkill("${skillId}");`;
-  const name = game.i18n.format("PF1.RollSkillMacroName", { 0: actor.name, 1: skillInfo.name });
+  const name = game.i18n.format("PF1.RollSkillMacroName", { actor: actor.name, skill: skillInfo.name });
   let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
   if (!macro) {
     macro = await Macro.create(
@@ -84,7 +84,7 @@ export const createSaveMacro = async function (saveId, actorId, slot) {
   if (!actor) return;
 
   const command = `const actor = await fromUuid("${actor.uuid}");\nreturn actor.rollSavingThrow("${saveId}");`;
-  const name = game.i18n.format("PF1.RollSaveMacroName", { 0: actor.name, 1: saveName });
+  const name = game.i18n.format("PF1.RollSaveMacroName", { actor: actor.name, type: saveName });
   let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
   if (!macro) {
     macro = await Macro.create(
@@ -138,27 +138,27 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
   switch (type) {
     case "defenses":
       command += `return actor.rollDefenses();`;
-      name = game.i18n.format("PF1.RollDefensesMacroName", { 0: actor.name });
+      name = game.i18n.format("PF1.RollDefensesMacroName", { actor: actor.name });
       img = "systems/pf1/icons/items/armor/shield-light-metal.png";
       break;
     case "cmb":
       command += `return actor.rollCMB();`;
-      name = game.i18n.format("PF1.RollCMBMacroName", { 0: actor.name });
+      name = game.i18n.format("PF1.RollCMBMacroName", { actor: actor.name });
       img = "systems/pf1/icons/feats/improved-grapple.jpg";
       break;
     case "cl":
       command += `return actor.rollCL("${altType}");`;
-      name = game.i18n.format("PF1.RollCLMacroName", { 0: actor.name, 1: altTypeLabel });
+      name = game.i18n.format("PF1.RollCLMacroName", { actor: actor.name, book: altTypeLabel });
       img = "systems/pf1/icons/spells/wind-grasp-eerie-3.jpg";
       break;
     case "concentration":
       command += `return actor.rollConcentration("${altType}");`;
-      name = game.i18n.format("PF1.RollConcentrationMacroName", { 0: actor.name, 1: altTypeLabel });
+      name = game.i18n.format("PF1.RollConcentrationMacroName", { actor: actor.name, book: altTypeLabel });
       img = "systems/pf1/icons/skills/light_01.jpg";
       break;
     case "bab":
       command += `return actor.rollBAB();`;
-      name = game.i18n.format("PF1.RollBABMacroName", { 0: actor.name });
+      name = game.i18n.format("PF1.RollBABMacroName", { actor: actor.name });
       img = "systems/pf1/icons/skills/yellow_08.jpg";
       break;
   }
@@ -195,9 +195,7 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
 export const rollItemMacro = function (itemName, { itemId, itemType, actorId } = {}) {
   const actor = getActorFromId(actorId);
   if (actor && !actor.testUserPermission(game.user, "OWNER")) {
-    const msg = game.i18n.localize("PF1.ErrorNoActorPermission");
-    console.warn(msg);
-    return ui.notifications.warn(msg);
+    return void ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
   }
   const item = actor
     ? actor.items.find((i) => {
@@ -207,9 +205,9 @@ export const rollItemMacro = function (itemName, { itemId, itemType, actorId } =
       })
     : null;
   if (!item) {
-    const msg = game.i18n.format("PF1.WarningNoItemOnActor", { 0: actor?.name, 1: itemName });
-    console.warn(msg);
-    return ui.notifications.warn(msg);
+    return void ui.notifications.warn(
+      game.i18n.format("PF1.WarningNoItemOnActor", { actor: actor?.name, item: itemName })
+    );
   }
 
   // Trigger the item roll
@@ -229,9 +227,7 @@ export const rollItemMacro = function (itemName, { itemId, itemType, actorId } =
 export const rollSkillMacro = function (actorId, skillId) {
   const actor = getActorFromId(actorId);
   if (!actor) {
-    const msg = game.i18n.format("PF1.ErrorActorNotFound", { 0: actorId });
-    console.warn(msg);
-    return ui.notifications.error(msg);
+    return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
   }
 
   return actor.rollSkill(skillId, { skipDialog: getSkipActionPrompt() });
@@ -247,9 +243,7 @@ export const rollSkillMacro = function (actorId, skillId) {
 export const rollSaveMacro = function (actorId, saveId) {
   const actor = getActorFromId(actorId);
   if (!actor) {
-    const msg = game.i18n.format("PF1.ErrorActorNotFound", { 0: actorId });
-    console.warn(msg);
-    return ui.notifications.error(msg);
+    return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
   }
 
   return actor.rollSavingThrow(saveId, { skipDialog: getSkipActionPrompt() });
@@ -267,11 +261,11 @@ export const rollSaveMacro = function (actorId, saveId) {
 export const rollDefenses = function ({ actorName = null, actorId = null, rollMode = null } = {}) {
   const actor = ActorPF.getActiveActor({ actorName: actorName, actorId: actorId });
   if (!actor) {
-    const msg = game.i18n.format("PF1.ErrorNoApplicableActorFoundForAction", {
-      0: game.i18n.localize("PF1.Action_RollDefenses"),
-    });
-    console.warn(msg);
-    return ui.notifications.warn(msg);
+    return void ui.notifications.warn(
+      game.i18n.format("PF1.ErrorNoApplicableActorFoundForAction", {
+        name: game.i18n.localize("PF1.Action_RollDefenses"),
+      })
+    );
   }
 
   return actor.rollDefenses({ rollMode });
@@ -288,9 +282,7 @@ export const rollDefenses = function ({ actorName = null, actorId = null, rollMo
 export const rollActorAttributeMacro = function (actorId, type, altType = null) {
   const actor = getActorFromId(actorId);
   if (!actor) {
-    const msg = game.i18n.format("PF1.ErrorActorNotFound", { 0: actorId });
-    console.error(msg);
-    return ui.notifications.error(msg);
+    return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
   }
 
   switch (type) {

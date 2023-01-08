@@ -21,14 +21,11 @@ export let isMigrating = false; // eslint-disable-line prefer-const -- pf1.migra
  */
 export const migrateWorld = async function () {
   if (!game.user.isGM) {
-    const msg = game.i18n.localize("PF1.ErrorUnauthorizedAction");
-    console.error(msg);
-    return ui.notifications.error(msg);
+    return void ui.notifications.error(game.i18n.localize("PF1.ErrorUnauthorizedAction"));
   }
 
   if (pf1.migrations.isMigrating) {
-    const msg = game.i18n.localize("PF1.Migration.AlreadyInProgress");
-    return ui.notifications.error(msg);
+    return void ui.notifications.error(game.i18n.localize("PF1.Migration.AlreadyInProgress"));
   } else {
     pf1.migrations.isMigrating = true;
     Hooks.callAll("pf1MigrationStarted");

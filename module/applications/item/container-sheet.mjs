@@ -210,12 +210,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Set labels
     if (!data.labels) data.labels = {};
-    data.labels.totalValue = game.i18n
-      .localize("PF1.ItemContainerTotalValue")
-      .format(data.totalValue.gp, data.totalValue.sp, data.totalValue.cp);
-    data.labels.sellValue = game.i18n
-      .localize("PF1.ItemContainerSellValue")
-      .format(data.sellValue.gp, data.sellValue.sp, data.sellValue.cp);
+    data.labels.totalValue = game.i18n.format("PF1.ItemContainerTotalValue", data.totalValue);
+    data.labels.sellValue = game.i18n.format("PF1.ItemContainerSellValue", data.sellValue);
 
     return data;
   }
@@ -422,7 +418,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
       const msg = `<p>${game.i18n.localize("PF1.DeleteItemConfirmation")}</p>`;
       Dialog.confirm({
-        title: game.i18n.localize("PF1.DeleteItemTitle").format(item.name),
+        title: game.i18n.format("PF1.DeleteItemTitle", { name: item.name }),
         content: msg,
         yes: () => {
           this.item.deleteContainerContent(li.dataset.itemId);
@@ -560,9 +556,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   async _quickIdentifyItem(event) {
     event.preventDefault();
     if (!game.user.isGM) {
-      const msg = game.i18n.localize("PF1.ErrorCantIdentify");
-      console.error(msg);
-      return ui.notifications.error(msg);
+      return void ui.notifications.error(game.i18n.localize("PF1.ErrorCantIdentify"));
     }
     const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const item = this.item.getContainerContent(itemId);

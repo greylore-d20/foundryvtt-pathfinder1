@@ -1337,7 +1337,7 @@ export class ActorPF extends ActorBasePF {
     const labels = {};
     // Race
     labels.race = this.race
-      ? game.i18n.localize("PF1.RaceTitle").format(this.race.name)
+      ? game.i18n.format("PF1.RaceTitle", { name: this.race.name })
       : game.i18n.localize("PF1.Race");
     labels.alignment = CONFIG.PF1.alignments[this.system.details.alignment];
 
@@ -1572,7 +1572,7 @@ export class ActorPF extends ActorBasePF {
                 : RollPF.safeRoll(src.formula || "0", rollData, [changeTarget, src, this], {
                     suppressError: !this.testUserPermission(game.user, "OWNER"),
                   }).total;
-            if (src.operator === "set") srcValue = game.i18n.localize("PF1.SetTo").format(srcValue);
+            if (src.operator === "set") srcValue = game.i18n.format("PF1.SetTo", { value: srcValue });
             if (!(src.operator === "add" && srcValue === 0) || src.ignoreNull === false) {
               sourceDetails[changeTarget].push({
                 name: srcInfo.replace(/[[\]]/g, ""),
@@ -1878,9 +1878,7 @@ export class ActorPF extends ActorBasePF {
     if (item.type !== "weapon") throw new Error("Wrong Item type");
 
     if (!this.isOwner) {
-      const msg = game.i18n.format("PF1.ErrorNoActorPermissionAlt", { 0: this.name });
-      console.warn(msg);
-      return ui.notifications.warn(msg);
+      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
     // Get attack template
@@ -1911,7 +1909,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Notify user
-    ui.notifications.info(game.i18n.localize("PF1.NotificationCreatedAttack").format(item.system.name));
+    ui.notifications.info(game.i18n.format("PF1.NotificationCreatedAttack", { item: item.name }));
 
     // Disable quick use of weapon
     await item.update({
@@ -1958,9 +1956,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollSkill(skillId, options = {}) {
     if (!this.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
+      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
     if (callOldNamespaceHook("actorRoll", "pf1PreActorRollSkill", undefined, this, "skill", skillId, options) === false)
@@ -2030,7 +2026,7 @@ export class ActorPF extends ActorBasePF {
       ...options,
       parts,
       rollData,
-      flavor: game.i18n.localize("PF1.SkillCheck").format(skl.name),
+      flavor: game.i18n.format("PF1.SkillCheck", { skill: skl.name }),
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       compendium: { entry: CONFIG.PF1.skillCompendiumEntries[skillId] ?? skl.journal, type: "JournalEntry" },
       subject: { skill: skillId },
@@ -2052,9 +2048,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollBAB(options = {}) {
     if (!this.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
+      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
     if (callOldNamespaceHook("actorRoll", "pf1PreActorRollBab", undefined, this, "bab", null, options) === false)
@@ -2080,9 +2074,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollCMB(options = {}) {
     if (!this.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
+      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
     options.ranged ??= false;
@@ -2151,9 +2143,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollAttack(options = {}) {
     if (!this.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
+      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
     // Default to melee attacks
@@ -2376,7 +2366,7 @@ export class ActorPF extends ActorBasePF {
     }
     // Spell Resistance
     if (data.attributes.sr.total > 0) {
-      misc.push(game.i18n.localize("PF1.SpellResistanceNote").format(data.attributes.sr.total));
+      misc.push(game.i18n.format("PF1.SpellResistanceNote", { value: data.attributes.sr.total }));
     }
 
     if (misc.length > 0) {
@@ -2468,9 +2458,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollSavingThrow(savingThrowId, options = {}) {
     if (!this.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
+      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
     if (
@@ -2532,7 +2520,7 @@ export class ActorPF extends ActorBasePF {
       ...options,
       parts,
       rollData,
-      flavor: game.i18n.localize("PF1.SavingThrowRoll").format(label),
+      flavor: game.i18n.format("PF1.SavingThrowRoll", { save: label }),
       subject: { save: savingThrowId },
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
@@ -2555,9 +2543,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollAbilityTest(abilityId, options = {}) {
     if (!this.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
+      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
     if (
@@ -2600,7 +2586,7 @@ export class ActorPF extends ActorBasePF {
       ...options,
       parts,
       rollData,
-      flavor: game.i18n.localize("PF1.AbilityTest").format(label),
+      flavor: game.i18n.format("PF1.AbilityTest", { ability: label }),
       subject: { ability: abilityId },
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
@@ -2619,9 +2605,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollDefenses({ rollMode = null } = {}) {
     if (!this.isOwner) {
-      const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-      console.warn(msg);
-      return ui.notifications.warn(msg);
+      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
     const rollData = this.getRollData();
 
@@ -2660,7 +2644,7 @@ export class ActorPF extends ActorBasePF {
         }),
         ...(this.system.traits.di.custom.length > 0 ? this.system.traits.di.custom.split(reSplit) : []),
       ];
-      energyResistance.push(...values.map((o) => game.i18n.localize("PF1.ImmuneTo").format(o)));
+      energyResistance.push(...values.map((o) => game.i18n.format("PF1.ImmuneTo", { immunity: o })));
     }
     // Damage Vulnerability
     if (this.system.traits.dv.value.length || this.system.traits.dv.custom.length) {
@@ -2670,7 +2654,7 @@ export class ActorPF extends ActorBasePF {
         }),
         ...(this.system.traits.dv.custom.length > 0 ? this.system.traits.dv.custom.split(reSplit) : []),
       ];
-      energyResistance.push(...values.map((o) => game.i18n.localize("PF1.VulnerableTo").format(o)));
+      energyResistance.push(...values.map((o) => game.i18n.format("PF1.VulnerableTo", { vulnerability: o })));
     }
 
     // Wound Threshold penalty
@@ -2851,9 +2835,7 @@ export class ActorPF extends ActorBasePF {
         const a = t instanceof Token ? t.actor : t;
 
         if (!a.isOwner) {
-          const msg = game.i18n.localize("PF1.ErrorNoActorPermissionAlt").format(this.name);
-          console.warn(msg);
-          ui.notifications.warn(msg);
+          ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
           continue;
         }
 
@@ -3888,11 +3870,12 @@ export class ActorPF extends ActorBasePF {
     const featCountRoll = RollPF.safeRoll(this.system.details.bonusFeatFormula || "0", this.getRollData());
     result.max += featCountRoll.total;
     if (featCountRoll.err) {
-      const msg = game.i18n
-        .localize("PF1.ErrorActorFormula")
-        .format(game.i18n.localize("PF1.BonusFeatFormula"), this.actor.name);
-      console.error(msg);
-      ui.notifications.error(msg);
+      ui.notifications.error(
+        game.i18n.format("PF1.ErrorActorFormula", {
+          context: game.i18n.localize("PF1.BonusFeatFormula"),
+          name: this.actor.name,
+        })
+      );
     }
 
     // Changes

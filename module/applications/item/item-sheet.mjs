@@ -135,7 +135,7 @@ export class ItemSheetPF extends ItemSheet {
       if (CONFIG.PF1.auraStrengths[auraStrength] != null) {
         data.auraStrength_name = CONFIG.PF1.auraStrengths[auraStrength];
 
-        data.labels.identify = game.i18n.localize("PF1.IdentifyDCNumber").format(15 + rollData.item.cl);
+        data.labels.identify = game.i18n.format("PF1.IdentifyDCNumber", { dc: 15 + rollData.item.cl });
       }
     }
 
@@ -675,7 +675,7 @@ export class ItemSheetPF extends ItemSheet {
           if (itemData.preparation.spontaneousPrepared) return game.i18n.localize("PF1.SpellPrepPrepared");
           else return game.i18n.localize("PF1.Unprepared");
         } else if (itemData.preparation.preparedAmount > 0)
-          return game.i18n.localize("PF1.AmountPrepared").format(itemData.preparation.preparedAmount);
+          return game.i18n.format("PF1.AmountPrepared", { count: itemData.preparation.preparedAmount });
         else return game.i18n.localize("PF1.Unprepared");
       } else if (itemData.preparation.mode) {
         return itemData.preparation.mode.titleCase();
@@ -1453,7 +1453,7 @@ export class ItemSheetPF extends ItemSheet {
       } else {
         const msg = `<p>${game.i18n.localize("PF1.DeleteItemConfirmation")}</p>`;
         Dialog.confirm({
-          title: game.i18n.localize("PF1.DeleteItemTitle").format(action.name),
+          title: game.i18n.format("PF1.DeleteItemTitle", { name: action.name }),
           content: msg,
           yes: () => {
             deleteItem();

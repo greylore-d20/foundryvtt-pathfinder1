@@ -29,9 +29,9 @@ export class TokenQuickActions {
       const item = i.item;
       const icon = item.img ?? CONST.DEFAULT_TOKEN;
       let title = "";
-      if (item.type === "attack") title = game.i18n.localize("PF1.AttackWith").format(item.name);
-      else if (item.type === "spell") title = game.i18n.localize("PF1.AttackWithSpell").format(item.name);
-      else if (item.type === "feat") title = game.i18n.localize("PF1.AttackWithFeat").format(item.name);
+      if (item.type === "attack") title = game.i18n.format("PF1.AttackWith", { name: item.name });
+      else if (item.type === "spell") title = game.i18n.format("PF1.AttackWithSpell", { name: item.name });
+      else if (item.type === "feat") title = game.i18n.format("PF1.AttackWithFeat", { name: item.name });
       const type = item.type;
       quickActions +=
         `<div id="${type}-${item.id}" class="control-icon token-quick-action" style="border: 2px solid ${i.color1};">` +

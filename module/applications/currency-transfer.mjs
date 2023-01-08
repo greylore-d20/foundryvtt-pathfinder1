@@ -147,7 +147,7 @@ export class CurrencyTransfer extends FormApplication {
   }
 
   static _failed(i18nKey) {
-    return ui.notifications.error(game.i18n.localize("PF1.CurrencyFailed") + game.i18n.localize(i18nKey));
+    return void ui.notifications.error(game.i18n.localize("PF1.CurrencyFailed") + game.i18n.localize(i18nKey));
   }
 
   static _directoryDrop(docDestId, event) {

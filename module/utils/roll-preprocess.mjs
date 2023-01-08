@@ -103,9 +103,7 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
   }
 
   if (index === -1 && !skipWarning) {
-    const msg = game.i18n.localize("PF1.WarningNoSizeDie").format(mediumDie, formula);
-    console.warn(msg);
-    ui.notifications.warn(msg);
+    ui.notifications.warn(game.i18n.localize("PF1.WarningNoSizeDie", { baseline: mediumDie, fallback: formula }));
   }
 
   const result = formula.split("d");

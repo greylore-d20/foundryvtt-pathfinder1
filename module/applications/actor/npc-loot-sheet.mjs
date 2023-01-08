@@ -43,12 +43,8 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
 
     // Set labels
     if (!data.labels) data.labels = {};
-    data.labels.totalValue = game.i18n
-      .localize("PF1.ItemContainerTotalValue")
-      .format(data.totalValue.gp, data.totalValue.sp, data.totalValue.cp);
-    data.labels.sellValue = game.i18n
-      .localize("PF1.ItemContainerSellValue")
-      .format(data.sellValue.gp, data.sellValue.sp, data.sellValue.cp);
+    data.labels.totalValue = game.i18n.format("PF1.ItemContainerTotalValue", data.totalValue);
+    data.labels.sellValue = game.i18n.format("PF1.ItemContainerSellValue", data.sellValue);
 
     // Alter inventory columns
     for (const inv of Object.values(data.inventory)) {

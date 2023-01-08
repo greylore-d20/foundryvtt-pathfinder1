@@ -707,11 +707,9 @@ export class ActorSheetPF extends ActorSheet {
     const owner = this.document.isOwner;
     const book = this.document.system.attributes.spells.spellbooks[bookKey];
 
-    let min = 0;
+    const min = book.hasCantrips ? 0 : 1;
     let max = 9;
     if (book.autoSpellLevelCalculation) {
-      min = book.hasCantrips ? 0 : 1;
-
       const cl = book.cl.autoSpellLevelTotal;
 
       const castsPerDay =

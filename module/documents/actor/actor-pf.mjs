@@ -761,7 +761,7 @@ export class ActorPF extends ActorBasePF {
         if (!Number.isFinite(levelData.value)) levelData.value = max;
       }
     } else {
-      for (let level = 0; level < 10; level++) {
+      for (let level = book.hasCantrips ? 0 : 1; level < 10; level++) {
         const spellLevel = book.spells[`spell${level}`];
         let base = parseInt(spellLevel.base);
         if (Number.isNaN(base)) {

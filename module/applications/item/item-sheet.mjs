@@ -1525,7 +1525,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Show widget
     const w = new Widget_CategorizedItemPicker(
-      { title: "PF1.Application.ChangeTargetSelector.Title" },
+      { title: "PF1.Application.ChangeTargetSelector.Title", classes: ["change-target-selector"] },
       categories,
       (key) => {
         if (key) {

@@ -49,6 +49,10 @@ export class Widget_CategorizedItemPicker extends Application {
      * @type {Object<string, string>}
      */
     this._hiddenElems = {};
+
+    if (options.classes?.length) {
+      this.options.classes.push(...options.classes);
+    }
   }
 
   get template() {
@@ -109,10 +113,13 @@ export class Widget_CategorizedItemPicker extends Application {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    const options = super.defaultOptions;
+    return {
+      ...options,
       width: 480,
       height: 480,
-    });
+      classes: [...options.classes, "pf1", "categorized-item-picker"],
+    };
   }
 
   _onClickItem(event) {

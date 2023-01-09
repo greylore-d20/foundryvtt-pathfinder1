@@ -38,15 +38,16 @@ export class AbilityTemplate extends MeasuredTemplatePF {
     // Additional type-specific data
     switch (type) {
       case "cone":
-        if (game.settings.get("pf1", "measureStyle") === true) templateData.angle = 90;
-        else templateData.angle = 53.13;
+        if (game.settings.get("pf1", "measureStyle") === true)
+          templateData.angle = CONFIG.MeasuredTemplate.defaults.angle;
+        else templateData.angle = CONFIG.MeasuredTemplate.defaults.originalAngle;
         break;
       case "rect":
         templateData.distance = Math.sqrt(Math.pow(distance, 2) + Math.pow(distance, 2));
         templateData.direction = 45;
         break;
       case "ray":
-        templateData.width = 5;
+        templateData.width = CONFIG.MeasuredTemplate.defaults.width;
         break;
       default:
         break;

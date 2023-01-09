@@ -377,6 +377,7 @@ Hooks.once("init", function () {
   CONFIG.PF1 = PF1;
   CONFIG.Canvas.layers.templates.layerClass = TemplateLayerPF;
   CONFIG.MeasuredTemplate.objectClass = MeasuredTemplatePF;
+  CONFIG.MeasuredTemplate.defaults.originalAngle = CONFIG.MeasuredTemplate.defaults.angle;
   CONFIG.MeasuredTemplate.defaults.angle = 90; // PF1 uses 90 degree angles
   CONFIG.Actor.documentClass = ActorBasePF;
   CONFIG.Actor.documentClasses = {

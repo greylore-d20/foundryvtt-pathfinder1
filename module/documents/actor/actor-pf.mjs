@@ -3258,18 +3258,10 @@ export class ActorPF extends ActorBasePF {
       const ability = skill.ability;
       for (const note of result) {
         note.notes = note.notes
-          .filter((o) => {
-            return (
-              // Check for skill.context or skill.xyz.subSkills.context
-              o.subTarget === context ||
-              o.subTarget?.split(".")?.[3] === context?.split(".")?.[1] ||
-              o.subTarget === `${ability}Skills` ||
-              o.subTarget === "skills"
-            );
-          })
-          .map((o) => {
-            return o.text;
-          });
+          .filter(
+            (note) => note.subTarget === context || note.subTarget === `${ability}Skills` || note.subTarget === "skills"
+          )
+          .map((note) => note.text);
       }
 
       return result;

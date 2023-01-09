@@ -1497,6 +1497,16 @@ export const PF1 = {
    */
   backgroundOnlySkills: ["lor", "art"],
 
+  /*
+   * Number of background skills per level gained from valid classes.
+   */
+  backgroundSkillsPerLevel: 2,
+
+  /**
+   * Valid class types to grant background skills.
+   */
+  backgroundSkillClasses: ["base", "prestige"],
+
   /**
    * Bonus modifier granted to class skills.
    */

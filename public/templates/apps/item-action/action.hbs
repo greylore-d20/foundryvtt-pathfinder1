@@ -12,6 +12,11 @@
     <input type="checkbox" name="naturalAttack.primaryAttack" {{checked data.naturalAttack.primaryAttack}}/> {{localize "PF1.PrimaryAttack"}}
   </label>
   {{/if}}
+
+  {{!-- Touch --}}
+  <label class="checkbox">
+    <input type="checkbox" name="touch" {{checked data.touch}}/> {{localize "PF1.TouchAttackShort"}}
+  </label>
 </div>
 
 {{#if (or (eq item.type "attack") (eq item.type "weapon"))}}

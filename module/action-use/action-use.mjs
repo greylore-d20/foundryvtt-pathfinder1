@@ -974,6 +974,8 @@ export class ActionUse {
     // Nonlethal
     if (this.action.data.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
 
+    if (this.action.data.touch) properties.push(game.i18n.localize("PF1.TouchAttackShort"));
+
     // Add info for Power Attack to melee, Deadly Aim to ranged attacks
     if (this.shared.powerAttack) {
       if (this.action.data.actionType === "rwak") properties.push(game.i18n.localize("PF1.DeadlyAim"));

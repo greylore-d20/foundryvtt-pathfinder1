@@ -418,6 +418,7 @@ export class ItemAction {
         },
       },
       nonlethal: false,
+      touch: false,
       usesAmmo: false,
       spellEffect: "",
       spellArea: "",

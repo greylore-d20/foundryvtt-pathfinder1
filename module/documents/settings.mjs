@@ -5,6 +5,10 @@ import { TooltipConfig } from "../applications/settings/tooltip.mjs";
 import { TooltipWorldConfig } from "../applications/settings/tooltip_world.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
 
+const debouncedReload = foundry.utils.debounce(() => {
+  window.location.reload();
+}, 100);
+
 export const registerSystemSettings = function () {
   /**
    * Track the system version upon which point a migration was last applied
@@ -133,6 +137,20 @@ export const registerSystemSettings = function () {
     },
   });
 
+  // MEASURING
+
+  /**
+   * Option to change measure style
+   */
+  game.settings.register("pf1", "measureStyle", {
+    name: "SETTINGS.pf1MeasureStyleN",
+    hint: "SETTINGS.pf1MeasureStyleL",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean,
+  });
+
   /**
    * Register diagonal movement rule setting
    */
@@ -167,6 +185,9 @@ export const registerSystemSettings = function () {
     onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
   });
 
+  /**
+   * System of units override for distances.
+   */
   game.settings.register("pf1", "distanceUnits", {
     name: "SETTINGS.pf1DistanceUnitsN",
     hint: "SETTINGS.pf1DistanceUnitsL",
@@ -182,6 +203,9 @@ export const registerSystemSettings = function () {
     onChange: () => pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
+  /**
+   * System of units override for weights.
+   */
   game.settings.register("pf1", "weightUnits", {
     name: "SETTINGS.pf1WeightUnitsN",
     hint: "SETTINGS.pf1WeightUnitsL",
@@ -196,6 +220,8 @@ export const registerSystemSettings = function () {
     },
     onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
   });
+
+  // OPTIONAL RULES
 
   /**
    * Option to allow the background skills optional ruleset.
@@ -222,6 +248,73 @@ export const registerSystemSettings = function () {
     type: Boolean,
     onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
   });
+
+  /**
+   * Unchained action economy
+   */
+  game.settings.register("pf1", "unchainedActionEconomy", {
+    name: "SETTINGS.pf1UnchainedActionEconomyN",
+    hint: "SETTINGS.pf1UnchainedActionEconomyH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: () => pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
+  });
+
+  // VISION
+
+  /**
+   * Low-light Vision Mode
+   */
+  game.settings.register("pf1", "lowLightVisionMode", {
+    name: "SETTINGS.pf1LowLightVisionModeN",
+    hint: "SETTINGS.pf1LowLightVisionModeH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: () => {
+      // Refresh canvas sight
+      canvas.perception.schedule({
+        lighting: { initialize: true, refresh: true },
+        sight: { initialize: true, refresh: true },
+      });
+    },
+  });
+
+  /**
+   * Shared Vision sharing style.
+   */
+  game.settings.register("pf1", "sharedVisionMode", {
+    name: "SETTINGS.pf1SharedVisionModeN",
+    hint: "SETTINGS.pf1SharedVisionModeH",
+    scope: "world",
+    config: false, // Hidden as it is unused; TODO: Re-implement #187's setting usage or remove setting/feature completely
+    default: "0",
+    type: String,
+    choices: {
+      0: "SETTINGS.pf1SharedVisionWithoutSelection",
+      1: "SETTINGS.pf1SharedVisionWithSelection",
+    },
+    onChange: () => {
+      game.socket.emit("system.pf1", { eventType: "redrawCanvas" });
+    },
+  });
+
+  /**
+   * Enable vision for player characters by default.
+   */
+  game.settings.register("pf1", "characterVision", {
+    name: "SETTINGS.pf1characterVisionN",
+    hint: "SETTINGS.pf1characterVisionH",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean,
+  });
+
+  // CHAT CARDS
 
   /**
    * Option to automatically collapse Item Card descriptions
@@ -253,61 +346,7 @@ export const registerSystemSettings = function () {
     },
   });
 
-  /**
-   * Option to change measure style
-   */
-  game.settings.register("pf1", "measureStyle", {
-    name: "SETTINGS.pf1MeasureStyleN",
-    hint: "SETTINGS.pf1MeasureStyleL",
-    scope: "world",
-    config: true,
-    default: true,
-    type: Boolean,
-  });
-
-  /**
-   * Low-light Vision Mode
-   */
-  game.settings.register("pf1", "lowLightVisionMode", {
-    name: "SETTINGS.pf1LowLightVisionModeN",
-    hint: "SETTINGS.pf1LowLightVisionModeH",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-    onChange: () => {
-      // Refresh canvas sight
-      canvas.perception.schedule({
-        lighting: { initialize: true, refresh: true },
-        sight: { initialize: true, refresh: true },
-      });
-    },
-  });
-
-  game.settings.register("pf1", "sharedVisionMode", {
-    name: "SETTINGS.pf1SharedVisionModeN",
-    hint: "SETTINGS.pf1SharedVisionModeH",
-    scope: "world",
-    config: false, // Hidden as it is unused; TODO: Re-implement #187's setting usage or remove setting/feature completely
-    default: "0",
-    type: String,
-    choices: {
-      0: "SETTINGS.pf1SharedVisionWithoutSelection",
-      1: "SETTINGS.pf1SharedVisionWithSelection",
-    },
-    onChange: () => {
-      game.socket.emit("system.pf1", { eventType: "redrawCanvas" });
-    },
-  });
-
-  game.settings.register("pf1", "characterVision", {
-    name: "SETTINGS.pf1characterVisionN",
-    hint: "SETTINGS.pf1characterVisionH",
-    scope: "world",
-    config: true,
-    default: true,
-    type: Boolean,
-  });
+  // HOMEBREW
 
   /**
    * Set coin weight
@@ -323,27 +362,42 @@ export const registerSystemSettings = function () {
   });
 
   /**
-   * Low-light Vision Mode
+   * Alternative reach corner rule
    */
-  game.settings.register("pf1", "allowScriptChanges", {
-    name: "SETTINGS.pf1AllowScriptChangesN",
-    hint: "SETTINGS.pf1AllowScriptChangesH",
+  game.settings.register("pf1", "alternativeReachCornerRule", {
+    name: "SETTINGS.pf1AlternativeReachCornerRuleN",
+    hint: "SETTINGS.pf1AlternativeReachCornerRuleH",
     scope: "world",
     config: true,
     default: false,
     type: Boolean,
-    onChange: (value) => {
-      if (!value || !game.user.isGM) return;
-      // Flash scare message and confirmation
-      const d = Dialog.confirm({
-        title: game.i18n.localize("SETTINGS.pf1AllowScriptChangesN"),
-        content: game.i18n.localize("SETTINGS.pf1AllowScriptChangesW"),
-        defaultYes: false,
-      });
-      d.then((result) => {
-        if (!result) game.settings.set("pf1", "allowScriptChanges", false);
-      });
-    },
+  });
+
+  /**
+   * Allow proficiencies on NPCs.
+   */
+  game.settings.register("pf1", "npcProficiencies", {
+    name: "SETTINGS.pf1NPCProficienciesN",
+    hint: "SETTINGS.pf1NPCProficienciesH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+  });
+
+  // TOKENS / CONDItIONS
+
+  /**
+   * Display default token conditions alongside system ones
+   */
+  game.settings.register("pf1", "coreEffects", {
+    name: "SETTINGS.pf1CoreEffectsN",
+    hint: "SETTINGS.pf1CoreEffectsH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: debouncedReload,
   });
 
   /**
@@ -371,6 +425,8 @@ export const registerSystemSettings = function () {
     },
   });
 
+  // TRANSPARENCY
+
   /**
    * Hide inline rolls from non-observers.
    */
@@ -397,18 +453,19 @@ export const registerSystemSettings = function () {
     requiresReload: true,
   });
 
-  /**
-   * Display default token conditions alongside system ones
-   */
-  game.settings.register("pf1", "coreEffects", {
-    name: "SETTINGS.pf1CoreEffectsN",
-    hint: "SETTINGS.pf1CoreEffectsH",
+  // COMBAT
+
+  game.settings.register("pf1", "initiativeTiebreaker", {
+    name: "SETTINGS.pf1InitTiebreakerN",
+    hint: "SETTINGS.pf1InitTiebreakerH",
     scope: "world",
     config: true,
-    default: false,
+    default: true,
     type: Boolean,
     requiresReload: true,
   });
+
+  // USER INTERFACE
 
   /**
    * Skip action dialog prompts
@@ -432,19 +489,6 @@ export const registerSystemSettings = function () {
     config: true,
     default: true,
     type: Boolean,
-  });
-
-  /**
-   * Unchained action economy
-   */
-  game.settings.register("pf1", "unchainedActionEconomy", {
-    name: "SETTINGS.pf1UnchainedActionEconomyN",
-    hint: "SETTINGS.pf1UnchainedActionEconomyH",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-    onChange: () => pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
   });
 
   /**
@@ -483,29 +527,7 @@ export const registerSystemSettings = function () {
     type: Boolean,
   });
 
-  /**
-   * Alternative reach corner rule
-   */
-  game.settings.register("pf1", "alternativeReachCornerRule", {
-    name: "SETTINGS.pf1AlternativeReachCornerRuleN",
-    hint: "SETTINGS.pf1AlternativeReachCornerRuleH",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-  });
-
-  /**
-   * Allow proficiencies on NPCs.
-   */
-  game.settings.register("pf1", "npcProficiencies", {
-    name: "SETTINGS.pf1NPCProficienciesN",
-    hint: "SETTINGS.pf1NPCProficienciesH",
-    scope: "world",
-    config: true,
-    default: false,
-    type: Boolean,
-  });
+  // TARGETING
 
   /**
    * Disable targets for attack cards
@@ -519,15 +541,6 @@ export const registerSystemSettings = function () {
     type: Boolean,
   });
 
-  game.settings.register("pf1", "initiativeTiebreaker", {
-    name: "SETTINGS.pf1InitTiebreakerN",
-    hint: "SETTINGS.pf1InitTiebreakerH",
-    scope: "world",
-    config: true,
-    default: true,
-    type: Boolean,
-  });
-
   /**
    * Clear targets after attack
    */
@@ -538,6 +551,32 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
+  });
+
+  // SECURITY
+
+  /**
+   * Allow Script type Changes.
+   */
+  game.settings.register("pf1", "allowScriptChanges", {
+    name: "SETTINGS.pf1AllowScriptChangesN",
+    hint: "SETTINGS.pf1AllowScriptChangesH",
+    scope: "world",
+    config: true,
+    default: false,
+    type: Boolean,
+    onChange: (value) => {
+      if (!value || !game.user.isGM) return;
+      // Flash scare message and confirmation
+      const d = Dialog.confirm({
+        title: game.i18n.localize("SETTINGS.pf1AllowScriptChangesN"),
+        content: game.i18n.localize("SETTINGS.pf1AllowScriptChangesW"),
+        defaultYes: false,
+      });
+      d.then((result) => {
+        if (!result) game.settings.set("pf1", "allowScriptChanges", false);
+      });
+    },
   });
 };
 

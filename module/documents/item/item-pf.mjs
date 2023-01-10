@@ -951,7 +951,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Basic template rendering data
-    const token = this.parentActor.token;
+    const token = this.parentActor?.token;
     const rollData = this.getRollData();
     const itemChatData = this.getChatData({ rollData });
     const identified = Boolean(rollData.item?.identified ?? true);

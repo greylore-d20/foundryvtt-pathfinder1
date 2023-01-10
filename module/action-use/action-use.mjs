@@ -1038,6 +1038,7 @@ export class ActionUse {
     const metadata = {};
 
     metadata.item = this.item.id;
+    metadata.action = this.action.id;
     metadata.template = this.shared.template ? this.shared.template.id : null;
     metadata.rolls = {
       attacks: [],

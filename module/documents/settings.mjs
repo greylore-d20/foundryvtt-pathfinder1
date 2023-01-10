@@ -151,21 +151,6 @@ export const registerSystemSettings = function () {
   });
 
   /**
-   * Experience rate
-   *
-   * @deprecated
-   */
-  game.settings.register("pf1", "experienceRate", {
-    name: "SETTINGS.pf1ExpRateN",
-    hint: "SETTINGS.pf1ExpRateL",
-    scope: "world",
-    config: false,
-    default: "",
-    type: String,
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
-  });
-
-  /**
    * System of Units
    */
   game.settings.register("pf1", "units", {

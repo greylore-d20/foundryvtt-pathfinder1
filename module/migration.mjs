@@ -169,17 +169,6 @@ export const migrateCompendium = async function (pack) {
  * Migrates world settings.
  */
 const _migrateWorldSettings = async function () {
-  const oldXPTrack = game.settings.get("pf1", "experienceRate");
-  if (oldXPTrack !== "" && oldXPTrack != null) {
-    // Set new config style
-    const config = game.settings.get("pf1", "experienceConfig") || ExperienceConfig.defaultSettings;
-    config.track = oldXPTrack;
-    await game.settings.set("pf1", "experienceConfig", config);
-    // HACK: Remove old config style for real
-    if (game.settings.settings.get("pf1", "experienceRate") !== undefined)
-      game.settings.settings.delete("pf1.experienceRate");
-  }
-
   const tooltipWorldConfig = game.settings.get("pf1", "tooltipWorldConfig");
   if (tooltipWorldConfig.hideActorName !== undefined) {
     // 1 (All) for true, -2 (None) for false

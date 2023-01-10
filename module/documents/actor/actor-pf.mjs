@@ -608,7 +608,7 @@ export class ActorPF extends ActorBasePF {
       if (book.autoSpellLevelCalculation) {
         const autoFormula = book.cl.autoSpellLevelCalculationFormula || "0";
         const autoBonus = RollPF.safeTotal(autoFormula, rollData);
-        const autoTotal = Math.max(1, Math.min(20, total + autoBonus));
+        const autoTotal = Math.clamped(total + autoBonus, 1, 20);
         book.cl.autoSpellLevelTotal = autoTotal;
 
         clTotal += autoBonus;
@@ -664,7 +664,10 @@ export class ActorPF extends ActorBasePF {
     // Set concentration bonus
     {
       // Temp fix for old actors that fail migration
-      if (Number.isFinite(book.concentration)) book.concentration = {};
+      if (Number.isFinite(book.concentration)) {
+        console.error(`Bad spellbook concentration value "${book.concentration}" in spellbook "${bookKey}"`);
+        book.concentration = {};
+      }
       const concFormula = book.concentrationFormula;
       const formulaRoll = concFormula.length ? RollPF.safeRoll(concFormula, rollData).total : 0;
       const classAbilityMod = actorData.abilities[book.ability]?.mod ?? 0;

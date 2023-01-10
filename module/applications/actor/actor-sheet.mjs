@@ -713,7 +713,8 @@ export class ActorSheetPF extends ActorSheet {
 
       const cl = book.cl.autoSpellLevelTotal;
 
-      const castsPerDay = CONFIG.PF1.casterProgression.castsPerDay[book.spellPreparationMode][book.casterType][cl - 1];
+      const castsPerDay =
+        CONFIG.PF1.casterProgression.castsPerDay[book.spellPreparationMode]?.[book.casterType]?.[cl - 1];
       // Check against undefined protects against bad CL modifications.
       max = castsPerDay !== undefined ? castsPerDay.length - 1 : 0;
     }
@@ -722,6 +723,10 @@ export class ActorSheetPF extends ActorSheet {
     const spellbook = {};
     for (let level = 0; level < 10; level++) {
       const spellLevel = getProperty(book, `spells.spell${level}`);
+      if (!spellLevel) {
+        console.error(`Bad data for spell level ${level} in spellbook "${bookKey}" for actor "${this.actor.name}"`);
+        continue;
+      }
       if (!isNaN(spellLevel.max)) {
         spellbook[level] = {
           level: level,

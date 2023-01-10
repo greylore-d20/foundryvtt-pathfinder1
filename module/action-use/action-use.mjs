@@ -972,7 +972,7 @@ export class ActionUse {
     }
 
     // Nonlethal
-    if (this.item.system.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
+    if (this.action.data.nonlethal) properties.push(game.i18n.localize("PF1.Nonlethal"));
 
     // Add info for Power Attack to melee, Deadly Aim to ranged attacks
     if (this.shared.powerAttack) {

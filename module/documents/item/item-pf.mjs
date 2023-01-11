@@ -1612,14 +1612,13 @@ export class ItemPF extends ItemBasePF {
     const sameActor = actor && targetItem.actor && targetItem.actor.id === actor.id;
 
     // Don't create link to self
-    const itemId = itemLink.split(".").slice(-1)[0];
-    if (itemId === this.id) return false;
+    if (itemLink === this.id) return false;
 
-    // Don't create existing links
-    const links = getProperty(this, `system.links.${linkType}`) || [];
-    if (links.filter((o) => o.id === itemLink).length) return false;
+    // Don't re-create existing links
+    const links = this.system.links?.[linkType] || [];
+    if (links.some((o) => o.id === itemLink || o.uuid === itemLink)) return false;
 
-    const targetLinks = getProperty(targetItem, `system.links.${linkType}`);
+    const targetLinks = targetItem.system.link?.[linkType] ?? [];
     if (["children", "charges", "ammunition"].includes(linkType) && sameActor) {
       if (linkType === "charges") {
         // Prevent the closing of charge link loops
@@ -1657,11 +1656,12 @@ export class ItemPF extends ItemBasePF {
    */
   generateInitialLinkData(linkType, dataType, targetItem, itemLink) {
     const result = {
-      id: itemLink,
-      dataType: dataType,
       name: targetItem.name,
       img: targetItem.img,
     };
+
+    if (dataType === "data") result.id = itemLink;
+    else result.uuid = itemLink;
 
     if (linkType === "classAssociations") {
       result.level = 1;
@@ -1682,8 +1682,7 @@ export class ItemPF extends ItemBasePF {
    * @param {string} dataType - Either "compendium", "data" or "world".
    * @param {object} targetItem - The target item to link to.
    * @param {string} itemLink - The link identifier for the item.
-   * e.g. "world.NExqvEMCMbDuDxv5" (world item), "pf1.feats.NExqvEMCMbDuDxv5" (compendium item) or
-   * "NExqvEMCMbDuDxv5" (item on same actor)
+   * e.g. UUID for items external to the actor, and item ID for same actor items.
    * @returns {boolean} Whether a link was created.
    */
   async createItemLink(linkType, dataType, targetItem, itemLink) {
@@ -1713,10 +1712,9 @@ export class ItemPF extends ItemBasePF {
       delete itemData._id;
 
       // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
-      if (getProperty(itemData, "type") === "spell") setProperty(itemData, "system.spellbook", "spelllike");
+      if (itemData.type === "spell") setProperty(itemData, "system.spellbook", "spelllike");
 
-      const newItemData = await this.parent.createEmbeddedDocuments("Item", [itemData]);
-      const newItem = this.parent.items.get(newItemData._id);
+      const newItem = await this.parent.createEmbeddedDocuments("Item", [itemData]);
 
       await this.createItemLink("children", "data", newItem, newItem._id);
     }
@@ -1740,7 +1738,7 @@ export class ItemPF extends ItemBasePF {
   async getAllLinkedItems() {
     const result = [];
 
-    for (const items of Object.values(getProperty(this, "system.links"))) {
+    for (const items of Object.values(this.system.links ?? {})) {
       for (const l of items) {
         const item = await this.getLinkItem(l);
         if (item) result.push(item);
@@ -1762,7 +1760,7 @@ export class ItemPF extends ItemBasePF {
       const idx = items.findIndex((item) => item.id === id || item.uuid === id);
       if (idx >= 0) {
         items.splice(idx, 1);
-        updateData[`data.links.${type}`] = items;
+        updateData[`system.links.${type}`] = items;
       }
     }
 
@@ -1771,28 +1769,21 @@ export class ItemPF extends ItemBasePF {
     }
   }
 
-  async getLinkItem(l, extraData = false) {
-    const id = l.id.split(".");
+  async getLinkItem(linkData, extraData = false) {
     let item;
 
     // Compendium entry
-    if (l.dataType === "compendium") {
-      const pack = game.packs.get(id.slice(0, 2).join("."));
-      if (!pack) return null;
-      item = await pack.getDocument(id[2]);
-    }
-    // World entry
-    else if (l.dataType === "world") {
-      item = game.items.get(id[1]);
+    if (linkData.uuid) {
+      item = await fromUuid(linkData.uuid);
     }
     // Same actor's item
-    else if (this.parent != null && this.parent.items != null) {
-      item = this.parent.items.get(id[0]);
+    else {
+      item = this.parent?.items?.get(linkData.id);
     }
 
     // Package extra data
     if (extraData) {
-      item = { item: item, linkData: l };
+      item = { item, linkData };
     }
 
     return item;
@@ -1800,7 +1791,7 @@ export class ItemPF extends ItemBasePF {
 
   async updateLinkItems() {
     // Update link items
-    const linkGroups = getProperty(this, "system.links") || {};
+    const linkGroups = this.system.links ?? {};
     for (const links of Object.values(linkGroups)) {
       for (const l of links) {
         const i = await this.getLinkItem(l);

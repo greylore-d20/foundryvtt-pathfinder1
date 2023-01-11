@@ -1251,15 +1251,14 @@ export class ItemSheetPF extends ItemSheet {
     const targetItem = await fromUuid(data.uuid);
     if (!targetItem) return;
 
-    let dataType, itemLink;
+    let dataType,
+      itemLink = data.uuid;
     // Case 1 - Import from a Compendium pack
     if (targetItem.pack) {
       dataType = "compendium";
-      itemLink = `${targetItem.pack}.${targetItem.id}`;
     }
-
     // Case 2 - Import from same actor
-    else if (targetItem.parent instanceof Actor && targetItem.parent === this.document.parentActor) {
+    else if (targetItem.parent === this.document.parentActor) {
       dataType = "data";
       itemLink = targetItem.id;
     }
@@ -1267,7 +1266,6 @@ export class ItemSheetPF extends ItemSheet {
     // Case 3 - Import from World Document
     else {
       dataType = "world";
-      itemLink = `world.${targetItem.id}`;
     }
 
     await this.item.createItemLink(linkType, dataType, targetItem, itemLink);

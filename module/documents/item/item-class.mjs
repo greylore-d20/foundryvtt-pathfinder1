@@ -66,17 +66,13 @@ export class ItemClassPF extends ItemPF {
 
     // Add items associated to this class
     if (newLevel > curLevel) {
-      const classAssociations = (getProperty(this, "system.links.classAssociations") || []).filter((o, index) => {
-        o.__index = index;
-        return o.level > curLevel && o.level <= newLevel;
-      });
+      const classAssociations = (this.system.links?.classAssociations ?? []).filter(
+        (o, index) => o.level > curLevel && o.level <= newLevel
+      );
 
       const newItems = [];
       for (const co of classAssociations) {
-        const collection = co.id.split(".").slice(0, 2).join(".");
-        const itemId = co.id.split(".")[2];
-        const pack = game.packs.get(collection);
-        const item = await pack?.getDocument(itemId);
+        const item = await fromUuid(co.uuid);
         if (!item) {
           const msg = `Could not find class association: ${co.id}`;
           console.warn(co.id, msg, this);

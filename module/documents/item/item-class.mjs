@@ -76,7 +76,7 @@ export class ItemClassPF extends ItemPF {
         const collection = co.id.split(".").slice(0, 2).join(".");
         const itemId = co.id.split(".")[2];
         const pack = game.packs.get(collection);
-        const item = await pack.getDocument(itemId);
+        const item = await pack?.getDocument(itemId);
         if (!item) {
           const msg = `Could not find class association: ${co.id}`;
           console.warn(co.id, msg, this);

@@ -1723,7 +1723,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   async getLinkedItems(type, extraData = false) {
-    const items = getProperty(this, `system..links.${type}`);
+    const items = this.system.links?.[type];
     if (!items) return [];
 
     const result = [];

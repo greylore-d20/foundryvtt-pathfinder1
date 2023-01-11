@@ -1698,14 +1698,6 @@ export class ItemPF extends ItemBasePF {
       callOldNamespaceHookAll("createItemLink", "pf1CreateItemLink", this, link, linkType);
       Hooks.callAll("pf1CreateItemLink", this, link, linkType);
 
-      /**
-       * @TODO This is a really shitty way of re-rendering the actor sheet, so I should change this method at some point,
-       * but the premise is that the actor sheet should show data for newly linked items, and it won't do it immediately for some reason
-       */
-      window.setTimeout(() => {
-        if (this.parent) this.parent.sheet.render();
-      }, 50);
-
       return true;
     } else if (linkType === "children" && dataType !== "data") {
       const itemData = targetItem.toObject();

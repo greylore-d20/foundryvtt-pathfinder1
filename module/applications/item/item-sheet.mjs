@@ -1423,33 +1423,6 @@ export class ItemSheetPF extends ItemSheet {
     }
   }
 
-  /**
-   * @param {string} linkType - The type of link.
-   * @param {string} dataType - Either "compendium", "data" or "world".
-   * @param {object} itemData - The (new) item's data.
-   * @param {string} itemLink - The link identifier for the item.
-   * @param {object} [data] - The raw data from a drop event.
-   * @returns {Array} An array to insert into this item's link data.
-   */
-  generateInitialLinkData(linkType, dataType, itemData, itemLink, data = null) {
-    const result = {
-      id: itemLink,
-      dataType: dataType,
-      name: itemData.name,
-      img: itemData.img,
-    };
-
-    if (linkType === "classAssociations") {
-      result.level = 1;
-    }
-
-    if (linkType === "ammunition") {
-      result.recoverChance = 50;
-    }
-
-    return result;
-  }
-
   async _onActionControl(event) {
     event.preventDefault();
     const a = event.currentTarget;

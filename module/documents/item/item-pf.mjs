@@ -1688,7 +1688,7 @@ export class ItemPF extends ItemBasePF {
   async createItemLink(linkType, dataType, targetItem, itemLink) {
     if (this.canCreateItemLink(linkType, dataType, targetItem, itemLink)) {
       const updateData = {};
-      const _links = duplicate(getProperty(this, `system.links.${linkType}`) || []);
+      const _links = deepClone(this.system.links?.[linkType] ?? []);
       const link = this.generateInitialLinkData(linkType, dataType, targetItem, itemLink);
       _links.push(link);
       updateData[`system.links.${linkType}`] = _links;

@@ -1840,7 +1840,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const deleteSkill = () => {
       const updateData = {};
-      updateData[`data.skills.${mainSkillId}.subSkills.-=${subSkillId}`] = null;
+      updateData[`system.skills.${mainSkillId}.subSkills.-=${subSkillId}`] = null;
       this.document.update(updateData);
     };
 
@@ -1868,7 +1868,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const deleteSkill = () => {
       const updateData = {};
-      updateData[`data.skills.-=${skillId}`] = null;
+      updateData[`system.skills.-=${skillId}`] = null;
       this.document.update(updateData);
     };
 

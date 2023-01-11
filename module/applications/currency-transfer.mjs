@@ -242,13 +242,13 @@ export class CurrencyTransfer extends FormApplication {
     this.order.forEach((c) => (destCurrency[c] += amount[c]));
     if (sourceDoc === destDoc)
       return sourceDoc.update({
-        "data.altCurrency": sourceAlt ? sourceCurrency : destCurrency,
-        "data.currency": destAlt ? sourceCurrency : destCurrency,
+        "system.altCurrency": sourceAlt ? sourceCurrency : destCurrency,
+        "system.currency": destAlt ? sourceCurrency : destCurrency,
       });
-    if (sourceAlt) sourceDoc.update({ "data.altCurrency": sourceCurrency });
-    else sourceDoc.update({ "data.currency": sourceCurrency });
-    if (destAlt) destDoc.update({ "data.altCurrency": destCurrency });
-    else destDoc.update({ "data.currency": destCurrency });
+    if (sourceAlt) sourceDoc.update({ "system.altCurrency": sourceCurrency });
+    else sourceDoc.update({ "system.currency": sourceCurrency });
+    if (destAlt) destDoc.update({ "system.altCurrency": destCurrency });
+    else destDoc.update({ "system.currency": destCurrency });
     return amount;
   }
 

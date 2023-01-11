@@ -129,7 +129,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
           },
           {
             isNumber: true,
-            name: "data.unidentified.basePrice",
+            name: "system.unidentified.basePrice",
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
             value: getProperty(data.item, "system.unidentified.price"),
@@ -616,7 +616,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     this._mouseWheelAdd(event.originalEvent, el);
 
     const value = Number(el.value);
-    this.setItemUpdate(item._id, "data.uses.value", value);
+    this.setItemUpdate(item._id, "system.uses.value", value);
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {

@@ -1766,7 +1766,7 @@ export class ItemPF extends ItemBasePF {
       }
 
       if (linkItems.length > items.length) {
-        updateData[`data.links.${k}`] = items;
+        updateData[`system.links.${k}`] = items;
       }
     }
 
@@ -1952,10 +1952,10 @@ export class ItemPF extends ItemBasePF {
     }
 
     const updateData = {};
-    updateData[`data.currency.pp`] = values[0];
-    updateData[`data.currency.gp`] = values[1];
-    updateData[`data.currency.sp`] = values[2];
-    updateData[`data.currency.cp`] = values[3];
+    updateData[`system.currency.pp`] = values[0];
+    updateData[`system.currency.gp`] = values[1];
+    updateData[`system.currency.sp`] = values[2];
+    updateData[`system.currency.cp`] = values[3];
     return this.update(updateData);
   }
 
@@ -1983,7 +1983,7 @@ export class ItemPF extends ItemBasePF {
     if (Array.isArray(flags)) throw new Error(`${this.name} [${this.id}] requires migration.`);
 
     if (flags[flagName] === undefined) {
-      await this.update({ [`data.flags.boolean.${flagName}`]: true }, context);
+      await this.update({ [`system.flags.boolean.${flagName}`]: true }, context);
       return true;
     }
 
@@ -2001,7 +2001,7 @@ export class ItemPF extends ItemBasePF {
     const flags = getProperty(this, "system.flags.boolean") ?? {};
 
     if (flags[flagName] !== undefined) {
-      await this.update({ [`data.flags.boolean.-=${flagName}`]: null }, context);
+      await this.update({ [`system.flags.boolean.-=${flagName}`]: null }, context);
       return true;
     }
 
@@ -2040,7 +2040,7 @@ export class ItemPF extends ItemBasePF {
     const flags = duplicate(getProperty(this, "system.flags.dictionary") ?? {});
 
     if (flags[flagName] !== value) {
-      await this.update({ [`data.flags.dictionary.${flagName}`]: value }, context);
+      await this.update({ [`system.flags.dictionary.${flagName}`]: value }, context);
       return true;
     }
 
@@ -2058,7 +2058,7 @@ export class ItemPF extends ItemBasePF {
     const flags = getProperty(this, "system.flags.dictionary") ?? {};
 
     if (flags[flagName] !== undefined) {
-      await this.update({ [`data.flags.dictionary.-=${flagName}`]: null }, context);
+      await this.update({ [`system.flags.dictionary.-=${flagName}`]: null }, context);
       return true;
     }
 

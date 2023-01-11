@@ -982,7 +982,7 @@ export function refreshActors(options = { renderOnly: false, renderForEveryone: 
  *
  * @param {object} sourceObj The source object which contains the full array in the same path as targetObj.
  * @param {object} targetObj The target object to alter. The array doesn't have to be immediately in this object.
- * @param {string} keepPath A path to the array to keep, separated with dots. e.g. "data.damageParts".
+ * @param {string} keepPath A path to the array to keep, separated with dots. e.g. "system.damageParts".
  */
 export function keepUpdateArray(sourceObj, targetObj, keepPath) {
   const subData = Object.entries(targetObj).filter((e) => e[0].startsWith(`${keepPath}.`));

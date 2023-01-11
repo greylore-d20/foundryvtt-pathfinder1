@@ -19,7 +19,7 @@ export class ItemFeatPF extends ItemPF {
    * @override
    */
   async setActive(active, context) {
-    return this.update({ "data.disabled": !active }, context);
+    return this.update({ "system.disabled": !active }, context);
   }
 
   get isActive() {

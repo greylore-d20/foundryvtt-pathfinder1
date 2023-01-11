@@ -1116,9 +1116,36 @@ const _migrateItemRange = function (ent, updateData) {
   }
 };
 
-const _migrateItemLinks = function (ent, updateData) {
+const _migrateItemLinks = async function (ent, updateData) {
   if (["attack", "consumable", "equipment"].includes(ent.type) && !hasProperty(ent, "system.links.charges")) {
     updateData["system.links.charges"] = [];
+  }
+
+  const linkData = ent.system.links ?? {};
+  for (const [linkType, oldLinks] of Object.entries(linkData)) {
+    let updated = false;
+    const links = deepClone(oldLinks);
+    for (const link of links) {
+      const type = link.dataType;
+      if (type !== undefined) {
+        if (type === "data") {
+          delete link.dataType;
+        } else if (type === "world") {
+          // Reconstruct world item UUID
+          link.uuid = link.id.replace(/^world\./, "Item.");
+          delete link.id;
+          delete link.dataType;
+        } else if (type === "compendium") {
+          // Reconstruct compendium UUID
+          link.uuid = `Compendium.${link.id}`;
+          delete link.id;
+          delete link.dataType;
+        }
+        updated = true;
+      }
+
+      updateData[`system.links.${linkType}`] = links;
+    }
   }
 };
 

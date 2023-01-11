@@ -1757,22 +1757,16 @@ export class ItemPF extends ItemBasePF {
    */
   async removeItemLink(id) {
     const updateData = {};
-    for (const [k, linkItems] of Object.entries(getProperty(this, "system.links") || {})) {
-      const items = duplicate(linkItems);
-      for (let a = 0; a < items.length; a++) {
-        const item = items[a];
-        if (item.id === id) {
-          items.splice(a, 1);
-          a--;
-        }
-      }
-
-      if (linkItems.length > items.length) {
-        updateData[`system.links.${k}`] = items;
+    for (const [type, linkItems] of Object.values(this.system.links ?? {})) {
+      const items = deepClone(linkItems);
+      const idx = items.findIndex((item) => item.id === id || item.uuid === id);
+      if (idx >= 0) {
+        items.splice(idx, 1);
+        updateData[`data.links.${type}`] = items;
       }
     }
 
-    if (Object.keys(updateData).length) {
+    if (!foundry.utils.isEmpty(updateData)) {
       return this.update(updateData);
     }
   }

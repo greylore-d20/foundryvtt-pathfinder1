@@ -21,6 +21,15 @@ export class ItemAction {
   }
 
   /**
+   * Returns whether this action is a combat maneuver
+   *
+   * @type {boolean}
+   */
+  get isCombatManeuver() {
+    return ["mcman", "rcman"].includes(this.data.actionType);
+  }
+
+  /**
    * Creates an action.
    *
    * @param {object[]} data - Data to initialize the action(s) with.
@@ -635,7 +644,7 @@ export class ItemAction {
     rollData.item.primaryAttack = primaryAttack;
 
     const isRanged = ["rwak", "rsak", "rcman"].includes(actionData.actionType);
-    const isCMB = ["mcman", "rcman"].includes(actionData.actionType);
+    const isCMB = this.isCombatManeuver;
 
     // Determine size bonus
     rollData.sizeBonus = !isCMB
@@ -743,10 +752,10 @@ export class ItemAction {
       parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
     }
 
-    const roll = await new D20RollPF(
-      [rollData.d20 || "1d20", ...parts.filter((p) => !!p)].join("+"),
-      rollData
-    ).evaluate({ async: true });
+    const critRange = itemData.broken || this.isCombatManeuver ? 20 : actionData.ability.critRange || 20;
+    const roll = await new D20RollPF([rollData.d20 || "1d20", ...parts.filter((p) => !!p)].join("+"), rollData, {
+      critical: critRange,
+    }).evaluate({ async: true });
     return roll;
   }
 
@@ -826,15 +835,15 @@ export class ItemAction {
   }
 
   /**
-   * Place a damage roll using an item (weapon, feat, spell, or equipment)
-   * Rely upon the DicePF.damageRoll logic for the core implementation
+   * Roll damage for an action.
    *
-   * @param root0
-   * @param root0.data
-   * @param root0.critical
-   * @param root0.extraParts
-   * @param root0.conditionalParts
-   * @param root0.primaryAttack
+   * @param {object} [options] - Options configuring the damage roll
+   * @param {object | null} [options.data=null] - rollData to be used
+   * @param {boolean} [options.critical=false] - Whether to roll critical damage
+   * @param {string[]} [options.extraParts] - Additional strings added to the roll formula
+   * @param {object} [options.conditionalParts=[]] - Conditional data sets
+   * @param {boolean} [options.primaryAttack] - Whether this is the primary attack
+   * @returns {Promise<DamageRoll[]>} Created damage rolls, one roll per damage part
    */
   async rollDamage({
     data = null,

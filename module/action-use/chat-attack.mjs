@@ -15,14 +15,12 @@ export class ChatAttack {
 
     this.damage = {
       flavor: "",
-      tooltip: "",
       total: 0,
       /** @type {DamageRoll[]} */
       rolls: [],
     };
     this.critDamage = {
       flavor: "",
-      tooltip: "",
       total: 0,
       /** @type {DamageRoll[]} */
       rolls: [],
@@ -176,14 +174,8 @@ export class ChatAttack {
       if (critical === true) this.critConfirm = roll;
       else this.attack = roll;
 
-      const d20 = roll.dice.length ? roll.dice[0].total : roll.terms[0].total;
-      let critType = 0;
-      const isCmb = ["mcman", "rcman"].includes(this.action.data.actionType);
-      if ((d20 >= this.critRange && !critical && !isCmb) || (d20 === 20 && (critical || isCmb))) critType = 1;
-      else if (d20 === 1) critType = 2;
-
       // Add crit confirm
-      if (!critical && !isCmb && d20 >= this.critRange && this.rollData.action.ability.critMult > 1) {
+      if (!critical && !this.action.isCombatManeuver && roll.isCrit && this.rollData.action.ability.critMult > 1) {
         this.hasCritConfirm = true;
         this.rollData.critMult = Math.max(1, this.rollData.action.ability.critMult);
         if (this.action.item.system.broken) this.rollData.critMult = 1;
@@ -193,7 +185,7 @@ export class ChatAttack {
     }
 
     // Add tooltip
-    roll.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
+    roll.options.flavor = critical ? game.i18n.localize("PF1.CriticalConfirmation") : this.label;
 
     if (this.attackNotes === "") this.addAttackNotes();
   }
@@ -229,7 +221,7 @@ export class ChatAttack {
       notes.push(...this.action.data.attackNotes);
     }
     // Add CMB notes
-    if (["mcman", "rcman"].includes(this.action.data.actionType)) {
+    if (this.action.isCombatManeuver) {
       notes.push(...(this.action.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
     }
 
@@ -303,7 +295,6 @@ export class ChatAttack {
 
     // Finalize data
     data.flavor = flavor;
-    data.tooltip = tooltips;
     data.total = totalDamage;
   }
 
@@ -356,14 +347,5 @@ export class ChatAttack {
     }
 
     return this;
-  }
-}
-
-export class DamagePart {
-  constructor(amount, damageType, roll, type = "normal") {
-    this.amount = amount;
-    this.damageType = damageType ?? "Untyped";
-    this.type = type;
-    this.roll = roll;
   }
 }

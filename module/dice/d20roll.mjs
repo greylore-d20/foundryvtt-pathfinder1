@@ -111,6 +111,15 @@ export class D20RollPF extends RollPF {
   }
 
   /**
+   * The flavor this roll was created with.
+   *
+   * @type {string}
+   */
+  get flavor() {
+    return this.options.flavor;
+  }
+
+  /**
    * Render a {@link Dialog} for the user to enter additional bonuses, set a static roll result, or take 10/20.
    *
    * @param {D20RollDialogOptions} [options={}] - Additional options determining what options to show in the dialog

@@ -2151,7 +2151,7 @@ export class ItemPF extends ItemBasePF {
       ["mwak", "msak", "mcman"].includes(actionData.actionType) || ["melee", "reach"].includes(actionData.range.units);
     const isRanged =
       ["rwak", "rsak", "rcman"].includes(actionData.actionType) || this.system.weaponSubtype === "ranged";
-    const isManeuver = ["mcman", "rcman"].includes(actionData.actionType);
+    const isManeuver = action.isCombatManeuver;
 
     const describePart = (value, label, sort = 0) => {
       sources.push({ value, label, sort });

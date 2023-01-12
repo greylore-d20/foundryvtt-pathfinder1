@@ -190,7 +190,11 @@ Hooks.once("init", function () {
   console.log(`PF1 | Initializing Pathfinder 1 System`);
 
   // Redirect notifications to console before Notifications is ready
-  ui.notifications = { info: console.log, warn: console.warn, error: console.error };
+  ui.notifications = {
+    info: (msg, opts = {}) => (opts.console !== false ? console.log(msg) : undefined),
+    warn: (msg, opts = {}) => (opts.console !== false ? console.warn(msg) : undefined),
+    error: (msg, opts = {}) => (opts.console !== false ? console.error(msg) : undefined),
+  };
 
   // Register client settings
   registerClientSettings();

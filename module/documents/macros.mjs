@@ -116,21 +116,7 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
   const actor = getActorFromId(actorId);
   if (!actor) return;
 
-  let altTypeLabel = "";
-  switch (altType) {
-    case "primary":
-      altTypeLabel = "Primary";
-      break;
-    case "secondary":
-      altTypeLabel = "Secondary";
-      break;
-    case "tertiary":
-      altTypeLabel = "Tertiary";
-      break;
-    case "spelllike":
-      altTypeLabel = "Spell-like";
-      break;
-  }
+  const altTypeLabel = altType ? actor.system.attributes?.spells?.spellbooks?.[altType]?.label : null;
 
   let name,
     img,

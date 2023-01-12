@@ -2013,33 +2013,7 @@ export const PF1 = {
       ],
     },
     nauseated: {
-      changes: [
-        {
-          formula: -2,
-          subTarget: "attack",
-          modifier: "penalty",
-        },
-        {
-          formula: -2,
-          subTarget: "wdamage",
-          modifier: "penalty",
-        },
-        {
-          formula: -2,
-          subTarget: "allSavingThrows",
-          modifier: "penalty",
-        },
-        {
-          formula: -2,
-          subTarget: "skills",
-          modifier: "penalty",
-        },
-        {
-          formula: -2,
-          subTarget: "allChecks",
-          modifier: "penalty",
-        },
-      ],
+      // Prevents actions, does not cause modifiers
     },
     stunned: {
       changes: [

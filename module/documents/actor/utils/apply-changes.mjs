@@ -342,6 +342,18 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
         }
       }
       break;
+    case "unskills":
+      // Untrained skills
+      for (const [skillId, skill] of Object.entries(curData.skills)) {
+        if (skill == null) continue;
+        for (const [subSkillId, subskill] of Object.entries(skill.subSkills ?? {})) {
+          if (subskill.rank > 0) continue;
+          result.push(`system.skills.${skillId}.subSkills.${subSkillId}.changeBonus`);
+        }
+        if (skill.rank > 0) continue;
+        result.push(`system.skills.${skillId}.changeBonus`);
+      }
+      break;
     case "strSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;

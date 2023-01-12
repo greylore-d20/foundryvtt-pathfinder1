@@ -2180,6 +2180,7 @@ export const PF1 = {
     wisMod: { label: "PF1.AbilityWisMod", category: "ability", sort: 44000 },
     chaMod: { label: "PF1.AbilityChaMod", category: "ability", sort: 45000 },
     skills: { label: "PF1.BuffTarAllSkills", category: "skills", sort: 50000 },
+    unskills: { label: "PF1.BuffTarUntrainedSkills", category: "skills", sort: 100000 },
     carryStr: { label: "PF1.CarryStrength", category: "misc", sort: 60000 },
     carryMult: { label: "PF1.CarryMultiplier", category: "misc", sort: 61000 },
     strSkills: { label: "PF1.BuffTarStrSkills", category: "skills", sort: 70000 },

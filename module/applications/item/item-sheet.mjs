@@ -1134,7 +1134,7 @@ export class ItemSheetPF extends ItemSheet {
     // Toggle hidden
     else if (item && a.classList.contains("item-hide")) {
       item.update({
-        hidden: !item.system.hidden,
+        hidden: !item.hidden,
       });
     }
   }

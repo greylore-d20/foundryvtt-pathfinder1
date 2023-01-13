@@ -124,6 +124,7 @@ Hooks.once("init", function () {
     spell: documents.item.ItemSpellPF,
     weapon: documents.item.ItemWeaponPF,
   };
+
   // Item DataModels
   CONFIG.Item.systemDataModels.buff = itemModels.BuffItemModel;
 

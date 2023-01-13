@@ -1,4 +1,10 @@
-import { ChangeModel, ContextNoteModel, ChangeFlagsModel, TraitModel, ScriptCallModel } from "../common/_module.mjs";
+import {
+  ChangeModel,
+  ContextNoteModel,
+  ChangeFlagsModel,
+  TraitModel,
+  ScriptCallModel,
+} from "@model/common/_module.mjs";
 
 export class BuffItemModel extends foundry.abstract.DataModel {
   static _enableV10Validation = true; // TODO: Remove with Foundry v11 where this becomes the standard

@@ -916,7 +916,11 @@ export class ActorPF extends ActorBasePF {
       rollData.cl = book.cl.total;
       rollData.ablMod = spellSlotAbilityMod;
       const spellClass = book.class ?? "";
-      rollData.classLevel = spellClass === "_hd" ? rollData.attributes.hd.total : rollData[spellClass]?.level || 0;
+      rollData.classLevel =
+        spellClass === "_hd"
+          ? rollData.attributes.hd?.total ?? rollData.details.level.value
+          : rollData.classes[spellClass]?.level || 0;
+
       const roll = RollPF.safeRoll(formula, rollData);
       book.spellPoints.max = roll.total;
     } else {

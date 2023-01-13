@@ -95,7 +95,10 @@ export class SkillEditor extends FormApplication {
     const updateData = { system: { skills: {} } };
     const skillCoreUpdateData = updateData.system.skills;
 
-    const { skill: newData, tag } = expandObject(formData);
+    formData = expandObject(formData);
+    // Forcibly slugify provided tag to ensure it is not invalid (e.g. contain periods)
+    const tag = formData.tag?.slugify({ strict: true });
+    const newData = formData.skill;
 
     // Track old IDs for rename related data deletion
     const oldSubSkillId = this.subSkillId,

@@ -28,7 +28,7 @@ import * as PF1 from "./module/config.mjs";
 import * as PF1CONST from "./module/const.mjs";
 import * as applications from "./module/applications/_module.mjs";
 import * as documents from "./module/documents/_module.mjs";
-import * as itemModels from "./module/data-model/item/_module.mjs";
+import * as dataModels from "./module/data-model/_module.mjs";
 import * as actionUse from "./module/action-use/_module.mjs";
 import * as chat from "./module/chat/_module.mjs";
 import * as _canvas from "./module/canvas/_module.mjs";
@@ -126,7 +126,8 @@ Hooks.once("init", function () {
   };
 
   // Item DataModels
-  CONFIG.Item.systemDataModels.buff = itemModels.BuffItemModel;
+  CONFIG.Item.systemDataModels.buff = dataModels.items.BuffItemModel;
+  CONFIG.Item.systemDataModels.loot = dataModels.items.LootItemModel;
 
   CONFIG.Token.documentClass = documents.TokenDocumentPF;
   CONFIG.ActiveEffect.documentClass = documents.ActiveEffectPF;

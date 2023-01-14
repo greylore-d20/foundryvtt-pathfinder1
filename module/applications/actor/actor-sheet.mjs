@@ -2106,15 +2106,15 @@ export class ActorSheetPF extends ActorSheet {
     // Get old items of same general category
     const oldItems = this.document.items
       .filter((i) => i.type === type && sameSubgroup(i))
-      .sort((a, b) => a.sort - b.sort);
+      .sort((a, b) => b.sort - a.sort);
 
     if (oldItems.length) {
       // Ensure new item is at the bottom of the list instead of seemingly random position
-      itemData.sort = oldItems[0].sort - 10;
+      itemData.sort = oldItems[0].sort + 100;
 
       // Ensure no duplicate names occur
       let i = 2;
-      while (oldItems.find((i) => i.name === itemData.name)) {
+      while (oldItems.find((item) => item.name === itemData.name)) {
         itemData.name = `${baseName} (${i++})`;
       }
     }

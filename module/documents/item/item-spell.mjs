@@ -370,6 +370,11 @@ export class ItemSpellPF extends ItemPF {
       type: "consumable",
       name: origData.name,
     };
+
+    data["system.unidentified.name"] =
+      origData.unidentifiedName || game.i18n.localize(`PF1.CreateItem${type.capitalize()}`);
+    data["system.identified"] = origData.identified ?? true;
+
     const action = pf1.components.ItemAction.defaultData;
 
     const [minLevel, minCl] = this.getMinimumCasterLevelBySpellData(origData);

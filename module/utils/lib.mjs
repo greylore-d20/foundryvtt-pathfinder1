@@ -446,53 +446,59 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
     name: itemData.name,
     sl,
     cl,
+    isGM: game.user.isGM,
   });
 
-  const getData = function (html) {
-    const data = itemData;
+  const getFormData = (html) => {
     const formData = expandObject(new FormDataExtended(html.querySelector("form")).object);
-    data.sl = formData.sl ?? 1;
-    data.cl = formData.cl ?? 1;
+    itemData.sl = formData.sl ?? 1;
+    itemData.cl = formData.cl ?? 1;
+    itemData.identified = formData.identified;
+    itemData.unidentifiedName = formData.unidentifiedName;
     // NaN check here to allow SL 0
-    if (Number.isNaN(data.sl)) data.sl = 1;
-    return data;
+    if (Number.isNaN(itemData.sl)) itemData.sl = 1;
+    return itemData;
   };
 
-  return new Promise((resolve) => {
-    const dialogData = {
+  const buttons = {
+    potion: {
+      icon: '<i class="fas fa-prescription-bottle"></i>',
+      label: game.i18n.localize("PF1.CreateItemPotion"),
+      callback: (html) => createConsumableSpell(getFormData(html), "potion"),
+    },
+    scroll: {
+      icon: '<i class="fas fa-scroll"></i>',
+      label: game.i18n.localize("PF1.CreateItemScroll"),
+      callback: (html) => createConsumableSpell(getFormData(html), "scroll"),
+    },
+    wand: {
+      icon: '<i class="fas fa-magic"></i>',
+      label: game.i18n.localize("PF1.CreateItemWand"),
+      callback: (html) => createConsumableSpell(getFormData(html), "wand"),
+    },
+    spell: {
+      icon: '<i class="fas fa-hand-sparkles"></i>',
+      label: game.i18n.localize("PF1.ItemTypeSpell"),
+      callback: () => "spell",
+    },
+  };
+
+  if (!allowSpell) delete buttons.spell;
+
+  return Dialog.wait(
+    {
       title: game.i18n.format("PF1.CreateItemForSpell", { name: itemData.name }),
       content,
       itemData,
-      buttons: {
-        potion: {
-          icon: '<i class="fas fa-prescription-bottle"></i>',
-          label: game.i18n.localize("PF1.CreateItemPotion"),
-          callback: (html) => resolve(createConsumableSpell(getData(html), "potion")),
-        },
-        scroll: {
-          icon: '<i class="fas fa-scroll"></i>',
-          label: game.i18n.localize("PF1.CreateItemScroll"),
-          callback: (html) => resolve(createConsumableSpell(getData(html), "scroll")),
-        },
-        wand: {
-          icon: '<i class="fas fa-magic"></i>',
-          label: game.i18n.localize("PF1.CreateItemWand"),
-          callback: (html) => resolve(createConsumableSpell(getData(html), "wand")),
-        },
-        spell: {
-          icon: '<i class="fas fa-hand-sparkles"></i>',
-          label: game.i18n.localize("PF1.ItemTypeSpell"),
-          callback: () => resolve("spell"),
-        },
-      },
-      close: () => {
-        resolve(false);
-      },
+      buttons,
+      close: () => false,
       default: "potion",
-    };
-    if (!allowSpell) delete dialogData.buttons.spell;
-    new Dialog(dialogData, { classes: ["dialog", "pf1", "create-consumable"], jQuery: false }).render(true);
-  });
+    },
+    {
+      classes: ["dialog", "pf1", "create-consumable"],
+      jQuery: false,
+    }
+  );
 };
 
 export const createConsumableSpell = async function (itemData, type) {

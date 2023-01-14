@@ -4127,9 +4127,11 @@ export class ActorPF extends ActorBasePF {
     let doc = this;
     const current = getProperty(this.system, attribute),
       updates = {};
-    if (attribute.startsWith("resources.")) {
-      const itemTag = attribute.split(".").slice(-1)[0];
-      doc = this.items.find((item) => item.system.tag === itemTag);
+    const resourceMatch = /^resources\.(?<tag>[^.]+)$/.exec(attribute);
+    if (resourceMatch) {
+      const { tag } = resourceMatch.groups;
+      const itemId = this.system.resources[tag]?._id;
+      doc = this.items.get(itemId);
     }
     if (!doc) return;
     const updateData = {};

@@ -3125,19 +3125,9 @@ export class ActorPF extends ActorBasePF {
   }
 
   get allNotes() {
-    const result = [];
-
-    const noteItems = this.items.filter((o) => {
-      return o.system.contextNotes != null;
-    });
-
-    for (const o of noteItems) {
-      if (!o.isActive) continue;
-      if (!o.system.contextNotes || o.system.contextNotes.length === 0) continue;
-      result.push({ notes: o.system.contextNotes, item: o });
-    }
-
-    return result;
+    return this.items
+      .filter((item) => item.isActive && item.system.contextNotes?.length > 0)
+      .map((item) => ({ notes: item.system.contextNotes, item }));
   }
 
   /**

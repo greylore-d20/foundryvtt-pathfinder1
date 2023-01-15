@@ -554,8 +554,11 @@ export class ActorPF extends ActorBasePF {
     // Do not process spellbooks that are not in use
     if (!book.inUse) return;
 
-    if (book.class) {
-      if (book.class === "_hd") book.label = game.i18n.localize("PF1.SpellBookSpelllike");
+    // Use custom name if present
+    if (book.name) book.label = book.name;
+    // Get name from class if selected
+    else if (book.class) {
+      if (book.class === "_hd") book.label = book.name || game.i18n.localize("PF1.SpellBookSpelllike");
       else {
         const bookClassId = this.classes[book.class]?._id;
         const bookClass = this.items.get(bookClassId);

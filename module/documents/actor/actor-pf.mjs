@@ -806,7 +806,7 @@ export class ActorPF extends ActorBasePF {
             if (Number.isFinite(spell.maxCharges)) {
               const slotCost = spell.system.slotCost ?? 1;
               const subtract = { domain: 0, uses: 0 };
-              if (spell.system.domain === true) {
+              if (spell.isDomain) {
                 subtract.domain = Math.min(spell.maxCharges, lvlSlots.domain);
                 subtract.uses = (spell.maxCharges - subtract.domain) * slotCost;
               } else {
@@ -3987,7 +3987,7 @@ export class ActorPF extends ActorBasePF {
               itemUpdate["system.preparation.preparedAmount"] = itemData.preparation.maxAmount;
               itemUpdates.push(itemUpdate);
             }
-            if (!item.system.domain) {
+            if (!item.isDomain) {
               let sbUses =
                 updateData[
                   `system.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`

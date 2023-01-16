@@ -529,6 +529,15 @@ export class ItemSpellPF extends ItemPF {
     );
   }
 
+  /**
+   * Determine if this spell is domain/school spell.
+   *
+   * @type {boolean}
+   */
+  get isDomain() {
+    return this.system.domain === true;
+  }
+
   get fullDescription() {
     return super.fullDescription + this.system.shortDescription;
   }

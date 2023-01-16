@@ -3124,6 +3124,11 @@ export class ActorPF extends ActorBasePF {
     return result;
   }
 
+  /**
+   * An array of all context note data for this actor.
+   *
+   * @type {{notes: {text: string, subTarget: string}[], item: ItemPF}[]}
+   */
   get allNotes() {
     return this.items
       .filter((item) => item.isActive && item.system.contextNotes?.length > 0)

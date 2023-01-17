@@ -19,7 +19,8 @@ export class LootItemModel extends foundry.abstract.DataModel {
       extraType: new fields.StringField({ required: true }),
       description: new fields.SchemaField(
         {
-          value: new fields.StringField({ required: false }),
+          value: new fields.HTMLField({ required: false }),
+          unidentified: new fields.HTMLField({ required: false }),
         },
         { required: false }
       ),

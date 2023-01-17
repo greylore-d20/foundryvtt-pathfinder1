@@ -632,12 +632,12 @@ export const addDefaultChanges = function (changes) {
     });
 
   const healthConfig = game.settings.get("pf1", "healthConfig");
-  const cls_options = this.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
-  const race_options = healthConfig.hitdice.Racial;
+  const classOptions = this.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
+  const raceOptions = healthConfig.hitdice.Racial;
   const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
   const continuous = { discrete: false, continuous: true }[healthConfig.continuity];
 
-  const push_health = (value, source) => {
+  const pushHealth = (value, source) => {
     changes.push(
       new pf1.components.ItemChange({
         formula: value,
@@ -657,38 +657,38 @@ export const addDefaultChanges = function (changes) {
       })
     );
   };
-  const manual_health = (health_source) => {
-    let health = health_source.system.hp + (health_source.system.subType === "base") * health_source.system.fc.hp.value;
+  const manualHealth = (healthSource) => {
+    let health = healthSource.system.hp + (healthSource.system.subType === "base") * healthSource.system.fc.hp.value;
 
     if (!continuous) health = round(health);
-    push_health(health, health_source);
+    pushHealth(health, healthSource);
   };
-  const auto_health = (health_source, options, maximized = 0) => {
-    if (health_source.system.hd === 0) return;
+  const autoHealth = (healthSource, options, maximized = 0) => {
+    if (healthSource.system.hd === 0) return;
 
-    let die_health = 1 + (health_source.system.hd - 1) * options.rate;
-    if (!continuous) die_health = round(die_health);
+    let dieHealth = 1 + (healthSource.system.hd - 1) * options.rate;
+    if (!continuous) dieHealth = round(dieHealth);
 
-    const maxed_health = Math.min(health_source.system.level, maximized) * health_source.system.hd;
-    const level_health = Math.max(0, health_source.system.level - maximized) * die_health;
-    const favor_health = (health_source.system.subType === "base") * health_source.system.fc.hp.value;
-    const health = maxed_health + level_health + favor_health;
+    const maxedHealth = Math.min(healthSource.system.level, maximized) * healthSource.system.hd;
+    const levelHealth = Math.max(0, healthSource.system.level - maximized) * dieHealth;
+    const favorHealth = (healthSource.system.subType === "base") * healthSource.system.fc.hp.value;
+    const health = maxedHealth + levelHealth + favorHealth;
 
-    push_health(health, health_source);
+    pushHealth(health, healthSource);
   };
-  const compute_health = (health_sources, options) => {
+  const computeHealth = (healthSources, options) => {
     // Compute and push health, tracking the remaining maximized levels.
     if (options.auto) {
       let maximized = options.maximized;
-      for (const hd of health_sources) {
-        auto_health(hd, options, maximized);
+      for (const hd of healthSources) {
+        autoHealth(hd, options, maximized);
         maximized = Math.max(0, maximized - hd.system.level);
       }
-    } else health_sources.forEach((race) => manual_health(race));
+    } else healthSources.forEach((race) => manualHealth(race));
   };
 
-  compute_health(racialHD, race_options);
-  compute_health(classes, cls_options);
+  computeHealth(racialHD, raceOptions);
+  computeHealth(classes, classOptions);
 
   // Add class data to saving throws
   const allClasses = [...classes, ...racialHD];

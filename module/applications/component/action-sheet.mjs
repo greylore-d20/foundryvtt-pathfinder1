@@ -58,7 +58,9 @@ export class ItemActionSheet extends FormApplication {
     data.action = this.action;
     data.item = this.item;
     data.actor = this.actor;
-    data.data = foundry.utils.mergeObject(this.action.constructor.defaultData, this.action.data, { inplace: false });
+    data.data = foundry.utils.mergeObject(this.action.constructor.defaultData, deepClone(this.action.data), {
+      inplace: false,
+    });
     data.damageTypes = pf1.registry.damageTypes.toRecord();
     data.rollData = this.object.getRollData();
 

@@ -1286,6 +1286,12 @@ const _migrateActionConditionals = function (action, item) {
         modifier.subTarget = `attack_${reResult[1]}`;
       }
 
+      // Remove excess sheet data that was previously incorretly added
+      delete modifier.targets;
+      delete modifier.subTargets;
+      delete modifier.conditionalModifierTypes;
+      delete modifier.conditionalCritical;
+
       // Convert modifier damage type
       if (modifier.target === "damage" && !modifier.damageType) {
         const damageTypeData = pf1.components.ItemAction.defaultDamageType;

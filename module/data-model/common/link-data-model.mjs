@@ -13,6 +13,7 @@ export class LinkDataModel extends foundry.abstract.DataModel {
       //uuid: new fields.StringField({ required: false }), // Added by !899
       dataType: new fields.StringField({ required: false }), // Removed by !899
       name: new fields.StringField({ required: false }),
+      level: new fields.NumberField({ min: 1, integer: true, required: false }),
       img: new fields.StringField({ required: false }),
     };
   }

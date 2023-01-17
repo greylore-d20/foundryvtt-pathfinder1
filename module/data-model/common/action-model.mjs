@@ -37,7 +37,7 @@ export class ActionModel extends foundry.abstract.DataModel {
       ),
       duration: new fields.SchemaField(
         {
-          value: new FormulaField({ blank: true, nullable: true }),
+          value: new FormulaField(),
           units: new fields.StringField({ blank: true, required: false }),
         },
         { required: false }
@@ -50,20 +50,20 @@ export class ActionModel extends foundry.abstract.DataModel {
       ),
       range: new fields.SchemaField(
         {
-          value: new FormulaField({ required: false }),
+          value: new FormulaField(),
           units: new fields.StringField({ blank: true, initial: "", required: false }),
           maxIncrements: new fields.NumberField({ min: 0, integer: true, initial: 1, required: false }),
-          minValue: new FormulaField({ required: false }),
+          minValue: new FormulaField(),
           minUnits: new fields.StringField({ blank: true, initial: "", required: false }),
         },
         { required: false }
       ),
       uses: new fields.SchemaField({
-        autoDeductChargesCost: new FormulaField({ required: false, nullable: true, blank: true }),
+        autoDeductChargesCost: new FormulaField(),
         self: new fields.SchemaField(
           {
             value: new fields.NumberField({ min: 0, integer: true }),
-            maxFormula: new FormulaField({ required: false }), // Formula
+            maxFormula: new FormulaField(),
             per: new fields.StringField({ required: false }),
           },
           { required: false }
@@ -72,7 +72,7 @@ export class ActionModel extends foundry.abstract.DataModel {
       measureTemplate: new fields.SchemaField(
         {
           type: new fields.StringField({ required: false }),
-          size: new FormulaField({ required: false }), // Formula
+          size: new FormulaField(),
           overrideColor: new fields.BooleanField({ required: false }),
           customColor: new fields.ColorField({ blank: true, required: false }),
           overrideTexture: new fields.BooleanField({ required: false }),

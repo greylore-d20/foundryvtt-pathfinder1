@@ -24,7 +24,7 @@ export class BuffItemModel extends foundry.abstract.DataModel {
         {
           start: new fields.NumberField({ required: false, integer: true }),
           units: new fields.StringField({ required: false, blank: true }),
-          value: new FormulaField({ required: false }),
+          value: new FormulaField(),
         },
         { required: false }
       ),

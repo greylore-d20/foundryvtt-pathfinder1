@@ -1,3 +1,5 @@
+import { IdentifierField } from "@model/fields/_module.mjs";
+
 /**
  * Model for item.system.links contents
  */
@@ -7,10 +9,11 @@ export class LinkDataModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
-      id: new fields.StringField({ blank: false, required: false }),
-      uuid: new fields.StringField({ blank: false, required: false }),
-      name: new fields.StringField({ blank: false, required: false }),
-      img: new fields.StringField({ blank: false, required: false }),
+      id: new IdentifierField({ required: false }),
+      //uuid: new fields.StringField({ required: false }), // Added by !899
+      dataType: new fields.StringField({ required: false }), // Removed by !899
+      name: new fields.StringField({ required: false }),
+      img: new fields.StringField({ required: false }),
     };
   }
 }

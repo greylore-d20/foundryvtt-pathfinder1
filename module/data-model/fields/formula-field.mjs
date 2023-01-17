@@ -8,6 +8,7 @@ export class FormulaField extends foundry.data.fields.StringField {
   static get _defaults() {
     return mergeObject(super._defaults, {
       required: false,
+      nullable: true,
       initial: undefined,
     });
   }

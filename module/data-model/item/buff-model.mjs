@@ -4,6 +4,7 @@ import {
   ChangeFlagsModel,
   TraitModel,
   ScriptCallModel,
+  LinkDataModel,
 } from "@model/common/_module.mjs";
 
 import { FormulaField } from "@model/fields/_module.mjs";
@@ -48,7 +49,7 @@ export class BuffItemModel extends foundry.abstract.DataModel {
       useCustomTag: new fields.BooleanField({ required: false }),
       links: new fields.SchemaField(
         {
-          children: new fields.ArrayField(new fields.ObjectField(), { required: false }),
+          children: new fields.ArrayField(new fields.EmbeddedDataField(LinkDataModel), { required: false }),
         },
         { required: false }
       ),

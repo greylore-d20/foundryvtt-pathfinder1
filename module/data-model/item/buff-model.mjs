@@ -6,6 +6,8 @@ import {
   ScriptCallModel,
 } from "@model/common/_module.mjs";
 
+import { FormulaField } from "@model/fields/_module.mjs";
+
 export class BuffItemModel extends foundry.abstract.DataModel {
   static _enableV10Validation = true; // TODO: Remove with Foundry v11 where this becomes the standard
 
@@ -21,7 +23,7 @@ export class BuffItemModel extends foundry.abstract.DataModel {
         {
           start: new fields.NumberField({ required: false, integer: true }),
           units: new fields.StringField({ required: false, blank: true }),
-          value: new fields.StringField({ required: false, blank: true, nullable: true }),
+          value: new FormulaField({ required: false }),
         },
         { required: false }
       ),

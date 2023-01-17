@@ -1,3 +1,8 @@
+import { FormulaField } from "@model/fields/_module.mjs";
+
+/**
+ * DataModel for Changes
+ */
 export class ChangeModel extends foundry.abstract.DataModel {
   static _enableV10Validation = true; // TODO: Remove with Foundry v11 where this becomes the standard
 
@@ -5,7 +10,7 @@ export class ChangeModel extends foundry.abstract.DataModel {
     const fields = foundry.data.fields;
     return {
       _id: new fields.StringField({ required: true, default: randomID(8) }),
-      formula: new fields.StringField({ blank: true }),
+      formula: new FormulaField(),
       modifier: new fields.StringField({ blank: true }),
       operator: new fields.StringField({ choices: ["add", "set", "script", "+", "="], initial: "add" }),
       priority: new fields.NumberField({ integer: true, initial: 0, required: false }),

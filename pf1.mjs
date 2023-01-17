@@ -128,6 +128,7 @@ Hooks.once("init", function () {
   // Item DataModels
   CONFIG.Item.systemDataModels.buff = dataModels.items.BuffItemModel;
   CONFIG.Item.systemDataModels.loot = dataModels.items.LootItemModel;
+  CONFIG.Item.systemDataModels.race = dataModels.items.RaceItemModel;
 
   CONFIG.Token.documentClass = documents.TokenDocumentPF;
   CONFIG.ActiveEffect.documentClass = documents.ActiveEffectPF;

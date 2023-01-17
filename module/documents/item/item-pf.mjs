@@ -106,6 +106,15 @@ export class ItemPF extends ItemBasePF {
     return this.constructor.isInventoryItem(this.type);
   }
 
+  /**
+   * The item's subtype, or `null` if the item has no subtype
+   *
+   * @type {string|null}
+   */
+  get subType() {
+    return this.system.subType ?? null;
+  }
+
   get firstAction() {
     if (!this.system.actions?.length) return undefined;
     return this.actions.get(this.system.actions[0]._id);

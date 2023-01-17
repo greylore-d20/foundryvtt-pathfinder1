@@ -1,10 +1,6 @@
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemRacePF extends ItemPF {
-  get subType() {
-    return null;
-  }
-
   async _preCreate(data, options, user) {
     const actor = this.parent instanceof Actor ? this.parent : null;
 

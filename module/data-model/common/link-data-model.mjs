@@ -9,7 +9,7 @@ export class LinkDataModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
-      id: new IdentifierField({ required: false }),
+      id: new fields.StringField(),
       //uuid: new fields.StringField({ required: false }), // Added by !899
       dataType: new fields.StringField({ required: false }), // Removed by !899
       name: new fields.StringField({ required: false }),

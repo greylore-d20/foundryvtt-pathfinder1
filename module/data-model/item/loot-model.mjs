@@ -7,7 +7,7 @@ import {
   LinkDataModel,
 } from "@model/common/_module.mjs";
 
-import { IdentifierField } from "@model/fields/_module.mjs";
+import { IdentifierField, FormulaField } from "@model/fields/_module.mjs";
 
 export class LootItemModel extends foundry.abstract.DataModel {
   static _enableV10Validation = true; // TODO: Remove with Foundry v11 where this becomes the standard
@@ -15,8 +15,8 @@ export class LootItemModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
-      subType: new fields.StringField({ required: true }),
-      extraType: new fields.StringField({ required: true }),
+      subType: new IdentifierField({ initial: "tradeGoods" }),
+      extraType: new IdentifierField({ initial: "", blank: true, required: false }),
       description: new fields.SchemaField(
         {
           value: new fields.HTMLField({ required: false }),
@@ -53,6 +53,7 @@ export class LootItemModel extends foundry.abstract.DataModel {
       ),
       // Magic item details
       identified: new fields.BooleanField({ required: false }),
+      identifiedName: new fields.StringField({ blank: true, required: false }),
       cl: new fields.NumberField({ min: 0, integer: true, required: false }),
       aura: new fields.SchemaField(
         {
@@ -63,7 +64,7 @@ export class LootItemModel extends foundry.abstract.DataModel {
       ),
       resizing: new fields.BooleanField({ required: false }),
       // Common bits to most items
-      changes: new fields.ArrayField(new fields.EmbeddedDataField(ChangeModel)),
+      changes: new fields.ArrayField(new fields.EmbeddedDataField(ChangeModel), { required: false }),
       changeFlags: new fields.EmbeddedDataField(ChangeFlagsModel, { required: false }),
       scriptCalls: new fields.ArrayField(new fields.EmbeddedDataField(ScriptCallModel), { required: false }),
       contextNotes: new fields.ArrayField(new fields.EmbeddedDataField(ContextNoteModel), { required: false }),

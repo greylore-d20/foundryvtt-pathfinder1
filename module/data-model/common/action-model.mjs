@@ -15,11 +15,11 @@ export class ActionModel extends foundry.abstract.DataModel {
       name: new fields.StringField({ required: true, blank: false, nullable: false }),
       img: new fields.StringField({ required: false, blank: false, nullable: false }),
       description: new fields.StringField({ blank: true, initial: "", required: false }),
-      tag: new fields.IdentifierField({ strict: true, initial: "", blank: true, required: false }),
+      tag: new IdentifierField({ strict: true, initial: "", blank: true, required: false }),
       activation: new fields.SchemaField(
         {
-          cost: fields.NumberField({ integer: true }),
-          type: fields.StringField({ required: false, blank: true }),
+          cost: new fields.NumberField({ integer: true }),
+          type: new fields.StringField({ required: false, blank: true }),
         },
         { required: false, initial: () => ({ cost: 1 }) }
       ),
@@ -27,8 +27,8 @@ export class ActionModel extends foundry.abstract.DataModel {
         {
           activation: new fields.SchemaField(
             {
-              cost: fields.NumberField({ integer: true }),
-              type: fields.StringField({ required: false, blank: true }),
+              cost: new fields.NumberField({ integer: true }),
+              type: new fields.StringField({ required: false, blank: true }),
             },
             { required: false, initial: () => ({ activation: { cost: 1 } }) }
           ),
@@ -64,7 +64,7 @@ export class ActionModel extends foundry.abstract.DataModel {
           {
             value: new fields.NumberField({ min: 0, integer: true }),
             maxFormula: new FormulaField(),
-            per: new fields.StringField({ required: false }),
+            per: new fields.StringField({ nullable: true, blank: true, required: false }),
           },
           { required: false }
         ),
@@ -86,25 +86,25 @@ export class ActionModel extends foundry.abstract.DataModel {
       critConfirmBonus: new FormulaField(),
       damage: new fields.SchemaField(
         {
-          parts: new fields.ArrayFields(new fields.EmbeddedDataField(DamageModel), { required: false }),
-          critParts: new fields.ArrayFields(new fields.EmbeddedDataField(DamageModel), { required: false }),
-          nonCritParts: new fields.ArrayFields(new fields.EmbeddedDataField(DamageModel), { required: false }),
+          parts: new fields.ArrayField(new fields.EmbeddedDataField(DamageModel), { required: false }),
+          critParts: new fields.ArrayField(new fields.EmbeddedDataField(DamageModel), { required: false }),
+          nonCritParts: new fields.ArrayField(new fields.EmbeddedDataField(DamageModel), { required: false }),
         },
         { required: false }
       ),
-      attackParts: [], // TODO
+      //attackParts: new fields.ArrayField(), // TODO
       formulaicAttacks: new fields.SchemaField(
         {
           count: new fields.SchemaField({ formula: new FormulaField() }),
           bonus: new fields.SchemaField({ formula: new FormulaField() }),
-          label: new fields.StringField({ required: false }),
+          label: new fields.StringField({ blank: true, nullable: true, required: false }),
         },
         { required: false }
       ),
       ability: new fields.SchemaField(
         {
-          attack: new fields.StringField({ required: false }), // Default: "str"
-          damage: new fields.StringField({ required: false }), // Default: "str"
+          attack: new IdentifierField({ blank: true, required: false }), // Default: "str"
+          damage: new IdentifierField({ blank: true, required: false }), // Default: "str"
           damageMult: new fields.NumberField({ positive: true, required: false }), // Default: 1
           critRange: new fields.NumberField({ integer: true, min: 1, max: 20, required: false }), // Default: 20
           critMult: new fields.NumberField({ integer: true, positive: true, min: 1, required: false }), // Default: 2
@@ -115,7 +115,7 @@ export class ActionModel extends foundry.abstract.DataModel {
         {
           dc: new FormulaField(),
           type: new IdentifierField({ strict: true }),
-          description: "",
+          description: new fields.StringField({ required: false }),
         },
         { required: false }
       ),
@@ -147,7 +147,7 @@ export class ActionModel extends foundry.abstract.DataModel {
       usesAmmo: new fields.BooleanField({ required: false }), // Default: false
       spellEffect: new fields.StringField({ required: false }),
       spellArea: new fields.StringField({ required: false }),
-      conditionals: new fields.ArrayFields(new fields.EmbeddedDataField(ConditionalModel), { required: false }),
+      conditionals: new fields.ArrayField(new fields.EmbeddedDataField(ConditionalModel), { required: false }),
       enh: new fields.SchemaField(
         {
           value: new fields.NumberField({ required: false, min: 0, nullable: true }), // Default: undefined

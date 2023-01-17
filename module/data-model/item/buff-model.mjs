@@ -7,7 +7,7 @@ import {
   LinkDataModel,
 } from "@model/common/_module.mjs";
 
-import { FormulaField } from "@model/fields/_module.mjs";
+import { IdentifierField, FormulaField } from "@model/fields/_module.mjs";
 
 export class BuffItemModel extends foundry.abstract.DataModel {
   static _enableV10Validation = true; // TODO: Remove with Foundry v11 where this becomes the standard
@@ -34,7 +34,7 @@ export class BuffItemModel extends foundry.abstract.DataModel {
       contextNotes: new fields.ArrayField(new fields.EmbeddedDataField(ContextNoteModel), { required: false }),
       description: new fields.SchemaField(
         {
-          value: new fields.StringField({ required: false }),
+          value: new fields.HTMLField({ required: false }),
         },
         { required: false }
       ),
@@ -45,8 +45,8 @@ export class BuffItemModel extends foundry.abstract.DataModel {
       languages: new fields.EmbeddedDataField(TraitModel, { required: false }),
       weaponProf: new fields.EmbeddedDataField(TraitModel, { required: false }),
       armorProf: new fields.EmbeddedDataField(TraitModel, { required: false }),
-      tag: new fields.StringField({ required: false, blank: true }),
-      useCustomTag: new fields.BooleanField({ required: false }),
+      tag: new IdentifierField({ required: false, blank: true, nullable: true }),
+      useCustomTag: new fields.BooleanField({ required: false }), // Default: false
       links: new fields.SchemaField(
         {
           children: new fields.ArrayField(new fields.EmbeddedDataField(LinkDataModel), { required: false }),

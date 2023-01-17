@@ -5,10 +5,6 @@ import { TooltipConfig } from "../applications/settings/tooltip.mjs";
 import { TooltipWorldConfig } from "../applications/settings/tooltip_world.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
 
-const debouncedReload = foundry.utils.debounce(() => {
-  window.location.reload();
-}, 100);
-
 export const registerSystemSettings = function () {
   /**
    * Track the system version upon which point a migration was last applied
@@ -385,7 +381,7 @@ export const registerSystemSettings = function () {
     type: Boolean,
   });
 
-  // TOKENS / CONDItIONS
+  // TOKENS / CONDITIONS
 
   /**
    * Display default token conditions alongside system ones
@@ -397,7 +393,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: debouncedReload,
+    requiresReload: true,
   });
 
   /**

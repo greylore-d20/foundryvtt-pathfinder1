@@ -1,3 +1,4 @@
+export { ActionModel } from "./action-model.mjs";
 export { ChangeFlagsModel } from "./change-flags-model.mjs";
 export { ChangeModel } from "./change-model.mjs";
 export { ConditionalModel } from "./conditional.mjs";

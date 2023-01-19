@@ -669,8 +669,9 @@ export const addDefaultChanges = function (changes) {
     let dieHealth = 1 + (healthSource.system.hd - 1) * options.rate;
     if (!continuous) dieHealth = round(dieHealth);
 
-    const maxedHealth = Math.min(healthSource.system.level, maximized) * healthSource.system.hd;
-    const levelHealth = Math.max(0, healthSource.system.level - maximized) * dieHealth;
+    const hitDice = healthSource.hitDice;
+    const maxedHealth = Math.min(hitDice, maximized) * healthSource.system.hd;
+    const levelHealth = Math.max(0, hitDice - maximized) * dieHealth;
     const favorHealth = (healthSource.system.subType === "base") * healthSource.system.fc.hp.value;
     const health = maxedHealth + levelHealth + favorHealth;
 
@@ -682,7 +683,8 @@ export const addDefaultChanges = function (changes) {
       let maximized = options.maximized;
       for (const hd of healthSources) {
         autoHealth(hd, options, maximized);
-        maximized = Math.max(0, maximized - hd.system.level);
+        const hitDice = hd.hitDice;
+        maximized = Math.max(0, maximized - hitDice);
       }
     } else healthSources.forEach((race) => manualHealth(race));
   };

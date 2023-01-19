@@ -8,7 +8,7 @@ const NEED_NEW_VERSION = {
   bestiary: "0.82.0",
   feats: "0.82.0",
   classes: "0.82.6",
-  races: "0.82.0",
+  races: "0.82.6",
   buffs: "0.82.0",
 };
 

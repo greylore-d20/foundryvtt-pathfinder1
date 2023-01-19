@@ -1919,6 +1919,58 @@ export class ActorPF extends ActorBasePF {
     return newItem;
   }
 
+  /**
+   * @param {object} casting Book casting configuration
+   * @param {string} casting.type "prepared", "spontaneous", or "hybrid"
+   * @param {string} casting.progression "high", "med", or "low"
+   * @param {string} casting.ability Spellcasting Ability Score, e.g. "int"
+   * @param {string} casting.spells Spell type: "arcane", "divine", "psychic", or "alchemy"
+   * @param {string} casting.class Class tag
+   * @param {boolean} casting.cantrips Has cantrips?
+   * @param {number} casting.domainSlots Number of domain slots. Default 1
+   */
+  createSpellbook(casting = {}) {
+    const books = this.system.attributes.spells.spellbooks ?? {};
+    const oldBook = casting.class
+      ? Object.entries(books).find(([_, book]) => !!book.class && book.class === casting.class)
+      : null;
+
+    let bookId;
+    if (oldBook) {
+      if (oldBook[1].inUse) return void ui.notifications.warn(game.i18n.localize("PF1.ErrorSpellbookExists"));
+      bookId = oldBook[0]; // Reuse old book
+    } else {
+      const available = Object.entries(books).find(([bookId, bookData]) => bookData.inUse !== true);
+      if (available === undefined) return void ui.notifications.warn(game.i18n.localize("PF1.ErrorNoFreeSpellbooks"));
+      bookId = available[0];
+    }
+
+    // Add defaults when unconfigured
+    casting.type ??= "prepared";
+    casting.class ??= "_hd";
+    casting.progression ??= "high";
+    casting.spells ??= "arcane";
+    casting.ability ??= "int";
+    casting.cantrips ??= true;
+    casting.domainSlots ??= 1;
+
+    const updateData = {
+      [`system.attributes.spells.spellbooks.${bookId}`]: {
+        inUse: true,
+        class: casting.class,
+        spellPreparationMode: casting.type,
+        casterType: casting.progression,
+        ability: casting.ability,
+        psychic: casting.spells === "psychic",
+        arcaneSpellFailure: casting.spells === "arcane",
+        hasCantrips: casting.cantrips,
+        domainSlotValue: casting.domainSlots,
+      },
+    };
+
+    return this.update(updateData);
+  }
+
   /* -------------------------------------------- */
 
   getSkillInfo(skillId) {

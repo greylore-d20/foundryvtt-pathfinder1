@@ -137,6 +137,68 @@
       </div>
       {{/each}}
 
+      {{! Spellcasting Configuration }}
+      <h4 class="form-header">{{localize "PF1.SpellCasting"}}</h4>
+
+      <div class="form-group spellcasting-type">
+        <label>{{localize "PF1.Type"}}</label>
+        <div class="form-fields">
+          <select name="system.casting.type">
+            <option value="">{{localize "PF1.None"}}</option>
+            {{selectOptions casting.types selected=system.casting.type localize=true}}
+          </select>
+        </div>
+      </div>
+
+      {{#if system.casting.type}}
+      <div class="form-group spellcasting-progression">
+        <label>{{localize "PF1.Spellcasting.Progression.Label"}}</label>
+        <div class="form-fields">
+          <select name="system.casting.progression">
+            <option value="">{{localize "PF1.None"}}</option>
+            {{selectOptions casting.progression selected=system.casting.progression localize=true}}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group spellcasting-ability">
+        <label>{{localize "PF1.SpellcastingAbility"}}</label>
+        <div class="form-fields">
+          <select name="system.casting.ability">
+            <option value="">{{localize "PF1.None"}}</option>
+            {{selectOptions config.abilities selected=system.casting.ability}}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group spellcasting-spells">
+        <label>{{localize "PF1.Spellcasting.Type.Label"}}</label>
+        <div class="form-fields">
+          <select name="system.casting.spells">
+            <option value="">{{localize "PF1.None"}}</option>
+            {{selectOptions casting.spells selected=system.casting.spells localize=true}}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group spellcasting-cantrips">
+        <label class="checkbox">
+          <input type="checkbox" name="system.casting.cantrips" data-dtype="Boolean" {{checked system.casting.cantrips}}>
+          {{localize "PF1.HasCantrips"}}
+        </label>
+      </div>
+
+      {{#unless hasSpellbook}}
+      <div class="form-group create-spellbook">
+        <button name="create-spellbook" type="button">
+          <i class="fa-solid fa-book"></i>
+          {{localize "PF1.CreateSpellbook"}}
+        </button>
+      </div>
+      {{/unless}}
+      {{/if}}
+
+      {{! Advanced }}
       <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
 
       <div class="form-group">

@@ -1536,6 +1536,20 @@ export const PF1 = {
     ranger: "low",
   },
 
+  spellcasting: {
+    type: {
+      spontaneous: "PF1.SpellPrepSpontaneous",
+      prepared: "PF1.SpellPrepPrepared",
+      hybrid: "PF1.Arcanist",
+    },
+    spells: {
+      arcane: "PF1.Spellcasting.Type.Arcane",
+      divine: "PF1.Spellcasting.Type.Divine",
+      psychic: "PF1.Spellcasting.Type.Psychic",
+      alchemy: "PF1.Spellcasting.Type.Alchemy",
+    },
+  },
+
   magicAuraByLevel: {
     spell: [
       { power: "faint", level: 1 },

@@ -139,6 +139,26 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    // Add spellcasting configuration
+    if (this.item.type === "class") {
+      data.casting = {
+        types: CONFIG.PF1.spellcasting.type,
+        spells: CONFIG.PF1.spellcasting.spells,
+        progression: {
+          high: "PF1.High",
+          med: "PF1.Medium",
+          low: "PF1.Low",
+        },
+      };
+
+      if (!this.item.parent) data.hasSpellbook = true; // Not true, but avoids unwanted behaviour.
+      else {
+        data.hasSpellbook = Object.values(rollData.spells ?? {}).find(
+          (book) => !!book.class && book.class === this.item.system.tag && book.inUse
+        );
+      }
+    }
+
     // Add descriptions
     data.descriptionHTML = {
       identified: await TextEditor.enrichHTML(data.system.description.value, {
@@ -866,6 +886,11 @@ export class ItemSheetPF extends ItemSheet {
     // Create attack
     if (["weapon"].includes(this.item.type)) {
       html.find("button[name='create-attack']").click(this._createAttack.bind(this));
+    }
+
+    // Create spellbook
+    if (this.item.type === "class") {
+      html.find("button[name='create-spellbook']").click(this._createSpellbook.bind(this));
     }
 
     // Listen to field entries
@@ -1680,6 +1705,17 @@ export class ItemSheetPF extends ItemSheet {
     await this._onSubmit(event);
 
     await this.item.actor.createAttackFromWeapon(this.item);
+  }
+
+  async _createSpellbook(event) {
+    event.preventDefault();
+    if (this.item.actor == null) throw new Error(game.i18n.localize("PF1.ErrorItemNoOwner"));
+    await this._onSubmit(event);
+
+    await this.item.actor.createSpellbook({ ...this.item.system.casting, class: this.item.system.tag });
+
+    // HACK: The above does not re-render the item sheet for some reason
+    this.render();
   }
 
   _onEntrySelector(event) {

@@ -13,6 +13,34 @@ export class ItemClassPF extends ItemPF {
     }
   }
 
+  _onCreate(data, options, userId) {
+    if (userId !== game.user.id) return;
+    const actor = this.parent;
+    if (!actor) return;
+
+    // Create spellbook if the class has spellcasting defined
+    if (!this.system.casting?.type) return;
+    const bookData = { ...this.system.casting, class: this.system.tag };
+    actor.createSpellbook(bookData);
+  }
+
+  _onDelete(options, userId) {
+    if (userId !== game.user.id) return;
+    const actor = this.parent;
+    if (!actor) return;
+
+    // Disable book associated with this class, if it has spellcasting defined
+    const tag = this.system.tag;
+    if (!tag || !this.system.casting?.type) return;
+    const books = actor.system.attributes.spells.spellbooks ?? {};
+    const usedBook = Object.entries(books).find(([bookId, book]) => !!book.class && book.class === tag);
+    if (usedBook === undefined) return;
+    const [bookId, book] = usedBook;
+    if (book.inUse) {
+      actor.update({ [`system.attributes.spells.spellbooks.${bookId}.inUse`]: false });
+    }
+  }
+
   async update(data, context = {}) {
     await super.update(data, context);
 
@@ -121,6 +149,15 @@ export class ItemClassPF extends ItemPF {
     // Can't prepare here as the actor uses this info before item preparation is done.
     itemData.hitDice = undefined;
     itemData.mythicTier = undefined;
+
+    // Soft fill default casting details when missing
+    if (itemData.casting?.type) {
+      itemData.casting.progression ??= "high";
+      itemData.casting.ability ??= "int";
+      itemData.casting.spells ??= "arcane";
+      itemData.casting.domainSlots ??= 1;
+      itemData.casting.cantrips ??= true;
+    }
   }
 
   prepareDerivedData() {

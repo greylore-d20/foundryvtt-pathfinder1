@@ -125,7 +125,7 @@
     "changes": [
       {
         "_id": "ipjt76kz",
-        "formula": "(@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) * min(4, max(0, floor((@classes.brawler.level - 1) / 4)))",
+        "formula": "(@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) * clamped(floor((@classes.brawler.level - 1) / 4), 0, 4)",
         "operator": "add",
         "subTarget": "ac",
         "modifier": "dodge",
@@ -135,7 +135,7 @@
       },
       {
         "_id": "tvl84rm2",
-        "formula": "(@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) * min(4, max(0, floor((@classes.brawler.level - 1) / 4)))",
+        "formula": "(@armor.type < 2 && @attributes.encumbrance.level < 1 ? 1 : 0) * clamped(floor((@classes.brawler.level - 1) / 4), 0, 4)",
         "operator": "add",
         "subTarget": "cmd",
         "modifier": "dodge",

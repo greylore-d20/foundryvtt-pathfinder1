@@ -9,7 +9,7 @@ const NEED_NEW_VERSION = {
   feats: "0.82.6",
   classes: "0.82.6",
   races: "0.82.6",
-  buffs: "0.82.0",
+  buffs: "0.82.6",
 };
 
 export const COMPENDIUM_TYPES = {

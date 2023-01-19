@@ -16,7 +16,7 @@
     "changes": [
       {
         "_id": "pv0gclyb",
-        "formula": "- max(0, min(4, floor((@classes.fighter.level + 1) / 4)))",
+        "formula": "-clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)",
         "operator": "add",
         "subTarget": "acpA",
         "modifier": "untyped",
@@ -26,7 +26,7 @@
       },
       {
         "_id": "e0zzcqzk",
-        "formula": "max(0, min(4, floor((@classes.fighter.level + 1) / 4)))",
+        "formula": "clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)",
         "operator": "add",
         "subTarget": "mDexA",
         "modifier": "untyped",

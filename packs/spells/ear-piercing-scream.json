@@ -64,7 +64,7 @@
         "damage": {
           "parts": [
             [
-              "(min(5, (max(1,floor(@cl/2)))))d6",
+              "clamped(floor(@cl / 2), 1, 5)d6",
               {
                 "values": ["sonic"],
                 "custom": ""

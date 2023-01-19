@@ -13,7 +13,7 @@
     "changes": [
       {
         "_id": "zjfo24qt",
-        "formula": "min(5, 2 + max(0, floor((@item.level - 3) / 3)))",
+        "formula": "clamped(2 + floor((@item.level - 3) / 3), 2, 5)",
         "operator": "add",
         "subTarget": "nac",
         "modifier": "enh",

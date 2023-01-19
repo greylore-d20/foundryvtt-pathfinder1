@@ -1206,6 +1206,14 @@ const _migrateItemActions = function (item, updateData, actor = null) {
       }
     }
   }
+
+  // Fix power attack multiplier being non-number
+  const paMult = actionData.powerAttack?.multiplier;
+  if (typeof paMult === "string") {
+    if (paMult === "") delete actionData.powerAttack.multiplier;
+    else actionData.powerAttack.multiplier = parseInt(paMult);
+  }
+
   // Clean out old attack and effect notes
   updateData["system.attackNotes"] = [];
   updateData["system.effectNotes"] = [];

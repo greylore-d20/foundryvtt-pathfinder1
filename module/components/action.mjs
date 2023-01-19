@@ -387,7 +387,7 @@ export class ItemAction {
       attackNotes: [],
       soundEffect: "",
       powerAttack: {
-        multiplier: "",
+        multiplier: null,
         damageBonus: 2,
         critMultiplier: 1,
       },

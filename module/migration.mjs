@@ -334,6 +334,20 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
 };
 
 /**
+ * Older actors incorrectly has .range.value as number instead of string
+ *
+ * @param action
+ * @param item
+ */
+const _migrateActionRange = (action, item) => {
+  if (action.range?.value !== undefined) {
+    if (typeof action.range.value !== "string") {
+      action.range.value = String(action.range.value);
+    }
+  }
+};
+
+/**
  * Migrates a single action within an item.
  *
  * @param {object} action - The action's data, which also serves as the update data to pass on.
@@ -343,6 +357,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
 export const migrateItemActionData = function (action, item) {
   action = foundry.utils.mergeObject(pf1.components.ItemAction.defaultData, action);
 
+  _migrateActionRange(action, item);
   _migrateActionDamageType(action, item);
   _migrateActionConditionals(action, item);
   _migrateActionEnhOverride(action, item);

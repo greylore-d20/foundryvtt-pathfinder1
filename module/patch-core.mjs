@@ -101,8 +101,9 @@ OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<
 // Document link attribute stuffing
 {
   const origFunc = TextEditor._createContentLink;
-  TextEditor._createContentLink = function (match, type, target, name) {
-    const a = origFunc.call(this, match, type, target, name);
+  TextEditor._createContentLink = function (match, { async = false, relativeTo } = {}) {
+    const [type, target, hash, name] = match.slice(1, 5);
+    const a = origFunc.call(this, match, { async, relativeTo });
     if (name?.indexOf("::") > -1) {
       const args = name.split("::"),
         label = args.pop();

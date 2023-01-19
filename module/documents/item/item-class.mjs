@@ -227,6 +227,7 @@ export class ItemClassPF extends ItemPF {
       const isBaseClass = (classData.subType || "base") === "base";
       if (!this.actor.classes) return;
       actor.classes[tag] = {
+        _id: this.id,
         level: classData.level,
         name: this.name,
         hd: classData.hd,

@@ -556,8 +556,9 @@ export class ActorPF extends ActorBasePF {
     if (book.class) {
       if (book.class === "_hd") book.label = "PF1.SpellBookSpelllike";
       else {
-        const bookClass = this.items.find((o) => o.type === "class" && o.system.tag === book.class);
-        if (bookClass != null) book.label = bookClass.name;
+        const bookClassId = this.classes[book.class]?._id;
+        const bookClass = this.items.get(bookClassId);
+        if (bookClass) book.label = bookClass.name;
       }
     }
 

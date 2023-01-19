@@ -2177,8 +2177,8 @@ export class ItemPF extends ItemBasePF {
       ["rwak", "rsak", "rcman"].includes(actionData.actionType) || this.system.weaponSubtype === "ranged";
     const isManeuver = ["mcman", "rcman"].includes(actionData.actionType);
 
-    const describePart = (value, name, sort = 0) => {
-      sources.push({ value, name, sort });
+    const describePart = (value, label, sort = 0) => {
+      sources.push({ value, label, sort });
     };
 
     // BAB is last for some reason, array is reversed to try make it the first.

@@ -620,16 +620,16 @@ export const addDefaultChanges = function (changes) {
   changes.push(...tempChanges.filter((c) => c instanceof pf1.components.ItemChange));
 
   // Class hit points
-  const classes = this.items
-    .filter((o) => o.type === "class" && !["racial"].includes(o.subType))
-    .sort((a, b) => {
-      return a.sort - b.sort;
-    });
-  const racialHD = this.items
-    .filter((o) => o.type === "class" && o.subType === "racial")
-    .sort((a, b) => {
-      return a.sort - b.sort;
-    });
+  const allClasses = this.items.filter((item) => item.type === "class").sort((a, b) => a.sort - b.sort);
+  // Categorize classes
+  const [classes, racialHD] = allClasses.reduce(
+    (all, cls) => {
+      if (cls.subType === "racial") all[1].push(cls);
+      else all[0].push(cls);
+      return all;
+    },
+    [[], []]
+  );
 
   const healthConfig = game.settings.get("pf1", "healthConfig");
   const classOptions = this.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
@@ -691,7 +691,6 @@ export const addDefaultChanges = function (changes) {
   computeHealth(classes, classOptions);
 
   // Add class data to saving throws
-  const allClasses = [...classes, ...racialHD];
   const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses") === true;
   for (const a of Object.keys(actorData.attributes.savingThrows)) {
     let hasGoodSave = false;

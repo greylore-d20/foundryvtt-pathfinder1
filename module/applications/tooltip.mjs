@@ -94,17 +94,25 @@ export class TooltipPF extends Application {
     data.name = token.name;
     if (
       (game.user.isGM && this.forceHideGMInfo) ||
-      (!game.user.isGM && !token.actor.testUserPermission(game.user, "OBSERVER"))
+      (!game.user.isGM &&
+        !token.actor.testUserPermission(
+          game.user,
+          this.worldConfig.minimumPermission ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED
+        ))
     ) {
-      const tooltipName = getProperty(token.actor, "system.details.tooltip.name");
-      data.name = tooltipName || token.name;
-
-      if (
-        !tooltipName ||
-        getProperty(token.actor, "system.details.tooltip.hideName") === true ||
-        token.document.disposition < this.worldConfig.hideActorNameByDisposition
-      ) {
+      const tooltipName = token.actor.system.details?.tooltip?.name || "";
+      const hideName = token.actor.system.details?.tooltip?.hideName === true;
+      // Hide name if explicitly set to hide or disposition does not match
+      if (hideName || token.document.disposition <= this.worldConfig.hideActorNameByDisposition) {
         data.name = this.worldConfig.hideActorNameReplacement || "???";
+      }
+      // Otherwise display custom name if configured
+      else if (tooltipName) {
+        data.name = tooltipName;
+      }
+      // Otherwise display token name as normal
+      else {
+        data.name = token.name;
       }
     }
 

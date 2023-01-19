@@ -13,6 +13,13 @@ export class TooltipWorldConfig extends FormApplication {
     settings = mergeObject(this.constructor.defaultSettings, settings);
     result.data = settings;
 
+    result.permissions = {
+      [CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE]: "OWNERSHIP.NONE",
+      [CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED]: "OWNERSHIP.LIMITED",
+      [CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER]: "OWNERSHIP.OBSERVER",
+      [CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER]: "OWNERSHIP.OWNER",
+    };
+
     return result;
   }
 
@@ -38,6 +45,7 @@ export class TooltipWorldConfig extends FormApplication {
       hideConditions: false,
       hideClothing: true,
       hideActorNameByDisposition: 0,
+      minimumPermission: CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED,
       hideActorNameReplacement: "???",
     };
   }

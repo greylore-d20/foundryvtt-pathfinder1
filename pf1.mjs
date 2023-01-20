@@ -128,6 +128,7 @@ Hooks.once("init", function () {
   // Item DataModels
   CONFIG.Item.systemDataModels.buff = dataModels.items.BuffItemModel;
   CONFIG.Item.systemDataModels.class = dataModels.items.ClassItemModel;
+  CONFIG.Item.systemDataModels.consumable = dataModels.items.ConsumableItemModel;
   CONFIG.Item.systemDataModels.loot = dataModels.items.LootItemModel;
   CONFIG.Item.systemDataModels.race = dataModels.items.RaceItemModel;
 

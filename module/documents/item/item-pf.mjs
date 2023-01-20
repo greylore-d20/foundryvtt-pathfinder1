@@ -1977,8 +1977,8 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async addItemBooleanFlag(flagName, context = {}) {
-    flagName = String(flagName);
-    const flags = getProperty(this, "system.flags.boolean") ?? {};
+    flagName = String(flagName).slugify({ strict: true });
+    const flags = this.system.flags?.boolean ?? {};
 
     if (Array.isArray(flags)) throw new Error(`${this.name} [${this.id}] requires migration.`);
 
@@ -2036,8 +2036,8 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async setItemDictionaryFlag(flagName, value, context = {}) {
-    flagName = String(flagName);
-    const flags = duplicate(getProperty(this, "system.flags.dictionary") ?? {});
+    flagName = String(flagName).slugify({ strict: true });
+    const flags = this.system.flags?.dictionary ?? {};
 
     if (flags[flagName] !== value) {
       await this.update({ [`system.flags.dictionary.${flagName}`]: value }, context);

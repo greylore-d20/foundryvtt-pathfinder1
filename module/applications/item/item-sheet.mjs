@@ -1167,28 +1167,12 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onTextAreaDrop(event) {
     event.preventDefault();
-    const data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
-    if (!data) return;
+
+    const eventData = TextEditor.getDragEventData(event.originalEvent);
+    if (!eventData) return;
 
     const elem = event.currentTarget;
-    let link;
-
-    // Case 1 - Document from Compendium Pack
-    if (data.pack) {
-      const pack = game.packs.get(data.pack);
-      if (!pack) return;
-      const doc = await pack.getDocument(data.id);
-      link = `@Compendium[${data.pack}.${data.id}]{${doc.name}}`;
-    }
-
-    // Case 2 - Document from World
-    else {
-      const config = CONFIG[data.type];
-      if (!config) return false;
-      const doc = config.collection.instance.get(data.id);
-      if (!doc) return false;
-      link = `@${data.type}[${doc._id}]{${doc.name}}`;
-    }
+    const link = await TextEditor.getContentLink(eventData);
 
     // Insert link
     if (link) {

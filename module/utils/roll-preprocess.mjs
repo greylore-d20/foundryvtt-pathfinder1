@@ -5,7 +5,7 @@
  * @param {number} origSides - The original number of sides per die to roll.
  * @param {string|number} [targetSize="M"] - The target size to change the die to.
  *   Can be a string of values "F", "D", "T", "S", "M", "L", "H", "G" or "C" for the different sizes.
- *   Can also be a number in the range of -4 to 4, where 0 is Medium.
+ *   Can also be a number in the range of 0 to 8, where 4 is Medium.
  * @param {string|number} [initialSize="M"] - The initial size of the creature. See targetSize above.
  * @returns {number} The result of the new roll.
  */

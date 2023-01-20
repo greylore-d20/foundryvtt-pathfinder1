@@ -422,11 +422,21 @@ export const mergeObjectExt = function (
   return original;
 };
 
+/**
+ * Sort an array using a language-aware comparison function that can sort by a property key.
+ * If no property key is provided, the array is sorted directly.
+ *
+ * @template T
+ * @param {T[]} arr The array to sort
+ * @param {string} [propertyKey=""] The property key to sort by, if any; can be a dot-separated path
+ * @returns {T[]} The sorted array
+ */
 export const naturalSort = function (arr, propertyKey = "") {
+  const collator = new Intl.Collator(game.settings.get("core", "language"), { numeric: true });
   return arr.sort((a, b) => {
-    const propA = propertyKey ? getProperty(a, propertyKey) : a;
-    const propB = propertyKey ? getProperty(b, propertyKey) : b;
-    return new Intl.Collator(game.settings.get("core", "language"), { numeric: true }).compare(propA, propB);
+    const propA = propertyKey ? (propertyKey in a ? a[propertyKey] : getProperty(a, propertyKey)) : a;
+    const propB = propertyKey ? (propertyKey in b ? b[propertyKey] : getProperty(b, propertyKey)) : b;
+    return collator.compare(propA, propB);
   });
 };
 

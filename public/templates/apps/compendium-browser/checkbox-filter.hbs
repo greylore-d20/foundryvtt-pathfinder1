@@ -1,0 +1,8 @@
+{{#each filter.choices as |choice i|}}
+  <div class="checkbox">
+    <input type="checkbox" name="filter.{{../id}}.choice.{{choice.key}}" {{checked choice.active}} />
+    <label type="checkbox">
+      {{choice.label}}
+    </label>
+  </div>
+{{/each}}

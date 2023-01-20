@@ -51,6 +51,11 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/apps/item-action/template.hbs",
     "systems/pf1/templates/apps/item-action/conditionals.hbs",
 
+    // Compendium browser partials
+    "systems/pf1/templates/apps/compendium-browser/entries.hbs",
+    "systems/pf1/templates/apps/compendium-browser/checkbox-filter.hbs",
+    "systems/pf1/templates/apps/compendium-browser/minmax-filter.hbs",
+
     // Chat
     "systems/pf1/templates/chat/roll-ext.hbs",
     "systems/pf1/templates/chat/defenses.hbs",
@@ -66,7 +71,6 @@ export const preloadHandlebarsTemplates = async function () {
     "systems/pf1/templates/internal/consumable-description.hbs",
     "systems/pf1/templates/internal/damage-tooltip.hbs",
     "systems/pf1/templates/internal/token-config_vision.hbs",
-    "systems/pf1/templates/internal/compendium-browser_entry.hbs",
     "systems/pf1/templates/internal/damage-type-visual.hbs",
 
     // Tooltip

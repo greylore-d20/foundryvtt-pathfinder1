@@ -64,7 +64,6 @@ import { ItemSheetPF_Container } from "./module/applications/item/container-shee
 
 import { getChangeFlat, getSourceInfo } from "./module/documents/actor/utils/apply-changes.mjs";
 import { CompendiumDirectoryPF } from "./module/compendium-directory.mjs";
-import { CompendiumBrowser, initializeCompendiumBrowsers } from "./module/applications/compendium-browser.mjs";
 import "./module/patch-core.mjs";
 import { DicePF } from "./module/dice/dice.mjs";
 import { RollPF } from "./module/dice/roll.mjs";
@@ -225,7 +224,6 @@ Hooks.once("init", function () {
       ActorTraitSelector,
       SensesSelector,
       CompendiumDirectoryPF,
-      CompendiumBrowser,
       EntrySelector,
       LevelUpForm,
       PointBuyCalculator,
@@ -662,7 +660,7 @@ Hooks.once("ready", async function () {
   await migrateSystemSettings();
 
   // Populate `pf1.applications.compendiums`
-  initializeCompendiumBrowsers();
+  pf1.applications.compendiumBrowser.CompendiumBrowser.initializeBrowsers();
 
   // Show changelog
   if (!game.settings.get("pf1", "dontShowChangelog")) {

@@ -493,5 +493,6 @@ module.exports = {
     DetectionModeTremor: "readonly",
     GlowOverlayFilter: "readonly",
     OutlineOverlayFilter: "readonly",
+    SearchFilter: "readonly",
   },
 };

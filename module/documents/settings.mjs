@@ -576,73 +576,12 @@ export const registerSystemSettings = function () {
   });
 };
 
-export const registerClientSettings = function () {
-  /**
-   * Compendium filters
-   */
-  game.settings.register("pf1", "compendiumFilters", {
-    name: "Compendium Filters",
-    hint: "Stores compendium filters",
-    scope: "client",
-    config: false,
-    default: {},
-    type: Object,
-  });
-
-  /**
-   * Compendium items
-   */
-  game.settings.register("pf1", "compendiumItems", {
-    name: "Compendium Items",
-    hint: "Cache compendium entries",
-    scope: "client",
-    config: false,
-    default: {},
-    type: Object,
-  });
-
-  /**
-   * Compendium save versions
-   */
-  game.settings.register("pf1", "compendiumSaveVersions", {
-    name: "Compendium Save Versions",
-    hint: "Versions of compendium caches",
-    scope: "client",
-    config: false,
-    default: {
-      spells: "0.75.6",
-      items: "0.75.6",
-      bestiary: "0.75.6",
-      feats: "0.75.6",
-      classes: "0.75.6",
-      races: "0.75.6",
-    },
-    type: Object,
-  });
-
-  /*
-   * Compendium difference data
-   */
-  game.settings.register("pf1", "compendiumForceRefresh", {
-    name: "Compendium Force Refresh Data",
-    hint: "Data needed to determine whether to force refresh compendiums",
-    scope: "client",
-    config: false,
-    default: {
-      diff: {
-        items: [],
-        spells: [],
-        classes: [],
-        races: [],
-        feats: [],
-        bestiary: [],
-      },
-    },
-    type: Object,
-  });
-};
+export const registerClientSettings = function () {};
 
 export const migrateSystemSettings = async function () {
+  // Delete now unused compendium browser cache
+  game.settings.storage.get("client").removeItem("pf1.compendiumItems");
+
   if (!game.user.isGM) return;
 
   // Currently empty, since the last option was removed (2022-06-06)

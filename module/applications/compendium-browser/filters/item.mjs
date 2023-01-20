@@ -1,0 +1,117 @@
+import { BaseFilter } from "./base.mjs";
+import { MinMaxFilter } from "./minmax.mjs";
+
+export class ItemTypeFilter extends BaseFilter {
+  static label = "PF1.Type";
+  static indexField = "type";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    this.choices = new foundry.utils.Collection(
+      [
+        { key: "weapon", label: game.i18n.localize("PF1.ItemTypeWeapon") },
+        { key: "equipment", label: game.i18n.localize("PF1.ItemTypeEquipment") },
+        { key: "consumable", label: game.i18n.localize("PF1.ItemTypeConsumable") },
+        { key: "loot", label: game.i18n.localize("PF1.Misc") },
+      ].map((choice) => [choice.key, choice])
+    );
+  }
+}
+
+export class WeaponTypeFilter extends BaseFilter {
+  static label = "PF1.WeaponType";
+  static indexField = "system.subType";
+  static type = "weapon";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    this.choices = this.constructor.getChoicesFromConfig(CONFIG.PF1.weaponTypes);
+  }
+}
+
+export class WeaponSubtypeFilter extends BaseFilter {
+  static label = "PF1.WeaponSubtype";
+  static indexField = "system.weaponSubtype";
+  static type = "weapon";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    this.choices = this.constructor.getChoicesFromConfig(CONFIG.PF1.weaponTypes, { innerSet: true });
+  }
+}
+
+export class WeaponPropertyFilter extends BaseFilter {
+  static label = "PF1.WeaponProperties";
+  static indexField = "system.properties";
+  static type = "weapon";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    this.choices = this.constructor.getChoicesFromConfig(CONFIG.PF1.weaponProperties);
+  }
+}
+
+export class WeaponGroupFilter extends BaseFilter {
+  static label = "PF1.WeaponGroups";
+  static indexField = "system.weaponGroups.value";
+  static type = "weapon";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    this.choices = this.constructor.getChoicesFromConfig(CONFIG.PF1.weaponGroups);
+  }
+}
+
+export class EquipmentSubtypeFilter extends BaseFilter {
+  static label = "PF1.EquipmentSubtype";
+  static indexField = "system.equipmentSubtype";
+  static type = "equipment";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    this.choices = this.constructor.getChoicesFromConfig(CONFIG.PF1.equipmentTypes, { innerSet: true });
+  }
+}
+
+export class ItemSlotFilter extends BaseFilter {
+  static label = "PF1.Slot";
+  static indexField = "system.slot";
+  static type = "equipment";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    this.choices = this.constructor.getChoicesFromConfig(CONFIG.PF1.equipmentSlots, { innerSet: true });
+  }
+}
+
+export class ConsumableTypeFilter extends BaseFilter {
+  static label = "PF1.ConsumableType";
+  static indexField = "system.subType";
+  static type = "consumable";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    this.choices = this.constructor.getChoicesFromConfig(CONFIG.PF1.consumableTypes);
+  }
+}
+
+export class MiscItemTypeFilter extends BaseFilter {
+  static label = "PF1.Misc";
+  static indexField = "system.subType";
+  static type = "loot";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    this.choices = this.constructor.getChoicesFromConfig(CONFIG.PF1.lootTypes);
+  }
+}
+
+export class ItemPriceFilter extends MinMaxFilter {
+  static label = "PF1.Price";
+  static indexField = "system.price";
+}
+
+export class ItemCasterLevelFilter extends MinMaxFilter {
+  static label = "PF1.CasterLevel";
+  static indexField = "system.cl";
+}

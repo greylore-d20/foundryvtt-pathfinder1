@@ -1,5 +1,3 @@
-import { CompendiumBrowser } from "./applications/compendium-browser.mjs";
-
 export class CompendiumDirectoryPF extends CompendiumDirectory {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -40,6 +38,6 @@ export class CompendiumDirectoryPF extends CompendiumDirectory {
       return void ui.notifications.warn(game.i18n.localize("PF1.Migration.Ongoing"));
     }
 
-    pf1.applications.compendiums[type]._render(true);
+    pf1.applications.compendiums[type]._render(true, { focus: true });
   }
 }

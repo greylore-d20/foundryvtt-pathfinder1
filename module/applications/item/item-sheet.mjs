@@ -1199,34 +1199,22 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onScriptCallDrop(event) {
     event.preventDefault();
-    const data = JSON.parse(event.originalEvent.dataTransfer.getData("text/plain"));
-    if (!data) return;
 
-    const elem = event.currentTarget;
-    const category = elem.dataset.category;
+    const eventData = TextEditor.getDragEventData(event.originalEvent);
+    if (!eventData) return;
 
-    if (data.type === "Macro") {
-      let uuid;
-      // Get from compendium
-      if (data.pack) {
-        const pack = game.packs.get(data.pack);
-        const document = await pack.getDocument(data.id);
-        uuid = document.uuid;
-      }
-      // Get from world
-      else if (data.id) {
-        const document = game.macros.get(data.id);
-        uuid = document.uuid;
-      }
+    const { uuid, type } = eventData;
+    if (type !== "Macro") return;
 
-      // Submit data
-      if (uuid) {
-        const list = this.document.system.scriptCalls ?? [];
-        await this._onSubmit(event);
-        return pf1.components.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
-          parent: this.item,
-        });
-      }
+    // Submit data
+    if (uuid) {
+      const elem = event.currentTarget;
+      const category = elem.dataset.category;
+      const list = this.document.system.scriptCalls ?? [];
+      await this._onSubmit(event);
+      return pf1.components.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
+        parent: this.item,
+      });
     }
   }
 

@@ -93,55 +93,57 @@ export class ItemSheetPF extends ItemSheet {
    * Start with the base item data and extending with additional properties for rendering.
    */
   async getData() {
-    const data = await super.getData();
-    data.system = data.item.system;
-    data.flags = { flags: data.flags };
-    const rollData = this.item.getRollData();
-    data.labels = this.item.getLabels();
+    const context = await super.getData();
+    context.flags = { flags: context.flags };
+
+    /** @type {ItemPF} */
+    const item = this.item,
+      itemData = item.system;
+    context.system = itemData;
+
+    const actor = item.actor,
+      actorData = actor?.system;
+
+    const rollData = item.getRollData();
+    context.labels = item.getLabels();
 
     // Include sub-items
-    data.items = [];
-    if (this.item.items != null) {
-      data.items = this.item.items.map((i) => {
-        return i.toObject();
-      });
-    }
+    context.items = item.items?.map((i) => i.toObject()) ?? [];
 
     // Include CONFIG values
-    data.config = CONFIG.PF1;
+    context.config = CONFIG.PF1;
 
     // Item Type, Status, and Details
-    data.itemType = this._getItemType(data.item);
-    data.itemStatus = this._getItemStatus(data.item);
-    data.itemProperties = this._getItemProperties();
-    data.itemName = data.item.name;
-    data.isCharged = ["day", "week", "charges"].includes(data.system.uses?.per);
-    data.defaultChargeFormula = this.item.getDefaultChargeFormula();
-    data.isPhysical = data.system.quantity !== undefined;
-    data.isNaturalAttack = data.system.subType === "natural";
-    data.isSpell = this.item.type === "spell";
-    data.owned = this.item.actor != null;
-    data.parentOwned = this.actor != null;
-    data.owner = this.item.isOwner;
-    data.isGM = game.user.isGM;
-    data.hasAction = this.item.hasAction;
-    data.showIdentifyDescription = data.isGM && data.isPhysical;
-    data.showUnidentifiedData = this.item.showUnidentifiedData;
-    data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
+    context.itemType = this._getItemType(item);
+    context.itemStatus = this._getItemStatus(item);
+    context.itemProperties = this._getItemProperties();
+    context.itemName = item.name;
+    context.isCharged = ["day", "week", "charges"].includes(itemData.uses?.per);
+    context.defaultChargeFormula = item.getDefaultChargeFormula();
+    context.isPhysical = itemData.quantity !== undefined;
+    context.isNaturalAttack = itemData.subType === "natural";
+    context.isSpell = item.type === "spell";
+    context.owned = !!actor;
+    context.owner = item.isOwner;
+    context.isGM = game.user.isGM;
+    context.hasAction = item.hasAction;
+    context.showIdentifyDescription = context.isGM && context.isPhysical;
+    context.showUnidentifiedData = item.showUnidentifiedData;
+    context.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
     if (rollData.item.auraStrength != null) {
       const auraStrength = rollData.item.auraStrength;
-      data.auraStrength = auraStrength;
+      context.auraStrength = auraStrength;
 
-      if (CONFIG.PF1.auraStrengths[auraStrength] != null) {
-        data.auraStrength_name = CONFIG.PF1.auraStrengths[auraStrength];
+      if (CONFIG.PF1.auraStrengths[auraStrength]) {
+        context.auraStrength_name = CONFIG.PF1.auraStrengths[auraStrength];
 
-        data.labels.identify = game.i18n.format("PF1.IdentifyDCNumber", { dc: 15 + rollData.item.cl });
+        context.labels.identify = game.i18n.format("PF1.IdentifyDCNumber", { dc: 15 + rollData.item.cl });
       }
     }
 
     // Add spellcasting configuration
-    if (this.item.type === "class") {
-      data.casting = {
+    if (item.type === "class") {
+      context.casting = {
         types: CONFIG.PF1.spellcasting.type,
         spells: CONFIG.PF1.spellcasting.spells,
         progression: {
@@ -151,71 +153,71 @@ export class ItemSheetPF extends ItemSheet {
         },
       };
 
-      if (!this.item.parent) data.hasSpellbook = true; // Not true, but avoids unwanted behaviour.
+      if (!item.parent) context.hasSpellbook = true; // Not true, but avoids unwanted behaviour.
       else {
-        data.hasSpellbook = Object.values(rollData.spells ?? {}).find(
-          (book) => !!book.class && book.class === this.item.system.tag && book.inUse
+        context.hasSpellbook = Object.values(rollData.spells ?? {}).find(
+          (book) => !!book.class && book.class === itemData.tag && book.inUse
         );
       }
     }
 
     // Add descriptions
-    data.descriptionHTML = {
-      identified: await TextEditor.enrichHTML(data.system.description.value, {
-        secrets: data.owned,
+    context.descriptionHTML = {
+      identified: await TextEditor.enrichHTML(itemData.description.value, {
+        secrets: context.owned,
         rollData: rollData,
         async: true,
       }),
-      unidentified: await TextEditor.enrichHTML(data.system.description.unidentified, {
-        secrets: data.owned,
+      unidentified: await TextEditor.enrichHTML(itemData.description.unidentified, {
+        secrets: context.owned,
         rollData: rollData,
         async: true,
       }),
     };
 
     // Unidentified data
-    if (this.item.showUnidentifiedData) {
-      data.itemName = this.item.system.unidentified.name || this.item.system.identifiedName || this.item.name;
+    if (item.showUnidentifiedData) {
+      context.itemName = item.system.unidentified.name || item.system.identifiedName || item.name;
     } else {
-      data.itemName = this.item.system.identifiedName || this.item.name;
+      context.itemName = item.system.identifiedName || item.name;
     }
 
     // Override description attributes
-    if (data.isPhysical) {
+    if (context.isPhysical) {
       /** @type {DescriptionAttribute[]} */
-      data.descriptionAttributes = [];
+      context.descriptionAttributes = [];
 
       // Add quantity
-      data.descriptionAttributes.push({
+      context.descriptionAttributes.push({
         isNumber: true,
         name: "system.quantity",
         label: game.i18n.localize("PF1.Quantity"),
-        value: data.system.quantity,
+        value: itemData.quantity,
         decimals: 0,
         id: "data-quantity",
       });
 
       // Add weight
-      data.descriptionAttributes.push({
+      context.descriptionAttributes.push({
         isNumber: true,
         name: "system.weight.value",
         fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
-        value: data.system.weight.converted.total,
-        inputValue: data.system.weight.converted.value,
+        value: itemData.weight.converted.total,
+        inputValue: itemData.weight.converted.value,
         decimals: 2,
         id: "data-weight-value",
       });
 
       // Add price
-      if (data.showIdentifyDescription) {
-        data.descriptionAttributes.push(
+      if (context.showIdentifyDescription) {
+        context.descriptionAttributes.push(
           {
             isNumber: true,
             name: "system.price",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: this.item.getValue({ sellValue: 1 }),
+            value: item.getValue({ sellValue: 1 }),
             decimals: 2,
             id: "data-price",
           },
@@ -224,29 +226,29 @@ export class ItemSheetPF extends ItemSheet {
             name: "system.unidentified.price",
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
-            value: this.item.getValue({ sellValue: 1, forceUnidentified: true }),
+            value: item.getValue({ sellValue: 1, forceUnidentified: true }),
             decimals: 2,
             id: "data-unidentifiedBasePrice",
           }
         );
       } else {
-        if (data.showUnidentifiedData) {
-          data.descriptionAttributes.push({
+        if (context.showUnidentifiedData) {
+          context.descriptionAttributes.push({
             isNumber: true,
             name: "system.unidentified.price",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: this.item.getValue({ sellValue: 1 }),
+            value: item.getValue({ sellValue: 1 }),
             decimals: 2,
             id: "data-price",
           });
         } else {
-          data.descriptionAttributes.push({
+          context.descriptionAttributes.push({
             isNumber: true,
             name: "system.price",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
-            value: this.item.getValue({ sellValue: 1 }),
+            value: item.getValue({ sellValue: 1 }),
             decimals: 2,
             id: "data-price",
           });
@@ -254,181 +256,180 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       // Add hit points
-      data.descriptionAttributes.push({
+      context.descriptionAttributes.push({
         isRange: true,
         label: game.i18n.localize("PF1.HPShort"),
         value: {
           name: "system.hp.value",
-          value: data.system.hp.value,
+          value: itemData.hp.value,
         },
         max: {
           name: "system.hp.max",
-          value: data.system.hp.max,
+          value: itemData.hp.max,
         },
       });
 
       // Add hardness
-      data.descriptionAttributes.push({
+      context.descriptionAttributes.push({
         isNumber: true,
         label: game.i18n.localize("PF1.Hardness"),
         name: "system.hardness",
         decimals: 0,
-        value: data.system.hardness,
+        value: itemData.hardness,
       });
 
       // Add equipped flag
-      data.descriptionAttributes.push({
+      context.descriptionAttributes.push({
         isBoolean: true,
         name: "system.equipped",
         label: game.i18n.localize("PF1.Equipped"),
-        value: data.system.equipped,
+        value: itemData.equipped,
       });
 
       // Add carried flag
-      data.descriptionAttributes.push({
+      context.descriptionAttributes.push({
         isBoolean: true,
         name: "system.carried",
         label: game.i18n.localize("PF1.Carried"),
-        value: data.system.carried,
+        value: itemData.carried,
       });
     }
 
     // Prepare feat specific stuff
-    if (data.item.type === "feat") {
-      data.isClassFeature = getProperty(this.item, "system.subType") === "classFeat";
-      data.isTemplate = getProperty(this.item, "system.subType") === "template";
+    if (item.type === "feat") {
+      context.isClassFeature = itemData.subType === "classFeat";
+      context.isTemplate = itemData.subType === "template";
     }
 
-    if (["class", "feat", "race"].includes(data.item.type)) {
+    if (["class", "feat", "race"].includes(item.type)) {
       // Add skill list
-      if (!this.actor) {
-        data.skills = Object.entries(CONFIG.PF1.skills).reduce((cur, o) => {
-          cur[o[0]] = { name: o[1], classSkill: getProperty(this.item, `system.classSkills.${o[0]}`) === true };
+      if (!actor) {
+        context.skills = Object.entries(CONFIG.PF1.skills).reduce((cur, [skillId, label]) => {
+          cur[skillId] = { name: label, classSkill: itemData.classSkills?.[skillId] === true };
           return cur;
         }, {});
       } else {
         // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = mergeObject(deepClone(CONFIG.PF1.skills), this.actor.system.skills);
-        data.skills = Object.entries(skills).reduce((cur, o) => {
-          const key = o[0];
-          const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
-          cur[o[0]] = { name: name, classSkill: getProperty(this.item, `system.classSkills.${o[0]}`) === true };
+        const skills = mergeObject(deepClone(CONFIG.PF1.skills), actorData.skills ?? {});
+        context.skills = Object.entries(skills).reduce((cur, [skillId, skillIdata]) => {
+          const name = CONFIG.PF1.skills[skillId] || skillIdata.name;
+          cur[skillId] = { name: name, classSkill: item.system.classSkills?.[skillId] === true };
           return cur;
         }, {});
       }
     }
 
     // Prepare weapon specific stuff
-    if (data.item.type === "weapon") {
-      data.isRanged = data.system.weaponSubtype === "ranged" || data.system.properties["thr"] === true;
+    if (item.type === "weapon") {
+      context.isRanged = itemData.weaponSubtype === "ranged" || itemData.properties["thr"] === true;
 
       // Prepare categories for weapons
-      data.weaponCategories = { types: {}, subTypes: {} };
+      context.weaponCategories = { types: {}, subTypes: {} };
       for (const [k, v] of Object.entries(CONFIG.PF1.weaponTypes)) {
-        if (typeof v === "object") data.weaponCategories.types[k] = v._label;
+        if (typeof v === "object") context.weaponCategories.types[k] = v._label;
       }
-      const type = data.system.subType;
-      if (hasProperty(CONFIG.PF1.weaponTypes, type)) {
+      const type = itemData.subType;
+      if (type in CONFIG.PF1.weaponTypes) {
         for (const [k, v] of Object.entries(CONFIG.PF1.weaponTypes[type])) {
           // Add static targets
-          if (!k.startsWith("_")) data.weaponCategories.subTypes[k] = v;
+          if (!k.startsWith("_")) context.weaponCategories.subTypes[k] = v;
         }
       }
     }
 
     // Prepare equipment specific stuff
-    if (data.item.type === "equipment") {
+    if (item.type === "equipment") {
       // Prepare categories for equipment
-      data.equipmentCategories = { types: {}, subTypes: {} };
+      context.equipmentCategories = { types: {}, subTypes: {} };
       for (const [k, v] of Object.entries(CONFIG.PF1.equipmentTypes)) {
-        if (typeof v === "object") data.equipmentCategories.types[k] = v._label;
+        if (typeof v === "object") context.equipmentCategories.types[k] = v._label;
       }
-      const type = data.system.subType;
-      if (hasProperty(CONFIG.PF1.equipmentTypes, type)) {
+      const type = itemData.subType;
+      if (type in CONFIG.PF1.equipmentTypes) {
         for (const [k, v] of Object.entries(CONFIG.PF1.equipmentTypes[type])) {
           // Add static targets
-          if (!k.startsWith("_")) data.equipmentCategories.subTypes[k] = v;
+          if (!k.startsWith("_")) context.equipmentCategories.subTypes[k] = v;
         }
       }
 
       // Prepare slots for equipment
-      data.equipmentSlots = CONFIG.PF1.equipmentSlots[type];
+      context.equipmentSlots = CONFIG.PF1.equipmentSlots[type];
 
       // Whether the equipment should show armor data
-      data.showArmorData = ["armor", "shield"].includes(type);
+      context.showArmorData = ["armor", "shield"].includes(type);
 
       // Whether the current equipment type has multiple slots
-      data.hasMultipleSlots = Object.keys(data.equipmentSlots).length > 1;
+      context.hasMultipleSlots = Object.keys(context.equipmentSlots).length > 1;
     }
 
     // Prepare spell specific stuff
-    if (data.item.type === "spell") {
+    if (item.type === "spell") {
       let spellbook = null;
-      if (this.actor != null) {
-        spellbook = getProperty(this.actor, `system.attributes.spells.spellbooks.${this.item.system.spellbook}`);
+      if (actor) {
+        const bookId = itemData.spellbook;
+        spellbook = actorData.attributes?.spells?.spellbooks?.[bookId];
       }
 
-      data.isPreparedSpell = spellbook != null ? !spellbook.spontaneous && !spellbook.spellPoints?.useSystem : false;
-      data.usesSpellpoints = spellbook != null ? spellbook.spellPoints?.useSystem ?? false : false;
-      data.isAtWill = data.system.atWill;
-      data.spellbooks = deepClone(this.actor?.system.attributes?.spells?.spellbooks ?? {});
+      context.isPreparedSpell = spellbook != null ? !spellbook.spontaneous && !spellbook.spellPoints?.useSystem : false;
+      context.usesSpellpoints = spellbook != null ? spellbook.spellPoints?.useSystem ?? false : false;
+      context.isAtWill = itemData.atWill;
+      context.spellbooks = deepClone(actorData.attributes?.spells?.spellbooks ?? {});
 
       const desc = await renderTemplate(
         "systems/pf1/templates/internal/spell-description.hbs",
-        this.document.spellDescriptionData
+        item.spellDescriptionData
       );
-      const firstAction = this.item.firstAction;
-      data.topDescription = await TextEditor.enrichHTML(desc, {
+      const firstAction = item.firstAction;
+      context.topDescription = await TextEditor.enrichHTML(desc, {
         rollData: firstAction?.getRollData() ?? rollData,
         async: true,
       });
 
       // Enrich description
-      if (data.system.shortDescription != null) {
-        data.shortDescription = await TextEditor.enrichHTML(data.system.shortDescription, {
+      if (itemData.shortDescription != null) {
+        context.shortDescription = await TextEditor.enrichHTML(itemData.shortDescription, {
           rollData: firstAction?.getRollData() ?? rollData,
-          secrets: data.owner,
+          secrets: context.owner,
           async: true,
         });
       }
     }
 
     // Prepare class specific stuff
-    if (data.item.type === "class") {
-      data.isMythicPath = data.system.subType === "mythic";
+    if (item.type === "class") {
+      context.isMythicPath = itemData.subType === "mythic";
 
-      for (const [a, s] of Object.entries(data.system.savingThrows)) {
+      for (const [a, s] of Object.entries(itemData.savingThrows)) {
         s.label = CONFIG.PF1.savingThrows[a];
       }
-      for (const [a, s] of Object.entries(data.system.fc)) {
+      for (const [a, s] of Object.entries(itemData.fc)) {
         s.label = CONFIG.PF1.favouredClassBonuses[a];
       }
 
-      data.isBaseClass = data.system.subType === "base";
-      data.isRacialHD = data.system.subType === "racial";
+      context.isBaseClass = itemData.subType === "base";
+      context.isRacialHD = itemData.subType === "racial";
 
-      if (this.actor != null) {
+      if (actor) {
         const healthConfig = game.settings.get("pf1", "healthConfig");
-        data.healthConfig = data.isRacialHD
+        context.healthConfig = context.isRacialHD
           ? healthConfig.hitdice.Racial
-          : this.actor.type === "character"
+          : actor.type === "character"
           ? healthConfig.hitdice.PC
           : healthConfig.hitdice.NPC;
-      } else data.healthConfig = { auto: false };
+      } else context.healthConfig = { auto: false };
 
       // Add skill list
-      if (!this.actor) {
-        data.skills = Object.entries(CONFIG.PF1.skills).reduce((cur, o) => {
-          cur[o[0]] = { name: o[1], classSkill: getProperty(data, `system.classSkills.${o[0]}`) === true };
+      if (!actor) {
+        context.skills = Object.entries(CONFIG.PF1.skills).reduce((cur, [skillId, label]) => {
+          cur[skillId] = { name: label, classSkill: itemData.classSkills?.[skillId] === true };
           return cur;
         }, {});
       } else {
         // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = mergeObject(deepClone(CONFIG.PF1.skills), this.actor.system.skills);
-        data.skills = Object.entries(skills).reduce((cur, o) => {
-          const key = o[0];
-          const name = CONFIG.PF1.skills[key] != null ? CONFIG.PF1.skills[key] : o[1].name;
-          cur[o[0]] = { name: name, classSkill: getProperty(data, `system.classSkills.${o[0]}`) === true };
+        const skills = mergeObject(deepClone(CONFIG.PF1.skills), actorData.skills ?? {});
+        context.skills = Object.entries(skills).reduce((cur, [skillId, skillData]) => {
+          const name = CONFIG.PF1.skills[skillId] != null ? CONFIG.PF1.skills[skillId] : skillData.name;
+          cur[skillId] = { name: name, classSkill: itemData.classSkills?.[skillId] === true };
           return cur;
         }, {});
       }
@@ -441,8 +442,8 @@ export class ItemSheetPF extends ItemSheet {
       languages: CONFIG.PF1.languages,
     };
     for (const [t, choices] of Object.entries(profs)) {
-      if (t in data.system) {
-        const trait = data.system[t];
+      if (t in itemData) {
+        const trait = itemData[t];
         if (!trait) continue;
         let values = [];
         if (trait.value) {
@@ -464,17 +465,17 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare stuff for active effects on items
-    if (this.item.changes) {
-      data.changeGlobals = {
+    if (item.changes) {
+      context.changeGlobals = {
         targets: {},
         modifiers: CONFIG.PF1.bonusModifiers,
       };
       for (const [k, v] of Object.entries(CONFIG.PF1.buffTargets)) {
-        if (typeof v === "object") data.changeGlobals.targets[k] = v._label;
+        if (typeof v === "object") context.changeGlobals.targets[k] = v._label;
       }
 
-      const buffTargets = getBuffTargets(this.item.actor);
-      data.changes = data.system.changes.reduce((cur, o) => {
+      const buffTargets = getBuffTargets(actor);
+      context.changes = itemData.changes.reduce((cur, o) => {
         const obj = { data: o };
 
         obj.subTargetLabel = buffTargets[o.subTarget]?.label;
@@ -486,41 +487,41 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare stuff for items with context notes
-    if (data.system.contextNotes) {
-      data.contextNotes = deepClone(data.system.contextNotes);
-      const noteTargets = getBuffTargets(this.item.actor, "contextNotes");
-      data.contextNotes.forEach((o) => {
+    if (itemData.contextNotes) {
+      context.contextNotes = deepClone(itemData.contextNotes);
+      const noteTargets = getBuffTargets(actor, "contextNotes");
+      context.contextNotes.forEach((o) => {
         o.label = noteTargets[o.subTarget]?.label;
       });
     }
 
     // Add distance units
-    data.distanceUnits = deepClone(CONFIG.PF1.distanceUnits);
-    if (this.item.type !== "spell") {
+    context.distanceUnits = deepClone(CONFIG.PF1.distanceUnits);
+    if (item.type !== "spell") {
       for (const d of ["close", "medium", "long"]) {
-        delete data.distanceUnits[d];
+        delete context.distanceUnits[d];
       }
     }
 
     // Parse notes
-    if (data.system.attackNotes) {
-      const value = data.system.attackNotes;
-      setProperty(data, "notes.attack", value);
+    if (itemData.attackNotes) {
+      const value = itemData.attackNotes;
+      setProperty(context, "notes.attack", value);
     }
 
     // Add item flags
-    this._prepareItemFlags(data);
+    this._prepareItemFlags(context);
 
     // Add script calls
-    await this._prepareScriptCalls(data);
+    await this._prepareScriptCalls(context);
 
     // Add links
-    await this._prepareLinks(data);
+    await this._prepareLinks(context);
 
     // Add actions
-    this._prepareActions(data);
+    this._prepareActions(context);
 
-    return data;
+    return context;
   }
 
   async _prepareLinks(data) {

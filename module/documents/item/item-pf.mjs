@@ -896,11 +896,13 @@ export class ItemPF extends ItemBasePF {
 
     const rollData = this.getRollData();
 
-    if (hasProperty(this, "system.uses.maxFormula")) {
-      const maxFormula = getProperty(this, "system.uses.maxFormula");
-      if (maxFormula !== "" && !formulaHasDice(maxFormula)) {
+    if (this.system.uses) {
+      const maxFormula = this.system.uses.maxFormula;
+      if (!maxFormula) {
+        this.system.uses.max = 0;
+      } else if (!formulaHasDice(maxFormula)) {
         const roll = RollPF.safeRoll(maxFormula, rollData);
-        setProperty(this, "system.uses.max", roll.total);
+        this.system.uses.max = roll.total;
       } else if (formulaHasDice(maxFormula)) {
         ui.notifications.warn(
           game.i18n.format("PF1.WarningNoDiceAllowedInFormula", {

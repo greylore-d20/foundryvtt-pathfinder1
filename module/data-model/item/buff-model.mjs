@@ -15,7 +15,7 @@ export class BuffItemModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
-      buffType: new fields.StringField({ required: true }),
+      subType: new IdentifierField({ initial: "temp" }),
 
       active: new fields.BooleanField({ required: false, initial: false }),
       level: new fields.NumberField({ required: false, nullable: true }),

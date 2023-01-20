@@ -15,7 +15,7 @@ export class ClassItemModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
-      classType: new IdentifierField(),
+      subType: new IdentifierField({ initial: "base" }),
       description: new fields.SchemaField(
         {
           value: new fields.HTMLField({ required: false }),

@@ -298,6 +298,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateItemWeight(item, updateData);
   _migrateItemHealth(item, updateData);
   _migrateItemType(item, updateData);
+  _migrateItemUnusedData(item, updateData);
 
   // Migrate action data
   const alreadyHasActions = item.system.actions instanceof Array && item.system.actions.length > 0;
@@ -1762,4 +1763,17 @@ const _migrateItemType = function (ent, updateData) {
   if (oldType == null) return;
   updateData["system.subType"] = oldType;
   updateData[`system.-=${type}Type`] = null;
+};
+
+/**
+ * Removes data that the system has added to items that is now unused with no new location.
+ *
+ * @param item
+ * @param updateData
+ */
+const _migrateItemUnusedData = (item, updateData) => {
+  // .priceUnits was never used
+  if (item.system.priceUnits !== undefined) {
+    updateData["system.-=priceUnits"] = null;
+  }
 };

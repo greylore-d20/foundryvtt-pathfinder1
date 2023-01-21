@@ -224,6 +224,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorHP(actor, updateData, linked);
   _migrateActorSenses(actor, updateData, linked, token);
   _migrateActorSkillJournals(actor, updateData, linked);
+  _migrateActorSubskillData(actor, updateData);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -1632,6 +1633,18 @@ const _migrateActorSkillJournals = function (ent, updateData, linked) {
 
     if (skill.journal?.match(reOldJournalFormat)) {
       updateData[`system.skills.${skillKey}.journal`] = `JournalEntry.${skill.journal}`;
+    }
+  }
+};
+
+const _migrateActorSubskillData = (actor, updateData) => {
+  for (const [skillId, skillData] of Object.entries(actor.system.skills ?? {})) {
+    for (const [subSkillId, subSkillData] of Object.entries(skillData.subSkills ?? {})) {
+      if (subSkillData.mod !== undefined) {
+        // Remove permanently stored .mod which is derived value
+        // Added with 0.82.6
+        updateData[`system.skills.${skillId}.subSkills.${subSkillId}.-=mod`] = null;
+      }
     }
   }
 };

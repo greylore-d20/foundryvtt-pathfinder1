@@ -1755,7 +1755,6 @@ export class ActorSheetPF extends ActorSheet {
       name: game.i18n.format("DOCUMENT.New", { type: game.i18n.localize("PF1.Skill") }),
       ability: mainSkillData.ability,
       rank: 0,
-      mod: 0,
       rt: mainSkillData.rt,
       cs: mainSkillData.cs,
       acp: mainSkillData.acp,

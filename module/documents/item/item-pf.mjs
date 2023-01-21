@@ -903,7 +903,7 @@ export class ItemPF extends ItemBasePF {
       } else if (!formulaHasDice(maxFormula)) {
         const roll = RollPF.safeRoll(maxFormula, rollData);
         this.system.uses.max = roll.total;
-      } else if (formulaHasDice(maxFormula)) {
+      } else {
         ui.notifications.warn(
           game.i18n.format("PF1.WarningNoDiceAllowedInFormula", {
             context: game.i18n.localize("PF1.ChargePlural"),

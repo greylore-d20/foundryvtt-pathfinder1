@@ -1212,40 +1212,34 @@ const resetSkills = function () {
   const actorData = this.system;
   const skills = actorData.skills;
 
+  const resetSkill = (skill) => {
+    const acpPenalty = skill.acp ? actorData.attributes.acp.total : 0;
+    const abilityModifier = actorData.abilities[skill.ability]?.mod || 0;
+    const changeModifiers = skill.changeBonus || 0;
+
+    skill.mod =
+      skill.rank +
+      (skill.cs && skill.rank > 0 ? PF1.classSkillBonus : 0) +
+      abilityModifier +
+      changeModifiers -
+      acpPenalty;
+  };
+
   for (const [skillKey, skill] of Object.entries(skills)) {
     if (!skill) {
       console.warn(`Bad skill data for "${skillKey}"`, this);
       continue;
     }
 
-    let acpPenalty = skill.acp ? actorData.attributes.acp.total : 0;
-    let ablMod = actorData.abilities[skill.ability]?.mod || 0;
-    let specificSkillBonus = skill.changeBonus || 0;
-
-    // Parse main skills
-
-    let sklValue =
-      skill.rank + (skill.cs && skill.rank > 0 ? PF1.classSkillBonus : 0) + ablMod + specificSkillBonus - acpPenalty;
-    skill.mod = sklValue;
+    resetSkill(skill);
 
     // Parse sub-skills
     for (const [subSkillKey, subSkill] of Object.entries(skill.subSkills || {})) {
       if (!subSkill) {
         console.warn(`Bad subskill data for "${skillKey}.${subSkillKey}"`, this);
-        continue;
+      } else {
+        resetSkill(subSkill);
       }
-
-      acpPenalty = subSkill.acp ? actorData.attributes.acp.total : 0;
-      ablMod = actorData.abilities[subSkill.ability]?.mod || 0;
-      specificSkillBonus = subSkill.changeBonus || 0;
-      sklValue =
-        subSkill.rank +
-        (subSkill.cs && subSkill.rank > 0 ? PF1.classSkillBonus : 0) +
-        ablMod +
-        specificSkillBonus -
-        acpPenalty;
-
-      subSkill.mod = sklValue;
     }
   }
 };

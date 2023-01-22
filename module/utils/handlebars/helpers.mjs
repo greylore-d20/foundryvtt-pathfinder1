@@ -33,6 +33,32 @@ export const registerHandlebarsHelpers = function () {
 
   Handlebars.registerHelper("actionDamage", actionDamage);
 
+  Handlebars.registerHelper("sortedDamageTypes", (/** @type {ChatAttack} */ attack, isCritical) => {
+    const typesTotals = {};
+    const processTypes = (types, damage, isCustom = false) => {
+      for (let type of types) {
+        type = type.trim();
+        if (!type) continue;
+        let value = typesTotals.get(type);
+        if (!value) {
+          value = { total: 0, type, isCustom };
+          typesTotals.set(type, value);
+        }
+        value.total += damage.total;
+      }
+    };
+
+    for (const damage of attack.damage.rolls) {
+      if (damage.total == 0) continue;
+      const typeInfo = damage.options.damageType;
+      console.log(typeInfo);
+      processTypes(typeInfo.custom?.split(";") ?? [], damage, true);
+      processTypes(typeInfo.values ?? [], damage);
+    }
+
+    return typesTotals.contents.sort((a, b) => b.total - a.total);
+  });
+
   /**
    * Alt numberFormat helper to provide non-fixed point decimals and pretty fractionals
    *

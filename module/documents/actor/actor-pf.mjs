@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { ActorBasePF } from "./actor-base.mjs";
 import { getAbilityModifier } from "@utils";
 import { ItemPF } from "../item/item-pf.mjs";
@@ -2053,7 +2054,7 @@ export class ActorPF extends ActorBasePF {
     if (skl.rank > 0) {
       parts.push(`${skl.rank}[${game.i18n.localize("PF1.SkillRankPlural")}]`);
       if (skl.cs) {
-        parts.push(`3[${game.i18n.localize("PF1.CSTooltip")}]`);
+        parts.push(`${PF1.classSkillBonus}[${game.i18n.localize("PF1.CSTooltip")}]`);
       }
     }
 

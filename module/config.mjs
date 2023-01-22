@@ -1497,6 +1497,11 @@ export const PF1 = {
    */
   backgroundOnlySkills: ["lor", "art"],
 
+  /**
+   * Bonus modifier granted to class skills.
+   */
+  classSkillBonus: 3,
+
   /* -------------------------------------------- */
 
   /**

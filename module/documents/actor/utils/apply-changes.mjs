@@ -1223,7 +1223,9 @@ const resetSkills = function () {
     let specificSkillBonus = skill.changeBonus || 0;
 
     // Parse main skills
-    let sklValue = skill.rank + (skill.cs && skill.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
+
+    let sklValue =
+      skill.rank + (skill.cs && skill.rank > 0 ? PF1.classSkillBonus : 0) + ablMod + specificSkillBonus - acpPenalty;
     skill.mod = sklValue;
 
     // Parse sub-skills
@@ -1236,7 +1238,13 @@ const resetSkills = function () {
       acpPenalty = subSkill.acp ? actorData.attributes.acp.total : 0;
       ablMod = actorData.abilities[subSkill.ability]?.mod || 0;
       specificSkillBonus = subSkill.changeBonus || 0;
-      sklValue = subSkill.rank + (subSkill.cs && subSkill.rank > 0 ? 3 : 0) + ablMod + specificSkillBonus - acpPenalty;
+      sklValue =
+        subSkill.rank +
+        (subSkill.cs && subSkill.rank > 0 ? PF1.classSkillBonus : 0) +
+        ablMod +
+        specificSkillBonus -
+        acpPenalty;
+
       subSkill.mod = sklValue;
     }
   }

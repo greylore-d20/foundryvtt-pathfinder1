@@ -276,6 +276,14 @@ export class ItemSheetPF extends ItemSheet {
         value: data.system.hardness,
       });
 
+      // Add equipped flag
+      data.descriptionAttributes.push({
+        isBoolean: true,
+        name: "system.equipped",
+        label: game.i18n.localize("PF1.Equipped"),
+        value: data.system.equipped,
+      });
+
       // Add carried flag
       data.descriptionAttributes.push({
         isBoolean: true,

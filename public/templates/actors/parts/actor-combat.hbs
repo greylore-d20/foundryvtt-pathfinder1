@@ -225,7 +225,7 @@
 
           <div class="item-detail item-range tooltip">
             {{#if item.hasRange}}
-            <label>{{itemRange item @root.rollData}}</label>
+            <label>{{actionRange item.document.firstAction @root.rollData}}</label>
               {{#if (or (gt item.range.maxIncrements 1) (ne item.range.minUnits ""))}}
               <span class="tooltipcontent">
                 {{localize "PF1.MaximumRangeIncrements"}}: {{item.range.maxIncrements}}<br>

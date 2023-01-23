@@ -6,6 +6,11 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("distanceUnit", (type) => convertDistance(0, type)[1]);
 
   Handlebars.registerHelper("itemRange", (item, rollData) => {
+    foundry.utils.logCompatibilityWarning("{{itemRange}} helper is deprecated, please use {{actionRange}} instead.", {
+      since: "PF1 0.82.6",
+      until: "PF1 0.83.0",
+    });
+
     if (!item.document?.firstAction?.hasRange) return null;
     const action = item.document.firstAction;
 
@@ -20,6 +25,23 @@ export const registerHandlebarsHelpers = function () {
       return `${ft} ${rv[1]}`;
     } else {
       return "" + (ft ?? "");
+    }
+  });
+
+  Handlebars.registerHelper("actionRange", (action, rollData) => {
+    if (!action?.hasRange) return null;
+
+    const range = action.data.range.value;
+    const rangeType = action.data.range.units;
+
+    if (rangeType == null) return null;
+
+    const ft = calculateRange(range, rangeType, rollData);
+    if (ft && typeof ft !== "string") {
+      const units = convertDistance(range)[1];
+      return `${ft} ${units}`;
+    } else {
+      return ft || "";
     }
   });
 

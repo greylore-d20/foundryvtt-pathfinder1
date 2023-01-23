@@ -256,7 +256,7 @@ export class ItemAction {
     let result = 10;
 
     // Get conditional save DC bonus
-    const dcBonus = rollData["dcBonus"] ?? 0;
+    const dcBonus = rollData.dcBonus ?? 0;
 
     if (this.item.type === "spell") {
       const spellbook = this.item.spellbook;
@@ -594,7 +594,7 @@ export class ItemAction {
     const exAtkBonusFormula = this.data.formulaicAttacks?.bonus || "";
     try {
       if (exAtkBonusFormula.length > 0) {
-        rollData["attackCount"] = 1;
+        rollData.attackCount = 1;
         RollPF.safeRoll(exAtkBonusFormula, rollData);
         delete rollData.attackCount;
       }

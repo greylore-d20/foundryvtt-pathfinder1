@@ -304,7 +304,7 @@ export class ActionUse {
       if (exAtkCount > 0) {
         try {
           for (let i = 0; i < exAtkCount; i++) {
-            rollData["formulaicAttack"] = i + 1; // Add and update attack counter
+            rollData.formulaicAttack = i + 1; // Add and update attack counter
             const bonus = RollPF.safeRoll(exAtkBonusFormula, rollData).total;
             delete rollData.formulaicAttack;
             allAttacks.push({

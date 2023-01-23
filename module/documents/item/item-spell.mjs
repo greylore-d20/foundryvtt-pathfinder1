@@ -239,7 +239,7 @@ export class ItemSpellPF extends ItemPF {
       if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
 
       // Get conditional save DC bonus
-      const dcBonus = rollData["dcBonus"] ?? 0;
+      const dcBonus = rollData.dcBonus ?? 0;
 
       return RollPF.safeRoll(formula, rollData).total + dcBonus;
     }

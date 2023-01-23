@@ -595,9 +595,9 @@ export class ItemAction {
     }
 
     // Test bonus attack formula
-    const exAtkBonusFormula = this.data.formulaicAttacks?.bonus || "";
+    const exAtkBonusFormula = this.data.formulaicAttacks?.bonus?.bonus || "0";
     try {
-      if (exAtkBonusFormula.length > 0) {
+      if (exAtkBonusFormula.length > 0 && exAtkBonusFormula != 0) {
         rollData.attackCount = 1;
         RollPF.safeRoll(exAtkBonusFormula, rollData);
         delete rollData.attackCount;

@@ -585,8 +585,12 @@ export class ItemAction {
       extraAttacks = Math.min(50, Math.max(0, xaroll.total)); // Arbitrarily clamp attacks
     }
     if (xaroll?.err) {
-      const msg = game.i18n.format("PF1.ErrorItemFormula", { item: this.name, actor: this.actor?.name });
-      console.warn(msg, xaroll.err, exAtkCountFormula);
+      const msg = game.i18n.format("PF1.ErrorActionFormula", {
+        action: this.name,
+        item: this.item?.name,
+        actor: this.actor?.name,
+      });
+      console.warn(msg, xaroll.err, exAtkCountFormula, this);
       ui.notifications.warn(msg, { console: false });
     }
 
@@ -599,9 +603,13 @@ export class ItemAction {
         delete rollData.attackCount;
       }
     } catch (err) {
-      const msg = game.i18n.format("PF1.ErrorItemFormula", { item: this.name, actor: this.actor?.name });
-      console.warn(msg, err, exAtkBonusFormula);
-      ui.notifications.warn(msg, { console: false });
+      const msg = game.i18n.format("PF1.ErrorActionFormula", {
+        action: this.name,
+        item: this.item?.name,
+        actor: this.actor?.name,
+      });
+      console.error(msg, err, exAtkBonusFormula, this);
+      ui.notifications.error(msg, { console: false });
     }
 
     // Update item

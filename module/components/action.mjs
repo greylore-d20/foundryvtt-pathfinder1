@@ -412,7 +412,7 @@ export class ItemAction {
   prepareData() {
     // Parse formulaic attacks
     if (this.hasAttack) {
-      this.parseFormulaicAttacks({ formula: getProperty(this.data, "formulaicAttacks.count.formula") });
+      this.parseFormulaicAttacks();
     }
 
     // Update conditionals

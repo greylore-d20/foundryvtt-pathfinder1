@@ -576,7 +576,7 @@ export class ItemAction {
   parseFormulaicAttacks({ formula = null } = {}) {
     if (!this.actor) return;
 
-    const exAtkCountFormula = formula ?? (this.data.formulaicAttacks?.count?.formula || "");
+    const exAtkCountFormula = formula || this.data.formulaicAttacks?.count?.formula || "0";
     let extraAttacks = 0,
       xaroll;
     const rollData = this.getRollData();

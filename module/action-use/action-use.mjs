@@ -306,6 +306,7 @@ export class ActionUse {
           for (let i = 0; i < exAtkCount; i++) {
             rollData["formulaicAttack"] = i + 1; // Add and update attack counter
             const bonus = RollPF.safeRoll(exAtkBonusFormula, rollData).total;
+            delete rollData.formulaicAttack;
             allAttacks.push({
               attackBonus: `(${bonus})[${game.i18n.localize("PF1.Iterative")}]`,
               // If formulaic attacks have a non-default name, number them with their own counter; otherwise, continue unnamed attack numbering

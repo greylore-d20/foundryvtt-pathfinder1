@@ -596,6 +596,7 @@ export class ItemAction {
       if (exAtkBonusFormula.length > 0) {
         rollData["attackCount"] = 1;
         RollPF.safeRoll(exAtkBonusFormula, rollData);
+        delete rollData.attackCount;
       }
     } catch (err) {
       const msg = game.i18n.format("PF1.ErrorItemFormula", { item: this.name, actor: this.actor?.name });

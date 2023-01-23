@@ -2499,6 +2499,8 @@ export const PF1 = {
     actor: [
       "d20",
       "attackBonus",
+      "attackCount",
+      "formulaicAttack",
       "damageBonus",
       "pointBlankBonus",
       "rapidShotPenalty",

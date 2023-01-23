@@ -49,11 +49,11 @@
             + @attributes.attack.shared : {{system.attributes.attack.shared}}<br/>
             + @attributes.attack.general : {{system.attributes.attack.general}}<br/>
             + @attributes.attack.melee : {{system.attributes.attack.melee}}<br/>
-            + @abilities.{{system.attributes.attack.meleeAbility}}.mod : {{system.attributes.attack.meleeAttackMod}}<br/>
             <br/>{{localize "PF1.FromSources"}}<br/>
             {{#if sourceDetails.system.attributes.attack.shared.length}}
             {{#each sourceDetails.system.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
+            {{#if genericAttacks.melee.ability}}{{lookup @root.config.abilities genericAttacks.melee.ability}} : {{genericAttacks.melee.abilityMod}}<br/>{{/if}}
             {{#if (ne @root.system.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeMods @root.system.traits.size }}<br/>{{/if}}
             {{#if sourceDetails.system.attributes.attack.general.length}}
             {{#each sourceDetails.system.attributes.attack.general as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
@@ -62,7 +62,7 @@
             {{#each sourceDetails.system.attributes.attack.melee as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
           </span>
-          {{numberFormat meleeAttack decimals=0 sign=true}}
+          {{numberFormat genericAttacks.melee.modifier decimals=0 sign=true}}
         </td>
 
         <td class="generic-ranged tooltip">
@@ -71,11 +71,11 @@
             + @attributes.attack.shared : {{system.attributes.attack.shared}}<br/>
             + @attributes.attack.general : {{system.attributes.attack.general}}<br/>
             + @attributes.attack.ranged : {{system.attributes.attack.ranged}}<br/>
-            + @abilities.{{system.attributes.attack.rangedAbility}}.mod : {{system.attributes.attack.rangedAttackMod}}<br/>
             <br/>{{localize "PF1.FromSources"}}<br/>
             {{#if sourceDetails.system.attributes.attack.shared.length}}
             {{#each sourceDetails.system.attributes.attack.shared as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
             {{/if}}
+            {{#if genericAttacks.ranged.ability}}{{lookup @root.config.abilities genericAttacks.ranged.ability}} : {{genericAttacks.ranged.abilityMod}}<br/>{{/if}}
             {{#if (ne @root.system.traits.size "med")}}{{localize "PF1.Size"}} : {{lookup @root.config.sizeMods @root.system.traits.size }}<br/>{{/if}}
             {{#if sourceDetails.system.attributes.attack.general.length}}
             {{#each sourceDetails.system.attributes.attack.general as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
@@ -85,7 +85,7 @@
             {{/if}}
           </span>
 
-          {{numberFormat rangedAttack decimals=0 sign=true}}
+          {{numberFormat genericAttacks.ranged.modifier decimals=0 sign=true}}
         </td>
 
         <td class="initiative tooltip">

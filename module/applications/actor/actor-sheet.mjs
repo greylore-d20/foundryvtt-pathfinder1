@@ -268,19 +268,27 @@ export class ActorSheetPF extends ActorSheet {
     data.filters = this._filters;
 
     // Generic melee and ranged attack bonuses, only present for sheet.
-    const coreAttack = data.system.attributes.attack.shared + data.system.attributes.attack.general,
-      meleeAtkAbl = data.system.abilities[data.system.attributes.attack.meleeAbility]?.mod ?? 0,
-      rangedAtkAbl = data.system.abilities[data.system.attributes.attack.rangedAbility]?.mod ?? 0,
-      cmbAbl = data.system.abilities[data.system.attributes.cmbAbility]?.mod ?? 0;
+    {
+      const attributes = data.system.attributes,
+        abilities = data.system.abilities,
+        sizeModifier = CONFIG.PF1.sizeMods[data.system.traits.size],
+        baseBonus = attributes.attack.shared + attributes.attack.general + sizeModifier,
+        meleeAbility = abilities[attributes.attack.meleeAbility]?.mod ?? 0,
+        rangedAbility = abilities[attributes.attack.rangedAbility]?.mod ?? 0;
 
-    const szMod = CONFIG.PF1.sizeMods[data.system.traits.size],
-      szCMBMod = CONFIG.PF1.sizeSpecialMods[data.system.traits.size];
-
-    data.system.attributes.attack.meleeAttackMod = meleeAtkAbl;
-    data.system.attributes.attack.rangedAttackMod = rangedAtkAbl;
-    data.meleeAttack = coreAttack + szMod + data.system.attributes.attack.melee + (meleeAtkAbl ?? 0);
-    data.rangedAttack = coreAttack + szMod + data.system.attributes.attack.ranged + (rangedAtkAbl ?? 0);
-    data.cmbAttack = coreAttack + szCMBMod + data.system.attributes.cmb.total + (cmbAbl ?? 0);
+      data.genericAttacks = {
+        melee: {
+          ability: attributes.attack.meleeAbility,
+          abilityMod: meleeAbility,
+          modifier: baseBonus + attributes.attack.melee + meleeAbility,
+        },
+        ranged: {
+          ability: attributes.attack.rangedAbility,
+          abilityMod: rangedAbility,
+          modifier: baseBonus + attributes.attack.ranged + rangedAbility,
+        },
+      };
+    }
 
     // Add inventory value
     {

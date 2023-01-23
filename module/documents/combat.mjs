@@ -166,7 +166,7 @@ export class CombatPF extends Combat {
         // Produce an initiative roll for the Combatant
         const isHidden = c.token?.hidden || c.hidden;
         if (isHidden) chatRollMode = messageOptions.rollMode ?? "gmroll";
-        const roll = RollPF.safeRoll(formula, rollData);
+        const roll = await RollPF.create(formula, rollData).evaluate();
         delete rollData.bonus;
         if (roll.err) ui.notifications.warn(roll.err.message);
         updates.push({ _id: id, initiative: roll.total });

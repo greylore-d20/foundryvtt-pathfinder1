@@ -76,18 +76,18 @@
     {{#if showIdentifyDescription}}
     <section class="description-body">
       <div class="tab description-group flexcol" data-group="description" data-tab="identified">
-      {{editor descriptionHTML.identified target="system.description.value" button=true owner=owner editable=editable engine="prosemirror" collaborate=false}}
+      {{editor descriptionHTML.identified target="system.description.value" button=true editable=editable engine="prosemirror" collaborate=false}}
       </div>
 
       <div class="tab description-group flexcol" data-group="description" data-tab="unidentified">
-      {{editor descriptionHTML.unidentified target="system.description.unidentified" button=true owner=owner editable=editable engine="prosemirror" collaborate=false}}
+      {{editor descriptionHTML.unidentified target="system.description.unidentified" button=true editable=editable engine="prosemirror" collaborate=false}}
       </div>
     </section>
     {{else}}
     {{#if showUnidentifiedData}}
-    {{editor descriptionHTML.unidentified target="system.description.unidentified" button=true owner=owner editable=editable engine="prosemirror" collaborate=false}}
+    {{editor descriptionHTML.unidentified target="system.description.unidentified" button=true editable=editable engine="prosemirror" collaborate=false}}
     {{else}}
-    {{editor descriptionHTML.identified target="system.description.value" button=true owner=owner editable=editable engine="prosemirror" collaborate=false}}
+    {{editor descriptionHTML.identified target="system.description.value" button=true editable=editable engine="prosemirror" collaborate=false}}
     {{/if}}
     {{/if}}
   </div>

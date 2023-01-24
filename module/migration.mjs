@@ -1116,7 +1116,7 @@ const _migrateItemRange = function (ent, updateData) {
   }
 };
 
-const _migrateItemLinks = async function (ent, updateData) {
+const _migrateItemLinks = function (ent, updateData) {
   if (["attack", "consumable", "equipment"].includes(ent.type) && !hasProperty(ent, "system.links.charges")) {
     updateData["system.links.charges"] = [];
   }

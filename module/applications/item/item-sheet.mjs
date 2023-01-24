@@ -777,6 +777,22 @@ export class ItemSheetPF extends ItemSheet {
       items: [],
     });
 
+    data.links.list.push({
+      id: "supplements",
+      label: game.i18n.localize("PF1.LinkTypeSupplements"),
+      help: game.i18n.localize("PF1.LinkHelpSupplements"),
+      fields: {
+        /*
+        // TODO: Add child link creation toggle
+        asChild: {
+          type: "Boolean",
+          label: game.i18n.localize("PF1.AsChild"),
+        },
+        */
+      },
+      items: [],
+    });
+
     // Post process data
     const item = this.item,
       actor = item.actor;

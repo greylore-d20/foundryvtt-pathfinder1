@@ -1505,7 +1505,13 @@ export class ItemPF extends ItemBasePF {
       return true;
     }
 
+    // Allow class association links only from compendiums
     if (linkType === "classAssociations" && dataType === "compendium") return true;
+    if (linkType === "supplements") {
+      // Allow supplement links only if not from an actor
+      if (!targetItem.actor) return true;
+      else ui.notifications.error(game.i18n.localize("PF1.LinkErrorNoActorSource"));
+    }
 
     return false;
   }

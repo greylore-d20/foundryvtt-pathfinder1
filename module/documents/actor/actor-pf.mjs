@@ -2104,10 +2104,10 @@ export class ActorPF extends ActorBasePF {
    * @param {"items"|"effects"} collection - Collection name
    * @param {Item[]|ActiveEffect[]} documents - Created documents
    * @param {object[]} result - Creation data for the documents
-   * @param {object} context - Create context
+   * @param {object} context - Create context options
    * @param {string} userId - Triggering user's ID
    */
-  _onCreateDescendantDocuments(parent, collection, documents, result, options, userId) {
+  _onCreateDescendantDocuments(parent, collection, documents, result, context, userId) {
     super._onCreateDescendantDocuments(...arguments);
 
     if (userId !== game.user.id) return;
@@ -2121,8 +2121,8 @@ export class ActorPF extends ActorBasePF {
     }
 
     if (collection === "effects") {
-      if (options.pf1?.updateConditionTracks !== false) {
-        this._handleConditionTracks(documents, options);
+      if (context.pf1?.updateConditionTracks !== false) {
+        this._handleConditionTracks(documents, context);
       }
     }
   }
@@ -3934,18 +3934,136 @@ export class ActorPF extends ActorBasePF {
     return result;
   }
 
-  async createEmbeddedDocuments(embeddedName, createData, options = {}) {
+  async createEmbeddedDocuments(embeddedName, createData, context = {}) {
     createData = createData instanceof Array ? createData : [createData];
-    const rv = await super.createEmbeddedDocuments(embeddedName, createData, options);
 
-    // Create class
-    for (const item of rv) {
-      if (item.type === "class") {
-        await item._onLevelChange(0, item.system.level);
+    const isItem = embeddedName === "Item";
+    let supplements;
+    if (isItem) {
+      supplements = await this._collectItemSupplements(createData, context);
+    }
+
+    const rv = await super.createEmbeddedDocuments(embeddedName, createData, context);
+
+    // Post creation handlers
+    if (isItem) {
+      for (const item of rv) {
+        // Create class
+        if (item.type === "class") {
+          await item._onLevelChange(0, item.system.level);
+        }
+      }
+
+      if (supplements?.size) {
+        // Awaiting this is not necessary for the createEmbedded to be successful
+        this._addSupplementChildLinks(rv, supplements);
       }
     }
 
     return rv;
+  }
+
+  async _collectItemSupplements(items, options) {
+    const allSupplements = new Collection();
+
+    const depth = 0;
+    const unnotified = 0;
+
+    const collect = async (item, { depth = 0 } = {}) => {
+      const supplements = item.system.links?.supplements ?? [];
+      // Log larger fetches.
+      // Fails if there's multiple small fetches
+      if (supplements.length > 5) console.log("Fetching", supplements.length, "supplements for", item.name);
+      // Collect supplements
+      const newItems = [];
+      for (const supplement of supplements) {
+        const { uuid } = supplement;
+        if (!uuid) continue; // Erroneous supplement data
+        const extraItem = await fromUuid(uuid);
+        if (!extraItem) {
+          // TODO: Display notification instead when this is from UI interaction.
+          console.warn("Supplement", uuid, "not found for", item.uuid ?? item.flags?.core?.sourceId ?? item);
+          continue;
+        }
+        const old = allSupplements.get(uuid);
+        if (old) old.count += 1;
+        else {
+          allSupplements.set(uuid, { parent: item, item: extraItem, count: 1 });
+          newItems.push(extraItem);
+        }
+      }
+
+      // TODO: Make the limits here configurable?
+      if (newItems.length) {
+        if (depth > 3) {
+          return void console.warn("Stopping collecting supplements deeper than 3 layers");
+        }
+        if (allSupplements.size > 100 && newItems.length) {
+          return void console.warn(`Too many supplements (${allSupplements.size}), stopping collecting more`);
+        }
+
+        for (const newItem of newItems) {
+          // TODO: Somehow add child relation to the children
+          await collect(newItem, { depth: depth + 1 });
+        }
+      }
+    };
+
+    // Collect supplements for all items
+    for (const item of items) await collect(item);
+
+    if (allSupplements.size) {
+      // Add to items array
+      for (const supplement of allSupplements) {
+        const { item, count, parent } = supplement;
+        const parentUuid = parent?.uuid ?? parent?.flags?.core?.sourceId;
+        if (parentUuid) {
+          item.updateSource({ "flags.pf1.source": parentUuid });
+        }
+        const data = game.items.fromCompendium(item);
+        // Adjust quantity of physical items if more than one was added of the same item
+        if (item.isPhysical && data.system.quantity > 0) {
+          data.system.quantity *= count;
+        }
+        items.push(data);
+      }
+    }
+
+    return allSupplements;
+  }
+
+  /**
+   * Update item child links with supplements.
+   *
+   * @param {Item[]} items
+   * @param {*} supplements
+   */
+  async _addSupplementChildLinks(items, supplements) {
+    const updates = new Collection();
+    const collection = new Collection();
+    for (const item of items) {
+      const source = item.getFlag("core", "sourceId");
+      if (source) collection.set(source, item);
+    }
+
+    for (const item of items) {
+      const source = item.getFlag("pf1", "source");
+      if (source) {
+        const parent = collection.get(source);
+        let update = updates.get(parent.id);
+        if (!update) {
+          update = { system: { links: { children: [] } } };
+          update._id = parent.id;
+          updates.set(parent.id, update);
+        }
+
+        update.system.links.children.push({ id: item.id, name: item.name, img: item.img });
+      }
+    }
+
+    if (updates.size) {
+      return this.updateEmbeddedDocuments("Item", Array.from(updates));
+    }
   }
 
   /**

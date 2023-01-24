@@ -58,7 +58,7 @@ export const patchCore = function () {
     // Compute data attributes
     this.colorRGB = Color.from(this.data.color)?.rgb;
     this.radius = Math.max(Math.abs(dim), Math.abs(bright));
-    this.ratio = Math.clamped(Math.abs(this.data.bright) / this.radius, 0, 1);
+    this.ratio = Math.clamped(Math.abs(bright) / this.radius, 0, 1);
     this.isDarkness = this.data.luminosity < 0;
 
     // Compute the source polygon

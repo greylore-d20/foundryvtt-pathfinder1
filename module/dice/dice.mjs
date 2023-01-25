@@ -125,6 +125,7 @@ export class DicePF {
               isCrit: d20.total >= critical,
               isFumble: d20.total <= fumble,
               isNat20: d20.total === 20,
+              isNat1: d20.total === 1,
               flavor: flavor,
               compendiumEntry: compendiumEntry,
               compendiumEntryType: compendiumEntryType,

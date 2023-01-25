@@ -104,7 +104,7 @@ export function registerD20RollTests() {
           it("should recognize a static roll of 1 as fumble", async function () {
             const roll = await rollD20("1");
             expect(roll.total).to.equal(1);
-            expect(roll.isFumble).to.be.true;
+            expect(roll.isNat1).to.be.true;
           });
 
           it("should handle a bonus to the roll", async function () {

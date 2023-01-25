@@ -82,6 +82,10 @@ export class D20RollPF extends RollPF {
    * @type {boolean|void}
    */
   get isFumble() {
+    foundry.utils.logCompatibilityWarning("D20RollPF.isFumble is deprecated in favor of D20RollPF.isNat1", {
+      since: "PF1 0.82.6",
+      until: "PF1 0.83.0",
+    });
     if (!this._evaluated) return undefined;
     if (!Number.isNumeric(this.options.fumble)) return false;
     return this.dice[0].total <= this.options.fumble;
@@ -95,6 +99,36 @@ export class D20RollPF extends RollPF {
   get isNat20() {
     if (!this._evaluated) return undefined;
     return this.dice[0].total === 20;
+  }
+
+  /**
+   * Is this roll a natural 1? Returns undefined if roll isn't evaluated.
+   *
+   * @type {boolean|void}
+   */
+  get isNat1() {
+    if (!this._evaluated) return undefined;
+    return this.dice[0].total === 1;
+  }
+
+  /**
+   * Natural roll value. Undefined if the roll isn't evaluated.
+   *
+   * @type {number|void}
+   */
+  get natural() {
+    if (!this._evaluated) return undefined;
+    return this.dice[0].total;
+  }
+
+  /**
+   * Modifier on the roll besides natural roll. Undefined if the roll isn't evaluated.
+   *
+   * @type {number|void}
+   */
+  get bonus() {
+    if (!this._evaluated) return undefined;
+    return this.total - this.natural;
   }
 
   /**
@@ -229,8 +263,11 @@ export class D20RollPF extends RollPF {
         tooltip: await this.getTooltip(),
         total: this.total,
         isCrit: this.isCrit,
-        isFumble: this.isFumble,
+        isFumble: this.isNat1, // Deprecated until 0.83
         isNat20: this.isNat20,
+        isNat1: this.isNat1,
+        natural: this.natural,
+        bonus: this.bonus,
         flavor: this.options.flavor,
         compendiumEntry: options.compendium?.entry,
         compendiumEntryType: options.compendium?.type,

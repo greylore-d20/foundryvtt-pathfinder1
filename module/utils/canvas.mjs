@@ -39,24 +39,20 @@ const _TokenHUD_getStatusEffectChoices = TokenHUD.prototype._getStatusEffectChoi
 TokenHUD.prototype._getStatusEffectChoices = function () {
   const core = _TokenHUD_getStatusEffectChoices.call(this),
     buffs = {};
-  // Only add buff textures for actors with that function (so not e.g. basic actors)
-  if (this.object.actor?._calcBuffActiveEffects) {
-    Object.values(this.object.actor._calcBuffActiveEffects()).forEach((obj, ind) => {
-      const buff = obj;
-      if (buffs[buff.icon] && buff.label) buff.icon += "?" + ind;
-      if (buff) {
-        buffs[buff.icon] = {
-          id: buff.id,
-          title: buff.label,
-          src: buff.icon,
-          isActive: buff.active,
-          isOverlay: false,
-          cssClass: buff.active ? "active" : "",
-        };
-      }
-    });
+  // Only add buff textures for actors with that function (so not e.g. not actors introduced by modules)
+  for (const buff of Object.values(this.object.actor._calcBuffActiveEffects?.() ?? {})) {
+    if (!buff) continue;
+    buffs[`buff-${buff.id}`] = {
+      id: buff.id,
+      title: buff.label,
+      src: buff.icon,
+      isActive: buff.active,
+      isOverlay: false,
+      cssClass: buff.active ? "active" : "",
+    };
   }
-  return Object.assign({}, core, buffs);
+
+  return { ...core, ...buffs };
 };
 
 //const TokenHUD__onToggleEffect = TokenHUD.prototype._onToggleEffect;

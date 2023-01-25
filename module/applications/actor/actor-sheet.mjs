@@ -2451,7 +2451,8 @@ export class ActorSheetPF extends ActorSheet {
       i.totalWeight = Math.roundDecimals(i.weight.converted.total, 1);
       i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
-      if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);
+      // Only loot has subType specific sections
+      if (i.type === "loot") inventory[subType]?.items.push(i);
     }
 
     // Organize Features

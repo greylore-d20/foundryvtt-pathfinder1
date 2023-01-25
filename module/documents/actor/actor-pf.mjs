@@ -1783,11 +1783,7 @@ export class ActorPF extends ActorBasePF {
     // Make only 1 fear or fatigue condition active at most
     const conditions = update.system.attributes?.conditions;
     if (conditions) {
-      const conditionStages = [
-        ["shaken", "frightened", "panicked"],
-        ["fatigued", "exhausted"],
-      ];
-      for (const conditionGroup of conditionStages) {
+      for (const conditionGroup of Object.values(PF1.conditionTracks)) {
         const conditionKey = Object.keys(conditions).find((o) => conditionGroup.includes(o));
         if (conditionKey != null) {
           for (const key of conditionGroup) {

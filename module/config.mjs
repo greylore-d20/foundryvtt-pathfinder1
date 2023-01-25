@@ -1796,6 +1796,14 @@ export const PF1 = {
     squeezing: "PF1.CondSqueezing",
   },
 
+  /**
+   * Conditions that override each other.
+   */
+  conditionTracks: {
+    fear: ["shaken", "frightened", "panicked"],
+    lethargy: ["fatigued", "exhausted"],
+  },
+
   conditionMechanics: {
     pf1_blind: {
       changes: [

@@ -90,9 +90,9 @@ export const patchCore = function () {
 
     if (this.object?.document.getFlag("pf1", "disableLowLight")) return result;
 
-    const relevantTokens = canvas.tokens.placeables.filter((o) => {
-      return o.actor?.testUserPermission(game.user, "OBSERVER");
-    });
+    const relevantTokens = canvas.tokens.placeables.filter(
+      (o) => o.hasSight && o.actor?.testUserPermission(game.user, "OBSERVER")
+    );
     const lowLightTokens = relevantTokens.filter((o) => o.actorVision.lowLight === true);
 
     if (game.user.isGM || game.settings.get("pf1", "lowLightVisionMode")) {

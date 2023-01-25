@@ -36,11 +36,13 @@ export class ItemBuffPF extends ItemPF {
     labels.subType = pf1.config.buffTypes[itemData.subType];
 
     if (this.system.duration) {
-      const dur = this.system.duration;
-      const unit = pf1.config.timePeriodsShort[dur.units];
-      if (unit && dur.value) {
-        const val = RollPF.safeTotal(dur.value, this.getRollData());
-        labels.duration = [val, unit].filterJoin(" ");
+      const duration = this.system.duration;
+      const unit = pf1.config.timePeriodsShort[duration.units];
+      if (unit === "turn") {
+        labels.duration = game.i18n.format("PF1.TimeFormat", { value: 1, unit });
+      } else if (unit && duration.value) {
+        const value = RollPF.safeTotal(duration.value, this.getRollData());
+        labels.duration = game.i18n.format("PF1.TimeFormat", { value, unit });
       } else {
         labels.duration = "";
       }
@@ -51,14 +53,32 @@ export class ItemBuffPF extends ItemPF {
 
   prepareDerivedItemData() {
     super.prepareDerivedItemData();
+    this._prepareDuration();
+  }
+
+  /**
+   * Prepare .system.duration
+   *
+   * @param {object} [options] Additional options
+   * @param {object} [options.rollData] Roll data instance. New instance is generated if undefined and needed.
+   * @private
+   */
+  _prepareDuration({ rollData } = {}) {
     const itemData = this.system;
 
+    const duration = itemData.duration ?? {};
+    const { units, value: formula } = duration;
+    if (!units) return;
+
     // Add total duration in seconds
-    if (itemData.duration.value?.length) {
-      let seconds = 0;
-      const rollData = this.getRollData();
-      const duration = RollPF.safeRoll(itemData.duration.value || "0", rollData).total;
-      switch (itemData.duration.units) {
+    let seconds = 0;
+    if (units === "turn") {
+      seconds = CONFIG.time.roundTime;
+    } else {
+      if (!formula) return;
+      rollData ??= this.getRollData();
+      const duration = RollPF.safeRoll(formula, rollData).total;
+      switch (units) {
         case "hour":
           seconds = duration * 60 * 60;
           break;
@@ -69,9 +89,8 @@ export class ItemBuffPF extends ItemPF {
           seconds = duration * CONFIG.time.roundTime;
           break;
       }
-
-      itemData.duration.totalSeconds = seconds;
     }
+    itemData.duration.totalSeconds = seconds;
   }
 
   // Creates a simple ActiveEffect from a buff item. Returns the effect
@@ -108,26 +127,23 @@ export class ItemBuffPF extends ItemPF {
     if (hideIcon) createData.icon = null;
 
     // Add buff durations
-    let durationValue = this.system.duration.value ?? null;
-    if (typeof durationValue == "number") durationValue += "";
-    if (durationValue) {
-      let seconds = 0;
-      switch (this.system.duration.units) {
+    const duration = this.system.duration;
+    let formula = duration.value || "";
+    if (typeof formula == "number") formula += "";
+    let seconds = 0;
+    const units = duration.units;
+    if (units === "turn") {
+      createData.duration.turns = 1;
+      seconds = CONFIG.time.roundTime;
+    } else if (formula) {
+      switch (units) {
         case "minute":
         case "hour": {
           seconds = this.totalDurationSeconds;
           break;
         }
-        case "turn": {
-          const turns = RollPF.safeRoll(durationValue, this.getRollData()).total;
-          if (turns > 0) {
-            createData.duration.turns = turns;
-            seconds = turns * CONFIG.time.roundTime;
-          }
-          break;
-        }
         case "round": {
-          const rounds = RollPF.safeRoll(durationValue, this.getRollData()).total;
+          const rounds = RollPF.safeRoll(formula, this.getRollData()).total;
           if (rounds > 0) {
             createData.duration.rounds = rounds;
             seconds = rounds * CONFIG.time.roundTime;
@@ -135,8 +151,9 @@ export class ItemBuffPF extends ItemPF {
           break;
         }
       }
-      if (seconds > 0) createData.duration.seconds = seconds;
     }
+
+    if (seconds > 0) createData.duration.seconds = seconds;
 
     return createData;
   }

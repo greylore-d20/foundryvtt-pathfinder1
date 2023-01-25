@@ -74,7 +74,9 @@
       <div class="form-group input-select">
         <label>{{localize "PF1.Duration"}}</label>
         <div class="form-fields">
+          {{#unless (eq system.duration.units "turn")}}
           <input class="formula" type="text" name="system.duration.value" value="{{system.duration.value}}" placeholder="{{localize "PF1.Formula"}}"/>
+          {{/unless}}
           <select name="system.duration.units">
             {{#select system.duration.units}}
             <option value=""></option>

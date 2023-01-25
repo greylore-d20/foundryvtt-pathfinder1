@@ -81,14 +81,14 @@
         {{#if atk.hasAttack}}
         <tr class="attack">
           <td {{#if atk.hasCritConfirm}}colspan="2"{{else}}colspan="4"{{/if}} class="roll">
-            <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.attack.isNat20}} natural-20{{/if}}{{#if atk.attack.isNat1}} natural-1 failure{{/if}}{{#if atk.attack.isCrit}} critical-threat success{{/if}}"
+            <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.attack.isNat20}} natural-20 success{{/if}}{{#if atk.attack.isNat1}} natural-1 failure{{/if}}{{#if atk.attack.isCrit}} critical-threat{{/if}}"
             title="{{atk.attack.formula}}" data-roll="{{json-string atk.attack}}">
             <i class="fas fa-dice-d20"></i> {{atk.attack.total}}
             </a>
           </td>
           {{#if atk.hasCritConfirm}}
           <td colspan="2" class="roll">
-            <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.critConfirm.isCrit}} success{{/if}}{{#if atk.critConfirm.isNat1}} natural-1 failure{{/if}}"
+            <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.critConfirm.isNat20}} success{{/if}}{{#if atk.critConfirm.isNat1}} natural-1 failure{{/if}}"
             title="{{atk.critConfirm.formula}}" data-roll="{{json-string atk.critConfirm}}">
             <i class="fas fa-dice-d20"></i> {{atk.critConfirm.total}}
             </a>

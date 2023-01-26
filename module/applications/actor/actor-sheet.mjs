@@ -2040,7 +2040,7 @@ export class ActorSheetPF extends ActorSheet {
     if (item.isPhysical) {
       data.identifiedName = data.name;
     }
-    if (data.links) data.links = {};
+    if (data.system.links?.children) delete data.system.links.children;
 
     this.document.createEmbeddedDocuments("Item", [data]);
   }

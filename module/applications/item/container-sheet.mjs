@@ -580,7 +580,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     if (item.isPhysical) {
       data.identifiedName = `${item.data.identifiedName} (${game.i18n.localize("PF1.Copy")})`;
     }
-    if (data.links) data.links = {};
+    if (data.system.links?.children) delete data.system.links.children;
 
     return this.item.createContainerContent(data);
   }

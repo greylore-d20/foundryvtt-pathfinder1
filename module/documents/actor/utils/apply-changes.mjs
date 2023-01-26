@@ -570,6 +570,37 @@ export const getChangeFlat = function (target, modifierType, value) {
         "system.attributes.spells.spellbooks.spelllike.cl.total"
       );
       break;
+    case "dc":
+      result.push(`system.attributes.spells.school.all.dc`);
+      break;
+  }
+
+  // Per school DC target
+  const schoolDC = /^dc\.school\.(?<schoolId>\w+)/.exec(target);
+  if (schoolDC) {
+    const schoolId = schoolDC.groups.schoolId;
+    result.push(`system.attributes.spells.school.${schoolId}.dc`);
+  }
+
+  // Per school CL target
+  const schoolCL = /^cl\.school\.(?<schoolId>\w+)/.exec(target);
+  if (schoolCL) {
+    const schoolId = schoolCL.groups.schoolId;
+    result.push(`system.attributes.spells.school.${schoolId}.cl`);
+  }
+
+  // Per book concentration target
+  const concnMatch = /^concn\.(?<bookId>\w+)/.exec(target);
+  if (concnMatch) {
+    const bookId = concnMatch.groups.bookId;
+    result.push(`system.attributes.spells.spellbooks.${bookId}.concentration.total`);
+  }
+
+  // Per book caster level target
+  const bookCL = /^cl\.book\.(?<bookId>\w+)/.exec(target);
+  if (bookCL) {
+    const bookId = bookCL.groups.bookId;
+    result.push(`system.attributes.spells.spellbooks.${bookId}.cl.bonus`);
   }
 
   if (target.match(/^skill\.([a-zA-Z0-9]+)$/)) {

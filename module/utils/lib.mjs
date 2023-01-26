@@ -417,6 +417,47 @@ export const getBuffTargets = function (actor, type = "buffs") {
     }
   }
 
+  // Append spell targets
+  const books = actor?.system.attributes?.spells?.spellbooks ?? {
+    primary: { label: game.i18n.localize("PF1.SpellBookPrimary") },
+    secondary: { label: game.i18n.localize("PF1.SpellBookSecondary") },
+    tertiary: { label: game.i18n.localize("PF1.SpellBookTertiary") },
+    spelllike: { label: game.i18n.localize("PF1.SpellBookSpelllike") },
+  };
+
+  // Get actor specific spell targets
+  const spellTargets = actor?._spellbookTargets ?? [];
+
+  // Add spell school DCs and CLs
+  for (const schoolId of Object.keys(CONFIG.PF1.spellSchools)) {
+    spellTargets.push(`dc.school.${schoolId}`, `cl.school.${schoolId}`);
+  }
+
+  for (const s of spellTargets) {
+    const re = /^(?<key>\w+)(?:\.(?<category>\w+))?\.(?<subKey>\w+)$/.exec(s);
+    if (!re) continue;
+    const { key, category, subKey } = re.groups;
+
+    let subLabel;
+    if (category === "school") subLabel = CONFIG.PF1.spellSchools[subKey];
+    else subLabel = books[subKey]?.label ?? subKey;
+
+    const fullKey = category ? `${key}.${category}` : key;
+    const mainLabel = game.i18n.localize(
+      {
+        "dc.school": "PF1.DC",
+        concn: "PF1.Concentration",
+        "cl.book": "PF1.CasterLevel",
+        "cl.school": "PF1.CasterLevelAbbr",
+      }[fullKey]
+    );
+
+    buffTargets[s] = {
+      label: `${mainLabel} (${subLabel})`,
+      category: "spell",
+    };
+  }
+
   return buffTargets;
 };
 

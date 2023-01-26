@@ -2076,6 +2076,7 @@ export const buffTargets = /** @type {const} */ ({
   bonusSkillRanks: { label: "PF1.BuffTarBonusSkillRanks", category: "skills", sort: 210000 },
   concentration: { label: "PF1.Concentration", category: "spell", sort: 220000 },
   cl: { label: "PF1.CasterLevel", category: "spell", sort: 230000 },
+  dc: { label: "PF1.SpellDC", category: "spell", sort: 240000 },
 });
 
 /**

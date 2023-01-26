@@ -305,6 +305,23 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * Change targets for spellbooks on the actor.
+   *
+   * @internal
+   * @type {Array[]} Target paths
+   */
+  get _spellbookTargets() {
+    const spellTargets = [];
+    // Add caster level and concentration to targets
+    for (const [bookId, bookData] of Object.entries(this._source.system.attributes?.spells?.spellbooks ?? {})) {
+      if (bookData.inUse) {
+        spellTargets.push(`cl.book.${bookId}`, `concn.${bookId}`);
+      }
+    }
+    return spellTargets;
+  }
+
+  /**
    * @internal
    */
   _prepareContainerItems() {
@@ -852,8 +869,8 @@ export class ActorPF extends ActorBasePF {
         );
       }
 
-      const prevTotal = book.cl.total ?? 0;
-      clTotal += prevTotal;
+      clTotal += book.cl.total ?? 0;
+      clTotal += book.cl.bonus ?? 0;
       book.cl.total = clTotal;
     }
 
@@ -894,7 +911,8 @@ export class ActorPF extends ActorBasePF {
       );
 
       // Apply value
-      book.concentration = { total: prevTotal + concentration };
+      book.concentration ??= {};
+      book.concentration.total = prevTotal + concentration;
     }
 
     const getAbilityBonus = (a) => (a !== 0 ? ActorPF.getSpellSlotIncrease(spellSlotAbilityMod, a) : 0);

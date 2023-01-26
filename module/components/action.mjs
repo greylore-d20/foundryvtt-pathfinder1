@@ -373,7 +373,10 @@ export class ItemAction {
         const data = rollData.action;
         if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
 
-        return RollPF.safeRoll(formula, rollData).total + dcBonus;
+        const dcSchoolBonus = rollData.attributes.spells?.school?.[this.item.system.school]?.dc ?? 0;
+        const universalDCBonus = rollData.attributes?.spells?.school?.all?.dc ?? 0;
+
+        return RollPF.safeRoll(formula, rollData).total + dcBonus + dcSchoolBonus + universalDCBonus;
       } else {
         // Assume standard base formula for spells with minimum required abilty score
         const level = this.item?.system.level ?? 1;
@@ -483,6 +486,11 @@ export class ItemAction {
 
     result.action = foundry.utils.deepClone(this.data);
     result.dc = this.hasSave ? this.getDC(result) : 0;
+
+    if (this.item.type === "spell") {
+      // Add per school CL bonus
+      result.cl += result.attributes?.spells?.school?.[this.item.system.school]?.cl ?? 0;
+    }
 
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
 

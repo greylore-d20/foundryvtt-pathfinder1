@@ -24,7 +24,7 @@ export class ItemContainerPF extends ItemPF {
 
     // Set base weight to weight of coins, which can be calculated without knowing contained items
     const weightReduction = (100 - (this.system.weightReduction ?? 0)) / 100;
-    this.system.weight.currency = this._calculateCoinWeight(this.system) * weightReduction;
+    this.system.weight.currency = this._calculateCoinWeight() * weightReduction;
   }
 
   /** @inheritDoc */
@@ -34,10 +34,7 @@ export class ItemContainerPF extends ItemPF {
     /** @type {ItemWeightData} */
     const weight = this.system.weight;
     // Quantity can be ignored for containers
-    weight.contents = this.items.reduce(
-      (total, item) => total + item.system.weight.total,
-      this._calculateCoinWeight(this.system)
-    );
+    weight.contents = this.items.reduce((total, item) => total + item.system.weight.total, this._calculateCoinWeight());
     weight.converted.contents = pf1.utils.convertWeight(weight.contents);
   }
 
@@ -171,16 +168,76 @@ export class ItemContainerPF extends ItemPF {
     await this.update({ "system.inventoryItems": inventory });
   }
 
-  /** @inheritdoc */
+  /**
+   * Returns the currency this item contains
+   *
+   * @param {object} [options] - Additional options affecting how the value is returned
+   * @param {boolean} [options.inLowestDenomination=false] - Whether to return the value in copper, or in gold (default)
+   * @returns {number} The total amount of currency this item contains, in gold pieces
+   */
   getTotalCurrency({ inLowestDenomination = false } = {}) {
     const currency = this.system.currency;
     const total = currency.pp * 1000 + currency.gp * 100 + currency.sp * 10 + currency.cp;
     return inLowestDenomination ? total : total / 100;
   }
 
+  /**
+   * Converts currencies of the given category to the given currency type
+   *
+   * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
+   */
+  convertCurrency(type = "pp") {
+    const totalValue = this.getTotalCurrency();
+    const values = [0, 0, 0, 0];
+    switch (type) {
+      case "pp":
+        values[0] = Math.floor(totalValue / 10);
+        values[1] = Math.max(0, Math.floor(totalValue) - values[0] * 10);
+        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[0] * 100 - values[1] * 10);
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[0] * 1000 - values[1] * 100 - values[2] * 10);
+        break;
+      case "gp":
+        values[1] = Math.floor(totalValue);
+        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[1] * 10);
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[1] * 100 - values[2] * 10);
+        break;
+      case "sp":
+        values[2] = Math.floor(totalValue * 10);
+        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[2] * 10);
+        break;
+      case "cp":
+        values[3] = Math.floor(totalValue * 100);
+        break;
+    }
+
+    const updateData = {};
+    updateData[`system.currency.pp`] = values[0];
+    updateData[`system.currency.gp`] = values[1];
+    updateData[`system.currency.sp`] = values[2];
+    updateData[`system.currency.cp`] = values[3];
+    return this.update(updateData);
+  }
+
+  /**
+   * @returns {number} Weight of coins on the item.
+   * @private
+   */
+  _calculateCoinWeight() {
+    const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
+    if (!coinWeightDivisor) return 0;
+    return (
+      Object.values(this.system.currency || {}).reduce((cur, amount) => {
+        return cur + amount;
+      }, 0) / coinWeightDivisor
+    );
+  }
+
   /** @inheritdoc */
   getValue({ recursive = true, sellValue = 0.5, inLowestDenomination = false, forceUnidentified = false } = {}) {
     let result = super.getValue(...arguments);
+
+    // Add item's contained currencies at full value
+    result += this.getTotalCurrency({ inLowestDenomination });
 
     if (!recursive) return result;
 

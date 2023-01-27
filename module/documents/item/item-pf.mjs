@@ -1849,14 +1849,12 @@ export class ItemPF extends ItemBasePF {
     return change;
   }
 
-  /**
-   * Returns the currency this item contains
-   *
-   * @param {object} [options] - Additional options affecting how the value is returned
-   * @param {boolean} [options.inLowestDenomination=false] - Whether to return the value in copper, or in gold (default)
-   * @returns {number} The total amount of currency this item contains, in gold pieces
-   */
-  getTotalCurrency({ inLowestDenomination = false } = {}) {
+  getTotalCurrency() {
+    foundry.utils.logCompatibilityWarning("ItemPF.getTotalCurrency is deprecated", {
+      since: "PF1 0.82.6",
+      until: "PF1 0.83.0",
+    });
+
     return 0;
   }
 
@@ -1886,7 +1884,7 @@ export class ItemPF extends ItemBasePF {
       return value;
     };
 
-    const quantity = getProperty(this, "system.quantity") || 0;
+    const quantity = this.system.quantity || 0;
 
     // Add item's price
     result += getActualValue(forceUnidentified ? false : !this.showUnidentifiedData) * quantity;
@@ -1894,57 +1892,16 @@ export class ItemPF extends ItemBasePF {
     // Modify sell value
     if (!(this.type === "loot" && this.system.subType === "tradeGoods")) result *= sellValue;
 
-    // Add item's contained currencies at full value
-    result += this.getTotalCurrency({ inLowestDenomination });
-
     return result;
   }
 
-  /**
-   * Converts currencies of the given category to the given currency type
-   *
-   * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
-   */
   convertCurrency(type = "pp") {
-    const totalValue = this.getTotalCurrency();
-    const values = [0, 0, 0, 0];
-    switch (type) {
-      case "pp":
-        values[0] = Math.floor(totalValue / 10);
-        values[1] = Math.max(0, Math.floor(totalValue) - values[0] * 10);
-        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[0] * 100 - values[1] * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[0] * 1000 - values[1] * 100 - values[2] * 10);
-        break;
-      case "gp":
-        values[1] = Math.floor(totalValue);
-        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[1] * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[1] * 100 - values[2] * 10);
-        break;
-      case "sp":
-        values[2] = Math.floor(totalValue * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[2] * 10);
-        break;
-      case "cp":
-        values[3] = Math.floor(totalValue * 100);
-        break;
-    }
+    foundry.utils.logCompatibilityWarning("ItemPF.convertCurrency is deprecated", {
+      since: "PF1 0.82.6",
+      until: "PF1 0.83.0",
+    });
 
-    const updateData = {};
-    updateData[`system.currency.pp`] = values[0];
-    updateData[`system.currency.gp`] = values[1];
-    updateData[`system.currency.sp`] = values[2];
-    updateData[`system.currency.cp`] = values[3];
-    return this.update(updateData);
-  }
-
-  _calculateCoinWeight(data) {
-    const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
-    if (!coinWeightDivisor) return 0;
-    return (
-      Object.values(getProperty(data, "currency") || {}).reduce((cur, amount) => {
-        return cur + amount;
-      }, 0) / coinWeightDivisor
-    );
+    return 0;
   }
 
   /**

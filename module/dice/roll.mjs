@@ -70,8 +70,17 @@ export class RollPF extends Roll {
       // Attach string terms as flavor texts to size roll terms, if appropriate
       // TODO: Review the need for this bit with Foundry v10, according to staff it will no longer be required.
       const priorSizeRoll = prior instanceof pf1.dice.terms.SizeRollTerm;
-      if (prior && priorSizeRoll && term instanceof StringTerm && term.term.match(/\[(.+)\]/)) {
-        prior.options.flavor = RegExp.$1;
+      if (prior && priorSizeRoll && term instanceof StringTerm) {
+        const re = term.term.match(pf1.dice.terms.SizeRollTerm.TRAILER_REGEXP);
+        const [match, modifiers, flavor] = re;
+        // Attach Flavor
+        if (flavor) {
+          prior.options.flavor = flavor;
+        }
+        // Attach modifiers
+        if (modifiers) {
+          prior.modifiers = Array.from((modifiers || "").matchAll(DiceTerm.MODIFIER_REGEXP)).map((m) => m[0]);
+        }
         return terms;
       }
 

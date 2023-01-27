@@ -4,7 +4,7 @@ import { RollPF } from "../roll.mjs";
  * RollTerm for sizeRoll() function
  */
 export class SizeRollTerm extends RollTerm {
-  constructor({ terms = [], roll, options }) {
+  constructor({ terms = [], roll, options, modifiers = [] }) {
     super({ options });
 
     if (terms) {
@@ -20,7 +20,15 @@ export class SizeRollTerm extends RollTerm {
       } else this.terms = terms.map((t) => RollTerm.fromData(t));
     }
 
-    this.roll = roll ? (roll instanceof Roll ? roll : Roll.fromData(roll)) : undefined;
+    this.modifiers = modifiers;
+
+    if (roll) {
+      if (roll instanceof Roll) this.roll = roll;
+      else {
+        roll.modifiers = modifiers;
+        this.roll = Roll.fromData(roll);
+      }
+    }
   }
 
   _terms = [];
@@ -31,8 +39,12 @@ export class SizeRollTerm extends RollTerm {
 
   isIntermediate = false;
 
-  static SERIALIZE_ATTRIBUTES = ["terms", "roll"];
-  static MODIFIERS = {};
+  static SERIALIZE_ATTRIBUTES = ["terms", "roll", "modifiers"];
+
+  /**
+   * Regexp for identifying flavor and modifiers
+   */
+  static TRAILER_REGEXP = new RegExp(`${DiceTerm.MODIFIERS_REGEXP_STRING}?${DiceTerm.FLAVOR_REGEXP_STRING}?$`);
 
   get total() {
     return this.roll.total;
@@ -47,7 +59,7 @@ export class SizeRollTerm extends RollTerm {
   }
 
   get expression() {
-    return `sizeRoll(${this.terms.map((t) => t.formula).join(", ")})`;
+    return `sizeRoll(${this.terms.map((t) => t.formula).join(", ")})${this.modifiers.join("")}`;
   }
 
   /**
@@ -61,6 +73,24 @@ export class SizeRollTerm extends RollTerm {
     return false;
   }
 
+  _prepareRoll() {
+    const noRoll = !this.roll;
+    // Map terms to sizeRoll params
+    const sizeDice = noRoll ? pf1.utils.rollPreProcess.sizeRoll(...this.terms.map((r) => r.total)) : null;
+    if (sizeDice) {
+      // Copy flavor to die roll
+      if (this.flavor) sizeDice[0].options.flavor = this.flavor;
+      // Copy modifiers to die roll
+      if (this.modifiers.length) sizeDice[0].modifiers = this.modifiers;
+    }
+    // Generate final roll
+    const roll = noRoll ? RollPF.fromTerms(sizeDice) : this.roll;
+    // Copy flavor to roll
+    if (this.flavor) roll.options.flavor = this.flavor;
+
+    return roll;
+  }
+
   _evaluateSync({ minimize = false, maximize = false } = {}) {
     const rollOpts = { minimize, maximize, async: false };
     for (const term of this.terms) {
@@ -68,14 +98,7 @@ export class SizeRollTerm extends RollTerm {
       term.evaluate(rollOpts);
     }
 
-    const noRoll = !this.roll;
-    // Map terms to sizeRoll params
-    const sizeDice = noRoll ? pf1.utils.rollPreProcess.sizeRoll(...this.terms.map((r) => r.total)) : null;
-    if (sizeDice && this.flavor) sizeDice[0].options.flavor = this.flavor;
-    // Generate final roll
-    const roll = noRoll ? RollPF.fromTerms(sizeDice) : this.roll;
-    // Copy flavor
-    if (this.flavor) roll.options.flavor = this.flavor;
+    const roll = this._prepareRoll();
 
     this.roll = roll._evaluated ? roll : roll.evaluate(rollOpts);
 
@@ -89,14 +112,7 @@ export class SizeRollTerm extends RollTerm {
       await term.evaluate(rollOpts);
     }
 
-    const noRoll = !this.roll;
-    // Map terms to sizeRoll params
-    const sizeDice = noRoll ? pf1.utils.rollPreProcess.sizeRoll(...this.terms.map((r) => r.total)) : null;
-    if (sizeDice && this.flavor) sizeDice[0].options.flavor = this.flavor;
-    // Generate final roll
-    const roll = noRoll ? RollPF.fromTerms(sizeDice) : this.roll;
-    // Copy flavor
-    if (this.flavor) roll.options.flavor = this.flavor;
+    const roll = this._prepareRoll();
 
     this.roll = roll._evaluated ? roll : await roll.evaluate(rollOpts);
 

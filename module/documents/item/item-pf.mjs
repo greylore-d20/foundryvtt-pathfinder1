@@ -1915,7 +1915,9 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async addItemBooleanFlag(flagName, context = {}) {
-    flagName = String(flagName).slugify({ strict: true });
+    flagName = String(flagName)
+      .replace(/[^\w_-]/g, "-")
+      .replace(/^-+/, "_");
     const flags = this.system.flags?.boolean ?? {};
 
     if (Array.isArray(flags)) throw new Error(`${this.name} [${this.id}] requires migration.`);
@@ -1974,7 +1976,9 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<boolean>} Whether something was changed.
    */
   async setItemDictionaryFlag(flagName, value, context = {}) {
-    flagName = String(flagName).slugify({ strict: true });
+    flagName = String(flagName)
+      .replace(/[^\w_-]/g, "-")
+      .replace(/^-+/, "_");
     const flags = this.system.flags?.dictionary ?? {};
 
     if (flags[flagName] !== value) {

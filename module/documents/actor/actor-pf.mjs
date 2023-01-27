@@ -2575,55 +2575,71 @@ export class ActorPF extends Actor {
     return [notes, notesHTML];
   }
 
+  /**
+   * Roll initiative for one or multiple Combatants associated with this actor.
+   * If no combat exists, GMs have the option to create one.
+   * If viewing a full Actor document, all Tokens which map to that actor will be targeted for initiative rolls.
+   * If viewing a synthetic Token actor, only that particular Token will be targeted for an initiative roll.
+   *
+   * @override
+   * @see {@link pf1.documents.CombatPF#rollInitiative}
+   * @param {object} [options={}] Options which configure how initiative is rolled
+   * @param {boolean} [options.createCombatants=false] - Create new Combatant entries for tokens associated with this actor.
+   * @param {boolean} [options.rerollInitiative=false] - Reroll initiative for existing Combatants
+   * @param {string|null} [options.dice=null] - Formula override for dice to roll
+   * @param {string|null} [options.bonus=null] - Formula for bonus to initiative
+   * @param {boolean} [options.skipDialog] - Skip roll dialog
+   * @param {string} [options.rollMode] - Roll mode override
+   * @returns {Promise<pf1.documents.CombatPF|null>} The updated Combat document in which initiative was rolled, or null if no initiative was rolled
+   */
   async rollInitiative({
     createCombatants = false,
     rerollInitiative = false,
     initiativeOptions = {},
+    dice = null,
+    bonus = null,
+    rollMode = null,
     skipDialog,
   } = {}) {
     // Obtain (or create) a combat encounter
     let combat = game.combat;
     if (!combat) {
-      if (game.user.isGM) {
-        const combatData = { active: true };
-        if (canvas?.scene?.id) combatData.scene = canvas.scene.id;
-        combat = await game.combats.documentClass.create(combatData);
+      if (game.user.isGM && canvas.scene) {
+        const cls = getDocumentClass("Combat");
+        combat = await cls.create({ scene: canvas.scene.id, active: true });
       } else {
-        ui.notifications.warn(game.i18n.localize("COMBAT.NoneActive"));
+        ui.notifications.warn("COMBAT.NoneActive", { localize: true });
         return null;
       }
     }
 
     // Create new combatants
     if (createCombatants) {
-      const tokens = this.isToken ? [this.token] : this.getActiveTokens();
-      const createData = tokens.reduce((arr, t) => {
-        if (t.inCombat) return arr;
-        arr.push({ tokenId: t.id, actorId: this.id, hidden: t.hidden });
-        return arr;
-      }, []);
-      // Add special combatant if there are no tokens
-      if (tokens.length == 0) {
-        createData.push({ actorId: this.id });
-      }
-      await combat.createEmbeddedDocuments("Combatant", createData);
+      const tokens = this.isToken ? [this.token] : this.getActiveTokens().map((t) => t.document);
+      const toCreate = [];
+      if (tokens.length) {
+        for (const t of tokens) {
+          if (t.inCombat) continue;
+          toCreate.push({ tokenId: t.id, sceneId: t.parent.id, actorId: this.id, hidden: t.hidden });
+        }
+      } else toCreate.push({ actorId: this.id, hidden: false });
+      await combat.createEmbeddedDocuments("Combatant", toCreate);
     }
 
-    // Iterate over combatants to roll for
-    const combatantIds = combat.combatants.reduce((arr, c) => {
-      if (c.actor.id !== this.id || (this.isToken && c.data.tokenId !== this.token.id)) return arr;
-      if (c.initiative !== null && !rerollInitiative) return arr;
-      arr.push(c.id);
-      return arr;
-    }, []);
-    return combatantIds.length
-      ? combat.rollInitiative(
-          combatantIds,
-          mergeObject(initiativeOptions, {
-            skipDialog,
-          })
-        )
-      : { combat, messages: [] };
+    // Roll initiative for combatants
+    const combatants = combat.combatants
+      .filter((c) => {
+        if (c.actor?.id !== this.id) return false;
+        return rerollInitiative || c.initiative === null;
+      })
+      .map((c) => c.id);
+
+    // No combatants. Possibly from reroll being disabled.
+    if (combatants.length == 0) return combat;
+
+    mergeObject(initiativeOptions, { formula: dice, bonus, rollMode, skipDialog });
+    await combat.rollInitiative(combatants, initiativeOptions);
+    return combat;
   }
 
   /**

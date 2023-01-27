@@ -107,8 +107,9 @@ export class CombatPF extends Combat {
    * Apply the dexterity score as a decimal tiebreaker if requested
    * See Combat._getInitiativeFormula for more detail.
    *
-   * @param {ActorPF} actor
-   * @param d20
+   * @param {ActorPF} actor - Actor to fetch roll data for
+   * @param {string} [d20="1d20"] - d20 roll formula
+   * @returns {string} Initiative formula
    */
   _getInitiativeFormula(actor, d20) {
     const defaultParts = [d20 || "1d20", `@attributes.init.total[${game.i18n.localize("PF1.Initiative")}]`];
@@ -121,29 +122,38 @@ export class CombatPF extends Combat {
 
   /**
    * @override
+   * @param {string[]} ids Combatant IDs to roll initiative for.
+   * @param {object} [options={}] - Additional options
+   * @param {string} [options.bonus=null] - Formula for bonus to initiative
+   * @param {string} [options.rollMode] - Roll mode override
+   * @param {boolean} [options.skipDialog=null] - Skip roll dialog
    */
-  async rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {}, skipDialog = null } = {}) {
+  async rollInitiative(
+    ids,
+    { formula = null, bonus = null, rollMode, updateTurn = true, messageOptions = {}, skipDialog = null } = {}
+  ) {
     skipDialog ??= getSkipActionPrompt();
     // Structure input data
     ids = typeof ids === "string" ? [ids] : ids;
     const currentId = this.combatant?.id;
-    let chatRollMode = game.settings.get("core", "rollMode");
 
-    let bonus = "",
-      stop = false,
-      d20;
+    const firstCombatant = this.combatants.get(ids[0]);
+    const rollerName =
+      (ids.length > 1 ? firstCombatant?.actor?.name : firstCombatant?.token?.name) ?? firstCombatant?.name;
+
     // Show initiative dialog
     if (!skipDialog) {
-      const dialogData = await Combat.implementation.showInitiativeDialog(formula);
-      chatRollMode = dialogData.rollMode;
+      const dialogData = await Combat.implementation.showInitiativeDialog({
+        formula,
+        bonus,
+        rollMode,
+        name: rollerName,
+      });
+      rollMode = dialogData.rollMode;
       bonus = dialogData.bonus || "";
-      stop = dialogData.stop || false;
-      if (dialogData.d20) d20 = dialogData.d20;
+      formula = dialogData.d20;
+      if (dialogData.stop) return this;
     }
-    // Determine formula
-    if (!formula) formula = "1d20";
-
-    if (stop) return this;
 
     // Iterate over Combatants, performing an initiative roll for each
     const [updates, messages] = await ids.reduce(
@@ -157,16 +167,13 @@ export class CombatPF extends Combat {
 
         // Produce an initiative roll for the Combatant
         const rollData = c.actor?.getRollData() ?? {};
-        formula = this._getInitiativeFormula(c.actor ? c.actor : null) || formula;
-        rollData.bonus = bonus;
-        if (bonus.length > 0 && i === 0) {
-          formula += " + @bonus";
-        }
+        let initformula = this._getInitiativeFormula(c.actor ? c.actor : null, formula) || "1d20";
+        if (bonus) initformula += ` + ${bonus}`;
 
         // Produce an initiative roll for the Combatant
         const isHidden = c.token?.hidden || c.hidden;
-        if (isHidden) chatRollMode = messageOptions.rollMode ?? "gmroll";
-        const roll = await RollPF.create(formula, rollData).evaluate();
+        if (isHidden) rollMode = messageOptions.rollMode ?? "gmroll";
+        const roll = await RollPF.create(initformula, rollData).evaluate({ async: true });
         delete rollData.bonus;
         if (roll.err) ui.notifications.warn(roll.err.message);
         updates.push({ _id: id, initiative: roll.total });
@@ -184,12 +191,14 @@ export class CombatPF extends Combat {
           notes.length > 0 ? { hasExtraText: true, extraText: notesHTML } : {}
         );
 
+        // Ensure roll mode is not lost
+        if (rollMode) messageOptions.rollMode = rollMode;
+
         // Create chat card data
         const chatData = mergeObject(
           {
             user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.CHAT,
-            rollMode: chatRollMode,
+            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             sound: CONFIG.sounds.dice,
             speaker: {
               scene: canvas.scene?.id,
@@ -199,14 +208,14 @@ export class CombatPF extends Combat {
             },
             flags: { pf1: { subject: { core: "init" } } },
             flavor: game.i18n.format("PF1.RollsForInitiative", { name: c.token?.name ?? c.actor.name }),
-            roll: roll,
+            rolls: [roll.toJSON()],
             content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", templateData),
           },
           messageOptions
         );
 
         // Handle different roll modes
-        ChatMessage.applyRollMode(chatData, chatData.rollMode);
+        ChatMessage.applyRollMode(chatData, rollMode);
 
         if (i > 0) chatData.sound = null; // Only play 1 sound for the whole set
         messages.push(chatData);
@@ -229,47 +238,43 @@ export class CombatPF extends Combat {
     return { combat: this, messages: chatMessages };
   }
 
-  static showInitiativeDialog = function (formula = null) {
-    let rollMode = game.settings.get("core", "rollMode");
-    return new Promise((resolve) => {
-      const template = "systems/pf1/templates/chat/roll-dialog.hbs";
-      const dialogData = {
-        formula: formula ? formula : "",
-        rollMode: rollMode,
-        rollModes: CONFIG.Dice.rollModes,
-      };
-      // Create buttons object
-      const buttons = {
-        normal: {
-          label: "Roll",
-          callback: (html) => {
-            rollMode = html.find('[name="rollMode"]').val();
-            const bonus = html.find('[name="bonus"]').val();
-            const d20 = html.find('[name="d20"]').val();
-            resolve({ rollMode, bonus, d20 });
+  /**
+   * @param {object} options
+   * @param {string} options.formula Formula override
+   * @param {string} options.bonus Bonus formula override
+   * @param {string} options.name Name of the roller
+   * @returns {object}
+   */
+  static async showInitiativeDialog({ formula = null, bonus = null, name } = {}) {
+    const rollMode = game.settings.get("core", "rollMode");
+
+    const template = "systems/pf1/templates/chat/roll-dialog.hbs";
+    const dialogData = { d20: formula, bonus, rollMode, rollModes: CONFIG.Dice.rollModes };
+
+    // Show dialog
+    return Dialog.wait(
+      {
+        title: game.i18n.format("PF1.InitiativeCheck", { name }),
+        content: await renderTemplate(template, dialogData),
+        buttons: {
+          normal: {
+            label: game.i18n.localize("PF1.Roll"),
+            callback: (html) => new FormDataExtended(html.querySelector("form")).object,
           },
         },
-      };
-      // Show dialog
-      renderTemplate(template, dialogData).then((dlg) => {
-        new Dialog(
-          {
-            title: game.i18n.localize("PF1.InitiativeBonus"),
-            content: dlg,
-            buttons: buttons,
-            default: "normal",
-            close: (html) => {
-              resolve({ stop: true });
-            },
-          },
-          {
-            subject: { core: "init" },
-            classes: [...Dialog.defaultOptions.classes, "pf1", "roll-initiative"],
-          }
-        ).render(true);
-      });
-    });
-  };
+        default: "normal",
+        close: (html) => ({ stop: true }),
+      },
+      {
+        subject: { core: "init" },
+        classes: [...Dialog.defaultOptions.classes, "pf1", "roll-initiative"],
+        jQuery: false,
+      },
+      {
+        focus: true,
+      }
+    );
+  }
 
   /**
    * Process current combatant: expire active effects & buffs.

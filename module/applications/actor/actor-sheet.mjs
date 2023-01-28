@@ -2081,12 +2081,11 @@ export class ActorSheetPF extends ActorSheet {
       type: type,
       system: duplicate(header.dataset),
     };
-    delete itemData.system["type"];
+    delete itemData.system.type;
 
-    const getSubtype = (d) => getProperty(d, `system.${d.type}Type`);
-    const subtype = getSubtype(itemData);
+    const subType = itemData.system.subType;
     const sameSubgroup = (oldItem) => {
-      if (subtype) return subtype === getSubtype(oldItem);
+      if (subType) return subType === oldItem.subType;
       if (type === "spell") {
         return itemData.spellbook === oldItem.system.spellbook && itemData.level === oldItem.system.level;
       }

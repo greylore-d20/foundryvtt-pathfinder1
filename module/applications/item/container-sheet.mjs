@@ -390,7 +390,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       type: type,
       system: duplicate(header.dataset),
     };
-    delete itemData["system.type"];
+    delete itemData.system.type;
     return this.item.createContainerContent(itemData);
   }
 

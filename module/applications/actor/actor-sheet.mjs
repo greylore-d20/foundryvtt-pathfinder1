@@ -2222,7 +2222,7 @@ export class ActorSheetPF extends ActorSheet {
       } else if (target instanceof Item) {
         await target.createContainerContent(itemData);
       }
-      console.log({ sheet: this, document: this.document });
+
       await this.document.deleteEmbeddedDocuments("Item", [item.id]);
     }
   }

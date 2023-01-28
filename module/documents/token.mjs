@@ -148,6 +148,6 @@ export class TokenDocumentPF extends TokenDocument {
     if (b.id === DetectionMode.BASIC_MODE_ID) return 1;
 
     const src = { a: CONFIG.Canvas.detectionModes[a.id], b: CONFIG.Canvas.detectionModes[b.id] };
-    return (src.a.constructor.PRIORITY ?? 0) - (src.b.constructor.PRIORITY ?? 0);
+    return (src.a?.constructor.PRIORITY ?? 0) - (src.b?.constructor.PRIORITY ?? 0);
   }
 }

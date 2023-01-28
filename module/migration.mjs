@@ -1776,4 +1776,9 @@ const _migrateItemUnusedData = (item, updateData) => {
   if (item.system.priceUnits !== undefined) {
     updateData["system.-=priceUnits"] = null;
   }
+
+  // Creating items in containers added typeName for no reason (in 0.82.5 and older)
+  if (item.system.typeName !== undefined) {
+    updateData["system.-=typeName"] = null;
+  }
 };

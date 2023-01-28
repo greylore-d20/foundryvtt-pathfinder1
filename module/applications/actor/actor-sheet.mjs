@@ -2581,10 +2581,13 @@ export class ActorSheetPF extends ActorSheet {
       },
     };
 
-    for (const a of attacks) {
-      const s = a.subType;
-      if (!attackSections[s]) continue;
-      attackSections[s].items.push(a);
+    for (const attack of attacks) {
+      const subType = attack.subType;
+      if (!attackSections[subType]) {
+        console.warn(`Attack for unrecongnized subtype "${subType}"`);
+        continue;
+      }
+      attackSections[subType].items.push(attack);
     }
 
     // Apply type filters

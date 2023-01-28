@@ -30,7 +30,7 @@
   "SETTINGS.pf1PCWoundsAndVigorH": "Benutze die optionalen Wunden und Vitalität Regeln für Spielercharaktere.",
   "SETTINGS.pf1NPCWoundsAndVigorN": "Wunden und Vitalität für NSCs",
   "SETTINGS.pf1NPCWoundsAndVigorH": "Benutze die optionalen Wunden und Vitalität Regeln für Nicht-Spielercharaktere.",
-  "SETTINGS.pf1AutoCollapseCardN": "Items im Chat-Protokoll automatisch zusammenklappen",
+  "SETTINGS.pf1AutoCollapseCardN": "Gegenstände im Chat-Protokoll automatisch zusammenklappen",
   "SETTINGS.pf1AutoCollapseCardL": "Objektbeschreibungen im Chat-Protokoll automatisch zusammenklappen",
   "SETTINGS.pf1MeasureStyleN": "Benutze Pathfinder Messmethoden Stil",
   "SETTINGS.pf1MeasureStyleL": "Verwende den Messungsstil von Pathfinder anstelle des Standardstils von FoundryVTT",
@@ -46,7 +46,7 @@
   "SETTINGS.pf1SharedVisionWithSelection": "Immer",
   "SETTINGS.pf1AllowScriptChangesN": "Script-Änderungen zulassen",
   "SETTINGS.pf1AllowScriptChangesH": "Lässt die Benutzung von Änderungen des Types \"Script\" in der Welt zu",
-  "SETTINGS.pf1AllowScriptChangesW": "<b>Diese Einstellung erlaubt es Spielern, beliebigen Code als GM auszuführen.</b><br><br>Bist du dir wirklich sicher, dass du dies erlauben möchtest?",
+  "SETTINGS.pf1AllowScriptChangesW": "<b>Diese Einstellung erlaubt es Spielern, beliebigen Code als SL auszuführen.</b><br><br>Bist du dir wirklich sicher, dass du dies erlauben möchtest?",
   "SETTINGS.pf1AllowScriptChangesE": "Script-Änderungen sind in dieser Welt gesperrt.",
   "SETTINGS.pf1HideTokenConditionsN": "Verstecke Token Zustände",
   "SETTINGS.pf1HideTokenConditionsH": "Ob die Icons von Zuständen und Buffs auf dem Token versteckt werden sollen",
@@ -528,7 +528,7 @@
   "PF1.CurrencySilverP": "Silbermünzen",
   "PF1.CurrencyCopperP": "Kupfermünzen",
   "PF1.CurrencyFailed": "Geldtransfer fehlgeschlagen: ",
-  "PF1.CurrencyGMRequired": "Ein GM muss den Transfer beenden.",
+  "PF1.CurrencyGMRequired": "Ein SL muss den Transfer beenden.",
   "PF1.CurrencyInsufficient": "Nicht genug Geld.",
 
   "PF1.DistPersonal": "Persönlich",
@@ -558,7 +558,7 @@
   "PF1.ItemContainerCapacityWeight": "Gewicht",
   "PF1.ItemContainerDetails": "Behälter Details",
   "PF1.ItemContainerHeader": "Behälter",
-  "PF1.ItemContainerProperties": "Behälter Eigenschaften",
+  "PF1.ItemContainerProperties": "Behältereigenschaften",
   "PF1.ItemContainerWeightReduction": "Gewichtsreduktion",
   "PF1.ItemContainerTotalValue": "Gesamtwert: {gp} GM, {sp} SM, {cp} KM",
   "PF1.ItemContainerTotalItemValue": "Gesamtwert aller Gegenstände: {gp} GM, {sp} SM, {cp} KM",
@@ -755,12 +755,12 @@
   "PF1.MeasureTemplateRay": "Strahl",
   "PF1.MeasureTemplateRectangle": "Rechteck",
 
-  "PF1.LoadingCompendiumBrowser": "Lade Kompendium Browser...",
+  "PF1.LoadingCompendiumBrowser": "Lade Kompendium-Browser...",
 
   "PF1.ItemTypeWeapon": "Waffen",
   "PF1.ItemTypeEquipment": "Ausrüstung",
   "PF1.ItemTypeLoot": "Beute",
-  "PF1.ItemTypeConsumable": "Verbrauchbares",
+  "PF1.ItemTypeConsumable": "Verbrauchsgegenstand",
   "PF1.ItemTypeClass": "Klasse",
   "PF1.ItemTypeBuff": "Buff",
   "PF1.ItemTypeSpell": "Zauber",
@@ -812,7 +812,7 @@
   "PF1.EquipTypeClothing": "Kleidung",
   "PF1.EquipTypeWondrousItem": "Wundersamer Gegenstand",
 
-  "PF1.EquipSlotSlotless": "Ohne Slot",
+  "PF1.EquipSlotSlotless": "Ohne Ausrüstungsplatz",
   "PF1.EquipSlotArmor": "Rüstung",
   "PF1.EquipSlotShield": "Schild",
   "PF1.EquipSlotHead": "Kopf",
@@ -942,7 +942,7 @@
 
   "PF1.InventoryWeapons": "Waffen",
   "PF1.InventoryArmorEquipment": "Rüstung/Ausrüstung",
-  "PF1.InventoryConsumables": "Verbrauchsmaterial",
+  "PF1.InventoryConsumables": "Verbrauchsgegenstand",
   "PF1.InventoryContainers": "Behälter",
 
   "PF1.ChangeFlagLoseDexToAC": "Geschicklichkeit von RK abziehen",
@@ -958,10 +958,11 @@
   "PF1.ErrorNoActorPermission": "Du hast keine Rechte den Aktor zu kontrollieren",
   "PF1.ErrorNoActorPermissionAlt": "Du hast keine Rechte den Aktor '{name}' zu kontrollieren",
   "PF1.ErrorNoFormula": "{name} hat keine Formel zum Würfeln!",
-  "PF1.ErrorItemNoOwner": "Dieses Item hat keinen Besitzer",
+  "PF1.ErrorItemNoOwner": "Dieser Gegenstand hat keinen Besitzer",
   "PF1.ErrorSpellbookExists": "Zauberbuch existiert schon",
   "PF1.ErrorNoFreeSpellbooks": "Keine freien Zauberbücher",
-  "PF1.ErrorItemFormula": "Formelfehler in Item {item} bei Aktor {actor}",
+  "PF1.ErrorItemFormula": "Formelfehler in Gegenstand \"{item}\" bei Aktor \"{actor}\"",
+  "PF1.ErrorActionFormula": "Formelfehler in Aktion \"{action}\" in Gegenstand \"{item}\" bei Aktor \"{actor}\"",
   "PF1.ErrorNoCharges": "{name} hat keine Aufladungen mehr",
   "PF1.ErrorInsufficientCharges": "{name} hat nicht genug Aufladungen",
   "PF1.ErrorNoQuantity": "Du hast davon keine weiteren Gegenstände mehr",
@@ -1168,7 +1169,7 @@
   "PF1.SourceInfoSkillRank_ClassBase": "{className} (Basis)",
   "PF1.SourceInfoSkillRank_ClassFC": "{className} (Bevorzugte Klasse)",
 
-  "PF1.CreateItemForSpell": "Erstelle Item für {name}",
+  "PF1.CreateItemForSpell": "Erstelle Gegenstand für {name}",
   "PF1.CreateItemWand": "Zauberstab",
   "PF1.CreateItemScroll": "Schriftrolle",
   "PF1.CreateItemPotion": "Trank",
@@ -1185,27 +1186,27 @@
 
     "Use": {
       "Name": "Benutzen",
-      "Info": "Wird aufgerufen, wenn das Item 'benutzt' wird (Angriff, Trank trinken, etc.). Hat die zusätzliche Variable `attacks`, welche alle Angriffswürfe der Aktion enthält (falls sie welche hat)."
+      "Info": "Wird aufgerufen, wenn der Gegenstand 'benutzt' wird (Angriff, Trank trinken, etc.). Hat die zusätzliche Variable `attacks`, welche alle Angriffswürfe der Aktion enthält (falls sie welche hat)."
     },
 
     "Equip": {
       "Name": "Ausrüsten",
-      "Info": "Wird aufgerufen, wenn das Item ausgerüstet oder abgelegt wird. Hat die zusätzliche Variable `equipped`, welche entweder `true` oder `false` ist."
+      "Info": "Wird aufgerufen, wenn der Gegenstand ausgerüstet oder abgelegt wird. Hat die zusätzliche Variable `equipped`, welche entweder `true` oder `false` ist."
     },
 
     "Toggle": {
       "Name": "Umschalten",
-      "Info": "Wird aufgerufen, wenn das Item ein- oder ausgeschaltet wird.  Hat die zusätzliche Variable `state`, welche entweder `true` oder `false` ist."
+      "Info": "Wird aufgerufen, wenn der Gegenstand ein- oder ausgeschaltet wird.  Hat die zusätzliche Variable `state`, welche entweder `true` oder `false` ist."
     },
 
     "ChangeQuantity": {
       "Name": "Mengenänderung",
-      "Info": "Wird aufgerufen, wenn sich die Menge des Items ändert.  Hat die zusätzlichen Variablen `quantity.previous` und `quantity.new`, beides sind Zahlen."
+      "Info": "Wird aufgerufen, wenn sich die Menge der Gegenstand ändert.  Hat die zusätzlichen Variablen `quantity.previous` und `quantity.new`, beides sind Zahlen."
     },
 
     "ChangeLevel": {
       "Name": "Stufenänderung",
-      "Info": "Wird aufgerufen, wenn sich die Stufe des Items ändert.  Hat die zusätzlichen Variablen `quantity.previous` und `quantity.new`, beides sind Zahlen."
+      "Info": "Wird aufgerufen, wenn sich die Stufe des Gegenstands ändert.  Hat die zusätzlichen Variablen `quantity.previous` und `quantity.new`, beides sind Zahlen."
     }
   },
 
@@ -1214,12 +1215,12 @@
   "PF1.AddClass": "Klasse hinzufügen",
   "PF1.Horizontal": "Horizontal",
   "PF1.Vertical": "Vertikal",
-  "PF1.HideHeld": "Hide Held items",
-  "PF1.HideArmor": "Hide Armor",
-  "PF1.HideBuffs": "Hide Buffs",
-  "PF1.HideConditions": "Hide Conditions",
-  "PF1.HideClothing": "Hide Clothing",
-  "PF1.HideName": "Hide Name",
+  "PF1.HideHeld": "Gehaltene Gegenstände verstecken",
+  "PF1.HideArmor": "Rüstung verstecken",
+  "PF1.HideBuffs": "Buffs verstecken",
+  "PF1.HideConditions": "Zustände verstecken",
+  "PF1.HideClothing": "Kleidung verstecken",
+  "PF1.HideName": "Namen verstecken",
   "PF1.Action": "Aktion",
   "PF1.All": "Alle",
   "PF1.Attack": "Angriff",
@@ -1501,7 +1502,7 @@
   "PF1.SpellEffects": "Zaubereffekte",
   "PF1.FeatureUsage": "Benutzte Fähigkeiten",
   "PF1.EquipmentUsage": "Benutzte Ausrüstung",
-  "PF1.ConsumableUsage": "Benutztes Verbrauchsmaterial",
+  "PF1.ConsumableUsage": "Benutzte Verbrauchsgegenstände",
   "PF1.Usage": "Anwendung",
   "PF1.Slot": "Slot",
   "PF1.MaxDexterityModifier": "Max. Geschicklichkeit Modifikator",
@@ -1612,7 +1613,7 @@
   "PF1.LearnedAt": "Gelernt auf",
   "PF1.EquipmentType": "Ausrüstungart",
   "PF1.EquipmentSubtype": "Ausrüstungsunterart",
-  "PF1.ConsumableType": "Verbrauchsmaterialart",
+  "PF1.ConsumableType": "Verbrauchsgegenstandsart",
   "PF1.CreatureType": "Kreaturenart",
   "PF1.Override": "Override",
   "PF1.OverrideColor": "Farbe überschreiben",
@@ -1690,7 +1691,7 @@
   "PF1.Advanced": "Erweitert",
   "PF1.LeftToPrepare": "Noch vorbereitbar",
   "PF1.SpellsTotalEachDay": "Gesamt pro Tag (exklusive Domänenzauber und Schulenzauber)",
-  "PF1.UseItem": "Item benutzen",
+  "PF1.UseItem": "Gegenstand benutzen",
   "PF1.UseSpell": "Zauber wirken",
   "PF1.UseFeat": "Feature benutzen",
   "PF1.PerformAttack": "Angriff ausführen",
@@ -1826,431 +1827,24 @@
   },
 
   "PF1.Help": {
-    "Label": "Hilfe",
-    "WIP": "Diese Sektion ist derzeit in Bearbeitung.",
-    "Desc": "This is a reference sheet and information panel on various topics of the Pathfinder 1e system for Foundry Virtual Tabletop.",
-    "Desc2": "You can select topics on the left, whose contents will appear on the right. On the top of this window are navigational tools.",
-    "Img": {
-      "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg",
-      "Items.Equipment": "systems/pf1/help/img/en/equipment-details.jpg",
-      "Items.Description": "systems/pf1/help/img/en/item-description.jpg",
-      "Items.Changes": "systems/pf1/help/img/en/item-changes.jpg"
-    },
-    "Nav": {
-      "Home": "Home",
-      "Actors": "Actors",
-      "Items": "Gegenstände",
-      "ItemTypes": "Gegenstands Typen",
-      "Concepts": "Konzepte",
-      "Special": "Spezial"
-    },
-    "Content": {
-      "Special": {
-        "Formulas": {
-          "Label": "Formeln",
-          "Desc": "Formulas are an important aspect in the Pathfinder 1e system. They can be as simple as a single numerical value, or as complex as single lines of code. They play a great role in item changes.",
-          "Desc2": "For a quick reference, you can find a lot of this information in tooltips on actor sheets as well.",
-          "Variables": {
-            "Label": "Variablen",
-            "Desc": "Hier findest du eine (unvollständige) liste aller Variabeln die du in deinen Formeln benutzen kannst.",
-            "Header": {
-              "Name": "Variable",
-              "Description": "Beschreibung"
-            },
-            "AbilityScoreTotal": {
-              "Desc": "The total value of an ability score. Replace X with one of the following: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
-            },
-            "AbilityScoreMod": {
-              "Desc": "The modifier of an ability score. Replace X with one of the following: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
-            },
-            "HitDie": {
-              "Desc": "The total hit die the actor has. This is a combination of class levels and racial hit die, and it excludes mythic tiers."
-            },
-            "SavingThrows": {
-              "Desc": "The total bonus of the appropriate saving throw for that actor. X can be either 'fort' (Fortitude), 'ref' (Reflex) or 'will' (Will)"
-            },
-            "SavingThrowsBase": {
-              "Desc": "The total base bonus of the appropriate saving throw for that actor, as given by class levels. X can be either 'fort' (Fortitude), 'ref' (Reflex) or 'will' (Will)"
-            },
-            "EncumbranceLevel": {
-              "Desc": "The current encumbrance level of the actor.",
-              "0": "<code>0</code>: Leichte Last",
-              "1": "<code>1</code>: Mittlere Last",
-              "2": "<code>2</code>: Schwere Last"
-            },
-            "ArmorType": {
-              "Desc": "The type of armor the actor is wearing.",
-              "0": "<code>0</code>: Keine Rüstung",
-              "1": "<code>1</code>: Leichte Rüstung",
-              "2": "<code>2</code>: Mittelschwere Rüstung",
-              "3": "<code>3</code>: Schwere Rüstung"
-            },
-            "ShieldType": {
-              "Desc": "The art des ausgerüsteten Schildes.",
-              "0": "<code>0</code>: Kein Schild",
-              "1": "<code>1</code>: Sonstiger Schild (wie Tartsche)",
-              "2": "<code>2</code>: Leichtes Schild",
-              "3": "<code>3</code>: Schweres Schild",
-              "4": "<code>4</code>: Turm Schild"
-            },
-            "CombatRound": {
-              "Desc": "Die derzeitige Kampfrunde, oder <code>0</code> falls nicht im Kampf."
-            },
-            "CritMult": {
-              "Desc": "The critical multiplier of the attack, or 1 if the attack is not a critical threat. Only appropriate for use in damage rolls and attack and effect notes."
-            }
-          },
-          "Functions": {
-            "Label": "Funktionen",
-            "Desc": "The following are functions you can use within formulas, and examples on how to use them.",
-            "Header": {
-              "Name": "Funktion",
-              "Description": "Beschreibung",
-              "Examples": "Beispiele",
-              "Example": "Beispiel"
-            },
-            "Max": {
-              "Desc": "Gibt die höchste der eingegebenen nummern zurück.",
-              "Examples": {
-                "0": "Returns the either the actor's Strength modifier or the actor's Dexterity modifier, whichever is higher."
-              }
-            },
-            "Min": {
-              "Desc": "Gibt die niedrigste der eingegebenen nummern zurück.",
-              "Examples": {
-                "0": "Returns the either the actor's Hit Die total or the number 10, whichever is lower."
-              }
-            },
-            "Floor": {
-              "Desc": "Rundet ab.",
-              "Examples": {
-                "0": "Returns half of the actor's Hit Die total, rounded down."
-              }
-            },
-            "Ceil": {
-              "Desc": "Rundet hoch.",
-              "Examples": {
-                "0": "Returns half of the actor's Hit Die total, rounded up."
-              }
-            },
-            "Round": {
-              "Desc": "Rundet zur nächsten ganzen Zahl.",
-              "Examples": {
-                "0": "Returns one third of the actor's Hit Die total, rounded to the nearest whole number."
-              }
-            },
-            "SquareRoot": {
-              "Desc": "Gibt die positive Quadratwurzel zurück.",
-              "Examples": {
-                "0": "Gibt 4 zurück."
-              }
-            },
-            "Power": {
-              "Desc": "Gibt x hoch y zurück.",
-              "Examples": {
-                "0": "Gibt 64 zurück."
-              }
-            },
-            "SizeRoll": {
-              "Desc": "Alters a damage roll to that of another size category.",
-              "Examples": {
-                "0": "Rolls 1d8 for medium actors, and alters the damage formula according to the calling actor's current size.",
-                "1": "Translates a damage roll of 1d4 from a tiny actor (size '2') to a huge actor (size '6')<br/>Output: 3d6"
-              }
-            },
-            "SizeReach": {
-              "Desc": "Generates a number equal to the reach of a creature of a certain size and stature.",
-              "Examples": {
-                "0": "Returns the normal melee reach as if the actor was 1 size category higher.",
-                "1": "Returns the reach a huge, long actor would have with a reach weapon."
-              }
-            }
-          }
-        },
-        "CompendiumBrowsers": {
-          "Label": "Compendium Browsers",
-          "Properties": {
-            "Label": "Compendium Properties",
-            "Hidden": {
-              "Label": "Versteckt",
-              "Description": "Hidden compendiums will not show up for players in compendium browsers."
-            },
-            "Disabled": {
-              "Label": "Disabled",
-              "Description": "Disabled compendiums will not show up for anyone (including GMs) in compendium browsers."
-            }
-          }
-        }
-      },
-      "Items": {
-        "ItemTypes.Physical": "Physical Item Types",
-        "ItemTypes.Other": "Other Item Types",
-        "Generic": {
-          "EnhancementBonus": "Enhancement Bonus",
-          "EnhancementBonusDesc": "The item's enhancement bonus, as per the Core rules",
-          "Masterwork": "Meisterwerk",
-          "MasterworkDesc": "Whether the item is masterwork, as per the Core rules",
-          "Broken": "Broken",
-          "BrokenDesc": "Whether the item is broken, as per the Core rules",
-          "EquipmentStatus": "Equipment Status",
-          "Equipped": "Ausgerüstet",
-          "EquippedDesc": "Whether the item is currently equipped, and transfers its changes to its actor (if any)",
-          "Identified": "Identified (GM only)",
-          "IdentifiedDesc": "Whether the item is currently identified, and shows its identified information to players",
-          "Size": "Größe",
-          "SizeDesc": "The item's size, similar to a character's size"
-        },
-        "Weapons": {
-          "Label": "Waffen",
-          "Desc": "Weapons are meant to represent physical weapons that a character can hold.",
-          "Category": "Kategorie",
-          "CategoryDesc": "The weapon's category (simple, martial, exotic or misc)",
-          "Type": "Typ",
-          "TypeDesc": "Der typ der waffe (leicht, Einhändig, Zweihändig oder Fernkampfwaffe)",
-          "Size": "Waffen Größe",
-          "SizeDesc": "Die Größe der Waffe, ähnlich zur Charakter größe",
-          "Properties": "Waffen Eigenschaften",
-          "PropertiesDesc": "The weapon's properties, as per the Core rules (does nothing mechanically)",
-          "BonusAttackFormula": "Bonus Attack Formula",
-          "BonusAttackFormulaDesc": "The weapon's attack bonus formula. Some examples:",
-          "BonusAttackFormulaExamples": {
-            "0": "Will incur a penalty to the attack roll of -2 if the wielder's Strength modifier is lower than 3"
-          },
-          "BaseWeaponDamage": "Base Weapon Damage",
-          "BaseWeaponDamageDesc": "The first field indicates the damage die a Medium-sized weapon would deal, and the second field indicates the type of damage it deals (i.e. Bludgeoning, Slashing, etc.)",
-          "BonusDamageFormula": "Bonus schaden Formel",
-          "BonusDamageFormulaDesc": "Der bonusschaden der Waffe. Beispiele:",
-          "BonusDamageFormulaExamples": {
-            "0": "Will add either 4 or the wielder's Strength modifier to the damage roll, whichever is lower"
-          },
-          "BaseWeaponCritical": "Base Weapon Critical",
-          "BaseWeaponCriticalDesc": "The first field indicates the lowest result of the attack's d20 to be a critical threat, and the second field indicates the amount by which the damage is multiplied"
-        },
-        "Equipment": {
-          "Label": "Ausrüstung",
-          "Desc": "Equipment represents all non-weapon equippable items, including armor, shields, rings and wondrous items.",
-          "Category": "Kategorie",
-          "CategoryDesc": "The armor's category (whether it's armor, a shield, or something else)",
-          "Type": "Type",
-          "TypeDesc": "Armor or Shield size type, or other item type (clothing, wondrous item, etc.)",
-          "Slot": "Slot",
-          "SlotDesc": "What slot this item is for (only shows up for items other than armor or shields)",
-          "Status": "Ausrüstungsstatus",
-          "StatusDesc": "Status flags of this particular item"
-        },
-        "Consumables": {
-          "Label": "Consumables",
-          "Desc": "Consumables represent physical items with limited uses, such as potions or wands."
-        },
-        "Containers": {
-          "Label": "Container",
-          "Desc": "Container sind Items die andere Items halten können."
-        },
-        "Loot": {
-          "Label": "Beute",
-          "Desc": "Loot items are all types of physical items that don't fit in other major categories, such as trade goods and ammunition."
-        },
-        "Description": {
-          "Label": "Beschreibung",
-          "Name": "Name",
-          "NameDesc": "The name of the item, if identified.",
-          "UnidentifiedName": "Unidentified Name",
-          "UnidentifiedNameDesc": "The name of the item, if unidentified. Shows the identified name for players if left empty.",
-          "Description": "Description",
-          "DescriptionDesc": "Die Beschreibung die angezeigt wird, sofern identifiziert.",
-          "UnidentifiedDescription": "Unidentified Description",
-          "UnidentifiedDescriptionDesc": "Die Beschreibung die angezeigt wird, sofern nicht identifiziert.",
-          "Price": "Preis",
-          "PriceDesc": "Der Preis des Gegenstands in Gold, sofern identifiziert.",
-          "UnidentifiedPrice": "Preis nicht identifiziert.",
-          "UnidentifiedPriceDesc": "Der Preis des Gegenstands in Gold, sofern nicht identifiziert."
-        },
-        "Changes": {
-          "Label": "Änderungen",
-          "Flags": {
-            "Label": "Flags",
-            "LoseDexToAC": {
-              "Label": "Lose Dex to AC",
-              "Desc": "While an item with this change is active, a character loses his Dexterity bonuses to Armor Class."
-            },
-            "SetAbility": {
-              "Label": "X Ability",
-              "Desc": "Sets the appropriate ability to the flag's specified value. This might be removed in a later version, since the same can be accomplished with the '=' operator (see below)."
-            },
-            "DwarfLikeEncumbrance": {
-              "Label": "Dwarf-like Encumbrance",
-              "Desc": "While an item with this change is active, its actor will not be slowed down by being in a medium or heavy load."
-            },
-            "FullSpeedMediumArmor": {
-              "Label": "Full Speed in Medium Armor",
-              "Desc": "While an item with this change is active, its actor will not be slowed down by wearing medium armor."
-            },
-            "FullSpeedHeavyArmor": {
-              "Label": "Full Speed in Heavy Armor",
-              "Desc": "While an item with this change is active, its actor will not be slowed down by wearing heavy armor."
-            }
-          },
-          "Changes": {
-            "Label": "Changes",
-            "Desc": "This is a list of changes which affect the actor owning the item directly. From left to right:",
-            "Formula": {
-              "Label": "Formel",
-              "Desc": "The formula by which to affect this particular change. The way this alters an actor's attribute depends on the operator (see next). See {tagOpen}this page{tagClose} for more details."
-            },
-            "Operator": {
-              "Label": "Operator",
-              "Desc": "The operators are '+' (relative), '=' (absolute) or 'S' (script). Relative values <i>add</i> to an attribute, while absolute values <i>set</i> the attribute to the result of the formula. See below for the script operator."
-            },
-            "Priority": {
-              "Label": "Priorität",
-              "Desc": "The priority of this change. Changes with lower priorities will be processed later."
-            },
-            "Target": {
-              "Label": "Ziel",
-              "Desc": "A general category of the attribute to alter."
-            },
-            "SubTarget": {
-              "Label": "Sub-Ziel",
-              "Desc": "The specific attribute to alter with this change."
-            },
-            "Modifier": {
-              "Label": "Modifier",
-              "Desc": "The modifier of this change."
-            }
-          },
-          "ContextNotes": {
-            "Label": "Context Notes",
-            "Desc": "This a list of contextual notes, which are shown in appropriate situations. From left to right:",
-            "Description": {
-              "Label": "Beshreibung",
-              "Desc": "The description to show in appropriate situations. Every newline adds a new description to the same target. You can use Foundry-style inline rolls in these."
-            },
-            "Target": {
-              "Label": "Ziel",
-              "Desc": "A general category of the attribute to alter."
-            },
-            "SubTarget": {
-              "Label": "Unter-ziel",
-              "Desc": "The specific attribute to alter with this change."
-            }
-          },
-          "ScriptOperator": {
-            "Label": "Script Operator",
-            "Desc": "The 'formula' of changes using the Script operator are actually small JavaScript scripts that are run when processing changes. Some JavaScript knowledge is required to understand these.",
-            "Variables": {
-              "Desc": "Within these scripts, the following variables can be used:",
-              "0": {
-                "Name": "d",
-                "Desc": "The roll data at the time of processing the change. Contains any variable you could use within a normal change formula using the `@` symbol."
-              },
-              "1": {
-                "Name": "result",
-                "Desc": "This contains two more variables, <code>value</code> and <code>operator</code>. Set <code>value</code> to the numeric result you want for the change, and <code>operator</code> to either <code>\"add\"</code> or <code>\"set\"</code>.<br><br><code>value</code> defaults to <code>0</code> and <code>operator</code> defaults to <code>\"add\"</code>."
-              }
-            }
-          }
-        },
-        "Flags": {
-          "Label": "Flags",
-          "Desc": {
-            "Basic": "Flags can be used by modules and macros. Boolean Flags don't do anything by themselves, but Dictionary Flags can be used in rolls, in addition to their use in macros and modules.",
-            "DictionaryFlags": {
-              "Basic": "You can access Dictionary Flags within rolls by using <code>@dFlags.(itemTag).(flagName)</code>, or with <code>@item.dFlags.(flagName)</code> within the current item."
-            }
-          }
-        },
-        "ScriptCalls": {
-          "Label": "Script Calls",
-          "Desc": {
-            "Basic": "Most items have certain categories of script calls, which are a combination of macros and inline scripts which run at specific events for that item."
-          },
-          "Macros": {
-            "Label": "Using Macros as Script Calls",
-            "Desc": {
-              "Basic": "In order to use Macros as Script Calls, simply drag a macro over from somewhere to the category of Script Calls you wish to run them on."
-            }
-          },
-          "Variables": {
-            "Label": "Variabeln",
-            "Desc": {
-              "Basic": "The variable availability differs somewhat from what's available in regular Macros. Below you will find a list of variables which are present within Script Calls."
-            },
-            "List": {
-              "Item": {
-                "Desc": "The item from which this event was called."
-              },
-              "Actor": {
-                "Desc": "The actor which owns the calling item. Can be <code>null</code> if the item is not on an actor."
-              },
-              "Token": {
-                "Desc": "The token of the associated actor, if any."
-              },
-              "Shared": {
-                "Desc": "An object which starts out as empty, but is shared between all script calls of a single event, after which it is returned to the calling function, which may or may not do something with it."
-              }
-            }
-          },
-
-          "Categories": {
-            "Label": "Kategorien",
-
-            "Use": {
-              "Name": "Benutzen",
-              "Desc": {
-                "Basic": "Called when an item has been used. If an item has at least one script call under this category, it's usable no matter what. This call will have two additional variables: <code>{var1}</code> which is an array of attack data, and <code>{var2}</code>, which containts the attack's measure template (if any).",
-                "Extra1": "Setting <code>shared.hideChat</code> to <code>true</code> prevents a chat card from being shown.",
-                "Extra2": "Setting <code>shared.reject</code> to <code>true</code> prevents the item from being used, take away charges and showing a chat card."
-              }
-            },
-
-            "Equip": {
-              "Name": "Ausrüsten",
-              "Desc": {
-                "Basic": "Called when an item has been equipped or unequipped. This call will have an additional variable <code>{var1}</code> which is either <code>true</code> if it has just been equipped, or <code>false</code> if it has just been unequipped."
-              }
-            },
-
-            "Toggle": {
-              "Name": "Toggle",
-              "Desc": {
-                "Basic": "Called when a buff or feature has been toggled on/off. This call will have an additional variable <code>{var1}</code> which is either <code>true</code> if it has just been enabled or <code>false</code> if it has just been disabled."
-              }
-            },
-
-            "ChangeQuantity": {
-              "Name": "Menge ändern",
-              "Desc": {
-                "Basic": "Called when the quantity of a physical item has been changed. This call will have the additional variables <code>{var1}</code> and <code>{var2}</code>, which contains the quantity numbers before and after the update respectively."
-              }
-            },
-
-            "ChangeLevel": {
-              "Name": "Level ändern",
-              "Desc": {
-                "Basic": "Called when the level of a item has been changed. This call will have the additional variables <code>{var1}</code> and <code>{var2}</code>, which contains the numbers before and after the update respectively."
-              }
-            }
-          }
-        }
-      }
-    }
+    "Label": "Hilfe"
   },
   "ACTOR": {
-    "TypeCharacter": "Spieler Charakter (SC)",
-    "TypeNpc": "Nicht Spieler Charakter (NSC)",
+    "TypeCharacter": "Spielercharakter (SC)",
+    "TypeNpc": "Nichtspielercharakter (NSC)",
     "TypeBasic": "Basic (for modules)"
   },
   "ITEM": {
     "TypeWeapon": "Waffe",
     "TypeEquipment": "Güter, Magische Gegenstände, etc.",
-    "TypeConsumable": "Consumable",
+    "TypeConsumable": "Verbrauchsgegenstand",
     "TypeLoot": "Beute",
-    "TypeClass": "Klasse, Racial HD, Mythic Path, etc.",
+    "TypeClass": "Klasse, Volkstrefferwürfel, Legendenpfad, etc.",
     "TypeSpell": "Zauber",
-    "TypeFeat": "Feat, Klassen feature, Talent, etc.",
+    "TypeFeat": "Talente, Klassenfertigkeiten, Fertigkeiten, etc.",
     "TypeBuff": "Buff",
     "TypeAttack": "Angriff",
     "TypeRace": "Volk",
-    "TypeContainer": "Container"
+    "TypeContainer": "Behälter"
   }
 }

@@ -2460,7 +2460,7 @@ export class ActorSheetPF extends ActorSheet {
         {
           // Fist generic data derived from the config object
           label: PF1.featTypesPlurals[featKey] ?? featValue,
-          dataset: { type: "feat", "type-name": game.i18n.localize(featValue), "feat-type": featKey },
+          dataset: { type: "feat", "type-name": game.i18n.localize(featValue), "sub-type": featKey },
           // Then any specific data explicitly set to override defaults
           ...featData[featKey],
         },
@@ -2494,25 +2494,25 @@ export class ActorSheetPF extends ActorSheet {
         label: game.i18n.localize("PF1.Temporary"),
         items: [],
         hasActions: false,
-        dataset: { type: "buff", "buff-type": "temp" },
+        dataset: { type: "buff", "sub-type": "temp" },
       },
       perm: {
         label: game.i18n.localize("PF1.Permanent"),
         items: [],
         hasActions: false,
-        dataset: { type: "buff", "buff-type": "perm" },
+        dataset: { type: "buff", "sub-type": "perm" },
       },
       item: {
         label: game.i18n.localize("PF1.Item"),
         items: [],
         hasActions: false,
-        dataset: { type: "buff", "buff-type": "item" },
+        dataset: { type: "buff", "sub-type": "item" },
       },
       misc: {
         label: game.i18n.localize("PF1.Misc"),
         items: [],
         hasActions: false,
-        dataset: { type: "buff", "buff-type": "misc" },
+        dataset: { type: "buff", "sub-type": "misc" },
       },
     };
 
@@ -2531,7 +2531,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         initial: false,
         showTypes: false,
-        dataset: { type: "attack", "attack-type": "weapon" },
+        dataset: { type: "attack", "sub-type": "weapon" },
       },
       natural: {
         label: game.i18n.localize("PF1.AttackTypeNaturalPlural"),
@@ -2539,7 +2539,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         initial: false,
         showTypes: false,
-        dataset: { type: "attack", "attack-type": "natural" },
+        dataset: { type: "attack", "sub-type": "natural" },
       },
       ability: {
         label: game.i18n.localize("PF1.AttackTypeAbilityPlural"),
@@ -2547,7 +2547,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         initial: false,
         showTypes: false,
-        dataset: { type: "attack", "attack-type": "ability" },
+        dataset: { type: "attack", "sub-type": "ability" },
       },
       racialAbility: {
         label: game.i18n.localize("PF1.AttackTypeRacialPlural"),
@@ -2555,7 +2555,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         initial: false,
         showTypes: false,
-        dataset: { type: "attack", "attack-type": "racialAbility" },
+        dataset: { type: "attack", "sub-type": "racialAbility" },
       },
       item: {
         label: game.i18n.localize("PF1.Items"),
@@ -2563,7 +2563,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         initial: false,
         showTypes: false,
-        dataset: { type: "attack", "attack-type": "item" },
+        dataset: { type: "attack", "sub-type": "item" },
       },
       misc: {
         label: game.i18n.localize("PF1.Misc"),
@@ -2571,7 +2571,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         initial: false,
         showTypes: false,
-        dataset: { type: "attack", "attack-type": "misc" },
+        dataset: { type: "attack", "sub-type": "misc" },
       },
     };
 

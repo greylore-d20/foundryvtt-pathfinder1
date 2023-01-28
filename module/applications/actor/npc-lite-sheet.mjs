@@ -42,7 +42,7 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
         canCreate: true,
         initial: true,
         showTypes: true,
-        dataset: { type: "attack", "attack-type": "weapon" },
+        dataset: { type: "attack", "sub-type": "weapon" },
       },
     };
 

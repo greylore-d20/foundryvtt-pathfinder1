@@ -26,7 +26,6 @@ export { LinkOptions } from "./link-options.mjs";
 export { PointBuyCalculator } from "./point-buy-calculator.mjs";
 export { ScriptEditor } from "./script-editor.mjs";
 export { SensesSelector } from "./senses-selector.mjs";
-export { SidebarPF } from "./sidebar.mjs";
 export { SkillEditor } from "./skill-editor.mjs";
 export { TooltipPF } from "./tooltip.mjs";
 export { ActorTraitSelector } from "./trait-selector.mjs";

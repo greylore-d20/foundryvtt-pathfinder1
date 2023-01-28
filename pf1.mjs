@@ -41,7 +41,6 @@ import { EntrySelector } from "./module/applications/entry-selector.mjs";
 import { LevelUpForm } from "./module/applications/level-up.mjs";
 import { PointBuyCalculator } from "./module/applications/point-buy-calculator.mjs";
 import { ScriptEditor } from "./module/applications/script-editor.mjs";
-import { SidebarPF } from "./module/applications/sidebar.mjs";
 import { ActorTraitSelector } from "./module/applications/trait-selector.mjs";
 import { ExperienceDistributor } from "./module/applications/xp-distributor.mjs";
 import { DamageTypeSelector } from "./module/applications/damage-type-selector.mjs";
@@ -228,7 +227,6 @@ Hooks.once("init", function () {
       LevelUpForm,
       PointBuyCalculator,
       ScriptEditor,
-      SidebarPF,
       TooltipPF,
       HelpBrowserPF,
       ExperienceDistributor,

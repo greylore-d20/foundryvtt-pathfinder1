@@ -156,101 +156,98 @@ export class ItemChange {
     const overrides = actor.changeOverrides;
     for (const t of targets) {
       const override = overrides[t];
-      if (!overrides || override) {
-        let operator = this.operator;
-        if (operator === "+") operator = "add";
-        if (operator === "=") operator = "set";
+      let operator = this.operator;
+      if (operator === "+") operator = "add";
+      if (operator === "=") operator = "set";
 
-        const modifierChanger =
-          t != null ? t.match(/^system\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/) : null;
-        const isModifierChanger = modifierChanger != null;
-        const abilityTarget = modifierChanger?.[1];
-        const ability = isModifierChanger ? deepClone(actor.system.abilities[abilityTarget]) : null;
+      const modifierChanger = t != null ? t.match(/^system\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/) : null;
+      const isModifierChanger = modifierChanger != null;
+      const abilityTarget = modifierChanger?.[1];
+      const ability = isModifierChanger ? deepClone(actor.system.abilities[abilityTarget]) : null;
 
-        let value = 0;
-        if (this.formula) {
-          if (operator === "script") {
-            if (!game.settings.get("pf1", "allowScriptChanges")) {
-              ui.notifications?.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), { console: false });
-              console.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), this.parent);
-              value = 0;
-              operator = "add";
-            } else {
-              const fn = this.createFunction(this.formula, ["d", "item"]);
-              const result = fn(rollData, this.parent);
-              value = result.value;
-              operator = result.operator;
-            }
-          } else if (operator === "function") {
-            value = this.formula(rollData, this.parent);
+      let value = 0;
+      if (this.formula) {
+        if (operator === "script") {
+          if (!game.settings.get("pf1", "allowScriptChanges")) {
+            ui.notifications?.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), { console: false });
+            console.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), this.parent);
+            value = 0;
             operator = "add";
-          } else if (!isNaN(this.formula)) {
-            value = parseFloat(this.formula);
-          } else if (this.isDeferred) {
-            value = RollPF.replaceFormulaData(this.formula, rollData, { missing: 0 });
           } else {
-            value = RollPF.safeRoll(this.formula, rollData, [t, this, rollData], {
-              suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
-            }).total;
+            const fn = this.createFunction(this.formula, ["d", "item"]);
+            const result = fn(rollData, this.parent);
+            value = result.value;
+            operator = result.operator;
           }
+        } else if (operator === "function") {
+          value = this.formula(rollData, this.parent);
+          operator = "add";
+        } else if (!isNaN(this.formula)) {
+          value = parseFloat(this.formula);
+        } else if (this.isDeferred) {
+          value = RollPF.replaceFormulaData(this.formula, rollData, { missing: 0 });
+        } else {
+          value = RollPF.safeRoll(this.formula, rollData, [t, this, rollData], {
+            suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
+          }).total;
         }
+      }
 
-        this.data.value = value;
+      this.data.value = value;
 
-        if (!t) continue;
-        const prior = override[operator][this.modifier];
+      if (!t) continue;
+      const prior = override[operator][this.modifier];
 
-        switch (operator) {
-          case "add":
-            {
-              let base = getProperty(actor, t);
+      switch (operator) {
+        case "add":
+          {
+            let base = getProperty(actor, t);
 
-              // Don't change non-existing ability scores
-              if (base == null) {
-                if (t.match(/^system\.abilities/)) continue;
-                base = 0;
-              }
+            // Don't change non-existing ability scores
+            if (base == null) {
+              if (t.match(/^system\.abilities/)) continue;
+              base = 0;
+            }
 
-              // Deferred formula
-              if (typeof value === "string") break;
+            // Deferred formula
+            if (typeof value === "string") break;
 
-              if (typeof base === "number") {
-                if (CONFIG.PF1.stackingBonusModifiers.includes(this.modifier)) {
-                  // Add stacking bonus
-                  setProperty(actor, t, base + value);
-                  override[operator][this.modifier] = (prior ?? 0) + value;
-                } else {
-                  // Use higher value only
-                  const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
-                  setProperty(actor, t, base + diff);
-                  override[operator][this.modifier] = Math.max(prior ?? 0, value);
-                }
+            if (typeof base === "number") {
+              if (CONFIG.PF1.stackingBonusModifiers.includes(this.modifier)) {
+                // Add stacking bonus
+                setProperty(actor, t, base + value);
+                override[operator][this.modifier] = (prior ?? 0) + value;
+              } else {
+                // Use higher value only
+                const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
+                setProperty(actor, t, base + diff);
+                override[operator][this.modifier] = Math.max(prior ?? 0, value);
               }
             }
-            break;
+          }
+          break;
 
-          case "set":
-            setProperty(actor, t, value);
-            override[operator][this.modifier] = value;
-            break;
-        }
+        case "set":
+          setProperty(actor, t, value);
+          override[operator][this.modifier] = value;
+          break;
+      }
 
-        if (applySourceInfo) this.applySourceInfo(actor, value);
+      if (applySourceInfo) this.applySourceInfo(actor, value);
 
-        // Adjust ability modifier
-        if (isModifierChanger) {
-          const prevMod = getAbilityModifier(ability.total, {
-            damage: ability.damage,
-            penalty: ability.penalty,
-          });
-          const newAbility = actor.system.abilities[abilityTarget];
-          const mod = getAbilityModifier(newAbility.total, {
-            damage: newAbility.damage,
-            penalty: newAbility.penalty,
-          });
+      // Adjust ability modifier
+      if (isModifierChanger) {
+        const prevMod = getAbilityModifier(ability.total, {
+          damage: ability.damage,
+          penalty: ability.penalty,
+        });
+        const newAbility = actor.system.abilities[abilityTarget];
+        const mod = getAbilityModifier(newAbility.total, {
+          damage: newAbility.damage,
+          penalty: newAbility.penalty,
+        });
 
-          actor.system.abilities[abilityTarget].mod = actor.system.abilities[abilityTarget].mod - (prevMod - mod);
-        }
+        actor.system.abilities[abilityTarget].mod = actor.system.abilities[abilityTarget].mod - (prevMod - mod);
       }
     }
   }

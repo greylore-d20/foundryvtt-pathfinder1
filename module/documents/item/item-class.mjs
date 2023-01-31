@@ -135,6 +135,9 @@ export class ItemClassPF extends ItemPF {
         // This adds flags.core.sourceId, removes extraneous permissions, resets sorting, etc.
         const itemData = game.items.fromCompendium(item);
 
+        // Set associated class
+        itemData.system.class = this.system.tag;
+
         newItems.push({ data: itemData, link });
       }
 

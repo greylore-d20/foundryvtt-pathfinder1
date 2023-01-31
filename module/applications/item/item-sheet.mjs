@@ -110,7 +110,17 @@ export class ItemSheetPF extends ItemSheet {
       actorData = actor?.system;
 
     const rollData = item.getRollData();
+    context.rollData = rollData;
     context.labels = item.getLabels();
+
+    context.canClassLink = pf1.config.classAssociations.includes(item.type);
+    if (context.canClassLink) {
+      context.hasClassLink = !!item.system.class;
+      context.classes = {};
+      for (const [classTag, classData] of Object.entries(rollData.classes)) {
+        context.classes[classTag] = classData.name;
+      }
+    }
 
     // Include sub-items
     context.items = item.items?.map((i) => i.toObject()) ?? [];

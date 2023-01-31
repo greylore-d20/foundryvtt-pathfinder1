@@ -217,6 +217,13 @@ export const classFractionalSavingThrowFormulas = {
 };
 
 /**
+ * Item types that can have class associations.
+ *
+ * TODO: Move this to item metadata.
+ */
+export const classAssociations = ["feat", "attack"];
+
+/**
  * The choices available for favored class bonuses
  */
 export const favouredClassBonuses = {

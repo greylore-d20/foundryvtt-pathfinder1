@@ -1275,6 +1275,10 @@ export class ItemPF extends ItemBasePF {
 
     result.item = deepClone(this.system);
 
+    // Add @class
+    const classTag = result.item.class;
+    if (classTag) result.class = result.classes[classTag];
+
     // Add dictionary flag
     if (this.system.tag) {
       result.item.dFlags = getProperty(result, `dFlags.${this.system.tag}`);

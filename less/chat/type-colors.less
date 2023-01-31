@@ -1,0 +1,59 @@
+.pf1 .type-color {
+  --primary: #fff;
+  --secondary: #c1c1c1;
+
+  --foreground: white;
+
+  &.type-buff {
+    --primary: #fdf767;
+    --secondary: #fdf203;
+    --foreground: black;
+  }
+
+  &.type-feat {
+    --primary: #8900ea;
+    --secondary: #5f00a3;
+  }
+
+  &.type-spell {
+    --primary: #5c37ff;
+    --secondary: #4026b2;
+  }
+
+  &.type-class {
+    --primary: #85b1d2;
+    --secondary: #6a8da8;
+    --foreground: black;
+  }
+
+  &.type-race {
+    --primary: #00bd29;
+    --secondary: #00841c;
+    --foreground: black;
+  }
+
+  &.type-attack {
+    --primary: #f21b1b;
+    --secondary: #a91212;
+    --foreground: white;
+  }
+
+  // Physical items
+  &.type-weapon,
+  &.type-equipment,
+  &.type-consumable,
+  &.type-loot {
+    --primary: #e5e5e5;
+    --secondary: #b7b7b7;
+    --foreground: black;
+  }
+
+  &.card-header {
+    color: var(--foreground);
+    background-image: linear-gradient(to right, var(--primary), var(--secondary));
+
+    .item-name {
+      color: var(--foreground);
+    }
+  }
+}

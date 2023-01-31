@@ -3811,8 +3811,6 @@ export class ActorPF extends ActorBasePF {
           get charges() {
             return this.item.charges;
           },
-          color1: ItemPF.getTypeColor(o.type, 0),
-          color2: ItemPF.getTypeColor(o.type, 1),
         };
       });
   }

@@ -722,9 +722,6 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   // Apply accessibility settings to chat message
   chat.applyAccessibilitySettings(app, html, data, game.settings.get("pf1", "accessibilityConfig"));
 
-  // Alter chat card title color
-  chat.addChatCardTitleGradient(app, html, data);
-
   // Alter ammo recovery options
   chat.alterAmmoRecovery(app, html);
 

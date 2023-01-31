@@ -152,23 +152,6 @@ export const hideGMSensitiveInfo = function (app, html, data) {
   }
 };
 
-export const addChatCardTitleGradient = async function (app, html, data) {
-  const card = html.find(".chat-card")[0];
-  if (!card) return;
-  const actor = await CONFIG.Item.documentClasses.default._getChatCardActor(card);
-  if (!actor) return;
-  const item = actor.items.get(card.dataset.itemId);
-  if (!item) return;
-  const title = $(card).find(".card-header");
-  if (!title.length) return;
-
-  title.css("background-image", `linear-gradient(to right, ${item.typeColor}, ${item.typeColor2})`);
-
-  const titleText = title.find("h2, h3");
-  if (Color(item.typeColor).isLight()) titleText.css("color", "black");
-  else titleText.css("color", "white");
-};
-
 export const alterAmmoRecovery = function (app, html) {
   const recoveryData = app.getFlag("pf1", "ammoRecovery");
   if (!recoveryData) return;

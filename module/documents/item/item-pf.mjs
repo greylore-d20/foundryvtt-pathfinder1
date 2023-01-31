@@ -219,6 +219,9 @@ export class ItemPF extends ItemBasePF {
     return this.system.duration?.totalSeconds ?? null;
   }
 
+  /**
+   * @type {number} Number from 0 to 4. 0 for no aura and 1-4 matching CONFIG.PF1.auraStrengths.
+   */
   get auraStrength() {
     const cl = getProperty(this, "system.cl") || 0;
     if (cl < 1) {
@@ -233,6 +236,9 @@ export class ItemPF extends ItemBasePF {
     return 4;
   }
 
+  /**
+   * @type {ActorPF|null|undefined} Parent actor
+   */
   get parentActor() {
     if (this.parent) return this.parent;
 

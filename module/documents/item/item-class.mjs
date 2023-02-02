@@ -14,6 +14,7 @@ export class ItemClassPF extends ItemPF {
   }
 
   _onCreate(data, options, userId) {
+    super._onCreate(data, options, userId);
     if (userId !== game.user.id) return;
     const actor = this.parent;
     if (!actor) return;
@@ -25,6 +26,7 @@ export class ItemClassPF extends ItemPF {
   }
 
   _onDelete(options, userId) {
+    super._onDelete(options, userId);
     if (userId !== game.user.id) return;
     const actor = this.parent;
     if (!actor) return;

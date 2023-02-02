@@ -4074,7 +4074,7 @@ export class ActorPF extends ActorBasePF {
 
     options = { restoreHealth, restoreDailyUses, longTermCare, hours };
     let allowed = Hooks.call("pf1PreActorRest", this, options, updateData, itemUpdates);
-    allowed = callOldNamespaceHook("actorRest", "pf1ActorRest", allowed, this, options, updateData, itemUpdates);
+    allowed = callOldNamespaceHook("actorRest", "pf1PreActorRest", allowed, this, options, updateData, itemUpdates);
     if (allowed === false) return;
 
     await this.updateEmbeddedDocuments("Item", itemUpdates);

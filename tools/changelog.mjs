@@ -138,7 +138,7 @@ export async function releaseLog(newVersion) {
               .split(",")
               .map((number) => config.gitIssueTemplate.replace(/NUMBER/g, number.trim()))
               .join(", ");
-            text = `${text}- ${message} ${link}\n`;
+            text = `${text}- ${message} (${link})\n`;
           }
         });
       }

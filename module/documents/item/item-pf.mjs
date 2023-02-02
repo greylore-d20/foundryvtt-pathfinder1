@@ -75,10 +75,7 @@ export class ItemPF extends ItemBasePF {
       if (updated) this.updateSource({ "system.changes": changes });
     }
 
-    let updates = {};
-    if (typeof this.preCreateData === "function") {
-      updates = this.preCreateData(data, options, user);
-    }
+    let updates = this.preCreateData(data, options, user);
 
     if (Object.keys(updates).length) return this.updateSource(updates);
   }

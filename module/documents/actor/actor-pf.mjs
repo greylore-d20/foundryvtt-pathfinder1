@@ -103,10 +103,7 @@ export class ActorPF extends ActorBasePF {
   _preCreate(data, options, user) {
     super._preCreate(data, options, user);
 
-    let updates = {};
-    if (typeof this.preCreateData === "function") {
-      updates = this.preCreateData(data, options, user);
-    }
+    const updates = this.preCreateData(data, options, user);
 
     if (Object.keys(updates).length) return this.system.update(updates);
   }

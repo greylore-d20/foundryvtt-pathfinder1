@@ -1855,7 +1855,10 @@ export class ActorPF extends ActorBasePF {
     super._onCreateEmbeddedDocuments(...arguments);
 
     if (userId === game.user.id && embeddedName === "Item") {
-      this.toggleConditionStatusIcons({ render: false });
+      // Creating anything but active buffs should not prompt toggling conditions
+      if (documents.some((item) => item.type === "buff" && item.isActive)) {
+        this.toggleConditionStatusIcons({ render: false });
+      }
 
       // Apply race size to actor
       const race = documents.find((d) => d.type === "race");
@@ -1869,7 +1872,14 @@ export class ActorPF extends ActorBasePF {
     super._onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId);
 
     if (userId === game.user.id && embeddedName === "Item") {
-      this.toggleConditionStatusIcons({ render: false });
+      // Toggle conditions only if updated items included buffs and the buff's active state was changed
+      if (
+        documents.some(
+          (item) => item.type === "buff" && result.some((ri) => ri._id == item.id && ri.system?.active !== undefined)
+        )
+      ) {
+        this.toggleConditionStatusIcons({ render: false });
+      }
     }
   }
 

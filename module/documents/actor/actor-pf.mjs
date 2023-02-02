@@ -3851,15 +3851,6 @@ export class ActorPF extends ActorBasePF {
     if (toCreate.length) await this.createEmbeddedDocuments("ActiveEffect", toCreate, createContext);
     if (toUpdate.length) await this.updateEmbeddedDocuments("ActiveEffect", toUpdate, context);
     this._states.togglingStatusIcons = false;
-
-    // Special case for unlinked tokens, which don't seem to draw their effects on an actor update
-    const tokens = this.getActiveTokens();
-    for (const token of tokens) {
-      const linked = token.document.actorLink;
-      if (!linked) {
-        token.drawEffects();
-      }
-    }
   }
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }

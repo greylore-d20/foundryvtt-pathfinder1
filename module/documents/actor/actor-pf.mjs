@@ -1053,16 +1053,6 @@ export class ActorPF extends ActorBasePF {
       item.prepareDerivedItemData();
       this.updateItemResources(item);
     });
-
-    // Update tokens for resources
-    const tokens = this.isToken ? [this.token] : this.getActiveTokens();
-    tokens.forEach((t) => {
-      try {
-        t.drawBars();
-      } catch (err) {
-        // Drop the harmless error
-      }
-    });
   }
 
   /**

@@ -161,8 +161,8 @@
   "SETTINGS.pf1UnitsN": "Système d’unités",
   "SETTINGS.pf1UnitsL": "Système d'unités utilisé dans ce monde",
 
-  "SETTINGS.pf1ImperialUnits": "Impérial (ft, lbs)",
-  "SETTINGS.pf1ImperialDistanceUnits": "Impérial (ft)",
+  "SETTINGS.pf1ImperialUnits": "Impérial (pieds, lbs)",
+  "SETTINGS.pf1ImperialDistanceUnits": "Impérial (pieds)",
   "SETTINGS.pf1ImperialWeightUnits": "Impérial (lbs)",
   "SETTINGS.pf1MetricUnits": "Métrique (mètres, kg)",
   "SETTINGS.pf1MetricDistanceUnits": "Métrique (mètres)",
@@ -218,28 +218,30 @@
 
   "PF1.TooltipWorldConfigName": "Infobulle Configuration du monde",
   "PF1.TooltipWorldConfigLabel": "Infobulle (Monde)",
-  "PF1.TooltipWorldConfigHint": "Changer les réglages d'infobulle de ce monde",
-  "PF1.TooltipWorldConfigHidePortraits": "Cacher les portraits (globalement)",
-  "PF1.TooltipWorldConfigDisable": "Désactiver les infobulles (globalement)",
-  "PF1.TooltipWorldConfigHideHeld": "Cacher les objets tenus (globalement)",
-  "PF1.TooltipWorldConfigHideHeld_Hint": "Cacher les objets tenus de tous les joueurs",
-  "PF1.TooltipWorldConfigHideArmor": "Cacher l’armure (globalement)",
-  "PF1.TooltipWorldConfigHideArmor_Hint": "Cacher l’armure de tous les joueurs",
-  "PF1.TooltipWorldConfigHideBuffs": "Cacher les effets (globalement)",
-  "PF1.TooltipWorldConfigHideBuffs_Hint": "Cacher les effets de tous les joueurs",
-  "PF1.TooltipWorldConfigHideConditions": "Cacher les états préjudiciables (globalement)",
-  "PF1.TooltipWorldConfigHideConditions_Hint": "Cacher les états préjudiciables de tous les joueurs",
-  "PF1.TooltipWorldConfigHideClothing": "Cacher les vêtements (globalement)",
-  "PF1.TooltipWorldConfigHideClothing_Hint": "Cacher les vêtements de tous les joueurs",
-  "PF1.TooltipWorldConfigHideActorName": "Cacher les noms des acteurs (globalement)",
-  "PF1.TooltipWorldConfigHideActorName_Hint": "Cacher les noms des acteurs de tous les joueurs",
-  "PF1.TooltipWorldConfigHideActorNameReplacement": "Noms de remplacement cachés",
+  "PF1.TooltipWorldConfigHint": "Changer les réglages d'infobulle de ce monde.",
+  "PF1.TooltipWorldConfigHidePortraits": "Cacher les portraits",
+  "PF1.TooltipWorldConfigDisable": "Désactiver les infobulles",
+  "PF1.TooltipWorldConfigHideHeld": "Cacher les objets tenus",
+  "PF1.TooltipWorldConfigHideHeld_Hint": "Cacher les objets tenus de tous les joueurs.",
+  "PF1.TooltipWorldConfigHideArmor": "Cacher l’armure",
+  "PF1.TooltipWorldConfigHideArmor_Hint": "Cacher l’armure de tous les joueurs.",
+  "PF1.TooltipWorldConfigHideBuffs": "Cacher les effets",
+  "PF1.TooltipWorldConfigHideBuffs_Hint": "Cacher les effets de tous les joueurs.",
+  "PF1.TooltipWorldConfigHideConditions": "Cacher les états préjudiciables",
+  "PF1.TooltipWorldConfigHideConditions_Hint": "Cacher les états préjudiciables de tous les joueurs.",
+  "PF1.TooltipWorldConfigHideClothing": "Cacher les vêtements",
+  "PF1.TooltipWorldConfigHideClothing_Hint": "Cacher les vêtements de tous les joueurs.",
+  "PF1.TooltipWorldConfigHideActorNameByDisposition": "Cacher les noms par disposition",
+  "PF1.TooltipWorldConfigHideActorNameByDisposition_Hint": "Cacher le nom pour tous les joueurs lorsque la disposition n'est pas configurée.",
   "PF1.Disposition": {
     "None": "Aucun",
     "Hostile": "Hostile",
     "Non-Friendly": "Inamical",
     "All": "Tous"
   },
+  "PF1.TooltipWorldConfigNameMinimumPermission": "Permission minimum du nom",
+  "PF1.TooltipWorldConfigNameMinimumPermission_Hint": "Niveau de permission minimum nécessaire pour voir le vrai nom du jeton.",
+  "PF1.TooltipWorldConfigHideActorNameReplacement": "Noms de remplacement cachés",
 
   "PF1.LevelUpForm_Title": "Montée de niveau : {className}",
   "PF1.LevelUpForm_Health": "Points de vie supplémentaires",
@@ -537,12 +539,12 @@
   "PF1.DistClose": "Courte",
   "PF1.DistMedium": "Moyenne",
   "PF1.DistLong": "Longue",
-  "PF1.DistFt": "feet",
+  "PF1.DistFt": "pieds",
   "PF1.DistMi": "miles",
 
   "PF1.DistM": "mètres",
   "PF1.DistKM": "kilomètres",
-  "PF1.DistFtShort": "ft",
+  "PF1.DistFtShort": "pi",
   "PF1.DistMiShort": "mi",
   "PF1.DistMShort": "m",
   "PF1.DistKMShort": "km",
@@ -712,6 +714,19 @@
   "PF1.RedMantisAssassin": "Assassin des mantes rouges",
   "PF1.Psychic": "Psychiste",
 
+  "PF1.Spellcasting": {
+    "Progression": {
+      "Label": "Progression"
+    },
+    "Type": {
+      "Label": "Type de magie",
+      "Arcane": "Profane",
+      "Divine": "Divine",
+      "Psychic": "Psychique",
+      "Alchemy": "Alchimique"
+    }
+  },
+
   "PF1.SpellComponentVerbal": "Verbale",
   "PF1.SpellComponentSomatic": "Gestuelle",
   "PF1.SpellComponentThought": "Intellectuelle",
@@ -726,7 +741,7 @@
 
   "PF1.AutoSpellClassLevelOffset": {
     "Formula": "Modification du niveau de classe",
-    "InfoBox": "Si vous avez une classe de prestige qui altère votre niveau de classe (ie @classes.mysticTheurge.level)"
+    "InfoBox": "Si vous avez une classe de prestige qui altère votre niveau de classe (par ex. @classes.mysticTheurge.level)"
   },
 
   "PF1.LearnMoreSpell": "Vous pouvez apprendre 1 sort supplémentaire",
@@ -734,7 +749,7 @@
   "PF1.PrepareMoreSpell": "Vous pouvez préparer 1 sort de plus",
   "PF1.PrepareMoreSpells": "Vous pouvez préparer {quantity} sorts de plus",
   "PF1.SpellScoreTooLow": "Votre caractéristique est trop basse pour lancer des sorts de ce niveau",
-  "PF1.TooManySpells": "Vous avez {quantity} sorts de trop",
+  "PF1.TooManySpells": "Vous avez {quantity} sorts en trop",
 
   "PF1.MeasureTemplateCone": "Cône",
   "PF1.MeasureTemplateCircle": "Cercle",
@@ -742,6 +757,8 @@
   "PF1.MeasureTemplateRectangle": "Rectangle",
 
   "PF1.LoadingCompendiumBrowser": "Chargement du navigateur de compendium...",
+  "PF1.LoadingItemsFromIndexes": "Chargement de {items} objets depuis {indexes} indexes…",
+  "PF1.CopyUuidToClipboard": "Copier l'UUID dans le presse-papier",
 
   "PF1.ItemTypeWeapon": "Arme",
   "PF1.ItemTypeEquipment": "Équipement",
@@ -943,10 +960,13 @@
   "PF1.ErrorGenericPermission": "Vous n’êtes pas autorisé à entreprendre une action.",
   "PF1.ErrorNoActorPermission": "Vous n’avez pas la permission de contrôler cet acteur.",
   "PF1.ErrorNoActorPermissionAlt": "Vous n’avez pas la permission de contrôler l’acteur '{name}'.",
-  "PF1.ErrorNoFormula": "{name} n’est pas une formule de lancer de dé !",
-  "PF1.ErrorItemNoOwner": "Cet objet n’a pas de possesseur.",
-  "PF1.ErrorItemFormula": "Il y a une erreur de formule dans l’objet {item} sur l’acteur {actor}.",
-  "PF1.ErrorNoCharges": "Il n’y a plus de capacité dans {name}.",
+  "PF1.ErrorNoFormula": "{name} n’a pas de formule à lancer pour les jets!",
+  "PF1.ErrorItemNoOwner": "Cet objet n’a pas de propriétaire.",
+  "PF1.ErrorSpellbookExists": "Le grimoire existe déjà",
+  "PF1.ErrorNoFreeSpellbooks": "Pas de grimoire libre",
+  "PF1.ErrorItemFormula": "Il y a une erreur de formule dans l’objet \"{item}\" sur l’acteur \"{actor}\".",
+  "PF1.ErrorActionFormula": "Il y a une erreur de formule dans l'action \"{action}\" (dans l'objet \"{item}\") sur l'acteur \"{actor}\"",
+  "PF1.ErrorNoCharges": "Il n’y a plus de charges restantes dans {name}.",
   "PF1.ErrorInsufficientCharges": "Il n’y a plus suffisamment de charges dans {name}.",
   "PF1.ErrorNoQuantity": "Vous n’avez plus d’élément de ce type.",
   "PF1.ErrorNoSpellsLeft": "Vous n’avez plus de sorts restants de ce type.",
@@ -1353,6 +1373,7 @@
   "PF1.AttackName": "Nom de l’attaque",
   "PF1.ActionName": "Nom de l'action",
   "PF1.CreateAttack": "Créer une attaque",
+  "PF1.CreateSpellbook": "Créer un grimoire",
   "PF1.Active": "Actif",
   "PF1.SpellDetails": "Détails du sort",
   "PF1.SpellBook": "Grimoire",
@@ -1439,6 +1460,7 @@
   "PF1.EquipmentStatus": "Statut de l’équipement",
   "PF1.WeaponSize": "Taille de l'arme",
   "PF1.WeaponProperties": "Attributs spéciaux d'arme",
+  "PF1.WeaponDetails": "Détails de l'arme",
   "PF1.EnhancementBonus": "Bonus d’altération",
   "PF1.EnhancementBonusOverride": "Bonus d'altération (modifié)",
   "PF1.BaseWeaponDamage": "Dégâts de base de l’arme",
@@ -1626,6 +1648,7 @@
   "PF1.Tag": "Étiquette",
   "PF1.Tags": "Étiquettes",
   "PF1.Refresh": "Rafraîchir",
+  "PF1.Reset": "Réinitialiser",
   "PF1.AttackDetails": "Détails de l'attaque",
   "PF1.AttackType": "Type d’attaque",
   "PF1.AttackUsage": "Utilisation",
@@ -1721,6 +1744,7 @@
   "PF1.Combat": "Combat",
   "PF1.Current": "Actuel",
   "PF1.Maximum": "Maximum",
+  "PF1.Minimum": "Minimum",
   "PF1.Ability": "Caractéristique",
   "PF1.Modifier": "Modificateur",
   "PF1.ModifierAbbr": "Mod.",

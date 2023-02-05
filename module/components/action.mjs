@@ -614,7 +614,7 @@ export class ItemAction {
     }
 
     // Test bonus attack formula
-    const exAtkBonusFormula = this.data.formulaicAttacks?.bonus?.bonus || "0";
+    const exAtkBonusFormula = this.data.formulaicAttacks?.bonus?.formula || "0";
     try {
       if (exAtkBonusFormula.length > 0 && exAtkBonusFormula != 0) {
         rollData.attackCount = 1;

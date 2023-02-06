@@ -2486,41 +2486,20 @@ export class ActorSheetPF extends ActorSheet {
     });
 
     // Buffs
-    let buffs = data.items.filter((obj) => {
-      return obj.type === "buff";
-    });
+    let buffs = data.items.filter((obj) => obj.type === "buff");
     buffs = this._filterItems(buffs, this._filters.buffs);
-    const buffSections = {
-      temp: {
-        label: game.i18n.localize("PF1.Temporary"),
+    const buffSections = {};
+    Object.entries(PF1.buffTypes).forEach(([buffId, label]) => {
+      buffSections[buffId] = {
+        label,
         items: [],
         hasActions: false,
-        dataset: { type: "buff", "sub-type": "temp" },
-      },
-      perm: {
-        label: game.i18n.localize("PF1.Permanent"),
-        items: [],
-        hasActions: false,
-        dataset: { type: "buff", "sub-type": "perm" },
-      },
-      item: {
-        label: game.i18n.localize("PF1.Item"),
-        items: [],
-        hasActions: false,
-        dataset: { type: "buff", "sub-type": "item" },
-      },
-      misc: {
-        label: game.i18n.localize("PF1.Misc"),
-        items: [],
-        hasActions: false,
-        dataset: { type: "buff", "sub-type": "misc" },
-      },
-    };
+        dataset: { type: "buff", "sub-type": buffId },
+      };
+    });
 
     for (const b of buffs) {
-      const s = b.subType;
-      if (!buffSections[s]) continue;
-      buffSections[s].items.push(b);
+      buffSections[b.subType]?.items.push(b);
     }
 
     // Attacks

@@ -50,6 +50,17 @@
 
     {{!-- Details Tab --}}
     <div class="tab details" data-group="primary" data-tab="details">
+      {{! Buff Subtype }}
+      <div class="form-group">
+        <label>{{localize "PF1.Type"}}</label>
+        <div class="form-fields">
+          <select name="system.subType">
+          {{selectOptions config.buffTypes selected=system.subType}}
+          </select>
+        </div>
+      </div>
+
+      {{! Hide From Token}}
       <div class="form-group">
         <label>{{localize "PF1.HideFromToken"}}</label>
         <input type="checkbox" name="system.hideFromToken" {{checked system.hideFromToken}} />
@@ -82,17 +93,6 @@
 
     {{!-- Changes Tab --}}
     <div class="tab flexcol" data-group="primary" data-tab="changes">
-      <div class="form-group select">
-        <label>{{localize "PF1.Type"}}</label>
-        <select name="system.subType" value="{{system.subType}}">
-          {{#select system.subType}}
-          {{#each config.buffTypes as |type a|}}
-          <option value="{{a}}">{{type}}</option>
-          {{/each}}
-          {{/select}}
-        </select>
-      </div>
-
       {{~> "systems/pf1/templates/items/parts/item-changes.hbs"}}
     </div>
 

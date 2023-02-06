@@ -1,14 +1,14 @@
 {{!-- Apply Damage button/widget --}}
 {{#*inline "applyDamageButton"}}
   {{!-- Apply full damage --}}
-  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage}}" title="{{#if isHealing}}{{localize "PF1.ApplyHealing"}}{{else}}{{localize "PF1.ApplyDamage"}}{{/if}}"
-                                                                                                      data-tags="{{#if nonlethal}}nonlethal{{/if}}">
+  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{damage}}" data-tooltip="{{#if isHealing}}PF1.ApplyHealing{{else}}PF1.ApplyDamage{{/if}}"
+      data-tags="{{#if nonlethal}}nonlethal{{/if}}">
     <i class="fas fa-hammer"></i>
     <i class="absolute fas fa-plus"></i>
   </a>
   {{!-- Apply half damage --}}
-  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{halfNumber damage}}" title="{{localize "PF1.ApplyHalf"}}"
-                                                                                                      data-tags="{{#if nonlethal}}nonlethal{{/if}}">
+  <a class="inline-action" data-action="applyDamage" data-value="{{#if isHealing}}-{{/if}}{{halfNumber damage}}" data-tooltip="PF1.ApplyHalf"
+      data-tags="{{#if nonlethal}}nonlethal{{/if}}">
     <i class="fas fa-hammer"></i>
     <i class="absolute">½</i>
   </a>
@@ -19,7 +19,7 @@
   <tr>
     {{#if dr.normal}}
       <td class="roll">
-        <a class="inline-roll inline-dsn-hidden inline-result" title="{{dr.normal.formula}}" data-roll="{{json-string dr.normal}}">
+        <a class="inline-roll inline-dsn-hidden inline-result" data-tooltip="{{dr.normal.formula}}" data-roll="{{json-string dr.normal}}">
           <i class="fas fa-dice-d20"></i> {{dr.normal.total}}
         </a>
       </td>
@@ -31,7 +31,7 @@
     {{#if atk.hasCritConfirm}}
     {{#if dr.crit}}
       <td class="roll">
-        <a class="inline-roll inline-dsn-hidden inline-result" title="{{dr.crit.formula}}" data-roll="{{json-string dr.crit}}">
+        <a class="inline-roll inline-dsn-hidden inline-result" data-tooltip="{{dr.crit.formula}}" data-roll="{{json-string dr.crit}}">
           <i class="fas fa-dice-d20"></i> {{dr.crit.total}}
         </a>
       </td>
@@ -54,7 +54,7 @@
           <th class="attack-flavor" {{#if atk.hasCritConfirm}}colspan="4"{{else}}colspan="2"{{/if}}>
             {{atk.attack.flavor}}
             {{#if atk.rollData.d20}}
-            <i class="fas fa-dice-d20" title="{{localize "PF1.CustomRollDesc"}}"></i>
+            <i class="fas fa-dice-d20" data-tooltip="PF1.CustomRollDesc"></i>
             {{/if}}
           </th>
         </tr>
@@ -68,7 +68,7 @@
         <tr>
           <th class="attack-damage" colspan="2">
             {{atk.damage.flavor}}
-            <a class="attack-damage total fake-inline-roll inline-result" title="{{localize "PF1.Total"}}">
+            <a class="attack-damage total fake-inline-roll inline-result" data-tooltip="PF1.Total">
               {{atk.damage.total}}
             </a>
             {{> applyDamageButton damage=atk.damage.total isHealing=atk.isHealing nonlethal=atk.nonlethal}}
@@ -82,14 +82,14 @@
         <tr class="attack">
           <td {{#if atk.hasCritConfirm}}colspan="2"{{else}}colspan="4"{{/if}} class="roll">
             <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.attack.isNat20}} natural-20 success{{/if}}{{#if atk.attack.isNat1}} natural-1 failure{{/if}}{{#if atk.attack.isCrit}} critical-threat{{/if}}"
-            title="{{atk.attack.formula}}" data-roll="{{json-string atk.attack}}">
+            data-tooltip="{{atk.attack.formula}}" data-roll="{{json-string atk.attack}}">
             <i class="fas fa-dice-d20"></i> {{atk.attack.total}}
             </a>
           </td>
           {{#if atk.hasCritConfirm}}
           <td colspan="2" class="roll">
             <a class="inline-roll inline-dsn-hidden inline-result{{#if atk.critConfirm.isNat20}} success{{/if}}{{#if atk.critConfirm.isNat1}} natural-1 failure{{/if}}"
-            title="{{atk.critConfirm.formula}}" data-roll="{{json-string atk.critConfirm}}">
+            data-tooltip="{{atk.critConfirm.formula}}" data-roll="{{json-string atk.critConfirm}}">
             <i class="fas fa-dice-d20"></i> {{atk.critConfirm.total}}
             </a>
           </td>
@@ -100,7 +100,7 @@
         <tr class="damage">
           <th colspan="2">
             {{atk.damage.flavor}}
-            <a class="fake-inline-roll inline-dsn-hidden inline-result" title="{{localize "PF1.Total"}}">
+            <a class="fake-inline-roll inline-dsn-hidden inline-result" data-tooltip="PF1.Total">
               {{atk.damage.total}}
             </a>
             {{> applyDamageButton damage=atk.damage.total isHealing=atk.isHealing nonlethal=atk.nonlethal}}
@@ -108,7 +108,7 @@
           {{#if atk.hasCritConfirm}}
           <th colspan="2">
             {{atk.critDamage.flavor}}
-            <a class="fake-inline-roll inline-dsn-hidden inline-result" title="{{localize "PF1.Total"}}">
+            <a class="fake-inline-roll inline-dsn-hidden inline-result" data-tooltip="PF1.Total">
               {{atk.critDamage.total}}
             </a>
             {{> applyDamageButton damage=atk.critDamage.total isHealing=atk.isHealing nonlethal=atk.nonlethal}}
@@ -153,12 +153,12 @@
       <span class="name">{{atk.ammo.name}}</span>
 
       {{!-- Recover --}}
-      <a class="inline-action" data-action="recoverAmmo" title="{{localize "PF1.RecoverAmmunition"}}">
+      <a class="inline-action" data-action="recoverAmmo" data-tooltip="PF1.RecoverAmmunition">
         <i class="fas fa-rocket"></i>
       </a>
 
       {{!-- Force Recover --}}
-      <a class="inline-action" data-action="forceRecoverAmmo" title="{{localize "PF1.ForceRecover"}}">
+      <a class="inline-action" data-action="forceRecoverAmmo" data-tooltip="PF1.ForceRecover">
         <i class="fas fa-rocket"></i>
         <i class="absolute fas fa-plus"></i>
       </a>

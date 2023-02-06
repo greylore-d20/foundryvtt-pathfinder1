@@ -2,7 +2,7 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header loot-header flexrow">
-    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img" />
 
     <div class="header-details flexrow">
       {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
@@ -69,7 +69,7 @@
           </div>
         </div>
 
-        <div class="form-group" title="{{localize "PF1.AbundantDesc"}}">
+        <div class="form-group" data-tooltip="PF1.AbundantDesc">
           <label class="checkbox">
             <input type="checkbox" name="flags.pf1.abundant" {{checked item.flags.pf1.abundant}} /> {{localize "PF1.Abundant"}}
           </label>

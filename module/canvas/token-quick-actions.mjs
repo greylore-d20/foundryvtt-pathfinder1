@@ -35,7 +35,7 @@ export class TokenQuickActions {
       const type = item.type;
       quickActions +=
         `<div id="${type}-${item.id}" class="control-icon token-quick-action type-${type}">` +
-        `<img src="${icon}" width="36" height="36" title="${title}">`;
+        `<img src="${icon}" width="36" height="36" data-tooltip="${title}">`;
       quickActions += "</div >";
     });
 

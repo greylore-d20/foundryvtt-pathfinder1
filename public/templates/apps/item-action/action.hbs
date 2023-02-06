@@ -140,7 +140,7 @@
     <div class="form-fields">
       <input type="text" class="formulaic-attacks formula" name="formulaicAttacks.count.formula" value="{{data.formulaicAttacks.count.formula}}" data-dtype="String" placeholder="e.g. ceil(@attributes.bab.total / 5) - 1" />
       {{!-- to avoid disappearance of .value --}}
-      <input type="text" disabled class="formula-result small" name="formulaicAttacks.count.value" value="{{data.formulaicAttacks.count.value}}" title="{{localize 'PF1.FormulaResult'}}" placeholder="0" data-dtype="Number" />
+      <input type="text" disabled class="formula-result small" name="formulaicAttacks.count.value" value="{{data.formulaicAttacks.count.value}}" data-tooltip="PF1.FormulaResult" placeholder="0" data-dtype="Number" />
     </div>
   </div>
   <div class="form-group">
@@ -152,7 +152,7 @@
   <div class="form-group">
     <label>{{localize 'PF1.AttackName'}}</label>
     <div class="form-fields">
-      <input type="text" name="formulaicAttacks.label" value="{{data.formulaicAttacks.label}}" title="{{localize 'PF1.FormulaAttackHint'}}" data-dtype="String" placeholder="{{localize 'PF1.FormulaAttack'}}" />
+      <input type="text" name="formulaicAttacks.label" value="{{data.formulaicAttacks.label}}" data-tooltip="PF1.FormulaAttackHint" data-dtype="String" placeholder="{{localize 'PF1.FormulaAttack'}}" />
     </div>
   </div>
 </div>

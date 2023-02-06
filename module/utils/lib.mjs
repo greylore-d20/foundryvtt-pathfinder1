@@ -912,10 +912,9 @@ export function createInlineFormula(match, rollData, options) {
 
   a.classList.add(...cls);
 
-  const title = label || formula;
-  a.innerHTML = `<i class="fas fa-dice-d20"></i> ${title}`;
-  if (label) a.dataset.tooltip = formula;
+  a.dataset.tooltip = formula;
   label = label ? `${label}: ${formula}` : formula;
+  a.innerHTML = `<i class="fas fa-dice-d20"></i> ${label}`;
 
   return a;
 }

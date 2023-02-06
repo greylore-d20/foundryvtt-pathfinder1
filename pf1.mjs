@@ -1000,9 +1000,7 @@ Hooks.on("renderTokenConfig", async (app, html) => {
     dmTab.find("a.action-button").unbind();
   }
   // Add custom vision checkbox
-  newHTML = `<div class="form-group" title="${game.i18n.localize(
-    "PF1.CustomVisionRules.Description"
-  )}"><label>${game.i18n.localize(
+  newHTML = `<div class="form-group" data-tooltip="PF1.CustomVisionRules.Description"><label>${game.i18n.localize(
     "PF1.CustomVisionRules.Label"
   )}</label><input type="checkbox" name="flags.pf1.customVisionRules" data-dtype="Boolean"`;
   if (enableCustomVision) newHTML += " checked";

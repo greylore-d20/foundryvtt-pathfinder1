@@ -15,9 +15,9 @@
     </div>
 
     <div class="action-controls item-controls">
-      <a class="edit-action" title="{{localize "PF1.EditItem"}}"><i class="fas fa-edit"></i></a>
-      <a class="duplicate-action" title="{{localize "PF1.DuplicateItem"}}"><i class="fas fa-copy"></i></a>
-      <a class="delete-action" title="{{localize "PF1.DeleteItem"}}"><i class="fas fa-trash"></i></a>
+      <a class="edit-action" data-tooltip="PF1.EditItem"><i class="fas fa-edit"></i></a>
+      <a class="duplicate-action" data-tooltip="PF1.DuplicateItem"><i class="fas fa-copy"></i></a>
+      <a class="delete-action" data-tooltip="PF1.DeleteItem"><i class="fas fa-trash"></i></a>
     </div>
   </li>
 {{/inline}}
@@ -29,7 +29,7 @@
     <li class="inventory-header flexrow">
       <h3 class="item-name flexrow">{{localize "PF1.ActionPlural"}}</h3>
 
-      <div class="item-detail item-uses"><i class="icon icon-battery-pack large" title="{{localize "PF1.ChargePlural"}}"></i></div>
+      <div class="item-detail item-uses"><i class="icon icon-battery-pack large" data-tooltip="PF1.ChargePlural"></i></div>
 
       <div class="action-controls item-controls">
         <a class="action-control add-action">

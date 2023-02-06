@@ -65,20 +65,20 @@
             <li class="inventory-header flexrow">
                 <h3 class="item-name flexrow">
                     {{#if section.info}}
-                    <i class="fas fa-info item-info" title="{{section.info}}"></i>
+                    <i class="fas fa-info item-info" data-tooltip="{{section.info}}"></i>
                     {{/if}}
                     {{localize section.name}}
                 </h3>
 
                 {{#if ../isGM}}
                 <div class="item-detail item-hidden">
-                    <i class="fas fa-eye-slash" title="{{localize "PF1.Hidden"}}"></i>
+                    <i class="fas fa-eye-slash" data-tooltip="PF1.Hidden"></i>
                 </div>
                 {{/if}}
 
                 <div class="item-controls">
                     {{#if ../owner}}
-                    <a class="item-control item-create" title="{{localize "PF1.Create"}}">
+                    <a class="item-control item-create" data-tooltip="PF1.Create">
                         <i class="fas fa-plus"></i>
                     </a>
                     {{/if}}
@@ -101,8 +101,8 @@
                     {{/if}}
 
                     <div class="item-controls">
-                        <a class="item-control item-edit" title="{{localize "PF1.EditItem"}}"><i class="fas fa-edit"></i></a>
-                        <a class="item-control item-delete" title="{{localize "PF1.DeleteItem"}}"><i class="fas fa-trash"></i></a>
+                        <a class="item-control item-edit" data-tooltip="PF1.EditItem"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" data-tooltip="PF1.DeleteItem"><i class="fas fa-trash"></i></a>
                     </div>
                 </li>
                 {{/unless}}

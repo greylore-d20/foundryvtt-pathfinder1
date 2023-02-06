@@ -191,7 +191,7 @@ export const applyAccessibilitySettings = function (app, html, data, conf) {};
  */
 export const createInlineRollString = (roll, { hide3d = true } = {}) =>
   `<a class="inline-roll inline-result ${hide3d ? "inline-dsn-hidden" : ""}" \
-  title="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}"> \
+  data-tooltip="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}"> \
   <i class="fas fa-dice-d20"></i> ${roll.total}</a>`;
 
 export const hideInvisibleTargets = async function (app, html) {

@@ -4,7 +4,7 @@
   {{#if skill.arbitrary}}
   <li class="skill arbitrary" data-skill="{{s}}">
     <div class="skill-name">
-      <a class="skill-control skill-create" title="Add Skill">
+      <a class="skill-control skill-create" data-tooltip="PF1.AddSkill">
         <i class="fas fa-plus"></i>
       </a>
       {{#if compendiumEntry}}
@@ -42,16 +42,16 @@
       {{/if}}
     </div>
     <div class="rollable"><img src="icons/dice/d20black.svg"></div>
-    <span class="text-box skill-mod" title="{{localize "PF1.SkillModTooltip"}}">{{numberFormat subSkill.mod decimals=0 sign=true}}</span>
-    <span class="text-box skill-rank" name="system.skills.{{s}}.subSkills.{{b}}.rank" data-dtype="Number" title="{{localize "PF1.SkillRankPlural"}}" data-placeholder="{{localize "PF1.Rank"}}">{{#if subSkill.rank}}{{subSkill.rank}}{{/if}}</span>
+    <span class="text-box skill-mod" data-tooltip="PF1.SkillModTooltip">{{numberFormat subSkill.mod decimals=0 sign=true}}</span>
+    <span class="text-box skill-rank" name="system.skills.{{s}}.subSkills.{{b}}.rank" data-dtype="Number" data-tooltip="PF1.SkillRankPlural" data-placeholder="{{localize "PF1.Rank"}}">{{#if subSkill.rank}}{{subSkill.rank}}{{/if}}</span>
     <label class="checkbox skill-cs">
-      <abbr title="{{localize "PF1.CSTooltip"}}">{{localize "PF1.CS"}}</abbr> <input type="checkbox" disabled {{checked subSkill.cs}}/>
+      <abbr data-tooltip="PF1.CSTooltip">{{localize "PF1.CS"}}</abbr> <input type="checkbox" disabled {{checked subSkill.cs}}/>
     </label>
     <label class="checkbox skill-acp">
-      <abbr title="{{localize "PF1.ACPTooltip"}}">{{localize "PF1.ACP"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.subSkills.{{b}}.acp"{{#if @root.skillsLocked}} disabled{{/if}} {{checked subSkill.acp}}/>
+      <abbr data-tooltip="PF1.ACPTooltip">{{localize "PF1.ACP"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.subSkills.{{b}}.acp"{{#if @root.skillsLocked}} disabled{{/if}} {{checked subSkill.acp}}/>
     </label>
     <label class="checkbox skill-rt">
-      <abbr title="{{localize "PF1.RTTooltip"}}">{{localize "PF1.RT"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.subSkills.{{b}}.rt"{{#if @root.skillsLocked}} disabled{{/if}} {{checked subSkill.rt}}/>
+      <abbr data-tooltip="PF1.RTTooltip">{{localize "PF1.RT"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.subSkills.{{b}}.rt"{{#if @root.skillsLocked}} disabled{{/if}} {{checked subSkill.rt}}/>
     </label>
     <div class="skill-ability">
       <select class="skill-ability" name="system.skills.{{s}}.subSkills.{{b}}.ability" data-dtype="String"{{#if @root.skillsLocked}} disabled{{/if}}>
@@ -66,8 +66,8 @@
     <div class="skill-controls">
       {{#unless @root.skillsLocked}}
       {{#if @root.owner}}
-      <a class="skill-control skill-edit" title="{{localize "PF1.EditSkill"}}"><i class="fas fa-edit"></i></a>
-      <a class="skill-control skill-delete" title="Delete Skill"><i class="fas fa-trash"></i></a>
+      <a class="skill-control skill-edit" data-tooltip="PF1.EditSkill"><i class="fas fa-edit"></i></a>
+      <a class="skill-control skill-delete" data-tooltip="PF1.DeleteSkill"><i class="fas fa-trash"></i></a>
       {{/if}}
       {{/unless}}
     </div>
@@ -98,16 +98,16 @@
       {{/if}}
     </div>
     <div class="action roll"><img src="icons/dice/d20black.svg"></div>
-    <span class="text-box skill-mod" title="{{localize "PF1.SkillModTooltip"}}">{{numberFormat skill.mod decimals=0 sign=true}}</span>
-    <span class="text-box skill-rank" name="system.skills.{{s}}.rank" data-dtype="Number" title="{{localize "PF1.SkillRankPlural"}}" data-placeholder="{{localize "PF1.Rank"}}">{{#if skill.rank}}{{skill.rank}}{{/if}}</span>
+    <span class="text-box skill-mod" data-tooltip="PF1.SkillModTooltip">{{numberFormat skill.mod decimals=0 sign=true}}</span>
+    <span class="text-box skill-rank" name="system.skills.{{s}}.rank" data-dtype="Number" data-tooltip="PF1.SkillRankPlural" data-placeholder="{{localize "PF1.Rank"}}">{{#if skill.rank}}{{skill.rank}}{{/if}}</span>
     <label class="checkbox skill-cs">
-      <abbr title="{{localize "PF1.CSTooltip"}}">{{localize "PF1.CS"}}</abbr> <input type="checkbox" disabled {{checked skill.cs}}/>
+      <abbr data-tooltip="PF1.CSTooltip">{{localize "PF1.CS"}}</abbr> <input type="checkbox" disabled {{checked skill.cs}}/>
     </label>
     <label class="checkbox skill-acp">
-      <abbr title="{{localize "PF1.ACPTooltip"}}">{{localize "PF1.ACP"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.acp"{{#if @root.skillsLocked}} disabled{{/if}} {{checked skill.acp}}/>
+      <abbr data-tooltip="PF1.ACPTooltip">{{localize "PF1.ACP"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.acp"{{#if @root.skillsLocked}} disabled{{/if}} {{checked skill.acp}}/>
     </label>
     <label class="checkbox skill-rt">
-      <abbr title="{{localize "PF1.RTTooltip"}}">{{localize "PF1.RT"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.rt"{{#if @root.skillsLocked}} disabled{{/if}} {{checked skill.rt}}/>
+      <abbr data-tooltip="PF1.RTTooltip">{{localize "PF1.RT"}}</abbr> <input type="checkbox" name="system.skills.{{s}}.rt"{{#if @root.skillsLocked}} disabled{{/if}} {{checked skill.rt}}/>
     </label>
     <div class="skill-ability">
       <select class="skill-ability" name="system.skills.{{s}}.ability" data-dtype="String"{{#if @root.skillsLocked}} disabled{{/if}}>
@@ -122,9 +122,9 @@
     <div class="skill-controls">
       {{#unless @root.skillsLocked}}
       {{#if ../owner}}
-      <a class="skill-control skill-edit" title="{{localize "PF1.EditSkill"}}"><i class="fas fa-edit"></i></a>
+      <a class="skill-control skill-edit" data-tooltip="PF1.EditSkill"><i class="fas fa-edit"></i></a>
       {{#if skill.custom}}
-      <a class="skill-control skill-delete" title="{{localize "PF1.DeleteSkill"}}"><i class="fas fa-trash"></i></a>
+      <a class="skill-control skill-delete" data-tooltip="PF1.DeleteSkill"><i class="fas fa-trash"></i></a>
       {{/if}}{{/if}}
       {{/unless}}
     </div>

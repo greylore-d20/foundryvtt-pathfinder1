@@ -10,7 +10,7 @@
     {{!-- Inventory Tab --}}
     <div class="tab inventory flexcol" data-group="primary" data-tab="inventory">
       <header class="sheet-header flexrow">
-        <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
+        <img class="profile" src="{{actor.img}}" data-tooltip="{{actor.name}}" data-edit="img"/>
         
         <div class="header-details flexcol">
           <div class="header-top flexrow">
@@ -25,7 +25,7 @@
               {{!-- Sell Multiplier --}}
               <li>
                 <input type="text" name="flags.pf1.sellMultiplier" value="{{sellMultiplier}}" placeholder="{{localize "PF1.HelpSellMultiplierN"}}" data-dtype="Number"
-                  title="{{localize "PF1.HelpSellMultiplier"}}" />
+                  data-tooltip="PF1.HelpSellMultiplier" />
               </li>
             </ul>
           </div>

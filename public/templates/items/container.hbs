@@ -2,7 +2,7 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img" />
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img" />
 
     {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
   </header>
@@ -50,7 +50,7 @@
           {{#each config.currencies as |l k|}}
           <label class="denomination {{k}}">{{l}}</label>
           <input type="text" class="select-on-click" name="system.currency.{{k}}" value="{{#if (lookup ../system.currency k)}}{{lookup ../system.currency k}}{{/if}}" data-dtype="String"/>
-          <a class="convert-currency" data-type="{{k}}" data-category="currency" title="{{localize "PF1.ConvertCurrency"}}"><i class="fas fa-long-arrow-alt-left"></i></a>
+          <a class="convert-currency" data-type="{{k}}" data-category="currency" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-long-arrow-alt-left"></i></a>
           {{/each}}
         </ol>
       </div>

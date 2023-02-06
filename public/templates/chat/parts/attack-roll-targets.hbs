@@ -4,15 +4,15 @@
     <div class="target" data-uuid="{{t.uuid}}">
       {{!-- Saving Throws --}}
       <div class="saving-throws" data-gm-sensitive-uuid="{{t.uuid}}">
-        <div class="fort click" data-saving-throw="fort" title="{{localize "PF1.SavingThrowFort"}}">
+        <div class="fort click" data-saving-throw="fort" data-tooltip="PF1.SavingThrowFort">
           <i class="icon icon-heart-plus"></i>
           <span class="value"></span>
         </div>
-        <div class="ref click" data-saving-throw="ref" title="{{localize "PF1.SavingThrowRef"}}">
+        <div class="ref click" data-saving-throw="ref" data-tooltip="PF1.SavingThrowRef">
           <i class="icon icon-divert"></i>
           <span class="value"></span>
         </div>
-        <div class="will click" data-saving-throw="will" title="{{localize "PF1.SavingThrowWill"}}">
+        <div class="will click" data-saving-throw="will" data-tooltip="PF1.SavingThrowWill">
           <i class="icon icon-brain"></i>
           <span class="value"></span>
         </div>
@@ -23,15 +23,15 @@
 
       {{!-- AC --}}
       <div class="ac" data-gm-sensitive-uuid="{{t.uuid}}">
-        <div class="normal" title="{{localize "PF1.ACNormal"}}">
+        <div class="normal" data-tooltip="PF1.ACNormal">
           <i class="fas fa-shield-alt"></i>
           <span class="value">{{t.actorData.system.attributes.ac.normal.total}}</span>
         </div>
-        <div class="touch" title="{{localize "PF1.ACTouch"}}">
+        <div class="touch" data-tooltip="PF1.ACTouch">
           <i class="fas fa-hand-point-up"></i>
           <span class="value">{{t.actorData.system.attributes.ac.touch.total}}</span>
         </div>
-        <div class="flatFooted" title="{{localize "PF1.ACFlatFooted"}}">
+        <div class="flatFooted" data-tooltip="PF1.ACFlatFooted">
           <i class="fas fa-shoe-prints"></i>
           <span class="value">{{t.actorData.system.attributes.ac.flatFooted.total}}</span>
         </div>

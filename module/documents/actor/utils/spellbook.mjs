@@ -129,8 +129,12 @@ export class SpellbookMode {
     return this.raw === "prepared";
   }
 
+  get usesSpellpoints() {
+    return this.raw.spellPoints?.useSystem === true;
+  }
+
   get isSemiSpontaneous() {
-    return this.isSpontaneous || this.isHybrid || this.isPrestige;
+    return this.isSpontaneous || this.isHybrid || this.isPrestige || this.usesSpellpoints;
   }
 
   constructor(book) {

@@ -98,7 +98,7 @@ export const patchCore = function () {
     const lowLightTokens = relevantTokens.filter((o) => o.actorVision.lowLight === true);
 
     if (requiresSelection) {
-      if (lowLightTokens.length === relevantTokens.length) {
+      if (lowLightTokens.length && lowLightTokens.length === relevantTokens.length) {
         multiplier = { dim: 999, bright: 999 };
         for (const t of lowLightTokens) {
           const tokenVision = t.actorVision;

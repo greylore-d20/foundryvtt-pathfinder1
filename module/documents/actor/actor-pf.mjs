@@ -23,10 +23,6 @@ import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs"
  * Extend the base Actor class to implement additional game system logic.
  */
 export class ActorPF extends ActorBasePF {
-  static get relativeAttributes() {
-    return ["system.attributes.hp", "system.attributes.wounds", "system.attributes.vigor"];
-  }
-
   constructor(...args) {
     super(...args);
 
@@ -1176,11 +1172,12 @@ export class ActorPF extends ActorBasePF {
       attributes[k].max = round(attributes[k].max);
     }
 
-    // Offset relative attributes
-    for (const k of this.constructor.relativeAttributes) {
-      const offset = getProperty(this, `${k}.offset`);
-      const max = getProperty(this, `${k}.max`);
-      if (offset != null) setProperty(this, `${k}.value`, offset + max);
+    // Offset relative health
+    for (const key of ["hp", "wounds", "vigor"]) {
+      const hp = this.system.attributes[key];
+      if (Number.isFinite(hp?.offset)) {
+        hp.value = hp.max + hp.offset;
+      }
     }
 
     // Shared attack bonuses
@@ -1733,29 +1730,24 @@ export class ActorPF extends ActorBasePF {
   async _preUpdate(update, options, userId) {
     await super._preUpdate(update, options, userId);
 
-    // Offset HP value
-    if (this._initialized) {
-      for (const k of this.constructor.relativeAttributes) {
-        const isPathKey = {
-          value: Object.hasOwnProperty.call(update, `${k}.value`),
-          offset: Object.hasOwnProperty.call(update, `${k}.offset`),
-          max: Object.hasOwnProperty.call(update, `${k}.max`),
-        };
-        const value = Object.entries(isPathKey).reduce((cur, o) => {
-          cur[o[0]] = o[1] ? update[`${k}.${o[0]}`] : getProperty(update, `${k}.${o[0]}`);
-          if (o[0] === "max" && cur[o[0]] === undefined) cur[o[0]] = getProperty(this, `${k}.max`);
-          return cur;
-        }, {});
-        if (value.value !== undefined && value.offset === undefined)
-          setProperty(update, `${k}.offset`, value.value - value.max);
-      }
-    }
-
     this._syncTokenImage(update);
 
     if (!update.system) return; // No system updates.
 
     const oldData = this.system;
+
+    // Offset HP values
+    const attributes = update.system.attributes;
+    if (this._initialized && attributes != undefined) {
+      for (const key of ["hp", "wounds", "vigor"]) {
+        const hp = attributes[key];
+        if (!hp) continue;
+        if (hp.value !== undefined && hp.offset === undefined) {
+          const max = hp.max ?? oldData.attributes[key]?.max;
+          hp.offset = hp.value - max;
+        }
+      }
+    }
 
     // Apply changes in Actor size to Token width/height
     const newSize = update.system.traits?.size;

@@ -29,9 +29,11 @@ export class ItemFeatPF extends ItemPF {
   /** @inheritDoc */
   getLabels({ actionId } = {}) {
     const labels = super.getLabels({ actionId });
-    const { featType, abilityType } = this.system;
+    const { subType, abilityType } = this.system;
 
-    labels.featType = PF1.featTypes[featType];
+    labels.featType = PF1.featTypes[subType];
+    labels.abilityType = CONFIG.PF1.abilityTypes[this.system.abilityType]?.short;
+    labels.traitType = CONFIG.PF1.traitTypes[this.system.traitType];
 
     // Ability type
     if (abilityType && abilityType !== "none") {

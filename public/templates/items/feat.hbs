@@ -12,6 +12,14 @@
       <ul class="summary">
         <li>
           {{labels.featType}}
+
+          {{#if (and (eq system.subType "trait") labels.traitType)}}
+          [{{labels.traitType}}]
+          {{/if}}
+
+          {{#if labels.abilityType}}
+          ({{labels.abilityType}})
+          {{/if}}
         </li>
         <li>
           <label>
@@ -65,6 +73,17 @@
           </select>
         </div>
       </div>
+
+      {{! Trait Type }}
+      {{#if (eq system.subType "trait")}}
+      <div class="form-group select">
+        <label>{{localize "PF1.TraitType"}}</label>
+        <select name="system.traitType">
+          <option value=""></option>
+          {{selectOptions config.traitTypes selected=system.traitType}}
+        </select>
+      </div>
+      {{/if}}
 
       {{!-- Proficiencies --}}
       {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}

@@ -791,6 +791,24 @@ export const PF1 = {
     template: "PF1.TemplatePlural",
   },
 
+  traitTypes: {
+    combat: "PF1.Trait.Combat",
+    magic: "PF1.Trait.Magic",
+    faith: "PF1.Trait.Faith",
+    social: "PF1.Trait.Social",
+    campaign: "PF1.Trait.Campaign",
+    cosmic: "PF1.Trait.Cosmic",
+    equipment: "PF1.Trait.Equipment",
+    exemplar: "PF1.Trait.Exemplar",
+    faction: "PF1.Trait.Faction",
+    family: "PF1.Trait.Family",
+    mount: "PF1.Trait.Mount",
+    race: "PF1.Trait.Race",
+    region: "PF1.Trait.Region",
+    religion: "PF1.Trait.Religion",
+    drawback: "PF1.Trait.Drawback",
+  },
+
   /**
    * Ability types, each with their short and their long form
    */

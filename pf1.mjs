@@ -506,6 +506,7 @@ Hooks.once("setup", function () {
     "acValueLabels",
     "featTypes",
     "featTypesPlurals",
+    "traitTypes",
     "conditions",
     "lootTypes",
     "flyManeuverabilities",

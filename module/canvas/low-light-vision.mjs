@@ -86,31 +86,31 @@ export const patchCore = function () {
 
   LightSource.prototype.getRadius = function () {
     const result = { dim: this.data.dim, bright: this.data.bright };
-    const multiplier = { dim: 1, bright: 1 };
+    let multiplier = { dim: 1, bright: 1 };
 
     if (this.object?.document.getFlag("pf1", "disableLowLight")) return result;
 
+    const requiresSelection = game.user.isGM || game.settings.get("pf1", "lowLightVisionMode");
     const relevantTokens = canvas.tokens.placeables.filter(
-      (o) => o.hasSight && o.actor?.testUserPermission(game.user, "OBSERVER")
+      (o) =>
+        !!o.actor && o.actor?.testUserPermission(game.user, "OBSERVER") && (requiresSelection ? o.controlled : true)
     );
     const lowLightTokens = relevantTokens.filter((o) => o.actorVision.lowLight === true);
 
-    if (game.user.isGM || game.settings.get("pf1", "lowLightVisionMode")) {
-      for (const t of lowLightTokens.filter((o) => o.controlled)) {
+    if (requiresSelection) {
+      if (lowLightTokens.length === relevantTokens.length) {
+        multiplier = { dim: 999, bright: 999 };
+        for (const t of lowLightTokens) {
+          const tokenVision = t.actorVision;
+          multiplier.dim = Math.min(multiplier.dim, tokenVision.lowLightMultiplier);
+          multiplier.bright = Math.min(multiplier.bright, tokenVision.lowLightMultiplierBright);
+        }
+      }
+    } else {
+      for (const t of lowLightTokens) {
         const tokenVision = t.actorVision;
         multiplier.dim = Math.max(multiplier.dim, tokenVision.lowLightMultiplier);
         multiplier.bright = Math.max(multiplier.bright, tokenVision.lowLightMultiplierBright);
-      }
-    } else {
-      const hasControlledTokens = relevantTokens.filter((o) => o.controlled).length > 0;
-      const hasControlledLowLightTokens = lowLightTokens.filter((o) => o.controlled).length > 0;
-      const hasLowLightTokens = lowLightTokens.length > 0;
-      if ((!hasControlledTokens && hasLowLightTokens) || hasControlledLowLightTokens) {
-        for (const t of lowLightTokens) {
-          const tokenVision = t.actorVision;
-          multiplier.dim = Math.max(multiplier.dim, tokenVision.lowLightMultiplier);
-          multiplier.bright = Math.max(multiplier.bright, tokenVision.lowLightMultiplierBright);
-        }
       }
     }
 

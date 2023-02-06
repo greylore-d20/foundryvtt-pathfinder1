@@ -272,10 +272,10 @@ export const registerSystemSettings = function () {
     type: Boolean,
     onChange: () => {
       // Refresh canvas sight
-      canvas.perception.schedule({
-        lighting: { initialize: true, refresh: true },
-        sight: { initialize: true, refresh: true },
-      });
+      canvas.perception.update(
+        { initializeLighting: true, initializeVision: true, refreshLighting: true, refreshVision: true },
+        true
+      );
     },
   });
 

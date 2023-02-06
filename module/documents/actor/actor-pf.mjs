@@ -3890,7 +3890,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @typdef MaxAndValue
+   * @typedef MaxAndValue
    * @type {object}
    * @property {number} max - The maximum value.
    * @property {number} value - The current value.

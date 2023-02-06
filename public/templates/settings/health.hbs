@@ -10,9 +10,9 @@
       <p class="notes">{{localize 'SETTINGS.pf1HealthConfigInstructions'}}</p>
       <div class="hitdice-table">
         <label class="index table-header">{{localize 'PF1.HitDie'}}</label>
-        {{#each hitdieOptions}}
-          <label class="table-header">{{this}}</label>
-        {{/each}}
+        <label class="table-header">{{localize "SETTINGS.pf1HealthCompute"}}</label>
+        <label class="table-header">{{localize "SETTINGS.pf1HealthRate"}}</label>
+        <label class="table-header">{{localize "SETTINGS.pf1HealthMaximized"}}</label>
 
         {{#each hitdice as |opt hd|}}
           <label class="index">{{hd}}</label>

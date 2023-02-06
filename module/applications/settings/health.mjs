@@ -1,13 +1,52 @@
+export class HealthConfigModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return {
+      hitdice: new fields.SchemaField({
+        PC: new fields.SchemaField({
+          auto: new fields.BooleanField({ initial: false }),
+          rate: new fields.NumberField({ min: 0, initial: 0.5 }),
+          maximized: new fields.NumberField({ integer: true, min: 0, initial: 1 }),
+        }),
+        NPC: new fields.SchemaField({
+          auto: new fields.BooleanField({ initial: false }),
+          rate: new fields.NumberField({ min: 0, initial: 0.5 }),
+          maximized: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
+        }),
+        Racial: new fields.SchemaField({
+          auto: new fields.BooleanField({ initial: false }),
+          rate: new fields.NumberField({ min: 0, initial: 0.5 }),
+          maximized: new fields.NumberField({ integer: true, min: 0, initial: 0 }),
+        }),
+      }),
+      rounding: new fields.StringField({ blank: false, nullable: false, initial: "up" }),
+      continuity: new fields.StringField({ blank: false, nullable: false, initial: "discrete" }),
+      variants: new fields.SchemaField({
+        pc: new fields.SchemaField({
+          useWoundsAndVigor: new fields.BooleanField({ initial: false }),
+          useWoundThresholds: new fields.NumberField({ initial: 0 }),
+          allowWoundThresholdOverride: new fields.BooleanField({ initial: false }),
+        }),
+        npc: new fields.SchemaField({
+          useWoundsAndVigor: new fields.BooleanField({ initial: false }),
+          useWoundThresholds: new fields.NumberField({ initial: 0 }),
+          allowWoundThresholdOverride: new fields.BooleanField({ initial: true }),
+        }),
+      }),
+    };
+  }
+}
+
 export class HealthConfig extends FormApplication {
-  constructor(object, options) {
-    super(object || HealthConfig.defaultSettings, options);
+  constructor(object = new HealthConfigModel(), options) {
+    super(object, options);
   }
 
-  /** Collect data for the template. @override */
-  async getData() {
-    let settings = await game.settings.get("pf1", "healthConfig");
-    settings = mergeObject(HealthConfig.defaultSettings, settings);
-    return settings;
+  /**
+   * @override
+   */
+  getData() {
+    return game.settings.get("pf1", "healthConfig");
   }
 
   /** @override */
@@ -32,23 +71,6 @@ export class HealthConfig extends FormApplication {
     };
   }
 
-  static get defaultSettings() {
-    return {
-      hitdice: {
-        PC: { auto: false, rate: 0.5, maximized: 1 },
-        NPC: { auto: false, rate: 0.5, maximized: 0 },
-        Racial: { auto: false, rate: 0.5, maximized: 0 },
-      },
-      hitdieOptions: ["Compute", "Rate", "Maximized"],
-      rounding: "up",
-      continuity: "discrete",
-      variants: {
-        pc: { useWoundsAndVigor: false, useWoundThresholds: 0, allowWoundThresholdOverride: false },
-        npc: { useWoundsAndVigor: false, useWoundThresholds: 0, allowWoundThresholdOverride: true },
-      },
-    };
-  }
-
   /**
    * Activate the default set of listeners for the Document sheet These listeners handle basic stuff like form submission or updating images.
    *
@@ -68,7 +90,7 @@ export class HealthConfig extends FormApplication {
    */
   async _onReset(event) {
     event.preventDefault();
-    await game.settings.set("pf1", "healthConfig", HealthConfig.defaultSettings);
+    await game.settings.set("pf1", "healthConfig", new HealthConfigModel());
     ui.notifications.info(`Reset Pathfinder health configuration.`);
     return this.render();
   }

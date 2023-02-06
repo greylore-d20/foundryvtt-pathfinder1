@@ -1,4 +1,4 @@
-import { HealthConfig } from "../applications/settings/health.mjs";
+import { HealthConfig, HealthConfigModel } from "../applications/settings/health.mjs";
 import { ExperienceConfig } from "../applications/settings/experience.mjs";
 import { AccessibilityConfig } from "../applications/settings/accessibility.mjs";
 import { TooltipConfig } from "../applications/settings/tooltip.mjs";
@@ -47,8 +47,8 @@ export const registerSystemSettings = function () {
   game.settings.register("pf1", "healthConfig", {
     name: "SETTINGS.pf1HealthConfigName",
     scope: "world",
-    default: HealthConfig.defaultSettings,
-    type: Object,
+    default: new HealthConfigModel(),
+    type: HealthConfigModel,
     config: false,
     onChange: () => pf1.utils.refreshActors(),
   });

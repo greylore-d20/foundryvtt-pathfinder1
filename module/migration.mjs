@@ -211,7 +211,6 @@ export const migrateActorData = function (actor, token) {
   _migrateActorCR(actor, updateData, linked);
   _migrateAttackAbility(actor, updateData, linked);
   _migrateActorDefenseAbility(actor, updateData);
-  _migrateActorTokenVision(actor, updateData);
   _migrateActorSpellbookUsage(actor, updateData, linked);
   _migrateActorNullValues(actor, updateData);
   _migrateActorSpellbookDomainSlots(actor, updateData);
@@ -228,6 +227,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorSenses(actor, updateData, linked, token);
   _migrateActorSkillJournals(actor, updateData, linked);
   _migrateActorSubskillData(actor, updateData);
+  _migrateActorUnusedData(actor, updateData);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -283,14 +283,10 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateSavingThrowTypes(item, updateData);
   _migrateCR(item, updateData);
   _migrateItemChanges(item, updateData);
-  _migrateTemplateSize(item, updateData);
   _migrateEquipmentSize(item, updateData);
   _migrateTags(item, updateData);
   _migrateSpellCosts(item, updateData);
   _migrateLootEquip(item, updateData);
-  _migrateUnchainedActionEconomy(item, updateData);
-  _migrateItemRange(item, updateData);
-  _migrateWeaponData(item, updateData);
   _migrateItemLinks(item, updateData);
   _migrateClassAssociations(item, updateData);
   _migrateProficiencies(item, updateData);
@@ -676,92 +672,6 @@ const _migrateWeaponImprovised = function (ent, updateData) {
   }
 };
 
-const _migrateWeaponData = function (ent, updateData) {
-  if (ent.type !== "weapon") return;
-
-  if (getProperty(ent.system, "weaponData") !== undefined) {
-    const subtype = ent.system.weaponSubtype;
-    const isMelee = subtype !== "ranged";
-
-    // Generate missing data
-
-    // TODO: Respect character configuration if present
-    //getProperty(this, "system.attributes.attack.meleeAbility") || "str";
-    //getProperty(this, "system.attributes.attack.rangedAbility") || "dex";
-    const atkAbl = getProperty(ent, "system.ability.attack");
-    if (atkAbl == null || atkAbl === "") {
-      updateData["system.ability.attack"] = isMelee ? "str" : "dex";
-    }
-    const dmgAbl = getProperty(ent, "system.ability.damage");
-    if (dmgAbl == null || dmgAbl === "") {
-      updateData["system.ability.damage"] = "str";
-    }
-    if (getProperty(ent, "system.ability.damageMult") == null) {
-      updateData["system.ability.damageMult"] = subtype === "2h" ? 1.5 : 1;
-    }
-    if (getProperty(ent, "system.attackType") == null) {
-      updateData["system.attackType"] = "weapon";
-    }
-
-    // Activation
-    updateData["system.actionType"] = isMelee ? "mwak" : "rwak";
-    updateData["system.activation.type"] = "attack";
-    updateData["system.duration.units"] = "inst";
-
-    // BAB iteratives
-    updateData["system.formulaicAttacks.count.formula"] = "ceil(@attributes.bab.total / 5) - 1";
-    updateData["system.formulaicAttacks.bonus.formula"] = "@formulaicAttack * -5";
-
-    // Preserve weapon data if present
-
-    // Criticals
-    updateData["system.ability.critRange"] = getProperty(ent, "system.weaponData.critRange") ?? 20;
-    updateData["system.ability.critMult"] = getProperty(ent, "system.weaponData.critMult") ?? 2;
-
-    // Range
-    if (isMelee) {
-      const isReach = getProperty(ent, "system.properties.rch") ?? false;
-      updateData["system.range.units"] = isReach ? "reach" : "melee";
-    } else {
-      updateData["system.range.units"] = "ft";
-    }
-    const range = getProperty(ent, "system.weaponData.range") ?? null;
-    if (range !== undefined) {
-      updateData["system.range.value"] = range;
-    }
-
-    const maxRange = getProperty(ent, "system.weaponData.maxRangeIncrements");
-    if (maxRange !== undefined) updateData["system.range.maxIncrements"] = maxRange;
-
-    // Damage
-    const damageRoll = getProperty(ent, "system.weaponData.damageRoll")?.trim();
-    const damageType = getProperty(ent, "system.weaponData.damageType")?.trim();
-    const damageBonusFormula = getProperty(ent, "system.weaponData.damageFormula")?.trim();
-
-    if (damageRoll !== undefined) {
-      let roll = damageRoll || "1d4";
-      let dieCount = 1,
-        dieSides = 4;
-      if (roll.match(/^([0-9]+)d([0-9]+)$/)) {
-        dieCount = parseInt(RegExp.$1);
-        dieSides = parseInt(RegExp.$2);
-        roll = `sizeRoll(${dieCount}, ${dieSides}, @size)`;
-      }
-      if (damageBonusFormula != null && damageBonusFormula.length) roll = `${roll} + ${damageBonusFormula}`;
-      updateData["system.damage.parts"] = [[roll, damageType || ""]];
-    }
-
-    // Attack bonus
-    updateData["system.attackBonus"] = getProperty(ent, "system.weaponData.attackFormula")?.trim() ?? "";
-
-    // Flag show in quickbar
-    updateData["system.showInQuickbar"] = false;
-
-    // Remove legacy data
-    updateData["system.-=weaponData"] = null;
-  }
-};
-
 const _migrateSpellDescription = function (ent, updateData) {
   if (ent.type !== "spell") return;
 
@@ -991,13 +901,6 @@ const _migrateItemChanges = function (ent, updateData) {
   }
 };
 
-const _migrateTemplateSize = function (ent, updateData) {
-  const measureSize = getProperty(ent, "system.measureTemplate.size");
-  if (typeof measureSize === "number") {
-    updateData["system.measureTemplate.size"] = measureSize.toString();
-  }
-};
-
 const _migrateEquipmentSize = function (ent, updateData) {
   if (ent.type !== "equipment") return;
 
@@ -1080,43 +983,6 @@ const _migrateSpellCosts = function (ent, updateData) {
 const _migrateLootEquip = function (ent, updateData) {
   if (ent.type === "loot" && !hasProperty(ent, "system.equipped")) {
     updateData["system.equipped"] = false;
-  }
-};
-
-const _migrateUnchainedActionEconomy = function (ent, updateData) {
-  // Determine existing data
-  const curAction = getProperty(ent, "system.activation");
-  const unchainedAction = getProperty(ent, "system.unchainedAction.activation");
-  if (!curAction || (curAction && !curAction.type)) return;
-  if (unchainedAction && unchainedAction.type) return;
-
-  // Create unchained action economy data
-  if (CONFIG.PF1.abilityActivationTypes_unchained[curAction.type] != null) {
-    updateData["system.unchainedAction.activation.cost"] = curAction.cost;
-    updateData["system.unchainedAction.activation.type"] = curAction.type;
-  }
-  if (["swift", "attack"].includes(curAction.type)) {
-    updateData["system.unchainedAction.activation.cost"] = 1;
-    updateData["system.unchainedAction.activation.type"] = curAction.type === "attack" ? "attack" : "action";
-  }
-  if (curAction.type === "standard") {
-    updateData["system.unchainedAction.activation.cost"] = 2;
-    updateData["system.unchainedAction.activation.type"] = "action";
-  }
-  if (curAction.type === "full" || curAction.type === "round") {
-    updateData["system.unchainedAction.activation.cost"] = 3 * (curAction.cost || 1);
-    updateData["system.unchainedAction.activation.type"] = "action";
-  }
-  if (curAction.type === "immediate") {
-    updateData["system.unchainedAction.activation.type"] = "reaction";
-    updateData["system.unchainedAction.activation.cost"] = 1;
-  }
-};
-
-const _migrateItemRange = function (ent, updateData) {
-  // Set max range increment
-  if (getProperty(ent, "system.range.maxIncrements") === undefined) {
-    updateData["system.range.maxIncrements"] = 1;
   }
 };
 
@@ -1404,15 +1270,6 @@ const _migrateAttackAbility = function (ent, updateData, linked) {
 
   const rangedAbl = getProperty(ent, "system.attributes.attack.rangedAbility");
   if (rangedAbl === undefined && linked) updateData["system.attributes.attack.rangedAbility"] = "dex";
-};
-
-const _migrateActorTokenVision = function (ent, updateData) {
-  const vision = getProperty(ent, "system.attributes.vision");
-  if (!vision) return;
-
-  updateData["system.attributes.-=vision"] = null;
-  updateData["token.flags.pf1.lowLightVision"] = vision.lowLight;
-  if (!getProperty(ent, "token.brightSight")) updateData["token.brightSight"] = vision.darkvision ?? 0;
 };
 
 const _migrateActorSpellbookUsage = function (ent, updateData, linked) {
@@ -1775,13 +1632,59 @@ const _migrateItemType = function (ent, updateData) {
  * @param updateData
  */
 const _migrateItemUnusedData = (item, updateData) => {
-  // .priceUnits was never used
+  // .priceUnits was never used, removal added with 0.82.6
   if (item.system.priceUnits !== undefined) {
     updateData["system.-=priceUnits"] = null;
+  }
+
+  // .description.chat was never used
+  if (item.system.description?.chat !== undefined) {
+    updateData["system.description.-=chat"] = null;
   }
 
   // Creating items in containers added typeName for no reason (in 0.82.5 and older)
   if (item.system.typeName !== undefined) {
     updateData["system.-=typeName"] = null;
+  }
+
+  // Data not used since 0.81.0
+  if (item.system.weaponData !== undefined) {
+    updateData["system.-=weaponData"] = null;
+  }
+
+  // Data not used since 0.81.0
+  if (item.system.range !== undefined) {
+    updateData["system.-=range"] = null;
+  }
+
+  // Data not used since 0.81.0
+  if (item.system.primaryAttack !== undefined) {
+    updateData["system.-=primaryAttack"] = null;
+  }
+
+  // Data not used since 0.81.0
+  if (item.system.activation !== undefined) {
+    updateData["system.-=activation"] = null;
+  }
+
+  // Data not used since 0.81.0
+  if (item.system.unchainedAction !== undefined) {
+    updateData["system.-=unchainedAction"] = null;
+  }
+
+  // Data not used since 0.81.0
+  if (item.system.measureTemplate !== undefined) {
+    updateData["system.-=measureTemplate"] = null;
+  }
+};
+
+const _migrateActorUnusedData = (actor, updateData) => {
+  // Obsolete vision
+  if (getProperty(actor.system, "attributes.vision") !== undefined) {
+    updateData["system.attributes.-=vision"] = null;
+  }
+
+  if (getProperty(actor.prototypeToken, "flags.pf1.lowLightVision") !== undefined) {
+    updateData["prototypeToken.flags.pf1.-=lowLightVision"] = null;
   }
 };

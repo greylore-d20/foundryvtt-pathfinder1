@@ -201,7 +201,6 @@ export class ActorSheetPF extends ActorSheet {
       hasRace: false,
       config: CONFIG.PF1,
       useBGSkills: game.settings.get("pf1", "allowBackgroundSkills"),
-      spellFailure: this.document.spellFailure,
       isGM: game.user.isGM,
       race: this.document.race != null ? this.document.race.toObject() : null,
       usesAnySpellbook: this.document.system.attributes.spells.usedSpellbooks?.length > 0 ?? false,
@@ -2422,9 +2421,11 @@ export class ActorSheetPF extends ActorSheet {
     feats = this._filterItems(feats, this._filters.features);
 
     // Organize Spellbook
+    let hasASF = false;
     const spellbookData = {};
     const spellbooks = data.system.attributes.spells.spellbooks;
     for (const [key, spellbook] of Object.entries(spellbooks)) {
+      if (!spellbook.inUse) continue;
       let spellbookSpells = spells.filter((obj) => obj.spellbook === key);
       spellbookSpells = this._filterItems(spellbookSpells, this._filters[`spellbook-${key}`]);
       spellbookData[key] = {
@@ -2433,6 +2434,26 @@ export class ActorSheetPF extends ActorSheet {
           return obj.preparation.mode === "prepared" && obj.preparation.prepared;
         }).length,
         orig: spellbook,
+      };
+      if (spellbook.arcaneSpellFailure) hasASF = true;
+    }
+
+    if (hasASF) {
+      const asfSources = [];
+      const asf = this.actor.items
+        .filter((item) => item.type === "equipment" && item.system.equipped === true)
+        .reduce((cur, item) => {
+          const itemASF = item.system.spellFailure ?? 0;
+          if (itemASF > 0) {
+            asfSources.push({ item, asf: itemASF });
+            return cur + itemASF;
+          }
+          return cur;
+        }, 0);
+
+      data.asf = {
+        total: asf,
+        sources: asfSources,
       };
     }
 

@@ -117,11 +117,27 @@
                     {{/if}}
                 </div>
             </th>
+            {{#if asf}}
+            <th class="tooltip">
+                {{localize "PF1.ArcaneSpellFailureAbbr"}}
+                {{#if asf.sources.length}}
+                <div class="tooltipcontent">
+                    {{localize "PF1.FromSources"}}:<br/>
+                    {{#each asf.sources}}
+                    {{item.name}} : {{asf}}%<br>
+                    {{/each}}
+                </div>
+                {{/if}}
+            </th>
+            {{/if}}
         </thead>
 
         <tbody>
             <td class="acp">{{system.attributes.acp.total}}</td>
             <td class="maxdex">{{system.attributes.maxDexBonus}}</td>
+            {{#if asf}}
+            <td class="asf">{{asf.total}}%</td>
+            {{/if}}
         </tbody>
     </table>
 </div>

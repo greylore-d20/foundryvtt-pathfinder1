@@ -27,12 +27,20 @@
               {{/with}}
             </span>
           </th>
+          {{#if @root.asf}}
+          <th class="arcane-spell-failure">
+            {{localize "PF1.ArcaneSpellFailureAbbr"}}
+          </th>
+          {{/if}}
         </tr>
       </thead>
       <tbody>
         <tr>
           <td class="spellcasting-concentration-total">{{numberFormat spellbook.orig.concentration.total sign=true decimals=0}}</td>
           <td class="spellcasting-casterlevel-total">{{numberFormat spellbook.orig.cl.total sign=true decimals=0}}</td>
+          {{#if @root.asf}}
+          <td class="arcane-spell-failure-total">{{@root.asf.total}}%</td>
+          {{/if}}
         </tr>
       </tbody>
     </table>
@@ -130,11 +138,6 @@
             {{/each}}
             {{/select}}
           </select>
-        </div>
-
-        <div class="flexrow spell-failure">
-          <label><h3>{{localize "PF1.ArcaneSpellFailure"}}</h3></label>
-          <input type="text" disabled value="{{spellFailure}}%"/>
         </div>
 
         <div class="flexrow formulas">

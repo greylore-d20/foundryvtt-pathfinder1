@@ -189,8 +189,9 @@
 </div>
 
 {{#unless isCombatManeuver}}
-<hr>
 {{!-- Critical Damage Bonus Formula --}}
+{{#if hasCritDamage}}
+<hr>
 <div class="damage" data-key="damage.critParts">
   <h4 class="damage-header">
     {{#unless isHealing }}{{localize "PF1.CritDamageBonusFormula"}}{{ else }}{{localize "PF1.CritHealingBonusFormula"}}{{/unless}}
@@ -206,8 +207,10 @@
     <li class="damage-part flexrow"><a class="damage-control add-damage"><i class="fas fa-plus"></i> {{localize "PF1.AddCriticalDamage"}}</a></li>
   </ol>
 </div>
+{{/if}}
 
 {{!-- Non-critical Damage Bonus Formula --}}
+{{#if hasNonCritDamage}}
 <hr>
 <div class="damage" data-key="damage.nonCritParts">
   <h4 class="damage-header">
@@ -224,6 +227,7 @@
     <li class="damage-part flexrow"><a class="damage-control add-damage"><i class="fas fa-plus"></i> {{localize "PF1.AddNonCriticalDamage"}}</a></li>
   </ol>
 </div>
+{{/if}}
 
 {{!-- Power Attack/Deadly Aim properties --}}
 {{#if hasAttackRoll}}

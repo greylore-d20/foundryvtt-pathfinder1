@@ -3509,6 +3509,10 @@ export class ActorPF extends ActorBasePF {
 
   getTotalCurrency(category = "currency", { inLowestDenomination = false } = {}) {
     const currencies = this.system[category];
+    if (!currencies) {
+      console.error(`Currency type "${category}" not found.`);
+      return NaN;
+    }
     const total = currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp;
     return inLowestDenomination ? total : total / 100;
   }
@@ -3520,35 +3524,39 @@ export class ActorPF extends ActorBasePF {
    * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
    */
   convertCurrency(category = "currency", type = "pp") {
-    const totalValue =
-      category === "currency" ? this.getTotalCurrency("currency") : this.getTotalCurrency("altCurrency");
-    const values = [0, 0, 0, 0];
-    switch (type) {
-      case "pp":
-        values[0] = Math.floor(totalValue / 10);
-        values[1] = Math.max(0, Math.floor(totalValue) - values[0] * 10);
-        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[0] * 100 - values[1] * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[0] * 1000 - values[1] * 100 - values[2] * 10);
-        break;
-      case "gp":
-        values[1] = Math.floor(totalValue);
-        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[1] * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[1] * 100 - values[2] * 10);
-        break;
-      case "sp":
-        values[2] = Math.floor(totalValue * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[2] * 10);
-        break;
-      case "cp":
-        values[3] = Math.floor(totalValue * 100);
-        break;
+    const currency = {
+      pp: 0,
+      gp: 0,
+      sp: 0,
+      cp: this.getTotalCurrency(category, { inLowestDenomination: true }),
+    };
+
+    if (!Number.isFinite(currency.cp)) {
+      console.error(`Invalid total currency "${currency.cp}" in "${category}" category`);
+      return;
     }
 
-    const updateData = {};
-    updateData[`system.${category}.pp`] = values[0];
-    updateData[`system.${category}.gp`] = values[1];
-    updateData[`system.${category}.sp`] = values[2];
-    updateData[`system.${category}.cp`] = values[3];
+    const types = { pp: 3, gp: 2, sp: 1, cp: 0 };
+    const largestType = types[type];
+
+    if (largestType >= types.pp) {
+      currency.pp = Math.floor(currency.cp / 1_000);
+      currency.cp -= currency.pp * 1_000;
+    }
+    if (largestType >= types.gp) {
+      currency.gp = Math.max(0, Math.floor(currency.cp / 100));
+      currency.cp -= currency.gp * 100;
+    }
+    if (largestType >= types.sp) {
+      currency.sp = Math.max(0, Math.floor(currency.cp / 10));
+      currency.cp -= currency.sp * 10;
+    }
+
+    // Sanity check
+    if (currency.cp < 0) currency.cp = 0;
+
+    const updateData = { system: { [category]: currency } };
+
     return this.update(updateData);
   }
 

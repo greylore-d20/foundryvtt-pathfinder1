@@ -94,10 +94,16 @@ export class ItemClassPF extends ItemPF {
       }
 
       if (newItems.length) {
-        const items = await actor.createEmbeddedDocuments(
-          "Item",
-          newItems.map((o) => o.data)
-        );
+        const itemsCreationData = newItems.sort((a, b) => a.co.level - b.co.level).map((o) => o.data);
+        // Put new items at end of their types
+        const _typeSorting = {};
+        for (const item of itemsCreationData) {
+          _typeSorting[item.type] ??=
+            actor.items.filter((i) => i.type === item.type).sort((a, b) => b.sort - a.sort)[0]?.sort ?? 0;
+          _typeSorting[item.type] += CONST.SORT_INTEGER_DENSITY;
+          item.sort = _typeSorting[item.type];
+        }
+        const items = await actor.createEmbeddedDocuments("Item", itemsCreationData);
 
         const updateData = [];
         const classUpdateData = { _id: this.id };

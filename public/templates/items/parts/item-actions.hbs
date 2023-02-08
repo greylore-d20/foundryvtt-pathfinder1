@@ -51,11 +51,11 @@
   <label>{{localize "PF1.LimitedUses"}}</label>
   <div class="form-fields">
     {{#if isCharged}}
-    <input type="text" name="system.uses.value" value="{{system.uses.value}}" data-dtype="Number"/>
+    <input type="text" name="system.uses.value" value="{{system.uses.value}}" data-dtype="Number" {{disabled inheritCharges}} />
     <span class="sep"> / </span>
     <input type="text" value="{{system.uses.max}}" disabled data-dtype="Number"/>
     {{/if}}
-    <select name="system.uses.per">
+    <select name="system.uses.per" {{disabled inheritCharges}}>
       {{#select system.uses.per}}
       <option value=""></option>
       {{#each config.limitedUsePeriods as |name key|}}

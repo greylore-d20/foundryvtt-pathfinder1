@@ -125,6 +125,7 @@ export class ItemSheetPF extends ItemSheet {
     context.itemStatus = this._getItemStatus(item);
     context.itemProperties = this._getItemProperties();
     context.itemName = item.name;
+    if (item.links.charges) context.inheritCharges = item.links.charges;
     context.isCharged = ["day", "week", "charges"].includes(itemData.uses?.per);
     context.defaultChargeFormula = item.getDefaultChargeFormula();
     context.isPhysical = itemData.quantity !== undefined;
@@ -944,6 +945,14 @@ export class ItemSheetPF extends ItemSheet {
       .on("click", (event) => {
         this._onSpanTextInput(event, this._setActionUses.bind(this));
       });
+
+    // Open charge source with right click
+    html.find(".uses-source [data-item-id]").on("contextmenu", (event) => {
+      event.preventDefault();
+      const itemId = event.currentTarget.dataset.itemId;
+      const item = this.document.parentActor.items.get(itemId);
+      item?.sheet.render(true, { focus: true });
+    });
 
     /* -------------------------------------------- */
     /*  Links

@@ -66,9 +66,19 @@
   </div>
 </div>
 {{#if isCharged}}
+{{#if inheritCharges}}
+<div class="form-group uses-source">
+  <label>{{localize "PF1.ChargeSource"}}</label>
+  <div class="form-fields" data-item-id="{{inheritCharges.id}}">
+    <img class="image" src="{{inheritCharges.img}}" width="24" height="24">
+    <label class="item-name">{{inheritCharges.name}}</label>
+  </div>
+</div>
+{{else}}
 <div class="form-group uses-per">
   <input class="formula" type="text" name="system.uses.maxFormula" value="{{system.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
 </div>
+{{/if}}
 <div class="form-group charges-per-use">
   <label>{{localize "PF1.ChargeCostFormula"}}</label>
   <div class="form-fields">

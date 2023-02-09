@@ -449,6 +449,8 @@ export class ItemPF extends ItemBasePF {
    * Prepare this item's {@link ItemWeightData}
    */
   prepareWeight() {
+    if (!this.isPhysical) return;
+
     const itemData = this.system;
 
     // HACK: Migration shim. Allows unmigrated items to have their weight correct.

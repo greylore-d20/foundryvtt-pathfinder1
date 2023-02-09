@@ -2885,16 +2885,6 @@ export class ActorSheetPF extends ActorSheet {
     }
   }
 
-  /**
-   * @override
-   */
-  _getSortSiblings(source) {
-    return this.document.items.filter((i) => {
-      if (ItemPF.isInventoryItem(source.data.type)) return ItemPF.isInventoryItem(i.data.type);
-      return i.data.type === source.data.type && i.data.id !== source.data.id;
-    });
-  }
-
   async _onDropItemCreate(itemData) {
     // Import spell as consumable
     if (itemData.type === "spell" && this.currentPrimaryTab !== "spellbook") {

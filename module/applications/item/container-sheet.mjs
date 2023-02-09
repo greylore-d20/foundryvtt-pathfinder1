@@ -683,17 +683,36 @@ export class ItemSheetPF_Container extends ItemSheetPF {
    * @override
    */
   _onSortItem(event, itemData) {
+    const items = this.document.items;
+
     // Get the drag source and its siblings
-    const source = this.item.getContainerContent(itemData._id);
-    const siblings = this._getSortSiblings(source);
+    const source = items.get(itemData._id);
 
     // Get the drop target
     const dropTarget = event.target.closest(".item");
     const targetId = dropTarget ? dropTarget.dataset.itemId : null;
-    const target = siblings.find((s) => s._id === targetId);
+    const target = items.get(targetId);
+
+    // Don't sort on yourself
+    if (targetId === source.id) return;
+
+    // Identify sibling items based on adjacent HTML elements
+    const siblings = [];
+    for (const el of dropTarget.parentElement.children) {
+      const siblingId = el.dataset.itemId;
+      if (siblingId && siblingId !== source.id) {
+        const item = items.get(el.dataset.itemId);
+        // Only take same typed siblings
+        if (item.type !== source.type) continue;
+        siblings.push(item);
+      }
+    }
+
+    // Don't sort if target has no siblings
+    if (siblings.length == 0) return;
 
     // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(source, { target: target, siblings });
+    const sortUpdates = SortingHelpers.performIntegerSort(source, { target, siblings });
     const updateData = sortUpdates.map((u) => {
       const update = u.update;
       update._id = u.target._id;
@@ -702,16 +721,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Perform the update
     return this.item.updateContainerContents(updateData);
-  }
-
-  /**
-   * @override
-   */
-  _getSortSiblings(source) {
-    return this.item.items.filter((i) => {
-      if (ItemPF.isInventoryItem(source.type)) return ItemPF.isInventoryItem(i.type);
-      return i.type === source.type && i.data._id !== source._id;
-    });
   }
 
   /**

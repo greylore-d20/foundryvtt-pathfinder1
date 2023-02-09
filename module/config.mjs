@@ -839,12 +839,6 @@ export const PF1 = {
     cp: "PF1.CurrencyCP",
   },
 
-  acTypes: {
-    armor: "Armor",
-    shield: "Shield",
-    natural: "Natural Armor",
-  },
-
   /**
    * Resultant armor types for an actor's worn armor as per their roll data
    *

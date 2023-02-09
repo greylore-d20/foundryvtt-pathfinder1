@@ -81,8 +81,8 @@ export class ActionUse {
       return ERR_REQUIREMENT.DISABLED;
     }
 
-    const itemQuantity = this.system.quantity;
-    if (itemQuantity != null && itemQuantity <= 0) {
+    const itemQuantity = this.item.system.quantity;
+    if (itemQuantity !== undefined && itemQuantity <= 0) {
       ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
       return ERR_REQUIREMENT.INSUFFICIENT_QUANTITY;
     }

@@ -4,6 +4,7 @@ import { MinMaxFilter } from "./minmax.mjs";
 export class ItemTypeFilter extends BaseFilter {
   static label = "PF1.Type";
   static indexField = "type";
+  static types = ["weapon", "equipment", "consumable", "container", "loot"];
 
   /** @inheritDoc */
   prepareChoices() {
@@ -12,6 +13,7 @@ export class ItemTypeFilter extends BaseFilter {
         { key: "weapon", label: game.i18n.localize("PF1.ItemTypeWeapon") },
         { key: "equipment", label: game.i18n.localize("PF1.ItemTypeEquipment") },
         { key: "consumable", label: game.i18n.localize("PF1.ItemTypeConsumable") },
+        { key: "container", label: game.i18n.localize("ITEM.TypeContainer") },
         { key: "loot", label: game.i18n.localize("PF1.Misc") },
       ].map((choice) => [choice.key, choice])
     );

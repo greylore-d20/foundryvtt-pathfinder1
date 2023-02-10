@@ -123,6 +123,21 @@ export class CompendiumBrowser extends Application {
     this._debouncedRender = foundry.utils.debounce(this.render, 300);
   }
 
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      template: "systems/pf1/templates/apps/compendium-browser/compendium-browser.hbs",
+      classes: ["pf1", "app"],
+      id: `pf1-compendium-browser-${this.name}`,
+      width: 800,
+      height: window.innerHeight - 60,
+      top: 30,
+      left: 40,
+      resizable: true,
+      scrollY: [".filter-container"],
+      dragDrop: [{ dragSelector: ".directory-item", dropSelector: null }],
+    });
+  }
+
   /**
    * Initialize all {@link CompendiumBrowser}s found in {@link pf1.applications.compendiumBrowser}
    * and register them in {@link pf1.applications.compendiums}.
@@ -137,21 +152,6 @@ export class CompendiumBrowser extends Application {
     compendiums.races = new compendiumClasses.RaceBrowser();
     compendiums.bestiary = new compendiumClasses.CreatureBrowser();
     compendiums.buffs = new compendiumClasses.BuffBrowser();
-  }
-
-  static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
-      template: "systems/pf1/templates/apps/compendium-browser/compendium-browser.hbs",
-      classes: ["pf1", "app"],
-      id: `pf1-compendium-browser-${this.name}`,
-      width: 800,
-      height: window.innerHeight - 60,
-      top: 30,
-      left: 40,
-      resizable: true,
-      scrollY: [".filter-container"],
-      dragDrop: [{ dragSelector: ".directory-item", dropSelector: null }],
-    });
   }
 
   /**
@@ -488,9 +488,13 @@ export class CompendiumBrowser extends Application {
   }
 
   /** @inheritDoc */
+  _canDragStart(selector) {
+    return true;
+  }
+
+  /** @inheritDoc */
   _onDragStart(event) {
-    const li = event.currentTarget;
-    const uuid = li.dataset.uuid;
+    const { uuid } = event.currentTarget.dataset;
     event.dataTransfer.setData(
       "text/plain",
       JSON.stringify({

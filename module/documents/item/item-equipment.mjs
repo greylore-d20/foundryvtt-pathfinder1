@@ -36,10 +36,6 @@ export class ItemEquipmentPF extends ItemPF {
     return super._preDelete(options, user);
   }
 
-  get subType() {
-    return this.system.equipmentType;
-  }
-
   /** @inheritDoc */
   getLabels({ actionId } = {}) {
     const labels = super.getLabels({ actionId });

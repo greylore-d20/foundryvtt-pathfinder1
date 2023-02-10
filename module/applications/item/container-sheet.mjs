@@ -121,39 +121,39 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         data.descriptionAttributes.push(
           {
             isNumber: true,
-            name: "system.basePrice",
+            name: "system.price",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: data.item.system.price,
-            id: "data-basePrice",
+            id: "data-price",
           },
           {
             isNumber: true,
-            name: "system.unidentified.basePrice",
+            name: "system.unidentified.price",
             fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
             value: data.item.system.unidentified?.price,
-            id: "data-unidentifiedBasePrice",
+            id: "data-unidentifiedPrice",
           }
         );
       } else {
         if (data.showUnidentifiedData) {
           data.descriptionAttributes.push({
             isNumber: true,
-            name: "system.unidentified.basePrice",
+            name: "system.unidentified.price",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: data.item.system.unidentified?.price,
-            id: "data-basePrice",
+            id: "data-price",
           });
         } else {
           data.descriptionAttributes.push({
             isNumber: true,
-            name: "system.basePrice",
+            name: "system.price",
             fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: data.item.system.price,
-            id: "data-basePrice",
+            id: "data-price",
           });
         }
       }

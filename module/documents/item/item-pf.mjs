@@ -710,14 +710,6 @@ export class ItemPF extends ItemBasePF {
       data = flattenObject(data);
     }
 
-    // Update price from base price
-    if (data["system.basePrice"] != null) {
-      linkData(srcData, data, "system.price", srcData.system.basePrice || 0);
-    }
-    if (data["system.unidentified.basePrice"] != null) {
-      linkData(srcData, data, "system.unidentified.price", srcData.system.unidentified?.basePrice || 0);
-    }
-
     // Make sure charges doesn't exceed max charges, and vice versa
     if (this.isCharged) {
       let charges = 0;

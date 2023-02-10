@@ -327,6 +327,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateItemChargeCost(item, updateData);
   _migrateItemWeight(item, updateData);
   _migrateItemHealth(item, updateData);
+  _migrateContainerPrice(item, updateData);
   _migrateItemType(item, updateData);
   _migrateItemLearnedAt(item, updateData);
   _migrateItemTuples(item, updateData);
@@ -1708,6 +1709,20 @@ export const filterItemActions = function (action) {
   if (action.actionType) return true;
 
   return false;
+};
+
+const _migrateContainerPrice = (item, updateData) => {
+  if (item.type !== "container") return;
+
+  // .basePrice was merged into .price with 0.82.6
+  if (item.system.basePrice !== undefined) {
+    updateData["system.price"] = item.system.basePrice;
+    updateData["system.-=basePrice"] = null;
+  }
+  if (item.system.unidentified?.basePrice !== undefined) {
+    updateData["system.unidentified.price"] = item.system.unidentified.basePrice;
+    updateData["system.unidentified.-=basePrice"] = null;
+  }
 };
 
 const _migrateItemType = function (ent, updateData) {

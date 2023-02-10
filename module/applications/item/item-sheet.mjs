@@ -233,7 +233,7 @@ export class ItemSheetPF extends ItemSheet {
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
             value: item.getValue({ sellValue: 1, forceUnidentified: true }),
             decimals: 2,
-            id: "data-unidentifiedBasePrice",
+            id: "data-unidentifiedPrice",
           }
         );
       } else {

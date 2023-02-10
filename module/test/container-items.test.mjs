@@ -224,11 +224,11 @@ export const registerContainerItemTests = () => {
 
             describe("and own value", function () {
               before(async () => {
-                await items.container.update({ "system.basePrice": 100 });
+                await items.container.update({ "system.price": 100 });
               });
               after(async () => {
                 await items.container.update({
-                  "system.basePrice": 0,
+                  "system.price": 0,
                   "system.weight.value": 0,
                   "system.weightReduction": 0,
                 });

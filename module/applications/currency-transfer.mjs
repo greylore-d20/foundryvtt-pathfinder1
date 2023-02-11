@@ -8,7 +8,7 @@ export class CurrencyTransfer extends FormApplication {
 
     if (source.actor) {
       if (typeof source.actor === "string") source.actor = game.actors.get(source.actor);
-      if (source.actor.data.type == "npc") source.alt = false;
+      if (source.actor.type == "npc") source.alt = false;
     }
     if (source.container) {
       source.alt = false;
@@ -17,7 +17,7 @@ export class CurrencyTransfer extends FormApplication {
     }
     if (dest.actor) {
       if (typeof dest.actor === "string") dest.actor = game.actors.get(dest.actor);
-      if (dest.actor.data.type == "npc") dest.alt = false;
+      if (dest.actor.type == "npc") dest.alt = false;
       else if (dest.actor === source.actor && !source.container && !dest.container) dest.alt = !source.alt;
     }
     if (dest.container) {
@@ -27,10 +27,10 @@ export class CurrencyTransfer extends FormApplication {
 
     // Currency checks
     if (source.container) {
-      source.amount = mergeObject(source.container.data.currency, source.amount ?? {});
+      source.amount = mergeObject(source.container.system.currency, source.amount ?? {});
     } else if (source.actor) {
       source.amount = mergeObject(
-        source.alt ? source.actor.data.altCurrency : source.actor.data.currency,
+        source.alt ? source.actor.system.altCurrency : source.actor.system.currency,
         source.amount ?? {}
       );
     } else if (game.user.isGM) {
@@ -198,8 +198,8 @@ export class CurrencyTransfer extends FormApplication {
     this.order.forEach((c) => (amount[c] = amount[c] ?? 0));
     if (!Object.values(amount).find((a) => a > 0)) return this._failed("PF1.CurrencyInsufficient"), false;
 
-    let sourceCurrency = duplicate(sourceAlt ? sourceDoc?.data.altCurrency : sourceDoc?.data.currency);
-    const destCurrency = duplicate(destAlt ? destDoc.data.altCurrency : destDoc.data.currency);
+    let sourceCurrency = duplicate(sourceAlt ? sourceDoc?.system.altCurrency : sourceDoc?.system.currency);
+    const destCurrency = duplicate(destAlt ? destDoc.system.altCurrency : destDoc.system.currency);
     if ((!sourceCurrency && !game.user.isGM) || !destCurrency) return false;
     const originalSource = Object.assign(Object.fromEntries(this.order.map((o) => [o, Infinity])), sourceCurrency);
 
@@ -229,8 +229,8 @@ export class CurrencyTransfer extends FormApplication {
         data: {
           sourceActor: sourceDoc.actor?.uuid ?? sourceDoc.uuid,
           destActor: destDoc.actor?.uuid ?? destDoc.uuid,
-          sourceContainer: sourceDoc.data.type === "container" ? sourceDoc.id : "",
-          destContainer: destDoc.data.type === "container" ? destDoc.id : "",
+          sourceContainer: sourceDoc.type === "container" ? sourceDoc.id : "",
+          destContainer: destDoc.type === "container" ? destDoc.id : "",
           sourceAlt: sourceAlt,
           destAlt: destAlt,
           amount: amount,

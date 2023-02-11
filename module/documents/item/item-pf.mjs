@@ -1761,7 +1761,7 @@ export class ItemPF extends ItemBasePF {
    */
   async removeItemLink(id) {
     const updateData = {};
-    for (const [type, linkItems] of Object.values(this.system.links ?? {})) {
+    for (const [type, linkItems] of Object.entries(this.system.links ?? {})) {
       const items = deepClone(linkItems);
       const idx = items.findIndex((item) => item.id === id || item.uuid === id);
       if (idx >= 0) {

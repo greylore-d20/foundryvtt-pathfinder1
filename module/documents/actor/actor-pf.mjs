@@ -389,6 +389,11 @@ export class ActorPF extends ActorBasePF {
         disableBuffs.push({ _id: item.id, "system.active": false });
       }
     }
+
+    // Add context info for why this update happens to allow modules to understand the cause.
+    context.pf1 ??= {};
+    context.pf1.reason = "duration;";
+
     const disableAEContext = mergeObject({ render: !disableBuffs.length }, context);
     if (disableActiveEffects.length)
       await this.updateEmbeddedDocuments("ActiveEffect", disableActiveEffects, disableAEContext);

@@ -85,7 +85,7 @@ export class ItemSpellPF extends ItemPF {
         result.classLevel =
           spellbook.class === "_hd"
             ? result.attributes.hd?.total ?? result.details.level.value
-            : result.classes[spellbook.class]?.level || 0;
+            : result.classes?.[spellbook.class]?.level || 0;
         result.ablMod = ablMod;
       }
     }

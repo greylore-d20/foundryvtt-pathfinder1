@@ -121,8 +121,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   get firstAction() {
-    if (!this.system.actions?.length) return undefined;
-    return this.actions.get(this.system.actions[0]._id);
+    return this.actions?.get(this.system.actions?.[0]?._id);
   }
 
   /**

@@ -58,7 +58,8 @@ export class ItemPF extends ItemBasePF {
     super._preCreate(data, options, user);
 
     // Set typed image
-    if (data.img === undefined) {
+    // The test against DEFAULT_ICON is to deal with a Foundry bug with unlinked actors.
+    if (data.img === undefined || data.img === Item.DEFAULT_ICON) {
       const image = PF1.defaultIcons.items[this.type];
       if (image) this.updateSource({ img: image });
     }

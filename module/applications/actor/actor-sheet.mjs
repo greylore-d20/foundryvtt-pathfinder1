@@ -2577,7 +2577,7 @@ export class ActorSheetPF extends ActorSheet {
     for (const attack of attacks) {
       const subType = attack.subType;
       if (!attackSections[subType]) {
-        console.warn(`Attack for unrecongnized subtype "${subType}"`);
+        console.warn(`Attack for unrecognized subtype "${subType}"`);
         continue;
       }
       attackSections[subType].items.push(attack);

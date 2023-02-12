@@ -367,13 +367,13 @@ export class ItemSheetPF extends ItemSheet {
       let spellbook = null;
       if (actor) {
         const bookId = itemData.spellbook;
-        spellbook = actorData.attributes?.spells?.spellbooks?.[bookId];
+        spellbook = actorData?.attributes.spells?.spellbooks[bookId];
       }
 
       context.isPreparedSpell = spellbook != null ? !spellbook.spontaneous && !spellbook.spellPoints?.useSystem : false;
       context.usesSpellpoints = spellbook != null ? spellbook.spellPoints?.useSystem ?? false : false;
       context.isAtWill = itemData.atWill;
-      context.spellbooks = deepClone(actorData.attributes?.spells?.spellbooks ?? {});
+      context.spellbooks = deepClone(actorData?.attributes.spells.spellbooks ?? {});
 
       const desc = await renderTemplate(
         "systems/pf1/templates/internal/spell-description.hbs",

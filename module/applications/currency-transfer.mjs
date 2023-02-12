@@ -172,7 +172,7 @@ export class CurrencyTransfer extends FormApplication {
         { actor: sourceActor, container: data.containerId, alt: data.alt },
         {
           actor: destDoc?.actor ?? destDoc,
-          container: destDoc.data.type === "container" ? destDoc.id : null,
+          container: destDoc.system.type === "container" ? destDoc.id : null,
           amount: Object.fromEntries([[data.currency, parseInt(data.amount)]]),
         }
       ).render(true);

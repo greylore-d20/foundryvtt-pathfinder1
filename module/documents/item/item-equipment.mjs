@@ -5,17 +5,17 @@ export class ItemEquipmentPF extends ItemPF {
   async _preUpdate(update, context) {
     // Set equipment subtype and slot
     const type = update.system?.subType;
-    if (type !== undefined && type !== this.system.subType) {
+    if (type !== undefined && type !== this.subType) {
       // Set subtype
       const subtype = update.system?.equipmentSubtype ?? this.system.equipmentSubtype ?? "";
-      const subtypes = Object.keys(CONFIG.PF1.equipmentTypes[type]).filter((o) => !o.startsWith("_"));
+      const subtypes = Object.keys(CONFIG.PF1.equipmentTypes[type] ?? {}).filter((o) => !o.startsWith("_"));
       if (!subtype || !subtypes.includes(subtype)) {
         update.system.equipmentSubtype = subtypes[0];
       }
 
       // Set slot
       const slot = update.system?.slot ?? this.system.slot ?? "";
-      const slotTypes = Object.keys(CONFIG.PF1.equipmentSlots[type]);
+      const slotTypes = Object.keys(CONFIG.PF1.equipmentSlots[type] ?? {});
       if (!slot || !slotTypes.includes(slot)) {
         setProperty(update, "system.slot", slotTypes[0]);
       }

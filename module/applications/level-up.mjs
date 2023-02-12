@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { createInlineRollString } from "../utils/chat.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
@@ -89,7 +90,7 @@ export class LevelUpForm extends FormApplication {
 
     result.data = this.object.toObject();
     result.actor = this.actor.toObject();
-    result.config = CONFIG.PF1;
+    result.config = PF1;
 
     // Add sections
     result.section = this.currentSection;
@@ -184,17 +185,17 @@ export class LevelUpForm extends FormApplication {
 
     // Add ability score
     const newHD = this.actor.getRollData().attributes.hd.total + 1;
-    const newAbilityScores = CONFIG.PF1.levelAbilityScores[newHD];
+    const newAbilityScores = PF1.levelAbilityScores[newHD];
     if (typeof newAbilityScores === "number" && newAbilityScores > 0) {
       result.push({
         name: "ability",
         label: "PF1.LevelUp.AbilityScore.Label",
         template: "systems/pf1/templates/apps/level-up/ability-score.hbs",
         choice: null,
-        abilities: Object.keys(CONFIG.PF1.abilities).reduce((cur, o) => {
+        abilities: Object.keys(PF1.abilities).reduce((cur, o) => {
           cur[o] = {
             value: this.actor.system.abilities[o].total,
-            name: CONFIG.PF1.abilities[o],
+            name: PF1.abilities[o],
             added: 0,
             isEnhanced: this.actor.system.abilities[o].total !== this.actor.system.abilities[o].base,
           };
@@ -227,7 +228,7 @@ export class LevelUpForm extends FormApplication {
     const itemData = {};
     const actorData = {};
     const chatData = {
-      config: CONFIG.PF1,
+      config: PF1,
     };
     const newItems = [];
     const callbacks = [];
@@ -435,7 +436,7 @@ export class LevelUpForm extends FormApplication {
     // Add level up ability score feature if it doesn't exist yet
     if (!item) {
       const newItem = mergeObject(
-        CONFIG.PF1.levelAbilityScoreFeature,
+        PF1.levelAbilityScoreFeature,
         {
           flags: {
             pf1: {
@@ -515,7 +516,7 @@ export class LevelUpForm extends FormApplication {
 
     const templateData = {
       formData,
-      config: CONFIG.PF1,
+      config: PF1,
       item: this.object.toObject(),
       actor: this.actor.toObject(),
     };

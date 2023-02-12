@@ -1,5 +1,5 @@
-import { ItemPF } from "./item-pf.mjs";
 import { PF1 } from "@config";
+import { ItemPF } from "./item-pf.mjs";
 
 export class ItemFeatPF extends ItemPF {
   async _preDelete(options, user) {
@@ -32,8 +32,8 @@ export class ItemFeatPF extends ItemPF {
     const { subType, abilityType } = this.system;
 
     labels.featType = PF1.featTypes[subType];
-    labels.abilityType = CONFIG.PF1.abilityTypes[this.system.abilityType]?.short;
-    labels.traitType = CONFIG.PF1.traitTypes[this.system.traitType];
+    labels.abilityType = PF1.abilityTypes[this.system.abilityType]?.short;
+    labels.traitType = PF1.traitTypes[this.system.traitType];
 
     // Ability type
     if (abilityType && abilityType !== "none") {

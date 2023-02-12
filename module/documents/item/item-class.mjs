@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { ItemPF } from "./item-pf.mjs";
 import { createTag } from "../../utils/lib.mjs";
 import { RollPF } from "../../dice/roll.mjs";
@@ -179,11 +180,9 @@ export class ItemClassPF extends ItemPF {
 
     // Prepare class base save
     {
-      const saveFormulas = useFractional
-        ? CONFIG.PF1.classFractionalSavingThrowFormulas
-        : CONFIG.PF1.classSavingThrowFormulas;
+      const saveFormulas = useFractional ? PF1.classFractionalSavingThrowFormulas : PF1.classSavingThrowFormulas;
 
-      for (const save of Object.keys(CONFIG.PF1.savingThrows)) {
+      for (const save of Object.keys(PF1.savingThrows)) {
         const classType = itemData.subType || "base";
         let formula;
         const saveData = itemData.savingThrows[save];
@@ -202,7 +201,7 @@ export class ItemClassPF extends ItemPF {
 
     // Prepare BAB
     {
-      const babFormulas = useFractional ? CONFIG.PF1.classFractionalBABFormulas : CONFIG.PF1.classBABFormulas;
+      const babFormulas = useFractional ? PF1.classFractionalBABFormulas : PF1.classBABFormulas;
 
       const babType = itemData.bab;
       let formula;

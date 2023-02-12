@@ -406,8 +406,8 @@ export class ActorPF extends ActorBasePF {
 
     // Reset equipment info
     this.equipment = {
-      shield: { type: CONFIG.PF1.shieldTypes.none, id: undefined },
-      armor: { type: CONFIG.PF1.armorTypes.none, id: undefined },
+      shield: { type: PF1.shieldTypes.none, id: undefined },
+      armor: { type: PF1.armorTypes.none, id: undefined },
     };
 
     // Reset class info
@@ -436,7 +436,7 @@ export class ActorPF extends ActorBasePF {
     this.system.details.mythicTier = mythicTier;
 
     // Populate conditions
-    for (const condition of Object.keys(CONFIG.PF1.conditions)) {
+    for (const condition of Object.keys(PF1.conditions)) {
       this.system.attributes.conditions[condition] ??= false;
     }
 
@@ -525,7 +525,7 @@ export class ActorPF extends ActorBasePF {
     // Custom proficiencies
     const customProficiencies =
       this.system.traits.armorProf?.customTotal
-        ?.split(CONFIG.PF1.re.traitSeparator)
+        ?.split(PF1.re.traitSeparator)
         .map((item) => item.trim().toLowerCase())
         .filter((item) => item.length > 0) || [];
 
@@ -646,7 +646,7 @@ export class ActorPF extends ActorBasePF {
           setSourceInfoByName(
             this.sourceInfo,
             key,
-            game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
+            game.i18n.localize(PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]),
             -rollData.attributes.woundThresholds.penalty
           );
         }
@@ -732,7 +732,7 @@ export class ActorPF extends ActorBasePF {
       }
 
       const castsForLevels =
-        CONFIG.PF1.casterProgression[book.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][mode.raw][casterType];
+        PF1.casterProgression[book.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][mode.raw][casterType];
       let classLevel = Math.clamped(book.cl.autoSpellLevelTotal, 1, 20);
 
       // Protect against invalid class level bricking actors
@@ -754,7 +754,7 @@ export class ActorPF extends ActorBasePF {
         // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
         const spellsForLevel =
           level === 0 && book.spontaneous
-            ? CONFIG.PF1.casterProgression.spellsPreparedPerDay[mode.raw][casterType][classLevel - 1][level]
+            ? PF1.casterProgression.spellsPreparedPerDay[mode.raw][casterType][classLevel - 1][level]
             : castsForLevels[classLevel - 1][level];
         levelData.base = spellsForLevel;
 
@@ -858,7 +858,7 @@ export class ActorPF extends ActorBasePF {
             // spontaneous or hybrid
             // if not prepared then base off of casts per day
             let available =
-              CONFIG.PF1.casterProgression.spellsPreparedPerDay[mode.raw][casterType]?.[classLevel - 1][spellLevel];
+              PF1.casterProgression.spellsPreparedPerDay[mode.raw][casterType]?.[classLevel - 1][spellLevel];
             available += allLevelMod;
 
             const formula = spellLevelData.preparedOffsetFormula || "0";
@@ -1071,14 +1071,14 @@ export class ActorPF extends ActorBasePF {
     // NPCs are considered proficient with their armor
     // Collect proficiencies from items, add them to actor's proficiency totals
     const proficiencies = {
-      armorProf: CONFIG.PF1.armorProficiencies,
-      weaponProf: CONFIG.PF1.weaponProficiencies,
-      languages: CONFIG.PF1.languages,
+      armorProf: PF1.armorProficiencies,
+      weaponProf: PF1.weaponProficiencies,
+      languages: PF1.languages,
     };
     for (const [prof, translations] of Object.entries(proficiencies)) {
       // Custom proficiency baseline from actor
       const customProficiencies =
-        actorData.traits[prof]?.custom?.split(CONFIG.PF1.re.traitSeparator).filter((item) => item.length > 0) || [];
+        actorData.traits[prof]?.custom?.split(PF1.re.traitSeparator).filter((item) => item.length > 0) || [];
 
       // Iterate over all items to create one array of non-custom proficiencies
       const proficiencies = this.items.reduce(
@@ -1105,7 +1105,7 @@ export class ActorPF extends ActorBasePF {
             // Collect trimmed but otherwise original proficiency strings, dedupe array for actor's total
             const customProfs =
               item.system[prof].custom
-                ?.split(CONFIG.PF1.re.traitSeparator)
+                ?.split(PF1.re.traitSeparator)
                 .map((i) => i.trim())
                 .filter((el, i, arr) => el.length > 0 && arr.indexOf(el) === i) || [];
             // Add readable custom profs to sources and overall collection
@@ -1139,7 +1139,7 @@ export class ActorPF extends ActorBasePF {
       cmbAbl = this.system.attributes.cmbAbility,
       cmbAblMod = this.system.abilities[cmbAbl]?.mod ?? 0,
       size = this.system.traits.size,
-      szCMBMod = CONFIG.PF1.sizeSpecialMods[size] ?? 0,
+      szCMBMod = PF1.sizeSpecialMods[size] ?? 0,
       cmbBonus = this.system.attributes.cmb.bonus ?? 0,
       cmb = shrAtk + genAtk + szCMBMod + cmbBonus + cmbAblMod;
     this.system.attributes.cmb.total = cmb;
@@ -1191,7 +1191,7 @@ export class ActorPF extends ActorBasePF {
     this.updateWoundThreshold();
 
     // Create arbitrary skill slots
-    for (const skillId of CONFIG.PF1.arbitrarySkills) {
+    for (const skillId of PF1.arbitrarySkills) {
       if (data.skills[skillId] == null) continue;
       const skill = data.skills[skillId];
       skill.subSkills = skill.subSkills || {};
@@ -1210,7 +1210,7 @@ export class ActorPF extends ActorBasePF {
 
     // Mark background skills
     for (const skillId of Object.keys(data.skills)) {
-      if (CONFIG.PF1.backgroundSkills.includes(skillId)) {
+      if (PF1.backgroundSkills.includes(skillId)) {
         const skill = data.skills[skillId];
         skill.background = true;
         for (const subSkillId of Object.keys(skill.subSkills ?? {})) skill.subSkills[subSkillId].background = true;
@@ -1259,14 +1259,14 @@ export class ActorPF extends ActorBasePF {
         attributes.ac[k].total += v;
         getSourceInfo(this.sourceInfo, `system.attributes.ac.${k}.total`).positive.push({
           value: v,
-          name: CONFIG.PF1.abilities[acAblKey[k]],
+          name: PF1.abilities[acAblKey[k]],
         });
       }
       for (const [k, v] of Object.entries(cmd)) {
         attributes.cmd[k] += v;
         getSourceInfo(this.sourceInfo, `system.attributes.cmd.${k}`).positive.push({
           value: v,
-          name: CONFIG.PF1.abilities[cmdDexAbl],
+          name: PF1.abilities[cmdDexAbl],
         });
       }
     }
@@ -1276,7 +1276,7 @@ export class ActorPF extends ActorBasePF {
       const armorItems = this.items.filter((o) => o.type === "equipment");
       let reducedSpeed = false;
       const sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
-      if (attributes.encumbrance.level >= CONFIG.PF1.encumbranceLevels.medium && !this.changeFlags["noEncumbrance"]) {
+      if (attributes.encumbrance.level >= PF1.encumbranceLevels.medium && !this.changeFlags["noEncumbrance"]) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.Encumbrance");
       }
@@ -1307,7 +1307,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add encumbrance source details
     switch (attributes.encumbrance.level) {
-      case CONFIG.PF1.encumbranceLevels.medium:
+      case PF1.encumbranceLevels.medium:
         getSourceInfo(this.sourceInfo, "system.attributes.acp.total").negative.push({
           name: game.i18n.localize("PF1.Encumbrance"),
           value: 3,
@@ -1317,7 +1317,7 @@ export class ActorPF extends ActorBasePF {
           value: 3,
         });
         break;
-      case CONFIG.PF1.encumbranceLevels.heavy:
+      case PF1.encumbranceLevels.heavy:
         getSourceInfo(this.sourceInfo, "system.attributes.acp.total").negative.push({
           name: game.i18n.localize("PF1.Encumbrance"),
           value: 6,
@@ -1343,13 +1343,13 @@ export class ActorPF extends ActorBasePF {
     labels.race = this.race
       ? game.i18n.format("PF1.RaceTitle", { name: this.race.name })
       : game.i18n.localize("PF1.Race");
-    labels.alignment = CONFIG.PF1.alignments[this.system.details.alignment];
+    labels.alignment = PF1.alignments[this.system.details.alignment];
 
     // Speed
     labels.speed = {};
     for (const [key, obj] of Object.entries(this.system.attributes.speed ?? {})) {
       const dist = pf1.utils.convertDistance(obj.total);
-      labels.speed[key] = `${dist[0]} ${CONFIG.PF1.measureUnitsShort[dist[1]]}`;
+      labels.speed[key] = `${dist[0]} ${PF1.measureUnitsShort[dist[1]]}`;
     }
 
     return labels;
@@ -1504,7 +1504,7 @@ export class ActorPF extends ActorBasePF {
     const actorData = this.system;
     const sourceDetails = {};
     // Get empty source arrays
-    for (const b of Object.keys(CONFIG.PF1.buffTargets)) {
+    for (const b of Object.keys(PF1.buffTargets)) {
       let buffTargets = getChangeFlat.call(this, b, null);
       if (!(buffTargets instanceof Array)) buffTargets = [buffTargets];
       for (const bt of buffTargets) {
@@ -1553,7 +1553,7 @@ export class ActorPF extends ActorBasePF {
             for (const k of flats) {
               if (!k) continue;
               sourceDetails[k].push({
-                name: game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wtData.level]),
+                name: game.i18n.localize(PF1.woundThresholdConditions[wtData.level]),
                 value: -wtData.penalty,
               });
             }
@@ -1752,7 +1752,7 @@ export class ActorPF extends ActorBasePF {
     // Apply changes in Actor size to Token width/height
     const newSize = update.system.traits?.size;
     if (newSize !== undefined && oldData.traits.size !== undefined) {
-      const size = CONFIG.PF1.tokenSizes[newSize];
+      const size = PF1.tokenSizes[newSize];
       if (!this.isToken && !this.prototypeToken.flags?.pf1?.staticSize) {
         if (!update.token) update.token = {};
         update.token.width = size.w;
@@ -1839,7 +1839,7 @@ export class ActorPF extends ActorBasePF {
     if (game.user.id === userId) {
       const sizeKey = updateData.system?.traits?.size;
       if (sizeKey) {
-        const size = CONFIG.PF1.tokenSizes[sizeKey];
+        const size = PF1.tokenSizes[sizeKey];
         const tokens = this.getActiveTokens(false, true).filter((o) => {
           if (o.getFlag("pf1", "staticSize")) return false;
           return true;
@@ -2003,11 +2003,11 @@ export class ActorPF extends ActorBasePF {
     if (isSubSkill) {
       skill = mainSkill.subSkills[subSkillId];
       if (!skill) return null;
-      skillName = `${CONFIG.PF1.skills[mainSkillId]} (${skill.name})`;
+      skillName = `${PF1.skills[mainSkillId]} (${skill.name})`;
       parentSkill = this.getSkillInfo(mainSkillId);
     } else {
       skill = mainSkill;
-      skillName = skill.name ?? CONFIG.PF1.skills[skillId];
+      skillName = skill.name ?? PF1.skills[skillId];
     }
 
     const result = duplicate(skill);
@@ -2066,7 +2066,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add ability modifier
     if (skl.ability) {
-      parts.push(`@abilities.${skl.ability}.mod[${CONFIG.PF1.abilities[skl.ability]}]`);
+      parts.push(`@abilities.${skl.ability}.mod[${PF1.abilities[skl.ability]}]`);
     }
 
     // Add rank
@@ -2086,7 +2086,7 @@ export class ActorPF extends ActorBasePF {
     if (rollData.attributes.woundThresholds?.penalty > 0) {
       parts.push(
         `- @attributes.woundThresholds.penalty[${game.i18n.localize(
-          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
+          PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
         )}]`
       );
     }
@@ -2106,7 +2106,7 @@ export class ActorPF extends ActorBasePF {
       rollData,
       flavor: game.i18n.format("PF1.SkillCheck", { skill: skl.name }),
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      compendium: { entry: CONFIG.PF1.skillCompendiumEntries[skillId] ?? skl.journal, type: "JournalEntry" },
+      compendium: { entry: PF1.skillCompendiumEntries[skillId] ?? skl.journal, type: "JournalEntry" },
       subject: { skill: skillId },
       speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
     };
@@ -2174,7 +2174,7 @@ export class ActorPF extends ActorBasePF {
     srcDetails(this.sourceDetails["system.attributes.attack.shared"]);
 
     const size = this.system.traits.size ?? "med";
-    rollData.sizeBonus = CONFIG.PF1.sizeSpecialMods[size];
+    rollData.sizeBonus = PF1.sizeSpecialMods[size];
     if (rollData.sizeBonus != 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
     const changeSources = ["attack"];
@@ -2188,7 +2188,7 @@ export class ActorPF extends ActorBasePF {
 
     const abl = options.ability ?? this.system.attributes.cmbAbility;
     const ablMod = this.system.abilities[abl]?.mod ?? 0;
-    if (ablMod != 0) describePart(ablMod, CONFIG.PF1.abilities[abl]);
+    if (ablMod != 0) describePart(ablMod, PF1.abilities[abl]);
 
     // Add grapple note
     if (this.system.attributes.conditions.grappled) {
@@ -2259,10 +2259,10 @@ export class ActorPF extends ActorBasePF {
 
     // Add ability modifier
     const atkAbl = this.system.attributes?.attack?.[`${options.melee ? "melee" : "ranged"}Ability`];
-    changes.push(`${this.system.abilities[atkAbl].mod}[${CONFIG.PF1.abilities[atkAbl]}]`);
+    changes.push(`${this.system.abilities[atkAbl].mod}[${PF1.abilities[atkAbl]}]`);
 
     const size = this.system.traits.size ?? "med";
-    rollData.sizeBonus = CONFIG.PF1.sizeMods[size];
+    rollData.sizeBonus = PF1.sizeMods[size];
     if (rollData.sizeBonus != 0) changes.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
     const props = [];
@@ -2310,7 +2310,7 @@ export class ActorPF extends ActorBasePF {
 
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
-    if (wT.valid) notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
+    if (wT.valid) notes.push(game.i18n.localize(PF1.woundThresholdConditions[wT.level]));
 
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
@@ -2368,7 +2368,7 @@ export class ActorPF extends ActorBasePF {
 
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
-    if (wT.valid) notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]));
+    if (wT.valid) notes.push(game.i18n.localize(PF1.woundThresholdConditions[wT.level]));
     // TODO: Make the penalty show separate of the CL.total.
 
     const props = [];
@@ -2403,7 +2403,7 @@ export class ActorPF extends ActorBasePF {
     const actorData = this.system;
     const headers = [];
 
-    const reSplit = CONFIG.PF1.re.traitSeparator;
+    const reSplit = PF1.re.traitSeparator;
     const misc = [];
 
     if (damageResistances) {
@@ -2421,7 +2421,7 @@ export class ActorPF extends ActorBasePF {
       if (actorData.traits.dv.value.length || actorData.traits.dv.custom.length) {
         const value = [].concat(
           actorData.traits.dv.value.map((obj) => {
-            return CONFIG.PF1.damageTypes[obj];
+            return PF1.damageTypes[obj];
           }),
           actorData.traits.dv.custom.length > 0 ? actorData.traits.dv.custom.split(";") : []
         );
@@ -2441,11 +2441,11 @@ export class ActorPF extends ActorBasePF {
     ) {
       const value = [].concat(
         actorData.traits.di.value.map((obj) => {
-          return CONFIG.PF1.damageTypes[obj];
+          return PF1.damageTypes[obj];
         }),
         actorData.traits.di.custom.length > 0 ? actorData.traits.di.custom.split(";") : [],
         actorData.traits.ci.value.map((obj) => {
-          return CONFIG.PF1.conditionTypes[obj];
+          return PF1.conditionTypes[obj];
         }),
         actorData.traits.ci.custom.length > 0 ? actorData.traits.ci.custom.split(";") : []
       );
@@ -2590,10 +2590,10 @@ export class ActorPF extends ActorBasePF {
 
     // Wound Threshold penalty
     if (rollData.attributes.woundThresholds.penalty > 0) {
-      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
+      notes.push(game.i18n.localize(PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
       parts.push(
         `- @attributes.woundThresholds.penalty[${game.i18n.localize(
-          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
+          PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
         )}]`
       );
     }
@@ -2601,7 +2601,7 @@ export class ActorPF extends ActorBasePF {
     // Roll saving throw
     const props = this.getDefenseHeaders({ damageResistances: false, damageVulnerabilities: false });
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-    const label = CONFIG.PF1.savingThrows[savingThrowId];
+    const label = PF1.savingThrows[savingThrowId];
 
     const rollOptions = {
       ...options,
@@ -2644,7 +2644,7 @@ export class ActorPF extends ActorBasePF {
     const noteObjects = this.getContextNotes(`abilityChecks.${abilityId}`);
     const notes = this.formatContextNotes(noteObjects, rollData);
 
-    const label = CONFIG.PF1.abilities[abilityId];
+    const label = PF1.abilities[abilityId];
     const abl = this.system.abilities[abilityId];
 
     const parts = [`@abilities.${abilityId}.mod[${label}]`];
@@ -2658,10 +2658,10 @@ export class ActorPF extends ActorBasePF {
 
     // Wound Threshold penalty
     if (rollData.attributes.woundThresholds.penalty > 0) {
-      notes.push(game.i18n.localize(CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
+      notes.push(game.i18n.localize(PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]));
       parts.push(
         `- @attributes.woundThresholds.penalty[${game.i18n.localize(
-          CONFIG.PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
+          PF1.woundThresholdConditions[rollData.attributes.woundThresholds.level]
         )}]`
       );
     }
@@ -2721,7 +2721,7 @@ export class ActorPF extends ActorBasePF {
     if (this.system.attributes.srNotes.length > 0) srNotes.push(...this.system.attributes.srNotes.split(/[\n\r]+/));
 
     // Add misc data
-    const reSplit = CONFIG.PF1.re.traitSeparator;
+    const reSplit = PF1.re.traitSeparator;
     // Damage Reduction
     let drNotes = [];
     if (this.system.traits.dr.length) {
@@ -2736,7 +2736,7 @@ export class ActorPF extends ActorBasePF {
     if (this.system.traits.di.value.length || this.system.traits.di.custom.length) {
       const values = [
         ...this.system.traits.di.value.map((obj) => {
-          return CONFIG.PF1.damageTypes[obj];
+          return PF1.damageTypes[obj];
         }),
         ...(this.system.traits.di.custom.length > 0 ? this.system.traits.di.custom.split(reSplit) : []),
       ];
@@ -2746,7 +2746,7 @@ export class ActorPF extends ActorBasePF {
     if (this.system.traits.dv.value.length || this.system.traits.dv.custom.length) {
       const values = [
         ...this.system.traits.dv.value.map((obj) => {
-          return CONFIG.PF1.damageTypes[obj];
+          return PF1.damageTypes[obj];
         }),
         ...(this.system.traits.dv.custom.length > 0 ? this.system.traits.dv.custom.split(reSplit) : []),
       ];
@@ -2756,7 +2756,7 @@ export class ActorPF extends ActorBasePF {
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
     if (wT.valid) {
-      const wTlabel = game.i18n.localize(CONFIG.PF1.woundThresholdConditions[wT.level]);
+      const wTlabel = game.i18n.localize(PF1.woundThresholdConditions[wT.level]);
       acNotes.push(wTlabel);
       cmdNotes.push(wTlabel);
     }
@@ -2833,7 +2833,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Easy way to toggle a condition.
    *
-   * @param key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   * @param key - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
    */
   async toggleCondition(key) {
     key = `system.attributes.conditions.${key}`;
@@ -2847,7 +2847,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Easy way to set a condition.
    *
-   * @param {string} key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   * @param {string} key - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
    * @param {boolean} enabled - Whether to enable (true) the condition, or disable (false) it.
    */
   async setCondition(key, enabled) {
@@ -2863,7 +2863,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Easy way to determine whether this actor has a condition.
    *
-   * @param {string} key - A direct condition key, as per CONFIG.PF1.conditions, such as `shaken` or `dazed`.
+   * @param {string} key - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
    */
   hasCondition(key) {
     return this.system.attributes?.conditions?.[key] === true;
@@ -3179,7 +3179,7 @@ export class ActorPF extends ActorBasePF {
     wt.penalty = level * wtMult + wtMod;
 
     const penalty = wt.penalty;
-    const changeFlatKeys = CONFIG.PF1.woundThresholdChangeTargets;
+    const changeFlatKeys = PF1.woundThresholdChangeTargets;
     for (const fk of changeFlatKeys) {
       let flats = getChangeFlat.call(this, fk, "penalty", this.system);
       if (!(flats instanceof Array)) flats = [flats];
@@ -3447,10 +3447,10 @@ export class ActorPF extends ActorBasePF {
     encumbrance.carriedWeight = Math.round(carriedWeight * 10) / 10;
 
     // Determine load level
-    let encLevel = CONFIG.PF1.encumbranceLevels.light;
+    let encLevel = PF1.encumbranceLevels.light;
     if (carriedWeight > 0) {
-      if (carriedWeight > encumbrance.levels.medium) encLevel = CONFIG.PF1.encumbranceLevels.heavy;
-      else if (carriedWeight > encumbrance.levels.light) encLevel = CONFIG.PF1.encumbranceLevels.medium;
+      if (carriedWeight > encumbrance.levels.medium) encLevel = PF1.encumbranceLevels.heavy;
+      else if (carriedWeight > encumbrance.levels.light) encLevel = PF1.encumbranceLevels.medium;
     }
     encumbrance.level = encLevel;
 
@@ -3460,11 +3460,11 @@ export class ActorPF extends ActorBasePF {
     };
 
     switch (encumbrance.level) {
-      case CONFIG.PF1.encumbranceLevels.medium:
+      case PF1.encumbranceLevels.medium:
         result.acp = 3;
         result.maxDexBonus = 3;
         break;
-      case CONFIG.PF1.encumbranceLevels.heavy:
+      case PF1.encumbranceLevels.heavy:
         result.acp = 6;
         result.maxDexBonus = 1;
         break;
@@ -3489,9 +3489,9 @@ export class ActorPF extends ActorBasePF {
     const carryStr = this.system.abilities.str.total + carryCapacity.bonus.total;
     let carryMultiplier = carryCapacity.multiplier.total;
     const size = this.system.traits.size;
-    if (this.system.attributes.quadruped) carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.quadruped[size];
-    else carryMultiplier *= CONFIG.PF1.encumbranceMultipliers.normal[size];
-    const table = CONFIG.PF1.encumbranceLoads;
+    if (this.system.attributes.quadruped) carryMultiplier *= PF1.encumbranceMultipliers.quadruped[size];
+    else carryMultiplier *= PF1.encumbranceMultipliers.normal[size];
+    const table = PF1.encumbranceLoads;
 
     let heavy = Math.floor(table[carryStr] * carryMultiplier);
     if (carryStr >= table.length) {
@@ -3595,7 +3595,7 @@ export class ActorPF extends ActorBasePF {
       result = this._rollData;
 
       // Clear certain fields
-      const clearFields = CONFIG.PF1.temporaryRollDataFields.actor;
+      const clearFields = PF1.temporaryRollDataFields.actor;
       for (const k of clearFields) {
         const arr = k.split(".");
         const k2 = arr.slice(0, -1).join(".");
@@ -3631,7 +3631,7 @@ export class ActorPF extends ActorBasePF {
     /* ----------------------------- */
     // Set size index
     {
-      const sizeChart = Object.keys(CONFIG.PF1.sizeChart);
+      const sizeChart = Object.keys(PF1.sizeChart);
       result.size = sizeChart.indexOf(result.traits.size);
     }
 
@@ -3854,7 +3854,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Create and delete condition ActiveEffects
-    for (const condKey of Object.keys(CONFIG.PF1.conditions)) {
+    for (const condKey of Object.keys(PF1.conditions)) {
       const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === condKey);
       const hasCondition = this.system.attributes.conditions[condKey] === true;
       const hasEffectIcon = idx >= 0;
@@ -3862,9 +3862,9 @@ export class ActorPF extends ActorBasePF {
       if (hasCondition && !hasEffectIcon) {
         toCreate.push({
           "flags.core.statusId": condKey,
-          name: CONFIG.PF1.conditions[condKey],
-          icon: CONFIG.PF1.conditionTextures[condKey],
-          label: CONFIG.PF1.conditions[condKey],
+          name: PF1.conditions[condKey],
+          icon: PF1.conditionTextures[condKey],
+          label: PF1.conditions[condKey],
         });
       } else if (!hasCondition && hasEffectIcon) {
         const removeEffects = fx.filter((e) => e.getFlag("core", "statusId") === condKey);

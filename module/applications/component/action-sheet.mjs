@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { createTag } from "../../utils/lib.mjs";
 
 export class ItemActionSheet extends FormApplication {
@@ -68,7 +69,7 @@ export class ItemActionSheet extends FormApplication {
     data.tag = createTag(data.action.name);
 
     // Include CONFIG values
-    data.config = CONFIG.PF1;
+    data.config = PF1;
 
     // Action Details
     data.hasAttackRoll = this.action.hasAttack;
@@ -121,7 +122,7 @@ export class ItemActionSheet extends FormApplication {
     }
 
     // Add distance units
-    data.distanceUnits = deepClone(CONFIG.PF1.distanceUnits);
+    data.distanceUnits = deepClone(PF1.distanceUnits);
     if (this.item.type !== "spell") {
       for (const d of ["close", "medium", "long"]) {
         delete data.distanceUnits[d];

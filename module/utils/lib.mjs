@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { SemanticVersion } from "./semver.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
@@ -146,7 +147,7 @@ export const getActorFromId = function (id) {
  *
  * @param {number} value - The value (in feet) to convert.
  * @param {string} type - The original type to convert from. Either 'ft' (feet, default) or 'mi' (miles, in which case the result is in km (metric))
- * @returns {Array.<number, string>} An array containing the converted value in index 0 and the new unit key in index 1 (for use in CONFIG.PF1.measureUnits, for example)
+ * @returns {Array.<number, string>} An array containing the converted value in index 0 and the new unit key in index 1 (for use in PF1.measureUnits, for example)
  */
 export const convertDistance = function (value, type = "ft") {
   const system = getDistanceSystem();
@@ -577,8 +578,8 @@ export const colorToInt = function (color) {
 export const getBuffTargets = function (actor, type = "buffs") {
   const buffTargets = duplicate(
     {
-      buffs: CONFIG.PF1.buffTargets,
-      contextNotes: CONFIG.PF1.contextNoteTargets,
+      buffs: PF1.buffTargets,
+      contextNotes: PF1.contextNoteTargets,
     }[type]
   );
 
@@ -590,7 +591,7 @@ export const getBuffTargets = function (actor, type = "buffs") {
       buffTargets[s] = { label: skill.name, category: "skill" };
     }
   } else {
-    for (const [k, v] of Object.entries(CONFIG.PF1.skills)) {
+    for (const [k, v] of Object.entries(PF1.skills)) {
       buffTargets[`skill.${k}`] = { label: v, category: "skill" };
     }
   }
@@ -615,8 +616,8 @@ export const getBuffTargetDictionary = function (actor, type = "buffs") {
   // Assemble initial categories and items
   const targetCategories = duplicate(
     {
-      buffs: CONFIG.PF1.buffTargetCategories,
-      contextNotes: CONFIG.PF1.contextNoteCategories,
+      buffs: PF1.buffTargetCategories,
+      contextNotes: PF1.contextNoteCategories,
     }[type]
   );
   let categories = Object.entries(buffTargets).reduce((cur, o) => {
@@ -992,11 +993,11 @@ export function calculateRangeFormula(formula, type = "ft", rollData = {}) {
     case "reach":
       return rollData.range?.reach ?? 0;
     case "close":
-      return RollPF.safeRoll(CONFIG.PF1.spellRangeFormulas.close, rollData).total;
+      return RollPF.safeRoll(PF1.spellRangeFormulas.close, rollData).total;
     case "medium":
-      return RollPF.safeRoll(CONFIG.PF1.spellRangeFormulas.medium, rollData).total;
+      return RollPF.safeRoll(PF1.spellRangeFormulas.medium, rollData).total;
     case "long":
-      return RollPF.safeRoll(CONFIG.PF1.spellRangeFormulas.long, rollData).total;
+      return RollPF.safeRoll(PF1.spellRangeFormulas.long, rollData).total;
     case "mi":
       return RollPF.safeRoll(formula, rollData).total * 5_280;
     default:

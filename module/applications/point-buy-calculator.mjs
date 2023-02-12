@@ -1,3 +1,5 @@
+import { PF1 } from "@config";
+
 export class PointBuyCalculator extends DocumentSheet {
   constructor(...args) {
     super(...args);
@@ -5,7 +7,7 @@ export class PointBuyCalculator extends DocumentSheet {
     const actorAbl = this.actor.system.abilities;
 
     this.abilities = [];
-    for (const [k, name] of Object.entries(CONFIG.PF1.abilities)) {
+    for (const [k, name] of Object.entries(PF1.abilities)) {
       this.abilities.push({
         key: k,
         name: name,
@@ -13,7 +15,7 @@ export class PointBuyCalculator extends DocumentSheet {
       });
     }
 
-    const ablValues = Object.keys(CONFIG.PF1.abilityCost).map((i) => Number(i));
+    const ablValues = Object.keys(PF1.abilityCost).map((i) => Number(i));
     this.min = Math.min(...ablValues);
     this.max = Math.max(...ablValues);
   }
@@ -51,7 +53,7 @@ export class PointBuyCalculator extends DocumentSheet {
     let result = 0;
 
     for (const a of this.abilities) {
-      result += CONFIG.PF1.abilityCost[a.value];
+      result += PF1.abilityCost[a.value];
     }
     return result;
   }

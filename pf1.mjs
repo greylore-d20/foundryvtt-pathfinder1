@@ -609,14 +609,14 @@ Hooks.once("setup", function () {
 
   // Localize and sort CONFIG objects
   for (const o of toLocalize) {
-    CONFIG.PF1[o] = doLocalize(CONFIG.PF1[o], o);
+    PF1[o] = doLocalize(PF1[o], o);
   }
 
   // Localize buff targets
   const localizeLabels = ["buffTargets", "buffTargetCategories", "contextNoteTargets", "contextNoteCategories"];
   for (const l of localizeLabels) {
-    for (const [k, v] of Object.entries(CONFIG.PF1[l])) {
-      CONFIG.PF1[l][k].label = game.i18n.localize(v.label);
+    for (const [k, v] of Object.entries(PF1[l])) {
+      PF1[l][k].label = game.i18n.localize(v.label);
     }
   }
 
@@ -810,7 +810,7 @@ Hooks.on("updateToken", function (token, updateData, options, userId) {
 Hooks.on("preCreateToken", (token, initialData, options, userId) => {
   // Apply token size
   if (token.getFlag("pf1", "staticSize")) return;
-  const sizeConf = CONFIG.PF1.tokenSizes[token.actor?.system.traits?.size];
+  const sizeConf = PF1.tokenSizes[token.actor?.system.traits?.size];
   if (!sizeConf) return;
 
   // token.updateSource() doesn't work here

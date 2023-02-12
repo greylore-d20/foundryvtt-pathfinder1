@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { createTag, convertDistance } from "@utils";
 import { ChatAttack } from "./chat-attack.mjs";
 import { createCustomChatMessage } from "@utils/chat.mjs";
@@ -867,11 +868,11 @@ export class ActionUse {
           dc: this.shared.saveDC,
           type: this.shared.save,
           label: game.i18n.format("PF1.SavingThrowButtonLabel", {
-            type: CONFIG.PF1.savingThrows[this.shared.save],
+            type: PF1.savingThrows[this.shared.save],
             dc: this.shared.saveDC.toString(),
           }),
           gmSensitiveLabel: game.i18n.format("PF1.SavingThrowButtonLabelGMSensitive", {
-            save: CONFIG.PF1.savingThrows[this.shared.save],
+            save: PF1.savingThrows[this.shared.save],
           }),
         },
       },
@@ -888,7 +889,7 @@ export class ActionUse {
 
         const rangeUnits = this.shared.action.data.range.units;
         if (["melee", "touch", "reach", "close", "medium", "long"].includes(rangeUnits)) {
-          this.shared.templateData.rangeLabel = CONFIG.PF1.distanceUnits[rangeUnits];
+          this.shared.templateData.rangeLabel = PF1.distanceUnits[rangeUnits];
         }
       }
     }
@@ -1002,7 +1003,7 @@ export class ActionUse {
     // Add Wound Thresholds info
     if (this.shared.rollData.attributes.woundThresholds.level > 0)
       properties.push(
-        game.i18n.localize(CONFIG.PF1.woundThresholdConditions[this.shared.rollData.attributes.woundThresholds.level])
+        game.i18n.localize(PF1.woundThresholdConditions[this.shared.rollData.attributes.woundThresholds.level])
       );
 
     return properties;

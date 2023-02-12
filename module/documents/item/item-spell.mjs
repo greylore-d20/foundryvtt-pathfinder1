@@ -1,6 +1,6 @@
+import { PF1 } from "@config";
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
-import { PF1 } from "@config";
 import { getDistanceSystem } from "@utils";
 
 export class ItemSpellPF extends ItemPF {
@@ -280,15 +280,10 @@ export class ItemSpellPF extends ItemPF {
     return this.spellbook?.spellPoints?.useSystem ?? false;
   }
 
-  /**
-   * Components used by this spell pre-translated and pre-formatted.
-   *
-   * @public
-   * @returns {string[]} Array in spell description form (e.g. ["V", "S", "M/DF (Spoon)"])
-   */
-  getSpellComponents() {
-    const reSplit = CONFIG.PF1.re.traitSeparator;
-    const srcComponents = this.system.components ?? {},
+  getSpellComponents(srcData) {
+    if (!srcData) srcData = duplicate(this.system);
+    const reSplit = PF1.re.traitSeparator,
+      srcComponents = this.system.components ?? {},
       srcMaterials = this.system.materials ?? {};
 
     const components = [];
@@ -343,7 +338,7 @@ export class ItemSpellPF extends ItemPF {
     for (const o of learnedAt) {
       result[0] = Math.min(result[0], o[1]);
 
-      const tc = CONFIG.PF1.classCasterType[o[0]] || "high";
+      const tc = PF1.classCasterType[o[0]] || "high";
       if (tc === "high") {
         result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 2);
       } else if (tc === "med") {
@@ -445,7 +440,7 @@ export class ItemSpellPF extends ItemPF {
       if (["close", "medium", "long"].includes(actionData.range.units)) {
         action.range = {
           units: "ft",
-          value: RollPF.safeTotal(CONFIG.PF1.spellRangeFormulas[actionData.range.units], rollData).toString(),
+          value: RollPF.safeTotal(PF1.spellRangeFormulas[actionData.range.units], rollData).toString(),
         };
       } else {
         action.range = actionData.range;
@@ -498,7 +493,7 @@ export class ItemSpellPF extends ItemPF {
         isScroll: type === "scroll",
         sl: level,
         cl: cl,
-        config: CONFIG.PF1,
+        config: PF1,
       }),
       rollData
     );
@@ -546,13 +541,13 @@ export class ItemSpellPF extends ItemPF {
   }
 
   get spellDescriptionData() {
-    const reSplit = CONFIG.PF1.re.traitSeparator;
+    const reSplit = PF1.re.traitSeparator;
     const srcData = this.system;
     const firstAction = this.firstAction;
     const actionData = firstAction?.data ?? {};
 
     const label = {
-      school: (CONFIG.PF1.spellSchools[srcData.school] || "").toLowerCase(),
+      school: (PF1.spellSchools[srcData.school] || "").toLowerCase(),
       subschool: srcData.subschool || "",
       types: "",
     };
@@ -607,11 +602,11 @@ export class ItemSpellPF extends ItemPF {
       const activationCost = act.cost;
       const activationType = act.type;
       const activationTypes = isUnchainedActionEconomy
-        ? CONFIG.PF1.abilityActivationTypes_unchained
-        : CONFIG.PF1.abilityActivationTypes;
+        ? PF1.abilityActivationTypes_unchained
+        : PF1.abilityActivationTypes;
       const activationTypesPlurals = isUnchainedActionEconomy
-        ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
-        : CONFIG.PF1.abilityActivationTypesPlurals;
+        ? PF1.abilityActivationTypesPlurals_unchained
+        : PF1.abilityActivationTypesPlurals;
 
       if (activationType) {
         if (activationTypesPlurals[activationType] != null) {
@@ -648,7 +643,7 @@ export class ItemSpellPF extends ItemPF {
       const rangeValue = actionData.range?.value;
 
       if (rangeUnit != null && rangeUnit !== "none") {
-        label.range = (CONFIG.PF1.distanceUnits[rangeUnit] || "").toLowerCase();
+        label.range = (PF1.distanceUnits[rangeUnit] || "").toLowerCase();
         const units = getDistanceSystem();
         if (rangeUnit === "close")
           label.range = `${label.range} ${game.i18n.localize(

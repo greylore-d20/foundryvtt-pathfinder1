@@ -1,3 +1,5 @@
+import { PF1 } from "@config";
+
 export class ActorSheetFlags extends DocumentSheet {
   static get defaultOptions() {
     const options = super.defaultOptions;
@@ -44,7 +46,7 @@ export class ActorSheetFlags extends DocumentSheet {
    */
   _getFlags() {
     const flags = {};
-    for (const [k, v] of Object.entries(CONFIG.PF1.characterFlags)) {
+    for (const [k, v] of Object.entries(PF1.characterFlags)) {
       if (!Object.prototype.hasOwnProperty.call(flags, v.section)) flags[v.section] = {};
       const flag = duplicate(v);
       flag.type = v.type.name;

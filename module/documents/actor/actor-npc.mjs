@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { ActorPF } from "./actor-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
@@ -62,6 +63,6 @@ export class ActorNPCPF extends ActorPF {
    */
   getCRExp(cr) {
     if (cr < 1.0) return Math.max(400 * cr, 0);
-    return CONFIG.PF1.CR_EXP_LEVELS[cr];
+    return PF1.CR_EXP_LEVELS[cr];
   }
 }

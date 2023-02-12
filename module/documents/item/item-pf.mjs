@@ -226,7 +226,7 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   * @type {number} Number from 0 to 4. 0 for no aura and 1-4 matching CONFIG.PF1.auraStrengths.
+   * @type {number} Number from 0 to 4. 0 for no aura and 1-4 matching PF1.auraStrengths.
    */
   get auraStrength() {
     const cl = this.system.cl || 0;
@@ -356,7 +356,7 @@ export class ItemPF extends ItemBasePF {
     super.prepareData();
     const itemData = this.system;
     const data = itemData;
-    const C = CONFIG.PF1;
+    const C = PF1;
     const labels = {};
 
     this.prepareLinks();
@@ -499,7 +499,7 @@ export class ItemPF extends ItemBasePF {
       const equipmentType = this.system.subType || null;
       if (equipmentType != null) {
         const equipmentSlot = this.system.slot || null;
-        labels.slot = equipmentSlot == null ? null : CONFIG.PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
+        labels.slot = equipmentSlot == null ? null : PF1.equipmentSlots[equipmentType]?.[equipmentSlot];
       } else labels.slot = null;
     }
 
@@ -1031,7 +1031,7 @@ export class ItemPF extends ItemBasePF {
       if (actionData.duration != null) {
         if (!["inst", "perm"].includes(actionData.duration.units) && typeof actionData.duration.value === "string") {
           const duration = RollPF.safeRoll(actionData.duration.value || "0", enrichOptions.rollData).total;
-          dynamicLabels.duration = [duration, CONFIG.PF1.timePeriods[actionData.duration.units]].filterJoin(" ");
+          dynamicLabels.duration = [duration, PF1.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
       }
 
@@ -1730,7 +1730,7 @@ export class ItemPF extends ItemBasePF {
   /**
    * Generates lists of change subtargets this item can have.
    *
-   * @param {string} target - The target key, as defined in CONFIG.PF1.buffTargets.
+   * @param {string} target - The target key, as defined in PF1.buffTargets.
    * @returns {Object<string, string>} A list of changes
    */
   getChangeSubTargets(target) {
@@ -1738,26 +1738,26 @@ export class ItemPF extends ItemBasePF {
     // Add specific skills
     if (target === "skill") {
       if (this.parent == null) {
-        for (const [s, skl] of Object.entries(CONFIG.PF1.skills)) {
+        for (const [s, skl] of Object.entries(PF1.skills)) {
           result[`skill.${s}`] = skl;
         }
       } else {
-        const actorSkills = mergeObject(duplicate(CONFIG.PF1.skills), this.parent.data.skills);
+        const actorSkills = mergeObject(duplicate(PF1.skills), this.parent.data.skills);
         for (const [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;
-            else result[`skill.${s}`] = CONFIG.PF1.skills[s];
+            else result[`skill.${s}`] = PF1.skills[s];
           } else {
             for (const [s2, skl2] of Object.entries(skl.subSkills)) {
-              result[`skill.${s}.subSkills.${s2}`] = `${CONFIG.PF1.skills[s]} (${skl2.name})`;
+              result[`skill.${s}.subSkills.${s2}`] = `${PF1.skills[s]} (${skl2.name})`;
             }
           }
         }
       }
     }
     // Add static subtargets
-    else if (hasProperty(CONFIG.PF1.buffTargets, target)) {
-      for (const [k, v] of Object.entries(CONFIG.PF1.buffTargets[target])) {
+    else if (hasProperty(PF1.buffTargets, target)) {
+      for (const [k, v] of Object.entries(PF1.buffTargets[target])) {
         if (!k.startsWith("_") && !k.startsWith("~")) result[k] = v;
       }
     }
@@ -2042,9 +2042,7 @@ export class ItemPF extends ItemBasePF {
     const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
 
     // Unreliable melee/ranged identification
-    const sizeBonus = !isManeuver
-      ? CONFIG.PF1.sizeMods[rollData.traits.size]
-      : CONFIG.PF1.sizeSpecialMods[rollData.traits.size];
+    const sizeBonus = !isManeuver ? PF1.sizeMods[rollData.traits.size] : PF1.sizeSpecialMods[rollData.traits.size];
 
     // Add size bonus
     if (sizeBonus != 0) describePart(sizeBonus, game.i18n.localize("PF1.Size"), -20);
@@ -2064,7 +2062,7 @@ export class ItemPF extends ItemBasePF {
 
     if (actionData.ability.attack) {
       const ablMod = actorData.abilities?.[actionData.ability.attack]?.mod ?? 0;
-      describePart(ablMod, CONFIG.PF1.abilities[actionData.ability.attack], -50);
+      describePart(ablMod, PF1.abilities[actionData.ability.attack], -50);
     }
 
     // Attack bonus formula
@@ -2149,7 +2147,7 @@ export class ItemPF extends ItemBasePF {
 
     if (!rollData) return [];
 
-    const mods = Object.keys(CONFIG.PF1.bonusModifiers);
+    const mods = Object.keys(PF1.bonusModifiers);
 
     // Turn relevant conditionals into structure accepted by getHighestChanges
     const fakeCondChanges = [];

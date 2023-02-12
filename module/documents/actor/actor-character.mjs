@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { ActorPF } from "./actor-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
@@ -90,7 +91,7 @@ export class ActorCharacterPF extends ActorPF {
     const expTrack = expConfig.track;
     // Preset experience tracks
     if (["fast", "medium", "slow"].includes(expTrack)) {
-      const levels = CONFIG.PF1.CHARACTER_EXP_LEVELS[expTrack];
+      const levels = PF1.CHARACTER_EXP_LEVELS[expTrack];
       return levels[Math.min(level, levels.length - 1)];
     }
     // Custom formula experience track

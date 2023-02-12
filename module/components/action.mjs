@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { calculateRange, convertDistance } from "../utils/lib.mjs";
 import { getHighestChanges } from "../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
@@ -550,11 +551,11 @@ export class ItemAction {
     // Activation method
     if (actionData.activation) {
       const activationTypes = isUnchainedActionEconomy
-        ? CONFIG.PF1.abilityActivationTypes_unchained
-        : CONFIG.PF1.abilityActivationTypes;
+        ? PF1.abilityActivationTypes_unchained
+        : PF1.abilityActivationTypes;
       const activationTypesPlural = isUnchainedActionEconomy
-        ? CONFIG.PF1.abilityActivationTypesPlurals_unchained
-        : CONFIG.PF1.abilityActivationTypesPlurals;
+        ? PF1.abilityActivationTypesPlurals_unchained
+        : PF1.abilityActivationTypesPlurals;
 
       const activation = this.activation;
       if (activation && activation.cost > 1 && activationTypesPlural[activation.type] != null) {
@@ -574,7 +575,7 @@ export class ItemAction {
 
     if (this.hasRange) {
       const sourceUnits = actionData.range.units;
-      const rangeLabel = CONFIG.PF1.distanceUnits[sourceUnits];
+      const rangeLabel = PF1.distanceUnits[sourceUnits];
       if (["personal", "touch", "melee", "reach"].includes(sourceUnits)) {
         labels.range = rangeLabel;
       } else {
@@ -660,9 +661,7 @@ export class ItemAction {
     const isCMB = this.isCombatManeuver;
 
     // Determine size bonus
-    rollData.sizeBonus = !isCMB
-      ? CONFIG.PF1.sizeMods[rollData.traits.size]
-      : CONFIG.PF1.sizeSpecialMods[rollData.traits.size];
+    rollData.sizeBonus = !isCMB ? PF1.sizeMods[rollData.traits.size] : PF1.sizeSpecialMods[rollData.traits.size];
 
     // Add misc bonuses/penalties
     rollData.item.proficiencyPenalty = -4;
@@ -689,7 +688,7 @@ export class ItemAction {
 
     // Add ability modifier
     if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) {
-      parts.push(`@abilities.${abl}.mod[${CONFIG.PF1.abilities[abl]}]`);
+      parts.push(`@abilities.${abl}.mod[${PF1.abilities[abl]}]`);
     }
     // Add bonus parts
     parts = parts.concat(extraParts);
@@ -966,7 +965,7 @@ export class ItemAction {
       if (rollData.abilities[abl].mod < 0) rollData.ablDamage = rollData.abilities[abl].mod;
 
       // Determine ability score label
-      const ablLabel = CONFIG.PF1.abilities[abl];
+      const ablLabel = PF1.abilities[abl];
 
       // Add ability score
       parts[0].extra.push(`@ablDamage[${ablLabel}]`);
@@ -1007,14 +1006,14 @@ export class ItemAction {
    */
   getConditionalTargets() {
     const result = {};
-    if (this.hasAttack) result["attack"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.attack._label);
-    if (this.hasDamage) result["damage"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.damage._label);
-    result["size"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.size._label);
+    if (this.hasAttack) result["attack"] = game.i18n.localize(PF1.conditionalTargets.attack._label);
+    if (this.hasDamage) result["damage"] = game.i18n.localize(PF1.conditionalTargets.damage._label);
+    result["size"] = game.i18n.localize(PF1.conditionalTargets.size._label);
     if (this.item.type === "spell" || this.hasSave)
-      result["effect"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.effect._label);
+      result["effect"] = game.i18n.localize(PF1.conditionalTargets.effect._label);
     // Only add Misc target if subTargets are available
     if (Object.keys(this.getConditionalSubTargets("misc")).length > 0) {
-      result["misc"] = game.i18n.localize(CONFIG.PF1.conditionalTargets.misc._label);
+      result["misc"] = game.i18n.localize(PF1.conditionalTargets.misc._label);
     }
     return result;
   }
@@ -1022,14 +1021,14 @@ export class ItemAction {
   /**
    * Generates lists of conditional subtargets this attack can have.
    *
-   * @param {string} target - The target key, as defined in CONFIG.PF1.conditionTargets.
+   * @param {string} target - The target key, as defined in PF1.conditionTargets.
    * @returns {Object<string, string>} A list of conditionals
    */
   getConditionalSubTargets(target) {
     const result = {};
     // Add static targets
-    if (hasProperty(CONFIG.PF1.conditionalTargets, target)) {
-      for (const [k, v] of Object.entries(CONFIG.PF1.conditionalTargets[target])) {
+    if (hasProperty(PF1.conditionalTargets, target)) {
+      for (const [k, v] of Object.entries(PF1.conditionalTargets[target])) {
         if (!k.startsWith("_") && !k.startsWith("~")) result[k] = v;
       }
     }
@@ -1060,19 +1059,19 @@ export class ItemAction {
   }
 
   /* Generates lists of conditional modifier bonus types applicable to a formula.
-   * @param {string} target - The target key as defined in CONFIG.PF1.conditionTargets.
+   * @param {string} target - The target key as defined in PF1.conditionTargets.
    * @returns {Object.<string, string>} A list of bonus types.
    * */
   getConditionalModifierTypes(target) {
     const result = {};
     if (target === "attack" || target === "damage") {
-      // Add bonusModifiers from CONFIG.PF1.bonusModifiers
-      for (const [k, v] of Object.entries(CONFIG.PF1.bonusModifiers)) {
+      // Add bonusModifiers from PF1.bonusModifiers
+      for (const [k, v] of Object.entries(PF1.bonusModifiers)) {
         result[k] = v;
       }
     }
     if (target === "damage") {
-      for (const [k, v] of Object.entries(CONFIG.PF1.damageTypes)) {
+      for (const [k, v] of Object.entries(PF1.damageTypes)) {
         result[k] = v;
       }
     }
@@ -1080,7 +1079,7 @@ export class ItemAction {
   }
 
   /* Generates a list of critical applications for a given formula target.
-   * @param {string} target - The target key as defined in CONFIG.PF1.conditionalTargets.
+   * @param {string} target - The target key as defined in PF1.conditionalTargets.
    * @returns {Object.<string, string>} A list of critical applications.
    * */
   getConditionalCritical(target) {

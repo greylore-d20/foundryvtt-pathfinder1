@@ -1,5 +1,5 @@
-import { ItemPF } from "./item-pf.mjs";
 import { PF1 } from "@config";
+import { ItemPF } from "./item-pf.mjs";
 
 export class ItemEquipmentPF extends ItemPF {
   async _preUpdate(update, context) {
@@ -8,14 +8,14 @@ export class ItemEquipmentPF extends ItemPF {
     if (type !== undefined && type !== this.subType) {
       // Set subtype
       const subtype = update.system?.equipmentSubtype ?? this.system.equipmentSubtype ?? "";
-      const subtypes = Object.keys(CONFIG.PF1.equipmentTypes[type] ?? {}).filter((o) => !o.startsWith("_"));
+      const subtypes = Object.keys(PF1.equipmentTypes[type] ?? {}).filter((o) => !o.startsWith("_"));
       if (!subtype || !subtypes.includes(subtype)) {
         update.system.equipmentSubtype = subtypes[0];
       }
 
       // Set slot
       const slot = update.system?.slot ?? this.system.slot ?? "";
-      const slotTypes = Object.keys(CONFIG.PF1.equipmentSlots[type] ?? {});
+      const slotTypes = Object.keys(PF1.equipmentSlots[type] ?? {});
       if (!slot || !slotTypes.includes(slot)) {
         setProperty(update, "system.slot", slotTypes[0]);
       }
@@ -63,7 +63,7 @@ export class ItemEquipmentPF extends ItemPF {
   prepareData() {
     const itemData = super.prepareData();
     const data = itemData;
-    const C = CONFIG.PF1;
+    const C = PF1;
 
     // AC labels
     if (data.armor.dex === "") data.armor.dex = null;
@@ -80,8 +80,8 @@ export class ItemEquipmentPF extends ItemPF {
       if (!actor?.system || !actor?.equipment) return;
 
       const actorData = actor.system;
-      const shieldTypes = CONFIG.PF1.shieldTypes,
-        armorTypes = CONFIG.PF1.armorTypes;
+      const shieldTypes = PF1.shieldTypes,
+        armorTypes = PF1.armorTypes;
 
       switch (data.subType) {
         case "shield": {

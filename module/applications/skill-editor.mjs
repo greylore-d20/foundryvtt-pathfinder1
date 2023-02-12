@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { createTag } from "../utils/lib.mjs";
 
 export class SkillEditor extends FormApplication {
@@ -33,7 +34,7 @@ export class SkillEditor extends FormApplication {
     return this.subSkillId != null;
   }
   get isStaticSkill() {
-    return CONFIG.PF1.skills[this.skillId] != null && !this.isSubSkill;
+    return PF1.skills[this.skillId] != null && !this.isSubSkill;
   }
 
   get skill() {
@@ -41,7 +42,7 @@ export class SkillEditor extends FormApplication {
     return this.actor.system.skills[this.skillId];
   }
   get skillName() {
-    return this.isStaticSkill ? CONFIG.PF1.skills[this.skillId] : this.skill.name;
+    return this.isStaticSkill ? PF1.skills[this.skillId] : this.skill.name;
   }
   get skillTag() {
     if (this.isStaticSkill) return this.skillId;
@@ -52,7 +53,7 @@ export class SkillEditor extends FormApplication {
     const data = await super.getData(options);
 
     // Configuration
-    data.config = CONFIG.PF1;
+    data.config = PF1;
 
     // Skill data
     data.skill = mergeObject(

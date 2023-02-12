@@ -1,3 +1,4 @@
+import { PF1 } from "@config";
 import { getChangeFlat, getSourceInfo } from "../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
 import { getAbilityModifier } from "@utils";
@@ -213,7 +214,7 @@ export class ItemChange {
             if (typeof value === "string") break;
 
             if (typeof base === "number") {
-              if (CONFIG.PF1.stackingBonusModifiers.includes(this.modifier)) {
+              if (PF1.stackingBonusModifiers.includes(this.modifier)) {
                 // Add stacking bonus
                 setProperty(actor, t, base + value);
                 override[operator][this.modifier] = (prior ?? 0) + value;
@@ -255,7 +256,7 @@ export class ItemChange {
     switch (this.operator) {
       case "add":
       case "function":
-        if (CONFIG.PF1.stackingBonusModifiers.includes(this.modifier)) {
+        if (PF1.stackingBonusModifiers.includes(this.modifier)) {
           const sourceInfoGroup = value >= 0 ? "positive" : "negative";
           for (const si of sourceInfoTargets) {
             getSourceInfo(actor.sourceInfo, si)[sourceInfoGroup].push({

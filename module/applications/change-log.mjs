@@ -21,7 +21,7 @@ export class ChangeLogWindow extends FormApplication {
   }
 
   get title() {
-    return `${game.i18n.localize("PF1.title")} ~ ${game.i18n.localize("PF1.Changelog")}`;
+    return `${game.i18n.localize("PF1.Title")} ~ ${game.i18n.localize("PF1.Changelog")}`;
   }
 
   async getData() {

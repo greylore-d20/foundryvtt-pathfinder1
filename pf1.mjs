@@ -1038,7 +1038,7 @@ Hooks.on("renderSidebarTab", (app, html) => {
     html
       .find("#game-details")
       .after(
-        $(`<h2>${game.i18n.localize("PF1.title")}</h2>`),
+        $(`<h2>${game.i18n.localize("PF1.Title")}</h2>`),
         $("<div id='pf1-details'>").append(chlogButton, helpButton)
       );
 

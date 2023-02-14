@@ -64,6 +64,16 @@ export class D20RollPF extends RollPF {
   };
 
   /**
+   * The D20 die this roll is based on.
+   *
+   * @type {Die}
+   */
+  get d20() {
+    // this.dice[0] returns wrong number if formula had, for example, a die roll inside parenthesis.
+    return this.terms[0];
+  }
+
+  /**
    * Is this roll a critical success? Returns undefined if roll isn't evaluated.
    *
    * @type {boolean|void}
@@ -71,10 +81,8 @@ export class D20RollPF extends RollPF {
   get isCrit() {
     if (!this._evaluated) return undefined;
     if (!Number.isNumeric(this.options.critical)) return false;
-    return this.dice[0].total >= this.options.critical;
+    return this.d20.total >= this.options.critical;
   }
-
-  /* -------------------------------------------- */
 
   /**
    * Is this roll a critical failure? Returns undefined if roll isn't evaluated.
@@ -88,7 +96,7 @@ export class D20RollPF extends RollPF {
     });
     if (!this._evaluated) return undefined;
     if (!Number.isNumeric(this.options.fumble)) return false;
-    return this.dice[0].total <= this.options.fumble;
+    return this.d20.total <= this.options.fumble;
   }
 
   /**
@@ -98,7 +106,7 @@ export class D20RollPF extends RollPF {
    */
   get isNat20() {
     if (!this._evaluated) return undefined;
-    return this.dice[0].total === 20;
+    return this.d20.total === 20;
   }
 
   /**
@@ -108,7 +116,7 @@ export class D20RollPF extends RollPF {
    */
   get isNat1() {
     if (!this._evaluated) return undefined;
-    return this.dice[0].total === 1;
+    return this.d20.total === 1;
   }
 
   /**
@@ -118,7 +126,7 @@ export class D20RollPF extends RollPF {
    */
   get natural() {
     if (!this._evaluated) return undefined;
-    return this.dice[0].total;
+    return this.d20.total;
   }
 
   /**
@@ -135,7 +143,7 @@ export class D20RollPF extends RollPF {
    * Return a standardized representation for the displayed formula associated with this Roll.
    * This formula includes any {@link pf1!types.D20RollOptions.bonus bonus} that might not be part of this roll's {@link terms}.
    *
-   * @returns {string}
+   * @type {string}
    */
   get formula() {
     let formula = this.constructor.getFormula(this.terms);
@@ -161,7 +169,7 @@ export class D20RollPF extends RollPF {
    */
   async promptDialog(options = {}) {
     const { rollMode = game.settings.get("core", "rollMode"), template = this.constructor.DIALOG_TEMPLATE } = options;
-    const d20 = this.options.staticRoll === null ? this.terms[0].formula : this.options.staticRoll;
+    const d20 = this.options.staticRoll === null ? this.d20.formula : this.options.staticRoll;
     const renderData = {
       data: this.data,
       rollMode: options.rollMode || rollMode,
@@ -343,9 +351,10 @@ export class D20RollPF extends RollPF {
     if (!this._evaluated) throw new Error("Roll must be evaluated before applying static roll.");
 
     if (this.options.staticRoll !== null && this.options.staticRoll >= 0) {
-      const diff = this.options.staticRoll - this.dice[0].total;
+      const d20 = this.d20;
+      const diff = this.options.staticRoll - d20.total;
       const newTotal = this._total + diff;
-      const activeDie = this.dice[0].results.find((r) => r.active) ?? this.dice[0].results[0];
+      const activeDie = d20.results.find((r) => r.active) ?? d20.results[0];
       activeDie.result = this.options.staticRoll;
       this._total = newTotal;
       this.options.flavor += ` (${game.i18n.format("PF1.TakeX", { number: this.options.staticRoll })})`;

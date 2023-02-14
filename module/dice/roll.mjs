@@ -11,13 +11,16 @@ export class RollPF extends Roll {
    * @returns {DiceTerm[]}
    */
   get dice() {
-    return this._dice.concat(
-      this.terms.reduce((dice, t) => {
-        if (t instanceof DiceTerm) dice.push(t);
-        else if (t instanceof PoolTerm) dice = dice.concat(t.dice);
-        else if (t instanceof pf1.dice.terms.SizeRollTerm) dice = dice.concat(t.dice);
-        return dice;
-      }, [])
+    return (
+      this.terms
+        .reduce((dice, t) => {
+          if (t instanceof DiceTerm) dice.push(t);
+          else if (t instanceof PoolTerm) dice = dice.concat(t.dice);
+          else if (t instanceof pf1.dice.terms.SizeRollTerm) dice = dice.concat(t.dice);
+          return dice;
+        }, [])
+        // Append dice from parenthesis and similar eliminated rolls.
+        .concat(this._dice)
     );
   }
 

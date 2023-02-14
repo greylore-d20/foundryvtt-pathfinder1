@@ -103,11 +103,12 @@ export class DicePF {
         // Execute the roll
         const roll = await Roll.create(curParts.join(" + "), data).evaluate({ async: true });
 
+        const d20 = roll.d20;
         // Spoof a roll (e.g. Take 10/20)
         if (setRoll != null && setRoll >= 0) {
-          const diff = setRoll - roll.dice[0].total,
+          const diff = setRoll - d20.total,
             newTotal = roll._total + diff;
-          roll.terms[0].results[0].result = setRoll;
+          d20.results[0].result = setRoll;
           roll._total = newTotal;
           flavor += ` (Take ${setRoll})`;
         }
@@ -115,7 +116,6 @@ export class DicePF {
         // Convert the roll to a chat message
         if (chatTemplate) {
           // Create roll template data
-          const d20 = roll.terms[0];
           const rollData = mergeObject(
             {
               user: game.user.id,

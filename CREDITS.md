@@ -144,7 +144,13 @@ People and credits are listed in no particular order.
 
 ## mkahvi
 
-- Made some code contributions
+- Wound Thresholds optional rule
+- Formula-based extra attacks
+- Class casting autoconfig
+- Buff durations and auto expiration
+- Deferred rolled bonuses for skills
+- Nonproficient ACP
+- Bunch of other features, improvements and bug fixes
 
 ## Grarl
 

@@ -1030,9 +1030,9 @@ export class ActorSheetPF extends ActorSheet {
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
-    // Roll defenses
+    // Display defenses
     html.find(".generic-defenses .rollable").click((ev) => {
-      this.document.rollDefenses();
+      this.document.displayDefenseCard();
     });
 
     // Rest

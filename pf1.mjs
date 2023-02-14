@@ -302,7 +302,7 @@ Hooks.once("init", function () {
     rollItemMacro: macros.rollItemMacro,
     rollSkillMacro: macros.rollSkillMacro,
     rollSaveMacro: macros.rollSaveMacro,
-    rollDefenses: macros.rollDefenses,
+    rollDefenses: macros.displayDefenses,
     rollActorAttributeMacro: macros.rollActorAttributeMacro,
     // Migrations
     migrations,

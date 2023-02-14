@@ -123,8 +123,8 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
     command = `(await fromUuid("${actor.uuid}"))\n\t`;
   switch (type) {
     case "defenses":
-      command += `.rollDefenses();`;
-      name = game.i18n.format("PF1.RollDefensesMacroName", { actor: actor.name });
+      command += `.displayDefenseCard();`;
+      name = game.i18n.format("PF1.DisplayDefensesMacroName", { actor: actor.name });
       img = "systems/pf1/icons/items/armor/shield-light-metal.png";
       break;
     case "cmb":
@@ -244,17 +244,17 @@ export const rollSaveMacro = function (actorId, saveId) {
  * @param options.rollMode
  * @returns {Promise|void} The defense roll, or void if no actor is found
  */
-export const rollDefenses = function ({ actorName = null, actorId = null, rollMode = null } = {}) {
+export const displayDefenses = function ({ actorName = null, actorId = null, rollMode = null } = {}) {
   const actor = ActorPF.getActiveActor({ actorName: actorName, actorId: actorId });
   if (!actor) {
     return void ui.notifications.warn(
       game.i18n.format("PF1.ErrorNoApplicableActorFoundForAction", {
-        name: game.i18n.localize("PF1.Action_RollDefenses"),
+        name: game.i18n.localize("PF1.Action_DisplayDefenses"),
       })
     );
   }
 
-  return actor.rollDefenses({ rollMode });
+  return actor.displayDefenseCard({ rollMode });
 };
 
 /**
@@ -273,7 +273,7 @@ export const rollActorAttributeMacro = function (actorId, type, altType = null) 
 
   switch (type) {
     case "defenses":
-      return actor.rollDefenses();
+      return actor.displayDefenseCard();
     case "cmb":
       return actor.rollCMB();
     case "cl":

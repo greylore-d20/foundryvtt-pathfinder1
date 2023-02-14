@@ -304,7 +304,7 @@ export const addTargetCallbacks = function (app, html) {
 };
 
 export const targetACClick = async function (app, html, actor, event) {
-  actor.rollDefenses({ rollMode: "selfroll" });
+  actor.displayDefenseCard({ rollMode: "selfroll" });
 };
 
 export const targetSavingThrowClick = async function (app, html, actor, event) {

@@ -2681,13 +2681,22 @@ export class ActorPF extends ActorBasePF {
     return result;
   }
 
+  async rollDefenses(options) {
+    foundry.utils.logCompatibilityWarning("Actor.rollDefenses is deprecated in favor of Actor.displayDefenseCard", {
+      since: "PF1 0.82.3",
+      until: "PF1 0.83.0",
+    });
+
+    return this.displayDefenseCard(options);
+  }
+
   /**
    * Show defenses in chat
    *
-   * @param root0
-   * @param root0.rollMode
+   * @param {object} [options={}]
+   * @param {string | null} [options.rollMode=null]   The roll mode to use for the roll; defaults to the user's current preference when `null`.
    */
-  async rollDefenses({ rollMode = null } = {}) {
+  async displayDefenseCard({ rollMode = null } = {}) {
     if (!this.isOwner) {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }

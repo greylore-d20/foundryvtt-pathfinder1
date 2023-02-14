@@ -1687,4 +1687,9 @@ const _migrateActorUnusedData = (actor, updateData) => {
   if (getProperty(actor.prototypeToken, "flags.pf1.lowLightVision") !== undefined) {
     updateData["prototypeToken.flags.pf1.-=lowLightVision"] = null;
   }
+
+  // XP max is purely derived value
+  if (actor.system.details?.xp?.max !== undefined) {
+    updateData["system.details.xp.-=max"] = null;
+  }
 };

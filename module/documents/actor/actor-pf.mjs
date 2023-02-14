@@ -257,16 +257,16 @@ export class ActorPF extends ActorBasePF {
 
   get _skillTargets() {
     const skills = [];
-    const subSkills = [];
     for (const [sklKey, skl] of Object.entries(this.system.skills)) {
       if (skl == null) continue;
-      if (skl.subSkills != null) {
-        for (const subSklKey of Object.keys(skl.subSkills)) {
-          subSkills.push(`skill.${sklKey}.subSkills.${subSklKey}`);
-        }
-      } else skills.push(`skill.${sklKey}`);
+      // Add main skill
+      skills.push(`skill.${sklKey}`);
+      // Add subskills if present
+      for (const subSklKey of Object.keys(skl.subSkills ?? [])) {
+        skills.push(`skill.${sklKey}.subSkills.${subSklKey}`);
+      }
     }
-    return [...skills, ...subSkills];
+    return skills;
   }
 
   _prepareContainerItems(items) {
@@ -2039,9 +2039,14 @@ export class ActorPF extends ActorBasePF {
 
     const skl = this.getSkillInfo(skillId);
 
+    const skillMatch = /^(?<mainSkillId>\w+).subSkills.(?<subSkillId>\w+)$/.exec(skillId);
+    const { mainSkillId, subSkillId } = skillMatch?.groups ?? {};
+    const haveParentSkill = !!subSkillId;
+
     // Add contextual attack string
     const rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`skill.${skillId}`);
+    if (haveParentSkill) noteObjects.push(...this.getContextNotes(`skill.${mainSkillId}`));
     const notes = this.formatContextNotes(noteObjects, rollData);
 
     // Add untrained note
@@ -2056,6 +2061,7 @@ export class ActorPF extends ActorBasePF {
         let cf = getChangeFlat.call(this, c.subTarget, c.modifier);
         if (!(cf instanceof Array)) cf = [cf];
 
+        if (haveParentSkill && cf.includes(`system.skills.${mainSkillId}.changeBonus`)) return true;
         return cf.includes(`system.skills.${skillId}.changeBonus`);
       }),
       { ignoreTarget: true }

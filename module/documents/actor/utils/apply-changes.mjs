@@ -568,8 +568,13 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
 
   if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)$/)) {
     const sklKey = RegExp.$1;
-    if (curData.skills[sklKey] != null) {
+    const skillData = curData.skills[sklKey];
+    if (skillData != null) {
       result.push(`system.skills.${sklKey}.changeBonus`);
+      // Apply to subskills also
+      for (const subSklKey of Object.keys(skillData.subSkills ?? {})) {
+        result.push(`system.skills.${sklKey}.subSkills.${subSklKey}.changeBonus`);
+      }
     }
   } else if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)\.subSkills\.([a-zA-Z0-9_]+)$/)) {
     const sklKey = RegExp.$1;

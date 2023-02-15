@@ -21,12 +21,13 @@ export class ItemRacePF extends ItemPF {
   async _preUpdate(update, context, user) {
     await super._preUpdate(update, context, user);
 
-    if (this.parent?.type === "basic") return;
+    const actor = this.parent;
+    if (actor?.type === "basic") return;
 
     // Track size change
-    const newSize = getProperty(update, "system.size");
-    if (this.parent && newSize !== undefined) {
-      const oldSize = this.parent.system.traits.size;
+    const newSize = update.system?.size;
+    if (actor && newSize !== undefined) {
+      const oldSize = actor.system.traits?.size;
       if (this.system.size === oldSize && newSize !== oldSize) {
         context._pf1SizeChanged = true;
       }
@@ -36,10 +37,10 @@ export class ItemRacePF extends ItemPF {
   _onUpdate(data, context, userId) {
     super._onUpdate(data, context, userId);
 
+    const actor = this.parent;
     // Change actor size if the old size is same as old race size.
-    if (this.parent && context._pf1SizeChanged) {
-      if (this.parent.type === "basic") return;
-      this.parent.update({ "system.traits.size": this.system.size });
+    if (actor && context._pf1SizeChanged && game.user.id === userId) {
+      actor.update({ "system.traits.size": this.system.size });
     }
   }
 

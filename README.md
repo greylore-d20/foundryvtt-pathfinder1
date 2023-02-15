@@ -15,10 +15,6 @@ Install the following game system in FoundryVTT's game system tab:
 If you wish to manually install the system, you must clone or extract it into the `Data/systems/pf1` folder.
 You may do this by downloading a zip archive from the [Releases Page](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/releases).
 
-## User Documentation
-
-Most documentation is available in [the wiki](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/wikis/home), including _FAQ_, copy of the in-game help browser content, and some others.
-
 ## Building
 
 1. Clone or download this repository.
@@ -31,10 +27,12 @@ Most documentation is available in [the wiki](https://gitlab.com/foundryvtt_path
 This system provides module and macro developers with an API, including the ability to listen to system-specific hook events and extending the system's functionality.
 Its documentation can be found in [this repository's wiki](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/wikis/home) in the `API` section.
 
-## Information
+## User Documentation
 
 While running the system in Foundry, you can find a Help browser in the Settings tab.
 An English mirror of that information can also be found in [this repository's wiki](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/wikis/Help/Home) in the `System reference sheet / Help` section.
+
+The rest of [the wiki](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/wikis/home) also includes _FAQ_ and some other helpful content.
 
 ## Legal
 

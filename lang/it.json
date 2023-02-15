@@ -52,7 +52,7 @@
     "ActionSpellSave": "Tiro Salvezza (Incantesimo)",
     "ActionType": "Tipo d'Azione",
     "ActivationCost": "Costo di Attivazione",
-    "ActivationTypeAoO": "A.d.O.",
+    "ActivationTypeAoO": "Attacco di Opportunità",
     "ActivationTypeAttack": "Attacco",
     "ActivationTypeAttackPlural": "Azioni di Attacco",
     "ActivationTypeFree": "Gratuita",
@@ -1060,7 +1060,7 @@
     "Stature": "Statura",
     "StatureLong": "Lungo",
     "StatureTall": "Alto",
-    "SearchFilterPlaceholder": "Cerca...",
+    "SearchFilterPlaceholder": "Cerca…",
     "Feature": "Capacità",
     "General": "Generale",
     "OptionalAndVariantRules": "Varianti e Regole Opzionali",
@@ -1078,7 +1078,7 @@
     "DomainSlotValueDesc": "Quanti slot 'gratuiti' per livello incantesimo sono forniti da Dominio/Scuola?",
     "AutoSpellClassLevelOffset": {
       "Formula": "Modificatore Livello Classe",
-      "InfoBox": "Se hai una classe di prestigio che altera il tuo livello di classe, definiscilo qui (e.g. @classes.mysticTheurge.level):"
+      "InfoBox": "Se hai una classe di prestigio che altera il tuo livello di classe, aggiungine il livello qui (e.g. @classes.mysticTheurge.level)"
     },
     "AutoCalculateSpellSlots": "calcolo Automatico Slot Incantesimi",
     "HasCantrips": "Ha Trucchetti/Orazioni",
@@ -1321,27 +1321,22 @@
     "ScriptCalls": {
       "Name": "Script",
       "NewName": "Nuovo Script",
-
       "Use": {
         "Name": "Utilizzo",
         "Info": "Richiamato quando l'oggetto viene 'usato' (attacco, bere pozione, ecc.). Prevede la variabile extra `attacks`, che contiene la serie di tiri per colpire, se disponibile."
       },
-
       "Equip": {
         "Name": "Equipaggiato",
         "Info": "Richiamato quando l'oggetto viene equipaggiato o disequipaggiato. Prevede la variabile extra `equipped`, che può essere `true` o `false`."
       },
-
       "Toggle": {
         "Name": "Attiva/Disattiva",
         "Info": "Richiamato quando l'oggetto viene attivato o disattivato. Prevede la variabile extra `state`, che può essere `true` o `false`."
       },
-
       "ChangeQuantity": {
         "Name": "Cambio Quantità",
         "Info": "Richiamato quando vengono cambiate le quantità dell'oggetto. Prevede la variabile extra `quantity.previous` e `quantity.new`, entrambi numeriche."
       },
-
       "ChangeLevel": {
         "Name": "Cambio Livello",
         "Info": "Richiamato quando viene cambiato il livello dell'oggetto. Prevede la variabile extra `quantity.previous` e `quantity.new`, entrambi numeriche."
@@ -1709,38 +1704,32 @@
                 }
               }
             },
-
             "Categories": {
               "Label": "Categorie",
-
               "Use": {
                 "Name": "Utilizzo",
                 "Desc": {
                   "Basic": "Chiamato quando un oggetto viene utilizzato. Se un elemento ha almeno una chiamata di script in questa categoria, è utilizzabile in ogni caso. Questa chiamata prevede due variabili aggiuntive: <code>{var1}</code> che è un array di dati di attacco e <code>{var2}</code>, che contiene il modello di misura dell'attacco (se presente)."
                 }
               },
-
               "Equip": {
                 "Name": "Equipaggiato",
                 "Desc": {
                   "Basic": "Chiamato quando un oggetto viene equipaggiato o disequipaggiato. Questa chiamata prevede una variabile aggiuntiva <code>{var1}</code> che è <code>true</code> appena viene equipaggiato, o <code>false</code> appena viene disequipaggiato."
                 }
               },
-
               "Toggle": {
                 "Name": "Attiva/Disattiva",
                 "Desc": {
                   "Basic": "Chiamato quando un potenziamento o una funzione viene attivata/disattivata. Questa chiamata prevede una variabile aggiuntiva <code>{var1}</code> che è <code>true</code> appena viene attivato o <code>false</code> appena viene disattivato."
                 }
               },
-
               "ChangeQuantity": {
                 "Name": "Cambio Quantità",
                 "Desc": {
                   "Basic": "Chiamato quando viene modificata la quantità di un articolo fisico. Questa chiamata prevede le variabili aggiuntive <code>{var1}</code> e <code>{var2}</code>, che contengono rispettivamente i numeri di quantità prima e dopo l'aggiornamento."
                 }
               },
-
               "ChangeLevel": {
                 "Name": "Cambio Livello",
                 "Desc": {
@@ -1754,7 +1743,7 @@
     }
   },
   "SETTINGS": {
-    "pf1AlternativeReachCornerRuleH": "Nasconde gli angoli esterni dalle misurazioni della portata di 10-ft.",
+    "pf1AlternativeReachCornerRuleH": "Nasconde gli angoli esterni dalle misurazioni della portata di 10-ft",
     "pf1AlternativeReachCornerRuleN": "Regola Alternativa sulla Portata",
     "pf1AttackChatCardTemplateH": "Seleziona lo stile della card degli attacchi da mostrare in chat",
     "pf1AttackChatCardTemplateN": "Stile card degli attacchi",
@@ -1764,20 +1753,20 @@
     "pf1BackgroundSkillsN": "Usa Abilità di Background",
     "pf1CoinWeightH": "Numero di monete per 1 lbs di peso",
     "pf1CoinWeightN": "Divisore del Peso delle Monete",
-    "pf1CoreEffectsH": "Mostra solo Condizioni di PF1 (deselezionato) o anche le icone core (selezionato).",
+    "pf1CoreEffectsH": "Mostra solo le Condizioni di PF1 (deselezionato) o anche le icone di base di Foundry (selezionato)",
     "pf1CoreEffectsN": "Default Condizioni Token",
-    "pf1CurWtL": "Le monete trasportate influenzano l'ingombro del personaggio",
+    "pf1CurWtL": "Le monete trasportate influenzano l'ingombro del personaggio.",
     "pf1CurWtN": "Applica peso delle monete",
     "pf1DiagDMG": "5/10/5",
     "pf1DiagL": "Configura quale regola di movimento in diagonale debba essere utilizzata nel sistema.",
     "pf1DiagN": "Regola di movimento in diagonale",
     "pf1DiagPHB": "5/5/5",
-    "pf1DisplayIterativesH": "Visualizzazione BAB ripartita per iterattivi anzichè solo totale.",
+    "pf1DisplayIterativesH": "Visualizzazione BAB ripartita per attacchi iterativi anziché solo totale",
     "pf1DisplayIterativesN": "Mostra Iterattivi",
     "pf1DragRulerDash": "Scatto",
     "pf1DragRulerRun": "Corsa",
     "pf1DragRulerWalk": "Camminare",
-    "pf1DragRulerUseElevationName": "Use elevation to determine movement type",
+    "pf1DragRulerUseElevationName": "Utilizza l'elevazione per determinare il tipo di movimento",
     "pf1DragRulerUseElevationHint": "Use a tokens elevation to determine wether a token is flying or burrowing",
     "pf1ExpRateL": "La velocità con cui il personaggio avanza di livello",
     "pf1ExpRateN": "Velocità di Avanzamento",
@@ -1823,9 +1812,9 @@
     "pf1InitTBN": "Spareggio Iniziativa con Destrezza",
     "pf1InvertSectionFilterBehaviourH": "Inverte il comportamento del shift-click per la selezione delle categorie inventario.",
     "pf1InvertSectionFilterBehaviourN": "Inverti comportamento filtro inventario",
-    "pf1LowLightVisionModeH": "Quando selezionata, i giocatori che non hanno token selezionati non beneficeranno della Visione Crepuscolare dei loro token (si applica anche per Scurovisione).",
+    "pf1LowLightVisionModeH": "Quando selezionata, i giocatori che non hanno token selezionati non beneficeranno della Visione Crepuscolare dei loro token (si applica anche per Scurovisione)",
     "pf1LowLightVisionModeN": "Visione Crepuscolare richiede la selezione",
-    "pf1MeasureStyleL": "Attiva lo stile di misurazione di Pathfinder al posto dello stile predefinito di FoundryVTT.",
+    "pf1MeasureStyleL": "Attiva lo stile di misurazione di Pathfinder al posto dello stile predefinito di FoundryVTT",
     "pf1MeasureStyleN": "Usa stile di misurazione di Pathfinder",
     "pf1NPCWoundsAndVigorH": "Utilizza la regola opzionale Ferite e Vigore per i personaggi non giocanti.",
     "pf1NPCWoundsAndVigorN": "Ferite e Vigore per PNG",
@@ -1837,7 +1826,7 @@
     "pf1SharedVisionModeN": "Modalità Visione Condivisa",
     "pf1SharedVisionWithSelection": "Sempre",
     "pf1SharedVisionWithoutSelection": "Senza token selezionati",
-    "pf1SkipActionDialogsH": "Salta le finestre di dialogo delle azioni (come quelle per gli attacchi o i tiri salvezza) a meno che non usi Shift-click.",
+    "pf1SkipActionDialogsH": "Salta le finestre di dialogo delle azioni (come quelle per gli attacchi o i tiri salvezza) a meno che non usi Shift-click",
     "pf1SkipActionDialogsN": "Salta Finestre Dialogo Azioni",
     "pf1UnchainedActionEconomyH": "Attiva la Gestione Riveduta delle Azioni di Pathfinder Rivisitato.",
     "pf1UnchainedActionEconomyN": "Gestione Riveduta delle Azioni Pathfinder Rivisitato",
@@ -1850,5 +1839,79 @@
     "VisionDarkvision": "Scurovisione",
     "VisionLowLight": "Visione Crepuscolare",
     "VisionLowLightMultiplier": "Moltiplicatore Vis.Crepuscolare"
-  }
+  },
+  "SETTINGS.pf1OpenXPDistributorN": "Apri interfaccia di distribuzione PE",
+  "SETTINGS.pf1OpenXPDistributorL": "Apre l'interfaccia per la distribuzione di PE quando il combattimento termina se Maiusc non è premuto quando la cancellazione del combattimento viene confermata",
+  "PF1.KEYBINDINGS": {
+    "SkipConfirmPrompt": {
+      "Name": "Salta Richiesta di Conferma"
+    },
+    "HideTokenTooltip": {
+      "Hint": "Nasconde i tooltip dei token quando il tasto è premuto",
+      "Name": "Nascondi Tooltip del Token"
+    },
+    "HideTokenTooltipGMInfo": {
+      "Name": "Mostra Tooltip dei Token come Giocatore"
+    },
+    "ForceShowItem": {
+      "Name": "Forza Mostra Oggetto",
+      "Hint": "Se mostrare l'oggetto in chat o meno quando si usa una macro usandolo"
+    }
+  },
+  "PF1.SpellComponentKeys": {
+    "Verbal": "V",
+    "Somatic": "S",
+    "Thought": "I",
+    "Emotion": "E",
+    "Material": "M",
+    "Focus": "F",
+    "DivineFocus": "FD"
+  },
+  "SETTINGS.pf1ImperialUnits": "Imperiale (piedi, libbre)",
+  "SETTINGS.pf1DistanceUnitsL": "Sovrascrive il sistema di unità da usare per le distanze.",
+  "PF1.Sheet": {
+    "PC": "Personaggio Giocante (PG)",
+    "Item": "Oggetto Generico",
+    "NPC": "Personaggio Non Giocante (PNG)",
+    "NPCLite": "PNG Lite",
+    "NPCLoot": "Bottino",
+    "Container": "Contenitore"
+  },
+  "PF1.TooltipWorldConfigHideActorNameByDisposition_Hint": "Nasconde il nome a tutti i giocatori quando la disposizione del token è peggiore di quella configurata.",
+  "Pathfinder 1": "Pathfinder 1",
+  "SETTINGS.pf1InitTiebreakerN": "Spareggio Iniziativa",
+  "SETTINGS.pf1InitTiebreakerH": "Aggiunge all'iniziativa il bonus totale diviso per 100 per evitare pareggi durante i tiri di Iniziativa.",
+  "SETTINGS.pf1characterVisionN": "Visione personaggi dei giocatori",
+  "SETTINGS.pf1characterVisionH": "I personaggi dei giocatori hanno la vision del token attiva di default, indipendentemente dalla configurazione di default dei token.",
+  "SETTINGS.pf1AllowScriptChangesN": "Abilita Modifiche di tipo Script",
+  "SETTINGS.pf1AllowScriptChangesH": "Permetti l'uso di modifiche di tipo \"Script\" nel mondo",
+  "SETTINGS.pf1AllowScriptChangesW": "<b>Questa impostazione permetterebbe ai giocatori di eseguire codice qualsiasi come il GM.</b><br><br>Sei sicuro di volerla abilitare?",
+  "SETTINGS.pf1AllowScriptChangesE": "Le modifiche di tipo Script sono disabilitate su questo mondo.",
+  "SETTINGS.pf1obscureInlineRollsN": "Offusca tiri di dado inline",
+  "SETTINGS.pf1obscureInlineRollsH": "Nasconde i tiri di dado inline da giocatori che non sono almeno osservatore.",
+  "SETTINGS.pf1obscureSaveDCsN": "Offusca CD tiri salvezza",
+  "SETTINGS.pf1obscureSaveDCsH": "Nasconde ai giocatori i valori delle CD dalle card.",
+  "SETTINGS.pf1NPCProficienciesN": "Competenze PNG",
+  "SETTINGS.pf1NPCProficienciesH": "Anche gli attori PNG usano le competenze. Con questa impostazione disabilitata (default), sono considerati competenti con tutto quello che hanno, come da regole.",
+  "SETTINGS.pf1DisableAttackCardTargetsN": "Disabilita Bersagli Attacchi",
+  "SETTINGS.pf1DisableAttackCardTargetsH": "Nascondi gli attori bersagliati dalle card degli attacchi",
+  "SETTINGS.pf1ClearTargetsAfterAttackN": "Resetta bersagli dopo un attacco",
+  "SETTINGS.pf1ClearTargetsAfterAttackH": "Se resettare o meno tutti i bersagli dopo un tiro per colpire.",
+  "SETTINGS.pf1ImperialDistanceUnits": "Imperiale (piedi)",
+  "SETTINGS.pf1ImperialWeightUnits": "Imperiale (libbre)",
+  "SETTINGS.pf1MetricUnits": "Metrico (metri, kg)",
+  "SETTINGS.pf1MetricDistanceUnits": "Metrico (metri)",
+  "SETTINGS.pf1MetricWeightUnits": "Metrico (kg)",
+  "SETTINGS.pf1DistanceUnitsN": "Sistema di unità per la distanza",
+  "SETTINGS.pf1WeightUnitsN": "Sistema di unità per il peso",
+  "SETTINGS.pf1WeightUnitsL": "Sovrascrive il sistema di unità da usare per il peso.",
+  "PF1.TooltipWorldConfigHideActorNameByDisposition": "Nascondi nome in base alla disposizione",
+  "PF1.Disposition": {
+    "None": "Nessuna",
+    "Hostile": "Ostile",
+    "Non-Friendly": "Non Amichevole",
+    "All": "Tutte"
+  },
+  "PF1.TooltipWorldConfigNameMinimumPermission": "Permesso minimo nome",
+  "PF1.TooltipWorldConfigNameMinimumPermission_Hint": "Livello di appartenenza minimo per vedere il nome reale di un token."
 }

@@ -158,7 +158,8 @@ export class ChatAttack {
     }
 
     // Add broken penalty
-    if (this.action.item.broken && !critical) {
+    const broken = this.rollData.item.broken;
+    if (broken && !critical) {
       const label = game.i18n.localize("PF1.Broken");
       extraParts.push(`-2[${label}]`);
     }
@@ -178,7 +179,7 @@ export class ChatAttack {
       if (!critical && !this.action.isCombatManeuver && roll.isCrit && this.rollData.action.ability.critMult > 1) {
         this.hasCritConfirm = true;
         this.rollData.critMult = Math.max(1, this.rollData.action.ability.critMult);
-        if (this.action.item.system.broken) this.rollData.critMult = 1;
+        if (broken) this.rollData.critMult = 1;
 
         await this.addAttack({ bonus: bonus, extraParts: extraParts, critical: true, conditionalParts });
       }

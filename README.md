@@ -15,6 +15,10 @@ Install the following game system in FoundryVTT's game system tab:
 If you wish to manually install the system, you must clone or extract it into the `Data/systems/pf1` folder.
 You may do this by downloading a zip archive from the [Releases Page](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/releases).
 
+## User Documentation
+
+Most documentation is available in [the wiki](https://gitlab.com/foundryvtt_pathfinder1e/foundryvtt-pathfinder1/-/wikis/home), including _FAQ_, copy of the in-game help browser content, and some others.
+
 ## Building
 
 1. Clone or download this repository.

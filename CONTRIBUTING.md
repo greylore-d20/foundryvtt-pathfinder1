@@ -24,6 +24,15 @@ When creating a new issue, the following information is especially appreciated:
 - Feature requests should not only contain a summary of the desired feature, but ideally examples for which this feature would be necessary or useful.
   - If the change in question includes matters of design or layout, attaching mock-ups is a valuable tool to make sure all contributors can visualize it.
 
+## Localization
+
+Translations of `lang` files are managed using [Weblate](https://weblate.foundryvtt-hub.com/git/pf1/main/), a web-based translation platform.
+Editing translations on Weblate is the preferred way to contribute translations.
+
+The contents of the help browser are written in Markdown and managed separately.
+To contribute translations for those files, create and/or edit files in the [`help`](help) directory, following the directory structure of the [English files](help/en).
+To merge changes to markdown files into `lang` files and check them within Foundry, run `npm run lang`.
+
 ## Merge Requests
 
 Merge requests are the most direct way to get ideas or changes implemented into the system and provide a streamlined way to update and share system translations.
@@ -103,4 +112,4 @@ The description can also contain references to open issues to automatically clos
 This project's CI/ CD will run after opening a merge request and create a result of either "passed" or "failed".
 In the latter case, check the job for which error caused it to fail, and correct the issue if possible.
 
-If you encounter any problems at any point during the setup, feel free to message one of the developers via Discord or leave a message in the `#pf1e` channel of the [FoundryVTT Discord server](https://discord.gg/foundryvtt).
+If you encounter any problems at any point during the setup, feel free to message one of the developers via Discord, or leave a message in the `#pf1e` channel of the [FoundryVTT Discord server](https://discord.gg/foundryvtt) or the `#pathfinder1e-dev` channel of the [League Discord server](https://discord.gg/rNzh6U2qMG).

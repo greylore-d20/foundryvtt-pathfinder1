@@ -267,9 +267,7 @@
     "ChangeFlagMediumArmorFullSpeed": "Velocità piena in Armatura Media",
     "ChangeFlagNoDex": "0 Des",
     "ChangeFlagNoStr": "0 For",
-    "ChangeFlagOneCha": "1 Car",
     "ChangeFlagOneInt": "1 Int",
-    "ChangeFlagOneWis": "1 Sag",
     "Changelog": "Note di Rilascio",
     "Changes": "Modifiche",
     "CharacterName": "Nome del Personaggio",
@@ -422,7 +420,6 @@
     "DamageTypeSonic": "Sonico",
     "DamageTypes": "Tipi di Danno",
     "DeadlyAim": "Mira Letale",
-    "DeductChargeFormulaPlaceholder": "Formula per il Costo della Carica",
     "Default": "Default",
     "Defenses": "Difese",
     "Deity": "Divinità",
@@ -661,7 +658,6 @@
     "LinkTypeChildren": "Figli",
     "LinkTypeClassAssociations": "Associazione di Classe",
     "Links": "Collegamenti",
-    "LoadingCompendiumBrowser": "Sto caricando il Browser dei Compendi...",
     "LongTermCare": "Cura a Lungo Termine",
     "LootTypeAmmo": "Munizioni",
     "LootTypeAmmoSingle": "Munizione",
@@ -992,7 +988,6 @@
     "UseSpellPoints": "Usa Punti Incantesimo",
     "Used": "Utilizzati",
     "Uses": "Utilizzi",
-    "UsesItem": "Utilizzi {0}",
     "Value": "Valore",
     "Versatile": "Versatile",
     "Vigor": "Vigore",
@@ -1292,7 +1287,6 @@
     "TooltipConfigResetInfo": "Reset configurazione tooltip Pathfinder.",
     "TooltipConfigUpdateInfo": "Configurazione tooltip Pathfinder aggiornata.",
     "TooltipWorldConfigDisable": "Disabilità Tooltip (globale)",
-    "TooltipWorldConfigHideActorName": "Nascondi Nomi Attori (globale)",
     "TooltipWorldConfigHideActorName_Hint": "Nascondi Nomi Attori a tutti i giocatori",
     "TooltipWorldConfigHideActorNameReplacement": "Nome sostitutivo se nascosto",
     "TooltipWorldConfigHideArmor": "Nascondi Armatura (globale)",
@@ -1344,139 +1338,83 @@
     },
     "Help": {
       "Label": "Guida",
-      "WIP": "Questa sezione è al momento un Work In Progress (WIP).",
       "Desc": "Questo è un pannello informativo su vari argomenti del sistema Pathfinder 1e per Foundry Virtual Tabletop.",
-      "Desc2": "Puoi selezionare gli argomenti sulla sinistra, i cui contenuti appariranno sulla destra. Nella parte superiore di questa finestra trovi gli strumenti di navigazione.",
       "Img": {
         "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg",
-        "Items.Equipment": "systems/pf1/help/img/en/equipment-details.jpg",
-        "Items.Description": "systems/pf1/help/img/en/item-description.jpg",
-        "Items.Changes": "systems/pf1/help/img/en/item-changes.jpg"
+        "Items.Description": "systems/pf1/help/img/en/item-description.jpg"
       },
       "Nav": {
         "Home": "Home",
-        "Actors": "Attori",
         "Items": "Oggetti",
-        "ItemTypes": "Tipo Oggetti",
-        "Concepts": "Concetti",
-        "Special": "Speciale"
+        "Concepts": "Concetti"
       },
       "Content": {
         "Special": {
           "Formulas": {
             "Label": "Formule",
-            "Desc": "Le formule sono un aspetto importante nel sistema Pathfinder 1e. Possono essere semplici come un singolo valore numerico o complessi come singole righe di codice. Svolgono un ruolo importante nelle modifiche agli oggetti.",
             "Desc2": "Per un rapido riferimento, puoi trovare molte di queste informazioni anche nei suggerimenti sulle schede degli attori.",
             "Variables": {
-              "Label": "Variabili",
               "Desc": "Di seguito troverai un elenco (incompleto) di variabili che puoi utilizzare all'interno delle tue formule.",
               "Header": {
-                "Name": "Variabile",
                 "Description": "Descrizione"
-              },
-              "AbilityScoreTotal": {
-                "Desc": "Il valore totale di un punteggio di caratteristica. Sostituisci X con uno dei seguenti: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
               },
               "AbilityScoreMod": {
                 "Desc": "Il modificatore di un punteggio di caratteristica. Sostituisci X con uno dei seguenti: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
               },
-              "HitDie": {
-                "Desc": "Il numero totale di dadi vita che ha un attore. Si tratta della combinazione di livelli classe e dadi vita razziali, esclusi livelli mitici."
-              },
               "SavingThrows": {
                 "Desc": "Il bonus totale del tiro salvezza appropriato per quell'attore. X può essere sia 'fort' (Tempra), 'ref' (Riflessi) or 'will' (Volontà)"
               },
-              "SavingThrowsBase": {
-                "Desc": "Il bonus base totale del tiro salvezza appropriato per quell'attore, come dato dai livelli di classe. X può essere sia 'fort' (Tempra), 'ref' (Riflessi) or 'will' (Volontà)"
-              },
               "EncumbranceLevel": {
                 "Desc": "Il livello corrente di ingombro dell'attore.",
-                "0": "<code>0</code>: Carico Leggero",
-                "1": "<code>1</code>: Carico Medio",
-                "2": "<code>2</code>: Carico Pesante"
+                "1": "<code>1</code>: Carico Medio"
               },
               "ArmorType": {
                 "Desc": "Il tipo di armatura che indossa l'attore.",
-                "0": "<code>0</code>: No Armatura",
                 "1": "<code>1</code>: Armatura Leggera",
-                "2": "<code>2</code>: Armatura Media",
                 "3": "<code>3</code>: Armatura Pesante"
               },
               "ShieldType": {
-                "Desc": "Il tipo di scudo che l'attore sta tenendo.",
                 "0": "<code>0</code>: No Scudo",
-                "1": "<code>1</code>: Scudo Vario (come un buckler)",
                 "2": "<code>2</code>: Scudo Leggero",
-                "3": "<code>3</code>: Scudo Medio",
                 "4": "<code>4</code>: Scudo Torre"
-              },
-              "CombatRound": {
-                "Desc": "Il round di combattimento corrente, oppure <code>0</code> se non in combattimento."
               }
             },
             "Functions": {
               "Label": "Funzioni",
-              "Desc": "Di seguito sono riportate le funzioni che è possibile utilizzare all'interno delle formule ed esempi su come utilizzarle.",
               "Header": {
                 "Name": "Funzione",
-                "Description": "Descrizione",
-                "Examples": "Esempi",
-                "Example": "Esempio"
+                "Examples": "Esempi"
               },
               "Max": {
-                "Desc": "Restituisce il numero più alto tra quelli forniti.",
-                "Examples": {
-                  "0": "Restituisce il modificatore di Forza dell'attore o il modificatore di Destrezza dell'attore, qualunque sia il più alto."
-                }
+                "Desc": "Restituisce il numero più alto tra quelli forniti."
               },
               "Min": {
-                "Desc": "Restituisce il numero più basso tra quelli forniti.",
-                "Examples": {
-                  "0": "Restituisce il totale dei Dadi vita dell'attore o il numero 10, a seconda di quale dei due sia inferiore."
-                }
+                "Desc": "Restituisce il numero più basso tra quelli forniti."
               },
               "Floor": {
-                "Desc": "Arrotonda il numero dato per difetto all'intero più basso.",
-                "Examples": {
-                  "0": "Restituisce la metà del totale dei Dadi Vita dell'attore, arrotondata per difetto."
-                }
+                "Desc": "Arrotonda il numero dato per difetto all'intero più basso."
               },
               "Ceil": {
-                "Desc": "Arrotonda il numero dato per eccesso all'intero più alto.",
-                "Examples": {
-                  "0": "Restituisce metà del totale dei Dadi Vita dell'attore, arrotondata per eccesso."
-                }
+                "Desc": "Arrotonda il numero dato per eccesso all'intero più alto."
               },
               "Round": {
-                "Desc": "Arrotonda il numero dato all'intero più vicino.",
-                "Examples": {
-                  "0": "Restituisce un terzo del totale dei Dadi Vita dell'attore, arrotondato al numero intero più vicino."
-                }
+                "Desc": "Arrotonda il numero dato all'intero più vicino."
               },
               "SquareRoot": {
-                "Desc": "Restituisce la radice quadrata positiva del numero dato.",
-                "Examples": {
-                  "0": "Restituisce 4."
-                }
+                "Desc": "Restituisce la radice quadrata positiva del numero dato."
               },
               "Power": {
-                "Desc": "Restituisce X alla potenza di Y.",
-                "Examples": {
-                  "0": "Restituisce 64."
-                }
+                "Desc": "Restituisce X alla potenza di Y."
               },
               "SizeRoll": {
                 "Desc": "Altera un tiro per i danni a quello di un'altra categoria di taglia.",
                 "Examples": {
-                  "0": "Tira 1d8 per gli attori di taglia media e modifica la formula del danno in base alla taglia attuale dell'attore chiamante.",
                   "1": "Traduce un tiro di danno di 1d4 da attore di taglia piccola (size '2') a taglia enorme (size '6')<br/>Output: 3d6"
                 }
               },
               "SizeReach": {
-                "Desc": "Genera un numero equivalente alla Portata di una creatura di una certa taglia e statura.",
                 "Examples": {
-                  "0": "Restituisce la normale portata in mischia come se l'attore fosse di 1 categoria di taglia superiore.",
-                  "1": "Restituisce la portata che un attore di taglia enorme/lungo avrebbe con un'arma da portata."
+                  "0": "Restituisce la normale portata in mischia come se l'attore fosse di 1 categoria di taglia superiore."
                 }
               }
             }
@@ -1484,254 +1422,173 @@
           "CompendiumBrowsers": {
             "Label": "Compendium Browsers",
             "Properties": {
-              "Label": "Proprietà Compendio",
               "Hidden": {
-                "Label": "Nascosto",
-                "Description": "I compendi nascosti non verranno visualizzati ai giocatori nei browser dei compendi."
+                "Label": "Nascosto"
               },
               "Disabled": {
-                "Label": "Disattivo",
-                "Description": "I compendi disabilitati non verranno visualizzati per nessuno (inclusi i GM) nei browser dei compendi."
+                "Label": "Disattivo"
               }
             }
           }
         },
         "Items": {
           "ItemTypes.Physical": "Tipi Oggetto fisico",
-          "ItemTypes.Other": "Altri Tipi Oggetto",
           "Generic": {
             "EnhancementBonus": "Bonus Potenziamento",
-            "EnhancementBonusDesc": "Il bonus di potenziamento dell'oggetto, secondo le regole base.",
             "Masterwork": "Perfetto",
-            "MasterworkDesc": "Determina se l'oggetto è Perfetto, secondo le regole di base",
             "Broken": "Rotto",
-            "BrokenDesc": "Determina se l'oggetto è Rotto, secondo le regole di base",
             "EquipmentStatus": "Status dell'Equipaggiamento",
-            "Equipped": "Equipaggiato",
             "EquippedDesc": "Determina se l'oggetto è attualmente equipaggiato trasferendo le sue modifiche all'attore (se presente)",
-            "Identified": "Identificato (solo GM)",
             "IdentifiedDesc": "Determina se l'oggetto è attualmente identificato mostrando le proprietà identificate ai giocatori",
-            "Size": "Taglia",
             "SizeDesc": "La taglia dell'oggetto, simile alla taglia di un personaggio"
           },
           "Weapons": {
-            "Label": "Armi",
             "Desc": "Le armi fisiche che un personaggio può tenere.",
-            "Category": "Categoria",
             "CategoryDesc": "La categoria dell'arma (semplice, da guerra, esotica o varie)",
-            "Type": "Tipo",
             "TypeDesc": "Il Tipo di arma (leggera, una mano, due mani o a distanza)",
-            "Size": "Taglia dell'Arma",
             "SizeDesc": "La taglia dell'arma, simile alla taglia di un personaggio",
-            "Properties": "Proprietà Arma",
             "PropertiesDesc": "Le proprietà dell'arma, come da regole di base (non fa niente meccanicamente)",
-            "BonusAttackFormula": "Formula Bonus Attacco",
             "BonusAttackFormulaDesc": "La formula del bonus di attacco dell'arma. Qualche esempio:",
-            "BonusAttackFormulaExamples": {
-              "0": "Incorrerà in una penalità al tiro per colpire di -2 se il modificatore di Forza di chi lo impugna è inferiore a 3"
-            },
             "BaseWeaponDamage": "Danno Base Arma",
-            "BaseWeaponDamageDesc": "Il primo campo indica il dado di danni che infliggerebbe un'arma di taglia media, e il secondo campo indica il tipo di danno che infligge (contundente, tagliente, ecc.)",
             "BonusDamageFormula": "Formula Bonus al Danno",
-            "BonusDamageFormulaDesc": "Il bonus al danno che l'arma infligge. Qualche esempio:",
             "BonusDamageFormulaExamples": {
               "0": "Aggiungerà al tiro per i danni il valore 4 o il modificatore di Forza del possessore, a seconda di quale sia il più basso"
             },
-            "BaseWeaponCritical": "Critico Base Arma",
             "BaseWeaponCriticalDesc": "Il primo campo indica il risultato più basso del d20 dell'attacco affinchè sia una minaccia di critico, il secondo campo indica il moltiplicatore del danno"
           },
           "Equipment": {
-            "Label": "Equipaggiamento",
             "Desc": "L'equipaggiamento rappresenta tutti gli oggetti equipaggiabili che non siano armi, come armature, scudi, anelli e oggetti meravigliosi.",
-            "Category": "Categoria",
             "CategoryDesc": "La categoria dell'armatura (armatura, scudo, o altro)",
-            "Type": "Tipo",
             "TypeDesc": "Tipo di taglia armatura/scudo o altro tipo di oggetto (abbigliamento, oggetto meraviglioso, ecc.)",
-            "Slot": "Slot",
             "SlotDesc": "Lo slot assegnato a questo oggetto (viene visualizzato solo per oggetti diversi da armature o scudi)",
-            "Status": "Status dell'Equipaggiamento",
             "StatusDesc": "Flag di stato di questo particolare oggetto"
           },
           "Consumables": {
-            "Label": "Consumabili",
             "Desc": "I consumabili rappresentano oggetti fisici con usi limitati, come pozioni o bacchette."
           },
           "Containers": {
-            "Label": "Contenitori",
             "Desc": "I contenitori sono oggetti che possono contenere altri oggetti."
           },
           "Loot": {
-            "Label": "Bottino",
             "Desc": "Gli oggetti bottino sono tutti i tipi di oggetti fisici che non rientrano in altre categorie principali, come beni commerciali e munizioni."
           },
           "Description": {
-            "Label": "Descrizione",
             "Name": "Nome",
-            "NameDesc": "Il nome dell'oggetto, se identificato.",
             "UnidentifiedName": "Nome Non Identificato",
-            "UnidentifiedNameDesc": "Il nome dell'oggetto, se non identificato. Se lasciato vuoto mostra ai giocatori il nome identificato.",
             "Description": "Descrizione",
-            "DescriptionDesc": "La descrizione da mostrare, se identificato.",
             "UnidentifiedDescription": "Descrizione Non Identificato",
-            "UnidentifiedDescriptionDesc": "La descrizione dell'oggetto, se non identificato.",
             "Price": "Prezzo",
-            "PriceDesc": "Il prezzo dell'oggetto, in monete d'oro, se identificato.",
-            "UnidentifiedPrice": "Prezzo Non Identificato",
-            "UnidentifiedPriceDesc": "Il prezzo dell'oggetto, in monete d'oro, se non identificato."
+            "UnidentifiedPrice": "Prezzo Non Identificato"
           },
           "Changes": {
             "Label": "Modifiche",
             "Flags": {
-              "Label": "Flags",
               "LoseDexToAC": {
-                "Label": "Perde la Des alla CA",
-                "Desc": "Mentre un oggetto con questa modifica è attivo, un personaggio perde il suo bonus di Destrezza alla Classe Armatura."
+                "Label": "Perde la Des alla CA"
               },
               "SetAbility": {
-                "Label": "X Caratteristica",
-                "Desc": "Imposta la caratteristica appropriata sul valore specificato del flag. Questo potrebbe essere rimosso in una versione successiva, poiché lo stesso effetto può essere ottenuto con l'operatore '=' (vedi sotto)."
+                "Label": "X Caratteristica"
               },
               "DwarfLikeEncumbrance": {
-                "Label": "Ingombro Nanico",
-                "Desc": "Mentre un oggetto con questa modifica è attivo, il suo attore non verrà rallentato se si trova in carico medio o pesante."
+                "Label": "Ingombro Nanico"
               },
               "FullSpeedMediumArmor": {
-                "Label": "Velocità piena in Armatura Media",
-                "Desc": "Mentre un oggetto con questa modifica è attivo, il suo attore non verrà rallentato indossando un'armatura media."
+                "Label": "Velocità piena in Armatura Media"
               },
               "FullSpeedHeavyArmor": {
-                "Label": "Velocità piena in Armatura Pesante",
-                "Desc": "Mentre un oggetto con questa modifica è attivo, il suo attore non verrà rallentato indossando un'armatura piena."
+                "Label": "Velocità piena in Armatura Pesante"
               }
             },
             "Changes": {
               "Label": "Modifiche",
-              "Desc": "Questo è un elenco di modifiche che interessano l'attore che possiede direttamente l'oggetto. Da sinistra a destra:",
               "Formula": {
-                "Label": "Formula",
-                "Desc": "La formula con cui incidere su questo particolare cambiamento. Il modo in cui questo altera l'attributo di un attore dipende dall'operatore (vedi dopo). Vedi {tagOpen}questa pagina{tagClose} per maggiori dettagli."
+                "Label": "Formula"
               },
               "Operator": {
-                "Label": "Operatore",
-                "Desc": "Gli operatori sono '+' (relativo), '=' (assoluto) o 'S' (script). Valori relativi <i>aggiungono</i> a un attributo, mentre valori assoluti <i>impostano</i> l'attributo al risultato della formula. Vedi sotto Operatori Script."
+                "Label": "Operatore"
               },
               "Priority": {
-                "Label": "Priorità",
-                "Desc": "La priorità di questa modifica. Le modifiche con priorità inferiore verranno elaborate in seguito."
+                "Label": "Priorità"
               },
               "Target": {
-                "Label": "Target",
-                "Desc": "Una categoria generale dell'attributo da modificare."
+                "Label": "Target"
               },
               "SubTarget": {
-                "Label": "Sub-Target",
-                "Desc": "L'attributo specifico da alterare con questa modifica."
+                "Label": "Sub-Target"
               },
               "Modifier": {
-                "Label": "Modificatore",
-                "Desc": "Il Tipo di Modificatore."
+                "Label": "Modificatore"
               }
             },
             "ContextNotes": {
               "Label": "Note Contestuali",
-              "Desc": "Questo è un elenco di note contestuali, che vengono mostrate in situazioni appropriate. Da sinistra a destra:",
               "Description": {
-                "Label": "Descrizione",
-                "Desc": "La descrizione da mostrare in situazioni appropriate. Ogni nuova riga aggiunge una nuova descrizione allo stesso target. Puoi inserirci i tiri in linea di Foundry."
+                "Label": "Descrizione"
               },
               "Target": {
-                "Label": "Target",
-                "Desc": "Una categoria generale dell'attributo da modificare."
+                "Label": "Target"
               },
               "SubTarget": {
-                "Label": "Sub-Target",
-                "Desc": "L'attributo specifico da alterare con questa modifica."
+                "Label": "Sub-Target"
               }
             },
             "ScriptOperator": {
               "Label": "Operatore Script",
-              "Desc": "La 'formula' delle modifiche che utilizzano l'operatore Script 'S' sono in realtà piccoli script JavaScript che vengono eseguiti durante l'esecuzione delle modifiche. Per comprenderli è necessaria una certa conoscenza di JavaScript.",
               "Variables": {
                 "Desc": "All'interno di questi script, è possibile utilizzare le seguenti variabili:",
                 "0": {
-                  "Name": "d",
                   "Desc": "I dati del tiro al momento dell'elaborazione della modifica. Contiene qualsiasi variabile che è possibile utilizzare all'interno di una normale formula di modifica utilizzando il simbolo `@`."
                 },
                 "1": {
-                  "Name": "result",
                   "Desc": "Questo contiene altre due variabili, <code>value</code> e <code>operator</code>. Imposta <code>value</code> al risultato numerico che vuoi per la modifica, e <code>operator</code> per <code>\"add\"</code> o <code>\"set\"</code>.<br><br><code>value</code> default <code>0</code> e <code>operator</code> default <code>\"add\"</code>."
                 }
               }
             }
           },
           "Flags": {
-            "Label": "Flags",
             "Desc": {
-              "Basic": "I flag possono essere utilizzati da moduli e macro. I flag booleani non fanno nulla da soli, ma i flag di dizionario possono essere utilizzati nei tiri, oltre al loro utilizzo in macro e moduli.",
-              "DictionaryFlags": {
-                "Basic": "È possibile inserire flag dizionario all'interno dei tiri utilizzando <code>@dFlags.(itemTag).(flagName)</code>, o con <code>@item.dFlags.(flagName)</code> all'interno dell'elemento corrente."
-              }
+              "Basic": "I flag possono essere utilizzati da moduli e macro. I flag booleani non fanno nulla da soli, ma i flag di dizionario possono essere utilizzati nei tiri, oltre al loro utilizzo in macro e moduli."
             }
           },
           "ScriptCalls": {
             "Label": "Script",
-            "Desc": {
-              "Basic": "Gli oggetti possono avere differenti categorie di script a seconda della tipologia di oggetto. Tali categorie rappresentano la combinazione di macro e script che vengono eseguiti in occasione di eventi specifici per quell'oggetto."
-            },
             "Macros": {
-              "Label": "Utilizzo di macro come chiamate di script",
-              "Desc": {
-                "Basic": "Per utilizzare le macro come chiamate di script, trascina semplicemente una macro nella categoria di chiamate di script su cui desideri eseguirle."
-              }
+              "Label": "Utilizzo di macro come chiamate di script"
             },
             "Variables": {
               "Label": "Variabili",
-              "Desc": {
-                "Basic": "La disponibilità della variabile è leggermente diversa da quella disponibile nelle normali Macro. Di seguito troverai un elenco di variabili che sono presenti all'interno delle chiamate di Script."
-              },
               "List": {
                 "Item": {
                   "Desc": "L'elemento da cui è stato chiamato questo evento."
                 },
-                "Actor": {
-                  "Desc": "L'attore che possiede l'elemento chiamante. Può essere <code>null</code> se l'elemento non è su un attore."
-                },
                 "Token": {
                   "Desc": "Il token dell'attore associato, se presente."
-                },
-                "Shared": {
-                  "Desc": "Un oggetto che all'inizio è vuoto, ma è condiviso tra tutte le chiamate di script di un singolo evento, dopodiché viene restituito alla funzione chiamante, che può o meno fare qualcosa con esso."
                 }
               }
             },
             "Categories": {
               "Label": "Categorie",
               "Use": {
-                "Name": "Utilizzo",
                 "Desc": {
                   "Basic": "Chiamato quando un oggetto viene utilizzato. Se un elemento ha almeno una chiamata di script in questa categoria, è utilizzabile in ogni caso. Questa chiamata prevede due variabili aggiuntive: <code>{var1}</code> che è un array di dati di attacco e <code>{var2}</code>, che contiene il modello di misura dell'attacco (se presente)."
                 }
               },
               "Equip": {
-                "Name": "Equipaggiato",
                 "Desc": {
                   "Basic": "Chiamato quando un oggetto viene equipaggiato o disequipaggiato. Questa chiamata prevede una variabile aggiuntiva <code>{var1}</code> che è <code>true</code> appena viene equipaggiato, o <code>false</code> appena viene disequipaggiato."
                 }
               },
               "Toggle": {
-                "Name": "Attiva/Disattiva",
                 "Desc": {
                   "Basic": "Chiamato quando un potenziamento o una funzione viene attivata/disattivata. Questa chiamata prevede una variabile aggiuntiva <code>{var1}</code> che è <code>true</code> appena viene attivato o <code>false</code> appena viene disattivato."
                 }
               },
               "ChangeQuantity": {
-                "Name": "Cambio Quantità",
                 "Desc": {
                   "Basic": "Chiamato quando viene modificata la quantità di un articolo fisico. Questa chiamata prevede le variabili aggiuntive <code>{var1}</code> e <code>{var2}</code>, che contengono rispettivamente i numeri di quantità prima e dopo l'aggiornamento."
                 }
               },
               "ChangeLevel": {
-                "Name": "Cambio Livello",
                 "Desc": {
                   "Basic": "Chiamato quando il livello di un elemento viene modificato. Questa chiamata prevede le variabili aggiuntive <code>{var1}</code> e <code>{var2}</code>, che contengono rispettivamente i numeri prima e dopo l'aggiornamento."
                 }
@@ -1808,7 +1665,6 @@
     "pf1HideReachMeasurementsN": "Nascondi Misurazioni Portata",
     "pf1HideTokenConditionsH": "Scegli se gli effetti e le condizioni debbano nascondere la loro icona dai token",
     "pf1HideTokenConditionsN": "Nascondi Condizioni Token",
-    "pf1InitTBL": "Aggiungi il punteggio di Destrezza come decimale per effettuare lo spareggio nei tiri di Iniziativa.",
     "pf1InitTBN": "Spareggio Iniziativa con Destrezza",
     "pf1InvertSectionFilterBehaviourH": "Inverte il comportamento del shift-click per la selezione delle categorie inventario.",
     "pf1InvertSectionFilterBehaviourN": "Inverti comportamento filtro inventario",

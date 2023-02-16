@@ -1,13 +1,11 @@
 {
   "PF1.Title": "开拓者 1",
-
   "PF1.ActorSheetPFCharacter": "人物",
   "PF1.ActorSheetPFNPC": "NPC",
   "PF1.ActorSheetPFNPCLite": "NPC (简)",
   "PF1.ActorSheetPFNPCLoot": "战利品",
   "SETTINGS.pf1DiagN": "对角线移动规则",
   "SETTINGS.pf1DiagL": "配置此系统中的游戏应使用哪个对角线移动规则。",
-  "SETTINGS.pf1InitTBL": "为先攻加入小数来做更为细致的区分。",
   "SETTINGS.pf1CurWtN": "开启货币负重",
   "SETTINGS.pf1CurWtL": "携带的货币会影响人物的负重。",
   "SETTINGS.pf1DiagPHB": "5/5/5",
@@ -191,7 +189,6 @@
   "PF1.TooltipWorldConfigHideConditions_Hint": "对所有玩家隐藏状态",
   "PF1.TooltipWorldConfigHideClothing": "隐藏服装(全局)",
   "PF1.TooltipWorldConfigHideClothing_Hint": "对所有玩家隐藏服装",
-  "PF1.TooltipWorldConfigHideActorName_Hint": "对所有玩家隐藏名称",
   "PF1.TooltipWorldConfigHideActorNameReplacement": "隐藏替换名称",
   "PF1.LevelUpForm_Title": "给{className}升级",
   "PF1.LevelUpForm_Health": "生命值",
@@ -268,7 +265,6 @@
   "PF1.SwapSelected": "切换选中",
   "PF1.ClearReduction": "清除减免值",
   "PF1.RollsForInitiative": "{0} 投掷先攻!",
-  "PF1.Take20": "取20",
   "PF1.Flags": "标志",
   "PF1.FlagsInstructions": "设置人物特质以符合PF1系统。",
   "PF1.FlagsTitle": "设置特质",
@@ -805,9 +801,7 @@
   "PF1.WarningCannotCreateChargeLink2": "无法在{source}和{target}之间创建充能型关联，因为{1}已经关联至{deeptarget}了",
   "PF1.WarningNoCombatantFound": "未找到参战者",
   "PF1.NotificationCreatedAttack": "从 {item} 创建攻击",
-
   "PF1.Action_DisplayDefenses": "显示防御信息",
-
   "PF1.Info_FirstClass": "从{html}中拖出一个\n或点击上面的'+添加'按钮",
   "PF1.Info_FirstClass_Compendium": "职业合集包",
   "PF1.Info_MissingClass": "你的人物缺少一个职业，查看人物卡概览页中的职业子标签页。",
@@ -931,7 +925,6 @@
   "PF1.AbilityTypeShortExtraordinary": "Ex",
   "PF1.AbilityTypeShortSupernatural": "Su",
   "PF1.AbilityTypeShortSpell-Like": "Sp",
-
   "PF1.RollSkillMacroName": "{actor}:骰{skill}",
   "PF1.DisplayDefensesMacroName": "{actor}:显示防御",
   "PF1.RollCMBMacroName": "{actor}:骰CMB",
@@ -939,7 +932,6 @@
   "PF1.RollConcentrationMacroName": "{actor}:骰专注({book})",
   "PF1.RollBABMacroName": "{actor}:骰BAB",
   "PF1.RollSaveMacroName": "{actor}: 骰{type}豁免",
-
   "PF1.DamageTypeBludgeoning": "钝击",
   "PF1.DamageTypePiercing": "穿刺",
   "PF1.DamageTypeSlashing": "挥砍",
@@ -968,7 +960,6 @@
   "PF1.SourceInfoRace": "种族",
   "PF1.SourceInfoSkillRank_ClassBase": "{className} (基础)",
   "PF1.SourceInfoSkillRank_ClassFC": "{className} (天赋职业)",
-
   "PF1.CreateItemForSpell": "从 {name} 创建物品",
   "PF1.CreateItemWand": "魔杖",
   "PF1.CreateItemScroll": "卷轴",
@@ -976,10 +967,8 @@
   "PF1.CreateItemWandOf": "{name}魔杖",
   "PF1.CreateItemScrollOf": "{name}卷轴",
   "PF1.CreateItemPotionOf": "{name}药水",
-
   "PF1.CombatInfo_Header": "战斗",
   "PF1.CombatInfo_Round": "第{round}轮",
-
   "PF1.ScriptCalls": {
     "Name": "调用脚本",
     "NewName": "调用新脚本",
@@ -1564,69 +1553,43 @@
   },
   "PF1.Help": {
     "Label": "Help",
-    "Desc": "This is a reference sheet and information panel on various topics of the Pathfinder 1e system for Foundry Virtual Tabletop.",
     "Img": {
-      "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg",
-      "Items.Description": "systems/pf1/help/img/en/item-description.jpg"
+      "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg"
     },
     "Nav": {
       "Home": "Home",
-      "Items": "Items",
       "Concepts": "Concepts"
     },
     "Content": {
       "Special": {
         "Formulas": {
-          "Label": "Formulas",
           "Desc2": "For a quick reference, you can find a lot of this information in tooltips on actor sheets as well.",
           "Variables": {
-            "Desc": "Below you will find an (incomplete) list of variables you can use within your formulas.",
             "Header": {
               "Description": "Description"
-            },
-            "AbilityScoreMod": {
-              "Desc": "The modifier of an ability score. Replace X with one of the following: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
             },
             "SavingThrows": {
               "Desc": "The total bonus of the appropriate saving throw for that actor. X can be either 'fort' (Fortitude), 'ref' (Reflex) or 'will' (Will)"
             },
             "EncumbranceLevel": {
-              "Desc": "The current encumbrance level of the actor.",
               "1": "<code>1</code>: Medium Load"
             },
             "ArmorType": {
-              "Desc": "The type of armor the actor is wearing.",
-              "1": "<code>1</code>: Light Armor",
-              "3": "<code>3</code>: Heavy Armor"
+              "1": "<code>1</code>: Light Armor"
             },
             "ShieldType": {
               "0": "<code>0</code>: No Shield",
-              "2": "<code>2</code>: Light Shield",
               "4": "<code>4</code>: Tower Shield"
-            },
-            "CritMult": {
-              "Desc": "The critical multiplier of the attack, or 1 if the attack is not a critical threat. Only appropriate for use in damage rolls and attack and effect notes."
             }
           },
           "Functions": {
             "Desc": "The following are functions you can use within formulas, and examples on how to use them.",
             "Header": {
-              "Description": "Description",
               "Example": "Example"
-            },
-            "Max": {
-              "Examples": {
-                "0": "Returns the either the actor's Strength modifier or the actor's Dexterity modifier, whichever is higher."
-              }
             },
             "Min": {
               "Examples": {
                 "0": "Returns the either the actor's Hit Die total or the number 10, whichever is lower."
-              }
-            },
-            "Floor": {
-              "Examples": {
-                "0": "Returns half of the actor's Hit Die total, rounded down."
               }
             },
             "Ceil": {
@@ -1634,19 +1597,9 @@
                 "0": "Returns half of the actor's Hit Die total, rounded up."
               }
             },
-            "Round": {
-              "Examples": {
-                "0": "Returns one third of the actor's Hit Die total, rounded to the nearest whole number."
-              }
-            },
             "SquareRoot": {
               "Examples": {
                 "0": "Returns 4."
-              }
-            },
-            "Power": {
-              "Examples": {
-                "0": "Returns 64."
               }
             },
             "SizeRoll": {
@@ -1655,7 +1608,6 @@
               }
             },
             "SizeReach": {
-              "Desc": "Generates a number equal to the reach of a creature of a certain size and stature.",
               "Examples": {
                 "1": "Returns the reach a huge, long actor would have with a reach weapon."
               }
@@ -1664,12 +1616,8 @@
         },
         "CompendiumBrowsers": {
           "Properties": {
-            "Label": "Compendium Properties",
             "Hidden": {
               "Description": "Hidden compendiums will not show up for players in compendium browsers."
-            },
-            "Disabled": {
-              "Description": "Disabled compendiums will not show up for anyone (including GMs) in compendium browsers."
             }
           }
         }
@@ -1677,141 +1625,82 @@
       "Items": {
         "ItemTypes.Other": "Other Item Types",
         "Generic": {
-          "EnhancementBonusDesc": "The item's enhancement bonus, as per the Core rules",
           "MasterworkDesc": "Whether the item is masterwork, as per the Core rules",
-          "BrokenDesc": "Whether the item is broken, as per the Core rules",
           "Equipped": "Equipped",
-          "Identified": "Identified (GM only)",
           "Size": "Size"
         },
         "Weapons": {
-          "Label": "Weapons",
           "Category": "Category",
-          "Type": "Type",
           "Size": "Weapon Size",
-          "Properties": "Weapon Properties",
           "BonusAttackFormula": "Bonus Attack Formula",
-          "BonusAttackFormulaExamples": {
-            "0": "Will incur a penalty to the attack roll of -2 if the wielder's Strength modifier is lower than 3"
-          },
           "BaseWeaponDamageDesc": "The first field indicates the damage die a Medium-sized weapon would deal, and the second field indicates the type of damage it deals (i.e. Bludgeoning, Slashing, etc.)",
-          "BonusDamageFormulaDesc": "The bonus damage the weapon deals. Some examples:",
           "BaseWeaponCritical": "Base Weapon Critical"
         },
         "Equipment": {
-          "Label": "Equipment",
           "Category": "Category",
-          "Type": "Type",
-          "Slot": "Slot",
-          "Status": "Equipment Status"
+          "Slot": "Slot"
         },
         "Consumables": {
           "Label": "Consumables"
-        },
-        "Containers": {
-          "Label": "Containers"
         },
         "Loot": {
           "Label": "Loot"
         },
         "Description": {
-          "Label": "Description",
           "NameDesc": "The name of the item, if identified.",
-          "UnidentifiedNameDesc": "The name of the item, if unidentified. Shows the identified name for players if left empty.",
           "DescriptionDesc": "The description to show, if identified.",
-          "UnidentifiedDescriptionDesc": "The description to show to players, if unidentified.",
-          "PriceDesc": "The price of the item, in gold pieces, if identified",
-          "UnidentifiedPriceDesc": "The price of the item, in gold pieces, if unidentified."
+          "PriceDesc": "The price of the item, in gold pieces, if identified"
         },
         "Changes": {
           "Flags": {
             "Label": "Flags",
-            "LoseDexToAC": {
-              "Desc": "While an item with this change is active, a character loses his Dexterity bonuses to Armor Class."
-            },
             "SetAbility": {
               "Desc": "Sets the appropriate ability to the flag's specified value. This might be removed in a later version, since the same can be accomplished with the '=' operator (see below)."
             },
-            "DwarfLikeEncumbrance": {
-              "Desc": "While an item with this change is active, its actor will not be slowed down by being in a medium or heavy load."
-            },
             "FullSpeedMediumArmor": {
               "Desc": "While an item with this change is active, its actor will not be slowed down by wearing medium armor."
-            },
-            "FullSpeedHeavyArmor": {
-              "Desc": "While an item with this change is active, its actor will not be slowed down by wearing heavy armor."
             }
           },
           "Changes": {
             "Desc": "This is a list of changes which affect the actor owning the item directly. From left to right:",
-            "Formula": {
-              "Desc": "The formula by which to affect this particular change. The way this alters an actor's attribute depends on the operator (see next). See {tagOpen}this page{tagClose} for more details."
-            },
             "Operator": {
               "Desc": "The operators are '+' (relative), '=' (absolute) or 'S' (script). Relative values <i>add</i> to an attribute, while absolute values <i>set</i> the attribute to the result of the formula. See below for the script operator."
             },
-            "Priority": {
-              "Desc": "The priority of this change. Changes with lower priorities will be processed later."
-            },
             "Target": {
               "Desc": "A general category of the attribute to alter."
-            },
-            "SubTarget": {
-              "Desc": "The specific attribute to alter with this change."
             },
             "Modifier": {
               "Desc": "The modifier of this change."
             }
           },
           "ContextNotes": {
-            "Desc": "This a list of contextual notes, which are shown in appropriate situations. From left to right:",
             "Description": {
               "Desc": "The description to show in appropriate situations. Every newline adds a new description to the same target. You can use Foundry-style inline rolls in these."
-            },
-            "Target": {
-              "Desc": "A general category of the attribute to alter."
             },
             "SubTarget": {
               "Desc": "The specific attribute to alter with this change."
             }
           },
           "ScriptOperator": {
-            "Desc": "The 'formula' of changes using the Script operator are actually small JavaScript scripts that are run when processing changes. Some JavaScript knowledge is required to understand these.",
             "Variables": {
               "0": {
                 "Name": "d"
-              },
-              "1": {
-                "Name": "result"
               }
             }
           }
         },
         "Flags": {
-          "Label": "Flags",
-          "Desc": {
-            "DictionaryFlags": {
-              "Basic": "You can access Dictionary Flags within rolls by using <code>@dFlags.(itemTag).(flagName)</code>, or with <code>@item.dFlags.(flagName)</code> within the current item."
-            }
-          }
+          "Label": "Flags"
         },
         "ScriptCalls": {
           "Desc": {
             "Basic": "Most items have certain categories of script calls, which are a combination of macros and inline scripts which run at specific events for that item."
-          },
-          "Macros": {
-            "Desc": {
-              "Basic": "In order to use Macros as Script Calls, simply drag a macro over from somewhere to the category of Script Calls you wish to run them on."
-            }
           },
           "Variables": {
             "Desc": {
               "Basic": "The variable availability differs somewhat from what's available in regular Macros. Below you will find a list of variables which are present within Script Calls."
             },
             "List": {
-              "Actor": {
-                "Desc": "The actor which owns the calling item. Can be <code>null</code> if the item is not on an actor."
-              },
               "Shared": {
                 "Desc": "An object which starts out as empty, but is shared between all script calls of a single event, after which it is returned to the calling function, which may or may not do something with it."
               }
@@ -1819,19 +1708,12 @@
           },
           "Categories": {
             "Use": {
-              "Name": "Use",
               "Desc": {
                 "Extra1": "Setting <code>shared.hideChat</code> to <code>true</code> prevents a chat card from being shown."
               }
             },
-            "Equip": {
-              "Name": "Equip"
-            },
             "Toggle": {
               "Name": "Toggle"
-            },
-            "ChangeQuantity": {
-              "Name": "Change Quantity"
             },
             "ChangeLevel": {
               "Name": "Change Level"

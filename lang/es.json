@@ -1,13 +1,11 @@
 {
   "PF1.Title": "Pathfinder 1",
-
   "PF1.ActorSheetPFCharacter": "Personaje",
   "PF1.ActorSheetPFNPC": "PNJ",
   "PF1.ActorSheetPFNPCLite": "PNJ (Ligero)",
   "PF1.ActorSheetPFNPCLoot": "Botín",
   "SETTINGS.pf1DiagN": "Regla de Movimiento Diagonal",
   "SETTINGS.pf1DiagL": "Configura cuál regla de movimiento diagonal debe usarse para los juegos dentro del sistema.",
-  "SETTINGS.pf1InitTBL": "Añade tu puntuación base de Destreza para desempatar la Iniciativa.",
   "SETTINGS.pf1CurWtN": "Aplicar Peso de Monedas",
   "SETTINGS.pf1CurWtL": "Las monedas llevadas afectan la impedimenta del personaje.",
   "SETTINGS.pf1DiagPHB": "5/5/5",
@@ -145,7 +143,6 @@
   "PF1.TooltipWorldConfigHideConditions_Hint": "Ocultar Condiciones de todos los jugadores",
   "PF1.TooltipWorldConfigHideClothing": "Ocultar Vestimenta (Global)",
   "PF1.TooltipWorldConfigHideClothing_Hint": "Ocultar Vestimenta de todos los jugadores",
-  "PF1.TooltipWorldConfigHideActorName_Hint": "Ocultar Nombres de Actor de todos los jugadores",
   "PF1.TooltipWorldConfigHideActorNameReplacement": "Ocultar Nombre de Reemplazo",
   "PF1.LevelUpForm_Title": "{className} sube de nivel",
   "PF1.LevelUpForm_Health": "Salud",
@@ -1430,83 +1427,54 @@
   },
   "PF1.Help": {
     "Label": "Ayuda",
-    "Desc": "Esta es una ficha de referencia y un panel de información para varios aspectos del Sistema Pathfinder 1e para Foundry Virtual Tabletop.",
     "Img": {
-      "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg",
-      "Items.Description": "systems/pf1/help/img/en/item-description.jpg"
+      "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg"
     },
     "Nav": {
       "Home": "Inicio",
-      "Items": "Objetos",
       "Concepts": "Conceptos"
     },
     "Content": {
       "Special": {
         "Formulas": {
-          "Label": "Formulas",
           "Desc2": "Para una referencia rápida, también puedes encontrar mucha de esta información en los tooltips de las fichas de personaje.",
           "Variables": {
-            "Desc": "Debajo podrás encontrar una lista (Incompleta) de variables que puedes usar en tus fórmulas.",
             "Header": {
               "Description": "Descripción"
-            },
-            "AbilityScoreMod": {
-              "Desc": "El Modificador de una Puntuación de Característica. Reemplaza X con uno de los siguientes: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
             },
             "SavingThrows": {
               "Desc": "El Bonificador total para la Tirada de Salvación apropiada del personaje. X puede ser tanto 'fort' (Fortaleza), 'ref' (Reflejos) como 'will' (Voluntad)"
             },
             "EncumbranceLevel": {
-              "Desc": "El nivel de Impedimenta actual del personaje.",
               "1": "<code>1</code>: Carga Intermedia"
             },
             "ArmorType": {
-              "Desc": "l tipo de armadura que el personaje está vistiendo.",
-              "1": "<code>1</code>: Armadura Ligera",
-              "3": "<code>3</code>: Armadura Pesada"
+              "1": "<code>1</code>: Armadura Ligera"
             },
             "ShieldType": {
               "0": "<code>0</code>: Sin Escudo",
-              "2": "<code>2</code>: Escudo Ligero",
               "4": "<code>4</code>: Escudo Pavés"
             }
           },
           "Functions": {
-            "Label": "Funciones",
             "Header": {
-              "Name": "Función",
-              "Examples": "Ejemplos"
+              "Name": "Función"
             },
             "Max": {
               "Desc": "Devuelve el mayor de los números dados."
             },
-            "Min": {
-              "Desc": "Devuelve el menor de los números dados."
-            },
             "Floor": {
               "Desc": "Redondea el número resultante hacia abajo, al número entero más próximo."
             },
-            "Ceil": {
-              "Desc": "Redondea el número resultante hacia arriba, al número entero más próximo."
-            },
             "Round": {
               "Desc": "Redondea el número dado al entero más próximo."
-            },
-            "SquareRoot": {
-              "Desc": "Devuelve la raíz cuadrada positiva del número dado."
             },
             "Power": {
               "Desc": "Devuelve X elevado a Y."
             },
             "SizeRoll": {
-              "Desc": "Altera una tirada de daño a otra categoría de tamaño.",
               "Examples": {
                 "1": "Traduce una tirada de daño de 1d4 de un personaje Menudo (Tamaño '2') a la de un personaje Enorme (Tamaño '6')<br/>Resultado: 3d6"
-              }
-            },
-            "SizeReach": {
-              "Examples": {
-                "0": "Devolverá el alcance normal en cuerpo a cuerpo como si el personaje fuera 1 categoría de tamaño mayor."
               }
             }
           }
@@ -1514,9 +1482,6 @@
         "CompendiumBrowsers": {
           "Label": "Navegadores de Compendios",
           "Properties": {
-            "Hidden": {
-              "Label": "Oculto"
-            },
             "Disabled": {
               "Label": "Desactivado"
             }
@@ -1524,115 +1489,68 @@
         }
       },
       "Items": {
-        "ItemTypes.Physical": "Tipos de Objetos Físicos",
         "Generic": {
           "EnhancementBonus": "Bono por Mejora",
-          "Masterwork": "De Gran Calidad",
           "Broken": "Roto",
-          "EquipmentStatus": "Estado del Equipamiento",
           "EquippedDesc": "Si el objeto está actualmente equipado, y otorga sus cambios al personaje (Si tuviera).",
-          "IdentifiedDesc": "Si el objeto ha sido identificado, y muestra su información identificada a los jugadores.",
           "SizeDesc": "El tamaño del objeto, similar al tamaño del personaje."
         },
         "Weapons": {
-          "Desc": "Las Armas representan armas físicas que el personaje pueda sujetar.",
           "CategoryDesc": "La categoría del arma (Simple, marcial, exótica o miscelánea).",
-          "TypeDesc": "El Tipo del arma (Ligera, a una mano, a dos manos, a distancia).",
           "SizeDesc": "El tamaño del arma, similar al tamaño del personaje.",
-          "PropertiesDesc": "Las propiedades del arma, como en las Reglas Básicas (No hacen nada mecánicamente).",
           "BonusAttackFormulaDesc": "La fórmula de ataque del arma. Algunos ejemplos:",
-          "BaseWeaponDamage": "Daño Base del Arma",
           "BonusDamageFormula": "Formula de Daño Extra",
-          "BonusDamageFormulaExamples": {
-            "0": "Sumará 4 o el Mod. de Fuerza de su dueño a la tirada de daño, el que sea menor."
-          },
           "BaseWeaponCriticalDesc": "El primer campo indica el resultado más bajo que el d20 requiere sacar para una amenaza de crítico, y el segundo campo indica la cantidad por la cual el daño es multiplicado"
         },
         "Equipment": {
-          "Desc": "El equipamiento representa todos los objetos equipables que no sean armas, como las armaduras, escudos, anillos u objetos maravillosos.",
           "CategoryDesc": "La categoría de la armadura (Si es armadura, escudo, u otra cosa).",
-          "TypeDesc": "El tipo de tamaño de la armadura o ecudo, u otro tipo de objeto (Vestiduras, objeto maravilloso, etc.).",
-          "SlotDesc": "En cuál espacio se equipa este objeto (Solo se muestra para objetos que no sean armaduras o escudos).",
-          "StatusDesc": "Flags de estado particulares para este objeto."
+          "SlotDesc": "En cuál espacio se equipa este objeto (Solo se muestra para objetos que no sean armaduras o escudos)."
         },
         "Consumables": {
           "Desc": "Los consumibles representan objetos físicos con una cantidad de usos limitados, como pociones o varitas."
-        },
-        "Containers": {
-          "Desc": "Los contenedores son objetos que pueden contener otros objetos."
         },
         "Loot": {
           "Desc": "Objetos de bontín son todos los demás objetos que no aplican para las categorías anteriores, como las mercancías o la munición."
         },
         "Description": {
-          "Name": "Nombre",
           "UnidentifiedName": "Nombre Sin Identificar",
-          "Description": "Descrición",
           "UnidentifiedDescription": "Descrición Sin Identificar",
-          "Price": "Precio",
           "UnidentifiedPrice": "Precio Sin Identificar"
         },
         "Changes": {
-          "Label": "Cambios",
           "Flags": {
             "LoseDexToAC": {
               "Label": "Pierde Des. a la CA"
             },
-            "SetAbility": {
-              "Label": "Característica X"
-            },
             "DwarfLikeEncumbrance": {
               "Label": "Impedimenta de Enano"
-            },
-            "FullSpeedMediumArmor": {
-              "Label": "Velocidad Completa en Armadura Intermedia"
             },
             "FullSpeedHeavyArmor": {
               "Label": "Velocidad Completa en Armadura Pesada"
             }
           },
           "Changes": {
-            "Label": "Cambios",
             "Formula": {
               "Label": "Fórmula"
-            },
-            "Operator": {
-              "Label": "Operador"
             },
             "Priority": {
               "Label": "Prioridad"
             },
-            "Target": {
-              "Label": "Objetivo"
-            },
             "SubTarget": {
               "Label": "Sub-objetivo"
-            },
-            "Modifier": {
-              "Label": "Modificador"
             }
           },
           "ContextNotes": {
             "Label": "Notas de Contexto",
-            "Description": {
-              "Label": "Descripción"
-            },
             "Target": {
               "Label": "Objetivo"
-            },
-            "SubTarget": {
-              "Label": "Sub-Objetivo"
             }
           },
           "ScriptOperator": {
             "Label": "Operador de Script",
             "Variables": {
-              "Desc": "Dentro de estos scripts se pueden usar las siguientes variables:",
               "0": {
                 "Desc": "Los datos de una tirada a la hora de procesar los cambios. Contiene todas las variables con el símbolo `@` que puedes usar en una fórmula normal."
-              },
-              "1": {
-                "Desc": "Posee dos variables más, <code>value</code> y <code>operator</code>. Configura <code>value</code> con el resultado numérico que deseas para el cambio, y <code>operator</code> tanto para <code>\"add\"</code> o <code>\"set\"</code>.<br><br><code>value</code> es por defecto <code>0</code> y <code>operator</code> es por defecto <code>\"add\"</code>."
               }
             }
           }
@@ -1643,46 +1561,26 @@
           }
         },
         "ScriptCalls": {
-          "Label": "Llamadas de Script",
           "Macros": {
             "Label": "Usando Macros como Llamadas de Scripts"
           },
           "Variables": {
-            "Label": "Variables",
             "List": {
               "Item": {
                 "Desc": "El objeto del cual se ha llamado este evento."
-              },
-              "Token": {
-                "Desc": "El token del personaje asociado, si posee uno."
               }
             }
           },
           "Categories": {
             "Label": "Categorías",
-            "Use": {
-              "Desc": {
-                "Basic": "Llamada cuando un objeto es usado. Si un objeto posee al menos una llamada de script en esta categoría, es usable sin importar qué. Esta llamada posee dos variables adicionales: <code>{var1}</code> que es un arreglo de datos de Ataque, y <code>{var2}</code>, que contiene el área de efecto del ataque (Si posee)."
-              }
-            },
             "Equip": {
               "Desc": {
                 "Basic": "Llamada cuando un objeto es equipado o desequipado. Posee la variable adicional <code>{var1}</code> que puede ser tanto <code>true</code> si ha sido equipado, como <code>false</code> si se encuentra desequipado."
               }
             },
-            "Toggle": {
-              "Desc": {
-                "Basic": "Llamada cuando un Buff o Aptitud se activa o desactiva. Posee la variable adicional <code>{var1}</code> que puede ser tanto <code>true</code> si ha sido activado, como <code>false</code> si se encuentra desactivado."
-              }
-            },
             "ChangeQuantity": {
               "Desc": {
                 "Basic": "Llamada cuando la cantidad de un objeto físico cambia. Esta llamada posee dos variables adicionales: <code>{var1}</code> y <code>{var2}</code>, que contienen la cantidad del objeto antes y después de que haya cambiado."
-              }
-            },
-            "ChangeLevel": {
-              "Desc": {
-                "Basic": "Llamada cuando el nivel de un objeto cambia. Esta llamada posee dos variables adicionales: <code>{var1}</code> y <code>{var2}</code>, que contienen respectivamente el nivel antes y después de que haya cambiado."
               }
             }
           }

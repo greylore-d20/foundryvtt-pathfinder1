@@ -267,7 +267,6 @@
     "ChangeFlagMediumArmorFullSpeed": "Velocità piena in Armatura Media",
     "ChangeFlagNoDex": "0 Des",
     "ChangeFlagNoStr": "0 For",
-    "ChangeFlagOneInt": "1 Int",
     "Changelog": "Note di Rilascio",
     "Changes": "Modifiche",
     "CharacterName": "Nome del Personaggio",
@@ -1042,7 +1041,6 @@
     "XPTrackSlow": "Lenta",
     "Yes": "Sì",
     "YesShort": "S",
-    "description": "Un sistema di gioco completo per giocare a Pathfinder 1 utilizzando FoundryVTT.",
     "title": "Pathfinder 1",
     "CondNauseated": "Nauseato",
     "CondShaken": "Scosso",
@@ -1287,7 +1285,6 @@
     "TooltipConfigResetInfo": "Reset configurazione tooltip Pathfinder.",
     "TooltipConfigUpdateInfo": "Configurazione tooltip Pathfinder aggiornata.",
     "TooltipWorldConfigDisable": "Disabilità Tooltip (globale)",
-    "TooltipWorldConfigHideActorName_Hint": "Nascondi Nomi Attori a tutti i giocatori",
     "TooltipWorldConfigHideActorNameReplacement": "Nome sostitutivo se nascosto",
     "TooltipWorldConfigHideArmor": "Nascondi Armatura (globale)",
     "TooltipWorldConfigHideArmor_Hint": "Nascondi Armatura a tutti i giocatori",
@@ -1338,83 +1335,54 @@
     },
     "Help": {
       "Label": "Guida",
-      "Desc": "Questo è un pannello informativo su vari argomenti del sistema Pathfinder 1e per Foundry Virtual Tabletop.",
       "Img": {
-        "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg",
-        "Items.Description": "systems/pf1/help/img/en/item-description.jpg"
+        "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg"
       },
       "Nav": {
         "Home": "Home",
-        "Items": "Oggetti",
         "Concepts": "Concetti"
       },
       "Content": {
         "Special": {
           "Formulas": {
-            "Label": "Formule",
             "Desc2": "Per un rapido riferimento, puoi trovare molte di queste informazioni anche nei suggerimenti sulle schede degli attori.",
             "Variables": {
-              "Desc": "Di seguito troverai un elenco (incompleto) di variabili che puoi utilizzare all'interno delle tue formule.",
               "Header": {
                 "Description": "Descrizione"
-              },
-              "AbilityScoreMod": {
-                "Desc": "Il modificatore di un punteggio di caratteristica. Sostituisci X con uno dei seguenti: 'str', 'dex', 'con', 'int', 'wis', 'cha'."
               },
               "SavingThrows": {
                 "Desc": "Il bonus totale del tiro salvezza appropriato per quell'attore. X può essere sia 'fort' (Tempra), 'ref' (Riflessi) or 'will' (Volontà)"
               },
               "EncumbranceLevel": {
-                "Desc": "Il livello corrente di ingombro dell'attore.",
                 "1": "<code>1</code>: Carico Medio"
               },
               "ArmorType": {
-                "Desc": "Il tipo di armatura che indossa l'attore.",
-                "1": "<code>1</code>: Armatura Leggera",
-                "3": "<code>3</code>: Armatura Pesante"
+                "1": "<code>1</code>: Armatura Leggera"
               },
               "ShieldType": {
                 "0": "<code>0</code>: No Scudo",
-                "2": "<code>2</code>: Scudo Leggero",
                 "4": "<code>4</code>: Scudo Torre"
               }
             },
             "Functions": {
-              "Label": "Funzioni",
               "Header": {
-                "Name": "Funzione",
-                "Examples": "Esempi"
+                "Name": "Funzione"
               },
               "Max": {
                 "Desc": "Restituisce il numero più alto tra quelli forniti."
               },
-              "Min": {
-                "Desc": "Restituisce il numero più basso tra quelli forniti."
-              },
               "Floor": {
                 "Desc": "Arrotonda il numero dato per difetto all'intero più basso."
               },
-              "Ceil": {
-                "Desc": "Arrotonda il numero dato per eccesso all'intero più alto."
-              },
               "Round": {
                 "Desc": "Arrotonda il numero dato all'intero più vicino."
-              },
-              "SquareRoot": {
-                "Desc": "Restituisce la radice quadrata positiva del numero dato."
               },
               "Power": {
                 "Desc": "Restituisce X alla potenza di Y."
               },
               "SizeRoll": {
-                "Desc": "Altera un tiro per i danni a quello di un'altra categoria di taglia.",
                 "Examples": {
                   "1": "Traduce un tiro di danno di 1d4 da attore di taglia piccola (size '2') a taglia enorme (size '6')<br/>Output: 3d6"
-                }
-              },
-              "SizeReach": {
-                "Examples": {
-                  "0": "Restituisce la normale portata in mischia come se l'attore fosse di 1 categoria di taglia superiore."
                 }
               }
             }
@@ -1422,9 +1390,6 @@
           "CompendiumBrowsers": {
             "Label": "Compendium Browsers",
             "Properties": {
-              "Hidden": {
-                "Label": "Nascosto"
-              },
               "Disabled": {
                 "Label": "Disattivo"
               }
@@ -1432,115 +1397,68 @@
           }
         },
         "Items": {
-          "ItemTypes.Physical": "Tipi Oggetto fisico",
           "Generic": {
             "EnhancementBonus": "Bonus Potenziamento",
-            "Masterwork": "Perfetto",
             "Broken": "Rotto",
-            "EquipmentStatus": "Status dell'Equipaggiamento",
             "EquippedDesc": "Determina se l'oggetto è attualmente equipaggiato trasferendo le sue modifiche all'attore (se presente)",
-            "IdentifiedDesc": "Determina se l'oggetto è attualmente identificato mostrando le proprietà identificate ai giocatori",
             "SizeDesc": "La taglia dell'oggetto, simile alla taglia di un personaggio"
           },
           "Weapons": {
-            "Desc": "Le armi fisiche che un personaggio può tenere.",
             "CategoryDesc": "La categoria dell'arma (semplice, da guerra, esotica o varie)",
-            "TypeDesc": "Il Tipo di arma (leggera, una mano, due mani o a distanza)",
             "SizeDesc": "La taglia dell'arma, simile alla taglia di un personaggio",
-            "PropertiesDesc": "Le proprietà dell'arma, come da regole di base (non fa niente meccanicamente)",
             "BonusAttackFormulaDesc": "La formula del bonus di attacco dell'arma. Qualche esempio:",
-            "BaseWeaponDamage": "Danno Base Arma",
             "BonusDamageFormula": "Formula Bonus al Danno",
-            "BonusDamageFormulaExamples": {
-              "0": "Aggiungerà al tiro per i danni il valore 4 o il modificatore di Forza del possessore, a seconda di quale sia il più basso"
-            },
             "BaseWeaponCriticalDesc": "Il primo campo indica il risultato più basso del d20 dell'attacco affinchè sia una minaccia di critico, il secondo campo indica il moltiplicatore del danno"
           },
           "Equipment": {
-            "Desc": "L'equipaggiamento rappresenta tutti gli oggetti equipaggiabili che non siano armi, come armature, scudi, anelli e oggetti meravigliosi.",
             "CategoryDesc": "La categoria dell'armatura (armatura, scudo, o altro)",
-            "TypeDesc": "Tipo di taglia armatura/scudo o altro tipo di oggetto (abbigliamento, oggetto meraviglioso, ecc.)",
-            "SlotDesc": "Lo slot assegnato a questo oggetto (viene visualizzato solo per oggetti diversi da armature o scudi)",
-            "StatusDesc": "Flag di stato di questo particolare oggetto"
+            "SlotDesc": "Lo slot assegnato a questo oggetto (viene visualizzato solo per oggetti diversi da armature o scudi)"
           },
           "Consumables": {
             "Desc": "I consumabili rappresentano oggetti fisici con usi limitati, come pozioni o bacchette."
-          },
-          "Containers": {
-            "Desc": "I contenitori sono oggetti che possono contenere altri oggetti."
           },
           "Loot": {
             "Desc": "Gli oggetti bottino sono tutti i tipi di oggetti fisici che non rientrano in altre categorie principali, come beni commerciali e munizioni."
           },
           "Description": {
-            "Name": "Nome",
             "UnidentifiedName": "Nome Non Identificato",
-            "Description": "Descrizione",
             "UnidentifiedDescription": "Descrizione Non Identificato",
-            "Price": "Prezzo",
             "UnidentifiedPrice": "Prezzo Non Identificato"
           },
           "Changes": {
-            "Label": "Modifiche",
             "Flags": {
               "LoseDexToAC": {
                 "Label": "Perde la Des alla CA"
               },
-              "SetAbility": {
-                "Label": "X Caratteristica"
-              },
               "DwarfLikeEncumbrance": {
                 "Label": "Ingombro Nanico"
-              },
-              "FullSpeedMediumArmor": {
-                "Label": "Velocità piena in Armatura Media"
               },
               "FullSpeedHeavyArmor": {
                 "Label": "Velocità piena in Armatura Pesante"
               }
             },
             "Changes": {
-              "Label": "Modifiche",
               "Formula": {
                 "Label": "Formula"
-              },
-              "Operator": {
-                "Label": "Operatore"
               },
               "Priority": {
                 "Label": "Priorità"
               },
-              "Target": {
-                "Label": "Target"
-              },
               "SubTarget": {
                 "Label": "Sub-Target"
-              },
-              "Modifier": {
-                "Label": "Modificatore"
               }
             },
             "ContextNotes": {
               "Label": "Note Contestuali",
-              "Description": {
-                "Label": "Descrizione"
-              },
               "Target": {
                 "Label": "Target"
-              },
-              "SubTarget": {
-                "Label": "Sub-Target"
               }
             },
             "ScriptOperator": {
               "Label": "Operatore Script",
               "Variables": {
-                "Desc": "All'interno di questi script, è possibile utilizzare le seguenti variabili:",
                 "0": {
                   "Desc": "I dati del tiro al momento dell'elaborazione della modifica. Contiene qualsiasi variabile che è possibile utilizzare all'interno di una normale formula di modifica utilizzando il simbolo `@`."
-                },
-                "1": {
-                  "Desc": "Questo contiene altre due variabili, <code>value</code> e <code>operator</code>. Imposta <code>value</code> al risultato numerico che vuoi per la modifica, e <code>operator</code> per <code>\"add\"</code> o <code>\"set\"</code>.<br><br><code>value</code> default <code>0</code> e <code>operator</code> default <code>\"add\"</code>."
                 }
               }
             }
@@ -1551,46 +1469,26 @@
             }
           },
           "ScriptCalls": {
-            "Label": "Script",
             "Macros": {
               "Label": "Utilizzo di macro come chiamate di script"
             },
             "Variables": {
-              "Label": "Variabili",
               "List": {
                 "Item": {
                   "Desc": "L'elemento da cui è stato chiamato questo evento."
-                },
-                "Token": {
-                  "Desc": "Il token dell'attore associato, se presente."
                 }
               }
             },
             "Categories": {
               "Label": "Categorie",
-              "Use": {
-                "Desc": {
-                  "Basic": "Chiamato quando un oggetto viene utilizzato. Se un elemento ha almeno una chiamata di script in questa categoria, è utilizzabile in ogni caso. Questa chiamata prevede due variabili aggiuntive: <code>{var1}</code> che è un array di dati di attacco e <code>{var2}</code>, che contiene il modello di misura dell'attacco (se presente)."
-                }
-              },
               "Equip": {
                 "Desc": {
                   "Basic": "Chiamato quando un oggetto viene equipaggiato o disequipaggiato. Questa chiamata prevede una variabile aggiuntiva <code>{var1}</code> che è <code>true</code> appena viene equipaggiato, o <code>false</code> appena viene disequipaggiato."
                 }
               },
-              "Toggle": {
-                "Desc": {
-                  "Basic": "Chiamato quando un potenziamento o una funzione viene attivata/disattivata. Questa chiamata prevede una variabile aggiuntiva <code>{var1}</code> che è <code>true</code> appena viene attivato o <code>false</code> appena viene disattivato."
-                }
-              },
               "ChangeQuantity": {
                 "Desc": {
                   "Basic": "Chiamato quando viene modificata la quantità di un articolo fisico. Questa chiamata prevede le variabili aggiuntive <code>{var1}</code> e <code>{var2}</code>, che contengono rispettivamente i numeri di quantità prima e dopo l'aggiornamento."
-                }
-              },
-              "ChangeLevel": {
-                "Desc": {
-                  "Basic": "Chiamato quando il livello di un elemento viene modificato. Questa chiamata prevede le variabili aggiuntive <code>{var1}</code> e <code>{var2}</code>, che contengono rispettivamente i numeri prima e dopo l'aggiornamento."
                 }
               }
             }
@@ -1665,7 +1563,6 @@
     "pf1HideReachMeasurementsN": "Nascondi Misurazioni Portata",
     "pf1HideTokenConditionsH": "Scegli se gli effetti e le condizioni debbano nascondere la loro icona dai token",
     "pf1HideTokenConditionsN": "Nascondi Condizioni Token",
-    "pf1InitTBN": "Spareggio Iniziativa con Destrezza",
     "pf1InvertSectionFilterBehaviourH": "Inverte il comportamento del shift-click per la selezione delle categorie inventario.",
     "pf1InvertSectionFilterBehaviourN": "Inverti comportamento filtro inventario",
     "pf1LowLightVisionModeH": "Quando selezionata, i giocatori che non hanno token selezionati non beneficeranno della Visione Crepuscolare dei loro token (si applica anche per Scurovisione)",
@@ -1734,7 +1631,6 @@
     "Container": "Contenitore"
   },
   "PF1.TooltipWorldConfigHideActorNameByDisposition_Hint": "Nasconde il nome a tutti i giocatori quando la disposizione del token è peggiore di quella configurata.",
-  "Pathfinder 1": "Pathfinder 1",
   "SETTINGS.pf1InitTiebreakerN": "Spareggio Iniziativa",
   "SETTINGS.pf1InitTiebreakerH": "Aggiunge all'iniziativa il bonus totale diviso per 100 per evitare pareggi durante i tiri di Iniziativa.",
   "SETTINGS.pf1characterVisionN": "Visione personaggi dei giocatori",

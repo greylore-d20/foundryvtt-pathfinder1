@@ -1553,32 +1553,18 @@
   },
   "PF1.Help": {
     "Label": "Help",
-    "Nav": {
-      "Home": "Home"
-    },
     "Content": {
       "Special": {
         "Formulas": {
           "Desc2": "For a quick reference, you can find a lot of this information in tooltips on actor sheets as well.",
           "Variables": {
-            "SavingThrows": {
-              "Desc": "The total bonus of the appropriate saving throw for that actor. X can be either 'fort' (Fortitude), 'ref' (Reflex) or 'will' (Will)"
-            },
             "ArmorType": {
               "1": "<code>1</code>: Light Armor"
-            },
-            "ShieldType": {
-              "4": "<code>4</code>: Tower Shield"
             }
           },
           "Functions": {
             "Header": {
               "Example": "Example"
-            },
-            "Ceil": {
-              "Examples": {
-                "0": "Returns half of the actor's Hit Die total, rounded up."
-              }
             },
             "SizeRoll": {
               "Examples": {
@@ -1586,33 +1572,20 @@
               }
             }
           }
-        },
-        "CompendiumBrowsers": {
-          "Properties": {
-            "Hidden": {
-              "Description": "Hidden compendiums will not show up for players in compendium browsers."
-            }
-          }
         }
       },
       "Items": {
         "Generic": {
-          "MasterworkDesc": "Whether the item is masterwork, as per the Core rules",
-          "Size": "Size"
+          "MasterworkDesc": "Whether the item is masterwork, as per the Core rules"
         },
         "Weapons": {
-          "Size": "Weapon Size",
-          "BaseWeaponDamageDesc": "The first field indicates the damage die a Medium-sized weapon would deal, and the second field indicates the type of damage it deals (i.e. Bludgeoning, Slashing, etc.)"
+          "Size": "Weapon Size"
         },
         "Equipment": {
           "Category": "Category"
         },
-        "Consumables": {
-          "Label": "Consumables"
-        },
         "Description": {
-          "NameDesc": "The name of the item, if identified.",
-          "PriceDesc": "The price of the item, in gold pieces, if identified"
+          "NameDesc": "The name of the item, if identified."
         },
         "Changes": {
           "Flags": {
@@ -1621,14 +1594,8 @@
             }
           },
           "Changes": {
-            "Desc": "This is a list of changes which affect the actor owning the item directly. From left to right:",
             "Target": {
               "Desc": "A general category of the attribute to alter."
-            }
-          },
-          "ContextNotes": {
-            "Description": {
-              "Desc": "The description to show in appropriate situations. Every newline adds a new description to the same target. You can use Foundry-style inline rolls in these."
             }
           },
           "ScriptOperator": {
@@ -1640,19 +1607,11 @@
           }
         },
         "ScriptCalls": {
-          "Desc": {
-            "Basic": "Most items have certain categories of script calls, which are a combination of macros and inline scripts which run at specific events for that item."
-          },
           "Variables": {
             "List": {
               "Shared": {
                 "Desc": "An object which starts out as empty, but is shared between all script calls of a single event, after which it is returned to the calling function, which may or may not do something with it."
               }
-            }
-          },
-          "Categories": {
-            "Toggle": {
-              "Name": "Toggle"
             }
           }
         }

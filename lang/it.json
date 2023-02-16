@@ -1041,7 +1041,6 @@
     "XPTrackSlow": "Lenta",
     "Yes": "Sì",
     "YesShort": "S",
-    "title": "Pathfinder 1",
     "CondNauseated": "Nauseato",
     "CondShaken": "Scosso",
     "CondFrightened": "Spaventato",
@@ -1335,50 +1334,30 @@
     },
     "Help": {
       "Label": "Guida",
-      "Img": {
-        "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg"
-      },
       "Nav": {
-        "Home": "Home",
-        "Concepts": "Concetti"
+        "Home": "Home"
       },
       "Content": {
         "Special": {
           "Formulas": {
             "Desc2": "Per un rapido riferimento, puoi trovare molte di queste informazioni anche nei suggerimenti sulle schede degli attori.",
             "Variables": {
-              "Header": {
-                "Description": "Descrizione"
-              },
               "SavingThrows": {
                 "Desc": "Il bonus totale del tiro salvezza appropriato per quell'attore. X può essere sia 'fort' (Tempra), 'ref' (Riflessi) or 'will' (Volontà)"
-              },
-              "EncumbranceLevel": {
-                "1": "<code>1</code>: Carico Medio"
               },
               "ArmorType": {
                 "1": "<code>1</code>: Armatura Leggera"
               },
               "ShieldType": {
-                "0": "<code>0</code>: No Scudo",
                 "4": "<code>4</code>: Scudo Torre"
               }
             },
             "Functions": {
-              "Header": {
-                "Name": "Funzione"
-              },
               "Max": {
                 "Desc": "Restituisce il numero più alto tra quelli forniti."
               },
-              "Floor": {
-                "Desc": "Arrotonda il numero dato per difetto all'intero più basso."
-              },
               "Round": {
                 "Desc": "Arrotonda il numero dato all'intero più vicino."
-              },
-              "Power": {
-                "Desc": "Restituisce X alla potenza di Y."
               },
               "SizeRoll": {
                 "Examples": {
@@ -1388,7 +1367,6 @@
             }
           },
           "CompendiumBrowsers": {
-            "Label": "Compendium Browsers",
             "Properties": {
               "Disabled": {
                 "Label": "Disattivo"
@@ -1398,64 +1376,43 @@
         },
         "Items": {
           "Generic": {
-            "EnhancementBonus": "Bonus Potenziamento",
             "Broken": "Rotto",
-            "EquippedDesc": "Determina se l'oggetto è attualmente equipaggiato trasferendo le sue modifiche all'attore (se presente)",
             "SizeDesc": "La taglia dell'oggetto, simile alla taglia di un personaggio"
           },
           "Weapons": {
-            "CategoryDesc": "La categoria dell'arma (semplice, da guerra, esotica o varie)",
             "SizeDesc": "La taglia dell'arma, simile alla taglia di un personaggio",
-            "BonusAttackFormulaDesc": "La formula del bonus di attacco dell'arma. Qualche esempio:",
-            "BonusDamageFormula": "Formula Bonus al Danno",
-            "BaseWeaponCriticalDesc": "Il primo campo indica il risultato più basso del d20 dell'attacco affinchè sia una minaccia di critico, il secondo campo indica il moltiplicatore del danno"
+            "BonusDamageFormula": "Formula Bonus al Danno"
           },
           "Equipment": {
-            "CategoryDesc": "La categoria dell'armatura (armatura, scudo, o altro)",
-            "SlotDesc": "Lo slot assegnato a questo oggetto (viene visualizzato solo per oggetti diversi da armature o scudi)"
+            "CategoryDesc": "La categoria dell'armatura (armatura, scudo, o altro)"
           },
           "Consumables": {
             "Desc": "I consumabili rappresentano oggetti fisici con usi limitati, come pozioni o bacchette."
           },
-          "Loot": {
-            "Desc": "Gli oggetti bottino sono tutti i tipi di oggetti fisici che non rientrano in altre categorie principali, come beni commerciali e munizioni."
-          },
           "Description": {
             "UnidentifiedName": "Nome Non Identificato",
-            "UnidentifiedDescription": "Descrizione Non Identificato",
             "UnidentifiedPrice": "Prezzo Non Identificato"
           },
           "Changes": {
             "Flags": {
-              "LoseDexToAC": {
-                "Label": "Perde la Des alla CA"
-              },
               "DwarfLikeEncumbrance": {
                 "Label": "Ingombro Nanico"
-              },
-              "FullSpeedHeavyArmor": {
-                "Label": "Velocità piena in Armatura Pesante"
               }
             },
             "Changes": {
               "Formula": {
                 "Label": "Formula"
               },
-              "Priority": {
-                "Label": "Priorità"
-              },
               "SubTarget": {
                 "Label": "Sub-Target"
               }
             },
             "ContextNotes": {
-              "Label": "Note Contestuali",
               "Target": {
                 "Label": "Target"
               }
             },
             "ScriptOperator": {
-              "Label": "Operatore Script",
               "Variables": {
                 "0": {
                   "Desc": "I dati del tiro al momento dell'elaborazione della modifica. Contiene qualsiasi variabile che è possibile utilizzare all'interno di una normale formula di modifica utilizzando il simbolo `@`."
@@ -1463,29 +1420,12 @@
               }
             }
           },
-          "Flags": {
-            "Desc": {
-              "Basic": "I flag possono essere utilizzati da moduli e macro. I flag booleani non fanno nulla da soli, ma i flag di dizionario possono essere utilizzati nei tiri, oltre al loro utilizzo in macro e moduli."
-            }
-          },
           "ScriptCalls": {
             "Macros": {
               "Label": "Utilizzo di macro come chiamate di script"
             },
-            "Variables": {
-              "List": {
-                "Item": {
-                  "Desc": "L'elemento da cui è stato chiamato questo evento."
-                }
-              }
-            },
             "Categories": {
               "Label": "Categorie",
-              "Equip": {
-                "Desc": {
-                  "Basic": "Chiamato quando un oggetto viene equipaggiato o disequipaggiato. Questa chiamata prevede una variabile aggiuntiva <code>{var1}</code> che è <code>true</code> appena viene equipaggiato, o <code>false</code> appena viene disequipaggiato."
-                }
-              },
               "ChangeQuantity": {
                 "Desc": {
                   "Basic": "Chiamato quando viene modificata la quantità di un articolo fisico. Questa chiamata prevede le variabili aggiuntive <code>{var1}</code> e <code>{var2}</code>, che contengono rispettivamente i numeri di quantità prima e dopo l'aggiornamento."

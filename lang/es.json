@@ -1427,50 +1427,30 @@
   },
   "PF1.Help": {
     "Label": "Ayuda",
-    "Img": {
-      "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg"
-    },
     "Nav": {
-      "Home": "Inicio",
-      "Concepts": "Conceptos"
+      "Home": "Inicio"
     },
     "Content": {
       "Special": {
         "Formulas": {
           "Desc2": "Para una referencia rápida, también puedes encontrar mucha de esta información en los tooltips de las fichas de personaje.",
           "Variables": {
-            "Header": {
-              "Description": "Descripción"
-            },
             "SavingThrows": {
               "Desc": "El Bonificador total para la Tirada de Salvación apropiada del personaje. X puede ser tanto 'fort' (Fortaleza), 'ref' (Reflejos) como 'will' (Voluntad)"
-            },
-            "EncumbranceLevel": {
-              "1": "<code>1</code>: Carga Intermedia"
             },
             "ArmorType": {
               "1": "<code>1</code>: Armadura Ligera"
             },
             "ShieldType": {
-              "0": "<code>0</code>: Sin Escudo",
               "4": "<code>4</code>: Escudo Pavés"
             }
           },
           "Functions": {
-            "Header": {
-              "Name": "Función"
-            },
             "Max": {
               "Desc": "Devuelve el mayor de los números dados."
             },
-            "Floor": {
-              "Desc": "Redondea el número resultante hacia abajo, al número entero más próximo."
-            },
             "Round": {
               "Desc": "Redondea el número dado al entero más próximo."
-            },
-            "Power": {
-              "Desc": "Devuelve X elevado a Y."
             },
             "SizeRoll": {
               "Examples": {
@@ -1480,7 +1460,6 @@
           }
         },
         "CompendiumBrowsers": {
-          "Label": "Navegadores de Compendios",
           "Properties": {
             "Disabled": {
               "Label": "Desactivado"
@@ -1490,64 +1469,43 @@
       },
       "Items": {
         "Generic": {
-          "EnhancementBonus": "Bono por Mejora",
           "Broken": "Roto",
-          "EquippedDesc": "Si el objeto está actualmente equipado, y otorga sus cambios al personaje (Si tuviera).",
           "SizeDesc": "El tamaño del objeto, similar al tamaño del personaje."
         },
         "Weapons": {
-          "CategoryDesc": "La categoría del arma (Simple, marcial, exótica o miscelánea).",
           "SizeDesc": "El tamaño del arma, similar al tamaño del personaje.",
-          "BonusAttackFormulaDesc": "La fórmula de ataque del arma. Algunos ejemplos:",
-          "BonusDamageFormula": "Formula de Daño Extra",
-          "BaseWeaponCriticalDesc": "El primer campo indica el resultado más bajo que el d20 requiere sacar para una amenaza de crítico, y el segundo campo indica la cantidad por la cual el daño es multiplicado"
+          "BonusDamageFormula": "Formula de Daño Extra"
         },
         "Equipment": {
-          "CategoryDesc": "La categoría de la armadura (Si es armadura, escudo, u otra cosa).",
-          "SlotDesc": "En cuál espacio se equipa este objeto (Solo se muestra para objetos que no sean armaduras o escudos)."
+          "CategoryDesc": "La categoría de la armadura (Si es armadura, escudo, u otra cosa)."
         },
         "Consumables": {
           "Desc": "Los consumibles representan objetos físicos con una cantidad de usos limitados, como pociones o varitas."
         },
-        "Loot": {
-          "Desc": "Objetos de bontín son todos los demás objetos que no aplican para las categorías anteriores, como las mercancías o la munición."
-        },
         "Description": {
           "UnidentifiedName": "Nombre Sin Identificar",
-          "UnidentifiedDescription": "Descrición Sin Identificar",
           "UnidentifiedPrice": "Precio Sin Identificar"
         },
         "Changes": {
           "Flags": {
-            "LoseDexToAC": {
-              "Label": "Pierde Des. a la CA"
-            },
             "DwarfLikeEncumbrance": {
               "Label": "Impedimenta de Enano"
-            },
-            "FullSpeedHeavyArmor": {
-              "Label": "Velocidad Completa en Armadura Pesada"
             }
           },
           "Changes": {
             "Formula": {
               "Label": "Fórmula"
             },
-            "Priority": {
-              "Label": "Prioridad"
-            },
             "SubTarget": {
               "Label": "Sub-objetivo"
             }
           },
           "ContextNotes": {
-            "Label": "Notas de Contexto",
             "Target": {
               "Label": "Objetivo"
             }
           },
           "ScriptOperator": {
-            "Label": "Operador de Script",
             "Variables": {
               "0": {
                 "Desc": "Los datos de una tirada a la hora de procesar los cambios. Contiene todas las variables con el símbolo `@` que puedes usar en una fórmula normal."
@@ -1555,29 +1513,12 @@
             }
           }
         },
-        "Flags": {
-          "Desc": {
-            "Basic": "Los Flags pueden usarse para módulos y macros. Flags Booleanos no se afectan a sí mismos, pero Flags de Diccionario pueden usarse en tiradas, además de su uso en macros y módulos."
-          }
-        },
         "ScriptCalls": {
           "Macros": {
             "Label": "Usando Macros como Llamadas de Scripts"
           },
-          "Variables": {
-            "List": {
-              "Item": {
-                "Desc": "El objeto del cual se ha llamado este evento."
-              }
-            }
-          },
           "Categories": {
             "Label": "Categorías",
-            "Equip": {
-              "Desc": {
-                "Basic": "Llamada cuando un objeto es equipado o desequipado. Posee la variable adicional <code>{var1}</code> que puede ser tanto <code>true</code> si ha sido equipado, como <code>false</code> si se encuentra desequipado."
-              }
-            },
             "ChangeQuantity": {
               "Desc": {
                 "Basic": "Llamada cuando la cantidad de un objeto físico cambia. Esta llamada posee dos variables adicionales: <code>{var1}</code> y <code>{var2}</code>, que contienen la cantidad del objeto antes y después de que haya cambiado."

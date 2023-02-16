@@ -264,7 +264,7 @@
   "PF1.ReduceBy": "减免",
   "PF1.SwapSelected": "切换选中",
   "PF1.ClearReduction": "清除减免值",
-  "PF1.RollsForInitiative": "{0} 投掷先攻!",
+  "PF1.RollsForInitiative": "{name} 投掷先攻!",
   "PF1.Flags": "标志",
   "PF1.FlagsInstructions": "设置人物特质以符合PF1系统。",
   "PF1.FlagsTitle": "设置特质",
@@ -1553,63 +1553,36 @@
   },
   "PF1.Help": {
     "Label": "Help",
-    "Img": {
-      "Items.Weapons": "systems/pf1/help/img/en/weapon-details.jpg"
-    },
     "Nav": {
-      "Home": "Home",
-      "Concepts": "Concepts"
+      "Home": "Home"
     },
     "Content": {
       "Special": {
         "Formulas": {
           "Desc2": "For a quick reference, you can find a lot of this information in tooltips on actor sheets as well.",
           "Variables": {
-            "Header": {
-              "Description": "Description"
-            },
             "SavingThrows": {
               "Desc": "The total bonus of the appropriate saving throw for that actor. X can be either 'fort' (Fortitude), 'ref' (Reflex) or 'will' (Will)"
-            },
-            "EncumbranceLevel": {
-              "1": "<code>1</code>: Medium Load"
             },
             "ArmorType": {
               "1": "<code>1</code>: Light Armor"
             },
             "ShieldType": {
-              "0": "<code>0</code>: No Shield",
               "4": "<code>4</code>: Tower Shield"
             }
           },
           "Functions": {
-            "Desc": "The following are functions you can use within formulas, and examples on how to use them.",
             "Header": {
               "Example": "Example"
-            },
-            "Min": {
-              "Examples": {
-                "0": "Returns the either the actor's Hit Die total or the number 10, whichever is lower."
-              }
             },
             "Ceil": {
               "Examples": {
                 "0": "Returns half of the actor's Hit Die total, rounded up."
               }
             },
-            "SquareRoot": {
-              "Examples": {
-                "0": "Returns 4."
-              }
-            },
             "SizeRoll": {
               "Examples": {
                 "0": "Rolls 1d8 for medium actors, and alters the damage formula according to the calling actor's current size."
-              }
-            },
-            "SizeReach": {
-              "Examples": {
-                "1": "Returns the reach a huge, long actor would have with a reach weapon."
               }
             }
           }
@@ -1623,62 +1596,39 @@
         }
       },
       "Items": {
-        "ItemTypes.Other": "Other Item Types",
         "Generic": {
           "MasterworkDesc": "Whether the item is masterwork, as per the Core rules",
-          "Equipped": "Equipped",
           "Size": "Size"
         },
         "Weapons": {
-          "Category": "Category",
           "Size": "Weapon Size",
-          "BonusAttackFormula": "Bonus Attack Formula",
-          "BaseWeaponDamageDesc": "The first field indicates the damage die a Medium-sized weapon would deal, and the second field indicates the type of damage it deals (i.e. Bludgeoning, Slashing, etc.)",
-          "BaseWeaponCritical": "Base Weapon Critical"
+          "BaseWeaponDamageDesc": "The first field indicates the damage die a Medium-sized weapon would deal, and the second field indicates the type of damage it deals (i.e. Bludgeoning, Slashing, etc.)"
         },
         "Equipment": {
-          "Category": "Category",
-          "Slot": "Slot"
+          "Category": "Category"
         },
         "Consumables": {
           "Label": "Consumables"
         },
-        "Loot": {
-          "Label": "Loot"
-        },
         "Description": {
           "NameDesc": "The name of the item, if identified.",
-          "DescriptionDesc": "The description to show, if identified.",
           "PriceDesc": "The price of the item, in gold pieces, if identified"
         },
         "Changes": {
           "Flags": {
-            "Label": "Flags",
             "SetAbility": {
               "Desc": "Sets the appropriate ability to the flag's specified value. This might be removed in a later version, since the same can be accomplished with the '=' operator (see below)."
-            },
-            "FullSpeedMediumArmor": {
-              "Desc": "While an item with this change is active, its actor will not be slowed down by wearing medium armor."
             }
           },
           "Changes": {
             "Desc": "This is a list of changes which affect the actor owning the item directly. From left to right:",
-            "Operator": {
-              "Desc": "The operators are '+' (relative), '=' (absolute) or 'S' (script). Relative values <i>add</i> to an attribute, while absolute values <i>set</i> the attribute to the result of the formula. See below for the script operator."
-            },
             "Target": {
               "Desc": "A general category of the attribute to alter."
-            },
-            "Modifier": {
-              "Desc": "The modifier of this change."
             }
           },
           "ContextNotes": {
             "Description": {
               "Desc": "The description to show in appropriate situations. Every newline adds a new description to the same target. You can use Foundry-style inline rolls in these."
-            },
-            "SubTarget": {
-              "Desc": "The specific attribute to alter with this change."
             }
           },
           "ScriptOperator": {
@@ -1689,17 +1639,11 @@
             }
           }
         },
-        "Flags": {
-          "Label": "Flags"
-        },
         "ScriptCalls": {
           "Desc": {
             "Basic": "Most items have certain categories of script calls, which are a combination of macros and inline scripts which run at specific events for that item."
           },
           "Variables": {
-            "Desc": {
-              "Basic": "The variable availability differs somewhat from what's available in regular Macros. Below you will find a list of variables which are present within Script Calls."
-            },
             "List": {
               "Shared": {
                 "Desc": "An object which starts out as empty, but is shared between all script calls of a single event, after which it is returned to the calling function, which may or may not do something with it."
@@ -1707,16 +1651,8 @@
             }
           },
           "Categories": {
-            "Use": {
-              "Desc": {
-                "Extra1": "Setting <code>shared.hideChat</code> to <code>true</code> prevents a chat card from being shown."
-              }
-            },
             "Toggle": {
               "Name": "Toggle"
-            },
-            "ChangeLevel": {
-              "Name": "Change Level"
             }
           }
         }

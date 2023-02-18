@@ -279,55 +279,52 @@ export class ItemSpellPF extends ItemPF {
     return this.spellbook?.spellPoints?.useSystem ?? false;
   }
 
-  getSpellComponents(srcData) {
-    if (!srcData) srcData = duplicate(this.system);
+  /**
+   * Components used by this spell pre-translated and pre-formatted.
+   *
+   * @public
+   * @returns {string[]} Array in spell description form (e.g. ["V", "S", "M/DF (Spoon)"])
+   */
+  getSpellComponents() {
     const reSplit = CONFIG.PF1.re.traitSeparator;
+    const srcComponents = this.system.components ?? {},
+      srcMaterials = this.system.materials ?? {};
 
-    let components = [];
-    const compKeys = {
-      V: game.i18n.localize("PF1.SpellComponentKeys.Verbal"),
-      S: game.i18n.localize("PF1.SpellComponentKeys.Somatic"),
-      T: game.i18n.localize("PF1.SpellComponentKeys.Thought"),
-      E: game.i18n.localize("PF1.SpellComponentKeys.Emotion"),
-      M: game.i18n.localize("PF1.SpellComponentKeys.Material"),
-      F: game.i18n.localize("PF1.SpellComponentKeys.Focus"),
-      DF: game.i18n.localize("PF1.SpellComponentKeys.DivineFocus"),
+    const components = [];
+    const labels = {
+      verbal: game.i18n.localize("PF1.SpellComponentKeys.Verbal"),
+      somatic: game.i18n.localize("PF1.SpellComponentKeys.Somatic"),
+      thought: game.i18n.localize("PF1.SpellComponentKeys.Thought"),
+      emotion: game.i18n.localize("PF1.SpellComponentKeys.Emotion"),
+      material: game.i18n.localize("PF1.SpellComponentKeys.Material"),
+      focus: game.i18n.localize("PF1.SpellComponentKeys.Focus"),
+      divineFocus: game.i18n.localize("PF1.SpellComponentKeys.DivineFocus"),
     };
-    for (const [key, value] of Object.entries(srcData.components ?? {})) {
-      if (key === "value" && value.length > 0) components.push(...value.split(reSplit));
-      else if (key === "verbal" && value) components.push(compKeys.V);
-      else if (key === "somatic" && value) components.push(compKeys.S);
-      else if (key === "thought" && value) components.push(compKeys.T);
-      else if (key === "emotion" && value) components.push(compKeys.E);
-      else if (key === "material" && value) components.push(compKeys.M);
-      else if (key === "focus" && value) components.push(compKeys.F);
+
+    if (srcComponents.verbal) components.push(labels.verbal);
+    if (srcComponents.somatic) components.push(labels.somatic);
+    if (srcComponents.thought) components.push(labels.thought);
+    if (srcComponents.emotion) components.push(labels.emotion);
+
+    const df = srcComponents.divineFocus;
+    // Reverse mapping of CONFIG.PF1.divineFocus for readability
+    const dfVariants = { DF: 1, MDF: 2, FDF: 3 };
+
+    if (srcComponents.material) {
+      let material = labels.material;
+      if (df === dfVariants.MDF) material = `${material}/${labels.divineFocus}`;
+      if (srcMaterials.value) material = `${material} (${srcMaterials.value})`;
+      if (material) components.push(material);
     }
-    if (srcData.components?.divineFocus === 1) components.push(compKeys.DF);
-    const df = srcData.components?.divineFocus;
-    // Sort components
-    const componentsOrder = [compKeys.V, compKeys.S, compKeys.T, compKeys.E, compKeys.M, compKeys.F, compKeys.DF];
-    components.sort((a, b) => {
-      const index = [componentsOrder.indexOf(a), components.indexOf(b)];
-      if (index[0] === -1 && index[1] === -1) return 0;
-      if (index[0] === -1 && index[1] >= 0) return 1;
-      if (index[0] >= 0 && index[1] === -1) return -1;
-      return index[0] - index[1];
-    });
-    components = components.map((o) => {
-      if (o === compKeys.M) {
-        if (df === 2) o = `${compKeys.M}/${compKeys.DF}`;
-        if (srcData.materials?.value) {
-          o = `${o} (${srcData.materials?.value})`;
-        }
-      }
-      if (o === compKeys.F) {
-        if (df === 3) o = `${compKeys.F}/${compKeys.DF}`;
-        if (srcData.materials?.focus) {
-          o = `${o} (${srcData.materials?.focus})`;
-        }
-      }
-      return o;
-    });
+    if (srcComponents.focus) {
+      let focus = labels.focus;
+      if (df === dfVariants.FDF) focus = `${focus}/${labels.divineFocus}`;
+      if (srcMaterials.focus) focus = `${focus} (${srcMaterials.focus})`;
+      if (focus) components.push(focus);
+    }
+    if (df === dfVariants.DF) components.push(labels.divineFocus);
+    if (labels.value) components.push(...srcComponents.value.split(reSplit));
+
     return components;
   }
 
@@ -627,7 +624,7 @@ export class ItemSpellPF extends ItemPF {
     }
 
     // Set components label
-    label.components = this.getSpellComponents(srcData).join(", ");
+    label.components = this.getSpellComponents().join(", ");
 
     // Set duration label
     {

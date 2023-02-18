@@ -1,5 +1,18 @@
 import { degtorad, measureDistance } from "../utils/lib.mjs";
 
+const withinAngle = (min, max, value) => {
+  min = Math.normalizeDegrees(min);
+  max = Math.normalizeDegrees(max);
+  value = Math.normalizeDegrees(value);
+
+  if (min < max) return value >= min && value <= max;
+  return value >= min || value <= max;
+};
+
+const withinRect = (point, rect) => {
+  return point.x >= rect.x && point.x < rect.x + rect.width && point.y >= rect.y && point.y < rect.y + rect.height;
+};
+
 /**
  * Applies patches to core functions to integrate Pathfinder specific measurements.
  */
@@ -97,20 +110,24 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone", "ray"].includes(this.document.t)) return [];
 
     const grid = canvas.grid,
-      d = canvas.dimensions;
+      gridSizePx = canvas.dimensions.size, // Size of each cell in pixels
+      gridSizeUnits = canvas.dimensions.distance; // feet, meters, etc.
 
     if (!this.id || !this.shape) return [];
 
+    const templateType = this.document.t,
+      templateDirection = this.document.direction,
+      templateAngle = this.document.angle;
+
     // Parse rays as per Bresenham's algorithm
-    if (this.document.t === "ray") {
+    if (templateType === "ray") {
       const result = [];
 
-      const s = d.size;
-      const line = function (x0, y0, x1, y1) {
-        x0 = Math.floor(Math.floor(x0) / s);
-        x1 = Math.floor(Math.floor(x1) / s);
-        y0 = Math.floor(Math.floor(y0) / s);
-        y1 = Math.floor(Math.floor(y1) / s);
+      const line = (x0, y0, x1, y1) => {
+        x0 = Math.floor(Math.floor(x0) / gridSizePx);
+        x1 = Math.floor(Math.floor(x1) / gridSizePx);
+        y0 = Math.floor(Math.floor(y0) / gridSizePx);
+        y1 = Math.floor(Math.floor(y1) / gridSizePx);
 
         const dx = Math.abs(x1 - x0);
         const dy = Math.abs(y1 - y0);
@@ -119,7 +136,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
         let err = dx - dy;
 
         while (!(x0 === x1 && y0 === y1)) {
-          result.push({ x: x0 * s, y: y0 * s });
+          result.push({ x: x0 * gridSizePx, y: y0 * gridSizePx });
           const e2 = err << 1;
           if (e2 > -dy) {
             err -= dy;
@@ -133,7 +150,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
       };
 
       // Extend ray by half a square for better highlight calculation
-      const ray = Ray.fromAngle(this.ray.A.x, this.ray.A.y, this.ray.angle, this.ray.distance + s / 2);
+      const ray = Ray.fromAngle(this.ray.A.x, this.ray.A.y, this.ray.angle, this.ray.distance + gridSizePx / 2);
 
       // Get resulting squares
       line(ray.A.x, ray.A.y, ray.B.x, ray.B.y);
@@ -142,41 +159,31 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     }
 
     // Get number of rows and columns
-    const nr = Math.ceil((this.document.distance * 1.5) / d.distance / (d.size / grid.h)),
-      nc = Math.ceil((this.document.distance * 1.5) / d.distance / (d.size / grid.w));
+    const nr = Math.ceil((this.document.distance * 1.5) / gridSizeUnits / (gridSizePx / grid.h)),
+      nc = Math.ceil((this.document.distance * 1.5) / gridSizeUnits / (gridSizePx / grid.w));
 
     // Get the center of the grid position occupied by the template
-    const x = this.document.x,
-      y = this.document.y;
+    const { x, y } = this.document;
 
     const [cx, cy] = grid.getCenter(x, y),
       [col0, row0] = grid.grid.getGridPositionFromPixels(cx, cy),
-      minAngle = (360 + ((this.document.direction - this.document.angle * 0.5) % 360)) % 360,
-      maxAngle = (360 + ((this.document.direction + this.document.angle * 0.5) % 360)) % 360;
-
-    const within_angle = function (min, max, value) {
-      min = (360 + (min % 360)) % 360;
-      max = (360 + (max % 360)) % 360;
-      value = (360 + (value % 360)) % 360;
-
-      if (min < max) return value >= min && value <= max;
-      return value >= min || value <= max;
-    };
+      minAngle = Math.normalizeDegrees(templateDirection - templateAngle / 2),
+      maxAngle = Math.normalizeDegrees(templateDirection + templateAngle / 2);
 
     const originOffset = { x: 0, y: 0 };
     // Offset measurement for cones
     // Offset is to ensure that cones only start measuring from cell borders, as in https://www.d20pfsrd.com/magic/#Aiming_a_Spell
-    if (this.document.t === "cone") {
+    if (templateType === "cone") {
       // Degrees anticlockwise from pointing right. In 45-degree increments from 0 to 360
-      const dir = (this.document.direction >= 0 ? 360 - this.document.direction : -this.document.direction) % 360;
+      const dir = (templateDirection >= 0 ? 360 - templateDirection : -templateDirection) % 360;
       // If we're not on a border for X, offset by 0.5 or -0.5 to the border of the cell in the direction we're looking on X axis
       const xOffset =
-        this.document.x % d.size != 0
+        this.document.x % gridSizePx != 0
           ? Math.sign((1 * Math.round(Math.cos(degtorad(dir)) * 100)) / 100) / 2 // /2 turns from 1/0/-1 to 0.5/0/-0.5
           : 0;
       // Same for Y, but cos Y goes down on screens, we invert
       const yOffset =
-        this.document.y % d.size != 0 ? -Math.sign((1 * Math.round(Math.sin(degtorad(dir)) * 100)) / 100) / 2 : 0;
+        this.document.y % gridSizePx != 0 ? -Math.sign((1 * Math.round(Math.sin(degtorad(dir)) * 100)) / 100) / 2 : 0;
       originOffset.x = xOffset;
       originOffset.y = yOffset;
     }
@@ -187,22 +194,24 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
         // Position of cell's top-left corner, in pixels
         const [gx, gy] = canvas.grid.grid.getPixelsFromGridPosition(col0 + a, row0 + b);
         // Position of cell's center, in pixels
-        const [cellCenterX, cellCenterY] = [gx + d.size * 0.5, gy + d.size * 0.5];
+        const [cellCenterX, cellCenterY] = [gx + gridSizePx * 0.5, gy + gridSizePx * 0.5];
 
         // Determine point of origin
-        const origin = { x: this.document.x, y: this.document.y };
-        origin.x += originOffset.x * d.size;
-        origin.y += originOffset.y * d.size;
-
-        const ray = new Ray(origin, { x: cellCenterX, y: cellCenterY });
-
-        const rayAngle = (360 + ((ray.angle / (Math.PI / 180)) % 360)) % 360;
-        if (this.document.t === "cone" && ray.distance > 0 && !within_angle(minAngle, maxAngle, rayAngle)) {
-          continue;
-        }
+        const origin = {
+          x: this.document.x + originOffset.x * gridSizePx,
+          y: this.document.y + originOffset.y * gridSizePx,
+        };
 
         // Determine point we're measuring the distance to - always in the center of a grid square
         const destination = { x: cellCenterX, y: cellCenterY };
+
+        if (templateType === "cone") {
+          const ray = new Ray(origin, destination);
+          const rayAngle = Math.normalizeDegrees(ray.angle / (Math.PI / 180));
+          if (ray.distance > 0 && !withinAngle(minAngle, maxAngle, rayAngle)) {
+            continue;
+          }
+        }
 
         const distance = measureDistance(destination, origin);
         if (distance <= this.document.distance) {
@@ -214,31 +223,81 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     return result;
   }
 
+  /**
+   * Determine tokens residing within the template bounds, based on either grid higlight logic or token center.
+   *
+   * @public
+   * @returns {Token[]} Tokens sufficiently within the template.
+   */
   getTokensWithin() {
-    const highlightSquares = this.getHighlightedSquares(),
-      d = canvas.dimensions;
-
-    const inRect = function (point, rect) {
-      return point.x >= rect.x && point.x < rect.x + rect.width && point.y >= rect.y && point.y < rect.y + rect.height;
-    };
+    const shape = this.document.t,
+      dimensions = this.scene.dimensions,
+      gridSizePx = dimensions.size,
+      gridSizeUnits = dimensions.distance;
 
     const result = [];
+    // Special handling for gridless
+    if (canvas.grid.type === CONST.GRID_TYPES.GRIDLESS && ["circle", "cone", "rect"].includes(shape)) {
+      // TODO: Test against vision points and ensure ~third of them are inside the template instead.
+      for (const t of canvas.tokens.placeables) {
+        switch (shape) {
+          case "circle": {
+            const ray = new Ray(this.center, t.center);
+            // Calculate ray length in relation to circle radius
+            const raySceneLength = (ray.distance / gridSizePx) * gridSizeUnits;
+            // Include this token if its center is within template radius
+            if (raySceneLength <= this.document.distance) result.push(t);
+            break;
+          }
+          case "cone": {
+            const templateDirection = this.document.direction;
+            const templateAngle = this.document.angle,
+              minAngle = Math.normalizeDegrees(templateDirection - templateAngle / 2),
+              maxAngle = Math.normalizeDegrees(templateDirection + templateAngle / 2);
+
+            const ray = new Ray(this.center, t.center);
+            const rayAngle = Math.normalizeDegrees(Math.toDegrees(ray.angle));
+
+            const rayWithinAngle = withinAngle(minAngle, maxAngle, rayAngle);
+            // Calculate ray length in relation to circle radius
+            const raySceneLength = (ray.distance / gridSizePx) * gridSizeUnits;
+            // Include token if its within template distance and within the cone's angle
+            if (rayWithinAngle && raySceneLength <= this.document.distance) result.push(t);
+            break;
+          }
+          case "rect": {
+            const rect = {
+              x: this.x,
+              y: this.y,
+              width: this.width,
+              height: this.width,
+            };
+            if (withinRect(t.center, rect)) result.push(t);
+            break;
+          }
+        }
+      }
+      return result;
+    }
+
+    const highlightSquares = this.getHighlightedSquares();
+
     for (const s of highlightSquares) {
       for (const t of canvas.tokens.placeables) {
         if (result.includes(t)) continue;
 
         const tokenData = {
-          x: Math.round(t.document.x / d.size),
-          y: Math.round(t.document.y / d.size),
+          x: Math.round(t.document.x / gridSizePx),
+          y: Math.round(t.document.y / gridSizePx),
           width: t.document.width,
           height: t.document.height,
         };
         const squareData = {
-          x: Math.round(s.x / d.size),
-          y: Math.round(s.y / d.size),
+          x: Math.round(s.x / gridSizePx),
+          y: Math.round(s.y / gridSizePx),
         };
 
-        if (inRect(squareData, tokenData)) result.push(t);
+        if (withinRect(squareData, tokenData)) result.push(t);
       }
     }
 

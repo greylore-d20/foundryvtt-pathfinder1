@@ -162,5 +162,22 @@ OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<
   };
 }
 
+/**
+ * Patch ImagePopout image share handling function to respect identified status of items
+ *
+ * Synchronized with Foundry VTT v10.291
+ */
+{
+  const original_handleShareImage = ImagePopout._handleShareImage;
+  ImagePopout._handleShareImage = function ({ image, title, caption, uuid, showTitle } = {}) {
+    const doc = fromUuidSync(uuid);
+    if (doc instanceof Item) {
+      title = doc.name;
+    }
+
+    return original_handleShareImage.call(this, { image, title, caption, uuid, showTitle });
+  };
+}
+
 // Call patch functions
 patchLowLightVision();

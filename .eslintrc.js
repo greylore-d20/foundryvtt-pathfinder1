@@ -442,6 +442,7 @@ module.exports = {
     saveDataToFile: "readonly",
     readTextFromFile: "readonly",
     fromUuid: "readonly",
+    fromUuidSync: "readonly",
     _handleMouseWheelInputChange: "readonly",
     getTemplate: "readonly",
     loadTemplates: "readonly",

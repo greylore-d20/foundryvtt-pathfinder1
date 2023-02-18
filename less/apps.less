@@ -406,7 +406,7 @@
 
 .pf1.sheet {
   .window-content {
-    overflow-y: hidden;
+    overflow: hidden;
     padding: 5px;
     background: @sheetBackground;
     font-size: @fontSizeEnlarged;
@@ -977,6 +977,36 @@
   .primary-body {
     flex: 1;
     overflow: hidden;
+
+    .tab {
+      overflow: hidden;
+      height: 100%;
+
+      section {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      &.summary {
+        overflow: hidden scroll;
+
+        section {
+          overflow: unset;
+        }
+      }
+
+      .inventory-group {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      &.spellbook {
+        .spellbooks-body {
+          height: 100%;
+          overflow: hidden;
+        }
+      }
+    }
   }
 
   /* ----------------------------------------- */
@@ -2107,13 +2137,9 @@
   }
 
   .primary-body {
-    overflow: hidden;
-    flex: 1;
-
     .tab {
       height: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: hidden scroll;
 
       input[type="text"],
       select {

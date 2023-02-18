@@ -45,6 +45,7 @@
     "build": "vite build",
     "build:watch": "npm run prebuild && vite build --mode development --watch",
     "build:serve": "npm run build && vite serve",
+    "build:css": "npx less ./less/pf1.less ./dist/pf1.css",
     "serve": "vite serve",
     "packs": "node ./tools/packs.mjs",
     "packs:extract": "node ./tools/packs.mjs extract",

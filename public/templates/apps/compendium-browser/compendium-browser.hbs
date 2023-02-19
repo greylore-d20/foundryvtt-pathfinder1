@@ -8,8 +8,10 @@
     <div class="filter-container">
       {{#each filters as |filter|}}
         <div class="filter" data-filter-id="{{filter.id}}">
-          <h3 class="rollable">{{filter.label}} {{#if filter.active}}<i class="fas fa-filter"></i>×{{filter.activeCount}}{{/if}}</h3>
-          <div class="filter-content {{filter.collapsed}}">
+          <h3 class="rollable">{{filter.label}}
+            {{#if filter.active}}<i class="fas fa-filter"></i>×{{filter.activeCount}}{{/if}}
+          </h3>
+          <div class="filter-content flexcol {{filter.collapsed}}">
             {{> (lookup . "template") filter=filter}}
           </div>
         </div>

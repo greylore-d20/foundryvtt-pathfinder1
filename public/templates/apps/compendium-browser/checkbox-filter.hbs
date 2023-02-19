@@ -1,8 +1,27 @@
-{{#each filter.choices as |choice i|}}
-  <div class="checkbox">
-    <input type="checkbox" name="filter.{{../id}}.choice.{{choice.key}}" {{checked choice.active}} />
-    <label type="checkbox">
-      {{choice.label}}
-    </label>
+{{#if filter.hasControls}}
+  <div class="filter-controls flexrow">
+    {{#if filter.boolean}}
+      <button class="boolean" data-tooltip="PF1.FilterBooleanOperatorHint" data-tooltip-="RIGHT">
+        <i class="fas fa-ballot-check"></i>
+        {{#if (eq filter.boolean "AND")}}{{localize "PF1.All"}}
+        {{else}}{{localize "PF1.Any"}}
+        {{/if}}
+      </button>
+    {{/if}}
   </div>
-{{/each}}
+{{/if}}
+<ul class="filter-choices">
+  {{#each filter.choices as |choice i|}}
+    <li class="filter-choice flexrow">
+      <input
+        type="checkbox"
+        name="filter.{{../id}}.choice.{{choice.key}}"
+        id="{{@root.id}}.filter.{{../id}}.choice.{{choice.key}}"
+        {{checked choice.active}}
+      />
+      <label for="{{@root.id}}.filter.{{../id}}.choice.{{choice.key}}">
+        {{choice.label}}
+      </label>
+    </li>
+  {{/each}}
+</ul>

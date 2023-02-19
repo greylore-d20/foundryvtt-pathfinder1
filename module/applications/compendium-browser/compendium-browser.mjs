@@ -1,5 +1,6 @@
 import { naturalSort } from "@utils";
 import { BaseFilter } from "./filters/base.mjs";
+import fuzzysort from "fuzzysort";
 
 /**
  * The basic compendium browser class allowing the browsing of compendiums by utilising their indexes.
@@ -93,13 +94,11 @@ export class CompendiumBrowser extends Application {
   _query = "";
 
   /**
-   * The regex created from the current search query.
+   * An object containing data used to render the loading spinner and related text.
    *
    * @private
-   * @type {RegExp | null}
+   * @type {object | null}
    */
-  _searchFilterRgx = null;
-
   _loadingInfo = null;
 
   /**
@@ -111,7 +110,7 @@ export class CompendiumBrowser extends Application {
    */
   #setup = false;
 
-  constructor(options) {
+  constructor(options = {}) {
     super(options);
     /**
      * All index entries this compendium browser is aware of.
@@ -274,7 +273,7 @@ export class CompendiumBrowser extends Application {
     await CompendiumBrowser.getIndexes(this.packs.map((pack) => pack.collection));
     const unorderedEntries = await Promise.all(this.packs.map((pack) => this.loadPackIndex(pack)));
     naturalSort(unorderedEntries.flat(), "name").forEach((entry) => this.entries.set(`${entry.__uuid}`, entry));
-    this.filters.forEach((filter) => filter.prepareChoices());
+    this.filters.forEach((filter) => filter.setup());
     this.#setup = true;
   }
 
@@ -291,8 +290,7 @@ export class CompendiumBrowser extends Application {
       .filter((entry) => this.handledTypes.has(entry.type))
       .map((entry) => {
         try {
-          const indexEntry = this.constructor._mapEntry(entry, pack);
-          return indexEntry;
+          return this.constructor._mapEntry(entry, pack);
         } catch (err) {
           Hooks.onError(`CompendiumBrowser#_mapEntry`, err, {
             msg: `${this.constructor.name} failed to map entry ${entry.name} [${entry._id}] from pack ${pack.collection}`,
@@ -312,17 +310,18 @@ export class CompendiumBrowser extends Application {
    * @returns {IndexEntry[]} The filtered entries
    */
   getFilteredEntries() {
-    const entries = this.entries.contents;
+    let entries = this.entries.contents;
+
     const activeFilters = this.filters.filter((filter) => filter.active);
-    if (activeFilters.length === 0 && !this._query) {
-      return entries;
-    } else {
-      return entries.filter((entry) => {
-        const searchFilterResult = this._testSearchFilter(entry);
-        const filterResult = activeFilters.every((filter) => filter.applyFilter(entry));
-        return searchFilterResult && filterResult;
-      });
-    }
+    if (activeFilters.length)
+      entries = entries.filter((entry) => activeFilters.every((filter) => filter.applyFilter(entry)));
+
+    if (this._query)
+      entries = fuzzysort
+        .go(SearchFilter.cleanQuery(this._query), entries, { key: "name", threshold: -10000 })
+        .map((match) => match.obj);
+
+    return entries;
   }
 
   /** @inheritdoc */
@@ -345,6 +344,7 @@ export class CompendiumBrowser extends Application {
   /** @inheritDoc */
   async getData(...args) {
     const context = await super.getData(...args);
+    context.id = args[0]?.id;
     context.query = this._query ?? "";
     context.filters = this.filters
       .filter((filter) => filter.hasChoices())
@@ -357,6 +357,8 @@ export class CompendiumBrowser extends Application {
         collapsed: this.expandedFilters.has(filter.id) ? "" : "collapsed",
         choices: filter.choices.contents,
         field: filter.constructor.indexField,
+        boolean: filter.booleanOperator,
+        hasControls: filter.hasControls,
       }));
 
     if (this.#setup) {
@@ -420,23 +422,14 @@ export class CompendiumBrowser extends Application {
   }
 
   /**
-   * Check whether an entry should be hidden in the item list due to the search filter
+   * Store the current search filter query and re-render the application.
    *
    * @private
-   * @param {{name: string}} entry - An {@link IndexEntry} like object to be checked
-   * @returns {boolean} Whether the entry should be hidden
+   * @param {Event} event - The originating change event
    */
-  _testSearchFilter(entry) {
-    const rgx = this._searchFilterRgx;
-    if (!rgx) return true;
-    return rgx.test(SearchFilter.cleanQuery(entry.name));
-  }
-
-  /** @inheritDoc */
   _onCustomSearchFilter(event) {
     event.preventDefault();
     this._query = event.target.value;
-    this._searchFilterRgx = new RegExp(RegExp.escape(this._query), "i");
     this._debouncedRender();
   }
 
@@ -515,6 +508,7 @@ export class CompendiumBrowser extends Application {
       filter.resetActiveChoices();
     }
     this._query = "";
+    this.expandedFilters.clear();
     this.render();
   }
 
@@ -567,7 +561,6 @@ export class CompendiumBrowser extends Application {
             if (newEntries.length === 0) {
               // No more entries to load with current filters
               observer.unobserve(listEnd);
-              return;
             } else {
               const newHtml = await this.constructor._renderEntries(newEntries);
               listEnd.insertAdjacentHTML("beforebegin", newHtml);

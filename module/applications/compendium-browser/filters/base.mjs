@@ -23,6 +23,7 @@ export class BaseFilter {
    * @type {string}
    */
   static label = "";
+
   /**
    * The field this filter checks against its choices.
    * Will also be added to the `compendiumIndexFields` of the document's `CONFIG` object.
@@ -30,7 +31,6 @@ export class BaseFilter {
    * @abstract
    * @type {string}
    */
-
   static indexField = "";
 
   /**
@@ -71,6 +71,15 @@ export class BaseFilter {
    * @type {Collection<FilterChoice> | null}
    */
   choices = null;
+
+  /**
+   * The boolean operator used to combine choices of this filter.
+   * If "OR", an entry will be included if at least one active choice matches.
+   * If "AND", an entry will only be included if all active choices match.
+   *
+   * @type {"AND" | "OR" | false}
+   */
+  booleanOperator = BOOLEAN_OPERATOR.NONE;
 
   /**
    * A reference to the {@link CompendiumBrowser} this filter is used in.
@@ -135,8 +144,22 @@ export class BaseFilter {
     return this.choices?.some((choice) => choice.active) ?? false;
   }
 
+  /**
+   * The number of active choices.
+   *
+   * @type {number}
+   */
   get activeChoiceCount() {
     return this.choices?.filter((choice) => choice.active).length ?? 0;
+  }
+
+  /**
+   * Whether this filter provides controls in addition to its choices.
+   *
+   * @type {boolean}
+   */
+  get hasControls() {
+    return this.booleanOperator !== BOOLEAN_OPERATOR.NONE;
   }
 
   /**
@@ -159,6 +182,29 @@ export class BaseFilter {
       compendiumIndexFields?.push(this.constructor.indexField);
     }
   }
+
+  /**
+   * Prepare the filter for use.
+   * This step expects the compendium browser to have gathered its entries.
+   */
+  setup() {
+    this.prepareBooleanOperator();
+    this.prepareChoices();
+  }
+
+  /**
+   * Prepare the boolean operator for this filter.
+   */
+  prepareBooleanOperator() {
+    const entries = this.compendiumBrowser?.entries.contents;
+    // Find the first entry that has data in the field and use its data
+    let fieldData;
+    entries.find((entry) => {
+      return (fieldData = getProperty(entry, this.constructor.indexField));
+    });
+    if (["Array", "Object"].includes(foundry.utils.getType(fieldData))) this.booleanOperator = BOOLEAN_OPERATOR.AND;
+  }
+
   /**
    * Prepare the choices for this filter. This is called after the compendium browser has gathered its entries.
    * By default, this will generate a list of choices from the index field of all entries in the compendium.
@@ -191,7 +237,7 @@ export class BaseFilter {
   }
 
   /**
-   * Returns whether this filter has more than the given number of choices.
+   * Returns whether this filter has _more than_ the given number of choices.
    * Defaults to 1, as a single choice allows for no real filtering.
    *
    * @param {number} [number=1] - The number of choices to check for
@@ -205,7 +251,7 @@ export class BaseFilter {
    * Toggle the active state of a choice, or set it to a specific state.
    *
    * @param {string} key - The key of the choice to toggle
-   * @param {boolean} [state=null] - The state to set the choice to. If null, the choice will be toggled.
+   * @param {boolean | null} [state=null] - The state to set the choice to. If null, the choice will be toggled.
    * @returns {boolean} - The new state of the choice
    * @throws {Error} - If the choice does not exist in this filter
    */
@@ -231,22 +277,23 @@ export class BaseFilter {
    */
   applyFilter(entry) {
     const activeChoices = this.choices.filter((choice) => choice.active);
+    // If no choices are active, this filter applies no conditions
     if (activeChoices.length === 0) return true;
-    else {
-      const types = this.constructor.handledTypes;
-      if (types.length && !types.includes(entry.type)) return false;
 
+    // If the filter is active, but the entry does not match the filter's types, the entry cannot match
+    const types = this.constructor.handledTypes;
+    if (types.size && !types.has(entry.type)) return false;
+
+    /** @type {string | string[] | Record<string, boolean>} */
+    const data = getProperty(entry, this.constructor.indexField);
+
+    const testMethod = this.booleanOperator === BOOLEAN_OPERATOR.OR ? "some" : "every";
+    if (Array.isArray(data)) {
+      return activeChoices[testMethod]((choice) => data.includes(choice.key));
+    } else if (typeof data === "object" && data !== null) {
+      return activeChoices[testMethod]((choice) => choice.key in data && data[choice.key]);
+    } else {
       return activeChoices.some((choice) => {
-        const data = getProperty(entry, this.constructor.indexField);
-
-        // For arrays and objects, every choice must be present for the filter to match
-        if (Array.isArray(data)) {
-          return activeChoices.every((choice) => data.includes(choice.key));
-        }
-        if (typeof data === "object" && data !== null) {
-          return activeChoices.every((choice) => choice.key in data && data[choice.key]);
-        }
-
         return data == choice.key;
       });
     }
@@ -258,6 +305,12 @@ export class BaseFilter {
    * @param {HTMLElement} html - The rendered HTML element for this filter only
    */
   activateListeners(html) {
+    html.querySelector("button.boolean")?.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (this.booleanOperator === BOOLEAN_OPERATOR.OR) this.booleanOperator = BOOLEAN_OPERATOR.AND;
+      else this.booleanOperator = BOOLEAN_OPERATOR.OR;
+      this.compendiumBrowser.render();
+    });
     html.addEventListener("change", (event) => {
       if (event.target.type === "checkbox") {
         const checkbox = event.target;
@@ -270,3 +323,14 @@ export class BaseFilter {
     });
   }
 }
+
+/**
+ * States for the boolean operator of a filter.
+ *
+ * @enum {string | false}
+ */
+const BOOLEAN_OPERATOR = {
+  AND: "AND",
+  OR: "OR",
+  NONE: false,
+};

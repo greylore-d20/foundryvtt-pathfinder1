@@ -1210,16 +1210,29 @@
         }
 
         .filter-content {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-
           &.collapsed {
             display: none;
           }
 
-          .checkbox {
-            display: flex;
-            align-items: center;
+          .filter-controls {
+            justify-content: flex-end;
+
+            button {
+              background: rgba(255, 255, 240, 0.8);
+              border: 1px solid var(--color-border-light-primary);
+              font-size: @fontSizeNormal;
+              line-height: unset;
+              min-width: fit-content;
+              max-width: 30%;
+            }
+          }
+
+          ul.filter-choices {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin: 0;
+            padding: 0;
+            list-style: none;
           }
         }
       }
@@ -1273,6 +1286,13 @@
         border-bottom: 1px solid @borderLight;
         border-right: 1px solid @borderLight;
 
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.05);
+          .entry-name {
+            text-shadow: 0 0 8px var(--color-shadow-primary);
+          }
+        }
+
         img {
           flex: 0;
           width: 48px;
@@ -1280,7 +1300,7 @@
           margin: 2px;
         }
 
-        h4 {
+        .entry-name {
           margin-left: 4px;
           margin-bottom: 0;
         }

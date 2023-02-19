@@ -4,6 +4,7 @@ import { AccessibilityConfig } from "../applications/settings/accessibility.mjs"
 import { TooltipConfig } from "../applications/settings/tooltip.mjs";
 import { TooltipWorldConfig } from "../applications/settings/tooltip_world.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
+import { getFirstActiveGM } from "@utils";
 
 export const registerSystemSettings = function () {
   /**
@@ -49,7 +50,7 @@ export const registerSystemSettings = function () {
     default: HealthConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => pf1.utils.refreshActors(),
   });
 
   // Experience configuration
@@ -67,7 +68,7 @@ export const registerSystemSettings = function () {
     default: ExperienceConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => pf1.utils.refreshActors(),
   });
 
   // Accessibility configuration
@@ -178,7 +179,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricUnits"),
     },
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => pf1.utils.refreshActors(),
   });
 
   /**
@@ -196,7 +197,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialDistanceUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricDistanceUnits"),
     },
-    onChange: () => pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
+    onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
   });
 
   /**
@@ -214,7 +215,7 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialWeightUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricWeightUnits"),
     },
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => pf1.utils.refreshActors(),
   });
 
   // OPTIONAL RULES
@@ -229,7 +230,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
+    onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
   });
 
   /**
@@ -242,7 +243,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => pf1.utils.refreshActors(),
   });
 
   /**
@@ -255,7 +256,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => pf1.utils.refreshActors({ renderOnly: true, renderForEveryone: true }),
+    onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
   });
 
   // VISION
@@ -293,9 +294,7 @@ export const registerSystemSettings = function () {
       0: "SETTINGS.pf1SharedVisionWithoutSelection",
       1: "SETTINGS.pf1SharedVisionWithSelection",
     },
-    onChange: () => {
-      game.socket.emit("system.pf1", { eventType: "redrawCanvas" });
-    },
+    onChange: () => canvas.perception.update({ refreshLighting: true, refreshVision: true }, true),
   });
 
   /**
@@ -322,9 +321,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => {
-      ui.chat.render();
-    },
+    onChange: () => ui.chat.render(),
   });
 
   /**
@@ -337,9 +334,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => {
-      ui.chat.render();
-    },
+    onChange: () => ui.chat.render(),
   });
 
   // HOMEBREW
@@ -354,7 +349,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: 50,
     type: Number,
-    onChange: () => pf1.utils.refreshActors({ renderForEveryone: true }),
+    onChange: () => pf1.utils.refreshActors(),
   });
 
   /**
@@ -407,10 +402,13 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
     onChange: () => {
+      const gm = getFirstActiveGM();
+      if (gm?.id !== game.user.id) return;
+
       const promises = [];
       const actors = [
-        ...Array.from(game.actors.contents.filter((actor) => actor.prototypeToken.actorLink)),
-        ...Object.values(game.actors.tokens).filter((a) => a != null),
+        ...game.actors.filter((actor) => actor.prototypeToken.actorLink),
+        ...Object.values(game.actors.tokens).filter((actor) => actor != null),
       ];
       for (const actor of actors) {
         if (actor.toggleConditionStatusIcons) {

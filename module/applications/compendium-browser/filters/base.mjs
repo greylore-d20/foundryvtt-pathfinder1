@@ -314,7 +314,7 @@ export class BaseFilter {
     html.addEventListener("change", (event) => {
       if (event.target.type === "checkbox") {
         const checkbox = event.target;
-        const choiceKey = checkbox.name.split("choice.").pop();
+        const choiceKey = /filter.\w*.choice.(?<choice>.*)/.exec(checkbox.name)?.groups?.choice;
         if (choiceKey) {
           this.toggleChoice(choiceKey, checkbox.checked);
           this.compendiumBrowser.render();

@@ -1,7 +1,21 @@
 import { BaseFilter } from "./base.mjs";
+import { CR } from "@utils";
 
 export class CreatureCRFilter extends BaseFilter {
   static label = "PF1.ChallengeRatingShort";
   static indexField = "system.details.cr.base";
   static types = ["character", "npc"];
+
+  /** @override */
+  prepareChoices() {
+    super.prepareChoices();
+    const choices = this.choices.contents
+      .map((choice) => Number(choice.key))
+      .sort((a, b) => a - b)
+      .map((cr) => {
+        const label = CR.fromNumber(cr);
+        return [cr.toString(), { key: cr, label: label }];
+      });
+    this.choices = new foundry.utils.Collection(choices);
+  }
 }

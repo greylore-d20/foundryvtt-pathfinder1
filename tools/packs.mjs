@@ -8,9 +8,14 @@ const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 const __filename = url.fileURLToPath(import.meta.url);
 const PACK_SRC = "../packs";
 const PACK_CACHE = "../public/packs";
+/**
+ * Arrays of dot paths exempt from data trimming; `system.` is implied, as only system data is trimmed.
+ *
+ * @type {{Item: string[], Actor: string[]}}
+ */
 const TEMPLATE_EXCEPTION_PATHS = {
   Actor: [],
-  Item: ["classSkills", "uses.autoDeductChargesCost", "flags.dictionary", "flags.boolean"],
+  Item: ["classSkills", "uses.autoDeductChargesCost", "flags.dictionary", "flags.boolean", "casting"],
 };
 const templateData = loadDocumentTemplates();
 const manifest = loadManifest();
@@ -95,6 +100,7 @@ function sluggify(string) {
  * @param {object} source - The source to compare with the first parameter.
  * @param {object} [options] - Additional options to augment the behavior.
  * @param {object} [options.keepDefaults=true] - Whether to keep entries which are identical to the source.
+ * @param {"Actor" | "Item"} [options.documentType] - The document name to which this template belongs.
  * @param {string[]} [options.path] - A string containing the names of the parent objects from previous adhereTemplate calls.
  */
 function adhereTemplate(object, source, options = {}) {
@@ -103,15 +109,15 @@ function adhereTemplate(object, source, options = {}) {
   const path = options.path ?? [];
 
   for (const k of Object.keys(object)) {
-    if (
-      !sourceKeys.includes(k) &&
-      (!options.documentType ||
-        !TEMPLATE_EXCEPTION_PATHS[options.documentType].find((exceptionPath) => {
-          const basePath = path.join(".");
-          const specificPath = `${basePath}.${k}`;
-          return exceptionPath === basePath || exceptionPath === specificPath;
-        }))
-    ) {
+    const isTemplateKey = sourceKeys.includes(k);
+    const basePath = path.join(".");
+    const specificPath = `${basePath ? basePath + "." : ""}${k}`;
+    const isExempt =
+      options.documentType &&
+      TEMPLATE_EXCEPTION_PATHS[options.documentType].some(
+        (exceptionPath) => exceptionPath === basePath || exceptionPath === specificPath
+      );
+    if (!isTemplateKey && !isExempt) {
       delete object[k];
       continue;
     }

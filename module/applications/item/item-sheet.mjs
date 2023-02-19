@@ -75,6 +75,12 @@ export class ItemSheetPF extends ItemSheet {
     return `${path}/${this.item.type}.hbs`;
   }
 
+  get title() {
+    const actor = this.actor;
+    if (actor) return `${super.title} – ${actor.name}`;
+    return super.title;
+  }
+
   get actor() {
     let actor = this.item.actor;
     let p = this.parentItem;

@@ -2,7 +2,7 @@ import { PF1 } from "@config";
 import { ActorBasePF } from "./actor-base.mjs";
 import { getAbilityModifier } from "@utils";
 import { ItemPF } from "../item/item-pf.mjs";
-import { createTag, fractionalToString } from "../../utils/lib.mjs";
+import { createTag, fractionalToString, enrichHTMLUnrolled } from "../../utils/lib.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
 import { LinkFunctions } from "../../utils/links.mjs";
 import { getSkipActionPrompt } from "../settings.mjs";
@@ -3371,19 +3371,21 @@ export class ActorPF extends ActorBasePF {
    * Returns a list of already parsed context notes.
    *
    * @param {string} context - The context to draw notes from.
+   * @param {object} [options] Additional options
+   * @param {boolean} [options.roll=true] Whether to roll inline rolls or not.
    * @returns {string[]} The resulting notes, already parsed.
    */
-  getContextNotesParsed(context) {
+  getContextNotesParsed(context, { roll = true } = {}) {
     const noteObjects = this.getContextNotes(context);
 
     return noteObjects.reduce((cur, o) => {
       for (const note of o.notes) {
-        cur.push(
-          TextEditor.enrichHTML(note, {
-            rollData: o.item != null ? o.item.getRollData() : this.getRollData(),
-            async: false,
-          })
-        );
+        const enrichOptions = {
+          rollData: o.item != null ? o.item.getRollData() : this.getRollData(),
+          rolls: roll,
+          async: false,
+        };
+        cur.push(enrichHTMLUnrolled(note, enrichOptions));
       }
 
       return cur;
@@ -3392,15 +3394,13 @@ export class ActorPF extends ActorBasePF {
 
   formatContextNotes(notes, rollData, { roll = true } = {}) {
     const result = [];
-    rollData = rollData ?? this.getRollData();
+    rollData ??= this.getRollData();
     for (const noteObj of notes) {
       rollData.item = {};
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (const note of noteObj.notes) {
-        result.push(
-          ...note.split(/[\n\r]+/).map((o) => TextEditor.enrichHTML(o, { rollData, rolls: roll, async: false }))
-        );
+        result.push(...note.split(/[\n\r]+/).map((subnote) => enrichHTMLUnrolled(subnote, { rollData, rolls: roll })));
       }
     }
     return result;

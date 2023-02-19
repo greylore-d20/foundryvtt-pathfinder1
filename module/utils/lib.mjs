@@ -846,55 +846,87 @@ export function simplifyFormula(formula, rollData = {}) {
 /**
  * Variant of TextEditor._createInlineRoll for creating unrolled inline rolls.
  *
- * @param _match
- * @param _command
- * @param formula
- * @param closing
- * @param label
- * @param {...any} args
+ * Synchronized with Foundry VTT v10.291
+ *
+ * {@inheritDoc TextEditor._createInlineRoll
+ *
+ * @param match
+ * @param rollData
+ * @param options
  */
-export function createInlineFormula(_match, _command, formula, closing, label, ...args) {
-  console.log(arguments);
-  const rollData = args.pop();
-  if (closing.length === 3) formula += "]";
+export function createInlineFormula(match, rollData, options) {
+  let [command, formula, closing, label] = match.slice(1, 5);
+  const isDeferred = !!command;
+  let roll;
 
   const cls = ["inline-preroll", "inline-formula"];
-  let e_formula;
+
+  // Handle the possibility of closing brackets
+  if (closing.length === 3) formula += "]";
+
+  // Extract roll data as a parsed chat command
+  const chatCommand = `${command}${formula}`;
+  let parsedCommand = null;
   try {
-    e_formula = simplifyFormula(formula, rollData);
+    parsedCommand = ChatLog.parse(chatCommand);
+  } catch (err) {
+    console.error("Failed to parse formula:", chatCommand, err);
+    return null;
+  }
+  const [cmd, matches] = parsedCommand;
+  const [raw, rollType, fml, flv] = matches;
+  // TODO: Prettify display of commands like: /d 3d6
+
+  const a = document.createElement("a");
+
+  // Set roll data
+  if (cmd) {
+    cls.push(cmd);
+    a.dataset.mode = cmd;
+  }
+  a.dataset.flavor = flv?.trim() ?? label ?? "";
+  formula = Roll.defaultImplementation.replaceFormulaData(formula.trim(), rollData || {});
+  try {
+    formula = simplifyFormula(formula);
   } catch (err) {
     console.error(err);
-    e_formula = "0";
+    return null;
   }
-  label = label ? `${label}: ${e_formula}` : e_formula;
+  a.dataset.formula = formula;
 
-  // Format return value
-  const a = document.createElement("a");
   a.classList.add(...cls);
-  a.title = formula;
-  a.innerHTML = `<i class="fas fa-dice-d20"></i> ${label}`;
+
+  const title = label || formula;
+  a.innerHTML = `<i class="fas fa-dice-d20"></i> ${title}`;
+  if (label) a.dataset.tooltip = formula;
+  label = label ? `${label}: ${formula}` : formula;
+
   return a;
 }
 
 /**
  * enrichHTML but with inline rolls not rolled
  *
- * @param content
- * @param root0
- * @param root0.rollData
- * @param root0.secrets
- * @param root0.rolls
- * @param root0.documents
+ * {@inheritDoc TextEditor.enrichHTML}
+ *
+ * @param {string} content HTML content in string format to be enriched.
+ * @param {options} [options] Additional options passed to enrichHTML
+ * @param {object} [options.rollData] Roll data object
+ * @param {boolean} [options.secrets] Display secrets
+ * @param {boolean} [options.rolls=false] Roll inline rolls. If false, the roll formula is shown instead as if /r had been used.
+ * @param {boolean} [options.documents] Parse content links
+ *
+ * Synchronized with Foundry VTT v10.291
  */
-export function enrichHTMLUnrolled(content, { rollData, secrets, rolls, documents } = {}) {
+export function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, documents } = {}) {
   let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, async: false });
 
   if (!rolls) {
     const html = document.createElement("div");
     html.innerHTML = String(pcontent);
     const text = TextEditor._getTextNodes(html);
-    const rgx = /\[\[(\/[a-zA-Z]+\s)?(.*?)([\]]{2,3})(?:{([^}]+)})?/gi;
-    TextEditor._replaceTextContent(text, rgx, (...args) => createInlineFormula(...args, rollData));
+    const rgx = /\[\[(\/[a-zA-Z]+\s)?(.*?)(]{2,3})(?:{([^}]+)})?/gi;
+    TextEditor._replaceTextContent(text, rgx, (match) => createInlineFormula(match, rollData));
     pcontent = html.innerHTML;
   }
 

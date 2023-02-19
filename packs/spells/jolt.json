@@ -43,7 +43,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -58,13 +58,21 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "other",
+        "actionType": "rsak",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
-          "parts": [],
           "critParts": [],
-          "nonCritParts": []
+          "nonCritParts": [],
+          "parts": [
+            [
+              "1d3",
+              {
+                "values": ["electric"],
+                "custom": ""
+              }
+            ]
+          ]
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -74,11 +82,11 @@
           "bonus": {
             "formula": ""
           },
-          "label": null
+          "label": ""
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": "dex",
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
@@ -93,7 +101,7 @@
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
-          "multiplier": "",
+          "multiplier": null,
           "damageBonus": 2,
           "critMultiplier": 1
         },
@@ -111,7 +119,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": true
       }
     ],
     "uses": {

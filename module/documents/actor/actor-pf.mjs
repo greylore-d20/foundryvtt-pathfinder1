@@ -388,7 +388,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add context info for why this update happens to allow modules to understand the cause.
     context.pf1 ??= {};
-    context.pf1.reason = "duration;";
+    context.pf1.reason = "duration";
 
     const disableAEContext = mergeObject({ render: !disableBuffs.length }, context);
     if (disableActiveEffects.length)

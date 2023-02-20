@@ -349,16 +349,8 @@ export class CompendiumBrowser extends Application {
     context.filters = this.filters
       .filter((filter) => filter.hasChoices())
       .map((filter) => ({
-        id: filter.id,
-        template: filter.constructor.TEMPLATE,
-        label: game.i18n.localize(filter.constructor.label),
-        active: filter.active,
-        activeCount: filter.activeChoiceCount,
+        ...filter.getData(),
         collapsed: this.expandedFilters.has(filter.id) ? "" : "collapsed",
-        choices: filter.choices.contents,
-        field: filter.constructor.indexField,
-        boolean: filter.booleanOperator,
-        hasControls: filter.hasControls,
       }));
 
     if (this.#setup) {
@@ -505,7 +497,7 @@ export class CompendiumBrowser extends Application {
    */
   _onResetFilters(_event) {
     for (const filter of this.filters) {
-      filter.resetActiveChoices();
+      filter.reset();
     }
     this._query = "";
     this.expandedFilters.clear();

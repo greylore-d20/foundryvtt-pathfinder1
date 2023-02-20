@@ -3,7 +3,7 @@ import { BaseFilter } from "./base.mjs";
 /**
  * A filter that allows the user to input a minimum and maximum value.
  */
-export class MinMaxFilter extends BaseFilter {
+export class NumberRangeFilter extends BaseFilter {
   static TEMPLATE = "systems/pf1/templates/apps/compendium-browser/minmax-filter.hbs";
 
   /** @inheritDoc */
@@ -18,7 +18,7 @@ export class MinMaxFilter extends BaseFilter {
   }
 
   /** @inheritDoc */
-  resetActiveChoices() {
+  reset() {
     this.choices.forEach((choice) => {
       choice.value = null;
       choice.active = false;

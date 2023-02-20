@@ -56,7 +56,7 @@ export class BaseFilter {
    *
    * @type {string}
    */
-  static TEMPLATE = "systems/pf1/templates/apps/compendium-browser/checkbox-filter.hbs";
+  static TEMPLATE = "";
 
   /**
    * The ID of this filter used to identify it in its browser's filters.
@@ -73,15 +73,6 @@ export class BaseFilter {
   choices = null;
 
   /**
-   * The boolean operator used to combine choices of this filter.
-   * If "OR", an entry will be included if at least one active choice matches.
-   * If "AND", an entry will only be included if all active choices match.
-   *
-   * @type {"AND" | "OR" | false}
-   */
-  booleanOperator = BOOLEAN_OPERATOR.NONE;
-
-  /**
    * A reference to the {@link CompendiumBrowser} this filter is used in.
    *
    * @type {import("../compendium-browser.mjs").CompendiumBrowser | null}
@@ -95,35 +86,6 @@ export class BaseFilter {
     this.compendiumBrowser = compendiumBrowser;
     Object.defineProperty(this, "id", { value: foundry.utils.randomID(), writable: false, configurable: false });
     this.registerIndexFields();
-  }
-
-  /**
-   * Generate a {@link Collection} of {@link FilterChoice}s from a {@link CONFIG} object.
-   *
-   * @param {Record<string, string> | Record<string, Record<string, string>>} configObject - The object to generate choices from; can be a Record<string, string> or
-   * @param {object} [options={}] - Options determining how the choices are generated.
-   * @param {string} [options.labelKey="_label"] - The key to use to determine the label if the configObject is a Record<string, object>; will be ignored if the configObject is a Record<string, string>.
-   * @param {boolean} [options.innerSet=false] - Whether choices should be generated from direct properties of the configObject, or from the properties of the inner objects.
-   * @returns {Collection<FilterChoice>} - A Collection of {@link FilterChoice}s
-   */
-  static getChoicesFromConfig(configObject, { labelKey = "_label", innerSet = false } = {}) {
-    /** @type {Collection<FilterChoice>} */
-    const choices = new foundry.utils.Collection();
-    for (const [key, value] of Object.entries(configObject)) {
-      if (innerSet) {
-        for (const [innerKey, innerValue] of Object.entries(value)) {
-          if (innerKey === labelKey) continue;
-          choices.set(innerKey, { key: innerKey, label: innerValue });
-        }
-      } else {
-        if (typeof value === "object" && value[labelKey]) {
-          choices.set(key, { key, label: value[labelKey] });
-        } else if (typeof value === "string") {
-          choices.set(key, { key, label: value });
-        }
-      }
-    }
-    return choices;
   }
 
   /**
@@ -154,15 +116,6 @@ export class BaseFilter {
   }
 
   /**
-   * Whether this filter provides controls in addition to its choices.
-   *
-   * @type {boolean}
-   */
-  get hasControls() {
-    return this.booleanOperator !== BOOLEAN_OPERATOR.NONE;
-  }
-
-  /**
    * Adds the index fields checked by this filter to the document's `CONFIG` object,
    * so that {@link CompendiumCollection#getIndex} will include them.
    */
@@ -188,21 +141,7 @@ export class BaseFilter {
    * This step expects the compendium browser to have gathered its entries.
    */
   setup() {
-    this.prepareBooleanOperator();
     this.prepareChoices();
-  }
-
-  /**
-   * Prepare the boolean operator for this filter.
-   */
-  prepareBooleanOperator() {
-    const entries = this.compendiumBrowser?.entries.contents;
-    // Find the first entry that has data in the field and use its data
-    let fieldData;
-    entries.find((entry) => {
-      return (fieldData = getProperty(entry, this.constructor.indexField));
-    });
-    if (["Array", "Object"].includes(foundry.utils.getType(fieldData))) this.booleanOperator = BOOLEAN_OPERATOR.AND;
   }
 
   /**
@@ -210,30 +149,7 @@ export class BaseFilter {
    * By default, this will generate a list of choices from the index field of all entries in the compendium.
    */
   prepareChoices() {
-    const entries = this.compendiumBrowser?.entries.contents;
-    const observedValues = new Set(
-      entries.flatMap((entry) => {
-        const data = getProperty(entry, this.constructor.indexField);
-        if (Array.isArray(data)) {
-          if (data.length === 0) return [];
-          else return data;
-        }
-        if (typeof data === "object" && data !== null) {
-          const keys = Object.keys(data);
-          if (keys.length === 0) return [];
-          else return keys;
-        }
-        if (data == null) return [];
-        if (typeof data === "string" && data.trim() === "") return [];
-        return [data];
-      })
-    );
-    this.choices = new foundry.utils.Collection(
-      naturalSort(
-        [...observedValues].map((value) => ({ key: value, label: game.i18n.localize(`${value}`) })),
-        "label"
-      ).map((choice) => [`${choice.key}`, choice])
-    );
+    this.choices = new foundry.utils.Collection();
   }
 
   /**
@@ -248,89 +164,46 @@ export class BaseFilter {
   }
 
   /**
-   * Toggle the active state of a choice, or set it to a specific state.
+   * Reset all choices and controls to their default state (inactive)
    *
-   * @param {string} key - The key of the choice to toggle
-   * @param {boolean | null} [state=null] - The state to set the choice to. If null, the choice will be toggled.
-   * @returns {boolean} - The new state of the choice
-   * @throws {Error} - If the choice does not exist in this filter
+   * @abstract
    */
-  toggleChoice(key, state = null) {
-    const choice = this.choices?.get(key);
-    if (!choice) throw new Error(`Choice ${key} does not exist in this filter.`);
-    if (state === null) choice.active = !choice.active;
-    else choice.active = state;
-    return choice.active;
-  }
-
-  /** Reset all choices to their default state (inactive) */
-  resetActiveChoices() {
-    this.choices?.forEach((choice) => (choice.active = false));
-  }
+  reset() {}
 
   /**
    * Check whether an entry matches this filter.
    * If the filter is not active, this will always return true.
    *
+   * @abstract
    * @param {object} entry - The entry to check against this filter
    * @returns {boolean} - Whether the entry matches this filter
    */
-  applyFilter(entry) {
-    const activeChoices = this.choices.filter((choice) => choice.active);
-    // If no choices are active, this filter applies no conditions
-    if (activeChoices.length === 0) return true;
+  applyFilter(entry) {}
 
-    // If the filter is active, but the entry does not match the filter's types, the entry cannot match
-    const types = this.constructor.handledTypes;
-    if (types.size && !types.has(entry.type)) return false;
-
-    /** @type {string | string[] | Record<string, boolean>} */
-    const data = getProperty(entry, this.constructor.indexField);
-
-    const testMethod = this.booleanOperator === BOOLEAN_OPERATOR.OR ? "some" : "every";
-    if (Array.isArray(data)) {
-      return activeChoices[testMethod]((choice) => data.includes(choice.key));
-    } else if (typeof data === "object" && data !== null) {
-      return activeChoices[testMethod]((choice) => choice.key in data && data[choice.key]);
-    } else {
-      return activeChoices.some((choice) => {
-        return data == choice.key;
-      });
-    }
+  /**
+   * Provide data necessary to render this filter.
+   * The data object generated by {@link BaseFilter#getData} contains the minimum data not only required
+   * by the filter itself, but also by the rendering {@link CompendiumBrowser}.
+   *
+   * @returns {object}} The data object for this filter
+   */
+  getData() {
+    return {
+      id: this.id,
+      template: this.constructor.TEMPLATE,
+      label: game.i18n.localize(this.constructor.label),
+      active: this.active,
+      activeCount: this.activeChoiceCount,
+      choices: this.choices?.contents ?? [],
+      field: this.constructor.indexField,
+    };
   }
 
   /**
    * Activate event listeners for this filter.
    *
+   * @abstract
    * @param {HTMLElement} html - The rendered HTML element for this filter only
    */
-  activateListeners(html) {
-    html.querySelector("button.boolean")?.addEventListener("click", (event) => {
-      event.preventDefault();
-      if (this.booleanOperator === BOOLEAN_OPERATOR.OR) this.booleanOperator = BOOLEAN_OPERATOR.AND;
-      else this.booleanOperator = BOOLEAN_OPERATOR.OR;
-      this.compendiumBrowser.render();
-    });
-    html.addEventListener("change", (event) => {
-      if (event.target.type === "checkbox") {
-        const checkbox = event.target;
-        const choiceKey = /filter.\w*.choice.(?<choice>.*)/.exec(checkbox.name)?.groups?.choice;
-        if (choiceKey) {
-          this.toggleChoice(choiceKey, checkbox.checked);
-          this.compendiumBrowser.render();
-        }
-      }
-    });
-  }
+  activateListeners(html) {}
 }
-
-/**
- * States for the boolean operator of a filter.
- *
- * @enum {string | false}
- */
-const BOOLEAN_OPERATOR = {
-  AND: "AND",
-  OR: "OR",
-  NONE: false,
-};

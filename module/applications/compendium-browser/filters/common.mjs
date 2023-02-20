@@ -1,7 +1,7 @@
-import { BaseFilter } from "./base.mjs";
+import { CheckboxFilter } from "./checkbox.mjs";
 import { naturalSort } from "@utils";
 
-export class PackFilter extends BaseFilter {
+export class PackFilter extends CheckboxFilter {
   static label = "PF1.Compendium";
   static indexField = "__pack";
 

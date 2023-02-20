@@ -1159,6 +1159,19 @@
 .compendium-browser {
   max-height: 100%;
 
+  .search-form {
+    position: relative;
+    input {
+      position: relative;
+      padding-left: 17px;
+      background: rgba(255, 255, 245, 0.8);
+    }
+    i {
+      position: absolute;
+      left: 4px;
+    }
+  }
+
   aside.sidebar {
     flex: 0 0 300px;
     height: 100%;
@@ -1166,15 +1179,11 @@
     border-right: @borderGroove;
     font-size: @fontSizeNormal;
 
-    > .entry-filter {
+    .entry-filter {
       flex: 0;
       margin: 0 1rem 1rem 0;
       justify-content: center;
       align-items: center;
-
-      > i {
-        flex: 0 0 24px;
-      }
     }
 
     .filter-container {
@@ -1214,16 +1223,30 @@
             display: none;
           }
 
+          .hidden {
+            display: none;
+          }
+
           .filter-controls {
             justify-content: flex-end;
+            margin-bottom: 1em;
+
+            .control {
+              line-height: unset;
+              font-size: @fontSizeNormal;
+              min-width: fit-content;
+              max-width: 30%;
+            }
 
             button {
               background: rgba(255, 255, 240, 0.8);
-              border: 1px solid var(--color-border-light-primary);
-              font-size: @fontSizeNormal;
-              line-height: unset;
-              min-width: fit-content;
-              max-width: 30%;
+              border: 1px solid var(--color-border-light-tertiary);
+            }
+
+            .choice-filter {
+              margin: auto;
+              align-items: center;
+              position: relative;
             }
           }
 
@@ -1233,6 +1256,12 @@
             margin: 0;
             padding: 0;
             list-style: none;
+          }
+
+          .no-choices {
+            text-align: center;
+            margin: 0.5em 0;
+            font-style: italic;
           }
         }
       }

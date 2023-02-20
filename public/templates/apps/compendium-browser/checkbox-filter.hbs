@@ -1,7 +1,13 @@
 {{#if filter.hasControls}}
   <div class="filter-controls flexrow">
+    {{#if filter.hasSearch}}
+      <div class="choice-filter search-form control formgroup flexrow">
+        <input type="search" name="choice-query" value="{{choiceQuery}}" placeholder="{{localize "PF1.SearchFilterPlaceholder"}}" autocomplete="off" />
+        <i class="fas fa-search"></i>
+      </div>
+    {{/if}}
     {{#if filter.boolean}}
-      <button class="boolean" data-tooltip="PF1.FilterBooleanOperatorHint" data-tooltip-="RIGHT">
+      <button class="control boolean" data-tooltip="PF1.FilterBooleanOperatorHint" data-tooltip-="RIGHT">
         <i class="fas fa-ballot-check"></i>
         {{#if (eq filter.boolean "AND")}}{{localize "PF1.All"}}
         {{else}}{{localize "PF1.Any"}}
@@ -12,7 +18,7 @@
 {{/if}}
 <ul class="filter-choices">
   {{#each filter.choices as |choice i|}}
-    <li class="filter-choice flexrow">
+    <li class="filter-choice flexrow" data-choice="{{choice.key}}">
       <input
         type="checkbox"
         name="filter.{{../id}}.choice.{{choice.key}}"
@@ -25,3 +31,4 @@
     </li>
   {{/each}}
 </ul>
+<span class="no-choices hidden">{{localize "PF1.FilterNoChoices"}}</span>

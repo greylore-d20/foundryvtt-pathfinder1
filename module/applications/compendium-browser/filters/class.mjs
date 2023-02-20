@@ -1,7 +1,7 @@
 import { PF1 } from "@config";
-import { BaseFilter } from "./base.mjs";
+import { CheckboxFilter } from "./checkbox.mjs";
 
-export class ClassTypeFilter extends BaseFilter {
+export class ClassTypeFilter extends CheckboxFilter {
   static label = "PF1.ClassType";
   static type = "class";
   static indexField = "system.subType";
@@ -12,13 +12,13 @@ export class ClassTypeFilter extends BaseFilter {
   }
 }
 
-export class ClassHitDieFilter extends BaseFilter {
+export class ClassHitDieFilter extends CheckboxFilter {
   static label = "PF1.HitDie";
   static type = "class";
   static indexField = "system.hd";
 }
 
-export class ClassBaseAttackBonusFilter extends BaseFilter {
+export class ClassBaseAttackBonusFilter extends CheckboxFilter {
   static label = "PF1.BAB";
   static type = "class";
   static indexField = "system.bab";
@@ -29,13 +29,13 @@ export class ClassBaseAttackBonusFilter extends BaseFilter {
   }
 }
 
-export class ClassSkillPointsFilter extends BaseFilter {
+export class ClassSkillPointsFilter extends CheckboxFilter {
   static label = "PF1.SkillsPerLevel";
   static type = "class";
   static indexField = "system.skillsPerLevel";
 }
 
-class ClassSavingThrowFilter extends BaseFilter {
+class ClassSavingThrowFilter extends CheckboxFilter {
   static type = "class";
   static savingThrow = "";
   static get label() {

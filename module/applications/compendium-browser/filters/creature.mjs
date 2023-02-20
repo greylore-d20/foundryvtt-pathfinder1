@@ -1,7 +1,7 @@
-import { BaseFilter } from "./base.mjs";
+import { CheckboxFilter } from "./checkbox.mjs";
 import { CR } from "@utils";
 
-export class CreatureCRFilter extends BaseFilter {
+export class CreatureCRFilter extends CheckboxFilter {
   static label = "PF1.ChallengeRatingShort";
   static indexField = "system.details.cr.base";
   static types = ["character", "npc"];

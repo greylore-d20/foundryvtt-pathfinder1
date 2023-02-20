@@ -1,7 +1,7 @@
-import { BaseFilter } from "./base.mjs";
-import { MinMaxFilter } from "./minmax.mjs";
+import { CheckboxFilter } from "./checkbox.mjs";
+import { NumberRangeFilter } from "./number-range.mjs";
 
-export class ItemTypeFilter extends BaseFilter {
+export class ItemTypeFilter extends CheckboxFilter {
   static label = "PF1.Type";
   static indexField = "type";
   static types = ["weapon", "equipment", "consumable", "container", "loot"];
@@ -20,7 +20,7 @@ export class ItemTypeFilter extends BaseFilter {
   }
 }
 
-export class WeaponTypeFilter extends BaseFilter {
+export class WeaponTypeFilter extends CheckboxFilter {
   static label = "PF1.WeaponType";
   static indexField = "system.subType";
   static type = "weapon";
@@ -31,7 +31,7 @@ export class WeaponTypeFilter extends BaseFilter {
   }
 }
 
-export class WeaponSubtypeFilter extends BaseFilter {
+export class WeaponSubtypeFilter extends CheckboxFilter {
   static label = "PF1.WeaponSubtype";
   static indexField = "system.weaponSubtype";
   static type = "weapon";
@@ -42,7 +42,7 @@ export class WeaponSubtypeFilter extends BaseFilter {
   }
 }
 
-export class WeaponPropertyFilter extends BaseFilter {
+export class WeaponPropertyFilter extends CheckboxFilter {
   static label = "PF1.WeaponProperties";
   static indexField = "system.properties";
   static type = "weapon";
@@ -53,7 +53,7 @@ export class WeaponPropertyFilter extends BaseFilter {
   }
 }
 
-export class WeaponGroupFilter extends BaseFilter {
+export class WeaponGroupFilter extends CheckboxFilter {
   static label = "PF1.WeaponGroups";
   static indexField = "system.weaponGroups.value";
   static type = "weapon";
@@ -64,7 +64,7 @@ export class WeaponGroupFilter extends BaseFilter {
   }
 }
 
-export class EquipmentSubtypeFilter extends BaseFilter {
+export class EquipmentSubtypeFilter extends CheckboxFilter {
   static label = "PF1.EquipmentSubtype";
   static indexField = "system.equipmentSubtype";
   static type = "equipment";
@@ -75,7 +75,7 @@ export class EquipmentSubtypeFilter extends BaseFilter {
   }
 }
 
-export class ItemSlotFilter extends BaseFilter {
+export class ItemSlotFilter extends CheckboxFilter {
   static label = "PF1.Slot";
   static indexField = "system.slot";
   static type = "equipment";
@@ -86,7 +86,7 @@ export class ItemSlotFilter extends BaseFilter {
   }
 }
 
-export class ConsumableTypeFilter extends BaseFilter {
+export class ConsumableTypeFilter extends CheckboxFilter {
   static label = "PF1.ConsumableType";
   static indexField = "system.subType";
   static type = "consumable";
@@ -97,7 +97,7 @@ export class ConsumableTypeFilter extends BaseFilter {
   }
 }
 
-export class MiscItemTypeFilter extends BaseFilter {
+export class MiscItemTypeFilter extends CheckboxFilter {
   static label = "PF1.Misc";
   static indexField = "system.subType";
   static type = "loot";
@@ -108,12 +108,12 @@ export class MiscItemTypeFilter extends BaseFilter {
   }
 }
 
-export class ItemPriceFilter extends MinMaxFilter {
+export class ItemPriceFilter extends NumberRangeFilter {
   static label = "PF1.Price";
   static indexField = "system.price";
 }
 
-export class ItemCasterLevelFilter extends MinMaxFilter {
+export class ItemCasterLevelFilter extends NumberRangeFilter {
   static label = "PF1.CasterLevel";
   static indexField = "system.cl";
 }

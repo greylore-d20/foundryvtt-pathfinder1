@@ -688,12 +688,8 @@ export class ItemPF extends ItemBasePF {
     this.memorizeVariables();
 
     const diff = diffObject(flattenObject(this.toObject()), data);
-    // Filter diff for undefined values. Single value depth with speed as priority
-    for (const [k, v] of Object.entries(diff)) {
-      if (v === undefined) delete diff[k];
-    }
 
-    if (Object.keys(diff).length && !context.skipUpdate) {
+    if (Object.keys(diff).length) {
       const parentItem = this.parentItem;
       if (parentItem == null) {
         await super.update(diff, context);
@@ -713,8 +709,6 @@ export class ItemPF extends ItemBasePF {
           await parentItem.update(diff);
         }
       }
-    } else if (context.skipUpdate) {
-      diff["_id"] = this.id;
     }
   }
 

@@ -673,9 +673,12 @@ export class ItemPF extends ItemBasePF {
         }
       } else {
         // Update charges for linked items
-        if (data["system.uses.value"] != null) {
+        const uses = data["system.uses.value"];
+        if (uses !== undefined) {
           if (link && link.links?.charges == null) {
-            await link.update({ "system.uses.value": data["system.uses.value"] });
+            await link.update({ "system.uses.value": uses });
+            // Remove updating current item's inherited value
+            delete data["system.uses.value"];
           }
         }
       }

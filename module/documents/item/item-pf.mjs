@@ -702,13 +702,13 @@ export class ItemPF extends ItemBasePF {
     }
 
     if (Object.keys(diff).length && !context.skipUpdate) {
-      if (this.parentItem == null) {
+      const parentItem = this.parentItem;
+      if (parentItem == null) {
         await super.update(diff, context);
       } else {
         // Determine item index to update in parent
-        const parentInventory = this.parentItem.system.inventoryItems || [];
-        const parentItem = parentInventory.find((o) => o._id === this.id);
-        const idx = parentInventory.indexOf(parentItem);
+        const parentInventory = parentItem.system.inventoryItems || [];
+        const idx = parentInventory.findIndex((item) => item._id === this.id);
 
         if (idx >= 0) {
           // Replace keys to suit parent item
@@ -718,7 +718,7 @@ export class ItemPF extends ItemBasePF {
           }
 
           // Update parent item
-          await this.parentItem.update(diff);
+          await parentItem.update(diff);
         }
       }
     } else if (context.skipUpdate) {

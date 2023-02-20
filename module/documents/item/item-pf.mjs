@@ -716,32 +716,6 @@ export class ItemPF extends ItemBasePF {
     } else if (context.skipUpdate) {
       diff["_id"] = this.id;
     }
-
-    // Update tokens and the actor using this item
-    const actor = this.parent;
-    if (actor) {
-      // Update tokens
-      const promises = [];
-      const tokens = canvas?.tokens?.placeables?.filter((token) => token.actor?.id === actor.id) ?? [];
-      for (const token of tokens) {
-        const tokenUpdateData = {};
-
-        // Update tokens with this item as a resource bar
-        if (diff["system.uses.value"] != null) {
-          for (const barKey of ["bar1", "bar2"]) {
-            const bar = token.document.getBarAttribute(barKey);
-            if (bar && bar.attribute === `resources.${this.system.tag}`) {
-              tokenUpdateData[`${barKey}.value`] = diff["system.uses.value"];
-            }
-          }
-        }
-
-        if (!foundry.utils.isEmpty(tokenUpdateData)) {
-          promises.push(token.document.update(tokenUpdateData));
-        }
-      }
-      if (promises.length) await Promise.all(promises);
-    }
   }
 
   memorizeVariables() {

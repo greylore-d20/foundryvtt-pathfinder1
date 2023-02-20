@@ -31,10 +31,10 @@ export class ActorRestDialog extends DocumentSheet {
    */
   async _updateObject(event, formData) {
     this.object.performRest({
-      restoreHealth: formData["restoreHealth"],
-      longTermCare: formData["longTermCare"],
-      restoreDailyUses: formData["restoreDailyUses"],
-      hours: formData["hours"],
+      restoreHealth: formData.restoreHealth,
+      longTermCare: formData.longTermCare,
+      restoreDailyUses: formData.restoreDailyUses,
+      hours: formData.hours,
     });
   }
 }

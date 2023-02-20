@@ -3986,6 +3986,160 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * Restore spellbook used slots and spellpoints.
+   *
+   * @param {object} [options]
+   * @param {boolean} [options.commit=true] If false, return update data object instead of directly updating the actor.
+   * @param {object} [options.rollData] Roll data
+   * @returns {Promise<this|object>} Result of update or the update data.
+   */
+  async resetSpellbookUsage({ commit = true, rollData } = {}) {
+    const actorData = this.system;
+    const updateData = {};
+
+    rollData ??= this.getRollData();
+
+    // Update spellbooks
+    for (const [bookId, spellbook] of Object.entries(actorData.attributes.spells.spellbooks)) {
+      // Restore spellbooks using spell points
+      if (spellbook.spellPoints.useSystem) {
+        // Try to roll restoreFormula, fall back to restoring max spell points
+        let restorePoints = spellbook.spellPoints.max;
+        if (spellbook.spellPoints.restoreFormula) {
+          const restoreRoll = RollPF.safeRoll(spellbook.spellPoints.restoreFormula, rollData);
+          if (restoreRoll.err) console.error(restoreRoll.err, spellbook.spellPoints.restoreFormula);
+          else restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll.total, spellbook.spellPoints.max);
+        }
+        updateData[`system.attributes.spells.spellbooks.${bookId}.spellPoints.value`] = restorePoints;
+      }
+      // Restore spell slots
+      else {
+        for (let level = 0; level < 10; level++) {
+          updateData[`system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`] =
+            spellbook.spells[`spell${level}`]?.max ?? 0;
+        }
+      }
+    }
+
+    if (commit) return this.update(updateData);
+    return updateData;
+  }
+
+  /**
+   * @param {object} [options] Additional options
+   * @param {boolean} [options.commit=true] If false, return update data object instead of directly updating the actor.
+   * @param {object} [options.updateData] Update data to complement or read changed values from.
+   * @returns {Promise<Item[]|object[]>} Result of an update or the update data.
+   */
+  async rechargeItems({ updateData = {}, commit = true } = {}) {
+    const actorData = this.system;
+    const itemUpdates = [];
+
+    // Get data at path, either from passed updateData or directly from actor
+    const getPathData = (path) => updateData[path] ?? getProperty(this, path);
+
+    // Update charged items
+    for (const item of this.items) {
+      const itemUpdate = {};
+      const itemData = item.system;
+
+      if (itemData.uses && itemData.uses.per === "day") {
+        // Skip already fully charged
+        if (itemData.uses.value === itemData.uses.max) continue;
+
+        itemUpdate["system.uses.value"] = itemData.uses.max;
+      } else if (item.type === "spell") {
+        const bookId = itemData.spellbook,
+          level = itemData.level;
+
+        const spellbook = getProperty(actorData, `attributes.spells.spellbooks.${bookId}`);
+
+        // Skip spells with missing spellbook
+        if (!spellbook) {
+          console.warn(`${item.name} [${item.id}] has invalid spellbook: "${bookId}"`);
+          continue;
+        }
+
+        // Spontaneous don't store casts in individual spells
+        if (spellbook.spontaneous) continue;
+
+        if (itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {
+          itemUpdate["system.preparation.preparedAmount"] = itemData.preparation.maxAmount;
+          itemUpdates.push(itemUpdate);
+        }
+        if (!item.system.domain) {
+          let sbUses = getPathData(`system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`) || 0;
+          sbUses -= itemData.preparation.maxAmount;
+          updateData[`system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`] = sbUses;
+        }
+      }
+
+      // Update charged actions
+      if (item.system.actions?.length > 0) {
+        const actions = deepClone(item.system.actions);
+        let _changed = false;
+        for (const actionData of actions) {
+          if (actionData.uses.self?.per === "day") {
+            const maxUses = actionData.uses.self.max || 0;
+            if (actionData.uses.self.value < maxUses) {
+              actionData.uses.self.value = maxUses;
+              _changed = true;
+            }
+          }
+        }
+
+        if (_changed) {
+          itemUpdate["system.actions"] = actions;
+        }
+      }
+
+      // Append update to queue
+      if (!foundry.utils.isEmpty(itemUpdate)) {
+        itemUpdate._id = item.id;
+        itemUpdates.push(itemUpdate);
+      }
+    }
+
+    if (commit) {
+      if (itemUpdates.length) return this.updateEmbeddedDocuments("Item", itemUpdates);
+    } else return itemUpdates;
+    return [];
+  }
+
+  /**
+   * Handler for character healing during rest.
+   *
+   * @param {object} options Resting options.
+   * @returns {object} Update data object
+   */
+  _restingHeal(options = {}) {
+    const actorData = this.system,
+      hp = actorData.attributes.hp;
+    const { hours, longTermCare } = options;
+    const updateData = {};
+
+    const hd = actorData.attributes.hd.total;
+    const heal = {
+      hp: hd,
+      abl: 1,
+      nonlethal: hours * hd,
+    };
+    if (longTermCare === true) {
+      heal.hp *= 2;
+      heal.abl *= 2;
+    }
+
+    updateData["system.attributes.hp.value"] = Math.min(hp.value + heal.hp, hp.max);
+    updateData["system.attributes.hp.nonlethal"] = Math.max(0, (hp.nonlethal || 0) - heal.nonlethal);
+    for (const [key, abl] of Object.entries(actorData.abilities)) {
+      const dmg = Math.abs(abl.damage);
+      updateData[`system.abilities.${key}.damage`] = Math.max(0, dmg - heal.abl);
+    }
+
+    return updateData;
+  }
+
+  /**
    * Perform all changes related to an actor resting, including restoring HP, ability scores, item uses, etc.
    *
    * @see {@link hookEvents!pf1PreActorRest pf1PreActorRest hook}
@@ -4000,109 +4154,17 @@ export class ActorPF extends ActorBasePF {
     const updateData = {};
     // Restore health and ability damage
     if (restoreHealth === true) {
-      const hd = actorData.attributes.hd.total;
-      const heal = {
-        hp: hd,
-        abl: 1,
-        nonlethal: hours * hd,
-      };
-      if (longTermCare === true) {
-        heal.hp *= 2;
-        heal.abl *= 2;
-      }
-
-      updateData["system.attributes.hp.value"] = Math.min(
-        actorData.attributes.hp.value + heal.hp,
-        actorData.attributes.hp.max
-      );
-      updateData["system.attributes.hp.nonlethal"] = Math.max(
-        0,
-        (actorData.attributes.hp.nonlethal || 0) - heal.nonlethal
-      );
-      for (const [key, abl] of Object.entries(actorData.abilities)) {
-        const dmg = Math.abs(abl.damage);
-        updateData[`system.abilities.${key}.damage`] = Math.max(0, dmg - heal.abl);
-      }
+      const healUpdate = this._restingHeal(options);
+      mergeObject(updateData, healUpdate);
     }
 
-    const itemUpdates = [];
+    let itemUpdates = [];
     // Restore daily uses of spells, feats, etc.
     if (restoreDailyUses === true) {
-      // Update spellbooks
-      for (const [bookId, spellbook] of Object.entries(actorData.attributes?.spells?.spellbooks ?? {})) {
-        for (let level = 0; level < 10; level++) {
-          updateData[`system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`] =
-            spellbook.spells[`spell${level}`]?.max || 0;
-        }
-      }
+      const spellbookUpdates = await this.resetSpellbookUsage({ commit: false });
+      mergeObject(updateData, spellbookUpdates);
 
-      // Update charged items
-      for (const item of this.items) {
-        const itemUpdate = {};
-        const itemData = item.system;
-
-        if (itemData.uses && itemData.uses.per === "day" && itemData.uses.value !== itemData.uses.max) {
-          itemUpdate["system.uses.value"] = itemData.uses.max;
-        } else if (item.type === "spell") {
-          const spellbook = actorData.attributes?.spells?.spellbooks?.[itemData.spellbook],
-            isSpontaneous = spellbook.spontaneous;
-          if (!isSpontaneous) {
-            if (itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {
-              itemUpdate["system.preparation.preparedAmount"] = itemData.preparation.maxAmount;
-              itemUpdates.push(itemUpdate);
-            }
-            if (!item.isDomain) {
-              let sbUses =
-                updateData[
-                  `system.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`
-                ] || 0;
-              sbUses -= itemData.preparation.maxAmount;
-              updateData[
-                `system.attributes.spells.spellbooks.${itemData.spellbook}.spells.spell${itemData.level}.value`
-              ] = sbUses;
-            }
-          }
-        }
-
-        // Update charged actions
-        if (item.system.actions?.length > 0) {
-          const actions = deepClone(item.system.actions);
-          let _changed = false;
-          for (const actionData of actions) {
-            if (actionData.uses.self?.per === "day") {
-              const maxUses = actionData.uses.self.max || 0;
-              if (actionData.uses.self.value < maxUses) {
-                actionData.uses.self.value = maxUses;
-                _changed = true;
-              }
-            }
-          }
-
-          if (_changed) {
-            itemUpdate["system.actions"] = actions;
-          }
-        }
-
-        // Append update to queue
-        if (!foundry.utils.isEmpty(itemUpdate)) {
-          itemUpdate._id = item.id;
-          itemUpdates.push(itemUpdate);
-        }
-      }
-
-      for (const [key, spellbook] of Object.entries(actorData.attributes.spells.spellbooks)) {
-        // Restore spellbooks using spell points
-        if (spellbook.spellPoints.useSystem) {
-          // Try to roll restoreFormula, fall back to restoring max spell points
-          let restorePoints = spellbook.spellPoints.max;
-          if (spellbook.spellPoints.restoreFormula) {
-            const restoreRoll = RollPF.safeRoll(spellbook.spellPoints.restoreFormula, this.getRollData());
-            if (restoreRoll.err) console.error(restoreRoll.err, spellbook.spellPoints.restoreFormula);
-            else restorePoints = Math.min(spellbook.spellPoints.value + restoreRoll.total, spellbook.spellPoints.max);
-          }
-          updateData[`system.attributes.spells.spellbooks.${key}.spellPoints.value`] = restorePoints;
-        }
-      }
+      itemUpdates = await this.rechargeItems({ commit: false, updateData });
     }
 
     options = { restoreHealth, restoreDailyUses, longTermCare, hours };

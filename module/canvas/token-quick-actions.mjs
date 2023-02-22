@@ -34,7 +34,7 @@ export class TokenQuickActions {
       else if (item.type === "feat") title = game.i18n.format("PF1.AttackWithFeat", { name: item.name });
       const type = item.type;
       quickActions +=
-        `<div id="${type}-${item.id}" class="control-icon token-quick-action" style="border: 2px solid ${i.color1};">` +
+        `<div id="${type}-${item.id}" class="control-icon token-quick-action type-${type}">` +
         `<img src="${icon}" width="36" height="36" title="${title}">`;
       quickActions += "</div >";
     });

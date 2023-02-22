@@ -1013,7 +1013,9 @@ const _migrateItemLinks = function (ent, updateData) {
         }
         updated = true;
       }
+    }
 
+    if (updated) {
       updateData[`system.links.${linkType}`] = links;
     }
   }

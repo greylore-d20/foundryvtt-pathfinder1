@@ -46,4 +46,26 @@ export class ItemLootPF extends ItemPF {
     if (this.subType === "gear") return this.system.equipped;
     return true;
   }
+
+  /**
+   * Make ammo count inherently as single use.
+   *
+   * @inheritdoc
+   * @override
+   */
+  get isSingleUse() {
+    return this.subType === "ammo" || super.isSingleUse;
+  }
+
+  /**
+   * Simplified addCharges for items that can't have charges.
+   *
+   * @inheritdoc
+   * @override
+   */
+  async addCharges(value) {
+    const quantity = this.system.quantity;
+    if (!Number.isFinite(quantity)) return;
+    return this.update({ "system.quantity": quantity + value });
+  }
 }

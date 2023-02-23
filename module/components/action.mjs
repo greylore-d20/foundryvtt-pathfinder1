@@ -1,10 +1,10 @@
 import { calculateRange, convertDistance } from "../utils/lib.mjs";
-import { getHighestChanges } from "../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../dice/roll.mjs";
 import { keepUpdateArray, createTag } from "../utils/lib.mjs";
 import { DamageRoll } from "../dice/damage-roll.mjs";
 import { D20RollPF } from "../dice/d20roll.mjs";
 import { getDistanceSystem } from "@utils";
+import { ItemChange } from "@component/change.mjs";
 
 export class ItemAction {
   constructor(data, parent) {
@@ -313,8 +313,7 @@ export class ItemAction {
     const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.actionType);
     const isWeapon = ["mwak", "rwak"].includes(this.data.actionType);
     const changes = this.parent.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
-    const highest = getHighestChanges(changes, { ignoreTarget: true });
-    return highest;
+    return ItemChange.getHighestChanges(changes);
   }
 
   getRollData() {
@@ -729,21 +728,13 @@ export class ItemAction {
         })
       );
     }
-    let changeBonus = [];
     // Get attack bonus
-    changeBonus = getHighestChanges(
+    const changeBonus = ItemChange.getHighestChanges(
       changes.filter((c) => {
-        c.applyChange(this.actor);
-        return !["set", "="].includes(c.operator);
-      }),
-      { ignoreTarget: true }
-    ).reduce((cur, c) => {
-      cur.push({
-        value: c.value,
-        source: c.flavor,
-      });
-      return cur;
-    }, []);
+        const { operator } = c.evaluate(rollData);
+        return operator === "add";
+      })
+    ).map((change) => ({ value: change.value, source: change.flavor }));
     for (const c of changeBonus) {
       parts.push(`${c.value}[${RollPF.cleanFlavor(c.source)}]`);
     }
@@ -936,12 +927,11 @@ export class ItemAction {
       }
 
       // Get damage bonus
-      getHighestChanges(
+      ItemChange.getHighestChanges(
         changes.filter((c) => {
-          c.applyChange(this.actor);
-          return !["set", "="].includes(c.operator);
-        }),
-        { ignoreTarget: true }
+          const { operator } = c.evaluate(rollData);
+          return operator === "add";
+        })
       ).forEach((c) => {
         let value = c.value;
         // Put in parenthesis if there's a chance it is more complex

@@ -49,6 +49,42 @@ export class ItemChange {
     };
   }
 
+  /**
+   * Determine the highest applicable changes from a given list of changes.
+   *
+   * @param {ItemChange[]} changes - An array containing all changes to check. All changes must have been evaluated already.
+   * @returns {ItemChange[]} A list of processed changes, excluding the lower-valued ones inserted (if they don't stack)
+   */
+  static getHighestChanges(changes) {
+    const getHighestTemplate = () => ({
+      value: 0,
+      ids: [],
+      highestID: null,
+    });
+    const highestByModifier = Object.keys(CONFIG.PF1.bonusModifiers).reduce((cur, modifier) => {
+      cur[modifier] = getHighestTemplate();
+      return cur;
+    }, {});
+
+    for (const change of changes) {
+      const highest = highestByModifier[change.modifier];
+
+      if (!highest) continue; // Ignore bad changes
+      highest.ids.push(change._id);
+      if (highest.value < change.value || !highest.highestID) {
+        highest.value = change.value;
+        highest.highestID = change._id;
+      }
+    }
+
+    return Object.entries(highestByModifier)
+      .flatMap(([modifier, highest]) => {
+        if (CONFIG.PF1.stackingBonusModifiers.includes(modifier)) return highest.ids;
+        else return highest.highestID ? [highest.highestID] : [];
+      })
+      .map((id) => changes.find((change) => change._id === id));
+  }
+
   get id() {
     return this.data._id;
   }
@@ -137,6 +173,52 @@ export class ItemChange {
   }
 
   /**
+   * Evaluate this change.
+   *
+   * @param {object} [rollData=null] - Roll data to use for the evaluation.
+   * @returns {{value: number, operator: "add" | "set"}} The resulting value and the operator to use for an actor's `changeOverrides`.
+   */
+  evaluate(rollData = null) {
+    rollData ??= this.parent?.getRollData({ refresh: true }) ?? {};
+
+    let value = 0;
+
+    let operator = this.operator;
+    if (operator === "+") operator = "add";
+    if (operator === "=") operator = "set";
+
+    if (this.formula) {
+      if (operator === "script") {
+        if (!game.settings.get("pf1", "allowScriptChanges")) {
+          ui.notifications?.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), { console: false });
+          console.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), this.parent);
+          value = 0;
+          operator = "add";
+        } else {
+          const fn = this.createFunction(this.formula, ["d", "item"]);
+          const result = fn(rollData, this.parent);
+          value = result.value;
+          operator = result.operator;
+        }
+      } else if (operator === "function") {
+        value = this.formula(rollData, this.parent);
+        operator = "add";
+      } else if (!isNaN(this.formula)) {
+        value = parseFloat(this.formula);
+      } else if (this.isDeferred) {
+        value = RollPF.replaceFormulaData(this.formula, rollData, { missing: 0 });
+      } else {
+        value = RollPF.safeRoll(this.formula, rollData, [this, rollData], {
+          suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
+        }).total;
+      }
+    }
+
+    this.data.value = value;
+    return { value, operator };
+  }
+
+  /**
    * Applies this change to an actor.
    *
    * @param {ActorPF} actor - The actor to apply the change's data to.
@@ -152,60 +234,28 @@ export class ItemChange {
     }
 
     const rollData = this.parent ? this.parent.getRollData({ refresh: true }) : actor.getRollData({ refresh: true });
+    const { value, operator } = this.evaluate(rollData);
 
     const overrides = actor.changeOverrides;
-    for (const t of targets) {
-      const override = overrides[t];
-      let operator = this.operator;
-      if (operator === "+") operator = "add";
-      if (operator === "=") operator = "set";
+    for (const target of targets) {
+      const override = overrides[target];
 
-      const modifierChanger = t != null ? t.match(/^system\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/) : null;
+      const modifierChanger =
+        target != null ? target.match(/^system\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/) : null;
       const isModifierChanger = modifierChanger != null;
       const abilityTarget = modifierChanger?.[1];
       const ability = isModifierChanger ? deepClone(actor.system.abilities[abilityTarget]) : null;
 
-      let value = 0;
-      if (this.formula) {
-        if (operator === "script") {
-          if (!game.settings.get("pf1", "allowScriptChanges")) {
-            ui.notifications?.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), { console: false });
-            console.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), this.parent);
-            value = 0;
-            operator = "add";
-          } else {
-            const fn = this.createFunction(this.formula, ["d", "item"]);
-            const result = fn(rollData, this.parent);
-            value = result.value;
-            operator = result.operator;
-          }
-        } else if (operator === "function") {
-          value = this.formula(rollData, this.parent);
-          operator = "add";
-        } else if (!isNaN(this.formula)) {
-          value = parseFloat(this.formula);
-        } else if (this.isDeferred) {
-          value = RollPF.replaceFormulaData(this.formula, rollData, { missing: 0 });
-        } else {
-          value = RollPF.safeRoll(this.formula, rollData, [t, this, rollData], {
-            suppressError: this.parent && !this.parent.testUserPermission(game.user, "OWNER"),
-          }).total;
-        }
-      }
-
-      this.data.value = value;
-
-      if (!t) continue;
       const prior = override[operator][this.modifier];
 
       switch (operator) {
         case "add":
           {
-            let base = getProperty(actor, t);
+            let base = getProperty(actor, target);
 
             // Don't change non-existing ability scores
             if (base == null) {
-              if (t.match(/^system\.abilities/)) continue;
+              if (target.match(/^system\.abilities/)) continue;
               base = 0;
             }
 
@@ -215,12 +265,12 @@ export class ItemChange {
             if (typeof base === "number") {
               if (CONFIG.PF1.stackingBonusModifiers.includes(this.modifier)) {
                 // Add stacking bonus
-                setProperty(actor, t, base + value);
+                setProperty(actor, target, base + value);
                 override[operator][this.modifier] = (prior ?? 0) + value;
               } else {
                 // Use higher value only
                 const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
-                setProperty(actor, t, base + diff);
+                setProperty(actor, target, base + diff);
                 override[operator][this.modifier] = Math.max(prior ?? 0, value);
               }
             }
@@ -228,7 +278,7 @@ export class ItemChange {
           break;
 
         case "set":
-          setProperty(actor, t, value);
+          setProperty(actor, target, value);
           override[operator][this.modifier] = value;
           break;
       }

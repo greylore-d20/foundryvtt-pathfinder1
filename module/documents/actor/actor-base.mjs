@@ -32,4 +32,11 @@ export class ActorBasePF extends Actor {
     if (!this._visionPermissionSheet) this._visionPermissionSheet = new VisionPermissionSheet(this);
     return this._visionPermissionSheet;
   }
+
+  /**
+   * @override
+   */
+  applyActiveEffects() {
+    // By not calling super we deny active effect modification.
+  }
 }

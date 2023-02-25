@@ -8,7 +8,8 @@ import { getDistanceSystem } from "@utils";
 
 export class ItemAction {
   constructor(data, parent) {
-    this.data = data;
+    this.data = mergeObject(ItemAction.defaultData, data);
+
     /** @type {import("../documents/item/item-pf.mjs").ItemPF} */
     this.parent = parent;
     this.apps = {};
@@ -440,8 +441,6 @@ export class ItemAction {
     if (this.data.conditionals instanceof Array) {
       this.conditionals = this._prepareConditionals(this.data.conditionals);
     }
-
-    this.data.uses ??= {};
 
     // Prepare max personal charges
     if (this.data.uses.self?.per) {

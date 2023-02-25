@@ -341,10 +341,11 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
  * @param item
  */
 const _migrateActionRange = (action, item) => {
-  if (action.range?.value !== undefined) {
-    if (typeof action.range.value !== "string") {
-      action.range.value = String(action.range.value);
-    }
+  const range = action.range?.value;
+  if (range === null || range === "") {
+    delete action.range.value;
+  } else if (range !== undefined && typeof range !== "string") {
+    action.range.value = String(range);
   }
 };
 

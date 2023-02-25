@@ -441,6 +441,8 @@ export class ItemAction {
       this.conditionals = this._prepareConditionals(this.data.conditionals);
     }
 
+    this.data.uses ??= {};
+
     // Prepare max personal charges
     if (this.data.uses.self?.per) {
       const maxFormula = this.data.uses.self.per === "single" ? "1" : this.data.uses.self.maxFormula;

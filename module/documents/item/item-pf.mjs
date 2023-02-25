@@ -776,9 +776,9 @@ export class ItemPF extends ItemBasePF {
       // Call 'toggle' script calls
       {
         let state = null;
-        if (this.type === "buff") state = changed.system.active;
-        if (this.type === "feat" && hasProperty(changed, "system.disabled"))
-          state = changed.system?.disabled === true ? false : true;
+        if (this.type === "buff") state = changed.system?.active;
+        else if (this.type === "feat" && changed.system?.disabled !== undefined)
+          state = changed.system.disabled === true ? false : true;
         if (state != null) {
           this.executeScriptCalls("toggle", { state });
         }

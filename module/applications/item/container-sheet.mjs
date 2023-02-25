@@ -305,14 +305,16 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }, []);
 
     // Organize Inventory
+    const usystem = getWeightSystem();
+    const units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
     for (const i of items) {
       const subType = i.type === "loot" ? i.system.subType || "gear" : i.system.subType;
-      i.system.quantity = i.system.quantity || 0;
+      i.system.quantity ??= 0;
       i.totalWeight = Math.roundDecimals(i.document.system.weight.converted.total, 2);
-      const usystem = getWeightSystem();
-      i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
+      i.units = units;
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
-      if (subType != null && inventory[subType] != null) inventory[subType].items.push(i);
+      // Only loot has subType specific sections
+      if (i.type === "loot") inventory[subType]?.items.push(i);
     }
 
     data.inventory = Object.values(inventory);

@@ -158,6 +158,7 @@ globalThis.pf1 = moduleToObject({
   documents,
   migrations,
   registry,
+  /** @type {TooltipPF|null} */
   tooltip: null,
   utils,
 });

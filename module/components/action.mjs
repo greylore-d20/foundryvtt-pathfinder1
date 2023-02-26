@@ -487,7 +487,8 @@ export class ItemAction {
   }
 
   async update(updateData, options = {}) {
-    const idx = this.item.system.actions.indexOf(this.data);
+    const idx = this.item.system.actions.findIndex((action) => action._id === this.id);
+    if (idx < 0) throw new Error(`Action ${this.id} not found on item.`);
     const prevData = deepClone(this.data);
     const newUpdateData = flattenObject(mergeObject(prevData, expandObject(updateData)));
 

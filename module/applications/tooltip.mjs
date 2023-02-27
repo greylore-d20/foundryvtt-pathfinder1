@@ -16,6 +16,11 @@ export class TooltipPF extends Application {
 
     this.forceHideGMInfo = false;
     this.forceHide = false;
+    this.sticky = false;
+    /**
+     * Has stickied tooltip. Prevent replacing tooltip.
+     */
+    this.stickied = false;
 
     this.lock = {
       new: false,
@@ -56,17 +61,25 @@ export class TooltipPF extends Application {
 
   bind(object) {
     if (this.lock.new) return;
+    // If already stickied, don't replace it unless new sticky is tried.
+    if (this.stickied && !this.sticky) return;
     this.object = object;
+    if (this.sticky) this.stickied = true;
     this.render(true);
   }
 
   unbind(object) {
     if (this.lock.old) return;
+    // Sticky current tooltip. Don't track current state fully to avoid being far too sensitive about it.
+    if (this.sticky) this.stickied = true;
+    // Keep stickied tooltips
+    if (this.stickied) return;
     this.object = null;
     this.hide();
   }
 
   clearBind() {
+    this.stickied = false;
     this.object = null;
     this.hide();
   }
@@ -287,6 +300,11 @@ export class TooltipPF extends Application {
     if (this.config.disable === true || this.worldConfig.disable === true) return;
 
     if (!game.user.isGM && this.object.document.disposition === CONST.TOKEN_DISPOSITIONS.SECRET) return;
+
+    // Ensure tooltip is stickied
+    if (this.sticky) this.stickied = true;
+
+    this.element[0].classList.toggle("sticky", this.stickied);
 
     this.element.css("visibility", "visible");
   }

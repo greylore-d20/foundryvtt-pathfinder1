@@ -26,7 +26,7 @@ export const registerSystemControls = () => {
 
   game.keybindings.register("pf1", "forceShowItem", {
     name: "PF1.KEYBINDINGS.ForceShowItem.Name",
-    hint: game.i18n.localize("PF1.KEYBINDINGS.ForceShowItem.Hint"),
+    hint: "PF1.KEYBINDINGS.ForceShowItem.Hint",
     uneditable: CTRL_KEYS,
     onDown: () => {
       pf1.forceShowItem = true;
@@ -38,7 +38,7 @@ export const registerSystemControls = () => {
 
   game.keybindings.register("pf1", "hideTokenTooltip", {
     name: "PF1.KEYBINDINGS.HideTokenTooltip.Name",
-    hint: game.i18n.localize("PF1.KEYBINDINGS.HideTokenTooltip.Hint"),
+    hint: "PF1.KEYBINDINGS.HideTokenTooltip.Hint",
     uneditable: CTRL_KEYS,
     onDown: () => pf1.documents.controls._hideTokenTooltip(true),
     onUp: () => pf1.documents.controls._hideTokenTooltip(false),
@@ -51,6 +51,13 @@ export const registerSystemControls = () => {
     onDown: () => pf1.documents.controls._hideTokenTooltipGMInfo(true),
     onUp: () => pf1.documents.controls._hideTokenTooltipGMInfo(false),
   });
+
+  game.keybindings.register("pf1", "stickyTokenTooltip", {
+    name: "PF1.KEYBINDINGS.StickyTokenTooltip.Name",
+    hint: "PF1.KEYBINDINGS.StickyTokenTooltip.Hint",
+    onDown: () => pf1.documents.controls._stickyTokenTooltip(true),
+    onUp: () => pf1.documents.controls._stickyTokenTooltip(false),
+  });
 };
 
 /**
@@ -62,7 +69,12 @@ export const registerSystemControls = () => {
 export const _hideTokenTooltipGMInfo = (keyDown) => {
   if (!pf1.tooltip) return;
   pf1.tooltip.forceHideGMInfo = keyDown;
-  return pf1.tooltip?.refresh();
+  pf1.tooltip?.refresh();
+};
+
+export const _stickyTokenTooltip = (stickify) => {
+  if (!pf1.tooltip) return;
+  pf1.tooltip.sticky = stickify;
 };
 
 /**
@@ -75,5 +87,5 @@ export const _hideTokenTooltip = (keyDown) => {
   if (!pf1.tooltip) return;
   if (game.settings.get("pf1", "tooltipConfig")?.hideWithoutKey === true) pf1.tooltip.forceHide = !keyDown;
   else pf1.tooltip.forceHide = keyDown;
-  return pf1.tooltip?.refresh();
+  pf1.tooltip?.refresh();
 };

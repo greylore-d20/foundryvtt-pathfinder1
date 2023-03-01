@@ -1645,6 +1645,11 @@ const _migrateItemUnusedData = (item, updateData) => {
     updateData["system.description.-=chat"] = null;
   }
 
+  // .identifiedName was made obsolete with 0.82.6
+  if (item.system.identifiedName !== undefined) {
+    updateData["system.-=identifiedName"] = null;
+  }
+
   // Creating items in containers added typeName for no reason (in 0.82.5 and older)
   if (item.system.typeName !== undefined) {
     updateData["system.-=typeName"] = null;

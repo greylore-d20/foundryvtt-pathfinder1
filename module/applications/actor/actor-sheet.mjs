@@ -257,8 +257,7 @@ export class ActorSheetPF extends ActorSheet {
       );
       i.sort = item.sort;
       i.showUnidentifiedData = item.showUnidentifiedData;
-      if (i.showUnidentifiedData) i.name = item.system.unidentified?.name || item.system.identifiedName || item.name;
-      else i.name = item.system.identifiedName || item.name;
+      i.name = item.name;
       return i;
     });
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -2031,9 +2030,6 @@ export class ActorSheetPF extends ActorSheet {
 
     delete data.id;
     data.name = `${data.name} (Copy)`;
-    if (item.isPhysical) {
-      data.identifiedName = data.name;
-    }
     if (data.system.links?.children) delete data.system.links.children;
 
     this.document.createEmbeddedDocuments("Item", [data]);

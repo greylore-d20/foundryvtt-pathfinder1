@@ -1,14 +1,14 @@
 {{#if isGM}}
 <div class="flexcol">
   <h3 class="itemname">
-    <input name="name" type="text" value="{{ item.name }}" placeholder="{{localize 'PF1.ItemName'}}" />
+    <input name="name" type="text" value="{{name}}" placeholder="{{localize 'PF1.ItemName'}}" />
   </h3>
   <!-- <div class="flex-break"></div>-->
   <h3 class="itemname">
     <input
       name="system.unidentified.name"
       type="text"
-      value="{{ system.unidentified.name }}"
+      value="{{system.unidentified.name}}"
       placeholder="{{localize 'PF1.UnidentifiedName'}}"
     />
   </h3>
@@ -16,11 +16,11 @@
 {{else}}
 {{#if showUnidentifiedData}}
 <h1 class="itemname">
-  <input name="system.unidentified.name" type="text" value="{{ itemName }}" placeholder="{{localize 'PF1.ItemName'}}" />
+  <input name="system.unidentified.name" type="text" value="{{name}}" placeholder="{{localize 'PF1.ItemName'}}" />
 </h1>
 {{else}}
 <h1 class="itemname">
-  <input name="name" type="text" value="{{ itemName }}" placeholder="{{localize 'PF1.ItemName'}}" />
+  <input name="name" type="text" value="{{name}}" placeholder="{{localize 'PF1.ItemName'}}" />
 </h1>
 {{/if}}
 {{/if}}

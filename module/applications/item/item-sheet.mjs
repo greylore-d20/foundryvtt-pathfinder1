@@ -181,12 +181,7 @@ export class ItemSheetPF extends ItemSheet {
       }),
     };
 
-    // Unidentified data
-    if (item.showUnidentifiedData) {
-      context.itemName = item.system.unidentified.name || item.system.identifiedName || item.name;
-    } else {
-      context.itemName = item.system.identifiedName || item.name;
-    }
+    context.name = item.name;
 
     // Override description attributes
     if (context.isPhysical) {

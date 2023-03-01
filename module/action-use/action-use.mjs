@@ -845,9 +845,7 @@ export class ActionUse {
       this.item.parentActor?.token ??
       canvas.tokens?.placeables.find((t) => t.actor && t.actor.id === this.item.parentActor?.id);
     const identified = Boolean(this.shared.rollData.item?.identified ?? true);
-    const name = identified
-      ? `${this.shared.rollData.item.identifiedName || this.item.name} (${this.shared.action.name})`
-      : this.shared.rollData.item.unidentified?.name || this.item.name;
+    const name = identified ? `${this.item.name} (${this.shared.action.name})` : this.item.getName(true);
     this.shared.templateData = mergeObject(
       this.shared.templateData,
       {
@@ -941,7 +939,7 @@ export class ActionUse {
     if (!identified)
       this.shared.chatData["flags.pf1.identifiedInfo"] = {
         identified,
-        name: this.item.name,
+        name: this.item._source.name || this.item.name,
         description: itemChatData.identifiedDescription,
         actionName: this.shared.action.name,
         actionDescription: itemChatData.actionDescription,

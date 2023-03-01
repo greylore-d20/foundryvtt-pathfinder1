@@ -6,7 +6,7 @@ export class ItemDirectoryPF extends ItemDirectory {
    */
   static get defaultOptions() {
     const options = super.defaultOptions;
-    options.renderUpdateKeys.push("system.identifiedName", "system.unidentified.name", "system.identified");
+    options.renderUpdateKeys.push("system.unidentified.name", "system.identified");
     return options;
   }
 

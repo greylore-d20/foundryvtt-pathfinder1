@@ -262,9 +262,8 @@ export class ItemPF extends ItemBasePF {
   }
 
   getName(forcePlayerPerspective = false) {
-    if (game.user.isGM && !forcePlayerPerspective) return this.name;
-    if (this.system.identified === false && this.system.unidentified?.name) {
-      return this.system.unidentified.name;
+    if (game.user.isGM && forcePlayerPerspective) {
+      if (this.system.identified === false) return this.system.unidentified?.name || this.name;
     }
     return this.name;
   }
@@ -436,16 +435,9 @@ export class ItemPF extends ItemBasePF {
     super.prepareDerivedData();
 
     // Physical items
-    if (this.isPhysical) {
-      // Sync name
-      if (this.system.identifiedName === undefined) this.system.identifiedName = this.name;
-      if (this.showUnidentifiedData) {
-        // Set unidentified name for players
-        const unidentifiedName = this.system.unidentified.name;
-        if (unidentifiedName) this.system.name = unidentifiedName;
-        // Set unidentified description for players
-        this.system.description.value = this.system.description.unidentified;
-      }
+    if (this.isPhysical && this.showUnidentifiedData) {
+      // Set unidentified description for players
+      this.system.description.value = this.system.description.unidentified;
     }
   }
 
@@ -454,7 +446,7 @@ export class ItemPF extends ItemBasePF {
     if (this.showUnidentifiedData) {
       this.name = this.system.unidentified?.name || this._source.name;
     } else {
-      this.name = this.system.identifiedName || this._source.name;
+      this.name = this._source.name;
     }
 
     const itemData = this.system;
@@ -650,10 +642,6 @@ export class ItemPF extends ItemBasePF {
     if (data["system.unidentified.basePrice"] != null) {
       linkData(srcData, data, "system.unidentified.price", srcData.system.unidentified?.basePrice || 0);
     }
-
-    // Update name
-    if (data["system.identifiedName"]) linkData(srcData, data, "name", data["system.identifiedName"]);
-    else if (data["name"]) linkData(srcData, data, "system.identifiedName", data["name"]);
 
     // Make sure charges doesn't exceed max charges, and vice versa
     if (this.isCharged) {
@@ -926,7 +914,7 @@ export class ItemPF extends ItemBasePF {
       hasAction: this.hasAction,
       isVersatile: this.isVersatile,
       isSpell: this.type === "spell",
-      name: (identified ? rollData.identifiedName : rollData.item.unidentified?.name) || this.name,
+      name: this.getName(true),
       description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
       rollData: rollData,
       hasExtraProperties: false,
@@ -939,7 +927,7 @@ export class ItemPF extends ItemBasePF {
     if (identified === false) {
       pfFlags.identifiedInfo = {
         identified,
-        name: rollData.identifiedName || this.name,
+        name: this._source.name,
         description: itemChatData.identifiedDescription,
       };
     }

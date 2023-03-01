@@ -88,9 +88,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       data.hasEffect = item.hasEffect;
       data.hasAction = item.hasAction || item.isCharged;
       data.showUnidentifiedData = item.showUnidentifiedData;
-      if (item.showUnidentifiedData)
-        data.name = item.system.unidentified?.name || item.system.identifiedName || item.name;
-      else data.name = item.system.identifiedName || item.name;
+      data.name = item.name;
       return cur;
     }, []);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -580,8 +578,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     delete data._id;
     data.name = `${data.name} (${game.i18n.localize("PF1.Copy")})`;
-    if (item.isPhysical) {
-      data.identifiedName = `${item.data.identifiedName} (${game.i18n.localize("PF1.Copy")})`;
+    if (item.isPhysical && !item.system.identified) {
+      data.system.unidentified.name = `${item.system.unidentified.name} (${game.i18n.localize("PF1.Copy")})`;
     }
     if (data.system.links?.children) delete data.system.links.children;
 

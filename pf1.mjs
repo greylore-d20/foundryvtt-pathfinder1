@@ -858,29 +858,33 @@ Hooks.on("createItem", (item, options, userId) => {
 });
 
 Hooks.on("preDeleteItem", (item, options, userId) => {
-  if (item.actor) {
-    // Remove linked children with item
-    const _getChildren = function (item) {
-      const result = [];
-      const itemLinks = item.system.links;
-      if (itemLinks) {
-        for (const [linkType, links] of Object.entries(itemLinks)) {
-          for (const link of links) {
-            if (linkType === "children") {
-              const child = item.actor.items.get(link.id);
-              result.push(link.id);
-              if (child) {
-                const childChildren = _getChildren(child);
-                result.push(...childChildren);
-              }
-            }
-          }
-        }
-      }
-      return result;
-    };
+  if (!item.actor) return;
+  if (options.handledChildren) return;
 
-    const children = _getChildren(item);
+  const visited = new Set();
+
+  // Remove linked children with item
+  const _getChildren = (item) => {
+    if (visited.has(item.id)) return [];
+    visited.add(item.id);
+
+    const result = [];
+    const links = item.system.links?.children ?? [];
+    for (const link of links) {
+      if (visited.has(link.id)) continue;
+
+      const child = item.actor.items.get(link.id);
+      if (child) {
+        result.push(child.id);
+        result.push(..._getChildren(child));
+      }
+    }
+    return result;
+  };
+
+  const children = _getChildren(item);
+
+  if (children.length > 0) {
     const toRemove = [item.id, ...children]
       .reduce((cur, o) => {
         if (!cur.includes(o)) cur.push(o);
@@ -888,13 +892,8 @@ Hooks.on("preDeleteItem", (item, options, userId) => {
       }, [])
       .filter((o) => item.actor.items.has(o));
 
-    if (children.length > 0 && !options.handledChildren) {
-      CONFIG.Item.documentClass.deleteDocuments(toRemove, {
-        parent: item.actor,
-        handledChildren: true,
-      });
-      return false;
-    }
+    item.actor.deleteEmbeddedDocuments("Item", toRemove, { handledChildren: true });
+    return false;
   }
 });
 

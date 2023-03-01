@@ -1,39 +1,36 @@
 {
-  "_id": "um0zanw53vf4m7sn",
-  "name": "Oath of Justice",
+  "name": "Peacemaker’s Parley",
   "type": "spell",
   "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "sort": 0,
-  "flags": {},
   "system": {
     "tags": [],
     "actions": [
       {
-        "_id": "krizjjk377i3p9i5",
+        "_id": "ViNC6KbpJ4yAIFmt",
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "tag": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "swift"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 2,
+            "cost": 1,
             "type": "action"
           }
         },
         "duration": {
-          "value": "permanent (see text)",
+          "value": "instantaneous",
           "units": ""
         },
         "target": {
-          "value": "two creatures touched"
+          "value": ""
         },
         "range": {
           "value": null,
-          "units": "touch",
+          "units": "close",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -43,22 +40,19 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
-          },
-          "per": "",
-          "value": 0,
-          "maxFormula": ""
+            "per": ""
+          }
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "",
+        "actionType": "spellsave",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -78,22 +72,22 @@
         },
         "formula": "",
         "ability": {
-          "attack": "",
+          "attack": null,
           "damage": "",
           "damageMult": 1,
           "critRange": 20,
           "critMult": 2
         },
         "save": {
-          "dc": "0",
-          "type": "",
-          "description": ""
+          "dc": "",
+          "type": "will",
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
-          "multiplier": "",
+          "multiplier": null,
           "damageBonus": 2,
           "critMultiplier": 1
         },
@@ -105,9 +99,10 @@
           }
         },
         "nonlethal": false,
+        "touch": false,
         "usesAmmo": false,
         "spellEffect": "",
-        "spellArea": "",
+        "spellArea": "creatures in a 20-ft.-radius spread",
         "conditionals": [],
         "enh": {
           "value": null
@@ -115,7 +110,6 @@
       }
     ],
     "uses": {
-      "per": "",
       "autoDeductChargesCost": ""
     },
     "attackNotes": [],
@@ -126,24 +120,26 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        ["cleric", 3],
-        ["oracle", 3],
-        ["paladin", 2]
+        ["cleric", 2],
+        ["oracle", 2],
+        ["warpriest", 2]
       ],
       "domain": [],
       "subDomain": [],
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 3,
-    "school": "nec",
+    "level": 2,
+    "school": "enc",
+    "subschool": "charm",
     "components": {
       "verbal": true,
-      "somatic": true,
-      "divineFocus": 1
+      "somatic": true
     },
     "spellbook": "",
-    "sr": false,
-    "shortDescription": "<p><em>Editor's Note:</em> In order to prepare this spell, the caster must spend an hour performing a ritual in which he beseeches <strong>Kols</strong>. Further details can be found in <em>Pathfinder Companion: Dwarves of Golarion.</em></p><p>This spell seals a solemn vow between two creatures. When this spell is cast, the targets must clasp hands and swear their oath in Kols's name. The spell functions like @Compendium[pf1.spells.3jaumkutti1ytulq]{mark of justice}, except as noted above and rather than being cursed, the oath-breaker gains a mark on the face indicating to all dwarves who see it that the target has broken a sacred oath, which gives the oath-breaker a -4 penalty to influence dwarves. The mark can be removed as described in the <em>mark of justice</em> spell, or the other target can forgive the oath-breaker, which causes the mark to vanish.</p>"
-  }
+    "shortDescription": "<p><em>Editor's Note:</em> In order to prepare this spell, the caster must spend an hour performing a ritual in which he beseeches <strong>Grundinnar</strong>. Further details can be found in <em>Pathfinder Companion: Dwarves of Golarion.</em></p><p>You can attempt to influence unfriendly or hostile creatures, altering their attitudes toward you. After casting, make a Diplomacy check against the creatures as a free action; you gain a +2 sacred bonus on this check against creatures that failed their saves against the spell. Even if you favorably manipulate the attitude of the affected targets, they quickly revert to their previous attitude if threatened or treated poorly.</p>"
+  },
+  "flags": {},
+  "sort": 0,
+  "_id": "qCB83zX3N4F9mY5R"
 }

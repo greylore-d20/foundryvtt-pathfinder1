@@ -1,35 +1,32 @@
 {
-  "_id": "iHZBsGfMXQj74Wud",
-  "name": "Debilitating Speech",
+  "name": "Litany of Order",
   "type": "spell",
-  "img": "icons/skills/social/intimidation-impressing.webp",
-  "sort": 0,
-  "flags": {},
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
   "system": {
     "tags": [],
     "actions": [
       {
-        "_id": "tfrzzfnlgin52afh",
+        "_id": "lTcwa1a0UruhxOnD",
         "name": "Use",
-        "img": "icons/skills/social/intimidation-impressing.webp",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "tag": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "swift"
         },
         "unchainedAction": {
           "activation": {
             "cost": 1,
-            "type": ""
+            "type": "action"
           }
         },
         "duration": {
-          "value": "1 round/level",
+          "value": "1 round",
           "units": ""
         },
         "target": {
-          "value": "1 or more living creatures/level, no two of which may be more than 30 feet apart"
+          "value": "one creature"
         },
         "range": {
           "value": null,
@@ -39,15 +36,12 @@
           "minUnits": ""
         },
         "uses": {
-          "autoDeductChargesCost": "1 + @sl",
+          "autoDeductChargesCost": "",
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
-          },
-          "per": null,
-          "value": 0,
-          "maxFormula": ""
+            "per": ""
+          }
         },
         "measureTemplate": {
           "type": "",
@@ -85,7 +79,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "",
           "type": "will",
           "description": "Will negates"
         },
@@ -93,7 +87,7 @@
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
-          "multiplier": "",
+          "multiplier": null,
           "damageBonus": 2,
           "critMultiplier": 1
         },
@@ -105,6 +99,7 @@
           }
         },
         "nonlethal": false,
+        "touch": false,
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
@@ -125,22 +120,26 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        ["arcanist", 4],
-        ["sorcerer/wizard", 4]
+        ["inquisitor", 3],
+        ["paladin", 2]
       ],
       "domain": [],
       "subDomain": [],
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 4,
-    "school": "enc",
-    "types": "language-dependent, mind-affecting",
+    "level": 2,
+    "school": "evo",
+    "types": "lawful, language-dependent",
     "components": {
       "verbal": true,
-      "somatic": true
+      "somatic": true,
+      "divineFocus": 1
     },
     "spellbook": "",
-    "shortDescription": "<p>By speaking eloquently on the subject of your opponents’ ineptitude in combat, past failures, personal hygiene, or other faults, you sap their will to fight.</p><p>This spell can be cast as a standard action or as a full-round action. If cast as a standard action, it takes effect in 1d4 rounds following the spell’s casting. If cast as a full-round action, it takes effect 1 round after its casting. Enemies with 4 Hit Dice or fewer are @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.nGTsTfpWcJTTU3rk]{panicked}, enemies with 5–8 Hit Dice are @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.eNW5geiJqrnAjjNu]{cowering}, and enemies with more than 8 Hit Dice are @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.XxLUswkCuXnXmA5T]{shaken}.</p>"
-  }
+    "shortDescription": "<p>By shouting a forceful litany of strictures, you make a chaotic creature more susceptible to the attacks of lawful creatures. If the target is chaotic, it takes double the normal damage from attacks made by creatures that have a lawful aura from a class feature or by creatures that have the lawful subtype. If the target also has the chaotic subtype, when it is hit with attacks made by creatures with a lawful aura, it is also sickened for 1 round. If this spell targets a nonchaotic creature (or one that lacks the chaotic subtype), it has no effect and the spell is wasted. While subject to this spell, the target cannot be the target of another spell that has the word “litany” in the title.</p>"
+  },
+  "flags": {},
+  "sort": 0,
+  "_id": "DPKSnxvgdYVIsGpN"
 }

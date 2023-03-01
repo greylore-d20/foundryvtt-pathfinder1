@@ -1,53 +1,47 @@
 {
-  "_id": "iHZBsGfMXQj74Wud",
-  "name": "Debilitating Speech",
+  "name": "Litany of Duty",
   "type": "spell",
-  "img": "icons/skills/social/intimidation-impressing.webp",
-  "sort": 0,
-  "flags": {},
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
   "system": {
     "tags": [],
     "actions": [
       {
-        "_id": "tfrzzfnlgin52afh",
+        "_id": "lTcwa1a0UruhxOnD",
         "name": "Use",
-        "img": "icons/skills/social/intimidation-impressing.webp",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
         "description": "",
         "tag": "",
         "activation": {
           "cost": 1,
-          "type": "standard"
+          "type": "immediate"
         },
         "unchainedAction": {
           "activation": {
             "cost": 1,
-            "type": ""
+            "type": "reaction"
           }
         },
         "duration": {
-          "value": "1 round/level",
+          "value": "instantaneous",
           "units": ""
         },
         "target": {
-          "value": "1 or more living creatures/level, no two of which may be more than 30 feet apart"
+          "value": "you"
         },
         "range": {
           "value": null,
-          "units": "close",
+          "units": "personal",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
         },
         "uses": {
-          "autoDeductChargesCost": "1 + @sl",
+          "autoDeductChargesCost": "",
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
-          },
-          "per": null,
-          "value": 0,
-          "maxFormula": ""
+            "per": ""
+          }
         },
         "measureTemplate": {
           "type": "",
@@ -58,7 +52,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -85,15 +79,15 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will negates"
+          "dc": "",
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
-          "multiplier": "",
+          "multiplier": null,
           "damageBonus": 2,
           "critMultiplier": 1
         },
@@ -105,6 +99,7 @@
           }
         },
         "nonlethal": false,
+        "touch": false,
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
@@ -125,22 +120,27 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        ["arcanist", 4],
-        ["sorcerer/wizard", 4]
+        ["inquisitor", 2],
+        ["paladin", 1]
       ],
       "domain": [],
       "subDomain": [],
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 4,
-    "school": "enc",
-    "types": "language-dependent, mind-affecting",
+    "level": 1,
+    "school": "abj",
+    "types": "lawful",
     "components": {
       "verbal": true,
-      "somatic": true
+      "somatic": true,
+      "divineFocus": 1
     },
     "spellbook": "",
-    "shortDescription": "<p>By speaking eloquently on the subject of your opponents’ ineptitude in combat, past failures, personal hygiene, or other faults, you sap their will to fight.</p><p>This spell can be cast as a standard action or as a full-round action. If cast as a standard action, it takes effect in 1d4 rounds following the spell’s casting. If cast as a full-round action, it takes effect 1 round after its casting. Enemies with 4 Hit Dice or fewer are @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.nGTsTfpWcJTTU3rk]{panicked}, enemies with 5–8 Hit Dice are @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.eNW5geiJqrnAjjNu]{cowering}, and enemies with more than 8 Hit Dice are @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.XxLUswkCuXnXmA5T]{shaken}.</p>"
-  }
+    "sr": false,
+    "shortDescription": "<p>You repeat a mantra or phrase that reminds you of your duty. You can immediately reroll a failed saving throw against a spell that would force you to take an action against your will, and you gain a +2 bonus against enchantment effects for 1 round. You can use this spell to reroll only a saving throw that you failed within the past round. While subject to this spell, the target cannot be the target of another spell that has the word “litany” in the title.</p>"
+  },
+  "flags": {},
+  "sort": 0,
+  "_id": "55jB63sBH4GLV5Mm"
 }

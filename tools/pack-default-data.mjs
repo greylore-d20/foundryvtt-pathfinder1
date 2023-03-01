@@ -1,0 +1,123 @@
+/**
+ * Return the default data for an `ItemAction` component, akin to the template data used for documents like `Item` and `Actor`.
+ *
+ * @returns {object}}
+ */
+export function getActionDefaultData() {
+  return {
+    _id: "",
+    name: "",
+    img: "systems/pf1/icons/skills/gray_04.jpg",
+    description: "",
+    tag: "",
+    activation: {
+      cost: 1,
+      type: "",
+    },
+    unchainedAction: {
+      activation: {
+        cost: 1,
+        type: "",
+      },
+    },
+    duration: {
+      value: null,
+      units: "",
+    },
+    target: {
+      value: "",
+    },
+    range: {
+      value: null,
+      units: "",
+      maxIncrements: 1,
+      minValue: null,
+      minUnits: "",
+    },
+    uses: {
+      autoDeductChargesCost: "",
+      self: {
+        value: 0,
+        maxFormula: "",
+        per: null,
+      },
+    },
+    measureTemplate: {
+      type: "",
+      size: "",
+      overrideColor: false,
+      customColor: "",
+      overrideTexture: false,
+      customTexture: "",
+    },
+    attackName: "",
+    actionType: null,
+    attackBonus: "",
+    critConfirmBonus: "",
+    damage: {
+      parts: [],
+      critParts: [],
+      nonCritParts: [],
+    },
+    attackParts: [],
+    formulaicAttacks: {
+      count: { formula: "" },
+      bonus: { formula: "" },
+      label: null,
+    },
+    formula: "",
+    ability: {
+      attack: null,
+      damage: null,
+      damageMult: 1,
+      critRange: 20,
+      critMult: 2,
+    },
+    save: {
+      dc: "",
+      type: "",
+      description: "",
+    },
+    effectNotes: [],
+    attackNotes: [],
+    soundEffect: "",
+    powerAttack: {
+      multiplier: null,
+      damageBonus: 2,
+      critMultiplier: 1,
+    },
+    naturalAttack: {
+      primaryAttack: true,
+      secondary: {
+        attackBonus: "-5",
+        damageMult: 0.5,
+      },
+    },
+    nonlethal: false,
+    touch: false,
+    usesAmmo: false,
+    spellEffect: "",
+    spellArea: "",
+    conditionals: [],
+    enh: {
+      value: null,
+    },
+  };
+}
+
+/**
+ * Return the default data for an `ItemChange` component, akin to the template data used for documents like `Item` and `Actor`.
+ *
+ * @returns {object}}
+ */
+export function getChangeDefaultData() {
+  return {
+    _id: "",
+    formula: "",
+    operator: "add",
+    subTarget: "",
+    modifier: "",
+    priority: 0,
+    flavor: undefined,
+  };
+}

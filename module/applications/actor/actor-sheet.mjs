@@ -2415,16 +2415,16 @@ export class ActorSheetPF extends ActorSheet {
     const spellbookData = {};
     const spellbooks = data.system.attributes.spells.spellbooks;
     for (const [key, spellbook] of Object.entries(spellbooks)) {
+      // Required for spellbook selection in settings
+      spellbookData[key] = { orig: spellbook, inUse: spellbook.inUse };
+      // The rest are unnecssary processing if spellbook is not enabled
       if (!spellbook.inUse) continue;
       let spellbookSpells = spells.filter((obj) => obj.spellbook === key);
       spellbookSpells = this._filterItems(spellbookSpells, this._filters[`spellbook-${key}`]);
-      spellbookData[key] = {
-        data: this._prepareSpellbook(data, spellbookSpells, key),
-        prepared: spellbookSpells.filter((obj) => {
-          return obj.preparation.mode === "prepared" && obj.preparation.prepared;
-        }).length,
-        orig: spellbook,
-      };
+      spellbookData[key].data = this._prepareSpellbook(data, spellbookSpells, key);
+      spellbookData[key].prepared = spellbookSpells.filter(
+        (obj) => obj.preparation.mode === "prepared" && obj.preparation.prepared
+      ).length;
       if (spellbook.arcaneSpellFailure) hasASF = true;
     }
 
@@ -2583,6 +2583,7 @@ export class ActorSheetPF extends ActorSheet {
         { key: "attacks", section: attackSections },
       ];
       for (const [k, sb] of Object.entries(spellbookData)) {
+        if (!sb.inUse) continue;
         sections.push({ key: `spellbook-${k}`, section: sb.data });
       }
 

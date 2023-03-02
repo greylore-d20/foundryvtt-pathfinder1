@@ -123,7 +123,7 @@ export class CombatPF extends Combat {
    * @override
    */
   async rollInitiative(ids, { formula = null, updateTurn = true, messageOptions = {}, skipDialog = null } = {}) {
-    if (skipDialog == null) skipDialog = getSkipActionPrompt();
+    skipDialog ??= getSkipActionPrompt();
     // Structure input data
     ids = typeof ids === "string" ? [ids] : ids;
     const currentId = this.combatant?.id;

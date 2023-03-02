@@ -179,5 +179,31 @@ OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<
   };
 }
 
+/**
+ * Stop releasing modifiers on HTMLButtonElement. Check again on proper support of popouts. How blur is handled will have to be reevaluated
+ *
+ * Introduced Foundry VTT v10.291
+ */
+
+{
+  const original_onFocusIn = KeyboardManager.prototype._onFocusIn;
+  KeyboardManager.prototype._onFocusIn = function (event) {
+    const formElements = [HTMLInputElement, HTMLSelectElement, HTMLTextAreaElement, HTMLOptionElement];
+
+    if (event.target.isContentEditable || formElements.some((cls) => event.target instanceof cls)) {
+      this.releaseKeys();
+    }
+  };
+
+  Object.defineProperty(KeyboardManager.prototype, "hasFocus", {
+    get() {
+      // Pulled from https://www.w3schools.com/html/html_form_elements.asp
+      const formElements = ["input", "select", "textarea", "option", "[contenteditable]"];
+      const selector = formElements.map((el) => `${el}:focus`).join(", ");
+      return document.querySelectorAll(selector).length > 0;
+    },
+  });
+}
+
 // Call patch functions
 patchLowLightVision();

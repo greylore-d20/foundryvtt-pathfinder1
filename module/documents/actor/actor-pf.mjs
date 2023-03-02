@@ -140,13 +140,13 @@ export class ActorPF extends ActorBasePF {
     if (action === "defense-save") {
       const actor = await ItemPF._getChatCardActor(card);
       const saveId = button.dataset.save;
-      if (actor) actor.rollSavingThrow(saveId, { event: event, skipPrompt: getSkipActionPrompt() });
+      if (actor) actor.rollSavingThrow(saveId, { event: event });
     } else if (action === "save") {
       const actors = ActorPF.getSelectedActors();
       const saveId = button.dataset.type;
       let noSound = false;
       for (const a of actors) {
-        a[0].rollSavingThrow(saveId, { event: event, noSound: noSound, skipPrompt: getSkipActionPrompt() });
+        a[0].rollSavingThrow(saveId, { event: event, noSound: noSound });
         noSound = true;
       }
     }
@@ -2489,7 +2489,7 @@ export class ActorPF extends ActorBasePF {
     createCombatants = false,
     rerollInitiative = false,
     initiativeOptions = {},
-    skipDialog = false,
+    skipDialog,
   } = {}) {
     // Obtain (or create) a combat encounter
     let combat = game.combat;

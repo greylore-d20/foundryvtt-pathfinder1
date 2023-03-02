@@ -17,6 +17,7 @@ import { getHighestChanges } from "../actor/utils/apply-changes.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 import { ActionUse } from "@actionUse/action-use.mjs";
 import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs";
+import { getSkipActionPrompt } from "../settings.mjs";
 
 /**
  * Override and extend the basic :class:`Item` implementation
@@ -1118,13 +1119,20 @@ export class ItemPF extends ItemBasePF {
    * @see {@link SharedActionData}
    * @param {string} [actionID=""] - The ID of the action to use, defaults to the first action
    * @param {Event | null} [ev=null] - The event that triggered the use, if any
-   * @param {boolean} [skipDialog=false] - Whether to skip the dialog for this action
+   * @param {boolean} [skipDialog=getSkipActionPrompt()] - Whether to skip the dialog for this action
    * @param {boolean} [chatMessage=true] - Whether to send a chat message for this action
    * @param {string} [dice="1d20"] - The base dice to roll for this action
    * @param {string} [rollMode] - The roll mode to use for the chat message
    * @returns {Promise<SharedActionData | void | ChatMessage | *>}
    */
-  async use({ actionID = "", ev = null, skipDialog = false, chatMessage = true, dice = "1d20", rollMode } = {}) {
+  async use({
+    actionID = "",
+    ev = null,
+    skipDialog = getSkipActionPrompt(),
+    chatMessage = true,
+    dice = "1d20",
+    rollMode,
+  } = {}) {
     // Old use method
     if (!this.hasAction) {
       // Use

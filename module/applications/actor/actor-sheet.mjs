@@ -1597,14 +1597,14 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
-    this.document.rollConcentration(spellbookKey, { skipDialog: getSkipActionPrompt() });
+    this.document.rollConcentration(spellbookKey);
   }
 
   _onRollCL(event) {
     event.preventDefault();
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
-    this.document.rollCL(spellbookKey, { skipDialog: getSkipActionPrompt() });
+    this.document.rollCL(spellbookKey);
   }
 
   _setItemActive(event) {
@@ -1954,7 +1954,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Quick Attack
     if (a.classList.contains("item-attack")) {
-      await item.use({ ev: event, skipDialog: getSkipActionPrompt() });
+      await item.use({ ev: event });
     }
   }
 
@@ -2042,7 +2042,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
     if (!item) return;
 
-    return item.use({ skipDialog: getSkipActionPrompt() });
+    return item.use();
   }
 
   _convertCurrency(event) {
@@ -2263,27 +2263,27 @@ export class ActorSheetPF extends ActorSheet {
   _onRollAbilityTest(event) {
     event.preventDefault();
     const ability = event.currentTarget.closest(".ability").dataset.ability;
-    this.document.rollAbilityTest(ability, { skipDialog: getSkipActionPrompt() });
+    this.document.rollAbilityTest(ability);
   }
 
   _onRollBAB(event) {
     event.preventDefault();
-    this.document.rollBAB({ skipDialog: getSkipActionPrompt() });
+    this.document.rollBAB();
   }
 
   _onRollMelee(event) {
     event.preventDefault();
-    this.document.rollAttack({ melee: true, skipDialog: getSkipActionPrompt() });
+    this.document.rollAttack({ melee: true });
   }
 
   _onRollRanged(event) {
     event.preventDefault();
-    this.document.rollAttack({ melee: false, skipDialog: getSkipActionPrompt() });
+    this.document.rollAttack({ melee: false });
   }
 
   _onRollCMB(event) {
     event.preventDefault();
-    this.document.rollCMB({ skipDialog: getSkipActionPrompt() });
+    this.document.rollCMB();
   }
 
   _onRollInitiative(event) {
@@ -2291,14 +2291,13 @@ export class ActorSheetPF extends ActorSheet {
     this.document.rollInitiative({
       createCombatants: true,
       rerollInitiative: game.user.isGM,
-      skipDialog: getSkipActionPrompt(),
     });
   }
 
   _onRollSavingThrow(event) {
     event.preventDefault();
     const savingThrow = event.currentTarget.parentElement.dataset.savingthrow;
-    this.document.rollSavingThrow(savingThrow, { skipDialog: getSkipActionPrompt() });
+    this.document.rollSavingThrow(savingThrow);
   }
 
   /* -------------------------------------------- */
@@ -2619,14 +2618,14 @@ export class ActorSheetPF extends ActorSheet {
   _onRollSkillCheck(event) {
     event.preventDefault();
     const skill = event.currentTarget.parentElement.dataset.skill;
-    this.document.rollSkill(skill, { skipDialog: getSkipActionPrompt() });
+    this.document.rollSkill(skill);
   }
 
   _onRollSubSkillCheck(event) {
     event.preventDefault();
     const mainSkill = event.currentTarget.parentElement.dataset.mainSkill;
     const skill = event.currentTarget.parentElement.dataset.skill;
-    this.document.rollSkill(`${mainSkill}.subSkills.${skill}`, { skipDialog: getSkipActionPrompt() });
+    this.document.rollSkill(`${mainSkill}.subSkills.${skill}`);
   }
 
   /**

@@ -1,4 +1,3 @@
-import { getSkipActionPrompt } from "../documents/settings.mjs";
 import Color from "color";
 
 /* -------------------------------------------- */
@@ -294,7 +293,7 @@ export const targetSavingThrowClick = async function (app, html, actor, event) {
   const elem = event.currentTarget;
   const save = elem.dataset.savingThrow;
 
-  const message = await actor.rollSavingThrow(save, { event, skipDialog: getSkipActionPrompt() });
+  const message = await actor.rollSavingThrow(save, { event });
   const total = message?.rolls?.[0]?.total;
 
   // Replace saving throw value on original chat card's target

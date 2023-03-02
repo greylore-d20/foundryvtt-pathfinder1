@@ -1,6 +1,5 @@
 import { ActorPF } from "./actor/actor-pf.mjs";
 import { getActorFromId, getItemOwner } from "../utils/lib.mjs";
-import { getSkipActionPrompt } from "./settings.mjs";
 
 /**
  * Various functions dealing with the creation and usage of macros.
@@ -198,7 +197,7 @@ export const rollItemMacro = function (itemName, { itemId, itemType, actorId } =
 
   // Trigger the item roll
   if (!pf1.forceShowItem && item.hasAction) {
-    return item.use({ skipDialog: getSkipActionPrompt() });
+    return item.use();
   }
   return item.roll();
 };
@@ -216,7 +215,7 @@ export const rollSkillMacro = function (actorId, skillId) {
     return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
   }
 
-  return actor.rollSkill(skillId, { skipDialog: getSkipActionPrompt() });
+  return actor.rollSkill(skillId);
 };
 
 /**
@@ -232,7 +231,7 @@ export const rollSaveMacro = function (actorId, saveId) {
     return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
   }
 
-  return actor.rollSavingThrow(saveId, { skipDialog: getSkipActionPrompt() });
+  return actor.rollSavingThrow(saveId);
 };
 
 /**

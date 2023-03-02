@@ -1,5 +1,4 @@
 import { clearHighlight, showAttackReach } from "./attack-reach.mjs";
-import { getSkipActionPrompt } from "../documents/settings.mjs";
 
 export class TokenQuickActions {
   static async addTop3Attacks(app, html, data) {
@@ -52,7 +51,7 @@ export class TokenQuickActions {
       // Add click handler
       elem.on("click", (event) => {
         if (!event.ctrlKey) {
-          return item.use({ ev: event, skipDialog: getSkipActionPrompt() });
+          return item.use({ ev: event });
         }
         return item.roll();
       });

@@ -604,7 +604,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Quick Attack
     if (a.classList.contains("item-attack")) {
-      await item.use({ ev: event, skipDialog: getSkipActionPrompt() });
+      await item.use({ ev: event });
     }
   }
 

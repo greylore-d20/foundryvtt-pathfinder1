@@ -1,3 +1,4 @@
+import { getSkipActionPrompt } from "module/documents/settings.mjs";
 import { RollPF } from "./roll.mjs";
 
 /**
@@ -381,7 +382,7 @@ export class D20RollPF extends RollPF {
  */
 export async function d20Roll(options = {}) {
   const {
-    skipDialog = false,
+    skipDialog = getSkipActionPrompt(),
     staticRoll = null,
     chatTemplateData = {},
     chatMessage = true,

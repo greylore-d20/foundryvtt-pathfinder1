@@ -1071,6 +1071,12 @@ export class ItemPF extends ItemBasePF {
       if (actionData.activation?.type) {
         props.push(labels.target, labels.activation, dynamicLabels.range, dynamicLabels.duration);
       }
+
+      // Enhancement Bonus
+      const enhBonus = actionData.enh?.value ?? itemData.enh ?? 0;
+      if (enhBonus > 0) {
+        props.push(game.i18n.format("PF1.Enhancement", { bonus: enhBonus }));
+      }
     }
 
     // Get per item type chat data

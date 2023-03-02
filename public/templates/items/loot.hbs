@@ -74,6 +74,16 @@
             <input type="checkbox" name="flags.pf1.abundant" {{checked item.flags.pf1.abundant}} /> {{localize "PF1.Abundant"}}
           </label>
         </div>
+
+        {{! Recovery Chance}}
+        {{#unless item.flags.pf1.abundant}}
+        <div class="form-group">
+          <label>{{localize "PF1.RecoverChancePercentage"}}</label>
+          <div class="form-fields">
+            <input type="number" name="system.recoverChance" data-dtype="Number" placeholder="50" min="0" max="100" value="{{system.recoverChance}}">
+          </div>
+        </div>
+        {{/unless}}
       {{/if}}
 
       <hr>

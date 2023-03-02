@@ -1450,9 +1450,10 @@ export class ItemPF extends ItemBasePF {
       // Find ammo item
       const ammoItem = item.actor.items.get(ammoId);
       if (!ammoItem) return;
+      if (ammoItem.getFlag("pf1", "abundant")) return; // Abundant is unrecoverable
       let chance = 100;
       if (action === "recoverAmmo") {
-        chance = 50; // @TODO: Allow user to set chance to something else, somehow
+        chance = ammoItem.system.recoverChance ?? 50;
       }
 
       // (Try to) recover ammo
@@ -1606,10 +1607,6 @@ export class ItemPF extends ItemBasePF {
 
     if (linkType === "classAssociations") {
       result.level = 1;
-    }
-
-    if (linkType === "ammunition") {
-      result.recoverChance = 50;
     }
 
     return result;

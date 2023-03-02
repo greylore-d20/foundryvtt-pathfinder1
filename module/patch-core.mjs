@@ -155,14 +155,6 @@ OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<
   };
 }
 
-{
-  const origFunc = Combatant.prototype.updateResource;
-  Combatant.prototype.updateResource = function () {
-    if (!this.actor) return (this.resource = null);
-    return (this.resource = foundry.utils.getProperty(this.actor.system, this.parent.settings.resource) ?? null);
-  };
-}
-
 // Patch the `fromData` method used by Foundry to allow rolls from builds with a renamed roll class
 // to still be created from JSON for tooltips etc.
 // Introduced in v0.81.1 for Foundry v9.269

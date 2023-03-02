@@ -58,7 +58,7 @@ const duplicateCombatantInitiativeDialog = function (combats, combatantId) {
 
   new Dialog(
     {
-      title: `${game.i18n.localize("PF1.DuplicateInitiative")}: ${combatant.actor.name}`,
+      title: `${game.i18n.localize("PF1.DuplicateInitiative")}: ${combatant.name}`,
       content: `<div class="flexrow form-group">
       <label>${game.i18n.localize("PF1.InitiativeOffset")}</label>
       <input type="number" name="initiativeOffset" value="0"/>
@@ -102,25 +102,6 @@ Hooks.on("getCombatTrackerEntryContext", function addCombatTrackerContextOptions
 
 export class CombatPF extends Combat {
   /**
-   * Override the default Initiative formula to customize special behaviors of the game system.
-   * Apply advantage, proficiency, or bonuses where appropriate
-   * Apply the dexterity score as a decimal tiebreaker if requested
-   * See Combat._getInitiativeFormula for more detail.
-   *
-   * @param {ActorPF} actor - Actor to fetch roll data for
-   * @param {string} [d20="1d20"] - d20 roll formula
-   * @returns {string} Initiative formula
-   */
-  _getInitiativeFormula(actor, d20) {
-    const defaultParts = [d20 || "1d20", `@attributes.init.total[${game.i18n.localize("PF1.Initiative")}]`];
-    if (actor && game.settings.get("pf1", "initiativeTiebreaker"))
-      defaultParts.push(`(@attributes.init.total / 100)[${game.i18n.localize("PF1.Tiebreaker")}]`);
-    const parts = CONFIG.Combat.initiative.formula ? CONFIG.Combat.initiative.formula.split(/\s*\+\s*/) : defaultParts;
-    if (!actor) return parts[0] || "0";
-    return parts.filter((p) => p !== null).join(" + ");
-  }
-
-  /**
    * @override
    * @param {string[]} ids Combatant IDs to roll initiative for.
    * @param {object} [options={}] - Additional options
@@ -162,34 +143,32 @@ export class CombatPF extends Combat {
         const [updates, messages] = result;
 
         // Get Combatant data (non-strictly)
-        const c = this.combatants.get(id);
-        if (!c || !c.isOwner) return results;
+        const combatant = this.combatants.get(id);
+        if (!combatant?.isOwner) return results;
 
         // Produce an initiative roll for the Combatant
-        const rollData = c.actor?.getRollData() ?? {};
-        let initformula = this._getInitiativeFormula(c.actor ? c.actor : null, formula) || "1d20";
-        if (bonus) initformula += ` + ${bonus}`;
-
-        // Produce an initiative roll for the Combatant
-        const isHidden = c.token?.hidden || c.hidden;
-        if (isHidden) rollMode = messageOptions.rollMode ?? "gmroll";
-        const roll = await RollPF.create(initformula, rollData).evaluate({ async: true });
-        delete rollData.bonus;
-        if (roll.err) ui.notifications.warn(roll.err.message);
+        const roll = combatant.getInitiativeRoll(formula, bonus);
+        await roll.evaluate({ async: true });
         updates.push({ _id: id, initiative: roll.total });
 
-        const [notes, notesHTML] = c.actor.getInitiativeContextNotes();
+        // Produce an initiative roll for the Combatant
+        const isHidden = combatant.token?.hidden || combatant.hidden;
+        if (isHidden) rollMode = messageOptions.rollMode ?? "gmroll";
+
+        if (roll.err) ui.notifications.warn(roll.err.message);
+
+        const [notes, notesHTML] = combatant.actor?.getInitiativeContextNotes?.() ?? [];
 
         // Create card template data
-        const templateData = mergeObject(
-          {
-            user: game.user.id,
-            formula: roll.formula,
-            tooltip: await roll.getTooltip(),
-            total: roll.total,
-          },
-          notes.length > 0 ? { hasExtraText: true, extraText: notesHTML } : {}
-        );
+        const hasNotes = notes?.length > 0;
+        const templateData = {
+          user: game.user.id,
+          formula: roll.formula,
+          tooltip: await roll.getTooltip(),
+          total: roll.total,
+          hasExtraText: hasNotes,
+          extraText: hasNotes ? notesHTML : undefined,
+        };
 
         // Ensure roll mode is not lost
         if (rollMode) messageOptions.rollMode = rollMode;
@@ -201,13 +180,13 @@ export class CombatPF extends Combat {
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             sound: CONFIG.sounds.dice,
             speaker: {
-              scene: canvas.scene?.id,
-              actor: c.actor ? c.actor.id : null,
-              token: c.token?.id,
-              alias: c.token?.name,
+              scene: combatant.sceneId,
+              actor: combatant.actorId,
+              token: combatant.tokenId,
+              alias: combatant.name,
             },
             flags: { pf1: { subject: { core: "init" } } },
-            flavor: game.i18n.format("PF1.RollsForInitiative", { name: c.token?.name ?? c.actor.name }),
+            flavor: game.i18n.format("PF1.RollsForInitiative", { name: combatant.name }),
             rolls: [roll.toJSON()],
             content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", templateData),
           },

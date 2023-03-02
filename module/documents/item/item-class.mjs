@@ -8,7 +8,7 @@ export class ItemClassPF extends ItemPF {
     await super._preUpdate(update, context, userId);
 
     // Set level marker
-    if (hasProperty(update, "system.level")) {
+    if (update.system?.level !== undefined) {
       this._prevLevel = this.system.level;
     }
   }
@@ -44,6 +44,9 @@ export class ItemClassPF extends ItemPF {
   }
 
   async update(updateData, context = {}) {
+    // Ensure update data is always in expanded format instead of arbitrarily mixed or flattened depending on caller.
+    updateData = expandObject(updateData);
+
     await super.update(updateData, context);
 
     // Update class
@@ -62,6 +65,12 @@ export class ItemClassPF extends ItemPF {
     return super.delete(context);
   }
 
+  /**
+   * Add or remove class associations on level change.
+   *
+   * @param {number} curLevel Current level, before the level change.
+   * @param {number} newLevel New level, after the level change.
+   */
   async _onLevelChange(curLevel, newLevel) {
     if (!this.parent) return;
     const actor = this.parentActor;
@@ -69,32 +78,32 @@ export class ItemClassPF extends ItemPF {
     // Add items associated to this class
     if (newLevel > curLevel) {
       const classAssociations = (this.system.links?.classAssociations ?? []).filter(
-        (o, index) => o.level > curLevel && o.level <= newLevel
+        (link, index) => link.level > curLevel && link.level <= newLevel
       );
 
+      const sources = new Map();
+
       const newItems = [];
-      for (const co of classAssociations) {
-        const item = await fromUuid(co.uuid);
+      for (const link of classAssociations) {
+        const item = await fromUuid(link.uuid);
         if (!item) {
-          const msg = `Could not find class association: ${co.id}`;
-          console.warn(co.id, msg, this);
+          const msg = `Could not find class association: ${link.uuid}`;
+          console.warn(link.uuid, msg, this);
           ui.notifications?.warn(msg, { console: false });
           continue;
         }
 
-        // Apply Foundry's transformations for importing
+        sources.set(link.uuid, link);
+
+        // Apply Foundry's transformations for importing (automatically calls .toObject())
         // This adds flags.core.sourceId, removes extraneous permissions, resets sorting, etc.
         const itemData = game.items.fromCompendium(item);
 
-        // Set temporary flag
-        setProperty(itemData, "flags.pf1.__co.level", duplicate(co.level));
-
-        delete itemData._id;
-        newItems.push({ data: itemData, co: co });
+        newItems.push({ data: itemData, link });
       }
 
       if (newItems.length) {
-        const itemsCreationData = newItems.sort((a, b) => a.co.level - b.co.level).map((o) => o.data);
+        const itemsCreationData = newItems.sort((a, b) => a.link.level - b.link.level).map((o) => o.data);
         // Put new items at end of their types
         const _typeSorting = {};
         for (const item of itemsCreationData) {
@@ -105,19 +114,16 @@ export class ItemClassPF extends ItemPF {
         }
         const items = await actor.createEmbeddedDocuments("Item", itemsCreationData);
 
-        const updateData = [];
-        const classUpdateData = { _id: this.id };
-        updateData.push(classUpdateData);
-        for (const i of items) {
-          const co = i.getFlag("pf1", "__co");
+        const classAssociations = {};
+        const updateData = { flags: { pf1: { links: { classAssociations } } } };
+        for (const item of items) {
+          const link = sources.get(item.getFlag("core", "sourceId"));
+
           // Set class association flags
-          classUpdateData[`flags.pf1.links.classAssociations.${i.id}`] = co.level;
-          // Remove temporary flag
-          updateData.push({ _id: i.id, "flags.pf1.-=__co": null });
+          classAssociations[item.id] = link?.level ?? 1;
         }
-        if (updateData.length) {
-          await actor.updateEmbeddedDocuments("Item", updateData);
-        }
+
+        await this.update(updateData, { render: false });
       }
     }
 

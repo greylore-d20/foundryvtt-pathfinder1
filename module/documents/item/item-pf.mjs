@@ -1138,12 +1138,15 @@ export class ItemPF extends ItemBasePF {
 
     /** @type {ItemAction | undefined} */
     let action;
-    if (!actionID && this.system.actions.length > 1 && skipDialog === false) {
-      const app = new pf1.applications.ActionChooser(this);
-      app.render(true);
-      return;
-    } else if (actionID || this.system.actions.length === 1 || skipDialog) {
-      action = this.actions.get(actionID || this.system.actions[0]._id);
+    if (this.system.actions.length > 0) {
+      if (actionID) {
+        action = this.actions.get(actionID);
+      } else if (this.system.actions.length > 1 && skipDialog !== true) {
+        new pf1.applications.ActionChooser(this).render(true, { focus: true });
+        return;
+      } else {
+        action = this.firstAction;
+      }
     } else {
       console.error("This item does not have an action associated with it.");
       return;

@@ -161,6 +161,8 @@ globalThis.pf1 = moduleToObject({
   /** @type {TooltipPF|null} */
   tooltip: null,
   utils,
+  // Initialize skip confirm prompt value
+  skipConfirmPrompt: false,
 });
 
 // OBSOLETE: Add String.format

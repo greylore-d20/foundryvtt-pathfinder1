@@ -43,15 +43,15 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
           "maxFormula": ""
         },
         "measureTemplate": {
-          "type": "",
-          "size": "0",
+          "type": "circle",
+          "size": "10",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -62,9 +62,17 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
-          "parts": [],
           "critParts": [],
-          "nonCritParts": []
+          "nonCritParts": [],
+          "parts": [
+            [
+              "1d8",
+              {
+                "values": ["sonic"],
+                "custom": ""
+              }
+            ]
+          ]
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -111,11 +119,13 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {
-      "per": ""
+      "per": "",
+      "autoDeductChargesCost": ""
     },
     "attackNotes": [],
     "effectNotes": [],
@@ -125,9 +135,12 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        ["cleric/oracle", 2],
+        ["cleric", 2],
+        ["oracle", 2],
         ["bard", 2],
-        ["occultist", 2]
+        ["occultist", 2],
+        ["warpriest", 2],
+        ["skald ", 2]
       ],
       "domain": [],
       "subDomain": [],
@@ -146,6 +159,7 @@
     "materials": {
       "focus": "a musical instrument"
     },
+    "spellbook": "",
     "shortDescription": "<p>You blast an area with a tremendous cacophony. Every creature in the area takes 1d8 points of sonic damage and must succeed on a Fortitude save to avoid being stunned for 1 round. Creatures that cannot hear are not stunned but are still damaged.</p>"
   }
 }

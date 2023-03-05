@@ -1,5 +1,5 @@
 import Color from "color";
-import { colorToInt, convertDistance, measureDistance } from "../utils/lib.mjs";
+import { colorToInt, convertDistance, measureDistance, calculateRangeFormula } from "../utils/lib.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
 const rangeColor = {
@@ -109,7 +109,7 @@ const getAttackReach = function (token, attack, action) {
     squares.normal = getReachSquares(token, range.melee, minRange, null, { useReachRule });
     squares.reach = getReachSquares(token, range.reach, range.melee, null, { useReachRule });
   } else if (rangeKey === "ft") {
-    const r = RollPF.safeRoll(action.data.range.value || "0", rollData).total;
+    const r = calculateRangeFormula(action.data.range.value || "0", "ft", rollData);
     squares.normal = getReachSquares(token, r, minRange, null, { useReachRule: true });
 
     // Add range increments
@@ -127,16 +127,8 @@ const getAttackReach = function (token, attack, action) {
       }
     }
   } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {
-    let r;
-    switch (rangeKey) {
-      case "close":
-        r = RollPF.safeRoll("25 + floor(@cl / 2) * 5", rollData).total;
-        break;
-      case "medium":
-        r = RollPF.safeRoll("100 + @cl * 10", rollData).total;
-        break;
-    }
-    squares.normal = getReachSquares(token, r, minRange, null, { useReachRule });
+    const range = calculateRangeFormula(null, rangeKey, rollData);
+    squares.normal = getReachSquares(token, range, minRange, null, { useReachRule });
   }
 
   const result = {

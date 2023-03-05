@@ -2,14 +2,7 @@ import { PF1 } from "@config";
 import { DicePF, formulaHasDice } from "../../dice/dice.mjs";
 import { ItemBasePF } from "./item-base.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
-import {
-  createTag,
-  linkData,
-  convertDistance,
-  calculateRange,
-  keepUpdateArray,
-  diffObjectAndArray,
-} from "../../utils/lib.mjs";
+import { createTag, linkData, convertDistance, keepUpdateArray, diffObjectAndArray } from "../../utils/lib.mjs";
 import { getWeightSystem } from "@utils";
 import { ItemChange } from "../../components/change.mjs";
 import { ItemAction } from "../../components/action.mjs";

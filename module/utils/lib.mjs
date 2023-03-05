@@ -982,10 +982,11 @@ export const isGMActive = function () {
 
 /**
  * @param formula
- * @param type
+ * @param {"melee"|"touch"|"reach"|"close"|"medium"|"long"|"mi"} type
  * @param rollData
+ * @returns {number} Range in feet for the defined formula
  */
-export function calculateRangeFormula(formula, type = "ft", rollData = {}) {
+export const calculateRangeFormula = (formula, type = "ft", rollData = {}) => {
   switch (type) {
     case "melee":
     case "touch":
@@ -1000,10 +1001,14 @@ export function calculateRangeFormula(formula, type = "ft", rollData = {}) {
       return RollPF.safeRoll(PF1.spellRangeFormulas.long, rollData).total;
     case "mi":
       return RollPF.safeRoll(formula, rollData).total * 5_280;
+    case "m":
+      return (RollPF.safeRoll(formula, rollData).total / 1.5) * 5;
+    case "km":
+      return ((RollPF.safeRoll(formula, rollData).total * 1000) / 1.5) * 5;
     default:
       return RollPF.safeRoll(formula, rollData).total;
   }
-}
+};
 
 /**
  * Calculates range formula and converts it.

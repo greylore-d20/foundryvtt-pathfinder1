@@ -29,6 +29,10 @@
       flex: 0;
       border-bottom: @borderGroove;
 
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 2px;
+
       .name-xp {
         flex: 0;
 
@@ -81,6 +85,7 @@
 
         .race.item-image {
           flex: 0 0 32px;
+          background: no-repeat center;
           background-size: contain;
           line-height: 32px;
           text-align: center;
@@ -289,9 +294,22 @@
       }
     }
 
+    .subdetails-body {
+      h2 {
+        // Override Foundry bottom margin (0.5rem)
+        margin-bottom: 0.2rem;
+      }
+    }
+
     .quick-info {
       ul.attributes {
         margin: 2px 0;
+      }
+
+      .generic-defenses {
+        h3 {
+          margin: 0;
+        }
       }
 
       table {
@@ -500,12 +518,12 @@
   /*  Ability Scores                           */
   /* ----------------------------------------- */
 
-  .ability-scores {
-    flex: 0;
-    margin-bottom: 4px;
-
-    table {
-      margin-bottom: 4px;
+  .tab.attributes {
+    .ability-scores {
+      flex: 0;
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 2px;
     }
   }
 
@@ -927,9 +945,24 @@
       font-size: @fontSizeHeader;
       margin: 0;
     }
+  }
 
-    &.spellbook-filters {
-      flex: 0 0 40px;
+  .tab.spellbook {
+    .spellbook-configuration {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 2px;
+
+      .spellbook-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3px;
+
+        .spell-settings {
+          display: flex;
+          flex-flow: column nowrap;
+        }
+      }
     }
   }
 
@@ -1010,23 +1043,31 @@
 
     .spell-points-current {
       flex: 0;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
 
       h3 {
         .nodesto();
         font-size: @fontSizeHeader;
         flex: 0 0 160px;
+        margin: 0;
       }
 
       .value,
       .max {
         display: flex;
-        flex: 0 0 32px;
-        text-align: center;
+        flex: 0 0 3em;
       }
 
       .sep {
         flex: 0;
       }
+    }
+
+    .spell-summary {
+      display: flex;
+      flex-flow: row nowrap;
     }
 
     .radios {
@@ -1059,7 +1100,7 @@
       grid-auto-rows: auto;
       grid-template-columns: min-content 1fr;
 
-      > label h3 {
+      > h3 {
         white-space: nowrap;
       }
 
@@ -1237,9 +1278,11 @@
   .rollable.image-d20 {
     flex: 0 0 24px;
     display: inline-block;
+    background: no-repeat center;
+    background-size: contain;
     background-image: url(../../icons/dice/d20black.svg);
-    background-size: 100%;
     height: 24px;
+    width: 24px;
   }
 
   /* ----------------------------------------- */
@@ -1255,7 +1298,7 @@
   /* ----------------------------------------- */
 
   hr {
-    margin: 4px 0 4px 0;
+    margin: 2px 0;
     flex: 0;
   }
 

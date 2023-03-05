@@ -415,12 +415,16 @@
     form {
       height: 100%;
       overflow: hidden;
+
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 2px;
     }
 
     .tab {
       height: 100%;
       overflow-y: auto;
-      align-content: flex-start;
+      gap: 2px;
     }
   }
 
@@ -536,15 +540,17 @@
           flex: 0 0 24px;
           background-size: 24px;
           margin-right: 5px;
+          background: no-repeat center;
+          background-size: contain;
+
+          &:hover:not(.no-hover) {
+            background-image: url("../../icons/svg/d20-black.svg") !important;
+          }
         }
 
         h4 {
           margin: 0;
           min-width: 0;
-        }
-
-        .item-image:hover:not(.no-hover) {
-          background-image: url("../../icons/svg/d20-black.svg") !important;
         }
       }
 
@@ -584,7 +590,7 @@
     // Inventory Header
     .inventory-header,
     .items-header {
-      margin: 2px 0;
+      margin: 0 0 2px 0;
       padding: 0;
       background: rgba(0, 0, 0, 0.05);
       border: @borderGroove;
@@ -745,7 +751,7 @@
 
     .item-list {
       list-style: none;
-      margin: 0;
+      margin: 0 0 2px 0;
       padding: 0;
     }
 
@@ -945,18 +951,18 @@
   /* ----------------------------------------- */
 
   .sheet-navigation {
-    flex: 0 0 @navHeight;
+    flex: 0;
     .nodesto();
-    margin: 4px 0;
     background: rgba(155, 155, 155, 0.3);
     border: 1px solid rgba(0, 0, 0, 0);
-    border-radius: 6px 6px 0 0;
+    border-radius: 12px 12px 0 0;
     font-size: @fontSizeSubHeader;
+    column-gap: 2px;
 
     .item {
-      height: 30px;
-      line-height: 32px;
-      margin: 0 2px;
+      line-height: 1.3em;
+      height: 1.3em;
+      margin: 0;
       white-space: nowrap;
       border: 1px solid rgba(0, 0, 0, 0);
       border-radius: 12px 12px 0 0;
@@ -992,7 +998,9 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    line-height: 16px;
+    align-items: center;
+    align-self: end;
+    column-gap: 6px;
 
     .filter-title {
       flex: 3;
@@ -1001,7 +1009,6 @@
     .filter-item {
       text-align: center;
       font-size: @fontSizeNormal;
-      margin: 0 6px;
       border-bottom: 3px solid @colorBeige;
       white-space: nowrap;
 

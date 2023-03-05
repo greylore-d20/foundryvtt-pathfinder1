@@ -1,5 +1,6 @@
 import { ActorPF } from "../documents/actor/actor-pf.mjs";
 import { createTestActor, addCompendiumItemToActor, unitTest_renderActorSheet } from "./actor-utils.mjs";
+import { ItemChange } from "@component/change.mjs";
 
 export const registerActorItemAttackTests = () => {
   // ---------------------------------- //
@@ -133,6 +134,141 @@ export const registerActorItemAttackTests = () => {
                 expect(rolls.damage[0].formula).to.equal("3d6 + 4[Strength]");
               });
             });
+          });
+        });
+      });
+
+      describe("masterwork/enhanced longsword", function () {
+        const items = {};
+        before(async () => {
+          items.wLongsword = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Longsword", {
+            "system.masterwork": true,
+          });
+          items.aLongsword = await actor.createAttackFromWeapon(items.wLongsword);
+        });
+
+        const addBuff = () =>
+          actor.createEmbeddedDocuments("Item", [
+            {
+              name: "Buff",
+              type: "buff",
+              system: {
+                active: true,
+                changes: [
+                  new ItemChange({ formula: "2", subTarget: "attack", modifier: "enh" }).data,
+                  new ItemChange({ formula: "2", subTarget: "damage", modifier: "enh" }).data,
+                ],
+              },
+            },
+          ]);
+
+        describe("attack with weapon item", async function () {
+          let attack;
+          before(async () => {
+            const roll = await items.wLongsword.use({ skipDialog: true });
+            messages.push(roll);
+            attack = roll.systemRolls.attacks[0];
+          });
+
+          it("should have the correct attack formula", function () {
+            expect(attack.attack.formula).to.equal("1d20 + 4[Strength] + 1[Enhancement Bonus]");
+          });
+
+          it("should have the correct damage formula", function () {
+            expect(attack.damage[0].formula).to.equal("1d8 + 4[Strength]");
+          });
+        });
+
+        describe("attack with enhanced weapon item", async function () {
+          let attack;
+          before(async () => {
+            await items.wLongsword.update({ "system.enh": 1, "system.masterwork": true });
+            const roll = await items.wLongsword.use({ skipDialog: true });
+            messages.push(roll);
+            attack = roll.systemRolls.attacks[0];
+          });
+
+          it("should have the correct attack formula", function () {
+            expect(attack.attack.formula).to.equal("1d20 + 4[Strength] + 1[Enhancement Bonus]");
+          });
+          it("should have the correct damage formula", function () {
+            expect(attack.damage[0].formula).to.equal("1d8 + 1[Enhancement Bonus] + 4[Strength]");
+          });
+        });
+
+        describe("attack with added buff", async function () {
+          let buff, attack;
+          before(async () => {
+            const buffItems = await addBuff();
+            buff = buffItems[0];
+            const roll = await items.wLongsword.use({ skipDialog: true });
+            messages.push(roll);
+            attack = roll.systemRolls.attacks[0];
+          });
+          after(async () => {
+            await buff.delete();
+          });
+
+          it("should have the correct attack formula", function () {
+            expect(attack.attack.formula).to.equal("1d20 + 4[Strength] + 2[Buff]");
+          });
+          it("should have the correct damage formula", function () {
+            expect(attack.damage[0].formula).to.equal("1d8 + 2[Buff] + 4[Strength]");
+          });
+        });
+
+        describe("attack with attack item", async function () {
+          let attack;
+          before(async () => {
+            const roll = await items.aLongsword.use({ skipDialog: true });
+            messages.push(roll);
+            attack = roll.systemRolls.attacks[0];
+          });
+
+          it("should have the correct attack formula", function () {
+            expect(attack.attack.formula).to.equal("1d20 + 4[Strength] + 1[Enhancement Bonus]");
+          });
+
+          it("should have the correct damage formula", function () {
+            expect(attack.damage[0].formula).to.equal("1d8 + 4[Strength]");
+          });
+        });
+
+        describe("attack with enhanced attack item", async function () {
+          let attack;
+          before(async () => {
+            await items.aLongsword.update({ "system.enh": 1, "system.masterwork": true });
+            const roll = await items.aLongsword.use({ skipDialog: true });
+            messages.push(roll);
+            attack = roll.systemRolls.attacks[0];
+          });
+
+          it("should have the correct attack formula", function () {
+            expect(attack.attack.formula).to.equal("1d20 + 4[Strength] + 1[Enhancement Bonus]");
+          });
+          it("should have the correct damage formula", function () {
+            expect(attack.damage[0].formula).to.equal("1d8 + 1[Enhancement Bonus] + 4[Strength]");
+          });
+        });
+
+        describe("attack with enhanced attack item and buff", async function () {
+          let attack, buff;
+          before(async () => {
+            const buffItems = await addBuff();
+            buff = buffItems[0];
+            const roll = await items.aLongsword.use({ skipDialog: true });
+            messages.push(roll);
+            attack = roll.systemRolls.attacks[0];
+          });
+          after(async () => {
+            await buff.delete();
+          });
+
+          it("should have the correct attack formula", function () {
+            expect(attack.attack.formula).to.equal("1d20 + 4[Strength] + 2[Buff]");
+          });
+          it("should have the correct damage formula", function () {
+            expect(attack.damage[0].formula).to.equal("1d8 + 2[Buff] + 4[Strength]");
           });
         });
       });

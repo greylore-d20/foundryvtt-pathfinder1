@@ -12,7 +12,6 @@ import {
   getChangeFlat,
   getSourceInfo,
   setSourceInfoByName,
-  getHighestChanges,
 } from "./utils/apply-changes.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
@@ -2053,15 +2052,14 @@ export class ActorPF extends ActorBasePF {
 
     // Gather changes
     const parts = [];
-    const changes = getHighestChanges(
+    const changes = ItemChange.getHighestChanges(
       this.changes.filter((c) => {
         let cf = getChangeFlat.call(this, c.subTarget, c.modifier);
         if (!(cf instanceof Array)) cf = [cf];
 
         if (haveParentSkill && cf.includes(`system.skills.${mainSkillId}.changeBonus`)) return true;
         return cf.includes(`system.skills.${skillId}.changeBonus`);
-      }),
-      { ignoreTarget: true }
+      })
     );
 
     // Add ability modifier
@@ -2180,9 +2178,8 @@ export class ActorPF extends ActorBasePF {
     const changeSources = ["attack"];
     if (options.ranged === true) changeSources.push("rattack");
     else changeSources.push("mattack");
-    const effectiveChanges = getHighestChanges(
-      this.changes.filter((c) => changeSources.includes(c.subTarget)),
-      { ignoreTarget: true }
+    const effectiveChanges = ItemChange.getHighestChanges(
+      this.changes.filter((c) => changeSources.includes(c.subTarget))
     );
     effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor));
 
@@ -2570,11 +2567,11 @@ export class ActorPF extends ActorBasePF {
     const changes = this.changes.filter((c) => ["allSavingThrows", savingThrowId].includes(c.subTarget));
     {
       // Get damage bonus
-      changeBonus = getHighestChanges(
+      changeBonus = ItemChange.getHighestChanges(
         changes.filter((c) => {
-          return !["set", "="].includes(c.operator);
-        }),
-        { ignoreTarget: true }
+          const { operator } = c.evaluate(rollData);
+          return operator === "add";
+        })
       ).reduce((cur, c) => {
         if (c.value)
           cur.push({

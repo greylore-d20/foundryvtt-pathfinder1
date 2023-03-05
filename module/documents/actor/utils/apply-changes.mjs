@@ -2,6 +2,7 @@ import { PF1 } from "../../../config.mjs";
 import { RollPF } from "../../../dice/roll.mjs";
 import { fractionalToString } from "@utils";
 import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
+import { ItemChange } from "@component/change.mjs";
 
 /**
  * @this {import("@actor/actor-pf.mjs").ActorPF}
@@ -1281,13 +1282,7 @@ export const setSourceInfoByName = function (obj, key, name, value, positive = t
   }
 };
 
-/**
- * @param {ItemChange[]} changes - An array containing all changes to check. Must be called after they received a value (by ItemChange.applyChange)
- * @param {object} [options]
- * @param {boolean} [options.ignoreTarget] - Whether to only check for modifiers such as enhancement, insight (true) or whether the target (AC, weapon damage) is also important (false)
- * @returns {ItemChange[]} - A list of processed changes, excluding the lower-valued ones inserted (if they don't stack)
- */
-export const getHighestChanges = function (changes, options = { ignoreTarget: false }) {
+const _oldGetHighestChanges = function (changes, options = { ignoreTarget: false }) {
   const highestTemplate = {
     value: 0,
     ids: [],
@@ -1334,4 +1329,20 @@ export const getHighestChanges = function (changes, options = { ignoreTarget: fa
   }
 
   return changes;
+};
+
+/**
+ * @deprecated since 0.83.0
+ * @param {ItemChange[]} changes - An array containing all changes to check. Must be called after they received a value (by ItemChange.applyChange)
+ * @param {object} [options]
+ * @param {boolean} [options.ignoreTarget] - Whether to only check for modifiers such as enhancement, insight (true) or whether the target (AC, weapon damage) is also important (false)
+ * @returns {ItemChange[]} - A list of processed changes, excluding the lower-valued ones inserted (if they don't stack)
+ */
+export const getHighestChanges = function (changes, options = { ignoreTarget: false }) {
+  const details = options.ignoreTarget ? "Additionally, the ignoreTarget option is no longer supported." : "";
+  foundry.utils.logCompatibilityWarning(
+    "getHighestChanges has been deprecated. Use ItemChange.getHighestChanges instead.",
+    { since: "0.83.0", until: "0.84.0", details: details }
+  );
+  return options.ignoreTarget ? _oldGetHighestChanges(changes, options) : ItemChange.getHighestChanges(changes);
 };

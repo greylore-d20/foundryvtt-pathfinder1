@@ -13,7 +13,6 @@ import {
 import { getWeightSystem } from "@utils";
 import { ItemChange } from "../../components/change.mjs";
 import { ItemAction } from "../../components/action.mjs";
-import { getHighestChanges } from "../actor/utils/apply-changes.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 import { ActionUse } from "@actionUse/action-use.mjs";
 import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs";
@@ -2062,9 +2061,8 @@ export class ItemPF extends ItemBasePF {
     const changeSources = [];
     if (isRanged) changeSources.push("rattack");
     if (isMelee) changeSources.push("mattack");
-    const effectiveChanges = getHighestChanges(
-      this.parentActor.changes.filter((c) => changeSources.includes(c.subTarget)),
-      { ignoreTarget: true }
+    const effectiveChanges = ItemChange.getHighestChanges(
+      this.parentActor.changes.filter((c) => changeSources.includes(c.subTarget))
     );
     effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, -800));
 
@@ -2198,7 +2196,7 @@ export class ItemPF extends ItemBasePF {
       });
     }
 
-    return getHighestChanges(allChanges, { ignoreTarget: true });
+    return ItemChange.getHighestChanges(allChanges);
   }
 
   /**

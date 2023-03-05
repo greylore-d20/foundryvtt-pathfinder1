@@ -16,9 +16,9 @@ import { dialogGetActor } from "../../utils/dialog.mjs";
 import { applyAccessibilitySettings } from "../../utils/chat.mjs";
 import { LevelUpForm } from "../level-up.mjs";
 import { CurrencyTransfer } from "../currency-transfer.mjs";
-import { getHighestChanges } from "../../documents/actor/utils/apply-changes.mjs";
 import { PF1 } from "../../config.mjs";
 import { RollPF } from "../../dice/roll.mjs";
+import { ItemChange } from "@component/change.mjs";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -516,19 +516,18 @@ export class ActorSheetPF extends ActorSheet {
       // Bonus feat formula
       const featCountRoll = RollPF.safeRoll(this.document.system.details.bonusFeatFormula || "0", rollData);
       const changes = this.document.changes.filter((c) => c.subTarget === "bonusFeats");
-      const changeBonus = getHighestChanges(
+      const changeBonus = ItemChange.getHighestChanges(
         changes.filter((c) => {
-          c.applyChange(this.document);
-          if (c.parent || c.flavor) {
-            sourceData.push({
-              name: c.parent?.name ?? c.flavor,
-              value: c.value,
-            });
-          }
-          return !["set", "="].includes(c.operator);
-        }),
-        { ignoreTarget: true }
+          const { operator } = c.evaluate();
+          return operator === "add";
+        })
       ).reduce((cur, c) => {
+        if (c.parent || c.flavor) {
+          sourceData.push({
+            name: c.parent?.name ?? c.flavor,
+            value: c.value,
+          });
+        }
         return cur + c.value;
       }, 0);
       data.featCount.byFormula = featCountRoll.total + changeBonus;

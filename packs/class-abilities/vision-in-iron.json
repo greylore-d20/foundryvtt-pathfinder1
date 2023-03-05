@@ -1,18 +1,18 @@
 {
-  "_id": "mqukM0AnVAF4bvV4",
-  "name": "Rustling Grasp",
+  "_id": "qxXrAwxQlkuJDdhh",
+  "name": "Vision in Iron",
   "type": "feat",
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "sort": 0,
   "flags": {},
   "system": {
     "description": {
-      "value": "<p>Once per day as a standard action, you can perform a melee touch attack that rusts iron, as the&nbsp;rusting grasp&nbsp;spell.</p>\n<p>At 11th level, and every four levels thereafter, you can use this ability an additional time per day.</p>\n<p>You must be at least 7th level to select this revelation.</p>"
+      "value": "<p>You can use any piece of polished metal at least the size of a dagger as a scrying device, as if using the spell @Compendium[pf1.spells.g66w32kdup1f43bp]{Scrying}.</p>\n<p>At 15th level, this functions like @Compendium[pf1.spells.glt6uk3n6g6l2p6l]{Scrying, Greater}.</p>\n<p>You can scry for a number of rounds per day equal to your oracle level; these rounds do not need to be consecutive.</p>\n<p>You must be at least 7th level to select this revelation.</p>"
     },
-    "tags": [],
+    "tags": [["Revelation"], ["Metal Mystery"]],
     "actions": [
       {
-        "_id": "kb2w03xj5xja17zj",
+        "_id": "c7d5isooxb68yqbr",
         "name": "Use",
         "img": "systems/pf1/icons/spells/light-royal-1.jpg",
         "description": "",
@@ -28,15 +28,15 @@
           }
         },
         "duration": {
-          "value": null,
-          "units": "inst"
+          "value": "1",
+          "units": "round"
         },
         "target": {
-          "value": "object touched"
+          "value": ""
         },
         "range": {
           "value": null,
-          "units": "touch",
+          "units": "",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -50,7 +50,7 @@
           },
           "per": "day",
           "value": 0,
-          "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
+          "maxFormula": "@classes.oracle.level"
         },
         "measureTemplate": {
           "type": "",
@@ -119,7 +119,7 @@
     ],
     "uses": {
       "per": "day",
-      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
+      "maxFormula": "@classes.oracle.level"
     },
     "attackNotes": [],
     "effectNotes": [],
@@ -129,7 +129,7 @@
       "children": [],
       "charges": []
     },
-    "tag": "classFeat_rustlingGrasp",
+    "tag": "classFeat_visionInIron",
     "useCustomTag": true,
     "armorProf": {
       "value": []

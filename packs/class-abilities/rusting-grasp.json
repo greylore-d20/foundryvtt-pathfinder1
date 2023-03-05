@@ -1,18 +1,18 @@
 {
-  "_id": "qxXrAwxQlkuJDdhh",
-  "name": "Vision of Iron",
+  "_id": "mqukM0AnVAF4bvV4",
+  "name": "Rusting Grasp",
   "type": "feat",
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "sort": 0,
   "flags": {},
   "system": {
     "description": {
-      "value": "<p>You can use any piece of polished metal at least the size of a dagger as a scrying device, as if using the spell @Compendium[pf1.spells.g66w32kdup1f43bp]{Scrying}.</p>\n<p>At 15th level, this functions like @Compendium[pf1.spells.glt6uk3n6g6l2p6l]{Scrying, Greater}.</p>\n<p>You can scry for a number of rounds per day equal to your oracle level; these rounds do not need to be consecutive.</p>\n<p>You must be at least 7th level to select this revelation.</p>"
+      "value": "<p>Once per day as a standard action, you can perform a melee touch attack that rusts iron, as the&nbsp;rusting grasp&nbsp;spell.</p>\n<p>At 11th level, and every four levels thereafter, you can use this ability an additional time per day.</p>\n<p>You must be at least 7th level to select this revelation.</p>"
     },
-    "tags": [],
+    "tags": [["Revelation"], ["Metal Mystery"]],
     "actions": [
       {
-        "_id": "c7d5isooxb68yqbr",
+        "_id": "kb2w03xj5xja17zj",
         "name": "Use",
         "img": "systems/pf1/icons/spells/light-royal-1.jpg",
         "description": "",
@@ -28,15 +28,15 @@
           }
         },
         "duration": {
-          "value": "1",
-          "units": "round"
+          "value": null,
+          "units": "inst"
         },
         "target": {
-          "value": ""
+          "value": "object touched"
         },
         "range": {
           "value": null,
-          "units": "",
+          "units": "touch",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -50,7 +50,7 @@
           },
           "per": "day",
           "value": 0,
-          "maxFormula": "@classes.oracle.level"
+          "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
         },
         "measureTemplate": {
           "type": "",
@@ -119,7 +119,7 @@
     ],
     "uses": {
       "per": "day",
-      "maxFormula": "@classes.oracle.level"
+      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
     },
     "attackNotes": [],
     "effectNotes": [],
@@ -129,7 +129,7 @@
       "children": [],
       "charges": []
     },
-    "tag": "classFeat_visionOfIron",
+    "tag": "classFeat_rustingGrasp",
     "useCustomTag": true,
     "armorProf": {
       "value": []

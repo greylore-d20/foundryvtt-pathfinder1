@@ -1,56 +1,53 @@
 {
-  "_id": "ZMk7lj8hea8clAxe",
-  "name": "Gunslinger Initiative",
+  "_id": "qXbFw1qEdelMGNH4",
+  "name": "Gunslinger's Dodge",
   "type": "feat",
-  "img": "systems/pf1/icons/feats/improved-initiative.jpg",
+  "img": "systems/pf1/icons/feats/dodge.jpg",
   "sort": 0,
   "flags": {},
   "system": {
     "description": {
-      "value": "<p><span style=\"color: #191813; font-size: 13px;\">At 3rd level, as long as the gunslinger has at least 1 grit point, she gains the following benefits. First, she gains a +2 bonus on </span><em>initiative</em><span style=\"color: #191813; font-size: 13px;\">&nbsp;checks. Furthermore, if she has the&nbsp;</span><em>Quick Draw</em><span style=\"color: #191813; font-size: 13px;\">&nbsp;feat, her hands are free and unrestrained, and the firearm is not hidden, she can draw a single firearm as part of the&nbsp;</span><em>initiative</em><span style=\"color: #191813; font-size: 13px;\"> check.</span></p>"
+      "value": "<p>At 1st level, the gunslinger gains an uncanny knack for getting out of the way of ranged attacks. When a ranged attack is made against the gunslinger, she can spend 1 grit point to move 5 feet as an immediate action; doing so grants the gunslinger a +2 bonus to AC against the triggering attack. This movement is not a 5-foot step, and provokes attacks of opportunity. Alternatively, the gunslinger can drop prone to gain a +4 bonus to AC against the triggering attack. The gunslinger can only perform this deed while wearing medium or light armor, and while carrying no more than a light load.</p>"
     },
     "tags": [["Gunslinger Deed"]],
     "actions": [
       {
-        "_id": "l4ejn4hvg9kyh6pj",
+        "_id": "uGRBMDP0zp08yMJL",
         "name": "Use",
-        "img": "systems/pf1/icons/feats/improved-initiative.jpg",
+        "img": "systems/pf1/icons/feats/dodge.jpg",
         "description": "",
         "tag": "",
         "activation": {
           "cost": 1,
-          "type": "passive"
+          "type": "immediate"
         },
         "unchainedAction": {
           "activation": {
             "cost": 1,
-            "type": "passive"
+            "type": ""
           }
         },
         "duration": {
           "value": null,
-          "units": "perm"
+          "units": ""
         },
         "target": {
           "value": ""
         },
         "range": {
           "value": null,
-          "units": "personal",
+          "units": "",
           "maxIncrements": 1,
           "minValue": null,
-          "minUnits": "none"
+          "minUnits": ""
         },
         "uses": {
-          "autoDeductChargesCost": "0",
+          "autoDeductChargesCost": "",
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
-          },
-          "per": "unlimited",
-          "value": 5,
-          "maxFormula": ""
+            "per": ""
+          }
         },
         "measureTemplate": {
           "type": "",
@@ -88,7 +85,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": 0,
+          "dc": "",
           "type": "",
           "description": ""
         },
@@ -118,28 +115,17 @@
       }
     ],
     "uses": {
-      "per": "unlimited",
-      "value": 5
+      "per": ""
     },
     "attackNotes": [],
     "effectNotes": [],
-    "changes": [
-      {
-        "_id": "s57us5lv",
-        "formula": "(@resources.gritGun.value > 0 ? 1 : 0)",
-        "operator": "add",
-        "subTarget": "init",
-        "modifier": "untypedPerm",
-        "priority": 0,
-        "value": 1
-      }
-    ],
+    "changes": [],
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
-    "tag": "classFeat_gunslingerInitiative",
+    "tag": "classFeat_gunslingersDodge",
     "useCustomTag": true,
     "armorProf": {
       "value": []
@@ -150,10 +136,10 @@
     "languages": {
       "value": []
     },
-    "scriptCalls": [],
     "subType": "classFeat",
+    "scriptCalls": [],
     "associations": {
-      "classes": []
+      "classes": [["Gunslinger"]]
     },
     "abilityType": "ex"
   }

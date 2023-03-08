@@ -1,56 +1,53 @@
 {
-  "_id": "ZMk7lj8hea8clAxe",
-  "name": "Gunslinger Initiative",
+  "_id": "MoYtXZ0fYDw7If8G",
+  "name": "Startling Shot",
   "type": "feat",
-  "img": "systems/pf1/icons/feats/improved-initiative.jpg",
+  "img": "systems/pf1/icons/skills/weapon_36.jpg",
   "sort": 0,
   "flags": {},
   "system": {
     "description": {
-      "value": "<p><span style=\"color: #191813; font-size: 13px;\">At 3rd level, as long as the gunslinger has at least 1 grit point, she gains the following benefits. First, she gains a +2 bonus on </span><em>initiative</em><span style=\"color: #191813; font-size: 13px;\">&nbsp;checks. Furthermore, if she has the&nbsp;</span><em>Quick Draw</em><span style=\"color: #191813; font-size: 13px;\">&nbsp;feat, her hands are free and unrestrained, and the firearm is not hidden, she can draw a single firearm as part of the&nbsp;</span><em>initiative</em><span style=\"color: #191813; font-size: 13px;\"> check.</span></p>"
+      "value": "<p>At 7th level, a gunslinger with least 1 grit point can spend a standard action to purposely miss a creature that she could normally hit with a firearm attack. When she does, that creature becomes flat-footed until the start of its next turn.</p>"
     },
     "tags": [["Gunslinger Deed"]],
     "actions": [
       {
-        "_id": "l4ejn4hvg9kyh6pj",
+        "_id": "YuUwkM96rFN4AsZ8",
         "name": "Use",
-        "img": "systems/pf1/icons/feats/improved-initiative.jpg",
+        "img": "systems/pf1/icons/skills/weapon_36.jpg",
         "description": "",
         "tag": "",
         "activation": {
           "cost": 1,
-          "type": "passive"
+          "type": "standard"
         },
         "unchainedAction": {
           "activation": {
             "cost": 1,
-            "type": "passive"
+            "type": ""
           }
         },
         "duration": {
           "value": null,
-          "units": "perm"
+          "units": ""
         },
         "target": {
           "value": ""
         },
         "range": {
           "value": null,
-          "units": "personal",
+          "units": "",
           "maxIncrements": 1,
           "minValue": null,
-          "minUnits": "none"
+          "minUnits": ""
         },
         "uses": {
-          "autoDeductChargesCost": "0",
+          "autoDeductChargesCost": "",
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
-          },
-          "per": "unlimited",
-          "value": 5,
-          "maxFormula": ""
+            "per": ""
+          }
         },
         "measureTemplate": {
           "type": "",
@@ -88,7 +85,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": 0,
+          "dc": "",
           "type": "",
           "description": ""
         },
@@ -118,28 +115,17 @@
       }
     ],
     "uses": {
-      "per": "unlimited",
-      "value": 5
+      "per": ""
     },
     "attackNotes": [],
     "effectNotes": [],
-    "changes": [
-      {
-        "_id": "s57us5lv",
-        "formula": "(@resources.gritGun.value > 0 ? 1 : 0)",
-        "operator": "add",
-        "subTarget": "init",
-        "modifier": "untypedPerm",
-        "priority": 0,
-        "value": 1
-      }
-    ],
+    "changes": [],
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
-    "tag": "classFeat_gunslingerInitiative",
+    "tag": "classFeat_startlingShot",
     "useCustomTag": true,
     "armorProf": {
       "value": []
@@ -153,8 +139,7 @@
     "scriptCalls": [],
     "subType": "classFeat",
     "associations": {
-      "classes": []
-    },
-    "abilityType": "ex"
+      "classes": [["Gunslinger"]]
+    }
   }
 }

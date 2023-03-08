@@ -1,56 +1,53 @@
 {
-  "_id": "ZMk7lj8hea8clAxe",
-  "name": "Gunslinger Initiative",
+  "_id": "W3RCSHE7qjDNKp7c",
+  "name": "Dead Shot",
   "type": "feat",
-  "img": "systems/pf1/icons/feats/improved-initiative.jpg",
+  "img": "systems/pf1/icons/skills/weapon_37.jpg",
   "sort": 0,
   "flags": {},
   "system": {
     "description": {
-      "value": "<p><span style=\"color: #191813; font-size: 13px;\">At 3rd level, as long as the gunslinger has at least 1 grit point, she gains the following benefits. First, she gains a +2 bonus on </span><em>initiative</em><span style=\"color: #191813; font-size: 13px;\">&nbsp;checks. Furthermore, if she has the&nbsp;</span><em>Quick Draw</em><span style=\"color: #191813; font-size: 13px;\">&nbsp;feat, her hands are free and unrestrained, and the firearm is not hidden, she can draw a single firearm as part of the&nbsp;</span><em>initiative</em><span style=\"color: #191813; font-size: 13px;\"> check.</span></p>"
+      "value": "<p>At 7th level, as a full-round action, the gunslinger can take careful aim and pool all of her attack potential into a single, deadly shot. When she does this, she shoots the firearm at a single target, but makes as many attack rolls as she can, based on her base attack bonus. She makes the attack rolls in order from highest bonus to lowest, as if she were making a full attack. If any of the attack rolls hit the target, the gunslinger’s single attack is considered to have hit. For each additional successful attack roll beyond the first, the gunslinger increases the damage of the shot by the base damage dice of the firearm. For instance, if a 7th-level gunslinger firing a musket hits with both attacks, she does 2d12 points of damage with the shot, instead of 1d12 points of damage, before adding any damage modifiers. Precision damage and extra damage from weapon special abilities (such as flaming) are added with damage modifiers and are not increased by this deed. If one or more rolls are critical threats, she confirms the critical once using her highest base attack bonus –5. For each critical threat beyond the first, she reduces this penalty by 1 (to a maximum of 0). The gunslinger only misfires on a dead shot if all the attack rolls are misfires. She cannot perform this deed with a blunderbuss or other scatter weapon when attacking creatures in a cone. The gunslinger must spend 1 grit point to perform this deed.</p>"
     },
     "tags": [["Gunslinger Deed"]],
     "actions": [
       {
-        "_id": "l4ejn4hvg9kyh6pj",
+        "_id": "UnDW7W7AromBUkU6",
         "name": "Use",
-        "img": "systems/pf1/icons/feats/improved-initiative.jpg",
+        "img": "systems/pf1/icons/skills/weapon_37.jpg",
         "description": "",
         "tag": "",
         "activation": {
           "cost": 1,
-          "type": "passive"
+          "type": "full"
         },
         "unchainedAction": {
           "activation": {
             "cost": 1,
-            "type": "passive"
+            "type": ""
           }
         },
         "duration": {
           "value": null,
-          "units": "perm"
+          "units": ""
         },
         "target": {
           "value": ""
         },
         "range": {
           "value": null,
-          "units": "personal",
+          "units": "",
           "maxIncrements": 1,
           "minValue": null,
-          "minUnits": "none"
+          "minUnits": ""
         },
         "uses": {
-          "autoDeductChargesCost": "0",
+          "autoDeductChargesCost": "",
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
-          },
-          "per": "unlimited",
-          "value": 5,
-          "maxFormula": ""
+            "per": ""
+          }
         },
         "measureTemplate": {
           "type": "",
@@ -88,7 +85,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": 0,
+          "dc": "",
           "type": "",
           "description": ""
         },
@@ -118,28 +115,17 @@
       }
     ],
     "uses": {
-      "per": "unlimited",
-      "value": 5
+      "per": ""
     },
     "attackNotes": [],
     "effectNotes": [],
-    "changes": [
-      {
-        "_id": "s57us5lv",
-        "formula": "(@resources.gritGun.value > 0 ? 1 : 0)",
-        "operator": "add",
-        "subTarget": "init",
-        "modifier": "untypedPerm",
-        "priority": 0,
-        "value": 1
-      }
-    ],
+    "changes": [],
     "contextNotes": [],
     "links": {
       "children": [],
       "charges": []
     },
-    "tag": "classFeat_gunslingerInitiative",
+    "tag": "classFeat_deadShot",
     "useCustomTag": true,
     "armorProf": {
       "value": []
@@ -153,7 +139,7 @@
     "scriptCalls": [],
     "subType": "classFeat",
     "associations": {
-      "classes": []
+      "classes": [["Gunslinger"]]
     },
     "abilityType": "ex"
   }

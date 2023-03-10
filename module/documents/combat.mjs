@@ -260,7 +260,7 @@ export class CombatPF extends Combat {
    */
   async _processCurrentCombatant() {
     try {
-      this.combatant?.actor?.expireActiveEffects();
+      this.combatant?.actor?.expireActiveEffects({ combat: this });
     } catch (error) {
       console.error(error);
     }

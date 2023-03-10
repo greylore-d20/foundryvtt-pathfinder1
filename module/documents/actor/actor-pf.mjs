@@ -404,28 +404,50 @@ export class ActorPF extends Actor {
   /**
    * Deletes expired temporary active effects and disables linked expired buffs.
    *
+   * @param {object} [options] Additional options
+   * @param {Combat} [options.combat] Combat to expire data in, if relevant
    * @param {DocumentModificationContext} [context] Document update context
    */
-  async expireActiveEffects(context = {}) {
+  async expireActiveEffects({ combat } = {}, context = {}) {
     const worldTime = game.time.worldTime;
+
     const temporaryEffects = this.temporaryEffects.filter((ae) => {
-      const { seconds, startTime } = ae.duration;
+      const { seconds, rounds, startTime, startRound } = ae.duration;
       // Calculate remaining duration.
       // AE.duration.remaining is updated by Foundry only in combat and is unreliable.
       if (seconds > 0) {
-        const elapsed = worldTime - startTime,
+        const elapsed = worldTime - (startTime ?? 0),
           remaining = seconds - elapsed;
+        return remaining <= 0;
+      } else if (rounds > 0 && combat) {
+        // BUG: This will ignore which combat
+        const elapsed = combat.round - (startRound ?? 0),
+          remaining = rounds - elapsed;
         return remaining <= 0;
       }
       return false;
     });
+
     const disableActiveEffects = [],
-      disableBuffs = [];
+      deleteActiveEffects = [],
+      disableBuffs = [],
+      actorUpdate = {};
+
     for (const ae of temporaryEffects) {
       const re = ae.origin?.match(/Item\.(?<itemId>\w+)/);
       const item = this.items.get(re?.groups.itemId);
-      if (!item || item.type !== "buff") {
-        disableActiveEffects.push({ _id: ae.id, active: false });
+      if (item?.type !== "buff") {
+        const conditionId = ae.getFlag("core", "statusId");
+        if (conditionId) {
+          // Disable expired conditions
+          actorUpdate[`system.attributes.conditions.-=${conditionId}`] = null;
+        } else {
+          if (ae.getFlag("pf1", "autoDelete")) {
+            deleteActiveEffects.push(ae.id);
+          } else {
+            disableActiveEffects.push({ _id: ae.id, disabled: true });
+          }
+        }
       } else {
         disableBuffs.push({ _id: item.id, "system.active": false });
       }
@@ -435,10 +457,23 @@ export class ActorPF extends Actor {
     context.pf1 ??= {};
     context.pf1.reason = "duration";
 
-    const disableAEContext = mergeObject({ render: !disableBuffs.length }, context);
+    const hasActorUpdates = !foundry.utils.isEmpty(actorUpdate);
+
+    const deleteAEContext = mergeObject(
+      { render: !disableBuffs.length && !disableActiveEffects.length && !hasActorUpdates },
+      context
+    );
+    if (deleteActiveEffects.length)
+      await this.deleteEmbeddedDocuments("ActiveEffect", deleteActiveEffects, deleteAEContext);
+
+    const disableAEContext = mergeObject({ render: !disableBuffs.length && !hasActorUpdates }, context);
     if (disableActiveEffects.length)
       await this.updateEmbeddedDocuments("ActiveEffect", disableActiveEffects, disableAEContext);
-    if (disableBuffs.length) await this.updateEmbeddedDocuments("Item", disableBuffs, context);
+
+    const disableBuffContext = mergeObject({ render: !hasActorUpdates }, context);
+    if (disableBuffs.length) await this.updateEmbeddedDocuments("Item", disableBuffs, disableBuffContext);
+
+    if (hasActorUpdates) await this.update(actorUpdate, context);
   }
 
   /**
@@ -4002,7 +4037,14 @@ export class ActorPF extends Actor {
 
       if (hasCondition && !hasEffectIcon) {
         toCreate.push({
-          "flags.core.statusId": condKey,
+          flags: {
+            core: {
+              statusId: condKey,
+            },
+            pf1: {
+              autoDelete: true,
+            },
+          },
           name: pf1.config.conditions[condKey],
           icon: pf1.config.conditionTextures[condKey],
           label: pf1.config.conditions[condKey],

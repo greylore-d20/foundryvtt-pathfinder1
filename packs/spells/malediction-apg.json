@@ -1,17 +1,14 @@
 {
-  "_id": "eiocqcnac13xai90",
-  "name": "Malediction",
+  "name": "Malediction (APG)",
   "type": "spell",
-  "img": "icons/magic/death/skeleton-skull-soul-blue.webp",
-  "sort": 0,
-  "flags": {},
+  "img": "icons/magic/unholy/strike-body-life-soul-purple.webp",
   "system": {
     "tags": [],
     "actions": [
       {
-        "_id": "bve3wpv6r56um272",
+        "_id": "Urd1zmxEYXRBNlHF",
         "name": "Use",
-        "img": "icons/magic/death/skeleton-skull-soul-blue.webp",
+        "img": "icons/magic/unholy/strike-body-life-soul-purple.webp",
         "description": "",
         "tag": "",
         "activation": {
@@ -25,11 +22,11 @@
           }
         },
         "duration": {
-          "value": "1 minute and instantaneous (see text)",
+          "value": "instantaneous/1 minute per HD of the target; see text",
           "units": ""
         },
         "target": {
-          "value": "1 creature touched"
+          "value": "living creature touched"
         },
         "range": {
           "value": null,
@@ -44,14 +41,11 @@
             "value": 0,
             "maxFormula": "",
             "per": ""
-          },
-          "per": "",
-          "value": 0,
-          "maxFormula": ""
+          }
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
@@ -85,7 +79,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "",
           "type": "will",
           "description": "Will negates"
         },
@@ -105,18 +99,17 @@
           }
         },
         "nonlethal": false,
+        "touch": true,
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
         "conditionals": [],
         "enh": {
           "value": null
-        },
-        "touch": true
+        }
       }
     ],
     "uses": {
-      "per": "",
       "autoDeductChargesCost": ""
     },
     "attackNotes": [],
@@ -127,27 +120,31 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        ["antipaladin", 4],
-        ["cleric", 4],
-        ["oracle", 4],
-        ["shaman", 4],
-        ["spiritualist", 4],
-        ["warpriest", 4],
-        ["witch", 4]
+        ["arcanist", 3],
+        ["sorcerer", 3],
+        ["witch", 3],
+        ["wizard", 3]
       ],
       "domain": [],
       "subDomain": [],
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 4,
+    "level": 3,
     "school": "nec",
-    "types": "curse, evil",
+    "types": "death, evil",
     "components": {
       "verbal": true,
-      "somatic": true
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "onyx dust worth 500 gp"
     },
     "spellbook": "",
-    "shortDescription": "<p>Channeling the blasphemy of fiends into your hand, you mark your target with a brief but fundamental corruption, causing its soul to be irretrievably damned should it die within the next minute. If you are lawful evil, souls are sent to Hell. If you are neutral evil, souls are sent to Abaddon. If you are chaotic evil, souls are sent to the Abyss.</p><p>A target killed while under the effect of this spell cannot be resurrected by normal means. Only a worshiper of a deity or demigod of your alignment can return a soul damned by <em>malediction</em> to life without difficulty. Other spellcasters must succeed at a caster level check (DC = 10 + your caster level) to restore to life a creature slain while under the effects of <em>malediction</em>. @Compendium[pf1.spells.suel7sgnztenv551]{Miracle} or @UUID[Compendium.pf1.spells.nnj51dwfkwd15ngj]{wish} can return the victim of a <em>malediction</em> to life without requiring a caster level check.</p><p>A soul can also be freed by the efforts of someone bodily going to the appropriate plane, locating the affected soul, and leading it out of the plane, which allows it to go to its intended destination in the afterlife and be resurrected as normal. You can end the effects of your own <em>malediction</em> by casting the spell again and concentrating on a past target. Doing so only frees the past target to go to its rightful place in death; it does not return the target to life.</p><p>Spells such as @Compendium[pf1.spells.myg2b9ww43nnlbr2]{break enchantment}, @Compendium[pf1.spells.gmgwyjfpeuuc4t4o]{dispel magic}, and @UUID[Compendium.pf1.spells.o87h8gjxevcbztgd]{remove curse} negate this spell if successfully cast before the target dies.</p>"
-  }
+    "shortDescription": "<p>You utter a dire curse over the body of a dying creature, allowing you to consume its waning life force. Upon casting this spell, you touch a living creature that has –1 or fewer hit points. If the target fails its saving throw, it dies and you gain 1 hero point for every 5 Hit Dice possessed by the target (minimum 1, maximum 3). These hero points last for a number of minutes equal to the target’s Hit Dice. Any hero points remaining when this spell ends are lost.</p>"
+  },
+  "flags": {},
+  "sort": 0,
+  "_id": "gTOG6zLrWHgHztQ8"
 }

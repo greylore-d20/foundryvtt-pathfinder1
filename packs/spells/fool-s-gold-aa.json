@@ -1,17 +1,14 @@
 {
-  "_id": "1mc2b6d2aw6kkna0",
-  "name": "Shield Companion",
+  "name": "Fool's Gold (AA)",
   "type": "spell",
-  "img": "systems/pf1/icons/misc/magic-swirl.png",
-  "sort": 0,
-  "flags": {},
+  "img": "icons/commodities/currency/coin-inset-skull-gold.webp",
   "system": {
     "tags": [],
     "actions": [
       {
-        "_id": "miqp65cy5hmysxfs",
+        "_id": "5TkFFJ78xCR2nPq4",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/commodities/currency/coin-inset-skull-gold.webp",
         "description": "",
         "tag": "",
         "activation": {
@@ -25,15 +22,15 @@
           }
         },
         "duration": {
-          "value": "1 hour/level (D)",
+          "value": "10 minutes/level",
           "units": ""
         },
         "target": {
-          "value": "your companion creature"
+          "value": "1 gold piece/level touched"
         },
         "range": {
           "value": null,
-          "units": "close",
+          "units": "touch",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -43,22 +40,19 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
-          },
-          "per": "",
-          "value": 0,
-          "maxFormula": ""
+            "per": ""
+          }
         },
         "measureTemplate": {
           "type": "",
-          "size": "0",
+          "size": "",
           "overrideColor": false,
           "customColor": "",
           "overrideTexture": false,
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "msak",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -74,7 +68,7 @@
           "bonus": {
             "formula": ""
           },
-          "label": null
+          "label": ""
         },
         "formula": "",
         "ability": {
@@ -85,15 +79,15 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
-          "type": "will",
-          "description": "Will negates (harmless)"
+          "dc": "",
+          "type": "fort",
+          "description": "Fortitude negates (object, see text)"
         },
         "effectNotes": [],
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
-          "multiplier": "",
+          "multiplier": null,
           "damageBonus": 2,
           "critMultiplier": 1
         },
@@ -105,6 +99,7 @@
           }
         },
         "nonlethal": false,
+        "touch": true,
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",
@@ -115,7 +110,7 @@
       }
     ],
     "uses": {
-      "per": ""
+      "autoDeductChargesCost": ""
     },
     "attackNotes": [],
     "effectNotes": [],
@@ -125,26 +120,38 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        ["sorcerer/wizard", 3],
-        ["ranger", 2],
-        ["paladin", 2],
-        ["summoner", 3],
+        ["alchemist", 1],
+        ["antipaladin", 1],
+        ["arcanist", 2],
+        ["bard", 1],
+        ["investigator", 1],
+        ["mesmerist", 1],
+        ["occultist", 2],
+        ["psychic", 1],
         ["shaman", 2],
-        ["hunter", 2],
-        ["unchained Summoner", 3],
-        ["witch", 1]
+        ["skald", 1],
+        ["sorcerer", 2],
+        ["witch", 2],
+        ["wizard", 2]
       ],
       "domain": [],
       "subDomain": [],
       "elementalSchool": [],
       "bloodline": []
     },
-    "level": 3,
-    "school": "abj",
+    "school": "trs",
     "components": {
       "verbal": true,
-      "somatic": true
+      "somatic": true,
+      "focus": true
     },
-    "shortDescription": "<p>This spell creates a special mystical connection between you and your companion creature-animal companion, bonded mount, eidolon, or familiar-which allows you to transfer its wounds to you. The creature gains a +1 deflection bonus to AC and a +1 resistance bonus on saves.</p><p>As an immediate action when your companion takes damage, you can take that damage yourself to prevent your companion from being harmed (similar to <i>shield other</i>, except the damage is not split between you and the target). Forms of harm that do not involve the loss of hit points, such as charm effects, temporary ability damage, level drain, and death effects, are not affected. If the creature suffers a reduction of hit points from a lowered Constitution score, you cannot take that damage on behalf of your companion creature because it is not hit point damage. When the spell ends, damage directed to you by the spell is not reassigned to the subject.</p><p>If you and your companion move out of range of each other, the spell ends.</p>"
-  }
+    "materials": {
+      "focus": "a lump of gold worth 5 gp"
+    },
+    "spellbook": "",
+    "shortDescription": "<p>You cast this spell on one or more gold pieces, which make those who have them more vulnerable to your magics. A creature with one or more of these gold pieces in its possession must attempt a Will save (at this spell’s save DC) the first time the creature is forced to attempt a saving throw against a spell, spell-like ability, or supernatural ability you create. If the creature fails, it takes a –2 penalty on all saving throws against your magic effects as long as the gold piece is in its possession. Additionally, if it fails a saving throw against a magic ability of yours that is not harmless and has a duration, the duration is doubled for that creature.</p>"
+  },
+  "flags": {},
+  "sort": 0,
+  "_id": "Y1wgewApRHLDb3Hq"
 }

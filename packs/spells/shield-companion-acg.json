@@ -1,17 +1,17 @@
 {
-  "_id": "0wun756dydhv1ihk",
-  "name": "Fool's Gold",
+  "_id": "1mc2b6d2aw6kkna0",
+  "name": "Shield Companion (ACG)",
   "type": "spell",
-  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "img": "icons/magic/nature/wolf-paw-glow-orange.webp",
   "sort": 0,
   "flags": {},
   "system": {
     "tags": [],
     "actions": [
       {
-        "_id": "mqjz5f4o0v5e8n9d",
+        "_id": "miqp65cy5hmysxfs",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/nature/wolf-paw-glow-orange.webp",
         "description": "",
         "tag": "",
         "activation": {
@@ -25,15 +25,15 @@
           }
         },
         "duration": {
-          "value": "1 hour/level",
+          "value": "1 hour/level (D)",
           "units": ""
         },
         "target": {
-          "value": "objects touched"
+          "value": "your companion creature"
         },
         "range": {
           "value": null,
-          "units": "touch",
+          "units": "close",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -43,7 +43,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -87,7 +87,7 @@
         "save": {
           "dc": "0",
           "type": "will",
-          "description": "none or Will disbelief (see text)"
+          "description": "Will negates (harmless)"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -111,11 +111,13 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {
-      "per": ""
+      "per": "",
+      "autoDeductChargesCost": ""
     },
     "attackNotes": [],
     "effectNotes": [],
@@ -125,28 +127,27 @@
     "scriptCalls": [],
     "learnedAt": {
       "class": [
-        ["sorcerer/wizard", 1],
-        ["bard", 1],
-        ["psychic", 1],
-        ["medium", 1],
-        ["mesmerist", 1],
-        ["witch", 2]
+        ["sorcerer/wizard", 3],
+        ["ranger", 2],
+        ["paladin", 2],
+        ["summoner", 3],
+        ["shaman", 2],
+        ["hunter", 2],
+        ["unchained Summoner", 3],
+        ["witch", 1]
       ],
       "domain": [],
       "subDomain": [],
       "elementalSchool": [],
       "bloodline": []
     },
-    "school": "ill",
+    "level": 3,
+    "school": "abj",
     "components": {
       "verbal": true,
-      "somatic": true,
-      "material": true
+      "somatic": true
     },
-    "materials": {
-      "value": "a copper piece or silver piece"
-    },
-    "sr": false,
-    "shortDescription": "<p>You can temporarily make copper or silver seem to be an equivalent amount of gold. The spell affects 1 gp/level worth of material (thus, at 3rd level, the spell affects up to 300 copper pieces, 30 silver pieces, or a copper or silver item worth no more than 3 gp). Coins increase in value as normal for the new type of coinage. For items other than coins, some of the value of the item comes from its craftsmanship, regardless of the metal used, so the value of the item seems to be 5 times (for silver items) or 50 times (for copper items) its true value. Thus, a copper candlestick originally worth 5 cp transformed by this spell appears to be worth 250 cp, or 2 gp and 5 sp. A successful DC 25 Appraise check automatically detects the true nature of the coins or items. Creatures inspecting or interacting with the coins or items can attempt a saving throw to disbelieve the illusion.</p>"
+    "spellbook": "",
+    "shortDescription": "<p>This spell creates a special mystical connection between you and your companion creature-animal companion, bonded mount, eidolon, or familiar-which allows you to transfer its wounds to you. The creature gains a +1 deflection bonus to AC and a +1 resistance bonus on saves.</p><p>As an immediate action when your companion takes damage, you can take that damage yourself to prevent your companion from being harmed (similar to @Compendium[pf1.spells.menqakfoa1ftvi3f]{shield other}, except the damage is not split between you and the target). Forms of harm that do not involve the loss of hit points, such as charm effects, temporary ability damage, level drain, and death effects, are not affected. If the creature suffers a reduction of hit points from a lowered Constitution score, you cannot take that damage on behalf of your companion creature because it is not hit point damage. When the spell ends, damage directed to you by the spell is not reassigned to the subject.</p><p>If you and your companion move out of range of each other, the spell ends.</p>"
   }
 }

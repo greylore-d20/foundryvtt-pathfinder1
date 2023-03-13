@@ -913,15 +913,6 @@ export class ItemPF extends ItemBasePF {
       }
     }
 
-    // Roll spell failure chance
-    if (templateData.isSpell && this.parent != null && this.parent.spellFailure > 0 && this.system.components.somatic) {
-      const spellbook = this.parent.system.attributes?.spells?.spellbooks?.[this.system.spellbook];
-      if (spellbook && spellbook.arcaneSpellFailure) {
-        templateData.spellFailure = RollPF.safeRoll("1d100").total;
-        templateData.spellFailureSuccess = templateData.spellFailure > this.parentActor.spellFailure;
-      }
-    }
-
     // Render the chat card template
     const templateType = ["consumable"].includes(this.type) ? this.type : "item";
     const template = `systems/pf1/templates/chat/${templateType}-card.hbs`;

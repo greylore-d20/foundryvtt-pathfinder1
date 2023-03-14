@@ -413,8 +413,8 @@ export class ActorPF extends ActorBasePF {
     // Reset class info
     this.classes = {};
 
-    // HACK: Init missing resources structure. Needed mostly for JSON imports.
-    this.resources ??= {};
+    //  Init resources structure
+    this.system.resources ??= {};
 
     this._resetInherentTotals();
     callOldNamespaceHookAll("pf1.prepareBaseActorData", "pf1PrepareBaseActorData", this);

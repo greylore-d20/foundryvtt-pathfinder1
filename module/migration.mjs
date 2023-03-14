@@ -1700,4 +1700,9 @@ const _migrateActorUnusedData = (actor, updateData) => {
   if (actor.system.details?.xp?.max !== undefined) {
     updateData["system.details.xp.-=max"] = null;
   }
+
+  // Actor resources have always been derived data
+  if (actor.system.resources !== undefined) {
+    updateData["system.-=resources"] = null;
+  }
 };

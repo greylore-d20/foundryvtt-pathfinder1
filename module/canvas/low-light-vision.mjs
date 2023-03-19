@@ -41,51 +41,18 @@ export const addLowLightVisionToTokenConfig = function (app, html) {
 };
 
 export const patchCore = function () {
-  const LightSource_initialize = LightSource.prototype.initialize;
-  LightSource.prototype.initialize = function (data = {}) {
-    // Initialize new input data
-    const changes = this._initializeData(data);
-    this._initializeFlags();
+  const LightSource_initializeData = LightSource.prototype._initializeData;
 
-    // Record the requested animation configuration
-    const seed = this.animation.seed ?? data.seed ?? Math.floor(Math.random() * 100000);
-    const animationConfig = foundry.utils.deepClone(CONFIG.Canvas.lightAnimations[this.data.animation.type] || {});
-    this.animation = Object.assign(animationConfig, this.data.animation, { seed });
-
-    // Compute dim and bright radius
-    const { dim, bright } = this.getRadius();
-
-    // Compute data attributes
-    this.colorRGB = Color.from(this.data.color)?.rgb;
-    this.radius = Math.max(Math.abs(dim), Math.abs(bright));
-    this.ratio = Math.clamped(Math.abs(bright) / this.radius, 0, 1);
-    this.isDarkness = this.data.luminosity < 0;
-
-    // Compute the source polygon
-    this.los = this._createPolygon();
-    this._flags.renderSoftEdges =
-      canvas.performance.lightSoftEdges && (!!this.los.rays?.length || this.data.angle < 360);
-
-    // Initialize or update meshes with the los points array
-    this._initializeMeshes(this.los);
-
-    // Update shaders if the animation type or the constrained wall option changed
-    const updateShaders = "animation.type" in changes || "walls" in changes;
-    if (updateShaders) this._initializeShaders();
-    else if (this.constructor._appearanceKeys.some((k) => k in changes)) {
-      // Record status flags
-      for (const k of Object.keys(this._resetUniforms)) {
-        this._resetUniforms[k] = true;
-      }
-    }
-
-    // Initialize blend modes and sorting
-    this._initializeBlending();
-    return this;
+  LightSource.prototype._initializeData = function (data = {}) {
+    const rv = LightSource_initializeData.call(this, data);
+    const { dim, bright } = this.getRadius(this.data.dim, this.data.bright);
+    this.data.dim = dim;
+    this.data.bright = bright;
+    return rv;
   };
 
-  LightSource.prototype.getRadius = function () {
-    const result = { dim: this.data.dim, bright: this.data.bright };
+  LightSource.prototype.getRadius = function (dim, bright) {
+    const result = { dim, bright };
     let multiplier = { dim: 1, bright: 1 };
 
     if (this.object?.document.getFlag("pf1", "disableLowLight")) return result;

@@ -1529,7 +1529,7 @@ export class ItemPF extends ItemBasePF {
     const links = this.system.links?.[linkType] || [];
     if (links.some((o) => o.id === itemLink || o.uuid === itemLink)) return false;
 
-    const targetLinks = targetItem.system.link?.[linkType] ?? [];
+    const targetLinks = targetItem.system.links?.[linkType] ?? [];
     if (["children", "charges", "ammunition"].includes(linkType) && sameActor) {
       if (linkType === "charges") {
         // Prevent the closing of charge link loops

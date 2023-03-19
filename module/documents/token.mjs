@@ -78,6 +78,13 @@ export class TokenDocumentPF extends TokenDocument {
       this.sight.attenuation = dvConf.attenuation;
       this.sight.brightness = dvConf.brightness;
       this.sight.contrast = dvConf.contrast;
+    } else {
+      // Make sure sight is reset
+      const baseSight = this._source.sight;
+      this.sight.saturation = baseSight.saturation;
+      this.sight.attenuation = baseSight.attenuation;
+      this.sight.brightness = baseSight.brightness;
+      this.sight.contrast = baseSight.contrast;
     }
 
     // Set basic detection mode

@@ -1820,17 +1820,24 @@ export class ActorPF extends ActorBasePF {
   _onUpdate(updateData, options, userId, context = {}) {
     super._onUpdate(updateData, options, userId, context);
 
-    if (game.user.id === userId && hasProperty(updateData, "system.attributes.conditions")) {
-      this.toggleConditionStatusIcons({ render: false });
-      // Redraw canvas on condition toggle
+    let refreshVision = false;
+    if (hasProperty(updateData, "system.attributes.conditions")) {
+      if (game.user.id === userId) this.toggleConditionStatusIcons({ render: false });
+      refreshVision = true;
+    } else if (hasProperty(updateData, "system.traits.senses")) {
+      refreshVision = true;
+    }
+
+    if (refreshVision) {
+      // Refresh canvas perception
       canvas.perception.update(
         {
-          initializeLighting: true,
           initializeVision: true,
+          refreshLighting: true,
+          refreshVision: true,
         },
         true
       );
-      game.socket.emit("system.pf1", { eventType: "redrawCanvas" });
     }
 
     // Resize token(s)

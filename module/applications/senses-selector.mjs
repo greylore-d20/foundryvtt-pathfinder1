@@ -55,16 +55,6 @@ export class SensesSelector extends DocumentSheet {
     // Update document
     const result = await super._updateObject(event, formData);
 
-    // Refresh canvas perception
-    canvas.perception.update(
-      {
-        initializeLighting: true,
-        initializeVision: true,
-      },
-      true
-    );
-    game.socket.emit("system.pf1", { eventType: "redrawCanvas" });
-
     return result;
   }
 }

@@ -114,7 +114,21 @@ export const registerHandlebarsHelpers = function () {
   });
 
   Handlebars.registerHelper("itemAttacks", (item) => {
+    foundry.utils.logCompatibilityWarning(
+      "{{itemAttacks}} helper is deprecated, please use {{actionAttacks}} instead.",
+      {
+        since: "PF1 0.82.6",
+        until: "PF1 0.83.0",
+      }
+    );
+
     const attacks = item.document.attackArray;
+    const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.
+    return `${attacks.length} (${highest < 0 ? highest : `+${highest}`}${attacks.length > 1 ? "/…" : ""})`;
+  });
+
+  Handlebars.registerHelper("actionAttacks", (action) => {
+    const attacks = action.item.getAttackArray(action.id);
     const highest = Math.max(...attacks); // Highest bonus, with assumption the first might not be that.
     return `${attacks.length} (${highest < 0 ? highest : `+${highest}`}${attacks.length > 1 ? "/…" : ""})`;
   });

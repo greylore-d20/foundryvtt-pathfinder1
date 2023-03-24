@@ -175,7 +175,7 @@
 
           <div class="item-detail item-attacks tooltip">
             {{#if item.hasAttack}}
-            <label>{{itemAttacks item @root.rollData max=3}}</label>
+            <label>{{actionAttacks item.document.firstAction @root.rollData}}</label>
             <span class="tooltipcontent">
               {{#each item.document.attackArray~}}
                 {{numberFormat this decimals=0 sign=true}}{{#unless @last}}/{{/unless}}

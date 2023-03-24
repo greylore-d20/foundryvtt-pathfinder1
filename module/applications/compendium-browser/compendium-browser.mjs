@@ -193,6 +193,8 @@ export class CompendiumBrowser extends Application {
     result.__pack = pack.collection;
     result.__packLabel = pack.metadata.label;
     result.__uuid = `Compendium.${pack.collection}.${entry._id}`;
+    // Prepare `__name` field for fuzzy search optimisation
+    result.__name = fuzzysort.prepare(entry.name.normalize("NFKD"));
     return result;
   }
 
@@ -318,7 +320,7 @@ export class CompendiumBrowser extends Application {
 
     if (this._query)
       entries = fuzzysort
-        .go(SearchFilter.cleanQuery(this._query), entries, { key: "name", threshold: -10000 })
+        .go(this._query.normalize("NFKD"), entries, { key: "__name", threshold: -10000 })
         .map((match) => match.obj);
 
     return entries;

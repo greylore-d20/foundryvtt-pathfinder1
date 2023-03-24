@@ -23,7 +23,7 @@ export class ScriptCalls extends BaseRegistry {
     // Use
     {
       _id: "use",
-      itemTypes: ["attack", "feat", "equipment", "consumable", "spell", "weapon"],
+      itemTypes: ["attack", "buff", "feat", "equipment", "consumable", "spell", "weapon"],
       name: "PF1.ScriptCalls.Use.Name",
       info: "PF1.ScriptCalls.Use.Info",
     },

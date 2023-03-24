@@ -39,6 +39,12 @@
             <span>{{localize "PF1.Level"}}</span>
           </div>
 
+          {{#if section.hasActions}}
+          <div class="item-detail item-actions">
+            <i class="icon icon-gears large" title="{{localize "PF1.ActionPlural"}}"></i>
+          </div>
+          {{/if}}
+
           <div class="item-detail item-active">
             <span>{{localize "PF1.Active"}}</span>
           </div>
@@ -67,6 +73,19 @@
           <div class="item-detail item-level">
             <span class="text-box" data-dtype="Number">{{#if item.level}}{{item.level}}{{/if}}</span>
           </div>
+
+          {{#if section.hasActions}}
+          <div class="item-detail item-actions">
+            <div class="item-attack tooltip">
+              {{#if item.hasAction}}
+              <span class="tooltipcontent">
+                {{localize "PF1.UseItem"}}
+              </span>
+              <a class="item-control item-attack"><img class="icon" src="systems/pf1/icons/actions/gladius.svg"></a>
+              {{/if}}
+            </div>
+          </div>
+          {{/if}}
 
           <div class="item-detail item-active">
             <input type="checkbox" {{checked item.active}}/>

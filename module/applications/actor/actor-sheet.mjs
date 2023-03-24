@@ -2497,7 +2497,7 @@ export class ActorSheetPF extends ActorSheet {
       buffSections[buffId] = {
         label,
         items: [],
-        hasActions: false,
+        hasActions: true,
         dataset: { type: "buff", "sub-type": buffId },
       };
     });

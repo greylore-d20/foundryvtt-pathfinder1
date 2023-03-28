@@ -783,7 +783,7 @@ Hooks.on("createToken", (token, options, userId) => {
   }
 });
 
-Hooks.on("preDeleteToken", (token, options, userId) => {
+Hooks.on("deleteToken", (token, options, userId) => {
   // Hide token tooltip on token deletion
   pf1.tooltip?.unbind(token.object);
 });

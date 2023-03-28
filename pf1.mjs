@@ -798,9 +798,6 @@ Hooks.on("preDeleteToken", (token, options, userId) => {
 Hooks.on("updateToken", function (token, updateData, options, userId) {
   // Hide token tooltip on token update
   pf1.tooltip?.unbind(token);
-
-  // Update token's actor sheet (if any)
-  token.actor?.sheet?.render();
 });
 
 /**

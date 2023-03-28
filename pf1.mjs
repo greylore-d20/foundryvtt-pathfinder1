@@ -766,13 +766,6 @@ Hooks.on("updateActor", (actor, data, options, userId) => {
   }
 });
 
-Hooks.on("preCreateToken", async (scene, token, options, userId) => {
-  const actor = game.actors.get(token.actorId);
-  if (!actor?._calcBuffActiveEffects) return; // Don't do anything for actors without this function (e.g. basic actors)
-  const buffTextures = Object.values(actor?._calcBuffActiveEffects() ?? []).map((b) => b.icon);
-  for (const icon of buffTextures) if (icon) await loadTexture(icon);
-});
-
 Hooks.on("createToken", (token, options, userId) => {
   if (game.user.id !== userId) return;
   // Re-associate imported Active Effects which are sourced to Items owned by this same Actor

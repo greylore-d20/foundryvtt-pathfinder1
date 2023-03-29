@@ -162,6 +162,14 @@
         text-align: left;
         padding: 0; // Override Foundry padding
       }
+
+      [data-item-id]:hover {
+        .item-name {
+          color: var(--pf1-item-hover-text);
+          text-shadow: var(--pf1-item-hover-shadow);
+          cursor: pointer;
+        }
+      }
     }
 
     span.sep {

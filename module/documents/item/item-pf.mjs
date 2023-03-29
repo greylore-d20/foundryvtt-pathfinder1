@@ -844,7 +844,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<ChatMessage | void>}
    */
   async roll(altChatData = {}) {
-    foundry.utils.logCompatibilityWarning(`ActorPF#roll has been deprecated in favor of ActorPF#displayCard`, {
+    foundry.utils.logCompatibilityWarning(`ItemPF#roll has been deprecated in favor of ItemPF#displayCard`, {
       since: "PF1 0.82.0",
       until: "PF1 0.83.0",
     });

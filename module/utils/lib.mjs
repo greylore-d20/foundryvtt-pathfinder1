@@ -268,7 +268,8 @@ export const convertWeight = function (value) {
   const system = getWeightSystem();
   switch (system) {
     case "metric":
-      return Math.round((value / 2) * 100) / 100; // 1 kg is not exactly 2 lb but this conversion is officially used by Paizo/BBE
+      // 1 kg is not exactly 2 lb but this conversion is officially used by Paizo/BBE
+      return value / 2;
     default:
       return value;
   }
@@ -284,7 +285,7 @@ export const convertWeightBack = function (value) {
   const system = getWeightSystem();
   switch (system) {
     case "metric":
-      return Math.round(value * 2 * 100) / 100; // 1 kg is not exactly 2 lb but this conversion is officially used by Paizo/BBE
+      return value * 2; // 1 kg is not exactly 2 lb but this conversion is officially used by Paizo/BBE
     default:
       return value;
   }

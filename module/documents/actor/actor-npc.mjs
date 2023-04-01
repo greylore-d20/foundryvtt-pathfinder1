@@ -36,21 +36,23 @@ export class ActorNPCPF extends ActorPF {
   /* Not used by NPCs */
   _updateExp() {}
 
+  /**
+   * Get challegne rating.
+   * Applies CR offset modifications from templates.
+   *
+   * @returns {number}
+   */
   getCR() {
-    if (this.type !== "npc") return 0;
-    const data = this.system;
-
-    const base = data.details.cr.base;
-    if (this.items == null) return base;
+    const base = this.system.details?.cr?.base ?? 0;
 
     // Gather CR from templates
-    const templates = this.items.filter(
-      (o) => o.type === "feat" && o.system.subType === "template" && !o.system.disabled
-    );
-    return templates.reduce((cur, o) => {
-      const crOffset = o.system.crOffset;
-      if (typeof crOffset === "string" && crOffset.length)
-        cur += RollPF.safeRoll(crOffset, this.getRollData(data)).total;
+    const templates = this.items.filter((item) => item.type === "feat" && item.subType === "template" && item.isActive);
+
+    return templates.reduce((cur, item) => {
+      const crOffset = item.system.crOffset;
+      if (crOffset) {
+        cur += RollPF.safeRoll(crOffset, item.getRollData()).total;
+      }
       return cur;
     }, base);
   }

@@ -82,8 +82,8 @@ export class HealthConfig extends FormApplication {
     const settings = expandObject(formData);
     // Some mild sanitation for the numeric values.
     for (const hd of Object.values(settings.hitdice)) {
-      hd.rate = Math.max(0, Math.min(hd.rate, 100));
-      hd.maximized = Math.max(0, Math.min(Math.floor(hd.maximized), 100));
+      hd.rate = Math.clamped(hd.rate, 0, 100);
+      hd.maximized = Math.clamped(Math.floor(hd.maximized), 0, 100);
     }
 
     settings.variants.npc.allowWoundThresholdOverride = true; // HACK: This setting vanishes otherwise

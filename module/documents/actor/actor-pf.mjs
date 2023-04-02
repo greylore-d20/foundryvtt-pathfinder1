@@ -3062,7 +3062,7 @@ export class ActorPF extends ActorBasePF {
           }
           if (woundAdjust != 0) {
             const wounds = a.data.attributes.wounds;
-            update["system.attributes.wounds.value"] = Math.max(0, Math.min(wounds.value + woundAdjust, wounds.max));
+            update["system.attributes.wounds.value"] = Math.clamped(wounds.value + woundAdjust, 0, wounds.max);
           }
         }
         // Normal Hit Points

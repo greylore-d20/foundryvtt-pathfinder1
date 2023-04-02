@@ -156,7 +156,7 @@ export class ItemAction {
 
     rollData ??= this.getRollData();
     const cost = RollPF.safeRoll(formula, rollData).total;
-    return this.item.isSingleUse ? Math.max(-1, Math.min(1, cost)) : cost;
+    return this.item.isSingleUse ? Math.clamped(cost, -1, 1) : cost;
   }
 
   /**
@@ -613,7 +613,7 @@ export class ItemAction {
     const rollData = this.getRollData();
     if (exAtkCountFormula.length > 0) {
       xaroll = RollPF.safeRoll(exAtkCountFormula, rollData);
-      extraAttacks = Math.min(50, Math.max(0, xaroll.total)); // Arbitrarily clamp attacks
+      extraAttacks = Math.clamped(xaroll.total, 0, 50); // Arbitrarily clamp attacks
     }
     if (xaroll?.err) {
       const msg = game.i18n.format("PF1.ErrorActionFormula", {

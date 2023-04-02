@@ -100,7 +100,7 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
       }
     }
 
-    index = Math.max(0, Math.min(c.length - 1, index));
+    index = Math.clamped(index, 0, c.length - 1);
     formula = c[index];
   }
 

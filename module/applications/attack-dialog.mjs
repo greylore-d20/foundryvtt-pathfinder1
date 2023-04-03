@@ -17,11 +17,21 @@ export class AttackDialog extends Application {
       cl: this.rollData.cl ?? 0,
       sl: this.rollData.sl ?? 0,
     };
+
+    const isNaturalAttack = this.object.item.system.attackType === "natural",
+      isPrimaryAttack = this.object.data.naturalAttack.primaryAttack === true;
+
     this.flags = {
-      "primary-attack": this.object.data.naturalAttack.primaryAttack === true,
+      "primary-attack": isPrimaryAttack,
       "cl-check": this.object.clCheck === true,
       "measure-template": true,
     };
+
+    let damageMult = this.rollData.action?.ability?.damageMult ?? 1;
+    if (isNaturalAttack && !isPrimaryAttack) {
+      damageMult = this.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
+    }
+
     this.attributes = {
       d20: this.rollData.d20 ?? "",
       "attack-bonus": "",
@@ -29,7 +39,7 @@ export class AttackDialog extends Application {
       "cl-offset": "0",
       "sl-offset": "0",
       rollMode: game.settings.get("core", "rollMode"),
-      "damage-ability-multiplier": this.rollData.action?.ability?.damageMult ?? 1,
+      "damage-ability-multiplier": damageMult,
       held: this.rollData.item?.held ?? "normal",
     };
     this.conditionals = {};

@@ -619,6 +619,17 @@ export const PF1 = {
     },
   },
 
+  /**
+   * Damage multipliers from ability score.
+   */
+  abilityDamageMultipliers: [
+    { value: 0.5, label: "×0.5" },
+    { value: 1, label: "×1" },
+    { value: 1.5, label: "×1.5" },
+    { value: 2, label: "×2" },
+    { value: 2.5, label: "×2.5" },
+  ],
+
   /* -------------------------------------------- */
 
   /**

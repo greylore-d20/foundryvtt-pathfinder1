@@ -53,7 +53,7 @@
 </div>
 {{/if}}
 
-{{#if hasAttackRoll }}
+{{#if hasAttackRoll}}
 {{!-- Attack Name --}}
 <h3 class="form-header">{{localize "PF1.Attack"}}</h3>
 <div class="form-group">
@@ -70,6 +70,15 @@
     <input class="formula" type="text" name="attackBonus" value="{{data.attackBonus}}" placeholder="{{localize "PF1.Formula"}}"/>
   </div>
 </div>
+
+{{#if isNaturalAttack}}
+<div class="form-group">
+  <label>{{localize "PF1.SecondaryAttackModifier"}}</label>
+  <div class="form-fields">
+    <input type="text" class="formula" name="naturalAttack.secondary.attackBonus" value="{{data.naturalAttack.secondary.attackBonus}}" data-dtype="String" placeholder="{{localize "PF1.Formula"}}" />
+  </div>
+</div>
+{{/if}}
 
 {{#unless isCombatManeuver}}
 <div class="form-group">
@@ -163,16 +172,22 @@
       {{/select}}
     </select>
     <select name="ability.damageMult" data-dtype="Number">
-      {{#select data.ability.damageMult}}
-      <option value="0.5">x0.5</option>
-      <option value="1" {{#unless data.ability.damageMult}}selected="selected"{{/unless}}>x1</option>
-      <option value="1.5">x1.5</option>
-      <option value="2">x2</option>
-      <option value="2.5">x2.5</option>
-      {{/select}}
+      {{selectOptions config.abilityDamageMultipliers selected=data.ability.damageMult nameAttr="value" labelAttr="label"}}
     </select>
   </div>
 </div>
+
+{{#if isNaturalAttack}}
+<div class="form-group">
+  <label>{{localize "PF1.SecondaryAttackAbilityMultiplier"}}</label>
+  <div class="form-fields">
+    <label style="flex:1;"><!-- Ensure Alignment --></label>
+    <select name="naturalAttack.secondary.damageMult" data-dtype="Number">
+      {{selectOptions config.abilityDamageMultipliers selected=data.naturalAttack.secondary.damageMult nameAttr="value" labelAttr="label"}}
+    </select>
+  </div>
+</div>
+{{/if}}
 
 {{!-- Damage Formula --}}
 <div class="damage" data-key="damage.parts">
@@ -255,32 +270,6 @@
   <label>{{localize "PF1.CriticalMultiplier"}}</label>
   <div class="form-fields">
     <input type="number" name="powerAttack.critMultiplier" value="{{data.powerAttack.critMultiplier}}" data-dtype="Number" />
-  </div>
-</div>
-{{/if}}
-
-{{!-- Secondary Natural Attack properties --}}
-{{#if isNaturalAttack}}
-<h3 class="form-header">{{localize "PF1.SecondaryAttack"}}</h3>
-<div class="form-group">
-  <label>{{localize "PF1.AttackPenalty"}}</label>
-  <div class="form-fields">
-    <input type="text" class="formula" name="naturalAttack.secondary.attackBonus" value="{{data.naturalAttack.secondary.attackBonus}}" data-dtype="String" placeholder="{{localize "PF1.Formula"}}" />
-  </div>
-</div>
-
-<div class="form-group">
-  <label>{{localize "PF1.AbilityMultiplier"}}</label>
-  <div class="form-fields">
-  <select name="naturalAttack.secondary.damageMult" data-dtype="Number">
-    {{#select data.naturalAttack.secondary.damageMult}}
-    <option value="0.5" {{#unless data.naturalAttack.secondary.damageMult}}selected="selected"{{/unless}}>x0.5</option>
-    <option value="1">x1</option>
-    <option value="1.5">x1.5</option>
-    <option value="2">x2</option>
-    <option value="2.5">x2.5</option>
-    {{/select}}
-  </select>
   </div>
 </div>
 {{/if}}

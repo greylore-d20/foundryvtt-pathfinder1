@@ -174,8 +174,10 @@ export class ActionUse {
     setProperty(this.shared.rollData, "item.held", formData["held"] ?? "normal");
 
     // Damage multiplier
-    if (formData["damage-ability-multiplier"] != null)
-      this.shared.rollData.action.ability.damageMult = formData["damage-ability-multiplier"];
+    const abilityDamageMultOverride = formData["damage-ability-multiplier"];
+    if (abilityDamageMultOverride != null) {
+      this.shared.rollData.action.ability.damageMult = abilityDamageMultOverride;
+    }
 
     // Power Attack
     if (formData["power-attack"]) {
@@ -237,7 +239,9 @@ export class ActionUse {
       this.shared.rollData.action?.naturalAttack.primaryAttack === false
     ) {
       const attackBonus = this.shared.rollData.action.naturalAttack?.secondary?.attackBonus || "-5";
-      const damageMult = this.shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
+      let damageMult = this.shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
+      // Allow dialog override to work
+      if (abilityDamageMultOverride) damageMult = abilityDamageMultOverride;
       this.shared.attackBonus.push(`(${attackBonus})[${game.i18n.localize("PF1.SecondaryAttack")}]`);
       this.shared.rollData.action.ability.damageMult = damageMult;
     }

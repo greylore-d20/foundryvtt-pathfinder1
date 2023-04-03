@@ -454,6 +454,14 @@ export class ItemAction {
     if (this.data.enh?.value != null && !["weapon", "attack"].includes(this.item.type)) {
       setProperty(this.data, "enh.value", null);
     }
+
+    // Initialize default damageMult if missing
+    if (this.data.ability?.damageMult === undefined) {
+      setProperty(this.data, "ability.damageMult", 1);
+    }
+    if (this.data.naturalAttack?.secondary?.damageMult === undefined) {
+      setProperty(this.data, "naturalAttack.secondary.damageMult", 0.5);
+    }
   }
 
   _prepareConditionals(conditionals) {

@@ -231,8 +231,7 @@ export class ActorSheetPF extends ActorSheet {
     });
 
     // The Actor and its Items
-    if (this.document.isToken) data.token = this.document.token.toObject();
-    else data.token = data.actor.token;
+    data.token = this.token;
     data.items = this.document.items.map((item) => {
       const i = deepClone(item.system);
       i.document = item;
@@ -1022,7 +1021,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Display defenses
     html.find(".generic-defenses .rollable").click((ev) => {
-      this.document.displayDefenseCard();
+      this.document.displayDefenseCard({ token: this.token });
     });
 
     // Rest
@@ -1390,7 +1389,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
 
     if (item == null) return;
-    return item.displayCard();
+    return item.displayCard(undefined, { token: this.token });
   }
 
   _mouseWheelAdd(event, el) {
@@ -1592,14 +1591,14 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
-    this.document.rollConcentration(spellbookKey);
+    this.document.rollConcentration(spellbookKey, { token: this.token });
   }
 
   _onRollCL(event) {
     event.preventDefault();
 
     const spellbookKey = $(event.currentTarget).closest(".spellbook-group").data("tab");
-    this.document.rollCL(spellbookKey);
+    this.document.rollCL(spellbookKey, { token: this.token });
   }
 
   _setItemActive(event) {
@@ -1621,7 +1620,7 @@ export class ActorSheetPF extends ActorSheet {
       return o instanceof LevelUpForm && o._element && o.object === item;
     });
     if (app) app.render(true, { focus: true });
-    else new LevelUpForm(item).render(true);
+    else new LevelUpForm(item, { token: this.token }).render(true);
   }
 
   /* -------------------------------------------- */
@@ -1949,7 +1948,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Quick Attack
     if (a.classList.contains("item-attack")) {
-      await item.use({ ev: event });
+      await item.use({ ev: event, token: this.token });
     }
   }
 
@@ -2037,7 +2036,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
     if (!item) return;
 
-    return item.use();
+    return item.use({ token: this.token });
   }
 
   _convertCurrency(event) {
@@ -2258,27 +2257,27 @@ export class ActorSheetPF extends ActorSheet {
   _onRollAbilityTest(event) {
     event.preventDefault();
     const ability = event.currentTarget.closest(".ability").dataset.ability;
-    this.document.rollAbilityTest(ability);
+    this.document.rollAbilityTest(ability, { token: this.token });
   }
 
   _onRollBAB(event) {
     event.preventDefault();
-    this.document.rollBAB();
+    this.document.rollBAB({ token: this.token });
   }
 
   _onRollMelee(event) {
     event.preventDefault();
-    this.document.rollAttack({ melee: true });
+    this.document.rollAttack({ melee: true, token: this.token });
   }
 
   _onRollRanged(event) {
     event.preventDefault();
-    this.document.rollAttack({ melee: false });
+    this.document.rollAttack({ melee: false, token: this.token });
   }
 
   _onRollCMB(event) {
     event.preventDefault();
-    this.document.rollCMB();
+    this.document.rollCMB({ token: this.token });
   }
 
   _onRollInitiative(event) {
@@ -2286,13 +2285,14 @@ export class ActorSheetPF extends ActorSheet {
     this.document.rollInitiative({
       createCombatants: true,
       rerollInitiative: game.user.isGM,
+      token: this.token,
     });
   }
 
   _onRollSavingThrow(event) {
     event.preventDefault();
     const savingThrow = event.currentTarget.parentElement.dataset.savingthrow;
-    this.document.rollSavingThrow(savingThrow);
+    this.document.rollSavingThrow(savingThrow, { token: this.token });
   }
 
   /* -------------------------------------------- */
@@ -2613,14 +2613,14 @@ export class ActorSheetPF extends ActorSheet {
   _onRollSkillCheck(event) {
     event.preventDefault();
     const skill = event.currentTarget.parentElement.dataset.skill;
-    this.document.rollSkill(skill);
+    this.document.rollSkill(skill, { token: this.token });
   }
 
   _onRollSubSkillCheck(event) {
     event.preventDefault();
     const mainSkill = event.currentTarget.parentElement.dataset.mainSkill;
     const skill = event.currentTarget.parentElement.dataset.skill;
-    this.document.rollSkill(`${mainSkill}.subSkills.${skill}`);
+    this.document.rollSkill(`${mainSkill}.subSkills.${skill}`, { token: this.token });
   }
 
   /**

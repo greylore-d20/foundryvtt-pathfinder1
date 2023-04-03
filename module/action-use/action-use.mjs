@@ -38,6 +38,13 @@ export class ActionUse {
    */
   actor;
   /**
+   * The actor this action use is based on.
+   *
+   * @type {TokenDocument}
+   */
+  token;
+
+  /**
    * The item this action use is based on.
    *
    * @type {ItemPF}
@@ -65,6 +72,7 @@ export class ActionUse {
       item: { value: shared.item },
       action: { value: shared.action },
       actor: { value: shared.item.parentActor },
+      token: { value: shared.token },
     });
   }
 
@@ -798,9 +806,12 @@ export class ActionUse {
       attacks: this.shared.chatAttacks.map((o) => o.finalize()),
     };
 
+    const actor = this.item.parentActor,
+      token = this.token ?? actor.token;
+
     // Set chat data
     this.shared.chatData = {
-      speaker: ChatMessage.getSpeaker({ actor: this.item.parent }),
+      speaker: ChatMessage.implementation.getSpeaker({ actor, token, alias: token?.name }),
       rollMode: this.shared.rollMode,
     };
 
@@ -846,9 +857,6 @@ export class ActionUse {
     }
 
     // Parse template data
-    const token =
-      this.item.parentActor?.token ??
-      canvas.tokens?.placeables.find((t) => t.actor && t.actor.id === this.item.parentActor?.id);
     const identified = Boolean(this.shared.rollData.item?.identified ?? true);
     const name = identified ? `${this.item.name} (${this.shared.action.name})` : this.item.getName(true);
     this.shared.templateData = mergeObject(
@@ -865,7 +873,8 @@ export class ActionUse {
         properties: props,
         hasProperties: props.length > 0,
         item: this.item.toObject(),
-        actor: this.item.parentActor,
+        actor,
+        token,
         hasSave: this.shared.action.hasSave,
         rollData: this.shared.rollData,
         save: {
@@ -902,16 +911,12 @@ export class ActionUse {
     if (this.item.type === "spell" && this.item.parent != null) {
       // Spell failure
       if (this.item.parent.spellFailure > 0 && this.item.system.components.somatic) {
-        const spellbook = getProperty(
-          this.item.parentActor,
-          `system.attributes.spells.spellbooks.${this.item.system.spellbook}`
-        );
+        const spellbook = getProperty(actor.system, `attributes.spells.spellbooks.${this.item.system.spellbook}`);
         if (spellbook && spellbook.arcaneSpellFailure) {
           const roll = RollPF.safeRoll("1d100");
           this.shared.templateData.spellFailure = roll.total;
           this.shared.templateData.spellFailureRoll = roll;
-          this.shared.templateData.spellFailureSuccess =
-            this.shared.templateData.spellFailure > this.item.parentActor.spellFailure;
+          this.shared.templateData.spellFailureSuccess = this.shared.templateData.spellFailure > actor.spellFailure;
         }
       }
       // Caster Level Check

@@ -164,7 +164,7 @@ export class ActorPF extends ActorBasePF {
   }
 
   static getActiveActor({ actorName = null, actorId = null } = {}) {
-    const speaker = ChatMessage.getSpeaker();
+    const speaker = ChatMessage.implementation.getSpeaker();
     let actor;
 
     if (actorName || actorId) {
@@ -2108,6 +2108,8 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
+    const token = options.token ?? this.token;
+
     const rollOptions = {
       ...options,
       parts,
@@ -2116,7 +2118,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       compendium: { entry: PF1.skillCompendiumEntries[skillId] ?? skl.journal, type: "JournalEntry" },
       subject: { skill: skillId },
-      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollSkill", this, rollOptions, skillId) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
@@ -2139,12 +2141,15 @@ export class ActorPF extends ActorBasePF {
 
     if (callOldNamespaceHook("actorRoll", "pf1PreActorRollBab", undefined, this, "bab", null, options) === false)
       return;
+
+    const token = options.token ?? this.token;
+
     const rollOptions = {
       ...options,
       parts: [`${this.system.attributes.bab.total}[${game.i18n.localize("PF1.BABAbbr")}]`],
       subject: { core: "bab" },
       flavor: game.i18n.localize("PF1.BAB"),
-      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollBab", this, rollOptions) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
@@ -2206,6 +2211,8 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
+    const token = options.token ?? this.token;
+
     const rollOptions = {
       ...options,
       parts,
@@ -2213,7 +2220,7 @@ export class ActorPF extends ActorBasePF {
       subject: { core: "cmb" },
       flavor: game.i18n.localize("PF1.CMB"),
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollCmb", this, options) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
@@ -2276,6 +2283,8 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
+    const token = options.token ?? this.token;
+
     const rollOptions = {
       ...options,
       parts: changes,
@@ -2283,7 +2292,7 @@ export class ActorPF extends ActorBasePF {
       subject: { core: "attack" },
       flavor: game.i18n.localize(`PF1.${options.melee ? "Melee" : "Ranged"}`),
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollAttack", this, rollOptions) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
@@ -2323,6 +2332,8 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
+    const token = options.token ?? this.token;
+
     const rollOptions = {
       ...options,
       parts,
@@ -2330,7 +2341,7 @@ export class ActorPF extends ActorBasePF {
       subject: { core: "cl", spellbook: spellbookKey },
       flavor: game.i18n.localize("PF1.CasterLevelCheck"),
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollCl", this, spellbookKey, rollOptions) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
@@ -2387,6 +2398,8 @@ export class ActorPF extends ActorBasePF {
       formulaRoll = RollPF.safeRoll(spellbook.concentrationFormula, rollData).total;
     rollData.formulaBonus = formulaRoll;
 
+    const token = options.token ?? this.token;
+
     const rollOptions = {
       ...options,
       parts,
@@ -2394,7 +2407,7 @@ export class ActorPF extends ActorBasePF {
       subject: { core: "concentration", spellbook: spellbookKey },
       flavor: game.i18n.localize("PF1.ConcentrationCheck"),
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollConcentration", this, rollOptions, spellbookKey) === false) return;
     const result = pf1.dice.d20Roll(rollOptions);
@@ -2611,6 +2624,8 @@ export class ActorPF extends ActorBasePF {
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
     const label = PF1.savingThrows[savingThrowId];
 
+    const token = options.token ?? this.token;
+
     const rollOptions = {
       ...options,
       parts,
@@ -2618,7 +2633,7 @@ export class ActorPF extends ActorBasePF {
       flavor: game.i18n.format("PF1.SavingThrowRoll", { save: label }),
       subject: { save: savingThrowId },
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollSave", this, options, savingThrowId) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
@@ -2677,6 +2692,8 @@ export class ActorPF extends ActorBasePF {
     const props = [];
     if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
 
+    const token = options.token ?? this.token;
+
     const rollOptions = {
       ...options,
       parts,
@@ -2684,7 +2701,7 @@ export class ActorPF extends ActorBasePF {
       flavor: game.i18n.format("PF1.AbilityTest", { ability: label }),
       subject: { ability: abilityId },
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      speaker: CONFIG.ChatMessage.documentClass.getSpeaker({ actor: this }),
+      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
     if (Hooks.call("pf1PreActorRollAbility", this, options, abilityId) === false);
     const result = await pf1.dice.d20Roll(rollOptions);
@@ -2704,10 +2721,11 @@ export class ActorPF extends ActorBasePF {
   /**
    * Show defenses in chat
    *
-   * @param {object} [options={}]
+   * @param {object} [options={}] Additional options
    * @param {string | null} [options.rollMode=null]   The roll mode to use for the roll; defaults to the user's current preference when `null`.
+   * @param {TokenDocument} [options.token] Relevant token if any.
    */
-  async displayDefenseCard({ rollMode = null } = {}) {
+  async displayDefenseCard({ rollMode = null, token } = {}) {
     if (!this.isOwner) {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
@@ -2770,17 +2788,14 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Get actor's token
-    const token =
-      this.token instanceof TokenDocument
-        ? this.token.object
-        : this.token ?? canvas.tokens.placeables.find((t) => t.actor && t.actor.id === this.id);
+    token ??= this.token;
 
     // Create message
     const actorData = this.system;
     const data = {
       actor: this,
-      name: this.name,
-      tokenId: this.token ? `${this.token.uuid}` : null,
+      name: token?.name ?? this.name,
+      tokenUuid: token?.uuid ?? null,
       ac: {
         normal: actorData.attributes.ac.normal.total,
         touch: actorData.attributes.ac.touch.total,
@@ -2798,7 +2813,6 @@ export class ActorPF extends ActorBasePF {
         drNotes: drNotes,
         energyResistance: energyResistance,
       },
-      tokenUuid: token?.document.uuid,
     };
     // Add regeneration and fast healing
     if ((actorData.traits?.fastHealing || "").length || (actorData.traits?.regen || "").length) {
@@ -2811,7 +2825,7 @@ export class ActorPF extends ActorBasePF {
     setProperty(data, "flags.pf1.subject", "defenses");
 
     const chatData = {
-      speaker: ChatMessage.getSpeaker({ actor: this }),
+      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
       rollMode,
       flags: {
         core: {

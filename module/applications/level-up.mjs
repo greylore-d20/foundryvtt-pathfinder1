@@ -3,8 +3,13 @@ import { createInlineRollString } from "../utils/chat.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
 export class LevelUpForm extends FormApplication {
-  constructor(...args) {
-    super(...args);
+  constructor(object, options = {}) {
+    super(object, options);
+
+    /**
+     * Relevant token if any.
+     */
+    this.token = options.token;
 
     /**
      * Tracks whether this form has already been submitted.
@@ -512,7 +517,7 @@ export class LevelUpForm extends FormApplication {
   }
 
   async createChatMessage(formData) {
-    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor, token: this.token });
 
     const templateData = {
       formData,

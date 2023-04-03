@@ -51,9 +51,9 @@ export class TokenQuickActions {
       // Add click handler
       elem.on("click", (event) => {
         if (!event.ctrlKey) {
-          return item.use({ ev: event });
+          return item.use({ ev: event, token: token.document });
         }
-        return item.roll();
+        return item.displayCard({ token: token.document });
       });
 
       elem.on("contextmenu", () => {

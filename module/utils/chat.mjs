@@ -8,18 +8,14 @@ export const createCustomChatMessage = async function (
   chatData = {},
   { rolls = [] } = {}
 ) {
-  chatData = mergeObject(
-    {
-      user: game.user.id,
-      type: CONST.CHAT_MESSAGE_TYPES.CHAT,
-    },
-    chatData
-  );
+  chatData.user ??= game.user.id;
+  chatData.type ??= CONST.CHAT_MESSAGE_TYPES.CHAT;
 
   chatData.content = await renderTemplate(chatTemplate, chatTemplateData);
+  chatData.rollMode ??= game.settings.get("core", "rollMode");
 
   // Handle different roll modes
-  ChatMessage.implementation.applyRollMode(chatData, chatData.rollMode ?? game.settings.get("core", "rollMode"));
+  ChatMessage.implementation.applyRollMode(chatData, chatData.rollMode);
 
   // Dice So Nice integration
   if (chatData.roll != null && rolls.length === 0) rolls = [chatData.roll];

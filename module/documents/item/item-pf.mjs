@@ -855,23 +855,26 @@ export class ItemPF extends ItemBasePF {
    * Display the chat card for an Item as a message in chat
    *
    * @param {object} [altChatData={}] - Optional data that will be merged into the chat data object.
+   * @param {object} [options=[]] Additional options.
+   * @param {TokenDocument} [options.token] Relevant token if any.
    * @returns {Promise<ChatMessage | void>}
    */
-  async displayCard(altChatData = {}) {
-    const actor = this.parent;
+  async displayCard(altChatData = {}, { token } = {}) {
+    const actor = this.parentActor;
     if (actor && !actor.isOwner) {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: actor.name }));
     }
 
     // Basic template rendering data
-    const token = this.parentActor?.token;
+    token ??= actor?.token;
     const rollData = this.getRollData();
     const itemChatData = this.getChatData({ rollData });
     const identified = Boolean(rollData.item?.identified ?? true);
 
     const templateData = {
       actor: this.parent,
-      tokenId: token ? token.uuid : null,
+      token,
+      tokenId: token?.uuid,
       item: this.toObject(),
       labels: this.getLabels(),
       hasAttack: this.hasAttack,
@@ -922,21 +925,19 @@ export class ItemPF extends ItemBasePF {
     pfFlags.metadata.item = this.id;
 
     // Basic chat message data
-    const chatData = flattenObject(
-      mergeObject(
-        {
-          user: game.user.id,
-          type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-          speaker: ChatMessage.getSpeaker({ actor: this.parent }),
-          flags: {
-            core: {
-              canPopout: true,
-            },
-            pf1: pfFlags,
+    const chatData = mergeObject(
+      {
+        user: game.user.id,
+        type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+        speaker: ChatMessage.implementation.getSpeaker({ actor, token, alias: token?.name }),
+        flags: {
+          core: {
+            canPopout: true,
           },
+          pf1: pfFlags,
         },
-        altChatData
-      )
+      },
+      altChatData
     );
 
     if (Hooks.call("pf1DisplayCard", this, { template, templateData, chatData }) === false) return;
@@ -1081,6 +1082,7 @@ export class ItemPF extends ItemBasePF {
    * @param {boolean} [chatMessage=true] - Whether to send a chat message for this action
    * @param {string} [dice="1d20"] - The base dice to roll for this action
    * @param {string} [rollMode] - The roll mode to use for the chat message
+   * @param {TokenDocument} [token] Token this action is for, if any.
    * @returns {Promise<SharedActionData | void | ChatMessage | *>}
    */
   async use({
@@ -1090,6 +1092,7 @@ export class ItemPF extends ItemBasePF {
     chatMessage = true,
     dice = "1d20",
     rollMode,
+    token,
   } = {}) {
     // Old use method
     if (!this.hasAction) {
@@ -1165,10 +1168,11 @@ export class ItemPF extends ItemBasePF {
       scriptData: {},
     };
 
-    // Prevent reassigning the ActionUse's item and action
+    // Prevent reassigning the ActionUse's item, action, and token
     Object.defineProperties(shared, {
       action: { value: action, writable: false, enumerable: true },
       item: { value: this, writable: false, enumerable: true },
+      token: { value: token, writable: false, enumerable: true },
     });
 
     const actionUse = new ActionUse(shared);

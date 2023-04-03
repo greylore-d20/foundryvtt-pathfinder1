@@ -69,7 +69,7 @@ export class ItemActionSheet extends FormApplication {
     data.damageTypes = pf1.registry.damageTypes.toObject();
     data.rollData = action.getRollData();
 
-    // Set tag
+    // Tag placeholder
     data.tag = createTag(action.name);
 
     // Include CONFIG values

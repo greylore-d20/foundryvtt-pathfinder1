@@ -117,6 +117,9 @@ export class ItemSheetPF extends ItemSheet {
       }, {});
     }
 
+    // Include raw tag data (from source to not get autofilled tag)
+    context.tag = this.item._source.system.tag;
+
     // Item Type, Status, and Details
     context.itemType = this._getItemType(item);
     context.itemStatus = this._getItemStatus(item);

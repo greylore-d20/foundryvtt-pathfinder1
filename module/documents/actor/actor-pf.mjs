@@ -2116,24 +2116,25 @@ export class ActorPF extends ActorBasePF {
     if (!item.isCharged) return false;
     if (item.isSingleUse) return false;
 
-    const itemTag = !item.system.useCustomTag ? createTag(item.name) : item.system.tag;
     const resource = {
       value: item.charges,
       max: item.maxCharges,
       _id: item.id,
     };
 
-    if (warnOnDuplicate && this.system.resources[itemTag] && this.isOwner) {
+    const tag = item.system.tag;
+
+    if (warnOnDuplicate && this.system.resources[tag] && this.isOwner) {
       const msg = game.i18n.format("PF1.WarningDuplicateTag", {
         actor: this.uuid,
         item: item.name,
-        tag: itemTag,
+        tag,
       });
       ui.notifications.warn(msg, { console: false });
       console.warn(msg, item);
     }
 
-    this.system.resources[itemTag] = resource;
+    this.system.resources[tag] = resource;
     return true;
   }
 

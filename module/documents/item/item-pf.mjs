@@ -603,13 +603,19 @@ export class ItemPF extends ItemBasePF {
       this.name = this._source.name;
     }
 
-    const itemData = this.system;
+    this._prepareIdentifier();
+  }
 
-    // Initialize tag for items that have tagged template
-    const itemTemplate = game.system.template.Item;
-    const taggedTypes = itemTemplate.types.filter((t) => itemTemplate[t].templates?.includes("tagged"));
-    if (itemData.useCustomTag !== true && taggedTypes.includes(this.type)) {
-      itemData.tag = createTag(this.name);
+  /**
+   * Initialize identifier
+   */
+  _prepareIdentifier() {
+    if (!this.system.tag) {
+      // TODO: remove template.json dependency
+      const isTaggedType = game.template.Item[this.type]?.templates.includes("tagged") ?? false;
+      if (isTaggedType) {
+        this.system.tag = createTag(this.name);
+      }
     }
 
     if (this.inContainer) this.adjustContained();

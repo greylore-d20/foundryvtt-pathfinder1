@@ -1915,11 +1915,13 @@ export class ActorSheetPF extends ActorSheet {
       custom: true,
     };
 
-    let tag = createTag(skillData.name || "skill");
+    const baseName = skillData.name || "skill";
+    const baseTag = createTag(baseName);
+    let tag = baseTag;
     let count = 1;
     while (this.document.system.skills[tag] != null) {
       count++;
-      tag = createTag(skillData.name || "skill") + count.toString();
+      tag = baseTag + count.toString();
     }
 
     const updateData = {};

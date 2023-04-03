@@ -476,7 +476,6 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateCR(item, updateData);
   _migrateItemChanges(item, updateData);
   _migrateEquipmentSize(item, updateData);
-  _migrateTags(item, updateData);
   _migrateSpellCosts(item, updateData);
   _migrateLootEquip(item, updateData);
   _migrateItemLinks(item, updateData);
@@ -1272,15 +1271,6 @@ const _migrateItemHealth = function (item, updateData) {
     }
   } else if (item.type !== "class" && hp !== undefined) {
     updateData["system.-=hp"] = null;
-  }
-};
-
-const _migrateTags = function (ent, updateData) {
-  if (!["class"].includes(ent.type)) return;
-
-  const tag = getProperty(ent, "system.tag");
-  if (!tag && ent.name) {
-    updateData["system.tag"] = createTag(ent.name);
   }
 };
 
@@ -2107,6 +2097,14 @@ const _migrateItemUnusedData = (item, updateData) => {
   // Data not used since 0.81.0
   if (item.system.measureTemplate !== undefined) {
     updateData["system.-=measureTemplate"] = null;
+  }
+
+  // useCustomTag not used since PF1 vNEXT
+  if (item.system.useCustomTag !== undefined) {
+    updateData["system.-=useCustomTag"] = null;
+    if (item.system.useCustomTag === false) {
+      updateData["system.-=tag"] = null;
+    }
   }
 };
 

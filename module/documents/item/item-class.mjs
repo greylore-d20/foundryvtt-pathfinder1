@@ -253,9 +253,6 @@ export class ItemClassPF extends ItemPF {
       const actorData = actor.system,
         classData = this.system;
 
-      let tag = classData.tag;
-      if (!tag) tag = createTag(this.name);
-
       let healthConfig = game.settings.get("pf1", "healthConfig");
       const hasPlayerOwner = this.hasPlayerOwner;
       healthConfig =
@@ -268,7 +265,7 @@ export class ItemClassPF extends ItemPF {
       if (!classData.subType) console.warn(`${this.name} lacks class type`, this);
       const isBaseClass = (classData.subType || "base") === "base";
       if (!this.actor.classes) return;
-      actor.classes[tag] = {
+      actor.classes[classData.tag] = {
         _id: this.id,
         level: classData.level,
         name: this.name,

@@ -16,9 +16,9 @@ import { getActorFromId, getItemOwner } from "../utils/lib.mjs";
  * @param {number} slot     The hotbar slot to use
  * @returns {Promise<User>} The updated User
  */
-export const createItemMacro = async function (data, slot) {
-  const item = await fromUuid(data.uuid);
-  const command = `(await fromUuid("${item.uuid}")).use();`;
+export const createItemMacro = async (data, slot) => {
+  const item = fromUuidSync(data.uuid);
+  const command = `fromUuidSync("${item.uuid}")\n\t.use();`;
   let macro = game.macros.contents.find((m) => m.name === item.name && m.data.command === command);
   if (!macro) {
     macro = await Macro.create(
@@ -44,12 +44,12 @@ export const createItemMacro = async function (data, slot) {
  * @param {number} slot - The hotbar slot to use
  * @returns {Promise<User>} The updated User
  */
-export const createSkillMacro = async function (skillId, actorId, slot) {
+export const createSkillMacro = async (skillId, actorId, slot) => {
   const actor = getActorFromId(actorId);
   if (!actor) return;
 
   const skillInfo = actor.getSkillInfo(skillId);
-  const command = `(await fromUuid("${actor.uuid}"))\n\t.rollSkill("${skillId}");`;
+  const command = `fromUuidSync("${actor.uuid}")\n\t.rollSkill("${skillId}");`;
   const name = game.i18n.format("PF1.RollSkillMacroName", { actor: actor.name, skill: skillInfo.name });
   let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
   if (!macro) {
@@ -77,12 +77,12 @@ export const createSkillMacro = async function (skillId, actorId, slot) {
  * @param {number} slot - The hotbar slot to use
  * @returns {Promise<User>} The updated User
  */
-export const createSaveMacro = async function (saveId, actorId, slot) {
+export const createSaveMacro = async (saveId, actorId, slot) => {
   const actor = getActorFromId(actorId);
   const saveName = game.i18n.localize("PF1.SavingThrow" + saveId.substr(0, 1).toUpperCase() + saveId.substr(1));
   if (!actor) return;
 
-  const command = `(await fromUuid("${actor.uuid}"))\n\t.rollSavingThrow("${saveId}");`;
+  const command = `fromUuidSync("${actor.uuid}")\n\t.rollSavingThrow("${saveId}");`;
   const name = game.i18n.format("PF1.RollSaveMacroName", { actor: actor.name, type: saveName });
   let macro = game.macros.contents.find((m) => m.name === name && m.data.command === command);
   if (!macro) {
@@ -111,7 +111,7 @@ export const createSaveMacro = async function (saveId, actorId, slot) {
  * @param {string} [altType] - An alternative type, used to denote a spellbook
  * @returns {Promise<User|void>} The updated User, if an update is triggered
  */
-export const createMiscActorMacro = async function (type, actorId, slot, altType = null) {
+export const createMiscActorMacro = async (type, actorId, slot, altType = null) => {
   const actor = getActorFromId(actorId);
   if (!actor) return;
 
@@ -119,7 +119,7 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
 
   let name,
     img,
-    command = `(await fromUuid("${actor.uuid}"))\n\t`;
+    command = `fromUuidSync("${actor.uuid}")\n\t`;
   switch (type) {
     case "defenses":
       command += `.displayDefenseCard();`;
@@ -177,7 +177,7 @@ export const createMiscActorMacro = async function (type, actorId, slot, altType
  * @param {string} [options.actorId] - The actorś identifier
  * @returns {Promise|void} The item's roll or void if any requirements are not met
  */
-export const rollItemMacro = function (itemName, { itemId, itemType, actorId } = {}) {
+export const rollItemMacro = (itemName, { itemId, itemType, actorId } = {}) => {
   const actor = getActorFromId(actorId);
   if (actor && !actor.testUserPermission(game.user, "OWNER")) {
     return void ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
@@ -209,7 +209,7 @@ export const rollItemMacro = function (itemName, { itemId, itemType, actorId } =
  * @param {string} skillId - The skill's identifier
  * @returns {Promise|void} The skill roll, or void if no skill is found
  */
-export const rollSkillMacro = function (actorId, skillId) {
+export const rollSkillMacro = (actorId, skillId) => {
   const actor = getActorFromId(actorId);
   if (!actor) {
     return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
@@ -225,7 +225,7 @@ export const rollSkillMacro = function (actorId, skillId) {
  * @param {string} saveId - The save's identifier
  * @returns {Promise|void} The save roll, or void if no save is found
  */
-export const rollSaveMacro = function (actorId, saveId) {
+export const rollSaveMacro = (actorId, saveId) => {
   const actor = getActorFromId(actorId);
   if (!actor) {
     return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
@@ -243,7 +243,7 @@ export const rollSaveMacro = function (actorId, saveId) {
  * @param options.rollMode
  * @returns {Promise|void} The defense roll, or void if no actor is found
  */
-export const displayDefenses = function ({ actorName = null, actorId = null, rollMode = null } = {}) {
+export const displayDefenses = ({ actorName = null, actorId = null, rollMode = null } = {}) => {
   const actor = ActorPF.getActiveActor({ actorName: actorName, actorId: actorId });
   if (!actor) {
     return void ui.notifications.warn(
@@ -264,7 +264,7 @@ export const displayDefenses = function ({ actorName = null, actorId = null, rol
  * @param {string} [altType] - An additional qualifier, used e.g. to determine a roll's spellbook
  * @returns {Promise|void} The roll, or void if no actor is found
  */
-export const rollActorAttributeMacro = function (actorId, type, altType = null) {
+export const rollActorAttributeMacro = (actorId, type, altType = null) => {
   const actor = getActorFromId(actorId);
   if (!actor) {
     return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));

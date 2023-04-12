@@ -685,7 +685,7 @@ export class ItemPF extends ItemBasePF {
     if (Object.keys(diff).length) {
       const parentItem = this.parentItem;
       if (parentItem == null) {
-        await super.update(diff, context);
+        return super.update(diff, context);
       } else {
         // Determine item index to update in parent
         const parentInventory = parentItem.system.inventoryItems || [];
@@ -699,7 +699,7 @@ export class ItemPF extends ItemBasePF {
           }
 
           // Update parent item
-          await parentItem.update(diff);
+          return parentItem.update(diff);
         }
       }
     }

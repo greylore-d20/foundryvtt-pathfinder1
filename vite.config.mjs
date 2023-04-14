@@ -4,12 +4,12 @@ import url from "node:url";
 import { defineConfig } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import { copy } from "@guanghechen/rollup-plugin-copy";
-import { terser } from "rollup-plugin-terser";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 import { resolveUrl, FOUNDRY_CONFIG } from "./tools/foundry-config.mjs";
 import handlebarsReload from "./tools/handlebars-reload.mjs";
 import langReload from "./tools/lang-reload.mjs";
+import forceMinifyEsm from "./tools/minify.mjs";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 /**
@@ -58,7 +58,6 @@ const config = defineConfig(({ command, mode }) => {
             if (assetInfo.name === "style.css") return "pf1.css";
           },
         },
-        plugins: [terser({ mangle: { keep_classnames: true, keep_fnames: true } })],
       },
       reportCompressedSize: true,
       lib: {
@@ -84,6 +83,7 @@ const config = defineConfig(({ command, mode }) => {
         root: resolve("."),
         projects: ["jsconfig.json"],
       }),
+      forceMinifyEsm(),
       visualizer({
         sourcemap: true,
         template: "treemap",

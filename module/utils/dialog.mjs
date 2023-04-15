@@ -57,9 +57,9 @@ export const dialogGetActor = function (title = "", actors = []) {
         const gmActive = isGMActive();
         const enabled = gmActive || target.testUserPermission(game.user, "OWNER");
         const disabledClass = enabled ? "" : "disabled";
-        content += `<div class="dialog-get-actor flexrow ${disabledClass}" data-actor-id="${target.id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
+        content += `<div class="dialog-get-actor flexrow ${disabledClass}" data-actor-id="${target.id}"><img src="${target.img}"><h2>${target.name}</h2></div>`;
       } else if (target instanceof Item) {
-        content += `<div class="dialog-get-actor flexrow" data-item-id="${target.id}"><img src="${target.data.img}"><h2>${target.name}</h2></div>`;
+        content += `<div class="dialog-get-actor flexrow" data-item-id="${target.id}"><img src="${target.img}"><h2>${target.name}</h2></div>`;
       }
     });
 

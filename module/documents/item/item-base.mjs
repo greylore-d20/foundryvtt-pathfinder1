@@ -13,10 +13,10 @@ export class ItemBasePF extends Item {
   constructor(data, context = {}) {
     if (context.pf1?.subtyped) {
       super(data, context);
-    } else if (data.type) {
+    } else {
       const subtyped = { pf1: { subtyped: true } };
-      const cls = CONFIG.Item.documentClasses[data?.type ?? data.type] ?? CONFIG.Item.documentClasses.default;
-      if (!cls) console.warn(data?.type, data.type);
+      const cls = CONFIG.Item.documentClasses[data.type];
+      if (!cls) console.warn("Invalid item type:", { type: data.type });
       return new cls(data, { ...subtyped, ...context });
     }
   }

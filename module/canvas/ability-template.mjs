@@ -163,7 +163,7 @@ export class AbilityTemplate extends MeasuredTemplatePF {
           } else {
             delta = canvas.dimensions.distance;
           }
-          this.data.distance += delta * -Math.sign(event.deltaY);
+          this.document.distance += delta * -Math.sign(event.deltaY);
         } else {
           if (pfStyle && this.document.t === "cone") {
             delta = 90;

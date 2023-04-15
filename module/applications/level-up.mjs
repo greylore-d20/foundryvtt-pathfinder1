@@ -452,14 +452,6 @@ export class LevelUpForm extends FormApplication {
         { inplace: false }
       );
 
-      // Translate name and description
-      newItem.name = game.i18n.localize(newItem.name);
-      setProperty(
-        newItem,
-        "system.description.value",
-        game.i18n.localize(getProperty(newItem, "system.description.value") ?? "")
-      );
-
       // Add changes
       setProperty(
         newItem,

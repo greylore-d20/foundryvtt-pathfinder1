@@ -2877,61 +2877,65 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   async _onDropItemCreate(itemData) {
-    // Import spell as consumable
-    if (itemData.type === "spell" && this.currentPrimaryTab !== "spellbook") {
-      const resultData = await createConsumableSpellDialog(itemData);
-      if (resultData === "spell") {
-        // No action here.
-      } else if (resultData) return this.document.createEmbeddedDocuments("Item", [resultData]);
-      else return false;
-    }
-    // Choose how to import class
-    if (itemData.type === "class" && itemData.system.subType !== "mythic" && !(event && event.shiftKey)) {
-      const doReturn = await new Promise((resolve) => {
-        new Dialog(
-          {
-            title: game.i18n.localize("PF1.AddClass"),
-            content: `<div class="pf1"><p>${game.i18n.localize(
-              "PF1.Info.AddClassDialog_Desc"
-            )}</p><div class="help-text"><i class="fas fa-info-circle"></i> ${game.i18n.localize(
-              "PF1.Info.AddClassDialog"
-            )}</div></div>`,
-            buttons: {
-              normal: {
-                icon: '<i class="fas fa-hat-wizard"></i>',
-                label: game.i18n.localize("PF1.Normal"),
-                callback: () => {
-                  LevelUpForm.addClassWizard(this.actor, itemData).then(() => {
-                    resolve(true);
-                  });
+    const itemDatas = itemData instanceof Array ? itemData : [itemData];
+
+    const creationData = [];
+    for (const itemData of itemDatas) {
+      delete itemData._id;
+
+      // Import spell as consumable
+      if (itemData.type === "spell" && this.currentPrimaryTab !== "spellbook") {
+        const resultData = await createConsumableSpellDialog(itemData);
+        if (resultData === "spell") {
+          // No action here.
+        } else if (resultData) return this.document.createEmbeddedDocuments("Item", [resultData]);
+        else return false;
+      }
+      // Choose how to import class
+      if (itemData.type === "class" && itemData.system.subType !== "mythic" && !(event && event.shiftKey)) {
+        const doReturn = await new Promise((resolve) => {
+          new Dialog(
+            {
+              title: game.i18n.localize("PF1.AddClass"),
+              content: `<div class="pf1"><p>${game.i18n.localize(
+                "PF1.Info.AddClassDialog_Desc"
+              )}</p><div class="help-text"><i class="fas fa-info-circle"></i> ${game.i18n.localize(
+                "PF1.Info.AddClassDialog"
+              )}</div></div>`,
+              buttons: {
+                normal: {
+                  icon: '<i class="fas fa-hat-wizard"></i>',
+                  label: game.i18n.localize("PF1.Normal"),
+                  callback: () => {
+                    LevelUpForm.addClassWizard(this.actor, itemData).then(() => {
+                      resolve(true);
+                    });
+                  },
+                },
+                raw: {
+                  icon: '<i class="fas fa-file"></i>',
+                  label: game.i18n.localize("PF1.Raw"),
+                  callback: () => {
+                    resolve(false);
+                  },
                 },
               },
-              raw: {
-                icon: '<i class="fas fa-file"></i>',
-                label: game.i18n.localize("PF1.Raw"),
-                callback: () => {
-                  resolve(false);
-                },
+              close: () => {
+                resolve(true);
               },
             },
-            close: () => {
-              resolve(true);
-            },
-          },
-          {
-            classes: ["dialog", "pf1", "add-character-class"],
-          }
-        ).render(true);
-      });
-      if (doReturn) return false;
+            {
+              classes: ["dialog", "pf1", "add-character-class"],
+            }
+          ).render(true);
+        });
+        if (doReturn) return false;
+      }
+
+      creationData.push(itemData);
     }
 
-    if (itemData.id) delete itemData.id;
-    const actorRef = this.document;
-    return this.document.createEmbeddedDocuments("Item", [itemData]).then((createdItem) => {
-      const fullItem = actorRef.items.get(createdItem.id);
-      return fullItem;
-    });
+    return this.document.createEmbeddedDocuments("Item", creationData);
   }
 
   _onDragStart(event) {

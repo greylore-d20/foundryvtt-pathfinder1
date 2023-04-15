@@ -1849,8 +1849,10 @@ export class ActorPF extends ActorBasePF {
           if (o.getFlag("pf1", "staticSize")) return false;
           return true;
         });
-        tokens.forEach((o) => {
-          o.update({ width: size.w, height: size.h, scale: size.scale });
+        tokens.forEach((token) => {
+          // Update only tokens that changed, ignoring those with their own custom size
+          if (token.actor.system.traits.size !== sizeKey) return;
+          token.update({ width: size.w, height: size.h, scale: size.scale });
         });
       }
     }

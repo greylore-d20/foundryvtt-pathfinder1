@@ -1308,7 +1308,7 @@ export class ItemSheetPF extends ItemSheet {
       // Add to another item
       else {
         const prevActions = deepClone(this.object.system.actions ?? []);
-        data._id = randomID(16);
+        data.data._id = randomID(16);
         prevActions.splice(prevActions.length, 0, data.data);
         await this.object.update({ "system.actions": prevActions });
       }

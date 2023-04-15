@@ -1201,6 +1201,9 @@ const _migrateActionConditionals = function (action, item) {
       // Create modifier ID
       if (!modifier._id) modifier._id = randomID(16);
 
+      // Ensure subTarget exists
+      modifier.subTarget ??= "";
+
       let reResult;
       // Convert modifier subtarget
       if ((reResult = modifier.subTarget.match(/^attack\.([0-9]+)/))) {

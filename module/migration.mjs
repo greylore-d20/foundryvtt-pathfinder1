@@ -1488,7 +1488,7 @@ const _migrateActorHP = function (ent, updateData, linked) {
 };
 
 const _migrateActorSenses = function (ent, updateData, linked, token) {
-  const oldSenses = getProperty(ent, "system.traits.senses");
+  const oldSenses = ent.system.traits?.senses;
   if (typeof oldSenses === "string") {
     const tokenData = token ?? ent.prototypeToken;
 
@@ -1507,9 +1507,14 @@ const _migrateActorSenses = function (ent, updateData, linked, token) {
       sid: false,
       tr: false,
       si: false,
-      sc: false,
+      sc: 0,
       custom: oldSenses,
     };
+  }
+
+  // Migrate boolean Scent sense to number
+  if (typeof oldSenses?.sc === "boolean") {
+    updateData["system.traits.senses.sc"] = oldSenses.sc ? 30 : 0;
   }
 };
 

@@ -31,6 +31,7 @@ export class SensesSelector extends DocumentSheet {
       "system.traits.senses.ts": "distance",
       "system.traits.senses.bse": "distance",
       "system.traits.senses.bs": "distance",
+      "system.traits.senses.sc": "distance",
     };
   }
 

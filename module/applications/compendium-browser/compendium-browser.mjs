@@ -439,7 +439,7 @@ export class CompendiumBrowser extends Application {
     const { uuid } = li.dataset;
     const document = await fromUuid(uuid);
     const collection = game.packs.get(document.pack);
-    return document.sheet.render(true, { editable: game.user.isGM && !collection.isLocked, focus: true });
+    return document.sheet.render(true, { editable: game.user.isGM && !collection.locked, focus: true });
   }
 
   /**

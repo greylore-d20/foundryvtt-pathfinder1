@@ -1,7 +1,7 @@
 import { PF1 } from "@config";
 import { ActorBasePF } from "./actor-base.mjs";
 import { getAbilityModifier } from "@utils";
-import { ItemPF } from "../item/item-pf.mjs";
+import { ItemPF, ItemRacePF } from "@item/_module.mjs";
 import { createTag, fractionalToString, enrichHTMLUnrolled } from "../../utils/lib.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
 import { LinkFunctions } from "../../utils/links.mjs";
@@ -90,10 +90,8 @@ export class ActorPF extends ActorBasePF {
        */
       this._states = {};
 
-    /**
-     * Race cache
-     */
-    this._race ??= null;
+    // Init race reference
+    this.race ??= null;
   }
 
   _preCreate(data, options, user) {
@@ -207,10 +205,25 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @returns {ItemRacePF|null}
+   * Return actor's current race (item).
+   *
+   * @type {ItemRacePF|null}
    */
   get race() {
     return this._race;
+  }
+
+  /**
+   * Set reference to actor's current race (item).
+   * Fill in any additional info, such as easy reference to creature type.
+   *
+   * @type {ItemRacePF|null}
+   */
+  set race(item) {
+    this._race = item;
+    const creatureType = item?.system.creatureType;
+    this.system.traits.type = creatureType;
+    this.system.traits.humanoid = creatureType === "humanoid";
   }
 
   get typeColor() {

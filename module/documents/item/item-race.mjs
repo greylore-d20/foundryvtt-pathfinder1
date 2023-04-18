@@ -47,7 +47,7 @@ export class ItemRacePF extends ItemPF {
   _onDelete(data, context, userId) {
     super._onDelete(data, context, userId);
 
-    if (this.parent?.race === this) this.parent._race = null;
+    if (this.parent?.race === this) this.parent.race = null;
   }
 
   /**
@@ -57,6 +57,6 @@ export class ItemRacePF extends ItemPF {
     super.prepareBaseData();
     const actor = this.actor;
     // Self-register on actor
-    if (actor) actor._race = this;
+    if (actor) actor.race = this;
   }
 }

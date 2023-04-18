@@ -25,15 +25,6 @@ const runSocketFunction = async function (args, senderId) {
         parentItem._cleanLink(link, linkType);
         break;
       }
-      case "redrawCanvas":
-        canvas.perception.update(
-          {
-            initializeLighting: true,
-            initializeVision: true,
-          },
-          true
-        );
-        break;
       case "currencyTransfer": {
         if (!isFirstGM) return;
         let source = await fromUuid(args.data.sourceActor);

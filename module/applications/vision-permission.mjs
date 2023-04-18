@@ -50,7 +50,6 @@ export class VisionPermissionSheet extends FormApplication {
 
   async _updateObject(event, formData) {
     await this.object.setFlag("pf1", "visionPermission", formData);
-    game.socket.emit("system.pf1", { eventType: "redrawCanvas" });
   }
 
   async getData() {

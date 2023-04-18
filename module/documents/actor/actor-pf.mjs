@@ -1839,18 +1839,22 @@ export class ActorPF extends ActorBasePF {
       refreshVision = true;
     } else if (hasProperty(updateData, "system.traits.senses")) {
       refreshVision = true;
+    } else if (updateData.flags?.pf1?.visionPermissions) {
+      refreshVision = true;
     }
 
     if (refreshVision) {
-      // Refresh canvas perception
-      canvas.perception.update(
-        {
-          initializeVision: true,
-          refreshLighting: true,
-          refreshVision: true,
-        },
-        true
-      );
+      if (this.testUserPermission(game.user, "OBSERVER")) {
+        // Refresh canvas perception
+        canvas.perception.update(
+          {
+            initializeVision: true,
+            refreshLighting: true,
+            refreshVision: true,
+          },
+          true
+        );
+      }
     }
 
     // Resize token(s)

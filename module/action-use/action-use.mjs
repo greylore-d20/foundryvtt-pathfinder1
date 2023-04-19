@@ -465,7 +465,16 @@ export class ActionUse {
    */
   checkAttackRequirements() {
     // Determine charge cost
-    let cost = this.shared.action.getChargeCost({ rollData: this.shared.rollData });
+    const baseCost = this.shared.action.getChargeCost({ rollData: this.shared.rollData });
+
+    // Bonus cost, e.g. from a conditional modifier
+    const bonusCost = this.shared.rollData["chargeCostBonus"] ?? 0;
+
+    const cost = baseCost + bonusCost;
+
+    // Save chargeCost as rollData entry for anything else
+    this.shared.rollData.chargeCost = cost;
+
     if (cost != 0) {
       let uses = this.item.charges;
       if (this.item.type === "spell") {
@@ -473,8 +482,6 @@ export class ActionUse {
           uses = this.item.getSpellUses();
         }
       }
-      // Add charge cost from conditional modifiers
-      cost += this.shared.rollData["chargeCostBonus"] ?? 0;
 
       // Cancel usage on insufficient charges
       if (cost > uses) {
@@ -482,9 +489,6 @@ export class ActionUse {
         return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
       }
     }
-
-    // Save chargeCost as rollData entry for following formulae
-    this.shared.rollData.chargeCost = cost;
 
     return 0;
   }

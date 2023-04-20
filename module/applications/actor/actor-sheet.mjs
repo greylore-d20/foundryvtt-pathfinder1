@@ -238,6 +238,9 @@ export class ActorSheetPF extends ActorSheet {
       i.type = item.type;
       i.id = item.id;
       i.img = item.img;
+      i.isCharged = item.isCharged;
+      i.hasUses = i.uses?.max > 0;
+
       const firstAction = item.firstAction;
       i.labels = item.getLabels({ actionId: firstAction?.id });
       i.hasAttack = firstAction?.hasAttack;
@@ -256,7 +259,15 @@ export class ActorSheetPF extends ActorSheet {
       );
       i.sort = item.sort;
       i.showUnidentifiedData = item.showUnidentifiedData;
-      i.name = item.name;
+      i.name = item.name; // Copy name over from item to handle identified state correctly
+
+      i.isStack = i.quantity > 1;
+      i.price = item.getValue({ recursive: false, sellValue: 1 });
+
+      const itemQuantity = i.quantity != null ? i.quantity : 1;
+      const itemCharges = i.uses?.value != null ? i.uses.value : 1;
+      i.empty = itemQuantity <= 0 || (i.isCharged && itemCharges <= 0);
+
       return i;
     });
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -2379,17 +2390,6 @@ export class ActorSheetPF extends ActorSheet {
     // Partition items by category
     let [items, spells, feats, classes, attacks] = data.items.reduce(
       (arr, item) => {
-        const document = item.document;
-        item.img = item.img || CONST.DEFAULT_TOKEN;
-        item.isStack = item.quantity ? item.quantity > 1 : false;
-        item.hasUses = item.uses && item.uses.max > 0;
-        item.isCharged = ["day", "week", "charges"].includes(item.uses?.per);
-        if (document) item.price = document.getValue({ recursive: false, sellValue: 1 });
-        else item.price = item.identified === false ? item.unidentified.price : item.price;
-
-        const itemQuantity = item.quantity != null ? item.quantity : 1;
-        const itemCharges = item.uses?.value != null ? item.uses.value : 1;
-        item.empty = itemQuantity <= 0 || (item.isCharged && itemCharges <= 0);
         if (item.type === "spell") arr[1].push(item);
         else if (item.type === "feat") arr[2].push(item);
         else if (item.type === "class") arr[3].push(item);

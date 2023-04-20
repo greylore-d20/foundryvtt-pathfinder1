@@ -21,34 +21,16 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
   }
 
   _prepareItems(data) {
-    const [attacks] = data.items.reduce(
-      (arr, item) => {
-        item.img = item.img || foundry.data.ItemData.DEFAULT_ICON;
-        item.hasUses = item.uses && item.uses.max > 0;
-        item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "uses.per"));
-
-        const itemCharges = getProperty(item, "uses.value") != null ? getProperty(item, "uses.value") : 1;
-
-        if (item.type === "attack") arr[0].push(item);
-        return arr;
-      },
-      [[]]
-    );
-
     const attackSections = {
       all: {
         label: game.i18n.localize("PF1.ActionPlural"),
-        items: [],
+        items: data.items.filter((i) => i.type === "attack"),
         canCreate: true,
         initial: true,
         showTypes: true,
         dataset: { type: "attack", "sub-type": "weapon" },
       },
     };
-
-    for (const a of attacks) {
-      attackSections.all.items.push(a);
-    }
 
     data.attacks = attackSections;
   }

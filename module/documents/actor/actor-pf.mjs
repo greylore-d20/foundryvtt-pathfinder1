@@ -94,8 +94,8 @@ export class ActorPF extends ActorBasePF {
     this.race ??= null;
   }
 
-  _preCreate(data, options, user) {
-    super._preCreate(data, options, user);
+  async _preCreate(data, options, user) {
+    await super._preCreate(data, options, user);
 
     const updates = this.preCreateData(data, options, user);
 

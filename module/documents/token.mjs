@@ -1,7 +1,7 @@
 import { PF1 } from "@config";
 
 export class TokenDocumentPF extends TokenDocument {
-  _preCreate(data, options, userId) {
+  async _preCreate(data, options, userId) {
     this._preCreateSetSize();
   }
 

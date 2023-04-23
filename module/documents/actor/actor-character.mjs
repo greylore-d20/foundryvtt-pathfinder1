@@ -7,8 +7,8 @@ export class ActorCharacterPF extends ActorPF {
    * @param {object} data Creation data
    * @param {User} user User instance
    */
-  _preCreate(data, user) {
-    super._preCreate(data, user);
+  async _preCreate(data, user) {
+    await super._preCreate(data, user);
 
     const tokenUpdateData = {};
     // Link token data by default

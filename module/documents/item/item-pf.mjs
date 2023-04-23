@@ -49,8 +49,8 @@ export class ItemPF extends ItemBasePF {
     return ["weapon", "equipment", "consumable", "loot", "container"].includes(type);
   }
 
-  _preCreate(data, options, user) {
-    super._preCreate(data, options, user);
+  async _preCreate(data, options, user) {
+    await super._preCreate(data, options, user);
 
     // Set typed image
     // The test against DEFAULT_ICON is to deal with a Foundry bug with unlinked actors.

@@ -7,9 +7,9 @@
   "flags": {},
   "system": {
     "description": {
-      "value": "<p>By calling upon eerie powers, the witch's touch can mend even the most terrible wounds of those she touches. This acts as&nbsp;cure serious wounds, using the witch's caster level.</p>\n<p>Once a creature has benefited from the major healing hex, it cannot benefit from it again for 24 hours.</p>\n<p>At 15th level, this hex acts like&nbsp;cure critical wounds.</p>"
+      "value": "<p>By calling upon eerie powers, the witch's touch can mend even the most terrible wounds of those she touches. This acts as @UUID[Compendium.pf1.spells.norn02g8zdsspf2j]{cure serious wounds}, using the witch's caster level.</p><p>Once a creature has benefited from the major healing hex, it cannot benefit from it again for 24 hours.</p><p>At 15th level, this hex acts like @UUID[Compendium.pf1.spells.sa076xymi52eq3to]{cure critical wounds}.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"], ["Major Hex"]],
     "actions": [
       {
         "_id": "ffnmvtvxmqffclsv",
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -65,17 +65,17 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
+          "critParts": [],
+          "nonCritParts": [],
           "parts": [
             [
-              "(@classes.witch.level >= 15 ? 4 : 3)d8 + @classes.witch.level",
+              "(@classes.witch.level >= 15 ? 4 : 3)d8 + min(20, @classes.witch.level)",
               {
-                "values": ["untyped"],
+                "values": ["positive"],
                 "custom": ""
               }
             ]
-          ],
-          "critParts": [],
-          "nonCritParts": []
+          ]
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -122,7 +122,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": true
       }
     ],
     "uses": {

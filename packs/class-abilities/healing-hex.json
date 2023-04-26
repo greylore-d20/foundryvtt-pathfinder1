@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>A witch can soothe the wounds of those she touches. This acts as a @Compendium[pf1.spells.xoc3vhg3btmfjauq]{Cure Light Wounds} spell, using the witch's caster level.</p>\n<p>Once a creature has benefited from the healing hex, it cannot benefit from it again for 24 hours.</p>\n<p>At 5th level, this hex acts like @Compendium[pf1.spells.e67esdjp4nojtbr7]{Cure Moderate Wounds}.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"]],
     "actions": [
       {
         "_id": "5i7olkoslvx9sx98",
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -65,17 +65,17 @@
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
+          "critParts": [],
+          "nonCritParts": [],
           "parts": [
             [
               "(@classes.witch.level >= 5 ? 2 : 1)d8 + (min(10, @classes.witch.level))",
               {
-                "values": ["untyped"],
+                "values": ["positive"],
                 "custom": ""
               }
             ]
-          ],
-          "critParts": [],
-          "nonCritParts": []
+          ]
         },
         "attackParts": [],
         "formulaicAttacks": {
@@ -96,7 +96,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "",
           "type": "",
           "description": ""
         },
@@ -122,7 +122,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

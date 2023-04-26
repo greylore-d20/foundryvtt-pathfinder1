@@ -9,8 +9,218 @@
     "description": {
       "value": "<p>The witch calls forth the ghost of a humanoid creature with no more than 18 Hit Dice. The ghost has its own personality and desires, but is willing to bargain with the witch, as if she had cast @Compendium[pf1.spells.0wamdkl9gp19l55w]{Planar Ally, Greater}. To seal an agreement with the witch, the ghost requires life energy equal to 1 temporary negative level (this is in addition to the standard payment for the ghost's service).</p>\n<p>This negative level persists as long as the ghost remains in the service of the witch; the witch can end the agreement as a standard action, immediately removing the negative level.</p>"
     },
-    "tags": [],
-    "actions": [],
+    "tags": [["Hex"], ["Grand Hex"]],
+    "actions": [
+      {
+        "_id": "OtYIGatPh6Zpum2L",
+        "name": "Seal Bargain",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "description": "",
+        "tag": "start",
+        "activation": {
+          "cost": 1,
+          "type": "nonaction"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "nonaction"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": "",
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductChargesCost": "",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": ""
+          }
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": null,
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "primaryAttack": true,
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "touch": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "value": null
+        }
+      },
+      {
+        "_id": "pp2yj60g1XyfGxu8",
+        "name": "End Agreement",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "description": "",
+        "tag": "end",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "inst"
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "unlimited",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductChargesCost": "",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": ""
+          }
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": null,
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "primaryAttack": true,
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "touch": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "value": null
+        }
+      }
+    ],
+    "uses": {
+      "per": ""
+    },
     "attackNotes": [],
     "effectNotes": [],
     "changes": [],
@@ -30,7 +240,17 @@
     "languages": {
       "value": []
     },
-    "scriptCalls": [],
+    "scriptCalls": [
+      {
+        "_id": "4gd4mYGD61Urb28B",
+        "name": "Bargain Negative Level Adjust",
+        "img": "icons/svg/dice-target.svg",
+        "type": "script",
+        "value": "const tag = shared.attackData.action.tag;\nconst nl = actor.system.attributes.energyDrain || 0;\nif (tag === \"start\") {\n  actor.update({\"system.attributes.energyDrain\": nl + 1})\n}\nelse if (tag === \"end\") {\n  actor.update({\"system.attributes.energyDrain\": Math.max(0, nl - 1)})  \n}\n",
+        "category": "use",
+        "hidden": false
+      }
+    ],
     "subType": "classFeat",
     "associations": {
       "classes": [["Witch"]]

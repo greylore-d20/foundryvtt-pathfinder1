@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>The witch fills an ally with the safety he feels at home or inflicts pangs of homesickness to hamper an enemy’s defenses. She chooses a target for the hex within 30 feet. If she chooses an ally, that ally gains a +2 dodge bonus to AC against traps and on Reflex saves against traps. If she chooses an opponent, that opponent takes a –2 penalty to AC against traps and on Reflex saves against traps. Either way, the effects last for 1 minute. The target can attempt a Will save to negate the effects of the hex.</p>\n<p>At 8th level, the bonus or penalty increases to 4.</p>\n<p>At 16th level, the bonus or penalty increases to 6.</p>\n<p>A creature targeted by this hex cannot be targeted again by this hex for 1 day.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"]],
     "actions": [
       {
         "_id": "eroittvg81g1qbuw",
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -88,7 +88,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
           "type": "will",
           "description": "Will negates"
         },
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

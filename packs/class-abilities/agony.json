@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>With a quick incantation, a witch can place this hex on one creature within 60 feet, causing them to suffer intense pain. The target is nauseated for a number of rounds equal to the witch's level. A Fortitude save negates this effect. If the saving throw is failed, the target can attempt a new save each round to end the effect.</p>\n<p>Whether or not the save is successful, a creature cannot be the target of this hex again for 1 day.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"], ["Major Hex"]],
     "actions": [
       {
         "_id": "0aydhkpvtdolnuuy",
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -88,7 +88,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
           "type": "fort",
           "description": "Fortitude negates"
         },
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

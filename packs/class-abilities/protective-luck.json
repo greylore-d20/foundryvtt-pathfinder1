@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>The witch can cause fate to twist so that it benefits a creature within 30 feet for 1 round. Whenever that creature is targeted by an effect that requires an attack roll, including weapon attacks, the attacker must roll twice and take the worse result.</p>\n<p>At 8th level and 16th level, the duration of this hex is extended by 1 round.</p>\n<p>A witch cannot use this ability on herself.</p>\n<p>Hexes that affect the fortune hex, such as cackle, also affect protective luck.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"]],
     "actions": [
       {
         "_id": "0qhc085g9naj8dbj",
@@ -28,7 +28,7 @@
           }
         },
         "duration": {
-          "value": "@classes.witch.level >= 16 ? 3 : ((@classes.witch.level < 16 && @classes.witch.level > 7) ? 2 : 1)",
+          "value": "1 + min(2, floor(@classes.witch.level / 8))",
           "units": "round"
         },
         "target": {
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

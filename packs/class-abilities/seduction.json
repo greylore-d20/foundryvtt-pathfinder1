@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>The witch uses enthralling movements to fascinate a single creature within 60 feet that can see the witch. A Will save negates this effect. If the target is (or could be) sexually attracted to the witch, the save DC is increased by 2. The effect lasts for 1 round, but the witch can extend this effect for 1 additional round (up to a total number of rounds equal to her class level) by taking a standard action to continue her enthralling movements. Whether or not the target succeeds at its save, it cannot be the target of this ability again for 1 day.</p>\n<p>At 8th level, the fascination effect lasts for 2 additional rounds after the witch ceases taking a standard action to maintain it. This is a mind-affecting charm effect.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"]],
     "actions": [
       {
         "_id": "i1ex3175awk6i94f",
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -61,7 +61,7 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "",
+        "actionType": "save",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
@@ -82,15 +82,15 @@
         "formula": "",
         "ability": {
           "attack": null,
-          "damage": null,
+          "damage": "",
           "damageMult": 1,
           "critRange": 20,
           "critMult": 2
         },
         "save": {
-          "dc": 0,
-          "type": "",
-          "description": ""
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
+          "type": "will",
+          "description": "Will negates"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

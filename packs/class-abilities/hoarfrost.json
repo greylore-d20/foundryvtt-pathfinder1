@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>The target is rimed with a shell of frost needles that slowly work their way into its flesh (Fortitude negates). The target turns pale and blue, and takes 1 point of Constitution damage per minute until it dies, saves (once per minute), or is cured.&nbsp;Break enchantment,&nbsp;dispel magic,&nbsp;remove curse, and similar spells end the effect.</p>\n<p>If the target saves, it is immune to this hex for 1 day. This is a cold effect.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"], ["Major Hex"]],
     "actions": [
       {
         "_id": "ge3mpiwwpfil6rfi",
@@ -35,8 +35,8 @@
           "value": "one creature"
         },
         "range": {
-          "value": null,
-          "units": "",
+          "value": "30",
+          "units": "ft",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -88,7 +88,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
           "type": "fort",
           "description": "Fortitude negates"
         },
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

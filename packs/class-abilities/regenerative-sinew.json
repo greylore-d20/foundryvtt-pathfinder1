@@ -7,13 +7,13 @@
   "flags": {},
   "system": {
     "description": {
-      "value": "<p>The witch can cause the debilitating wounds of a creature she touches to quickly close, helping it heal rapidly. The target either gains fast healing 5 for a number of rounds equal to 1/2 the witch’s class level or it heals up to 4 points of ability score damage from any two ability scores (witch’s choice).</p>\n<p>At 15th level, in addition to the chosen effect, the target’s severed body members, broken bones, and ruined organs grow back, as per&nbsp;regenerate.</p>\n<p>Once a creature has benefited from this hex, it cannot benefit from it again for 24 hours.</p>"
+      "value": "<p>The witch can cause the debilitating wounds of a creature she touches to quickly close, helping it heal rapidly.</p><p>The target either gains fast healing 5 for a number of rounds equal to 1/2 the witch’s class level or it heals up to 4 points of ability score damage from any two ability scores (witch’s choice).</p><p>At 15th level, in addition to the chosen effect, the target’s severed body members, broken bones, and ruined organs grow back, as per @UUID[Compendium.pf1.spells.3fbrrckyfagfzyop]{regenerate}.</p><p>Once a creature has benefited from this hex, it cannot benefit from it again for 24 hours.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"], ["Major Hex"]],
     "actions": [
       {
         "_id": "dxcgr8nd0zfc2nqv",
-        "name": "Use",
+        "name": "Fast Healing",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
         "description": "",
         "tag": "",
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -77,18 +77,18 @@
           "bonus": {
             "formula": ""
           },
-          "label": null
+          "label": ""
         },
         "formula": "",
         "ability": {
-          "attack": null,
-          "damage": null,
+          "attack": "",
+          "damage": "",
           "damageMult": 1,
           "critRange": 20,
-          "critMult": 2
+          "critMult": 1
         },
         "save": {
-          "dc": 0,
+          "dc": "",
           "type": "",
           "description": ""
         },
@@ -96,7 +96,7 @@
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
-          "multiplier": "",
+          "multiplier": null,
           "damageBonus": 2,
           "critMultiplier": 1
         },
@@ -108,6 +108,113 @@
           }
         },
         "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "value": null
+        },
+        "touch": true
+      },
+      {
+        "_id": "FxH3XtLEEc5RNka7",
+        "name": "Restoration",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "description": "",
+        "tag": "",
+        "activation": {
+          "cost": 1,
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "",
+          "units": ""
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "value": null,
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductChargesCost": "",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": ""
+          },
+          "per": "",
+          "value": 0,
+          "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": ""
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 1
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": null,
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "primaryAttack": true,
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "touch": true,
         "usesAmmo": false,
         "spellEffect": "",
         "spellArea": "",

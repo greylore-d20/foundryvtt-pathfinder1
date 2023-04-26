@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>A witch can use this hex on a creature to prevent it from drawing a weapon for a number of rounds equal to the witch’s level. This hex has no effect on natural weapons or weapons already in a creature’s hands, but does prevent an archer from drawing arrows.</p>\n<p>A Will save negates this effect, and whether or not the save is successful, a creature cannot be the target of this hex again for 1 day.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"]],
     "actions": [
       {
         "_id": "tjdmz9rnhtsyg4a0",
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -88,7 +88,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
           "type": "will",
           "description": "Will negates"
         },
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

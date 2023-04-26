@@ -7,9 +7,9 @@
   "flags": {},
   "system": {
     "description": {
-      "value": "<p>The witch can feed on the fear of her victim. The target of this hex becomes shaken for a number of rounds equal to 3 + the witch’s Intelligence modifier. As long as the witch remains within 30 feet of her target, she gains a +1 morale bonus on attack rolls and a +1 morale bonus on saving throws as long as this effect persists.</p>\n<p>A successful Will save reduces the duration of this hex to 1 round. This is a mind-affecting fear effect.</p>"
+      "value": "<p><em>The witch can feed on the fear of her victim.</em></p><p>The target of this hex becomes shaken for a number of rounds equal to 3 + the witch’s Intelligence modifier.</p><p>As long as the witch remains within 30 feet of her target, she gains a +1 morale bonus on attack rolls and a +1 morale bonus on saving throws as long as this effect persists.</p><p>A successful Will save reduces the duration of this hex to 1 round.</p><p>This is a mind-affecting fear effect.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"], ["Major Hex"]],
     "actions": [
       {
         "_id": "bxs8ql7xg6sj6hjh",
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -88,9 +88,9 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
           "type": "will",
-          "description": "Will negates"
+          "description": "Will reduces duration to 1 round"
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

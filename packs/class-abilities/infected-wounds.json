@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>The target's wounds become infected (Fortitude negates). The target takes 1 point of Constitution damage per day. After the first day, the target may save once per day to cure the infection.</p>\n<p>This is a disease effect.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"], ["Major Hex"]],
     "actions": [
       {
         "_id": "q0fah2qgh2atex7b",
@@ -35,8 +35,8 @@
           "value": "one creature"
         },
         "range": {
-          "value": null,
-          "units": "",
+          "value": "30",
+          "units": "ft",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -88,7 +88,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
           "type": "fort",
           "description": "Fortitude negates"
         },
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>Calling upon fell powers, a witch can place a hex on a creature within 60 feet that causes its sleep to be tormented by terrible nightmares. This functions as the spell @Compendium[pf1.spells.siv3ub7hbmcklf8c]{Nightmare} each time the affected creature attempts to rest. A Will save negates this effect. If the save is failed, the target must make a new save each night or be unable to rest.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"], ["Major Hex"]],
     "actions": [
       {
         "_id": "6nkg2cikp8y4szvd",
@@ -35,8 +35,8 @@
           "value": "one living creature"
         },
         "range": {
-          "value": null,
-          "units": "",
+          "value": "60",
+          "units": "ft",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -88,7 +88,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
           "type": "will",
           "description": "Will negates"
         },
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>The witch can partially transform an enemy into a pig. The effects of the transformation are mostly cosmetic and do not change the creature’s size category or overall shape, but the affected creature takes a –2 penalty on Will saving throws for a number of rounds equal to the witch’s Intelligence modifier (Will negates).</p>\n<p>At 8th level, the affected creature’s hands (or paws) turn into hooves, preventing it from using claw attacks or taking any action that would require the creature to use its fingers.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"]],
     "actions": [
       {
         "_id": "gk9hwsjpma8q5pec",
@@ -35,8 +35,8 @@
           "value": "one creature"
         },
         "range": {
-          "value": null,
-          "units": "",
+          "value": "30",
+          "units": "ft",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -88,7 +88,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
           "type": "will",
           "description": "Will negates"
         },

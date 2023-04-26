@@ -9,7 +9,7 @@
     "description": {
       "value": "<p>The witch can cause a creature in water to struggle, imposing a –4 penalty on its Swim checks and reducing its swim speed (if any) by 10 feet for 1 minute unless it succeeds at a Fortitude saving throw; on a successful save, the effect’s duration is reduced to 1 round.</p>\n<p>The duration of this hex can be extended with the cackle hex.</p>\n<p>This hex does not stack with itself.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"]],
     "actions": [
       {
         "_id": "cvq1vpe0ehsbdiqi",
@@ -35,8 +35,8 @@
           "value": "one creature"
         },
         "range": {
-          "value": null,
-          "units": "",
+          "value": "30",
+          "units": "ft",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -88,7 +88,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
           "type": "fort",
           "description": "Fortitude reduces duration to 1 round"
         },
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

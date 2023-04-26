@@ -9,13 +9,13 @@
     "description": {
       "value": "<p>The witch may target a single undead creature with this hex as if with an @Compendium[pf1.spells.lllhr9py6w44cxjm]{Undeath to Death} spell. A Will save negates this effect.</p>\n<p>Whether or not the save is successful, a creature cannot be the target of this hex again for 1 day.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"], ["Grand Hex"]],
     "actions": [
       {
         "_id": "vbo5dgvtwaoaro6m",
         "name": "Use",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
-        "description": "",
+        "description": "<p>Slays [[/r (@classes.witch.level)d4]] HD undead creature.</p>",
         "tag": "",
         "activation": {
           "cost": 1,
@@ -35,8 +35,8 @@
           "value": "one undead creature"
         },
         "range": {
-          "value": null,
-          "units": "medium",
+          "value": "30",
+          "units": "ft",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -88,7 +88,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": "0",
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
           "type": "will",
           "description": "Will negates"
         },
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

@@ -7,13 +7,13 @@
   "flags": {},
   "system": {
     "description": {
-      "value": "<p>The witch can curse an animal, plant creature, or plot of land, causing it to wither and die. Blighting an area takes 1 round, during which time the witch and her familiar must be in contact with the target. If it's used on a plot of land, the land begins to wither the following day, and over the next week all plants in the area die. Nothing will grow in that area so long as the curse persists. A witch can affect an area with a radius equal to her class level × 10 feet. Blighting a creature is a standard action that requires a melee touch attack. If used on a creature of the animal or plant type, the creature gains the following curse:</p>\n<p><em>Blight Hex</em>—type&nbsp;curse;&nbsp;save&nbsp;Will negates;&nbsp;frequency&nbsp;1/day;&nbsp;effect&nbsp;1 Con damage. Both types of curse can be removed with a&nbsp;remove curse&nbsp;or similar magic, using the save DC as the DC to remove the curse. A witch can only have one blight in effect at a time. If another blight hex is made, the first immediately ends.</p>"
+      "value": "<p>The witch can curse an animal, plant creature, or plot of land, causing it to wither and die.</p><p>Blighting an area takes 1 round, during which time the witch and her familiar must be in contact with the target. If it's used on a plot of land, the land begins to wither the following day, and over the next week all plants in the area die. Nothing will grow in that area so long as the curse persists. A witch can affect an area with a radius equal to her class level × 10 feet.</p><p>Blighting a creature is a standard action that requires a melee touch attack. If used on a creature of the animal or plant type, the creature gains the following curse:</p><p><em>Blight Hex</em>—type curse; save Will negates; frequency 1/day; effect 1 Con damage.</p><p>Both types of curse can be removed with a remove curse or similar magic, using the save DC as the DC to remove the curse.</p><p>A witch can only have one blight in effect at a time. If another blight hex is made, the first immediately ends.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"]],
     "actions": [
       {
         "_id": "cdh8ngzbslaxzs12",
-        "name": "Use",
+        "name": "Creature",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
         "description": "",
         "tag": "",
@@ -46,11 +46,114 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
           "maxFormula": ""
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "msak",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": ""
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 1
+        },
+        "save": {
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": null,
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "primaryAttack": true,
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "value": null
+        },
+        "touch": true
+      },
+      {
+        "_id": "4qEeyEw6dhGtiOFS",
+        "name": "Area",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "description": "",
+        "tag": "",
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": "seeText"
+        },
+        "target": {
+          "value": "area"
+        },
+        "range": {
+          "value": "",
+          "units": "touch",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductChargesCost": "",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": ""
+          }
         },
         "measureTemplate": {
           "type": "",
@@ -88,7 +191,7 @@
           "critMult": 2
         },
         "save": {
-          "dc": 0,
+          "dc": "",
           "type": "",
           "description": ""
         },
@@ -96,7 +199,7 @@
         "attackNotes": [],
         "soundEffect": "",
         "powerAttack": {
-          "multiplier": "",
+          "multiplier": null,
           "damageBonus": 2,
           "critMultiplier": 1
         },
@@ -108,9 +211,10 @@
           }
         },
         "nonlethal": false,
+        "touch": false,
         "usesAmmo": false,
         "spellEffect": "",
-        "spellArea": "",
+        "spellArea": "radius of 10 ft per level",
         "conditionals": [],
         "enh": {
           "value": null

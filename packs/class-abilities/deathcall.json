@@ -9,13 +9,13 @@
     "description": {
       "value": "<p>The witch’s presence makes death more likely for wounded foes. Creatures within 120 feet of the witch take a –1 penalty on checks to stabilize when dying.</p>\n<p>At 8th level, this penalty changes to –2, and at 16th level, it changes to –3.</p>"
     },
-    "tags": [],
+    "tags": [["Hex"]],
     "actions": [
       {
         "_id": "1cs1au2j7q7senjv",
         "name": "Use",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
-        "description": "",
+        "description": "<p>[[-1 - min(2, floor(@classes.witch.level / 8))]] penalty to stabilize.</p>",
         "tag": "",
         "activation": {
           "cost": 1,
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -114,7 +114,8 @@
         "conditionals": [],
         "enh": {
           "value": null
-        }
+        },
+        "touch": false
       }
     ],
     "uses": {

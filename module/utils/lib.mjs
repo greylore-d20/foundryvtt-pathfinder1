@@ -1178,3 +1178,21 @@ export function moduleToObject(module) {
   }
   return result;
 }
+
+/**
+ * Set default scene scaling.
+ *
+ * `imperial` sets scaling to 5 ft, `metric` sets scaling to 1.5 m
+ *
+ * @param {"metric"|"imperial"|undefined} [system] System of units. Pull current setting if undefined.
+ */
+export function setDefaultSceneScaling(system) {
+  system ??= getDistanceSystem();
+  if (system == "metric") {
+    game.system.gridUnits = "m";
+    game.system.gridDistance = 1.5;
+  } else {
+    game.system.gridUnits = "ft";
+    game.system.gridDistance = 5;
+  }
+}

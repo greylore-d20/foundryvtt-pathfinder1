@@ -87,6 +87,7 @@ import {
   refreshActors,
   diffObjectAndArray,
   moduleToObject,
+  setDefaultSceneScaling,
 } from "./module/utils/lib.mjs";
 import { getAbilityModifier } from "@utils";
 import { ChatMessagePF, customRolls } from "./module/documents/chat-message.mjs";
@@ -425,6 +426,8 @@ Hooks.once("init", function () {
 
   // Register System Settings
   registerSystemSettings();
+
+  setDefaultSceneScaling();
 
   //Calculate conditions for world
   CONFIG.statusEffects = getConditions();

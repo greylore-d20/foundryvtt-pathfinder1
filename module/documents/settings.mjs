@@ -4,7 +4,7 @@ import { AccessibilityConfig } from "../applications/settings/accessibility.mjs"
 import { TooltipConfig } from "../applications/settings/tooltip.mjs";
 import { TooltipWorldConfig } from "../applications/settings/tooltip_world.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
-import { getFirstActiveGM } from "@utils";
+import { getFirstActiveGM, setDefaultSceneScaling } from "@utils";
 
 export const registerSystemSettings = function () {
   /**
@@ -179,7 +179,10 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricUnits"),
     },
-    onChange: () => pf1.utils.refreshActors(),
+    onChange: () => {
+      pf1.utils.refreshActors();
+      setDefaultSceneScaling();
+    },
   });
 
   /**
@@ -197,7 +200,10 @@ export const registerSystemSettings = function () {
       imperial: game.i18n.localize("SETTINGS.pf1ImperialDistanceUnits"),
       metric: game.i18n.localize("SETTINGS.pf1MetricDistanceUnits"),
     },
-    onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
+    onChange: () => {
+      pf1.utils.refreshActors({ renderOnly: true });
+      setDefaultSceneScaling();
+    },
   });
 
   /**

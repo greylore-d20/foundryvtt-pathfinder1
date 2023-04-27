@@ -507,12 +507,13 @@
         border-bottom: none;
       }
 
-      background-color: rgba(155, 155, 155, 0.3);
-      &:nth-child(2n + 0) {
-        background-color: rgba(210, 210, 210, 0.3);
+      background-color: var(--pf1-item-list-bg);
+      &:nth-child(even) {
+        background-color: var(--pf1-item-list-bg-alt);
       }
       &:hover {
-        background-color: rgba(64, 64, 192, 0.3);
+        background-color: var(--pf1-item-list-hover-bg);
+        color: var(--pf1-item-list-hover-text);
       }
 
       &.disabled {

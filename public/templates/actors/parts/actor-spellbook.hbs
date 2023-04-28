@@ -448,7 +448,7 @@
         {{#each section.items as |item i|}}
         <li class="item flexrow {{#if item.document.canCast}}prepared{{else}}unprepared{{/if}} {{#if item.domain}}domain{{/if}}" data-item-id="{{item.id}}">
           <div class="item-name flexrow rollable">
-            <div class="item-image" style='background-image: url("{{item.img}}")'></div>
+            <div class="item-image" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
             <h4>{{item.name}}</h4>
           </div>
 
@@ -487,13 +487,15 @@
           </div>
 
           <div class="item-detail item-actions">
-            <div class="item-attack tooltip">
+            <div class="item-action tooltip">
               <span class="tooltipcontent">
                 {{localize "PF1.UseSpell"}}<br/>
                 {{#if labels.range}}{{labels.range}}<br>{{/if}}
                 {{#if labels.save}}{{labels.save}}<br/>{{/if}}
               </span>
-              <a class="item-control item-attack"><img class="icon" src="systems/pf1/icons/actions/gladius.svg"></a>
+              <a class="item-control item-action action roll">
+                <img src="icons/dice/d20black.svg">
+              </a>
             </div>
           </div>
 

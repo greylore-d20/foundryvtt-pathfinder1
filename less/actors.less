@@ -95,7 +95,7 @@
           color: @colorTan;
 
           &.rollable:hover {
-            background-image: url("../../icons/svg/d20-black.svg") !important;
+            background-image: url("icons/misc/info.svg") !important;
           }
         }
       }
@@ -578,7 +578,7 @@
           color: rgba(0, 0, 0, 0.6);
         }
 
-        .rollable {
+        .action.roll {
           img {
             opacity: 60%;
           }
@@ -586,20 +586,6 @@
           img:hover {
             animation: 0;
           }
-        }
-      }
-
-      .rollable {
-        img {
-          width: 24px;
-          height: 24px;
-          border: unset;
-        }
-
-        img:hover {
-          animation: dice-spin 250ms cubic-bezier(0.6, -0.28, 0.735, 0.045) 1 forwards;
-          transform-origin: 50% 40%;
-          filter: @filterAuburn;
         }
       }
 
@@ -1270,9 +1256,8 @@
   }
 
   a.rollable {
-    span {
-      margin: 0 2px;
-    }
+    display: inline-flex;
+    gap: 2px;
   }
 
   .rollable.image-d20 {

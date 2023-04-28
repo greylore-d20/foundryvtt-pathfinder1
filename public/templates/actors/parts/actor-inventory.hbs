@@ -77,7 +77,7 @@
       {{#each section.items as |item iid|}}
       <li class="item flexrow{{#if item.empty}} disabled{{/if}}" data-item-id="{{item.id}}">
         <div class="item-name flexrow">
-          <div class="item-image rollable" style='background-image: url("{{item.img}}")'></div>
+          <div class="item-image rollable" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
           <h4 class="rollable">
             {{~#if item.isStack}}({{item.quantity}}) {{/if}}
             {{item.name~}}
@@ -94,13 +94,15 @@
 
         {{#if section.hasActions}}
         <div class="item-detail item-actions">
-          <div class="item-attack tooltip">
+          <div class="item-action tooltip">
             {{#unless item.showUnidentifiedData}}
             {{#if item.hasAction}}
             <span class="tooltipcontent">
               {{localize "PF1.UseItem"}}
             </span>
-            <a class="item-control item-attack"><img class="icon" src="systems/pf1/icons/actions/gladius.svg"></a>
+            <a class="item-control item-action action roll">
+              <img src="icons/dice/d20black.svg">
+            </a>
             {{/if}}
             {{/unless}}
           </div>

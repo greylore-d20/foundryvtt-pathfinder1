@@ -544,7 +544,7 @@
           background-size: contain;
 
           &:hover:not(.no-hover) {
-            background-image: url("../../icons/svg/d20-black.svg") !important;
+            background-image: url("icons/misc/info.svg") !important;
           }
         }
 
@@ -569,21 +569,6 @@
         text-align: right;
         font-size: @fontSizeNormal;
         color: @colorTan;
-      }
-
-      .item-actions {
-        > div {
-          a {
-            display: flex;
-            flex: 0 0 16px;
-            padding: 0;
-            margin-right: 1px;
-            height: 16px;
-            &:last-child {
-              margin-right: 0;
-            }
-          }
-        }
       }
     }
 
@@ -821,13 +806,16 @@
   }
 
   // Rollable Links
-  .editable .rollable:hover {
-    color: var(--pf1-item-hover-text);
-    text-shadow: var(--pf1-item-hover-shadow);
-    cursor: pointer;
+  .editable {
+    .rollable:hover,
+    .action.roll:hover {
+      color: var(--pf1-item-hover-text);
+      text-shadow: var(--pf1-item-hover-shadow);
+      cursor: pointer;
 
-    .tooltipcontent {
-      text-shadow: none;
+      .tooltipcontent {
+        text-shadow: none;
+      }
     }
   }
 

@@ -1017,12 +1017,12 @@ export class ActorSheetPF extends ActorSheet {
     // Delete custom skill
     html.find(".skill > .skill-controls > .skill-delete").click((ev) => this._onSkillDelete(ev));
 
-    // Quick Item Action control
-    html.find(".item-actions a").mouseup((ev) => this._quickItemActionControl(ev));
+    // Item Action control
+    html.find(".item-actions a.item-action").click(this._itemActivationControl.bind(this));
 
     // Roll Skill Checks
-    html.find(".skill > .rollable").click(this._onRollSkillCheck.bind(this));
-    html.find(".sub-skill > .rollable").click(this._onRollSubSkillCheck.bind(this));
+    html.find(".skill > .action.roll").click(this._onRollSkillCheck.bind(this));
+    html.find(".sub-skill > .action.roll").click(this._onRollSubSkillCheck.bind(this));
 
     // Open skill compendium entry
     html.find("a.compendium-entry").click(this._onOpenCompendiumEntry.bind(this));
@@ -1951,16 +1951,18 @@ export class ActorSheetPF extends ActorSheet {
     w.render($(a));
   }
 
-  async _quickItemActionControl(event) {
+  /**
+   * Activate an item from item control button.
+   *
+   * @param {MouseEvent} event Click event
+   */
+  _itemActivationControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
+    const itemId = a.closest(".item[data-item-id]").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    // Quick Attack
-    if (a.classList.contains("item-attack")) {
-      await item.use({ ev: event, token: this.token });
-    }
+    item.use({ ev: event, token: this.token });
   }
 
   async _quickChangeItemQuantity(event, add = 1) {

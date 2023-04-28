@@ -869,6 +869,9 @@ export class ItemSheetPF extends ItemSheet {
     // Item summaries
     html.find(".item .item-name h4").on("click", (event) => this._onItemSummary(event));
 
+    // Action control
+    html.find(".action-controls a").on("click", this._onActionControl.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");
@@ -934,9 +937,6 @@ export class ItemSheetPF extends ItemSheet {
     /* -------------------------------------------- */
     /*  Actions
     /* -------------------------------------------- */
-
-    // Action control
-    html.find(".action-controls a").on("click", this._onActionControl.bind(this));
 
     // Modify action charges
     html
@@ -1407,6 +1407,13 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
+    // Edit action
+    if (a.classList.contains("edit-action")) {
+      return this._onActionEdit(event);
+    }
+
+    if (!this.isEditable) return;
+
     // Add action
     if (a.classList.contains("add-action")) {
       const newActionData = {
@@ -1417,11 +1424,6 @@ export class ItemSheetPF extends ItemSheet {
       };
       await this._onSubmit(event);
       return pf1.components.ItemAction.create([newActionData], { parent: this.item });
-    }
-
-    // Edit action
-    if (a.classList.contains("edit-action")) {
-      return this._onActionEdit(event);
     }
 
     // Remove action

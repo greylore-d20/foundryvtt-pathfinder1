@@ -94,10 +94,16 @@ export class ActorPF extends ActorBasePF {
     this.race ??= null;
   }
 
-  async _preCreate(data, options, user) {
-    await super._preCreate(data, options, user);
+  /**
+   * @override
+   * @param {object} data Creation data
+   * @param {object} options Options
+   * @param {string} userId Invoking user's ID
+   */
+  _preCreate(data, options, userId) {
+    super._preCreate(data, options, userId);
 
-    const updates = this.preCreateData(data, options, user);
+    const updates = this.preCreateData(data, options, userId);
 
     // Set typed image
     if (data.img === undefined) {
@@ -105,18 +111,20 @@ export class ActorPF extends ActorBasePF {
       if (image) this.updateSource({ img: image });
     }
 
-    if (Object.keys(updates).length) return this.updateSource(updates);
+    if (Object.keys(updates).length) this.updateSource(updates);
   }
 
   /**
    * Meant to be overridden.
    *
+   * @abstract
+   * @augments _preCreate
    * @param data
    * @param options
-   * @param user
+   * @param userId
    * @returns {object} Update data to replace with.
    */
-  preCreateData(data, options, user) {
+  preCreateData(data, options, userId) {
     return {};
   }
 
@@ -205,9 +213,9 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * Return actor's current race (item).
+   * Actor's current race item.
    *
-   * @type {ItemRacePF|null}
+   * @type {pf1.documents.item.ItemRacePF|null}
    */
   get race() {
     return this._race;
@@ -372,7 +380,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Deletes expired temporary active effects and disables linked expired buffs.
    *
-   * @param {DocumentModificationContext} context
+   * @param {DocumentModificationContext} [context] Document update context
    */
   async expireActiveEffects(context = {}) {
     const worldTime = game.time.worldTime;
@@ -553,20 +561,20 @@ export class ActorPF extends ActorBasePF {
   /**
    * Update specific spellbook.
    *
-   * @param {string} bookKey
-   * @param {object} rollData
+   * @param {string} bookId Spellbook identifier
+   * @param {object} [rollData] Roll data instance
    * @param {object} cache Pre-calculated data for re-use from _generateSpellbookCache
    */
-  _updateSpellBook(bookKey, rollData, cache) {
+  _updateSpellBook(bookId, rollData, cache) {
     const actorData = this.system;
-    const book = actorData.attributes.spells.spellbooks[bookKey];
+    const book = actorData.attributes.spells.spellbooks[bookId];
     if (!book) {
-      console.error(`Spellbook data not found for "${bookKey} on actor`, this);
+      console.error(`Spellbook data not found for "${bookId} on actor`, this);
       return;
     }
 
     // Set spellbook label
-    book.label = book.name || game.i18n.localize(`PF1.SpellBook${bookKey.capitalize()}`);
+    book.label = book.name || game.i18n.localize(`PF1.SpellBook${bookId.capitalize()}`);
 
     // Do not process spellbooks that are not in use
     if (!book.inUse) return;
@@ -586,7 +594,7 @@ export class ActorPF extends ActorBasePF {
     rollData ??= this.getRollData({ refresh: true });
     cache ??= this._generateSpellbookCache();
 
-    const bookInfo = cache.books[bookKey];
+    const bookInfo = cache.books[bookId];
 
     const spellbookAbility = actorData.abilities[book.ability];
 
@@ -598,7 +606,7 @@ export class ActorPF extends ActorBasePF {
     // Set CL
     let clTotal = 0;
     {
-      const key = `system.attributes.spells.spellbooks.${bookKey}.cl.total`;
+      const key = `system.attributes.spells.spellbooks.${bookId}.cl.total`;
       const formula = book.cl.formula || "0";
       let total = 0;
 
@@ -686,7 +694,7 @@ export class ActorPF extends ActorBasePF {
     {
       // Temp fix for old actors that fail migration
       if (Number.isFinite(book.concentration)) {
-        console.error(`Bad spellbook concentration value "${book.concentration}" in spellbook "${bookKey}"`);
+        console.error(`Bad spellbook concentration value "${book.concentration}" in spellbook "${bookId}"`);
         book.concentration = {};
       }
       const concFormula = book.concentrationFormula;
@@ -698,21 +706,21 @@ export class ActorPF extends ActorBasePF {
       // Set source info
       setSourceInfoByName(
         this.sourceInfo,
-        `system.attributes.spells.spellbooks.${bookKey}.concentration.total`,
+        `system.attributes.spells.spellbooks.${bookId}.concentration.total`,
         game.i18n.localize("PF1.CasterLevel"),
         clTotal,
         false
       );
       setSourceInfoByName(
         this.sourceInfo,
-        `system.attributes.spells.spellbooks.${bookKey}.concentration.total`,
+        `system.attributes.spells.spellbooks.${bookId}.concentration.total`,
         game.i18n.localize("PF1.SpellcastingAbility"),
         classAbilityMod,
         false
       );
       setSourceInfoByName(
         this.sourceInfo,
-        `system.attributes.spells.spellbooks.${bookKey}.concentration.total`,
+        `system.attributes.spells.spellbooks.${bookId}.concentration.total`,
         game.i18n.localize("PF1.ByBonus"),
         formulaRoll,
         false
@@ -954,6 +962,8 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * Collect some basic spellbook info so it doesn't need to be gathered again for each spellbook.
+   *
+   * @returns {object} Spellbook cache
    */
   _generateSpellbookCache() {
     const bookKeys = Object.keys(this.system.attributes.spells.spellbooks);
@@ -983,8 +993,8 @@ export class ActorPF extends ActorBasePF {
   /**
    * Update all spellbooks
    *
-   * @param rollData
-   * @param cache
+   * @param {object} [rollData] Roll data instance
+   * @param {object} [cache] Spellbook cache
    */
   updateSpellbookInfo(rollData, cache) {
     rollData ??= this.getRollData({ refresh: true });
@@ -1727,8 +1737,9 @@ export class ActorPF extends ActorBasePF {
   /**
    * Return the amount of experience required to gain a certain character level.
    *
-   * @param level {number}  The desired level
-   * @returns {number}       The XP required
+   * @abstract
+   * @param {number} level The desired level
+   * @returns {number} The XP required
    */
   getLevelExp(level) {
     return 0; // Only used by PCs
@@ -1974,14 +1985,17 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @param {object} casting Book casting configuration
-   * @param {string} casting.type "prepared", "spontaneous", or "hybrid"
-   * @param {string} casting.progression "high", "med", or "low"
-   * @param {string} casting.ability Spellcasting Ability Score, e.g. "int"
-   * @param {string} casting.spells Spell type: "arcane", "divine", "psychic", or "alchemy"
-   * @param {string} casting.class Class tag
-   * @param {boolean} casting.cantrips Has cantrips?
-   * @param {number} casting.domainSlots Number of domain slots. Default 1
+   * Enable and configure a new spellbook.
+   *
+   * @param {object} [casting] Book casting configuration
+   * @param {"prepared"|"spontaneous"|"hybrid"} [casting.type="prepared"] Spellbook type
+   * @param {"high"|"med"|"low"} [casting.progression="high"] Casting progression type
+   * @param {string} [casting.ability="int"] Spellcasting ability score ID
+   * @param {"arcane"|"divine"|"psychic"|"alchemy"} [casting.spells="arcane"] Spell/spellcasting type
+   * @param {string} [casting.class="_hd"] Class tag
+   * @param {boolean} [casting.cantrips=true] Has cantrips?
+   * @param {number} [casting.domainSlots=1] Number of domain slots.
+   * @returns {Promise<this>} Promise to updated document
    */
   createSpellbook(casting = {}) {
     const books = this.system.attributes.spells.spellbooks ?? {};
@@ -2000,6 +2014,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add defaults when unconfigured
+    // `class` causes problems if destructured, hence why it is here.
     casting.type ??= "prepared";
     casting.class ??= "_hd";
     casting.progression ??= "high";
@@ -2329,16 +2344,16 @@ export class ActorPF extends ActorBasePF {
   /**
    * Roll a Caster Level check using a particular spellbook of this actor
    *
-   * @param {string} spellbookKey
-   * @param {ActorRollOptions} [options={}]
+   * @param {string} bookId Spellbook identifier
+   * @param {ActorRollOptions} [options={}] Roll options
    * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
-  async rollCL(spellbookKey, options = {}) {
-    const spellbook = this.system.attributes.spells.spellbooks[spellbookKey];
+  async rollCL(bookId, options = {}) {
+    const spellbook = this.system.attributes.spells.spellbooks[bookId];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
 
-    if (callOldNamespaceHook("actorRoll", "pf1PreActorRollCl", undefined, this, "cl", spellbookKey, options) === false)
+    if (callOldNamespaceHook("actorRoll", "pf1PreActorRollCl", undefined, this, "cl", bookId, options) === false)
       return;
 
     // Set up roll parts
@@ -2346,10 +2361,10 @@ export class ActorPF extends ActorBasePF {
 
     const describePart = (value, label) => parts.push(`${value}[${label}]`);
     const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
-    srcDetails(this.sourceDetails[`system.attributes.spells.spellbooks.${spellbookKey}.cl.total`]);
+    srcDetails(this.sourceDetails[`system.attributes.spells.spellbooks.${bookId}.cl.total`]);
 
     // Add contextual caster level string
-    const notes = this.getContextNotesParsed(`spell.cl.${spellbookKey}`);
+    const notes = this.getContextNotesParsed(`spell.cl.${bookId}`);
 
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
@@ -2364,40 +2379,33 @@ export class ActorPF extends ActorBasePF {
       ...options,
       parts,
       rollData,
-      subject: { core: "cl", spellbook: spellbookKey },
+      subject: { core: "cl", spellbook: bookId },
       flavor: game.i18n.localize("PF1.CasterLevelCheck"),
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
-    if (Hooks.call("pf1PreActorRollCl", this, spellbookKey, rollOptions) === false) return;
+    if (Hooks.call("pf1PreActorRollCl", this, bookId, rollOptions) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
-    Hooks.callAll("pf1ActorRollCl", this, result, spellbookKey);
+    Hooks.callAll("pf1ActorRollCl", this, result, bookId);
     return result;
   }
 
   /**
    * Roll a concentration check using a particular spellbook of this actor
    *
-   * @param {string} spellbookKey
-   * @param {ActorRollOptions} [options={}]
+   * @param {string} bookId Spellbook identifier
+   * @param {ActorRollOptions} [options={}] Roll options
    * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
-  async rollConcentration(spellbookKey, options = {}) {
-    const spellbook = this.system.attributes.spells.spellbooks[spellbookKey];
+  async rollConcentration(bookId, options = {}) {
+    const spellbook = this.system.attributes.spells.spellbooks[bookId];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
     rollData.mod = this.system.abilities[spellbook.ability]?.mod ?? 0;
 
     if (
-      Hooks.call(
-        "actorRoll",
-        "pf1PreActorRollConcentration",
-        undefined,
-        this,
-        "concentration",
-        spellbookKey,
-        options
-      ) === false
+      Hooks.call("actorRoll", "pf1PreActorRollConcentration", undefined, this, "concentration", bookId, options) ===
+      false
     )
       return;
 
@@ -2406,10 +2414,10 @@ export class ActorPF extends ActorBasePF {
 
     const describePart = (value, label) => parts.push(`${value}[${label}]`);
     const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
-    srcDetails(this.sourceDetails[`system.attributes.spells.spellbooks.${spellbookKey}.concentration.total`]);
+    srcDetails(this.sourceDetails[`system.attributes.spells.spellbooks.${bookId}.concentration.total`]);
 
     // Add contextual concentration string
-    const notes = this.getContextNotesParsed(`spell.concentration.${spellbookKey}`);
+    const notes = this.getContextNotesParsed(`spell.concentration.${bookId}`);
 
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
@@ -2430,21 +2438,21 @@ export class ActorPF extends ActorBasePF {
       ...options,
       parts,
       rollData,
-      subject: { core: "concentration", spellbook: spellbookKey },
+      subject: { core: "concentration", spellbook: bookId },
       flavor: game.i18n.localize("PF1.ConcentrationCheck"),
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
-    if (Hooks.call("pf1PreActorRollConcentration", this, rollOptions, spellbookKey) === false) return;
+    if (Hooks.call("pf1PreActorRollConcentration", this, rollOptions, bookId) === false) return;
     const result = pf1.dice.d20Roll(rollOptions);
-    Hooks.callAll("pf1ActorRollConcentration", this, result, spellbookKey);
+    Hooks.callAll("pf1ActorRollConcentration", this, result, bookId);
     return result;
   }
 
   /**
-   * @param {object} options
-   * @param {boolean} options.damageResistances If false, damage resistances (DR, ER) are omitted.
-   * @param {boolean} options.damageVulnerabilities If false, damage vulnerabilities are omitted.
+   * @param {object} [options] Additional options
+   * @param {boolean} [options.damageResistances=true] If false, damage resistances (DR, ER) are omitted.
+   * @param {boolean} [options.damageVulnerabilities=true] If false, damage vulnerabilities are omitted.
    */
   getDefenseHeaders({ damageResistances = true, damageVulnerabilities = true } = {}) {
     const actorData = this.system;
@@ -2586,8 +2594,8 @@ export class ActorPF extends ActorBasePF {
   /**
    * Roll a specific saving throw
    *
-   * @param {string} savingThrowId
-   * @param {ActorRollOptions} [options={}]
+   * @param {"ref"|"fort"|"will"} savingThrowId Identifier for saving throw type.
+   * @param {ActorRollOptions} [options={}] Roll options.
    * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollSavingThrow(savingThrowId, options = {}) {
@@ -2864,31 +2872,17 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * Wrapper for the static function, taking this actor as the only target.
-   *
-   * @param value
-   * @param options
-   */
-  async applyDamage(value, options = {}) {
-    return this.constructor.applyDamage(
-      value,
-      mergeObject(options, {
-        targets: [this],
-      })
-    );
-  }
-
-  /**
    * Easy way to toggle a condition.
    *
-   * @param key - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
+   * @param {string} conditionId A direct condition identiifer, as per PF1.conditions, such as `shaken` or `dazed`.
+   * @returns {Promise<this>|undefined} Promise to updated document, or nothing if no update occurs.
    */
-  async toggleCondition(key) {
-    key = `system.attributes.conditions.${key}`;
+  async toggleCondition(conditionId) {
+    conditionId = `system.attributes.conditions.${conditionId}`;
 
-    const newStatus = !getProperty(this, key);
-    const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
-    const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
+    const newStatus = !getProperty(this, conditionId);
+    const deleteKey = conditionId.replace(/(\w+)$/, (condition) => `-=${condition}`);
+    const updateData = newStatus ? { [conditionId]: true } : { [deleteKey]: null };
     await this.update(updateData);
   }
 
@@ -2911,13 +2905,29 @@ export class ActorPF extends ActorBasePF {
   /**
    * Easy way to determine whether this actor has a condition.
    *
-   * @param {string} key - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
+   * @param {string} conditionId Condition identifier, as per PF1.conditions, such as `shaken` or `dazed`.
+   * @returns {boolean} Confirmation as boolean.
    */
-  hasCondition(key) {
-    return this.system.attributes?.conditions?.[key] === true;
+  hasCondition(conditionId) {
+    return this.system.attributes?.conditions?.[conditionId] === true;
   }
 
   /* -------------------------------------------- */
+
+  /**
+   * Wrapper for the static function, taking this actor as the only target.
+   *
+   * @param {number} value Value to adjust health by.
+   * @param {object} options Additional options.
+   */
+  async applyDamage(value, options = {}) {
+    return this.constructor.applyDamage(
+      value,
+      mergeObject(options, {
+        targets: [this],
+      })
+    );
+  }
 
   /**
    * Apply rolled dice damage to the token or tokens which are currently controlled.
@@ -3128,14 +3138,14 @@ export class ActorPF extends ActorBasePF {
                 checked.forEach((chk) => (chk.checked = !chk.checked));
               }
               /**
-               * @param e
+               * @param {Element} e
                */
               function setReduction(e) {
                 inp[0].querySelector('input[name="damage-reduction"]').value =
                   e.currentTarget.innerText.match(numReg) ?? "";
               }
               /**
-               * @param event
+               * @param {WheelEvent} event
                */
               function mouseWheelAdd(event) {
                 const el = event.currentTarget;
@@ -3166,7 +3176,8 @@ export class ActorPF extends ActorBasePF {
   /**
    * Returns effective Wound Threshold multiplier with rules and overrides applied.
    *
-   * @param data
+   * @param {object} [data]
+   * @returns {number} Multiplier
    */
   getWoundThresholdMultiplier(data = null) {
     data = data ?? this.system;
@@ -3180,8 +3191,8 @@ export class ActorPF extends ActorBasePF {
   /**
    * Returns Wound Threshold relevant data.
    *
-   * @param {*} rollData Provided valid rollData
-   * @param data
+   * @param {object} data Provided valid rollData
+   * @returns {{level:number,penalty:number,multiplier:number,valid:boolean}}
    */
   getWoundThresholdData(data = null) {
     data = data ?? this.system;
@@ -3570,9 +3581,9 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @param root0
-   * @param root0.inLowestDenomination
-   * @returns {number} The total amount of currency this actor has, in gold pieces
+   * @param {object} [options] Additional options
+   * @param {boolean} [options.inLowestDenomination=false] Use copper for calculations and return.
+   * @returns {number} The total amount of currency this actor has, in gold pieces.
    */
   mergeCurrency({ inLowestDenomination = false } = {}) {
     const total =
@@ -3594,8 +3605,9 @@ export class ActorPF extends ActorBasePF {
   /**
    * Converts currencies of the given category to the given currency type
    *
-   * @param {string} category - Either 'currency' or 'altCurrency'.
-   * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
+   * @param {string} category Either 'currency' or 'altCurrency'.
+   * @param {string} type Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
+   * @returns {Promise<this>|undefined} Updated document or undefined if no update occurred.
    */
   convertCurrency(category = "currency", type = "pp") {
     const currency = {
@@ -4034,7 +4046,7 @@ export class ActorPF extends ActorBasePF {
   /**
    * Restore spellbook used slots and spellpoints.
    *
-   * @param {object} [options]
+   * @param {object} [options] Additional options
    * @param {boolean} [options.commit=true] If false, return update data object instead of directly updating the actor.
    * @param {object} [options.rollData] Roll data
    * @returns {Promise<this|object>} Result of update or the update data.

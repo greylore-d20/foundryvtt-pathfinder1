@@ -86,6 +86,8 @@ export class ItemPF extends ItemBasePF {
   /**
    * Meant to be overridden.
    *
+   * {@inheritDoc _preCreate}
+   *
    * @param data
    * @param options
    * @param user
@@ -182,8 +184,8 @@ export class ItemPF extends ItemBasePF {
   /**
    * Get default charge cost for all actions.
    *
-   * @param options
-   * @param options.rollData
+   * @param {object} [options] Additional options
+   * @param {object} [options.rollData] Roll data instance
    * @returns {number} Number for default cost.
    */
   getDefaultChargeCost({ rollData } = {}) {
@@ -310,8 +312,8 @@ export class ItemPF extends ItemBasePF {
    * Generic charge addition (or subtraction) function that either adds charges
    * or quantity, based on item data.
    *
-   * @param {number} value       - The amount of charges to add.
-   * @returns {Promise}
+   * @param {number} value The amount of charges to add.
+   * @returns {Promise<this>} Updated document
    */
   async addCharges(value) {
     // Add link charges
@@ -378,8 +380,6 @@ export class ItemPF extends ItemBasePF {
     if (!this.actor) {
       this.prepareDerivedItemData();
     }
-
-    return itemData;
   }
 
   /**
@@ -857,7 +857,7 @@ export class ItemPF extends ItemBasePF {
    * @param {object} [altChatData={}] - Optional data that will be merged into the chat data object.
    * @param {object} [options=[]] Additional options.
    * @param {TokenDocument} [options.token] Relevant token if any.
-   * @returns {Promise<ChatMessage | void>}
+   * @returns {Promise<ChatMessage | void>} Chat message instance if one was created.
    */
   async displayCard(altChatData = {}, { token } = {}) {
     const actor = this.parentActor;
@@ -2002,8 +2002,8 @@ export class ItemPF extends ItemBasePF {
   /**
    * Attack sources for a specific action.
    *
-   * @param actionId
-   * @returns {object[]} Array of value and label pairs for attack bonus sources on the main attack.
+   * @param {string} actionId Action ID
+   * @returns {object[]|undefined} Array of value and label pairs for attack bonus sources on the main attack, or undefined if the action is missing.
    */
   getAttackSources(actionId) {
     const action = this.actions.get(actionId);
@@ -2108,7 +2108,7 @@ export class ItemPF extends ItemBasePF {
   /**
    * Return attack sources for default action.
    *
-   * @returns {object[]} Array of value and label pairs for attack bonus sources on the main attack.
+   * @returns {object[]|undefined} Array of value and label pairs for attack bonus sources on the main attack.
    */
   get attackSources() {
     return this.getAttackSources(this.firstAction.id);
@@ -2185,16 +2185,22 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
-   * Generic damage source retrieval, includes default conditionals and other item specific modifiers.
+   * Generic damage source retrieval for default action, includes default conditionals and other item specific modifiers.
+   *
+   * @returns {ItemChange[]|undefined} All relevant changes, or undefined if action was not found.
    */
   get allDamageSources() {
     return this.getAllDamageSources(this.firstAction.id);
   }
 
   /**
-   * @param {boolean} active
+   * Set item's active state.
+   *
+   * @abstract
+   * @param {boolean} active Active state
    * @param {object} context Optional update context
-   * @returns Update promise if item type supports the operation.
+   * @returns {Promise<this>} Update promise if item type supports the operation.
+   * @throws Error if item does not support the operation.
    */
   setActive(active, context) {
     throw new Error(`Item type ${this.type} does not support ItemPF#setActive`);

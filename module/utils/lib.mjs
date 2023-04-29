@@ -799,11 +799,10 @@ export const findInCompendia = function (searchTerm, options = { packs: [], type
 /**
  * Removes flairs from a formula.
  *
- * @param {string} formula
+ * @param {string} formula Formula
+ * @returns {string} Stripped formula
  */
-export function stripRollFlairs(formula) {
-  return formula.replace(/\[[^\]]*]/g, "");
-}
+export const stripRollFlairs = (formula) => formula.replace(/\[[^\]]*]/g, "");
 
 /**
  * Simplifies formula to very basic level.
@@ -951,7 +950,8 @@ export function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, 
 /**
  * Split copper currency into gold, silver and copper.
  *
- * @param cp
+ * @param {number} cp Copper
+ * @returns {{gp:number,sp:number,cp:number}} Gold, silver, and copper.
  */
 export const splitCurrency = (cp) => {
   const gp = Math.floor(cp / 100);
@@ -967,23 +967,23 @@ export const splitCurrency = (cp) => {
 /**
  * Get first active GM user.
  *
- * @returns {User}
+ * @returns {User|undefined} Active GM
  */
-export const getFirstActiveGM = function () {
-  return game.users.filter((u) => u.active && u.isGM).sort((a, b) => b.id - a.id)[0];
-};
+export const getFirstActiveGM = () => game.users.filter((u) => u.active && u.isGM).sort((a, b) => b.id - a.id)[0];
 
 /**
  * Check whether at least one GM is active.
+ *
+ * @returns {boolean} Have active GM
  */
-export const isGMActive = function () {
-  return game.users.some((u) => u.active && u.isGM);
-};
+export const isGMActive = () => game.users.some((u) => u.active && u.isGM);
 
 /**
- * @param formula
- * @param {"melee"|"touch"|"reach"|"close"|"medium"|"long"|"mi"} type
- * @param rollData
+ * Resolve range formula to numeric value.
+ *
+ * @param {string} [formula] Range formula. Only used with "mi", "ft", "m", "km" and similar types.
+ * @param {"melee"|"touch"|"reach"|"close"|"medium"|"long"|"mi"} [type="ft"] Formula type
+ * @param {object} [rollData] Roll data for evaluating the formula
  * @returns {number} Range in feet for the defined formula
  */
 export const calculateRangeFormula = (formula, type = "ft", rollData = {}) => {

@@ -16,7 +16,7 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
   }
 
   get template() {
-    if (!game.user.isGM && this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.hbs";
+    if (this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.hbs";
     return "systems/pf1/templates/actors/npc-sheet-lite.hbs";
   }
 

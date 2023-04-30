@@ -1067,7 +1067,10 @@ export class ActionUse {
 
     // Add targets
     if (template != null) {
-      metadata.targets = template.getTokensWithin().map((o) => o.id);
+      metadata.targets = template
+        .getTokensWithin()
+        .filter((t) => t.combatant?.isDefeated !== true)
+        .map((o) => o.id);
     } else {
       metadata.targets = Array.from(game.user.targets).map((o) => o.id);
     }

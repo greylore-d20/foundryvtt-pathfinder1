@@ -344,7 +344,7 @@ export class ItemSpellPF extends ItemPF {
       } else if (tc === "med") {
         result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 3);
       } else if (tc === "low") {
-        result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 3);
+        result[1] = Math.min(result[1], 1 + Math.max(0, o[1]) * 3);
       }
     }
 

@@ -61,20 +61,19 @@ export class ItemEquipmentPF extends ItemPF {
   }
 
   prepareData() {
-    const itemData = super.prepareData();
-    const data = itemData;
-    const C = PF1;
+    super.prepareData();
+    const itemData = this.system;
 
     // AC labels
-    if (data.armor.dex === "") data.armor.dex = null;
-    else if (typeof data.armor.dex === "string" && /\d+/.test(data.armor.dex)) {
-      data.armor.dex = parseInt(data.armor.dex);
+    if (itemData.armor.dex === "") itemData.armor.dex = null;
+    else if (typeof itemData.armor.dex === "string" && /\d+/.test(itemData.armor.dex)) {
+      itemData.armor.dex = parseInt(itemData.armor.dex);
     }
     // Add enhancement bonus
-    if (data.armor.enh == null) data.armor.enh = 0;
+    if (itemData.armor.enh == null) itemData.armor.enh = 0;
 
     // Feed info back to actor
-    if (data.equipped === true) {
+    if (itemData.equipped === true) {
       const actor = this.actor;
       // Guard against weirdness with unlinked data (data is undefined at this state), and also basic test for if this item has actor.
       if (!actor?.system || !actor?.equipment) return;
@@ -83,9 +82,9 @@ export class ItemEquipmentPF extends ItemPF {
       const shieldTypes = PF1.shieldTypes,
         armorTypes = PF1.armorTypes;
 
-      switch (data.subType) {
+      switch (itemData.subType) {
         case "shield": {
-          const subtype = data.equipmentSubtype;
+          const subtype = itemData.equipmentSubtype;
           let shieldType = actor.equipment.shield.type;
           if (subtype === "other" && shieldType < shieldTypes.other) shieldType = shieldTypes.other;
           else if (subtype === "lightShield" && shieldType < shieldTypes.light) shieldType = shieldTypes.light;
@@ -98,7 +97,7 @@ export class ItemEquipmentPF extends ItemPF {
           break;
         }
         case "armor": {
-          const subtype = data.equipmentSubtype;
+          const subtype = itemData.equipmentSubtype;
           let armorType = actor.equipment.armor.type;
           if (subtype === "lightArmor" && armorType < armorTypes.light) armorType = armorTypes.light;
           else if (subtype === "mediumArmor" && armorType < armorTypes.medium) armorType = armorTypes.medium;

@@ -350,30 +350,27 @@ export class ItemPF extends ItemBasePF {
   prepareData() {
     super.prepareData();
     const itemData = this.system;
-    const data = itemData;
-    const C = PF1;
-    const labels = {};
 
     this.prepareLinks();
 
     // Update changes
-    if (this.system.changes instanceof Array) {
-      this.changes = this._prepareChanges(this.system.changes);
+    if (itemData.changes instanceof Array) {
+      this.changes = this._prepareChanges(itemData.changes);
     }
 
     // Update actions
-    if (this.system.actions instanceof Array) {
-      this.actions = this._prepareActions(this.system.actions);
+    if (itemData.actions instanceof Array) {
+      this.actions = this._prepareActions(itemData.actions);
     }
 
     // Update script calls
-    if (this.system.scriptCalls instanceof Array) {
-      this.scriptCalls = this._prepareScriptCalls(this.system.scriptCalls);
+    if (itemData.scriptCalls instanceof Array) {
+      this.scriptCalls = this._prepareScriptCalls(itemData.scriptCalls);
     }
 
     // Update contained items
-    if (this.system.inventoryItems instanceof Array) {
-      this.items = this._prepareInventory(this.system.inventoryItems);
+    if (itemData.inventoryItems instanceof Array) {
+      this.items = this._prepareInventory(itemData.inventoryItems);
     }
     this.prepareWeight();
 

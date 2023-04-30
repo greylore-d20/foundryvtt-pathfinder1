@@ -1,0 +1,287 @@
+{
+  "name": "Poison Touch Hex",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_02.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The witch empowers herself or an ally within 30 feet with poisonous nails. The affected creature gains a claw attack as a secondary attack that deals 1d3 points of damage (1d2 for Small creatures) and has the following poison ability:</p><fieldset><legend>Witch Toxin</legend><p>Claw—injury; save Fort DC 10 + half the witch’s level + the witch’s Intelligence modifier; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save.</p></fieldset><p>The creature gains this claw attack for a number of minutes equal to the witch’s level. If the target already has a claw attack, that attack gains the poison ability listed above, but the DC is 1 higher.</p><p>Once a creature has benefited from this hex, it cannot benefit from it again for 24 hours.</p>"
+    },
+    "tags": [["Hex"]],
+    "actions": [
+      {
+        "_id": "tkb044PPOk8Gx4Lw",
+        "name": "Grant Claw",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "description": "",
+        "tag": "",
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.witch.level",
+          "units": "minute"
+        },
+        "target": {
+          "value": "creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductChargesCost": "",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": ""
+          }
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": null,
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": null,
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "primaryAttack": true,
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "touch": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "value": null
+        }
+      },
+      {
+        "_id": "31PxUUaqlXemuHiV",
+        "name": "Witch Toxin",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "description": "",
+        "tag": "",
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": "passive"
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductChargesCost": "",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": ""
+          }
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "save",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "parts": [],
+          "critParts": [],
+          "nonCritParts": []
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": null
+        },
+        "formula": "",
+        "ability": {
+          "attack": null,
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
+          "type": "fort",
+          "description": "Fort cures"
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": null,
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "primaryAttack": true,
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "touch": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "value": null
+        }
+      }
+    ],
+    "uses": {
+      "per": ""
+    },
+    "attackNotes": [],
+    "effectNotes": [],
+    "changes": [],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "languages": {
+      "value": []
+    },
+    "scriptCalls": [],
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Witch"]]
+    },
+    "abilityType": "su",
+    "classSkills": {
+      "acr": false,
+      "apr": false,
+      "art": false,
+      "blf": false,
+      "clm": false,
+      "crf": false,
+      "dip": false,
+      "dev": false,
+      "dis": false,
+      "esc": false,
+      "fly": false,
+      "han": false,
+      "hea": false,
+      "int": false,
+      "kar": false,
+      "kdu": false,
+      "ken": false,
+      "kge": false,
+      "khi": false,
+      "klo": false,
+      "kna": false,
+      "kno": false,
+      "kpl": false,
+      "kre": false,
+      "lin": false,
+      "lor": false,
+      "per": false,
+      "prf": false,
+      "pro": false,
+      "rid": false,
+      "sen": false,
+      "slt": false,
+      "spl": false,
+      "ste": false,
+      "sur": false,
+      "swm": false,
+      "umd": false
+    }
+  },
+  "flags": {},
+  "sort": 0,
+  "_id": "OrbMq0Tyk6eL3KCs"
+}

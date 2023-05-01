@@ -197,14 +197,21 @@ export class ActionUse {
       if (!powerAttackMultiplier) {
         powerAttackMultiplier = 1;
         if (this.item.system.subType === "natural") {
-          if (this.shared.rollData.action?.naturalAttack.primaryAttack)
-            powerAttackMultiplier = this.shared.rollData.action.ability?.damageMult;
+          // Primary
+          if (this.shared.rollData.action.naturalAttack?.primaryAttack) {
+            // Primary attack gets +50% damage like with two-handing if ability score multiplier is 1.5x or higher
+            if (this.shared.rollData.action.ability?.damageMult >= 1.5) {
+              powerAttackMultiplier = 1.5;
+            }
+          }
+          // Secondary
           else {
-            powerAttackMultiplier = this.shared.rollData.action.naturalAttack?.secondary?.damageMult ?? 0.5;
+            powerAttackMultiplier = 0.5;
           }
         } else {
-          if (this.shared.rollData?.item?.held === "2h") powerAttackMultiplier = 1.5;
-          else if (this.shared.rollData?.item?.held === "oh") powerAttackMultiplier = 0.5;
+          const held = this.shared.rollData.item.held;
+          if (held === "2h") powerAttackMultiplier = 1.5;
+          else if (held === "oh") powerAttackMultiplier = 0.5;
         }
       } else {
         powerAttackMultiplier = parseFloat(powerAttackMultiplier);

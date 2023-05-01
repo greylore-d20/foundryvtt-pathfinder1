@@ -1,0 +1,51 @@
+{
+  "_id": "lKnfkRSOpPjT4qRy",
+  "name": "Bonus Feat (SAM)",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/map-treasure.jpg",
+  "sort": 0,
+  "flags": {},
+  "system": {
+    "description": {
+      "value": "<p>At 6th level, and every six levels thereafter, a samurai gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat feats. The samurai must meet the requirements of these bonus feats.</p>"
+    },
+    "tags": [],
+    "actions": [],
+    "attackNotes": [],
+    "effectNotes": [],
+    "changes": [
+      {
+        "_id": "026yrsmu",
+        "formula": "floor(@classes.samurai.level / 6)",
+        "operator": "add",
+        "subTarget": "bonusFeats",
+        "modifier": "untyped",
+        "priority": 0,
+        "value": 0,
+        "target": "misc"
+      }
+    ],
+    "contextNotes": [],
+    "links": {
+      "children": [],
+      "charges": []
+    },
+    "tag": "classFeat_bonusFeatSam",
+    "useCustomTag": true,
+    "armorProf": {
+      "value": []
+    },
+    "weaponProf": {
+      "value": []
+    },
+    "languages": {
+      "value": []
+    },
+    "scriptCalls": [],
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Samurai"]]
+    },
+    "abilityType": "none"
+  }
+}

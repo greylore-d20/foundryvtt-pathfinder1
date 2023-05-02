@@ -594,6 +594,25 @@
         }
       }
 
+      &.unconfigured {
+        .skill-name {
+          color: darkred;
+
+          // Warning triangle
+          &:after {
+            content: " \f071";
+            font-family: "Font Awesome 5 Free";
+            white-space: pre;
+            font-weight: bold;
+          }
+        }
+
+        .action.roll {
+          visibility: hidden;
+          pointer-events: none;
+        }
+      }
+
       .skill-name {
         display: inline-flex;
         font-size: @fontSizeEnlarged;

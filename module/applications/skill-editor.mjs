@@ -22,7 +22,9 @@ export class SkillEditor extends FormApplication {
   }
 
   get title() {
-    return `${game.i18n.localize("PF1.EditSkill")}: ${this.skillName}`;
+    let name = this.skillName;
+    if (!name) name = game.i18n.localize("PF1.UnconfiguredSkill");
+    return `${game.i18n.localize("PF1.EditSkill")}: ${name}`;
   }
 
   get actor() {
@@ -40,9 +42,11 @@ export class SkillEditor extends FormApplication {
     if (this.isSubSkill) return this.actor.system.skills[this.skillId]?.subSkills[this.subSkillId];
     return this.actor.system.skills[this.skillId];
   }
+
   get skillName() {
-    return this.isStaticSkill ? pf1.config.skills[this.skillId] : this.skill.name;
+    return this.skill.name || this.skill.label;
   }
+
   get skillTag() {
     if (this.isStaticSkill) return this.skillId;
     return this.isSubSkill ? this.subSkillId : this.skillId;
@@ -67,6 +71,8 @@ export class SkillEditor extends FormApplication {
       },
       { inplace: false }
     );
+
+    data.placeholderName = game.i18n.format("DOCUMENT.New", { type: game.i18n.localize("PF1.Skill") });
 
     // Actor data
     data.actorData = this.actor.toObject();

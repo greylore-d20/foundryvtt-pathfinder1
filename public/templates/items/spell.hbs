@@ -214,17 +214,16 @@
 
       {{!-- Material Components --}}
       {{#if system.components.material}}
-      <h3>{{localize "PF1.SpellcastingMaterials"}}</h3>
       <div class="form-group">
-        <label>{{localize "PF1.Description"}}</label>
+        <label>{{localize "PF1.SpellMaterialDescription"}}</label>
         <div class="form-fields">
           <input class="materials" type="text" name="system.materials.value" value="{{system.materials.value}}"/>
         </div>
       </div>
       <div class="form-group">
-        <label>{{localize "PF1.Value"}}</label>
+        <label>{{localize "PF1.SpellMaterialValue"}}</label>
         <div class="form-fields">
-          <input type="text" data-dtype="Number" name="system.materials.gpValue" value="{{system.materials.gpValue}}" placeholder="0" />
+          <input class="material-value" type="number" data-dtype="Number" name="system.materials.gpValue" value="{{system.materials.gpValue}}" placeholder="0" />
         </div>
       </div>
       {{/if}}

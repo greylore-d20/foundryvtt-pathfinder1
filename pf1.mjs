@@ -1042,16 +1042,33 @@ Hooks.on("renderSidebarTab", (app, html) => {
 
 // Add compendium sidebar context options
 Hooks.on("getCompendiumDirectoryPFEntryContext", (html, entryOptions) => {
-  // Add option to disable pack
-  entryOptions.push({
-    name: game.i18n.localize("PF1.Disable"),
-    icon: '<i class="fas fa-low-vision"></i>',
-    callback: (li) => {
-      const pack = game.packs.get(li.data("pack"));
-      const disabled = pack.config.pf1?.disabled;
-      pack.configure({ "pf1.disabled": !disabled });
+  // Add option to enable & disable pack
+  entryOptions.unshift(
+    {
+      name: game.i18n.localize("PF1.CompendiumBrowser.HidePack"),
+      icon: '<i class="fas fa-low-vision"></i>',
+      condition: ([li]) => {
+        const pack = game.packs.get(li.dataset.pack);
+        return pack.config.pf1?.disabled !== true;
+      },
+      callback: ([li]) => {
+        const pack = game.packs.get(li.dataset.pack);
+        pack.configure({ "pf1.disabled": true });
+      },
     },
-  });
+    {
+      name: game.i18n.localize("PF1.CompendiumBrowser.ShowPack"),
+      icon: '<i class="fas fa-eye"></i>',
+      condition: ([li]) => {
+        const pack = game.packs.get(li.dataset.pack);
+        return pack.config.pf1?.disabled === true;
+      },
+      callback: ([li]) => {
+        const pack = game.packs.get(li.dataset.pack);
+        pack.configure({ "pf1.disabled": false });
+      },
+    }
+  );
 });
 
 // Show experience distributor after combat

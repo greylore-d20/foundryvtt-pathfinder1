@@ -1,21 +1,6 @@
 export class CompendiumDirectoryPF extends CompendiumDirectory {
-  static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      template: "systems/pf1/templates/sidebar/compendium.hbs",
-    });
-  }
-
-  async getData(options) {
-    const data = await super.getData(options);
-
-    for (const p of Object.values(data.packs)) {
-      for (const pack of p.packs) {
-        const disabled = pack.config.pf1?.disabled === true;
-        setProperty(pack, "pf1.disabled", disabled);
-      }
-    }
-
-    return data;
+  get template() {
+    return "systems/pf1/templates/sidebar/compendium.hbs";
   }
 
   activateListeners(html) {

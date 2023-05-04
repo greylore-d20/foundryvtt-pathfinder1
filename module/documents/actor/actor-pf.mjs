@@ -1919,8 +1919,9 @@ export class ActorPF extends ActorBasePF {
   }
 
   updateItemResources(item) {
-    const isCharged = item.isCharged;
-    if (isCharged) {
+    if (item.isCharged) {
+      if (item.isSingleUse) return false;
+
       const itemTag = !item.system.useCustomTag ? createTag(item.name) : item.system.tag;
 
       const res = {

@@ -238,7 +238,9 @@ export class ActorSheetPF extends ActorSheet {
       i.type = item.type;
       i.id = item.id;
       i.img = item.img;
+      i.isSingleUse = item.isSingleUse;
       i.isCharged = item.isCharged;
+      i.hasResource = i.isCharged && !i.isSingleUse;
       i.hasUses = i.uses?.max > 0;
 
       const firstAction = item.firstAction;
@@ -266,7 +268,7 @@ export class ActorSheetPF extends ActorSheet {
 
       const itemQuantity = i.quantity != null ? i.quantity : 1;
       const itemCharges = i.uses?.value != null ? i.uses.value : 1;
-      i.empty = itemQuantity <= 0 || (i.isCharged && itemCharges <= 0);
+      i.empty = itemQuantity <= 0 || (i.isCharged && !i.isSingleUse && itemCharges <= 0);
 
       return i;
     });

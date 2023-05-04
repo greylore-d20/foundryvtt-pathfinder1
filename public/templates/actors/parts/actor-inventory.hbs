@@ -141,7 +141,7 @@
 
         <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
           {{#unless showUnidentifiedData}}
-          {{#if item.isCharged}}
+          {{#if item.hasResource}}
           <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.uses.value}}</span>
           <span class="sep"> / </span>
           <span class="text-box">{{item.uses.max}}</span>

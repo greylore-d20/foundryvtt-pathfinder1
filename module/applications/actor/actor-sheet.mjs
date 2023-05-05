@@ -1586,10 +1586,28 @@ export class ActorSheetPF extends ActorSheet {
     this.actor.update(updateData);
   }
 
+  /**
+   * Toggle skill lock.
+   *
+   * @param {MouseEvent} event
+   */
   _onToggleSkillLock(event) {
     event.preventDefault();
     this._skillsLocked = !this._skillsLocked;
-    return this.render();
+
+    const target = event.currentTarget;
+    target.classList.toggle("unlocked", !this._skillsLocked);
+
+    const tab = target.closest(".tab");
+    tab.classList.toggle("locked", this._skillsLocked);
+
+    tab.querySelectorAll(".lockable").forEach((el) => {
+      if (["INPUT", "SELECT"].includes(el.tagName)) {
+        el.disabled = this._skillsLocked;
+      } else {
+        el.classList.toggle("hide-contents", this._skillsLocked);
+      }
+    });
   }
 
   _onOpenCompendium(event) {

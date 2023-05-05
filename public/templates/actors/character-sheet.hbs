@@ -47,7 +47,7 @@
     </div>
 
     {{!-- Skills Tab --}}
-    <div class="tab skills flexcol" data-group="primary" data-tab="skills">
+    <div class="tab skills flexcol{{#if @root.skillsLocked}} locked{{/if}}" data-group="primary" data-tab="skills">
       {{> "systems/pf1/templates/actors/parts/actor-skills-front.hbs"}}
     </div>
 

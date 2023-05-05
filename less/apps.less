@@ -423,8 +423,27 @@
 
     .tab {
       height: 100%;
-      overflow-y: auto;
+      overflow: hidden;
       gap: 2px;
+
+      &.active {
+        display: flex;
+        flex-flow: column nowrap;
+      }
+
+      section {
+        height: 100%;
+        overflow: hidden;
+      }
+    }
+  }
+
+  // Item sheets do not use <section>
+  &.item {
+    .window-content {
+      .tab {
+        overflow: hidden scroll;
+      }
     }
   }
 
@@ -972,22 +991,6 @@
     overflow: hidden;
 
     .tab {
-      overflow: hidden;
-      height: 100%;
-
-      section {
-        height: 100%;
-        overflow: hidden;
-      }
-
-      &.summary {
-        overflow: hidden scroll;
-
-        section {
-          overflow: unset;
-        }
-      }
-
       .inventory-group {
         height: 100%;
         overflow: hidden;
@@ -995,7 +998,6 @@
 
       &.spellbook {
         .spellbooks-body {
-          height: 100%;
           overflow: hidden;
         }
       }
@@ -2131,9 +2133,6 @@
 
   .primary-body {
     .tab {
-      height: 100%;
-      overflow: hidden scroll;
-
       input[type="text"],
       select {
         border: 1px solid @colorTan;
@@ -2142,12 +2141,6 @@
 
       .form-header {
         flex: 0;
-      }
-
-      // Details tab
-      &.details.active {
-        display: flex;
-        flex-direction: column;
       }
     }
   }

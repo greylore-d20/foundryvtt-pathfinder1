@@ -47,18 +47,16 @@
 @colorSuccess: #18520b;
 @colorFailure: #aa0200;
 
-@itemHoverBackgroundTint: rgba(64, 64, 192, 0.2);
 @itemActiveBackgroundTint: rgba(32, 32, 96, 0.2);
-@itemDarkBackgroundTint: rgba(155, 155, 155, 0.2);
-@itemBrightBackgroundTint: rgba(210, 210, 210, 0.3);
 
 .itemBackgroundBase(@base, @alt, @hover) {
   background-color: @base;
-  &:nth-child(2n + 1) {
+  &:nth-child(even) {
     background-color: @alt;
   }
   &:hover {
     background-color: @hover;
+    color: var(--pf1-item-list-hover-text);
   }
   &.active {
     background-color: @itemActiveBackgroundTint;
@@ -66,11 +64,7 @@
 }
 
 .itemBackground() {
-  .itemBackgroundBase(@itemDarkBackgroundTint, @itemBrightBackgroundTint, @itemHoverBackgroundTint);
-}
-
-.itemBackgroundAlt() {
-  .itemBackgroundBase(@itemBrightBackgroundTint, @itemDarkBackgroundTint, @itemHoverBackgroundTint);
+  .itemBackgroundBase(var(--pf1-item-list-bg), var(--pf1-item-list-bg-alt), var(--pf1-item-list-hover-bg));
 }
 
 /* ----------------------------------------- */

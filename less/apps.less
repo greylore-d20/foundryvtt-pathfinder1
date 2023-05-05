@@ -507,14 +507,7 @@
         border-bottom: none;
       }
 
-      background-color: var(--pf1-item-list-bg);
-      &:nth-child(even) {
-        background-color: var(--pf1-item-list-bg-alt);
-      }
-      &:hover {
-        background-color: var(--pf1-item-list-hover-bg);
-        color: var(--pf1-item-list-hover-text);
-      }
+      .itemBackground();
 
       &.disabled {
         .item-name {
@@ -1986,7 +1979,7 @@
             }
 
             &:hover {
-              background-color: @itemHoverBackgroundTint;
+              background-color: var(--pf1-item-list-hover-bg);
 
               .controls {
                 display: flex;

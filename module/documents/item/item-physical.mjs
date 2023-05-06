@@ -5,6 +5,23 @@ import { ItemPF } from "./item-pf.mjs";
  */
 export class ItemPhysicalPF extends ItemPF {
   /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
+
+    if (context.diff === false || context.recursive === false) return;
+
+    // No system changes
+    if (!changed.system) return;
+
+    await this._resetChargesOnQuantityUpdate(changed);
+  }
+
+  /**
    * @inheritDoc
    * @internal
    */
@@ -67,6 +84,37 @@ export class ItemPhysicalPF extends ItemPF {
 
       if (quantity.new != null && quantity.new !== quantity.previous) {
         this.executeScriptCalls("changeQuantity", { quantity });
+      }
+    }
+  }
+
+  /**
+   * Reset charges when quantity is changed to simulate a stack.
+   *
+   * - If charges are 0
+   * - ... and quantity is reduced, reset to max
+   *
+   * @param {object} changed
+   */
+  async _resetChargesOnQuantityUpdate(changed) {
+    // Don't care if charges are linked
+    if (this.links.charges) return;
+
+    // Only if quantity changed
+    const newQuantity = changed.system.quantity;
+    if (newQuantity === undefined) return;
+    // Don't touch if quantity is increased or remains the same
+    if ((newQuantity || 0) >= (this.system.quantity || 0)) return;
+
+    // Avoid overwriting value if the update is modifying it.
+    if (changed.system.uses?.value !== undefined) return;
+
+    const oldUses = this.system.uses ?? {};
+    if (oldUses.per && oldUses.value === 0 && oldUses.max > 0) {
+      const update = await this.recharge({ period: "any", commit: false });
+      if (update) {
+        changed.system.uses ??= {};
+        changed.system.uses.value = update.system.uses.value;
       }
     }
   }

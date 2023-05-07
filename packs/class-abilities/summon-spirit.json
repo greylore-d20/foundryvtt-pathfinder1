@@ -246,7 +246,7 @@
         "name": "Bargain Negative Level Adjust",
         "img": "icons/svg/dice-target.svg",
         "type": "script",
-        "value": "const tag = shared.attackData.action.tag;\nconst nl = actor.system.attributes.energyDrain || 0;\nif (tag === \"start\") {\n  actor.update({\"system.attributes.energyDrain\": nl + 1})\n}\nelse if (tag === \"end\") {\n  actor.update({\"system.attributes.energyDrain\": Math.max(0, nl - 1)})  \n}\n",
+        "value": "const tag = shared.attackData.action.tag;\nconst nl = actor.system.attributes.energyDrain || 0;\nif (tag === \"start\") {\nactor.update({\"system.attributes.energyDrain\": nl + 1})\n}\nelse if (tag === \"end\") {\nactor.update({\"system.attributes.energyDrain\": Math.max(0, nl - 1)})  \n}",
         "category": "use",
         "hidden": false
       }

@@ -1271,7 +1271,7 @@ export class ItemPF extends ItemBasePF {
     if (game.settings.get("pf1", "clearTargetsAfterAttack")) {
       game.user.updateTokenTargets([]);
       // Above does not communicate targets to other users, so..
-      game.user.broadcastActivity({targets: []});
+      game.user.broadcastActivity({ targets: [] });
     }
 
     return result;

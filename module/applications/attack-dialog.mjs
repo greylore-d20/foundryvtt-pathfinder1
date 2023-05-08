@@ -2,8 +2,8 @@ import { ActionUse } from "../action-use/action-use.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
 export class AttackDialog extends Application {
-  constructor(object, rollData = null, options = {}) {
-    super(options);
+  constructor(object, rollData = null, options = {}, appOptions = {}) {
+    super(appOptions);
 
     this.object = object;
 
@@ -37,7 +37,7 @@ export class AttackDialog extends Application {
       "damage-bonus": "",
       "cl-offset": "0",
       "sl-offset": "0",
-      rollMode: game.settings.get("core", "rollMode"),
+      rollMode: options.rollMode || game.settings.get("core", "rollMode"),
       "damage-ability-multiplier": damageMult,
       held: this.rollData.item?.held ?? "normal",
     };

@@ -1162,6 +1162,8 @@ export class ItemPF extends Item {
     rollMode,
     token,
   } = {}) {
+    rollMode ||= game.settings.get("core", "rollMode");
+
     // Old use method
     if (!this.hasAction) {
       // Use
@@ -1227,7 +1229,7 @@ export class ItemPF extends Item {
       damageBonus: [],
       attacks: [],
       chatAttacks: [],
-      rollMode: game.settings.get("core", "rollMode"),
+      rollMode,
       useMeasureTemplate: action.hasTemplate && game.settings.get("pf1", "placeMeasureTemplateOnQuickRolls"),
       conditionals: null,
       conditionalPartsCommon: {},
@@ -1295,9 +1297,6 @@ export class ItemPF extends Item {
       measureResult = await actionUse.promptMeasureTemplate();
       if (!measureResult.result) return;
     }
-
-    // Override roll mode if present.
-    if (rollMode) shared.rollMode = rollMode;
 
     // Call itemUse hook and determine whether the item can be used based off that
     let allowed = Hooks.call("pf1PreActionUse", actionUse);

@@ -124,7 +124,7 @@ export class ActionUse {
    * @returns {ItemAttack_Dialog_Result|boolean}
    */
   createAttackDialog() {
-    const dialog = new pf1.applications.AttackDialog(this.shared.action, this.shared.rollData);
+    const dialog = new pf1.applications.AttackDialog(this.shared.action, this.shared.rollData, this.shared);
     return dialog.show();
   }
 
@@ -146,7 +146,8 @@ export class ActionUse {
     if (dmgBonus) {
       this.shared.damageBonus.push(dmgBonus);
     }
-    this.shared.rollMode = formData["rollMode"] ?? game.settings.get("core", "rollMode");
+
+    if (formData.rollMode) this.shared.rollMode = formData.rollMode;
 
     // Point-Blank Shot
     if (formData["point-blank-shot"]) {

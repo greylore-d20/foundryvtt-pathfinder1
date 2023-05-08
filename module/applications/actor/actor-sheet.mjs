@@ -2441,6 +2441,8 @@ export class ActorSheetPF extends ActorSheet {
       spellbookData[key].prepared = spellbookSpells.filter(
         (obj) => obj.preparation.mode === "prepared" && obj.preparation.prepared
       ).length;
+      spellbookData[key].rollData = data.rollData.spells[key];
+      spellbookData[key].class = data.rollData.classes[spellbook.class];
       if (spellbook.arcaneSpellFailure) hasASF = true;
     }
 

@@ -51,9 +51,9 @@
   <label>{{localize "PF1.LimitedUses"}}</label>
   <div class="form-fields">
     {{#if isCharged}}
-    <input type="text" name="system.uses.value" value="{{system.uses.value}}" data-dtype="Number" {{disabled inheritCharges}} />
+    <input type="text" name="system.uses.value" value="{{system.uses.value}}" data-dtype="Number" data-tooltip="@resources.{{system.tag}}.value : {{system.uses.value}}" {{disabled inheritCharges}} />
     <span class="sep"> / </span>
-    <input type="text" value="{{system.uses.max}}" disabled data-dtype="Number"/>
+    <input type="text" value="{{system.uses.max}}" disabled data-dtype="Number" data-tooltip="@resources.{{system.tag}}.max : {{system.uses.max}}"/>
     {{/if}}
     <select name="system.uses.per" {{disabled inheritCharges}}>
       {{#select system.uses.per}}

@@ -73,7 +73,7 @@
       <div class="form-group">
         <label>{{localize "PF1.SpellLevel"}}</label>
         <div class="form-fields">
-          <select name="system.level" data-dtype="Number">
+          <select name="system.level" data-dtype="Number" data-tooltip="@sl : {{system.level}}<br>@item.level : {{system.level}}">
             {{#select system.level}}
             {{#each config.spellLevels as |name lvl|}}
             <option value="{{lvl}}">{{name}}</option>

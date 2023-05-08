@@ -16,7 +16,7 @@
 
                 <div class="tag-list flexrow">
                     {{#each flags.boolean as |value key|}}
-                    <span class="tag">{{key}}</span>
+                    <span class="tag" data-tootip="">{{key}}</span>
                     {{/each}}
                 </div>
             </div>
@@ -41,7 +41,7 @@
                 </thead>
                 <tbody>
                     {{#each flags.dictionary as |value key|}}
-                    <tr>
+                    <tr data-tooltip="@dFlags.{{@root.system.tag}}.{{key}}">
                         <td>{{key}}</td>
                         <td>{{value}}</td>
                     </tr>

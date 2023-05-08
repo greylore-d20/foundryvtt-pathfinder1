@@ -8,10 +8,10 @@
 </nav>
 
 <section class="spellbooks-body">
-  {{#each spellbookData as |spellbook a|}}
+  {{#each spellbookData as |spellbook bookId|}}
   {{#if spellbook.orig.inUse}}
-  <div class="tab spellbook-group flexcol" data-group="spellbooks" data-tab="{{a}}">
-  {{~> "systems/pf1/templates/actors/parts/actor-spellbook.hbs" spellbook=spellbook spellbookIndex=a
+  <div class="tab spellbook-group flexcol" data-group="spellbooks" data-tab="{{bookId}}">
+  {{~> "systems/pf1/templates/actors/parts/actor-spellbook.hbs" spellbook=spellbook bookId=bookId
     data=../data filters=../filters.spellbook isCharacter=../isCharacter
     spellFailure=../spellFailure hiddenElems=../hiddenElems sourceDetails=../sourceDetails}}
   </div>

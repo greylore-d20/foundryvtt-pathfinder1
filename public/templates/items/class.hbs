@@ -18,8 +18,7 @@
         <li>
           {{lookup config.classTypes system.subType}}
         </li>
-        <li class="tooltip">
-          <span class="tooltipcontent">@classes.{{item.system.tag}}.level : {{system.level}}</span>
+        <li data-tooltip="@classes.{{system.tag}}.level : {{system.level}}<br>@item.level : {{system.level}}<br>@classes.{{system.tag}}.hitDice : {{system.hitDice}}">
           <input type="text" name="system.level" value="{{system.level}}" placeholder="{{#if isMythicPath}}{{localize "PF1.Tier"}}{{else}}{{localize "PF1.Level"}}{{/if}}" data-dtype="Number"/>
         </li>
       </ul>
@@ -64,7 +63,7 @@
       <div class="form-group">
         <label>{{localize "PF1.HitDie"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.hd" value="{{system.hd}}" data-dtype="Number" />
+          <input type="text" name="system.hd" value="{{system.hd}}" data-dtype="Number" data-tooltip="@classes.{{system.tag}}.hd"/>
         </div>
       </div>
 
@@ -122,7 +121,7 @@
       {{#each system.savingThrows as |savingThrow id|}}
       <div class="form-group">
         <label>{{savingThrow.label}}</label>
-        <select name="system.savingThrows.{{id}}.value">
+        <select name="system.savingThrows.{{id}}.value" data-tooltip="@classes.{{@root.system.tag}}.savingThrows.{{id}} : {{savingThrow.base}}">
           {{#select savingThrow.value}}
           <option value="">{{localize "PF1.None"}}</option>
           {{#each ../config.classSavingThrows as |name value|}}
@@ -215,7 +214,7 @@
       {{#each system.fc as |fc id|}}
       <div class="form-group">
         <label>{{fc.label}}</label>
-        <input type="text" name="system.fc.{{id}}.value" value="{{fc.value}}" data-dtype="Number" />
+        <input type="text" name="system.fc.{{id}}.value" value="{{fc.value}}" data-dtype="Number" data-tooltip="@classes.{{@root.system.tag}}.fc.{{id}}" />
       </div>
       {{/each}}
       <div class="form-group">

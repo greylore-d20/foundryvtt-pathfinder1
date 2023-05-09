@@ -497,12 +497,10 @@ export class ItemPF extends ItemBasePF {
     weight.total += weight.currency;
 
     // Convert weight according metric system (lb vs kg)
-    const usystem = getWeightSystem();
     weight.converted = {
       value: pf1.utils.convertWeight(weight.value),
       total: pf1.utils.convertWeight(weight.total),
     };
-    weight.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
   }
 
   prepareDerivedData() {

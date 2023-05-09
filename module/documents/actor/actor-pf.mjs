@@ -2264,7 +2264,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
-    if (Hooks.call("pf1PreActorRollCmb", this, options) === false) return;
+    if (Hooks.call("pf1PreActorRollCmb", this, rollOptions) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollCmb", this, result);
     return result;
@@ -2670,7 +2670,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
-    if (Hooks.call("pf1PreActorRollSave", this, options, savingThrowId) === false) return;
+    if (Hooks.call("pf1PreActorRollSave", this, rollOptions, savingThrowId) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollSave", this, result, savingThrowId);
     return result;
@@ -2738,7 +2738,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
-    if (Hooks.call("pf1PreActorRollAbility", this, options, abilityId) === false);
+    if (Hooks.call("pf1PreActorRollAbility", this, rollOptions, abilityId) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollAbility", this, result, abilityId);
     return result;

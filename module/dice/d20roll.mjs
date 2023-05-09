@@ -182,6 +182,8 @@ export class D20RollPF extends RollPF {
     const dialogOptions = options.dialogOptions || {};
     dialogOptions.subject = options.subject;
     dialogOptions.jQuery = false;
+    dialogOptions.classes ??= [];
+    dialogOptions.classes.push(...Dialog.defaultOptions.classes, "pf1", "roll-prompt");
 
     const html = await renderTemplate(template, renderData);
 

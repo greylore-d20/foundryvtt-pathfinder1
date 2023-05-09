@@ -185,7 +185,7 @@ export class DicePF {
     let roll;
     return new Promise((resolve) => {
       if (!(dialogOptions.classes instanceof Array)) dialogOptions.classes = [];
-      dialogOptions.classes.push("dialog", "pf1", "die-roll");
+      dialogOptions.classes.push(...Dialog.defaultOptions.classes, "pf1", "die-roll");
       // Enrich dialog identity
       if (subject) {
         dialogOptions.subject = subject;
@@ -360,7 +360,7 @@ export class DicePF {
     let roll;
     return new Promise((resolve) => {
       if (!(dialogOptions.classes instanceof Array)) dialogOptions.classes = [];
-      dialogOptions.classes.push("dialog", "pf1", "damage-roll");
+      dialogOptions.classes.push(...Dialog.defaultOptions.classes, "pf1", "damage-roll");
 
       new Dialog(
         {

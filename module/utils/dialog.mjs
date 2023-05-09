@@ -41,7 +41,7 @@ export function dialogGetNumber({
         },
       },
       {
-        classes: ["dialog", "pf1", "get-number"],
+        classes: [...Dialog.defaultOptions.classes, "pf1", "get-number"],
       }
     ).render(true);
   });
@@ -63,7 +63,7 @@ export const dialogGetActor = function (title = "", actors = []) {
       }
     });
 
-    const dialog = new Dialog(
+    new Dialog(
       {
         title: title,
         content: content,
@@ -73,30 +73,25 @@ export const dialogGetActor = function (title = "", actors = []) {
             resolve(null);
           }
         },
+        render: function (html) {
+          html.find(".dialog-get-actor:not(.disabled)").click((event) => {
+            const elem = event.currentTarget;
+            const actorId = elem.dataset.actorId;
+            if (actorId) {
+              resolve({ type: "actor", id: actorId });
+            } else {
+              const itemId = elem.dataset.itemId;
+              if (itemId) {
+                resolve({ type: "item", id: itemId });
+              }
+            }
+            this.close();
+          });
+        },
       },
       {
-        classes: ["dialog", "pf1", "get-actor"],
+        classes: [...Dialog.defaultOptions.classes, "pf1", "get-actor"],
       }
-    );
-
-    dialog.activateListeners = function (html) {
-      Dialog.prototype.activateListeners.call(this, html);
-
-      html.find(".dialog-get-actor:not(.disabled)").click((event) => {
-        const elem = event.currentTarget;
-        const actorId = elem.dataset.actorId;
-        if (actorId) {
-          resolve({ type: "actor", id: actorId });
-        } else {
-          const itemId = elem.dataset.itemId;
-          if (itemId) {
-            resolve({ type: "item", id: itemId });
-          }
-        }
-        this.close();
-      });
-    };
-
-    dialog.render(true);
+    ).render(true);
   });
 };

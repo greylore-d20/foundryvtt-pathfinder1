@@ -3121,7 +3121,7 @@ export class ActorPF extends ActorBasePF {
           callback: (html) => resolve(_submit.call(this, html, 0.5 * healingInvert)),
         };
 
-        const d = new Dialog(
+        new Dialog(
           {
             title: healingInvert > 0 ? game.i18n.localize("PF1.ApplyDamage") : game.i18n.localize("PF1.ApplyHealing"),
             content: html,
@@ -3166,10 +3166,9 @@ export class ActorPF extends ActorBasePF {
             },
           },
           {
-            classes: ["dialog", "pf1", "apply-hit-points"],
+            classes: [...Dialog.defaultOptions.classes, "pf1", "apply-hit-points"],
           }
-        );
-        d.render(true);
+        ).render(true);
       });
     } else return _submit();
   }

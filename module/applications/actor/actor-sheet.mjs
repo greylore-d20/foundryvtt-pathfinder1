@@ -2244,27 +2244,32 @@ export class ActorSheetPF extends ActorSheet {
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    new Dialog({
-      title: game.i18n.format("PF1.Dialog.SplitItem.Title", { name: item.name }),
-      content: `<p>${game.i18n.format("PF1.Dialog.SplitItem.Desc")}</p><input type="text" name="value" value="1" />`,
-      buttons: {
-        split: {
-          // icon: `<i class="fas fa-people-arrows></i>`,
-          label: game.i18n.localize("PF1.Split"),
-          callback: async (html) => {
-            let splitValue = parseInt(html.find(`[name="value"]`).val());
-            splitValue = Math.min(item.system.quantity - 1, Math.max(0, splitValue));
-            if (splitValue > 0) {
-              await item.update({ "system.quantity": Math.max(0, item.system.quantity - splitValue) });
-              const data = item.toObject();
-              data.system.quantity = splitValue;
-              await CONFIG.Item.documentClass.createDocuments([data], { parent: this.document });
-            }
+    new Dialog(
+      {
+        title: game.i18n.format("PF1.Dialog.SplitItem.Title", { name: item.name }),
+        content: `<p>${game.i18n.format("PF1.Dialog.SplitItem.Desc")}</p><input type="text" name="value" value="1" />`,
+        buttons: {
+          split: {
+            // icon: `<i class="fas fa-people-arrows></i>`,
+            label: game.i18n.localize("PF1.Split"),
+            callback: async (html) => {
+              let splitValue = parseInt(html.find(`[name="value"]`).val());
+              splitValue = Math.min(item.system.quantity - 1, Math.max(0, splitValue));
+              if (splitValue > 0) {
+                await item.update({ "system.quantity": Math.max(0, item.system.quantity - splitValue) });
+                const data = item.toObject();
+                data.system.quantity = splitValue;
+                await CONFIG.Item.documentClass.createDocuments([data], { parent: this.document });
+              }
+            },
           },
         },
+        default: "split",
       },
-      default: "split",
-    }).render(true);
+      {
+        classes: [...Dialog.defaultOptions.classes, "pf1", "item-split"],
+      }
+    ).render(true);
   }
 
   _onSubmitElement(event) {
@@ -2949,7 +2954,7 @@ export class ActorSheetPF extends ActorSheet {
               },
             },
             {
-              classes: ["dialog", "pf1", "add-character-class"],
+              classes: [...Dialog.defaultOptions.classes, "pf1", "add-character-class"],
             }
           ).render(true);
         });

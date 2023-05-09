@@ -80,7 +80,7 @@ const duplicateCombatantInitiativeDialog = function (combats, combatantId) {
       default: "confirm",
     },
     {
-      classes: ["dialog", "pf1", "duplicate-initiative"],
+      classes: [...Dialog.defaultOptions.classes, "pf1", "duplicate-initiative"],
     }
   ).render(true);
 };
@@ -263,7 +263,7 @@ export class CombatPF extends Combat {
             },
           },
           {
-            classes: ["dialog", "pf1", "roll-initiative"],
+            classes: [...Dialog.defaultOptions.classes, "pf1", "roll-initiative"],
           }
         ).render(true);
       });

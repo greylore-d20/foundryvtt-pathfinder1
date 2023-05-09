@@ -263,6 +263,7 @@ export class CombatPF extends Combat {
             },
           },
           {
+            subject: { core: "init" },
             classes: [...Dialog.defaultOptions.classes, "pf1", "roll-initiative"],
           }
         ).render(true);

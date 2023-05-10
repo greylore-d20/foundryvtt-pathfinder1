@@ -30,10 +30,10 @@
 
       <ol class="item-list">
         {{#each section.items as |item iid|}}
-        <li class="item flexrow" data-item-id="{{item._id}}">
+        <li class="item flexrow {{#if item.empty}}empty-stack{{/if}}" data-item-id="{{item._id}}">
           <div class="item-name flexrow">
             <div class="item-image rollable" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
-            <h4 class="rollable{{#if item.empty}} strikethrough-text{{/if}}">
+            <h4 class="rollable">
               {{~#if item.isStack}}({{item.system.quantity}}) {{/if}}
               {{item.name~}}
             </h4>

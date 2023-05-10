@@ -1,6 +1,5 @@
 /* Deprecated vars */
 @borderLight: #ccc;
-@borderDark: #666;
 
 @fontSizeLargeHeader: var(--font-size-28, 20pt);
 @fontSizeHeader: var(--font-size-24, 18pt);
@@ -28,7 +27,6 @@
 /*  Sheet Styles                             */
 /* ----------------------------------------- */
 
-@colorDark: #191813;
 @colorFaint: #c9c7b8;
 @colorBeige: #b5b3a4;
 @colorTan: #7a7971;
@@ -44,9 +42,7 @@
 @filterAuburn: invert(16%) sepia(51.5%) saturate(4012%) hue-rotate(345deg) brightness(100%) contrast(86%);
 @filterParchment: invert(88%) sepia(11%) saturate(158%) hue-rotate(13deg) brightness(98%) contrast(93%);
 
-@colorSuccess: #18520b;
-@colorFailure: #aa0200;
-
+@itemHoverBackgroundTint: rgba(64, 64, 192, 0.2);
 @itemActiveBackgroundTint: rgba(32, 32, 96, 0.2);
 
 .itemBackgroundBase(@base, @alt, @hover) {
@@ -67,76 +63,8 @@
   .itemBackgroundBase(var(--pf1-item-list-bg), var(--pf1-item-list-bg-alt), var(--pf1-item-list-hover-bg));
 }
 
-/* ----------------------------------------- */
-/*  Flexbox                                  */
-/* ----------------------------------------- */
-
-.flexrow {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-
-  .flex1 {
-    flex: 1;
-  }
-  .flex2 {
-    flex: 2;
-  }
-  .flex3 {
-    flex: 3;
-  }
-  .flex4 {
-    flex: 4;
-  }
-}
-
-.flexcol {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-
-  .flex1 {
-    flex: 1;
-  }
-  .flex2 {
-    flex: 2;
-  }
-  .flex3 {
-    flex: 3;
-  }
-  .flex4 {
-    flex: 4;
-  }
-}
-
-.strikethrough-text {
-  text-decoration: line-through;
-}
-
-.pf1-sheet-group {
-  padding: 2px;
-  margin: 2px;
-  border: 1px solid rgba(0, 0, 0, 0);
-  border-radius: 2px;
-
-  &:hover {
-    border-color: #666;
-  }
-}
-
 .pf1 {
   hr {
     width: 100%;
-  }
-}
-
-/* ----------------------------------------- */
-/*  Animation                                */
-/* ----------------------------------------- */
-
-@keyframes dice-spin {
-  100% {
-    transform: rotate(1turn);
   }
 }

@@ -1,10 +1,7 @@
-@dark-color: #191813;
-@light-color: #f0f0f0;
-
 #health-config nav.tabs {
   font-size: @fontSizeLarge;
   line-height: 32px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--color-border-dark-primary);
 }
 
 #hitdice {
@@ -17,13 +14,12 @@
 
 #hitdice > * {
   padding: 5px;
-  border-bottom: 1px solid @dark-color;
+  border-bottom: 1px solid var(--color-border-dark-primary);
 }
 
 #hitdice .table-header {
-  color: @light-color;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid @dark-color;
+  color: var(--color-text-light-highlight);
+  background: var(--pf1-dark-bg);
   font-weight: bold;
   text-shadow: 1px 1px black;
 }
@@ -38,7 +34,7 @@
 
 #hitdice .switch-label > span {
   display: block;
-  border: 1px solid @dark-color;
+  border: 1px solid var(--color-border-dark-primary);
   border-radius: 4px;
   cursor: pointer;
   margin: auto;
@@ -47,8 +43,8 @@
 }
 
 #hitdice .switch-label > span.switch-auto {
-  background-color: fade(@dark-color, 25%);
-  color: @light-color;
+  background-color: var(--pf1-dark-bg);
+  color: var(--color-text-light-highlight);
 }
 
 #hitdice .switch-check:not(:checked) + .switch-label .switch-auto {
@@ -56,4 +52,21 @@
 }
 #hitdice .switch-check:checked + .switch-label .switch-manual {
   display: none;
+}
+
+#hitdice {
+  .switch-check {
+    display: none;
+  }
+
+  .switch-label > span {
+    display: block;
+    border: 1px solid var(--color-border-dark-primary);
+    border-radius: 4px;
+    cursor: pointer;
+    margin: auto;
+    padding: 2px;
+    width: calc(100% - 2px);
+    text-align: center;
+  }
 }

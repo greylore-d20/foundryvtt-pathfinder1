@@ -16,7 +16,7 @@
     "changes": [
       {
         "_id": "dzjkz8b1",
-        "formula": "@classes.slayer.level < 4 ? 1 : (floor(@classes.slayer.level / 2))",
+        "formula": "max(1, floor(@classes.slayer.level / 2))",
         "operator": "add",
         "subTarget": "skill.dev",
         "modifier": "untyped",
@@ -27,7 +27,7 @@
     ],
     "contextNotes": [
       {
-        "text": "+[[@classes.slayer.level < 4 ? 1 : (floor(@classes.slayer.level / 2))]] vs Traps",
+        "text": "+[[max(1, floor(@classes.slayer.level / 2))]] vs Traps",
         "target": "skill",
         "subTarget": "skill.per"
       }
@@ -51,6 +51,9 @@
     "subType": "classFeat",
     "associations": {
       "classes": [["Slayer"]]
+    },
+    "classSkills": {
+      "dev": true
     },
     "abilityType": "ex"
   }

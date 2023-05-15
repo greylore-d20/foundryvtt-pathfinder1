@@ -19,7 +19,7 @@
     "changes": [
       {
         "_id": "vhodw42z",
-        "formula": "@classes.investigator.level < 4 ? 1 : (floor(@classes.investigator.level / 2))",
+        "formula": "max(1, floor(@classes.investigator.level / 2))",
         "operator": "add",
         "subTarget": "skill.dev",
         "modifier": "untyped",
@@ -30,7 +30,7 @@
     ],
     "contextNotes": [
       {
-        "text": "+[[@classes.investigator.level < 4 ? 1 : (floor(@classes.investigator.level / 2))]] vs Traps",
+        "text": "+[[max(1, floor(@classes.investigator.level / 2))]] vs Traps",
         "target": "skill",
         "subTarget": "skill.per"
       }

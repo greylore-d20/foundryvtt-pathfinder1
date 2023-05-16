@@ -1093,6 +1093,8 @@ export class ItemPF extends ItemBasePF {
     enrichOptions.secrets ??= this.isOwner;
     enrichOptions.async = false; // @TODO: Work on making this async, somehow
 
+    enrichOptions.relativeTo = this.actor;
+
     const itemData = enrichOptions.rollData?.item ?? this.system;
     const actionData = enrichOptions.rollData?.action ?? action?.data ?? {};
 

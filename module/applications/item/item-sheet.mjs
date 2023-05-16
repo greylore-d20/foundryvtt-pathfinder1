@@ -179,11 +179,13 @@ export class ItemSheetPF extends ItemSheet {
         secrets: context.owner,
         rollData: rollData,
         async: true,
+        relativeTo: this.actor,
       }),
       unidentified: await TextEditor.enrichHTML(itemData.description.unidentified, {
         secrets: context.owner,
         rollData: rollData,
         async: true,
+        relativeTo: this.actor,
       }),
     };
 
@@ -407,6 +409,7 @@ export class ItemSheetPF extends ItemSheet {
       context.topDescription = await TextEditor.enrichHTML(desc, {
         rollData: firstAction?.getRollData() ?? rollData,
         async: true,
+        relativeTo: this.actor,
       });
 
       // Enrich description
@@ -415,6 +418,7 @@ export class ItemSheetPF extends ItemSheet {
           rollData: firstAction?.getRollData() ?? rollData,
           secrets: context.owner,
           async: true,
+          relativeTo: this.actor,
         });
       }
     }
@@ -1194,7 +1198,7 @@ export class ItemSheetPF extends ItemSheet {
     if (!eventData) return;
 
     const elem = event.currentTarget;
-    const link = await TextEditor.getContentLink(eventData);
+    const link = await TextEditor.getContentLink(eventData, { relativeTo: this.actor });
 
     // Insert link
     if (link) {

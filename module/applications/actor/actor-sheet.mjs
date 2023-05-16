@@ -237,11 +237,13 @@ export class ActorSheetPF extends ActorSheet {
       secrets: isOwner,
       rollData: data.rollData,
       async: true,
+      relativeTo: this.actor,
     });
     data.notesHTML = await TextEditor.enrichHTML(data.system.details.notes.value, {
       secrets: isOwner,
       rollData: data.rollData,
       async: true,
+      relativeTo: this.actor,
     });
 
     // The Actor and its Items

@@ -109,7 +109,12 @@ export class ChatAttack {
         result += `<span class="tag">${n}</span>`;
       }
     }
-    const inner = TextEditor.enrichHTML(result, { rollData: this.rollData, async: false });
+
+    const inner = TextEditor.enrichHTML(result, {
+      rollData: this.rollData,
+      async: false,
+      relativeTo: this.action.actor,
+    });
     this.attackNotesHTML = `<div class="flexcol property-group gm-sensitive attack-notes"><label>${game.i18n.localize(
       "PF1.AttackNotes"
     )}</label><div class="flexrow tag-list">${inner}</div></div>`;
@@ -127,7 +132,11 @@ export class ChatAttack {
         result += `<span class="tag">${n}</span>`;
       }
     }
-    const inner = TextEditor.enrichHTML(result, { rollData: this.rollData, async: false });
+    const inner = TextEditor.enrichHTML(result, {
+      rollData: this.rollData,
+      async: false,
+      relativeTo: this.action.actor,
+    });
     this.effectNotesHTML = `<div class="flexcol property-group gm-sensitive effect-notes"><label>${game.i18n.localize(
       "PF1.EffectNotes"
     )}</label><div class="flexrow tag-list">${inner}</div></div>`;

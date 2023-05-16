@@ -3601,6 +3601,7 @@ export class ActorPF extends ActorBasePF {
           rollData: o.item != null ? o.item.getRollData() : this.getRollData(),
           rolls: roll,
           async: false,
+          relativeTo: this,
         };
         cur.push(enrichHTMLUnrolled(note, enrichOptions));
       }
@@ -3617,7 +3618,11 @@ export class ActorPF extends ActorBasePF {
       if (noteObj.item != null) rollData = noteObj.item.getRollData();
 
       for (const note of noteObj.notes) {
-        result.push(...note.split(/[\n\r]+/).map((subnote) => enrichHTMLUnrolled(subnote, { rollData, rolls: roll })));
+        result.push(
+          ...note
+            .split(/[\n\r]+/)
+            .map((subnote) => enrichHTMLUnrolled(subnote, { rollData, rolls: roll, relativeTo: this }))
+        );
       }
     }
     return result;

@@ -119,6 +119,7 @@ export class ItemActionSheet extends FormApplication {
       secrets: data.owner,
       rollData: data.rollData,
       async: true,
+      relativeTo: this.actor,
     });
 
     // Show additional ranged properties
@@ -450,7 +451,7 @@ export class ItemActionSheet extends FormApplication {
     if (!eventData) return;
 
     const elem = event.currentTarget;
-    const link = await TextEditor.getContentLink(eventData);
+    const link = await TextEditor.getContentLink(eventData, { relativeTo: this.actor });
 
     // Insert link
     if (link) {

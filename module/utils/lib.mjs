@@ -941,8 +941,8 @@ export function createInlineFormula(match, rollData, options) {
  *
  * Synchronized with Foundry VTT v10.291
  */
-export function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, documents } = {}) {
-  let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, async: false });
+export function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, documents, relativeTo } = {}) {
+  let pcontent = TextEditor.enrichHTML(content, { secrets, rolls, documents, rollData, async: false, relativeTo });
 
   if (!rolls) {
     const html = document.createElement("div");

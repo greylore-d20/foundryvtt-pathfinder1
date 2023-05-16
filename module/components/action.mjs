@@ -875,7 +875,7 @@ export class ItemAction {
 
     if (effectContent.length === 0) return "";
 
-    const inner = TextEditor.enrichHTML(effectContent, { rollData: rollData });
+    const inner = TextEditor.enrichHTML(effectContent, { rollData: rollData, relativeTo: this.actor });
     return `<div class="flexcol property-group"><label>${game.i18n.localize(
       "PF1.EffectNotes"
     )}</label><div class="flexrow tag-list">${inner}</div></div>`;

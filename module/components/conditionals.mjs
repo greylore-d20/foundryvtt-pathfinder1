@@ -36,8 +36,14 @@ export class ItemConditional {
     };
   }
 
+  /** @type {string} */
   get id() {
     return this.data._id;
+  }
+
+  /** @type {string} */
+  get name() {
+    return this.data.name;
   }
 
   prepareData() {
@@ -120,6 +126,7 @@ export class ItemConditionalModifier {
     };
   }
 
+  /** @type {string} */
   get id() {
     return this.data._id;
   }

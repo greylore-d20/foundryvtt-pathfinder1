@@ -172,12 +172,12 @@ export class ItemSheetPF extends ItemSheet {
     // Add descriptions
     context.descriptionHTML = {
       identified: await TextEditor.enrichHTML(itemData.description.value, {
-        secrets: context.owned,
+        secrets: context.owner,
         rollData: rollData,
         async: true,
       }),
       unidentified: await TextEditor.enrichHTML(itemData.description.unidentified, {
-        secrets: context.owned,
+        secrets: context.owner,
         rollData: rollData,
         async: true,
       }),

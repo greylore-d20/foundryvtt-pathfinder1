@@ -10,7 +10,122 @@
       "value": "<p>At 2nd level, an order of the blossom cavalier can make a sneak attack, as the rogue ability of the same name. At 2nd level, his sneak attack damage is +1d6. This damage increases by 1d6 at 8th level and every 6 levels thereafter. If the cavalier gets a sneak attack bonus from another source, the bonus damage stacks.</p>"
     },
     "tags": [],
-    "actions": [],
+    "actions": [
+      {
+        "_id": "baKSL9suyWG3rBVh",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/banner-red.jpg",
+        "description": "",
+        "tag": "",
+        "activation": {
+          "cost": 1,
+          "type": ""
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 1,
+            "type": ""
+          }
+        },
+        "duration": {
+          "value": null,
+          "units": ""
+        },
+        "target": {
+          "value": ""
+        },
+        "range": {
+          "value": null,
+          "units": "",
+          "maxIncrements": 1,
+          "minValue": null,
+          "minUnits": ""
+        },
+        "uses": {
+          "autoDeductChargesCost": "",
+          "self": {
+            "value": 0,
+            "maxFormula": "",
+            "per": ""
+          }
+        },
+        "measureTemplate": {
+          "type": "",
+          "size": "",
+          "overrideColor": false,
+          "customColor": "",
+          "overrideTexture": false,
+          "customTexture": ""
+        },
+        "attackName": "",
+        "actionType": "mwak",
+        "attackBonus": "",
+        "critConfirmBonus": "",
+        "damage": {
+          "critParts": [],
+          "nonCritParts": [],
+          "parts": [
+            [
+              "floor((@classes.cavalier.level + 4) / 6)d6",
+              {
+                "values": ["precision"],
+                "custom": ""
+              }
+            ]
+          ]
+        },
+        "attackParts": [],
+        "formulaicAttacks": {
+          "count": {
+            "formula": ""
+          },
+          "bonus": {
+            "formula": ""
+          },
+          "label": ""
+        },
+        "formula": "",
+        "ability": {
+          "attack": "",
+          "damage": "",
+          "damageMult": 1,
+          "critRange": 20,
+          "critMult": 2
+        },
+        "save": {
+          "dc": "",
+          "type": "",
+          "description": ""
+        },
+        "effectNotes": [],
+        "attackNotes": [],
+        "soundEffect": "",
+        "powerAttack": {
+          "multiplier": null,
+          "damageBonus": 2,
+          "critMultiplier": 1
+        },
+        "naturalAttack": {
+          "primaryAttack": true,
+          "secondary": {
+            "attackBonus": "-5",
+            "damageMult": 0.5
+          }
+        },
+        "nonlethal": false,
+        "touch": false,
+        "usesAmmo": false,
+        "spellEffect": "",
+        "spellArea": "",
+        "conditionals": [],
+        "enh": {
+          "value": null
+        }
+      }
+    ],
+    "uses": {
+      "per": ""
+    },
     "attackNotes": [],
     "effectNotes": [],
     "changes": [],

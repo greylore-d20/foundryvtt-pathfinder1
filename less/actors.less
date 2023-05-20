@@ -178,13 +178,11 @@
     }
 
     .hd-level {
-      flex: 0 0 256px;
-      overflow-x: hidden;
-      margin: 0 0 4px 8px;
+      display: flex;
+      flex-flow: column;
+      gap: 2px;
 
       table {
-        margin-bottom: 4px;
-
         &:hover {
           a.config-icon {
             color: @colorBeige;

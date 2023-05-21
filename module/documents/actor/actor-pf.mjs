@@ -1844,6 +1844,11 @@ export class ActorPF extends ActorBasePF {
   _onUpdate(updateData, options, userId, context = {}) {
     super._onUpdate(updateData, options, userId, context);
 
+    // No system data updated
+    if (!updateData.system) return;
+
+    const sourceUser = game.user.id === userId;
+
     let refreshVision = false;
     if (hasProperty(updateData, "system.attributes.conditions")) {
       if (game.user.id === userId) this.toggleConditionStatusIcons({ render: false });
@@ -1869,20 +1874,21 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Resize token(s)
-    if (game.user.id === userId) {
-      const sizeKey = updateData.system?.traits?.size;
-      if (sizeKey) {
-        const size = PF1.tokenSizes[sizeKey];
-        const tokens = this.getActiveTokens(false, true).filter((o) => {
-          if (o.getFlag("pf1", "staticSize")) return false;
-          return true;
-        });
-        tokens.forEach((token) => {
-          // Update only tokens that changed, ignoring those with their own custom size
-          if (token.actor.system.traits.size !== sizeKey) return;
-          token.update({ width: size.w, height: size.h, scale: size.scale });
-        });
-      }
+    const sizeKey = updateData.system.traits?.size;
+    if (sourceUser && sizeKey) {
+      const size = CONFIG.PF1.tokenSizes[sizeKey];
+      const tokens = this.getActiveTokens(false, true).filter((token) => !token.getFlag("pf1", "staticSize"));
+
+      const scene = tokens[0]?.object.scene;
+      scene?.updateEmbeddedDocuments(
+        "Token",
+        tokens.map((t) => ({
+          _id: t.id,
+          width: size.w,
+          height: size.h,
+          texture: { scaleX: size.scale, scaleY: size.scale },
+        }))
+      );
     }
   }
 

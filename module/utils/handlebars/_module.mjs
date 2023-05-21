@@ -1,2 +1,2 @@
 export { registerHandlebarsHelpers } from "./helpers.mjs";
-export { preloadHandlebarsTemplates } from "./templates.mjs";
+export * from "./templates.mjs";

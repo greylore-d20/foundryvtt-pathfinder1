@@ -169,9 +169,11 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    const description = this.document.getDescription();
+
     // Add descriptions
     context.descriptionHTML = {
-      identified: await TextEditor.enrichHTML(itemData.description.value, {
+      identified: await TextEditor.enrichHTML(description, {
         secrets: context.owner,
         rollData: rollData,
         async: true,
@@ -1362,7 +1364,7 @@ export class ItemSheetPF extends ItemSheet {
     const item = this.document[collection].get(li.attr("data-item-id"));
     // For actions (embedded into a parent item), show only the action's summary instead of a complete one
     const isAction = collection === "actions";
-    const { description, actionDescription, properties } = item.getChatData();
+    const { description, actionDescription, properties } = item.getChatData({ chatcard: false });
 
     // Toggle summary
     if (li.hasClass("expanded")) {

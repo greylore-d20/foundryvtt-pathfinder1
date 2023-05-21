@@ -836,7 +836,10 @@ export class ActionUse {
     let extraText = "";
     if (this.shared.templateData.attacks.length > 0) extraText = this.shared.templateData.attacks[0].attackNotesHTML;
 
-    const itemChatData = this.item.getChatData({ rollData: this.shared.rollData }, { actionId: this.shared.action.id });
+    const itemChatData = this.item.getChatData(
+      { rollData: this.shared.rollData },
+      { actionId: this.shared.action.id, chatcard: true }
+    );
 
     // Get properties
     const properties = [...itemChatData.properties, ...this.addGenericPropertyLabels()];

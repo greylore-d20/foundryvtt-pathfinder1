@@ -1677,7 +1677,7 @@ export class ActorSheetPF extends ActorSheet {
     const collection = elem.attr("data-item-collection") ?? "items";
     const itemId = elem.attr("data-item-id");
     const item = this.document[collection].get(itemId);
-    const { description, properties } = item.getChatData();
+    const { description, properties } = item.getChatData({ chatcard: false });
 
     // Toggle summary
     this._expandedItems = this._expandedItems.filter((o) => o !== itemId);

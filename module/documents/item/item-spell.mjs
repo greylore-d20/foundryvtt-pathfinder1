@@ -2,6 +2,7 @@ import { PF1 } from "@config";
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 import { getDistanceSystem } from "@utils";
+import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 export class ItemSpellPF extends ItemPF {
   /** @inheritDoc */
@@ -41,13 +42,6 @@ export class ItemSpellPF extends ItemPF {
     const clOffset = this.system.clOffset ?? 0;
     const casterLevel = this.spellbook?.cl.total ?? 0;
     return Math.max(0, casterLevel + clOffset + bonus);
-  }
-
-  prepareDerivedItemData() {
-    super.prepareDerivedItemData();
-
-    // Update description
-    this._updateSpellDescription();
   }
 
   preCreateData(data, options, user) {
@@ -546,18 +540,6 @@ export class ItemSpellPF extends ItemPF {
   }
 
   /**
-   * Updates the spell's description.
-   *
-   * @param data
-   */
-  async _updateSpellDescription(data) {
-    this.system.description.value = await renderTemplate(
-      "systems/pf1/templates/internal/spell-description.hbs",
-      mergeObject(data ?? {}, this.spellDescriptionData)
-    );
-  }
-
-  /**
    * @returns true if the spell is prepared to cast in any manner.
    */
   get canCast() {
@@ -580,6 +562,17 @@ export class ItemSpellPF extends ItemPF {
 
   get fullDescription() {
     return super.fullDescription + this.system.shortDescription;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  getDescription({ chatcard = false, data = {} } = {}) {
+    return renderCachedTemplate("systems/pf1/templates/internal/spell-description.hbs", {
+      ...data,
+      ...this.spellDescriptionData,
+      chatcard: chatcard === true,
+    });
   }
 
   get spellDescriptionData() {

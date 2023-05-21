@@ -341,6 +341,18 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * Get full description.
+   *
+   * @param {object} options Item type dependant options for rendering the description.
+   * @param {boolean} [options.chatcard=false] Instruct template to render chat card in mind.
+   * @param {object} [options.data={}] Template data for rendering
+   * @returns {string} Full description.
+   */
+  getDescription(options) {
+    return this.system.description.value;
+  }
+
+  /**
    * @returns {ActiveEffect} An active effect associated with this item.
    */
   get effect() {
@@ -1025,6 +1037,7 @@ export class ItemPF extends ItemBasePF {
    *                                              `rollData` defaults to {@link ItemAction#getRollData}/{@link ItemPF#getRollData}.
    *                                              `secrets` defaults to {@link Item#isOwner}.
    * @param {object} [options] - Additional options affecting the chat data generation
+   * @param {boolean} [options.chatcard=false] Is this actually for chat card.
    * @param {string} [options.actionId] - The ID of an action on this item to generate chat data for,
    *                                      defaults to {@link ItemPF.firstAction}
    * @returns {ChatData} The chat data for this item (+action)
@@ -1044,7 +1057,8 @@ export class ItemPF extends ItemBasePF {
     const actionData = enrichOptions.rollData?.action ?? action?.data ?? {};
 
     // Rich text descriptions
-    data.identifiedDescription = TextEditor.enrichHTML(itemData.description.value, enrichOptions);
+    const description = this.getDescription({ chatcard: options.chatcard });
+    data.identifiedDescription = TextEditor.enrichHTML(description, enrichOptions);
     if (itemData.shortDescription) {
       data.identifiedDescription = `${data.identifiedDescription}${TextEditor.enrichHTML(
         itemData.shortDescription,
@@ -1330,7 +1344,7 @@ export class ItemPF extends ItemBasePF {
       await shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 });
 
     // Retrieve message data
-    await actionUse.getMessageData();
+    actionUse.getMessageData();
 
     // Post message
     let result;

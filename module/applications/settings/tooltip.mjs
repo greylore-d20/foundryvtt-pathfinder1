@@ -104,7 +104,7 @@ export class TooltipConfig extends FormApplication {
     if (!key) return;
 
     let value;
-    if (el.tagName.toUpperCase() === "INPUT") {
+    if (el.tagName === "INPUT") {
       value = el.value;
       if (el.type === "checkbox") value = el.checked === true ? true : false;
     } else {

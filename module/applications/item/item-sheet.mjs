@@ -1053,7 +1053,7 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _mouseWheelAdd(event, el) {
-    const isInput = el.tagName.toUpperCase() === "INPUT";
+    const isInput = el.tagName === "INPUT";
     const { originalEvent } = event;
 
     if (originalEvent && originalEvent instanceof WheelEvent && originalEvent.ctrlKey) {
@@ -1080,7 +1080,7 @@ export class ItemSheetPF extends ItemSheet {
 
     this._mouseWheelAdd(event, el);
 
-    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
+    const value = el.tagName === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setActionUpdate(action.id, "uses.self.value", value);
 
     // Update on lose focus

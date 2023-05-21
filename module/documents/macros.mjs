@@ -79,7 +79,7 @@ export const createSkillMacro = async (skillId, actorId, slot) => {
  */
 export const createSaveMacro = async (saveId, actorId, slot) => {
   const actor = getActorFromId(actorId);
-  const saveName = game.i18n.localize("PF1.SavingThrow" + saveId.substr(0, 1).toUpperCase() + saveId.substr(1));
+  const saveName = game.i18n.localize("PF1.SavingThrow" + saveId.capitalize());
   if (!actor) return;
 
   const command = `fromUuidSync("${actor.uuid}")\n\t.rollSavingThrow("${saveId}");`;

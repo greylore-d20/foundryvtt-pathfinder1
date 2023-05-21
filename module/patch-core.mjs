@@ -12,8 +12,8 @@ import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs"
   const origParse = ChatLog.parse;
   ChatLog.parse = function (message) {
     const match = message.match(/^\/(\w+)(?: +([^#]+))(?:#(.+))?/),
-      type = match?.[1];
-    if (["HEAL", "H", "DAMAGE", "D"].includes(type?.toUpperCase())) {
+      type = match?.[1]?.toUpperCase();
+    if (["HEAL", "H", "DAMAGE", "D"].includes(type)) {
       match[2] = match[0].slice(1);
       return ["custom", match];
     } else return origParse.call(this, message);

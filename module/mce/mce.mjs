@@ -31,11 +31,8 @@ export const tinyMCEInit = function () {
  */
 function registerContextMenu(editor) {
   const isInfoElement = function (node) {
-    if (node.nodeName.toLowerCase() !== "span") node = node.parentNode;
-    return (
-      node.nodeName.toLowerCase() === "span" &&
-      (node.classList.contains("notImp") || node.classList.contains("needSteps"))
-    );
+    if (node.nodeName !== "SPAN") node = node.parentNode;
+    return node.nodeName === "SPAN" && (node.classList.contains("notImp") || node.classList.contains("needSteps"));
   };
 
   const getInfoElement = function () {

@@ -577,11 +577,11 @@ export class LevelUpForm extends FormApplication {
 
     // Get value
     let value = a.value;
-    switch (a.dataset.dtype.toLowerCase()) {
-      case "number":
+    switch (a.dataset.dtype) {
+      case "Number":
         value = parseFloat(value);
         break;
-      case "boolean":
+      case "Boolean":
         value = ["true", "1"].includes(value);
         break;
     }

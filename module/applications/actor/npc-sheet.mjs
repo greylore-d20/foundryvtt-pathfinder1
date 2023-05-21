@@ -95,7 +95,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
     event.preventDefault();
     const el = event.currentTarget;
 
-    const value = CR.fromString(el.tagName.toUpperCase() === "INPUT" ? el.value : el.innerText);
+    const value = CR.fromString(el.tagName === "INPUT" ? el.value : el.innerText);
     const name = el.getAttribute("name");
     if (name) {
       this._pendingUpdates[name] = value;

@@ -582,7 +582,7 @@ export class ItemSpellPF extends ItemPF {
     const actionData = firstAction?.data ?? {};
 
     const label = {
-      school: (PF1.spellSchools[srcData.school] || "").toLowerCase(),
+      school: PF1.spellSchools[srcData.school],
       subschool: srcData.subschool || "",
       types: "",
     };
@@ -629,7 +629,6 @@ export class ItemSpellPF extends ItemPF {
       }
       if (!Number.isNaN(activationCost) && label.castingTime != null)
         label.castingTime = `${activationCost} ${label.castingTime}`;
-      if (label.castingTime) label.castingTime = label.castingTime.toLowerCase();
     }
 
     // Set components label
@@ -656,7 +655,7 @@ export class ItemSpellPF extends ItemPF {
       const rangeValue = actionData.range?.value;
 
       if (rangeUnit != null && rangeUnit !== "none") {
-        label.range = (PF1.distanceUnits[rangeUnit] || "").toLowerCase();
+        label.range = PF1.distanceUnits[rangeUnit];
         const units = getDistanceSystem();
         if (rangeUnit === "close")
           label.range = `${label.range} ${game.i18n.localize(

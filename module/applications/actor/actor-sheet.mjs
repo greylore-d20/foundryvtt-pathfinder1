@@ -1406,7 +1406,7 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _mouseWheelAdd(event, el) {
-    const isInput = el.tagName.toUpperCase() === "INPUT";
+    const isInput = el.tagName === "INPUT";
     const { originalEvent } = event;
 
     if (originalEvent && originalEvent instanceof WheelEvent && originalEvent.ctrlKey) {
@@ -1433,7 +1433,7 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event, el);
 
-    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
+    const value = el.tagName === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "system.uses.value", value);
 
     // Update on lose focus
@@ -1455,7 +1455,7 @@ export class ActorSheetPF extends ActorSheet {
     this._mouseWheelAdd(event, el);
 
     const prevValue = item.system.preparation?.preparedAmount;
-    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
+    const value = el.tagName === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "system.preparation.preparedAmount", value);
     if (prevValue < value) {
       const maxValue = item.system.preparation.maxAmount;
@@ -1480,14 +1480,14 @@ export class ActorSheetPF extends ActorSheet {
     this._mouseWheelAdd(event, el);
 
     const prevValue = item.system.preparation?.maxAmount;
-    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
+    const value = el.tagName === "INPUT" ? Number(el.value) : Number(el.innerText);
     this.setItemUpdate(item.id, "system.preparation.maxAmount", Math.max(0, value));
     if (prevValue > value) {
       const curValue = item.system.preparation.preparedAmount;
       this.setItemUpdate(item.id, "system.preparation.preparedAmount", Math.min(curValue, value));
     }
     if (value < 0) {
-      el.tagName.toUpperCase() === "INPUT" ? (el.value = 0) : (el.innerText = 0);
+      el.tagName === "INPUT" ? (el.value = 0) : (el.innerText = 0);
     }
 
     // Update on lose focus
@@ -1506,8 +1506,8 @@ export class ActorSheetPF extends ActorSheet {
     this._mouseWheelAdd(event, el);
 
     // Get base value
-    const rawValue = el.tagName.toUpperCase() === "INPUT" ? el.value : el.innerText;
-    let value = el.dataset.dtype?.toUpperCase() === "STRING" ? rawValue : Number(rawValue);
+    const rawValue = el.tagName === "INPUT" ? el.value : el.innerText;
+    let value = el.dataset.dtype === "String" ? rawValue : Number(rawValue);
 
     // Adjust value if needed
     const name = el.getAttribute("name");
@@ -1538,7 +1538,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
 
     this._mouseWheelAdd(event, el);
-    const value = el.tagName.toUpperCase() === "INPUT" ? Number(el.value) : Number(el.innerText);
+    const value = el.tagName === "INPUT" ? Number(el.value) : Number(el.innerText);
     const name = el.getAttribute("name");
     if (name) {
       this._pendingUpdates[name] = value;

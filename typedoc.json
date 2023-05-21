@@ -1,4 +1,5 @@
 {
+  "$schema": "https://typedoc.org/schema.json",
   "out": "docs",
   "tsconfig": "jsconfig.json",
   "name": "Pathfinder 1e for Foundry VTT",
@@ -8,5 +9,8 @@
   "externalPattern": ["@foundry/**/*.mjs", "node_modules/**/*"],
   "excludeExternals": true,
   "internalModule": "types",
-  "entryPoints": ["pf1.mjs", "hooks.d.ts"]
+  "entryPoints": ["pf1.mjs", "hooks.d.ts"],
+  "compilerOptions": {
+    "checkJs": false
+  }
 }

@@ -755,7 +755,7 @@ Hooks.on("renderAmbientLightConfig", (app, html) => {
 });
 
 Hooks.on("renderTokenHUD", (app, html, data) => {
-  TokenQuickActions.addTop3Attacks(app, html, data);
+  TokenQuickActions.addQuickActions(app, html, data);
 });
 
 Hooks.on("updateActor", (actor, data, options, userId) => {

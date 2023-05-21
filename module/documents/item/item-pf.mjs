@@ -329,6 +329,16 @@ export class ItemPF extends ItemBasePF {
     else await this.update({ "system.uses.value": prevValue + value });
   }
 
+  /**
+   * Linked ammunition item if any.
+   *
+   * @type {Item|undefined}
+   */
+  get defaultAmmo() {
+    const ammoId = this.getFlag("pf1", "defaultAmmo");
+    return this.actor?.items.get(ammoId);
+  }
+
   /* -------------------------------------------- */
 
   /**

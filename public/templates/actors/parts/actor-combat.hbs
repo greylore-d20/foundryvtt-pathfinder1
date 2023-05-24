@@ -198,11 +198,11 @@
                 {{localize "PF1.Details"}}:<br/>
                 {{#with item.document.firstAction}}
                   {{#each data.damage.parts as |pt ix|}}
-                    {{pt.[0]}}{{#if pt.[1]}} [{{damageTypes pt.[1]}}]{{/if}}<br/>
+                    {{pt.formula}}{{#if pt.type}} [{{damageTypes pt.type}}]{{/if}}<br/>
                   {{/each}}
                   {{#if data.damage.nonCritParts}}
                     {{#each data.damage.nonCritParts as |pt|}}
-                      {{pt.[0]}}{{#if pt.[1]}} [{{pt.[1]}}]{{/if}}<br/>
+                      {{pt.formula}}{{#if pt.type}} [{{damageTypes pt.type}}]{{/if}}<br/>
                     {{/each}}
                   {{/if}}
                   {{#if data.ability.damage}}

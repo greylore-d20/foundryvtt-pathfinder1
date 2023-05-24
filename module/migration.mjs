@@ -360,6 +360,7 @@ export const migrateItemActionData = function (action, item) {
   action = foundry.utils.mergeObject(pf1.components.ItemAction.defaultData, action);
 
   _migrateActionRange(action, item);
+  _migrateActionDamageParts(action, item);
   _migrateActionDamageType(action, item);
   _migrateActionConditionals(action, item);
   _migrateActionEnhOverride(action, item);
@@ -1168,6 +1169,29 @@ const _migrateItemChargeCost = function (item, updateData) {
   }
 };
 
+/**
+ * Migrate damage part tuples into objects
+ *
+ * Introduced with 0.82.6
+ *
+ * @param {*} action
+ * @param {*} item
+ */
+const _migrateActionDamageParts = function (action, item) {
+  const categories = action.damage;
+  for (const part of ["parts", "critParts", "nonCritParts"]) {
+    const category = categories[part];
+    if (!category) continue;
+
+    category.forEach((damage, index) => {
+      if (Array.isArray(damage)) {
+        const [formula, type] = damage;
+        category[index] = { formula, type };
+      }
+    });
+  }
+};
+
 const _migrateActionDamageType = function (action, item) {
   // Determine data paths using damage types
   const damageGroupPaths = ["damage.parts", "damage.critParts", "damage.nonCritParts"];
@@ -1175,18 +1199,18 @@ const _migrateActionDamageType = function (action, item) {
     const damageGroup = getProperty(action, damageGroupPath);
     for (const damagePart of damageGroup) {
       // Convert damage types
-      const damageType = damagePart[1];
+      const damageType = damagePart.type;
       if (typeof damageType === "string") {
         const damageTypeData = pf1.components.ItemAction.defaultDamageType;
         damageTypeData.values = _Action_ConvertDamageType(damageType);
         if (damageTypeData.values.length === 0) damageTypeData.custom = damageType;
-        damagePart[1] = damageTypeData;
+        damagePart.type = damageTypeData;
       }
       // Convert array to object
       else if (damageType instanceof Array) {
         const damageTypeData = pf1.components.ItemAction.defaultDamageType;
         damageTypeData.values = damageType;
-        damagePart[1] = damageTypeData;
+        damagePart.type = damageTypeData;
       }
     }
   }

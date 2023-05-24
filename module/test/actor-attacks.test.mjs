@@ -154,7 +154,10 @@ export const registerActorItemAttackTests = () => {
                     actionType: "mwak",
                     damage: {
                       parts: [
-                        ["sizeRoll(1, 6, @size)", { custom: "", values: ["bludgeoning", "piercing", "slashing"] }],
+                        {
+                          formula: "sizeRoll(1, 6, @size)",
+                          type: { custom: "", values: ["bludgeoning", "piercing", "slashing"] },
+                        },
                       ],
                     },
                     ability: {

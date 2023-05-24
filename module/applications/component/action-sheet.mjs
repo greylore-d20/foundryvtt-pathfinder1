@@ -339,20 +339,23 @@ export class ItemActionSheet extends FormApplication {
     event.preventDefault();
     const a = event.currentTarget;
     const list = a.closest(".damage");
-    const k = list.dataset.key || "damage.parts";
-    const k2 = k.split(".").slice(0, -1).join(".");
-    const k3 = k.split(".").slice(-1).join(".");
+    const path = list.dataset.key || "damage.parts";
+    const k2 = path.split(".").slice(0, -1).join(".");
+    const k3 = path.split(".").slice(-1).join(".");
 
     // Add new damage component
     if (a.classList.contains("add-damage")) {
       // Get initial data
       const damageTypeBase = pf1.components.ItemAction.defaultDamageType;
-      const initialData = ["", damageTypeBase];
+      const initialData = {
+        formula: "",
+        type: damageTypeBase,
+      };
 
       // Add data
       const damage = getProperty(this.action.data, k2);
       const updateData = {};
-      updateData[k] = getProperty(damage, k3).concat([initialData]);
+      updateData[path] = getProperty(damage, k3).concat([initialData]);
       return this._onSubmit(event, { updateData });
     }
 
@@ -362,7 +365,7 @@ export class ItemActionSheet extends FormApplication {
       const damage = deepClone(getProperty(this.action.data, k2));
       getProperty(damage, k3).splice(Number(li.dataset.damagePart), 1);
       const updateData = {};
-      updateData[k] = getProperty(damage, k3);
+      updateData[path] = getProperty(damage, k3);
       return this._onSubmit(event, { updateData });
     }
   }
@@ -377,8 +380,8 @@ export class ItemActionSheet extends FormApplication {
     if (damageIndex != null && damagePart != null) {
       const app = new pf1.applications.DamageTypeSelector(
         this.object,
-        `${damagePart}.${damageIndex}.1`,
-        getProperty(this.object.data, damagePart)[damageIndex][1]
+        `${damagePart}.${damageIndex}.type`,
+        getProperty(this.object.data, damagePart)[damageIndex].type
       );
       return app.render(true);
     }

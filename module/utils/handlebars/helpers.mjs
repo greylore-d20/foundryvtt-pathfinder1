@@ -71,7 +71,7 @@ export const registerHandlebarsHelpers = function () {
       }
     };
 
-    const handleParts = (parts) => parts.forEach(([formula, _]) => handleFormula(formula));
+    const handleParts = (parts) => parts.forEach(({ formula }) => handleFormula(formula));
 
     // Normal damage parts
     handleParts(actionData.damage.parts);

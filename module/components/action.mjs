@@ -885,9 +885,10 @@ export class ItemAction {
     if (rollData.ablMult == null) rollData.ablMult = rollData.action?.ability.damageMult;
 
     // Define Roll parts
-    let parts = this.data.damage.parts.map((p) => {
-      return { base: p[0], extra: [], damageType: p[1], type: "normal" };
-    });
+    let parts =
+      this.data.damage.parts?.map((damage) => {
+        return { base: damage.formula, extra: [], damageType: damage.type, type: "normal" };
+      }) ?? [];
     // Add conditionals damage
     conditionalParts["damage.normal"]?.forEach((p) => {
       const [base, damageType, isExtra] = p;
@@ -895,10 +896,11 @@ export class ItemAction {
     });
     // Add critical damage parts
     if (critical === true) {
-      if (this.data.damage?.critParts != null) {
+      const critParts = this.data.damage?.critParts;
+      if (critParts) {
         parts = parts.concat(
-          this.data.damage.critParts.map((p) => {
-            return { base: p[0], extra: [], damageType: p[1], type: "crit" };
+          critParts.map((damage) => {
+            return { base: damage.formula, extra: [], damageType: damage.type, type: "crit" };
           })
         );
       }
@@ -910,10 +912,11 @@ export class ItemAction {
     }
     // Add non-critical damage parts
     if (critical === false) {
-      if (this.data.damage?.nonCritParts != null) {
+      const nonCritParts = this.data.damage?.nonCritParts;
+      if (nonCritParts) {
         parts = parts.concat(
-          this.data.damage.nonCritParts.map((p) => {
-            return { base: p[0], extra: [], damageType: p[1], type: "nonCrit" };
+          nonCritParts.map((damage) => {
+            return { base: damage.formula, extra: [], damageType: damage.type, type: "nonCrit" };
           })
         );
       }

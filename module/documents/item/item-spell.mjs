@@ -486,7 +486,7 @@ export class ItemSpellPF extends ItemPF {
     // Set damage formula
     action.actionType = origData.actionType;
     for (const d of actionData.damage?.parts ?? []) {
-      action.damage.parts.push([this._replaceConsumableConversionString(d[0], rollData), d[1]]);
+      action.damage.parts.push({ formula: this._replaceConsumableConversionString(d.formula, rollData), type: d.type });
     }
 
     // Set saves

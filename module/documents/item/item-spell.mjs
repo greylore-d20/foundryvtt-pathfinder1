@@ -365,22 +365,22 @@ export class ItemSpellPF extends ItemPF {
    * @returns {number[]} An array containing the spell level and caster level.
    */
   static getMinimumCasterLevelBySpellData(itemData) {
-    const learnedAt = itemData.system.learnedAt?.class?.reduce((cur, o) => {
-      const classes = o[0].split("/");
-      for (const cls of classes) cur.push([cls, o[1]]);
+    const learnedAt = Object.entries(itemData.system.learnedAt?.class ?? {})?.reduce((cur, [classId, level]) => {
+      const classes = classId.split("/");
+      for (const cls of classes) cur.push([cls, level]);
       return cur;
     }, []);
     const result = [9, 20];
-    for (const o of learnedAt) {
-      result[0] = Math.min(result[0], o[1]);
+    for (const [classId, level] of learnedAt) {
+      result[0] = Math.min(result[0], level);
 
-      const tc = PF1.classCasterType[o[0]] || "high";
+      const tc = PF1.classCasterType[classId] || "high";
       if (tc === "high") {
-        result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 2);
+        result[1] = Math.min(result[1], 1 + Math.max(0, level - 1) * 2);
       } else if (tc === "med") {
-        result[1] = Math.min(result[1], 1 + Math.max(0, o[1] - 1) * 3);
+        result[1] = Math.min(result[1], 1 + Math.max(0, level - 1) * 3);
       } else if (tc === "low") {
-        result[1] = Math.min(result[1], 1 + Math.max(0, o[1]) * 3);
+        result[1] = Math.min(result[1], 1 + Math.max(0, level) * 3);
       }
     }
 
@@ -598,36 +598,14 @@ export class ItemSpellPF extends ItemPF {
     }
     // Set information about when the spell is learned
     data.learnedAt = {};
-    data.learnedAt.class = (srcData.learnedAt?.class || [])
-      .map((o) => {
-        return `${o[0]} ${o[1]}`;
-      })
-      .sort()
-      .join(", ");
-    data.learnedAt.domain = (srcData.learnedAt?.domain || [])
-      .map((o) => {
-        return `${o[0]} ${o[1]}`;
-      })
-      .sort()
-      .join(", ");
-    data.learnedAt.subDomain = (srcData.learnedAt?.subDomain || [])
-      .map((o) => {
-        return `${o[0]} ${o[1]}`;
-      })
-      .sort()
-      .join(", ");
-    data.learnedAt.elementalSchool = (srcData.learnedAt?.elementalSchool || [])
-      .map((o) => {
-        return `${o[0]} ${o[1]}`;
-      })
-      .sort()
-      .join(", ");
-    data.learnedAt.bloodline = (srcData.learnedAt?.bloodline || [])
-      .map((o) => {
-        return `${o[0]} ${o[1]}`;
-      })
-      .sort()
-      .join(", ");
+    if (srcData.learnedAt) {
+      ["class", "domain", "subDomain", "elementalSchool", "bloodline"].forEach(
+        (category) =>
+          (data.learnedAt[category] = Object.entries(srcData.learnedAt[category])
+            .map(([classId, level]) => `${classId} ${level}`)
+            .join(", "))
+      );
+    }
 
     const isUnchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
 

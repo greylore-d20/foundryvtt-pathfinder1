@@ -297,6 +297,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateItemWeight(item, updateData);
   _migrateItemHealth(item, updateData);
   _migrateItemType(item, updateData);
+  _migrateItemLearnedAt(item, updateData);
   _migrateItemUnusedData(item, updateData);
 
   // Migrate action data
@@ -1136,6 +1137,24 @@ const _migrateItemActions = function (item, updateData, actor = null) {
   updateData["system.effectNotes"] = [];
 
   updateData["system.actions"] = [actionData];
+};
+
+/**
+ * Convert tuple learnedAt values into key:value pairs directly in the object.
+ *
+ * @param item
+ * @param updateData
+ */
+const _migrateItemLearnedAt = (item, updateData) => {
+  const learnedAt = item.system.learnedAt ?? {};
+  for (const [category, value] of Object.entries(learnedAt)) {
+    if (Array.isArray(value)) {
+      updateData[`system.learnedAt.${category}`] = value.reduce((learned, [classId, level]) => {
+        learned[classId] = level;
+        return learned;
+      }, {});
+    }
+  }
 };
 
 const _migrateActionChargeUsage = function (action, item) {

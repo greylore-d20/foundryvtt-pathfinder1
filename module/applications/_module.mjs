@@ -33,6 +33,7 @@ export { VisionPermissionSheet } from "./vision-permission.mjs";
 export { ExperienceDistributor } from "./xp-distributor.mjs";
 
 export { ItemDirectoryPF } from "./sidebar/items-directory.mjs";
+export { Troubleshooter } from "./troubleshooter.mjs";
 
 /**
  * {@link CompendiumBrowser}s for the various compendiums.

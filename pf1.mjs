@@ -1025,11 +1025,12 @@ Hooks.on("renderSidebarTab", (app, html) => {
     // Add buttons
     const chlogButton = $(`<button>${game.i18n.localize("PF1.Changelog")}</button>`);
     const helpButton = $(`<button>${game.i18n.localize("PF1.Help.Label")}</button>`);
+    const tshooterButton = $(`<button>${game.i18n.localize("PF1.Troubleshooter.Button")}</button>`);
     html
       .find("#game-details")
       .after(
         $(`<h2>${game.i18n.localize("PF1.Title")}</h2>`),
-        $("<div id='pf1-details'>").append(chlogButton, helpButton)
+        $("<div id='pf1-details'>").append(chlogButton, helpButton, tshooterButton)
       );
 
     chlogButton.click(() => {
@@ -1037,6 +1038,7 @@ Hooks.on("renderSidebarTab", (app, html) => {
       chlog.render(true, { focus: true });
     });
     helpButton.click(() => pf1.applications.helpBrowser.openUrl("Help/Home"));
+    tshooterButton.click(() => pf1.applications.Troubleshooter.open());
   }
 });
 

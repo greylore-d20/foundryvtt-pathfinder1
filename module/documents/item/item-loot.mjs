@@ -68,4 +68,14 @@ export class ItemLootPF extends ItemPF {
     if (!Number.isFinite(quantity)) return;
     return this.update({ "system.quantity": quantity + value });
   }
+
+  /**
+   * Simplified charges
+   *
+   * @override
+   * @type {number} Quantity
+   */
+  get charges() {
+    return this.system.quantity ?? 0;
+  }
 }

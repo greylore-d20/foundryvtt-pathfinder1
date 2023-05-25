@@ -47,9 +47,9 @@ export const registerHandlebarsHelpers = function () {
 
   /**
    *
-   * @param action
-   * @param rollData
-   * @param options
+   * @param {ItemAction} action
+   * @param {object} rollData
+   * @param {object} [options]
    */
   function actionDamage(action, rollData, options) {
     if (!action.hasDamage) return null;
@@ -57,17 +57,28 @@ export const registerHandlebarsHelpers = function () {
     const actor = action.actor,
       item = action.parent,
       actorData = actor?.system,
-      actionData = action.data;
+      actionData = action.data,
+      combine = options.hash.combine ?? true;
 
-    const rv = [];
+    const parts = [];
 
     const handleFormula = (formula, change) => {
-      // Ensure @item.level and similar gets parsed correctly
-      const rd = change?.parent?.getRollData() ?? rollData;
-      const roll = RollPF.safeRoll(formula, rd);
-      if (roll.total !== 0) {
-        const newformula = simplifyFormula(roll.formula);
-        rv.push(newformula);
+      try {
+        switch (typeof formula) {
+          case "string": {
+            // Ensure @item.level and similar gets parsed correctly
+            const rd = formula.indexOf("@") >= 0 ? change?.parent?.getRollData() ?? rollData : {};
+            const newformula = simplifyFormula(formula, rd, { combine });
+            if (newformula != 0) parts.push(newformula);
+            break;
+          }
+          case "number":
+            if (formula != 0) parts.push(`${formula}`);
+            break;
+        }
+      } catch (err) {
+        console.error(`Formula parsing error with "${formula}"`);
+        parts.push("NaN");
       }
     };
 
@@ -79,22 +90,33 @@ export const registerHandlebarsHelpers = function () {
     // Include ability score only if the string isn't too long yet
     const dmgAbl = actionData.ability.damage;
     const dmgAblMod = Math.floor((actorData?.abilities[dmgAbl]?.mod ?? 0) * (actionData.ability.damageMult || 1));
-    if (dmgAblMod != 0) rv.push(dmgAblMod);
+    if (dmgAblMod != 0) parts.push(dmgAblMod);
 
     // Include damage parts that don't happen on crits
     handleParts(actionData.damage.nonCritParts);
 
     // Include general sources. Item enhancement bonus is among these.
-    item.getAllDamageSources(action.id)?.forEach((s) => handleFormula(s.formula, s));
+    item.getAllDamageSources(action.id)?.forEach((s) => {
+      if (s.operator === "script") return;
+      handleFormula(s.formula, s);
+    });
 
-    if (rv.length === 0) rv.push("NaN"); // Something probably went wrong
+    if (parts.length === 0) parts.push("NaN"); // Something probably went wrong
 
-    return rv
-      .join("+")
-      .replace(/\s+/g, "") // remove whitespaces
-      .replace(/\+-/, "-") // simplify math logic pt.1
-      .replace(/--/g, "+") // simplify math logic pt.2
-      .replace(/\+\++/, "+"); // simplify math logic pt.3
+    const simplifyMath = (formula) =>
+      formula
+        .replace(/\s+/g, "") // remove whitespaces
+        .replace(/\+-/g, "-") // + -n = -n
+        .replace(/--/g, "+") // - -n = +n
+        .replace(/-\+/g, "-") // - +n = -n
+        .replace(/\+\++/g, "+"); // + +n = +n
+
+    const semiFinal = simplifyMath(parts.join("+"));
+    if (semiFinal === "NaN") return semiFinal;
+    if (!combine) return semiFinal;
+    // With combine enabled, the following turns 1d12+1d8+6-8+3-2 into 1d12+1d8-1
+    const final = simplifyFormula(semiFinal, null, { combine });
+    return simplifyMath(final);
   }
 
   Handlebars.registerHelper("actionDamage", actionDamage);

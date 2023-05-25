@@ -10,6 +10,7 @@ import { registerActorItemAttackTests } from "./actor-attacks.test.mjs";
 import { registerContainerItemTests } from "./container-items.test.mjs";
 import { registerItemWeightTests } from "./item-weight.test.mjs";
 import { registerD20RollTests } from "./d20roll.test.mjs";
+import { registerFormulaParsingTests } from "./formula.test.mjs";
 
 // Registers all `Quench` tests
 Hooks.on("quenchReady", () => {
@@ -21,4 +22,5 @@ Hooks.on("quenchReady", () => {
   registerContainerItemTests();
   registerItemWeightTests();
   registerD20RollTests();
+  registerFormulaParsingTests();
 });

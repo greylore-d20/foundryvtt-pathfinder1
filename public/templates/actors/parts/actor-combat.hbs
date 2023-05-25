@@ -178,7 +178,7 @@
             {{#if item.hasDamage}}
               <label class="resolved-formula">{{actionDamage item.document.firstAction @root.rollData}}</label>
               <span class="tooltipcontent">
-                <span class="span3">{{actionDamage item.document.firstAction @root.rollData}}</span>
+                <span class="span3">{{actionDamage item.document.firstAction @root.rollData combine=false}}</span>
                 <span class="span3"><br/>{{localize "PF1.Details"}}:</span>
                 {{#with item.document.firstAction}}
                   {{#each data.damage.parts as |pt ix|}}

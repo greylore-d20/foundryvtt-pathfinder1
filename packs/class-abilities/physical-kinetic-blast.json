@@ -62,12 +62,12 @@
         },
         "attackName": "",
         "actionType": "rsak",
-        "attackBonus": "min(@resources.burn.value, floor(@classes.kineticist.level / 3))",
+        "attackBonus": "min(@resources.classFeat_burn.value, floor(@classes.kineticist.level / 3))",
         "critConfirmBonus": "",
         "damage": {
           "parts": [
             [
-              "(ceil(@classes.kineticist.level / 2))d6 + ceil(@classes.kineticist.level / 2) + min(@resources.burn.value, floor(@classes.kineticist.level / 3)) * 2",
+              "(ceil(@classes.kineticist.level / 2))d6 + ceil(@classes.kineticist.level / 2) + min(@resources.classFeat_burn.value, floor(@classes.kineticist.level / 3)) * 2",
               {
                 "values": ["untyped"],
                 "custom": ""

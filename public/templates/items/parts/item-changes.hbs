@@ -63,7 +63,7 @@
       </div>
 
       <div class="item-target flexrow">
-        <span class="change-target{{#unless (lookup this.data "subTarget")}} invalid{{/unless}}">{{subTargetLabel}}</span>
+        <span class="change-target{{#unless isValid}} invalid{{/unless}}">{{label}}</span>
       </div>
 
       <div class="item-modifier flexrow">
@@ -110,7 +110,7 @@
       </div>
 
       <div class="item-target flexrow">
-        <span class="context-note-target{{#unless (lookup this "subTarget")}} invalid{{/unless}}">{{label}}</span>
+        <span class="context-note-target{{#unless isValid}} invalid{{/unless}}">{{label}}</span>
       </div>
 
       <div class="item-controls flexrow basic">

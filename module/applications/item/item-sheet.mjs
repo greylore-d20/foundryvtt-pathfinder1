@@ -481,7 +481,9 @@ export class ItemSheetPF extends ItemSheet {
       context.changes = itemData.changes.reduce((cur, o) => {
         const obj = { data: o };
 
-        obj.subTargetLabel = buffTargets[o.subTarget]?.label;
+        const target = buffTargets[o.subTarget];
+        obj.isValid = !!target;
+        obj.label = target?.label ?? o.subTarget;
         obj.isScript = obj.data.operator === "script";
 
         cur.push(obj);
@@ -494,7 +496,9 @@ export class ItemSheetPF extends ItemSheet {
       context.contextNotes = deepClone(itemData.contextNotes);
       const noteTargets = getBuffTargets(actor, "contextNotes");
       context.contextNotes.forEach((o) => {
-        o.label = noteTargets[o.subTarget]?.label;
+        const target = noteTargets[o.subTarget];
+        o.isValid = !!target;
+        o.label = target?.label ?? o.subTarget;
       });
     }
 

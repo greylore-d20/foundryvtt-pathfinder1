@@ -401,7 +401,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const li = event.currentTarget.closest(".item");
     const item = this.item.getContainerContent(li.dataset.itemId);
 
-    item.sheet.render(true, { focus: true });
+    item.sheet.render(true, { focus: true, editable: this.isEditable });
   }
 
   _onItemDelete(event) {

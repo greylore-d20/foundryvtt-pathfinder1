@@ -5,6 +5,22 @@ export class TokenDocumentPF extends TokenDocument {
     this._preCreateSetSize();
   }
 
+  async _preUpdate(updateData, options, user) {
+    await super._preUpdate(updateData, options, user);
+
+    const flags = updateData.flags?.pf1;
+    if (flags) {
+      // Delete flags instead of turning them false
+      const deleteFlags = ["staticSize", "disableLowLight", "customVisionRules"];
+      for (const flag of deleteFlags) {
+        if (flags[flag] === false) {
+          flags[`-=${flag}`] = null;
+          delete flags[flag];
+        }
+      }
+    }
+  }
+
   /**
    * Handle actor size during token creation.
    */

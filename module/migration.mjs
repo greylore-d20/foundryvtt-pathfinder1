@@ -182,6 +182,37 @@ const _migrateWorldSettings = async function () {
 /* -------------------------------------------- */
 
 /**
+ * Migrate data in tokens that is no longer used.
+ *
+ * @param {object} token Token data
+ */
+export const migrateTokenData = function (token) {
+  const flags = token.flags?.pf1 ?? {};
+
+  // Remove obsolete flags
+  if (flags.lowLightVision !== undefined) {
+    token["flags.pf1.-=lowLightVision"] = null;
+  }
+  if (flags.lowLightVisionMultiplier !== undefined) {
+    token["flags.pf1.-=lowLightVisionMultiplier"] = null;
+  }
+  if (flags.lowLightVisionMultiplierBright !== undefined) {
+    token["flags.pf1.-=lowLightVisionMultiplierBright"] = null;
+  }
+
+  // Remove disabled but still in use flags
+  if (flags.disableLowLight === false) {
+    token["flags.pf1.-=disableLowLight"] = null;
+  }
+  if (flags.staticSize === false) {
+    token["flags.pf1.-=staticSize"] = null;
+  }
+  if (flags.customVisionRules === false) {
+    token["flags.pf1.-=customVisionRules"] = null;
+  }
+};
+
+/**
  * Migrate a single Actor document to incorporate latest data model changes
  * Return an Object of updateData to be applied
  *
@@ -407,6 +438,9 @@ export const migrateSceneData = async function (scene) {
 
       foundry.utils.mergeObject(t.actorData, update);
     }
+
+    migrateTokenData(t);
+
     tokens.push(t);
   }
   return { tokens };

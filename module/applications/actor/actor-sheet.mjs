@@ -2050,16 +2050,33 @@ export class ActorSheetPF extends ActorSheet {
   async _duplicateItem(event) {
     event.preventDefault();
     const a = event.currentTarget;
-
-    const itemId = $(a).parents(".item").attr("data-item-id");
+    const itemId = a.closest(".item[data-item-id]").dataset.itemId;
     const item = this.document.items.get(itemId);
-    const data = item.toObject();
+    const itemData = item.toObject();
 
-    delete data.id;
-    data.name = `${data.name} (Copy)`;
-    if (data.system.links?.children) delete data.system.links.children;
+    delete itemData._id;
 
-    this.document.createEmbeddedDocuments("Item", [data]);
+    if (itemData.system.links?.children) delete itemData.system.links.children;
+
+    // BUG: If unidentified item has same name, it won't be matched
+    const searchUnusedName = (name) => {
+      let iter = 1;
+      let newName;
+      do {
+        iter += 1;
+        newName = `${name} (${iter})`;
+      } while (this.actor.items.getName(newName));
+      return newName;
+    };
+
+    // Eliminate previous iterator
+    itemData.name = itemData.name.replace(/\s+\(\d+\)$/, "");
+
+    itemData.name = searchUnusedName(itemData.name);
+
+    // TODO: itemData.system.unidentified?.name;
+
+    this.document.createEmbeddedDocuments("Item", [itemData]);
   }
 
   _quickAction(event) {

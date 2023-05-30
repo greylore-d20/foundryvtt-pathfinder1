@@ -499,10 +499,10 @@ export class ItemAction {
     const idx = this.item.system.actions.findIndex((action) => action._id === this.id);
     if (idx < 0) throw new Error(`Action ${this.id} not found on item.`);
     const prevData = deepClone(this.data);
-    const newUpdateData = flattenObject(mergeObject(prevData, expandObject(updateData)));
+    const newUpdateData = mergeObject(prevData, expandObject(updateData));
 
     // Make sure this action has a name, even if it's removed
-    if (!newUpdateData["name"]) newUpdateData["name"] = this.name;
+    newUpdateData["name"] ||= this.name;
 
     // Make sure stuff remains an array
     {
@@ -521,7 +521,7 @@ export class ItemAction {
       }
     }
 
-    await this.item.update({ [`system.actions.${idx}`]: expandObject(newUpdateData) });
+    await this.item.update({ "system.actions": { [idx]: newUpdateData } });
     await this.sheet?.render();
   }
 

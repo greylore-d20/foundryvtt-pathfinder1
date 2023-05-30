@@ -24,7 +24,7 @@ export class ItemChange {
     if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newChangeData = deepClone(parent.system.changes || []);
+      const newChangeData = deepClone(parent.system.changes ?? []);
       newChangeData.push(...data);
 
       // Update parent

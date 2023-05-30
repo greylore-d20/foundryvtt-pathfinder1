@@ -701,10 +701,11 @@ export class ItemPF extends ItemBasePF {
         "system.changes",
       ];
 
+      data = expandObject(data);
       for (const path of keepPaths) {
         keepUpdateArray(this, data, path);
-        linkData(srcData, data, path, data[path]);
       }
+      data = flattenObject(data);
     }
 
     // Update price from base price

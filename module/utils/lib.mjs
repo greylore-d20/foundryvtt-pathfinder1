@@ -1053,43 +1053,22 @@ export function refreshActors(options = { renderOnly: false, renderForEveryone: 
  * @param {string} keepPath A path to the array to keep, separated with dots. e.g. "system.damageParts".
  */
 export function keepUpdateArray(sourceObj, targetObj, keepPath) {
-  const subData = Object.entries(targetObj).filter((e) => e[0].startsWith(`${keepPath}.`));
+  const newValue = getProperty(targetObj, keepPath);
+  if (newValue == null) return;
+  if (Array.isArray(newValue)) return;
 
-  if (subData.length > 0) {
-    const arr = deepClone(getProperty(sourceObj, keepPath) || []);
-    const keySeparatorCount = (keepPath.match(/\./g) || []).length;
-    subData.forEach((entry) => {
-      const subKey = entry[0].split(".").slice(keySeparatorCount + 1);
-      const i = subKey[0];
-      const subKey2 = subKey.slice(1).join(".");
-      if (!arr[i]) arr[i] = {};
+  const newArray = deepClone(getProperty(sourceObj, keepPath) || []);
 
-      // Single entry array
-      if (!subKey2) {
-        arr[i] = entry[1];
-      }
-      // Remove property
-      else if (subKey[subKey.length - 1].startsWith("-=")) {
-        const obj = flattenObject(arr[i]);
-        subKey[subKey.length - 1] = subKey[subKey.length - 1].slice(2);
-        const deleteKeys = Object.keys(obj).filter((o) => o.startsWith(subKey.slice(1).join(".")));
-        for (const k of deleteKeys) {
-          if (Object.prototype.hasOwnProperty.call(obj, k)) {
-            delete obj[k];
-          }
-        }
-        arr[i] = expandObject(obj);
-      }
-      // Add or change property
-      else {
-        arr[i] = mergeObject(arr[i], expandObject({ [subKey2]: entry[1] }));
-      }
-
-      delete targetObj[entry[0]];
-    });
-
-    targetObj[keepPath] = arr;
+  for (const [key, value] of Object.entries(newValue)) {
+    if (foundry.utils.getType(value) === "Object") {
+      const subData = expandObject(value);
+      newArray[key] = mergeObject(newArray[key], subData);
+    } else {
+      newArray[key] = value;
+    }
   }
+
+  setProperty(targetObj, keepPath, newArray);
 }
 
 /**

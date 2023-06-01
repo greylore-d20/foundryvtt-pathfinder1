@@ -425,6 +425,9 @@ export class ActorPF extends ActorBasePF {
   prepareBaseData() {
     super.prepareBaseData();
 
+    // Reset item types cache
+    this._itemTypes = null;
+
     // Reset equipment info
     this.equipment = {
       shield: { type: PF1.shieldTypes.none, id: undefined },
@@ -4298,6 +4301,23 @@ export class ActorPF extends ActorBasePF {
 
   getItemByTag(tag) {
     return this.items.find((o) => o.system.tag === tag);
+  }
+
+  /**
+   * Cached result of .itemTypes
+   *
+   * @private
+   */
+  _itemTypes;
+
+  /**
+   * Cached override
+   *
+   * @override
+   */
+  get itemTypes() {
+    this._itemTypes ??= super.itemTypes;
+    return this._itemTypes;
   }
 }
 

@@ -3655,6 +3655,27 @@ export class ActorPF extends ActorBasePF {
     return this.update(updateData);
   }
 
+  /**
+   * Prepare armor/shield data for roll data
+   *
+   * @param {object} equipment Equipment info
+   * @param {string} equipment.id Item ID
+   * @param {string} equipment.type Armor/Shield type
+   * @param {object} armorData Armor data object
+   * @private
+   */
+  _prepareArmorData({ id, type } = {}, armorData) {
+    armorData.type = type ?? null;
+
+    const itemData = this.items.get(id)?.system;
+    if (!itemData) return;
+
+    armorData.ac = itemData.armor.value ?? 0;
+    armorData.enh = itemData.armor.enh ?? 0;
+    armorData.total = armorData.ac + armorData.enh;
+    if (!Number.isFinite(armorData.total)) armorData.total = 0;
+  }
+
   getRollData(options = { refresh: false }) {
     let result;
 
@@ -3682,6 +3703,7 @@ export class ActorPF extends ActorBasePF {
     /* ----------------------------- */
     /* Always add the following data
     /* ----------------------------- */
+
     // Add combat round, if in combat
     if (game.combats?.viewed) {
       result.combat = {
@@ -3690,7 +3712,8 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add denied Dex to AC
-    setProperty(result, "conditions.loseDexToAC", this.changeFlags?.loseDexToAC ?? false);
+    result.conditions ??= {};
+    result.conditions.loseDexToAC = this.changeFlags?.loseDexToAC ?? false;
 
     // Return cached data, if applicable
     if (skipRefresh) return result;
@@ -3698,55 +3721,20 @@ export class ActorPF extends ActorBasePF {
     /* ----------------------------- */
     /* Set the following data on a refresh
     /* ----------------------------- */
+
     // Set size index
-    {
-      const sizeChart = Object.keys(PF1.sizeChart);
-      result.size = sizeChart.indexOf(result.traits.size);
-    }
+    const sizeChart = Object.keys(PF1.sizeChart);
+    result.size = sizeChart.indexOf(result.traits.size);
 
     // Add more info for formulas
-    result.armor = { type: 0 };
-    result.shield = { type: 0 };
+    result.armor = { type: 0, total: 0, ac: 0, enh: 0 };
+    result.shield = { type: 0, total: 0, ac: 0, enh: 0 };
 
     // Determine equipped armor type
-    {
-      const armorId = this.equipment?.armor?.id;
-      const eqArmor = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-      const armor = armorId ? this.items.get(armorId) : null;
-      if (armor) {
-        result.armor.type = this.equipment.armor.type;
-        const armorData = armor.system;
-        const enhAC = armorData.armor.enh ?? 0,
-          baseAC = armorData.armor.value ?? 0,
-          fullAC = baseAC + enhAC;
-        if (eqArmor.total < fullAC) {
-          eqArmor.ac = baseAC;
-          eqArmor.total = fullAC;
-          eqArmor.enh = enhAC;
-        }
-      }
-      if (!Number.isFinite(eqArmor.total)) eqArmor.total = 0;
-      mergeObject(result.armor, eqArmor);
-    }
-
-    // Determine equipped shield type
-    {
-      const shieldId = this.equipment?.shield?.id;
-      const shield = shieldId ? this.items.get(shieldId) : null;
-      const eqShield = { total: Number.NEGATIVE_INFINITY, ac: 0, enh: 0 };
-      if (shield) {
-        result.shield.type = this.equipment.shield.type;
-        const shieldData = shield.system;
-        const enhAC = shieldData.armor.enh ?? 0,
-          baseAC = shieldData.armor.value ?? 0,
-          fullAC = baseAC + enhAC;
-        if (eqShield.total < fullAC) {
-          eqShield.ac = baseAC;
-          eqShield.total = fullAC;
-          eqShield.enh = enhAC;
-        }
-      }
-      mergeObject(result.shield, eqShield);
+    const eqData = this.equipment;
+    if (eqData) {
+      this._prepareArmorData(eqData.armor, result.armor);
+      this._prepareArmorData(eqData.shield, result.shield);
     }
 
     // Add spellbook info
@@ -3758,7 +3746,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Add item dictionary flags
-    if (this.itemFlags) result.dFlags = this.itemFlags.dictionary;
+    result.dFlags = this.itemFlags?.dictionary ?? {};
 
     // Add range info
     result.range = this.constructor.getReach(this.system.traits.size, this.system.traits.stature);

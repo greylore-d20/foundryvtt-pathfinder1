@@ -1956,40 +1956,42 @@ export class ActorPF extends ActorBasePF {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
+    const srcData = item.toObject().system;
+
     // Get attack template
-    const attackData = {};
+    const attackItem = {
+      name: item.name,
+      type: "attack",
+      img: item.img,
+      system: {
+        subType: "weapon",
+        held: srcData.held,
+        masterwork: srcData.masterwork,
+        proficient: srcData.proficient,
+        enh: srcData.enh,
+        broken: srcData.broken,
+        weaponGroups: srcData.weaponGroups,
+        actions: deepClone(srcData.actions ?? []),
+      },
+    };
 
-    // Add misc things
-    attackData["type"] = "attack";
-    attackData["name"] = item.name;
-    attackData["img"] = item.img;
-    attackData["system.subType"] = "weapon";
-    attackData["system.masterwork"] = item.system.masterwork;
-    attackData["system.enh"] = item.system.enh;
-    attackData["system.broken"] = item.system.broken;
-
-    // Add actions
-    const actions = deepClone(item._source.system.actions ?? []);
-    for (const action of actions) {
+    // Add ensure action IDs are correct and unique
+    for (const action of attackItem.system.actions) {
       action._id = randomID(16);
     }
-    attackData["system.actions"] = actions;
 
     // Create attack
-    const newItem = (await this.createEmbeddedDocuments("Item", [expandObject(attackData)]))[0];
+    const [newItem] = await this.createEmbeddedDocuments("Item", [attackItem]);
+    if (!newItem) throw new Error("Failed to create attack from weapon");
 
     // Create link
-    if (newItem) {
-      await item.createItemLink("children", "data", newItem, newItem.id);
-    }
+    await item.createItemLink("children", "data", newItem, newItem.id);
 
     // Notify user
     ui.notifications.info(game.i18n.format("PF1.NotificationCreatedAttack", { item: item.name }));
 
     // Disable quick use of weapon
-    await item.update({
-      "system.showInQuickbar": false,
-    });
+    await item.update({ "system.showInQuickbar": false });
 
     return newItem;
   }

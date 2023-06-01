@@ -199,9 +199,6 @@ export class ItemPF extends ItemBasePF {
   }
 
   get maxCharges() {
-    // No actor? No charges!
-    if (!this.parentActor) return 0;
-
     // Get linked charges
     const link = this.links?.charges;
     if (link) return link.maxCharges;
@@ -870,9 +867,6 @@ export class ItemPF extends ItemBasePF {
   }
 
   _updateMaxUses() {
-    // No actor? No charges!
-    if (!this.parentActor) return;
-
     // No charges? No charges!
     if (!["day", "week", "charges"].includes(this.system.uses?.per)) return;
 

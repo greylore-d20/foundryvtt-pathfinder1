@@ -950,8 +950,9 @@ export class ActionUse {
       if (targets.length) {
         this.shared.templateData.targets = targets.map((o) => {
           return {
+            img: o.document.texture.src,
             actorData: o.actor?.toObject(false),
-            tokenData: o.document?.toObject(false),
+            tokenData: o.document.toObject(false),
             uuid: o.document.uuid,
           };
         });

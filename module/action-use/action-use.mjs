@@ -97,11 +97,6 @@ export class ActionUse {
       return ERR_REQUIREMENT.INSUFFICIENT_QUANTITY;
     }
 
-    if (this.item.isCharged && this.item.charges < this.shared.chargeCost) {
-      ui.notifications.warn(game.i18n.format("PF1.ErrorInsufficientCharges", { name: this.item.name }));
-      return ERR_REQUIREMENT.INSUFFICIENT_CHARGES;
-    }
-
     if (this.action.isSelfCharged && this.action.data.uses.self?.value < 1) {
       ui.notifications.warn(
         game.i18n.format("PF1.ErrorInsufficientCharges", {

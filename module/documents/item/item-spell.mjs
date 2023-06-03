@@ -685,8 +685,7 @@ export class ItemSpellPF extends ItemPF {
     // Set DC and SR
     {
       const savingThrowDescription = actionData.save?.description;
-      if (savingThrowDescription) label.savingThrow = savingThrowDescription;
-      else label.savingThrow = "none";
+      label.savingThrow = savingThrowDescription || game.i18n.localize("PF1.None");
 
       const sr = srcData.sr;
       label.sr = (sr === true ? game.i18n.localize("PF1.Yes") : game.i18n.localize("PF1.No")).toLowerCase();

@@ -1,6 +1,5 @@
 import { PF1 } from "@config";
 import { DicePF, formulaHasDice } from "../../dice/dice.mjs";
-import { ItemBasePF } from "./item-base.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
 import { createTag, linkData, convertDistance, keepUpdateArray, diffObjectAndArray } from "../../utils/lib.mjs";
 import { getWeightSystem } from "@utils";
@@ -15,7 +14,7 @@ import { getSkipActionPrompt } from "../settings.mjs";
 /**
  * Override and extend the basic :class:`Item` implementation
  */
-export class ItemPF extends ItemBasePF {
+export class ItemPF extends Item {
   constructor(...args) {
     super(...args);
 

@@ -1,5 +1,4 @@
 import { PF1 } from "@config";
-import { ActorBasePF } from "./actor-base.mjs";
 import { getAbilityModifier } from "@utils";
 import { ItemPF, ItemRacePF } from "@item/_module.mjs";
 import { createTag, fractionalToString, enrichHTMLUnrolled } from "../../utils/lib.mjs";
@@ -18,11 +17,12 @@ import { RollPF } from "../../dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
 import { ItemChange } from "../../components/change.mjs";
 import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs";
+import { VisionPermissionSheet } from "module/applications/vision-permission.mjs";
 
 /**
  * Extend the base Actor class to implement additional game system logic.
  */
-export class ActorPF extends ActorBasePF {
+export class ActorPF extends Actor {
   constructor(...args) {
     super(...args);
 
@@ -92,6 +92,9 @@ export class ActorPF extends ActorBasePF {
 
     // Init race reference
     this.race ??= null;
+
+    this._itemTypes ??= null;
+    this._visionPermissionSheet ??= null;
   }
 
   /**
@@ -254,6 +257,7 @@ export class ActorPF extends ActorBasePF {
   set race(item) {
     this._race = item;
     const creatureType = item?.system.creatureType;
+    this.system.traits ??= {};
     this.system.traits.type = creatureType;
     this.system.traits.humanoid = creatureType === "humanoid";
   }
@@ -383,8 +387,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   applyActiveEffects() {
-    super.applyActiveEffects();
-
     this.containerItems = this._prepareContainerItems(this.items);
     this._prepareItemFlags(this.allItems);
     this._prepareChanges();
@@ -4332,6 +4334,16 @@ export class ActorPF extends ActorBasePF {
   get itemTypes() {
     this._itemTypes ??= super.itemTypes;
     return this._itemTypes;
+  }
+
+  /**
+   * The VisionPermissionSheet instance for this actor
+   *
+   * @type {VisionPermissionSheet}
+   */
+  get visionPermissionSheet() {
+    this._visionPermissionSheet ??= new VisionPermissionSheet(this);
+    return this._visionPermissionSheet;
   }
 }
 

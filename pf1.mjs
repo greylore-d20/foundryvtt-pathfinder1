@@ -19,7 +19,7 @@ import { tinyMCEInit } from "./module/mce/mce.mjs";
 import { measureDistances, getConditions } from "./module/utils/canvas.mjs";
 import { TemplateLayerPF } from "./module/canvas/measure.mjs";
 import { MeasuredTemplatePF } from "./module/canvas/measure.mjs";
-import { ActorBasePF } from "./module/documents/actor/actor-base.mjs";
+import { ActorPFProxy } from "@actor/actor-proxy.mjs";
 import { ActorPF } from "./module/documents/actor/actor-pf.mjs";
 import { ActorCharacterPF } from "./module/documents/actor/actor-character.mjs";
 import { ActorNPCPF } from "./module/documents/actor/actor-npc.mjs";
@@ -57,7 +57,7 @@ import { ItemLootPF } from "./module/documents/item/item-loot.mjs";
 import { ItemRacePF } from "./module/documents/item/item-race.mjs";
 import { ItemSpellPF } from "./module/documents/item/item-spell.mjs";
 import { ItemWeaponPF } from "./module/documents/item/item-weapon.mjs";
-import { ItemBasePF } from "./module/documents/item/item-base.mjs";
+import { ItemPFProxy } from "@item/item-proxy.mjs";
 import { ItemSheetPF } from "./module/applications/item/item-sheet.mjs";
 import { ItemSheetPF_Container } from "./module/applications/item/container-sheet.mjs";
 
@@ -205,7 +205,6 @@ Hooks.once("init", function () {
 
   // Create a PF1 namespace within the game global
   const oldPf1 = {
-    polymorphism: { ActorBasePF, ItemBasePF },
     documents: { ActorPF, ItemPF, TokenDocumentPF },
     get entities() {
       // OBSOLETION WARNING
@@ -383,10 +382,8 @@ Hooks.once("init", function () {
   CONFIG.MeasuredTemplate.objectClass = MeasuredTemplatePF;
   CONFIG.MeasuredTemplate.defaults.originalAngle = CONFIG.MeasuredTemplate.defaults.angle;
   CONFIG.MeasuredTemplate.defaults.angle = 90; // PF1 uses 90 degree angles
-  CONFIG.Actor.documentClass = ActorBasePF;
+  CONFIG.Actor.documentClass = ActorPFProxy;
   CONFIG.Actor.documentClasses = {
-    default: ActorPF, // fallback
-    // Specific types
     character: ActorCharacterPF,
     npc: ActorNPCPF,
     basic: BasicActorPF,
@@ -394,10 +391,8 @@ Hooks.once("init", function () {
   CONFIG.Token.documentClass = TokenDocumentPF;
   CONFIG.Token.objectClass = TokenPF;
   CONFIG.ActiveEffect.documentClass = ActiveEffectPF;
-  CONFIG.Item.documentClass = ItemBasePF;
+  CONFIG.Item.documentClass = ItemPFProxy;
   CONFIG.Item.documentClasses = {
-    default: ItemPF, // Fallback
-    // Specific types
     attack: ItemAttackPF,
     buff: ItemBuffPF,
     class: ItemClassPF,
@@ -409,7 +404,6 @@ Hooks.once("init", function () {
     race: ItemRacePF,
     spell: ItemSpellPF,
     weapon: ItemWeaponPF,
-    // etc.
   };
   CONFIG.Combat.documentClass = CombatPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
@@ -1148,11 +1142,10 @@ const handleChatTooltips = function (event) {
 /* Class exports                   */
 /* ------------------------------- */
 // Actor classes
-export { ActorBasePF, ActorPF, ActorCharacterPF, ActorNPCPF, BasicActorPF };
+export { ActorPF, ActorCharacterPF, ActorNPCPF, BasicActorPF };
 
 // Item classes
 export {
-  ItemBasePF,
   ItemPF,
   ItemAttackPF,
   ItemBuffPF,

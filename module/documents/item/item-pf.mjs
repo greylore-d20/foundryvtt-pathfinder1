@@ -23,7 +23,7 @@ export class ItemPF extends ItemBasePF {
       /**
        * An object containing links to other items.
        *
-       * @type {object}
+       * @type {Record<string, ItemPF>}
        */
       this.links = {};
 
@@ -578,16 +578,21 @@ export class ItemPF extends ItemBasePF {
   prepareLinks() {
     if (!this.links) return;
 
-    for (const [k, i] of Object.entries(this.links)) {
-      switch (k) {
-        case "charges": {
-          const uses = i.system.uses;
-          if (!uses) break;
-          for (const [k, v] of Object.entries(uses)) {
-            if (["autoDeductCharges", "autoDeductChargesCost"].includes(k)) continue;
-            this.system.uses[k] = v;
-          }
-          break;
+    for (const [type, item] of Object.entries(this.links)) {
+      if (type === "charges") {
+        // Remove cached link if stale
+        const links = item.getLinkedItemsSync("charges");
+        if (!links.some((i) => i.id === this.id)) {
+          delete this.links.charges;
+          continue;
+        }
+
+        // Copy charge data
+        const uses = item.system.uses;
+        if (!uses) break;
+        for (const [k, v] of Object.entries(uses)) {
+          if (["autoDeductCharges", "autoDeductChargesCost"].includes(k)) continue;
+          this.system.uses[k] = v;
         }
       }
     }
@@ -1647,7 +1652,6 @@ export class ItemPF extends ItemBasePF {
   generateInitialLinkData(linkType, dataType, targetItem, itemLink) {
     const result = {
       name: targetItem.name,
-      img: targetItem.img,
     };
 
     if (dataType === "data") result.id = itemLink;
@@ -1673,11 +1677,11 @@ export class ItemPF extends ItemBasePF {
    */
   async createItemLink(linkType, dataType, targetItem, itemLink) {
     if (this.canCreateItemLink(linkType, dataType, targetItem, itemLink)) {
-      const updateData = {};
-      const _links = deepClone(this.system.links?.[linkType] ?? []);
       const link = this.generateInitialLinkData(linkType, dataType, targetItem, itemLink);
-      _links.push(link);
-      updateData[`system.links.${linkType}`] = _links;
+      const itemData = this.toObject();
+      const links = itemData.system.links?.[linkType] ?? [];
+      links.push(link);
+      const updateData = { [`system.links.${linkType}`]: links };
 
       // Call link creation hook
       await this.update(updateData);
@@ -1690,7 +1694,7 @@ export class ItemPF extends ItemBasePF {
       delete itemData._id;
 
       // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
-      if (itemData.type === "spell") setProperty(itemData, "system.spellbook", "spelllike");
+      if (itemData.type === "spell") itemData.system.spellbook = "spelllike";
 
       const newItem = await this.parent.createEmbeddedDocuments("Item", [itemData]);
 
@@ -1707,6 +1711,28 @@ export class ItemPF extends ItemBasePF {
     const result = [];
     for (const l of items) {
       const item = await this.getLinkItem(l, extraData);
+      if (item) result.push(item);
+    }
+
+    return result;
+  }
+
+  /**
+   * Retrieve list of linked items for a type, synchronously.
+   * Intended mainly for fetching child or charge links quickly.
+   *
+   * @example
+   * const childItems = item.getLinkedItemsSync("children");
+   * @param {string} type Link type, e.g. "children", "charges", or "classAssociations"
+   * @returns {Item[]|object[]} Linked items or their compendium index data
+   */
+  getLinkedItemsSync(type) {
+    const links = this.system.links?.[type];
+    if (!links) return [];
+
+    const result = [];
+    for (const linkData of links) {
+      const item = this.getLinkedItemSync(linkData);
       if (item) result.push(item);
     }
 
@@ -1767,30 +1793,20 @@ export class ItemPF extends ItemBasePF {
     return item;
   }
 
-  async updateLinkItems() {
-    // Update link items
-    const linkGroups = this.system.links ?? {};
-    for (const links of Object.values(linkGroups)) {
-      for (const l of links) {
-        const i = await this.getLinkItem(l);
-        if (i == null) {
-          l.name = l.name + (l.name?.indexOf("[x]") > -1 ? "" : " [x]");
-          l.img = CONST.DEFAULT_TOKEN;
-          continue;
-        }
-        l.name = i.name;
-        l.img = i.img;
-      }
-    }
-  }
-
-  _cleanLink(oldLink, linkType) {
-    if (!this.parent) return;
-
-    const otherItem = this.parent.items.get(oldLink.id);
-    if (linkType === "charges" && otherItem && hasProperty(otherItem, "links.charges")) {
-      delete otherItem.links.charges;
-    }
+  /**
+   * Retrieve item referred to by a link in .system.links data
+   *
+   * @example
+   * const items = (item.system.links?.children ?? [])
+   *   .map(link => item.getLinkedItemSync(link));
+   * @param {object} linkData Link data
+   * @returns {Item|object|undefined} Linked item, undefined, or compendium index data
+   */
+  getLinkedItemSync(linkData = {}) {
+    const { id, uuid } = linkData;
+    const actor = this.actor;
+    if (uuid) return fromUuidSync(uuid, actor);
+    else return actor?.items.get(id);
   }
 
   /**

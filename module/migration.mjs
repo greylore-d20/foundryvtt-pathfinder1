@@ -1049,6 +1049,7 @@ const _migrateItemLinks = function (ent, updateData) {
           delete link.id;
           delete link.dataType;
         }
+        delete link.img;
         updated = true;
       }
     }

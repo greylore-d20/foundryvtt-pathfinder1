@@ -12,19 +12,6 @@ const runSocketFunction = async function (args, senderId) {
   const sender = game.users.get(senderId);
   try {
     switch (args.eventType) {
-      case "cleanItemLink": {
-        // Get actor
-        const actor = await fromUuid(args.actorUUID);
-        // Get item
-        const parentItemData = await fromUuid(args.itemUUID);
-        const parentItem = actor.items.get(parentItemData._id);
-        // Get link data
-        const link = args.link;
-        const linkType = args.linkType;
-        // Clean item links
-        parentItem._cleanLink(link, linkType);
-        break;
-      }
       case "currencyTransfer": {
         if (!isFirstGM) return;
         let source = await fromUuid(args.data.sourceActor);

@@ -531,7 +531,7 @@ export class ItemSheetPF extends ItemSheet {
     return context;
   }
 
-  async _prepareLinks(data) {
+  _prepareLinks(data) {
     data.links = {
       list: [],
     };
@@ -571,25 +571,26 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Post process data
-    for (const l of data.links.list) {
-      const items = this.item.system.links?.[l.id] || [];
-      for (let a = 0; a < items.length; a++) {
-        const i = items[a];
-        i._index = a;
+    const item = this.item,
+      actor = item.actor;
+    for (const links of data.links.list) {
+      const items = item.system.links?.[links.id] || [];
+      for (let index = 0; index < items.length; index++) {
+        const linkData = items[index];
+
+        const linkedItem = item.getLinkedItemSync(linkData);
+        if (!linkedItem) linkData.broken = true;
+        linkData.img = linkedItem?.img || ItemPF.DEFAULT_ICON;
 
         // Add item to stack
-        l.items.push(i);
+        links.items.push(linkData);
       }
 
       // Sort items
-      if (l.id === "classAssociations") {
-        l.items = l.items.sort((a, b) => {
-          return a.level - b.level;
-        });
+      if (links.id === "classAssociations") {
+        links.items = links.items.sort((a, b) => a.level - b.level);
       }
     }
-
-    await this.item.updateLinkItems();
   }
 
   _prepareActions(data) {
@@ -797,22 +798,19 @@ export class ItemSheetPF extends ItemSheet {
   async _updateObject(event, formData) {
     // Handle links arrays
     const links = Object.entries(formData).filter((e) => e[0].startsWith("system.links"));
-    for (const e of links) {
-      const path = e[0].split(".");
-      const linkType = path[2];
-      const index = path[3];
-      const subPath = path.slice(4).join(".");
-      const value = e[1];
+    for (const [key, value] of links) {
+      const [_s, _l, linkType, index, subkey] = key.split(".");
 
       // Non-indexed formData is presumed to have been handled already
       if (index == null) continue;
+      // No subkey means nothing to process here
+      if (subkey == null) continue;
 
-      delete formData[e[0]];
+      delete formData[key];
 
-      if (!formData[`system.links.${linkType}`])
-        formData[`system.links.${linkType}`] = deepClone(this.item.system.links?.[linkType]);
-
-      setProperty(formData[`system.links.${linkType}`][index], subPath, value);
+      const linkPath = `system.links.${linkType}`;
+      formData[linkPath] ??= deepClone(this.item.system.links?.[linkType]);
+      formData[linkPath][index][subkey] = value;
     }
 
     // Handle weight to ensure `weight.value` is in lbs
@@ -936,9 +934,7 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
     // Linked item clicks
-    html
-      .find(".tab[data-tab='links'] .links-item[data-link] .links-item-name")
-      .on("click", this._openLinkedItem.bind(this));
+    html.find(".tab[data-tab='links'] .links-item .links-item-name").on("contextmenu", this._openLinkedItem.bind(this));
 
     /* -------------------------------------------- */
     /*  Actions
@@ -1391,22 +1387,15 @@ export class ItemSheetPF extends ItemSheet {
    *
    * @param {Event} event
    */
-  _openLinkedItem(event) {
+  async _openLinkedItem(event) {
     event.preventDefault();
-    const el = event.target.closest("[data-link]"),
-      link = el.dataset.link,
-      parts = link.split("."),
-      packId = parts.length === 3 ? parts.slice(0, 2).join(".") : null,
-      itemId = parts.pop();
+    const el = event.target.closest(".links-item[data-uuid],.links-item[data-item-id]");
+    const { uuid, itemId } = el.dataset;
 
-    if (packId) {
-      game.packs
-        .get(packId)
-        .getDocument(itemId)
-        .then((d) => d.sheet.render(true, { focus: true }));
-    } else {
-      this.actor.items.get(itemId).sheet.render(true, { focus: true });
-    }
+    let item;
+    if (itemId) item = this.item.actor.items.get(itemId);
+    else item = await fromUuid(uuid);
+    item.sheet.render(true, { focus: true });
   }
 
   async _onActionControl(event) {
@@ -1592,28 +1581,25 @@ export class ItemSheetPF extends ItemSheet {
     if (a.classList.contains("delete-link")) {
       const li = a.closest(".links-item");
       const group = a.closest('div[data-group="links"]');
-      let links = deepClone(this.item.system.links?.[group.dataset.tab] ?? []);
-      const link = links.find((o) => o.id === li.dataset.link);
+      const linkType = group.dataset.tab;
+
+      let links = deepClone(this.item.system.links?.[linkType] ?? []);
+      const { uuid, itemId } = li.dataset;
+      const link = links.find((o) => {
+        if (uuid) return o.uuid === uuid;
+        if (itemId) return o.id === itemId;
+        return false;
+      });
       links = links.filter((o) => o !== link);
 
       const updateData = {};
-      updateData[`system.links.${group.dataset.tab}`] = links;
+      updateData[`system.links.${linkType}`] = links;
 
       // Call hook for deleting a link
-      callOldNamespaceHookAll("deleteItemLink", "pf1DeleteItemLink", this.item, link, group.dataset.tab);
-      Hooks.callAll("pf1DeleteItemLink", this.item, link, group.dataset.tab);
+      callOldNamespaceHookAll("deleteItemLink", "pf1DeleteItemLink", this.item, link, linkType);
+      Hooks.callAll("pf1DeleteItemLink", this.item, link, linkType);
 
       await this._onSubmit(event, { updateData });
-
-      // Clean link
-      this.item._cleanLink(link, group.dataset.tab);
-      game.socket.emit("system.pf1", {
-        eventType: "cleanItemLink",
-        actorUUID: this.item.actor?.uuid,
-        itemUUID: this.item.uuid,
-        link: link,
-        linkType: group.dataset.tab,
-      });
     }
   }
 

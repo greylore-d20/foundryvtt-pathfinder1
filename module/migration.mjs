@@ -329,6 +329,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateItemHealth(item, updateData);
   _migrateItemType(item, updateData);
   _migrateItemLearnedAt(item, updateData);
+  _migrateItemRaceSubtypes(item, updateData);
   _migrateItemUnusedData(item, updateData);
 
   // Migrate action data
@@ -1792,5 +1793,20 @@ const _migrateActorUnusedData = (actor, updateData) => {
   // Actor resources have always been derived data
   if (actor.system.resources !== undefined) {
     updateData["system.-=resources"] = null;
+  }
+};
+
+/**
+ * Flatten race subtype tuple array into flat array
+ *
+ * @param item
+ * @param updateData
+ */
+const _migrateItemRaceSubtypes = (item, updateData) => {
+  if (item.type !== "race") return;
+  if (item.system.subTypes?.length) {
+    if (typeof item.system.subTypes[0] !== "string") {
+      updateData["system.subTypes"] = item.system.subTypes.flat();
+    }
   }
 };

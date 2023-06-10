@@ -4,11 +4,12 @@ export class EntrySelector extends FormApplication {
 
     // Prepare data and convert it into format compatible with the editor
     this.isFlag = this.options.flag === true;
+    this.isBoolean = this.options.boolean === true;
     this.isFlat = this.options.flat === true;
     const data = deepClone(getProperty(this.object, this.attribute) ?? (this.isFlag ? {} : []));
 
     this.originalEntries = data;
-    this.entries = this.isFlag ? (this.isFlat ? Object.keys(data).map((d) => [d]) : Object.entries(data)) : data;
+    this.entries = this.isFlag ? (this.isBoolean ? Object.keys(data).map((d) => [d]) : Object.entries(data)) : data;
   }
 
   static get defaultOptions() {
@@ -44,15 +45,14 @@ export class EntrySelector extends FormApplication {
   }
 
   getData() {
-    const entries = this.entries.map((o) => {
-      return o.map((o2, a) => {
-        return [o2, this.dtypes[a]];
-      });
-    });
+    const entries = this.entries.map((entry) =>
+      this.isFlat ? [entry, this.dtypes[entry]] : entry.map((o2, a) => [o2, this.dtypes[a]])
+    );
 
     return {
       entries: entries,
       fields: this.fields,
+      isFlat: this.isFlat,
     };
   }
 
@@ -72,7 +72,7 @@ export class EntrySelector extends FormApplication {
       const newKeys = new Set(); // Needed for deletion detection
       const entries = this.entries.forEach(([key, value]) => {
         newKeys.add(key);
-        updateData[`${this.attribute}.${key}`] = this.isFlat ? true : value;
+        updateData[`${this.attribute}.${key}`] = this.isBoolean ? true : value;
       });
       // Handle deletions
       const oldKeys = Object.keys(this.originalEntries);
@@ -80,6 +80,7 @@ export class EntrySelector extends FormApplication {
         if (!newKeys.has(key)) updateData[`${this.attribute}.-=${key}`] = null;
       });
     } else {
+      console.log(deepClone(this.attribute), deepClone(this.entries));
       updateData[this.attribute] = this.entries;
     }
 
@@ -91,13 +92,19 @@ export class EntrySelector extends FormApplication {
     const a = event.currentTarget;
 
     if (a.classList.contains("add-entry")) {
-      const obj = [];
-      for (let a = 0; a < this.dataCount; a++) {
+      if (this.isFlat) {
         const dataType = this.dtypes[a];
-        if (dataType === "Number") obj.push(0);
-        else obj.push("");
+        if (dataType === "Number") this.entries.push(0);
+        else this.entries.push("");
+      } else {
+        const obj = [];
+        for (let a = 0; a < this.dataCount; a++) {
+          const dataType = this.dtypes[a];
+          if (dataType === "Number") obj.push(0);
+          else obj.push("");
+        }
+        this.entries.push(obj);
       }
-      this.entries.push(obj);
       return this.render();
     }
 
@@ -120,8 +127,12 @@ export class EntrySelector extends FormApplication {
     if (a.dataset.dtype === "Number") {
       let v = parseFloat(value);
       if (isNaN(v)) v = 0;
-      this.entries[index][index2] = Math.floor(v * 100) / 100;
-    } else this.entries[index][index2] = value;
+      if (this.isFlat) this.entries[index] = Math.floor(v * 100) / 100;
+      else this.entries[index][index2] = Math.floor(v * 100) / 100;
+    } else {
+      if (this.isFlat) this.entries[index] = value;
+      else this.entries[index][index2] = value;
+    }
   }
 
   async _submitAndClose(event) {

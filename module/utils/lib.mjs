@@ -1046,6 +1046,28 @@ export function refreshActors(options = { renderOnly: false, renderForEveryone: 
 }
 
 /**
+ * Refresh all actor, item and action sheets.
+ *
+ * @param {object} [options] Additional options
+ * @param {boolean} [options.reset=true] Reset underlying document.
+ * @param {boolean} [options.actor] Include actor sheets
+ * @param {boolean} [options.item] Include item sheets
+ * @param {boolean} [options.action] Include action sheets
+ */
+export function refreshSheets({ reset = true, actor = true, item = true, action = true } = {}) {
+  Object.values(ui.windows).forEach((app) => {
+    if (
+      (actor && app instanceof ActorSheet) ||
+      (item && app instanceof ItemSheet) ||
+      (action && app instanceof pf1.applications.component.ItemActionSheet)
+    ) {
+      if (reset && app.object instanceof Document) app.object.reset();
+      else app.render();
+    }
+  });
+}
+
+/**
  * Turns dictionaries with numbered keys into arrays.
  *
  * @param {object} sourceObj The source object which contains the full array in the same path as targetObj.

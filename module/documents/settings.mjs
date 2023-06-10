@@ -359,6 +359,19 @@ export const registerSystemSettings = function () {
   });
 
   /**
+   * Default spellpoint cost
+   */
+  game.settings.register("pf1", "spellPointCost", {
+    name: "SETTINGS.pf1SpellPointCostN",
+    hint: "SETTINGS.pf1SpellPointCostH",
+    scope: "world",
+    config: true,
+    default: "1 + @sl",
+    type: String,
+    onChange: () => pf1.utils.refreshSheets({ reset: false }),
+  });
+
+  /**
    * Alternative reach corner rule
    */
   game.settings.register("pf1", "alternativeReachCornerRule", {

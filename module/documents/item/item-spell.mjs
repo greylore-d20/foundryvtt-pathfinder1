@@ -199,7 +199,7 @@ export class ItemSpellPF extends ItemPF {
 
   getDefaultChargeFormula() {
     if (this.useSpellPoints()) {
-      return this.system.spellPoints?.cost || "0";
+      return this.system.spellPoints?.cost || game.settings.get("pf1", "spellPointCost") || "0";
     } else {
       return super.getDefaultChargeFormula();
     }

@@ -24,5 +24,6 @@ export {
   isMinimumCoreVersion,
   measureDistance,
   refreshActors,
+  refreshSheets,
   sortArrayByName,
 } from "./lib.mjs";

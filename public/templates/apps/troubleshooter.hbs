@@ -24,6 +24,10 @@
 	<hr>
 
 	<h2>{{localize "PF1.Troubleshooter.Actions.Label"}}</h2>
-	<button type="button" data-action='migrate' {{#unless isGM}}disabled{{/unless}}><h3>{{localize "PF1.Troubleshooter.Actions.Migrate"}}</h3></button>
+	<button type="button" data-action='migrate' {{#unless isGM}}disabled{{/unless}}>
+		<i class='progress spinner fa-solid fa-spinner'></i>
+		<h3>{{localize "PF1.Troubleshooter.Actions.Migrate"}}</h3>
+		<i class='progress check fa-solid fa-check'></i>
+	</button>
 	<p class='hint'>{{{localize "PF1.Troubleshooter.Actions.MigrateHint"}}}</p>
 </form>

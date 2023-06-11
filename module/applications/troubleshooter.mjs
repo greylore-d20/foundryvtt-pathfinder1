@@ -35,14 +35,20 @@ export class Troubleshooter extends Application {
     };
   }
 
-  _runMigration(event) {
+  /**
+   * @param {Event} event
+   */
+  async _runMigration(event) {
     if (!game.user.isGM) return;
 
+    /** @type {Element} */
     const el = event.target;
-
+    el.classList.remove("finished");
     el.disabled = true;
 
-    pf1.migrations.migrateWorld().finally(() => (el.disabled = false));
+    await pf1.migrations.migrateWorld();
+    el.disabled = false;
+    el.classList.add("finished");
   }
 
   _openHelp(event) {
@@ -58,7 +64,14 @@ export class Troubleshooter extends Application {
 
     const [html] = jq;
 
-    html.querySelector("button[data-action='migrate']").addEventListener("click", this._runMigration.bind(this));
+    const migrationButton = html.querySelector("button[data-action='migrate']");
+    migrationButton.addEventListener("click", this._runMigration.bind(this));
+
+    // React to external migration to minimal degree
+    if (pf1.migrations.isMigrating) {
+      migrationButton.disabled = true;
+      Hooks.once("pf1MigrationFinished", () => (migrationButton.disabled = false));
+    }
 
     html.querySelector("a[data-action='help']").addEventListener("click", this._openHelp.bind(this));
   }

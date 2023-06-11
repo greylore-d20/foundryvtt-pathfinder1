@@ -8,6 +8,53 @@
       color: var(--color-text-hyperlink);
     }
 
+    button {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 0.3rem;
+      align-items: center;
+      justify-content: center;
+
+      > * {
+        // Prevent click handlers for button children
+        pointer-events: none;
+      }
+
+      .progress {
+        visibility: hidden;
+        flex: 0 24px;
+
+        &.spinner {
+          color: gray;
+
+          @keyframes pf1-constant-spin {
+            from {
+              transform: rotate(0deg);
+            }
+
+            to {
+              transform: rotate(360deg);
+            }
+          }
+
+          animation: pf1-constant-spin 2.5s infinite linear;
+        }
+      }
+
+      &.finished .progress {
+        &.spinner {
+          visibility: hidden;
+        }
+        &.check {
+          visibility: visible;
+          color: darkgreen;
+        }
+      }
+      &:disabled .progress.spinner {
+        visibility: visible;
+      }
+    }
+
     .hint {
       padding: 0 10%;
     }

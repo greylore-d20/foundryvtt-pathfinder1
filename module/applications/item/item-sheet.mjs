@@ -478,17 +478,16 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       const buffTargets = getBuffTargets(actor);
-      context.changes = itemData.changes.reduce((cur, o) => {
-        const obj = { data: o };
-
-        const target = buffTargets[o.subTarget];
-        obj.isValid = !!target;
-        obj.label = target?.label ?? o.subTarget;
-        obj.isScript = obj.data.operator === "script";
-
-        cur.push(obj);
-        return cur;
-      }, []);
+      context.changes =
+        itemData.changes?.map((o) => {
+          const target = buffTargets[o.subTarget];
+          return {
+            data: o,
+            isValid: !!target,
+            label: target?.label ?? o.subTarget,
+            isScript: o.operator === "script",
+          };
+        }) ?? [];
     }
 
     // Prepare stuff for items with context notes

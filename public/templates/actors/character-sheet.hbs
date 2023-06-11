@@ -72,10 +72,8 @@
         {{editor notesHTML target="system.details.notes.value" button=true editable=editable engine="prosemirror" collaborate=false}}
       </div>
 
-      {{#if table_magicItems}}
-      <div>
-        {{{table_magicItems}}}
-      </div>
+      {{#if magicItems}}
+      {{> "systems/pf1/templates/internal/table_magic-items.hbs" items=magicItems}}
       {{/if}}
     </div>
 

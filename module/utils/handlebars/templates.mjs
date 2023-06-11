@@ -26,6 +26,8 @@ const templatePaths = /** @type {const} */ ([
 
   "systems/pf1/templates/internal/item-search.hbs",
 
+  "systems/pf1/templates/internal/table_magic-items.hbs",
+
   // Item Sheet Partials
   "systems/pf1/templates/items/parts/item-actions.hbs",
   "systems/pf1/templates/items/parts/item-advanced.hbs",

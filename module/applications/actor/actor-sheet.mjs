@@ -574,45 +574,47 @@ export class ActorSheetPF extends ActorSheet {
     this._prepareHiddenElements();
     data.hiddenElems = this._hiddenElems;
 
+    data.magicItems = {
+      identified: [],
+      unidentified: [],
+    };
+
     // Create a table of magic items
-    {
-      const magicItems = this.document.items
-        .filter((item) => {
-          if (item.showUnidentifiedData) return false;
-          if (!item.system.carried) return false;
+    this.document.items
+      .filter((o) => {
+        if (!o.isPhysical) return false;
+        if (o.showUnidentifiedData) return false;
+        if (!o.system.carried) return false;
+        if (o.system.quantity === 0) return false;
 
-          const school = item.system.aura?.school;
-          const cl = item.system.cl;
-          return typeof school === "string" && school.length > 0 && typeof cl === "number" && cl > 0;
-        })
-        .map((item) => {
-          const data = {};
+        const school = o.system.aura?.school;
+        const cl = o.system.cl;
+        return school?.length > 0 && cl > 0;
+      })
+      .forEach((item) => {
+        const itemData = {};
 
-          data.name = item.name;
-          data.img = item.img;
-          data.id = item.id;
-          data.cl = item.system.cl;
-          data.school = item.system.aura?.school;
-          if (PF1.spellSchools[data.school] != null) {
-            data.school = PF1.spellSchools[data.school];
-          }
-          data.school = `${PF1.auraStrengths[item.auraStrength]} <b>${data.school}</b>`;
-          data.identifyDC = 15 + data.cl;
-          {
-            const quantity = item.system.quantity || 0;
-            if (quantity > 1) data.quantity = quantity;
-          }
-          data.identified = item.system.identified === true;
+        itemData.name = item.name;
+        itemData.img = item.img;
+        itemData.id = item.id;
+        itemData.cl = item.system.cl;
+        itemData.school = item.system.aura?.school;
+        if (CONFIG.PF1.spellSchools[itemData.school] != null) {
+          itemData.school = CONFIG.PF1.spellSchools[itemData.school];
+        }
+        itemData.aura = {
+          strength: CONFIG.PF1.auraStrengths[item.auraStrength],
+          school: itemData.school,
+        };
+        itemData.identifyDC = 15 + itemData.cl;
+        itemData.quantity = item.system.quantity || 0;
+        itemData.identified = item.system.identified === true;
 
-          return data;
-        });
-      if (magicItems.length > 0) {
-        data.table_magicItems = await renderTemplate("systems/pf1/templates/internal/table_magic-items.hbs", {
-          items: magicItems,
-          isGM: game.user.isGM,
-        });
-      }
-    }
+        itemData.unidentifiedName = game.user.isGM ? item.system.unidentified?.name : null;
+
+        if (itemData.identified) data.magicItems.identified.push(itemData);
+        else data.magicItems.unidentified.push(itemData);
+      });
 
     // Prepare (interactive) labels
     {

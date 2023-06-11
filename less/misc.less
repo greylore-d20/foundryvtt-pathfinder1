@@ -161,8 +161,17 @@ input.text-box {
     }
 
     &.magic-items-table {
-      .name {
+      .item-name {
         width: auto;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 0.3em;
+
+        .name {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
       .aura {
         width: 20%;
@@ -176,6 +185,16 @@ input.text-box {
       .identify {
         width: 40px;
       }
+    }
+  }
+
+  .magic-items {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 3px;
+
+    h2 {
+      margin: 0;
     }
   }
 

@@ -990,9 +990,17 @@ export const splitCurrency = (cp) => {
 /**
  * Get first active GM user.
  *
+ * @deprecated Use `game.users.activeGM` instead
  * @returns {User|undefined} Active GM
  */
-export const getFirstActiveGM = () => game.users.filter((u) => u.active && u.isGM).sort((a, b) => b.id - a.id)[0];
+export const getFirstActiveGM = () => {
+  foundry.utils.logCompatibilityWarning("pf1.utils.getFirstActiveGM() is deprecated in favor of game.users.activeGM", {
+    since: "PF1 0.83.0",
+    until: "PF1 0.FUTURE",
+  });
+
+  return game.users.activeGM;
+};
 
 /**
  * Check whether at least one GM is active.

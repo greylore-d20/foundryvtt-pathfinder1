@@ -4,7 +4,7 @@ import { AccessibilityConfig } from "../applications/settings/accessibility.mjs"
 import { TooltipConfig } from "../applications/settings/tooltip.mjs";
 import { TooltipWorldConfig } from "../applications/settings/tooltip_world.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
-import { getFirstActiveGM, setDefaultSceneScaling } from "@utils";
+import { setDefaultSceneScaling } from "@utils";
 
 export const registerSystemSettings = function () {
   /**
@@ -421,8 +421,7 @@ export const registerSystemSettings = function () {
     default: false,
     type: Boolean,
     onChange: () => {
-      const gm = getFirstActiveGM();
-      if (gm?.id !== game.user.id) return;
+      if (!game.users.activeGM.isSelf) return;
 
       const promises = [];
       const actors = [

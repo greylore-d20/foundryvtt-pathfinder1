@@ -1,4 +1,4 @@
-import { getFirstActiveGM, refreshActors } from "./utils/lib.mjs";
+import { refreshActors } from "./utils/lib.mjs";
 
 /**
  *
@@ -8,7 +8,7 @@ export function initializeSocket() {
 }
 
 const runSocketFunction = async function (args, senderId) {
-  const isFirstGM = game.user === getFirstActiveGM();
+  const isFirstGM = game.users.activeGM.isSelf;
   const sender = game.users.get(senderId);
   try {
     switch (args.eventType) {

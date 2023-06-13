@@ -148,11 +148,12 @@ export class ActorPF extends ActorBasePF {
       const saveId = button.dataset.save;
       if (actor) actor.rollSavingThrow(saveId, { event: event });
     } else if (action === "save") {
-      const actors = ActorPF.getSelectedActors();
+      const tokens = canvas.tokens.controlled;
       const saveId = button.dataset.type;
       let noSound = false;
-      for (const a of actors) {
-        a[0].rollSavingThrow(saveId, { event: event, noSound: noSound });
+      for (const token of tokens) {
+        const actor = token.actor;
+        actor?.rollSavingThrow(saveId, { event: event, noSound: noSound });
         noSound = true;
       }
     }
@@ -169,7 +170,21 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
+  /**
+   * @param root0
+   * @param root0.actorName
+   * @param root0.actorId
+   * @deprecated
+   */
   static getActiveActor({ actorName = null, actorId = null } = {}) {
+    foundry.utils.logCompatibilityWarning(
+      "ActorPF.getActiveActor() is deprecated in favor of ChatMessage.getSpeakerActor(ChatMessage.getSpeaker())",
+      {
+        since: "PF1 0.83.0",
+        until: "PF1 0.84.0",
+      }
+    );
+
     const speaker = ChatMessage.implementation.getSpeaker();
     let actor;
 
@@ -190,8 +205,17 @@ export class ActorPF extends ActorBasePF {
    * Returns an array of all selected tokens, along with their actors.
    *
    * @returns {Array.<ActorPF, Token>[]}
+   * @deprecated
    */
   static getSelectedActors() {
+    foundry.utils.logCompatibilityWarning(
+      "ActorPF.getSelectedActors() is deprecated in favor of canvas.tokens.controlled",
+      {
+        since: "PF1 0.83.0",
+        until: "PF1 0.84.0",
+      }
+    );
+
     const result = [];
     for (const t of canvas.tokens.controlled) {
       result.push([t.actor, t]);

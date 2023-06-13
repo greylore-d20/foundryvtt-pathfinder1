@@ -176,8 +176,14 @@ export const createMiscActorMacro = async (type, actorId, slot, altType = null) 
  * @param {string} [options.itemType] - The item's type
  * @param {string} [options.actorId] - The actorś identifier
  * @returns {Promise|void} The item's roll or void if any requirements are not met
+ * @deprecated
  */
 export const rollItemMacro = (itemName, { itemId, itemType, actorId } = {}) => {
+  foundry.utils.logCompatibilityWarning("rollItemMacro() is deprecated in favor of Item.use()", {
+    since: "PF1 0.83.0",
+    until: "PF1 0.84.0",
+  });
+
   const actor = getActorFromId(actorId);
   if (actor && !actor.testUserPermission(game.user, "OWNER")) {
     return void ui.notifications.warn(game.i18n.localize("PF1.ErrorNoActorPermission"));
@@ -208,8 +214,14 @@ export const rollItemMacro = (itemName, { itemId, itemType, actorId } = {}) => {
  * @param {string} actorId - The actor's identifier
  * @param {string} skillId - The skill's identifier
  * @returns {Promise|void} The skill roll, or void if no skill is found
+ * @deprecated
  */
 export const rollSkillMacro = (actorId, skillId) => {
+  foundry.utils.logCompatibilityWarning("rollSkillMacro() is deprecated in favor of Actor.rollSkill()", {
+    since: "PF1 0.83.0",
+    until: "PF1 0.84.0",
+  });
+
   const actor = getActorFromId(actorId);
   if (!actor) {
     return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
@@ -224,8 +236,14 @@ export const rollSkillMacro = (actorId, skillId) => {
  * @param {string} actorId - The actor's identifier
  * @param {string} saveId - The save's identifier
  * @returns {Promise|void} The save roll, or void if no save is found
+ * @deprecated
  */
 export const rollSaveMacro = (actorId, saveId) => {
+  foundry.utils.logCompatibilityWarning("rollSaveMacro() is deprecated in favor of Actor.rollSavingThrow()", {
+    since: "PF1 0.83.0",
+    until: "PF1 0.84.0",
+  });
+
   const actor = getActorFromId(actorId);
   if (!actor) {
     return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));
@@ -242,8 +260,14 @@ export const rollSaveMacro = (actorId, saveId) => {
  * @param {string} [options.actorId] - The actor's identifier
  * @param options.rollMode
  * @returns {Promise|void} The defense roll, or void if no actor is found
+ * @deprecated
  */
 export const displayDefenses = ({ actorName = null, actorId = null, rollMode = null } = {}) => {
+  foundry.utils.logCompatibilityWarning("displayDefenses() is deprecated in favor of Actor.displayDefenseCard()", {
+    since: "PF1 0.83.0",
+    until: "PF1 0.84.0",
+  });
+
   const actor = ActorPF.getActiveActor({ actorName: actorName, actorId: actorId });
   if (!actor) {
     return void ui.notifications.warn(
@@ -263,8 +287,17 @@ export const displayDefenses = ({ actorName = null, actorId = null, rollMode = n
  * @param {string} type - The attribute to roll
  * @param {string} [altType] - An additional qualifier, used e.g. to determine a roll's spellbook
  * @returns {Promise|void} The roll, or void if no actor is found
+ * @deprecated
  */
 export const rollActorAttributeMacro = (actorId, type, altType = null) => {
+  foundry.utils.logCompatibilityWarning(
+    "rollActorAttributeMacro() is deprecated in favor of directly calling functions on the actor.",
+    {
+      since: "PF1 0.83.0",
+      until: "PF1 0.84.0",
+    }
+  );
+
   const actor = getActorFromId(actorId);
   if (!actor) {
     return void ui.notifications.error(game.i18n.format("PF1.ErrorActorNotFound", { id: actorId }));

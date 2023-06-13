@@ -657,21 +657,30 @@ export class ItemSpellPF extends ItemPF {
       if (rangeUnit != null && rangeUnit !== "none") {
         label.range = PF1.distanceUnits[rangeUnit];
         const units = getDistanceSystem();
-        if (rangeUnit === "close")
-          label.range = `${label.range} ${game.i18n.localize(
-            units == "metric" ? "PF1.SpellRangeShortMetric" : "PF1.SpellRangeShort"
-          )}`;
-        else if (rangeUnit === "medium")
-          label.range = `${label.range} ${game.i18n.localize(
-            units == "metric" ? "PF1.SpellRangeMediumMetric" : "PF1.SpellRangeMedium"
-          )}`;
-        else if (rangeUnit === "long")
-          label.range = `${label.range} ${game.i18n.localize(
-            units == "metric" ? "PF1.SpellRangeLongMetric" : "PF1.SpellRangeLong"
-          )}`;
-        else if (["ft", "mi"].includes(rangeUnit)) {
-          if (!rangeValue) label.range = "";
-          else label.range = `${rangeValue} ${label.range}`;
+        switch (rangeUnit) {
+          case "close":
+            label.range = `${label.range} ${game.i18n.localize(
+              units == "metric" ? "PF1.SpellRangeShortMetric" : "PF1.SpellRangeShort"
+            )}`;
+            break;
+          case "medium":
+            label.range = `${label.range} ${game.i18n.localize(
+              units == "metric" ? "PF1.SpellRangeMediumMetric" : "PF1.SpellRangeMedium"
+            )}`;
+            break;
+          case "long":
+            label.range = `${label.range} ${game.i18n.localize(
+              units == "metric" ? "PF1.SpellRangeLongMetric" : "PF1.SpellRangeLong"
+            )}`;
+            break;
+          case "ft":
+          case "mi":
+            if (!rangeValue) label.range = "";
+            else label.range = `${rangeValue} ${label.range}`;
+            break;
+          case "spec":
+            label.range = rangeValue || label.range;
+            break;
         }
       }
     }

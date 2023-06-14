@@ -2986,6 +2986,16 @@ export class ActorSheetPF extends ActorSheet {
     return this.document.createEmbeddedDocuments("Item", creationData);
   }
 
+  /**
+   * Allow drag start always.
+   * Foundry blocks this if sheet is not editable, which blocks copying items.
+   *
+   * @override
+   */
+  _canDragStart(selector) {
+    return true;
+  }
+
   _onDragStart(event) {
     const elem = event.target;
     if (elem.classList.contains("denomination")) {

@@ -972,13 +972,6 @@ export const getFirstActiveGM = () => {
 };
 
 /**
- * Check whether at least one GM is active.
- *
- * @returns {boolean} Have active GM
- */
-export const isGMActive = () => game.users.some((u) => u.active && u.isGM);
-
-/**
  * Resolve range formula to numeric value.
  *
  * @param {string} [formula] Range formula. Only used with "mi", "ft", "m", "km" and similar types.

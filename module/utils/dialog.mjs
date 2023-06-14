@@ -1,5 +1,3 @@
-import { isGMActive } from "./lib.mjs";
-
 /**
  * @param root0
  * @param root0.title
@@ -51,11 +49,12 @@ export const dialogGetActor = function (title = "", actors = []) {
   return new Promise((resolve) => {
     const cancelled = true;
 
+    const gmActive = !!game.users.activeGM;
+
     let content = "";
     actors.forEach((target) => {
       if (target instanceof Actor) {
-        const gmActive = isGMActive();
-        const enabled = gmActive || target.testUserPermission(game.user, "OWNER");
+        const enabled = gmActive || target.isOwner;
         const disabledClass = enabled ? "" : "disabled";
         content += `<div class="dialog-get-actor flexrow ${disabledClass}" data-actor-id="${target.id}"><img src="${target.img}"><h2>${target.name}</h2></div>`;
       } else if (target instanceof Item) {

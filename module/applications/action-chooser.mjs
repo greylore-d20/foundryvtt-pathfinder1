@@ -45,8 +45,8 @@ export class ActionChooser extends Application {
   _onClickAction(event) {
     event.preventDefault();
 
-    const actionID = event.currentTarget.dataset?.action;
-    this.item.use({ ...this.useOptions, actionID, skipDialog: getSkipActionPrompt() });
+    const actionId = event.currentTarget.dataset?.action;
+    this.item.use({ ...this.useOptions, actionId, skipDialog: getSkipActionPrompt() });
     this.close();
   }
 }

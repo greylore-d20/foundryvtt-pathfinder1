@@ -1147,7 +1147,7 @@ export class ItemAction {
    * @returns {Promise<void>}
    */
   async use(options = {}) {
-    options.actionID = this.id;
+    options.actionId = this.id;
 
     return this.item.use(options);
   }

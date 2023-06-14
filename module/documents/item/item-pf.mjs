@@ -1195,7 +1195,8 @@ export class ItemPF extends ItemBasePF {
    * Use an attack, using {@link SharedActionData}
    *
    * @see {@link SharedActionData}
-   * @param {string} [actionID=""] - The ID of the action to use, defaults to the first action
+   * @param {string} [actionId=""] - The ID of the action to use, defaults to the first action
+   * @param {string} [actionID=""] - Deprecated in favor of `actionId`
    * @param {Event | null} [ev=null] - The event that triggered the use, if any
    * @param {boolean} [skipDialog=getSkipActionPrompt()] - Whether to skip the dialog for this action
    * @param {boolean} [chatMessage=true] - Whether to send a chat message for this action
@@ -1205,6 +1206,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {Promise<SharedActionData | void | ChatMessage | *>}
    */
   async use({
+    actionId = "",
     actionID = "",
     ev = null,
     skipDialog = getSkipActionPrompt(),
@@ -1214,6 +1216,15 @@ export class ItemPF extends ItemBasePF {
     token,
   } = {}) {
     rollMode ||= game.settings.get("core", "rollMode");
+
+    if (actionID) {
+      foundry.utils.logCompatibilityWarning("ItemPF.use() actionID parameter is deprecated in favor of actionId", {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      });
+
+      actionId ||= actionID;
+    }
 
     // Old use method
     if (!this.hasAction) {
@@ -1249,8 +1260,8 @@ export class ItemPF extends ItemBasePF {
     /** @type {ItemAction | undefined} */
     let action;
     if (this.system.actions.length > 0) {
-      if (actionID) {
-        action = this.actions.get(actionID);
+      if (actionId) {
+        action = this.actions.get(actionId);
       } else if (this.system.actions.length > 1 && skipDialog !== true) {
         const selector = new pf1.applications.ActionChooser(this);
         selector.useOptions = { ev, chatMessage, dice, rollMode, token };

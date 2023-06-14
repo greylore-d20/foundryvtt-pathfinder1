@@ -329,7 +329,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateItemHealth(item, updateData);
   _migrateItemType(item, updateData);
   _migrateItemLearnedAt(item, updateData);
-  _migrateItemRaceSubtypes(item, updateData);
+  _migrateItemTuples(item, updateData);
   _migrateItemUnusedData(item, updateData);
 
   // Migrate action data
@@ -1798,16 +1798,22 @@ const _migrateActorUnusedData = (actor, updateData) => {
 };
 
 /**
- * Flatten race subtype tuple array into flat array
+ * Flatten item tuple arrays
  *
  * @param item
  * @param updateData
  */
-const _migrateItemRaceSubtypes = (item, updateData) => {
-  if (item.type !== "race") return;
-  if (item.system.subTypes?.length) {
-    if (typeof item.system.subTypes[0] !== "string") {
-      updateData["system.subTypes"] = item.system.subTypes.flat();
+const _migrateItemTuples = (item, updateData) => {
+  if (item.type === "race") {
+    if (item.system.subTypes?.length) {
+      if (typeof item.system.subTypes[0] !== "string") {
+        updateData["system.subTypes"] = item.system.subTypes.flat();
+      }
+    }
+  }
+  if (item.system.tags?.length) {
+    if (typeof item.system.tags[0] !== "string") {
+      updateData["system.tags"] = item.system.tags.flat();
     }
   }
 };

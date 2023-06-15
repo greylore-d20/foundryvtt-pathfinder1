@@ -79,7 +79,7 @@ export class ItemAction {
     return this.parent;
   }
   get actor() {
-    return this.parent.parentActor;
+    return this.parent.actor;
   }
 
   get id() {

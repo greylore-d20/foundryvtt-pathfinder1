@@ -945,7 +945,7 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".uses-source [data-item-id]").on("contextmenu", (event) => {
       event.preventDefault();
       const itemId = event.currentTarget.dataset.itemId;
-      const item = this.document.parentActor.items.get(itemId);
+      const item = this.document.actor.items.get(itemId);
       item?.sheet.render(true, { focus: true });
     });
 
@@ -1233,7 +1233,7 @@ export class ItemSheetPF extends ItemSheet {
       dataType = "compendium";
     }
     // Case 2 - Import from same actor
-    else if (targetItem.parent === this.document.parentActor) {
+    else if (targetItem.parent === this.document.actor) {
       dataType = "data";
       itemLink = targetItem.id;
     }

@@ -129,7 +129,7 @@ export class ItemScriptCall {
   async execute(shared, extraParams = {}) {
     // Add variables to the evaluation scope
     const item = this.parent;
-    const actor = item.parentActor;
+    const actor = item.actor;
     const token =
       actor?.token?.object ?? (actor ? canvas.tokens.placeables.find((t) => t.actor?.id === actor.id) : null);
 

@@ -171,7 +171,7 @@ export class ItemBuffPF extends ItemPF {
   }
 
   get effect() {
-    return this.parentActor?.effects.find((o) => o.origin?.indexOf(`Item.${this.id}`) > 0);
+    return this.actor?.effects.find((o) => o.origin?.indexOf(`Item.${this.id}`) > 0);
   }
 
   /**

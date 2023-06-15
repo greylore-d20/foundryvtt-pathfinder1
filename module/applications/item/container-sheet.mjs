@@ -469,7 +469,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }
 
     // Add actor to drag data
-    const actor = this.item.parentActor;
+    const actor = this.item.actor;
     if (actor) {
       dragData.actorId = actor.id;
       dragData.sceneId = actor.isToken ? canvas.scene?.id : null;
@@ -524,7 +524,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     if (!this.item.isOwner) return false;
 
     const item = await ItemPF.fromDropData(data);
-    const actor = item.parentActor;
+    const actor = item.actor;
     const itemData = item.toObject();
 
     // Sort item
@@ -541,7 +541,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     if (item.isPhysical) {
       await this.item.createContainerContent(itemData);
 
-      if (actor && actor === this.item.parentActor) {
+      if (actor && actor === this.item.actor) {
         if (actor.items.get(item.id)) {
           await actor.deleteEmbeddedDocuments("Item", [item.id]);
         } else {

@@ -83,7 +83,7 @@ export class ItemPF extends Item {
     }
 
     // Ensure unique Change IDs
-    const actor = this.parentActor;
+    const actor = this.actor;
     if (actor && data?.system?.changes?.length > 0) {
       const changes = data.system.changes;
       let updated = false;
@@ -198,7 +198,7 @@ export class ItemPF extends Item {
 
   get charges() {
     // No actor? No charges!
-    if (!this.parentActor) return 0;
+    if (!this.actor) return 0;
 
     // Get linked charges
     const link = this.links?.charges;
@@ -328,18 +328,16 @@ export class ItemPF extends Item {
   }
 
   /**
-   * @type {ActorPF|null|undefined} Parent actor
+   * @type {ActorPF|null} Parent actor
+   * @deprecated Use {@link actor instead}
    */
   get parentActor() {
-    if (this.parent) return this.parent;
+    foundry.utils.logCompatibilityWarning("ItemPF.parentActor is deprecated in favor of Item.actor", {
+      since: "0.83.0",
+      until: "0.85.0",
+    });
 
-    let actor = null;
-    let p = this.parentItem;
-    while (!actor && p) {
-      actor = p.actor;
-      p = p.parentItem;
-    }
-    return actor;
+    return this.actor;
   }
 
   get limited() {
@@ -355,13 +353,13 @@ export class ItemPF extends Item {
   }
 
   testUserPermission(user, permission, { exact = false } = {}) {
-    if (this.parentActor) return this.parentActor.testUserPermission(user, permission, { exact });
+    if (this.actor) return this.actor.testUserPermission(user, permission, { exact });
     if (this.parentItem) return this.parentItem.testUserPermission(user, permission, { exact });
     return super.testUserPermission(user, permission, { exact });
   }
 
   get permission() {
-    if (this.parentActor) return this.parentActor.permission;
+    if (this.actor) return this.actor.permission;
     return super.permission;
   }
 
@@ -684,7 +682,7 @@ export class ItemPF extends Item {
         item.updateSource(o);
         item.reset();
       } else {
-        item = new CONFIG.Item.documentClass(o);
+        item = new Item.implementation(o, { parent: this.actor });
         item.parentItem = this;
       }
 
@@ -960,7 +958,7 @@ export class ItemPF extends Item {
    * @returns {Promise<ChatMessage | void>} Chat message instance if one was created.
    */
   async displayCard(altChatData = {}, { token } = {}) {
-    const actor = this.parentActor;
+    const actor = this.actor;
     if (actor && !actor.isOwner) {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: actor.name }));
     }
@@ -1388,7 +1386,7 @@ export class ItemPF extends Item {
    * @returns {ItemChange[]} The resulting changes.
    */
   getContextChanges(context = "attack") {
-    let result = this.parentActor.changes;
+    let result = this.actor.changes;
 
     switch (context) {
       case "mattack":
@@ -1424,7 +1422,7 @@ export class ItemPF extends Item {
    * @returns {object} An object with data to be used in rolls in relation to this item.
    */
   getRollData() {
-    const parentActor = this.parentActor;
+    const parentActor = this.actor;
     const result = parentActor ? parentActor.getRollData() : {};
 
     result.item = deepClone(this.system);
@@ -1549,9 +1547,9 @@ export class ItemPF extends Item {
 
       return true;
     } else if (action === "concentration") {
-      item.parentActor.rollConcentration(item.system.spellbook);
+      item.actor.rollConcentration(item.system.spellbook);
     } else if (action === "caster-level-check") {
-      item.parentActor.rollCL(item.system.spellbook);
+      item.actor.rollCL(item.system.spellbook);
     }
 
     return false;
@@ -2123,7 +2121,7 @@ export class ItemPF extends Item {
 
     const sources = [];
 
-    const actorData = this.parentActor?.system,
+    const actorData = this.actor?.system,
       itemData = this.system,
       actionData = action.data;
 
@@ -2152,15 +2150,15 @@ export class ItemPF extends Item {
     // Add size bonus
     if (sizeBonus != 0) describePart(sizeBonus, game.i18n.localize("PF1.Size"), -20);
 
-    srcDetails(this.parentActor.sourceDetails["system.attributes.attack.shared"]);
-    if (isManeuver) srcDetails(this.parentActor.sourceDetails["system.attributes.cmb.bonus"]);
-    srcDetails(this.parentActor.sourceDetails["system.attributes.attack.general"]);
+    srcDetails(this.actor.sourceDetails["system.attributes.attack.shared"]);
+    if (isManeuver) srcDetails(this.actor.sourceDetails["system.attributes.cmb.bonus"]);
+    srcDetails(this.actor.sourceDetails["system.attributes.attack.general"]);
 
     const changeSources = [];
     if (isRanged) changeSources.push("rattack");
     if (isMelee) changeSources.push("mattack");
     const effectiveChanges = getHighestChanges(
-      this.parentActor.changes.filter((c) => changeSources.includes(c.subTarget)),
+      this.actor.changes.filter((c) => changeSources.includes(c.subTarget)),
       { ignoreTarget: true }
     );
     effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, -800));

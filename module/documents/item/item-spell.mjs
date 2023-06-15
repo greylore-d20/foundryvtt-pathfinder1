@@ -72,7 +72,7 @@ export class ItemSpellPF extends ItemPF {
   preCreateData(data, options, user) {
     const updates = super.preCreateData(data, options, user);
 
-    const actor = this.parentActor;
+    const actor = this.actor;
     if (actor) {
       // Swap non-psychic components for psychic ones
       if (this.spellbook?.psychic === true) {

@@ -73,7 +73,7 @@ export class ItemClassPF extends ItemPF {
    */
   async _onLevelChange(curLevel, newLevel) {
     if (!this.parent) return;
-    const actor = this.parentActor;
+    const actor = this.actor;
 
     // Add items associated to this class
     if (newLevel > curLevel) {

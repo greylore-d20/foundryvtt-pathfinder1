@@ -50,7 +50,7 @@ export class ItemActionSheet extends FormApplication {
     return this.action.item;
   }
   get actor() {
-    return this.item.parentActor;
+    return this.item.actor;
   }
 
   async getData() {

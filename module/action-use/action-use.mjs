@@ -70,7 +70,7 @@ export class ActionUse {
       shared: { value: shared },
       item: { value: shared.item },
       action: { value: shared.action },
-      actor: { value: shared.item.parentActor },
+      actor: { value: shared.item.actor },
       token: { value: shared.token },
     });
   }
@@ -79,7 +79,7 @@ export class ActionUse {
    * @returns {Promise<number>} - 0 when successful, otherwise one of the ERR_REQUIREMENT constants.
    */
   checkRequirements() {
-    const actor = this.item.parentActor;
+    const actor = this.item.actor;
     if (actor && !actor.isOwner) {
       ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: actor.name }));
       return ERR_REQUIREMENT.NO_ACTOR_PERM;
@@ -812,7 +812,7 @@ export class ActionUse {
       attacks: this.shared.chatAttacks.map((o) => o.finalize()),
     };
 
-    const actor = this.item.parentActor,
+    const actor = this.item.actor,
       token = this.token ?? actor.token;
 
     // Set chat data

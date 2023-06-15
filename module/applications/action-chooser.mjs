@@ -20,7 +20,7 @@ export class ActionChooser extends Application {
   }
   get title() {
     return game.i18n.format("PF1.Application.ActionChooser.Title", {
-      actor: this.item.parentActor.name ?? "",
+      actor: this.item.actor.name ?? "",
       item: this.item.name,
     });
   }

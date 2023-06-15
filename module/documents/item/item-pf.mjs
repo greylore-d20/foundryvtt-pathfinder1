@@ -1,7 +1,7 @@
 import { PF1 } from "@config";
 import { DicePF, formulaHasDice } from "../../dice/dice.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
-import { createTag, linkData, convertDistance, keepUpdateArray, diffObjectAndArray } from "../../utils/lib.mjs";
+import { createTag, convertDistance, keepUpdateArray, diffObjectAndArray } from "../../utils/lib.mjs";
 import { getWeightSystem } from "@utils";
 import { ItemChange } from "../../components/change.mjs";
 import { ItemAction } from "../../components/action.mjs";
@@ -687,8 +687,6 @@ export class ItemPF extends Item {
     if (context.recursive === false) {
       return super.update(data, context);
     }
-    const baseData = this.toObject();
-    const srcData = mergeObject(baseData, data, { inplace: false });
 
     // Make sure stuff remains an array
     {
@@ -731,11 +729,11 @@ export class ItemPF extends Item {
       const link = this.links.charges;
       if (!link) {
         if (this.type === "spell") {
-          if (charges !== undefined) linkData(srcData, data, "system.preparation.preparedAmount", charges);
-          if (maxCharges !== undefined) linkData(srcData, data, "system.preparation.maxAmount", maxCharges);
+          if (charges !== undefined) data["system.preparation.preparedAmount"] = charges;
+          if (maxCharges !== undefined) data["system.preparation.maxAmount"] = maxCharges;
         } else {
-          if (charges !== undefined) linkData(srcData, data, "system.uses.value", charges);
-          if (maxCharges !== undefined) linkData(srcData, data, "system.uses.max", maxCharges);
+          if (charges !== undefined) data["system.uses.value"] = charges;
+          if (maxCharges !== undefined) data["system.uses.max"] = maxCharges;
         }
       } else {
         // Update charges for linked items

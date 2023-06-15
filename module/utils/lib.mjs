@@ -74,11 +74,6 @@ export const radtodeg = function (radians) {
   return (radians / 180) * Math.PI;
 };
 
-export const linkData = function (expanded, flattened, key, value) {
-  setProperty(expanded, key, value);
-  flattened[key] = value;
-};
-
 /**
  * @param {object} item Item data
  * @returns {User|null}

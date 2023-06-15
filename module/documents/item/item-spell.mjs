@@ -5,6 +5,32 @@ import { getDistanceSystem } from "@utils";
 import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 export class ItemSpellPF extends ItemPF {
+  /**
+   * @override
+   * @param {object} data Creation data
+   * @param {object} options Context options
+   * @param {User} user Triggering user
+   */
+  async _preCreate(data, options, user) {
+    await super._preCreate(data, options, user);
+    this._assignLevelOnCreate(data, options);
+  }
+
+  /**
+   * Assign spell level according to spellbook class if present.
+   *
+   * @protected
+   * @param {object} data Item data
+   * @param {object} options Creation options
+   */
+  _assignLevelOnCreate(data, options) {
+    const actor = this.actor;
+    const book = this.system.spellbook;
+    const cls = actor?.system.attributes?.spells?.spellbooks?.[book]?.class;
+    const level = this.system.learnedAt?.class?.[cls];
+    if (Number.isFinite(level)) this.updateSource({ "system.level": Math.clamped(level, 0, 9) });
+  }
+
   /** @inheritDoc */
   getLabels({ actionId, rollData } = {}) {
     const labels = super.getLabels({ actionId });

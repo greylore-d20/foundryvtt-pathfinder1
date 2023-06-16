@@ -1598,7 +1598,7 @@ export class ActorPF extends Actor {
         if (wtData.level > 0) {
           const changeFlatKeys = ["~attackCore", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
           for (const fk of changeFlatKeys) {
-            let flats = getChangeFlat.call(this, fk, "penalty", actorData);
+            let flats = getChangeFlat.call(this, fk, "penalty");
             if (!(flats instanceof Array)) flats = [flats];
             for (const k of flats) {
               if (!k) continue;
@@ -1716,7 +1716,7 @@ export class ActorPF extends Actor {
 
     // Determine skill keys
     try {
-      const skillKeys = getChangeFlat.call(this, "skills", "skills");
+      const skillKeys = getChangeFlat.call(this, "skills");
       for (const k of skillKeys) {
         keys[k.replace(/^system\./, "")] = 0;
       }
@@ -3287,7 +3287,7 @@ export class ActorPF extends Actor {
     const penalty = wt.penalty;
     const changeFlatKeys = pf1.config.woundThresholdChangeTargets;
     for (const fk of changeFlatKeys) {
-      let flats = getChangeFlat.call(this, fk, "penalty", this.system);
+      let flats = getChangeFlat.call(this, fk, "penalty");
       if (!(flats instanceof Array)) flats = [flats];
       for (const k of flats) {
         if (!k) continue;

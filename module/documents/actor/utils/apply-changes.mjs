@@ -57,7 +57,7 @@ export function applyChanges() {
   // Apply all changes
   for (let a = 0; a < changes.length; a++) {
     const change = changes[a];
-    let flats = getChangeFlat.call(this, change.subTarget, change.modifier);
+    let flats = getChangeFlat.call(this, change.subTarget, change.modifier, change.value);
     if (!(flats instanceof Array)) flats = [flats];
     for (const f of flats) {
       if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
@@ -69,7 +69,7 @@ export function applyChanges() {
     for (const cc of continuousChanges) {
       if (cc === change) continue;
 
-      let flats = getChangeFlat.call(this, cc.subTarget, cc.modifier);
+      let flats = getChangeFlat.call(this, cc.subTarget, cc.modifier, cc.value);
       if (!(flats instanceof Array)) flats = [flats];
       for (const f of flats) {
         if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
@@ -139,10 +139,17 @@ const getSortChangePriority = function () {
   };
 };
 
-export const getChangeFlat = function (changeTarget, changeType, curData = null) {
+/**
+ * @this {Actor}
+ * @param {string} changeTarget Target (e.g. "ac" or "skills")
+ * @param {string} changeType Type (e.g. "profane", "untyped", or "dodge"). If undefined, all valid targets will be returned.
+ * @param {number} modifier  Value, if known
+ * @returns {Array<string>} Array of target paths to modify
+ */
+export const getChangeFlat = function (changeTarget, changeType, modifier) {
   if (changeTarget == null) return null;
 
-  curData = curData ?? this.system;
+  const curData = this.system;
   /** @type {string[]} */
   const result = [];
 
@@ -187,44 +194,33 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
       result.push("system.details.carryCapacity.multiplier.total");
       break;
     case "ac":
+      result.push("system.attributes.ac.normal.total", "system.attributes.ac.touch.total");
+
       switch (changeType) {
         case "dodge":
         case "haste":
-          result.push(
-            "system.attributes.ac.normal.total",
-            "system.attributes.ac.touch.total",
-            "system.attributes.cmd.total"
-          );
+          result.push("system.attributes.cmd.total");
           break;
         case "deflection":
-          result.push(
-            "system.attributes.ac.normal.total",
-            "system.attributes.ac.touch.total",
-            "system.attributes.ac.flatFooted.total",
-            "system.attributes.cmd.total",
-            "system.attributes.cmd.flatFootedTotal"
-          );
-          break;
         case "circumstance":
         case "insight":
         case "luck":
         case "morale":
         case "profane":
         case "sacred":
+        case "penalty":
           result.push(
-            "system.attributes.ac.normal.total",
-            "system.attributes.ac.touch.total",
             "system.attributes.ac.flatFooted.total",
             "system.attributes.cmd.total",
             "system.attributes.cmd.flatFootedTotal"
           );
           break;
         default:
-          result.push(
-            "system.attributes.ac.normal.total",
-            "system.attributes.ac.touch.total",
-            "system.attributes.ac.flatFooted.total"
-          );
+          result.push("system.attributes.ac.flatFooted.total");
+          // Other penalties also apply to CMD, but not bonuses
+          if (modifier < 0) {
+            result.push("system.attributes.cmd.total", "system.attributes.cmd.flatFootedTotal");
+          }
           break;
       }
       break;
@@ -599,7 +595,7 @@ export const getChangeFlat = function (changeTarget, changeType, curData = null)
 
   // Call hooks to enable modules to add or adjust the result array
   callOldNamespaceHookAll("pf1.getChangeFlat", "pf1GetChangeFlat", changeTarget, changeType, { keys: result });
-  Hooks.callAll("pf1GetChangeFlat", changeTarget, changeType, result, curData);
+  Hooks.callAll("pf1GetChangeFlat", changeTarget, changeType, modifier, result, curData);
 
   // Return results directly when deprecation is removed
   return result.map((key) => {

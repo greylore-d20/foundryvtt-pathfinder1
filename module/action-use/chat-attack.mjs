@@ -138,6 +138,8 @@ export class ChatAttack {
   async addAttack({ noAttack = false, bonus = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
     if (!this.action.item) return;
 
+    const actor = this.action.actor;
+
     this.hasAttack = true;
     this.notesOnly = false;
     /** @type {D20RollPF} */
@@ -147,8 +149,8 @@ export class ChatAttack {
         extraParts.push(`@critConfirmBonus[${game.i18n.localize("PF1.CriticalConfirmation")}]`);
       }
 
-      const ccKey = pf1.documents.actor.changes.getChangeFlat.call(this.action.item, "critConfirm");
-      this.action.item.parentActor?.sourceDetails[ccKey]?.forEach((c) => extraParts.push(`(${c.value})[${c.name}]`));
+      const ccKey = pf1.documents.actor.changes.getChangeFlat.call(actor, "critConfirm");
+      actor?.sourceDetails[ccKey]?.forEach((c) => extraParts.push(`(${c.value})[${c.name}]`));
 
       // Add conditionals for critical confirmation
       if (conditionalParts["attack.crit"]?.length) extraParts.push(...conditionalParts["attack.crit"]);

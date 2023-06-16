@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { ActionUse } from "../action-use/action-use.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
@@ -84,7 +83,7 @@ export class AttackDialog extends Application {
     return {
       data: this.rollData,
       item: this.object.data,
-      config: PF1,
+      config: pf1.config,
       rollMode: game.settings.get("core", "rollMode"),
       rollModes: CONFIG.Dice.rollModes,
       hasAttack: this.object.hasAttack,

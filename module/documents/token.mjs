@@ -1,5 +1,3 @@
-import { PF1 } from "@config";
-
 export class TokenDocumentPF extends TokenDocument {
   async _preCreate(data, options, userId) {
     this._preCreateSetSize();
@@ -29,7 +27,7 @@ export class TokenDocumentPF extends TokenDocument {
 
     // Apply token size
     if (this.getFlag("pf1", "staticSize")) return;
-    const sizeConf = PF1.tokenSizes[this.actor.system.traits?.size];
+    const sizeConf = pf1.config.tokenSizes[this.actor.system.traits?.size];
     if (!sizeConf) return;
 
     this.updateSource({

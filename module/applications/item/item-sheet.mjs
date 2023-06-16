@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { adjustNumberByStringCommand, getBuffTargetDictionary, getBuffTargets } from "@utils";
 import { ItemPF } from "@item/item-pf.mjs";
 import { ScriptEditor } from "../script-editor.mjs";
@@ -118,7 +117,7 @@ export class ItemSheetPF extends ItemSheet {
     context.items = item.items?.map((i) => i.toObject()) ?? [];
 
     // Include CONFIG values
-    context.config = PF1;
+    context.config = pf1.config;
 
     // Item Type, Status, and Details
     context.itemType = this._getItemType(item);
@@ -142,8 +141,8 @@ export class ItemSheetPF extends ItemSheet {
       const auraStrength = rollData.item.auraStrength;
       context.auraStrength = auraStrength;
 
-      if (PF1.auraStrengths[auraStrength]) {
-        context.auraStrength_name = PF1.auraStrengths[auraStrength];
+      if (pf1.config.auraStrengths[auraStrength]) {
+        context.auraStrength_name = pf1.config.auraStrengths[auraStrength];
 
         context.labels.identify = game.i18n.format("PF1.IdentifyDCNumber", { dc: 15 + rollData.item.cl });
       }
@@ -152,8 +151,8 @@ export class ItemSheetPF extends ItemSheet {
     // Add spellcasting configuration
     if (item.type === "class") {
       context.casting = {
-        types: PF1.spellcasting.type,
-        spells: PF1.spellcasting.spells,
+        types: pf1.config.spellcasting.type,
+        spells: pf1.config.spellcasting.spells,
         progression: {
           high: "PF1.High",
           med: "PF1.Medium",
@@ -309,15 +308,15 @@ export class ItemSheetPF extends ItemSheet {
     if (["class", "feat", "race"].includes(item.type)) {
       // Add skill list
       if (!actor) {
-        context.skills = Object.entries(PF1.skills).reduce((cur, [skillId, label]) => {
+        context.skills = Object.entries(pf1.config.skills).reduce((cur, [skillId, label]) => {
           cur[skillId] = { name: label, classSkill: itemData.classSkills?.[skillId] === true };
           return cur;
         }, {});
       } else {
         // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = mergeObject(deepClone(PF1.skills), actorData.skills ?? {});
+        const skills = mergeObject(deepClone(pf1.config.skills), actorData.skills ?? {});
         context.skills = Object.entries(skills).reduce((cur, [skillId, skillIdata]) => {
-          const name = PF1.skills[skillId] || skillIdata.name;
+          const name = pf1.config.skills[skillId] || skillIdata.name;
           cur[skillId] = { name: name, classSkill: item.system.classSkills?.[skillId] === true };
           return cur;
         }, {});
@@ -330,12 +329,12 @@ export class ItemSheetPF extends ItemSheet {
 
       // Prepare categories for weapons
       context.weaponCategories = { types: {}, subTypes: {} };
-      for (const [k, v] of Object.entries(PF1.weaponTypes)) {
+      for (const [k, v] of Object.entries(pf1.config.weaponTypes)) {
         if (typeof v === "object") context.weaponCategories.types[k] = v._label;
       }
       const type = itemData.subType;
-      if (type in PF1.weaponTypes) {
-        for (const [k, v] of Object.entries(PF1.weaponTypes[type])) {
+      if (type in pf1.config.weaponTypes) {
+        for (const [k, v] of Object.entries(pf1.config.weaponTypes[type])) {
           // Add static targets
           if (!k.startsWith("_")) context.weaponCategories.subTypes[k] = v;
         }
@@ -346,19 +345,19 @@ export class ItemSheetPF extends ItemSheet {
     if (item.type === "equipment") {
       // Prepare categories for equipment
       context.equipmentCategories = { types: {}, subTypes: {} };
-      for (const [k, v] of Object.entries(PF1.equipmentTypes)) {
+      for (const [k, v] of Object.entries(pf1.config.equipmentTypes)) {
         if (typeof v === "object") context.equipmentCategories.types[k] = v._label;
       }
       const type = itemData.subType;
-      if (type in PF1.equipmentTypes) {
-        for (const [k, v] of Object.entries(PF1.equipmentTypes[type])) {
+      if (type in pf1.config.equipmentTypes) {
+        for (const [k, v] of Object.entries(pf1.config.equipmentTypes[type])) {
           // Add static targets
           if (!k.startsWith("_")) context.equipmentCategories.subTypes[k] = v;
         }
       }
 
       // Prepare slots for equipment
-      context.equipmentSlots = PF1.equipmentSlots[type];
+      context.equipmentSlots = pf1.config.equipmentSlots[type];
 
       // Whether the equipment should show armor data
       context.showArmorData = ["armor", "shield"].includes(type);
@@ -405,10 +404,10 @@ export class ItemSheetPF extends ItemSheet {
       context.isMythicPath = itemData.subType === "mythic";
 
       for (const [a, s] of Object.entries(itemData.savingThrows)) {
-        s.label = PF1.savingThrows[a];
+        s.label = pf1.config.savingThrows[a];
       }
       for (const [a, s] of Object.entries(itemData.fc)) {
-        s.label = PF1.favouredClassBonuses[a];
+        s.label = pf1.config.favouredClassBonuses[a];
       }
 
       context.isBaseClass = itemData.subType === "base";
@@ -425,15 +424,15 @@ export class ItemSheetPF extends ItemSheet {
 
       // Add skill list
       if (!actor) {
-        context.skills = Object.entries(PF1.skills).reduce((cur, [skillId, label]) => {
+        context.skills = Object.entries(pf1.config.skills).reduce((cur, [skillId, label]) => {
           cur[skillId] = { name: label, classSkill: itemData.classSkills?.[skillId] === true };
           return cur;
         }, {});
       } else {
         // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = mergeObject(deepClone(PF1.skills), actorData.skills ?? {});
+        const skills = mergeObject(deepClone(pf1.config.skills), actorData.skills ?? {});
         context.skills = Object.entries(skills).reduce((cur, [skillId, skillData]) => {
-          const name = PF1.skills[skillId] != null ? PF1.skills[skillId] : skillData.name;
+          const name = pf1.config.skills[skillId] != null ? pf1.config.skills[skillId] : skillData.name;
           cur[skillId] = { name: name, classSkill: itemData.classSkills?.[skillId] === true };
           return cur;
         }, {});
@@ -442,9 +441,9 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare proficiencies & languages
     const profs = {
-      armorProf: PF1.armorProficiencies,
-      weaponProf: PF1.weaponProficiencies,
-      languages: PF1.languages,
+      armorProf: pf1.config.armorProficiencies,
+      weaponProf: pf1.config.weaponProficiencies,
+      languages: pf1.config.languages,
     };
     for (const [t, choices] of Object.entries(profs)) {
       if (t in itemData) {
@@ -461,7 +460,9 @@ export class ItemSheetPF extends ItemSheet {
 
         // Add custom entry
         if (trait.custom) {
-          trait.custom.split(PF1.re.traitSeparator).forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
+          trait.custom
+            .split(pf1.config.re.traitSeparator)
+            .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
         }
         trait.cssClass = !foundry.utils.isEmpty(trait.selected) ? "" : "inactive";
       }
@@ -471,9 +472,9 @@ export class ItemSheetPF extends ItemSheet {
     if (item.changes) {
       context.changeGlobals = {
         targets: {},
-        modifiers: PF1.bonusModifiers,
+        modifiers: pf1.config.bonusModifiers,
       };
-      for (const [k, v] of Object.entries(PF1.buffTargets)) {
+      for (const [k, v] of Object.entries(pf1.config.buffTargets)) {
         if (typeof v === "object") context.changeGlobals.targets[k] = v._label;
       }
 
@@ -502,7 +503,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Add distance units
-    context.distanceUnits = deepClone(PF1.distanceUnits);
+    context.distanceUnits = deepClone(pf1.config.distanceUnits);
     if (item.type !== "spell") {
       for (const d of ["close", "medium", "long"]) {
         delete context.distanceUnits[d];
@@ -691,10 +692,10 @@ export class ItemSheetPF extends ItemSheet {
    * @private
    */
   _getItemType(item) {
-    const typeKeys = Object.keys(PF1.itemTypes);
+    const typeKeys = Object.keys(pf1.config.itemTypes);
     let itemType = item.type;
     if (!typeKeys.includes(itemType)) itemType = typeKeys[0];
-    return game.i18n.localize(PF1.itemTypes[itemType]);
+    return game.i18n.localize(pf1.config.itemTypes[itemType]);
   }
 
   /**
@@ -740,19 +741,19 @@ export class ItemSheetPF extends ItemSheet {
       props.push(
         ...Object.entries(item.system.properties)
           .filter((e) => e[1] === true)
-          .map((e) => PF1.weaponProperties[e[0]])
+          .map((e) => pf1.config.weaponProperties[e[0]])
       );
     } else if (item.type === "spell") {
       props.push(labels.components, labels.materials);
     } else if (item.type === "equipment") {
       // Obfuscate wondrous item as clothing or other, if unidentified
       if (!item.showUnidentifiedData || item.system.subType !== "misc") {
-        props.push(PF1.equipmentTypes[item.system.subType][item.system.equipmentSubtype]);
+        props.push(pf1.config.equipmentTypes[item.system.subType][item.system.equipmentSubtype]);
       } else {
         if (item.system.slot === "slotless") {
-          props.push(PF1.equipmentTypes[item.system.subType]["other"]);
+          props.push(pf1.config.equipmentTypes[item.system.subType]["other"]);
         } else {
-          props.push(PF1.equipmentTypes[item.system.subType]["clothing"]);
+          props.push(pf1.config.equipmentTypes[item.system.subType]["clothing"]);
         }
       }
       // Add AC
@@ -764,7 +765,7 @@ export class ItemSheetPF extends ItemSheet {
     // Action type
     const itemActionTypes = item.actionTypes;
     if (itemActionTypes) {
-      props.push(...itemActionTypes.map((o) => PF1.itemActionTypes[o]));
+      props.push(...itemActionTypes.map((o) => pf1.config.itemActionTypes[o]));
     }
 
     // Action usage
@@ -1344,7 +1345,7 @@ export class ItemSheetPF extends ItemSheet {
       name: label.getAttribute("for"),
       title: label.innerText,
       subject: a.dataset.options,
-      choices: PF1[a.dataset.options],
+      choices: pf1.config[a.dataset.options],
     };
     new ActorTraitSelector(this.object, options).render(true);
   }
@@ -1502,7 +1503,7 @@ export class ItemSheetPF extends ItemSheet {
     const categories = getBuffTargetDictionary(this.item.actor);
 
     const part1 = change?.subTarget?.split(".")[0];
-    const category = PF1.buffTargets[part1]?.category ?? part1;
+    const category = pf1.config.buffTargets[part1]?.category ?? part1;
 
     // Show widget
     const w = new Widget_CategorizedItemPicker(
@@ -1553,7 +1554,7 @@ export class ItemSheetPF extends ItemSheet {
     const categories = getBuffTargetDictionary(this.item.actor, "contextNotes");
 
     const part1 = note?.subTarget?.split(".")[0];
-    const category = PF1.contextNoteTargets[part1]?.category ?? part1;
+    const category = pf1.config.contextNoteTargets[part1]?.category ?? part1;
 
     // Show widget
     const w = new Widget_CategorizedItemPicker(

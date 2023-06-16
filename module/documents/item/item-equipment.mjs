@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemEquipmentPF extends ItemPF {
@@ -8,14 +7,14 @@ export class ItemEquipmentPF extends ItemPF {
     if (type !== undefined && type !== this.subType) {
       // Set subtype
       const subtype = update.system?.equipmentSubtype ?? this.system.equipmentSubtype ?? "";
-      const subtypes = Object.keys(PF1.equipmentTypes[type] ?? {}).filter((o) => !o.startsWith("_"));
+      const subtypes = Object.keys(pf1.config.equipmentTypes[type] ?? {}).filter((o) => !o.startsWith("_"));
       if (!subtype || !subtypes.includes(subtype)) {
         update.system.equipmentSubtype = subtypes[0];
       }
 
       // Set slot
       const slot = update.system?.slot ?? this.system.slot ?? "";
-      const slotTypes = Object.keys(PF1.equipmentSlots[type] ?? {});
+      const slotTypes = Object.keys(pf1.config.equipmentSlots[type] ?? {});
       if (!slot || !slotTypes.includes(slot)) {
         setProperty(update, "system.slot", slotTypes[0]);
       }
@@ -42,15 +41,15 @@ export class ItemEquipmentPF extends ItemPF {
     const itemData = this.system;
 
     let eType = this.subType;
-    const typeKeys = Object.keys(PF1.equipmentTypes);
+    const typeKeys = Object.keys(pf1.config.equipmentTypes);
     if (!typeKeys.includes(eType)) eType = typeKeys[0];
 
     let eSubtype = this.system.equipmentSubtype;
-    const subtypeKeys = Object.keys(PF1.equipmentTypes[eType]).filter((o) => !o.startsWith("_"));
+    const subtypeKeys = Object.keys(pf1.config.equipmentTypes[eType]).filter((o) => !o.startsWith("_"));
     if (!subtypeKeys.includes(eSubtype)) eSubtype = subtypeKeys[0];
 
-    labels.equipmentType = PF1.equipmentTypes[eType]._label;
-    labels.equipmentSubtype = PF1.equipmentTypes[eType][eSubtype];
+    labels.equipmentType = pf1.config.equipmentTypes[eType]._label;
+    labels.equipmentSubtype = pf1.config.equipmentTypes[eType][eSubtype];
 
     const ac = this.showUnidentifiedData
       ? itemData.armor.value || 0
@@ -79,8 +78,8 @@ export class ItemEquipmentPF extends ItemPF {
       if (!actor?.system || !actor?.equipment) return;
 
       const actorData = actor.system;
-      const shieldTypes = PF1.shieldTypes,
-        armorTypes = PF1.armorTypes;
+      const shieldTypes = pf1.config.shieldTypes,
+        armorTypes = pf1.config.armorTypes;
 
       switch (itemData.subType) {
         case "shield": {

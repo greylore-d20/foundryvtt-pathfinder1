@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemFeatPF extends ItemPF {
@@ -31,13 +30,13 @@ export class ItemFeatPF extends ItemPF {
     const labels = super.getLabels({ actionId });
     const { subType, abilityType } = this.system;
 
-    labels.featType = PF1.featTypes[subType];
-    labels.abilityType = PF1.abilityTypes[this.system.abilityType]?.short;
-    labels.traitType = PF1.traitTypes[this.system.traitType];
+    labels.featType = pf1.config.featTypes[subType];
+    labels.abilityType = pf1.config.abilityTypes[this.system.abilityType]?.short;
+    labels.traitType = pf1.config.traitTypes[this.system.traitType];
 
     // Ability type
     if (abilityType && abilityType !== "none") {
-      labels.abilityType = PF1.abilityTypes[abilityType].short;
+      labels.abilityType = pf1.config.abilityTypes[abilityType].short;
     } else if (labels.abilityType) {
       delete labels.abilityType;
     }

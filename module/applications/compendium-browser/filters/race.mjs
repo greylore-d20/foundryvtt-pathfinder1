@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { CheckboxFilter } from "./checkbox.mjs";
 
 export class CreatureTypeFilter extends CheckboxFilter {
@@ -8,7 +7,7 @@ export class CreatureTypeFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.creatureTypes);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.creatureTypes);
   }
 }
 

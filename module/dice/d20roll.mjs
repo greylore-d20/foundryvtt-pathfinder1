@@ -142,7 +142,7 @@ export class D20RollPF extends RollPF {
 
   /**
    * Return a standardized representation for the displayed formula associated with this Roll.
-   * This formula includes any {@link pf1!types.D20RollOptions.bonus bonus} that might not be part of this roll's {@link terms}.
+   * This formula includes any {@link D20RollOptions.bonus bonus} that might not be part of this roll's {@link terms}.
    *
    * @type {string}
    */
@@ -165,7 +165,7 @@ export class D20RollPF extends RollPF {
   /**
    * Render a {@link Dialog} for the user to enter additional bonuses, set a static roll result, or take 10/20.
    *
-   * @param {D20RollDialogOptions} [options={}] - Additional options determining what options to show in the dialog
+   * @param {D20RollDialogOptions} [options] - Additional options determining what options to show in the dialog
    * @returns {Promise<this | null>} A promise that resolves when the dialog is closed
    */
   async promptDialog(options = {}) {
@@ -368,7 +368,7 @@ export class D20RollPF extends RollPF {
 /**
  * Performs an actor based d20 roll.
  *
- * @param {Partial<D20ActorRollOptions>} [options={}]
+ * @param {Partial<D20ActorRollOptions>} [options]
  * @example Rolling a 1d20 + an actor's BAB + 2 for good behavior
  * ```js
  * const actor = game.actors.getName("Righteous Paladin");

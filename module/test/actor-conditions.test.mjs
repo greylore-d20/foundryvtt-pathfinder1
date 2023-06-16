@@ -1,6 +1,5 @@
 import { ActorPF } from "../documents/actor/actor-pf.mjs";
 import { getAbilityModifier } from "@utils";
-import { PF1 } from "../config.mjs";
 import { createTestActor } from "./actor-utils.mjs";
 
 export const registerActorConditionsTests = () => {
@@ -92,7 +91,7 @@ export const registerActorConditionsTests = () => {
         });
 
         it("lowered ability checks", function () {
-          for (const ability of Object.keys(PF1.abilities)) {
+          for (const ability of Object.keys(pf1.config.abilities)) {
             expect(actor.system.abilities[ability].checkMod).to.equal(-2);
             expect(actor.sourceDetails[`system.abilities.${ability}.checkMod`]).to.be.an("array").that.deep.includes({
               name: "Shaken",
@@ -180,7 +179,7 @@ export const registerActorConditionsTests = () => {
         });
 
         it("lowered ability checks", function () {
-          for (const ability of Object.keys(PF1.abilities)) {
+          for (const ability of Object.keys(pf1.config.abilities)) {
             expect(actor.system.abilities[ability].checkMod).to.equal(-2);
             expect(actor.sourceDetails[`system.abilities.${ability}.checkMod`]).to.be.an("array").that.deep.includes({
               name: "Sickened",

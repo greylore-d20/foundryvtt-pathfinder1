@@ -1,5 +1,3 @@
-import { PF1 } from "@config";
-
 /**
  * Returns the result of a roll of die, which changes based on different sizes.
  *
@@ -13,7 +11,7 @@ import { PF1 } from "@config";
  */
 export const sizeRoll = function (origCount, origSides, targetSize = "M", initialSize = "M") {
   const _getSizeIndex = function (size) {
-    if (typeof size === "string") return Object.values(PF1.sizeChart).indexOf(size.toUpperCase());
+    if (typeof size === "string") return Object.values(pf1.config.sizeChart).indexOf(size.toUpperCase());
     return size;
   };
   targetSize = _getSizeIndex(targetSize);
@@ -48,7 +46,7 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
   // Get initial die type
   const mediumDie = `${origCount}d${origSides}`;
   const mediumDieMax = origCount * origSides;
-  let c = duplicate(PF1.sizeDie);
+  let c = duplicate(pf1.config.sizeDie);
   {
     if (c.indexOf(mediumDie) === -1) {
       c = c.map((d) => {
@@ -116,8 +114,8 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
 };
 
 export const sizeReach = function (size = "M", reach = false, stature = "tall") {
-  if (typeof size === "number") size = Object.values(PF1.sizeChart)[size];
-  size = Object.entries(PF1.sizeChart).find((o) => o[1] === size)[0];
+  if (typeof size === "number") size = Object.values(pf1.config.sizeChart)[size];
+  size = Object.entries(pf1.config.sizeChart).find((o) => o[1] === size)[0];
 
   return [
     new NumericTerm({

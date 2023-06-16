@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { ItemSheetPF } from "./item-sheet.mjs";
 import { ItemPF } from "../../documents/item/item-pf.mjs";
 import { splitCurrency } from "../../utils/lib.mjs";
@@ -244,7 +243,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         dataset: { type: "consumable" },
       },
       gear: {
-        label: PF1.lootTypes["gear"],
+        label: pf1.config.lootTypes["gear"],
         canCreate: true,
         hasActions: false,
         items: [],
@@ -252,7 +251,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeGearSingle"), "sub-type": "gear" },
       },
       ammo: {
-        label: PF1.lootTypes["ammo"],
+        label: pf1.config.lootTypes["ammo"],
         canCreate: true,
         hasActions: false,
         items: [],
@@ -260,7 +259,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeAmmoSingle"), "sub-type": "ammo" },
       },
       misc: {
-        label: PF1.lootTypes["misc"],
+        label: pf1.config.lootTypes["misc"],
         canCreate: true,
         hasActions: false,
         items: [],
@@ -268,7 +267,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         dataset: { type: "loot", "type-name": game.i18n.localize("PF1.Misc"), "sub-type": "misc" },
       },
       tradeGoods: {
-        label: PF1.lootTypes["tradeGoods"],
+        label: pf1.config.lootTypes["tradeGoods"],
         canCreate: true,
         hasActions: false,
         items: [],

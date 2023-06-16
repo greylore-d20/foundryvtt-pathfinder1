@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
 import {
@@ -200,7 +199,7 @@ export class ActorSheetPF extends ActorSheet {
       cssClass: isOwner ? "editable" : "locked",
       isCharacter: this.document.type === "character",
       hasRace: false,
-      config: PF1,
+      config: pf1.config,
       useBGSkills: game.settings.get("pf1", "allowBackgroundSkills"),
       isGM: game.user.isGM,
       race: this.document.race != null ? this.document.race.toObject() : null,
@@ -280,7 +279,7 @@ export class ActorSheetPF extends ActorSheet {
     {
       const attributes = data.system.attributes,
         abilities = data.system.abilities,
-        sizeModifier = PF1.sizeMods[data.system.traits.size],
+        sizeModifier = pf1.config.sizeMods[data.system.traits.size],
         baseBonus = attributes.attack.shared + attributes.attack.general + sizeModifier,
         meleeAbility = abilities[attributes.attack.meleeAbility]?.mod ?? 0,
         rangedAbility = abilities[attributes.attack.rangedAbility]?.mod ?? 0;
@@ -316,7 +315,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Ability Scores
     for (const [a, abl] of Object.entries(data.system.abilities)) {
-      abl.label = PF1.abilities[a];
+      abl.label = pf1.config.abilities[a];
       abl.totalLabel = abl.total == null ? "-" : abl.total;
 
       abl.sourceDetails = [
@@ -327,14 +326,14 @@ export class ActorSheetPF extends ActorSheet {
 
     // Armor Class
     for (const [a, ac] of Object.entries(data.system.attributes.ac)) {
-      ac.label = PF1.ac[a];
-      ac.valueLabel = PF1.acValueLabels[a];
+      ac.label = pf1.config.ac[a];
+      ac.valueLabel = pf1.config.acValueLabels[a];
       ac.sourceDetails = data.sourceDetails != null ? data.sourceDetails.system.attributes.ac[a].total : [];
     }
 
     // Saving Throws
     for (const [a, savingThrow] of Object.entries(data.system.attributes.savingThrows)) {
-      savingThrow.label = PF1.savingThrows[a];
+      savingThrow.label = pf1.config.savingThrows[a];
       savingThrow.sourceDetails =
         data.sourceDetails != null ? data.sourceDetails.system.attributes.savingThrows[a].total : [];
     }
@@ -342,10 +341,10 @@ export class ActorSheetPF extends ActorSheet {
     // Update skill labels
     const acp = this.document.system.attributes?.acp?.total;
     for (const [s, skl] of Object.entries(data.system.skills ?? {})) {
-      skl.label = PF1.skills[s];
-      skl.arbitrary = PF1.arbitrarySkills.includes(s);
+      skl.label = pf1.config.skills[s];
+      skl.arbitrary = pf1.config.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
-      skl.compendiumEntry = PF1.skillCompendiumEntries[s] ?? skl.journal ?? null;
+      skl.compendiumEntry = pf1.config.skillCompendiumEntries[s] ?? skl.journal ?? null;
 
       // Add skill rank source
       if (skl.rank > 0) {
@@ -365,7 +364,7 @@ export class ActorSheetPF extends ActorSheet {
       // Add ability modifier source
       if (skl.ability) {
         skl.sourceDetails.push({
-          name: PF1.abilities[skl.ability],
+          name: pf1.config.abilities[skl.ability],
           value: data.rollData.abilities[skl.ability]?.mod ?? 0,
         });
       }
@@ -387,7 +386,7 @@ export class ActorSheetPF extends ActorSheet {
             }
           }
           skl2.sourceDetails.push({
-            name: PF1.abilities[skl2.ability],
+            name: pf1.config.abilities[skl2.ability],
             value: data.system.abilities[skl2.ability]?.mod ?? 0,
           });
           if (
@@ -449,8 +448,8 @@ export class ActorSheetPF extends ActorSheet {
         const fcSkills = cls.system.fc.skill.value;
         skillRanks.allowed +=
           Math.max(1, clsSkillsPerLevel + this.document.system.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills && PF1.backgroundSkillClasses.includes(cls.system.subType))
-          skillRanks.bgAllowed += clsLevel * PF1.backgroundSkillsPerLevel;
+        if (data.useBGSkills && pf1.config.backgroundSkillClasses.includes(cls.system.subType))
+          skillRanks.bgAllowed += clsLevel * pf1.config.backgroundSkillsPerLevel;
 
         sourceData.push({
           name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
@@ -643,14 +642,15 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _prepareTraits(traits) {
+    const damageTypes = pf1.registry.damageTypes.toLocalisedObject();
     const map = {
       // "dr": PF1.damageTypes,
-      di: PF1.damageTypes,
-      dv: PF1.damageTypes,
-      ci: PF1.conditionTypes,
-      languages: PF1.languages,
-      armorProf: PF1.armorProficiencies,
-      weaponProf: PF1.weaponProficiencies,
+      di: damageTypes,
+      dv: damageTypes,
+      ci: pf1.config.conditionTypes,
+      languages: pf1.config.languages,
+      armorProf: pf1.config.armorProficiencies,
+      weaponProf: pf1.config.weaponProficiencies,
     };
     for (const [t, choices] of Object.entries(map)) {
       const trait = traits[t];
@@ -669,10 +669,14 @@ export class ActorSheetPF extends ActorSheet {
 
       // Prefer total over value for dynamically collected proficiencies
       if (trait.customTotal) {
-        trait.customTotal.split(PF1.re.traitSeparator).forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
+        trait.customTotal
+          .split(pf1.config.re.traitSeparator)
+          .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
       } else if (trait.custom) {
         // Add custom entry
-        trait.custom.split(PF1.re.traitSeparator).forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
+        trait.custom
+          .split(pf1.config.re.traitSeparator)
+          .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
       }
       trait.cssClass = !foundry.utils.isEmpty(trait.selected) ? "" : "inactive";
     }
@@ -683,12 +687,12 @@ export class ActorSheetPF extends ActorSheet {
 
     for (const [k, v] of Object.entries(senses)) {
       if (k === "ll" && senses[k].enabled) {
-        result[k] = PF1.senses[k];
+        result[k] = pf1.config.senses[k];
         continue;
       }
 
       if (k === "custom" && v.length) {
-        v.split(PF1.re.traitSeparator).forEach((c, i) => {
+        v.split(pf1.config.re.traitSeparator).forEach((c, i) => {
           result[`custom${i + 1}`] = c.trim();
         });
         continue;
@@ -696,12 +700,12 @@ export class ActorSheetPF extends ActorSheet {
 
       if (typeof v === "number" && v > 0) {
         const converted = pf1.utils.convertDistance(v);
-        result[k] = `${PF1.senses[k]} ${converted[0]} ${converted[1]}`;
+        result[k] = `${pf1.config.senses[k]} ${converted[0]} ${converted[1]}`;
         continue;
       }
 
       if (v === true) {
-        result[k] = PF1.senses[k];
+        result[k] = pf1.config.senses[k];
         continue;
       }
     }
@@ -728,7 +732,8 @@ export class ActorSheetPF extends ActorSheet {
     if (book.autoSpellLevelCalculation) {
       const cl = book.cl.autoSpellLevelTotal;
 
-      const castsPerDay = PF1.casterProgression.castsPerDay[book.spellPreparationMode]?.[book.casterType]?.[cl - 1];
+      const castsPerDay =
+        pf1.config.casterProgression.castsPerDay[book.spellPreparationMode]?.[book.casterType]?.[cl - 1];
       // Check against undefined protects against bad CL modifications.
       max = castsPerDay !== undefined ? castsPerDay.length - 1 : 0;
     }
@@ -748,7 +753,7 @@ export class ActorSheetPF extends ActorSheet {
           spontaneous: book.spontaneous,
           canCreate: owner === true,
           canPrepare: data.actor.type === "character",
-          label: PF1.spellLevels[level],
+          label: pf1.config.spellLevels[level],
           items: [],
           uses: spellLevel.value || 0,
           baseSlots: spellLevel.base || 0,
@@ -791,7 +796,7 @@ export class ActorSheetPF extends ActorSheet {
     keys.forEach((a) => {
       const skl = skillset[a];
       // Include all bute Lore and Artistry in all
-      if (!PF1.backgroundOnlySkills.includes(a)) result.all.skills[a] = skl;
+      if (!pf1.config.backgroundOnlySkills.includes(a)) result.all.skills[a] = skl;
       if (skl.background) result.background.skills[a] = skl;
       else result.adventure.skills[a] = skl;
     });
@@ -870,8 +875,8 @@ export class ActorSheetPF extends ActorSheet {
         heavy: Math.clamped(((carriedWeight - load.medium) * 100) / (load.heavy - load.medium), 0, 99.5),
       },
       encumbered: {
-        light: actorData.attributes.encumbrance.level >= PF1.encumbranceLevels.medium,
-        medium: actorData.attributes.encumbrance.level >= PF1.encumbranceLevels.heavy,
+        light: actorData.attributes.encumbrance.level >= pf1.config.encumbranceLevels.medium,
+        medium: actorData.attributes.encumbrance.level >= pf1.config.encumbranceLevels.heavy,
         heavy: actorData.attributes.encumbrance.carriedWeight >= actorData.attributes.encumbrance.levels.heavy,
       },
       light: actorData.attributes.encumbrance.levels.light,
@@ -1861,7 +1866,7 @@ export class ActorSheetPF extends ActorSheet {
     const skill = this.document.system.skills[mainSkillId];
     const subSkillId = $(event.currentTarget).parents(".sub-skill").attr("data-skill");
     const subSkill = skill?.subSkills?.[subSkillId];
-    const skillName = `${PF1.skills[mainSkillId] ?? skill.name} (${subSkill.name})`;
+    const skillName = `${pf1.config.skills[mainSkillId] ?? skill.name} (${subSkill.name})`;
 
     const deleteSkill = () => {
       const updateData = {};
@@ -1889,7 +1894,7 @@ export class ActorSheetPF extends ActorSheet {
     if (!this.document.testUserPermission(game.user, "OWNER")) return;
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
     const skill = this.document.system.skills[skillId];
-    const skillName = PF1.skills[skillId] ?? skill.name;
+    const skillName = pf1.config.skills[skillId] ?? skill.name;
 
     const deleteSkill = () => {
       const updateData = {};
@@ -1960,7 +1965,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const a = event.currentTarget;
 
-    const items = Object.entries(PF1.alignmentsShort).reduce((cur, o) => {
+    const items = Object.entries(pf1.config.alignmentsShort).reduce((cur, o) => {
       cur.push({ value: o[0], label: game.i18n.localize(o[1]) });
       return cur;
     }, []);
@@ -2389,7 +2394,7 @@ export class ActorSheetPF extends ActorSheet {
         dataset: { type: "consumable" },
       },
       gear: {
-        label: PF1.lootTypes["gear"],
+        label: pf1.config.lootTypes["gear"],
         canCreate: true,
         hasActions: false,
         items: [],
@@ -2397,7 +2402,7 @@ export class ActorSheetPF extends ActorSheet {
         dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeGearSingle"), "sub-type": "gear" },
       },
       ammo: {
-        label: PF1.lootTypes["ammo"],
+        label: pf1.config.lootTypes["ammo"],
         canCreate: true,
         hasActions: false,
         items: [],
@@ -2405,7 +2410,7 @@ export class ActorSheetPF extends ActorSheet {
         dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeAmmoSingle"), "sub-type": "ammo" },
       },
       misc: {
-        label: PF1.lootTypes["misc"],
+        label: pf1.config.lootTypes["misc"],
         canCreate: true,
         hasActions: false,
         items: [],
@@ -2413,7 +2418,7 @@ export class ActorSheetPF extends ActorSheet {
         dataset: { type: "loot", "type-name": game.i18n.localize("PF1.Misc"), "sub-type": "misc" },
       },
       tradeGoods: {
-        label: PF1.lootTypes["tradeGoods"],
+        label: pf1.config.lootTypes["tradeGoods"],
         canCreate: true,
         hasActions: false,
         items: [],
@@ -2506,13 +2511,13 @@ export class ActorSheetPF extends ActorSheet {
     const features = {};
     const featureDefaults = { items: [], canCreate: true, hasActions: true };
     const featData = this.constructor.featTypeData;
-    for (const [featKey, featValue] of Object.entries(PF1.featTypes)) {
+    for (const [featKey, featValue] of Object.entries(pf1.config.featTypes)) {
       // Merge type specific data into common data template
       features[featKey] = mergeObject(
         featureDefaults,
         {
           // Fist generic data derived from the config object
-          label: PF1.featTypesPlurals[featKey] ?? featValue,
+          label: pf1.config.featTypesPlurals[featKey] ?? featValue,
           dataset: { type: "feat", "type-name": game.i18n.localize(featValue), "sub-type": featKey },
           // Then any specific data explicitly set to override defaults
           ...featData[featKey],
@@ -2524,8 +2529,8 @@ export class ActorSheetPF extends ActorSheet {
     for (const f of feats) {
       const k = f.subType;
       if (f.abilityType && f.abilityType !== "none") {
-        f.abilityTypeShort = PF1.abilityTypes[f.abilityType].short;
-        f.abilityType = PF1.abilityTypes[f.abilityType].long;
+        f.abilityTypeShort = pf1.config.abilityTypes[f.abilityType].short;
+        f.abilityType = pf1.config.abilityTypes[f.abilityType].long;
       } else {
         f.abilityTypeShort = "";
         f.abilityType = "";
@@ -2541,7 +2546,7 @@ export class ActorSheetPF extends ActorSheet {
     let buffs = data.items.filter((obj) => obj.type === "buff");
     buffs = this._filterItems(buffs, this._filters.buffs);
     const buffSections = {};
-    Object.entries(PF1.buffTypes).forEach(([buffId, label]) => {
+    Object.entries(pf1.config.buffTypes).forEach(([buffId, label]) => {
       buffSections[buffId] = {
         label,
         items: [],
@@ -2793,11 +2798,15 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const a = event.currentTarget;
     const label = a.parentElement.querySelector("label");
+    const choices =
+      a.dataset.options in pf1.registry
+        ? pf1.registry[a.dataset.options].toLocalisedObject()
+        : pf1.config[a.dataset.options];
     const options = {
       name: label.getAttribute("for"),
       title: label.innerText,
       subject: a.dataset.options,
-      choices: PF1[a.dataset.options],
+      choices: choices,
     };
 
     const app = Object.values(this.document.apps).find((o) => {

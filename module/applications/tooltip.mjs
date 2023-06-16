@@ -1,5 +1,3 @@
-import { PF1 } from "@config";
-
 export class TooltipPF extends Application {
   constructor() {
     super();
@@ -148,8 +146,8 @@ export class TooltipPF extends Application {
         if (active === true) {
           data.conditions = data.conditions || [];
           data.conditions.push({
-            label: PF1.conditions[conditionId],
-            icon: PF1.conditionTextures[conditionId],
+            label: pf1.config.conditions[conditionId],
+            icon: pf1.config.conditionTextures[conditionId],
           });
         }
       }

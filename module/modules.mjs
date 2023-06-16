@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { convertDistance } from "./utils/lib.mjs";
 
 /**
@@ -25,8 +24,8 @@ export function initializeModules() {
         getRanges(token) {
           const baseSpeed = convertDistance(this.getBaseSpeed(token))[0];
           const rollData = token.actor.getRollData(),
-            inHeavyArmor = rollData.armor.type >= PF1.armorTypes.heavy,
-            inHeavyLoad = rollData.attributes.encumbrance.level >= PF1.encumbranceLevels.heavy;
+            inHeavyArmor = rollData.armor.type >= pf1.config.armorTypes.heavy,
+            inHeavyLoad = rollData.attributes.encumbrance.level >= pf1.config.encumbranceLevels.heavy;
 
           let runMultiplier = 4;
           if (inHeavyArmor || inHeavyLoad) runMultiplier = 3;

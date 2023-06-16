@@ -1,5 +1,4 @@
 import { CheckboxFilter } from "./checkbox.mjs";
-import { PF1 } from "@config";
 
 export class SpellSchoolFilter extends CheckboxFilter {
   static label = "PF1.SpellSchool";
@@ -8,7 +7,7 @@ export class SpellSchoolFilter extends CheckboxFilter {
 
   /** @override */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.spellSchools);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.spellSchools);
   }
 }
 
@@ -55,6 +54,6 @@ export class SpellLevelFilter extends CheckboxFilter {
 
   /** @override */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.spellLevels);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.spellLevels);
   }
 }

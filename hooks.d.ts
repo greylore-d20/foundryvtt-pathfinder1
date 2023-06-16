@@ -22,8 +22,6 @@
 import { ActorPF } from "@actor/actor-pf.mjs";
 import { ItemPF } from "@item/item-pf.mjs";
 import { ItemBuffPF } from "@item/item-buff.mjs";
-import { PF1 } from "@config";
-import { ItemContainerPF } from "@item/item-container.mjs";
 import { ItemSheetPF_Container } from "./module/applications/item/container-sheet.mjs";
 import { ItemAction } from "@component/action.mjs";
 import { ItemChange } from "@component/change.mjs";
@@ -74,14 +72,14 @@ declare global {
        *
        * @group Actor
        * @remarks Called by {@link Hooks.callAll}
-       * @see {@link pf1!config conditionTypes in pf1.config}
+       * @see {@link pf1.config.conditionTypes conditions}
        * @param actor - The actor whose conditions have changed.
        * @param condition - The name of the condition that has changed as per `CONFIG.PF1.conditionTypes`.
        * @param state - The new state of the condition.
        */
       pf1ToggleActorCondition: (
         actor: ActorPF,
-        condition: keyof typeof PF1.conditionTypes | (string & {}),
+        condition: keyof typeof pf1.config.conditionTypes | (string & {}), // string & {} prevents the enum strings from disappearing into string
         state: boolean
       ) => void;
 
@@ -136,7 +134,7 @@ declare global {
        *
        * @group Actor
        * @remarks Called by {@link Hooks.call}
-       * @see {@link pf1!documents.actor.ActorPF.performRest ActorPF#performRest}
+       * @see {@link pf1.documents.actor.ActorPF.performRest ActorPF#performRest}
        * @param actor - The actor who is resting.
        * @param restOptions - The options passed to the method's call.
        *   Mutating this data will not affect the system's calculations, as they are finished when this hook is fired.
@@ -159,7 +157,7 @@ declare global {
        *
        * @group Actor
        * @remarks Called by {@link Hooks.callAll}
-       * @see {@link pf1!documents.actor.ActorPF.performRest ActorPF#performRest}
+       * @see {@link pf1.documents.actor.ActorPF.performRest ActorPF#performRest}
        * @param actor - The actor who has rested.
        * @param restOptions - The options passed to the method's call.
        *   Mutating this data will not affect the system's calculations, as they are finished when this hook is fired.
@@ -393,7 +391,7 @@ declare global {
        *
        * @group Item
        * @remarks Called by {@link Hooks.call}
-       * @see {@link pf1!documents.item.ItemPF.displayCard ItemPF#displayCard}
+       * @see {@link pf1.documents.item.ItemPF.displayCard ItemPF#displayCard}
        * @param item - The item whose chat card is being displayed.
        * @param data - Data related to the item's use.
        * @returns Explicitly return `false` to prevent the item's chat card from being displayed.
@@ -444,7 +442,7 @@ declare global {
       /**
        * A hook event fired by the system when the system determines which data fields a change target should affect,
        * i.e. flattens the change target to target data fields.
-       * This is called for every {@link pf1!components.ItemChange ItemChange} on every actor for every data preparation,
+       * This is called for every {@link pf1.components.ItemChange ItemChange} on every actor for every data preparation,
        * so callbacks should be efficient.
        *
        * @group Changes
@@ -466,14 +464,14 @@ declare global {
        * });
        * ```
        * @param changeTarget - The change target as per the change's `subTarget` property,
-       *   see {@link pf1!components.ItemChange.subTarget ItemChange#subTarget} and {@link pf1!config pf1.config.buffTargets}.
+       *   see {@link pf1.components.ItemChange.subTarget ItemChange#subTarget} and {@link pf1.config.buffTargets change targets}.
        * @param changeType - The change type as per the change's `modifier` property,
-       *   see {@link pf1!components.ItemChange.modifier ItemChange#modifier} and {@link pf1!config pf1.config.bonusModifiers}.
+       *   see {@link pf1.components.ItemChange.modifier ItemChange#modifier} and {@link pf1.config.bonusModifiers change modifiers}.
        * @param result - An array of target data fields.
        * @param curData - The current data of the actor the change is being applied to.
        */
       pf1GetChangeFlat: (
-        changeTarget: string,
+        changeTarget: BuffTarget | (string & {}),
         changeType: string,
         result: string[],
         curData: Record<string, unknown>
@@ -504,14 +502,14 @@ declare global {
       //         Migration         //
       // ------------------------- //
       /**
-       * A hook event fired by the system when it starts its {@link pf1!migrations.migrateWorld migration}.
+       * A hook event fired by the system when it starts its {@link pf1.migrations.migrateWorld migration}.
        *
        * @group Migration
        * @remarks Called by {@link Hooks.callAll}
        */
       pf1MigrationStarted: () => void;
       /**
-       * A hook event fired by the system when it has finished its {@link pf1!migrations.migrateWorld migration}.
+       * A hook event fired by the system when it has finished its {@link pf1.migrations.migrateWorld migration}.
        *
        * @group Migration
        * @remarks Called by {@link Hooks.callAll}
@@ -544,7 +542,7 @@ declare global {
       /**
        * A hook event fired by the system when a generic dice roll is made.
        *
-       * @see {@link pf1!dice.DicePF.d20Roll DicePF.d20Roll}
+       * @see {@link pf1.dice.DicePF.d20Roll DicePF.d20Roll}
        * @deprecated Use `PreActorRoll*` hooks instead.
        * @group Dice
        * @remarks Called by {@link Hooks.call}
@@ -595,9 +593,9 @@ declare global {
        *
        * @group Roll Data
        * @remarks Called by {@link Hooks.callAll}
-       * @see {@link pf1!documents.actor.ActorPF.getRollData ActorPF#getRollData}
-       * @see {@link pf1!documents.item.ItemPF.getRollData ItemPF#getRollData}
-       * @see {@link pf1!components.ItemAction.getRollData ItemAction#getRollData}
+       * @see {@link pf1.documents.actor.ActorPF.getRollData ActorPF#getRollData}
+       * @see {@link pf1.documents.item.ItemPF.getRollData ItemPF#getRollData}
+       * @see {@link pf1.components.ItemAction.getRollData ItemAction#getRollData}
        * @param document - The document or component whose roll data is to be created.
        * @param data - The created roll data that can be modified.
        */

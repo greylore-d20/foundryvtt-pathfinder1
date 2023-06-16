@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { measureDistance as unifiedMeasureDistance } from "./lib.mjs";
 
 /**
@@ -26,10 +25,10 @@ export const measureDistances = function (segments, options = {}) {
  */
 export const getConditions = function () {
   const core = CONFIG.statusEffects;
-  let sys = Object.keys(PF1.conditions).map((c) => ({
+  let sys = Object.keys(pf1.config.conditions).map((c) => ({
     id: c,
-    label: PF1.conditions[c],
-    icon: PF1.conditionTextures[c],
+    label: pf1.config.conditions[c],
+    icon: pf1.config.conditionTextures[c],
   }));
   if (game.settings.get("pf1", "coreEffects")) sys.push(...core);
   else sys = [core[0]].concat(sys);

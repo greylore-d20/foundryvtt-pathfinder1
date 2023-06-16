@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { CheckboxFilter } from "./checkbox.mjs";
 
 export class ClassTypeFilter extends CheckboxFilter {
@@ -8,7 +7,7 @@ export class ClassTypeFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.classTypes);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.classTypes);
   }
 }
 
@@ -25,7 +24,7 @@ export class ClassBaseAttackBonusFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.classBAB);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.classBAB);
   }
 }
 
@@ -39,7 +38,7 @@ class ClassSavingThrowFilter extends CheckboxFilter {
   static type = "class";
   static savingThrow = "";
   static get label() {
-    return PF1.savingThrows[this.savingThrow] ?? "";
+    return pf1.config.savingThrows[this.savingThrow] ?? "";
   }
   static get indexField() {
     return `system.savingThrows.${this.savingThrow}.value`;
@@ -47,7 +46,7 @@ class ClassSavingThrowFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.classSavingThrows);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.classSavingThrows);
     this.choices.set("none", { label: game.i18n.localize("PF1.None"), key: "none" });
   }
 

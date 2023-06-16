@@ -5,7 +5,7 @@ module.exports = {
     es2022: true,
     node: true,
   },
-  extends: ["eslint:recommended", "plugin:prettier/recommended", "plugin:jsdoc/recommended"],
+  extends: ["eslint:recommended", "plugin:prettier/recommended", "plugin:jsdoc/recommended-typescript-flavor"],
   parserOptions: {
     ecmaVersion: 2022,
     sourceType: "module",
@@ -27,7 +27,8 @@ module.exports = {
     "newline-per-chained-call": "off",
     "no-plusplus": "off",
     "valid-jsdoc": "off",
-    "jsdoc/no-undefined-types": ["warn", { definedTypes: ["Record", "JQuery"] }],
+    "jsdoc/tag-lines": ["error", "any", { startLines: 1 }],
+    "jsdoc/no-defaults": ["off"],
   },
   settings: {
     jsdoc: {

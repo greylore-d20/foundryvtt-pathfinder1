@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { RollPF } from "../../../dice/roll.mjs";
 import { fractionalToString } from "@utils";
 import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
@@ -96,7 +95,7 @@ const createOverride = function () {
     set: {},
   };
 
-  for (const k of Object.keys(PF1.bonusModifiers)) {
+  for (const k of Object.keys(pf1.config.bonusModifiers)) {
     result.add[k] = null;
     result.set[k] = null;
   }
@@ -107,7 +106,7 @@ const createOverride = function () {
 const getSortChangePriority = function () {
   /** @type {[string, {sort: number}][]}*/
   const skillTargets = this._skillTargets.map((target, index) => [target, { sort: 76000 + index * 10 }]);
-  const buffTargets = Object.entries(PF1.buffTargets);
+  const buffTargets = Object.entries(pf1.config.buffTargets);
   const types = [...skillTargets, ...buffTargets]
     .sort(([, { sort: aSort }], [, { sort: bSort }]) => aSort - bSort)
     .map(([target]) => target);
@@ -752,7 +751,7 @@ export const addDefaultChanges = function (changes) {
 
     // Fractional bonus +2 when one class has good save
     if (useFractional && hasGoodSave) {
-      const goodSaveFormula = PF1.classFractionalSavingThrowFormulas.goodSaveBonus;
+      const goodSaveFormula = pf1.config.classFractionalSavingThrowFormulas.goodSaveBonus;
       const total = RollPF.safeRoll(goodSaveFormula).total;
       changes.push(
         new pf1.components.ItemChange({
@@ -776,7 +775,7 @@ export const addDefaultChanges = function (changes) {
         target: "misc",
         subTarget: "mhp",
         modifier: "base",
-        flavor: PF1.abilities[hpAbility],
+        flavor: pf1.config.abilities[hpAbility],
       })
     );
 
@@ -788,7 +787,7 @@ export const addDefaultChanges = function (changes) {
           target: "misc",
           subTarget: "wounds",
           modifier: "base",
-          flavor: PF1.abilities[hpAbility],
+          flavor: pf1.config.abilities[hpAbility],
         })
       );
     }
@@ -863,14 +862,14 @@ export const addDefaultChanges = function (changes) {
     );
     // Strength or substitute to CMD
     const strAbl = actorData.attributes.cmd.strAbility;
-    if (strAbl in PF1.abilities) {
+    if (strAbl in pf1.config.abilities) {
       changes.push(
         new pf1.components.ItemChange({
           formula: `@abilities.${strAbl}.mod`,
           target: "misc",
           subTarget: "cmd",
           modifier: "untypedPerm",
-          flavor: PF1.abilities[strAbl],
+          flavor: pf1.config.abilities[strAbl],
         })
       );
     }
@@ -899,7 +898,7 @@ export const addDefaultChanges = function (changes) {
           subTarget: "init",
           modifier: "untypedPerm",
           priority: -100,
-          flavor: PF1.abilities[abl],
+          flavor: pf1.config.abilities[abl],
         })
       );
     }
@@ -932,7 +931,7 @@ export const addDefaultChanges = function (changes) {
           target: "savingThrows",
           subTarget: "fort",
           modifier: "untypedPerm",
-          flavor: PF1.abilities[abl],
+          flavor: pf1.config.abilities[abl],
         })
       );
     }
@@ -946,7 +945,7 @@ export const addDefaultChanges = function (changes) {
           target: "savingThrows",
           subTarget: "ref",
           modifier: "untypedPerm",
-          flavor: PF1.abilities[abl],
+          flavor: pf1.config.abilities[abl],
         })
       );
     }
@@ -960,7 +959,7 @@ export const addDefaultChanges = function (changes) {
           target: "savingThrows",
           subTarget: "will",
           modifier: "untypedPerm",
-          flavor: PF1.abilities[abl],
+          flavor: pf1.config.abilities[abl],
         })
       );
     }
@@ -1078,7 +1077,7 @@ export const addDefaultChanges = function (changes) {
   {
     const flyKey = actorData.attributes.speed.fly.maneuverability;
     let flyValue = 0;
-    if (flyKey != null) flyValue = PF1.flyManeuverabilityValues[flyKey];
+    if (flyKey != null) flyValue = pf1.config.flyManeuverabilityValues[flyKey];
     if (flyValue !== 0) {
       changes.push(
         new pf1.components.ItemChange({
@@ -1138,7 +1137,7 @@ export const addDefaultChanges = function (changes) {
     // AC
     changes.push(
       new pf1.components.ItemChange({
-        formula: PF1.sizeMods[sizeKey],
+        formula: pf1.config.sizeMods[sizeKey],
         target: "ac",
         subTarget: "ac",
         modifier: "size",
@@ -1148,7 +1147,7 @@ export const addDefaultChanges = function (changes) {
     // Stealth skill
     changes.push(
       new pf1.components.ItemChange({
-        formula: PF1.sizeStealthMods[sizeKey],
+        formula: pf1.config.sizeStealthMods[sizeKey],
         target: "skill",
         subTarget: "skill.ste",
         modifier: "size",
@@ -1158,7 +1157,7 @@ export const addDefaultChanges = function (changes) {
     // Fly skill
     changes.push(
       new pf1.components.ItemChange({
-        formula: PF1.sizeFlyMods[sizeKey],
+        formula: pf1.config.sizeFlyMods[sizeKey],
         target: "skill",
         subTarget: "skill.fly",
         modifier: "size",
@@ -1168,7 +1167,7 @@ export const addDefaultChanges = function (changes) {
     // CMD
     changes.push(
       new pf1.components.ItemChange({
-        formula: PF1.sizeSpecialMods[sizeKey],
+        formula: pf1.config.sizeSpecialMods[sizeKey],
         target: "misc",
         subTarget: "cmd",
         modifier: "size",
@@ -1181,14 +1180,14 @@ export const addDefaultChanges = function (changes) {
   for (const [con, v] of Object.entries(actorData.attributes.conditions || {})) {
     if (!v) continue;
 
-    const mechanic = PF1.conditionMechanics[con];
+    const mechanic = pf1.config.conditionMechanics[con];
     if (!mechanic) continue;
 
     // Add changes
     for (const change of mechanic.changes ?? []) {
       // Alter change data
       const changeData = deepClone(change);
-      changeData.flavor = PF1.conditions[con];
+      changeData.flavor = pf1.config.conditions[con];
 
       // Create change object
       const changeObj = new pf1.components.ItemChange(changeData);
@@ -1238,7 +1237,7 @@ const resetSkills = function () {
 
     skill.mod =
       skill.rank +
-      (skill.cs && skill.rank > 0 ? PF1.classSkillBonus : 0) +
+      (skill.cs && skill.rank > 0 ? pf1.config.classSkillBonus : 0) +
       abilityModifier +
       changeModifiers -
       acpPenalty;
@@ -1295,7 +1294,7 @@ export const getHighestChanges = function (changes, options = { ignoreTarget: fa
     ids: [],
     highestID: null,
   };
-  const highest = Object.keys(PF1.bonusModifiers).reduce((cur, k) => {
+  const highest = Object.keys(pf1.config.bonusModifiers).reduce((cur, k) => {
     if (options.ignoreTarget) cur[k] = duplicate(highestTemplate);
     else cur[k] = {};
     return cur;
@@ -1318,7 +1317,7 @@ export const getHighestChanges = function (changes, options = { ignoreTarget: fa
     let mod, h;
     const filterFunc = function (c) {
       if (h.highestID === c._id) return true;
-      if (PF1.stackingBonusModifiers.indexOf(mod) === -1 && h.ids.includes(c._id)) return false;
+      if (pf1.config.stackingBonusModifiers.indexOf(mod) === -1 && h.ids.includes(c._id)) return false;
       return true;
     };
 

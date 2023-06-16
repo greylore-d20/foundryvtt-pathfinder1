@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { hasTokenVision } from "../applications/vision-permission.mjs";
 
 export class TokenPF extends Token {
@@ -9,7 +8,7 @@ export class TokenPF extends Token {
       if (buffItem) {
         call = await buffItem.setActive(!buffItem.isActive);
       } else call = await super.toggleEffect(effect, { active, overlay });
-    } else if (effect && !midUpdate && Object.keys(PF1.conditions).includes(effect.id)) {
+    } else if (effect && !midUpdate && Object.keys(pf1.config.conditions).includes(effect.id)) {
       const updates = {};
       updates["system.attributes.conditions." + effect.id] = !this.actor.system.attributes.conditions[effect.id];
       call = await this.actor.update(updates);

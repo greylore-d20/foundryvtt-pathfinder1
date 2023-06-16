@@ -1,139 +1,39 @@
-/* eslint-disable no-case-declarations */
 /**
- * The Pathfinder 1st edition game system for Foundry Virtual Tabletop
- * Author: Furyspark
- * Software License: GNU GPLv3
+ * The core API provided by the system, available via the global `pf1`.
+ *
+ * @module
  */
 
-// Import Modules
-import { PF1 } from "./module/config.mjs";
-import {
-  registerSystemSettings,
-  registerClientSettings,
-  migrateSystemSettings,
-  getSkipActionPrompt,
-} from "./module/documents/settings.mjs";
-import { preloadHandlebarsTemplates } from "./module/utils/handlebars/templates.mjs";
-import { registerHandlebarsHelpers } from "./module/utils/handlebars/helpers.mjs";
-import { tinyMCEInit } from "./module/mce/mce.mjs";
-import { measureDistances, getConditions } from "./module/utils/canvas.mjs";
-import { TemplateLayerPF } from "./module/canvas/measure.mjs";
-import { MeasuredTemplatePF } from "./module/canvas/measure.mjs";
-import { ActorPFProxy } from "@actor/actor-proxy.mjs";
-import { ActorPF } from "./module/documents/actor/actor-pf.mjs";
-import { ActorCharacterPF } from "./module/documents/actor/actor-character.mjs";
-import { ActorNPCPF } from "./module/documents/actor/actor-npc.mjs";
-import { BasicActorPF } from "./module/documents/actor/actor-basic.mjs";
-import { ActorSheetPF } from "./module/applications/actor/actor-sheet.mjs";
-import { ActorSheetPFCharacter } from "./module/applications/actor/character-sheet.mjs";
-import { ActorSheetPFNPC } from "./module/applications/actor/npc-sheet.mjs";
-import { ActorSheetPFNPCLite } from "./module/applications/actor/npc-lite-sheet.mjs";
-import { ActorSheetPFNPCLoot } from "./module/applications/actor/npc-loot-sheet.mjs";
-import { ActorSheetPFBasic } from "./module/applications/actor/basic-sheet.mjs";
-import { ActorSheetFlags } from "./module/applications/actor/actor-flags.mjs";
-import { ActorRestDialog } from "./module/applications/actor/actor-rest.mjs";
-import { SensesSelector } from "./module/applications/senses-selector.mjs";
-import { SkillEditor } from "./module/applications/skill-editor.mjs";
-import { CombatPF } from "./module/documents/combat.mjs";
-import { TokenPF } from "./module/canvas/token.mjs";
-import { TokenDocumentPF } from "./module/documents/token.mjs";
-import { EntrySelector } from "./module/applications/entry-selector.mjs";
-import { LevelUpForm } from "./module/applications/level-up.mjs";
-import { PointBuyCalculator } from "./module/applications/point-buy-calculator.mjs";
-import { ScriptEditor } from "./module/applications/script-editor.mjs";
-import { ActorTraitSelector } from "./module/applications/trait-selector.mjs";
-import { ExperienceDistributor } from "./module/applications/xp-distributor.mjs";
-import { DamageTypeSelector } from "./module/applications/damage-type-selector.mjs";
-import { ActiveEffectPF } from "./module/documents/active-effect.mjs";
-import { ItemPF } from "./module/documents/item/item-pf.mjs";
-import { ItemAttackPF } from "./module/documents/item/item-attack.mjs";
-import { ItemBuffPF } from "./module/documents/item/item-buff.mjs";
-import { ItemClassPF } from "./module/documents/item/item-class.mjs";
-import { ItemConsumablePF } from "./module/documents/item/item-consumable.mjs";
-import { ItemContainerPF } from "./module/documents/item/item-container.mjs";
-import { ItemEquipmentPF } from "./module/documents/item/item-equipment.mjs";
-import { ItemFeatPF } from "./module/documents/item/item-feat.mjs";
-import { ItemLootPF } from "./module/documents/item/item-loot.mjs";
-import { ItemRacePF } from "./module/documents/item/item-race.mjs";
-import { ItemSpellPF } from "./module/documents/item/item-spell.mjs";
-import { ItemWeaponPF } from "./module/documents/item/item-weapon.mjs";
-import { ItemPFProxy } from "@item/item-proxy.mjs";
-import { ItemSheetPF } from "./module/applications/item/item-sheet.mjs";
-import { ItemSheetPF_Container } from "./module/applications/item/container-sheet.mjs";
-
-import { getChangeFlat, getSourceInfo } from "./module/documents/actor/utils/apply-changes.mjs";
-import { CompendiumDirectoryPF } from "./module/compendium-directory.mjs";
-import "./module/patch-core.mjs";
-import { DicePF } from "./module/dice/dice.mjs";
-import { RollPF } from "./module/dice/roll.mjs";
-import { AbilityTemplate } from "./module/canvas/ability-template.mjs";
-import { AttackDialog } from "./module/applications/attack-dialog.mjs";
-import {
-  getItemOwner,
-  getActorFromId,
-  createTag,
-  measureDistance,
-  convertWeight,
-  convertWeightBack,
-  convertDistance,
-  convertDistanceBack,
-  getBuffTargets,
-  getBuffTargetDictionary,
-  binarySearch,
-  sortArrayByName,
-  findInCompendia,
-  getFirstActiveGM,
-  isMinimumCoreVersion,
-  refreshActors,
-  diffObjectAndArray,
-  moduleToObject,
-  setDefaultSceneScaling,
-} from "./module/utils/lib.mjs";
-import { getAbilityModifier } from "@utils";
-import { ChatMessagePF, customRolls } from "./module/documents/chat-message.mjs";
-import { ChatAttack } from "./module/action-use/chat-attack.mjs";
-import { TokenQuickActions } from "./module/canvas/token-quick-actions.mjs";
-import { initializeSocket } from "./module/socket.mjs";
-import { SemanticVersion } from "./module/utils/semver.mjs";
-import { ChangeLogWindow } from "./module/applications/change-log.mjs";
-import { HelpBrowserPF } from "./module/applications/help-browser.mjs";
-import { addReachListeners } from "./module/canvas/attack-reach.mjs";
-import { TooltipPF } from "./module/applications/tooltip.mjs";
-import { dialogGetNumber, dialogGetActor } from "./module/utils/dialog.mjs";
-import * as chat from "./module/utils/chat.mjs";
-import * as migrations from "./module/migration.mjs";
-import * as macros from "./module/documents/macros.mjs";
-import * as controls from "./module/documents/controls.mjs";
-import * as ItemAttack from "./module/action-use/action-use.mjs";
-import { addLowLightVisionToLightConfig, addLowLightVisionToTokenConfig } from "./module/canvas/low-light-vision.mjs";
-import { initializeModules } from "./module/modules.mjs";
-import { ItemChange } from "./module/components/change.mjs";
-import { ItemScriptCall } from "./module/components/script-call.mjs";
-import { ItemAction } from "./module/components/action.mjs";
-import { ItemActionSheet } from "./module/applications/component/action-sheet.mjs";
-import { ItemConditional, ItemConditionalModifier } from "./module/components/conditionals.mjs";
-import { ActionChooser } from "./module/applications/action-chooser.mjs";
-import { Widget_CategorizedItemPicker } from "./module/applications/categorized-item-picker.mjs";
-import { CurrencyTransfer } from "./module/applications/currency-transfer.mjs";
-import { ItemDirectoryPF } from "./module/applications/_module.mjs";
-import { BaseRegistry } from "./module/registry/base-registry.mjs";
-import { DamageTypes } from "./module/registry/damage-types.mjs";
-import { ScriptCalls } from "./module/registry/script-call.mjs";
-import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
-
+// Imports for side effects
 import "./less/pf1.less";
 import "./module/hmr.mjs";
+import "./module/patch-core.mjs";
+
+// Import Modules
+import { tinyMCEInit } from "./module/mce/mce.mjs";
+import { measureDistances, getConditions } from "./module/utils/canvas.mjs";
+import { getFirstActiveGM, moduleToObject, setDefaultSceneScaling } from "./module/utils/lib.mjs";
+import { initializeSocket } from "./module/socket.mjs";
+import { SemanticVersion } from "./module/utils/semver.mjs";
+import * as chat from "./module/utils/chat.mjs";
+import * as macros from "./module/documents/macros.mjs";
+import { initializeModules } from "./module/modules.mjs";
+import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
+import { CompendiumDirectoryPF } from "module/compendium-directory.mjs";
+import { ActorPFProxy } from "@actor/actor-proxy.mjs";
+import { ItemPFProxy } from "@item/item-proxy.mjs";
 
 // New API
+import * as PF1 from "./module/config.mjs";
 import * as applications from "./module/applications/_module.mjs";
 import * as documents from "./module/documents/_module.mjs";
-import * as actionUse from "./module/action-use/_module.mjs"; // TODO: Change dir name?
+import * as actionUse from "./module/action-use/_module.mjs";
 import * as _canvas from "./module/canvas/_module.mjs";
 import * as dice from "./module/dice/_module.mjs";
 import * as components from "./module/components/_module.mjs";
 import * as utils from "./module/utils/_module.mjs";
 import * as registry from "./module/registry/_module.mjs";
-import * as rollPreProcess from "./module/utils/roll-preprocess.mjs";
+import * as migrations from "./module/migration.mjs";
 
 // ESM exports, to be kept in sync with globalThis.pf1
 export {
@@ -166,27 +66,6 @@ globalThis.pf1 = moduleToObject({
   skipConfirmPrompt: false,
 });
 
-// OBSOLETE: Add String.format
-if (!String.prototype.format) {
-  /**
-   * Replaces `{<number>}` elements in this string with the provided arguments.
-   *
-   * @deprecated
-   * @param {string[]} args - The arguments to replace the `{<number>}` elements with.
-   * @returns {string} String with `{<number>}` elements replaced.
-   */
-  String.prototype.format = function (...args) {
-    foundry.utils.logCompatibilityWarning("String.format() is deprecated and will be removed in future PF1 release.", {
-      since: "PF1 0.82.6",
-      until: "PF1 0.83.0",
-    });
-
-    return this.replace(/{(\d+)}/g, function (match, number) {
-      return args[number] != null ? args[number] : match;
-    });
-  };
-}
-
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
 /* -------------------------------------------- */
@@ -200,214 +79,51 @@ Hooks.once("init", function () {
     error: (msg, opts = {}) => (opts.console !== false ? console.error(msg) : undefined),
   };
 
-  // Register client settings
-  registerClientSettings();
-
-  // Create a PF1 namespace within the game global
-  const oldPf1 = {
-    documents: { ActorPF, ItemPF, TokenDocumentPF },
-    get entities() {
-      // OBSOLETION WARNING
-      console.error("game.pf1.entities is obsolete; please use game.pf1.documents instead.");
-      return this.documents;
-    },
-    applications: {
-      // Actors
-      ActorSheetPF,
-      ActorSheetPFCharacter,
-      ActorSheetPFNPC,
-      ActorSheetPFNPCLite,
-      ActorSheetPFNPCLoot,
-      // Items
-      ItemSheetPF,
-      ItemSheetPF_Container,
-      // Document Components
-      ItemActionSheet,
-      // Misc
-      AttackDialog,
-      ActorSheetFlags,
-      ActorRestDialog,
-      ActorTraitSelector,
-      SensesSelector,
-      CompendiumDirectoryPF,
-      EntrySelector,
-      LevelUpForm,
-      PointBuyCalculator,
-      ScriptEditor,
-      TooltipPF,
-      HelpBrowserPF,
-      ExperienceDistributor,
-      SkillEditor,
-      DamageTypeSelector,
-      ActionChooser,
-      // Widgets
-      Widget_CategorizedItemPicker,
-      CurrencyTransfer,
-    },
-    compendiums: applications.compendiums,
-    // Rolling
-    DicePF,
-    rollPreProcess: {
-      ...rollPreProcess,
-    },
-    //Chat
-    chat: {
-      ChatAttack,
-      ChatMessagePF,
-      events: { targetACClick: chat.targetACClick, targetSavingThrowClick: chat.targetSavingThrowClick },
-    },
-    // Utility
-    utils: {
-      createTag,
-      getItemOwner,
-      getActorFromId,
-      getAbilityModifier,
-      getChangeFlat,
-      getSourceInfo,
-      convertDistance,
-      convertDistanceBack,
-      convertWeight,
-      convertWeightBack,
-      measureDistance,
-      measureDistances,
-      measureReachDistance(p0, p1, alt = false) {
-        // OBSOLETE: Wrapper for compatibility with old. Remove later.
-        console.warn(
-          'measureReachDistance is obsolete, please use measureDistance with diagonalRule set to "555" instead'
-        );
-        return measureDistance(p0, p1, { diagonalRule: alt ? "555" : "5105" });
-      },
-      dialogGetActor,
-      dialogGetNumber,
-      SemanticVersion,
-      isMinimumCoreVersion,
-      binarySearch,
-      sortArrayByName,
-      findInCompendia,
-      getFirstActiveGM,
-      refreshActors,
-      diffObjectAndArray,
-    },
-    // Components
-    documentComponents: {
-      ItemChange,
-      ItemAction,
-      ItemConditional,
-      ItemConditionalModifier,
-      ItemScriptCall,
-    },
-    // API
-    baseRegistry: BaseRegistry,
-    damageTypes: new DamageTypes(),
-    scriptCalls: new ScriptCalls(),
-    // Macros
-    macros,
-    rollItemMacro: macros.rollItemMacro,
-    rollSkillMacro: macros.rollSkillMacro,
-    rollSaveMacro: macros.rollSaveMacro,
-    rollDefenses: macros.displayDefenses,
-    rollActorAttributeMacro: macros.rollActorAttributeMacro,
-    // Migrations
-    migrations,
-    migrateWorld: migrations.migrateWorld,
-    get isMigrating() {
-      return pf1.migrations.isMigrating;
-    },
-    // Misc
-    config: PF1,
-    tooltip: null,
-    AbilityTemplate,
-    ItemAttack: { ...ItemAttack },
-    controls,
-    // Variables controlled by control configuration
-    skipConfirmPrompt: false,
-    tokenTooltip: {
-      get hide() {
-        console.warn("game.pf1.tokenTooltip.hide is obsolete. Use pf1.tooltip.forceHide instead.");
-        return pf1.tooltip.forceHide;
-      },
-      set hide(value) {
-        console.warn("game.pf1.tokenTooltip.hide is obsolete. Use pf1.tooltip.forceHide instead.");
-        pf1.tooltip.forceHide = value;
-      },
-      get hideGMInfo() {
-        console.warn("game.pf1.tokenTooltip.hideGMInfo is obsolete. Use pf1.tooltip.forceHideGMInfo instead.");
-        return pf1.tooltip.forceHideGMInfo;
-      },
-      set hideGMInfo(value) {
-        console.warn("game.pf1.tokenTooltip.hideGMInfo is obsolete. Use pf1.tooltip.forceHideGMInfo instead.");
-        pf1.tooltip.forceHideGMInfo = value;
-      },
-    },
-    forceShowItem: false,
-    // Function library
-    functions: {
-      getBuffTargets,
-      getBuffTargetDictionary,
-    },
-    // Singleton instance of the help browser
-    helpBrowser: new HelpBrowserPF(),
-  };
-  game.pf1 = new Proxy(oldPf1, {
-    get(obj, property) {
-      foundry.utils.logCompatibilityWarning(
-        [
-          "You are accessing game.pf1, which will be restructured to match globalThis.pf1 in the future.",
-          `Please check whether ${property} and its contents are still available, or use globalThis.pf1 instead.`,
-        ].join("\n"),
-        { since: "PF1 0.82.0", until: "PF1 0.83.0" }
-      );
-      return Reflect.get(obj, property);
-    },
-    set(obj, property, value) {
-      foundry.utils.logCompatibilityWarning(
-        [
-          "You are accessing game.pf1, which will be restructured to match globalThis.pf1 in the future.",
-          `Please check whether ${property} and its contents are still available, or use globalThis.pf1 instead.`,
-        ].join("\n"),
-        { since: "PF1 0.82.0", until: "PF1 0.83.0" }
-      );
-      return Reflect.set(obj, property, value);
-    },
-  });
-
   // Global exports
-  globalThis.RollPF = RollPF;
-
-  CONFIG.ui.items = ItemDirectoryPF;
+  globalThis.RollPF = dice.RollPF;
 
   // Record Configuration Values
-  CONFIG.PF1 = PF1;
-  CONFIG.Canvas.layers.templates.layerClass = TemplateLayerPF;
-  CONFIG.MeasuredTemplate.objectClass = MeasuredTemplatePF;
+  CONFIG.PF1 = pf1.config;
+
+  // Canvas object classes and configuration
+  CONFIG.Canvas.layers.templates.layerClass = _canvas.TemplateLayerPF;
+  CONFIG.MeasuredTemplate.objectClass = _canvas.MeasuredTemplatePF;
   CONFIG.MeasuredTemplate.defaults.originalAngle = CONFIG.MeasuredTemplate.defaults.angle;
   CONFIG.MeasuredTemplate.defaults.angle = 90; // PF1 uses 90 degree angles
+  CONFIG.Token.objectClass = _canvas.TokenPF;
+
+  // Document classes
   CONFIG.Actor.documentClass = ActorPFProxy;
   CONFIG.Actor.documentClasses = {
-    character: ActorCharacterPF,
-    npc: ActorNPCPF,
-    basic: BasicActorPF,
+    character: documents.actor.ActorCharacterPF,
+    npc: documents.actor.ActorNPCPF,
+    basic: documents.actor.BasicActorPF,
   };
-  CONFIG.Token.documentClass = TokenDocumentPF;
-  CONFIG.Token.objectClass = TokenPF;
-  CONFIG.ActiveEffect.documentClass = ActiveEffectPF;
   CONFIG.Item.documentClass = ItemPFProxy;
   CONFIG.Item.documentClasses = {
-    attack: ItemAttackPF,
-    buff: ItemBuffPF,
-    class: ItemClassPF,
-    consumable: ItemConsumablePF,
-    container: ItemContainerPF,
-    equipment: ItemEquipmentPF,
-    feat: ItemFeatPF,
-    loot: ItemLootPF,
-    race: ItemRacePF,
-    spell: ItemSpellPF,
-    weapon: ItemWeaponPF,
+    attack: documents.item.ItemAttackPF,
+    buff: documents.item.ItemBuffPF,
+    class: documents.item.ItemClassPF,
+    consumable: documents.item.ItemConsumablePF,
+    container: documents.item.ItemContainerPF,
+    equipment: documents.item.ItemEquipmentPF,
+    feat: documents.item.ItemFeatPF,
+    loot: documents.item.ItemLootPF,
+    race: documents.item.ItemRacePF,
+    spell: documents.item.ItemSpellPF,
+    weapon: documents.item.ItemWeaponPF,
   };
-  CONFIG.Combat.documentClass = CombatPF;
+
+  CONFIG.Token.documentClass = documents.TokenDocumentPF;
+  CONFIG.ActiveEffect.documentClass = documents.ActiveEffectPF;
+  CONFIG.Combat.documentClass = documents.CombatPF;
+  CONFIG.ChatMessage.documentClass = documents.ChatMessagePF;
+
+  // UI classes
+  CONFIG.ui.items = applications.ItemDirectoryPF;
   CONFIG.ui.compendium = CompendiumDirectoryPF;
-  CONFIG.ChatMessage.documentClass = ChatMessagePF;
+
+  // Dice config
   CONFIG.Dice.rolls.splice(0, 0, dice.RollPF);
   CONFIG.Dice.termTypes.SizeRollTerm = dice.terms.SizeRollTerm;
   CONFIG.Dice.RollPF = dice.RollPF;
@@ -419,35 +135,51 @@ Hooks.once("init", function () {
   CONFIG.time.roundTime = 6;
 
   // Register System Settings
-  registerSystemSettings();
-
+  documents.settings.registerSystemSettings();
+  documents.settings.registerClientSettings();
   setDefaultSceneScaling();
 
   //Calculate conditions for world
   CONFIG.statusEffects = getConditions();
 
   // Preload Handlebars Templates
-  preloadHandlebarsTemplates();
-  registerHandlebarsHelpers();
+  utils.handlebars.preloadHandlebarsTemplates();
+  utils.handlebars.registerHandlebarsHelpers();
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("pf1", ActorSheetPFCharacter, {
+  Actors.registerSheet("pf1", applications.actor.ActorSheetPFCharacter, {
     label: "PF1.Sheet.PC",
     types: ["character"],
     makeDefault: true,
   });
-  Actors.registerSheet("pf1", ActorSheetPFNPC, { label: "PF1.Sheet.NPC", types: ["npc"], makeDefault: true });
-  Actors.registerSheet("pf1", ActorSheetPFNPCLite, { label: "PF1.Sheet.NPCLite", types: ["npc"], makeDefault: false });
-  Actors.registerSheet("pf1", ActorSheetPFNPCLoot, { label: "PF1.Sheet.NPCLoot", types: ["npc"], makeDefault: false });
-  Actors.registerSheet("pf1", ActorSheetPFBasic, { label: "PF1.Sheet.Basic", types: ["basic"], makeDefault: true });
+  Actors.registerSheet("pf1", applications.actor.ActorSheetPFNPC, {
+    label: "PF1.Sheet.NPC",
+    types: ["npc"],
+    makeDefault: true,
+  });
+  Actors.registerSheet("pf1", applications.actor.ActorSheetPFNPCLite, {
+    label: "PF1.Sheet.NPCLite",
+    types: ["npc"],
+    makeDefault: false,
+  });
+  Actors.registerSheet("pf1", applications.actor.ActorSheetPFNPCLoot, {
+    label: "PF1.Sheet.NPCLoot",
+    types: ["npc"],
+    makeDefault: false,
+  });
+  Actors.registerSheet("pf1", applications.actor.ActorSheetPFBasic, {
+    label: "PF1.Sheet.Basic",
+    types: ["basic"],
+    makeDefault: true,
+  });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("pf1", ItemSheetPF, {
+  Items.registerSheet("pf1", applications.item.ItemSheetPF, {
     label: "PF1.Sheet.Item",
     types: ["class", "feat", "spell", "consumable", "equipment", "loot", "weapon", "buff", "attack", "race"],
     makeDefault: true,
   });
-  Items.registerSheet("pf1", ItemSheetPF_Container, {
+  Items.registerSheet("pf1", applications.item.ItemSheetPF_Container, {
     label: "PF1.Sheet.Container",
     types: ["container"],
     makeDefault: true,
@@ -532,8 +264,6 @@ Hooks.once("setup", function () {
     "consumableTypes",
     "attackTypes",
     "buffTypes",
-    // "buffTargets",
-    // "contextNoteTargets",
     "healingTypes",
     "divineFocus",
     "classSavingThrows",
@@ -556,10 +286,6 @@ Hooks.once("setup", function () {
 
   // Config (sub-)objects to be sorted
   const toSort = [
-    // "buffTargets",
-    // "buffTargets.misc",
-    // "contextNoteTargets",
-    // "contextNoteTargets.misc",
     "skills",
     "conditions",
     "conditionTypes",
@@ -606,14 +332,14 @@ Hooks.once("setup", function () {
 
   // Localize and sort CONFIG objects
   for (const o of toLocalize) {
-    PF1[o] = doLocalize(PF1[o], o);
+    pf1.config[o] = doLocalize(pf1.config[o], o);
   }
 
   // Localize buff targets
   const localizeLabels = ["buffTargets", "buffTargetCategories", "contextNoteTargets", "contextNoteCategories"];
   for (const l of localizeLabels) {
-    for (const [k, v] of Object.entries(PF1[l])) {
-      PF1[l][k].label = game.i18n.localize(v.label);
+    for (const [k, v] of Object.entries(pf1.config[l])) {
+      pf1.config[l][k].label = game.i18n.localize(v.label);
     }
   }
 
@@ -621,7 +347,7 @@ Hooks.once("setup", function () {
   tinyMCEInit();
 
   // Register controls
-  controls.registerSystemControls();
+  documents.controls.registerSystemControls();
 
   callOldNamespaceHookAll("pf1.postSetup", "pf1PostSetup");
   Hooks.callAll("pf1PostSetup");
@@ -636,7 +362,7 @@ Hooks.once("ready", async function () {
   // Create tooltip
   const ttconf = game.settings.get("pf1", "tooltipConfig");
   const ttwconf = game.settings.get("pf1", "tooltipWorldConfig");
-  if (!ttconf.disable && !ttwconf.disable) TooltipPF.toggle(true);
+  if (!ttconf.disable && !ttwconf.disable) pf1.applications.TooltipPF.toggle(true);
 
   window.addEventListener("resize", () => {
     pf1.tooltip?.setPosition();
@@ -661,7 +387,7 @@ Hooks.once("ready", async function () {
   }
 
   // Migrate system settings
-  await migrateSystemSettings();
+  await documents.settings.migrateSystemSettings();
 
   // Populate `pf1.applications.compendiums`
   pf1.applications.compendiumBrowser.CompendiumBrowser.initializeBrowsers();
@@ -673,7 +399,7 @@ Hooks.once("ready", async function () {
     const curVersion = SemanticVersion.fromString(game.system.version);
 
     if (curVersion.isHigherThan(changelogVersion)) {
-      const app = new ChangeLogWindow(changelogVersion);
+      const app = new pf1.applications.ChangeLogWindow(changelogVersion);
       app.render(true, { focus: true });
       game.settings.set("pf1", "changelogVersion", curVersion.toString());
     }
@@ -737,19 +463,19 @@ Hooks.on("renderChatPopout", (app, html, data) => {
   if (game.settings.get("pf1", "hideChatButtons")) html.find(".card-buttons").hide();
 });
 
-Hooks.on("renderChatLog", (_, html) => ItemPF.chatListeners(html));
-Hooks.on("renderChatLog", (_, html) => ActorPF.chatListeners(html));
-Hooks.on("renderChatLog", (_, html) => addReachListeners(html));
+Hooks.on("renderChatLog", (_, html) => documents.item.ItemPF.chatListeners(html));
+Hooks.on("renderChatLog", (_, html) => documents.actor.ActorPF.chatListeners(html));
+Hooks.on("renderChatLog", (_, html) => _canvas.attackReach.addReachListeners(html));
 
-Hooks.on("renderChatPopout", (_, html) => ItemPF.chatListeners(html));
-Hooks.on("renderChatPopout", (_, html) => ActorPF.chatListeners(html));
+Hooks.on("renderChatPopout", (_, html) => documents.item.ItemPF.chatListeners(html));
+Hooks.on("renderChatPopout", (_, html) => documents.actor.ActorPF.chatListeners(html));
 
 Hooks.on("renderAmbientLightConfig", (app, html) => {
-  addLowLightVisionToLightConfig(app, html);
+  _canvas.lowLightVision.addLowLightVisionToLightConfig(app, html);
 });
 
 Hooks.on("renderTokenHUD", (app, html, data) => {
-  TokenQuickActions.addQuickActions(app, html, data);
+  _canvas.TokenQuickActions.addQuickActions(app, html, data);
 });
 
 Hooks.on("updateActor", (actor, data, options, userId) => {
@@ -809,7 +535,7 @@ Hooks.on("preCreateToken", (token, initialData, options, userId) => {
 });
 
 Hooks.on("createItem", (item, options, userId) => {
-  const actor = item.parent instanceof ActorPF ? item.parent : null;
+  const actor = item.parent instanceof documents.actor.ActorPF ? item.parent : null;
   if (userId !== game.user.id) return;
 
   // Show buff if active
@@ -888,7 +614,7 @@ Hooks.on("preDeleteItem", (item, options, userId) => {
 
 Hooks.on("deleteItem", async (item, options, userId) => {
   if (userId !== game.user.id) return;
-  const actor = item.parent instanceof ActorPF ? item.parent : null;
+  const actor = item.parent instanceof documents.actor.ActorPF ? item.parent : null;
 
   if (actor) {
     // Remove links
@@ -915,7 +641,7 @@ Hooks.on("deleteItem", async (item, options, userId) => {
 
 Hooks.on("updateItem", async (item, changedData, options, userId) => {
   if (userId !== game.user.id) return;
-  const actor = item.parent instanceof ActorPF ? item.parent : null;
+  const actor = item.parent instanceof documents.actor.ActorPF ? item.parent : null;
 
   if (actor) {
     // Toggle buff
@@ -929,19 +655,25 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
 });
 
 Hooks.on("chatMessage", (log, message, chatData) => {
-  const result = customRolls(message, chatData.speaker);
+  const result = documents.customRolls(message, chatData.speaker);
   return !result;
 });
 
 Hooks.on("renderActorDirectory", (app, html, data) => {
   html.find("li.actor").each((i, li) => {
-    li.addEventListener("drop", CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-document-id")));
+    li.addEventListener(
+      "drop",
+      applications.CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-document-id"))
+    );
   });
 });
 
 Hooks.on("renderItemDirectory", (app, html, data) => {
   html.find("li.item").each((i, li) => {
-    li.addEventListener("drop", CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-document-id")));
+    li.addEventListener(
+      "drop",
+      applications.CurrencyTransfer._directoryDrop.bind(undefined, li.getAttribute("data-document-id"))
+    );
   });
 });
 
@@ -1007,7 +739,7 @@ Hooks.on("renderTokenConfig", async (app, html) => {
   });
 
   // Add disable low-light vision checkbox
-  addLowLightVisionToTokenConfig(app, html);
+  _canvas.lowLightVision.addLowLightVisionToTokenConfig(app, html);
 
   // Resize windows
   app.setPosition();
@@ -1028,7 +760,7 @@ Hooks.on("renderSidebarTab", (app, html) => {
       );
 
     chlogButton.click(() => {
-      const chlog = Object.values(ui.windows).find((o) => o.id == "changelog") ?? new ChangeLogWindow();
+      const chlog = Object.values(ui.windows).find((o) => o.id == "changelog") ?? new applications.ChangeLogWindow();
       chlog.render(true, { focus: true });
     });
     helpButton.click(() => pf1.applications.helpBrowser.openUrl("Help/Home"));
@@ -1070,7 +802,7 @@ Hooks.on("getCompendiumDirectoryPFEntryContext", (html, entryOptions) => {
 // Show experience distributor after combat
 Hooks.on("deleteCombat", (combat, options, userId) => {
   const isGM = game.user.isGM;
-  const skipPrompt = getSkipActionPrompt();
+  const skipPrompt = documents.settings.getSkipActionPrompt();
   const { disableExperienceTracking, openXpDistributor } = game.settings.get("pf1", "experienceConfig");
   if (
     isGM &&
@@ -1079,7 +811,7 @@ Hooks.on("deleteCombat", (combat, options, userId) => {
     ((openXpDistributor && !skipPrompt) || (!openXpDistributor && skipPrompt))
   ) {
     const combatants = combat.combatants.map((o) => o.actor);
-    const app = new ExperienceDistributor(combatants);
+    const app = new applications.ExperienceDistributor(combatants);
 
     if (app.getCharacters().length > 0) {
       app.render(true);
@@ -1137,53 +869,3 @@ const handleChatTooltips = function (event) {
   const w = rect.width;
   elem.find(".tooltipcontent").css("left", `${x}px`).css("top", `${y}px`).css("width", `${w}px`);
 };
-
-/* ------------------------------- */
-/* Class exports                   */
-/* ------------------------------- */
-// Actor classes
-export { ActorPF, ActorCharacterPF, ActorNPCPF, BasicActorPF };
-
-// Item classes
-export {
-  ItemPF,
-  ItemAttackPF,
-  ItemBuffPF,
-  ItemClassPF,
-  ItemConsumablePF,
-  ItemContainerPF,
-  ItemEquipmentPF,
-  ItemFeatPF,
-  ItemLootPF,
-  ItemRacePF,
-  ItemSpellPF,
-  ItemWeaponPF,
-};
-
-// Item component classes
-export { ItemChange, ItemAction };
-
-// Actor sheets
-export {
-  ActorSheetPFBasic,
-  ActorSheetPF,
-  ActorSheetPFCharacter,
-  ActorSheetPFNPCLite,
-  ActorSheetPFNPCLoot,
-  ActorSheetPFNPC,
-};
-
-// Item sheets
-export { ItemSheetPF, ItemSheetPF_Container };
-
-// Item component sheets
-export { ItemActionSheet };
-
-// Token
-export { TokenPF, TokenDocumentPF };
-
-// Chat Message
-export { ChatMessagePF };
-
-// Measured Template
-export { MeasuredTemplatePF };

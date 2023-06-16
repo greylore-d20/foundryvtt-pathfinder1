@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { CheckboxFilter } from "./checkbox.mjs";
 import { NumberRangeFilter } from "./number-range.mjs";
 
@@ -28,7 +27,7 @@ export class WeaponTypeFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.weaponTypes);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.weaponTypes);
   }
 }
 
@@ -39,7 +38,7 @@ export class WeaponSubtypeFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.weaponTypes, { innerSet: true });
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.weaponTypes, { innerSet: true });
   }
 }
 
@@ -50,7 +49,7 @@ export class WeaponPropertyFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.weaponProperties);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.weaponProperties);
   }
 }
 
@@ -61,7 +60,7 @@ export class WeaponGroupFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.weaponGroups);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.weaponGroups);
   }
 }
 
@@ -72,7 +71,7 @@ export class EquipmentSubtypeFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.equipmentTypes, { innerSet: true });
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.equipmentTypes, { innerSet: true });
   }
 }
 
@@ -83,7 +82,7 @@ export class ItemSlotFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.equipmentSlots, { innerSet: true });
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.equipmentSlots, { innerSet: true });
   }
 }
 
@@ -94,7 +93,7 @@ export class ConsumableTypeFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.consumableTypes);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.consumableTypes);
   }
 }
 
@@ -105,7 +104,7 @@ export class MiscItemTypeFilter extends CheckboxFilter {
 
   /** @inheritDoc */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(PF1.lootTypes);
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.lootTypes);
   }
 }
 

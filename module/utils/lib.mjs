@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { SemanticVersion } from "./semver.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
@@ -574,8 +573,8 @@ export const colorToInt = function (color) {
 export const getBuffTargets = function (actor, type = "buffs") {
   const buffTargets = duplicate(
     {
-      buffs: PF1.buffTargets,
-      contextNotes: PF1.contextNoteTargets,
+      buffs: pf1.config.buffTargets,
+      contextNotes: pf1.config.contextNoteTargets,
     }[type]
   );
 
@@ -587,7 +586,7 @@ export const getBuffTargets = function (actor, type = "buffs") {
       buffTargets[s] = { label: skill.name, category: "skill" };
     }
   } else {
-    for (const [k, v] of Object.entries(PF1.skills)) {
+    for (const [k, v] of Object.entries(pf1.config.skills)) {
       buffTargets[`skill.${k}`] = { label: v, category: "skill" };
     }
   }
@@ -612,8 +611,8 @@ export const getBuffTargetDictionary = function (actor, type = "buffs") {
   // Assemble initial categories and items
   const targetCategories = duplicate(
     {
-      buffs: PF1.buffTargetCategories,
-      contextNotes: PF1.contextNoteCategories,
+      buffs: pf1.config.buffTargetCategories,
+      contextNotes: pf1.config.contextNoteCategories,
     }[type]
   );
   let categories = Object.entries(buffTargets).reduce((cur, o) => {
@@ -1018,11 +1017,11 @@ export const calculateRangeFormula = (formula, type = "ft", rollData = {}) => {
     case "reach":
       return rollData.range?.reach ?? 0;
     case "close":
-      return RollPF.safeRoll(PF1.spellRangeFormulas.close, rollData).total;
+      return RollPF.safeRoll(pf1.config.spellRangeFormulas.close, rollData).total;
     case "medium":
-      return RollPF.safeRoll(PF1.spellRangeFormulas.medium, rollData).total;
+      return RollPF.safeRoll(pf1.config.spellRangeFormulas.medium, rollData).total;
     case "long":
-      return RollPF.safeRoll(PF1.spellRangeFormulas.long, rollData).total;
+      return RollPF.safeRoll(pf1.config.spellRangeFormulas.long, rollData).total;
     case "mi":
       return RollPF.safeRoll(formula, rollData).total * 5_280;
     case "m":

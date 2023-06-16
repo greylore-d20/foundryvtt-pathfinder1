@@ -74,6 +74,9 @@ To build the system, you now have multiple options:
   File changes will either trigger a reload of the browser page, or be hot reloaded (in case of less or handlebars files).
   _This is the recommended development setup._
 
+> _Note_:
+> If you want the build process to skip building packs, you can run `npx vite build`.
+
 After the system has been built at least once, you can also run `npm run serve` to directly start the development server.
 This will not trigger a build and therefore not mirror any changes to compendium, language, or help files, handlebars template files, or any other static content stored in `public`, but does allow rapidly starting an environment to test JavaScript changes.
 

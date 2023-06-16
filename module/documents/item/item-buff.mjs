@@ -1,6 +1,5 @@
 import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
-import { PF1 } from "@config";
 
 export class ItemBuffPF extends ItemPF {
   async _preUpdate(changed, options, userId) {
@@ -34,11 +33,11 @@ export class ItemBuffPF extends ItemPF {
     const labels = super.getLabels({ actionId });
 
     const itemData = this.system;
-    labels.subType = PF1.buffTypes[itemData.subType];
+    labels.subType = pf1.config.buffTypes[itemData.subType];
 
     if (this.system.duration) {
       const dur = this.system.duration;
-      const unit = PF1.timePeriodsShort[dur.units];
+      const unit = pf1.config.timePeriodsShort[dur.units];
       if (unit && dur.value) {
         const val = RollPF.safeTotal(dur.value, this.getRollData());
         labels.duration = [val, unit].filterJoin(" ");

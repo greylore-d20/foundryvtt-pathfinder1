@@ -125,6 +125,18 @@ export class DamageTypes extends BaseRegistry {
       },
     },
   ].map((d) => ({ ...d, module: "pf1" }));
+
+  /**
+   * Get an object containing all damage types and their localised name.
+   *
+   * @returns {{[damageTypeId: string]: string}} An object containing all damage types and their localised name.
+   */
+  toLocalisedObject() {
+    return this.reduce((acc, damageType) => {
+      acc[damageType.id] = game.i18n.localize(damageType.name);
+      return acc;
+    }, {});
+  }
 }
 
 export const damageTypes = new DamageTypes();

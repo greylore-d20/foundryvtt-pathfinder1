@@ -1,4 +1,3 @@
-import { PF1 } from "@config";
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemWeaponPF extends ItemPF {
@@ -7,7 +6,7 @@ export class ItemWeaponPF extends ItemPF {
     const newWeaponType = update.system?.subType;
     if (newWeaponType != null && newWeaponType !== this.system.subType) {
       const subtype = update.system.weaponSubtype ?? this.system.weaponSubtype ?? "";
-      const keys = Object.keys(PF1.weaponTypes[newWeaponType]).filter((o) => !o.startsWith("_"));
+      const keys = Object.keys(pf1.config.weaponTypes[newWeaponType]).filter((o) => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
         update.system.weaponSubtype = keys[0];
       }
@@ -32,7 +31,7 @@ export class ItemWeaponPF extends ItemPF {
   getLabels({ actionId } = {}) {
     const labels = super.getLabels({ actionId });
 
-    const { weaponTypes } = PF1;
+    const { weaponTypes } = pf1.config;
 
     // Type and subtype labels
     let wType = this.system.subType;
@@ -74,14 +73,14 @@ export class ItemWeaponPF extends ItemPF {
     const weaponGroups = this.system.weaponGroups || { value: [], custom: "" };
 
     weaponGroups.selected = weaponGroups.value.reduce((obj, t) => {
-      obj[t] = PF1.weaponGroups[t];
+      obj[t] = pf1.config.weaponGroups[t];
       return obj;
     }, {});
 
     // Add custom entry
     if (weaponGroups.custom) {
       weaponGroups.custom
-        .split(PF1.re.traitSeparator)
+        .split(pf1.config.re.traitSeparator)
         .forEach((c, i) => (weaponGroups.selected[`custom${i + 1}`] = c.trim()));
     }
 

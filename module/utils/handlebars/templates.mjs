@@ -5,6 +5,8 @@
 
 /**
  * A list of template paths to pre-load
+ *
+ * @private
  */
 const templatePaths = /** @type {const} */ ([
   // Actor Sheet Partials

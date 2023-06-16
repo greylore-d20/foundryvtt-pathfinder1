@@ -1,6 +1,12 @@
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemLootPF extends ItemPF {
+  /**
+   * @inheritDoc
+   * @internal
+   */
+  static system = Object.freeze(foundry.utils.mergeObject(super.system, { isPhysical: true }, { inplace: false }));
+
   get extraType() {
     return this.system.extraType;
   }

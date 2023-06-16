@@ -1,6 +1,12 @@
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemWeaponPF extends ItemPF {
+  /**
+   * @inheritDoc
+   * @internal
+   */
+  static system = Object.freeze(foundry.utils.mergeObject(super.system, { isPhysical: true }, { inplace: false }));
+
   async _preUpdate(update, context) {
     // Set weapon subtype if not present
     const newWeaponType = update.system?.subType;

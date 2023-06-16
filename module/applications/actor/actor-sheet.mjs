@@ -818,9 +818,9 @@ export class ActorSheetPF extends ActorSheet {
   /* -------------------------------------------- */
 
   /**
-   * Determine whether an Owned Item will be shown based on the current set of filters
+   * Determine whether an Item will be shown based on the current set of filters
    *
-   * @param items
+   * @param {object[]} items - Raw data objects of items
    * @param filters
    * @returns {boolean}
    * @private
@@ -833,7 +833,7 @@ export class ActorSheetPF extends ActorSheet {
         if (hasTypeFilter && !filters.has(`type-${item.subType}`)) return false;
       }
 
-      if (ItemPF.isInventoryItem(item.type)) {
+      if (item.document.isPhysical) {
         if (hasTypeFilter && item.type !== "loot" && !filters.has(`type-${item.type}`)) return false;
         else if (hasTypeFilter && item.type === "loot" && !filters.has(`type-${item.subType}`)) return false;
       }
@@ -2445,7 +2445,7 @@ export class ActorSheetPF extends ActorSheet {
         else if (item.type === "feat") arr[2].push(item);
         else if (item.type === "class") arr[3].push(item);
         else if (item.type === "attack") arr[4].push(item);
-        else if (ItemPF.isInventoryItem(item.type)) arr[0].push(item);
+        else if (item.document.isPhysical) arr[0].push(item);
         return arr;
       },
       [[], [], [], [], []]

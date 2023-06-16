@@ -1,6 +1,12 @@
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemEquipmentPF extends ItemPF {
+  /**
+   * @inheritDoc
+   * @internal
+   */
+  static system = Object.freeze(foundry.utils.mergeObject(super.system, { isPhysical: true }, { inplace: false }));
+
   async _preUpdate(update, context) {
     // Set equipment subtype and slot
     const type = update.system?.subType;

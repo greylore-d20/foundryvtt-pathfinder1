@@ -538,7 +538,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     }
 
     // Create or transfer item
-    if (ItemPF.isInventoryItem(item.type)) {
+    if (item.isPhysical) {
       await this.item.createContainerContent(itemData);
 
       if (actor && actor === this.item.parentActor) {

@@ -43,8 +43,33 @@ export class ItemPF extends Item {
       this.actions = new Collection();
   }
 
+  /**
+   * A static object holding system-specific metadata applicable to all instances of this Document class.
+   *
+   * @internal
+   */
+  static system = Object.freeze({
+    /**
+     * Whether this item is a physical one, possessing properties like quantity or weight.
+     *
+     * @type {boolean}
+     */
+    isPhysical: false,
+  });
+
+  /**
+   * Determine whether an item type is physical.
+   *
+   * @deprecated Use {@link ItemPF.isPhysical} insted.
+   * @param {string} type - The item type to check
+   * @returns {boolean} Whether an item of that type is physical.
+   */
   static isInventoryItem(type) {
-    return ["weapon", "equipment", "consumable", "loot", "container"].includes(type);
+    foundry.utils.logCompatibilityWarning(`ItemPF.isInventoryItem is deprecated. Use ItemPF.isPhysical instead.`, {
+      since: "0.83.0",
+      until: "0.84.0",
+    });
+    return CONFIG.Item.documentClasses[type]?.isPhysical ?? false;
   }
 
   async _preCreate(data, options, user) {
@@ -102,8 +127,17 @@ export class ItemPF extends Item {
     return ["quantity", "level", "inventoryItems"];
   }
 
+  /**
+   * Whether this item is physical.
+   *
+   * @type {boolean}
+   */
+  static get isPhysical() {
+    return this.system.isPhysical;
+  }
+  /** {@inheritDoc ItemPF.isPhysical:getter} */
   get isPhysical() {
-    return this.constructor.isInventoryItem(this.type);
+    return this.constructor.isPhysical;
   }
 
   /**

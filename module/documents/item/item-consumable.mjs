@@ -1,6 +1,12 @@
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemConsumablePF extends ItemPF {
+  /**
+   * @inheritDoc
+   * @internal
+   */
+  static system = Object.freeze(foundry.utils.mergeObject(super.system, { isPhysical: true }, { inplace: false }));
+
   async _preDelete(options, user) {
     if (user.id === game.user.id) {
       if (this.system.quantity > 0) {

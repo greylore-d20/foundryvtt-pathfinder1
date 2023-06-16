@@ -21,6 +21,8 @@ export const registerActorConditionsTests = () => {
         await actor.delete();
       });
 
+      const shakenCondition = { name: "Shaken", value: -2, modifier: "Penalty" };
+
       // ---------------------------------- //
       // Shaken                             //
       // ---------------------------------- //
@@ -41,39 +43,29 @@ export const registerActorConditionsTests = () => {
             expect(actor.system.attributes.savingThrows.fort.total).to.equal(1);
             expect(actor.sourceDetails["system.attributes.savingThrows.fort.total"])
               .to.be.an("array")
-              .that.deep.includes({
-                name: "Shaken",
-                value: -2,
-              });
+              .that.deep.includes(shakenCondition);
           });
 
           it("lowered Reflex", function () {
             expect(actor.system.attributes.savingThrows.ref.total).to.equal(0);
             expect(actor.sourceDetails["system.attributes.savingThrows.ref.total"])
               .to.be.an("array")
-              .that.deep.includes({
-                name: "Shaken",
-                value: -2,
-              });
+              .that.deep.includes(shakenCondition);
           });
 
           it("lowered Will", function () {
             expect(actor.system.attributes.savingThrows.will.total).to.equal(0);
             expect(actor.sourceDetails["system.attributes.savingThrows.will.total"])
               .to.be.an("array")
-              .that.deep.includes({
-                name: "Shaken",
-                value: -2,
-              });
+              .that.deep.includes(shakenCondition);
           });
         });
 
         it("lowered attack", function () {
           expect(actor.system.attributes.attack.general).to.equal(-2);
-          expect(actor.sourceDetails["system.attributes.attack.general"]).to.be.an("array").that.deep.includes({
-            name: "Shaken",
-            value: -2,
-          });
+          expect(actor.sourceDetails["system.attributes.attack.general"])
+            .to.be.an("array")
+            .that.deep.includes(shakenCondition);
         });
 
         it("lowered skill checks", function () {
@@ -83,20 +75,18 @@ export const registerActorConditionsTests = () => {
             ["umd", 1],
           ]) {
             expect(actor.system.skills[skill].mod).to.equal(value);
-            expect(actor.sourceDetails[`system.skills.${skill}.changeBonus`]).to.be.an("array").that.deep.includes({
-              name: "Shaken",
-              value: -2,
-            });
+            expect(actor.sourceDetails[`system.skills.${skill}.changeBonus`])
+              .to.be.an("array")
+              .that.deep.includes(shakenCondition);
           }
         });
 
         it("lowered ability checks", function () {
           for (const ability of Object.keys(pf1.config.abilities)) {
             expect(actor.system.abilities[ability].checkMod).to.equal(-2);
-            expect(actor.sourceDetails[`system.abilities.${ability}.checkMod`]).to.be.an("array").that.deep.includes({
-              name: "Shaken",
-              value: -2,
-            });
+            expect(actor.sourceDetails[`system.abilities.${ability}.checkMod`])
+              .to.be.an("array")
+              .that.deep.includes(shakenCondition);
           }
         });
       });
@@ -112,6 +102,8 @@ export const registerActorConditionsTests = () => {
           await actor.setCondition("sickened", false);
         });
 
+        const sickenedCondition = { name: "Sickened", value: -2, modifier: "Penalty" };
+
         it("can be enabled", async function () {
           expect(actor.hasCondition("sickened")).to.be.true;
         });
@@ -121,47 +113,36 @@ export const registerActorConditionsTests = () => {
             expect(actor.system.attributes.savingThrows.fort.total).to.equal(1);
             expect(actor.sourceDetails["system.attributes.savingThrows.fort.total"])
               .to.be.an("array")
-              .that.deep.includes({
-                name: "Sickened",
-                value: -2,
-              });
+              .that.deep.includes(sickenedCondition);
           });
 
           it("lowered Reflex", function () {
             expect(actor.system.attributes.savingThrows.ref.total).to.equal(0);
             expect(actor.sourceDetails["system.attributes.savingThrows.ref.total"])
               .to.be.an("array")
-              .that.deep.includes({
-                name: "Sickened",
-                value: -2,
-              });
+              .that.deep.includes(sickenedCondition);
           });
 
           it("lowered Will", function () {
             expect(actor.system.attributes.savingThrows.will.total).to.equal(0);
             expect(actor.sourceDetails["system.attributes.savingThrows.will.total"])
               .to.be.an("array")
-              .that.deep.includes({
-                name: "Sickened",
-                value: -2,
-              });
+              .that.deep.includes(sickenedCondition);
           });
         });
 
         it("lowered attack", function () {
           expect(actor.system.attributes.attack.general).to.equal(-2);
-          expect(actor.sourceDetails["system.attributes.attack.general"]).to.be.an("array").that.deep.includes({
-            name: "Sickened",
-            value: -2,
-          });
+          expect(actor.sourceDetails["system.attributes.attack.general"])
+            .to.be.an("array")
+            .that.deep.includes(sickenedCondition);
         });
 
         it("lowered weapon damage", function () {
           expect(actor.system.attributes.damage.weapon).to.equal(-2);
-          expect(actor.sourceDetails["system.attributes.damage.weapon"]).to.be.an("array").that.deep.includes({
-            name: "Sickened",
-            value: -2,
-          });
+          expect(actor.sourceDetails["system.attributes.damage.weapon"])
+            .to.be.an("array")
+            .that.deep.includes(sickenedCondition);
         });
 
         it("lowered skill checks", function () {
@@ -171,20 +152,18 @@ export const registerActorConditionsTests = () => {
             ["umd", 1],
           ]) {
             expect(actor.system.skills[skill].mod).to.equal(value);
-            expect(actor.sourceDetails[`system.skills.${skill}.changeBonus`]).to.be.an("array").that.deep.includes({
-              name: "Sickened",
-              value: -2,
-            });
+            expect(actor.sourceDetails[`system.skills.${skill}.changeBonus`])
+              .to.be.an("array")
+              .that.deep.includes(sickenedCondition);
           }
         });
 
         it("lowered ability checks", function () {
           for (const ability of Object.keys(pf1.config.abilities)) {
             expect(actor.system.abilities[ability].checkMod).to.equal(-2);
-            expect(actor.sourceDetails[`system.abilities.${ability}.checkMod`]).to.be.an("array").that.deep.includes({
-              name: "Sickened",
-              value: -2,
-            });
+            expect(actor.sourceDetails[`system.abilities.${ability}.checkMod`])
+              .to.be.an("array")
+              .that.deep.includes(sickenedCondition);
           }
         });
       });
@@ -239,6 +218,7 @@ export const registerActorConditionsTests = () => {
             expect(actor.system.abilities[ability].mod).to.equal(baseModifier - 1);
             expect(actor.sourceDetails[`system.abilities.${ability}.penalty`]).to.be.an("array").that.deep.includes({
               name: "Fatigued",
+              modifier: "Penalty",
               value: -2,
             });
           }
@@ -256,6 +236,7 @@ export const registerActorConditionsTests = () => {
             expect(actor.system.abilities[ability].mod).to.equal(baseModifier - 3);
             expect(actor.sourceDetails[`system.abilities.${ability}.penalty`]).to.be.an("array").that.deep.includes({
               name: "Exhausted",
+              modifier: "Penalty",
               value: -6,
             });
           }

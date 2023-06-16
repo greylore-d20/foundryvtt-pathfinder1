@@ -1,5 +1,4 @@
 import { RollPF } from "../../../dice/roll.mjs";
-import { fractionalToString } from "@utils";
 import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 /**
@@ -138,20 +137,20 @@ const getSortChangePriority = function () {
 };
 
 /**
- * @this {Actor}
- * @param {string} changeTarget Target (e.g. "ac" or "skills")
- * @param {string} changeType Type (e.g. "profane", "untyped", or "dodge"). If undefined, all valid targets will be returned.
- * @param {number} modifier  Value, if known
+ * @this {ActorPF}
+ * @param {BuffTarget} target Target (e.g. "ac" or "skills")
+ * @param {ModifierType} modifierType Type (e.g. "profane", "untyped", or "dodge"). If undefined, all valid targets will be returned.
+ * @param {number} [value]  Value, if known
  * @returns {Array<string>} Array of target paths to modify
  */
-export const getChangeFlat = function (changeTarget, changeType, modifier) {
-  if (changeTarget == null) return [];
+export const getChangeFlat = function (target, modifierType, value) {
+  if (target == null) return [];
 
   const curData = this.system;
   /** @type {string[]} */
   const result = [];
 
-  switch (changeTarget) {
+  switch (target) {
     case "mhp":
       result.push("system.attributes.hp.max");
       break;
@@ -167,15 +166,15 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
     case "int":
     case "wis":
     case "cha":
-      if (changeType === "penalty") {
-        result.push(`system.abilities.${changeTarget}.penalty`);
+      if (modifierType === "penalty") {
+        result.push(`system.abilities.${target}.penalty`);
         break;
       }
-      if (["base", "untypedPerm"].includes(changeType)) {
-        result.push(`system.abilities.${changeTarget}.total`, `system.abilities.${changeTarget}.base`);
+      if (["base", "untypedPerm"].includes(modifierType)) {
+        result.push(`system.abilities.${target}.total`, `system.abilities.${target}.base`);
         break;
       }
-      result.push(`system.abilities.${changeTarget}.total`);
+      result.push(`system.abilities.${target}.total`);
       break;
     case "strMod":
     case "dexMod":
@@ -183,7 +182,7 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
     case "intMod":
     case "wisMod":
     case "chaMod":
-      result.push(`system.abilities.${changeTarget.slice(0, 3)}.mod`);
+      result.push(`system.abilities.${target.slice(0, 3)}.mod`);
       break;
     case "carryStr":
       result.push("system.details.carryCapacity.bonus.total");
@@ -194,7 +193,7 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
     case "ac":
       result.push("system.attributes.ac.normal.total", "system.attributes.ac.touch.total");
 
-      switch (changeType) {
+      switch (modifierType) {
         case "dodge":
         case "haste":
           result.push("system.attributes.cmd.total");
@@ -216,7 +215,7 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
         default:
           result.push("system.attributes.ac.flatFooted.total");
           // Other penalties also apply to CMD, but not bonuses
-          if (modifier < 0) {
+          if (value < 0) {
             result.push("system.attributes.cmd.total", "system.attributes.cmd.flatFootedTotal");
           }
           break;
@@ -224,7 +223,7 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
       break;
     case "aac": {
       const targets = ["system.ac.normal.total"];
-      switch (changeType) {
+      switch (modifierType) {
         case "base":
           targets.push("system.ac.normal.base");
           break;
@@ -240,7 +239,7 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
     }
     case "sac": {
       const targets = ["system.ac.shield.total"];
-      switch (changeType) {
+      switch (modifierType) {
         case "base":
           targets.push("system.ac.shield.base");
           break;
@@ -256,7 +255,7 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
     }
     case "nac": {
       const targets = ["system.ac.natural.total"];
-      switch (changeType) {
+      switch (modifierType) {
         case "base":
           targets.push("system.ac.natural.base");
           break;
@@ -481,32 +480,32 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
       }
       break;
     case "landSpeed":
-      if (changeType === "base") return ["system.attributes.speed.land.total"];
+      if (modifierType === "base") return ["system.attributes.speed.land.total"];
       result.push("system.attributes.speed.land.add", "system.attributes.speed.land.total");
       break;
     case "climbSpeed":
-      if (changeType === "base") {
+      if (modifierType === "base") {
         result.push("system.attributes.speed.climb.total");
         break;
       }
       result.push("system.attributes.speed.climb.add", "system.attributes.speed.climb.total");
       break;
     case "swimSpeed":
-      if (changeType === "base") {
+      if (modifierType === "base") {
         result.push("system.attributes.speed.swim.total");
         break;
       }
       result.push("system.attributes.speed.swim.add", "system.attributes.speed.swim.total");
       break;
     case "burrowSpeed":
-      if (changeType === "base") {
+      if (modifierType === "base") {
         result.push("system.attributes.speed.burrow.total");
         break;
       }
       result.push("system.attributes.speed.burrow.add", "system.attributes.speed.burrow.total");
       break;
     case "flySpeed":
-      if (changeType === "base") {
+      if (modifierType === "base") {
         result.push("system.attributes.speed.fly.total");
         break;
       }
@@ -516,7 +515,7 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
       result.push("system.attributes.cmb.bonus");
       break;
     case "cmd":
-      if (["dodge", "haste"].includes(changeType)) {
+      if (["dodge", "haste"].includes(modifierType)) {
         result.push("system.attributes.cmd.total");
         break;
       }
@@ -573,7 +572,7 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
       break;
   }
 
-  if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)$/)) {
+  if (target.match(/^skill\.([a-zA-Z0-9]+)$/)) {
     const sklKey = RegExp.$1;
     const skillData = curData.skills[sklKey];
     if (skillData != null) {
@@ -583,7 +582,7 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
         result.push(`system.skills.${sklKey}.subSkills.${subSklKey}.changeBonus`);
       }
     }
-  } else if (changeTarget.match(/^skill\.([a-zA-Z0-9]+)\.subSkills\.([a-zA-Z0-9_]+)$/)) {
+  } else if (target.match(/^skill\.([a-zA-Z0-9]+)\.subSkills\.([a-zA-Z0-9_]+)$/)) {
     const sklKey = RegExp.$1;
     const subSklKey = RegExp.$2;
     if (curData.skills[sklKey]?.subSkills?.[subSklKey] != null) {
@@ -592,8 +591,8 @@ export const getChangeFlat = function (changeTarget, changeType, modifier) {
   }
 
   // Call hooks to enable modules to add or adjust the result array
-  callOldNamespaceHookAll("pf1.getChangeFlat", "pf1GetChangeFlat", changeTarget, changeType, { keys: result });
-  Hooks.callAll("pf1GetChangeFlat", changeTarget, changeType, modifier, result, curData);
+  callOldNamespaceHookAll("pf1.getChangeFlat", "pf1GetChangeFlat", target, modifierType, { keys: result });
+  Hooks.callAll("pf1GetChangeFlat", result, target, modifierType, value, this);
 
   // Return results directly when deprecation is removed
   return result.map((key) => {

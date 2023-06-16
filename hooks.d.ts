@@ -457,24 +457,26 @@ declare global {
        *   };
        * });
        * // Define the correct data field for the change to target
-       * Hooks.on("pf1GetChangeFlat", (target, modifier, result) => {
+       * Hooks.on("pf1GetChangeFlat", (result, target, modifierType, value, actor) => {
        *   if (target === "gp") {
        *     result.push("system.currency.gp");
        *   }
        * });
        * ```
-       * @param changeTarget - The change target as per the change's `subTarget` property,
-       *   see {@link pf1.components.ItemChange.subTarget ItemChange#subTarget} and {@link pf1.config.buffTargets change targets}.
-       * @param changeType - The change type as per the change's `modifier` property,
-       *   see {@link pf1.components.ItemChange.modifier ItemChange#modifier} and {@link pf1.config.bonusModifiers change modifiers}.
        * @param result - An array of target data fields.
-       * @param curData - The current data of the actor the change is being applied to.
+       * @param target - The change target as per the change's `subTarget` property,
+       *   see {@link pf1.components.ItemChange.subTarget ItemChange#subTarget} and {@link pf1.config.buffTargets change targets}.
+       * @param modifierType - The change type as per the change's `modifier` property,
+       *   see {@link pf1.components.ItemChange.modifier ItemChange#modifier} and {@link pf1.config.bonusModifiers change modifiers}.
+       * @param value - The numerical change value, if any.
+       * @param actor - The actor the change is being applied to.
        */
       pf1GetChangeFlat: (
-        changeTarget: BuffTarget | (string & {}),
-        changeType: string,
         result: string[],
-        curData: Record<string, unknown>
+        target: BuffTarget | (string & {}),
+        modifierType: ModifierType | (string & {}) | undefined,
+        value: number | undefined,
+        actor: ActorPF
       ) => void;
 
       /**

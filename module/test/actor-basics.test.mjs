@@ -248,9 +248,10 @@ export const registerActorBasicTests = () => {
           before(async () => {
             combat = await Combat.create({});
             await combat.activate();
-            const combatResult = await actor.rollInitiative({ createCombatants: true, skipDialog: true });
-            messages.push(...combatResult.messages);
-            roll = combatResult.messages[0];
+            await actor.rollInitiative({ createCombatants: true, skipDialog: true });
+            const latestMessage = game.messages.contents.pop();
+            if (latestMessage.flags.pf1.subject.core === "init") messages.push(latestMessage);
+            roll = latestMessage;
             combatant = combat.combatants.find((o) => o.actor.id === actor.id);
           });
           after(async () => {

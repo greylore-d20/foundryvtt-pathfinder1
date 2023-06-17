@@ -596,16 +596,17 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     return item.update({ "system.quantity": newQuantity });
   }
 
-  async _quickItemActionControl(event) {
+  /**
+   * Handles click events to trigger the use of an item.
+   *
+   * @protected
+   * @param {MouseEvent} event - The originating click event
+   */
+  _quickItemActionControl(event) {
     event.preventDefault();
-    const a = event.currentTarget;
     const itemId = $(event.currentTarget).closest(".item").attr("data-item-id");
     const item = this.item.getContainerContent(itemId);
-
-    // Quick Attack
-    if (a.classList.contains("item-attack")) {
-      await item.use({ ev: event });
-    }
+    item.use({ ev: event });
   }
 
   async _setItemUses(event) {

@@ -77,12 +77,11 @@
 
         {{#if section.hasActions}}
         <div class="item-detail item-actions">
-          <div class="item-attack tooltip">
+          <div class="item-action">
             {{#if item.hasAction}}
-            <span class="tooltipcontent">
-              {{localize "PF1.UseItem"}}
-            </span>
-            <a class="item-control item-attack"><img class="icon" src="systems/pf1/icons/actions/gladius.svg"></a>
+            <a class="item-control item-action action roll" data-tooltip="PF1.UseBuff">
+              <img src="icons/dice/d20black.svg">
+            </a>
             {{/if}}
           </div>
         </div>

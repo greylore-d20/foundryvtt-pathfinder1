@@ -59,13 +59,10 @@
 
         {{#if section.hasActions}}
         <div class="item-detail item-actions">
-          <div class="item-action tooltip">
+          <div class="item-action">
             {{#unless item.disabled}}
             {{#if item.hasAction}}
-            <span class="tooltipcontent">
-              {{localize "PF1.UseFeat"}}
-            </span>
-            <a class="item-control item-action action roll">
+            <a class="item-control item-action action roll" data-tooltip="PF1.UseFeat">
               <img src="icons/dice/d20black.svg">
             </a>
             {{/if}}

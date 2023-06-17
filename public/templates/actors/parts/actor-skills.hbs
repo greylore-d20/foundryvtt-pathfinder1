@@ -15,7 +15,9 @@
       <h4>{{skill.label}}</h4>
       {{/if}}
     </div>
-    <div class="action roll"><img src="icons/dice/d20black.svg"></div>
+    <div class="action roll" data-tooltip="PF1.RollSkill">
+      <img src="icons/dice/d20black.svg">
+    </div>
   </li>
   {{#each skill.subSkills as |subSkill b|}}
   <li class="sub-skill {{#if subSkill.untrained}}untrained{{/if}}" data-skill="{{b}}" data-main-skill="{{s}}">
@@ -36,7 +38,9 @@
       <h4>{{subSkill.name}}</h4>
       {{/if}}
     </div>
-    <div class="action roll"><img src="icons/dice/d20black.svg"></div>
+    <div class="action roll" data-tooltip="PF1.RollSkill">
+      <img src="icons/dice/d20black.svg">
+    </div>
     <span class="text-box skill-mod" data-tooltip="PF1.SkillModTooltip">{{numberFormat subSkill.mod decimals=0 sign=true}}</span>
     <span class="text-box skill-rank" name="system.skills.{{s}}.subSkills.{{b}}.rank" data-dtype="Number" data-tooltip="PF1.SkillRankPlural" data-placeholder="{{localize "PF1.Rank"}}">{{#if subSkill.rank}}{{subSkill.rank}}{{/if}}</span>
     <label class="checkbox skill-cs" data-tooltip="PF1.CSTooltip">
@@ -84,7 +88,9 @@
       <h4>{{#if skill.custom}}{{skill.name}}{{else}}{{skill.label}}{{/if}}</h4>
       {{/if}}
     </div>
-    <div class="action roll"><img src="icons/dice/d20black.svg"></div>
+    <div class="action roll" data-tooltip="PF1.RollSkill">
+      <img src="icons/dice/d20black.svg">
+    </div>
     <span class="text-box skill-mod" data-tooltip="PF1.SkillModTooltip">{{numberFormat skill.mod decimals=0 sign=true}}</span>
     <span class="text-box skill-rank" name="system.skills.{{s}}.rank" data-dtype="Number" data-tooltip="PF1.SkillRankPlural" data-placeholder="{{localize "PF1.Rank"}}">{{#if skill.rank}}{{skill.rank}}{{/if}}</span>
     <label class="checkbox skill-cs">

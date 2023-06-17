@@ -473,13 +473,11 @@
       </div>
 
       <div class="item-detail item-actions">
-        <div class="item-action tooltip">
-          <span class="tooltipcontent">
-            <span class="span3">{{localize "PF1.UseSpell"}}</span>
-            {{#if labels.range}}<span class="span3">{{labels.range}}</span>{{/if}}
-            {{#if labels.save}}<span class="span3">{{labels.save}}</span>{{/if}}
-          </span>
-          <a class="item-control item-action action roll">
+        <div class="item-action">
+          <a class="item-control item-action action roll"
+            data-tooltip="{{localize "PF1.UseSpell"}}
+              {{#if labels.range}}<br>{{labels.range}}{{/if}}
+              {{#if labels.save}}<br>{{labels.save}}{{/if}}">
             <img src="icons/dice/d20black.svg">
           </a>
         </div>

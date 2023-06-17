@@ -1468,13 +1468,25 @@ export class ActorSheetPF extends ActorSheet {
   /*  Event Listeners and Handlers                */
   /* -------------------------------------------- */
 
-  _onRest(event) {
+  async _onRest(event) {
     event.preventDefault();
-    const app = Object.values(this.document.apps).find((o) => {
-      return o instanceof ActorRestDialog && o._element;
-    });
-    if (app) app.render(true, { focus: true });
-    else new ActorRestDialog(this.document).render(true);
+
+    const skipDialog = pf1.documents.settings.getSkipActionPrompt();
+    if (skipDialog) {
+      const button = event.currentTarget;
+      button.disabled = true;
+      try {
+        await this.actor.performRest({ verbose: true });
+      } finally {
+        button.disabled = false;
+      }
+    } else {
+      const app = Object.values(this.document.apps).find((o) => {
+        return o instanceof ActorRestDialog && o._element;
+      });
+      if (app) app.render(true, { focus: true });
+      else new ActorRestDialog(this.document).render(true);
+    }
   }
 
   /* -------------------------------------------- */

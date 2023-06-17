@@ -4447,7 +4447,7 @@ export class ActorPF extends ActorBasePF {
    * @returns {Promise<ActorRestData | void>} Updates applied to the actor, if resting was completed
    */
   async performRest(options = {}) {
-    const { restoreHealth = true, longTermCare = false, restoreDailyUses = true, hours = 8 } = options;
+    const { restoreHealth = true, longTermCare = false, restoreDailyUses = true, hours = 8, verbose = false } = options;
     const actorData = this.system;
 
     const updateData = {};
@@ -4474,6 +4474,12 @@ export class ActorPF extends ActorBasePF {
     if (!foundry.utils.isEmpty(updateData.system)) await this.update(updateData);
 
     Hooks.callAll("pf1ActorRest", this, options, updateData, itemUpdates);
+
+    if (verbose) {
+      const message = restoreDailyUses ? "PF1.FullRestMessage" : "PF1.RestMessage";
+      ui.notifications.info(game.i18n.format(message, { name: this.token?.name ?? this.name, hours }));
+    }
+
     return { options, updateData, itemUpdates };
   }
 
@@ -4552,10 +4558,11 @@ export class ActorPF extends ActorBasePF {
 /**
  * @typedef {object} ActorRestOptions
  * Options given to {@link ActorPF.performRest} affecting an actor's resting.
- * @property {boolean} restoreHealth - Whether the actor's health should be restored. Defaults to `true`.
- * @property {boolean} restoreDailyUses - Whether daily uses of spells and abilities should be restored. Defaults to `true`.
- * @property {boolean} longTermCare - Whether additional hit and ability score points should be restored through the Heal skill. Defaults to `false`.
- * @property {number} hours - The number of hours the actor will rest. Defaults to `8`.
+ * @property {boolean} [restoreHealth=true] - Whether the actor's health should be restored.
+ * @property {boolean} [restoreDailyUses=true] - Whether daily uses of spells and abilities should be restored.
+ * @property {boolean} [longTermCare=false] - Whether additional hit and ability score points should be restored through the Heal skill.
+ * @property {number} [hours=8] - The number of hours the actor will rest.
+ * @property {boolean} [verbose=false] - Display notification once rest processing finishes.
  */
 
 /**

@@ -4,7 +4,7 @@
   <div class="flexcol">
     <div class="flexrow name-xp">
       <div>
-        <h1 class="charname">
+        <h1 class="char-name">
           <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}" data-tooltip="PF1.CharacterName"/>
         </h1>
       </div>
@@ -447,10 +447,10 @@
   <div class="classes-body">
     <h2>{{localize "PF1.ClassPlural"}}</h2>
 
-    <ol class="inventory-list">
+    <ol class="item-groups-list">
       <ol class="item-list" data-type="class">
-        <li class="inventory-header flexrow">
-          <div class="item-name flexrow">
+        <li class="item-list-header flexrow">
+          <div class="item-name">
             <h3>{{localize "PF1.ItemTypeClass"}}</h3>
           </div>
 
@@ -473,7 +473,7 @@
         {{#if classes.length}}
         {{#each classes as |item iid|}}
         <li class="item flexrow {{#unless isCharged}}uncharged{{/unless}}" data-item-id="{{item.id}}">
-          <div class="item-name flexrow rollable">
+          <div class="item-name rollable">
             <div class="item-image" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
             <h4>{{item.name}}</h4>
           </div>

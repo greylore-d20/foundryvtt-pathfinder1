@@ -868,7 +868,7 @@ export class ItemSheetPF extends ItemSheet {
     html.mousemove((ev) => this._moveTooltips(ev));
 
     // Edit action
-    html.find(".actions .items-list .item").on("contextmenu", this._onActionEdit.bind(this));
+    html.find(".actions .item-list .item").on("contextmenu", this._onActionEdit.bind(this));
 
     // Item summaries
     html.find(".item .item-name h4").on("click", (event) => this._onItemSummary(event));
@@ -968,9 +968,9 @@ export class ItemSheetPF extends ItemSheet {
 
     html.find(".script-calls .item-control").click(this._onScriptCallControl.bind(this));
 
-    html.find(".script-calls .items-list .item").contextmenu(this._onScriptCallEdit.bind(this));
+    html.find(".script-calls .item-list .item").contextmenu(this._onScriptCallEdit.bind(this));
 
-    html.find(".script-calls .inventory-list[data-category]").on("drop", this._onScriptCallDrop.bind(this));
+    html.find(".script-calls .item-list[data-category]").on("drop", this._onScriptCallDrop.bind(this));
   }
 
   _onSpanTextInput(event, callback = null) {
@@ -1133,7 +1133,7 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
     const item = this.document.scriptCalls ? this.document.scriptCalls.get(a.closest(".item")?.dataset.itemId) : null;
-    const group = a.closest(".inventory-list");
+    const group = a.closest(".item-list");
     const category = group.dataset.category;
 
     // Create item

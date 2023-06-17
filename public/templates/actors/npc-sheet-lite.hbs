@@ -6,7 +6,7 @@
 
     <div class="header-details flexcol">
       <!-- <div class="header-top flexrow"> -->
-        <h1 class="charname">
+        <h1 class="char-name">
           <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}"/>
         </h1>
       <!-- </div> -->
@@ -198,9 +198,9 @@
       <div class="combat-attacks">
         <section class="attacks-body">
           {{#each attacks as |section sid|}}
-          <ol class="inventory-list sub-scroll scroll-attacks">
-            <li class="inventory-header flexrow">
-              <div class="item-name flexrow">
+          <ol class="item-groups-list sub-scroll scroll-attacks">
+            <li class="item-list-header flexrow">
+              <div class="item-name">
                 <h3>{{section.label}}</h3>
               </div>
 
@@ -224,7 +224,7 @@
             <ol class="item-list" data-type="attack" data-subtype="{{sid}}">
               {{#each section.items as |item iid|}}
               <li class="item flexrow" data-item-id="{{item.id}}">
-                <div class="item-name flexrow rollable">
+                <div class="item-name rollable">
                   <div class="item-image" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
                   <h4>
                     {{item.name~}}

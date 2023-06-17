@@ -375,12 +375,12 @@
 </div>
 {{/if}}
 
-<ol class="inventory-list book-{{bookId}}-body">
+<ol class="item-groups-list book-{{bookId}}-body">
   {{#each spellbook.data as |section sid|}}
   {{#unless section._hidden}}
   <ol class="item-list" data-type="spell" data-level="{{section.level}}" data-preparation-unused="{{section.preparation.unused}}" {{#if ../spellbook.orig.spontaneous}}data-known-unused="{{section.known.unused}}"{{/if}}>
-    <li class="flexrow inventory-header spellbook-header {{#if section.lowAbilityScore}}insufficient-ability-score{{/if}}" data-level="{{section.level}}">
-      <div class="item-name flexrow">
+    <li class="flexrow item-list-header spellbook-header {{#if section.lowAbilityScore}}insufficient-ability-score{{/if}}" data-level="{{section.level}}">
+      <div class="item-name">
         <h3>{{section.name}}</h3>
       </div>
 
@@ -433,7 +433,7 @@
 
     {{#each section.items as |item i|}}
     <li class="item flexrow {{#if item.document.canCast}}prepared{{else}}unprepared{{/if}} {{#if item.domain}}domain{{/if}}" data-item-id="{{item.id}}">
-      <div class="item-name flexrow rollable">
+      <div class="item-name rollable">
         <div class="item-image" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
         <h4>{{item.name}}</h4>
       </div>

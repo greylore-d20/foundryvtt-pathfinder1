@@ -35,7 +35,7 @@
       .name-xp {
         flex: 0;
 
-        h1.charname {
+        h1.char-name {
           input {
             height: 2.5rem;
             padding: 0;
@@ -89,13 +89,16 @@
           line-height: 32px;
           text-align: center;
           vertical-align: baseline;
-          margin-right: 4px;
           height: 32px;
           color: @colorTan;
 
           &.rollable:hover {
-            background-image: url("icons/misc/info.svg") !important;
+            background-image: url(icons/misc/info.svg) !important;
           }
+        }
+
+        .tag-list {
+          justify-content: flex-start;
         }
       }
     }
@@ -874,9 +877,7 @@
       overflow: hidden;
     }
 
-    .inventory-list {
-      height: 100%;
-
+    .item-list {
       input[type="checkbox"] {
         height: 18px;
       }

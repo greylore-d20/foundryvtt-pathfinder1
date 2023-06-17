@@ -118,7 +118,7 @@ export class ActorSheetPF extends ActorSheet {
     return mergeObject(super.defaultOptions, {
       scrollY: [
         ".combat-attacks",
-        ".inventory-list",
+        ".item-groups-list",
         ".skills-list",
         ".traits",
         ".actor-notes",
@@ -926,7 +926,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Item summaries
-    html.find(".item .item-name h4").click((event) => this._onItemSummary(event));
+    html.find(".item .item-name").click((event) => this._onItemSummary(event));
 
     // Allow opening items even if the sheet isn't editable.
 
@@ -937,7 +937,7 @@ export class ActorSheetPF extends ActorSheet {
     // General items
     html.find(".item-edit").on("click", this._onItemEdit.bind(this));
     // General items (right click)
-    html.find(".item .item-name h4").contextmenu(this._onItemEdit.bind(this));
+    html.find(".item .item-name").contextmenu(this._onItemEdit.bind(this));
     // Quick items (right click)
     html.find(".quick-actions li").contextmenu(this._onItemEdit.bind(this));
     // Race controls (editable limitations done internally)
@@ -1405,6 +1405,8 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onItemRoll(event) {
     event.preventDefault();
+    event.stopPropagation();
+
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 

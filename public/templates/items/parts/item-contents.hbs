@@ -1,8 +1,8 @@
 <section class="inventory-body">
   {{#each sections as |section sid|}}
-  <ol class="inventory-list">
-    <li class="inventory-header flexrow">
-      <div class="item-name flexrow">
+  <ol class="item-groups-list">
+    <li class="item-list-header flexrow">
+      <div class="item-name">
         <h3>{{section.label}}</h3>
       </div>
 
@@ -32,7 +32,7 @@
     <ol class="item-list">
       {{#each section.items as |item iid|}}
       <li class="item flexrow {{#if item.empty}}empty-stack{{/if}}" data-item-id="{{item._id}}">
-        <div class="item-name flexrow">
+        <div class="item-name">
           <div class="item-image rollable" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
           <h4 class="rollable">
             {{~#if item.isStack}}({{item.system.quantity}}) {{/if}}

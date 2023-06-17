@@ -419,9 +419,10 @@
       .tab {
         overflow: hidden scroll;
 
-        // Links and description tabs use different scrolling
+        // Links, description and changes tabs use different scrolling
         &[data-group="description"],
-        &[data-tab="links"] {
+        &[data-tab="links"],
+        &[data-tab="changes"] {
           overflow: hidden;
         }
 
@@ -434,9 +435,9 @@
   }
 
   // Overflow long names
-  .charname input,
-  .itemname input,
-  .inventory-list h4 {
+  .char-name input,
+  .item-name input,
+  .item-name h4 {
     text-overflow: ellipsis;
     overflow: hidden;
   }

@@ -1,185 +1,170 @@
 .pf1.sheet {
-  .inventory-list,
-  .items-list,
+  .item-groups-list {
+    overflow: hidden scroll;
+    height: 100%;
+  }
+
+  .item-groups-list,
   .item-list {
     list-style: none;
     margin: 0;
     padding: 0 0;
-    overflow: hidden;
   }
 
-  .inventory-list {
-    overflow: hidden scroll;
-  }
-
-  .inventory-list,
-  .items-list,
   .item-list {
+    overflow: hidden;
+
     .empty-stack {
       .item-name {
         text-decoration: line-through;
       }
     }
+  }
 
-    .inventory-header,
-    .items-header,
-    .items-list {
-      .fas {
-        text-align: center;
+  // Item List Header
+  .item-list-header {
+    margin: 0 0 2px 0;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.05);
+    border: @borderGroove;
+    line-height: 24px;
+    flex: 0 0 24px;
+
+    font-size: var(--font-size-12, 9pt);
+
+    h3 {
+      margin: 0;
+      padding-left: 5px;
+      font-size: @fontSizeNormal;
+      font-weight: bold;
+    }
+
+    .item-controls {
+      justify-content: space-evenly;
+    }
+  }
+
+  .item-list-header,
+  .item {
+    > *:not(:last-child) {
+      border-right: 1px solid var(--color-border-light-secondary);
+    }
+
+    > *:not(.item-name) {
+      justify-content: space-evenly;
+    }
+
+    .item-name {
+      h3 {
+        border: unset;
+      }
+    }
+
+    .fas {
+      text-align: center;
+    }
+
+    .item-name {
+      .change-formula {
+        margin: 0 2px;
       }
 
-      .item-name {
-        align-items: baseline;
-
-        h3 {
-          border: unset;
-        }
-
-        .change-formula {
-          margin: 0 2px;
-        }
-
-        > textarea {
-          margin: 0 2px;
-        }
-
-        .item-info {
-          flex: 0 0 16px;
-          margin-right: 4px;
-        }
+      > textarea {
+        margin: 0 2px;
       }
-      .item-enabled {
-        flex: 0 0 48px;
-      }
-      .item-operator {
-        flex: 0 0 56px;
-      }
-      .item-target {
-        flex: 0 0 160px;
 
-        .change-target,
-        .context-note-target {
-          flex: 0 0 156px;
-          width: 156px;
-        }
+      .item-info {
+        flex: 0 0 16px;
+        margin-right: 4px;
       }
-      .item-modifier {
-        flex: 0 0 112px;
+    }
+    .item-enabled {
+      flex: 0 0 48px;
+    }
+    .item-operator {
+      flex: 0 0 56px;
+    }
+    .item-target {
+      flex: 0 0 160px;
 
-        .change-modifier {
-          flex: 0 0 108px;
-          width: 108px;
-        }
+      .change-target,
+      .context-note-target {
+        flex: 0 0 156px;
+        width: 156px;
       }
-      .item-priority {
-        flex: 0 0 32px;
+    }
+    .item-modifier {
+      flex: 0 0 112px;
+
+      .change-modifier {
+        flex: 0 0 108px;
+        width: 108px;
       }
+    }
+    .item-priority {
+      flex: 0 0 32px;
     }
 
     &.flexcol {
       height: 100%;
     }
 
-    // Inventory Item
-    .item {
-      line-height: 24px;
-      padding: 0 2px; // to align with the header border
-      border-bottom: 1px solid @colorFaint;
-      &:last-child {
-        border-bottom: none;
-      }
-
-      .itemBackground();
-
-      &.disabled {
-        .item-name {
-          h4 {
-            text-decoration: line-through;
-            color: @colorTan;
-          }
-        }
-      }
-
-      // Item Header Name
+    &.disabled {
       .item-name {
-        cursor: pointer;
-        white-space: nowrap;
-        overflow: hidden;
-        align-items: center;
-
-        &.flag-name {
-          cursor: initial;
-        }
-
-        .item-image {
-          height: 24px;
-          flex: 0 0 24px;
-          background-size: 24px;
-          margin-right: 5px;
-          background: no-repeat center;
-          background-size: contain;
-
-          &:hover:not(.no-hover) {
-            background-image: url("icons/misc/info.svg") !important;
-          }
-        }
-
         h4 {
-          margin: 0;
-          min-width: 0;
+          text-decoration: line-through;
+          color: @colorTan;
+        }
+      }
+    }
+
+    // Item Header Name
+    .item-name {
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      align-items: center;
+
+      display: inline-flex;
+      gap: 0.3rem;
+
+      &.flag-name {
+        cursor: initial;
+      }
+
+      .item-image {
+        height: 24px;
+        flex: 0 0 24px;
+        background-size: 24px;
+        background: no-repeat center;
+        background-size: contain;
+
+        &:hover:not(.no-hover) {
+          background-image: url(../../icons/misc/info.svg) !important;
         }
       }
 
-      input[type="checkbox"] {
-        height: 12px;
-      }
-
-      // Item Dropdown Properties
-      .item-properties {
-        margin-top: 3px;
-      }
-
-      // Charged
-      .item-recharge {
-        flex: 0 0 80px;
-        text-align: right;
-        font-size: @fontSizeNormal;
-        color: @colorTan;
-      }
-    }
-
-    // Inventory Header
-    .inventory-header,
-    .items-header {
-      margin: 0 0 2px 0;
-      padding: 0;
-      background: rgba(0, 0, 0, 0.05);
-      border: @borderGroove;
-      line-height: 24px;
-      flex: 0 0 24px;
-
-      h3 {
+      h4 {
         margin: 0;
-        padding-left: 5px;
-        font-size: @fontSizeNormal;
-        font-weight: bold;
-      }
-
-      .item-controls {
-        justify-content: space-evenly;
+        min-width: 0;
       }
     }
 
-    .inventory-header,
-    .items-header,
-    .item {
-      > *:not(:last-child) {
-        border-right: 1px solid var(--color-border-light-secondary);
-      }
+    input[type="checkbox"] {
+      height: 12px;
+    }
 
-      > *:not(.item-name) {
-        justify-content: space-evenly;
-      }
+    // Item Dropdown Properties
+    .item-properties {
+      margin-top: 3px;
+    }
+
+    // Charged
+    .item-recharge {
+      flex: 0 0 80px;
+      text-align: right;
+      font-size: @fontSizeNormal;
+      color: @colorTan;
     }
 
     // Item Detail Sections
@@ -193,7 +178,6 @@
       white-space: nowrap;
       display: flex;
       flex-flow: row nowrap;
-      justify-content: flex-end;
       align-items: center;
 
       .icon {
@@ -293,7 +277,9 @@
     }
 
     a.item-control {
-      height: 100%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
 
       &.item-toggle-data {
         color: rgba(75, 75, 75, 0.3);
@@ -323,7 +309,6 @@
       flex-flow: row nowrap;
       overflow-x: hidden;
       white-space: nowrap;
-      justify-content: center;
 
       a {
         flex: 0 0 16px;
@@ -344,6 +329,21 @@
       line-height: 1.5;
       padding: 0.25em 0.5em;
       border-top: 1px solid @colorFaint;
+    }
+  }
+
+  .item-list {
+    .item {
+      // To align with header
+      padding: 0 2px;
+
+      border-bottom: 1px solid @colorFaint;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .itemBackground();
     }
   }
 }

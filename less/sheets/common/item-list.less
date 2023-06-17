@@ -5,8 +5,16 @@
     list-style: none;
     margin: 0;
     padding: 0 0;
-    overflow-y: auto;
+    overflow: hidden;
+  }
 
+  .inventory-list {
+    overflow: hidden scroll;
+  }
+
+  .inventory-list,
+  .items-list,
+  .item-list {
     .empty-stack {
       .item-name {
         text-decoration: line-through;
@@ -302,12 +310,6 @@
 
     .item-active {
       flex: 0 0 60px;
-    }
-
-    .item-list {
-      list-style: none;
-      margin: 0 0 2px 0;
-      padding: 0;
     }
 
     // Item Control Buttons

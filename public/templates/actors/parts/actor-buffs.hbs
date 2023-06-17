@@ -28,7 +28,9 @@
     {{#unless section._hidden}}
     <ol class="item-list" data-type="buff" data-subtype="{{sid}}">
       <li class="inventory-header flexrow buffs-{{sid}}">
-        <h3 class="item-name flexrow">{{section.label}}</h3>
+        <div class="item-name flexrow">
+          <h3>{{section.label}}</h3>
+        </div>
 
         <div class="item-detail item-duration">
           <span>{{localize "PF1.Duration"}}</span>

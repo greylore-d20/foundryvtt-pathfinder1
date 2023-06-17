@@ -44,7 +44,9 @@
   {{#unless section._hidden}}
     <ol class="item-list" data-type="{{section.dataset.type}}" data-subtype="{{section.dataset.sub-type}}">
       <li class="inventory-header flexrow items-{{sid}}">
-        <h3 class="item-name flexrow">{{section.label}}</h3>
+        <div class="item-name flexrow">
+          <h3>{{section.label}}</h3>
+        </div>
 
         {{#if section.hasSlots}}<div class="item-detail item-slot"><i class="icon icon-inventory-slot large" data-tooltip="PF1.Slot"></i></div>{{/if}}
         {{#if section.hasActions}}<div class="item-detail item-actions"><i class="icon icon-gears large" data-tooltip="PF1.ActionPlural"></i></div>{{/if}}

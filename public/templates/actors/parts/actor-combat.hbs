@@ -113,7 +113,9 @@
     {{#unless section._hidden}}
       <ol class="item-list" data-type="attack" data-subtype="{{sid}}">
         <li class="inventory-header flexrow attacks-{{sid}}">
-          <h3 class="item-name flexrow">{{section.label}}</h3>
+          <div class="item-name flexrow">
+            <h3>{{section.label}}</h3>
+          </div>
 
           {{#if section.showTypes}}<div class="item-detail item-type"><i class="icon icon-magic-palm large" data-tooltip="PF1.Type"></i></div>{{/if}}
 
@@ -148,9 +150,7 @@
         <li class="item flexrow" data-item-id="{{item.id}}">
           <div class="item-name flexrow rollable">
             <div class="item-image" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
-            <h4>
-              {{item.name~}}
-            </h4>
+            <h4>{{item.name~}}</h4>
           </div>
 
           {{#if section.showTypes}}

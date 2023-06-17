@@ -200,7 +200,9 @@
           {{#each attacks as |section sid|}}
           <ol class="inventory-list sub-scroll scroll-attacks">
             <li class="inventory-header flexrow">
-              <h3 class="item-name flexrow">{{section.label}}</h3>
+              <div class="item-name flexrow">
+                <h3>{{section.label}}</h3>
+              </div>
 
               {{#if section.showTypes}}<div class="item-detail item-type"><i class="icon icon-magic-palm large" data-tooltip="PF1.Type"></i></div>{{/if}}
 

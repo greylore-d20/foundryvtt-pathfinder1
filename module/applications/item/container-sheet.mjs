@@ -785,7 +785,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   _searchFilterChange(event) {
     event.preventDefault();
     event.stopPropagation();
-    //this._onSubmit(event, { preventRender: true }); // prevent sheet refresh
 
     // Accept input only while not compositioning
 

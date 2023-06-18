@@ -2990,6 +2990,8 @@ export class ActorSheetPF extends ActorSheet {
 
     this._submitQueued = false;
 
+    if (this._itemUpdates?.length) preventRender = true;
+
     await super._onSubmit(event, { updateData, preventClose, preventRender });
 
     // Update items

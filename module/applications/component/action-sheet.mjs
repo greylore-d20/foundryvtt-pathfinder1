@@ -304,13 +304,13 @@ export class ItemActionSheet extends FormApplication {
 
     // Add new conditional
     if (a.classList.contains("add-conditional")) {
-      await this._onSubmit(event); // Submit any unsaved changes
+      await this._onSubmit(event, { preventRender: true }); // Submit any unsaved changes
       return pf1.components.ItemConditional.create([{}], { parent: this.object });
     }
 
     // Remove a conditional
     if (a.classList.contains("delete-conditional")) {
-      await this._onSubmit(event); // Submit any unsaved changes
+      await this._onSubmit(event, { preventRender: true }); // Submit any unsaved changes
       const li = a.closest(".conditional");
       const conditional = this.object.conditionals.get(li.dataset.conditional);
       return conditional.delete();
@@ -318,7 +318,7 @@ export class ItemActionSheet extends FormApplication {
 
     // Add a new conditional modifier
     if (a.classList.contains("add-conditional-modifier")) {
-      await this._onSubmit(event);
+      await this._onSubmit(event, { preventRender: true });
       const li = a.closest(".conditional");
       const conditional = this.object.conditionals.get(li.dataset.conditional);
       return pf1.components.ItemConditionalModifier.create([{}], { parent: conditional });
@@ -326,7 +326,7 @@ export class ItemActionSheet extends FormApplication {
 
     // Remove a conditional modifier
     if (a.classList.contains("delete-conditional-modifier")) {
-      await this._onSubmit(event);
+      await this._onSubmit(event, { preventRender: true });
       const li = a.closest(".conditional-modifier");
       const conditional = this.object.conditionals.get(li.dataset.conditional);
       const modifier = conditional.modifiers.get(li.dataset.modifier);

@@ -1128,7 +1128,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Create item
     if (a.classList.contains("item-create")) {
-      await this._onSubmit(event);
+      await this._onSubmit(event, { preventRender: true });
       return pf1.components.ItemScriptCall.create([{ category, type: "script" }], { parent: this.item });
     }
     // Delete item
@@ -1195,7 +1195,7 @@ export class ItemSheetPF extends ItemSheet {
       const elem = event.currentTarget;
       const category = elem.dataset.category;
       const list = this.document.system.scriptCalls ?? [];
-      await this._onSubmit(event);
+      await this._onSubmit(event, { preventRender: true });
       return pf1.components.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
         parent: this.item,
       });
@@ -1407,7 +1407,7 @@ export class ItemSheetPF extends ItemSheet {
           ? game.i18n.localize("PF1.Attack")
           : game.i18n.localize("PF1.Use"),
       };
-      await this._onSubmit(event);
+      await this._onSubmit(event, { preventRender: true });
       return pf1.components.ItemAction.create([newActionData], { parent: this.item });
     }
 
@@ -1471,7 +1471,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new change
     if (a.classList.contains("add-change")) {
-      await this._onSubmit(event);
+      await this._onSubmit(event, { preventRender: true });
       return pf1.components.ItemChange.create([{}], { parent: this.item });
     }
 
@@ -1645,7 +1645,7 @@ export class ItemSheetPF extends ItemSheet {
   async _createAttack(event) {
     if (this.item.actor == null) throw new Error(game.i18n.localize("PF1.ErrorItemNoOwner"));
 
-    await this._onSubmit(event);
+    await this._onSubmit(event, { preventRender: true });
 
     await this.item.actor.createAttackFromWeapon(this.item);
   }
@@ -1653,7 +1653,7 @@ export class ItemSheetPF extends ItemSheet {
   async _createSpellbook(event) {
     event.preventDefault();
     if (this.item.actor == null) throw new Error(game.i18n.localize("PF1.ErrorItemNoOwner"));
-    await this._onSubmit(event);
+    await this._onSubmit(event, { preventRender: true });
 
     await this.item.actor.createSpellbook({ ...this.item.system.casting, class: this.item.system.tag });
 

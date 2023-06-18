@@ -903,12 +903,12 @@ export class ItemPF extends Item {
         const roll = RollPF.safeRoll(maxFormula, rollData);
         this.system.uses.max = roll.total;
       } else {
-        ui.notifications.warn(
-          game.i18n.format("PF1.WarningNoDiceAllowedInFormula", {
-            context: game.i18n.localize("PF1.ChargePlural"),
-            item: this.name,
-          })
-        );
+        const msg = game.i18n.format("PF1.WarningNoDiceAllowedInFormula", {
+          formula: maxFormula,
+          context: game.i18n.localize("PF1.ChargePlural"),
+        });
+        ui.notifications.warn(msg, { console: false });
+        console.warn(msg, this);
       }
     }
   }

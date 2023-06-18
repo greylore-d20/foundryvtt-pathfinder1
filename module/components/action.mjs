@@ -887,31 +887,6 @@ export class ItemAction {
   }
 
   /**
-   * Place an attack roll using an item (weapon, feat, spell, or equipment)
-   * Rely upon the DicePF.d20Roll logic for the core implementation
-   *
-   * @param options
-   */
-  async rollFormula(options = {}) {
-    const itemData = this.data;
-    if (!itemData.formula) {
-      throw new Error(game.i18n.format("PF1.ErrorNoFormula", { name: this.name }));
-    }
-
-    // Define Roll Data
-    const rollData = this.parent.getRollData();
-    rollData.item = itemData;
-    const title = `${this.name} - ${game.i18n.localize("PF1.OtherFormula")}`;
-
-    const roll = await RollPF.create(itemData.formula, rollData).evaluate({ async: true });
-    return roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor: this.parent }),
-      flavor: itemData.chatFlavor || title,
-      rollMode: game.settings.get("core", "rollMode"),
-    });
-  }
-
-  /**
    * Roll damage for an action.
    *
    * @param {object} [options] - Options configuring the damage roll

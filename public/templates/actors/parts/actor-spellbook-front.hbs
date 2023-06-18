@@ -2,7 +2,7 @@
 <nav class="sheet-navigation tabs spellbooks" data-group="spellbooks">
   {{#each system.attributes.spells.spellbooks as |spellbook a|}}
   {{#if spellbook.inUse}}
-  <a class="item title-case" data-tab="{{a}}" data-group="spellbooks">{{spellbook.label}}</a>
+  <a class="item" data-tab="{{a}}" data-group="spellbooks">{{spellbook.label}}</a>
   {{/if}}
   {{/each}}
 </nav>

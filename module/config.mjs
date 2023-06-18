@@ -227,15 +227,6 @@ export const ac = {
   flatFooted: "PF1.ACFlatFooted",
 };
 
-/**
- * The set of Armor Class modifier types
- */
-export const acValueLabels = {
-  normal: "PF1.ACTypeNormal",
-  touch: "PF1.ACTypeTouch",
-  flatFooted: "PF1.ACTypeFlatFooted",
-};
-
 /* -------------------------------------------- */
 
 /**

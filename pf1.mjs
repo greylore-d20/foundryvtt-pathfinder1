@@ -236,7 +236,6 @@ Hooks.once("setup", function () {
     "timePeriodsShort",
     "savingThrows",
     "ac",
-    "acValueLabels",
     "featTypes",
     "featTypesPlurals",
     "traitTypes",

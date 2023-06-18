@@ -327,7 +327,6 @@ export class ActorSheetPF extends ActorSheet {
     // Armor Class
     for (const [a, ac] of Object.entries(data.system.attributes.ac)) {
       ac.label = pf1.config.ac[a];
-      ac.valueLabel = pf1.config.acValueLabels[a];
       ac.sourceDetails = data.sourceDetails != null ? data.sourceDetails.system.attributes.ac[a].total : [];
     }
 

@@ -415,7 +415,7 @@ export class ItemPF extends Item {
    * or quantity, based on item data.
    *
    * @param {number} value The amount of charges to add.
-   * @returns {Promise<this>} Updated document
+   * @returns {Promise<this | void>} Updated document or undefined if no update is possible.
    */
   async addCharges(value) {
     // Add link charges
@@ -427,8 +427,8 @@ export class ItemPF extends Item {
 
     const prevValue = this.isSingleUse ? this.system.quantity : this.system.uses?.value;
 
-    if (this.isSingleUse) await this.update({ "system.quantity": prevValue + value });
-    else await this.update({ "system.uses.value": prevValue + value });
+    if (this.isSingleUse) return this.update({ "system.quantity": prevValue + value });
+    else return this.update({ "system.uses.value": prevValue + value });
   }
 
   /**

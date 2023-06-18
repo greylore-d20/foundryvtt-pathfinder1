@@ -146,6 +146,12 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
+  /**
+   * @deprecated Use {@link addCharges} instead.
+   * @param {number} value - The number of charges to add.
+   * @param {object} [data=null] - Additional data to pass to the update
+   * @returns {Promise<this | void>} Updated document or undefined if no update is possible.
+   */
   async addUses(value, data = null) {
     foundry.utils.logCompatibilityWarning("ItemSpellPF.addUses() is deprecated in favor of .addCharges()", {
       since: "PF1 0.83.0",
@@ -155,6 +161,14 @@ export class ItemSpellPF extends ItemPF {
     return this.addCharges(value, data);
   }
 
+  /**
+   * Add charges to the spell or its relevant resource pool (spell points or spontaneous spells).
+   *
+   * @override
+   * @param {number} value - Number of charges to add
+   * @param {object} [data=null] - Additional data to pass to the update
+   * @returns {Promise<this | void>} Updated document or undefined if no update is possible or required.
+   */
   async addCharges(value, data = null) {
     if (!this.parent) return;
     if (this.system.atWill) return;
@@ -169,7 +183,8 @@ export class ItemSpellPF extends ItemPF {
       const curUses = this.getSpellUses();
       const updateData = {};
       updateData[`system.attributes.spells.spellbooks.${spellbookKey}.spellPoints.value`] = curUses + value;
-      return this.parent.update(updateData);
+      await this.parent.update(updateData);
+      return this;
     } else {
       const newCharges = isSpontaneous
         ? Math.max(0, (spellbook.spells?.[`spell${spellLevel}`]?.value || 0) + value)
@@ -188,11 +203,10 @@ export class ItemSpellPF extends ItemPF {
         const key = `system.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
         const actorUpdateData = {};
         actorUpdateData[key] = newCharges;
-        return this.parent.update(actorUpdateData);
+        await this.parent.update(actorUpdateData);
+        return this;
       }
     }
-
-    return null;
   }
 
   get isCharged() {

@@ -18,13 +18,6 @@ export class ItemSheetPF extends ItemSheet {
     this.items = [];
 
     /**
-     * Tracks the application IDs associated with this sheet.
-     *
-     * @type {Application[]}
-     */
-    this._openApplications = [];
-
-    /**
      * Track action updates from the item sheet.
      *
      * @property
@@ -1516,7 +1509,6 @@ export class ItemSheetPF extends ItemSheet {
       },
       { category, item: change?.subTarget }
     );
-    this._openApplications.push(w.appId);
     w.render(true);
   }
 
@@ -1569,7 +1561,6 @@ export class ItemSheetPF extends ItemSheet {
       },
       { category, item: note?.subTarget }
     );
-    this._openApplications.push(w.appId);
     w.render(true);
   }
 

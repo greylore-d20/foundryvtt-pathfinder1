@@ -1,0 +1,54 @@
+{
+  "name": "Claw",
+  "type": "attack",
+  "img": "icons/commodities/claws/claw-bear-brown-grey.webp",
+  "system": {
+    "description": {
+      "value": "<p>A primary natural weapon using your claws on your forelimbs or arms.</p><p>It deals bludgeoning and slashing damage, whichever is most beneficial.</p><hr><p>For general rules on natural attacks, see: @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural Attacks} (UMR).</p>"
+    },
+    "actions": [
+      {
+        "_id": "4lo88d47gxkw8wts",
+        "name": "Attack",
+        "img": "icons/commodities/claws/claw-bear-brown-grey.webp",
+        "tag": "claw",
+        "activation": {
+          "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "range": {
+          "value": "null",
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 4, @size)",
+              "type": {
+                "values": ["bludgeoning", "slashing"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "label": ""
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str"
+        }
+      }
+    ],
+    "subType": "natural",
+    "weaponGroups": {
+      "value": ["natural"]
+    }
+  },
+  "_id": "MZnbCVzqpvPsMvfT"
+}

@@ -20,7 +20,16 @@
     },
     {
       "name": "Character Building",
-      "packs": ["races", "classes", "racialhd", "class-abilities", "mythicpaths", "feats", "monster-templates"],
+      "packs": [
+        "races",
+        "classes",
+        "racialhd",
+        "class-abilities",
+        "mythicpaths",
+        "feats",
+        "monster-templates",
+        "monster-abilities"
+      ],
       "color": "#996300"
     },
     {
@@ -30,11 +39,19 @@
     }
   ],
   "packs": [
-    { "name": "classes", "label": "Classes", "path": "./packs/classes.db", "type": "Item" },
+    {
+      "name": "classes",
+      "label": "Classes",
+      "path": "packs/classes.db",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
     {
       "name": "mythicpaths",
       "label": "Mythic Paths",
-      "path": "./packs/mythic-paths.db",
+      "path": "packs/mythic-paths.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -43,7 +60,7 @@
     {
       "name": "commonbuffs",
       "label": "Common Buffs",
-      "path": "./packs/commonbuffs.db",
+      "path": "packs/commonbuffs.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -52,7 +69,7 @@
     {
       "name": "spells",
       "label": "Spells",
-      "path": "./packs/spells.db",
+      "path": "packs/spells.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -61,7 +78,7 @@
     {
       "name": "feats",
       "label": "Feats",
-      "path": "./packs/feats.db",
+      "path": "packs/feats.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -70,7 +87,7 @@
     {
       "name": "items",
       "label": "Items",
-      "path": "./packs/items.db",
+      "path": "packs/items.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -79,7 +96,7 @@
     {
       "name": "armors-and-shields",
       "label": "Armor and Shields",
-      "path": "./packs/armors-and-shields.db",
+      "path": "packs/armors-and-shields.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -88,7 +105,16 @@
     {
       "name": "weapons-and-ammo",
       "label": "Weapons and Ammo",
-      "path": "./packs/weapons-and-ammo.db",
+      "path": "packs/weapons-and-ammo.db",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
+      "name": "monster-abilities",
+      "label": "Monster Abilities",
+      "path": "packs/monster-abilities.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -97,7 +123,7 @@
     {
       "name": "racialhd",
       "label": "Racial HD",
-      "path": "./packs/racial-hd.db",
+      "path": "packs/racial-hd.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -106,7 +132,7 @@
     {
       "name": "races",
       "label": "Races",
-      "path": "./packs/races.db",
+      "path": "packs/races.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -115,7 +141,7 @@
     {
       "name": "class-abilities",
       "label": "Class Abilities",
-      "path": "./packs/class-abilities.db",
+      "path": "packs/class-abilities.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -124,7 +150,7 @@
     {
       "name": "monster-templates",
       "label": "Monster Templates",
-      "path": "./packs/monster-templates.db",
+      "path": "packs/monster-templates.db",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -133,7 +159,7 @@
     {
       "name": "sample-macros",
       "label": "Sample Macros",
-      "path": "./packs/sample-macros.db",
+      "path": "packs/sample-macros.db",
       "type": "Macro",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -142,7 +168,7 @@
     {
       "name": "roll-tables",
       "label": "Roll Tables",
-      "path": "./packs/roll-tables.db",
+      "path": "packs/roll-tables.db",
       "type": "RollTable",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -151,7 +177,7 @@
     {
       "name": "ultimate-equipment",
       "label": "Ultimate Equipment",
-      "path": "./packs/ultimate-equipment.db",
+      "path": "packs/ultimate-equipment.db",
       "type": "RollTable",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -160,7 +186,7 @@
     {
       "name": "pf1e-rules",
       "label": "Pathfinder 1e Rules",
-      "path": "./packs/pf1e-rules.db",
+      "path": "packs/pf1e-rules.db",
       "type": "JournalEntry",
       "ownership": {
         "PLAYER": "OBSERVER"

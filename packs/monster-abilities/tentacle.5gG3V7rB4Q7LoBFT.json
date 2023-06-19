@@ -1,0 +1,57 @@
+{
+  "name": "Tentacle",
+  "type": "attack",
+  "img": "icons/commodities/biological/tentacle-purple-white.webp",
+  "system": {
+    "description": {
+      "value": "<p>A secondary natural attack with your tentacle, pseudopod, or similar appendage.</p><p>It deals bludgeoning damage.</p><hr><p>For general rules on natural attacks, see: @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural Attacks} (UMR).</p>"
+    },
+    "actions": [
+      {
+        "_id": "f2ubtsgnwupcixhz",
+        "name": "Attack",
+        "img": "icons/commodities/biological/tentacle-purple-white.webp",
+        "tag": "tentacle",
+        "activation": {
+          "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "range": {
+          "value": "null",
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 4, @size)",
+              "type": {
+                "values": ["bludgeoning"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "label": ""
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str"
+        },
+        "naturalAttack": {
+          "primaryAttack": false
+        }
+      }
+    ],
+    "subType": "natural",
+    "weaponGroups": {
+      "value": ["natural"]
+    }
+  },
+  "_id": "5gG3V7rB4Q7LoBFT"
+}

@@ -1682,6 +1682,7 @@ export const weaponGroups = {
  * Define the set of weapon property flags which can exist on a weapon
  */
 export const weaponProperties = {
+  ato: "PF1.WeaponPropAutomatic",
   blc: "PF1.WeaponPropBlocking",
   brc: "PF1.WeaponPropBrace",
   dea: "PF1.WeaponPropDeadly",
@@ -1696,7 +1697,9 @@ export const weaponProperties = {
   nnl: "PF1.WeaponPropNonLethal",
   prf: "PF1.WeaponPropPerformance",
   rch: "PF1.WeaponPropReach",
+  sct: "PF1.WeaponPropScatter",
   snd: "PF1.WeaponPropSunder",
+  spc: "PF1.WeaponPropSpecial",
   thr: "PF1.WeaponPropThrown",
   trp: "PF1.WeaponPropTrip",
 };

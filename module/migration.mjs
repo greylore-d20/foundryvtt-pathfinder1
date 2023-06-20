@@ -896,6 +896,7 @@ export const migrateItemActionData = function (action, updateData, { itemData, i
   _migrateActionEnhOverride(action, itemData);
   _migrateActionPrimaryAttack(action, itemData);
   _migrateActionChargeUsage(action, itemData);
+  _migrateActionExtraAttacks(action, itemData);
   _migrateActionAmmunitionUsage(action, itemData, updateData);
   _migrateActionHarmlessSpell(action, itemData);
   _migrateActionSpellArea(action, itemData);
@@ -2086,6 +2087,23 @@ const _migrateActionObsoleteTypes = (action, itemData) => {
       action.duration.value = `${durVal}`;
     }
   }
+};
+
+const _migrateActionExtraAttacks = function (action, item) {
+  const parts = action.attackParts ?? [];
+  // Convert tuples into objects (0.83.0)
+  if (parts.some((p) => Array.isArray(p))) {
+    action.attackParts = parts.map((part) => {
+      if (Array.isArray(part)) {
+        return { formula: part[0], name: part[1] };
+      } else {
+        return part;
+      }
+    });
+  }
+
+  // Ensure formulas are strings
+  for (const part of action.attackParts) part.formula = `${part.formula}`;
 };
 
 const _migrateItemChargeCost = function (item, updateData) {

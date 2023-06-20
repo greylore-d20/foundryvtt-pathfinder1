@@ -113,10 +113,10 @@
 {{#if hasAttackRoll}}
 <h3 class="form-header">{{localize "PF1.ExtraAttacks"}}</h3>
 <ol class="attack-parts form-group">
-  {{#each data.attackParts as |part a|}}
-  <li class="attack-part flexrow" data-attack-part="{{a}}">
-    <input class="formula" type="text" name="attackParts.{{a}}.0" placeholder="{{localize "PF1.AttackBonusFormula"}}" value="{{lookup this "0"}}">
-    <input type="text" name="attackParts.{{a}}.1" placeholder="{{localize "PF1.Name"}}" value="{{lookup this "1"}}">
+  {{#each data.attackParts as |part idx|}}
+  <li class="attack-part flexrow" data-attack-part="{{idx}}">
+    <input class="formula" type="text" name="attackParts.{{idx}}.formula" placeholder="{{localize "PF1.AttackBonusFormula"}}" value="{{formula}}">
+    <input type="text" name="attackParts.{{idx}}.name" placeholder="{{localize "PF1.Name"}}" value="{{name}}">
     <a class="attack-control delete-attack"><i class="fas fa-trash"></i></a>
   </li>
   {{/each}}

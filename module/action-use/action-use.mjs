@@ -282,11 +282,11 @@ export class ActionUse {
 
     const allAttacks = fullAttack
       ? action.attackParts.reduce(
-          (cur, r) => {
+          (cur, part) => {
             cur.push({
-              attackBonus: r[0],
+              attackBonus: part.formula,
               // Use defined label, or fall back to continuously numbered default attack name
-              label: r[1] || game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
+              label: part.name || game.i18n.format("PF1.FormulaAttack", { 0: (unnamedAttackIndex += 1) }),
             });
             return cur;
           },

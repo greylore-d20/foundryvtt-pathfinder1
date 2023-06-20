@@ -486,17 +486,17 @@ export class ItemActionSheet extends FormApplication {
 
     // Add new attack component
     if (a.classList.contains("add-attack")) {
-      const attackParts = foundry.utils.deepClone(this.action.data.attackParts);
-      attackParts.push(["", ""]);
+      const attackParts = foundry.utils.deepClone(this.action.data.attackParts ?? []);
+      attackParts.push({ formula: "", name: "" });
       return this._onSubmit(event, { updateData: { attackParts } });
     }
 
     // Remove an attack component
     if (a.classList.contains("delete-attack")) {
       const li = a.closest(".attack-part");
-      const attackParts = foundry.utils.deepClone(this.action.data.attackParts);
+      const attackParts = foundry.utils.deepClone(this.action.data.attackParts ?? []);
       attackParts.splice(Number(li.dataset.attackPart), 1);
-      return this._onSubmit(event, { updateData: { attackParts: attackParts } });
+      return this._onSubmit(event, { updateData: { attackParts } });
     }
   }
 

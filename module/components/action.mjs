@@ -166,11 +166,7 @@ export class ItemAction {
   }
 
   get hasMultiAttack() {
-    return (
-      this.hasAttack &&
-      ((this.data.attackParts != null && this.data.attackParts.length > 0) ||
-        this.data.formulaicAttacks?.count?.value > 0)
-    );
+    return this.hasAttack && (this.data.attackParts?.length > 0 || this.data.formulaicAttacks?.count?.value > 0);
   }
 
   get autoDeductCharges() {
@@ -1218,9 +1214,9 @@ export class ItemAction {
         delete result["rapidShotDamage"];
       }
       if (this.hasMultiAttack) {
-        for (const [k, v] of Object.entries(this.data.attackParts)) {
-          result[`attack_${Number(k) + 1}`] = v[1];
-        }
+        this.data.attackParts.forEach((part, index) => {
+          result[`attack_${index + 1}`] = part.name;
+        });
       }
     }
     // Add subtargets affecting effects

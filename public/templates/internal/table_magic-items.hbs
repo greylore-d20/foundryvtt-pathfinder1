@@ -16,10 +16,12 @@
   <tbody>
   {{#each items}}
     <tr class="item" data-item-id="{{id}}">
-      <td class="item-name nocenter"{{#if unidentifiedName}}data-tooltip="{{unidentifiedName}}"{{/if}} data-tooltip-direction="UP">
-        <img src="{{img}}" class="image" width="24" height="24">
-        <span class="name">{{name}}</span>
-        {{#if (gt quantity 1)}}<span class="quantity"> (x{{quantity}})</span>{{/if}}
+      <td class="nocenter"{{#if unidentifiedName}} data-tooltip="{{unidentifiedName}}"{{/if}} data-tooltip-direction="UP">
+        <div class="item-name">
+          <img src="{{img}}" class="image" width="24" height="24">
+          <span class="name">{{name}}</span>
+          {{#if (gt quantity 1)}}<span class="quantity"> (x{{quantity}})</span>{{/if}}
+        </div>
       </td>
       <td class="aura">{{aura.strength}} <b>{{aura.school}}</b></td>
       <td class="caster-level">{{cl}}</td>

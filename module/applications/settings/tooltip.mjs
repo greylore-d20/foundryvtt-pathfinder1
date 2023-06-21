@@ -118,12 +118,10 @@ export class TooltipConfig extends FormApplication {
   }
 
   _openWorldSettings(event) {
-    if (!game.user.can("SETTINGS_MODIFY")) {
-      ui.notifications.error("PF1.ErrorGenericPermission");
-      return;
-    }
+    if (!game.user.can("SETTINGS_MODIFY"))
+      return void ui.notifications.error("PF1.ErrorGenericPermission", { localize: true });
 
-    new TooltipWorldConfig().render(true);
+    new TooltipWorldConfig().render(true, { focus: true });
   }
 
   async _onReset(event) {

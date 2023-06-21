@@ -1,35 +1,35 @@
 <section class="inventory-body">
-  {{#each sections as |section sid|}}
   <ol class="item-groups-list">
-    <li class="item-list-header flexrow">
-      <div class="item-name">
-        <h3>{{section.label}}</h3>
-      </div>
-
-      {{#if section.hasActions}}<div class="item-detail item-actions"><i class="icon icon-gears large" data-tooltip="PF1.ActionPlural"></i></div>{{/if}}
-
-      {{#if section.showValue}}
-      <div class="item-detail item-value"><i class="icon icon-coins large" data-tooltip="PF1.Value"></i></div>
-      {{/if}}
-      <div class="item-detail item-weight"><i class="icon icon-weight large" src="systems/pf1/icons/actions/weight.svg" data-tooltip="PF1.ItemWeight"></i></div>
-      {{#if ../isGM}}
-      <div class="item-detail item-identified"><i class="icon icon-quill-ink large" data-tooltip="PF1.Identified"></i></div>
-      {{/if}}
-      <div class="item-detail item-uses"><i class="icon icon-battery-pack large" data-tooltip="PF1.ChargePlural"></i></div>
-
-      {{#if ../owner}}
-      <div class="item-controls">
-        {{#if section.canCreate}}
-        <a class="item-control item-create" data-tooltip="PF1.CreateItem" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
-          <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
-        </a>
-        <a data-action="compendium" data-action-target="items" data-tooltip="PF1.OpenCompendium"><i class="fas fa-folder-plus"></i></a>
-        {{/if}}
-      </div>
-      {{/if}}
-    </li>
-
+  {{#each sections as |section sid|}}
     <ol class="item-list">
+      <li class="item-list-header flexrow">
+        <div class="item-name">
+          <h3>{{section.label}}</h3>
+        </div>
+
+        {{#if section.hasActions}}<div class="item-detail item-actions"><i class="icon icon-gears large" data-tooltip="PF1.ActionPlural"></i></div>{{/if}}
+
+        {{#if section.showValue}}
+        <div class="item-detail item-value"><i class="icon icon-coins large" data-tooltip="PF1.Value"></i></div>
+        {{/if}}
+        <div class="item-detail item-weight"><i class="icon icon-weight large" src="systems/pf1/icons/actions/weight.svg" data-tooltip="PF1.ItemWeight"></i></div>
+        {{#if ../isGM}}
+        <div class="item-detail item-identified"><i class="icon icon-quill-ink large" data-tooltip="PF1.Identified"></i></div>
+        {{/if}}
+        <div class="item-detail item-uses"><i class="icon icon-battery-pack large" data-tooltip="PF1.ChargePlural"></i></div>
+
+        {{#if ../owner}}
+        <div class="item-controls">
+          {{#if section.canCreate}}
+          <a class="item-control item-create" data-tooltip="PF1.CreateItem" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+            <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
+          </a>
+          <a data-action="compendium" data-action-target="items" data-tooltip="PF1.OpenCompendium"><i class="fas fa-folder-plus"></i></a>
+          {{/if}}
+        </div>
+        {{/if}}
+      </li>
+
       {{#each section.items as |item iid|}}
       <li class="item flexrow {{#if item.empty}}empty-stack{{/if}}" data-item-id="{{item._id}}">
         <div class="item-name">
@@ -101,6 +101,6 @@
       </li>
       {{/each}}
     </ol>
-  </ol>
   {{/each}}
+  </ol>
 </section>

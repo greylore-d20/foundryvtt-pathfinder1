@@ -439,10 +439,13 @@ export const mergeObjectExt = function (
  * @template T
  * @param {T[]} arr The array to sort
  * @param {string} [propertyKey=""] The property key to sort by, if any; can be a dot-separated path
+ * @param {object} [sortOptions] - Options affecting the sorting of elements
+ * @param {boolean} sortOptions.numeric - Whether numeric collation should be used, such that "1" < "2" < "10".
+ * @param {boolean} sortOptions.ignorePunctuation - Whether punctuation should be ignored.
  * @returns {T[]} The sorted array
  */
-export const naturalSort = function (arr, propertyKey = "") {
-  const collator = new Intl.Collator(game.settings.get("core", "language"), { numeric: true });
+export const naturalSort = function (arr, propertyKey = "", { numeric = true, ignorePunctuation = false } = {}) {
+  const collator = new Intl.Collator(game.settings.get("core", "language"), { numeric, ignorePunctuation });
   return arr.sort((a, b) => {
     const propA = propertyKey ? (propertyKey in a ? a[propertyKey] : getProperty(a, propertyKey)) : a;
     const propB = propertyKey ? (propertyKey in b ? b[propertyKey] : getProperty(b, propertyKey)) : b;
@@ -647,28 +650,18 @@ export const getBuffTargetDictionary = function (actor, type = "buffs") {
 
 /**
  * A locale-safe insertion sort of an Array of Objects, not in place. Ignores punctuation and capitalization.
+ * `name` properties in objects will be lowercased.
  *
  * @template T
  * @param {Array.<T & {name: string}>} inputArr - Array to be sorted. Each element must have a name property set
  * @returns {T[]} - New sorted Array
  */
 export const sortArrayByName = function (inputArr) {
-  const n = inputArr.length;
-  inputArr = duplicate(inputArr).map((o) => {
-    o.name = o.name.toLocaleLowerCase();
-    return o;
-  });
-  for (let i = 1; i < n; i++) {
-    const current = inputArr[i],
-      currentLower = current.name;
-    let j = i - 1;
-    while (j > -1 && currentLower.localeCompare(inputArr[j].name, undefined, { ignorePunctuation: true }) < 0) {
-      inputArr[j + 1] = inputArr[j];
-      j--;
-    }
-    inputArr[j + 1] = current;
+  inputArr = foundry.utils.deepClone(inputArr);
+  for (const elem of inputArr) {
+    elem.name = elem.name.toLocaleLowerCase();
   }
-  return inputArr;
+  return naturalSort(inputArr, "name", { numeric: true, ignorePunctuation: true });
 };
 
 /**

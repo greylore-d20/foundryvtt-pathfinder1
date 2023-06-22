@@ -1,18 +1,18 @@
 {
-  "_id": "A3ZtNeUxGs4jHdCy",
-  "name": "Holy Water",
+  "_id": "JjXrnMJ0AkcRqne2",
+  "name": "Charmer (ARC)",
   "type": "feat",
   "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
   "sort": 0,
   "flags": {},
   "system": {
     "description": {
-      "value": "<p>The arcanist can unleash a jet of holy water by expending 1 point from her arcane reservoir. This creates a 30-foot line of water that deals damage equal to 1d8 points of damage plus the arcanist’s Charisma modifier, plus an additional 1d8 points of damage for every 2 levels beyond 1st (to a maximum of 10d8 at 19th level) to each target in the line that would normally take damage from holy water. Creatures in the area of effect can attempt a Reflex saving throw to halve the damage.</p>"
+      "value": "<p>An arcanist can expend 1 point from her arcane reservoir as a standard action to gain the benefits of @Compendium[pf1.spells.7c8nufdm0pj4bgep]{glibness}, with a caster level equal to her arcanist level. The arcanist must have the aspect of @Compendium[pf1.class-abilities.Z5urT0Y7k5SUqOeJ]{innocence exploit} to take this exploit.</p>"
     },
-    "tags": [],
+    "tags": [["Arcanist Exploit"]],
     "actions": [
       {
-        "_id": "zn845xlfcuu8kvnk",
+        "_id": "f9lqv32qw748pl9h",
         "name": "Use",
         "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
         "description": "",
@@ -28,15 +28,15 @@
           }
         },
         "duration": {
-          "value": null,
-          "units": "inst"
+          "value": "@classes.arcanist.level * 10",
+          "units": "minute"
         },
         "target": {
-          "value": "30-ft. line"
+          "value": "self"
         },
         "range": {
-          "value": "30",
-          "units": "ft",
+          "value": null,
+          "units": "personal",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
@@ -46,7 +46,7 @@
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -61,19 +61,11 @@
           "customTexture": ""
         },
         "attackName": "",
-        "actionType": "spellsave",
+        "actionType": "",
         "attackBonus": "",
         "critConfirmBonus": "",
         "damage": {
-          "parts": [
-            [
-              "(ceil(@classes.arcanist.level / 2))d8 + @abilities.cha.mod",
-              {
-                "values": ["untyped"],
-                "custom": ""
-              }
-            ]
-          ],
+          "parts": [],
           "critParts": [],
           "nonCritParts": []
         },
@@ -90,15 +82,15 @@
         "formula": "",
         "ability": {
           "attack": null,
-          "damage": "",
+          "damage": null,
           "damageMult": 1,
           "critRange": 20,
           "critMult": 2
         },
         "save": {
-          "dc": "0",
-          "type": "ref",
-          "description": "Reflex half"
+          "dc": 0,
+          "type": "",
+          "description": ""
         },
         "effectNotes": [],
         "attackNotes": [],
@@ -136,7 +128,7 @@
       "children": [],
       "charges": []
     },
-    "tag": "classFeat_holyWater",
+    "tag": "classFeat_charmerArc",
     "useCustomTag": true,
     "armorProf": {
       "value": []

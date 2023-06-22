@@ -1,52 +1,52 @@
 {
-  "_id": "WgWbQt0Pp1qLvP44",
-  "name": "Tentacles",
+  "_id": "hjIKtQMst5tvUUIG",
+  "name": "Shadows Out of Light",
   "type": "feat",
   "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
   "sort": 0,
   "flags": {},
   "system": {
     "description": {
-      "value": "<p>As a swift action, the arcanist can spend 2 points from his arcane pool to sprout a pair of rubbery tentacles that grow from his upper chest. At the same time, his arms shrink into sickly, malformed stubs, capable of only rudimentary actions such as lifting small objects or making somatic gestures. Rings, bracers, and other items worn on the atrophied arms and hands remain in place, but magic items that require hands to activate cannot be used while the arcanist’s arms are in this state. Likewise, the use of weapons or shields is impossible during this time. The arcanist has full control over his hideous tentacles and can use them to deliver touch spells, or as secondary natural weapons that deal tentacle damage as appropriate for a creature of the arcanist’s size (1d4 for Medium arcanists, or 1d3 for Small ones) modified by 1/2 the arcanist’s Strength score. The arcanist’s reach with these tentacles is 5 feet longer than his normal reach.</p>"
+      "value": "<p>The arcanist can spend 1 point from his arcane reservoir to pull fiendish essence from the Outer Rifts into his own shadow. Malformed and nearly amorphous, the shadow-things swarm across his body, turning his eyes completely black and distorting his physical form. These shadows persist for 1 round per 2 arcanist levels (minimum of 1 round) and grant the arcanist a +2 deflection bonus to his Armor Class. The shadows are threatening, and as long as they persist the arcanist is considered armed for the purpose of flanking or threatening an attack of opportunity. Whenever a creature provokes an attack of opportunity from the arcanist, he may make the attack of opportunity with his shadow, striking as a touch attack that deals a number of points of cold damage equal to 1d6 + the arcanist’s Charisma modifier plus 1 point of Strength damage. A successful Fortitude saving throw negates the Strength damage. This ability does not itself increase the number of attacks of opportunity the arcanist can make in a round, but feats like Combat Reflexes do allow him to make multiple attacks of opportunity with his shadow. The shadows cannot be compelled to make normal attacks—they lash out in this way only as a reaction to being provoked.</p>"
     },
     "tags": [["Arcanist Exploit, Outer Rift"]],
     "actions": [
       {
-        "_id": "f3rg4p337h941r8r",
+        "_id": "f9lqv32qw748pl9h",
         "name": "Use",
         "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
         "description": "",
         "tag": "",
         "activation": {
           "cost": 1,
-          "type": "swift"
+          "type": "standard"
         },
         "unchainedAction": {
           "activation": {
-            "cost": 1,
+            "cost": 2,
             "type": "action"
           }
         },
         "duration": {
-          "value": null,
-          "units": ""
+          "value": "max(floor(@classes.arcanist.level/2), 1)",
+          "units": "round"
         },
         "target": {
-          "value": ""
+          "value": "self"
         },
         "range": {
           "value": null,
-          "units": "",
+          "units": "personal",
           "maxIncrements": 1,
           "minValue": null,
           "minUnits": ""
         },
         "uses": {
-          "autoDeductChargesCost": "2",
+          "autoDeductChargesCost": "",
           "self": {
             "value": 0,
             "maxFormula": "",
-            "per": null
+            "per": ""
           },
           "per": "",
           "value": 0,
@@ -128,7 +128,7 @@
       "children": [],
       "charges": []
     },
-    "tag": "classFeat_tentacles",
+    "tag": "classFeat_shadowsOutOfLight",
     "useCustomTag": true,
     "armorProf": {
       "value": []

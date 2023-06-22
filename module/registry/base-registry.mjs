@@ -1,33 +1,41 @@
+const fields = foundry.data.fields;
+
 /**
  * The Base Registry class, providing shared functionality for all registries in the system.
  *
  * @abstract
- * @template {BaseRegistryObject} ContentClass
- * @template {BaseRegistryObjectData} ContentData
- * @augments {foundry.utils.Collection<ContentClass>}
+ * @group Base Classes
+ * @template {RegistryEntry} Model
+ * @augments {foundry.utils.Collection<Model>}
  */
-export class BaseRegistry extends foundry.utils.Collection {
+export class Registry extends foundry.utils.Collection {
   /**
    * The class each of this registry's content is expected to be an instance of.
    *
-   * @type {typeof ContentClass}
+   * @type {typeof Model}
    */
-  static contentClass = null;
+  static model = null;
 
   /**
    * An array of data used to initialise this registry.
    *
-   * @type {ContentData[]} An array of data used to initialise this registry.
+   * @type {object[]} An array of data used to initialise this registry.
    * @private
    */
   static _defaultData = [];
 
   /**
-   * @param {ContentData[]} data - An array of data from which {@link ContentClass} instances will be created
+   * The class each of this registry's content is expected to be an instance of.
+   *
+   * @see {@link Registry.model}
+   * @type {Model}
    */
-  constructor(data = []) {
+  model = null;
+
+  constructor() {
     super();
-    this._initialize(data);
+    Object.defineProperty(this, "model", { value: this.constructor.model, writable: false, enumerable: false });
+    this._initialize();
   }
 
   /**
@@ -40,34 +48,17 @@ export class BaseRegistry extends foundry.utils.Collection {
   }
 
   /**
-   * The class each of this registry's content is expected to be an instance of.
+   * Initializes the registry with its default data.
    *
-   * @type {ContentClass}
-   */
-  get contentClass() {
-    return this.constructor.contentClass;
-  }
-
-  /**
-   * The name of the class this registry is for.
-   *
-   * @type {string}
-   */
-  get contentName() {
-    return this.contentClass.typeName;
-  }
-
-  /**
-   * Initializes the registry with the data provided in the constructor.
-   *
+   * @remarks This method is called automatically when the registry is instantiated.
+   *  It should be self-reliant and not require any other setup.
    * @private
    */
   _initialize() {
     this.clear();
     for (const element of this.constructor._defaultData) {
-      let content;
       try {
-        content = new this.contentClass(element);
+        const content = new this.model({ ...element, namespace: "pf1" });
         super.set(content.id, content);
       } catch (error) {
         console.error(error);
@@ -75,56 +66,73 @@ export class BaseRegistry extends foundry.utils.Collection {
     }
 
     // Allow modules to register their own content
-    Hooks.callAll(`pf1.register${this.name}`, this, this.contentClass);
+    Hooks.callAll(`pf1Register${this.name}`, this);
+  }
+
+  /**
+   * Prepares the data of all entries in the registry.
+   */
+  setup() {
+    for (const element of this) {
+      element.prepareData();
+    }
   }
 
   /**
    * Sets the value of a key in the registry.
    *
    * @param {string} id - ID of the value to set.
-   * @param {ContentClass} content - The value to set.
-   * @returns {BaseRegistry} The registry itself, after the value has been set.
+   * @param {Model} content - The value to set.
+   * @returns {Registry} The registry itself, after the value has been set.
    */
   set(id, content) {
-    const cls = this.contentClass;
+    const cls = this.model;
     if (!(content instanceof cls)) {
-      throw new Error(`Registry '${this.contentName}' can only register ${cls.typeName}`);
+      throw new Error(`Registry '${this.name}' can only register ${cls.name}`);
     }
     return super.set(id, content);
   }
 
   /**
-   * Registers a new instance of {@link ContentClass} with the registry, using a partial of its data as the base.
+   * Registers a new instance of {@link Model} with the registry, using a partial of its data as the base.
    *
-   * @param {string} module - The module for which this value is registered.
+   * @example
+   * ```js
+   * pf1.registry.damageTypes.register("my-module", "my-damage-type", {
+   *   name: "My Damage Type",
+   *   icon: "icons/svg/damage.svg",
+   *   color: "#00ff00",
+   *   category: "physical",
+   * });
+   * ```
+   * @param {string} namespace - The namespace for which this value is registered.
    * @param {string} id - The unique key of the value.
-   * @param {ContentData} value - A {@link Partial} of the data to use as the base for the new value.
-   * @returns {BaseRegistry} The registry itself, after the value has been registered.
+   * @param {object} value - A {@link Partial} of the data to use as the base for the new value.
+   * @returns {Registry} The registry itself, after the value has been registered.
    */
-  register(module, id, value) {
-    if (!module) throw new Error("Registering requires a module name");
+  register(namespace, id, value) {
+    if (!namespace || !id) throw new Error("Registering requires both a namespace and an ID");
     if (this.has(id)) {
-      throw new Error(`Registry '${this.contentName}' already has a key '${id}'`);
+      throw new Error(`Registry '${this.name}' already has a key '${id}'`);
     }
-    return this.set(id, new this.contentClass({ module, _id: id, ...value }));
+    return this.set(id, new this.model({ ...value, namespace, _id: id }));
   }
 
   /**
-   * Unregisters a value from the registry, or if no id is provided, all values belonging to the module.
+   * Unregisters a value from the registry, or if no id is provided, all values belonging to the namespace.
    *
-   * @param {string} module - The module for which this value is unregistered.
-   * @param {string} [id] - The unique key of the value, or `undefined` to unregister all values belonging to the module.
+   * @param {string} namespace - The namespace for which this value is unregistered.
+   * @param {string} [id] - The unique key of the value, or `undefined` to unregister all values belonging to the namespace.
    */
-  unregister(module, id) {
-    if (!module) throw new Error("Unregistering requires a module name");
+  unregister(namespace, id) {
+    if (!namespace | !id) throw new Error("Unregistering requires both a namespace and an ID");
     if (id) {
-      if (this.find((e) => e.data.module === module && e.id === id)) {
-        this.delete(id);
-      }
+      const entry = this.get(id);
+      if (entry && entry.namespace === namespace) this.delete(id);
+      else throw new Error(`Registry '${this.name}' has no key '${id}'`);
     } else {
-      const ids = this.filter((e) => e.data.module === module).map((e) => e.id);
-      for (const id of ids) {
-        this.delete(id);
+      for (const entry of this) {
+        if (entry.namespace === namespace) this.delete(entry.id);
       }
     }
   }
@@ -132,87 +140,61 @@ export class BaseRegistry extends foundry.utils.Collection {
   /**
    * Returns the contents of this registry as object, using ids as keys.
    *
-   * @param {string} [key] - Property of {@link ContentClass} (which should resolve to a string)
-   * to be used as key. Defaults to `id`.
-   * @param {boolean} [dataOnly] - If `true`, only the data of the content will be returned.
-   * Defaults to `true`.
-   * @returns {Record<string, ContentData>} The data of each value in the registry, by id
+   * @param {boolean} [source=false] - Whether to include the source data instead of its prepared data for each value.
+   * @returns {{ [id: string]: object }} The data of each value in the registry, by id
    */
-  toRecord(key = "id", dataOnly = true) {
-    return this.reduce((acc, registryObject) => {
-      const keyValue = getProperty(registryObject, key);
-      acc[keyValue] = dataOnly ? registryObject.data : registryObject;
-      return acc;
-    }, {});
+  toObject(source = false) {
+    return Object.fromEntries(this.map((registryObject) => [registryObject.id, registryObject.toObject(source)]));
+  }
+
+  /**
+   * Returns an object of the registry's contents, with the id as key and the name as value.
+   *
+   * @returns {{ [id: string]: string }} The names of each value in the registry, by id
+   */
+  getLabels() {
+    return Object.fromEntries(this.map((registryObject) => [registryObject.id, registryObject.name]));
   }
 }
 
 /**
- * The basic interface other registry objects are based on.
- *
- * @typedef {object} BaseRegistryObjectData
- * @property {string} _id - The unique key of the value.
- * @property {string} name - The name of the value.
- * @property {object} flags - Additional flags for the value.
- * @property {string} [module] - The module for which this value is registered. Automatically assigned when using {@link BaseRegistry#register}.
- */
-
-/**
  * The Base Registry Object class, providing shared functionality for all registry objects in the system.
+ * For the required data, see {@link defineSchema}.
  *
  * @abstract
+ * @group Base Classes
  */
-export class BaseRegistryObject {
-  /**
-   * @param {Partial<BaseRegistryObjectData>} src - The data to use to create the registry object
-   */
-  constructor(src) {
-    this.data = foundry.utils.mergeObject(this.constructor._baseData, src);
-  }
-
-  static get _baseData() {
+export class RegistryEntry extends foundry.abstract.DataModel {
+  /** @override */
+  static defineSchema() {
     return {
-      _id: randomID(16),
-      name: `New ${this.constructor.name}`,
-      flags: {},
+      _id: new fields.StringField({ required: true, blank: false, readonly: true }),
+      name: new fields.StringField({ required: false, initial: "", localize: true }),
+      flags: new fields.ObjectField({ required: false, initial: {} }),
+      namespace: new fields.StringField({ required: true, blank: false }),
     };
   }
 
   /**
-   * A name describing the type of this kind of registry objects.
+   * The unique key of the value.
    *
    * @type {string}
-   */
-  static get typeName() {
-    throw new Error("A class extending BaseRegistryObject must implement typeName");
-  }
-
-  /**
-   * The unique key of the registry object.
-   *
-   * @type {string}
+   * @readonly
    */
   get id() {
-    return this.data._id;
+    return this._id;
   }
 
   /**
-   * The name of the registry object.
-   *
-   * @type {string}
+   * Prepares the data of the registry entry.
    */
-  get name() {
-    return this.data.name;
-  }
+  prepareData() {
+    this.reset();
 
-  /**
-   * Returns a copy of the raw data of the registry object.
-   *
-   * @returns {object} The raw data of the registry object.
-   */
-  toJSON() {
-    const data = deepClone(this.data);
-    if ("module" in data) delete data.module;
-    return data;
+    // Localize fields marked for localization
+    for (const [name, field] of Object.entries(this.constructor.schema.fields)) {
+      if (field instanceof fields.StringField && field.options.localize === true)
+        this[name] = game.i18n.localize(this[name]);
+    }
   }
 }

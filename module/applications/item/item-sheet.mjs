@@ -611,9 +611,9 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   async _prepareScriptCalls(data) {
-    const categories = pf1.registry.scriptCalls.filter((o) => {
-      if (!o.data.itemTypes.includes(this.document.type)) return false;
-      return !(o.hidden === true && !game.user.isGM);
+    const categories = pf1.registry.scriptCalls.filter((scriptCallCategory) => {
+      if (!scriptCallCategory.itemTypes.includes(this.document.type)) return false;
+      return !(scriptCallCategory.hidden === true && !game.user.isGM);
     });
     // Don't show the Script Calls section if there are no categories for this item type
     if (!categories.length) {

@@ -33,6 +33,10 @@ module.exports = {
   settings: {
     jsdoc: {
       mode: "typescript",
+      structuredTags: {
+        group: { type: "text" },
+        remarks: { type: "text" },
+      },
     },
   },
   globals: {

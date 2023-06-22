@@ -1083,8 +1083,8 @@ export class ItemAction {
       }
     }
     if (target === "damage") {
-      for (const [k, v] of Object.entries(pf1.registry.damageTypes.toLocalisedObject())) {
-        result[k] = v;
+      for (const damageType of pf1.registry.damageTypes) {
+        result[damageType.id] = damageType.name;
       }
     }
     return result;

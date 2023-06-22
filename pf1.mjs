@@ -202,6 +202,27 @@ Hooks.once("init", function () {
   // Initialize module integrations
   initializeModules();
 
+  // Initialize registries with initial/built-in data
+  const registries = /** @type {const} */ ([
+    ["damageTypes", registry.DamageTypes],
+    ["scriptCalls", registry.ScriptCalls],
+  ]);
+  for (const [registryName, registryClass] of registries) {
+    pf1.registry[registryName] = new registryClass();
+  }
+
+  // Define getter for config properties moved into registries
+  Object.defineProperty(pf1.config, "damageTypes", {
+    get: () => {
+      foundry.utils.logCompatibilityWarning(
+        "Damage types have been moved into the DamageTypes registry. " +
+          "Use pf1.registry.damageTypes.getLabels() for the old format, or access the collection for full damage type data.",
+        { since: "0.83.0", until: "0.84.0" }
+      );
+      return pf1.registry.damageTypes.getLabels();
+    },
+  });
+
   // Call post-init hook
   callOldNamespaceHookAll("pf1.postInit", "pf1PostInit");
   Hooks.callAll("pf1PostInit");
@@ -339,6 +360,11 @@ Hooks.once("setup", function () {
     for (const [k, v] of Object.entries(pf1.config[l])) {
       pf1.config[l][k].label = game.i18n.localize(v.label);
     }
+  }
+
+  // Prepare registry data
+  for (const registry of Object.values(pf1.registry)) {
+    if (registry instanceof pf1.registry.Registry) registry.setup();
   }
 
   // TinyMCE variables and commands

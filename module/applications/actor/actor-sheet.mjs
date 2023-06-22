@@ -641,7 +641,7 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   _prepareTraits(traits) {
-    const damageTypes = pf1.registry.damageTypes.toLocalisedObject();
+    const damageTypes = pf1.registry.damageTypes.getLabels();
     const map = {
       // "dr": PF1.damageTypes,
       di: damageTypes,
@@ -2800,9 +2800,7 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
     const label = a.parentElement.querySelector("label");
     const choices =
-      a.dataset.options in pf1.registry
-        ? pf1.registry[a.dataset.options].toLocalisedObject()
-        : pf1.config[a.dataset.options];
+      a.dataset.options in pf1.registry ? pf1.registry[a.dataset.options].getLabels() : pf1.config[a.dataset.options];
     const options = {
       name: label.getAttribute("for"),
       title: label.innerText,

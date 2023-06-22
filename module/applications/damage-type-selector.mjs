@@ -9,7 +9,7 @@ export class DamageTypeSelector extends FormApplication {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       width: 720,
-      height: 580,
+      height: 590,
       template: "systems/pf1/templates/apps/damage-type-selector.hbs",
       closeOnSubmit: true,
     });
@@ -29,7 +29,7 @@ export class DamageTypeSelector extends FormApplication {
     const data = await super.getData(options);
 
     const damageTypes = pf1.registry.damageTypes;
-    data.damageTypes = damageTypes.filter((o) => !o.isModifier).map((o) => o.toJSON());
+    data.damageTypes = damageTypes.filter((damageType) => !damageType.isModifier);
 
     // Add damage type categories
     data.damageCategories = data.damageTypes.reduce((cur, o) => {

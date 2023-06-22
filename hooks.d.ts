@@ -601,6 +601,30 @@ declare global {
        */
       pf1GetRollData: (document: ActorPF | ItemPF | ItemAction, data: Record<string, unknown>) => void;
     }
+
+    /**
+     * A hook event fired by the system when a registry is initialized.
+     * Substitute the `Registry` part of the hook name with the name of the registry,
+     * for example `pf1RegisterDamageTypes`.
+     *
+     * @group Registry
+     * @remarks Called by {@link Hooks.callAll}
+     * @param registry - The registry that is initialized.
+     * @see {@link pf1.registry.Registry.register Registry#register}
+     * @see {@link pf1.registry.Registry.unregister Registry#unregister}
+     * @example
+     * ```js
+     * Hooks.on("pf1RegisterDamageTypes", (registry, model) => {
+     *   registry.register("my-module", "my-damage-type", {
+     *     name: "My Damage Type",
+     *     icon: "icons/svg/damage.svg",
+     *     color: "#00ff00",
+     *     category: "physical",
+     *   });
+     * });
+     * ```
+     */
+    export type pf1RegisterRegistry<R extends pf1.registry.Registry = pf1.registry.Registry> = (registry: R) => void;
   }
 }
 
@@ -679,3 +703,8 @@ export declare const pf1DeleteItemLink: Hooks.StaticCallbacks["pf1DeleteItemLink
 
 // Roll Data
 export declare const pf1GetRollData: Hooks.StaticCallbacks["pf1GetRollData"];
+
+// Dynamic hooks
+
+// Registry
+export import pf1RegisterRegistry = Hooks.pf1RegisterRegistry;

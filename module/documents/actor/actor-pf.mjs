@@ -2498,7 +2498,7 @@ export class ActorPF extends Actor {
 
     const reSplit = pf1.config.re.traitSeparator;
     const misc = [];
-    const damageTypes = pf1.registry.damageTypes.toLocalisedObject();
+    const damageTypes = pf1.registry.damageTypes.getLabels();
 
     if (damageResistances) {
       // Damage reduction
@@ -2815,7 +2815,7 @@ export class ActorPF extends Actor {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
     const rollData = this.getRollData();
-    const damageTypes = pf1.registry.damageTypes.toLocalisedObject();
+    const damageTypes = pf1.registry.damageTypes.getLabels();
 
     // Add contextual AC notes
     const acNoteObjects = this.getContextNotes("misc.ac");

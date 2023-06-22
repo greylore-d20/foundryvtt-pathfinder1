@@ -1,27 +1,45 @@
-import { BaseRegistry, BaseRegistryObject } from "./base-registry.mjs";
+import { Registry, RegistryEntry } from "./base-registry.mjs";
 
-export class DamageType extends BaseRegistryObject {
-  /** @inheritdoc */
-  static typeName = "Damage Type";
+const fields = foundry.data.fields;
 
-  /** @inheritdoc */
-  static get _baseData() {
-    return foundry.utils.mergeObject(super._baseData, {
-      img: "",
-      icon: "",
-      color: "black",
-      category: "misc",
-    });
-  }
-
-  get isModifier() {
-    return this.data.flags?.modifier === true;
+/**
+ * A single damage type entry in the {@link DamageTypes} registry.
+ *
+ * @group Damage Types
+ */
+export class DamageType extends RegistryEntry {
+  static defineSchema() {
+    return {
+      ...super.defineSchema(),
+      icon: new fields.StringField({ required: false, initial: "" }),
+      category: new fields.StringField({
+        required: true,
+        blank: false,
+        initial: "misc",
+        choices: DamageTypes.CATEGORIES,
+      }),
+      isModifier: new fields.BooleanField({ required: false, initial: false }),
+      color: new fields.StringField({ required: true, initial: "black" }),
+    };
   }
 }
-
-export class DamageTypes extends BaseRegistry {
+/**
+ * The singleton registry of damage types.
+ * At runtime this registry is accessible as `pf1.registry.damageTypes`.
+ *
+ * @group Damage Types
+ * @see {@link Registry}
+ * @see {@link DamageType}
+ * @augments {Registry<DamageType>}
+ */
+export class DamageTypes extends Registry {
   /** @inheritdoc */
-  static contentClass = DamageType;
+  static model = DamageType;
+
+  /**
+   * An array of allowed categories of damage types.
+   */
+  static CATEGORIES = /** @type {const} */ (["physical", "energy", "misc"]);
 
   /** @inheritdoc */
   static _defaultData = [
@@ -112,31 +130,21 @@ export class DamageTypes extends BaseRegistry {
       _id: "precision",
       name: "PF1.Precision",
       icon: "ra ra-archery-target",
-      flags: {
-        modifier: true,
-      },
+      isModifier: true,
     },
     {
       _id: "nonlethal",
       name: "PF1.Nonlethal",
       icon: "ra ra-hand",
-      flags: {
-        modifier: true,
-      },
+      isModifier: true,
     },
-  ].map((d) => ({ ...d, module: "pf1" }));
-
-  /**
-   * Get an object containing all damage types and their localised name.
-   *
-   * @returns {{[damageTypeId: string]: string}} An object containing all damage types and their localised name.
-   */
-  toLocalisedObject() {
-    return this.reduce((acc, damageType) => {
-      acc[damageType.id] = game.i18n.localize(damageType.name);
-      return acc;
-    }, {});
-  }
+  ];
 }
 
-export const damageTypes = new DamageTypes();
+/**
+ * {@inheritDoc DamageTypes}
+ *
+ * @group Damage Types
+ * @type {DamageTypes}
+ */
+export let damageTypes;

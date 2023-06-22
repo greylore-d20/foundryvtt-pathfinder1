@@ -1,22 +1,34 @@
-import { BaseRegistry, BaseRegistryObject } from "./base-registry.mjs";
+import { Registry, RegistryEntry } from "./base-registry.mjs";
 
-export class ScriptCall extends BaseRegistryObject {
-  /** @inheritdoc */
-  static typeName = "Script Call";
+const fields = foundry.data.fields;
 
-  /** @inheritdoc */
-  static get _baseData() {
-    return mergeObject(super._baseData, {
-      itemTypes: [],
-      name: null,
-      info: null,
-    });
+/**
+ * A single script call category/trigger.
+ *
+ * @group Script Call Categories
+ */
+export class ScriptCallCategory extends RegistryEntry {
+  static defineSchema() {
+    return {
+      ...super.defineSchema(),
+      itemTypes: new fields.ArrayField(new fields.StringField({})),
+      info: new fields.StringField({ required: true, blank: false, initial: "" }, { localize: true }),
+    };
   }
 }
 
-export class ScriptCalls extends BaseRegistry {
+/**
+ * The singleton registry of script call categories/trigger events.
+ * At runtime this registry is accessible as `pf1.registry.scriptCalls`.
+ *
+ * @group Script Call Categories
+ * @see {@link Registry}
+ * @see {@link ScriptCallCategory}
+ * @augments {Registry<ScriptCallCategory>}
+ */
+export class ScriptCalls extends Registry {
   /** @inheritdoc */
-  static contentClass = ScriptCall;
+  static model = ScriptCallCategory;
 
   /** @inheritdoc */
   static _defaultData = [
@@ -55,7 +67,13 @@ export class ScriptCalls extends BaseRegistry {
       name: "PF1.ScriptCalls.ChangeLevel.Name",
       info: "PF1.ScriptCalls.ChangeLevel.Info",
     },
-  ].map((d) => ({ ...d, module: "pf1" }));
+  ];
 }
 
-export const scriptCalls = new ScriptCalls();
+/**
+ * {@inheritDoc ScriptCalls}
+ *
+ * @group Script Call Categories
+ * @type {ScriptCalls}
+ */
+export let scriptCalls;

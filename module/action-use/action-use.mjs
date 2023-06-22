@@ -1130,7 +1130,7 @@ export class ActionUse {
     callOldNamespaceHookAll("itemUse", "pf1PreDisplayActionUse", this.item, "postAttack", hookData);
 
     this.shared.chatTemplate ||= "systems/pf1/templates/chat/attack-roll.hbs";
-    this.shared.templateData.damageTypes = pf1.registry.damageTypes.toRecord();
+    this.shared.templateData.damageTypes = pf1.registry.damageTypes.toObject();
     if (Hooks.call("pf1PreDisplayActionUse", this) === false) return;
 
     // Show chat message

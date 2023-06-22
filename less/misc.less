@@ -230,11 +230,17 @@ input.text-box {
   margin: 0;
 }
 
-#compendium footer .compendium-footer {
+#compendium footer.action-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: min-content;
   gap: 3px;
+  padding: 0.5rem; // For v10 to have comparable styling to v11
+
+  button {
+    // Overide Foundry's style
+    margin: 0;
+  }
 
   .colspan-2 {
     grid-column: span 2;

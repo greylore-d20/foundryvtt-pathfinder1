@@ -8,6 +8,7 @@
 import "./less/pf1.less";
 import "./module/hmr.mjs";
 import "./module/patch-core.mjs";
+import "module/compendium-directory.mjs";
 
 // Import Modules
 import { tinyMCEInit } from "./module/mce/mce.mjs";
@@ -19,7 +20,6 @@ import * as chat from "./module/utils/chat.mjs";
 import * as macros from "./module/documents/macros.mjs";
 import { initializeModules } from "./module/modules.mjs";
 import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
-import { CompendiumDirectoryPF } from "module/compendium-directory.mjs";
 import { ActorPFProxy } from "@actor/actor-proxy.mjs";
 import { ItemPFProxy } from "@item/item-proxy.mjs";
 
@@ -121,7 +121,6 @@ Hooks.once("init", function () {
 
   // UI classes
   CONFIG.ui.items = applications.ItemDirectoryPF;
-  CONFIG.ui.compendium = CompendiumDirectoryPF;
 
   // Dice config
   CONFIG.Dice.rolls.splice(0, 0, dice.RollPF);
@@ -765,37 +764,6 @@ Hooks.on("renderSidebarTab", (app, html) => {
     helpButton.click(() => pf1.applications.helpBrowser.openUrl("Help/Home"));
     tshooterButton.click(() => pf1.applications.Troubleshooter.open());
   }
-});
-
-// Add compendium sidebar context options
-Hooks.on("getCompendiumDirectoryPFEntryContext", (html, entryOptions) => {
-  // Add option to enable & disable pack
-  entryOptions.unshift(
-    {
-      name: game.i18n.localize("PF1.CompendiumBrowser.HidePack"),
-      icon: '<i class="fas fa-low-vision"></i>',
-      condition: ([li]) => {
-        const pack = game.packs.get(li.dataset.pack);
-        return pack.config.pf1?.disabled !== true;
-      },
-      callback: ([li]) => {
-        const pack = game.packs.get(li.dataset.pack);
-        pack.configure({ "pf1.disabled": true });
-      },
-    },
-    {
-      name: game.i18n.localize("PF1.CompendiumBrowser.ShowPack"),
-      icon: '<i class="fas fa-eye"></i>',
-      condition: ([li]) => {
-        const pack = game.packs.get(li.dataset.pack);
-        return pack.config.pf1?.disabled === true;
-      },
-      callback: ([li]) => {
-        const pack = game.packs.get(li.dataset.pack);
-        pack.configure({ "pf1.disabled": false });
-      },
-    }
-  );
 });
 
 // Show experience distributor after combat

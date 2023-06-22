@@ -197,16 +197,6 @@
       {{/unless}}
       {{/if}}
 
-      {{! Advanced }}
-      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
-
-      <div class="form-group">
-        <label>{{localize "PF1.Tag"}}</label>
-        <input {{#unless system.useCustomTag}}disabled{{/unless}} type="text" name="system.tag" value="{{system.tag}}" placeholder="{{localize "PF1.Tag"}}" />
-        <label>{{localize "PF1.Custom"}}</label>
-        <input type="checkbox" name="system.useCustomTag" {{checked system.useCustomTag}} />
-      </div>
-
       {{#if isBaseClass}}
       <h4 class="form-header">{{localize "PF1.FavouredClassBonuses"}}</h4>
 
@@ -236,6 +226,15 @@
         {{/each}}
         </ol>
       </div>
+
+      {{!-- Advanced --}}
+      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+
+      {{! Tags }}
+      {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}
+
+      {{! Identifier Tag }}
+      {{~> "systems/pf1/templates/items/parts/item-tag.hbs"}}
     </div>
 
     <div class="tab flexcol" data-group="primary" data-tab="changes">

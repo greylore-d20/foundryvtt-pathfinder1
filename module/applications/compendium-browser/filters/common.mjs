@@ -15,3 +15,8 @@ export class PackFilter extends CheckboxFilter {
     this.choices = new foundry.utils.Collection(orderedPacks);
   }
 }
+
+export class TagFilter extends CheckboxFilter {
+  static label = "PF1.Tags";
+  static indexField = "system.tags";
+}

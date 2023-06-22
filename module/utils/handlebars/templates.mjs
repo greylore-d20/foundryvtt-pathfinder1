@@ -43,6 +43,7 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/items/parts/item-proficiencies.hbs",
   "systems/pf1/templates/items/parts/item-size.hbs",
   "systems/pf1/templates/items/parts/item-tag.hbs",
+  "systems/pf1/templates/items/parts/item-tags.hbs",
   "systems/pf1/templates/items/parts/item-weapon-groups.hbs",
 
   // Apps

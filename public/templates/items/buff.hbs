@@ -91,8 +91,14 @@
       {{!-- Proficiencies --}}
       {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
 
-      {{!-- Advanced Tag --}}
-      {{> "systems/pf1/templates/items/parts/item-tag.hbs"}}
+      {{!-- Advanced --}}
+      <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>
+
+      {{! Tags }}
+      {{~> "systems/pf1/templates/items/parts/item-tags.hbs"}}
+
+      {{! Identifier Tag }}
+      {{~> "systems/pf1/templates/items/parts/item-tag.hbs"}}
     </div>
 
     {{!-- Changes Tab --}}

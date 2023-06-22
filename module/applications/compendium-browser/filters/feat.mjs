@@ -11,12 +11,6 @@ export class FeatTypeFilter extends CheckboxFilter {
   }
 }
 
-export class FeatTagFilter extends CheckboxFilter {
-  static label = "PF1.Tags";
-  static type = "feat";
-  static indexField = "system.tags";
-}
-
 export class FeatClassFilter extends CheckboxFilter {
   static label = "PF1.Classes";
   static type = "feat";

@@ -1,12 +1,12 @@
 import { CompendiumBrowser } from "./compendium-browser.mjs";
-import { PackFilter } from "./filters/common.mjs";
+import * as commonFilters from "./filters/common.mjs";
 import * as spellFilter from "./filters/spell.mjs";
 
 export class SpellBrowser extends CompendiumBrowser {
   static typeName = "PF1.Spells";
   static types = ["spell"];
   static filterClasses = [
-    PackFilter,
+    commonFilters.PackFilter,
     spellFilter.SpellSchoolFilter,
     spellFilter.SpellSubSchoolFilter,
     spellFilter.SpellDescriptorFilter,
@@ -15,6 +15,7 @@ export class SpellBrowser extends CompendiumBrowser {
     spellFilter.SpellLearnedBySubdomainFilter,
     spellFilter.SpellLearnedByBloodlineFilter,
     spellFilter.SpellLevelFilter,
+    commonFilters.TagFilter,
   ];
   /** @override */
   static _mapEntry(entry, pack) {

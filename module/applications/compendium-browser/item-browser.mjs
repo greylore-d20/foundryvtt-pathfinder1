@@ -1,11 +1,11 @@
 import { CompendiumBrowser } from "./compendium-browser.mjs";
 import * as itemFilters from "./filters/item.mjs";
-import { PackFilter } from "./filters/common.mjs";
+import * as commonFilters from "./filters/common.mjs";
 
 export class ItemBrowser extends CompendiumBrowser {
   static typeName = "PF1.Items";
   static filterClasses = [
-    PackFilter,
+    commonFilters.PackFilter,
     itemFilters.ItemTypeFilter,
     itemFilters.WeaponTypeFilter,
     itemFilters.WeaponSubtypeFilter,
@@ -17,5 +17,6 @@ export class ItemBrowser extends CompendiumBrowser {
     itemFilters.MiscItemTypeFilter,
     itemFilters.ItemPriceFilter,
     itemFilters.ItemCasterLevelFilter,
+    commonFilters.TagFilter,
   ];
 }

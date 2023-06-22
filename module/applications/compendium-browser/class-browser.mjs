@@ -1,11 +1,11 @@
 import { CompendiumBrowser } from "./compendium-browser.mjs";
-import { PackFilter } from "./filters/common.mjs";
+import * as commonFilters from "./filters/common.mjs";
 import * as classFilters from "./filters/class.mjs";
 
 export class ClassBrowser extends CompendiumBrowser {
   static typeName = "PF1.Classes";
   static filterClasses = [
-    PackFilter,
+    commonFilters.PackFilter,
     classFilters.ClassTypeFilter,
     classFilters.ClassHitDieFilter,
     classFilters.ClassBaseAttackBonusFilter,
@@ -13,5 +13,6 @@ export class ClassBrowser extends CompendiumBrowser {
     classFilters.ClassFortitudeFilter,
     classFilters.ClassReflexFilter,
     classFilters.ClassWillFilter,
+    commonFilters.TagFilter,
   ];
 }

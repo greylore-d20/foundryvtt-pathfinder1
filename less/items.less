@@ -75,6 +75,15 @@
     }
   }
 
+  // General
+
+  .entry-selector,
+  .trait-selector {
+    flex: 0 0 16px;
+    color: var(--color-text-dark-5);
+    font-size: @fontSizeNormal;
+  }
+
   /* ----------------------------------------- */
   /*  Item Details Form                        */
   /* ----------------------------------------- */
@@ -88,33 +97,11 @@
       background: rgba(0, 0, 0, 0.05);
     }
 
-    .trait-selector {
-      flex: 0 0 16px;
-      padding: 2px 0;
-      color: var(--color-text-dark-5);
-      font-size: @fontSizeNormal;
-    }
     .traits-list {
       list-style: none;
       margin: 0;
       padding: 0;
       text-align: right;
-    }
-
-    .form-group {
-      .entry-selector {
-        flex: 1;
-        height: 28px;
-        overflow: hidden;
-      }
-
-      &.subtypes {
-        .entry-selector {
-          flex: 0;
-          overflow: unset;
-          height: unset;
-        }
-      }
     }
 
     .form-group.input-select {

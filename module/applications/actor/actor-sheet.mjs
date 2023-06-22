@@ -330,7 +330,7 @@ export class ActorSheetPF extends ActorSheet {
 
       // Add misc skill bonus source
       if (data.sourceDetails.system.skills[skillId]) {
-        skill.sourceDetails.push(...data.sourceDetails.system.skills[skillId].changeBonus);
+        skill.sourceDetails.push(...data.sourceDetails.system.skills[skillId].mod);
       }
 
       skill.untrained = skill.rt === true && !(skill.rank > 0);
@@ -354,7 +354,7 @@ export class ActorSheetPF extends ActorSheet {
             value: data.system.abilities[subSkill.ability]?.mod ?? 0,
           });
           if (data.sourceDetails.system.skills[skillId]?.subSkills[subSkillId]) {
-            subSkill.sourceDetails.push(...data.sourceDetails.system.skills[skillId].subSkills[subSkillId].changeBonus);
+            subSkill.sourceDetails.push(...data.sourceDetails.system.skills[skillId].subSkills[subSkillId].mod);
           }
           subSkill.untrained = subSkill.rt === true && !(subSkill.rank > 0);
         }

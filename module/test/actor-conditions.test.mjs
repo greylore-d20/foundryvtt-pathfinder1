@@ -75,7 +75,7 @@ export const registerActorConditionsTests = () => {
             ["umd", 1],
           ]) {
             expect(actor.system.skills[skill].mod).to.equal(value);
-            expect(actor.sourceDetails[`system.skills.${skill}.changeBonus`])
+            expect(actor.sourceDetails[`system.skills.${skill}.mod`])
               .to.be.an("array")
               .that.deep.includes(shakenCondition);
           }
@@ -152,7 +152,7 @@ export const registerActorConditionsTests = () => {
             ["umd", 1],
           ]) {
             expect(actor.system.skills[skill].mod).to.equal(value);
-            expect(actor.sourceDetails[`system.skills.${skill}.changeBonus`])
+            expect(actor.sourceDetails[`system.skills.${skill}.mod`])
               .to.be.an("array")
               .that.deep.includes(sickenedCondition);
           }

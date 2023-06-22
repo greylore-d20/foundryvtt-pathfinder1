@@ -2513,8 +2513,8 @@ export class ActorPF extends ActorBasePF {
       this.changes.filter((c) => {
         const cf = c.getTargets(this);
 
-        if (haveParentSkill && cf.includes(`system.skills.${mainSkillId}.changeBonus`)) return true;
-        return cf.includes(`system.skills.${skillId}.changeBonus`);
+        if (haveParentSkill && cf.includes(`system.skills.${mainSkillId}.mod`)) return true;
+        return cf.includes(`system.skills.${skillId}.mod`);
       }),
       { ignoreTarget: true }
     );

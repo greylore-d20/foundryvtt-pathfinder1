@@ -50,6 +50,8 @@ export function applyChanges() {
   // Determine continuous changes
   const continuousChanges = changes.filter((o) => o.continuous === true);
 
+  resetSkills.call(this);
+
   // Apply all changes
   for (const change of changes) {
     const flats = change.getTargets(this);
@@ -78,7 +80,7 @@ export function applyChanges() {
     change.applySourceInfo(this);
   }
 
-  resetSkills.call(this);
+  finalizeSkills.call(this);
 }
 
 const createOverride = function () {
@@ -313,11 +315,11 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "skills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        result.push(`system.skills.${a}.changeBonus`);
+        result.push(`system.skills.${a}.mod`);
 
         if (skl.subSkills != null) {
           for (const b of Object.keys(skl.subSkills)) {
-            result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
+            result.push(`system.skills.${a}.subSkills.${b}.mod`);
           }
         }
       }
@@ -340,10 +342,10 @@ export const getChangeFlat = function (target, modifierType, value) {
         if (skill == null) continue;
         for (const [subSkillId, subskill] of Object.entries(skill.subSkills ?? {})) {
           if (subskill.rank > 0) continue;
-          result.push(`system.skills.${skillId}.subSkills.${subSkillId}.changeBonus`);
+          result.push(`system.skills.${skillId}.subSkills.${subSkillId}.mod`);
         }
         if (skill.rank > 0) continue;
-        result.push(`system.skills.${skillId}.changeBonus`);
+        result.push(`system.skills.${skillId}.mod`);
       }
       break;
     case "reach":
@@ -354,12 +356,11 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "strSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "str") result.push(`system.skills.${a}.changeBonus`);
+        if (skl.ability === "str") result.push(`system.skills.${a}.mod`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "str")
-              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "str") result.push(`system.skills.${a}.subSkills.${b}.mod`);
           }
         }
       }
@@ -367,12 +368,11 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "dexSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "dex") result.push(`system.skills.${a}.changeBonus`);
+        if (skl.ability === "dex") result.push(`system.skills.${a}.mod`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "dex")
-              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "dex") result.push(`system.skills.${a}.subSkills.${b}.mod`);
           }
         }
       }
@@ -380,12 +380,11 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "conSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "con") result.push(`system.skills.${a}.changeBonus`);
+        if (skl.ability === "con") result.push(`system.skills.${a}.mod`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "con")
-              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "con") result.push(`system.skills.${a}.subSkills.${b}.mod`);
           }
         }
       }
@@ -393,12 +392,11 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "intSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "int") result.push(`system.skills.${a}.changeBonus`);
+        if (skl.ability === "int") result.push(`system.skills.${a}.mod`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "int")
-              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "int") result.push(`system.skills.${a}.subSkills.${b}.mod`);
           }
         }
       }
@@ -406,12 +404,11 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "wisSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "wis") result.push(`system.skills.${a}.changeBonus`);
+        if (skl.ability === "wis") result.push(`system.skills.${a}.mod`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "wis")
-              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "wis") result.push(`system.skills.${a}.subSkills.${b}.mod`);
           }
         }
       }
@@ -419,12 +416,11 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "chaSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;
-        if (skl.ability === "cha") result.push(`system.skills.${a}.changeBonus`);
+        if (skl.ability === "cha") result.push(`system.skills.${a}.mod`);
 
         if (skl.subSkills != null) {
           for (const [b, subSkl] of Object.entries(skl.subSkills)) {
-            if (subSkl != null && subSkl.ability === "cha")
-              result.push(`system.skills.${a}.subSkills.${b}.changeBonus`);
+            if (subSkl != null && subSkl.ability === "cha") result.push(`system.skills.${a}.subSkills.${b}.mod`);
           }
         }
       }
@@ -580,17 +576,17 @@ export const getChangeFlat = function (target, modifierType, value) {
     const sklKey = RegExp.$1;
     const skillData = curData.skills[sklKey];
     if (skillData != null) {
-      result.push(`system.skills.${sklKey}.changeBonus`);
+      result.push(`system.skills.${sklKey}.mod`);
       // Apply to subskills also
       for (const subSklKey of Object.keys(skillData.subSkills ?? {})) {
-        result.push(`system.skills.${sklKey}.subSkills.${subSklKey}.changeBonus`);
+        result.push(`system.skills.${sklKey}.subSkills.${subSklKey}.mod`);
       }
     }
   } else if (target.match(/^skill\.([a-zA-Z0-9]+)\.subSkills\.([a-zA-Z0-9_]+)$/)) {
     const sklKey = RegExp.$1;
     const subSklKey = RegExp.$2;
     if (curData.skills[sklKey]?.subSkills?.[subSklKey] != null) {
-      result.push(`system.skills.${sklKey}.subSkills.${subSklKey}.changeBonus`);
+      result.push(`system.skills.${sklKey}.subSkills.${subSklKey}.mod`);
     }
   }
 
@@ -1296,21 +1292,18 @@ export const addDefaultChanges = function (changes) {
   }
 };
 
-const resetSkills = function () {
+/**
+ * Set actor skill baseline values.
+ */
+function resetSkills() {
   const actorData = this.system;
   const skills = actorData.skills;
 
-  const resetSkill = (skill) => {
-    const acpPenalty = skill.acp ? actorData.attributes.acp.total : 0;
-    const abilityModifier = actorData.abilities[skill.ability]?.mod || 0;
-    const changeModifiers = skill.changeBonus || 0;
+  const csBonus = pf1.config.classSkillBonus;
 
-    skill.mod =
-      skill.rank +
-      (skill.cs && skill.rank > 0 ? pf1.config.classSkillBonus : 0) +
-      abilityModifier +
-      changeModifiers -
-      acpPenalty;
+  const resetSkill = (skill) => {
+    const rank = skill.rank || 0;
+    skill.mod = rank + (skill.cs && rank > 0 ? csBonus : 0);
   };
 
   for (const [skillKey, skill] of Object.entries(skills)) {
@@ -1321,7 +1314,6 @@ const resetSkills = function () {
 
     resetSkill(skill);
 
-    // Parse sub-skills
     for (const [subSkillKey, subSkill] of Object.entries(skill.subSkills || {})) {
       if (!subSkill) {
         console.warn(`Bad subskill data for "${skillKey}.${subSkillKey}"`, this);
@@ -1330,7 +1322,33 @@ const resetSkills = function () {
       }
     }
   }
-};
+}
+
+/**
+ * Finalize actor skill values.
+ */
+function finalizeSkills() {
+  const actorData = this.system;
+  const skills = actorData.skills;
+  const abilities = actorData.abilities;
+
+  const acpPenaltyValue = actorData.attributes.acp.total ?? 0;
+
+  const finalizeSkill = (skill) => {
+    const acpPenalty = skill.acp ? acpPenaltyValue : 0;
+    const abilityModifier = abilities[skill.ability]?.mod || 0;
+    skill.mod += abilityModifier - acpPenalty;
+  };
+
+  for (const [skillKey, skill] of Object.entries(skills)) {
+    if (!skill) continue;
+    finalizeSkill(skill);
+    for (const [subSkillKey, subSkill] of Object.entries(skill.subSkills || {})) {
+      if (!subSkill) continue;
+      finalizeSkill(subSkill);
+    }
+  }
+}
 
 export const getSourceInfo = function (obj, key) {
   if (!obj[key]) {

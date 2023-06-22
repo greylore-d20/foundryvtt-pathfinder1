@@ -96,7 +96,7 @@ export const registerHandlebarsHelpers = function () {
     handleParts(actionData.damage.nonCritParts);
 
     // Include general sources. Item enhancement bonus is among these.
-    item.getAllDamageSources(action.id)?.forEach((s) => {
+    action.allDamageSources.forEach((s) => {
       if (s.operator === "script") return;
       handleFormula(s.formula, s);
     });

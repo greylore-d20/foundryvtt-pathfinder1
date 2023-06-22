@@ -2240,60 +2240,7 @@ export class ItemPF extends Item {
   }
 
   getAllDamageSources(actionId) {
-    const action = this.actions.get(actionId);
-    if (!action) return;
-
-    const conds = action.data.conditionals
-      .filter((c) => c.default)
-      .filter((c) => c.modifiers.find((m) => m.target === "damage"));
-    const rollData = action.getRollData();
-
-    if (!rollData) return [];
-
-    const mods = Object.keys(pf1.config.bonusModifiers);
-
-    // Turn relevant conditionals into structure accepted by getHighestChanges
-    const fakeCondChanges = [];
-    for (const c of conds) {
-      for (const m of c.modifiers) {
-        if (m.target !== "damage") continue;
-        const roll = RollPF.safeRoll(m.formula, rollData);
-        if (roll.err) continue;
-        const isModifier = mods.includes(m.type);
-        fakeCondChanges.push({
-          flavor: c.name,
-          value: roll.total,
-          modifier: isModifier ? m.type : "untyped", // Turn unrecognized types to untyped
-          type: isModifier ? undefined : m.type, // Preserve damage type if present
-          formula: m.formula,
-        });
-      }
-    }
-
-    const allChanges = [...action.damageSources, ...fakeCondChanges];
-
-    // Add enhancement bonus
-    if (action.enhancementBonus) {
-      allChanges.push({
-        flavor: game.i18n.localize("PF1.EnhancementBonus"),
-        value: action.enhancementBonus,
-        modifier: "enh",
-        formula: action.enhancementBonus.toString(),
-      });
-    }
-
-    // Add special cases specific to the item
-    // Broken
-    if (this.system.broken) {
-      allChanges.push({
-        flavor: game.i18n.localize("PF1.Broken"),
-        value: -2,
-        modifier: "untyped",
-        formula: "-2",
-      });
-    }
-
-    return getHighestChanges(allChanges, { ignoreTarget: true });
+    return this.actions.get(actionId)?.allDamageSources;
   }
 
   /**

@@ -199,7 +199,7 @@ export class ItemChange {
           operator = "add";
         } else if (!isNaN(this.formula)) {
           value = parseFloat(this.formula);
-        } else if (this.isDeferred) {
+        } else if (this.isDeferred && RollPF.parse(this.formula).some((t) => !t.isDeterministic)) {
           value = RollPF.replaceFormulaData(this.formula, rollData, { missing: 0 });
         } else {
           value = RollPF.safeRoll(this.formula, rollData, [t, this, rollData], {

@@ -11,9 +11,9 @@
 
   {{#if system.attributes.cmbAbility}}<span class="span1 align-left">{{lookup @root.config.abilities system.attributes.cmbAbility}} :</span><span class="span1 align-rightspaced">{{abilityMod system.attributes.cmbAbility @root.rollData 1}}</span><span class="span1 align-right"></span>{{/if}}
   
-  {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=1 skipLabel=1}}
+  {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=true skipLabel=1}}
   
-  {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.cmb.bonus skipLine=1 skipLabel=1}}
+  {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.cmb.bonus skipLine=true skipLabel=1}}
 
   {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.cmb"}}
 </span>

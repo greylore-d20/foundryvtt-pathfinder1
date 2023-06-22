@@ -1,6 +1,6 @@
 {{#if target.length}}
   {{#unless (eq forceLabel 0)}}
-    {{#unless (eq skipLine 1)}}<br/>{{/unless}}
+    {{#unless skipLine}}<br>{{/unless}}
   {{/unless}}
 {{/if}}
 
@@ -8,15 +8,17 @@
   {{#if target.length}}
     {{#unless skipLabel}}
       <span class="span3">
-        {{#if (eq bypassLabel 1)}}
+        {{#if bypassLabel}}
           {{localize sublabel}}:
         {{else}}
-          {{#if label}}
+          {{#if plain}}
+            {{localize "PF1.FromSources"}}
+          {{else if label}}
             {{localize label}}
           {{else}}
             {{localize "PF1.FromSources"}}
           {{/if}}
-          {{#if sublabel}} ({{localize sublabel}}){{/if}}:
+          {{~#if sublabel}} ({{localize sublabel}}){{/if}}:
         {{/if}}
       </span>
     {{/unless}}

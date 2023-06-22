@@ -27,7 +27,7 @@
                         <span class="span2 align-left">@abilities.{{id}}.base :</span><span class="span1 align-right"> {{ability.base}}</span>
                         <span class="span2 align-left">@abilities.{{id}}.baseMod :</span><span class="span1 align-right"> {{ability.baseMod}}</span>
 
-                        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=ability.sourceDetails sublabel="PF1.AbilityScore"}}
+                        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=ability.sourceDetails sublabel="PF1.AbilityScore" plain=true}}
 
                         {{#with (lookup ../sourceDetails.system.abilities id)}}
                         {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=mod sublabel="PF1.Modifier"}}
@@ -81,13 +81,13 @@
                     {{#if sourceDetails.system.attributes.acp.total.length}}
                         {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.acp.armorBonus sublabel="PF1.EquipTypeArmor"}}
                     {{else}}
-                        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.acp.armorBonus sublabel="PF1.EquipTypeArmor" bypassLabel=1}}
+                        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.acp.armorBonus sublabel="PF1.EquipTypeArmor" bypassLabel=true}}
                     {{/if}}
 
                     {{#if (or sourceDetails.system.attributes.acp.total.length sourceDetails.system.attributes.acp.armorBonus.length)}}
                         {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.acp.shieldBonus sublabel="PF1.EquipTypeShield"}}
                     {{else}}
-                        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.acp.shieldBonus sublabel="PF1.EquipTypeShield" bypassLabel=1}}
+                        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.acp.shieldBonus sublabel="PF1.EquipTypeShield" bypassLabel=true}}
                     {{/if}}
                 </div>
             </th>
@@ -101,13 +101,13 @@
                     {{#if sourceDetails.system.attributes.maxDexBonus.length}}
                         {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.mDex.armorBonus sublabel="PF1.EquipTypeArmor"}}
                     {{else}}
-                        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.mDex.armorBonus sublabel="PF1.EquipTypeArmor" bypassLabel=1}}
+                        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.mDex.armorBonus sublabel="PF1.EquipTypeArmor" bypassLabel=true}}
                     {{/if}}
 
                     {{#if (or sourceDetails.system.attributes.maxDexBonus.length sourceDetails.system.attributes.mDex.armorBonus.length)}}
                         {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.mDex.shieldBonus sublabel="PF1.EquipTypeShield"}}
                     {{else}}
-                        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.mDex.shieldBonus sublabel="PF1.EquipTypeShield" bypassLabel=1}}
+                        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.mDex.shieldBonus sublabel="PF1.EquipTypeShield" bypassLabel=true}}
                     {{/if}}
                 </div>
             </th>

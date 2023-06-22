@@ -8,7 +8,7 @@
                 <span class="span2 align-left">@armor.type :</span> <span class="span1 align-right">{{../rollData.armor.type}}</span>
                 <span class="span2 align-left">@shield.type :</span> <span class="span1 align-right">{{../rollData.shield.type}}</span>
 
-                {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=ac.sourceDetails }}
+                {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=ac.sourceDetails plain=true}}
                 {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.ac"}}
                 </div>
 
@@ -61,7 +61,7 @@
                 <div class="tooltipcontent">
                 <span class="span2 align-left">@attributes.savingThrows.{{id}}.total :</span> <span class="span1 align-right">{{savingThrow.total}}</span>
 
-                {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=savingThrow.sourceDetails }}
+                {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=savingThrow.sourceDetails plain=true}}
 
                 {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target=(concat "savingThrow." id)}}
                 </div>

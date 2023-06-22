@@ -27,9 +27,9 @@
             {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.shared }}
             {{#if genericAttacks.melee.ability}}<span class="span1 align-left">{{lookup @root.config.abilities genericAttacks.melee.ability}} :</span><span class="span1 align-rightspaced"> {{numberFormat genericAttacks.melee.abilityMod decimals=0 sign=true}}</span><span class="span1 align-right"></span>{{/if}}
             {{#if (ne @root.system.traits.size "med")}}<span class="span1 align-left">{{localize "PF1.Size"}} : </span><span class="span1 align-rightspaced">{{lookup @root.config.sizeMods @root.system.traits.size }}</span><span class="span1 align-right"></span>{{/if}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=1 skipLabel=1}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=true skipLabel=1}}
 
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.melee skipLine=1 skipLabel=1}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.melee skipLine=true skipLabel=1}}
           </span>
           <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Melee"}}</span></a>
         </th>
@@ -43,9 +43,9 @@
             {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.shared }}
             {{#if genericAttacks.ranged.ability}}<span class="span1 align-left">{{lookup @root.config.abilities genericAttacks.ranged.ability}} :</span><span class="span1 align-rightspaced"> {{numberFormat genericAttacks.ranged.abilityMod decimals=0 sign=true}}</span><span class="span1 align-right"></span>{{/if}}
             {{#if (ne @root.system.traits.size "med")}}<span class="span1 align-left">{{localize "PF1.Size"}} :</span> <span class="span1 align-rightspaced"> &nbsp;{{lookup @root.config.sizeMods @root.system.traits.size }}</span><span class="span1 align-right"></span>{{/if}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=1 skipLabel=1}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=true skipLabel=1}}
 
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.ranged skipLine=1 skipLabel=1}}
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.ranged skipLine=true skipLabel=1}}
           </span>
           <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Ranged"}}</span></a>
         </th>

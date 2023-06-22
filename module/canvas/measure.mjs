@@ -21,23 +21,25 @@ export class TemplateLayerPF extends TemplateLayer {
   async _onDragLeftStart(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftStart(event);
 
+    const v11 = game.release.generation >= 11; // for v10/v11 cross-compatibility
+
+    const interaction = v11 ? event.interactionData : event.data;
+
     // Call placeables layer super instead of templatelayer
-    const origin = duplicate(event.data.origin);
     await PlaceablesLayer.prototype._onDragLeftStart.call(this, event);
 
-    // Create the new preview template
-    const tool = game.activeTool;
-    const { originalEvent } = event.data;
+    const { origin } = interaction;
 
     // Snap to grid
-    if (!originalEvent.shiftKey) {
+    if (!event.shiftKey) {
       const pos = canvas.grid.getSnappedPosition(origin.x, origin.y, this.gridPrecision);
       origin.x = pos.x;
       origin.y = pos.y;
     }
 
-    // Create the template
-    const data = {
+    // Create a pending MeasuredTemplateDocument
+    const tool = game.activeTool;
+    const previewData = {
       user: game.user.id,
       t: tool,
       x: origin.x,
@@ -45,32 +47,38 @@ export class TemplateLayerPF extends TemplateLayer {
       distance: 1,
       direction: 0,
       fillColor: game.user.color || "#FF0000",
+      hidden: event.altKey,
     };
 
     // Apply some type-specific defaults
     const defaults = CONFIG.MeasuredTemplate.defaults;
-    if (tool === "cone") data["angle"] = defaults.angle;
-    else if (tool === "ray") data["width"] = defaults.width * canvas.dimensions.distance;
+    if (tool === "cone") previewData.angle = defaults.angle;
+    else if (tool === "ray") previewData.width = defaults.width * canvas.dimensions.distance;
+
+    const cls = getDocumentClass("MeasuredTemplate");
+    const doc = new cls(previewData, { parent: canvas.scene });
 
     // Create a preview template
-    const doc = new CONFIG.MeasuredTemplate.documentClass(data, { parent: canvas.scene });
     const template = new CONFIG.MeasuredTemplate.objectClass(doc);
-    event.data.preview = this.preview.addChild(template);
+    interaction.preview = this.preview.addChild(template);
     return template.draw();
   }
 
   _onDragLeftMove(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftMove(event);
 
-    const { destination, createState, preview, origin } = event.data;
-    if (createState === 0) return;
+    const v11 = game.release.generation >= 11; // for v10/v11 cross-compatibility
 
-    const { originalEvent } = event.data;
+    const interaction = v11 ? event.interactionData : event.data;
+    const { destination, preview, origin } = interaction;
+    const layerDragState = v11 ? interaction.layerDragState : interaction.createState;
+
+    if (layerDragState === 0) return;
 
     // Snap the destination to the grid
-    const snapToGrid = !originalEvent.shiftKey;
+    const snapToGrid = !event.shiftKey;
     if (snapToGrid) {
-      event.data.destination = canvas.grid.getSnappedPosition(destination.x, destination.y, 2);
+      interaction.destination = canvas.grid.getSnappedPosition(destination.x, destination.y, this.gridPrecision);
     }
 
     // Compute the ray
@@ -98,10 +106,13 @@ export class TemplateLayerPF extends TemplateLayer {
     } else {
       preview.document.distance = baseDistance;
     }
-    preview.refresh();
+
+    if (v11) preview.renderFlags.set({ refreshShape: true });
+    else preview.refresh();
 
     // Confirm the creation state
-    event.data.createState = 2;
+    if (v11) interaction.layerDragState = 2;
+    else interaction.createState = 2;
   }
 }
 

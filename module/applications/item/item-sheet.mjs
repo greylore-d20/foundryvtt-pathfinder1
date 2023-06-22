@@ -769,7 +769,7 @@ export class ItemSheetPF extends ItemSheet {
     // Tags
     const tags = item.system.tags;
     if (tags != null) {
-      props.push(...tags.map(([tag]) => tag));
+      props.push(...tags);
     }
 
     return props.filter((p) => !!p);

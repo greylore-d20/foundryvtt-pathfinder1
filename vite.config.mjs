@@ -47,6 +47,7 @@ const config = defineConfig(({ command, mode }) => {
       emptyOutDir: true,
       sourcemap: true,
       rollupOptions: {
+        external: /^(..\/..\/)?(fonts|ui|icons)\//,
         output: {
           sourcemapPathTransform: (relative) => {
             // Relative paths start with a `../`, which moves the path out of the `systems/pf1` directory.
@@ -74,7 +75,7 @@ const config = defineConfig(({ command, mode }) => {
         // but the dev server would resolve them from the root instead of relative to the file
         less: {
           rootpath: command === "serve" ? "systems/pf1/" : "",
-          rewriteUrls: command === "serve" ? "all" : "",
+          rewriteUrls: command === "serve" ? "all" : "off",
         },
       },
     },

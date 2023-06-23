@@ -423,7 +423,7 @@ export class ItemAction {
         self: {
           value: 0,
           maxFormula: "",
-          per: null,
+          per: "",
         },
       },
       measureTemplate: {

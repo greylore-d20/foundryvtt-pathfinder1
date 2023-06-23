@@ -15,12 +15,11 @@ const PACK_SRC = "../packs";
 const PACK_CACHE = "../public/packs";
 /**
  * Arrays of dot paths exempt from data trimming; `system.` is implied, as only system data is trimmed.
- *
- * @type {{Item: string[], Actor: string[]}}
+ * This should include paths to any objects that can contain arbitrary (i.e. not in template) properties.
  */
 const TEMPLATE_EXCEPTION_PATHS = {
   Actor: [],
-  Item: ["classSkills", "uses.autoDeductChargesCost", "flags", "casting"],
+  Item: ["classSkills", "uses.autoDeductChargesCost", "flags", "casting", "learnedAt"],
   Component: [],
 };
 

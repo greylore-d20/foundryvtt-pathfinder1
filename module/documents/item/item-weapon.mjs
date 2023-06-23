@@ -62,6 +62,12 @@ export class ItemWeaponPF extends ItemPhysicalPF {
     labels.subType = weaponTypes[wType]._label;
     labels.childType = weaponTypes[wType][wSubtype];
 
+    labels.properties = [
+      ...Object.entries(this.system.properties ?? {})
+        .filter(([_, enabled]) => enabled)
+        .map(([id]) => pf1.config.weaponProperties[id] || id),
+    ];
+
     return labels;
   }
 

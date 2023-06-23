@@ -13,12 +13,49 @@
       {{~> "systems/pf1/templates/internal/content-source-view.hbs"}}
 
       <ul class="summary">
-        <li>
-          {{lookup config.attackTypes system.subType }}
-        </li>
       </ul>
     </div>
   </header>
+
+  {{!-- Sidebar --}}
+  <section class="sidebar">
+    <header>
+      <h3 class="item-type">{{itemType}}</h3>
+
+      <label class="item-subtype">{{labels.subType}}</label>
+    </header>
+
+    {{#unless isNaturalAttack}}
+    <div class="descriptor held">
+      <label>{{localize "PF1.Held"}}:</label>
+      <span class="value">{{lookup config.weaponHoldTypes system.held}}</span>
+    </div>
+    {{/unless}}
+
+    {{#if (and showIdentified (gt system.enh 0))}}
+    <h4 class="enhancement">{{localize "PF1.Enhancement" bonus=system.enh}}</h4>
+    {{/if}}
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
+
+    <label class="descriptor checkbox quickbar" data-tooltip="PF1.QuickbarHint">
+      <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}>
+      {{localize "PF1.Quickbar"}}
+    </label>
+
+    <ul class="property-list weapon-groups">
+      <h5>{{localize "PF1.WeaponGroups"}}</h5>
+    {{#if system.weaponGroups.selected.length}}
+      {{#each system.weaponGroups.selected}}
+      <li class="property weapon-group {{@key}}">{{this}}</li>
+      {{/each}}
+    {{else}}
+      <li class="no-properties">{{localize "PF1.NonApplicable"}}</li>
+    {{/if}}
+    </ul>
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-tags.hbs"}}
+  </section>
 
   {{!-- Item Sheet Navigation --}}
   <nav class="sheet-navigation tabs" data-group="primary">
@@ -40,41 +77,7 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
-      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
-
-      <div class="form-group stacked">
-        {{#unless isNaturalAttack}}
-        <label class="checkbox">
-          <input type="checkbox" name="system.proficient" {{checked system.proficient}}> {{localize "PF1.Proficient"}}
-        </label>
-
-        <label class="checkbox">
-          <input type="checkbox" name="system.masterwork" {{checked system.masterwork}}> {{localize "PF1.Masterwork"}}
-        </label>
-
-        {{#if @root.showIdentifiedData}}
-        <label class="checkbox artifact">
-          <input type="checkbox" name="system.artifact" {{checked system.artifact}}> {{localize "PF1.Artifact"}}
-        </label>
-        {{/if}}
-        {{/unless}}
-
-        {{#if owner}}
-        <label class="checkbox">
-          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}> {{localize "PF1.ShowInQuickbar"}}
-        </label>
-        {{/if}}
-
-        {{#unless isNaturalAttack}}
-        <label class="checkbox">
-          <input type="checkbox" name="system.broken" {{checked system.broken}}> {{localize "PF1.Broken"}}
-        </label>
-
-        <label class="checkbox timeworn">
-          <input type="checkbox" name="system.timeworn" {{checked system.timeworn}}> {{localize "PF1.Timeworn"}}
-        </label>
-        {{/unless}}
-      </div>
+      <h3 class="form-header">{{localize "PF1.AttackDetails"}}</h3>
 
       <div class="form-group">
         <label>{{localize "PF1.EnhancementBonus"}}</label>
@@ -82,8 +85,6 @@
           <input type="number" name="system.enh" value="{{system.enh}}" data-dtype="Number" placeholder="0">
         </div>
       </div>
-
-      <h3 class="form-header">{{localize "PF1.AttackDetails"}}</h3>
 
       {{!-- Attack Type --}}
       <div class="form-group">
@@ -107,6 +108,35 @@
       </div>
       {{/unless}}
 
+      {{!-- Ammo Config --}}
+      {{> "systems/pf1/templates/items/parts/item-ammo.hbs"}}
+
+      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
+
+      <div class="form-group stacked">
+        {{#unless isNaturalAttack}}
+        <label class="checkbox proficient">
+          <input type="checkbox" name="system.proficient" {{checked system.proficient}}> {{localize "PF1.Proficient"}}
+        </label>
+
+        <label class="checkbox timeworn">
+          <input type="checkbox" name="system.timeworn" {{checked system.timeworn}}> {{localize "PF1.Timeworn"}}
+        </label>
+
+        {{#if @root.showIdentifiedData}}
+        <label class="checkbox artifact">
+          <input type="checkbox" name="system.artifact" {{checked system.artifact}}> {{localize "PF1.Artifact"}}
+        </label>
+        {{/if}}
+        {{/unless}}
+      </div>
+
+      {{!-- Base Types --}}
+      {{> "systems/pf1/templates/items/parts/item-base-types.hbs"}}
+
+      {{!-- Weapon Groups --}}
+      {{> "systems/pf1/templates/items/parts/item-weapon-groups.hbs"}}
+
       {{#if (eq system.subType "weapon")}}
         {{!-- Base Material --}}
         {{> "systems/pf1/templates/items/parts/item-materials.hbs" label="PF1.Materials.Base" value_ref="system.material.base.value" value=system.material.base.value custom_ref="system.material.base.custom" custom=system.material.base.custom choices=materialCategories.basics}}
@@ -120,15 +150,6 @@
         {{!-- Alignment Types --}}
         {{> "systems/pf1/templates/items/parts/item-alignments.hbs" reference="system.alignments" value=system.alignments}}
       {{/if}}
-
-      {{!-- Ammo Config --}}
-      {{> "systems/pf1/templates/items/parts/item-ammo.hbs"}}
-
-      {{!-- Base Types --}}
-      {{> "systems/pf1/templates/items/parts/item-base-types.hbs"}}
-
-      {{!-- Weapon Groups --}}
-      {{> "systems/pf1/templates/items/parts/item-weapon-groups.hbs"}}
 
       {{!-- Advanced --}}
       <h4 class="form-header">{{localize "PF1.Advanced"}}</h4>

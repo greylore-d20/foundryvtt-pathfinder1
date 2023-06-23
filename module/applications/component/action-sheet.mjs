@@ -9,7 +9,7 @@ export class ItemActionSheet extends FormApplication {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       template: "systems/pf1/templates/apps/item-action.hbs",
-      classes: ["pf1", "item", "sheet", "item-action"],
+      classes: ["pf1", "sheet", "action", "item-action"],
       width: 580,
       height: 720,
       closeOnSubmit: false,

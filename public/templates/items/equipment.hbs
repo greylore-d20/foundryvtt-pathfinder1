@@ -8,22 +8,70 @@
       {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
 
       <ul class="summary">
-        <li>
-          {{itemType}}
-        </li>
-        <li>
-          {{#if labels.childTypeDistinct}}
-          {{labels.childType}}
-          {{else}}
-          {{labels.subType}}
-          {{/if}}
-        </li>
-        <li>
-          {{#if hasMultipleSlots}}{{labels.slot}}{{/if}}
-        </li>
       </ul>
     </div>
   </header>
+
+  {{!-- Sidebar --}}
+  <section class="sidebar">
+    <header>
+      <h3 class="item-type">{{itemType}}</h3>
+
+      <label class="item-subtype">
+        {{#if labels.childTypeDistinct}}
+        {{labels.childType}}
+        {{else}}
+        {{labels.subType}}
+        {{/if}}
+      </label>
+
+      {{#if hasMultipleSlots}}
+      <label class="slot">{{labels.slot}}</label>
+      {{/if}}
+    </header>
+
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-aura.hbs"}}
+
+    <label class="descriptor checkbox quickbar" data-tooltip="PF1.QuickbarHint">
+      <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}>
+      {{localize "PF1.Quickbar"}}
+    </label>
+
+    {{#if (or labels.armor labels.mdex labels.acp)}}
+    <div class="details">
+      <h5>{{localize "PF1.Details"}}</h5>
+      {{#if labels.armor}}
+      <div class="descriptor ac">
+        <label>{{localize "PF1.ACNormal"}}</label>
+        <span>{{labels.armorValue}}</span>
+      </div>
+      {{/if}}
+      {{#if labels.acp}}
+      <div class="descriptor acp">
+        <label>{{localize "PF1.ACP"}}</label>
+        <span>{{labels.acpEffective}}</span>
+      </div>
+      {{/if}}
+      {{#if labels.mdex}}
+      <div class="descriptor mdex">
+        <label>{{localize "PF1.MaxDexShort"}}</label>
+        <span>{{numberFormat system.armor.dex sign=true}}</span>
+      </div>
+      {{/if}}
+      {{#if system.spellFailure}}
+      <div class="descriptor asf">
+        <label>{{localize "PF1.ArcaneSpellFailureAbbr"}}</label>
+        <span class="value">{{system.spellFailure}}%</span>
+      </div>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-tags.hbs"}}
+  </section>
 
   {{!-- Item Sheet Navigation --}}
   <nav class="sheet-navigation tabs" data-group="primary">
@@ -149,17 +197,11 @@
 
       {{!-- Equipment Status --}}
       <div class="form-group stacked">
-        <label class="checkbox">
-          <input type="checkbox" name="system.masterwork" {{checked system.masterwork}}> {{localize "PF1.Masterwork"}}
-        </label>
         {{#if @root.showIdentifiedData}}
         <label class="checkbox artifact">
           <input type="checkbox" name="system.artifact" {{checked system.artifact}}> {{localize "PF1.Artifact"}}
         </label>
         {{/if}}
-        <label class="checkbox broken">
-          <input type="checkbox" name="system.broken" {{checked system.broken}}> {{localize "PF1.Broken"}}
-        </label>
         <label class="checkbox timeworn">
           <input type="checkbox" name="system.timeworn" {{checked system.timeworn}}> {{localize "PF1.Timeworn"}}
         </label>
@@ -171,12 +213,6 @@
       <h4 class="form-header">{{localize "PF1.Misc"}}</h4>
 
       <div class="form-group stacked">
-        {{#if owner}}
-        <label class="checkbox">
-          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}> {{localize "PF1.ShowInQuickbar"}}
-        </label>
-        {{/if}}
-
         <label class="checkbox">
           <input type="checkbox" name="system.proficient" {{checked system.proficient}}> {{localize "PF1.ProficientAttack"}}
         </label>

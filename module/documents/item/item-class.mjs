@@ -340,4 +340,25 @@ export class ItemClassPF extends ItemPF {
   recharge() {
     return;
   }
+
+  getLabels({ rollData } = {}) {
+    const labels = super.getLabels({ rollData });
+
+    const itemData = this.system;
+    labels.subType = pf1.config.classTypes[itemData.subType];
+
+    labels.bab = pf1.config.classBAB[itemData.bab];
+    labels.saves = {
+      fort: pf1.config.classSavingThrows[itemData.savingThrows?.fort?.value],
+      ref: pf1.config.classSavingThrows[itemData.savingThrows?.ref?.value],
+      will: pf1.config.classSavingThrows[itemData.savingThrows?.will?.value],
+    };
+
+    labels.hitDie = itemData.hd;
+    if (itemData.subType !== "mythic") labels.hitDie = game.i18n.format("PF1.DieSize", { size: itemData.hd });
+
+    labels.hasFCB = itemData.fc?.hp > 0 || itemData.fc?.skill > 0 || itemData.fc?.alt > 0;
+
+    return labels;
+  }
 }

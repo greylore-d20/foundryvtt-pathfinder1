@@ -5,7 +5,7 @@
     <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img">
 
     <div class="header-details flexrow">
-      <h1 class="item-name">
+      <h1 class="item-name" data-tooltip="">
         <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}">
       </h1>
 
@@ -13,9 +13,6 @@
       {{~> "systems/pf1/templates/internal/content-source-view.hbs"}}
 
       <ul class="summary">
-        <li>
-          {{lookup config.classTypes system.subType}}
-        </li>
         <li data-tooltip="@classes.{{system.tag}}.level : {{system.level}}<br>@item.level : {{system.level}}{{#unless isMythicPath}}<br>@classes.{{system.tag}}.hitDice : {{system.hitDice}}{{/unless}}">
           <label>
             {{#if isMythicPath}}{{localize "PF1.Tier"}}{{else}}{{localize "PF1.Level"}}{{/if}}:
@@ -26,10 +23,48 @@
     </div>
   </header>
 
+  {{!-- Sidebar --}}
+  <section class="sidebar">
+    <header>
+      <h3 class="item-type">{{itemType}}</h3>
+
+      <label class="item-subtype">{{lookup config.classTypes system.subType}}</label>
+    </header>
+
+    <div class="descriptor health">
+      <label>
+        {{#if isMythic}}{{localize "PF1.Health"}}{{else}}{{localize "PF1.HitDie"}}{{/if}}:
+      </label>
+      <span>{{labels.hitDie}}</span>
+    </div>
+
+    <div class="descriptor">
+      <label>{{localize "PF1.BABAbbr"}}:</label>
+      <span>{{labels.bab}}</span>
+    </div>
+
+    <div class="descriptor">
+      <label>{{localize "PF1.SavingThrowFort"}}:</label>
+      <span>{{labels.saves.fort}}</span>
+    </div>
+    <div class="descriptor">
+      <label>{{localize "PF1.SavingThrowRef"}}:</label>
+      <span>{{labels.saves.ref}}</span>
+    </div>
+    <div class="descriptor">
+      <label>{{localize "PF1.SavingThrowWill"}}:</label>
+      <span>{{labels.saves.will}}</span>
+    </div>
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-tags.hbs"}}
+  </section>
+
   {{!-- Item Sheet Navigation --}}
   <nav class="sheet-navigation tabs" data-group="primary">
-    <a class="item" data-tab="description">{{ localize "PF1.Description" }}</a>
-    <a class="item" data-tab="details">{{ localize "PF1.Details" }}</a>
+    <a class="item" data-tab="description">{{localize "PF1.Description"}}</a>
+    <a class="item" data-tab="details">{{localize "PF1.Details"}}</a>
     <a class="item" data-tab="changes">{{localize "PF1.Changes"}}</a>
     <a class="item" data-tab="links">{{localize "PF1.Links"}}</a>
     <a class="item" data-tab="advanced">{{localize "PF1.Advanced"}}</a>

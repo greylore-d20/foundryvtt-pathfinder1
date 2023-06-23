@@ -7,50 +7,6 @@
   {{/if}}
 
   <div class="flexrow description-container">
-    <div class="item-properties">
-      {{#each descriptionAttributes}}
-      {{#if isBoolean}}
-      <div class="form-group">
-        <label>{{label}}</label>
-        <input type="checkbox" name="{{name}}" {{checked value}} {{disabled disabled}}>
-      </div>
-      {{else if isNumber}}
-      <div class="form-group">
-        <label>{{label}}</label>
-        <input data-action="input-text" name="{{name}}"
-          class="select-on-click{{#if tooltip}} details-tooptip{{/if}}"
-          value="{{numberFormat value decimals=decimals}}"{{#if tooltip}} data-tooltip-type="{{tooltip}}"{{/if}}
-          {{#if fakeValue}}data-input-value="{{inputValue}}"{{/if}}
-          type="number" data-dtype="Number" {{disabled disabled}} readonly>
-      </div>
-      {{else if isString}}
-      <div class="form-group">
-        <label>{{label}}</label>
-        <input data-action="input-text" name="{{name}}"
-          type="text" value="{{value}}" {{disabled disabled}} readonly>
-      </div>
-      {{else if isRange}}
-      <div class="form-group range-value">
-        <label>{{label}}</label>
-        {{!-- Value --}}
-        <input data-action="input-text" class="select-on-click" name="{{value.name}}"
-          type="number" data-dtype="Number" value="{{value.value}}" {{disabled disabled}} readonly>
-        <span class="separator">/</span>
-        {{!-- Max --}}
-        <input data-action="input-text" class="select-on-click" name="{{max.name}}"
-          type="number" data-dtype="Number" value="{{max.value}}" {{disabled disabled}} readonly>
-      </div>
-      {{/if}}
-      {{/each}}
-
-      {{!-- Properties --}}
-      <ol class="properties-list">
-        {{#each itemProperties}}
-        <li>{{this}}</li>
-        {{/each}}
-      </ol>
-    </div>
-
     {{#if showIdentifyDescription}}
     <section class="description-body">
       <div class="tab description-group flexcol" data-group="description" data-tab="identified">
@@ -61,12 +17,10 @@
       {{editor descriptionHTML.unidentified target="system.description.unidentified" button=true editable=editable engine="prosemirror" collaborate=false}}
       </div>
     </section>
-    {{else}}
-    {{#if showUnidentifiedData}}
+    {{else if showUnidentifiedData}}
     {{editor descriptionHTML.unidentified target="system.description.unidentified" button=true editable=editable engine="prosemirror" collaborate=false}}
     {{else}}
     {{editor descriptionHTML.identified target="system.description.value" button=true editable=editable engine="prosemirror" collaborate=false}}
-    {{/if}}
     {{/if}}
   </div>
 </div>

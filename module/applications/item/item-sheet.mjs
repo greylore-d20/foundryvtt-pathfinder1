@@ -15,6 +15,9 @@ export class ItemSheetPF extends ItemSheet {
   constructor(...args) {
     super(...args);
 
+    // Add item type to selectors
+    this.options.classes.push(`type-${this.item.type}`);
+
     this.items = [];
 
     /**
@@ -40,7 +43,7 @@ export class ItemSheetPF extends ItemSheet {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      width: 580,
+      width: 620,
       classes: ["pf1", "sheet", "item"],
       scrollY: [".tab", ".buff-flags", ".editor-content"],
       dragDrop: [
@@ -142,6 +145,8 @@ export class ItemSheetPF extends ItemSheet {
         all[size] = game.i18n.format("PF1.DieSize", { size });
         return all;
       }, {});
+
+      context.isMythic = this.item.subType === "mythic";
     }
 
     // Include raw tag data (from source to not get autofilled tag)
@@ -149,8 +154,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Item Type, Status, and Details
     context.itemType = game.i18n.localize(CONFIG.Item.typeLabels[item.type]);
-    context.itemStatus = this._getItemStatus();
-    context.itemProperties = this._getItemProperties();
     context.itemName = item.name;
     if (item.links.charges) context.inheritCharges = item.links.charges;
     context.isCharged = !["single", "", undefined].includes(itemData.uses?.per);
@@ -164,11 +167,13 @@ export class ItemSheetPF extends ItemSheet {
     context.hasAction = item.hasAction;
     context.showIdentifyDescription = context.isGM && context.isPhysical;
     context.showUnidentifiedData = item.showUnidentifiedData;
-    context.showIdentifiedData = !context.showUnidentifiedData;
+    context.showIdentified = !item.showUnidentifiedData;
+    context.showIdentifiedData = context.showIdentified;
     context.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
 
     // Identification information
     context.identify ??= {};
+    context.identify.dc = 0;
     if (rollData.item.auraStrength != null) {
       const auraStrength = rollData.item.auraStrength;
       context.auraStrength = auraStrength;
@@ -221,11 +226,11 @@ export class ItemSheetPF extends ItemSheet {
 
     context.name = item.name;
 
+    /** @type {DescriptionAttribute[]} */
+    context.descriptionAttributes = [];
+
     // Override description attributes
     if (context.isPhysical) {
-      /** @type {DescriptionAttribute[]} */
-      context.descriptionAttributes = [];
-
       // Add quantity
       context.descriptionAttributes.push({
         isNumber: true,
@@ -234,6 +239,10 @@ export class ItemSheetPF extends ItemSheet {
         value: itemData.quantity || 0,
         decimals: 0,
         id: "data-quantity",
+        constraints: {
+          min: 0,
+          step: 1,
+        },
       });
 
       // Add weight
@@ -247,6 +256,10 @@ export class ItemSheetPF extends ItemSheet {
         decimals: 2,
         tooltip: "weight",
         id: "data-weight-value",
+        constraints: {
+          min: 0,
+          step: 0.01,
+        },
       });
 
       // Add price
@@ -260,6 +273,10 @@ export class ItemSheetPF extends ItemSheet {
             decimals: 2,
             tooltip: "price",
             id: "data-price",
+            constraints: {
+              min: 0,
+              step: 0.01,
+            },
           },
           {
             isNumber: true,
@@ -268,6 +285,10 @@ export class ItemSheetPF extends ItemSheet {
             value: item.getValue({ sellValue: 1, forceUnidentified: true }),
             decimals: 2,
             id: "data-unidentifiedPrice",
+            constraints: {
+              min: 0,
+              step: 0.01,
+            },
           }
         );
       } else {
@@ -281,6 +302,10 @@ export class ItemSheetPF extends ItemSheet {
             decimals: 2,
             tooltip: "price",
             id: "data-price",
+            constraints: {
+              min: 0,
+              step: 0.01,
+            },
           });
         } else {
           context.descriptionAttributes.push({
@@ -291,21 +316,34 @@ export class ItemSheetPF extends ItemSheet {
             decimals: 2,
             tooltip: "price",
             id: "data-price",
+            constraints: {
+              min: 0,
+              step: 0.01,
+            },
           });
         }
       }
 
       // Add hit points
       context.descriptionAttributes.push({
+        isNumber: true,
         isRange: true,
         label: game.i18n.localize("PF1.HPShort"),
         value: {
           name: "system.hp.value",
           value: itemData.hp?.value || 0,
+          constraints: {
+            step: 1,
+            max: itemData.hp?.max || 0,
+          },
         },
         max: {
           name: "system.hp.max",
           value: itemData.hp?.max || 0,
+          constraints: {
+            min: 0,
+            step: 1,
+          },
         },
       });
 
@@ -316,6 +354,10 @@ export class ItemSheetPF extends ItemSheet {
         name: "system.hardness",
         decimals: 0,
         value: itemData.hardness || 0,
+        constraints: {
+          min: 0,
+          step: 1,
+        },
       });
 
       let disableEquipping = false;
@@ -350,7 +392,29 @@ export class ItemSheetPF extends ItemSheet {
         value: itemData.carried,
         disabled: item.inContainer,
       });
+    }
 
+    if (context.isPhysical || item.isQuasiPhysical) {
+      // Add carried flag
+      context.descriptionAttributes.push({
+        isBoolean: true,
+        name: "system.broken",
+        label: game.i18n.localize("PF1.Broken"),
+        value: itemData.broken,
+        disabled: context.isNaturalAttack,
+      });
+
+      // Add carried flag
+      context.descriptionAttributes.push({
+        isBoolean: true,
+        name: "system.masterwork",
+        label: game.i18n.localize("PF1.Masterwork"),
+        value: itemData.masterwork,
+        disabled: context.isNaturalAttack,
+      });
+    }
+
+    if (context.isPhysical) {
       // Add identified flag for GM
       if (game.user.isGM) {
         context.descriptionAttributes.push({
@@ -358,6 +422,7 @@ export class ItemSheetPF extends ItemSheet {
           name: "system.identified",
           label: game.i18n.localize("PF1.Identified"),
           value: itemData.identified ?? true,
+          disabled: !game.user.isGM,
         });
       }
     }
@@ -468,7 +533,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Prepare spell specific stuff
-    if (item.type === "spell") {
+    if (context.isSpell) {
       let spellbook = null;
       if (actor) {
         const bookId = itemData.spellbook;
@@ -508,6 +573,19 @@ export class ItemSheetPF extends ItemSheet {
       // Force intrinsic DF components
       if (df === dfVariants.MDF) itemData.components.material = true;
       if (df === dfVariants.FDF) itemData.components.focus = true;
+
+      // Generate component list according to spellbook
+      const c = { ...itemData.components };
+      context.components = c;
+      if (spellbook) {
+        const isDivine = spellbook.kind === "divine";
+        if (isDivine) {
+          if (df === dfVariants.FDF) c.focus = false;
+          if (df === dfVariants.MDF) c.material = false;
+        } else {
+          c.divineFocus = false;
+        }
+      }
     }
 
     // Prepare class specific stuff
@@ -935,83 +1013,6 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   /* -------------------------------------------- */
-
-  /**
-   * Get the text item status which is shown beneath the Item type in the top-right corner of the sheet
-   *
-   * @returns {string}
-   * @private
-   */
-  _getItemStatus() {
-    if (this.item.isPhysical) {
-      return this.item.system.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
-    }
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Get an array of item properties which are used in the small sidebar of the description tab
-   *
-   * @returns {string[]}
-   * @private
-   */
-  _getItemProperties() {
-    const props = [];
-    const item = this.item;
-    const labels = this.item.getLabels();
-
-    if (item.type === "weapon") {
-      props.push(
-        ...Object.entries(item.system.properties)
-          .filter((e) => e[1] === true)
-          .map((e) => pf1.config.weaponProperties[e[0]])
-      );
-    } else if (item.type === "spell") {
-      props.push(labels.components, labels.materials);
-    } else if (item.type === "equipment") {
-      const subType = item.subType;
-      // Obfuscate wondrous item as clothing or other, if unidentified
-      if (subType === "wondrous") {
-        if (!item.showUnidentifiedData) {
-          props.push(pf1.config.equipmentTypes.wondrous._label);
-        } else {
-          props.push(pf1.config.equipmentTypes.other._label);
-        }
-      } else {
-        const subtypeLabels = pf1.config.equipmentTypes[subType];
-        const typeLabel = subtypeLabels?.[item.system.equipmentSubtype] ?? subtypeLabels?._label;
-        if (typeLabel) props.push(typeLabel);
-      }
-      // Add AC
-      if (labels.armor) props.push(labels.armor);
-    } else if (item.type === "feat") {
-      props.push(labels.subType);
-    }
-
-    // Action type
-    const itemActionTypes = item.actionTypes;
-    if (itemActionTypes) {
-      props.push(...itemActionTypes.map((o) => pf1.config.itemActionTypes[o]));
-    }
-
-    // Action usage
-    if (item.type !== "weapon" && item.system.activation && !foundry.utils.isEmpty(item.system.activation)) {
-      props.push(labels.activation, labels.range, labels.target, labels.duration);
-    }
-
-    // Tags
-    const tags = item.system.tags;
-    if (tags?.length) {
-      props.push(...tags);
-    }
-
-    return props.filter((p) => !!p);
-  }
-
-  /* -------------------------------------------- */
-
-  /* -------------------------------------------- */
   /*  Form Submission                             */
   /* -------------------------------------------- */
 
@@ -1235,7 +1236,10 @@ export class ItemSheetPF extends ItemSheet {
     if (this.item.isPhysical) {
       if (this.item.isBroken && this.item.system.broken !== true) {
         const broken = html.find("input[name='system.broken']")[0];
-        if (broken) broken.indeterminate = true;
+        if (broken) {
+          broken.indeterminate = true;
+          broken.dataset.tooltip = "PF1.AutoBroken";
+        }
       }
     }
 

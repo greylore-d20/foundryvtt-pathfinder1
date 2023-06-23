@@ -8,15 +8,27 @@
       {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
 
       <ul class="summary">
-        <li>
-          {{itemType}}
-        </li>
-        <li>
-          {{#unless showUnidentifiedData}}{{lookup config.lootTypes system.subType}}{{/unless}}
-        </li>
       </ul>
     </div>
   </header>
+
+  {{!-- Sidebar --}}
+  <section class="sidebar">
+    <header>
+      <h3 class="item-type">{{itemType}}</h3>
+
+      {{#if showIdentifiedData}}
+      <label class="item-subtype">{{labels.subType}}</label>
+      {{/if}}
+    </header>
+
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-aura.hbs"}}
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-tags.hbs"}}
+  </section>
 
   {{!-- Item Sheet Navigation --}}
   <nav class="sheet-navigation tabs" data-group="primary">

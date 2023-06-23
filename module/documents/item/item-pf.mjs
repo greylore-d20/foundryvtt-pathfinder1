@@ -657,6 +657,13 @@ export class ItemPF extends ItemBasePF {
     if (!this.actor) {
       this.prepareDerivedItemData();
     }
+
+    const wgroups = this.system.weaponGroups;
+    if (wgroups) {
+      wgroups.value ??= [];
+      wgroups.custom ??= [];
+      wgroups.total = new Set([...wgroups.value.map((g) => pf1.config.weaponGroups[g] || g), ...wgroups.custom]);
+    }
   }
 
   prepareBaseData() {

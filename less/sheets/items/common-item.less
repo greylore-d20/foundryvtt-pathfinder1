@@ -1,28 +1,35 @@
 .pf1.sheet.item {
-  header {
-    .item-name {
-      :is(h1, h3) {
-        padding: 0;
-        margin: 0;
+  form {
+    display: grid;
+    grid-template-columns: 2fr 6fr;
+    grid-template-rows: min-content min-content 1fr;
 
-        &:first-of-type {
-          margin: 0.3em 0 0 0;
+    > header {
+      grid-column: span 2;
+
+      .item-name {
+        :is(h1, h3) {
+          padding: 0;
+          margin: 0;
+
+          &:first-of-type {
+            margin: 0.3em 0 0 0;
+          }
         }
+      }
+
+      .reference {
+        padding: 0 3px;
+        line-height: 1.5;
+      }
+
+      .header-details {
+        align-self: flex-start;
       }
     }
 
-    .header-details {
-      align-self: flex-start;
-
-      :is(h1, h2, h3) {
-        > input {
-          font: inherit;
-        }
-      }
+    :is(select, input):invalid {
+      border: var(--pf1-invalid-input-border);
     }
-  }
-
-  :is(select, input):invalid {
-    border: var(--pf1-invalid-input-border);
   }
 }

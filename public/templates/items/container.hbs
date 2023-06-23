@@ -9,6 +9,50 @@
     </div>
   </header>
 
+  {{!-- Sidebar --}}
+  <section class="sidebar">
+    <header>
+      <h3 class="item-type">{{itemType}}</h3>
+    </header>
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
+
+    <div class="weight-reduction">
+      <h5>{{localize "PF1.WeightReduction.Label"}}</h5>
+      <label class="percentage">
+        <span>{{localize "PF1.WeightReduction.Percentage"}}</span>
+        <input type="number" class="select-on-click" value="{{system.weight.reduction.percent}}" name="system.weight.reduction.percent" placeholder="0">%
+      </label>
+
+      <label class="flat">
+        <span>{{localize "PF1.WeightReduction.Flat"}}</span>
+        <input data-action="input-text" type="number" class="select-on-click"
+          value="{{system.weight.converted.reduction}}"
+          data-input-value="{{system.weight.converted.reduction}}"
+          name="system.weight.reduction.value" placeholder="0" readonly>
+          {{units.weight}}
+      </label>
+    </div>
+
+    <div class="contents">
+      <h4>{{localize "PF1.Containers.Contents.Label"}}</h4>
+
+      <div>
+        <label>{{localize "PF1.Weight"}}</label>
+        <span>{{weight.contents}} {{weight.units}}</span>
+      </div>
+
+      <div>
+        <label>{{localize "PF1.Value"}}</label>
+        <span>{{labels.totalValue}}</span>
+      </div>
+      <div>
+        <label>{{localize "PF1.SellValue"}}</label>
+        <span>{{labels.sellValue}}</span>
+      </div>
+    </div>
+  </section>
+
   {{!-- Item Sheet Navigation --}}
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item" data-tab="description">{{ localize "PF1.Description" }}</a>
@@ -29,26 +73,17 @@
 
       <header>
         <div class="form-group">
-          <label>{{localize "PF1.WeightReduction"}} %</label>
-          <div class="form-fields">
-            <input type="number" class="select-on-click" value="{{system.weight.reduction.percent}}" name="system.weight.reduction.percent" placeholder="0">
-            <label>{{localize "PF1.WeightReductionFlat"}}</label>
-            <div data-action="input-text" data-for=".data-weight-reduction-flat-value" data-attr-value="system.weight.reduction.value" data-input-value="{{system.weight.converted.reduction}}">
-              <input type="number" class="data-weight-reduction-flat-value" value="{{system.weight.converted.reduction}}" name="system.weight.reduction.value" placeholder="0" readonly>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
           {{~> "systems/pf1/templates/internal/item-search.hbs" category="container"}}
 
           <ol class="currency flexrow{{#if hasCurrency}} has-currency{{/if}}">
             <h3>{{localize "PF1.Currency.Label"}}</h3>
             {{#each config.currencies as |l k|}}
-            <li class="denomination {{k}}" data-denomination="{{k}}">
-              <label>{{l}}</label>
-              <input type="text" class="select-on-click" name="system.currency.{{k}}" value="{{#if (lookup @root.system.currency k)}}{{lookup @root.system.currency k}}{{/if}}" data-dtype="String">
-              <a class="convert-currency" data-type="{{k}}" data-category="currency" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-long-arrow-alt-left"></i></a>
+            <li class="denomination {{@key}}" data-denomination="{{@key}}">
+              <label>{{this}}</label>
+              <input type="text" class="select-on-click" name="system.currency.{{@key}}"
+                value="{{#if (lookup @root.system.currency k)}}{{lookup @root.system.currency @key}}{{/if}}" data-dtype="String" placeholder="0">
+              <a class="convert-currency" data-type="{{@key}}" data-category="currency" data-tooltip="PF1.ConvertCurrency">
+                <i class="fas fa-long-arrow-alt-left"></i></a>
             </li>
             {{/each}}
           </ol>
@@ -56,26 +91,6 @@
       </header>
 
       {{> "systems/pf1/templates/items/parts/item-contents.hbs" sections=inventory}}
-
-      <footer>
-        <table>
-          <thead>
-            <tr>
-              <th>{{localize "PF1.Containers.Contents.Weight"}}</th>
-              <th>{{localize "PF1.Containers.Contents.Value"}}</th>
-              <th>{{localize "PF1.Containers.Contents.SellValue"}}</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>{{weight.contents}} {{weight.units}}</td>
-              <td>{{labels.totalValue}}</td>
-              <td>{{labels.sellValue}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </footer>
     </div>
 
     {{#unless showUnidentifiedData}}

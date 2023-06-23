@@ -1,0 +1,16 @@
+{{#if (and @root.showIdentifiedData @root.identify.dc @root.system.aura.school)}}
+<label>{{lookup config.spellSchools system.aura.school}} ({{auraStrength_name}})</label>
+
+{{#if (and @root.showIdentifiedData @root.identify.dc)}}
+<div class='descriptor base-dc'>
+  <label>{{localize "PF1.IdentifyDC"}}</label>
+  <span class='value'>{{identify.dc}}</span>
+</div>
+{{#if (and @root.isGM system.cursed)}}
+<div class='descriptor curse-dc'>
+  <label>{{localize "PF1.IdentifyCurseDC"}}</label>
+  <span class='value'>{{identify.curse}}</span>
+</div>
+{{/if}}
+{{/if}}
+{{/if}}

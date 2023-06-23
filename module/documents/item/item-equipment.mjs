@@ -95,7 +95,16 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
 
     if (ac > 0) {
       labels.armor = `${ac} ${game.i18n.localize("PF1.ACNormal")}`;
+      labels.armorValue = ac;
     }
+
+    const acp = itemData.armor?.acp || 0;
+    if (acp > 0) {
+      labels.acp = true;
+      labels.acpEffective = Math.max(0, acp + (itemData.masterwork ? -1 : 0));
+    }
+    const mdex = itemData.armor?.dex ?? null;
+    if (Number.isFinite(mdex)) labels.mdex = true;
 
     if (this.subType === "armor") {
       labels.slot = pf1.config.equipmentSlots.armor.armor;
@@ -144,6 +153,9 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
 
     // Add enhancement bonus
     itemData.armor.enh ??= 0;
+
+    const enh = itemData.armor.enh || 0;
+    itemData.armor.total = (itemData.armor.value || 0) + enh;
 
     // Feed info back to actor
     if (itemData.equipped !== false) {

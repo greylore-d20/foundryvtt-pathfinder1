@@ -793,6 +793,9 @@ export class ItemAction {
       }
     }
 
+    // Action type
+    labels.actionType = pf1.config.itemActionTypes[actionData.actionType];
+
     return labels;
   }
 

@@ -239,6 +239,17 @@ export class ItemSpellPF extends ItemPF {
     }
   }
 
+  prepareDerivedData() {
+    super.prepareDerivedData();
+
+    const descs = this.system.descriptors;
+    if (descs) {
+      descs.custom ??= [];
+      descs.value ??= [];
+      descs.total = new Set([...descs.value.map((d) => pf1.config.spellDescriptors[d] || d), ...descs.custom]);
+    }
+  }
+
   getRollData() {
     const result = super.getRollData();
 

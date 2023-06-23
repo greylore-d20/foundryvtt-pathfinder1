@@ -129,6 +129,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         inputValue: data.item.system.weight.converted.value,
         decimals: 2,
         id: "data-weight-value",
+        constraints: {
+          min: 0,
+          step: 0.01,
+        },
       });
 
       // Add price
@@ -142,6 +146,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             value: data.item.system.price,
             decimals: 2,
             id: "data-price",
+            constraints: {
+              min: 0,
+              step: 0.01,
+            },
           },
           {
             isNumber: true,
@@ -151,6 +159,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             value: data.item.system.unidentified?.price,
             decimals: 2,
             id: "data-unidentifiedPrice",
+            constraints: {
+              min: 0,
+              step: 0.01,
+            },
           }
         );
       } else {
@@ -163,6 +175,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             value: data.item.system.unidentified?.price,
             decimals: 2,
             id: "data-price",
+            constraints: {
+              min: 0,
+              step: 0.01,
+            },
           });
         } else {
           data.descriptionAttributes.push({
@@ -173,21 +189,33 @@ export class ItemSheetPF_Container extends ItemSheetPF {
             value: data.item.system.price,
             decimals: 2,
             id: "data-price",
+            constraints: {
+              min: 0,
+              step: 0.01,
+            },
           });
         }
       }
 
       // Add hit points
       data.descriptionAttributes.push({
+        isNumber: true,
         isRange: true,
         label: game.i18n.localize("PF1.HPShort"),
         value: {
           name: "system.hp.value",
           value: data.item.system.hp?.value,
+          constraints: {
+            step: 1,
+          },
         },
         max: {
           name: "system.hp.max",
           value: data.item.system.hp?.max,
+          constraints: {
+            min: 0,
+            step: 1,
+          },
         },
       });
 
@@ -197,6 +225,10 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         label: game.i18n.localize("PF1.Hardness"),
         name: "system.hardness",
         value: data.item.system.hardness,
+        constraints: {
+          min: 0,
+          step: 1,
+        },
       });
 
       // Add carried flag
@@ -227,9 +259,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     data.sellValue = pf1.utils.currency.split(cpSellValue);
 
     // Set labels
-    if (!data.labels) data.labels = {};
-    data.labels.totalValue = game.i18n.format("PF1.Containers.TotalValue", data.totalValue);
-    data.labels.sellValue = game.i18n.format("PF1.Containers.SellValue", data.sellValue);
+    data.labels ??= {};
+    data.labels.totalValue = game.i18n.format("PF1.SplitValue", data.totalValue);
+    data.labels.sellValue = game.i18n.format("PF1.SplitValue", data.sellValue);
 
     return data;
   }

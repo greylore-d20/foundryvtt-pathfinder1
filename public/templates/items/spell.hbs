@@ -13,15 +13,98 @@
       {{~> "systems/pf1/templates/internal/content-source-view.hbs"}}
 
       <ul class="summary">
-        <li>
-          {{labels.level}}
-        </li>
-        <li>
-          {{labels.school}}
-        </li>
       </ul>
     </div>
   </header>
+
+    {{!-- Sidebar --}}
+  <section class="sidebar">
+    <header>
+      <h3 class="item-type">{{itemType}}</h3>
+
+      <label class="level">{{labels.level}}</label>
+
+      <label class="school">
+        <span>{{labels.school}}</span>
+        {{#if system.subschool}}
+        (<span class="subschool">{{system.subschool}}</span>)
+        {{/if}}
+      </label>
+    </header>
+
+    {{#if system.descriptors.total.size}}
+    <ul class="property-list descriptors tags">
+      <h5>{{localize "PF1.DescriptorPlural"}}</h5>
+      {{#each system.descriptors.total}}
+        <li class="property generic-tag">{{this}}</li>
+      {{/each}}
+    </ul>
+    {{/if}}
+
+    <ul class="property-list components tags">
+      <h5>{{localize "PF1.Components"}}</h5>
+      {{#if components.verbal}}
+        <li class="property generic-tag">{{localize "PF1.SpellComponents.Type.verbal.Label"}}</li>
+      {{/if}}
+      {{#if components.somatic}}
+        <li class="property generic-tag">{{localize "PF1.SpellComponents.Type.somatic.Label"}}</li>
+      {{/if}}
+      {{#if components.thought}}
+        <li class="property generic-tag">{{localize "PF1.SpellComponents.Type.thought.Label"}}</li>
+      {{/if}}
+      {{#if components.emotion}}
+        <li class="property generic-tag">{{localize "PF1.SpellComponents.Type.emotion.Label"}}</li>
+      {{/if}}
+      {{#if components.material}}
+        <li class="property generic-tag">{{localize "PF1.SpellComponents.Type.material.Label"}}</li>
+      {{/if}}
+      {{#if components.focus}}
+        <li class="property generic-tag">{{localize "PF1.SpellComponents.Type.focus.Label"}}</li>
+      {{/if}}
+      {{!-- Misc Components --}}
+      {{#if components.value}}
+        <li class="property generic-tag misc-component">{{system.components.value}}</li>
+      {{/if}}
+    </ul>
+
+    {{#if system.components.focus}}
+    <div class="descriptor focus wrap-value">
+      <label>{{localize "PF1.SpellComponents.Type.focus.Label"}}</label>
+      <span class="value">{{system.materials.focus}}</span>
+    </div>
+    {{/if}}
+
+    {{#if components.divineFocus}}
+      <div class="descriptor divine-focus wrap-value">
+        <label>{{localize "PF1.SpellComponents.Type.divineFocus.Label"}}</label>
+        <span class="value">{{lookup config.divineFocus system.components.divineFocus}}</span>
+      </div>
+    {{/if}}
+
+    {{!-- Material Components --}}
+    {{#if components.material}}
+    <div class="descriptor material wrap-value">
+      <label>{{localize "PF1.SpellComponents.Type.material.Label"}}</label>
+      <span class="value">
+      {{system.materials.value}}
+      {{#if system.materials.gpValue}}
+      <span class="value">({{localize "PF1.Currency.Inline.gp" value=system.materials.gpValue}})</span>
+      {{/if}}
+      </span>
+    </div>
+    {{/if}}
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
+
+    {{#if hasAction}}
+    <label class="descriptor checkbox quickbar" data-tooltip="PF1.QuickbarHint">
+      <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}>
+      {{localize "PF1.Quickbar"}}
+    </label>
+    {{/if}}
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-tags.hbs"}}
+  </section>
 
   {{!-- Item Sheet Navigation --}}
   <nav class="sheet-navigation tabs" data-group="primary">
@@ -147,13 +230,6 @@
           <input type="checkbox" name="system.domain" {{checked system.domain}}>
           {{localize "PF1.Domain"}}/{{localize "PF1.School"}}
         </label>
-
-        {{#if owner}}
-        <label class="checkbox">
-          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}>
-          {{localize "PF1.ShowInQuickbar"}}
-        </label>
-        {{/if}}
       </div>
 
       <h3 class="form-header">{{localize "PF1.SpellComponents.Label"}}</h3>

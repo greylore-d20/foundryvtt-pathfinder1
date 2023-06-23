@@ -13,9 +13,6 @@
       {{~> "systems/pf1/templates/internal/content-source-view.hbs"}}
 
       <ul class="summary">
-        <li>
-          {{labels.subType}}
-        </li>
         <li data-tooltip="@item.level : {{#if system.level}}{{system.level}}{{else}}0{{/if}}">
           <label>
             {{localize "PF1.Level"}}:
@@ -30,6 +27,19 @@
       </ul>
     </div>
   </header>
+
+    {{!-- Sidebar --}}
+  <section class="sidebar">
+    <header>
+      <h3 class="item-type">{{itemType}}</h3>
+
+      <label class="item-subtype">{{labels.subType}}</label>
+    </header>
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-inputs.hbs"}}
+
+    {{> "systems/pf1/templates/items/parts/item-sidebar-tags.hbs"}}
+  </section>
 
   {{!-- Item Sheet Navigation --}}
   <nav class="sheet-navigation tabs" data-group="primary">

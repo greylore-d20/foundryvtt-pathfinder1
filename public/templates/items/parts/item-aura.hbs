@@ -42,7 +42,7 @@
 </div>
 
 {{!-- Identify DC --}}
-{{#if isGM}}
+{{#if (and isGM identify.dc)}}
 <div class="form-group identification">
   <div class='base-dc'>
     <label>{{localize "PF1.IdentifyDC"}}</label>

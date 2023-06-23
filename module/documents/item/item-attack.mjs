@@ -92,4 +92,13 @@ export class ItemAttackPF extends ItemPF {
 
     return attackItem;
   }
+
+  getLabels({ actionId, rollData } = {}) {
+    const labels = super.getLabels({ actionId, rollData });
+
+    const itemData = this.system;
+    labels.subType = pf1.config.attackTypes[this.subType];
+
+    return labels;
+  }
 }

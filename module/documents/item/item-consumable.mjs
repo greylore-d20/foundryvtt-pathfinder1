@@ -27,4 +27,12 @@ export class ItemConsumablePF extends ItemPhysicalPF {
   get canEquip() {
     return !this.inContainer;
   }
+
+  getLabels({ actionId, rollData } = {}) {
+    const labels = super.getLabels({ actionId, rollData });
+
+    labels.subType = pf1.config.consumableTypes[this.subType];
+
+    return labels;
+  }
 }

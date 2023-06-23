@@ -635,7 +635,7 @@ export class ItemPF extends Item {
       let change = null;
       if (prior && prior.has(c._id)) {
         change = prior.get(c._id);
-        change.data = c;
+        change.data = mergeObject(ItemChange.defaultData, c);
         change.prepareData();
       } else change = new pf1.components.ItemChange(c, this);
       collection.set(c._id || change.data._id, change);
@@ -650,7 +650,7 @@ export class ItemPF extends Item {
       let action = null;
       if (prior && prior.has(o._id)) {
         action = prior.get(o._id);
-        action.data = o;
+        action.data = mergeObject(ItemAction.defaultData, o);
         action.prepareData();
       } else action = new pf1.components.ItemAction(o, this);
       collection.set(o._id || action.data._id, action);

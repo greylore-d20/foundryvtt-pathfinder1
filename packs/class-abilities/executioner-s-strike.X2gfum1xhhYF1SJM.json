@@ -1,0 +1,42 @@
+{
+  "_id": "X2gfum1xhhYF1SJM",
+  "name": "Executioner's Strike",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, your precision in combat has become incredible, and you can strike a lethal blow if your target cannot defend itself properly. Once per day, you can make an attack as a standard action against your chosen victim. If the attack hits and the victim is denied its Dexterity bonus to AC against you, any critical threats are automatically confirmed.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ilweaq9jj6hjhvtr",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1"
+    },
+    "tag": "classFeat_executionersStrike",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "su"
+  }
+}

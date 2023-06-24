@@ -1,0 +1,69 @@
+{
+  "_id": "L5jrgNDA43dMH1wm",
+  "name": "Acid Dart (CLE)",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/beam-acid-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can unleash an acid dart targeting any foe within 30 feet as a ranged touch attack. This acid dart deals 1d6 points of acid damage + 1 point for every two cleric levels you possess. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "bmgmaycmdm4c4irk",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/beam-acid-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d6 + floor(@classes.cleric.level / 2)",
+              "type": {
+                "values": ["acid"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.wis.mod"
+    },
+    "tag": "classFeat_acidDartCle",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "sp"
+  }
+}

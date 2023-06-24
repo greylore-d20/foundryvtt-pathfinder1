@@ -1,0 +1,55 @@
+{
+  "_id": "BkYvIUfGyQGkxCWn",
+  "name": "Touch the Spirit World",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/affliction_07.jpg",
+  "system": {
+    "description": {
+      "value": "<p>With a touch, you can empower a weapon to affect incorporeal creatures. The weapon touched deals half damage to incorporeal creatures, or full damage if it is a magic weapon. This benefit lasts for a number of rounds equal to your cleric level. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>\n<p>This power replaces the Gentle Rest power of the Repose Domain.</p>"
+    },
+    "actions": [
+      {
+        "_id": "yxbxuvgw1v9mr2ga",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/affliction_07.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.cleric.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "weapon touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.wis.mod"
+    },
+    "tag": "classFeat_touchTheSpiritWorld",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "su"
+  }
+}

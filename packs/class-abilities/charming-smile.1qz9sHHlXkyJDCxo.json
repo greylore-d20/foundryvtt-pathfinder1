@@ -1,0 +1,54 @@
+{
+  "_id": "1qz9sHHlXkyJDCxo",
+  "name": "Charming Smile",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/shadow_20.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can cast @Compendium[pf1.spells.tjog6bufg5b08lvq]{Charm Person} as a swift action, with a DC of 10 + 1/2 your cleric level + your Wisdom modifier. You can only have one creature charmed in this way at a time. The total number of rounds of this effect per day is equal to your cleric level. The rounds do not need to be consecutive, and you can dismiss the charm at any time as a free action. Each attempt to use this ability consumes 1 round of its duration, whether or not the creature succeeds on its save to resist the effect.</p>"
+    },
+    "actions": [
+      {
+        "_id": "yvkk3kakg9jmx3zu",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/shadow_20.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.cleric.level"
+    },
+    "tag": "classFeat_charmingSmile",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "sp"
+  }
+}

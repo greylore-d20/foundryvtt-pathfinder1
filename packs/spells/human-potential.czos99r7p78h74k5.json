@@ -1,0 +1,63 @@
+{
+  "_id": "czos99r7p78h74k5",
+  "name": "Human Potential",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "o7t4xeg5vcns4tl3",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "bard": 2,
+        "alchemist": 2,
+        "psychic": 2,
+        "medium": 2
+      }
+    },
+    "level": 2,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a human hair"
+    },
+    "shortDescription": "<p>The target shares in humanity's great potential as encouraged by Aroden. The target chooses one ability score and gains a +2 enhancement bonus to that ability score. The bonus confers the usual benefit to skills and abilities based on the ability enhanced, but does not affect bonus spells or skill ranks.</p>"
+  }
+}

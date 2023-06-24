@@ -1,0 +1,47 @@
+{
+  "_id": "qxXrAwxQlkuJDdhh",
+  "name": "Vision in Iron",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You can use any piece of polished metal at least the size of a dagger as a scrying device, as if using the spell @Compendium[pf1.spells.g66w32kdup1f43bp]{Scrying}.</p>\n<p>At 15th level, this functions like @Compendium[pf1.spells.glt6uk3n6g6l2p6l]{Scrying, Greater}.</p>\n<p>You can scry for a number of rounds per day equal to your oracle level; these rounds do not need to be consecutive.</p>\n<p>You must be at least 7th level to select this revelation.</p>"
+    },
+    "tags": ["Revelation", "Metal Mystery"],
+    "actions": [
+      {
+        "_id": "c7d5isooxb68yqbr",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.oracle.level"
+    },
+    "tag": "classFeat_visionInIron",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "sp"
+  }
+}

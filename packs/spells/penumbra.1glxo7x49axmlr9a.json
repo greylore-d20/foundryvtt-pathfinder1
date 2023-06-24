@@ -1,0 +1,63 @@
+{
+  "_id": "1glxo7x49axmlr9a",
+  "name": "Penumbra",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "vog1ccsfbggb4nst",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level (D)"
+        },
+        "target": {
+          "value": "creature or object touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "uses": {
+      "autoDeductChargesCost": "0"
+    },
+    "learnedAt": {
+      "class": {
+        "sorcerer": 0,
+        "wizard": 0
+      }
+    },
+    "level": 0,
+    "school": "evo",
+    "types": "darkness",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a bit of soot"
+    },
+    "shortDescription": "<p>This spell keeps the creature or object touched slightly in shadow. The target of this spell does not suffer any penalties or blindness caused by bright light, such as those from light sensitivity or light blindness.</p><p>You can have only one penumbra spell active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled.</p>"
+  }
+}

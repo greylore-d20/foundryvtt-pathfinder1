@@ -1,0 +1,65 @@
+{
+  "_id": "nepwelwi6tlh1vo0",
+  "name": "Mind Swap",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "zryy95a0ywt8s0xw",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level (D)"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "summoner": 5,
+        "witch": 6,
+        "psychic": 5,
+        "medium": 3,
+        "mesmerist": 5,
+        "occultist": 4,
+        "spiritualist": 4,
+        "unchained Summoner": 5
+      }
+    },
+    "level": 6,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell is similar to <i>possession</i>, except you switch minds with the target, so instead of the target's soul sharing its body with yours and being unable to act, the target's mind moves to your body and can control it as if you each had cast <i>possession</i> on the other.</p>"
+  }
+}

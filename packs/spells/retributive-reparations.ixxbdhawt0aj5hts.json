@@ -1,0 +1,59 @@
+{
+  "_id": "ixxbdhawt0aj5hts",
+  "name": "Retributive Reparations",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "21671flsg6ppfz0e",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 day/level or until triggered, and permanent; see text"
+        },
+        "target": {
+          "value": "one object"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (object) and Will negates; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "witch": 4,
+        "inquisitor": 3,
+        "antipaladin": 3,
+        "occultist": 3,
+        "spiritualist": 3
+      }
+    },
+    "level": 4,
+    "school": "nec",
+    "types": "curse",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>If a creature successfully takes the item targeted by this spell while you are holding, wearing, or wielding it, the creature must attempt a Will save. If the creature fails its save, it becomes fatigued, and it must attempt a new saving throw at the end of its turn every round it does not return the item to you. Failing a second saving throw causes the target to become exhausted. As long as the victim of the curse is actively working to return the object, its exhaustion is reduced to fatigue. The fatigue and exhaustion cannot be removed by effects that normally remove them, though immunity to fatigue and exhaustion protect against the conditions as normal.  This curse can be ended with <i>remove curse</i> or by returning the item to you. You can have this spell active on one item at a time.</p>"
+  }
+}

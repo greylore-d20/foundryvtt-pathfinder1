@@ -1,0 +1,57 @@
+{
+  "_id": "wph6xwqvqekl7ph9",
+  "name": "Destroy Robot",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "u35n90zqf091snqo",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one robot (see below)"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude partial"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "druid": 5,
+        "hunter": 5
+      }
+    },
+    "level": 6,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You attempt to destroy any one robot in range. When you cast this spell, your hand crackles with electricity. You must succeed at a ranged touch attack to affect the target.</p><p>The target takes 12d6 points of damage + 1 point per caster level, or 3d6 points of damage + 1 point per caster level on a successful saving throw. A cyborg or android can be damaged by this spell, but takes half damage and gains a +4 bonus on the saving throw to resist the spell's effects.</p>"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "_id": "uLNZwXsBbsm4ktOa",
+  "name": "Deathcall",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_02.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The witch’s presence makes death more likely for wounded foes. Creatures within 120 feet of the witch take a –1 penalty on checks to stabilize when dying.</p>\n<p>At 8th level, this penalty changes to –2, and at 16th level, it changes to –3.</p>"
+    },
+    "tags": ["Hex"],
+    "actions": [
+      {
+        "_id": "1cs1au2j7q7senjv",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "description": "<p>[[-1 - min(2, floor(@classes.witch.level / 8))]] penalty to stabilize.</p>",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "range": {
+          "value": "120",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_deathcall",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Witch"]]
+    },
+    "abilityType": "su"
+  }
+}

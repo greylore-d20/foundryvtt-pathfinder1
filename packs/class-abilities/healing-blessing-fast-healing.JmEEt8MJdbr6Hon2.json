@@ -1,0 +1,47 @@
+{
+  "_id": "JmEEt8MJdbr6Hon2",
+  "name": "Healing Blessing: Fast Healing",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/heal-jade-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, you can touch an ally and grant it fast healing 3 for 1 minute.</p>"
+    },
+    "actions": [
+      {
+        "_id": "q9gpfpjtmkakom4c",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/heal-jade-3.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_healingBlessingFastHealing",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "_id": "lsboosfk26m0ycqv",
+  "name": "Bestow Curse",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "jn3w2nsqkwxrgm3f",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "permanent"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "msak",
+        "formulaicAttacks": {
+          "label": ""
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "touch": true
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 3,
+        "oracle": 3,
+        "witch": 3,
+        "antipaladin": 3,
+        "adept": 3,
+        "bloodrager": 4,
+        "shaman": 3,
+        "medium": 2,
+        "mesmerist": 3,
+        "occultist": 3,
+        "spiritualist": 3
+      },
+      "subDomain": {
+        "Curse": 3,
+        "Tyranny": 3
+      },
+      "bloodline": {
+        "Accursed": 4,
+        "Div": 4
+      }
+    },
+    "level": 4,
+    "school": "nec",
+    "types": "curse",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You place a curse on the subject. Choose one of the following.</p><ul><li>-6 decrease to an ability score (minimum 1).</li><li>-4 penalty on attack rolls, saves, ability checks, and skill checks.</li><li>Each turn, the target has a 50% chance to act normally; otherwise, it takes no action.</li></ul><p>You may also invent your own curse, but it should be no more powerful than those described above.</p><p>The curse bestowed by this spell cannot be dispelled, but it can be removed with a <em>break enchantment</em>, <em>limited wish</em>, <em>miracle</em>, <em>remove curse</em>, or <em>wish</em> spell.</p><p><em>Bestow curse</em> counters <em>remove curse</em>.</p>"
+  }
+}

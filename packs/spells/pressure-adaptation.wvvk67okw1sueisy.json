@@ -1,0 +1,69 @@
+{
+  "_id": "wvvk67okw1sueisy",
+  "name": "Pressure Adaptation",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "nb84m30kpy2ccik7",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "druid": 3,
+        "ranger": 3,
+        "paladin": 3,
+        "alchemist": 3,
+        "summoner": 3,
+        "bloodrager": 3,
+        "shaman": 3,
+        "psychic": 3,
+        "hunter": 3,
+        "unchained Summoner": 3
+      }
+    },
+    "level": 3,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "slime from a cephalopod"
+    },
+    "shortDescription": "<p>The target adapts incredibly quickly to changes in pressure, adjusting to 100 feet of new pressure (or the entire shift, in the case of an instantaneous shift within its native range; see page 48) after just one successful Fortitude saving throw instead of the usual five.</p>"
+  }
+}

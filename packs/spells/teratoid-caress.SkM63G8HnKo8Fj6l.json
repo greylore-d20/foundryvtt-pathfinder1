@@ -1,0 +1,63 @@
+{
+  "name": "Teratoid Caress",
+  "type": "spell",
+  "img": "icons/magic/death/blood-corruption-vomit-red.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "rS8NTwOP8KLRR3xB",
+        "name": "Use",
+        "img": "icons/magic/death/blood-corruption-vomit-red.webp",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "permanent"
+        },
+        "target": {
+          "value": "1 living non-evil creature"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "msak",
+        "formulaicAttacks": {
+          "label": ""
+        },
+        "save": {
+          "type": "fort",
+          "description": "Fortitude partial"
+        },
+        "touch": true
+      }
+    ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "warpriest": 3
+      }
+    },
+    "level": 3,
+    "school": "con",
+    "subschool": "calling",
+    "types": "chaotic, curse, evil",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "spellbook": "",
+    "shortDescription": "<p>With a gentle caress, you infuse the creature touched with a blight of energy from the Abyss that feeds upon goodness and transforms flesh into monstrous deformity. The target can resist a <em>teratoid caress</em> with a successful Fortitude save, but even on a successful save, the target becomes sickened for 1 round by the vile energies.</p><p>If the target fails the save, his body becomes infected with Abyssal energy and a small portion of his body distorts and grows hideous, inflicting 2 points of Dexterity damage or 2 points of Charisma damage (50% chance of either effect). This deformity is always unsightly and offensive. Thereafter, the victim suffers a -1 penalty on all saving throws against evil effects. Worse, whenever the victim casts a good spell, channels positive energy, or offers a prayer to a good-aligned deity, the Abyssal energies seethe inside him, forcing a new Fortitude save to resist suffering an additional 1 point of Dexterity or Charisma damage. A good-aligned divine spellcaster who suffers from this curse suffers a -4 penalty on all concentration checks. This is a curse effect, but the effect can also be instantly removed with a @Compendium[pf1.spells.sg3eq6xpsum65fgm]{dispel evil} or @Compendium[pf1.spells.qr6qcx8zqum6jhc4]{atonement} spell.</p>"
+  },
+  "_id": "SkM63G8HnKo8Fj6l"
+}

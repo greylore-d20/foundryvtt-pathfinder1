@@ -1,0 +1,63 @@
+{
+  "_id": "ymwod8rlprkevo46",
+  "name": "Permanent Image",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "0rmijtvqmg6oa90p",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "permanent"
+        },
+        "range": {
+          "units": "long"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief (if interacted with)"
+        },
+        "spellEffect": "figment that cannot extend beyond a 20-ft. cube + one 10-ft. cube/level (S)"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "bard": 6,
+        "psychic": 6,
+        "mesmerist": 6,
+        "occultist": 6
+      }
+    },
+    "level": 6,
+    "school": "ill",
+    "subschool": "figment",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "a bit of fleece"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>silent image,</i> except that the figment includes visual, auditory, olfactory, and thermal elements, and the spell is permanent. By concentrating, you can move the image within the limits of the range, but it is static while you are not concentrating.</p>"
+  }
+}

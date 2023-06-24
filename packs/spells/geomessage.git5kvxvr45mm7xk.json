@@ -1,0 +1,63 @@
+{
+  "_id": "git5kvxvr45mm7xk",
+  "name": "Geomessage",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "77ml486qy0ux6g9g",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "1 day/level"
+        },
+        "target": {
+          "value": "surface touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "ranger": 3,
+        "bard": 3,
+        "medium": 3,
+        "occultist": 3,
+        "hunter": 3
+      }
+    },
+    "level": 4,
+    "school": "ill",
+    "subschool": "figment",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a scrap of vellum"
+    },
+    "sr": false,
+    "shortDescription": "<p>You create a written message of 50 words or fewer, or else an image, a drawing, or a similar diagram. The figment hangs invisible and obscured upon the target surface for the duration of the spell. Another casting of <i>geomessage</i> is needed to cause the figment to arrange itself into the intended message.  When you cast the spell, you can choose to incorporate a passphrase into the spell. If you do so, the message is protected as if <i>nondetection</i> had been cast on it for the full duration of the spell, though creatures that cast <i>geomessage</i> on the surface and speak the passphrase ignore the <i>nondetection</i> effect and cause the image to become visible until the caster speaks the passphrase again.  Without a passphrase, the message simply remains invisible to those who cast <i>geomessage</i>. Detection methods like <i>detect magic</i> and <i>see invisibility</i> indicate the message's presence but do not reveal its contents.</p>"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "_id": "JqKkksR6VURLDc3T",
+  "name": "Grave Touch (SOR)",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/affliction_07.jpg",
+  "system": {
+    "description": {
+      "value": "<p>Starting at 1st level, you can make a melee touch attack as a standard action that causes a living creature to become <em>shaken</em> for a number of rounds equal to 1/2 your sorcerer level (minimum 1). If you touch a <em>shaken</em> creature with this ability, it becomes <em>frightened</em> for 1 round if it has fewer Hit Dice than your sorcerer level. You can use this ability a number of times per day equal to 3 + your <em>Charisma</em> modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "5koaictbg4bpx9lt",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/affliction_07.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "max(1, (floor(@classes.sorcerer.level / 2)))",
+          "units": "round"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_graveTouchSor",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

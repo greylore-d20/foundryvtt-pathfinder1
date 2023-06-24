@@ -1,0 +1,51 @@
+{
+  "_id": "DxKzgjuvqHZMjKz0",
+  "name": "Paladin (Quick)",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_07.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b> Yes<br><b>Usable with Summons</b> No<p>Paladin creatures can battle evil using smite evil and heal using lay on hands, and they possesses some defensive abilities as well. A paladin creature's CR increases by 3 if the creature has 10 or more HD. A paladin creature must be lawful good.<p><b>Quick Rules:</b> +2 on all rolls based on Str and Cha; can smite evil† once per day (treating its HD as its paladin level for the purposes of damage); can use lay on hands† once per day (healing 1d6 hit points for every 2 HD it possesses instead of using its paladin level); gains detect evil† and divine grace† (if the creature has 10 or more HD, it also gains aura of resolve†).<p><b>Rebuild Rules:</b> Defensive Abilities divine grace† (if the creature has 10 or more HD, it also gains aura of resolve†); Special Attacks smite evil† ability once per day (treating its HD as its paladin level for the purposes of damage); Special Qualities detect evil† as the paladin class feature, lay on hands† once per day (healing 1d6 hit points for every 2 HD the creature possesses instead of using its paladin level); Ability Scores +4 Strength and Charisma.</p>"
+    },
+    "changes": [
+      {
+        "_id": "vz4q6ofq",
+        "formula": "2",
+        "subTarget": "mattack",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "uaetggyj",
+        "formula": "2",
+        "subTarget": "wdamage",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "jm5a570v",
+        "formula": "2",
+        "subTarget": "strSkills",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "vrbsze5w",
+        "formula": "2",
+        "subTarget": "strChecks",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "v7w7db7k",
+        "formula": "2",
+        "subTarget": "chaSkills",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "3tiuunci",
+        "formula": "2",
+        "subTarget": "chaChecks",
+        "modifier": "untyped"
+      }
+    ],
+    "subType": "template",
+    "crOffset": "@attributes.hd.total >= 10 ? 3 : 2"
+  }
+}

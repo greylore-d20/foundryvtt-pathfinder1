@@ -1,0 +1,65 @@
+{
+  "_id": "k84efb6j6ujklng0",
+  "name": "Illusion of Treachery, Greater",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "rghvayqww6q88afy",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "target": {
+          "value": "you and one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "antipaladin": 4,
+        "magus": 6,
+        "psychic": 5,
+        "mesmerist": 4,
+        "occultist": 5
+      }
+    },
+    "level": 6,
+    "school": "ill",
+    "subschool": "figment",
+    "components": {
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "a tiny marionette"
+    },
+    "spellbook": "",
+    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.i3w7iwvxrvit0iez]{Illusion of Treachery} except that it also conceals your own actions (as @Compendium[pf1.spells.nju9j6zlv9sbiznw]{Illusion of Calm}) and renders invisible all spell effects and ranged attacks originating from you until they reach the attack's target (this doesn't cause the attack's target to be unable to avoid the attack, as they still see the attack originating from the spell's target).</p>"
+  }
+}

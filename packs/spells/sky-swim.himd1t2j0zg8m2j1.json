@@ -1,0 +1,59 @@
+{
+  "_id": "himd1t2j0zg8m2j1",
+  "name": "Sky Swim",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "8uwdo6use9izp47o",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "Large or smaller creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "description": "none (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "druid": 3,
+        "witch": 3,
+        "hunter": 3
+      }
+    },
+    "level": 3,
+    "school": "trs",
+    "types": "air",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>This spell grants the target the ability to swim through the air.</p><p>If the target has a swim speed, it can move through the air at that speed. Otherwise, it must succeed at Swim checks to move as normal. Still air is treated as calm water, light or moderate wind is treated as rough water, strong or severe wind is treated as stormy water, and the target cannot swim through stronger winds (<i>Core Rulebook</i> 439). This spell does not grant the ability to breathe air to creatures that normally can't.</p>"
+  }
+}

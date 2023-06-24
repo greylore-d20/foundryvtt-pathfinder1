@@ -1,0 +1,48 @@
+{
+  "_id": "p8tP6ObwLWwYbHll",
+  "name": "Intercessor",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman can invoke an ancestor spirit into an intact, humanoid or monstrous humanoid corpse to learn what the body knew in life. The acts as @Compendium[pf1.spells.byn5q46du0ck592a]{Speak with Dead}, but the shaman may ask only a single question. If an animated corpse or undead is targeted with this ability, the hex immediately fails.</p>\n<p>Once a corpse has answered a single question, it cannot be targeted with this ability again.</p>"
+    },
+    "actions": [
+      {
+        "_id": "urkcbu7tjgmn56yq",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "dead humanoid"
+        },
+        "range": {
+          "value": "10",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_intercessor",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "sp"
+  }
+}

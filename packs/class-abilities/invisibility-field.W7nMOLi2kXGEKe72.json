@@ -1,0 +1,54 @@
+{
+  "_id": "W7nMOLi2kXGEKe72",
+  "name": "Invisibility Field",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/fog-water-air-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can make yourself <em>Invisible</em> as a swift action for a number of rounds per day equal to your wizard level. These rounds do not need to be consecutive. This otherwise functions as @Compendium[pf1.spells.cxgi0ub77t6aink1]{Invisibility, Greater}.</p>"
+    },
+    "actions": [
+      {
+        "_id": "bgbfb34kdvleed8z",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/fog-water-air-1.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.wizard.level"
+    },
+    "tag": "classFeat_invisibilityField",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Wizard"]]
+    },
+    "abilityType": "sp"
+  }
+}

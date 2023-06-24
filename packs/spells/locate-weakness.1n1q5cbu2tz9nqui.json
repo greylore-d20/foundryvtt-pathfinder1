@@ -1,0 +1,67 @@
+{
+  "_id": "1n1q5cbu2tz9nqui",
+  "name": "Locate Weakness",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "sk5a7hinrievz6mq",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "ranger": 2,
+        "witch": 3,
+        "inquisitor": 3,
+        "magus": 3,
+        "bloodrager": 3,
+        "psychic": 3,
+        "occultist": 3,
+        "hunter": 2
+      }
+    },
+    "level": 3,
+    "school": "div",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a pickled predator's eye"
+    },
+    "sr": false,
+    "shortDescription": "<p>You can sense your foes' weak points, granting you greater damage with critical hits. Whenever you score a critical hit, roll the attack's damage dice (but not extra or precision damage dice) twice and take the highest result.</p>"
+  }
+}

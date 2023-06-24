@@ -1,0 +1,53 @@
+{
+  "_id": "g2k2pg3l7ru29p0j",
+  "name": "Mind Thrust V",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "5zxtrrsxzmr8p05l",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will half"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "psychic": 5
+      }
+    },
+    "level": 5,
+    "school": "div",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>This functions as <i>mind thrust IV</i>, but the target is also exhausted for 1 round if it fails its save and fatigued for 1 round if it succeeds at its save. This spell can be undercast.</p>"
+  }
+}

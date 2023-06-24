@@ -1,0 +1,32 @@
+{
+  "_id": "ynT9mGB2KXDGEyWl",
+  "name": "Perfect Knowledge",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman gains the benefit of the @Compendium[pf1.spells.m1rmcpcaixcpz9ib]{Tongues} spell permanently. She also gains a +10 competence bonus on all Knowledge, Linguistics, and Spellcraft checks.</p>"
+    },
+    "changes": [
+      {
+        "_id": "ueusiz27",
+        "formula": "10",
+        "subTarget": "intSkills",
+        "modifier": "competence"
+      },
+      {
+        "_id": "ymqf93p5",
+        "formula": "-10",
+        "subTarget": "skill.apr",
+        "modifier": "penalty"
+      }
+    ],
+    "tag": "classFeat_perfectKnowledge",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "ex"
+  }
+}

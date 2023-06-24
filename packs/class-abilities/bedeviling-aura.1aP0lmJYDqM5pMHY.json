@@ -1,0 +1,48 @@
+{
+  "_id": "1aP0lmJYDqM5pMHY",
+  "name": "Bedeviling Aura",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/runes-orange-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can emit a 30-foot aura that bedevils your enemies with phantasmal assailants. Enemies within this aura move at half <em>speed</em>, are unable to take <em>attacks of opportunity</em>, and are considered to be flanked. This is a mind-affecting effect. You can use this ability for a number of rounds per day equal to your wizard level. These rounds do not need to be consecutive.</p>"
+    },
+    "actions": [
+      {
+        "_id": "4866qbi3elhcxohi",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/runes-orange-1.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.wizard.level"
+    },
+    "tag": "classFeat_bedevilingAura",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Wizard"]]
+    },
+    "abilityType": "su"
+  }
+}

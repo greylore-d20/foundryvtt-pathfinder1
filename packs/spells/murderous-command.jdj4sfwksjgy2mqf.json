@@ -1,0 +1,63 @@
+{
+  "_id": "jdj4sfwksjgy2mqf",
+  "name": "Murderous Command",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "8we1jrwdw2mo504l",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round"
+        },
+        "target": {
+          "value": "one living creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 1,
+        "oracle": 1,
+        "antipaladin": 1,
+        "psychic": 1,
+        "medium": 1,
+        "mesmerist": 1,
+        "occultist": 1
+      },
+      "subDomain": {
+        "Hatred": 1
+      }
+    },
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true
+    },
+    "shortDescription": "<p>You give the target a mental urge to kill its nearest ally, which it obeys to the best of its ability. The target attacks its nearest ally on its next turn with a melee weapon or natural weapon. If necessary, it moves to or charges to the nearest ally in order to make this attack. If it is unable to reach its closest ally on its next turn, the target uses its turn to get as close as possible to the ally.</p>"
+  }
+}

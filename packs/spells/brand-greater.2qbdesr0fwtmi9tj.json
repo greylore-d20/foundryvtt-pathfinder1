@@ -1,0 +1,57 @@
+{
+  "_id": "2qbdesr0fwtmi9tj",
+  "name": "Brand, Greater",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "e397vbzhzi9eu7i7",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "permanent"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "inquisitor": 4
+      }
+    },
+    "level": 4,
+    "school": "trs",
+    "types": "curse",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "spellbook": "",
+    "shortDescription": "<p>This spell functions like @Compendium[pf1.spells.h7ktzr7anfh382xu]{brand}, except that it inflicts 1d6 points of damage when applied and cannot be removed, even temporarily. In addition, a greater <em>brand</em> blazes as bright as a torch when brought within 30 feet of a visible symbol of your faith. While the symbol is blazing, the recipient is sickened.</p>\n<p>Like the effects of @Compendium[pf1.spells.lsboosfk26m0ycqv]{bestow curse}, a greater <em>brand</em> cannot be dispelled, but it can be removed by any means that removes a @Compendium[pf1.spells.3jaumkutti1ytulq]{mark of justice}.</p>"
+  }
+}

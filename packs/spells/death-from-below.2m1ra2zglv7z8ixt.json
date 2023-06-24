@@ -1,0 +1,57 @@
+{
+  "_id": "2m1ra2zglv7z8ixt",
+  "name": "Death from Below",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ibfjamyx1kmcs9a9",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "bard": 3,
+        "bloodrager": 2
+      }
+    },
+    "level": 2,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You grant the target a dodge bonus to its Armor Class against attacks from larger creatures. The bonus is equal to +1 for every size category the attacker is larger than the target of the spell, to a maximum of +1 per 3 caster levels. If the spell's target is a gnome, the maximum bonus is equal to +1 per 2 caster levels.</p>"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "_id": "jwhZBdIuoKxfl68f",
+  "name": "Second Wind",
+  "type": "spell",
+  "img": "systems/pf1/icons/spells/wind-grasp-magenta-2.jpg",
+  "system": {
+    "actions": [
+      {
+        "_id": "ehfkxxgjk2k466w1",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/wind-grasp-magenta-2.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "units": "personal",
+          "minUnits": "personal"
+        },
+        "actionType": "heal",
+        "damage": {
+          "parts": [
+            {
+              "formula": "2d8 + min(@cl, 10)",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "antipaladin": 3,
+        "cleric": 3,
+        "oracle": 3,
+        "hunter": 3,
+        "inquisitor": 3,
+        "paladin": 3,
+        "ranger": 3,
+        "warpriest": 3
+      }
+    },
+    "level": 3,
+    "school": "con",
+    "subschool": "healing",
+    "types": "air",
+    "components": {
+      "verbal": true
+    },
+    "spellbook": "",
+    "sr": false,
+    "shortDescription": "<p>You can cast this spell only when you have fewer than one-quarter of your total hit points. With a gasping utterance, you summon invigorating air to fill your lungs. You heal 2d8 points of damage + 1 point per caster level (maximum +10). You can cast this spell either as a swift action on your turn or as an immediate action when you are brought to below 0 hit points. If you do not breathe, you can’t benefit from this spell.</p>"
+  }
+}

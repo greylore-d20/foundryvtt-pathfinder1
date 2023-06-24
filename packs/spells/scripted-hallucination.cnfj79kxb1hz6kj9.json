@@ -1,0 +1,63 @@
+{
+  "_id": "cnfj79kxb1hz6kj9",
+  "name": "Scripted Hallucination",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "3n51jbxaq7rm8og9",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level (D)"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "long"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "15"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "bard": 5,
+        "magus": 5,
+        "psychic": 5,
+        "medium": 4,
+        "mesmerist": 5,
+        "occultist": 5
+      }
+    },
+    "level": 5,
+    "school": "ill",
+    "subschool": "phantasm",
+    "types": "mind-affecting",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.u2vipq48algenijz]{audiovisual hallucination}, except that the phantasm includes visual, auditory, olfactory, tactile, and thermal components, and the phantasm follows a complex script. The phantasm follows that script without your concentration and can react to stimuli the targets perceive.</p>"
+  }
+}

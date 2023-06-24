@@ -1,0 +1,65 @@
+{
+  "_id": "z6dj7genb2izwiyx",
+  "name": "Night Blindness",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "40powhwha3ia8u7a",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 day/level (D)"
+        },
+        "target": {
+          "value": "one living creature"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "cleric": 2,
+        "oracle": 2,
+        "bard": 1,
+        "witch": 1,
+        "antipaladin": 1,
+        "bloodrager": 1,
+        "shaman": 2,
+        "psychic": 1,
+        "mesmerist": 1,
+        "spiritualist": 2
+      }
+    },
+    "school": "nec",
+    "types": "curse",
+    "components": {
+      "verbal": true
+    },
+    "sr": false,
+    "shortDescription": "<p>Your target's vision becomes impaired as if the light level were one step lower, treating bright light as normal light, normal light as dim light, and dim light as darkness. In addition, the subject gains no benefit from darkvision, low-light vision, or the see in darkness ability. The subject gains a +4 bonus on saving throws to resist the blind or dazzled condition caused by bright light (such as flare). <i>Remove blindness/deafness</i> dispels <i>night blindness</i>.</p>"
+  }
+}

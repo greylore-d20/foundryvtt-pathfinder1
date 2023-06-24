@@ -1,0 +1,65 @@
+{
+  "_id": "gado7zyg5knc83ir",
+  "name": "Power Word Blind",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "gf4gipbgu1le9q20",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "see text"
+        },
+        "target": {
+          "value": "one creature with 200 hp or less"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 7,
+        "wizard": 7,
+        "witch": 7,
+        "psychic": 7,
+        "mesmerist": 6
+      },
+      "domain": {
+        "Darkness": 7,
+        "War": 7
+      },
+      "bloodline": {
+        "Maestro": 7,
+        "Shadow": 7
+      }
+    },
+    "level": 7,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true
+    },
+    "shortDescription": "<p>You utter a single word of power that causes a creature to become blinded, whether the creature can hear the word or not. The duration of the spell depends on the target's current hit point total.</p><p>Any creature that currently has 201 or more hit points is unaffected.</p><table><tr><th>Hit points</th><th>Duration</th></tr><tr><td>50 or less</td><td>Permanent</td></tr><tr><td>51-100</td><td>1d4+1 minutes</td></tr><tr><td>101-200</td><td>1d4+1 rounds</td></tr></table>"
+  }
+}

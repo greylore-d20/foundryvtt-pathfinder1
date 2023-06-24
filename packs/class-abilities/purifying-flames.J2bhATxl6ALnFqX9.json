@@ -1,0 +1,47 @@
+{
+  "_id": "J2bhATxl6ALnFqX9",
+  "name": "Purifying Flames",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/fireball-red-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Element</b> fire; <b>Type</b> utility (Sp); <b>Level</b> 4; <b>Burn</b> 1</p>\n<p>You use fire to burn poison from within a creature’s veins. You must attempt a caster level check (1d20 + your kineticist level) against the DC of each poison affecting the target. Success means that the poison is neutralized, as @Compendium[pf1.spells.6l904edkt8jv9jor]{Neutralize Poison}.</p>\n<p>When you attempt to neutralize poison in this way, you can choose to deal a number of points of fire damage to the poisoned creature equal to the amount of damage you normally take from accepting burn in order to reduce the DC of one poison affecting the target by 2. This reduction remains until the end of your next turn.</p>"
+    },
+    "actions": [
+      {
+        "_id": "tx1kw06pkymxtcsp",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/fireball-red-3.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_purifyingFlames",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Kineticist"]]
+    },
+    "abilityType": "sp"
+  }
+}

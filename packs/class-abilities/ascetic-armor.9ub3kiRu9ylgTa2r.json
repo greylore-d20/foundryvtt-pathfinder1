@@ -1,0 +1,52 @@
+{
+  "_id": "9ub3kiRu9ylgTa2r",
+  "name": "Ascetic Armor",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You can use meditative techniques that temporarily cause attacks to bounce off your skin, as long as you aren’t wearing armor or carrying a medium or heavy load. These techniques grant you a +4 armor bonus to AC.</p>\n<p>At 7th level, and every 4 levels thereafter, this bonus increases by 2.</p>\n<p>At 13th level, the techniques also grant DR 5/unarmed strikes or natural attacks. You can gain the benefits of ascetic armor for 1 hour per day per oracle level. The hours do not need to be consecutive, but you must spend them in 1-hour increments.</p>"
+    },
+    "actions": [
+      {
+        "_id": "djqvmj0e8mw7osmg",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "hour"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.oracle.level"
+    },
+    "tag": "classFeat_asceticArmor",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

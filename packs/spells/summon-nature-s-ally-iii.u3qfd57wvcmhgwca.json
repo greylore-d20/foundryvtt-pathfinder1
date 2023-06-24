@@ -1,0 +1,56 @@
+{
+  "_id": "u3qfd57wvcmhgwca",
+  "name": "Summon Nature's Ally III",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "prbb8wrrcufny80y",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "other",
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "one summoned creature"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "druid": 3,
+        "ranger": 3,
+        "hunter": 3
+      }
+    },
+    "level": 3,
+    "school": "con",
+    "subschool": "summoning",
+    "types": "see text",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>summon nature's ally I</i>, except that you can summon one 3rd-level creature, 1d3 2nd-level creatures of the same kind, or 1d4+1 1st-level creatures of the same kind.</p>"
+  }
+}

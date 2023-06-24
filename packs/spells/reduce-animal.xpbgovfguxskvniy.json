@@ -1,0 +1,55 @@
+{
+  "_id": "xpbgovfguxskvniy",
+  "name": "Reduce Animal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "pg9c51cokjbv25e3",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level"
+        },
+        "target": {
+          "value": "one willing animal of Small, Medium, Large, or Huge size"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "druid": 2,
+        "ranger": 3,
+        "hunter": 2
+      }
+    },
+    "level": 2,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>reduce person,</i> except that it affects a single willing animal. Reduce the damage dealt by the animal's natural attacks as appropriate for its new size (see Chapter 6 how to adjust damage for size).</p>"
+  }
+}

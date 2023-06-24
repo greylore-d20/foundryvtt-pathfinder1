@@ -1,0 +1,54 @@
+{
+  "_id": "R1xjQmsuzpqIalcs",
+  "name": "Incorporeal Form",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/affliction_08.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 15th level, you can become <em>incorporeal</em> for 1 round per sorcerer level. While in this form, you gain the incorporeal subtype. You only take half damage from corporeal sources as long as they are magic (you take no damage from non-magic weapons and objects). Likewise, your spells deal only half damage to corporeal creatures. Spells and other effects that do not deal damage function normally. You can use this ability once per day.</p>"
+    },
+    "actions": [
+      {
+        "_id": "v1qdh93yy0p8jgzw",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/affliction_08.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.sorcerer.level"
+    },
+    "tag": "classFeat_incorporealForm",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

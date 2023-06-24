@@ -1,0 +1,27 @@
+{
+  "_id": "9CyU0311Ga0lFkDr",
+  "name": "Shadowbound Creature",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_07.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b> Yes<br><b>Usable with Summons</b> No<p>A shadowbound creature has lost its color and capacity for joy and pleasure. Quick Rules: darkvision 120 ft.; +1 to AC; +2 on rolls based on Con; +2 hp/HD; light blindness; can’t gain morale bonuses; regretful gaze (shaken 1 round, 30 ft., Will save negates, DC = 10 + 1/2 HD + Cha modifier); after taking 3 points of damage per HD in a single attack, gain a +2 profane bonus on attack rolls, damage rolls, saving throws, and skill checks for 1 round.<p><b>Rebuild Rules:</b></p>\n<p><b>Senses</b> darkvision 120 ft.;</p>\n<p><b>AC</b> gain a deflection bonus to AC equal to 1/4 CR (minimum 1);</p>\n<p><b>Weaknesses</b> light blindness, can’t gain morale bonuses;</p>\n<p><b>Special Attacks</b> regretful gaze (shaken 1 round, 30 ft., Will negates, DC = 10 + 1/2 HD + Cha modifier); after taking 3 points of damage per HD in a single attack, gain a +2 profane bonus on attack rolls, damage rolls, saving throws, and skill checks for 1 round;</p>\n<p><b>Ability Scores</b> +4 Con.</p>"
+    },
+    "changes": [
+      {
+        "_id": "us3qj1su",
+        "formula": "max(1, floor(@details.cr.total / 4))",
+        "subTarget": "ac",
+        "modifier": "deflection"
+      },
+      {
+        "_id": "5ab9w1cd",
+        "formula": "4",
+        "subTarget": "con",
+        "modifier": "untyped"
+      }
+    ],
+    "subType": "template",
+    "crOffset": "1"
+  }
+}

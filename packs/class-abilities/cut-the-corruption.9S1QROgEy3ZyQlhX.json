@@ -1,0 +1,54 @@
+{
+  "_id": "9S1QROgEy3ZyQlhX",
+  "name": "Cut the Corruption",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/banner-red.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, an order of the Green cavalier can touch a weapon and enhance it as a free action once per day. For 1 minute, the weapon glows with a deep-green light and deals an additional 1d6 points of damage against aberrations and undead. This damage does not stack with the additional damage granted by the <a href=\"https://aonprd.com/MagicWeaponsDisplay.aspx?ItemName=Bane\">bane</a> weapon special ability. At 16th level, the cavalier can use this ability a second time each day.</p>"
+    },
+    "actions": [
+      {
+        "_id": "cg346a1ug4llzyiu",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/banner-red.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "weapon touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "floor(@classes.cavalier.level / 8)"
+    },
+    "tag": "classFeat_cutTheCorruption",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cavalier"]]
+    },
+    "abilityType": "su"
+  }
+}

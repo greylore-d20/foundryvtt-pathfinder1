@@ -1,0 +1,65 @@
+{
+  "_id": "6J67DLFUGE97JILh",
+  "name": "Thunderburst",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can create a blast of air accompanied by a loud peal of thunder. The blast has a range of 100 feet and has a 20-foot radius, increasing by 5 feet for every 4 oracle levels after 7th. Creatures in the area take 1d6 points of bludgeoning damage per oracle level and are deafened for 1 hour, with a Fortitude save resulting in half damage and no deafness.</p>\n<p>You must be at least 7th level to select this revelation.</p>\n<p>You can use this ability once per day, plus one additional time per day at 11th level and every four levels thereafter.</p>"
+    },
+    "actions": [
+      {
+        "_id": "xrvk8ujh6f9xvpfs",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "20-ft. radius burst"
+        },
+        "range": {
+          "value": "100",
+          "units": "ft"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(@classes.oracle.level)d6",
+              "type": {
+                "values": ["bludgeoning"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortidude half and no deafness"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
+    },
+    "tag": "classFeat_thunderburst",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "ex"
+  }
+}

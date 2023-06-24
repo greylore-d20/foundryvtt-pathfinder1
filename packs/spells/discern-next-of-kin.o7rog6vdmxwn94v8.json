@@ -1,0 +1,68 @@
+{
+  "_id": "o7rog6vdmxwn94v8",
+  "name": "Discern Next of Kin",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "nv0ix7brl6bif93m",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration, up to 1 minute/level (D)"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "60",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (see text)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "bard": 1,
+        "witch": 1,
+        "shaman": 1,
+        "psychic": 1,
+        "medium": 1,
+        "mesmerist": 1,
+        "occultist": 1,
+        "spiritualist": 1
+      }
+    },
+    "school": "div",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "a copper piece"
+    },
+    "shortDescription": "<p>You can scan the thoughts of one individual and learn the names and locations of the target's living relatives, as well as the attitude of the target toward those relatives (and vice versa). You learn about one relative per round you concentrate on the target. For example, you might learn that the target's father's name is Jarn, the father lives on a nearby farm, and the target and his father don't get along.</p><p>Since this spell reads the target's mind, you can learn only what the target knows or believes.</p>"
+  }
+}

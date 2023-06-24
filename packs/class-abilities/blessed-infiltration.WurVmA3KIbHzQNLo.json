@@ -1,0 +1,41 @@
+{
+  "_id": "WurVmA3KIbHzQNLo",
+  "name": "Blessed Infiltration",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 4th level, when you make a Bluff, Diplomacy, or Stealth check, you may roll twice and take the more favorable result. You can use this ability a number of times per day equal to your Wisdom bonus.</p>"
+    },
+    "actions": [
+      {
+        "_id": "0qfg6794auup8kf2",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@abilities.wis.mod"
+    },
+    "tag": "classFeat_blessedInfiltration",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "ex"
+  }
+}

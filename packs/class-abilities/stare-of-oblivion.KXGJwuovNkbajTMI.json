@@ -1,0 +1,52 @@
+{
+  "_id": "KXGJwuovNkbajTMI",
+  "name": "Stare of Oblivion",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can use @Compendium[pf1.spells.66vvhyiy5q8yzbq2]{Feeblemind} as a gaze attack against one creature (Will negates). This effect lasts 1d4 rounds. You can use this ability once per day at 8th level, and one additional time per day for every four levels beyond 8th.</p>"
+    },
+    "actions": [
+      {
+        "_id": "1w5k3vqw2jpiyc22",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1d4",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "floor((@classes.inquisitor.level - 4) / 4)"
+    },
+    "tag": "classFeat_stareOfOblivion",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "sp"
+  }
+}

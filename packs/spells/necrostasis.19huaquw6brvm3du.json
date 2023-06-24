@@ -1,0 +1,66 @@
+{
+  "_id": "19huaquw6brvm3du",
+  "name": "Necrostasis",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ht2jt79q1gauvt8j",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "target": {
+          "value": "one undead creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "cleric": 2,
+        "oracle": 2,
+        "witch": 2,
+        "inquisitor": 2,
+        "shaman": 2,
+        "spiritualist": 2
+      }
+    },
+    "level": 3,
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a finger bone"
+    },
+    "shortDescription": "<p>You drain necromantic energy from an undead creature, inducing a sluggish stupor. The target becomes staggered. For the duration of the spell, dark wisps of energy seep out of the target creature. If the target already has the staggered condition (as a zombie does), it becomes dazed for 1 round instead.</p>"
+  }
+}

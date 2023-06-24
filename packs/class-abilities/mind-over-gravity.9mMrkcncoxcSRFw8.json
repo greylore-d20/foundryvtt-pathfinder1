@@ -1,0 +1,48 @@
+{
+  "_id": "9mMrkcncoxcSRFw8",
+  "name": "Mind Over Gravity",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/weapons/axe-orc-double.png",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can expend 1 point of mental focus to give yourself a fly speed of 60 feet with perfect maneuverability. This effect lasts for 1 minute per occultist level you possess.</p>\n<p>You must be at least 7th level to select this focus power.</p>"
+    },
+    "actions": [
+      {
+        "_id": "77n6lc43o0dcoyg9",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/weapons/axe-orc-double.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.occultist.level",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_mindOverGravity",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Occultist"]]
+    },
+    "abilityType": "sp"
+  }
+}

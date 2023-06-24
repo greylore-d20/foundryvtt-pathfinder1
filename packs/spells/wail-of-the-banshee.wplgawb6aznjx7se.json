@@ -1,0 +1,66 @@
+{
+  "_id": "wplgawb6aznjx7se",
+  "name": "Wail of the Banshee",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "11derkxbeaj9kqiz",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one living creature/level within a 40-ft.-radius spread"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 9,
+        "wizard": 9,
+        "witch": 9,
+        "shaman": 9,
+        "psychic": 9
+      },
+      "domain": {
+        "Death": 9,
+        "Repose": 9
+      },
+      "bloodline": {
+        "Maestro": 9,
+        "Ghoul": 9
+      }
+    },
+    "level": 9,
+    "school": "nec",
+    "types": "death, sonic",
+    "components": {
+      "verbal": true
+    },
+    "shortDescription": "<p>When you cast this spell, you emit a terrible, soul-chilling scream that possibly kills creatures that hear it (except for yourself ). The spell affects up to one creature per caster level, inflicting 10 points of damage per caster level. Creatures closest to the point of origin are affected first.</p>"
+  }
+}

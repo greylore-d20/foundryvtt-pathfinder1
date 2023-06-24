@@ -1,0 +1,47 @@
+{
+  "_id": "bIXah0hiajlxZuUf",
+  "name": "Purging Flame",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/fireball-red-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Element</b> fire; <b>Type</b> utility (Sp); <b>Level</b> 6; <b>Burn</b> 1</p>\n<p>You can purge yourself or another with flame, removing all impurities. This functions as @Compendium[pf1.spells.myg2b9ww43nnlbr2]{Break Enchantment} on a single target. The target must be willing and takes 2 points of fire damage per character level as well as 1 point of burn (you do not need to accept burn unless you are the target). You can use this ability even when affected by an effect that denies you actions, so long as this effect is one that break enchantment could remove.</p>\n<p>If you burn rare incense or igneous rocks from Mount Kumijinja worth 100 gp or 1,000 gp as part of using purging flame, your target also benefits from restoration, as if the spell were cast using diamonds of equal value as a material component.</p>"
+    },
+    "actions": [
+      {
+        "_id": "gappsq7zsvi54s7m",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/fireball-red-3.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_purgingFlame",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Kineticist"]]
+    },
+    "abilityType": "sp"
+  }
+}

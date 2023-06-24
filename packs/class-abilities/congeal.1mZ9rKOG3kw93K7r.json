@@ -1,0 +1,49 @@
+{
+  "_id": "1mZ9rKOG3kw93K7r",
+  "name": "Congeal",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_02.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The witch can make the water in a 10-foot radius around her sludgy and viscous for 1 minute, causing it to function as difficult terrain for all swimming creatures except herself. This also provides partial cover against physical effects that pass through the affected area.</p>"
+    },
+    "tags": ["Hex"],
+    "actions": [
+      {
+        "_id": "pptaluzkgu8mwu7l",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "10-ft. radius"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_congeal",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Witch"]]
+    },
+    "abilityType": "su"
+  }
+}

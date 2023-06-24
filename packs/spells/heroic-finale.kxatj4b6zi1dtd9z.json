@@ -1,0 +1,56 @@
+{
+  "_id": "kxatj4b6zi1dtd9z",
+  "name": "Heroic Finale",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "8jqipfzj3aulfnxo",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "bard": 4
+      }
+    },
+    "level": 4,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You must have a bardic performance in effect to cast this spell. With a flourish, you immediately end the performance, and one creature within range affected by your bardic performance can make a move action or a standard action of their choice.</p>"
+  }
+}

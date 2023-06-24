@@ -1,0 +1,81 @@
+{
+  "_id": "sa076xymi52eq3to",
+  "name": "Cure Critical Wounds",
+  "type": "spell",
+  "img": "systems/pf1/icons/spells/heal-sky-2.jpg",
+  "system": {
+    "actions": [
+      {
+        "_id": "kkb3xqlbn4ogq5r5",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/heal-sky-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "damage": {
+          "parts": [
+            {
+              "formula": "4d8 + min(20, @cl)",
+              "type": {
+                "values": ["positive"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will half (harmless); see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 4,
+        "oracle": 4,
+        "druid": 5,
+        "bard": 4,
+        "alchemist": 4,
+        "witch": 5,
+        "inquisitor": 4,
+        "adept": 4,
+        "shaman": 4,
+        "occultist": 4,
+        "spiritualist": 4,
+        "hunter": 5
+      },
+      "domain": {
+        "Healing": 4
+      }
+    },
+    "level": 4,
+    "school": "con",
+    "subschool": "healing",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "shortDescription": "<p>This spell functions like <i>cure light wounds</i>, except that it cures 4d8 points of damage + 1 point per caster level (maximum +20).</p>"
+  }
+}

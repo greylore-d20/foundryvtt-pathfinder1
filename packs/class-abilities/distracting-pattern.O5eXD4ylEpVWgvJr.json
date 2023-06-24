@@ -1,0 +1,53 @@
+{
+  "_id": "O5eXD4ylEpVWgvJr",
+  "name": "Distracting Pattern",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/shielding-spirit-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 9th level, you can distort the scenery around you for a number of rounds equal to your <em>sorcerer</em> level. This ability provides a 20% miss chance on ranged attacks made against you and grants you a bonus on <em>Stealth</em> checks equal to 1/2 your <em>sorcerer</em> level. You can use this ability once per day at 9th level, twice per day at 17th level, and three times per day at 20th level.</p>"
+    },
+    "actions": [
+      {
+        "_id": "bjkynk45fii0q02g",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/shielding-spirit-3.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "value": "@classes.sorcerer.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day"
+    },
+    "tag": "classFeat_distractingPattern",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "su"
+  }
+}

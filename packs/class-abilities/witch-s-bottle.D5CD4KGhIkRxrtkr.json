@@ -1,0 +1,65 @@
+{
+  "_id": "D5CD4KGhIkRxrtkr",
+  "name": "Witch's Bottle",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_02.jpg",
+  "system": {
+    "description": {
+      "value": "<p>Once per day, the witch can perform a 10-minute ritual to create a potion imbued with the power of one of her hexes. Any creature that consumes this potion is affected by the hex as if cast by its creator. The witch can’t use that hex until the potion is consumed or rendered inert.</p>\n<p>Only hexes that can target a creature other than the witch can be distilled in this way. The potion remains potent until consumed or rendered inert by the witch as a free action.</p>\n<p>A witch must have the cauldron hex to select this hex.</p>"
+    },
+    "tags": ["Hex"],
+    "actions": [
+      {
+        "_id": "ds2r2nhqtba06yt9",
+        "name": "Create",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      },
+      {
+        "_id": "wAf82aDcJXReteFC",
+        "name": "Render Inert",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "units": "unlimited"
+        },
+        "actionType": ""
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1",
+      "autoDeductChargesCost": ""
+    },
+    "tag": "classFeat_witchsBottle",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Witch"]]
+    },
+    "abilityType": "su"
+  }
+}

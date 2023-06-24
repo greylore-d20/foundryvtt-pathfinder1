@@ -1,0 +1,62 @@
+{
+  "_id": "ni0okhagwuk0jbe9",
+  "name": "Waves of Ecstasy",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "yua9u6fcggi6kdvn",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level; see text"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial (see text)"
+        },
+        "spellArea": "cone-shaped burst"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 7,
+        "wizard": 7,
+        "cleric": 7,
+        "oracle": 7,
+        "bard": 6,
+        "witch": 7,
+        "psychic": 7,
+        "mesmerist": 6
+      }
+    },
+    "level": 7,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "emotion, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You emanate waves of intense pleasure that cause all targets within range to falter. Affected creatures are stunned for 1 round and are staggered for the remainder of the spell. A creature that makes its save is staggered for the first round and can act normally thereafter.</p>"
+  }
+}

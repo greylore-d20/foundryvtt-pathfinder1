@@ -1,0 +1,60 @@
+{
+  "_id": "9oosw4hf9kxh9b9s",
+  "name": "Pick Your Poison",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "vsm2y5zlvl8nfba3",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minute/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 1,
+        "oracle": 1,
+        "bard": 1,
+        "witch": 1,
+        "inquisitor": 1
+      }
+    },
+    "school": "con",
+    "subschool": "healing",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>This spell temporarily converts even the deadliest poison affecting a creature into an intoxicating alcohol. If the subject is affected by a poison effect while under the effects of this spell, instead of the poison's normal effect, she feels intoxicated as if she'd just had a very strong drink and takes a -2 penalty on attacks, saves, and checks for the duration of the spell.</p><p>When the spell's duration expires, the penalty ends and the poison's normal effects apply. <i>Pick your poison</i> does not affect any poison effects that occurred before the spell was cast.</p>"
+  }
+}

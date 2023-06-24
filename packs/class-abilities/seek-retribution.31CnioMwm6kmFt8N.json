@@ -1,0 +1,50 @@
+{
+  "_id": "31CnioMwm6kmFt8N",
+  "name": "Seek Retribution",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/banner-red.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, once per day after receiving a request for aid from a legal authority or an aggrieved party regarding the breaking of an oath, whenever the cavalier encounters the oath-breaking creature, he can choose to vehemently exact retribution. As a swift action, the cavalier can grant himself a competence bonus equal to his Charisma modifier on all attack rolls, weapon damage rolls, and opposed checks against the oathbreaking creature. These bonuses last for 1 round per level.</p>"
+    },
+    "actions": [
+      {
+        "_id": "3jrxtrz9v6106m6g",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/banner-red.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.cavalier.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_seekRetribution",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cavalier"]]
+    },
+    "abilityType": "ex"
+  }
+}

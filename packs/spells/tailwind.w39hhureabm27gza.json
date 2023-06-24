@@ -1,0 +1,67 @@
+{
+  "_id": "w39hhureabm27gza",
+  "name": "Tailwind",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "7pjwt11u2nyj7sue",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level"
+        },
+        "target": {
+          "value": "one or more creatures, no two of which can be more than 120 feet apart"
+        },
+        "range": {
+          "value": "120",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 4,
+        "oracle": 4,
+        "druid": 3,
+        "ranger": 3,
+        "magus": 4,
+        "bloodrager": 4,
+        "shaman": 3,
+        "occultist": 3,
+        "spiritualist": 3,
+        "hunter": 3
+      }
+    },
+    "level": 4,
+    "school": "trs",
+    "types": "air",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You compel the wind to push the targets in a direction of your choice. The subjects can hustle during local and overland movement without risk of fatigue. If the subjects are flying, the first 20 feet of movement each round in the chosen direction does not count against their movement for the round. Each creature remains affected only while within 120 feet of every other subject. You can change the tailwind's direction once per hour by concentrating as a standard action. This spell has no effect underwater.</p>"
+  }
+}

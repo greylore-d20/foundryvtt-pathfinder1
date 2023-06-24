@@ -1,0 +1,73 @@
+{
+  "_id": "md6ltvqh9paadsm4",
+  "name": "Protection from Chaos",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "epa2ugaj9gaf4qfn",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 min./level (D)"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "cleric": 1,
+        "oracle": 1,
+        "paladin": 1,
+        "summoner": 1,
+        "inquisitor": 1,
+        "adept": 1,
+        "bloodrager": 1,
+        "shaman": 1,
+        "medium": 1,
+        "spiritualist": 1,
+        "unchained Summoner": 1
+      },
+      "domain": {
+        "Law": 1
+      },
+      "subDomain": {
+        "Purity": 1
+      }
+    },
+    "school": "abj",
+    "types": "lawful",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>Protection from Evil</i>, except that the deflection and resistance bonuses apply to attacks made by chaotic creatures. The target receives a new saving throw against control by chaotic creatures and chaotic summoned creatures cannot touch the target.</p>"
+  }
+}

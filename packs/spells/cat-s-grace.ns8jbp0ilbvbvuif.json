@@ -1,0 +1,75 @@
+{
+  "_id": "ns8jbp0ilbvbvuif",
+  "name": "Cat's Grace",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "nychlkiop71r4ikk",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 min./level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "druid": 2,
+        "ranger": 2,
+        "bard": 2,
+        "alchemist": 2,
+        "summoner": 2,
+        "magus": 2,
+        "adept": 2,
+        "bloodrager": 2,
+        "psychic": 2,
+        "medium": 2,
+        "mesmerist": 2,
+        "hunter": 2,
+        "unchained Summoner": 2
+      },
+      "subDomain": {
+        "Flowing": 2
+      }
+    },
+    "level": 2,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "pinch of cat fur"
+    },
+    "shortDescription": "<p>The transmuted creature becomes more graceful, agile, and coordinated. The spell grants a +4 enhancement bonus to Dexterity, adding the usual benefits to AC, Reflex saves, and other uses of the Dexterity modifier.</p>"
+  }
+}

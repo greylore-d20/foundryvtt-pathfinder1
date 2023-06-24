@@ -1,0 +1,57 @@
+{
+  "_id": "ZMk7lj8hea8clAxe",
+  "name": "Gunslinger Initiative",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/improved-initiative.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 3rd level, as long as the gunslinger has at least 1 grit point, she gains the following benefits. First, she gains a +2 bonus on <em>initiative</em> checks. Furthermore, if she has the <em>Quick Draw</em> feat, her hands are free and unrestrained, and the firearm is not hidden, she can draw a single firearm as part of the <em>initiative</em> check.</p>"
+    },
+    "tags": ["Gunslinger Deed"],
+    "actions": [
+      {
+        "_id": "l4ejn4hvg9kyh6pj",
+        "name": "Use",
+        "img": "systems/pf1/icons/feats/improved-initiative.jpg",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "duration": {
+          "units": "perm"
+        },
+        "range": {
+          "units": "personal",
+          "minUnits": "none"
+        },
+        "uses": {
+          "autoDeductChargesCost": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "unlimited",
+      "value": 5
+    },
+    "changes": [
+      {
+        "_id": "s57us5lv",
+        "formula": "(@resources.classFeat_gritGun.value > 0 ? 1 : 0)",
+        "subTarget": "init",
+        "modifier": "untypedPerm"
+      }
+    ],
+    "tag": "classFeat_gunslingerInitiative",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "abilityType": "ex"
+  }
+}

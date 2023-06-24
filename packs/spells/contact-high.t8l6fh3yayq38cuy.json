@@ -1,0 +1,60 @@
+{
+  "_id": "t8l6fh3yayq38cuy",
+  "name": "Contact High",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "2eo8jwhximipyc6v",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "living creatures touched (up to one per level)"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "bard": 2,
+        "alchemist": 2,
+        "shaman": 3,
+        "mesmerist": 3,
+        "skald": 3
+      }
+    },
+    "level": 3,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>While under the effects of a drug, you can duplicate those effects in others. You can touch another creature once per round (this requires a melee touch attack if the target is unwilling). When touched, the target begins experiencing the effects of the same drug by which you are currently affected (select one, if you are under the influence of more than one drug). The target doesn't take any ability damage or risk addiction from the drug.  You cannot impart the effects of any potion, poison, elixir, or mutagen currently affecting you.</p>"
+  }
+}

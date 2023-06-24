@@ -1,0 +1,38 @@
+{
+  "_id": "efTk5zDt2rFPmNZt",
+  "name": "Slow Metabolism",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/weapons/kunai.png",
+  "system": {
+    "description": {
+      "value": "<p>The ninja has a slower-than-normal metabolism. She can hold her breath for twice as long as normal before needing to make Constitution checks (four times her Constitution score). In addition, whenever the ninja is poisoned, the time between saving throws (the poison's frequency) is doubled. Thus, a poison that has a frequency of “1/round for 6 rounds” would instead be “1/2 rounds for 12 rounds.”</p>"
+    },
+    "tags": ["Ninja Trick"],
+    "actions": [
+      {
+        "_id": "kq1p32alvcladka9",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/weapons/kunai.png",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_slowMetabolism",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Ninja"]]
+    },
+    "abilityType": "ex"
+  }
+}

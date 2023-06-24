@@ -1,0 +1,55 @@
+{
+  "_id": "HvK3Jn0trqpsDBO6",
+  "name": "Safekeeping",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/ice_16.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can <em>touch</em> a creature as a <em>standard action</em>, granting it a +2 <em>insight bonus</em> to AC for 1 round. You can use this ability a number of times per day equal to 3 + your <em>Charisma</em> modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "qeaukavi1ys6zk7s",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/ice_16.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_safekeeping",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "su"
+  }
+}

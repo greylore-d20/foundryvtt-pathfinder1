@@ -1,0 +1,54 @@
+{
+  "_id": "GidNLmDQBdokwgUn",
+  "name": "Bramble Armor",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_26.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 6th level, you can cause a host of wooden thorns to burst from your skin as a free action. While bramble armor is in effect, any foe striking you with an unarmed strike or a melee weapon without reach takes 1d6 points of piercing damage + 1 point per two cleric levels you possess. You can use this ability for a number of rounds per day equal to your cleric level. These rounds do not need to be consecutive.</p>"
+    },
+    "actions": [
+      {
+        "_id": "8w991g20urds1h4u",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_26.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.cleric.level"
+    },
+    "tag": "classFeat_brambleArmor",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "su"
+  }
+}

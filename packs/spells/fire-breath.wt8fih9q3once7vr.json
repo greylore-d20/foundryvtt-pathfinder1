@@ -1,0 +1,62 @@
+{
+  "_id": "wt8fih9q3once7vr",
+  "name": "Fire Breath",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "sjj46fdflnvkkon3",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level or until discharged; see text"
+        },
+        "range": {
+          "value": "15",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half; see text"
+        },
+        "spellArea": "cone-shaped burst"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "alchemist": 2,
+        "magus": 2,
+        "bloodrager": 2
+      }
+    },
+    "level": 2,
+    "school": "evo",
+    "types": "fire",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a chili pepper"
+    },
+    "shortDescription": "<p>Up to thrice during this spell's duration, you can belch forth a cone of fire as a standard action. The first cone deals 4d6 points of fire damage to every creature in the area. The second cone of flame deals 2d6 points of fire damage to every creature in the area. The third cone of flame deals 1d6 points of fire damage to every creature in the area. A successful Reflex save halves this damage. After the third cone of flame, the spell ends.</p>"
+  }
+}

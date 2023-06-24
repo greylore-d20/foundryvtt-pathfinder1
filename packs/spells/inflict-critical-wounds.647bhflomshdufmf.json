@@ -1,0 +1,75 @@
+{
+  "_id": "647bhflomshdufmf",
+  "name": "Inflict Critical Wounds",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "xlp92ps5peixnhui",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "4d8 + min(@cl, 20)",
+              "type": {
+                "values": ["negative"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will half"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 4,
+        "oracle": 4,
+        "witch": 5,
+        "inquisitor": 4,
+        "shaman": 4,
+        "occultist": 4,
+        "spiritualist": 4
+      },
+      "domain": {
+        "Destruction": 4
+      }
+    },
+    "level": 4,
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "shortDescription": "<p>This spell functions like <i>inflict light wounds</i>, except that you deal 4d8 points of damage + 1 point per caster level (maximum +20).</p>"
+  }
+}

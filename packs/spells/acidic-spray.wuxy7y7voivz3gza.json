@@ -1,0 +1,78 @@
+{
+  "_id": "wuxy7y7voivz3gza",
+  "name": "Acidic Spray",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "5np8zl8yv133p34n",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "value": "60",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "type": "ray",
+          "size": "60"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(min(15, @cl))d6",
+              "type": {
+                "values": ["acid"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex partial (see text)"
+        },
+        "spellEffect": "60-ft. line"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "magus": 5
+      }
+    },
+    "level": 5,
+    "school": "con",
+    "subschool": "creation",
+    "types": "acid",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a vial of acid worth 10 gp",
+      "gpValue": 10
+    },
+    "spellbook": "",
+    "preparation": {
+      "spontaneousPrepared": false
+    },
+    "shortDescription": "<p>A spray of acid erupts from your outstretched hand, dealing 1d6 points of acid damage per caster level (maximum 15d6) to each creature within its area (Reflex half ). This acid continues to burn for 1 round, dealing 1d6 points of acid damage per two caster levels (maximum 7d6) to any creature that failed its saving throw against the spell (a second Reflex save on the creature's turn negates this additional damage).</p>"
+  }
+}

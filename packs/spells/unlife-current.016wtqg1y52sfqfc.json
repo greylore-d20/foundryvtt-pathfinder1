@@ -1,0 +1,61 @@
+{
+  "_id": "016wtqg1y52sfqfc",
+  "name": "Unlife Current",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "s05h1cgkrhthc83o",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will half"
+        },
+        "spellArea": "current or portion of current up to 20 feet wide and 100 feet long"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "druid": 3,
+        "ranger": 3,
+        "antipaladin": 3,
+        "shaman": 3,
+        "hunter": 3
+      }
+    },
+    "level": 3,
+    "school": "con",
+    "subschool": "healing",
+    "types": "water",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>This functions as <i>life current</i> except you infuse the current with negative energy, so it heals undead and harms living creatures.</p>"
+  }
+}

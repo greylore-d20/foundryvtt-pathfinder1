@@ -1,0 +1,65 @@
+{
+  "_id": "17aTGwzPnyZazYHY",
+  "name": "Balefire",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You call upon the cleansing or searing fires of the Outer Rifts to burn your foes. As a standard action, one target within 30 feet is wreathed in screaming flames and takes 1d6 points of fire damage per level. A successful Reflex save halves this damage.</p>\n<p>At 10th level, the fire’s howls cause any creatures damaged by it to be staggered for 1 round.</p>\n<p>At 15th level, creatures who fail their saves against the balefire are staggered for 1d4 rounds and stunned for 1 round.</p>\n<p>You can use this ability once per day plus one additional time per day at 10th level.</p>"
+    },
+    "actions": [
+      {
+        "_id": "xtoy2f1cdbdrbwc6",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(@classes.oracle.level)d6",
+              "type": {
+                "values": ["fire"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.oracle.level >= 10 ? 2 : 1"
+    },
+    "tag": "classFeat_balefire",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

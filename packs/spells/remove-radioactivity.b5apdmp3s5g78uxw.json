@@ -1,0 +1,63 @@
+{
+  "_id": "b5apdmp3s5g78uxw",
+  "name": "Remove Radioactivity",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "79fsqb266i56mzit",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "creature or object touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 4,
+        "oracle": 4,
+        "druid": 4,
+        "ranger": 4,
+        "bard": 4,
+        "paladin": 4,
+        "witch": 4,
+        "inquisitor": 4,
+        "hunter": 4
+      }
+    },
+    "level": 4,
+    "school": "con",
+    "subschool": "healing",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You remove all ongoing radiation effects, both primary and secondary, on a single target if you succeed at a caster level check (DC = the Fortitude DC associated with the radiation effect). In addition, you immediately restore 1d4 points of Constitution drain and 1d4 points of Strength drain caused by radiation-this spell cannot restore ability damage or drain caused by other sources. When cast on an area, a single casting of <i>remove radioactivity</i> removes radiation from a 20-foot-radius area around the point you touch. This spell has no power to negate naturally radioactive materials, and as long as such materials remain in an area, the radiation that was removed may return.</p>"
+  }
+}

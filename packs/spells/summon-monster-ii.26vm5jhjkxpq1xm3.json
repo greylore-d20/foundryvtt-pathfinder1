@@ -1,0 +1,68 @@
+{
+  "_id": "26vm5jhjkxpq1xm3",
+  "name": "Summon Monster II",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "49w4ckwi2g3xck7c",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "other",
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "one summoned creature"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "cleric": 2,
+        "oracle": 2,
+        "bard": 2,
+        "summoner": 2,
+        "witch": 2,
+        "antipaladin": 2,
+        "psychic": 2,
+        "medium": 2,
+        "spiritualist": 2,
+        "unchained Summoner": 2
+      }
+    },
+    "level": 2,
+    "school": "con",
+    "subschool": "summoning",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true,
+      "divineFocus": 3
+    },
+    "materials": {
+      "focus": "a tiny bag and a small candle"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>summon monster I,</i> except that you can summon one creature from the 2nd-level list or 1d3 creatures of the same kind from the 1st-level list.</p>"
+  }
+}

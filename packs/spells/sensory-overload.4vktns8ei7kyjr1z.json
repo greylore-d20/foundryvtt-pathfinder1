@@ -1,0 +1,59 @@
+{
+  "_id": "4vktns8ei7kyjr1z",
+  "name": "Sensory Overload",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "qbzc9mq3va3u1h04",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "1 creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (see text)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "witch": 2,
+        "psychic": 2
+      }
+    },
+    "level": 2,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You overload the target creature's senses, making it difficult for the target to concentrate. For the duration of the effect, the target must succeed at a Will save at the same DC as the original effect to perform any standard or full-round action. On a failure,  the creature loses the action that triggered the saving throw. If successful, the creature is able to take the action, but this spell effect is not negated.</p>"
+  }
+}

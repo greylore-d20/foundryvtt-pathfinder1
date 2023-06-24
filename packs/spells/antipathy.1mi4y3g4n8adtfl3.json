@@ -1,0 +1,67 @@
+{
+  "_id": "1mi4y3g4n8adtfl3",
+  "name": "Antipathy",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "t2qndb7extls0uae",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "hour"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "hour"
+          }
+        },
+        "duration": {
+          "value": "2 hours/level"
+        },
+        "target": {
+          "value": "one location (up to a 10-ft. cube/level) or one object"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 8,
+        "wizard": 8,
+        "druid": 9,
+        "summoner": 6,
+        "witch": 8,
+        "psychic": 8,
+        "occultist": 6,
+        "unchained Summoner": 6
+      }
+    },
+    "level": 8,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "emotion, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a lump of alum soaked in vinegar"
+    },
+    "shortDescription": "<p>You cause an object or location to emanate magical vibrations that repel either a specific kind of intelligent creature or creatures of a particular alignment, as defined by you. The kind of creature to be affected must be named specifically. A creature subtype is not specific enough. Likewise, the specific alignment to be repelled must be named.</p><p>Creatures of the designated kind or alignment feel an urge to leave the area or to avoid the affected item.</p><p>A compulsion forces them to abandon the area or item, shunning it and never willingly returning to it while the spell is in effect. A creature that makes a successful saving throw can stay in the area or touch the item but feels uncomfortable doing so. This distracting discomfort reduces the creature's Dexterity score by 4 points.</p><p><i>Antipathy</i> counters and dispels <i>sympathy</i>.</p>"
+  }
+}

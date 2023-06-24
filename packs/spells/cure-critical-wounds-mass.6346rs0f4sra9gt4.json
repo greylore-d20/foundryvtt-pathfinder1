@@ -1,0 +1,76 @@
+{
+  "_id": "6346rs0f4sra9gt4",
+  "name": "Cure Critical Wounds, Mass",
+  "type": "spell",
+  "img": "systems/pf1/icons/spells/heal-sky-3.jpg",
+  "system": {
+    "actions": [
+      {
+        "_id": "3qdv862ypoug39x9",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/heal-sky-3.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "15"
+        },
+        "actionType": "heal",
+        "damage": {
+          "parts": [
+            {
+              "formula": "4d8 + min(40, @cl)",
+              "type": {
+                "values": ["positive"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will half (harmless) or Will half; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 8,
+        "oracle": 8,
+        "druid": 9,
+        "witch": 9,
+        "shaman": 8
+      },
+      "domain": {
+        "Community": 8,
+        "Healing": 8
+      }
+    },
+    "level": 8,
+    "school": "con",
+    "subschool": "healing",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "shortDescription": "<p>This spell functions like <i>mass cure light wounds</i>, except that it cures 4d8 points of damage + 1 point per caster level (maximum +40).</p>"
+  }
+}

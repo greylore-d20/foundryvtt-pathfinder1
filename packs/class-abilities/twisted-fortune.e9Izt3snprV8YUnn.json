@@ -1,0 +1,56 @@
+{
+  "_id": "e9Izt3snprV8YUnn",
+  "name": "Twisted Fortune",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/blood_01.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can use your <em>supernatural</em> <em>insight</em> to hijack the fortunes of a single target within 30 feet. For 1 round, the target becomes <em>confused</em> and cannot directly control its actions (<em>Will</em> negates). Once a creature has been affected by twisted fortune, it is immune to the ability’s effects for 24 hours. You can use this ability a number of times per day equal to 3 + your <em>Cha</em> modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "bz4v15u6afg50v4u",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/blood_01.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "spec"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_twistedFortune",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

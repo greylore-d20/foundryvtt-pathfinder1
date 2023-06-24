@@ -1,0 +1,32 @@
+{
+  "_id": "5JFfSqLMCpbRmERa",
+  "name": "Armor Training",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/armor/field-plate.png",
+  "system": {
+    "description": {
+      "value": "<p>Starting at 3rd level, a fighter learns to be more maneuverable while wearing armor. Whenever he is wearing <em>armor</em>, he reduces the armor check penalty by 1 (to a minimum of 0) and increases the maximum Dexterity bonus allowed by his armor by 1. Every four levels thereafter (7th, 11th, and 15th), these bonuses increase by +1 each time, to a maximum –4 reduction of the armor check penalty and a +4 increase of the maximum <em>Dexterity</em> bonus allowed.</p>\n<p>In addition, a fighter can also move at his normal speed while wearing medium armor. At 7th level, a fighter can move at his normal speed while wearing heavy armor.</p>"
+    },
+    "changes": [
+      {
+        "_id": "pv0gclyb",
+        "formula": "-clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)",
+        "subTarget": "acpA",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "e0zzcqzk",
+        "formula": "clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)",
+        "subTarget": "mDexA",
+        "modifier": "untyped"
+      }
+    ],
+    "tag": "classFeat_armorTraining",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Fighter"]]
+    },
+    "abilityType": "ex"
+  }
+}

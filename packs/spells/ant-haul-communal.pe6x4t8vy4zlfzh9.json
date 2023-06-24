@@ -1,0 +1,70 @@
+{
+  "_id": "pe6x4t8vy4zlfzh9",
+  "name": "Ant Haul, Communal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "n4rwhb0v4m8xt2so",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "2 hours/level"
+        },
+        "target": {
+          "value": "creatures touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "cleric": 2,
+        "oracle": 2,
+        "druid": 2,
+        "ranger": 2,
+        "alchemist": 2,
+        "summoner": 2,
+        "psychic": 2,
+        "occultist": 2,
+        "hunter": 2,
+        "unchained Summoner": 2
+      }
+    },
+    "level": 2,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a small pulley"
+    },
+    "shortDescription": "<p>This spell functions like ant haul (see page 202 of the Pathfinder RPG Advanced Player's Guide), except you may divide the duration in 2-hour intervals among the creatures touched.</p>"
+  }
+}

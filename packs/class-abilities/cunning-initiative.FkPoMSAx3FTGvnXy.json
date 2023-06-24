@@ -1,0 +1,48 @@
+{
+  "_id": "FkPoMSAx3FTGvnXy",
+  "name": "Cunning Initiative",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/haste-fire-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 2nd level, an inquisitor adds her Wisdom modifier on initiative checks, in addition to her Dexterity modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ncxmbijwulz46r76",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/haste-fire-1.jpg",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "changes": [
+      {
+        "_id": "xoftvh0t",
+        "formula": "@abilities.wis.mod",
+        "subTarget": "init",
+        "modifier": "untyped"
+      }
+    ],
+    "tag": "classFeat_cunningInitiative",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "ex"
+  }
+}

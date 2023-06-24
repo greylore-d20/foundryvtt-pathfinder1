@@ -1,0 +1,55 @@
+{
+  "_id": "mrtqusfmpohlprve",
+  "name": "Thought Worm II",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "l7nplejc8y4b5o8v",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "psychic": 3
+      }
+    },
+    "level": 3,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell functions as per <i>thought worm I</i>, but the penalty on Will saves is -4. This spell can be undercast.</p>"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "_id": "ydIUYyk6Fwyu8pAm",
+  "name": "Fire Nimbus",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman causes a creature within 30 feet to gain a nimbus of fire. Though this doesn’t harm the creature, it does cause the creature to emit light like a torch, preventing it from gaining any benefit from concealment or invisibility. The target also takes a –2 penalty on saving throws against spells or effects that deal fire damage. The fire nimbus lasts for a number of rounds equal to the shaman’s level. A successful Will saving throw negates this effect.</p>\n<p>Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.</p>"
+    },
+    "actions": [
+      {
+        "_id": "26sxxp0vmkeyrfed",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.shaman.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "tag": "classFeat_fireNimbus",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

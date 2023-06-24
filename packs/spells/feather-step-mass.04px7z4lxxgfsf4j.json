@@ -1,0 +1,59 @@
+{
+  "_id": "04px7z4lxxgfsf4j",
+  "name": "Feather Step, Mass",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "c0n7kpcnf4afpo9u",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "15"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "druid": 3,
+        "ranger": 3,
+        "bard": 3,
+        "psychic": 3,
+        "hunter": 3
+      }
+    },
+    "level": 3,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>As <i>feather step</i>, except this spell affects multiple creatures.</p>"
+  }
+}

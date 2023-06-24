@@ -1,0 +1,37 @@
+{
+  "_id": "lkVGkpsywFpdtoIs",
+  "name": "Shift Focus",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_04.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 4th level, an occultist gains the ability to shift his mental focus from one implement to another, though some of the focus is lost along the way. Shifting mental focus removes a number of points of mental focus from one implement and adds the same number – 1 to another implement; this takes 1 minute of quiet contemplation while touching both implements. The occultist can shift his mental focus only from one implement to another implement; he can’t shift generic focus into an implement.</p>\n<p>Unlike expending focus normally, this shift can reduce the effect of a resonant power in the implement from which the mental focus was taken. It does not, however, add to the resonant power of the implement to which the focus is added.</p>"
+    },
+    "actions": [
+      {
+        "_id": "x15zvmrhfrt6ig6p",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_04.jpg",
+        "activation": {
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "minute"
+          }
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_shiftFocus",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Occultist"]]
+    },
+    "abilityType": "su"
+  }
+}

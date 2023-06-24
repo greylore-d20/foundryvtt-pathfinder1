@@ -1,0 +1,58 @@
+{
+  "_id": "3BKBH3GXcpi6gzkR",
+  "name": "Physical Kinetic Blade",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/yellow_16.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Element(s)</b> universal; <b>Type</b> form infusion; <b>Level</b> 1; <b>Burn</b> 1<br><b>Associated Blasts</b> any<br><b>Saving Throw</b> none</p>\n<p>You form a weapon using your kinetic abilities. You create a non-reach, light or one-handed weapon in your hand formed of pure energy or elemental matter. (If you’re a telekineticist, you instead transfer the power of your kinetic blast to any object held in one hand.) The kinetic blade’s shape is purely cosmetic and doesn’t affect the damage dice, critical threat range, or critical multiplier of the kinetic blade, nor does it grant the kinetic blade any weapon special features. The object held by a telekineticist for this form infusion doesn’t prevent her from using gather power.</p>\n<p>You can use this form infusion once as part of an attack action, a charge action, or a full-attack action in order to make melee attacks with your kinetic blade. Since it’s part of another action (and isn’t an action itself), using this wild talent doesn’t provoke any additional <em>attacks of opportunity</em>. The kinetic blade deals your kinetic blast damage on each hit (applying any modifiers to your kinetic blast’s damage as normal, but not your <em>Strength</em> modifier). The blade disappears at the end of your turn. The weapon deals the same damage type that your kinetic blast deals, and it interacts with <em>Armor Class</em> and <em>spell resistance</em> as normal for a blast of its type. Even if a telekineticist uses this power on a magic weapon or another unusual object, the attack doesn’t use any of the magic weapon’s bonuses or effects and simply deals the telekineticist’s blast damage. The kinetic blade doesn’t add the damage bonus from elemental overflow.</p>"
+    },
+    "actions": [
+      {
+        "_id": "084qy58h4edozmn0",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/yellow_16.jpg",
+        "activation": {
+          "type": "attack"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "msak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(ceil(@classes.kineticist.level / 2))d6 + ceil(@classes.kineticist.level / 2)",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "ability": {
+          "attack": "str"
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "tag": "classFeat_physicalKineticBlade",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Kineticist"]]
+    },
+    "abilityType": "su",
+    "crOffset": "0"
+  }
+}

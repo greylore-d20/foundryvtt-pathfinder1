@@ -1,0 +1,54 @@
+{
+  "_id": "S9lYCsz7oA7v3GzR",
+  "name": "Discern Lies",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/emerald_11.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 5th level, an inquisitor can @Compendium[pf1.spells.9vdjohbrj896e2ot]{Discern Lies}, as per the spell, for a number of rounds per day equal to her inquisitor level. These rounds do not need to be consecutive. Activating this ability is an immediate action.</p>"
+    },
+    "actions": [
+      {
+        "_id": "kpptt507ttb5fcjd",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/emerald_11.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.inquisitor.level"
+    },
+    "tag": "classFeat_discernLies",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "sp"
+  }
+}

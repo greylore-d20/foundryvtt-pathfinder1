@@ -1,0 +1,69 @@
+{
+  "_id": "YKcajjA5GMqbG9Zg",
+  "name": "Fluid Mastery",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman gains a swim speed equal to her base land speed, as well as the ability to breathe underwater. In addition, she can unleash a torrent of ice and water from her hands in a 15-foot cone as a standard action. This torrent deals 1d4 points of cold damage per 2 shaman level she possesses, and pushes affected creatures back 5 feet directly away from the shaman.</p>\n<p>A successful Reflex saving throw halves the damage and negates the push.</p>\n<p>The shaman can use this ability three times per day, but she must wait 1d4 rounds between each use.</p>"
+    },
+    "actions": [
+      {
+        "_id": "v8e8br8naode4y8c",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_20.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "15-ft. cone"
+        },
+        "actionType": "save",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(floor(@classes.shaman.level / 2))d4",
+              "type": {
+                "values": ["cold"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex halves and negates pushback"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3"
+    },
+    "changes": [
+      {
+        "_id": "xzf6e83n",
+        "formula": "@attributes.speed.land.base",
+        "subTarget": "swimSpeed",
+        "modifier": "base"
+      }
+    ],
+    "tag": "classFeat_fluidMastery",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

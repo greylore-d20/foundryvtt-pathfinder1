@@ -1,0 +1,41 @@
+{
+  "_id": "3g4wtgAkMdPxTcju",
+  "name": "Critical Strike",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/enchant-red-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>Whenever the magus scores a critical hit with a melee weapon, he may cast a spell with a range of touch as a swift action, then make a touch attack with that spell against the target of the critical hit as a free action. The magus can use this ability once per day.</p>\n<p>The magus must be at least 12th level before selecting this arcana.</p>"
+    },
+    "actions": [
+      {
+        "_id": "gbfuhd2wwhu69ued",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/enchant-red-3.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1"
+    },
+    "tag": "classFeat_criticalStrike",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Magus"]]
+    },
+    "abilityType": "su"
+  }
+}

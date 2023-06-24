@@ -1,0 +1,60 @@
+{
+  "_id": "su9t0un5iwifqbux",
+  "name": "Peerless Integrity",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "1s4plz9vryiq1co7",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "none or Will negates; see text"
+        },
+        "spellArea": "10-ft.-radius emanation centered on you"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "bard": 2,
+        "antipaladin": 2,
+        "psychic": 2,
+        "mesmerist": 2
+      }
+    },
+    "level": 2,
+    "school": "ill",
+    "subschool": "glamer",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "sr": false,
+    "shortDescription": "<p><i>Peerless integrity</i> conceals the alignment of creatures from divination magic. All creatures within the spell's area, including you, appear to have lawful good auras for the purposes of divination spells and effects that reveal alignments (such as <i>detect law</i> and <i>see</i> alignmentUC), instead of their actual alignments. If the caster of such divination magic succeeds at a Will save, the caster recognizes whether the readings are true or false. Any creature under the effects of this spell gains a +2 circumstance modifier on Bluff and Diplomacy checks.  This spell does not affect other types of divination magic (such as <i>detect thoughts</i> or <i>discern</i> lies) and does not protect against spells or effects that cause harm based on targeted creatures' alignments.</p>"
+  }
+}

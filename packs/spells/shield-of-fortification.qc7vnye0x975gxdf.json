@@ -1,0 +1,59 @@
+{
+  "_id": "qc7vnye0x975gxdf",
+  "name": "Shield of Fortification",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "uwejsnmorz8hbe0b",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 2,
+        "oracle": 2,
+        "paladin": 1,
+        "inquisitor": 1,
+        "psychic": 2
+      }
+    },
+    "level": 2,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>You create a magical barrier that protects a target's vital areas. When the target is struck by a critical hit or a sneak attack, there is a 25% chance that the critical hit or sneak attack is negated and damage is instead rolled normally.</p><p>This benefit does not stack with other effects that can turn critical hits or sneak attacks into normal attacks, such as the <i>fortification</i> armor special ability.</p>"
+  }
+}

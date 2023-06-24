@@ -1,0 +1,63 @@
+{
+  "_id": "22cynh2gt4icqsqt",
+  "name": "Nondetection, Communal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "qewxolvtpbp9hogz",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level"
+        },
+        "target": {
+          "value": "creatures or objects touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "antipaladin": 4,
+        "psychic": 4,
+        "mesmerist": 4,
+        "occultist": 4
+      }
+    },
+    "level": 4,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "diamond dust worth 25 gp per target"
+    },
+    "shortDescription": "<p>This spell functions like <i>nondetection</i>, except you divide the duration in 1-hour increments among the creatures or objects touched.</p>"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "_id": "kQfiQUaq3lp43iND",
+  "name": "Undead Servitude",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You gain @Compendium[pf1.feats.CjLNTqNGz4zU4zpp]{Command Undead} as a bonus feat. You can channel negative energy a number of times per day equal to 3 + your Charisma modifier, but only to use Command Undead. You can take other feats to add to this ability, such as Improved Channeling, but not feats that alter this ability, such as Alignment Channel.</p>"
+    },
+    "actions": [
+      {
+        "_id": "9xzhtzpx4o9z76ai",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "20"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_undeadServitude",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

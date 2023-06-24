@@ -1,0 +1,63 @@
+{
+  "_id": "u2vipq48algenijz",
+  "name": "Audiovisual Hallucination",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ytn9eemib4mwyjkc",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration + 3 rounds (D)"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "long"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "15"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "bard": 3,
+        "magus": 3,
+        "psychic": 3,
+        "medium": 2,
+        "mesmerist": 3,
+        "occultist": 3
+      }
+    },
+    "level": 3,
+    "school": "ill",
+    "subschool": "phantasm",
+    "types": "mind-affecting",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.uab18yhecv8djvbg]{auditory hallucination}, except that you can include the image of any object, creature, or force you imagine or identify for the targets to imagine. You can move the image while you concentrate. After you cease concentration, you can define simple movements or changes for the phantasm to perform that can be explained in 25 words or fewer.  The image disappears when struck by an opponent unless you cause the illusion to react appropriately or instruct it to do so. Its AC is equal to 10 + the level of this spell.</p>"
+  }
+}

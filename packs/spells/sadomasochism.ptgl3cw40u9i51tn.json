@@ -1,0 +1,62 @@
+{
+  "_id": "ptgl3cw40u9i51tn",
+  "name": "Sadomasochism",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "rr2daxblimaq9ztq",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level (D)"
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates, see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 3,
+        "oracle": 3,
+        "witch": 4,
+        "inquisitor": 3,
+        "antipaladin": 3,
+        "magus": 4
+      }
+    },
+    "level": 4,
+    "school": "nec",
+    "types": "pain",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>While subject to this spell, anytime you are dealt damage, your attacker must roll damage for the attack twice and take the higher result, but the attacker must also succeed at a Will saving throw or be demoralized (<i>Pathfinder RPG Core Rulebook</i> 99) for 1 round. Each time you deal damage to a creature demoralized by this spell, you roll damage twice and take the higher result. This spell originally appeared in <i>Pathfinder Campaign Setting</i>: <i>Inner Sea Gods</i>.</p>"
+  }
+}

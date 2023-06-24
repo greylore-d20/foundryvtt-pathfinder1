@@ -1,0 +1,48 @@
+{
+  "_id": "CK5L0YJDENqBxLqv",
+  "name": "Fast Movement (MNK)",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/dodge.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 3rd level, a monk gains an <em>enhancement bonus</em> to his land speed, as shown on Table: monk. A monk in armor or carrying a medium or heavy load loses this extra speed.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ahgba2vnv3deaxd4",
+        "name": "Use",
+        "img": "systems/pf1/icons/feats/dodge.jpg",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "changes": [
+      {
+        "_id": "jgegdopu",
+        "formula": "10 * (floor(@classes.monk.level / 3))",
+        "subTarget": "landSpeed",
+        "modifier": "enh"
+      }
+    ],
+    "tag": "classFeat_fastMovementMnk",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Monk"]]
+    },
+    "abilityType": "ex"
+  }
+}

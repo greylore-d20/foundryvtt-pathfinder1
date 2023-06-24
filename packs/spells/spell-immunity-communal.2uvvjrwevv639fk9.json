@@ -1,0 +1,59 @@
+{
+  "_id": "2uvvjrwevv639fk9",
+  "name": "Spell Immunity, Communal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "sv1axr5sc2nrydaz",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 min./level"
+        },
+        "target": {
+          "value": "creatures touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 5,
+        "oracle": 5,
+        "inquisitor": 5,
+        "psychic": 5,
+        "occultist": 5
+      }
+    },
+    "level": 5,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>This spell functions like <i>spell immunity</i>, except you divide the duration in 10-minute intervals among the creatures touched.</p>"
+  }
+}

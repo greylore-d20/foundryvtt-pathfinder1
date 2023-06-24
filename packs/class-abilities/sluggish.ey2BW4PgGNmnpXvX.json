@@ -1,0 +1,51 @@
+{
+  "_id": "ey2BW4PgGNmnpXvX",
+  "name": "Sluggish",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman causes the speed of a creature within 30 feet to be halved. The target can attempt a Fortitude saving throw to negate this effect. The penalty lasts for a number of rounds equal to the shaman’s character level and does not stack with other effects that reduce speed.</p>\n<p>Whether or not the save is successful, the creature can’t be the target of this hex again for 24 hours.</p>"
+    },
+    "actions": [
+      {
+        "_id": "8hjdjmzgvqwd5if0",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.shaman.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "tag": "classFeat_sluggish",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

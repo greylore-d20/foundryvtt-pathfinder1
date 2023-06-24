@@ -1,0 +1,63 @@
+{
+  "_id": "yyzf346hiq8ixt0u",
+  "name": "Hold Animal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "w863o4zndngqrnxk",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level; see text"
+        },
+        "target": {
+          "value": "one animal"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "druid": 2,
+        "ranger": 2,
+        "psychic": 2,
+        "mesmerist": 2,
+        "hunter": 2
+      },
+      "domain": {
+        "Animal": 2
+      }
+    },
+    "level": 2,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell functions like <i>hold person,</i> except that it affects an animal instead of a humanoid.</p>"
+  }
+}

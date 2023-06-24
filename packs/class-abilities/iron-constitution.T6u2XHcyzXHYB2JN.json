@@ -1,0 +1,27 @@
+{
+  "_id": "T6u2XHcyzXHYB2JN",
+  "name": "Iron Constitution",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You gain a +1 bonus on Fortitude saves.</p>\n<p>At 7th level, and again at 14th level, this bonus increases by +1.</p>"
+    },
+    "tags": ["Revelation", "Metal Mystery"],
+    "changes": [
+      {
+        "_id": "qvjvr1jw",
+        "formula": "1 + floor(@classes.oracle.level / 7)",
+        "subTarget": "fort",
+        "modifier": "untyped"
+      }
+    ],
+    "tag": "classFeat_ironConstitution",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

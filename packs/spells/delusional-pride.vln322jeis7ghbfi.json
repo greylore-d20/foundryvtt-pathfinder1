@@ -1,0 +1,61 @@
+{
+  "_id": "vln322jeis7ghbfi",
+  "name": "Delusional Pride",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "wrasu63n8v566vpd",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "bard": 1,
+        "witch": 1,
+        "psychic": 1,
+        "medium": 1,
+        "mesmerist": 1
+      }
+    },
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "emotion, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>The target becomes so distracted by an overblown sense of its worth that it takes a -2 penalty on attacks and skill checks.</p><p>However, this feeling also gives the target a +2 morale bonus on saves against charm and compulsion effects.</p>"
+  }
+}

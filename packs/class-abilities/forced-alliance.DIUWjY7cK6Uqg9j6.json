@@ -1,0 +1,47 @@
+{
+  "_id": "DIUWjY7cK6Uqg9j6",
+  "name": "Forced Alliance",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/leadership.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can alter a living creature’s mind, causing it to see you as a friend and ally. If the creature is the same creature type as you, this power requires you to expend 1 point of mental focus; if it’s is not, you must expend 2 points instead. The creature can attempt a Will save to negate this effect. If it fails the saving throw, the creature treats you as an ally and doesn’t attempt to harm you (although your allies are not protected). You can call on the creature to aid you directly, but while doing so the creature can attempt a new Will save at the end of each round to end the effect.</p>\n<p>This effect otherwise lasts 1 round per occultist level you possess. This is a mind-affecting charm effect.</p>\n<p>You must be at least 5th level to select this focus power.</p>"
+    },
+    "actions": [
+      {
+        "_id": "cdz1akhyj4njm6mu",
+        "name": "Use",
+        "img": "systems/pf1/icons/feats/leadership.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.occultist.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "tag": "classFeat_forcedAlliance",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Occultist"]]
+    },
+    "abilityType": "sp"
+  }
+}

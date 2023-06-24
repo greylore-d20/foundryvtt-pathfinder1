@@ -1,0 +1,54 @@
+{
+  "_id": "nvy1z3w70ghhlel9",
+  "name": "Share Skin, Greater",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ka13e4qm2cs7j2t1",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level or until you return to your body"
+        },
+        "target": {
+          "value": "one creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "witch": 8
+      }
+    },
+    "level": 8,
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell functions like <i>share skin</i>, except as noted here.</p>"
+  }
+}

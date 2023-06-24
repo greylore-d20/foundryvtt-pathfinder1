@@ -1,0 +1,56 @@
+{
+  "_id": "auliu676zrdjmjs6",
+  "name": "Illusory Maze",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "hgdojpglf9lhv6t7",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief (if interacted with)"
+        },
+        "spellArea": "20-ft.-radius spread"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "bard": 2,
+        "witch": 2
+      }
+    },
+    "level": 2,
+    "school": "ill",
+    "subschool": "figment",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell creates the illusion of a translucent, ever-changing maze of glass in the target area. Creatures in the area who believe the maze to be real cannot move more than 5 feet continuously in any one direction and can't move diagonally, forcing them to take a circuitous route to their destination.</p>"
+  }
+}

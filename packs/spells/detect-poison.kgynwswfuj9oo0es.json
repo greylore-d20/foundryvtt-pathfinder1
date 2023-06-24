@@ -1,0 +1,70 @@
+{
+  "_id": "kgynwswfuj9oo0es",
+  "name": "Detect Poison",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "3cjey4y2cwlgkasp",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one creature, one object, or a 5-ft. cube"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        },
+        "spellArea": "one creature, one object, or a 5-ft. cube"
+      }
+    ],
+    "uses": {
+      "autoDeductChargesCost": "0"
+    },
+    "learnedAt": {
+      "class": {
+        "sorcerer": 0,
+        "wizard": 0,
+        "cleric": 0,
+        "oracle": 0,
+        "druid": 0,
+        "ranger": 1,
+        "paladin": 1,
+        "inquisitor": 0,
+        "shaman": 0,
+        "psychic": 0,
+        "mesmerist": 0,
+        "occultist": 0,
+        "hunter": 0,
+        "witch": 0
+      }
+    },
+    "level": 0,
+    "school": "div",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>You determine whether a creature, object, or area has been poisoned or is poisonous. You can determine the exact type of poison with a DC 20 Wisdom check. A character with the Craft (alchemy) skill may try a DC 20 Craft (alchemy) check if the Wisdom check fails, or may try the Craft (alchemy) check prior to the Wisdom check. The spell can penetrate barriers, but 1 foot of stone, 1 inch of common metal, a thin sheet of lead, or 3 feet of wood or dirt blocks it.</p>"
+  }
+}

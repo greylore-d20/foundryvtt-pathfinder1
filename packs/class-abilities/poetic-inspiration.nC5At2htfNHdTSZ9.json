@@ -1,0 +1,51 @@
+{
+  "_id": "nC5At2htfNHdTSZ9",
+  "name": "Poetic Inspiration",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/banner-red.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, an order of the songbird samurai can speak a few words as a swift action, inspiring allies to great deeds. Allies within 30 feet who can hear the samurai gain a competence bonus equal to her Charisma modifier on attack and weapon damage rolls for 1 round. This ability can be used once per combat.</p>"
+    },
+    "actions": [
+      {
+        "_id": "0m2ys9kflokhkob4",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/banner-red.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "allies within range"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_poeticInspiration",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Samurai"]]
+    },
+    "abilityType": "ex"
+  }
+}

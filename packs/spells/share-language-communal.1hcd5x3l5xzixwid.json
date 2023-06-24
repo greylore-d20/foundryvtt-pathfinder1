@@ -1,0 +1,67 @@
+{
+  "_id": "1hcd5x3l5xzixwid",
+  "name": "Share Language, Communal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "pzoqd5yffwdvodlp",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "24 hours"
+        },
+        "target": {
+          "value": "creatures touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "cleric": 3,
+        "oracle": 3,
+        "druid": 3,
+        "bard": 2,
+        "psychic": 2,
+        "mesmerist": 2,
+        "occultist": 3,
+        "hunter": 3
+      }
+    },
+    "level": 3,
+    "school": "div",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a page from a dictionary"
+    },
+    "shortDescription": "<p>This spell functions like <i>share language</i> (Advanced Player's Guide 243), except you divide the duration in 1-hour increments among the creatures touched.</p>"
+  }
+}

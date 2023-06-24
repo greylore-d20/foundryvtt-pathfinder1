@@ -1,0 +1,55 @@
+{
+  "_id": "3edtpx9oabq3oeeg",
+  "name": "Thought Worm III",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "dl6ss57w91rmpy3x",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial (see text)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "psychic": 4
+      }
+    },
+    "level": 4,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>This functions as per <i>thought worm II</i>, except a target that succeeds at its Will save still takes a -2 penalty on Will saves against your mind-affecting spells and effects for the same duration. This spell can be undercast.</p>"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "_id": "fhuoxhjgf9otqvzh",
+  "name": "Dispel Law",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "lrwv49mogrokrc1h",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level or until discharged, whichever comes first"
+        },
+        "target": {
+          "value": "you and a touched lawful creature from another plane, or you and an enchantment or lawful spell on a touched creature or object"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "description": "see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 5,
+        "oracle": 5,
+        "inquisitor": 5,
+        "antipaladin": 4,
+        "shaman": 5
+      },
+      "domain": {
+        "Chaos": 5
+      }
+    },
+    "level": 5,
+    "school": "abj",
+    "types": "chaotic",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>dispel evil</i>, except that you are surrounded by flickering, yellow chaotic energy, and the spell affects lawful creatures and spells rather than evil ones.</p>"
+  }
+}

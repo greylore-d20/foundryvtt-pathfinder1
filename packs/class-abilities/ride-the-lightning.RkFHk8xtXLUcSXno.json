@@ -1,0 +1,55 @@
+{
+  "_id": "RkFHk8xtXLUcSXno",
+  "name": "Ride the Lightning",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/lighting-eerie-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 15th level, as a <em>full-round action</em> you can become a living lightning bolt and move in a straight line up to 10 times your <em>speed</em>. You do not provoke <em>attacks of opportunity</em> while moving in this way. Creatures or objects in your path are affected as by your thunderbolt power. Creatures do not block your movement but solid barriers do unless they are reduced to 0 <em>hit points</em>. You can use this power once per day for a number of rounds equal to your sorcerer level.</p>"
+    },
+    "actions": [
+      {
+        "_id": "m96lpid3d5lex48w",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/lighting-eerie-2.jpg",
+        "activation": {
+          "type": "full"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.sorcerer.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1"
+    },
+    "tag": "classFeat_rideTheLightning",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

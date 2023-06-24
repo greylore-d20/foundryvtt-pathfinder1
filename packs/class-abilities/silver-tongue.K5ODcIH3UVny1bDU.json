@@ -1,0 +1,53 @@
+{
+  "_id": "K5ODcIH3UVny1bDU",
+  "name": "Silver Tongue",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/light_07.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can draw upon your <em>outsider</em> heritage to spin amazingly convincing lies. Activating this ability is a <em>swift action</em>. You gain a +5 bonus on one <em>Bluff</em> check made to convince another of the truth of your words (similar to using <em>glibness</em>). If a magical effect is used against you that would detect your lies or force you to speak the truth, the user of the effect must succeed on a <em>caster level</em> check (DC 10 + your sorcerer level) to succeed. Failure means the effect does not detect your lies or force you to speak only the truth. You can use this ability a number of times per day equal to 3 + your <em>Charisma</em> modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "z462ob5x1ro9hvtf",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/light_07.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_silverTongue",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "su"
+  }
+}

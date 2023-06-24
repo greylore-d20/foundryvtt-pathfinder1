@@ -1,0 +1,57 @@
+{
+  "_id": "7f9tbbxfod3to7yu",
+  "name": "Advanced Scurvy",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "xs03u75gtragu7jr",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "living creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 1,
+        "oracle": 1,
+        "druid": 1,
+        "hunter": 1
+      }
+    },
+    "school": "nec",
+    "types": "disease, evil",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>The subject contracts an advanced form of scurvy. He becomes constantly fatigued, suffers from bone pain (-1 penalty on Strength-and Dexterity-based checks), wounds easily (add +1 point of damage to any bleed effects affecting the target), experiences loose teeth, and is slow to heal (natural healing occurs at half the normal rate). Scurvy can be treated magically or can be overcome with proper nutrition; eating the right foods ends the fatigue and bone pain within 1-2 days and provides a full cure 2d6 days after that.</p>"
+  }
+}

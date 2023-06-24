@@ -1,0 +1,59 @@
+{
+  "_id": "97w0wbamqk0fzani",
+  "name": "Elemental Assessor",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "taraohmdtl3korrg",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1d4+1 rounds (see text)"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "other",
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "one elemental ray"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "cleric": 6,
+        "oracle": 6
+      }
+    },
+    "level": 6,
+    "school": "evo",
+    "types": "acid, cold, electricity, fire",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "four needles"
+    },
+    "shortDescription": "<p>Azata champions developed this spell to deal with fiends with unknown resistances. A ray of spiraling colors springs from your hand and streaks to its target. You must make a successful ranged touch attack to hit your target with the ray, which deals 2d6 points of acid damage, 2d6 points of cold damage, 2d6 points of electricity damage, and 2d6 points of fire damage. The type of energy that does the most points of damage to the target then persists, dealing another 4d6 points of that type of damage per round for 1d4 rounds.</p>"
+  }
+}

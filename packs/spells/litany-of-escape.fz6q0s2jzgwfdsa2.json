@@ -1,0 +1,57 @@
+{
+  "_id": "fz6q0s2jzgwfdsa2",
+  "name": "Litany of Escape",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "bjt4ccf2qvjl3aot",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one willing creature that is grappled"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "description": "no"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "paladin": 3,
+        "inquisitor": 4,
+        "antipaladin": 3
+      }
+    },
+    "level": 3,
+    "school": "con",
+    "subschool": "teleportation",
+    "types": "language-dependent",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>With a powerful prayer, you call upon the servants of your god to whisk a friend out of a grapple. The target loses the grappled and pinned conditions and is teleported 10 feet. If there is no available space for the target to teleport to, the spell fails.</p>"
+  }
+}

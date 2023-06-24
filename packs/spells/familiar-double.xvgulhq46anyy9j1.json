@@ -1,0 +1,63 @@
+{
+  "_id": "xvgulhq46anyy9j1",
+  "name": "Familiar Double",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "o37tc0pj7si099tm",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief (if interacted with)"
+        },
+        "spellEffect": "one shadow duplicate"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "witch": 7
+      }
+    },
+    "level": 7,
+    "school": "ill",
+    "subschool": "shadow",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a small replica of you worth 5 gp",
+      "gpValue": 5
+    },
+    "spellbook": "",
+    "preparation": {
+      "spontaneousPrepared": false
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions as <i>project image</i>, except the image appears in your familiar's square and moves when your familiar moves.</p>"
+  }
+}

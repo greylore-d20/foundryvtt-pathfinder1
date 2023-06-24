@@ -1,0 +1,38 @@
+{
+  "_id": "4Be8K8P66gE441j1",
+  "name": "Invoke Primal Magic",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>When an event within 30 feet of the arcanist would trigger a chance for a primal magic effect, the arcanist can spend 1 point from her arcane reservoir as an immediate action to increase the chance to 100%.</p>"
+    },
+    "tags": ["Arcanist Exploit"],
+    "actions": [
+      {
+        "_id": "82p8mnoavzobw0xz",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
+        "activation": {
+          "type": "immediate"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "reaction"
+          }
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_invokePrimalMagic",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Arcanist"]]
+    },
+    "abilityType": "su"
+  }
+}

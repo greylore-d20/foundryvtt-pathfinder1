@@ -1,0 +1,59 @@
+{
+  "_id": "e0k1fubi4uf8darc",
+  "name": "Aura of Inviolate Ownership",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "wmbuaox20bp344a2",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "15"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "paladin": 3,
+        "inquisitor": 3
+      }
+    },
+    "level": 3,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>This spell wards the attended items of all creatures it targets (items held, securely fastened to their person, or in containers on their person), enhancing each creature's grip and protecting items from loss or theft. The DC of Sleight of Hand checks to remove items warded by the spell is increased by 20, and affected creatures gain a +20 bonus to their CMDs against disarm and steal combat maneuvers.</p>"
+  }
+}

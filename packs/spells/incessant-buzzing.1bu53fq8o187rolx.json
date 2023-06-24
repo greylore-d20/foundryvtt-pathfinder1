@@ -1,0 +1,63 @@
+{
+  "_id": "1bu53fq8o187rolx",
+  "name": "Incessant Buzzing",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "nrggvvqw3veonlpv",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "spellEffect": "10-ft.-diameter sphere"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "bard": 1,
+        "witch": 1,
+        "antipaladin": 1,
+        "shaman": 1,
+        "psychic": 1
+      }
+    },
+    "school": "ill",
+    "subschool": "figment",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "insect wing"
+    },
+    "shortDescription": "<p>You summon an illusory swarm of angry wasps that fills a 10-foot-diameter sphere. You can summon it so that it shares an area with other creatures, and you can move it up to 40 feet each round as a move action. Creatures caught inside the swarm's area of effect cannot use skills that require patience or concentration. Additionally, spellcasters within the area must succeed at a caster level check (DC =  20 + level of spell to be cast) in order to cast spells. On a failed caster level check, the spell is lost. While the buzzing is unpleasant, it is not so loud as to drown out other noises or make communication difficult.</p>"
+  }
+}

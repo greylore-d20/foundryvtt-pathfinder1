@@ -1,0 +1,62 @@
+{
+  "_id": "a0w41d06aqlu70xs",
+  "name": "Curse of Disgust",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "el1rvjv9acszcld3",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "permanent"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "bard": 3,
+        "witch": 5,
+        "psychic": 6,
+        "mesmerist": 3,
+        "occultist": 4
+      }
+    },
+    "level": 5,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "curse, emotion, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You place a curse upon a creature, causing it to avoid the sight of a specific trigger, which is a kind of creature, object, or condition designated by you. When the target is within 30 feet of a trigger and is aware of the trigger, it gains the sickened condition and feels an urge to leave. A successful Will save negates the urge to leave, but the sickened condition persists as long as the target is within 30 feet of a trigger and aware of it. Example triggers include beggars, filthy clothing, diseased creatures, the king, blood, spiders, rats, corpses, and sewage.</p>"
+  }
+}

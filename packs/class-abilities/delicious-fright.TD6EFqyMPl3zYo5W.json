@@ -1,0 +1,51 @@
+{
+  "_id": "TD6EFqyMPl3zYo5W",
+  "name": "Delicious Fright",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_02.jpg",
+  "system": {
+    "description": {
+      "value": "<p><em>The witch can feed on the fear of her victim.</em></p><p>The target of this hex becomes shaken for a number of rounds equal to 3 + the witch’s Intelligence modifier.</p><p>As long as the witch remains within 30 feet of her target, she gains a +1 morale bonus on attack rolls and a +1 morale bonus on saving throws as long as this effect persists.</p><p>A successful Will save reduces the duration of this hex to 1 round.</p><p>This is a mind-affecting fear effect.</p>"
+    },
+    "tags": ["Hex", "Major Hex"],
+    "actions": [
+      {
+        "_id": "bxs8ql7xg6sj6hjh",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "3 + @abilities.int.mod",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
+          "type": "will",
+          "description": "Will reduces duration to 1 round"
+        }
+      }
+    ],
+    "tag": "classFeat_deliciousFright",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Witch"]]
+    }
+  }
+}

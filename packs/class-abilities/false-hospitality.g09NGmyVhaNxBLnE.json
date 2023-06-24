@@ -1,0 +1,53 @@
+{
+  "_id": "g09NGmyVhaNxBLnE",
+  "name": "False Hospitality",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_02.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The witches of Iblydos are known for greeting travelers with warmth only to reveal their powers once their enemies have lowered their defenses.</p><p>A witch can use this hex to gain the benefits of @Compendium[pf1.spells.7c8nufdm0pj4bgep]{Glibness} with a caster level equal to the witch’s level.</p><p>This hex can be used once per day.</p>"
+    },
+    "tags": ["Hex", "Major Hex"],
+    "actions": [
+      {
+        "_id": "c3n3nnlxtm6fvblt",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 * @classes.witch.level",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1"
+    },
+    "tag": "classFeat_falseHospitality",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Witch"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "_id": "XA1q9Y0BUyyKjSvY",
+  "name": "Philanthropic Magic",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>Whenever the arcanist targets one or more allies (excluding herself) with a spell, she can expend 1 arcane point from her arcane reservoir in order to grant those allies a number of temporary hit points equal to the spell’s level. These temporary hit points stack with temporary hit points from other sources, but temporary hit points from multiple uses of this exploit don’t stack with each other. The temporary hit points last 1 minute per caster level or until expended.</p>"
+    },
+    "tags": ["Arcanist Exploit"],
+    "actions": [
+      {
+        "_id": "7tdyrc3u45qo50ej",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_philanthropicMagic",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Arcanist"]]
+    },
+    "abilityType": "su"
+  }
+}

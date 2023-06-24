@@ -1,0 +1,43 @@
+{
+  "_id": "30XTaOI5fNrXpKEs",
+  "name": "Silencing Strike (INV)",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/weapons/sword-cane.png",
+  "system": {
+    "description": {
+      "value": "<p>When the investigator deals damage with a studied strike, the target must succeed at a Fortitude save (DC = 10 + 1/2 the investigator’s class level + her Intelligence modifier) or be unable to speak (even for verbal components) for 1d4+1 rounds. A successful save reduces the duration to 1 round. This talent has no effect on creatures immune to critical hits.</p>\n<p>An investigator must be at least 15th level to select this talent.</p>"
+    },
+    "actions": [
+      {
+        "_id": "zw03ahs0fmax4pym",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/weapons/sword-cane.png",
+        "activation": {
+          "type": "special"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "special"
+          }
+        },
+        "duration": {
+          "value": "1d4 +1",
+          "units": "round"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude reduces duration to 1 round"
+        }
+      }
+    ],
+    "tag": "classFeat_silencingStrikeInv",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Investigator"]]
+    },
+    "abilityType": "ex"
+  }
+}

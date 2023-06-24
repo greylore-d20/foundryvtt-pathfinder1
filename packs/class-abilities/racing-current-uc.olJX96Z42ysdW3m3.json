@@ -1,0 +1,45 @@
+{
+  "_id": "olJX96Z42ysdW3m3",
+  "name": "Racing Current (UC)",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/fire_07.jpg",
+  "system": {
+    "description": {
+      "value": "<p>A monk with this ki power can create a wave to help him maneuver allies upon the battlefield, as if using the spell @Compendium[pf1.spells.7fvsn0gbv6ynlp63]{Slipstream}. Using this ability is a move action that costs 2 ki points, and the ability remains in effect for 1 minute.</p>\n<p>A monk must be 6th level to select this ki power.</p>"
+    },
+    "actions": [
+      {
+        "_id": "4vapxmq8uhv980nw",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/fire_07.jpg",
+        "activation": {
+          "type": "move"
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "uses": {
+          "autoDeductChargesCost": "2"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_racingCurrentUc",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Monk (Unchained)"]]
+    },
+    "abilityType": "su"
+  }
+}

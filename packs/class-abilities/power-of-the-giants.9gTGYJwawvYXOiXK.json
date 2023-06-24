@@ -1,0 +1,55 @@
+{
+  "_id": "9gTGYJwawvYXOiXK",
+  "name": "Power of the Giants",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/stand-still.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 15th level, you may grow to Large size as a <em>standard action</em>. At this size you gain a +6 <em>size bonus</em> to <em>Strength</em>, a –2 penalty to <em>Dexterity</em>, a +4 <em>size bonus</em> to <em>Constitution</em>, and a +4 <em>natural armor</em> bonus. You may return to your normal size as a standard action. You may remain in this size for up to 1 minute per character level per day; this duration does not need to be consecutive, but it must be used in 1 minute increments.</p>"
+    },
+    "actions": [
+      {
+        "_id": "r73zc9kb8xqiyw3d",
+        "name": "Use",
+        "img": "systems/pf1/icons/feats/stand-still.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "Self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@attributes.hd.total"
+    },
+    "tag": "classFeat_powerOfTheGiants",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

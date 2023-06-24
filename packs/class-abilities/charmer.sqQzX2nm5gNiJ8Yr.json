@@ -1,0 +1,50 @@
+{
+  "_id": "sqQzX2nm5gNiJ8Yr",
+  "name": "Charmer",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/weapons/dagger.PNG",
+  "system": {
+    "description": {
+      "value": "<p>Once per day, the rogue can roll two dice while making a Diplomacy check, and take the better result. She must choose to use this talent before making the Diplomacy check. A rogue can use this ability one additional time per day for every 5 rogue levels she possesses.</p>"
+    },
+    "actions": [
+      {
+        "_id": "az1ej4ej8b1brag8",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/weapons/dagger.PNG",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "ceil(@classes.rogue.level / 5)"
+    },
+    "contextNotes": [
+      {
+        "subTarget": "skill.dip",
+        "text": "Charmer: roll two dice and take the better result."
+      }
+    ],
+    "tag": "classFeat_charmer",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Rogue"]]
+    },
+    "abilityType": "ex"
+  }
+}

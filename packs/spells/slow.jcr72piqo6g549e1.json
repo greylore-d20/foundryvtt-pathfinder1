@@ -1,0 +1,70 @@
+{
+  "_id": "jcr72piqo6g549e1",
+  "name": "Slow",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "57te51vria9nnas9",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "15"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "bard": 3,
+        "summoner": 2,
+        "magus": 3,
+        "bloodrager": 3,
+        "psychic": 3,
+        "medium": 2,
+        "occultist": 3,
+        "spiritualist": 3,
+        "unchained Summoner": 3
+      }
+    },
+    "level": 3,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a drop of molasses"
+    },
+    "spellbook": "",
+    "shortDescription": "<p>An affected creature moves and attacks at a drastically <i><i>slow</i>ed</i> rate. Creatures affected by this spell are staggered and can take only a single move action or standard action each turn, but not both (nor may it take full-round actions). Additionally, it takes a -1 penalty on attack rolls, AC, and Reflex saves. A <i><i>slow</i>ed</i> creature moves at half its normal speed (round down to the next 5-foot increment), which affects the creature's jumping distance as normal for decreased speed.</p><p>Multiple <i>slow</i> effects don't stack. <i>Slow</i> counters and dispels <i>haste</i>.</p>"
+  }
+}

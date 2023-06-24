@@ -1,0 +1,65 @@
+{
+  "_id": "yaBbhvmRbPfDjmp3",
+  "name": "Interstellar Void",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You call upon the frigid depths of outer space to bring a terrible chill to your enemies. As a standard action, one target within 30 feet is cloaked in the void and takes 1d6 points of cold damage for every oracle level you possess. A successful Fortitude save halves this damage.</p>\n<p>At 10th level, the interstellar void is so extreme that a creature that fails its save is fatigued.</p>\n<p>At 15th level, a creature that fail its save is exhausted and stunned for 1 round.</p>\n<p>You can use this ability once per day plus one additional time per day at 10th level.</p>"
+    },
+    "actions": [
+      {
+        "_id": "qx6qi8yzbeq8f4mv",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(@classes.oracle.level)d6",
+              "type": {
+                "values": ["cold"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude halves"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.oracle.level >= 10 ? 2 : 1"
+    },
+    "tag": "classFeat_interstellarVoid",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

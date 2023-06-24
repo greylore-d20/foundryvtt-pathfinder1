@@ -1,0 +1,54 @@
+{
+  "_id": "WMtJbAlvzaLnzYVy",
+  "name": "Might of the Gods",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/intimidating-prowess.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can add your cleric level as an enhancement bonus to your Strength score for a number of rounds per day equal to your cleric level. This bonus only applies on Strength checks and Strength-based skill checks. These rounds do not need to be consecutive.</p>"
+    },
+    "actions": [
+      {
+        "_id": "8jutek7gr29meuok",
+        "name": "Use",
+        "img": "systems/pf1/icons/feats/intimidating-prowess.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.cleric.level"
+    },
+    "tag": "classFeat_mightOfTheGods",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "su"
+  }
+}

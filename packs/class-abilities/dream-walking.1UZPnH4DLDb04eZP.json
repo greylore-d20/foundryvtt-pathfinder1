@@ -1,0 +1,51 @@
+{
+  "_id": "1UZPnH4DLDb04eZP",
+  "name": "Dream Walking",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/blue_15.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 15th level, you can enter the ethereal plane. This functions like @Compendium[pf1.spells.btccs4sjo2nog1a0]{Ethereal Jaunt}, but with a duration of 1 minute for every 2 sorcerer levels you possess. Once during this trip, you may cast @Compendium[pf1.spells.siv3ub7hbmcklf8c]{Nightmare} as a <em>spell-like ability</em> on a creature you see on the Material Plane. (This is an exception to the normal rule that ethereal creatures cannot affect targets on the Material Plane).</p>"
+    },
+    "actions": [
+      {
+        "_id": "am2na3arg2kak2hw",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/blue_15.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "floor(@classes.sorcerer.level / 2)",
+          "units": "minute"
+        },
+        "target": {
+          "value": "Self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_dreamWalking",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

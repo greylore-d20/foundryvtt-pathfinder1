@@ -1,0 +1,56 @@
+{
+  "_id": "co0mc49xhtf7aczt",
+  "name": "Invigorate, Mass",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ioj0gk372dpyyw71",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level (D)"
+        },
+        "target": {
+          "value": "creatures touched, up to one/level"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "bard": 3,
+        "psychic": 4,
+        "mesmerist": 3
+      }
+    },
+    "level": 3,
+    "school": "ill",
+    "subschool": "figment",
+    "components": {
+      "verbal": true
+    },
+    "shortDescription": "<p>This spell work as <i>invigorate</i>, except it affects multiple creatures.</p>"
+  }
+}

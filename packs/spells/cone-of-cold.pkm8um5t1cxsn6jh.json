@@ -1,0 +1,82 @@
+{
+  "_id": "pkm8um5t1cxsn6jh",
+  "name": "Cone of Cold",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "757xeokjecpvvyhz",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "value": "60",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "type": "cone",
+          "size": "60"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(min(15, @cl))d6",
+              "type": {
+                "values": ["cold"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        },
+        "spellArea": "cone-shaped burst"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "witch": 6,
+        "magus": 5,
+        "shaman": 6,
+        "occultist": 5
+      },
+      "domain": {
+        "Water": 6
+      },
+      "bloodline": {
+        "Boreal": 5,
+        "Oni": 5
+      }
+    },
+    "level": 5,
+    "school": "evo",
+    "types": "cold",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a small crystal or glass cone"
+    },
+    "shortDescription": "<p><i>Cone of cold</i> creates an area of extreme cold, originating at your hand and extending outward in a cone. It drains heat, dealing 1d6 points of cold damage per caster level (maximum 15d6).</p>"
+  }
+}

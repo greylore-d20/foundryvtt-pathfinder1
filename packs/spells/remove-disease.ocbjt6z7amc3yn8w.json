@@ -1,0 +1,67 @@
+{
+  "_id": "ocbjt6z7amc3yn8w",
+  "name": "Remove Disease",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "pcnxa3fuo9suex9v",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "druid": 3,
+        "ranger": 3,
+        "alchemist": 3,
+        "witch": 3,
+        "inquisitor": 3,
+        "adept": 3,
+        "spiritualist": 3,
+        "hunter": 3
+      },
+      "subDomain": {
+        "Restoration": 2
+      }
+    },
+    "level": 3,
+    "school": "con",
+    "subschool": "healing",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p><i>Remove disease</i> can cure all diseases from which the subject is suffering. You must make a caster level check (1d20 + caster level) against the DC of each disease affecting the target. Success means that the disease is cured. The spell also kills some hazards and parasites, including green slime and others.</p><p>Since the spell's duration is instantaneous, it does not prevent reinfection after a new exposure to the same disease at a later date.</p>"
+  }
+}

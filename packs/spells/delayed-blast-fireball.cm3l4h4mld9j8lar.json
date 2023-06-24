@@ -1,0 +1,77 @@
+{
+  "_id": "cm3l4h4mld9j8lar",
+  "name": "Delayed Blast Fireball",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "8i6vg5ivj41iqukr",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "5 rounds or less; see text"
+        },
+        "range": {
+          "units": "long"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "20"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(min(20, @cl))d6",
+              "type": {
+                "values": ["fire"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        },
+        "spellArea": "20-ft.-radius spread"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 7,
+        "wizard": 7
+      },
+      "subDomain": {
+        "Arson": 7
+      },
+      "bloodline": {
+        "Orc": 7,
+        "Kobold": 7
+      }
+    },
+    "level": 7,
+    "school": "evo",
+    "types": "fire",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a ball of bat guano and sulfur"
+    },
+    "shortDescription": "<p>This spell functions like <i>fireball</i>, except that it is more powerful and can detonate up to 5 rounds after the spell is cast. The burst of flame deals 1d6 points of fire damage per caster level (maximum 20d6). The glowing bead created by <i>delayed blast fireball</i> can detonate immediately if you desire, or you can choose to delay the burst for as many as 5 rounds. You select the amount of delay upon completing the spell, and that time cannot change once it has been set unless someone touches the bead. If you choose a delay, the glowing bead sits at its destination until it detonates. A creature can pick up and hurl the bead as a thrown weapon (range increment 10 feet). If a creature handles and moves the bead within 1 round of its detonation, there is a 25% chance that the bead detonates while being handled.</p>"
+  }
+}

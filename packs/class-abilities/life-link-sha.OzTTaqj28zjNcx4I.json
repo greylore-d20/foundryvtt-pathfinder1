@@ -1,0 +1,45 @@
+{
+  "_id": "OzTTaqj28zjNcx4I",
+  "name": "Life Link (SHA)",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman creates a bond between herself and another creature within 30 feet. Each round at the start of the shaman’s turn, if the bonded creature is wounded for 5 or more hit points below its maximum hit points, it heals 5 hit points and the shaman takes 5 points of damage. The shaman can have one bond active per shaman level. The bond continues until the bonded creature dies, the shaman dies, the distance between her and the bonded creature exceeds 100 feet, or the shaman ends it as an immediate action.</p>\n<p>If the shaman has multiple bonds active, she can end as many as she wants with the same immediate action.</p>"
+    },
+    "actions": [
+      {
+        "_id": "voqbpzrnmn9t6ivr",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "seeText"
+        },
+        "target": {
+          "value": "you and one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_lifeLinkSha",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "abilityType": "su"
+  }
+}

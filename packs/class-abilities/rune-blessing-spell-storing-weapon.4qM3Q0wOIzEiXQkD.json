@@ -1,0 +1,47 @@
+{
+  "_id": "4qM3Q0wOIzEiXQkD",
+  "name": "Rune Blessing: Spell-Storing Weapon",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/runes-magenta-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, you can cast a spell into a magic weapon as if it had the spell storing weapon special ability. If the stored spell is not used within 10 minutes, it dissipates.</p>"
+    },
+    "actions": [
+      {
+        "_id": "fix2xcoxpv5o7jhj",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/runes-magenta-3.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10",
+          "units": "minute"
+        },
+        "target": {
+          "value": "weapon touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_runeBlessingSpellstoringWeapon",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "_id": "wayryp00n6di730s",
+  "name": "Protection from Natural Attacks",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "cunur0zxiszaeibo",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "druid": 4,
+        "ranger": 2,
+        "alchemist": 3,
+        "summoner": 3,
+        "shaman": 4,
+        "psychic": 4,
+        "spiritualist": 3,
+        "hunter": 2,
+        "unchained Summoner": 3
+      }
+    },
+    "level": 4,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a scale from a lizard"
+    },
+    "shortDescription": "<p>Upon casting this spell, select one type of natural attack from the following: bite, claw, gore, hoof, pincers, slam, sting, swarm, tail slap, talon, tentacle, or wing. For the duration of the spell, the target gains DR 5/- against all attacks from natural weapons of the selected type.</p>"
+  }
+}

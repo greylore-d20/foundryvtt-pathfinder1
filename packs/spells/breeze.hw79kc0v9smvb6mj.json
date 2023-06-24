@@ -1,0 +1,63 @@
+{
+  "_id": "hw79kc0v9smvb6mj",
+  "name": "Breeze",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "zjz3ucpn5kt281we",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour (D)"
+        },
+        "target": {
+          "value": "one creature or object"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "uses": {
+      "autoDeductChargesCost": "0"
+    },
+    "learnedAt": {
+      "class": {
+        "sorcerer": 0,
+        "wizard": 0
+      }
+    },
+    "level": 0,
+    "school": "evo",
+    "types": "air",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a miniature fan"
+    },
+    "shortDescription": "<p>You create a light wind that blows against the target, from a direction of your choice. The breeze grants the subject a +2 bonus on saves against very hot conditions, severe heat, breath weapons, and saves against cloud vapors and gases (such as cloudkill, stinking cloud, and inhaled poisons). This spell does not function without air or underwater.</p><p>You can only have one breeze active at any one time. If you cast this spell while another casting is still in effect, the previous casting is dispelled.</p>"
+  }
+}

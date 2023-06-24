@@ -1,0 +1,53 @@
+{
+  "_id": "8semprhq10vg0cbm",
+  "name": "Mind Thrust III",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "1xlomlexaexpy54w",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will half"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "psychic": 3
+      }
+    },
+    "level": 3,
+    "school": "div",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>This functions as <i>mind thrust I</i>, but the target takes 1d8 points of damage per caster level (maximum 10d8). This spell can be undercast.</p>"
+  }
+}

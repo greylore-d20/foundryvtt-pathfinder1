@@ -1,0 +1,59 @@
+{
+  "_id": "os0fjza0vpbkro5r",
+  "name": "Abyssal Vermin",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "d3dpr69rgzp8i543",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "one vermin or vermin swarm"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (see text)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 4,
+        "oracle": 4,
+        "witch": 4,
+        "antipaladin": 2
+      }
+    },
+    "level": 4,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You infuse the target with power from the Abyss, granting it the fiendish creature simple template. The swarm gains DR 5/ good if it has at least 5 Hit Dice, or DR 10/good it if has at least 11 HD. It gains cold resistance 5 and fire resistance 5 if it has at least 5 HD, or cold resistance 10 and fire resistance 10 if it has at least 11 HD. It gains spell resistance equal to its CR + 6. Once per day, it can smite good (as a swift action against a good opponent, the vermin adds its Charisma bonus to its attack rolls and its HD to its damage rolls until the opponent is dead). If the targeted vermin is under your command, it automatically fails its saving throw against this spell. This spell has no effect on vermin that already have the fiendish creature simple template.</p>"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "_id": "YCfwpSeTDnG0NXTd",
+  "name": "Tornado Blessing: Howling Gale",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/wind-sky-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, you can invoke a howling windstorm around yourself as a standard action. For 1 minute, any Large or smaller creature takes twice as much movement to enter a space adjacent to you due to the winds, and thus can’t take a 5-foot step to move adjacent to you.</p>"
+    },
+    "actions": [
+      {
+        "_id": "snie8wbl9yh9mn2t",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/wind-sky-3.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_tornadoBlessingHowlingGale",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

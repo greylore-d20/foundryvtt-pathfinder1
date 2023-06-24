@@ -1,0 +1,60 @@
+{
+  "_id": "0r3tdcs6jf9qkjjr",
+  "name": "Screaming Flames",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "tta4if3wqzg70jg8",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half and Will negates (see text)"
+        },
+        "spellEffect": "a sheet of flame up to 15 ft. long and 10 ft. high that moves 15 ft. in a straight line."
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "antipaladin": 3
+      }
+    },
+    "level": 3,
+    "school": "evo",
+    "types": "evil, fire, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a charred animal or humanoid skull fragment"
+    },
+    "shortDescription": "<p>A sheer wall of flame appears and rushes away from you. Tendrils of fire reach out of it, shaped into skulls screaming in agony. When the wall passes through a creature's space, that creature must succeed at a Reflex save or take 1d8 points of fire damage for every 2 caster levels you have (maximum 5d8). Any creature taking fire damage must also succeed at a Will save or take 1d3 points of Wisdom damage. Deaf creatures receive a +4 circumstance bonus on their Will saves.  If your campaign uses the sanity system (see page 12), a creature takes 1d6 points of sanity damage instead of Wisdom damage.</p>"
+  }
+}

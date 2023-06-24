@@ -1,0 +1,62 @@
+{
+  "_id": "vXSY1Wznl80uFHxg",
+  "name": "Mend the Broken",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You can touch an object or creature as a standard action, healing it of 1d4 points of damage + 1 for every 2 inquisitor levels you possess. You can use this ability only on a broken object or a creature with fewer than half its maximum hit points. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "6mu2l2bfxnjedgb5",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "heal",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d4 + floor(@classes.inquisitor.level / 2)",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.wis.mod"
+    },
+    "tag": "classFeat_mendTheBroken",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "su"
+  }
+}

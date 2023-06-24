@@ -1,0 +1,47 @@
+{
+  "_id": "qWEawGOHmLOwXCup",
+  "name": "Earth Blessing: Armor of Earth",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/rock-acid-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, you can touch an ally and harden its armor or clothing. For 1 minute, the ally gains DR 1/—. For every 2 levels beyond 10th, this DR increases by 1 (to a maximum of DR 5/— at 18th level).</p>\n<p>This doesn’t stack with any other damage resistance.</p>"
+    },
+    "actions": [
+      {
+        "_id": "prg4a2m0vls574h6",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/rock-acid-3.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_earthBlessingArmorOfEarth",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

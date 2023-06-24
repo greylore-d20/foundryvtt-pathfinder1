@@ -1,0 +1,58 @@
+{
+  "_id": "Y1Blrx6vP14T5G6G",
+  "name": "Antitoxin Touch",
+  "type": "spell",
+  "img": "icons/magic/nature/beam-hand-leaves-green.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "md805i4mo1q20ah1",
+        "name": "Use",
+        "img": "icons/magic/nature/beam-hand-leaves-green.webp",
+        "activation": {
+          "type": "standard"
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "uses": {
+          "autoDeductChargesCost": "1 + @sl"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "alchemist": 1,
+        "druid": 1,
+        "hunter": 1,
+        "investigator": 1,
+        "ranger": 1,
+        "shaman": 1,
+        "witch": 1
+      }
+    },
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a small drop of antitoxin"
+    },
+    "spellbook": "",
+    "shortDescription": "<p>The target's skin secretes a small amount of venom-resistant oils for the spell's duration. The target cannot accidentally poison itself while applying poison. Additionally, the target does not risk exposure to a creature's poison when attempting to milk venom (<em>Ultimate Wilderness</em> 142).</p>"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "_id": "4OxtLoXhxTOvi96Q",
+  "name": "Blessed Correction",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 4th level, when you make a Diplomacy, Intimidate, or Perform (oratory) check, you may roll twice and take the more favorable result. You can use this ability a number of times per day equal to your Wisdom bonus.</p>"
+    },
+    "actions": [
+      {
+        "_id": "k63rxi0bbnms0s0g",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@abilities.wis.mod"
+    },
+    "tag": "classFeat_blessedCorrection",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "ex"
+  }
+}

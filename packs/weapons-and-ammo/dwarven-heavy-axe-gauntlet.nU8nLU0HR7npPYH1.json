@@ -1,0 +1,72 @@
+{
+  "_id": "nU8nLU0HR7npPYH1",
+  "name": "Dwarven Heavy Axe-Gauntlet",
+  "type": "weapon",
+  "img": "systems/pf1/icons/items/weapons/axe-gauntlet-dwarven-heavy.png",
+  "system": {
+    "description": {
+      "value": "<p><b>Source</b> <em>Heroes from the Fringe pg. 8</em></p><h3>Statistics</h3><p><b>Cost</b> 21 gp <b>Weight</b> 5 lbs.</p><p><b>Damage</b> 1d6 (small), 1d8 (medium); <b>Critical</b> x3; <b>Range</b> -; <b>Type</b> S; <b>Special</b> blocking, disarm</p><p><b>Category</b> One-Handed; <b>Proficiency</b> Exotic</p><p><b>Weapon Groups</b> Axes; Close</p><h3>Description</h3><p>An axe-gauntlet is a locked gauntlet covering the hand and forearm up to and over the elbow, with an axe blade built around the gauntlet's permanently closed fist. Axe-gauntlets were developed during the long Quest for Sky, when dwarven warriors often had to engage in running fights against larger, stronger opponents in areas the dwarves did not intend to ever return to. Losing a weapon in such circumstances often made it irretrievable, and the axe-gauntlet became popular with rearguard warriors. Though these weapons have seen significantly less use since the dwarves reached the surface, some dwarven warriors still appreciate the reliability of such designs. An axe-gauntlet takes a full-round action to don, and it gives you a +10 bonus to your CMD against disarm attempts. You can't use the hand on which an axe-gauntlet is worn for anything else.</p>"
+    },
+    "tags": ["Dwarven Heavy Axe-Gauntlet", "Dwarven"],
+    "weight": {
+      "value": 5
+    },
+    "price": 21,
+    "hp": {
+      "max": 5,
+      "value": 5
+    },
+    "hardness": 10,
+    "actions": [
+      {
+        "_id": "un40vttdgoa2vi0k",
+        "name": "Attack",
+        "img": "systems/pf1/icons/items/weapons/axe-gauntlet-dwarven-heavy.png",
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": "0",
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 8, @size)",
+              "type": {
+                "values": ["slashing"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critMult": 3
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "tag": "dwarvenHeavyAxegauntlet",
+    "weaponGroups": {
+      "value": ["axes", "close"]
+    },
+    "subType": "exotic",
+    "weaponSubtype": "1h"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "_id": "xyswXNxRu9EQBwau",
+  "name": "Wooden Weapon",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You can create a wooden club, quarterstaff, longspear, shortspear, or spear that lasts for 1 minute for every oracle level you possess. This weapon is appropriate for your size. You are considered proficient with the weapon. The weapon disappears after 1 round if it leaves your grasp.</p>\n<p>At 3rd level, the weapon is considered masterwork.</p>\n<p>At 7th level, 15th level, and 19th level, the weapon gains a +1 enhancement bonus.</p>\n<p>At 11th level, the weapon gains the keen weapon property (or the equivalent increase to its critical threat range, if it is a bludgeoning weapon).</p>\n<p>You can use this ability a number of times per day equal to 3 + your Charisma modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "66lr81lyzmg44atf",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.oracle.level",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_woodenWeapon",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

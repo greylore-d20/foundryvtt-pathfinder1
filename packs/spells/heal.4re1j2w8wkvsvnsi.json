@@ -1,0 +1,78 @@
+{
+  "_id": "4re1j2w8wkvsvnsi",
+  "name": "Heal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "mj6kc8l17hp5foa3",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "damage": {
+          "parts": [
+            {
+              "formula": "min(150, @cl * 10)",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 6,
+        "oracle": 6,
+        "druid": 7,
+        "alchemist": 6,
+        "witch": 7,
+        "inquisitor": 6,
+        "adept": 5,
+        "shaman": 7,
+        "occultist": 6,
+        "spiritualist": 6
+      },
+      "domain": {
+        "Healing": 6
+      }
+    },
+    "level": 6,
+    "school": "con",
+    "subschool": "healing",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p><i>Heal</i> enables you to channel positive energy into a creature to wipe away injury and afflictions. It immediately ends any and all of the following adverse conditions affecting the target: ability damage, blinded, confused, dazed, dazzled, deafened, diseased, exhausted, fatigued, feebleminded, insanity, nauseated, poisoned, sickened, and stunned. It also cures 10 hit points of damage per level of the caster, to a maximum of 150 points at 15th level.</p><p><i>Heal</i> does not remove negative levels or restore permanently drained ability score points.</p><p>If used against an undead creature, <i>heal</i> instead acts like <i>harm</i>.</p>"
+  }
+}

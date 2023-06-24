@@ -1,0 +1,64 @@
+{
+  "_id": "lle98qy2ejxsmlsg",
+  "name": "Khain's Army",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "1fe8pjx5es53x0ss",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "value": "5",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude half (see text)"
+        },
+        "spellEffect": "1d4+1 ghouls and 1 ghast"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "cleric": 5,
+        "oracle": 5,
+        "witch": 5
+      }
+    },
+    "level": 5,
+    "school": "nec",
+    "types": "evil",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a handful of ghoul's teeth"
+    },
+    "sr": false,
+    "shortDescription": "<p>Originally created by the priest-king of Nemret Noktoria, the ghoul Kortash Khain, for use by his minions to bolster their forces in battles against their enemies, Khain's army has become a favorite of many necromancers throughout Osirion and beyond. By scattering a handful of ghoul's teeth across the ground, you cause 1d4+1 ghouls led by a single ghast to rise up from the ground around you. The ghouls and their ghast leader must appear in squares adjacent to you, but after that they follow your spoken commands unerringly.</p><p>If one of the ghouls is destroyed while the spell's duration is still in effect, it bursts into a spray of rotten flesh and necromantic energy that deals 1d6 points of negative energy damage to all adjacent targets-this energy heals undead targets as typical for negative energy damage. If the ghast is destroyed in this manner, it deals twice as much negative energy damage as a ghoul. A successful Fortitude save halves the negative energy damage dealt. When this spell's duration expires, any remaining undead created by this spell crumble apart into dust and blow away without dealing any additional negative energy damage.</p>"
+  }
+}

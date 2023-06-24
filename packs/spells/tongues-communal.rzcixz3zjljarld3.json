@@ -1,0 +1,69 @@
+{
+  "_id": "rzcixz3zjljarld3",
+  "name": "Tongues, Communal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "hx7rrevhv6hrdmur",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 min./level"
+        },
+        "target": {
+          "value": "creatures touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 5,
+        "oracle": 5,
+        "bard": 3,
+        "alchemist": 4,
+        "summoner": 4,
+        "witch": 4,
+        "psychic": 4,
+        "mesmerist": 3,
+        "unchained Summoner": 4
+      }
+    },
+    "level": 4,
+    "school": "div",
+    "components": {
+      "verbal": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a clay model of a ziggurat"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>tongues</i>, except you divide the duration in 10-minute intervals among the creatures touched.</p>"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "_id": "oJZ9juRAaqmjfeNf",
+  "name": "Scalykind Blessing; Serpent Fang",
+  "type": "feat",
+  "img": "systems/pf1/icons/races/vishkanya.png",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, as a standard action you can manifest venomous fangs for 1 minute. These fangs grant a bite attack that deals 1d4 points of damage (for a Medium warpriest, 1d3 if Small). A successful bite also afflicts the opponent with a debilitating venom. The poison’s save DC is equal to 10 + 1/2 your warpriest level + your Constitution modifier.<p><b>Serpent Venom (Ex)</b>: <em>Bite</em>—injury; save Fort negates;<em> frequency</em> 1/round for 4 rounds; <em>effect</em> 1d2 Con; <em>cure</em> 1 save.</p>"
+    },
+    "actions": [
+      {
+        "_id": "hv2y800ji84z95me",
+        "name": "Use",
+        "img": "systems/pf1/icons/races/vishkanya.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_scalykindBlessingSerpentFang",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

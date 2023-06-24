@@ -1,0 +1,60 @@
+{
+  "_id": "1kwmd162fumjm5bj",
+  "name": "Fester, Mass",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "t6ceb3aw1njtkkgd",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level or 1 round; see text"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "15"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude partial"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "witch": 6,
+        "inquisitor": 6
+      }
+    },
+    "level": 6,
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "rotted meat"
+    },
+    "shortDescription": "<p>This spell functions as <i>fester</i>, except that it affects multiple foes.</p>"
+  }
+}

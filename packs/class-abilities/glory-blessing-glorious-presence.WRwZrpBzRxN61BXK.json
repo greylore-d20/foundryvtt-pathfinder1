@@ -1,0 +1,47 @@
+{
+  "_id": "WRwZrpBzRxN61BXK",
+  "name": "Glory Blessing: Glorious Presence",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/air-burst-sky-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can touch an ally and grant it a glorious blessing. For 1 minute, the ally becomes mesmerizing to her foes. This functions as @Compendium[pf1.spells.yk5bgi6j9kbtigof]{Sanctuary}, except if the ally attacks an opponent, this effect ends with respect to only that opponent. This is a mind-affecting effect.</p>"
+    },
+    "actions": [
+      {
+        "_id": "e17wzihafkn78irg",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/air-burst-sky-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_gloryBlessingGloriousPresence",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

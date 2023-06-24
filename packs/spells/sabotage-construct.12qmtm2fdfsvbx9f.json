@@ -1,0 +1,55 @@
+{
+  "_id": "12qmtm2fdfsvbx9f",
+  "name": "Sabotage Construct",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "cef2i3ex2thjnu0c",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "bard": 5,
+        "witch": 6,
+        "inquisitor": 5
+      }
+    },
+    "level": 6,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell functions as <i>confusion</i>, except that it affects only constructs. When you are rolling for a confused construct's behavior, a result of 26-50 indicates the construct twitches spasmodically. On a successful Will save, the construct is confused for only 1 round.</p>"
+  }
+}

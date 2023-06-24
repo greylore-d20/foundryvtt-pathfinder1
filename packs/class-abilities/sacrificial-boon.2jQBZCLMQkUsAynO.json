@@ -1,0 +1,44 @@
+{
+  "_id": "2jQBZCLMQkUsAynO",
+  "name": "Sacrificial Boon",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/affliction_06.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, as an <em>immediate action</em>, you can sacrifice 1 hit point in exchange for a +1 <em>sacred bonus</em> on the next damage roll, saving throw, or skill check you make. This bonus only applies as long as you use it by or during your next turn—otherwise both your sacrificed hit point and the bonus are wasted. You can use this ability a number of times per day equal to 3 +  your <em>Charisma</em> modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "o51q66gpq6cu3iz5",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/affliction_06.jpg",
+        "activation": {
+          "type": "immediate"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "reaction"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_sacrificialBoon",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "su"
+  }
+}

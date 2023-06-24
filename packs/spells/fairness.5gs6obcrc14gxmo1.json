@@ -1,0 +1,59 @@
+{
+  "_id": "5gs6obcrc14gxmo1",
+  "name": "Fairness",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "qput119uvcfhdh02",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "one humanoid creature per level"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 1,
+        "oracle": 1,
+        "paladin": 2,
+        "inquisitor": 2
+      }
+    },
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>Humanoid creatures affected by this spell must trade fairly with others to the best of their knowledge. If they know the fair value (or even an estimated fair value) of a good or service, they cannot participate in a trade if it would benefit one side unfairly, and must attempt to stop such trades from occurring, preventing them from cheating another while under the influence of this spell. The symbol of Abadar appears above the heads of those affected by this spell, making those affected and unaffected by the spell immediately apparent.</p>"
+  }
+}

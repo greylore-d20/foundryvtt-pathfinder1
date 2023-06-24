@@ -1,0 +1,55 @@
+{
+  "_id": "8hskbv8e996jwmmj",
+  "name": "Ego Whip V",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "dgqrf9lx0eepg7p5",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "psychic": 7
+      }
+    },
+    "level": 7,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "emotion, mind-affecting",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>This functions as <i>ego whip I</i>, but the target takes -10 penalty to the chosen ability score and is staggered for 1d10 rounds on a failed Will save. This spell can be undercast.</p>"
+  }
+}

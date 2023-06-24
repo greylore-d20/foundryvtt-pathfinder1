@@ -1,0 +1,61 @@
+{
+  "_id": "blu526dm3jnv2sj0",
+  "name": "Mask Dweomer, Communal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "pdln97luqs58nxge",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 day/level (D)"
+        },
+        "target": {
+          "value": "creatures or objects touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "description": "none; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "witch": 2,
+        "psychic": 2,
+        "occultist": 2
+      }
+    },
+    "level": 2,
+    "school": "ill",
+    "subschool": "glamer",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a piece of gauze"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>mask dweomer</i> (Advanced Player's Guide 232), except you divide the duration in 1-day increments among the creatures or objects touched.</p>"
+  }
+}

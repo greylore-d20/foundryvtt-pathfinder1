@@ -1,0 +1,53 @@
+{
+  "_id": "C2FVz32kc2QRrFtj",
+  "name": "Ancestral Weapon",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You can summon a simple or martial weapon from your family's history that is appropriate for your current size. You are considered proficient with this weapon.</p>\n<p>At 3rd level, the weapon is considered masterwork.</p>\n<p>At 7th level, 15th level, and 19th level, the weapon gains a cumulative +1 enhancement bonus.</p>\n<p>At 11th level, the weapon gains the ghost touch weapon property.</p>\n<p>You can use this ability for a number of minutes per day equal to your oracle level. This duration does not need to be consecutive, but it must be used in 1-minute increments. The weapon disappears after 1 round if it leaves your grasp.</p>"
+    },
+    "tags": ["Revelation", "Ancestor Mystery"],
+    "actions": [
+      {
+        "_id": "lefgruatyl43iwe0",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.oracle.level"
+    },
+    "tag": "classFeat_ancestralWeapon",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

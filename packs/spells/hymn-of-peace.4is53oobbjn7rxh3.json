@@ -1,0 +1,56 @@
+{
+  "_id": "4is53oobbjn7rxh3",
+  "name": "Hymn of Peace",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "8k9h9976ts7w707b",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "range": {
+          "value": "40",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "spellArea": "40-ft.-radius burst centered on you"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 7,
+        "oracle": 7,
+        "bard": 6
+      }
+    },
+    "level": 7,
+    "school": "abj",
+    "types": "good",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>Each time a subject of this spell attempts to attack another creature or object, or otherwise perform an aggressive or damaging action toward a creature or object, it must attempt a Will save. If the save succeeds, the subject can attack normally. If the save fails, the subject cannot follow through with the attack and loses that part of its action. Creatures not taking violent actions are unaffected by this spell.</p>"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "_id": "98277u53x5r925cm",
+  "name": "Forced Repentance",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "9r6a5skmtcd9z4eh",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one evil creature without the evil subtype"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "paladin": 4,
+        "inquisitor": 4
+      },
+      "subDomain": {
+        "Redemption": 4
+      }
+    },
+    "level": 4,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "emotion, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>You force an evil creature that does not have the evil subtype to momentarily reflect on its past actions and be overcome by grief and conscience. The target immediately drops prone and begins to loudly confess all of its sins and transgressions to the caster for the duration of the spell. The spell immediately ends if you move out of line of sight or if the target is attacked.</p>"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "_id": "vl4xo83qihqqpkb9",
+  "name": "Cold Iron Fetters",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "id68m8f1f8c6f92n",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "cleric": 5,
+        "oracle": 5,
+        "ranger": 3,
+        "summoner": 4,
+        "witch": 5,
+        "inquisitor": 4,
+        "shaman": 5,
+        "occultist": 5,
+        "hunter": 3,
+        "unchained Summoner": 4
+      }
+    },
+    "level": 5,
+    "school": "con",
+    "subschool": "creation",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "miniature cold iron shackle"
+    },
+    "sr": false,
+    "shortDescription": "<p>Cold iron shackles materialize around the target's limbs, reducing each of the target's movement speeds by half. Any flying target has its maneuverability worsened by two steps (from good to poor, for example, to a minimum of clumsy maneuverability). Additionally, if the target has DR/cold iron or DR/cold iron and magic, it is unable to use supernatural or spell-like means of movement (such as <i>dimension door</i>, <i>teleport</i>, or tree meld) for the duration of the spell.</p>"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "_id": "enka5ksVxZcCynR8",
+  "name": "Primal Fury",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/slice-spirit-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 13th level, you can unleash a more primal version of yourself as a free action. This functions as transformation, with the following exceptions. You can use this ability for a number of rounds per day equal to your psychic level. These rounds do not need to be consecutive. You can end the effect as a free action.</p>\n<p>After using this ability, you are fatigued for a number of rounds equal to twice the number of rounds spent in primal fury.</p>\n<p>You cannot enter a new primal fury while fatigued or exhausted. If you fall unconscious, your primal fury immediately ends.</p>"
+    },
+    "actions": [
+      {
+        "_id": "kl5e7y7ed6hv0g3l",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/slice-spirit-3.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.psychic.level"
+    },
+    "tag": "classFeat_primalFury",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Psychic"]]
+    },
+    "abilityType": "su"
+  }
+}

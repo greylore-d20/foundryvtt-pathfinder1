@@ -1,0 +1,54 @@
+{
+  "_id": "wK9bxQqe49GfT9xh",
+  "name": "Scythe of Evil",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_24.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can give a weapon touched the unholy special weapon quality for a number of rounds equal to 1/2 your cleric level. You can use this ability once per day at 8th level, and an additional time per day for every four levels beyond 8th.</p>"
+    },
+    "actions": [
+      {
+        "_id": "t3f1borlajf8rms3",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_24.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "floor(@classes.cleric.level / 2)",
+          "units": "round"
+        },
+        "target": {
+          "value": "one weapon"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "floor((@classes.cleric.level - 4) / 4)"
+    },
+    "tag": "classFeat_scytheOfEvil",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "_id": "XMd0WJcHTPI1ftbk",
+  "name": "Spell Destruction",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/link-blue-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Element</b> aether; <b>Type</b> utility (Sp); <b>Level</b> 7; <b>Burn</b> 0</p>\n<p>You weave strands of aether around yourself in order to deflect targeted magic back at the caster. Until the beginning of your next turn, every time you are targeted by a spell that could be affected by spell turning, roll 1d10–1 and determine the effects of the spell as if you had @Compendium[pf1.spells.uyn64zazmaydnk7o]{Spell Turning} with that many spell levels remaining.</p>\n<p>You can accept 1 point of burn to increase the duration to 10 minutes per kineticist level you possess, but in that case, it deflects only 10 spell levels in total (still rolled 1d10–1 at a time) before ending early.</p>"
+    },
+    "actions": [
+      {
+        "_id": "qrdu2vfrwsyz948k",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/link-blue-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_spellDestruction",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Kineticist"]]
+    },
+    "abilityType": "sp"
+  }
+}

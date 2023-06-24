@@ -1,0 +1,47 @@
+{
+  "_id": "OndzcdUxHba76MZH",
+  "name": "Destruction Blessing: Heart of Carnage",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/slice-orange-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, you can touch an ally and bless it with even greater destructive power. For 1 minute, the ally gains a +4 insight bonus on attack rolls made to confirm critical hits and has a 50% chance to treat any critical hit or sneak attack against it as a normal hit.</p>"
+    },
+    "actions": [
+      {
+        "_id": "q7fgxbbyhrmfrxm2",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/slice-orange-3.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "ally touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_destructionBlessingHeartOfCarnage",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

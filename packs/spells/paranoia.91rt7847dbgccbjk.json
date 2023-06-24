@@ -1,0 +1,59 @@
+{
+  "_id": "91rt7847dbgccbjk",
+  "name": "Paranoia",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "er995twwodjnkzds",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "bard": 2,
+        "witch": 2,
+        "psychic": 2,
+        "medium": 1,
+        "mesmerist": 1
+      }
+    },
+    "level": 2,
+    "school": "ill",
+    "subschool": "phantasm",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>The target believes everyone it sees is an enemy. The target becomes hostile to all creatures, treating all creatures as enemies and only itself as an ally. The target must attempt attacks of opportunity whenever any creature provokes them. Finally, whenever the target is adjacent to two or more creatures, its paranoia overwhelms it, and it takes a -2 penalty on attack rolls, weapon damage rolls, ability checks, skill checks, and saving throws.</p>"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "_id": "wsbkqtbvovp47kzi",
+  "name": "Hunger for Flesh, Mass",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "s55i69ifa5e8prmm",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one humanoid, magical beast, or monstrous humanoid/ level, no two of which can be more than 30 feet apart"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 7,
+        "wizard": 7,
+        "cleric": 7,
+        "oracle": 7,
+        "witch": 7,
+        "shaman": 7,
+        "psychic": 7,
+        "spiritualist": 6
+      }
+    },
+    "level": 7,
+    "school": "nec",
+    "types": "evil, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a ghoul fang"
+    },
+    "shortDescription": "<p>This spell functions like <i>Hunger for Flesh</i>, except that it affects multiple targets. When forced to feed by the spell, affected creatures attack creatures not affected by this spell if there are any such appropriate creatures nearby, but otherwise they attack other affected creatures.</p>"
+  }
+}

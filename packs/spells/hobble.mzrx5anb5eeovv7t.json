@@ -1,0 +1,65 @@
+{
+  "_id": "mzrx5anb5eeovv7t",
+  "name": "Hobble",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "2sfjnq5j8swpi7c7",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 20 feet apart"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "ranger": 1,
+        "bard": 1,
+        "inquisitor": 1,
+        "magus": 1,
+        "bloodrager": 1,
+        "mesmerist": 1,
+        "hunter": 1
+      }
+    },
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a drop of glue"
+    },
+    "shortDescription": "<p>This spell disrupts the method a target uses for movement. Creatures under the effects of this spell move at half their base speed (rounded down to the nearest 5-foot increment) but can still take 5-foot steps as normal. Incorporeal creatures and creatures flying with perfect maneuverability are immune to the effects of this spell. Each round, a target receives another save to end the effect.</p>"
+  }
+}

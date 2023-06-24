@@ -1,0 +1,62 @@
+{
+  "_id": "h9JemJZJl9jJWZX5",
+  "name": "Drunkard's Breath",
+  "type": "spell",
+  "img": "icons/magic/air/fog-gas-smoke-green.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "w2voo58jp6c0g11h",
+        "name": "Use",
+        "img": "icons/magic/air/fog-gas-smoke-green.webp",
+        "activation": {
+          "type": "standard"
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "uses": {
+          "autoDeductChargesCost": "1 + @sl"
+        },
+        "measureTemplate": {
+          "type": "cone",
+          "size": "30"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates; see text"
+        },
+        "spellArea": "cone-shaped burst"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "bard": 2,
+        "cleric": 2,
+        "oracle": 2,
+        "skald": 2,
+        "warpriest": 2
+      }
+    },
+    "level": 2,
+    "school": "con",
+    "subschool": "creation",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a rotten egg or cabbage leaves"
+    },
+    "spellbook": "",
+    "sr": false,
+    "shortDescription": "<p>This spell emanates from your mouth and functions like @Compendium[pf1.spells.kjke96zd1j1jz48z]{Stinking Cloud}, except as noted above. The effect is barely visible and does not obscure vision. The nausea effect resembles that of an extreme hangover. This is a poison effect. Cayden Cailean's church uses this spell to disperse angry crowds, such as when celebrations get out of hand.</p>"
+  }
+}

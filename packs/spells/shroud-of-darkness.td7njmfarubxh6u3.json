@@ -1,0 +1,68 @@
+{
+  "_id": "td7njmfarubxh6u3",
+  "name": "Shroud of Darkness",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "rm4djii6jehw53on",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "target": {
+          "value": "one creature/3 levels, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "cleric": 5,
+        "oracle": 5,
+        "bard": 5,
+        "inquisitor": 5,
+        "antipaladin": 4,
+        "shaman": 5,
+        "mesmerist": 4
+      }
+    },
+    "level": 5,
+    "school": "evo",
+    "types": "darkness",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a pinch of black sand"
+    },
+    "shortDescription": "<p>With a dark incantation and a gesture of your hand over your eyes, you cause a shroud of <i>darkness</i> to descend upon the targets of this spell. The subjects treat the light level as two steps lower than normal for the duration of this spell. Bright light becomes dim light, normal light becomes <i>darkness</i>, and areas of dim light and <i>darkness</i> become supernaturally dark (as <i>darkness</i>, but even creatures with darkvision cannot see).</p>"
+  }
+}

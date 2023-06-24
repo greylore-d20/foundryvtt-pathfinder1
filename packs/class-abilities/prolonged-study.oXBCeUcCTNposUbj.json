@@ -1,0 +1,41 @@
+{
+  "_id": "oXBCeUcCTNposUbj",
+  "name": "Prolonged Study",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/weapons/sword-cane.png",
+  "system": {
+    "description": {
+      "value": "<p>The investigator can study his opponents for long periods of time. The effects of his studied combat ability last for a number of rounds equal to twice his Intelligence modifier (minimum 2) or until he deals damage with a studied strike, whichever comes f irst.</p>\n<p>The investigator must be at least 13th level to select this talent.</p>"
+    },
+    "actions": [
+      {
+        "_id": "j6g2ozvmz9shfey4",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/weapons/sword-cane.png",
+        "activation": {
+          "type": "special"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "special"
+          }
+        },
+        "duration": {
+          "value": "max(2, @abilities.int.mod)",
+          "units": "round"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_prolongedStudy",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Investigator"]]
+    },
+    "abilityType": "ex"
+  }
+}

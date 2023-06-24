@@ -1,0 +1,72 @@
+{
+  "_id": "zcFwzE3jAqNKY9Xn",
+  "name": "Elemental Ray",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/beam-sky-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>Starting at 1st level, you can unleash an elemental ray as a standard action, targeting any foe within 30 feet as a ranged touch attack. This ray deals 1d6 points of damage of your energy type + 1 for every two sorcerer levels you possess. You can use this ability a number of times per day equal to 3 + your <em>Charisma</em> modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "7moykqf2d8wfwcsg",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/beam-sky-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "spec"
+        },
+        "uses": {
+          "autoDeductChargesCost": "0"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d6 + floor(@classes.sorcerer.level / 2)",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_elementalRay",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

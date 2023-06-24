@@ -1,0 +1,60 @@
+{
+  "_id": "4gxx3bodf76e63en",
+  "name": "River of Wind",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "s61pn62ftzitt9jr",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "value": "120",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude partial"
+        },
+        "spellArea": "120-ft. line"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "druid": 4,
+        "magus": 4,
+        "bloodrager": 4,
+        "occultist": 4,
+        "hunter": 4
+      }
+    },
+    "level": 4,
+    "school": "evo",
+    "types": "air",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>Summoning up the power of the tempest, you direct a current of forceful winds where you please. This spell creates a 5-foot-diameter line of wind-the direction of the wind is away from your location when you cast the spell, and remains constant in that direction for the spell duration. Creatures caught in a <i>river of wind</i> take 4d6 nonlethal damage and are knocked prone. A successful Fortitude save halves the damage and prevents being knocked prone.</p><p>A creature that begins its turn wholly or partially within a <i>river of wind</i> must make a Fortitude save or be pushed 20 feet in the wind's direction of flow, take 2d6 nonlethal damage, and be knocked prone-a successful Fortitude save means the creature merely takes 1d6 nonlethal damage. Creatures under the effect of <i>freedom of movement</i> and creatures with the air subtype are unaffected by a <i>river of wind</i>.</p>"
+  }
+}

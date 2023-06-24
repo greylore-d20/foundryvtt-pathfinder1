@@ -1,0 +1,64 @@
+{
+  "_id": "t8591zpp68cvxibv",
+  "name": "Domination Link",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ny34xsfaja8ssw8m",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration, up to 1 min./level (D)"
+        },
+        "range": {
+          "value": "60",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates; see text"
+        },
+        "spellArea": "cone-shaped emanation"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "bard": 3,
+        "witch": 3,
+        "inquisitor": 3
+      }
+    },
+    "level": 3,
+    "school": "div",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true,
+      "divineFocus": 3
+    },
+    "materials": {
+      "focus": "a copper piece"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>detect thoughts</i>, with the additional ability to find echoes of the thoughts of a creature mentally controlling the target. For example, if the target has been dominated by a vampire, you can use evidence left in the target's mind to learn about that vampire. Each minute you concentrate on the spell, you can learn your choice of one of the following pieces of information. <i>Direction</i>: The controller's general direction and distance. <i>Emotion</i>: The controller's emotional state (gloating, sated, frightened, angry, and so on). <i>Image</i>: A powerful iconic image relevant to the controller or its connection to the target, such as a symbol on a door or a name on a gravestone. <i>Location</i>: The controller's general location, such as \"in a large city\" or \"on a ship.\" <i>Name</i>: The name by which the target knows its controller (if any).  All of this information is based on the last time the influencing creature linked itself to the target, either to issue a command or to receive sensory input from the target. For example, if at nightfall a vampire commanded a dominated victim to walk to a cemetery, this spell can reveal the vampire's general location at that time, though it may have moved since then.</p>"
+  }
+}

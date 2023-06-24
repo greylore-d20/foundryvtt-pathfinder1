@@ -1,0 +1,64 @@
+{
+  "_id": "63bmtmuvy392gkv8",
+  "name": "Complex Hallucination",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "dznxw4jv4kdhl4mu",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration + 3 rounds"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "long"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "15"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "bard": 4,
+        "witch": 4,
+        "magus": 4,
+        "psychic": 4,
+        "medium": 3,
+        "mesmerist": 4,
+        "occultist": 4
+      }
+    },
+    "level": 4,
+    "school": "ill",
+    "subschool": "phantasm",
+    "types": "mind-affecting",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell functions as <i>audiovisual hallucination</i> (see page 204), except that the phantasm you create can also include olfactory, tactile, and thermal effects.</p>"
+  }
+}

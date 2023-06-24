@@ -1,0 +1,61 @@
+{
+  "_id": "aCyDEyMB5PKJAuTi",
+  "name": "Monkey Goblin",
+  "type": "race",
+  "img": "systems/pf1/icons/skills/affliction_24.jpg",
+  "system": {
+    "description": {
+      "value": "<h2>Standard Racial Traits</h2><ul><li><b>Ability Score Modifiers:</b> Monkey goblins are fast, but foolishly impulsive and disagreeable. As a result monkey goblins gain a +4 bonus to <em>Dexterity</em>, but suffer a –2 penalty to <em>Wisdom</em> and <em>Charisma</em>.</li><li><b>Size:</b> Monkey goblins are Small creatures and thus gain a +1 <em>size bonus</em> to their AC and <em>attack rolls</em>, but suffer a –1 penalty to their <em>CMD</em> and on <em>combat maneuver</em> checks, and a +4 <em>size bonus</em> on <em>Stealth</em> checks.</li><li><b>Speed (Slow Speed):</b> Monkey goblins have a base speed of 20 feet.</li><li><b>Natural Climber:</b> Monkey goblins have a climb speed of 30 feet.</li><li><b>Languages:</b> Monkey goblins begin play speaking Goblin. Monkey goblins with high <em>Intelligence</em> scores can choose from the following: Common, Draconic, Dwarven, Gnoll, Gnome, Halfling, Orc.</li><li><b>Prehensile Tail:</b> Monkey goblins have long, flexible tails that they can use to carry objects. They cannot wield weapons with their tails, but the tails do allow them to retrieve small objects stowed on their persons as a <em>swift action</em>.</li></ul><h3>Defensive Racial Traits</h3><ul><li><b>Fearless:</b> Monkey goblins gain a +2 <em>racial bonus</em> on all saving throws against fear.</li></ul><h3>Skill Racial Traits</h3><ul><li><b>Acrobatic:</b> Monkey goblins gain a +2 <em>racial bonus</em> on <em>Acrobatics</em> and <em>Stealth</em> checks.</li></ul><h3>Senses Racial Traits</h3><ul><li><b>Low-Light Vision:</b> Monkey goblins can see twice as far as humans in conditions of dim light.</li></ul>"
+    },
+    "tags": ["Bestiary"],
+    "changes": [
+      {
+        "_id": "030rnu3x",
+        "formula": "4",
+        "subTarget": "dex",
+        "modifier": "racial"
+      },
+      {
+        "_id": "fazi52ji",
+        "formula": "-2",
+        "subTarget": "wis",
+        "modifier": "racial"
+      },
+      {
+        "_id": "6dfeetxp",
+        "formula": "-2",
+        "subTarget": "cha",
+        "modifier": "racial"
+      },
+      {
+        "_id": "82s9ccrc",
+        "formula": "2",
+        "subTarget": "skill.acr",
+        "modifier": "racial"
+      },
+      {
+        "_id": "ib43m387",
+        "formula": "2",
+        "subTarget": "skill.ste",
+        "modifier": "racial"
+      }
+    ],
+    "contextNotes": [
+      {
+        "formula": "",
+        "operator": "add",
+        "target": "savingThrows",
+        "subTarget": "allSavingThrows",
+        "modifier": "",
+        "priority": 0,
+        "value": 0,
+        "text": "+[[2]] Racial vs. Fear Effects"
+      }
+    ],
+    "languages": {
+      "value": ["goblin"]
+    },
+    "size": "sm",
+    "subTypes": ["Goblinoid"]
+  }
+}

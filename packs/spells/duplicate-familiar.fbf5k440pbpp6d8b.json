@@ -1,0 +1,63 @@
+{
+  "_id": "fbf5k440pbpp6d8b",
+  "name": "Duplicate Familiar",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "8teehpe335ou2lk8",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        },
+        "spellEffect": "temporary duplicate of familiar touched"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "alchemist": 4,
+        "witch": 5
+      }
+    },
+    "level": 5,
+    "school": "con",
+    "subschool": "creation",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "focus": true
+    },
+    "materials": {
+      "value": "alchemically preserved mockingfey feathers",
+      "focus": "familiar"
+    },
+    "sr": false,
+    "shortDescription": "<p>You create a duplicate of a familiar. The familiar's master can use the duplicate as if it were his familiar in all respects, though he doesn't gain the bonus special ability from more  than one familiar at a time. When the spell's duration expires, the familiar duplicate shrivels into nothing, even if petrified or otherwise transformed.</p>"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "_id": "19i23oyn5ysfh633",
+  "name": "Fumblestep",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "8o4628cvztinvi66",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level or until discharged (see text)"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "description": "none (see text)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "witch": 1,
+        "mesmerist": 1,
+        "spiritualist": 1
+      }
+    },
+    "school": "con",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a sharp pebble"
+    },
+    "shortDescription": "<p><i>Fumblestep</i> coats a target's feet in slick ectoplasm that retains some psychic connection to your mind. While the spell remains in effect, the target creature takes a -1 penalty on Reflex saving throws and Acrobatics checks.  At any point during the spell's duration while the target remains in range, you can discharge the spell as a standard action, mentally tugging at the ectoplasm to perform a trip combat maneuver, using your caster level instead of your base attack bonus, and using your Charisma, Intelligence, or Wisdom modifier, whichever is highest, instead of your Strength modifier. This trip attempt does not provoke an attack of opportunity and cannot be affected by feats or other means of altering a trip combat maneuver's effects.</p>"
+  }
+}

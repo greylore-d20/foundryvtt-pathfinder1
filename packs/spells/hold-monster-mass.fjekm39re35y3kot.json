@@ -1,0 +1,67 @@
+{
+  "_id": "fjekm39re35y3kot",
+  "name": "Hold Monster, Mass",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "sshy2on5f8ujrfh5",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level; see text"
+        },
+        "target": {
+          "value": "one or more creatures, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 9,
+        "wizard": 9,
+        "witch": 9,
+        "psychic": 9
+      },
+      "subDomain": {
+        "Legislation": 9
+      }
+    },
+    "level": 9,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "one hard metal bar or rod, which can be as small as a three-penny nail"
+    },
+    "shortDescription": "<p>This spell functions like <i>hold person,</i> except that it affects multiple creatures and holds any living creature that fails its Will save.</p>"
+  }
+}

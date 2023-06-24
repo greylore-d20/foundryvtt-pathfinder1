@@ -1,0 +1,69 @@
+{
+  "_id": "KNRgpSzXPdrELTn2",
+  "name": "Dwarven Dorn-Dergar",
+  "type": "weapon",
+  "img": "icons/weapons/thrown/bolas-steel.webp",
+  "system": {
+    "description": {
+      "value": "<p><b>Source</b> <em>Adventurer's Armory 2 pg. 8</em>, <em>Dwarves of Golarion pg. 21</em></p><h3><span title=\"PFS Legal\">[PFS]</span> Statistics</h3><p><b>Cost</b> 50 gp <b>Weight</b> 15 lbs.</p><p><b>Damage</b> 1d8 (small), 1d10 (medium); <b>Critical</b> x2; <b>Range</b> -; <b>Type</b> B; <b>Special</b> reach, see text</p><p><b>Category</b> Two-Handed; <b>Proficiency</b> Exotic</p><p><b>Weapon Groups</b> Flails</p><h3>Description</h3><p>This 10-foot-long chain is weighted at the end by a ball of solid iron the size of a large fist. By adjusting the slack of the chain, the weapon can be used either with or without reach. Changing between using it as a normal weapon and a reach weapon is a move action.</p>"
+    },
+    "tags": ["Dwarven Dorn-Dergar", "Dwarven"],
+    "weight": {
+      "value": 15
+    },
+    "price": 50,
+    "hardness": 10,
+    "actions": [
+      {
+        "_id": "usdfuyii8chwtxu2",
+        "name": "Attack",
+        "img": "icons/weapons/thrown/bolas-steel.webp",
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": "0",
+          "units": "reach"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 10, @size)",
+              "type": {
+                "values": ["bludgeoning"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "damageMult": 1.5
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "tag": "dwarvenDorndergar",
+    "held": "2h",
+    "weaponGroups": {
+      "value": ["flails"]
+    },
+    "subType": "exotic",
+    "weaponSubtype": "2h"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "_id": "pEODJDoTk7uhCZY7",
+  "name": "Trapfinding",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/lockpick.jpg",
+  "system": {
+    "description": {
+      "value": "<p>A rogue adds 1/2 her level to <em>Perception</em> <em>skill checks</em> made to locate traps and to <em>Disable Device</em> <em>skill checks</em> (minimum +1). A rogue can use <em>Disable Device</em> to disarm magic traps.</p>"
+    },
+    "actions": [
+      {
+        "_id": "oz0dbhtu999vdrt7",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/lockpick.jpg",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "changes": [
+      {
+        "_id": "vhodw42z",
+        "formula": "max(1, floor(@classes.rogue.level / 2))",
+        "subTarget": "skill.dev",
+        "modifier": "untyped"
+      }
+    ],
+    "contextNotes": [
+      {
+        "text": "+[[max(1, floor(@classes.rogue.level / 2))]] vs Traps",
+        "target": "skill",
+        "subTarget": "skill.per"
+      }
+    ],
+    "tag": "classFeat_trapfinding",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Rogue"]]
+    }
+  }
+}

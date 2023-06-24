@@ -1,0 +1,66 @@
+{
+  "_id": "QCwge35wm645mWQk",
+  "name": "Solar Wind",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You can unleash a blast of searing wind at a single target within 30 feet as a ranged touch attack with no range increment. Your solar wind deals 1d6 points of fire damage + 1 for every 2 oracle levels you possess.</p>\n<p>At 7th level, you can also knock an opponent back, treating the blast as a bull rush combat maneuver that uses your caster level + your Charisma modifier in place of your CMB.</p>\n<p>You can use this ability a number of times per day equal to 3 + your Charisma modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "2h4uvokz8az5vqli",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d6 + floor(@classes.oracle.level / 2)",
+              "type": {
+                "values": ["fire"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_solarWind",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

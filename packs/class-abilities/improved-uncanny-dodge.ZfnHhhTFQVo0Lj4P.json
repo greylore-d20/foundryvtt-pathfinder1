@@ -1,0 +1,47 @@
+{
+  "_id": "ZfnHhhTFQVo0Lj4P",
+  "name": "Improved Uncanny Dodge",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/wind-stance.jpg",
+  "system": {
+    "description": {
+      "value": "<p>This character can no longer be flanked. This defense denies a rogue the ability to sneak attack the character by flanking her, unless the attacker has at least four more rogue levels than the target has class levels.</p>\n<p>If a character already has <em>uncanny dodge</em> (see above) from another class, the levels from the classes that grant <em>uncanny dodge</em> stack to determine the minimum rogue level required to flank the character.</p>"
+    },
+    "actions": [
+      {
+        "_id": "62oxegxcf5hd54nq",
+        "name": "Use",
+        "img": "systems/pf1/icons/feats/wind-stance.jpg",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "contextNotes": [
+      {
+        "subTarget": "ac",
+        "target": "misc",
+        "text": "Cannot be flanked"
+      }
+    ],
+    "tag": "classFeat_improvedUncannyDodge",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Barbarian"]]
+    },
+    "abilityType": "ex"
+  }
+}

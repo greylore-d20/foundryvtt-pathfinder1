@@ -1,0 +1,71 @@
+{
+  "_id": "iHgN3OH0lPEMM6on",
+  "name": "Diamond Spray",
+  "type": "spell",
+  "img": "icons/magic/light/projectile-needles-salvo-white.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "oya4qlo9aorxcvw3",
+        "name": "Use",
+        "img": "icons/magic/light/projectile-needles-salvo-white.webp",
+        "activation": {
+          "type": "standard"
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "value": "20",
+          "units": "ft"
+        },
+        "uses": {
+          "autoDeductChargesCost": "1 + @sl"
+        },
+        "measureTemplate": {
+          "type": "cone",
+          "size": "20"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(min(10, @cl))d6",
+              "type": {
+                "values": ["slashing"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        },
+        "effectNotes": ["Ignore up to [[min(10, floor(@cl / 2))[Caster Level]]] hardness"],
+        "spellArea": "cone-shaped burst"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "arcanist": 3,
+        "sorcerer": 3,
+        "wizard": 3
+      }
+    },
+    "level": 3,
+    "school": "evo",
+    "types": "earth",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a lump of coal"
+    },
+    "spellbook": "",
+    "shortDescription": "<p>A cone of tiny, sparkling slivers as hard and sharp as filed diamonds springs from your outstretched fingers at tremendous speed. Any creature in the area of the torrent takes 1d6 points of slashing damage per caster level (maximum 10d6). These magical slivers are treated as adamantine and cold iron for the purpose of overcoming damage reduction. In addition, this spell bypasses up to 1 point of an object's hardness per 2 caster levels (maximum 10).</p>"
+  }
+}

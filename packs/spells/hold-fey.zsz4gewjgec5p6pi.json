@@ -1,0 +1,67 @@
+{
+  "_id": "zsz4gewjgec5p6pi",
+  "name": "Hold Fey",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "6i6h05ga0ycbl7bu",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D); see text"
+        },
+        "target": {
+          "value": "one fey creature"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "cleric": 2,
+        "oracle": 2,
+        "bard": 2,
+        "witch": 2,
+        "inquisitor": 2
+      }
+    },
+    "level": 3,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true,
+      "divineFocus": 3
+    },
+    "materials": {
+      "focus": "a small, straight piece of iron"
+    },
+    "shortDescription": "<p>This spell functions as per <i>hold person</i>, except it affects a fey instead of a humanoid.</p>"
+  }
+}

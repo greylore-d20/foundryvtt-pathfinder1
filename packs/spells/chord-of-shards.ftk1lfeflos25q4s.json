@@ -1,0 +1,53 @@
+{
+  "_id": "ftk1lfeflos25q4s",
+  "name": "Chord of Shards",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "7n6az7127p62qmxf",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "value": "15",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex negates"
+        },
+        "spellArea": "cone-shaped burst"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "bard": 1
+      }
+    },
+    "school": "evo",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>During your bardic performance, you can strike a chord whose notes transform into a shower of razor sharp, crystalline shards. The shards deal 2d6 points of piercing damage to all creatures caught in the area of effect.</p>"
+  }
+}

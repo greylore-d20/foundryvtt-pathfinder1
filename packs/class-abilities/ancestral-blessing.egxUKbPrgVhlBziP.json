@@ -1,0 +1,48 @@
+{
+  "_id": "egxUKbPrgVhlBziP",
+  "name": "Ancestral Blessing",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman can grant the blessings of her ancestors to any ally within 30 feet. The blessed creature receives a +1 competence bonus on attack and damage rolls. This blessing lasts until the blessed creature hits with an attack or deals damage to a target. The shaman can have only one ancestral blessing active at a time. If the shaman uses this ability again, the previous blessing immediately ends.</p>\n<p>At 8th level and 16th level, the bonuses provided by this blessing increase by 1.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ir6ao0zrdvf455st",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "seeText"
+        },
+        "target": {
+          "value": "one ally"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_ancestralBlessing",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

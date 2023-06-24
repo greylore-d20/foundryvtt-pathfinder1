@@ -1,0 +1,55 @@
+{
+  "_id": "QMSZPx7zxTLmNHtx",
+  "name": "Go with the Flow",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/blue_20.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You can touch a creature as a standard action to suppress its strong emotions. The target is affected as the calm emotions spell, except it can still take violent actions and violent actions against the target do not end the effect. This effect lasts a number of rounds equal to 1/2 your cleric level (minimum 1). You can use this ability a number times per day equal to 3 + your Wisdom modifier.</p>\n<p>This power replaces the Icicle power of the Water Domain.</p>"
+    },
+    "actions": [
+      {
+        "_id": "uijvlk6h74pkar7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/blue_20.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "floor(@classes.cleric.level / 2)",
+          "units": "round"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.wis.mod"
+    },
+    "tag": "classFeat_goWithTheFlow",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "_id": "xoc3vhg3btmfjauq",
+  "name": "Cure Light Wounds",
+  "type": "spell",
+  "img": "systems/pf1/icons/spells/heal-sky-1.jpg",
+  "system": {
+    "actions": [
+      {
+        "_id": "9p8s460qd2jgearg",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/heal-sky-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d8 + min(5, @cl)",
+              "type": {
+                "values": ["positive"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will half (harmless); see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 1,
+        "oracle": 1,
+        "druid": 1,
+        "ranger": 2,
+        "bard": 1,
+        "paladin": 1,
+        "alchemist": 1,
+        "witch": 1,
+        "inquisitor": 1,
+        "adept": 1,
+        "shaman": 1,
+        "occultist": 1,
+        "spiritualist": 1,
+        "hunter": 1
+      },
+      "domain": {
+        "Healing": 1
+      }
+    },
+    "school": "con",
+    "subschool": "healing",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "shortDescription": "<p>When laying your hand upon a living creature, you channel positive energy that cures 1d8 points of damage + 1 point per caster level (maximum +5). Since undead are powered by negative energy, this spell deals damage to them instead of curing their wounds. An undead creature can apply spell resistance, and can attempt a Will save to take half damage.</p>"
+  }
+}

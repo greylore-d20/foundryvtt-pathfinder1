@@ -1,0 +1,59 @@
+{
+  "_id": "qn947hen3wrelxhz",
+  "name": "Create Food and Water",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "z8lkgv3z68k0ckf1",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "24 hours; see text"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "other",
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "food and water to sustain three humans or one horse/level for 24 hours"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "shaman": 3,
+        "occultist": 3
+      },
+      "subDomain": {
+        "Family": 3
+      }
+    },
+    "level": 3,
+    "school": "con",
+    "subschool": "creation",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>The food that this spell creates is simple fare of your choice--highly nourishing, if rather bland. Food so created decays and becomes inedible after 24 hours, although it can be kept fresh for another 24 hours by casting a <i>purify food and water</i> spell on it. The water created by this spell is just like clean rain water, and it doesn't go bad as the food does.</p>"
+  }
+}

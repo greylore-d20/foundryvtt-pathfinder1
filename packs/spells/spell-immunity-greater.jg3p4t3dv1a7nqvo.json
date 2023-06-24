@@ -1,0 +1,57 @@
+{
+  "_id": "jg3p4t3dv1a7nqvo",
+  "name": "Spell Immunity, Greater",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "66wvqct22l4ukx17",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 min./level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 8,
+        "oracle": 8,
+        "psychic": 8
+      }
+    },
+    "level": 8,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>This spell functions like <i>spell immunity</i>, except the immunity applies to spells of 8th level or lower. A creature can have only one <i>spell immunity</i> or <i>greater spell immunity</i> spell in effect on it at a time.</p>"
+  }
+}

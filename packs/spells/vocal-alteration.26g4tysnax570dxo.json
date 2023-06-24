@@ -1,0 +1,62 @@
+{
+  "_id": "26g4tysnax570dxo",
+  "name": "Vocal Alteration",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "31p03zkg9iqp6t96",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "one humanoid creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "bard": 1,
+        "alchemist": 1,
+        "witch": 1,
+        "inquisitor": 1,
+        "psychic": 1,
+        "medium": 1,
+        "mesmerist": 1,
+        "occultist": 1
+      }
+    },
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You alter the target's voice to something else. For example, you could make the target's voice high-pitched, husky, or nasal, or change its accent to an accent you are familiar with.</p><p>If this spell is used as part of a disguise, the target gets a +10 bonus on the Disguise check when trying to fool a listener.</p><p>The target can vary the disguised voice just as it could its normal voice. For example, a halfling female given a male dwarf noble's voice and accent could speak in falsetto, with a rural halfling accent, and so on.</p>"
+  }
+}

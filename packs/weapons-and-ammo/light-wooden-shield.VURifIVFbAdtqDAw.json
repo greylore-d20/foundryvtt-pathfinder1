@@ -1,0 +1,67 @@
+{
+  "_id": "VURifIVFbAdtqDAw",
+  "name": "Light Wooden Shield",
+  "type": "weapon",
+  "img": "systems/pf1/icons/items/armor/shield-light-wood.png",
+  "system": {
+    "description": {
+      "value": "<p>You can bash an opponent with a shield, using it as an off-hand weapon. Used this way, a shield is a martial bludgeoning weapon. If you use your shield as a weapon, you lose its AC bonus until your next turn. An enhancement bonus on a shield does not improve the effectiveness of a shield bash made with it, but the shield can be made into a magic weapon in its own right.</p>"
+    },
+    "tags": ["Light Wooden Shield"],
+    "weight": {
+      "value": 5
+    },
+    "price": 3,
+    "hp": {
+      "max": 7,
+      "value": 7
+    },
+    "hardness": 5,
+    "actions": [
+      {
+        "_id": "uoo0zcjnt1iva87w",
+        "name": "Attack",
+        "img": "systems/pf1/icons/items/armor/shield-light-wood.png",
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 3, @size)",
+              "type": {
+                "values": ["bludgeoning"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": "20",
+          "critMult": "2"
+        },
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "subType": "martial"
+  }
+}

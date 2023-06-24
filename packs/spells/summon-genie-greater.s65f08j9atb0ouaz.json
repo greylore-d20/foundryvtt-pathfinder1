@@ -1,0 +1,63 @@
+{
+  "_id": "s65f08j9atb0ouaz",
+  "name": "Summon Genie, Greater",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "c8olx7s17mlxplpg",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "other",
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "one summoned genie"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "cleric": 6,
+        "oracle": 6,
+        "summoner": 5,
+        "witch": 6,
+        "unchained Summoner": 5
+      }
+    },
+    "level": 6,
+    "school": "con",
+    "subschool": "summoning",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true,
+      "divineFocus": 3
+    },
+    "materials": {
+      "focus": "an oil lamp worth at least 50 gp"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>lesser summon genie</i>, except you can summon one shaitan, 1d3 djinn, or 1d4+1 jann.</p>"
+  }
+}

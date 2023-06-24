@@ -1,0 +1,55 @@
+{
+  "_id": "2VoHWYnkPDy0V8lV",
+  "name": "Altered Form",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/red_27.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 3rd level, you gain the ability to <em>change shape</em> (as the spell @Compendium[pf1.spells.kouqz0pm1xl8xilm]{Alter Self}) for a number of minutes per day equal to your sorcerer level. These rounds need not be consecutive. At 17th level, the duration of this effect is no longer limited, and you may remain in your chosen form as long as you want.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ldkntxklby07y9va",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/red_27.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "Self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.sorcerer.level"
+    },
+    "tag": "classFeat_alteredForm",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

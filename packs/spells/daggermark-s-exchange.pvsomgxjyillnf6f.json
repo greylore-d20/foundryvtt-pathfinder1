@@ -1,0 +1,66 @@
+{
+  "_id": "pvsomgxjyillnf6f",
+  "name": "Daggermark's Exchange",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "du43ktg5gitvav52",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "cleric": 3,
+        "oracle": 3,
+        "druid": 2,
+        "alchemist": 2,
+        "psychic": 3,
+        "occultist": 3,
+        "hunter": 2
+      }
+    },
+    "level": 3,
+    "school": "trs",
+    "types": "poison",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a dose of poison"
+    },
+    "sr": false,
+    "shortDescription": "<p>You swallow a dose of poison with no effect and regurgitate a dose of a different poison (your choice) into the old container (or another you have on hand). Attempt a Craft (alchemy) check against the new poison's DC. If you succeed, you create a dose of your chosen poison. If you fail, the poison you regurgitate is inert. If you roll a natural 1, you expose yourself to the original poison (although you remain immune to that poison if you have venom immunity or a similar class feature or ability). The new poison's price must be the same as or less than the original poison's price.</p>"
+  }
+}

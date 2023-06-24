@@ -1,0 +1,42 @@
+{
+  "_id": "F8E0iMm938v1oOCg",
+  "name": "Expanded Awareness",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/slice-spirit-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a move action, you can focus on your senses and gain one of the following sensory abilities: blindsense (10 feet), darkvision (30 feet), low-light vision, or scent. This new sense lasts for 1 round per psychic level.</p>\n<p>At 11th level, you can use expanded awareness to gain see in darkness or thoughtsense (20 feet).</p>\n<p>At 15th level, you can use it to gain lifesense.</p>\n<p>You can use this ability a number of times per day equal to your Wisdom modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "4srtlaxarwrgn738",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/slice-spirit-3.jpg",
+        "activation": {
+          "type": "move"
+        },
+        "duration": {
+          "value": "@classes.psychic.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_expandedAwareness",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Psychic"]]
+    },
+    "abilityType": "su"
+  }
+}

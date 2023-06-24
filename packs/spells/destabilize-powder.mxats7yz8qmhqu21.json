@@ -1,0 +1,60 @@
+{
+  "_id": "mxats7yz8qmhqu21",
+  "name": "Destabilize Powder",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "1iz5cu5qdp9v9fx1",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "1 loaded firearm"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "witch": 2
+      }
+    },
+    "level": 2,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a few drops of liquor"
+    },
+    "shortDescription": "<p>This spell makes the ammunition in the target firearm is prone to misfire. Increase the misfire range by 1 + 1 per five caster levels (maximum +5) for the ammunition currently loaded into that firearm. If aware of this spell's effect prior to firing the altered ammunition (a DC 17 Spellcraft check to identify the spell being cast or similar effect), the firearm's user can spend a standard action to clear the altered ammunition from the firearm. Doing so destroys that ammunition.</p>"
+  }
+}

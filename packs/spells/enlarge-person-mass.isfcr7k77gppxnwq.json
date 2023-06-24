@@ -1,0 +1,63 @@
+{
+  "_id": "isfcr7k77gppxnwq",
+  "name": "Enlarge Person, Mass",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "j2d7zs4xijer3f1p",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 min./level"
+        },
+        "target": {
+          "value": "One humanoid creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "summoner": 3,
+        "bloodrager": 4,
+        "psychic": 4,
+        "unchained Summoner": 4
+      }
+    },
+    "level": 4,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "powdered iron"
+    },
+    "shortDescription": "<p>This spell functions like <i>enlarge person</i>, except that it affects multiple creatures.</p>"
+  }
+}

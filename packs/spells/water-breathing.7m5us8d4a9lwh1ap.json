@@ -1,0 +1,74 @@
+{
+  "_id": "7m5us8d4a9lwh1ap",
+  "name": "Water Breathing",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "sozxery4y4qu6dqb",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "2 hours/level; see text"
+        },
+        "target": {
+          "value": "living creatures touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "cleric": 3,
+        "oracle": 3,
+        "druid": 3,
+        "alchemist": 3,
+        "summoner": 3,
+        "magus": 3,
+        "bloodrager": 3,
+        "shaman": 3,
+        "psychic": 3,
+        "hunter": 3,
+        "unchained Summoner": 3
+      },
+      "domain": {
+        "Water": 3
+      }
+    },
+    "level": 3,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "short reed or piece of straw"
+    },
+    "shortDescription": "<p>The transmuted creatures can breathe water freely. Divide the duration evenly among all the creatures you touch. The spell does not make creatures unable to breathe air.</p>"
+  }
+}

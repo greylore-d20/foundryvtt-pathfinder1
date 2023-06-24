@@ -1,0 +1,45 @@
+{
+  "_id": "cn1pXwOi8Sjj9btT",
+  "name": "Inspire",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/blood_11.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 15th level, your artistic magic can inspire your allies to great accomplishments. You can use @Compendium[pf1.spells.z0duc2v2n3ioynta]{Heroism, Greater} as a <em>spell-like ability</em>. You can use this ability once per day at 15th level, twice per day at 17th level, and three times per day at 19th level.</p>"
+    },
+    "actions": [
+      {
+        "_id": "qmo2nffz1qfz8mdx",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/blood_11.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1 + floor((@classes.sorcerer.level - 15) / 2)"
+    },
+    "tag": "classFeat_inspire",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

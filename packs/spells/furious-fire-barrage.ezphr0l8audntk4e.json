@@ -1,0 +1,59 @@
+{
+  "_id": "ezphr0l8audntk4e",
+  "name": "Furious Fire Barrage",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "gso15trod1996r6l",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level; see text"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "magus": 5,
+        "bloodrager": 4
+      }
+    },
+    "level": 6,
+    "school": "evo",
+    "types": "fire",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "two balls of guano"
+    },
+    "shortDescription": "<p>Upon casting this spell, you conjure forth one or two balls of flame, each resting in a free hand. As part of casting this spell or as a standard action, you can throw one flame ball a maximum of 300 feet, dealing 1d6 points of fire damage per caster level you have (maximum 10d6) to all creatures within a 10-foot-radius spread.  So long as the spell's duration lasts, you can channel your anger as a full-round action to create one new ball of flame, which can be thrown as a standard action. You cannot create additional balls of flame while you are under the effects of a <i>calm emotions</i> spell or are otherwise unable to feel anger or outrage.</p>"
+  }
+}

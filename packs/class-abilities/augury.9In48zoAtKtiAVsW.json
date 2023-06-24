@@ -1,0 +1,50 @@
+{
+  "_id": "9In48zoAtKtiAVsW",
+  "name": "Augury",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+  "system": {
+    "description": {
+      "value": "<p>Once per day, you can use @Compendium[pf1.spells.d1wxnax51cecplm4]{Augury} as a spell-like ability.</p>"
+    },
+    "actions": [
+      {
+        "_id": "313j2omnm3ef0oex",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+        "activation": {
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1"
+    },
+    "tag": "classFeat_augury",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "sp"
+  }
+}

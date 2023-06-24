@@ -1,0 +1,59 @@
+{
+  "_id": "tz793eoix5mg2wd8",
+  "name": "Project Weakness",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "fonjpxoe0enu5vru",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "permanent"
+        },
+        "target": {
+          "value": "living creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 3,
+        "oracle": 3,
+        "witch": 3
+      }
+    },
+    "level": 4,
+    "school": "nec",
+    "types": "curse, evil",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You curse the target with the weaknesses of your kind of vampirism. The creature reacts to garlic, mirrors, ringing bells, sunlight, and so on as if it were a vampire of the same type as you. This cannot kill the target; anything that would kill it (such as a lengthy exposure to sunlight if you are a moroi vampire) renders it helpless until the curse or the harmful effect is removed. The target gains none of the benefits of being a vampire (such as fast healing or requiring special ways to be permanently killed), only the penalties.</p>"
+  }
+}

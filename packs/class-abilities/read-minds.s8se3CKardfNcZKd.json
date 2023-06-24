@@ -1,0 +1,56 @@
+{
+  "_id": "s8se3CKardfNcZKd",
+  "name": "Read Minds",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/red_09.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can broaden your mental spectrum to encompass those around you. Doing so allows you to read the mind of every creature within 30 feet as if you had cast @Compendium[pf1.spells.xllxylvvqr82o2d5]{Detect Thoughts}. This ability allows you to read the surface thoughts of any creature that you are aware of after only 1 round of concentration. Creatures in this area are allowed a Will save to negate the effect. The DC of this Will save is 10 + 1/2 your cleric level + your Wisdom modifier. You can use this ability for a number of rounds per day equal to your cleric level. These rounds do not need to be consecutive.</p>\n<p>This pwoer replaces the Remote Viewing power of the Knowledge Domain.</p>"
+    },
+    "actions": [
+      {
+        "_id": "pcgcrz6fg7zdsue2",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/red_09.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "all in range"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.cleric.level"
+    },
+    "tag": "classFeat_readMinds",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "su"
+  }
+}

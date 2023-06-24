@@ -1,0 +1,42 @@
+{
+  "_id": "tgyMYBGUvy6vHv9D",
+  "name": "Poison Steep",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_02.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The witch can use her cauldron to brew a foul toxin in which she can steep fruits and other delicious edibles, transforming them so that when eaten, they have the same effect as a @Compendium[pf1.spells.vdh0yuzpjwhky6kr]{Poison} spell. Brewing the toxin and then steeping the food takes 1 hour in total; steeping can affect up to 1 pound of food. The food is poisoned for 24 hours, and the poison cannot be transferred to other objects. The food tastes normal, but magic detects it as poisonous.</p><p>The witch must have the @UUID[Compendium.pf1.class-abilities.ieI7su1zQYRe2KzG]{cauldron hex} to select this hex.</p>"
+    },
+    "tags": ["Hex"],
+    "actions": [
+      {
+        "_id": "5se39bbr9gsonwfb",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "activation": {
+          "type": "hour"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "hour"
+          }
+        },
+        "duration": {
+          "value": "24",
+          "units": "hour"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_poisonSteep",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Witch"]]
+    },
+    "abilityType": "sp"
+  }
+}

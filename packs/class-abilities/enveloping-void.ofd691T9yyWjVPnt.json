@@ -1,0 +1,51 @@
+{
+  "_id": "ofd691T9yyWjVPnt",
+  "name": "Enveloping Void",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman curses one creature with the dark void. As a standard action, the shaman can cause one enemy within 30 feet to treat the light level as two steps lower: bright light becomes dim light, normal light becomes darkness, and areas of dim light and darkness become supernaturally dark (like darkness, but even creatures with darkvision cannot see). This effect lasts for a number of rounds equal to the shaman’s level. A successful Will saving throw negates this effect.</p>\n<p>Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.</p>"
+    },
+    "actions": [
+      {
+        "_id": "wd2lz0dww6bp5rtv",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.shaman.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "tag": "classFeat_envelopingVoid",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "_id": "2ubwr3811rn9jvop",
+  "name": "Hold Portal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "8o7cs2l5ra57ecbn",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 min./level (D)"
+        },
+        "target": {
+          "value": "one portal, up to 20 sq. ft./level"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "psychic": 1,
+        "occultist": 1
+      },
+      "subDomain": {
+        "Fortifications": 1
+      }
+    },
+    "school": "abj",
+    "components": {
+      "verbal": true
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell magically holds shut a door, gate, window, or shutter of wood, metal, or stone. The magic affects the portal just as if it were securely closed and normally locked. A <i>knock</i> spell or a successful <i>dispel magic</i> spell can negate a <i>hold portal</i> spell.</p><p>Add 5 to the normal DC for forcing open a portal affected by this spell.</p>"
+  }
+}

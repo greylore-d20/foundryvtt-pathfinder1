@@ -1,0 +1,74 @@
+{
+  "name": "Revealing Light",
+  "type": "spell",
+  "img": "icons/magic/light/beam-strike-orange-gold.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "EmnjNrsvi7AHI8nY",
+        "name": "Use",
+        "img": "icons/magic/light/beam-strike-orange-gold.webp",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level"
+        },
+        "target": {
+          "value": "object touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "20"
+        },
+        "actionType": "msak",
+        "formulaicAttacks": {
+          "label": ""
+        },
+        "touch": true
+      }
+    ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
+    "learnedAt": {
+      "class": {
+        "arcanist": 2,
+        "bard": 1,
+        "cleric": 2,
+        "inquisitor": 2,
+        "medium": 1,
+        "oracle": 2,
+        "psychic": 2,
+        "skald": 1,
+        "sorcerer": 2,
+        "warpriest": 2,
+        "wizard": 2
+      }
+    },
+    "school": "evo",
+    "types": "light",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "piece of a mirror"
+    },
+    "spellbook": "",
+    "sr": false,
+    "shortDescription": "<p>The touched object emits a shimmering light (as per @Compendium[pf1.spells.ip9onjfp6nf1vlv9]{light}) that causes shadows to shift constantly in a 20-foot radius. Creatures lose any racial bonus on @UUID[Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.wRWHk7tCUHR99PzD]{Stealth} checks while in the area, and the light suppresses any bonuses on Stealth checks granted by visual camouflage (such as from camouflage netting<sup>UE</sup> or the @Compendium[pf1.class-abilities.58JR74Tzt6zxEJmE]{camouflage} rogue talent). The unpredictable light patterns also interfere with spells and effects of the pattern subschool, granting all creatures in the area a +2 bonus on saves against such effects.</p>"
+  },
+  "_id": "GeNvBJJptxIqFXZK"
+}

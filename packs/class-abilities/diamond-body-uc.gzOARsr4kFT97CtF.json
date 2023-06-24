@@ -1,0 +1,47 @@
+{
+  "_id": "gzOARsr4kFT97CtF",
+  "name": "Diamond Body (UC)",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/fire_07.jpg",
+  "system": {
+    "description": {
+      "value": "<p>By spending 1 point from his ki pool, a monk with this power can remove one toxin from his body as if using neutralize poison, using his monk level as his caster level. He can remove only one poison in this way per use of this ability.</p>\n<p>A monk must be at least 8th level before selecting this ki power.</p>"
+    },
+    "actions": [
+      {
+        "_id": "yqal5nhwj7ohflon",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/fire_07.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_diamondBodyUc",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Monk (Unchained)"]]
+    },
+    "abilityType": "su"
+  }
+}

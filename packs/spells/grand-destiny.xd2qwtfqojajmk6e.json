@@ -1,0 +1,60 @@
+{
+  "_id": "xd2qwtfqojajmk6e",
+  "name": "Grand Destiny",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "lc65kr4bvges1qbm",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level or until discharged"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "description": "none (harmless)"
+        },
+        "spellEffect": "one willing creature"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "bard": 4,
+        "alchemist": 5,
+        "summoner": 5,
+        "medium": 4,
+        "mesmerist": 5,
+        "unchained Summoner": 5
+      }
+    },
+    "level": 5,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You inspire the target with the power to seize a <i>grand destiny</i>. The target gains a +4 competence bonus that it can choose to apply before rolling any attack roll, caster level check, saving throw, or skill check. The spell ends once the bonus has been applied to two rolls. At 12th level and 15th level, the bonus can be applied an additional time before the spell is discharged. A subject can be under the effect of only one <i>grand destiny</i> spell at a time.</p>"
+  }
+}

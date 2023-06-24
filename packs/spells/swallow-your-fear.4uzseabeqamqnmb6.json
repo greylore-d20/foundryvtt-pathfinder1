@@ -1,0 +1,55 @@
+{
+  "_id": "4uzseabeqamqnmb6",
+  "name": "Swallow Your Fear",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ika2nl03n68gei1x",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes; see text"
+        },
+        "target": {
+          "value": "one creature plus one additional creature per four levels, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 1,
+        "oracle": 1,
+        "bard": 1
+      }
+    },
+    "school": "enc",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You make the affected subjects ready for battle despite their fear. If a target is suffering from a fear effect of any kind, he gains a +2 morale bonus to Strength and Constitution, a +1 morale bonus on Will saves, and a -2 penalty to AC.</p><p>If the subject is frightened, he remains in place and gains the confused condition for the remainder of the fear effect, except he treats all results of \"attack self \" as \"do nothing\" and treats \"attack nearest creature\" as \"act normally.\" If the subject is panicked, he remains in place and gains the confused condition for the duration of the fear effect.</p>"
+  }
+}

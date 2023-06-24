@@ -1,0 +1,52 @@
+{
+  "_id": "e6MZE23epaeXpxF1",
+  "name": "Divine Prison",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, once per day upon making a successful melee attack, you can affect your target with @Compendium[pf1.spells.d8hypv6zdyan3rzr]{Hold Monster} (Will negates).</p>"
+    },
+    "actions": [
+      {
+        "_id": "2wm6e63s1vf1z802",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@cl",
+          "units": "round"
+        },
+        "target": {
+          "value": "creature struck"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1"
+    },
+    "tag": "classFeat_divinePrison",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "sp"
+  }
+}

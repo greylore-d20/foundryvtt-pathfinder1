@@ -1,0 +1,64 @@
+{
+  "_id": "nqrpfidjuzllqa9z",
+  "name": "Inflict Pain, Mass",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "no3t39nw0wifs3dm",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart."
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 7,
+        "wizard": 7,
+        "witch": 7,
+        "inquisitor": 5,
+        "antipaladin": 4,
+        "psychic": 6,
+        "medium": 4,
+        "mesmerist": 5,
+        "occultist": 5,
+        "spiritualist": 5
+      }
+    },
+    "level": 7,
+    "school": "enc",
+    "types": "mind-affecting, pain",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell functions like <i>inflict pain</i> except as noted above.</p>"
+  }
+}

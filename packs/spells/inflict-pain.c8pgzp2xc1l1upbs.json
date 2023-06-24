@@ -1,0 +1,64 @@
+{
+  "_id": "c8pgzp2xc1l1upbs",
+  "name": "Inflict Pain",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "usua8vw5ijg5qetz",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "witch": 3,
+        "inquisitor": 2,
+        "antipaladin": 2,
+        "psychic": 2,
+        "medium": 2,
+        "mesmerist": 2,
+        "occultist": 2,
+        "spiritualist": 2
+      }
+    },
+    "level": 3,
+    "school": "enc",
+    "types": "mind-affecting, pain",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You telepathically wrack the target's mind and body with agonizing pain that imposes a -4 penalty on attack rolls, skill checks, and ability checks. A successful Will save reduces the duration to 1 round.</p>"
+  }
+}

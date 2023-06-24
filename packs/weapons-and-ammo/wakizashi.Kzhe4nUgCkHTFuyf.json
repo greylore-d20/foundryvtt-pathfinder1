@@ -1,0 +1,71 @@
+{
+  "_id": "Kzhe4nUgCkHTFuyf",
+  "name": "Wakizashi",
+  "type": "weapon",
+  "img": "icons/weapons/swords/sword-katana.webp",
+  "system": {
+    "description": {
+      "value": "<p><b>Source</b> <em>Ultimate Equipment pg. 20</em>, <em>Ultimate Combat pg. 134</em></p><h3><span title=\"PFS Legal\">[PFS]</span> Statistics</h3><p><b>Cost</b> 35 gp <b>Weight</b> 2 lbs.</p><p><b>Damage</b> 1d4 (small), 1d6 (medium); <b>Critical</b> 18-20/x2; <b>Range</b> -; <b>Type</b> P or S; <b>Special</b> deadly</p><p><b>Category</b> Light; <b>Proficiency</b> Exotic</p><p><b>Weapon Groups</b> Blades, Light</p><h3>Description</h3><p>These short, slender blades are between 1 to 2 feet long. They are primarily used as back-up weapons, to decapitate defeated enemies, or to commit seppuku (ritual suicide) as a matter of honor. These blades are specifically worn by samurai and are intended to be paired with a katana. Together, this set of blades is referred to as a daisho.</p>"
+    },
+    "tags": ["Wakizashi"],
+    "weight": {
+      "value": 2
+    },
+    "price": 35,
+    "hp": {
+      "max": 2,
+      "value": 2
+    },
+    "hardness": 10,
+    "actions": [
+      {
+        "_id": "jvxjrgiwkop1t2bi",
+        "name": "Attack",
+        "img": "icons/weapons/swords/sword-katana.webp",
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": "0",
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 6, @size)",
+              "type": {
+                "values": ["piercing", "slashing"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": 18
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "tag": "wakizashi",
+    "weaponGroups": {
+      "value": ["bladesLight"]
+    },
+    "subType": "exotic"
+  }
+}

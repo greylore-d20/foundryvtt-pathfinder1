@@ -1,0 +1,62 @@
+{
+  "_id": "0wahvj06h5eak2fk",
+  "name": "Placebo Effect",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "8h5l1r1qzf7jaxiy",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "psychic": 2,
+        "medium": 2,
+        "mesmerist": 2
+      }
+    },
+    "level": 2,
+    "school": "ill",
+    "subschool": "phantasm",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a sugar cube"
+    },
+    "sr": false,
+    "shortDescription": "<p>The subject temporarily ceases to feel the ill effects of a single ongoing affliction or condition from the following list: blinded, cursed, dazed, deafened, diseased, fatigued, frightened, nauseated, panicked, paralyzed, poisoned, shaken, sickened, staggered, or stunned. If that affliction or condition has a duration, it is suspended until this spell expires. If the subject has multiple instances of the same type of affliction (such as multiple diseases), a single casting of this spell can suspend only one of them. <i>Placebo effect</i> doesn't remove or temporarily negate any damage that the affliction may have already caused, nor does it provide protection against receiving such conditions again.</p>"
+  }
+}

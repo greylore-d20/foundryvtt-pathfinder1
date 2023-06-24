@@ -1,0 +1,52 @@
+{
+  "_id": "9IyrC4znbPWD2PRz",
+  "name": "Paragon of the City",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, the shaman assumes a spirit-infused paragon form that makes her a lethal stalker of the alleys and shadows. She gains the ability to make sneak attacks as a rogue of her shaman level for 1 minute or until dismissed.</p>\n<p>She can use this ability a number of times per day equal to 3 + her Charisma modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "gfipxg96b25bpkre",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_20.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_paragonOfTheCity",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

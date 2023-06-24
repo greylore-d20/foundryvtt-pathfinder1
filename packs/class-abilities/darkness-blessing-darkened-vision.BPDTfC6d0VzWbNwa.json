@@ -1,0 +1,50 @@
+{
+  "_id": "BPDTfC6d0VzWbNwa",
+  "name": "Darkness Blessing: Darkened Vision",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/rip-sky-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, you can place a shroud of darkness around the eyes of one foe within 30 feet. The target must succeed at a Will saving throw or be blinded for 1 minute (as @Compendium[pf1.spells.k7cf5gshkp8xxqux]{Blindness/Deafness}).</p>"
+    },
+    "actions": [
+      {
+        "_id": "1cv3n1uzp0e2odig",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/rip-sky-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "tag": "classFeat_darknessBlessingDarkenedVision",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

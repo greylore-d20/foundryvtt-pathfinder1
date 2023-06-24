@@ -1,0 +1,57 @@
+{
+  "_id": "Z2Jpbju6A5ASxiE2",
+  "name": "Bolts of Bedevilment",
+  "type": "spell",
+  "img": "icons/magic/unholy/beam-ringed-impact-purple.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "n3dm728weqo4nts3",
+        "name": "Use",
+        "img": "icons/magic/unholy/beam-ringed-impact-purple.webp",
+        "activation": {
+          "type": "standard"
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "uses": {
+          "autoDeductChargesCost": "1 + @sl"
+        },
+        "actionType": "rsak",
+        "formulaicAttacks": {
+          "label": ""
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "effectNotes": [
+          "<b>Save Fail Effect</b> @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.2A6Gk60pLDKR2zT0]{Dazed} for [[1d3]] rounds"
+        ],
+        "spellEffect": "ray"
+      }
+    ],
+    "learnedAt": {
+      "domain": {
+        "Madness": 5
+      }
+    },
+    "level": 5,
+    "school": "enc",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "shortDescription": "<p>You can fire one ray per round that dazes one living creature for 1d3 rounds.</p>"
+  }
+}

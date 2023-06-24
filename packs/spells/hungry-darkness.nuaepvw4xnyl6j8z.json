@@ -1,0 +1,68 @@
+{
+  "_id": "nuaepvw4xnyl6j8z",
+  "name": "Hungry Darkness",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "626nkqbj0dwtfw5c",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "60"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "3d6",
+              "type": {
+                "values": ["force"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0"
+        },
+        "spellArea": "60-ft.-radius spread"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 7,
+        "wizard": 7
+      }
+    },
+    "level": 7,
+    "school": "evo",
+    "types": "darkness, force",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a bat's tooth"
+    },
+    "shortDescription": "<p>This spell creates an area of intense blackness, as <i>deeper darkness</i>, but filled with unseen chewing teeth and ravenous maws. Any creatures beginning its turn within the <i>hungry darkness</i> is gnawed and slashed by these unseen fangs of force, dealing 3d6 points of force damage and 2 points of Constitution damage per round. Once a creature leaves the cloud, it continues to take 1d6 points of bleed damage each round until it receives magical healing or enters an area of bright light. Spell resistance can prevent damage from the <i>hungry darkness</i> but not against the darkness it creates.</p>"
+  }
+}

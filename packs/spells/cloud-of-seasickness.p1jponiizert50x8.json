@@ -1,0 +1,64 @@
+{
+  "_id": "p1jponiizert50x8",
+  "name": "Cloud of Seasickness",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "dxb1hkv8frtwtoov",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates; see text"
+        },
+        "spellEffect": "cloud spreads in 20-ft. radius, 20 ft. high"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "cleric": 2,
+        "oracle": 2,
+        "druid": 2,
+        "hunter": 2
+      }
+    },
+    "level": 2,
+    "school": "con",
+    "subschool": "creation",
+    "types": "poison",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a piece of seaweed"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>stinking cloud</i>, except as noted above and that the vapors make creatures sickened instead of nauseated. <i>Cloud of Seasickness</i> can be made permanent with a <i>permanency</i> spell (requiring a 9th-level caster and costing 2,500 gp). A permanent <i>Cloud of Seasickness</i> dispersed by wind reforms in 10 minutes.</p>"
+  }
+}

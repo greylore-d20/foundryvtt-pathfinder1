@@ -1,0 +1,60 @@
+{
+  "_id": "jvwmtzkb4i91t1yl",
+  "name": "Cushioning Bands",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "fmfbgb1aoxpgf11p",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level or until discharged (D)"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "summoner": 2,
+        "psychic": 2,
+        "unchained Summoner": 2
+      }
+    },
+    "level": 2,
+    "school": "con",
+    "subschool": "creation",
+    "types": "force",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>Invisible bands of force encircle vital areas of the target. The bands resist crushing forces and impacts without interfering with movement. The target gains DR 2/piercing or slashing and takes half damage from constriction, falling, and being buried, as well as from similar crushing effects such as <i>crushing hand</i>. Grapple checks for attacks other than constricting (such as pinning or swallowing whole) are not affected. Once the spell has blocked 12 points of damage per caster level (to a maximum of 120 points at 10th level), it is discharged. The bands have no effect on incorporeal attacks unless they deal damage from constriction or crushing, or unless the attacks would be subject to damage reduction.</p>"
+  }
+}

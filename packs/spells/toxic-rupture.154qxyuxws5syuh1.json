@@ -1,0 +1,65 @@
+{
+  "_id": "154qxyuxws5syuh1",
+  "name": "Toxic Rupture",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "j51p3xmakw10z4xn",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one poisonous creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "druid": 3,
+        "witch": 3,
+        "shaman": 3,
+        "hunter": 3
+      }
+    },
+    "level": 3,
+    "school": "nec",
+    "types": "poison",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a viper's fang"
+    },
+    "shortDescription": "<p>With a squeezing hand gesture, you cause internal bleeding in the target creature's venom glands or similar organs. The target must attempt a saving throw against its own poison using the DC for this spell. If it fails, the creature is poisoned and suffers the full effect of its poison. Any subsequent saving throws that the target must attempt against the poison use the normal DC for the poison rather than this spell's DC.</p>"
+  }
+}

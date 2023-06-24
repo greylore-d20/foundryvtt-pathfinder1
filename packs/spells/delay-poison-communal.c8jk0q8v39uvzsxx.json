@@ -1,0 +1,65 @@
+{
+  "_id": "c8jk0q8v39uvzsxx",
+  "name": "Delay Poison, Communal",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "g3s1pdw6zy9bldsz",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level"
+        },
+        "target": {
+          "value": "creatures touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "druid": 3,
+        "ranger": 3,
+        "bard": 3,
+        "paladin": 3,
+        "alchemist": 3,
+        "witch": 3,
+        "inquisitor": 3,
+        "hunter": 3
+      }
+    },
+    "level": 3,
+    "school": "con",
+    "subschool": "healing",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>This spell functions like <i>delay poison</i>, except you divide the duration in 1-hour intervals among the creatures touched.</p>"
+  }
+}

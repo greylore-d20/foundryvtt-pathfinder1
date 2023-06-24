@@ -1,0 +1,42 @@
+{
+  "_id": "0hihOrAiQ7dc0jV3",
+  "name": "Aether Architect",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/link-blue-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Element</b> aether; <b>Type</b> utility (Su); <b>Level</b> 9; <b>Burn</b> 0</p>\n<p>You can spin a small building, bridge, or other edifice out of aether, and even use aether to tether a building to a flat surface other than the ground. By concentrating for 10 minutes, you can create an edifice out of scintillating aether (same hardness and hit points as a wall of force) as long as the edifice is no larger than one 10-foot cube per kineticist level. Unless the creation is extremely simplistic, you must succeed at a Craft or Knowledge (engineering) check to add embellishments.</p>\n<p>This ability can also create a series of tethers to securely attach a normal building to a vertical surface or even a cavern ceiling. Aether architect lasts as long as you concentrate, and you can accept 1 point of burn to make the effect last until destroyed; by accepting this burn, you can use this ability any number of times in a row to create a larger edifice.</p>"
+    },
+    "actions": [
+      {
+        "_id": "6ue91msgq3szgz0t",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/link-blue-2.jpg",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "units": "seeText"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_aetherArchitect",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Kineticist"]]
+    },
+    "abilityType": "su"
+  }
+}

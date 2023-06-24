@@ -1,0 +1,64 @@
+{
+  "_id": "ulkqw7qmc9qf8ndd",
+  "name": "Wall of Brine",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "gg5qxh6v057nvwb6",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration + 1 round/level"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "description": "none; see text"
+        },
+        "spellEffect": "wall up to 10 ft./level long and 5 ft./level high (S)"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "druid": 4,
+        "ranger": 3,
+        "magus": 4,
+        "shaman": 4,
+        "hunter": 3
+      }
+    },
+    "level": 4,
+    "school": "con",
+    "subschool": "creation",
+    "types": "water",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "a bit of coral"
+    },
+    "shortDescription": "<p>You conjure a 5-foot-thick wall of seawater with a powerful current flowing toward one side of the wall, selected by you; a creature attempting to swim against this current must spend 4 squares of movement to enter a square of the wall. A creature that begins its turn in the wall is ejected in the direction of the current just before it acts. The wall provides cover against attacks from out of the water, as usual for a body of water. The water and the currents deflect physical ranged attacks into or through the wall, unless a weapon used is exceptionally massive (such as a siege engine). A creature submerged in the wall takes the usual penalties for underwater combat. The wall blocks gases and liquids and prevents water from mixing at its edges.</p>"
+  }
+}

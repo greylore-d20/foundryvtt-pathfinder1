@@ -1,0 +1,71 @@
+{
+  "_id": "tHObxrPeyhimmz9V",
+  "name": "Channel Positive Energy",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/blinding-critical.jpg",
+  "system": {
+    "description": {
+      "value": "<p>When a paladin reaches 4th level, she gains the supernatural ability to <em>channel positive energy</em> like a cleric. Using this ability consumes two uses of her lay on hands ability. A paladin uses her level as her effective cleric level when channeling positive energy. This is a <em>Charisma</em>-based ability.</p>"
+    },
+    "actions": [
+      {
+        "_id": "gdp25p05v255kjcl",
+        "name": "Use",
+        "img": "systems/pf1/icons/feats/blinding-critical.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "self; affects all living OR undead within burst"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft",
+          "maxIncrements": "1"
+        },
+        "uses": {
+          "autoDeductChargesCost": "2"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "30"
+        },
+        "actionType": "heal",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(ceil(@classes.paladin.level / 2))d6",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "10 + floor(@classes.paladin.level / 2) + @abilities.cha.mod",
+          "type": "will",
+          "description": "Will halves damage"
+        }
+      }
+    ],
+    "uses": {
+      "per": "charges"
+    },
+    "tag": "classFeat_channelPositiveEnergy",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Paladin"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "_id": "cMu6HFervQ41a4lD",
+  "name": "For the King",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/banner-red.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, an order of the lion cavalier can call out to his allies, inspiring them to greatness. As a swift action, the cavalier can grant a competence bonus equal to his Charisma modifier on all attack and damage rolls to all allies within 30 feet. This bonus lasts for 1 round. This ability can be used once per combat.</p>"
+    },
+    "actions": [
+      {
+        "_id": "u2pnajy54mcu8bsa",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/banner-red.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "allies within range"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_forTheKing",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cavalier"]]
+    },
+    "abilityType": "ex"
+  }
+}

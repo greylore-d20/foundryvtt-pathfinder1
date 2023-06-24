@@ -1,0 +1,74 @@
+{
+  "_id": "3zx0a8owmsr7x9d1",
+  "name": "False Future",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "s904vt39nzf8chm3",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level (D)"
+        },
+        "target": {
+          "value": "creature or object touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates or Will disbelief (see text)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "cleric": 4,
+        "oracle": 4,
+        "bard": 3,
+        "witch": 4,
+        "shaman": 4,
+        "psychic": 4,
+        "medium": 3,
+        "mesmerist": 3,
+        "spiritualist": 4
+      }
+    },
+    "level": 5,
+    "school": "ill",
+    "subschool": "glamer",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "crushed jade worth 100 gp",
+      "gpValue": 100
+    },
+    "spellbook": "",
+    "preparation": {
+      "spontaneousPrepared": false
+    },
+    "shortDescription": "<p>You interfere with attempts to predict the target's future by preventing divinations from revealing what the target will do and what will befall the target while under the spell's effects. Instead of the target's true actions or experiences, divinations resolve as if the target will experience some different future you describe as you cast <i>false future</i>. The target creature can attempt a Will save to avoid the initial effect, and creatures using divinations get a Will save to disbelieve the illusion. This spell doesn't prevent divinations cast after the duration's end from determining what the subject actually did during the time you obscured using <i>false future</i>. <i>False future</i> can't be detected by <i>detect magic</i> or <i>identify</i>, but greater <i>detect magic</i> (see page 212) can detect it.</p>"
+  }
+}

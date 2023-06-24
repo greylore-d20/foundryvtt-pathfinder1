@@ -1,0 +1,61 @@
+{
+  "_id": "oqwd8jx7tyk3ak49",
+  "name": "Phantasmal Putrefaction",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "nqyzvhoo2gry5z3w",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "15"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Will disbelief, then Fortitude partial (see text)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "witch": 6,
+        "medium": 4,
+        "mesmerist": 5
+      }
+    },
+    "level": 6,
+    "school": "ill",
+    "subschool": "phantasm",
+    "types": "fear, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You implant within the minds of your targets the illusion that their skin is rotting away, large rents are appearing all over their bodies, and their internal organs are spilling out into a putrid half-liquid mass at their feet. Those who fail to disbelieve <i>phantasmal putrefaction</i> immediately take 1d4 points of Wisdom damage. This damage occurs only once. Each round at the beginning of its turn, an affected target receives another Will save to disbelieve the effect, and targets that fail must succeed at a Fortitude save or faint, falling a<i>sleep</i> as per <i>sleep</i> (except that it isn't a magical <i>sleep</i> effect). Waking up doesn't end the spell for a target; it must continue to attempt Will saves to disbelieve and Fortitude saves to avoid fainting each round until the spell ends or the target successfully disbelieves.  Targets of the spell perceive everyone else around them to be rotting away, but other creatures see no visible effect of the spell, so they, in addition to those who disbelieve, can communicate the nature of the illusion to allies, providing those allies with a +4 bonus on the saving throw to disbelieve.  If your campaign uses the sanity system (see page 12), a creature takes 1d8 points of sanity damage instead of Wisdom damage.</p>"
+  }
+}

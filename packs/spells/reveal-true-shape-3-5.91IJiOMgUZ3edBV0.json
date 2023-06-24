@@ -1,0 +1,68 @@
+{
+  "name": "Reveal True Shape (3.5)",
+  "type": "spell",
+  "img": "icons/magic/perception/eye-ringed-glow-angry-small-teal.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "E6TGZLeSdymtq8Z9",
+        "name": "Use",
+        "img": "icons/magic/perception/eye-ringed-glow-angry-small-teal.webp",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
+    "learnedAt": {
+      "class": {
+        "arcanist": 2,
+        "bard": 2,
+        "cleric": 2,
+        "druid": 2,
+        "hunter": 2,
+        "oracle": 2,
+        "skald": 2,
+        "sorcerer": 2,
+        "warpriest": 2,
+        "wizard": 2
+      }
+    },
+    "level": 2,
+    "school": "div",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a pinch of rare herbs worth 50 gp",
+      "gpValue": 50
+    },
+    "spellbook": "",
+    "shortDescription": "<p>You reveal the true form of a magically disguised or transformed creature, whether the target’s transformation is physical (such as @Compendium[pf1.spells.d40ia71c2eljm91k]{polymorph}) or illusory (such as @Compendium[pf1.spells.oj36nfak6jc2s5ky]{disguise self}). The spell does not force the creature into its true form, but rather creates a perfect illusion of the creature’s true form that overlaps it and hides the disguised form completely, making the true form visible to all observers. For the duration of the spell, if the target changes shape or uses illusion to disguise its appearance, observers can still see its true form, though once the spell runs out any illusions or shape changes made by the target in the meantime immediately take effect. This spell does not reveal invisible creatures, overcome effects such as @Compendium[pf1.spells.18kryvj2dfuymk9d]{blur} and @UUID[Compendium.pf1.spells.r190q9zxmei82lmv]{displacement}, or penetrate mundane disguises.</p>"
+  },
+  "_id": "91IJiOMgUZ3edBV0"
+}

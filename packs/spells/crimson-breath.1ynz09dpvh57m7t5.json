@@ -1,0 +1,61 @@
+{
+  "_id": "1ynz09dpvh57m7t5",
+  "name": "Crimson Breath",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "al1cvvuf8pixjjh1",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 4,
+        "oracle": 4,
+        "druid": 4,
+        "alchemist": 4,
+        "witch": 4,
+        "hunter": 4
+      }
+    },
+    "level": 4,
+    "school": "trs",
+    "components": {
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>When you cast this spell, your salivary glands transform and instantly fill with potent venom. Make a ranged touch attack against a single target in range; if you hit, the target is affected by a dose of breath of the mantis god (see page 158). The Fortitude save DC for this poison is the same as the spell's DC, not the standard save DC for the poison.</p>"
+  }
+}

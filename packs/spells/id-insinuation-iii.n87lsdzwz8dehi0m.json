@@ -1,0 +1,55 @@
+{
+  "_id": "n87lsdzwz8dehi0m",
+  "name": "Id Insinuation III",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "grdehjtob6utfnd1",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration + 1 round"
+        },
+        "target": {
+          "value": "three creatures"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "psychic": 4
+      }
+    },
+    "level": 4,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>This functions as <i>id insinuation I</i>, except as noted above. In addition, on the first 2 rounds of the effect, the targets of this spell must roll twice to determine the result of their confused conditions. You select which roll is used. This spell can be undercast.</p>"
+  }
+}

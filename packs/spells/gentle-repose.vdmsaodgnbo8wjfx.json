@@ -1,0 +1,70 @@
+{
+  "_id": "vdmsaodgnbo8wjfx",
+  "name": "Gentle Repose",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "9bvroga96m8gpnk0",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 day/level"
+        },
+        "target": {
+          "value": "corpse touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "cleric": 2,
+        "oracle": 2,
+        "witch": 2,
+        "shaman": 2,
+        "medium": 2,
+        "occultist": 3,
+        "spiritualist": 2
+      },
+      "domain": {
+        "Repose": 2
+      }
+    },
+    "level": 3,
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "salt and a copper piece for each of the corpse's eyes"
+    },
+    "shortDescription": "<p>You preserve the remains of a dead creature so that they do not decay. Doing so effectively extends the time limit on raising that creature from the dead (see <i>raise dead</i>). Days spent under the influence of this spell don't count against the time limit.</p><p>Additionally, this spell makes transporting a slain (and thus decaying) comrade less unpleasant.</p><p>The spell also works on severed body parts and the like.</p>"
+  }
+}

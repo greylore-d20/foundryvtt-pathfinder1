@@ -1,0 +1,60 @@
+{
+  "_id": "ad5nqt2ll67zt64d",
+  "name": "Shocking Image",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "4hzvghetylo4qa44",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "bard": 4,
+        "bloodrager": 4,
+        "mesmerist": 4,
+        "occultist": 4
+      }
+    },
+    "level": 4,
+    "school": "ill",
+    "subschool": "figment",
+    "types": "electricity",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell works like <i>mirror image</i>, except the illusory doubles it creates discharge an electric shock when destroyed. An opponent that uses a melee attack to destroy one of your images takes 2d6 points of electricity damage. You must overcome a target's spell resistance the first time you deal this electricity damage to it. Failure renders the target immune to damage from this spell.</p>"
+  }
+}

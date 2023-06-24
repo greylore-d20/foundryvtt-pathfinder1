@@ -1,0 +1,70 @@
+{
+  "_id": "y69de8y5ddrhuue5",
+  "name": "Daze Monster",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "olnj4s22oxp9kg66",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round"
+        },
+        "target": {
+          "value": "one living creature of 6 HD or less"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "bard": 2,
+        "summoner": 1,
+        "witch": 2,
+        "bloodrager": 2,
+        "psychic": 2,
+        "medium": 2,
+        "mesmerist": 2,
+        "occultist": 2,
+        "unchained Summoner": 1
+      }
+    },
+    "level": 2,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a pinch of wool or similar substance"
+    },
+    "shortDescription": "<p>This spell functions like <i>daze</i>, but it can affect any one living creature of any type. Creatures of 7 or more HD are not affected.</p>"
+  }
+}

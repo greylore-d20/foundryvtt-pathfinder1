@@ -1,0 +1,50 @@
+{
+  "_id": "n6pxG3njAGl8gTiy",
+  "name": "Physical Push",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/slice-spirit-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>By channeling your psychic energy, you can make your body capable of greater physical feats. When you attempt a Strength-, Dexterity-, or Constitution-based ability check or skill check, you can gain a bonus on the check equal to your Wisdom bonus.</p>\n<p>You can use this ability a number of times per day equal to your Wisdom modifier. Using this ability is part of the action used to attempt the skill check (if any). If you succeed at the check, you regain 1 point in your phrenic pool.</p>"
+    },
+    "actions": [
+      {
+        "_id": "kmbn36qme8m6icfc",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/slice-spirit-3.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@abilities.wis.mod"
+    },
+    "tag": "classFeat_physicalPush",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Psychic"]]
+    },
+    "abilityType": "su"
+  }
+}

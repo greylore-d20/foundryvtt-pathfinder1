@@ -1,0 +1,55 @@
+{
+  "_id": "19Fh7slWwEfavrod",
+  "name": "Plague's Caress",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_15.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can make a melee <em>touch attack</em> as a <em>standard action</em> that causes a living creature’s flesh to break out into rancid-smelling pustules and sores for a number of rounds equal to 1/2 your <em>sorcerer</em> level (minimum 1 round). These sores cause the victim to become <em>sickened</em> for the duration of the effect; this is a <em>disease</em> effect. You can use this ability a number of times per day equal to 3 + your <em>Charisma</em> modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ymmp2agvn5nmklee",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_15.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "max(1, (floor(@classes.sorcerer.level / 2)))",
+          "units": "round"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_plaguesCaress",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

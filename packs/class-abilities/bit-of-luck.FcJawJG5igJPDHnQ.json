@@ -1,0 +1,55 @@
+{
+  "_id": "FcJawJG5igJPDHnQ",
+  "name": "Bit of Luck",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/medal.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You can touch a willing creature as a standard action, giving it a bit of luck. For the next round, any time the target rolls a d20, he may roll twice and take the more favorable result. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "xbzg0n2zpyd7hc3b",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/medal.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.wis.mod"
+    },
+    "tag": "classFeat_bitOfLuck",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "sp"
+  }
+}

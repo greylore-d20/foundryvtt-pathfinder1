@@ -1,0 +1,31 @@
+{
+  "_id": "ihe9gLYx5fDzL5Ly",
+  "name": "Slowing Strike",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/weapons/sword-cane.png",
+  "system": {
+    "description": {
+      "value": "<p>When the investigator deals damage with studied strike, the opponent must succeed at a Fortitude save (DC = 10 + 1/2 the investigator’s class level + his Intelligence modif ier) or be slowed by the crippling blow. A slowed opponent’s movement speeds are each reduced by 5 feet (to a minimum of 5 feet) until the creature is healed through the application of any spell that cures hit point damage or with a successful DC 15 Heal check. Multiple slowing strikes stack, to a minimum of 5 feet.</p>\n<p>An investigator must be at least 7th level to select this talent.</p>"
+    },
+    "actions": [
+      {
+        "_id": "lrzlyjjfrx39mprf",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/weapons/sword-cane.png",
+        "actionType": "save",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates slow"
+        }
+      }
+    ],
+    "tag": "classFeat_slowingStrike",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Investigator"]]
+    },
+    "abilityType": "ex"
+  }
+}

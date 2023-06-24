@@ -1,0 +1,51 @@
+{
+  "_id": "f8Hab50M91djXaYl",
+  "name": "Empty Body (UC)",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/fire_07.jpg",
+  "system": {
+    "description": {
+      "value": "<p>A monk with this ki power gains the ability to assume an ethereal state for 1 minute as though using the spell @Compendium[pf1.spells.gw9bes9othfqm7mi]{Etherealness}, using his monk level as his caster level.</p>\n<p>Using this ability is a move action that consumes 3 points from the monk’s ki pool.</p>\n<p>This ability affects only the monk and cannot be used to make other creatures ethereal.</p>"
+    },
+    "actions": [
+      {
+        "_id": "xk4zl7st5kznypkf",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/fire_07.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "uses": {
+          "autoDeductChargesCost": "3"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_emptyBodyUc",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Monk (Unchained)"]]
+    },
+    "abilityType": "su"
+  }
+}

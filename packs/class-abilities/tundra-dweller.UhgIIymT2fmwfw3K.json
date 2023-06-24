@@ -1,0 +1,48 @@
+{
+  "_id": "UhgIIymT2fmwfw3K",
+  "name": "Tundra Dweller",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman touches a willing creature and grants it cold resistance 10 for a number of rounds equal to her Charisma modifier (minimum 1). This resistance does not stack with any other cold resistance, such as from special abilities or magical items.</p>\n<p>At 8th and 16th levels, the duration of this hex is extended by 1 round.</p>\n<p>A creature targeted by this hex cannot be affected by it again for 24 hours.</p>"
+    },
+    "actions": [
+      {
+        "_id": "oayepjzvmhn0bhsf",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@abilities.cha.mod",
+          "units": "round"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_tundraDweller",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

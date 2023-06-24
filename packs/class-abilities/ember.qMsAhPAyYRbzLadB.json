@@ -1,0 +1,44 @@
+{
+  "_id": "qMsAhPAyYRbzLadB",
+  "name": "Ember",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/fire_01.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, when making a <em>Craft</em> check involving metal, you can expend any number of uses of this ability (up to half your <em>sorcerer</em> level, minimum one use) to gain a <em>circumstance bonus</em> on the check equal to twice the number of uses expended. You can use this ability a number of times per day equal to 3 + your <em>Charisma</em> modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "zn5skul6af3fcvcr",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/fire_01.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_ember",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "_id": "cyzbticmitktat5v",
+  "name": "Bless Water",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "6uldznxy2snp4frs",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "flask of water touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 1,
+        "oracle": 1,
+        "paladin": 1,
+        "inquisitor": 1
+      },
+      "subDomain": {
+        "Divine": 2
+      }
+    },
+    "school": "trs",
+    "types": "good",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "5 pounds of powdered silver worth 25 gp",
+      "gpValue": 25
+    },
+    "spellbook": "",
+    "preparation": {
+      "spontaneousPrepared": false
+    },
+    "shortDescription": "<p>This transmutation imbues a flask (1 pint) of water with positive energy, turning it into holy water.</p>"
+  }
+}

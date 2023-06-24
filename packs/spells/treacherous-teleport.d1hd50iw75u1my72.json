@@ -1,0 +1,64 @@
+{
+  "_id": "d1hd50iw75u1my72",
+  "name": "Treacherous Teleport",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "jr9xl45sk4tdnlnq",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "you and touched objects or other touched willing creatures"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "none and Will negates (object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "summoner": 6,
+        "witch": 6,
+        "magus": 6,
+        "psychic": 6,
+        "occultist": 6,
+        "spiritualist": 6,
+        "unchained Summoner": 6
+      }
+    },
+    "level": 6,
+    "school": "con",
+    "subschool": "teleportation",
+    "types": "ruse",
+    "components": {
+      "verbal": true
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions as <i>teleport</i> except that you can opt to intentionally cause any number of the creatures traveling with you to suffer a mishap or arrive in a specific different location you visualize simultaneously with the original destination, or both.  Attempts to identify treacherous <i>teleport</i> with a skill check incorrectly identify it as <i>teleport</i> ( see t he r use d escriptor o n page 192).</p>"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "_id": "pgxpdq6q7783u5oo",
+  "name": "Inveigle Person",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "mrypdhj4pc9fdvrz",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level"
+        },
+        "target": {
+          "value": "one humanoid creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "bard": 3,
+        "witch": 4,
+        "psychic": 3,
+        "mesmerist": 3
+      }
+    },
+    "level": 4,
+    "school": "enc",
+    "subschool": "charm",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a drop of alcohol"
+    },
+    "shortDescription": "<p>You cause the target to become extremely amiable. The target treats all other living creatures as if it were friendly toward them. Any overtly hostile or harmful act toward the target by any living creature ends the spell.  An inveigled creature attempts to fulfill multiple requests in the same manner as it would favors for its true friends. If such requests conflict, it usually chooses the more reasonable option-overriding this preference requires succeeding at an opposed Charisma check, as if under multiple forms of mental control (<i>Pathfinder RPG Core Rulebook</i> 209).</p>"
+  }
+}

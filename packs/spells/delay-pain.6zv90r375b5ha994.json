@@ -1,0 +1,67 @@
+{
+  "_id": "6zv90r375b5ha994",
+  "name": "Delay Pain",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "bjc81o4dc8rb00ms",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "cleric": 2,
+        "oracle": 2,
+        "bard": 2,
+        "witch": 2,
+        "inquisitor": 2,
+        "bloodrager": 2,
+        "psychic": 2,
+        "mesmerist": 2
+      },
+      "subDomain": {
+        "Kyton": 1
+      }
+    },
+    "level": 2,
+    "school": "enc",
+    "types": "emotion",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You override the target's ability to feel pain. Pain effects (such as <i>pain strike</i>** and <i>symbol of</i> pain) do not affect the target until this spell's duration has expired. This does not negate any physical damage, ability damage, or ability drain that a pain effect has already done, but it does negate ongoing penalties from pain while the spell lasts.</p>"
+  }
+}

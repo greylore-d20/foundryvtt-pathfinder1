@@ -1,0 +1,48 @@
+{
+  "_id": "zRjCUXkADqaG0hXj",
+  "name": "Dragon Resistances",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/ice_11.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 3rd level, you gain resist 5 against your energy type and a +1 natural armor bonus. At 9th level, your energy resistance increases to 10 and natural armor bonus increases to +2. At 15th level, your natural armor bonus increases to +4.</p>"
+    },
+    "actions": [
+      {
+        "_id": "njthie1zv5w4ks3m",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/ice_11.jpg",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "changes": [
+      {
+        "_id": "wvgstkuo",
+        "formula": "@classes.sorcerer.level > 14 ? 4 : @classes.sorcerer.level > 8 ? 2 : 1",
+        "subTarget": "nac",
+        "modifier": "untyped"
+      }
+    ],
+    "tag": "classFeat_dragonResistances",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "ex"
+  }
+}

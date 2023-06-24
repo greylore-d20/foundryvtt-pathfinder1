@@ -1,0 +1,55 @@
+{
+  "_id": "vi7biwvv87ra1zef",
+  "name": "Aura of Greater Courage",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "xtzjtwsdw4brdi02",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
+        "spellArea": "10-ft.-radius emanation centered on you"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "paladin": 2
+      }
+    },
+    "level": 2,
+    "school": "abj",
+    "types": "emotion",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "spellbook": "",
+    "shortDescription": "<p>When you cast this spell you strengthen your paladin's aura of courage. Until the end of its duration, all allies within that aura are immune to fear (magical or otherwise). If you do not have the aura of courage class feature, <i>aura of greater courage</i> has no effect.</p>"
+  }
+}

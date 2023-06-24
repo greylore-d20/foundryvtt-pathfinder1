@@ -1,0 +1,62 @@
+{
+  "_id": "vsr1e8ib0hfhbnxb",
+  "name": "Undetectable Alignment",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "m5vrxag3szal2sbq",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "24 hours"
+        },
+        "target": {
+          "value": "one creature or object"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 2,
+        "oracle": 2,
+        "bard": 1,
+        "paladin": 2,
+        "alchemist": 2,
+        "inquisitor": 2,
+        "antipaladin": 2,
+        "psychic": 2,
+        "mesmerist": 1
+      }
+    },
+    "level": 2,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>An <i>undetectable alignment</i> spell conceals the alignment of an object or a creature from all forms of divination.</p>"
+  }
+}

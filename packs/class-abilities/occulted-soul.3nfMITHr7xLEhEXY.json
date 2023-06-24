@@ -1,0 +1,48 @@
+{
+  "_id": "3nfMITHr7xLEhEXY",
+  "name": "Occulted Soul",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/weapons/kunai.png",
+  "system": {
+    "description": {
+      "value": "<p>A ninja with this trick can still her mind to bypass magical detection. The ninja can spend 1 ki point to cast @Compendium[pf1.spells.awia42zci8nufpfl]{Nondetection} on herself as a spell-like ability, with a caster level equal to her ninja level.</p>"
+    },
+    "actions": [
+      {
+        "_id": "39ohqjkdw3u1tv9j",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/weapons/kunai.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.ninja.level",
+          "units": "hour"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_occultedSoul",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Ninja"]]
+    },
+    "abilityType": "su"
+  }
+}

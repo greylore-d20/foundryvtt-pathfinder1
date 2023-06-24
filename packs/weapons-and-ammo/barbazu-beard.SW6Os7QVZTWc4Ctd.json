@@ -1,0 +1,70 @@
+{
+  "_id": "SW6Os7QVZTWc4Ctd",
+  "name": "Barbazu Beard",
+  "type": "weapon",
+  "img": "systems/pf1/icons/items/weapons/barbazu-beard.png",
+  "system": {
+    "description": {
+      "value": "<p><b>Source</b> <em>Cheliax, Empire of Devils pg. 27</em></p><h3>Statistics</h3><p><b>Cost</b> 25 gp <b>Weight</b> 5 lbs.</p><p><b>Damage</b> 1d3 (small), 1d4 (medium); <b>Critical</b> x2; <b>Range</b> -; <b>Type</b> S; <b>Special</b> -</p><p><b>Category</b> Light; <b>Proficiency</b> Exotic</p><h3>Description</h3><p>Popular in Egorian but rarely seen elsewhere, a barbazu beard is an intimidating helm with a full facemask wrought to look like a snarling barbazu's head. Extending from the chin area of the face guard is a razor-sharp blade much like an actual barbazu's beard, usually 8 inches long but sometimes longer. A barbazu beard can be used as an off-hand weapon that requires no hands to use; thus, a warrior could combine use of a barbazu beard with a two-handed weapon. It otherwise follows all rules for using an off-hand weapon. Attacking with a barbazu beard provokes an attack of opportunity. Because it is so close to the wearer's face, using a barbazu beard against creatures harmful to touch (such as fire elementals and acidic oozes) has the same risks as using a natural weapon or unarmed strike against these creatures.</p><p>A barbazu beard is a light melee exotic weapon.</p>"
+    },
+    "tags": ["Barbazu Beard"],
+    "weight": {
+      "value": 5
+    },
+    "price": 25,
+    "hp": {
+      "max": 2,
+      "value": 2
+    },
+    "hardness": 10,
+    "actions": [
+      {
+        "_id": "ex7tg178too139am",
+        "name": "Attack",
+        "img": "systems/pf1/icons/items/weapons/barbazu-beard.png",
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": "0",
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 4, @size)",
+              "type": {
+                "values": ["slashing"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str"
+        },
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "barbazuBeard",
+    "weaponGroups": {
+      "value": ["close"]
+    },
+    "subType": "exotic"
+  }
+}

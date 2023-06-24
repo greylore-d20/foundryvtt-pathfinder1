@@ -1,0 +1,51 @@
+{
+  "_id": "Ni14srKv0u8PRZ7w",
+  "name": "Mind Fear",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/affliction_08.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can expend 1 point of mental focus to cause a living creature to succumb to fear. The target must be within 30 feet of you, and it can attempt a Will saving throw to negate the effect. If the target fails the save and has a number of Hit Dice less than or equal to yours, it is frightened for 1d4 rounds. If the target fails the saving throw and has a number of Hit Dice greater than yours, it is instead shaken for 1d4 rounds.</p>\n<p>This is a mind-affecting fear effect.</p>"
+    },
+    "actions": [
+      {
+        "_id": "q9whfnw1xwc3nlfj",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/affliction_08.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1d4",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "tag": "classFeat_mindFear",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Occultist"]]
+    },
+    "abilityType": "sp"
+  }
+}

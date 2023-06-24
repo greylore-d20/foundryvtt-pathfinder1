@@ -1,0 +1,60 @@
+{
+  "_id": "1zyixa5b6aw7npub",
+  "name": "Crushing Hand",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "kfi03rxnloqoqnvo",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "other",
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "10-ft. hand"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 9,
+        "wizard": 9,
+        "psychic": 9
+      },
+      "domain": {
+        "Strength": 9
+      }
+    },
+    "level": 9,
+    "school": "evo",
+    "types": "force",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "a soft glove"
+    },
+    "shortDescription": "<p>This spell functions as <i>interposing hand</i>, except that it can also grapple one opponent as <i>grasping hand</i>. Its CMB and CMD for grapple checks use your caster level in place of its base attack bonus, with a +12 bonus for its Strength score (35) and a +1 bonus for being Large (its Dexterity is 10, granting no bonus to the CMD). A <i>crushing hand</i> deals 2d6+12 points of damage on each successful grapple check against an opponent. The <i>crushing hand</i> can instead be directed to bull rush a target (as <i>forceful hand</i>), using the same bonuses outlined above, or it can be directed to interpose itself, as <i>interposing hand</i> does.</p>"
+  }
+}

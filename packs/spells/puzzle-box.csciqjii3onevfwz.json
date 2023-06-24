@@ -1,0 +1,59 @@
+{
+  "_id": "csciqjii3onevfwz",
+  "name": "Puzzle Box",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "sey7y9fe7mh7i80q",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level or permanent; see text"
+        },
+        "target": {
+          "value": "one creature or one object up to 5 lbs./level"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates or none"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "bard": 2,
+        "witch": 3
+      }
+    },
+    "level": 3,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "curse, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell causes even commonly used objects to become conundrums. When cast on a creature, the target loses all weapon and shield proficiencies. The target also forgets how to use all spell-completion, spell-trigger, and use-activated magic items, as well as any mundane items used as part of a skill check, imposing a -5 penalty on all ability and skill checks attempted with such items. These effects last for 1 round per level. As a move action, the target can attempt a skill check to negate the effects of this spell for one object. Weapons, shields, and mundane objects require a successful Craft skill check of the type required to craft the item in question, with a DC equal to the spell's save DC. Magic items require a successful Spellcraft or Use Magic Device skill check against the spell's save DC.  Alternatively, this spell can be cast on a single touched object that weighs up to 5 pounds per the caster's level. Use of this object becomes a puzzle even to those previously familiar with it. Any creature attempting to use an item affected in this way is treated as though the creature was the target of <i>puzzle box</i> for that item only. When cast on an object, the duration of this spell is permanent.</p>"
+  }
+}

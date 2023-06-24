@@ -1,0 +1,63 @@
+{
+  "_id": "elf0s1di1ihcjgxr",
+  "name": "Invisibility Alarm",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ouyfln2medg58brq",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "20"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        },
+        "spellArea": "20-ft.-radius emanation centered on a point in space"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "ranger": 1,
+        "bard": 1,
+        "alchemist": 1,
+        "inquisitor": 1,
+        "psychic": 1,
+        "hunter": 1
+      }
+    },
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true,
+      "divineFocus": 3
+    },
+    "materials": {
+      "focus": "a tiny bell and a piece of very fine silver wire"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions as <i>alarm</i>, except it is triggered only by invisible creatures entering or leaving the warded area.</p><p>The spell has a different mental <i>alarm</i> depending on whether the invisible creature is entering or leaving the area. This spell does not aid you in sensing or pinpointing the location of an invisible creature within the spell's area.</p><p>Invisibility <i>alarm</i> can be made permanent with a <i>permanency</i> spell by a caster of 9th level or higher at a cost of 2,500 gp.</p>"
+  }
+}

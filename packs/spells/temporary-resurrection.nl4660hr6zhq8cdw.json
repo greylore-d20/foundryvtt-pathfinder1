@@ -1,0 +1,67 @@
+{
+  "_id": "nl4660hr6zhq8cdw",
+  "name": "Temporary Resurrection",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "36j1x5gcozthxte0",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "24 hours"
+        },
+        "target": {
+          "value": "dead creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 7,
+        "wizard": 7,
+        "witch": 7,
+        "psychic": 7,
+        "occultist": 6
+      }
+    },
+    "level": 7,
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "diamond dust worth 500 gp",
+      "gpValue": 500
+    },
+    "spellbook": "",
+    "preparation": {
+      "spontaneousPrepared": false
+    },
+    "sr": false,
+    "shortDescription": "<p>You restore temporary life to a body that has been dead for less than 48 hours. The spell lasts for 24 hours, after which the target dies again. The target gains 1 permanent negative level while under the effect of this spell; this negative level goes away when the target dies or is permanently <i>raise</i>d from the dead (such as with <i>raise</i> dead). The target still counts as a dead corpse (but not undead) for the purpose of spells that revive dead creatures, so a cleric can cast <i>raise</i> dead or a similar spell on the target even while this spell is active. Once a creature has been revived with <i>temporary resurrection</i>, this spell cannot be used on it again until it is permanently <i>raise</i>d from the dead.</p>"
+  }
+}

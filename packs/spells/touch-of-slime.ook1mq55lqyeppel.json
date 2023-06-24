@@ -1,0 +1,67 @@
+{
+  "_id": "ook1mq55lqyeppel",
+  "name": "Touch of Slime",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "06p69sp8wxpxjqf8",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "living creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "druid": 4,
+        "alchemist": 4,
+        "witch": 4,
+        "bloodrager": 4,
+        "psychic": 4,
+        "hunter": 4
+      }
+    },
+    "level": 4,
+    "school": "con",
+    "subschool": "creation",
+    "types": "disease",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a drop of acid and a black glass sphere"
+    },
+    "shortDescription": "<p>You create a coating of slime on your hand. When you make a successful melee touch attack with the slime, it pulls free of you and sticks to the target, at which point it acts like green slime (<i>Core Rulebook</i> 416), dealing 1d3 points of Constitution damage per round. Anything that destroys green slime (scraping, freezing, burning, cutting, sunlight, or <i>remove</i> disease) destroys this slime. If the slime kills a creature, it consumes the body and then dies. It cannot transfer to a creature other than the original target, and dies if separated from the original target.</p>"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "_id": "38QrIhvAklIxxVaj",
+  "name": "Hateful Retort",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+  "system": {
+    "description": {
+      "value": "<p>Once per day, as an immediate action after you have been hit with a melee attack, you can make a melee attack against the creature that hit you. This melee attack is at your highest attack bonus, even if you've already attacked in the round.</p>"
+    },
+    "tags": ["Inquisition", "Anger Inquisition"],
+    "actions": [
+      {
+        "_id": "y0tgk9i7dtpu4z5u",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+        "activation": {
+          "type": "immediate"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "reaction"
+          }
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1"
+    },
+    "tag": "classFeat_hatefulRetort",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "ex"
+  }
+}

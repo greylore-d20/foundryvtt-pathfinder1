@@ -1,0 +1,59 @@
+{
+  "_id": "0j2cb0iv0695a45i",
+  "name": "Possession, Greater",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "bwnj0hb38etzi7y0",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level (D)"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 8,
+        "wizard": 8,
+        "witch": 8,
+        "psychic": 8,
+        "occultist": 6,
+        "spiritualist": 6
+      }
+    },
+    "level": 8,
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell functions as <i>possession</i>, but when you possess a host, you enter the host's body and your physical body vanishes. You are ejected to the closest empty square upon expiration of the spell or upon the host's death.</p>"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "_id": "oRHnlhP9YFKrKqUm",
+  "name": "Ectoplasmic Form",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_25.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 9th level, you can transform into a cloud of ectoplasm. Treat this as @Compendium[pf1.spells.mqdoexj35atgqafn]{Gaseous Form}, except that you can <em>fly</em> at a speed of 30 feet, and you can solidify your form sufficiently to carry small objects, though fine manipulation is impossible. You can use this ability for a number of minutes per day equal to your <em>sorcerer</em> level.</p>\n<p>These minutes need not be consecutive, but must be used in 1-minute increments.</p>"
+    },
+    "actions": [
+      {
+        "_id": "dbzg4usx9r9xh1n2",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_25.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "Self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.sorcerer.level"
+    },
+    "tag": "classFeat_ectoplasmicForm",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "sp"
+  }
+}

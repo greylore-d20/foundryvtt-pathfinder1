@@ -1,0 +1,64 @@
+{
+  "_id": "ZPrMO00Iz2SfrNMq",
+  "name": "Wholeness of Body",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/yellow_09.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 7th level or higher, a monk can heal his own wounds as a <em>standard action</em>. He can heal a number of <em>hit points</em> of damage equal to his monk level by using 2 points from his ki pool.</p>"
+    },
+    "actions": [
+      {
+        "_id": "m3h8i8hm1iypih5t",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/yellow_09.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "Self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "uses": {
+          "autoDeductChargesCost": "0"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "damage": {
+          "parts": [
+            {
+              "formula": "@classes.monk.level",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "tag": "classFeat_wholenessOfBody",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Monk"]]
+    },
+    "abilityType": "su"
+  }
+}

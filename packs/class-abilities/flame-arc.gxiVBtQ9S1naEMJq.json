@@ -1,0 +1,62 @@
+{
+  "_id": "gxiVBtQ9S1naEMJq",
+  "name": "Flame Arc",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The arcanist can unleash an arc of flame by expending 1 point from her arcane reservoir. This creates a 30-foot line of flame that deals 1d6 points of fire damage + the arcanist’s Charisma modif ier, plus an additional 1d6 points of fire damage for every 2 levels beyond 1st (to a maximum of 10d6 at 19th level) to each target in the line. Creatures in the area of effect may attempt a Reflex saving throw to halve the damage.</p>"
+    },
+    "tags": ["Arcanist Exploit"],
+    "actions": [
+      {
+        "_id": "kk0jltyvq2jiq3xz",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/runes-blue-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "30-ft. line"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(ceil(@classes.arcanist.level / 2))d6 + @abilities.cha.mod",
+              "type": {
+                "values": ["fire"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        }
+      }
+    ],
+    "tag": "classFeat_flameArc",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Arcanist"]]
+    },
+    "abilityType": "su"
+  }
+}

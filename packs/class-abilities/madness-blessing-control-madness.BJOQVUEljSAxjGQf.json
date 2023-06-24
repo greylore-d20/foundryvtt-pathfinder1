@@ -1,0 +1,47 @@
+{
+  "_id": "BJOQVUEljSAxjGQf",
+  "name": "Madness Blessing: Control Madness",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/horror-acid-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, as a swift action you can choose one behavior for all confused creatures within 30 feet to exhibit (as if all creatures rolled the same result). This effect lasts for 1 round. You can use this ability even while you are confused.</p>"
+    },
+    "actions": [
+      {
+        "_id": "kvq1t6kqp33r2w5x",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/horror-acid-3.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "confused creatures"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_madnessBlessingControlMadness",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

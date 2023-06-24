@@ -1,0 +1,69 @@
+{
+  "_id": "g6e1uprwn8tnz2hp",
+  "name": "Touch of Slumber",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ulb5chb8829ikcjr",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "nonhostile creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "cleric": 5,
+        "oracle": 5,
+        "druid": 5,
+        "bard": 6,
+        "witch": 6,
+        "shaman": 5,
+        "psychic": 6,
+        "hunter": 5
+      }
+    },
+    "level": 5,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a bit of seaweed"
+    },
+    "shortDescription": "<p>This spell functions only against a creature with an attitude toward you of indifferent or better, and only if the target is not hostile toward you or your visible allies. A target touched by you (this touch usually requires a successful melee touch attack) must succeed at a Will saving throw or fall asleep for 2d6 hours. While asleep, the creature is helpless. For 1 minute after the creature is affected, any loud noise or rough contact causes it to awaken immediately. Thereafter, slapping or wounding an affected creature awakens it, but normal noise does not. Awakening a creature is a standard action (this is an application of the aid another action).</p>"
+  }
+}

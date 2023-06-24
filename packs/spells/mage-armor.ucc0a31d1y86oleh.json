@@ -1,0 +1,71 @@
+{
+  "_id": "ucc0a31d1y86oleh",
+  "name": "Mage Armor",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "kgk7n92g1rhhzlu2",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level (D)"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "summoner": 1,
+        "witch": 1,
+        "bloodrager": 1,
+        "psychic": 1,
+        "occultist": 1,
+        "spiritualist": 1,
+        "unchained Summoner": 1
+      },
+      "bloodline": {
+        "Draconic": 1
+      }
+    },
+    "school": "con",
+    "subschool": "creation",
+    "types": "force",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "a piece of cured leather"
+    },
+    "sr": false,
+    "shortDescription": "<p>An invisible but tangible field of force surrounds the subject of a <i>mage armor</i> spell, providing a +4 armor bonus to AC.</p><p>Unlike mundane armor, <i>mage armor</i> entails no armor check penalty, arcane spell failure chance, or speed reduction. Since <i>mage armor</i> is made of force, incorporeal creatures can't bypass it the way they do normal armor.</p>"
+  }
+}

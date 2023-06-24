@@ -1,0 +1,57 @@
+{
+  "_id": "iwW67ugGGuhJrTHu",
+  "name": "Monk (Quick)",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_07.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b> Yes<br><b>Usable with Summons</b> No<p>A monk creature gains extra attacks with unarmed strikes or natural attacks, an increase in damage with those attacks, and defensive abilities. A monk creature's CR increases by 3 if the creature has 10 or more HD. A monk creature must be lawful.<p><b>Quick Rules:</b> +2 on all rolls based on Dex and Wis; gains the Improved Unarmed Strike feat. When the creature makes a full attack with unarmed strikes or natural attacks, it can make an extra attack of the same type (of its choice) with a –5 penalty. If the creature uses unarmed strikes, it deals damage as if it were a monk of a level equal to its HD (maximum 20 HD). A creature with 10 or more HD that uses natural attacks instead increases the damage dealt by all of its natural attacks by one die step. If the creature is wearing no armor, it gains a bonus to AC equal to 2 + its Wis modifier. This bonus to AC increases by 1 for every 4 HD it possesses (to a maximum of +5 at 20 HD). The creature gains evasion† (improved evasion† if the creature has 10 or more HD).<p><b>Rebuild Rules:</b> Defensive Abilities evasion† (improved evasion† if the creature has 10 or more HD), and if the creature is wearing no armor, it gains a bonus to AC equal its Wis modifier. This bonus to AC increases by 1 for every 4 HD (to a maximum of +5 at 20 HD); Special Attacks when the creature makes a full attack with unarmed strikes or natural attacks, it can make an extra attack of the same type with a –5 penalty. If the creature uses unarmed strikes, it deals damage as if it were a monk with a level equal to its HD (maximum 20 HD). A creature with 10 or more HD that uses natural attacks increases the damage dealt by all of its natural attacks by one die step instead; Ability Scores +4 Dexterity and Wisdom; Feats Improved Unarmed Strike.</p>"
+    },
+    "changes": [
+      {
+        "_id": "8fj9n2j7",
+        "formula": "2",
+        "subTarget": "ref",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "0qe32r4m",
+        "formula": "2",
+        "subTarget": "dexSkills",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "8g3rbj23",
+        "formula": "2",
+        "subTarget": "dexChecks",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "s2yfxy8a",
+        "formula": "2",
+        "subTarget": "will",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "9mx4up64",
+        "formula": "2",
+        "subTarget": "wisChecks",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "sy7ghh5b",
+        "formula": "2",
+        "subTarget": "wisSkills",
+        "modifier": "untyped"
+      },
+      {
+        "_id": "fczg3axr",
+        "formula": "@abilities.wis.mod + (2 + floor(@attributes.hd.total / 4))",
+        "subTarget": "ac",
+        "modifier": "untyped"
+      }
+    ],
+    "subType": "template",
+    "crOffset": "@attributes.hd.total >= 10 ? 3 : 2"
+  }
+}

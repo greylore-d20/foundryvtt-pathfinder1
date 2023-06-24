@@ -1,0 +1,49 @@
+{
+  "_id": "3mvzelxgq38a2nw1",
+  "name": "Oracle's Burden",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "rj5xgoy3c98x3p6a",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "level": 2,
+    "school": "nec",
+    "types": "curse",
+    "components": {
+      "verbal": true
+    },
+    "shortDescription": "<p>You entreat the forces of fate to bestow your oracle's curse upon another creature. The target creature suffers all the hindrances and none of the benefits of your oracle's curse class feature. You still suffer all effects of your oracle's curse.</p><p>If you do not have the oracle's curse class feature, this spell has no effect.</p>"
+  }
+}

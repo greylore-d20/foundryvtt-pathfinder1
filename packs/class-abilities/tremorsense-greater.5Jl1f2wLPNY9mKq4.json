@@ -1,0 +1,42 @@
+{
+  "_id": "5Jl1f2wLPNY9mKq4",
+  "name": "Tremorsense, Greater",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/rock-sky-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Element</b> earth; <b>Type</b> utility (Su); <b>Level</b> 5; Burn 0<br><b>Prerequisite</b> tremorsense</p>\n<p>You can spend 10 minutes to extend your tremorsense outward while in a natural underground setting, letting you learn three facts as if using @Compendium[pf1.spells.icjrw9y6pa1uatlz]{Commune with Nature}, except your tremorsense can’t tell if a creature is a woodland creature or a powerful unnatural creature.</p>"
+    },
+    "actions": [
+      {
+        "_id": "e4fr6t1f0fajcq6z",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/rock-sky-3.jpg",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "uses": {
+          "autoDeductChargesCost": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_tremorsenseGreater",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Kineticist"]]
+    },
+    "abilityType": "su"
+  }
+}

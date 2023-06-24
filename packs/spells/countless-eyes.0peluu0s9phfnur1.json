@@ -1,0 +1,61 @@
+{
+  "_id": "0peluu0s9phfnur1",
+  "name": "Countless Eyes",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "r7xegdb5s5xmv7mk",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "alchemist": 3,
+        "witch": 3,
+        "inquisitor": 3,
+        "bloodrager": 3,
+        "psychic": 3,
+        "occultist": 3
+      }
+    },
+    "level": 3,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>The target sprouts extra eyes all over its body, including on the back of its head. It gains all-around vision (<i>Bestiary 2</i> 294) and cannot be flanked.</p>"
+  }
+}

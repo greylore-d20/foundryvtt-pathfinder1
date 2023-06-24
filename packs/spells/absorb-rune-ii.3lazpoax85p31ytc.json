@@ -1,0 +1,69 @@
+{
+  "_id": "3lazpoax85p31ytc",
+  "name": "Absorb Rune II",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "kxzydsp2989kevn4",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous plus 1 minute/level (see text)"
+        },
+        "target": {
+          "value": "one spell effect"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "cleric": 6,
+        "oracle": 6,
+        "bard": 6,
+        "magus": 6,
+        "occultist": 6
+      }
+    },
+    "level": 6,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a white silk glove worth 25 gp",
+      "gpValue": 25
+    },
+    "spellbook": "",
+    "preparation": {
+      "spontaneousPrepared": false
+    },
+    "shortDescription": "<p>This spell functions like <i>absorb rune I</i>, but it can affect runes equivalent to a spell of 5th level or lower.</p>"
+  }
+}

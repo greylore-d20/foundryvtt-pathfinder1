@@ -1,0 +1,68 @@
+{
+  "_id": "27o3msobhyghmfid",
+  "name": "Minor Image",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "t31akitj73drn88t",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration + 2 rounds"
+        },
+        "range": {
+          "units": "long"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief (if interacted with)"
+        },
+        "spellEffect": "visual figment that cannot extend beyond four 10-ft. cubes + one 10-ft. cube/level (S)"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "bard": 2,
+        "magus": 2,
+        "psychic": 2,
+        "medium": 2,
+        "mesmerist": 2,
+        "occultist": 2
+      },
+      "subDomain": {
+        "Imagination": 2
+      }
+    },
+    "level": 2,
+    "school": "ill",
+    "subschool": "figment",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "a bit of fleece"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>silent image</i>, except that <i>minor image</i> includes some minor sounds but not understandable speech.</p>"
+  }
+}

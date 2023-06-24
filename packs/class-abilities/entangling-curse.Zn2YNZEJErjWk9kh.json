@@ -1,0 +1,49 @@
+{
+  "_id": "Zn2YNZEJErjWk9kh",
+  "name": "Entangling Curse",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman entangles a creature within 30 feet for a number of rounds equal to the shaman’s Charisma modifier (minimum 1). A successful Reflex saving throw negates this effect.</p>\n<p>Whether or not the save is successful, the creature cannot be the target of this hex again for 24 hours.</p>"
+    },
+    "actions": [
+      {
+        "_id": "yedaauxp72j3i1qq",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@abilities.cha.mod",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_entanglingCurse",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

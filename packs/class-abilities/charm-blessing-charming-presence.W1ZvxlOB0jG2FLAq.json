@@ -1,0 +1,47 @@
+{
+  "_id": "W1ZvxlOB0jG2FLAq",
+  "name": "Charm Blessing: Charming Presence",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/evil-eye-eerie-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can touch an ally and grant an entrancing blessing. For 1 minute, the ally becomes mesmerizing to her opponents, filling them with either abject admiration or paralyzing fear. This effect functions as @Compendium[pf1.spells.yk5bgi6j9kbtigof]{Sanctuary}, except if the ally attacks an opponent, the effect ends with respect to only that opponent. This is a mind-affecting effect.</p>"
+    },
+    "actions": [
+      {
+        "_id": "sczt2vyso5otpk8f",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/evil-eye-eerie-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "ally touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_charmBlessingCharmingPresence",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

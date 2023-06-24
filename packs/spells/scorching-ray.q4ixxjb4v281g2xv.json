@@ -1,0 +1,79 @@
+{
+  "_id": "q4ixxjb4v281g2xv",
+  "name": "Scorching Ray",
+  "type": "spell",
+  "img": "systems/pf1/icons/spells/beam-red-2.jpg",
+  "system": {
+    "actions": [
+      {
+        "_id": "2mclfucp1e038m2n",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/beam-red-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "attackName": "Ray",
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "4d6",
+              "type": {
+                "values": ["fire"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "clamped(floor((@cl - 3) / 4), 0, 2)"
+          },
+          "label": "Ray #{0}"
+        },
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "one or more rays"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "magus": 2,
+        "adept": 2,
+        "bloodrager": 2
+      },
+      "bloodline": {
+        "Efreeti": 2,
+        "Elemental": 2,
+        "Infernal": 2
+      }
+    },
+    "level": 2,
+    "school": "evo",
+    "types": "fire",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "shortDescription": "<p>You blast your enemies with a searing beam of fire. You may fire one ray, plus one additional ray for every four levels beyond 3rd (to a maximum of three rays at 11th level). Each ray requires a ranged touch attack to hit and deals 4d6 points of fire damage. The rays may be fired at the same or different targets, but all rays must be aimed at targets within 30 feet of each other and fired simultaneously.</p>"
+  }
+}

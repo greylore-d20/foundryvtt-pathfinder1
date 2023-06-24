@@ -1,0 +1,49 @@
+{
+  "_id": "nobSUj4dEl72p0xd",
+  "name": "Phantom Stampede",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman summons a host of ghostly herd beasts to trample a single creature. These phantom beasts affect only the target creature, which is buffeted and pummeled by their passing. The creature takes no damage from the ability, but takes a –4 penalty to its CMD against bull rush, overrun, and trip attempts. Additionally, spellcasters under the effect of this ability take a –4 penalty on concentration checks. The target receives no saving throw to negate this effect.</p>\n<p>This effect lasts a number of rounds equal to the shaman’s level.</p>\n<p>The creature can’t be the target of this hex again for 24 hours.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ryecv0cl4nie9zt1",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.shaman.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_phantomStampede",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

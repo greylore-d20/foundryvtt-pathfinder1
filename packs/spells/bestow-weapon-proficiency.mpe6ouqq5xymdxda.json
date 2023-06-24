@@ -1,0 +1,72 @@
+{
+  "_id": "mpe6ouqq5xymdxda",
+  "name": "Bestow Weapon Proficiency",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "kufnooxws6h5aqef",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "cleric": 2,
+        "oracle": 2,
+        "paladin": 2,
+        "alchemist": 2,
+        "witch": 2,
+        "inquisitor": 2,
+        "antipaladin": 2,
+        "magus": 2,
+        "psychic": 2,
+        "medium": 2,
+        "occultist": 2
+      }
+    },
+    "level": 2,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "pieces of shaved metal"
+    },
+    "shortDescription": "<p>You bestow the subject with the ability to use a single type of weapon he is not proficient in as if he were proficient with that weapon. The weapon can be of any type, including an exotic weapon, but the subject of the spell must be holding the weapon.</p>"
+  }
+}

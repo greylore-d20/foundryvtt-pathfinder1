@@ -1,0 +1,66 @@
+{
+  "_id": "Rjetl2ez4SJfd0i3",
+  "name": "Ice Splinter",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, the shaman can shoot razor-sharp icicles at an enemy within 30 feet as a ranged touch attack. This barrage deals 1d6 points of piercing damage + 1 point for every 2 shaman levels she has.</p>\n<p>The shaman can use this ability a number of times per day equal to 3 + her Charisma modifier.</p>\n<p>At 11th level, any weapon she wields is treated as a <a href=\"https://aonprd.com/MagicWeaponsDisplay.aspx?ItemName=Frost\">frost</a> weapon.</p>"
+    },
+    "actions": [
+      {
+        "_id": "hr6uoe31w37c4wzp",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_20.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "One creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d6 + floor(@classes.shaman.level / 2)",
+              "type": {
+                "values": ["cold"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_iceSplinter",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

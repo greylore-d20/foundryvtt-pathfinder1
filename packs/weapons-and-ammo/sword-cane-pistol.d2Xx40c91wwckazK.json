@@ -1,0 +1,72 @@
+{
+  "_id": "d2Xx40c91wwckazK",
+  "name": "Sword Cane Pistol",
+  "type": "weapon",
+  "img": "icons/weapons/guns/gun-pistol-wood.webp",
+  "system": {
+    "description": {
+      "value": "<p><b>Source</b> <em>Ultimate Equipment pg. 43</em>, <em>Ultimate Combat pg. 139</em></p>\n<h3><span class=\"pfs-conditional\" title=\"No character may purchase a firearm unless she possesses the Gunsmithing feat and firearms are never considered Always Available\">[PFS]</span> Statistics</h3>\n<p><b>Cost</b> 775 gp <b>Weight</b> 1 lb.</p>\n<p><b>Damage</b> 1d3 (small), 1d4 (medium); <b>Critical</b> x3; <b>Range</b> 10 ft.; <b>Type</b> B and P; <b>Special</b> -</p>\n<p><b>Misfire</b> 1 (5 ft.); <b>Capacity</b> 1</p>\n<p><b>Category</b> One-Handed; <b>Proficiency</b> Exotic</p>\n<h3>Description</h3>\n<p>A combination weapon, this gun mixes a coat pistol with a sword cane. The sword cane pistol is considered a double weapon for the purpose of creating masterwork or magical versions of this weapon. The pistol attachment makes the nature of the weapon a little more difficult to hide. An observer must succeed at a DC 15 Perception check to realize that an undrawn sword cane pistol is a weapon rather than a simple walking stick; the DC decreases to 5 if the observer is able to handle the weapon.</p>\n<p>A sword cane pistol uses either a bullet and 1 dose of black powder or a single alchemical cartridge as ammunition. The sword part of the weapon must be drawn in order to load the pistol part of the weapon.</p>\n<p><b>This is an early firearm.</b></p>"
+    },
+    "tags": ["Sword Cane Pistol"],
+    "weight": {
+      "value": 1
+    },
+    "price": 775,
+    "hardness": 10,
+    "actions": [
+      {
+        "_id": "kglz54xwm4kbsd0b",
+        "name": "Attack",
+        "img": "icons/weapons/guns/gun-pistol-wood.webp",
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": "10",
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 4, @size)",
+              "type": {
+                "values": ["bludgeoning", "piercing"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          },
+          "label": ""
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critRange": null,
+          "critMult": 3
+        },
+        "save": {
+          "dc": "0"
+        },
+        "usesAmmo": true
+      }
+    ],
+    "tag": "swordCanePistol",
+    "weaponGroups": {
+      "value": ["firearms"]
+    },
+    "subType": "exotic",
+    "weaponSubtype": "ranged",
+    "ammoType": "gunBullet"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "_id": "azFolTaFreo2QCdu",
+  "name": "Protection Blessing; Aura of Protection",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/protect-royal-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, you can emit a 30-foot aura of protection for 1 minute. You and your allies within this aura gain resistance 10 against acid, cold, electricity, fire, and sonic.</p>\n<p>At 15th level, the energy resistance increases to 20.</p>"
+    },
+    "actions": [
+      {
+        "_id": "8ussvse4hjd2wnvi",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/protect-royal-3.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "allies"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_protectionBlessingAuraOfProtection",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

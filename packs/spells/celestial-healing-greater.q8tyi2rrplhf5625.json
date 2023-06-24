@@ -1,0 +1,69 @@
+{
+  "_id": "q8tyi2rrplhf5625",
+  "name": "Celestial Healing, Greater",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "jclj7fk03nl4ovxx",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/2 levels"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 4,
+        "oracle": 4,
+        "summoner": 4,
+        "witch": 4,
+        "magus": 4,
+        "bloodrager": 4,
+        "unchained Summoner": 4
+      }
+    },
+    "level": 4,
+    "school": "con",
+    "subschool": "healing",
+    "types": "good",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "1 drop of blood from a good outsider or 1 dose of holy water"
+    },
+    "spellbook": "",
+    "shortDescription": "<p>As per @Compendium[pf1.spells.6d6bgiakwmwiu7qv]{celestial healing}, except the target gains fast healing 4 and the target radiates the aura of a good cleric.</p>"
+  }
+}

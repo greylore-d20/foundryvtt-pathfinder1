@@ -1,0 +1,70 @@
+{
+  "_id": "dgmR0QtZF8vePzcz",
+  "name": "Scythe",
+  "type": "weapon",
+  "img": "systems/pf1/icons/items/weapons/scythe.PNG",
+  "system": {
+    "description": {
+      "value": "<p><b>Source</b> <em>Ultimate Equipment pg. 19</em>, <em>PRPG Core Rulebook pg. 143</em></p><h3><span title=\"PFS Legal\">[PFS]</span> Statistics</h3><p><b>Cost</b> 18 gp <b>Weight</b> 10 lbs.</p><p><b>Damage</b> 1d6 (small), 2d4 (medium); <b>Critical</b> x4; <b>Range</b> -; <b>Type</b> P or S; <b>Special</b> trip</p><p><b>Category</b> Two-Handed; <b>Proficiency</b> Martial</p><p><b>Weapon Groups</b> Blades, Heavy</p><h3>Description</h3><p>This weapon consists of a long wooden shaft with protruding handles and a sharp curved blade set at a right angle. Derived from a farm tool used to mow down crops, a scythe requires two hands to use, and is unwieldy but capable of inflicting grievous wounds. Its connotations as a symbol of death due to its association with reaping also make the scythe a particularly intimidating weapon.</p>"
+    },
+    "tags": ["Scythe"],
+    "weight": {
+      "value": 10
+    },
+    "price": 18,
+    "hardness": 10,
+    "actions": [
+      {
+        "_id": "c067qqd7r9b7lti3",
+        "name": "Attack",
+        "img": "systems/pf1/icons/items/weapons/scythe.PNG",
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": "0",
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(2, 4, @size)",
+              "type": {
+                "values": ["piercing", "slashing"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "damageMult": 1.5,
+          "critMult": 4
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "tag": "scythe",
+    "held": "2h",
+    "weaponGroups": {
+      "value": ["bladesHeavy"]
+    },
+    "subType": "martial",
+    "weaponSubtype": "2h"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "_id": "m84969gni5iu4bdt",
+  "name": "Lightning Bolt",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "0mfqxqpwteei11fe",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "value": "120",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "type": "ray",
+          "size": "120"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(min(10, @cl))d6",
+              "type": {
+                "values": ["electric"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        },
+        "spellArea": "120-ft. line"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "witch": 3,
+        "magus": 3,
+        "adept": 3,
+        "bloodrager": 3,
+        "occultist": 3
+      },
+      "bloodline": {
+        "Stormborn": 3
+      }
+    },
+    "level": 3,
+    "school": "evo",
+    "types": "electricity",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "fur and a glass rod"
+    },
+    "shortDescription": "<p>You release a powerful stroke of electrical energy that deals 1d6 points of electricity damage per caster level (maximum 10d6) to each creature within its area. The bolt begins at your fingertips.</p><p>The <i>lightning bolt</i> sets fire to combustibles and damages objects in its path. It can melt metals with a low melting point, such as lead, gold, copper, silver, or bronze. If the damage caused to an interposing barrier shatters or breaks through it, the bolt may continue beyond the barrier if the spell's range permits; otherwise, it stops at the barrier just as any other spell effect does.</p>"
+  }
+}

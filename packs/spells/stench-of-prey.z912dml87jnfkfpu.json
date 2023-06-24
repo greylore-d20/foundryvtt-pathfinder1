@@ -1,0 +1,58 @@
+{
+  "_id": "z912dml87jnfkfpu",
+  "name": "Stench of Prey",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "mekn6x2o1lgy5nua",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "one creature (see text)"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (see text)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "druid": 3,
+        "ranger": 3,
+        "shaman": 3,
+        "hunter": 3
+      }
+    },
+    "level": 3,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>The target exudes a strong odor that most predators recognize as the scent of helpless prey. The closest 1d4+1 predatory creatures within 30 feet must succeed at a Will save or start attacking the target (animals with the scent ability are affected if within 60 feet). If the predator is an animal, it can be called away from the target by a handler using the \"down\" trick (<i>Core Rulebook</i> 97) or any effect that suspends or dispels emotion or rage effects.</p><p>This spell has no effect on constructs, undead, or creatures with the unnatural aura ability or effects that repel animals.</p>"
+  }
+}

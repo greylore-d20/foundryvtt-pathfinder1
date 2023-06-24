@@ -1,0 +1,60 @@
+{
+  "_id": "rwb3qouy55azwvf3",
+  "name": "Tireless Pursuers",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "unh2kcsa5xo0o3ih",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level (D)"
+        },
+        "target": {
+          "value": "you plus one touched creature/3 levels"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "ranger": 3,
+        "inquisitor": 4,
+        "hunter": 3
+      }
+    },
+    "level": 3,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a hard biscuit broken into pieces"
+    },
+    "shortDescription": "<p>This spell functions as <i>tireless pursuit</i>, except as noted above.</p>"
+  }
+}

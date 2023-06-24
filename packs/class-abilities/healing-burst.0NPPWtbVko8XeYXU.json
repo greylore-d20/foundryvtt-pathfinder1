@@ -1,0 +1,59 @@
+{
+  "_id": "0NPPWtbVko8XeYXU",
+  "name": "Healing Burst",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/link-blue-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Element</b> aether, void, water, wood; <b>Type</b> utility (Sp); <b>Level</b> 4; <b>Burn</b> 1<br><b>Prerequisite</b> kinetic healer or void healer<br><b>Saving Throw</b> none; <b>SR</b> yes</p>\n<p>You use kinetic healer or void healer (whichever you have, or either if you have both) to heal all creatures in a 30-foot radius around you. Healing burst heals half as much damage as normal, unless your healing amount is based on positive blast, in which case it heals the full amount. Unlike kinetic healer, you must accept the burn yourself. This counts as kinetic healer for the purpose of the kinetic chirurgeon archetype (the 17th-level metahealer ability heals the kinetic chirurgeon twice—once for half and once for full).</p>"
+    },
+    "actions": [
+      {
+        "_id": "8hf7r594qvvdol5y",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/link-blue-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "creatures in range"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "heal",
+        "damage": {
+          "parts": [
+            {
+              "formula": "floor(((ceil(@classes.kineticist.level / 2))d6 + floor(@abilities.con.mod / 2) + min(@resources.classFeat_burn.value, floor(@classes.kineticist.level / 3) ) * 2) / 2)",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "tag": "classFeat_healingBurst",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Kineticist"]]
+    },
+    "abilityType": "sp"
+  }
+}

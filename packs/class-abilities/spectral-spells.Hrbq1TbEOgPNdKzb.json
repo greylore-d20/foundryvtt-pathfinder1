@@ -1,0 +1,41 @@
+{
+  "_id": "Hrbq1TbEOgPNdKzb",
+  "name": "Spectral Spells",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>You gain Ectoplasmic Spell as a bonus feat. In addition, once per day, you can cast a spell with the Ectoplasmic Spell metamagic feat as a standard action that does not increase the level of the spell.</p>\n<p>You can use this ability one additional time per day at 7th level and every 4 levels thereafter.</p>"
+    },
+    "actions": [
+      {
+        "_id": "swjz7w6altne5kwh",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "floor((@classes.oracle.level - 3) / 4)"
+    },
+    "tag": "classFeat_spectralSpells",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

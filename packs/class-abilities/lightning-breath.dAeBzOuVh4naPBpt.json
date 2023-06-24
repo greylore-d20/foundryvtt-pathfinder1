@@ -1,0 +1,65 @@
+{
+  "_id": "dAeBzOuVh4naPBpt",
+  "name": "Lightning Breath",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can breathe a 30-foot line of electricity. This line deals 1d4 points of electricity damage per oracle level. A Reflex save halves this damage.</p>\n<p>You can use this ability once per day, plus one additional time per day at 5th level and every five levels thereafter.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ufc1gwv1i5ruv94q",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "30-ft. line"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "save",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(@classes.oracle.level)d4",
+              "type": {
+                "values": ["electric"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex half"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1 + floor(@classes.oracle.level / 5)"
+    },
+    "tag": "classFeat_lightningBreath",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

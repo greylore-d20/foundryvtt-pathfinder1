@@ -1,0 +1,40 @@
+{
+  "_id": "4CYq7knmGXt0SZxo",
+  "name": "Knowledge Blessing: Lore Keeper",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/runes-royal-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can touch a creature to learn about its abilities and weaknesses. With a successful touch attack, you gain information as if your result on the appropriate Knowledge skill check were equal to 15 + your warpriest level + your Wisdom modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "sffzywkzjykob9kz",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/runes-royal-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "actionType": "msak",
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "tag": "classFeat_knowledgeBlessingLoreKeeper",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

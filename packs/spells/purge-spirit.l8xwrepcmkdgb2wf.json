@@ -1,0 +1,60 @@
+{
+  "_id": "l8xwrepcmkdgb2wf",
+  "name": "Purge Spirit",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "4ccyatz4ft6p212d",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one creature or haunt"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "witch": 4,
+        "psychic": 3,
+        "medium": 2,
+        "occultist": 2,
+        "spiritualist": 2
+      }
+    },
+    "level": 4,
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p><i>Purge spirit</i> rips away at the target's spiritual substance, scattering it over a wide area and hampering the target's ability to reform. The target takes 1d6 points of damage per caster level (maximum 10d6) and is staggered for 1 round. On a successful saving throw, the target takes half damage and is not staggered. This spell affects astrally projected creatures, ethereal creatures, haunts, incorporeal creatures, mediums channeling a spirit, and phantoms, and at the GM's discretion can affect other spirits or creatures made of ectoplasm. Incorporeal creatures take full damage from <i>purge spirit</i>.</p>"
+  }
+}

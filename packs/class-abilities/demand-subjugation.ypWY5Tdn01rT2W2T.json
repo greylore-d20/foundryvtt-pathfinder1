@@ -1,0 +1,48 @@
+{
+  "_id": "ypWY5Tdn01rT2W2T",
+  "name": "Demand Subjugation",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/red_06.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can force a defeated creature to accept a binding pact as a condition of its surrender, as if you are using lesser geas, except the creature must have a number of Hit Dice equal to or less than your cleric level. At 16th level, this ability functions as per geas/quest. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>\n<p>This power replaces the Staff of Order power of the Law Domain.</p>"
+    },
+    "actions": [
+      {
+        "_id": "juibhlag3n8fxq63",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/red_06.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "target": {
+          "value": "defeated creature"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.wis.mod"
+    },
+    "tag": "classFeat_demandSubjugation",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "sp"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "_id": "QqMg8O5rYRKoGtHW",
+  "name": "Versatile Evocation",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/vines-acid-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>When you cast an <em>evocation</em> spell that does acid, cold, electricity, or fire damage, you may change the damage dealt to one of the other four energy types. This changes the descriptor of the spell to match the new energy type. Any non-damaging effects remain unchanged unless the new energy type invalidates them (an @Compendium[pf1.spells.t1uhggjfimtabp4v]{Ice Storm} that deals fire damage might still provide a penalty on <em>Perception</em> checks due to smoke, but it would not create difficult terrain). Such effects are subject to GM discretion. You can use this ability a number of times per day equal to 3 + your <em>Intelligence</em> modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "7r2mfr0hky9z02gc",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/vines-acid-2.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.int.mod"
+    },
+    "tag": "classFeat_versatileEvocation",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Wizard"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "_id": "rm5kl4j5srzgr333",
+  "name": "Snowball",
+  "type": "spell",
+  "img": "systems/pf1/icons/spells/ice-blue-1.jpg",
+  "system": {
+    "actions": [
+      {
+        "_id": "n3mop128o1mo4unt",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/ice-blue-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(min(5, @cl))d6",
+              "type": {
+                "values": ["cold"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "label": ""
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "one ball of ice and snow"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "druid": 1,
+        "summoner": 1,
+        "witch": 1,
+        "magus": 1,
+        "bloodrager": 1,
+        "hunter": 1,
+        "unchained Summoner": 1
+      }
+    },
+    "school": "evo",
+    "types": "cold, water",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "shortDescription": "<p>You throw a ball of elemental ice and snow at a single target as a ranged touch attack. The snowball deals 1d6 points of cold damage per caster level you have (maximum 5d6).</p>"
+  }
+}

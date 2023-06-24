@@ -1,0 +1,55 @@
+{
+  "_id": "Lzhedjmay1oc4ktw",
+  "name": "Aura of Heroism",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/yellow_22.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can emit a 30-foot aura of heroism for a number of rounds per day equal to your cleric level. Using this ability is a swift action. Allies in the area are treated as if they were under the effects of heroism. These rounds do not need to be consecutive.</p>\n<p>This power replaces the Divine Presence power of the Glory Domain.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ev7iz361x85ojyn4",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/yellow_22.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.cleric.level"
+    },
+    "tag": "classFeat_auraOfHeroism",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "su"
+  }
+}

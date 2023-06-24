@@ -1,0 +1,54 @@
+{
+  "_id": "5pgzvhlvzhi16ek1",
+  "name": "Psychic Crush V",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "wqjfa0ajmrj81jxl",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Will partial and Fortitude partial; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "psychic": 9
+      }
+    },
+    "level": 9,
+    "school": "nec",
+    "types": "mind-affecting",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>This functions as <i>psychic crush IV</i>, but on a successful Fortitude or Will save, the target takes 11d6 points of damage + 1 point of damage per caster level. If it is at fewer than half its total hit points, the target takes a -2 penalty on the Will save to resist this spell. This spell can be undercast.</p>"
+  }
+}

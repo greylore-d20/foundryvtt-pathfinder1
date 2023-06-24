@@ -1,0 +1,69 @@
+{
+  "_id": "1Jmh8NgyCJFL7C5Q",
+  "name": "Weighted Spear",
+  "type": "weapon",
+  "img": "systems/pf1/icons/items/weapons/spear-weighted.png",
+  "system": {
+    "description": {
+      "value": "<p><b>Source</b> <em>Melee Tactics Toolbox pg. 19</em></p><h3><span title=\"PFS Legal\">[PFS]</span> Statistics</h3><p><b>Cost</b> 10 gp <b>Weight</b> 8 lbs.</p><p><b>Damage</b> 1d6/1d4 (small), 1d8/1d6 (medium); <b>Critical</b> x3/x2; <b>Range</b> -; <b>Type</b> B or P; <b>Special</b> brace, double</p><p><b>Category</b> Two-Handed; <b>Proficiency</b> Simple</p><p><b>Weapon Groups</b> Double; Spears</p><h3>Description</h3><p>This pole has a spear head at one end and a mace head at the other. It can be wielded like a standard spear (though it isn't balanced for throwing), or it can be used as a double weapon, alternately thrusting and bashing.</p>"
+    },
+    "tags": ["Weighted Spear"],
+    "weight": {
+      "value": 8
+    },
+    "price": 10,
+    "hardness": 10,
+    "actions": [
+      {
+        "_id": "ew4lffe60yewawks",
+        "name": "Attack",
+        "img": "systems/pf1/icons/items/weapons/spear-weighted.png",
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": "0",
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 8, @size)",
+              "type": {
+                "values": ["bludgeoning", "piercing"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "damageMult": 1.5,
+          "critMult": 0
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "tag": "weightedSpear",
+    "held": "2h",
+    "weaponGroups": {
+      "value": ["double", "spears"]
+    },
+    "weaponSubtype": "2h"
+  }
+}

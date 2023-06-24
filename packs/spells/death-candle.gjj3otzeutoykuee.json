@@ -1,0 +1,59 @@
+{
+  "_id": "gjj3otzeutoykuee",
+  "name": "Death Candle",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "g0avto3mwjsv4gzc",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous/10 minutes per HD of subject; see text"
+        },
+        "target": {
+          "value": "living creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 2,
+        "oracle": 2,
+        "witch": 2,
+        "inquisitor": 2,
+        "antipaladin": 1
+      }
+    },
+    "level": 2,
+    "school": "nec",
+    "types": "death, evil, fire",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell functions like <i>death knell</i>, except instead of using the slain target's life energy to enhance yourself, you use it to summon a Small fire elemental resembling a burning, howling version of the slain creature. The elemental acts immediately on your turn and otherwise behaves as if you had summoned it with <i>summon monster II</i>. The elemental remains for a number of rounds equal to the Hit Dice of the slain creature.</p>"
+  }
+}

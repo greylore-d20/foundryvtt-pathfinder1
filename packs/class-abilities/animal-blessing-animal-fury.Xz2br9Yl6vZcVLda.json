@@ -1,0 +1,47 @@
+{
+  "_id": "Xz2br9Yl6vZcVLda",
+  "name": "Animal Blessing: Animal Fury",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/wild-jade-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can touch one ally and grant it feral features. The ally gains 2 claw attacks that each deal 1d6 points of damage if the ally is Medium or 1d4 if it’s Small, or 1 bite attack that deals 1d8 points of damage if the ally is Medium or 1d6 if it’s Small. These are primary natural attacks that replace any similar primary natural attacks the ally might have. This effect lasts for 1 minute.</p>"
+    },
+    "actions": [
+      {
+        "_id": "y9u17kq9tis7agh4",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/wild-jade-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "creatuer touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_animalBlessingAnimalFury",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

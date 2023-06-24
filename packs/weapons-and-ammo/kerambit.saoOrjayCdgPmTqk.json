@@ -1,0 +1,68 @@
+{
+  "_id": "saoOrjayCdgPmTqk",
+  "name": "Kerambit",
+  "type": "weapon",
+  "img": "icons/weapons/thrown/dagger-ringed-guard.webp",
+  "system": {
+    "description": {
+      "value": "<p><b>Source</b> <em>Ultimate Equipment pg. 18</em>, <em>Ultimate Combat pg. 132</em></p><h3><span title=\"PFS Legal\">[PFS]</span> Statistics</h3><p><b>Cost</b> 2 gp <b>Weight</b> -</p><p><b>Damage</b> 1d2 (small), 1d3 (medium); <b>Critical</b> x3; <b>Range</b> -; <b>Type</b> S; <b>Special</b> -</p><p><b>Category</b> Light; <b>Proficiency</b> Martial</p><p><b>Weapon Groups</b> Blades, Light</p><h3>Description</h3><p>This small, curved pull dagger has a metal loop at the base of its handle, allowing it to be secured with a pinky or worn on a string tied in the hair. While relatively small, the curved blade can create brutal wounds. Easily concealed (you gain a +2 bonus on Sleight of Hand checks made to conceal a kerambit on your body), it is a favorite weapon of ninja and assassins.</p>"
+    },
+    "tags": ["Kerambit"],
+    "price": 2,
+    "hp": {
+      "max": 2,
+      "value": 2
+    },
+    "hardness": 10,
+    "actions": [
+      {
+        "_id": "yvaf02mfbndumsil",
+        "name": "Attack",
+        "img": "icons/weapons/thrown/dagger-ringed-guard.webp",
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": "0",
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 3, @size)",
+              "type": {
+                "values": ["slashing"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str",
+          "critMult": 3
+        },
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "kerambit",
+    "weaponGroups": {
+      "value": ["bladesLight"]
+    },
+    "subType": "martial"
+  }
+}

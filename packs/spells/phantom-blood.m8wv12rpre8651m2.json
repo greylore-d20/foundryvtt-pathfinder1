@@ -1,0 +1,57 @@
+{
+  "_id": "m8wv12rpre8651m2",
+  "name": "Phantom Blood",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "sm5vgpjr7jtnrfh4",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level"
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "alchemist": 1,
+        "magus": 1,
+        "bloodrager": 1,
+        "spiritualist": 1
+      }
+    },
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>You bolster your life energy. If the loss of hit points at the end of a temporary effect that modifies your Constitution (such as barbarian's rage or bloodrager's bloodrage) would cause you to become unconscious or kill you, you gain temporary hit points equal to your caster level (maximum 10). Each casting of this spell grants you temporary hit points only once.</p>"
+  }
+}

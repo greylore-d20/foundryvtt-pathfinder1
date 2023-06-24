@@ -1,0 +1,60 @@
+{
+  "_id": "j7H9VGdgjAV0fF0J",
+  "name": "Calamitous Flailing",
+  "type": "spell",
+  "img": "icons/skills/melee/hand-grip-staff-teal.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "03hh45vj3ywsqb2j",
+        "name": "Use",
+        "img": "icons/skills/melee/hand-grip-staff-teal.webp",
+        "activation": {
+          "type": "standard"
+        },
+        "duration": {
+          "value": "1 minute/level (D)"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "uses": {
+          "autoDeductChargesCost": "1 + @sl"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "arcanist": 4,
+        "bard": 3,
+        "cleric": 4,
+        "oracle": 4,
+        "mesmerist": 3,
+        "skald": 3,
+        "sorcerer": 4,
+        "wizard": 4,
+        "spiritualist": 3,
+        "warpriest": 4,
+        "witch": 3
+      }
+    },
+    "level": 4,
+    "school": "nec",
+    "types": "curse",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "shortDescription": "<p>You cause the victim's attacks to careen wildly, endangering itself and those around it. Your target gains a 25% miss chance on all attack rolls. If an attack misses due to this magical effect, the victim instead targets an ally, or else itself if there are no allies within range of the original attack. Apply the attack roll for the original attack to the new target's Armor Class to determine if this attack hits. This is a curse effect.</p>"
+  }
+}

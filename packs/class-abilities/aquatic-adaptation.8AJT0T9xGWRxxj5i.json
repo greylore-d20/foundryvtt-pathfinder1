@@ -1,0 +1,54 @@
+{
+  "_id": "8AJT0T9xGWRxxj5i",
+  "name": "Aquatic Adaptation",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/emerald_05.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 3rd level, you gain a swim <em>speed</em> of 30 feet. At 9th level, you gain the <em>amphibious</em> special quality and develop a fat layer that grants a +1 <em>natural armor bonus</em> and resist cold 5. When immersed in water, you gain <em>blindsense</em> 30 feet. At 15th level, you gain a swim <em>speed</em> of 60 feet and <em>blindsense</em> of 60 feet in water.</p>"
+    },
+    "actions": [
+      {
+        "_id": "jd09r8hevsgy9q0i",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/emerald_05.jpg",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "changes": [
+      {
+        "_id": "vk3jemkk",
+        "formula": "@classes.sorcerer.level >= 15 ? 60 : 30",
+        "subTarget": "swimSpeed",
+        "modifier": "base"
+      },
+      {
+        "_id": "uq8lnaor",
+        "formula": "@classes.sorcerer.level >= 9 ? 1 : 0",
+        "subTarget": "nac",
+        "modifier": "untyped"
+      }
+    ],
+    "tag": "classFeat_aquaticAdaptation",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "ex"
+  }
+}

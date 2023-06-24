@@ -1,0 +1,47 @@
+{
+  "_id": "ksjfNe1Hz123HFqP",
+  "name": "Cryokinetic Stasis",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/ice-blue-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p><b>Element</b> water; <b>Type</b> utility (Sp); <b>Level</b> 8; <b>Burn</b> 1</p>\n<p>You encase yourself or a willing target in an icy sheen, placing the target in a state of suspended animation, as per @Compendium[pf1.spells.qptzjtg2m9cqnuwh]{Temporal Stasis} except fire spells and spell-like abilities of 3rd level or higher count as if the caster used dispel magic against the stasis. Otherwise, no other force or effect can harm the target.</p>"
+    },
+    "actions": [
+      {
+        "_id": "rskzy4s065ncxlt8",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/ice-blue-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "seeText"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_cryokineticStasis",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Kineticist"]]
+    },
+    "abilityType": "sp"
+  }
+}

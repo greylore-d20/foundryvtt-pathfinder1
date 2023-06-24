@@ -1,0 +1,56 @@
+{
+  "_id": "3rn9hvdze0hjz5y4",
+  "name": "Swipe",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "rt4fnknagjghbszw",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one held item"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "bard": 2
+      }
+    },
+    "level": 3,
+    "school": "con",
+    "subschool": "teleportation",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>By flicking a finger in the appropriate direction and proclaiming ownership, you attempt to magically wrest an item from the target's grip and summon it to your hand. To claim an object held by an opponent, you must make a CMB check-this check has a bonus equal to your caster level + your Intelligence, Wisdom, or Charisma modifier (whichever is highest). If you fail this check, the target retains the item and the spell fails. If you succeed, the item teleports into one of your free hands or comes to rest at your feet.</p>"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "_id": "qwdi86zm5wbnd92l",
+  "name": "Rejuvenate Eidolon, Lesser",
+  "type": "spell",
+  "img": "systems/pf1/icons/spells/heal-royal-1.jpg",
+  "system": {
+    "actions": [
+      {
+        "_id": "ymhf457drr81qbvr",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/heal-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "eidolon touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d10 + min(@cl, 5)",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "summoner": 1,
+        "unchained Summoner": 1
+      }
+    },
+    "school": "con",
+    "subschool": "healing",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a drop of your blood"
+    },
+    "spellbook": "",
+    "sr": false,
+    "shortDescription": "<p>By laying your hand upon an eidolon, you cause its wounds to close and its form to solidify. This spell cures 1d10 points of damage +1 point per caster level (maximum +5).</p>"
+  }
+}

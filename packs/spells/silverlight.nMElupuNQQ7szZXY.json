@@ -1,0 +1,77 @@
+{
+  "name": "Silverlight",
+  "type": "spell",
+  "img": "icons/magic/light/explosion-star-blue-yellow.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "zKikI1HgWlPe2uRr",
+        "name": "Use",
+        "img": "icons/magic/light/explosion-star-blue-yellow.webp",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "object touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "20"
+        },
+        "actionType": "msak",
+        "formulaicAttacks": {
+          "label": ""
+        },
+        "save": {
+          "type": "fort",
+          "description": "Fortitude partial (see text)"
+        }
+      }
+    ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
+    "learnedAt": {
+      "class": {
+        "arcanist": 3,
+        "bard": 3,
+        "cleric": 3,
+        "druid": 3,
+        "oracle": 3,
+        "paladin": 3,
+        "skald": 3,
+        "sorcerer": 3,
+        "warpriest": 3,
+        "wizard": 3
+      }
+    },
+    "level": 3,
+    "school": "evo",
+    "types": "light",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "1 sp",
+      "gpValue": 0.1
+    },
+    "spellbook": "",
+    "sr": false,
+    "shortDescription": "<p>As @Compendium[pf1.spells.7x2z0i8rcx7s81fk]{daylight}, except the object touched sheds bright silvery light in a 20-foot radius. In addition to providing illumination, the area of bright light is painful to creatures that are susceptible to alchemical silver. A creature with DR/silver that begins its turn within the light of this spell is automatically @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.xHUnCadQ2qYsfvV0]{dazzled} and becomes @UUID[Compendium.pf1.pf1e-rules.NSqfXaj4MevUR2uJ.JournalEntryPage.7LwCMwrX3tchvrjW]{sickened} unless it succeeds on a Fortitude save. These effects disappear 1 round after the target leaves the <em>silverlight</em>. A creature that leaves the area and then returns must make a new saving throw. This spell provides dim light up to 40 feet away, but only creatures within 20 feet are subject to the above e!ects.</p>"
+  },
+  "_id": "nMElupuNQQ7szZXY"
+}

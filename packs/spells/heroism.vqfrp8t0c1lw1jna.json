@@ -1,0 +1,77 @@
+{
+  "_id": "vqfrp8t0c1lw1jna",
+  "name": "Heroism",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "twv4kuszh08zzbw2",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 min./level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "bard": 2,
+        "alchemist": 3,
+        "summoner": 3,
+        "witch": 3,
+        "inquisitor": 3,
+        "bloodrager": 3,
+        "psychic": 3,
+        "medium": 2,
+        "spiritualist": 3,
+        "unchained Summoner": 3
+      },
+      "domain": {
+        "Charm": 4
+      },
+      "subDomain": {
+        "Heroism": 3
+      },
+      "bloodline": {
+        "Imperious": 3,
+        "Martyred": 3
+      }
+    },
+    "level": 3,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell imbues a single creature with great bravery and morale in battle. The target gains a +2 morale bonus on attack rolls, saves, and skill checks.</p>"
+  }
+}

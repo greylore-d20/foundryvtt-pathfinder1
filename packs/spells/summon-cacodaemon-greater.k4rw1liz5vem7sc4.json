@@ -1,0 +1,63 @@
+{
+  "_id": "k4rw1liz5vem7sc4",
+  "name": "Summon Cacodaemon, Greater",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "m43qxhp6gezapxxu",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "other",
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "one summoned creature"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 4,
+        "oracle": 4,
+        "summoner": 3,
+        "witch": 4,
+        "unchained Summoner": 3
+      }
+    },
+    "level": 4,
+    "school": "con",
+    "subschool": "summoning",
+    "types": "evil",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "a silver hook"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>summon cacodaemon</i>, except it summons 1d4+1 cacodaemons.</p>"
+  }
+}

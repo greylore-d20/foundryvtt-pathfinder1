@@ -1,0 +1,63 @@
+{
+  "_id": "t4l1o78v9gcp3jag",
+  "name": "Banishing Blade",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "p4skjlyzcl95a9xb",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level or until discharged"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "none and Will partial (see text)"
+        },
+        "spellEffect": "one melee weapon"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "paladin": 4,
+        "summoner": 5,
+        "inquisitor": 5,
+        "antipaladin": 4,
+        "magus": 5,
+        "bloodrager": 4,
+        "shaman": 5,
+        "medium": 4,
+        "spiritualist": 5,
+        "unchained Summoner": 5
+      }
+    },
+    "level": 5,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You imbue a weapon with the power to drive foes back. The first time each round the weapon strikes a creature, the weapon attempts a free bull rush combat maneuver check against that creature. This does not provoke attacks of opportunity. The combat maneuver for the bull rush is equal to 1d20 + your caster level. You do not have to move to push creatures more than 5 feet with this bull rush. If a creature you strike has spell resistance, you must attempt a caster level check to overcome its spell resistance the first time you strike it. If you fail, that creature is immune to the effects of this casting of <i><i>banishing</i> blade</i>.  The first time each extraplanar creature whose Hit Dice don't exceed your caster level is driven back at least 10 feet by this spell, it must attempt a Will save. If it fails, it is sent back to its home plane. Whether it succeeds or fails, that creature is staggered for 1 round and <i><i>banishing</i> blade</i>'s duration ends.</p>"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "_id": "gzBR0qkMdu0KkLV0",
+  "name": "Bonus Feats (MAG)",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/combat-expertise.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 5th level, and every six levels thereafter, a magus gains a bonus feat in addition to those gained from normal advancement. These bonus feats must be selected from those listed as combat, item creation, or metamagic feats. He must meet the prerequisites for these feats as normal.</p>"
+    },
+    "changes": [
+      {
+        "_id": "mb8lkj30",
+        "formula": "floor((@classes.magus.level + 1) / 6)",
+        "subTarget": "bonusFeats",
+        "modifier": "untyped"
+      }
+    ],
+    "tag": "classFeat_bonusFeatsMag",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Magus"]]
+    }
+  }
+}

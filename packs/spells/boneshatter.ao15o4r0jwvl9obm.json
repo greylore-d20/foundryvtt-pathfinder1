@@ -1,0 +1,77 @@
+{
+  "_id": "ao15o4r0jwvl9obm",
+  "name": "Boneshatter",
+  "type": "spell",
+  "img": "systems/pf1/icons/items/inventory/monster-bones.jpg",
+  "system": {
+    "actions": [
+      {
+        "_id": "qmybu24s0sbtttzr",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/monster-bones.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous and 1 minute/level (see text)"
+        },
+        "target": {
+          "value": "one corporeal creature or object"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "damage": {
+          "parts": [
+            {
+              "formula": "(min(15, @cl))d6",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude partial (see text)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 5,
+        "oracle": 5
+      }
+    },
+    "level": 4,
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a broken bone"
+    },
+    "spellbook": "",
+    "preparation": {
+      "preparedAmount": 3,
+      "maxAmount": 3
+    },
+    "shortDescription": "<p>The target's bones (or exoskeleton) splinter, dealing 1d6 points of damage per caster level (maximum 15d6) to the target, which is also exhausted for 1 minute per caster level from the pain and exertion of the transformation.  If the target succeeds at its save, it takes half damage and is fatigued rather than exhausted. Objects made of bone, chitin, or similar material take half again as much damage (+50%) from this spell. This spell has no effect on a creature that has neither a skeleton nor a hard carapace.</p>"
+  }
+}

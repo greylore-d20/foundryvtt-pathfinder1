@@ -1,0 +1,44 @@
+{
+  "_id": "YFeoD1eJJIMpKpBb",
+  "name": "Acrobatic Stunt",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/weapons/dagger.PNG",
+  "system": {
+    "description": {
+      "value": "<p>Once per day, when flanked by at least two opponents, a rogue with this talent can, as an immediate action when any of the threatening opponents attacks her, attempt an Acrobatics check against the highest CMD of the threatening creatures plus 2 per threatening creature beyond the second. If successful, the rogue may take a 5-foot step in any direction, so long as she remains within the reach of the attacker triggering the movement. The rogue’s final position is used to determine whether the attacker benefits from flanking. On a failed check, the rogue falls prone in her original position and the attack resolves as normal (the opponent gains a +4 bonus for attacking a prone target). A rogue may use this ability one additional time per day for every 5 rogue levels she possesses. A rogue must be trained in Acrobatics to select this talent.</p>"
+    },
+    "actions": [
+      {
+        "_id": "5568cl7h9fhqo5hk",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/weapons/dagger.PNG",
+        "activation": {
+          "type": "immediate"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "reaction"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1 + (floor(@classes.rogue.level / 5))"
+    },
+    "tag": "classFeat_acrobaticStunt",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Rogue"]]
+    },
+    "abilityType": "ex"
+  }
+}

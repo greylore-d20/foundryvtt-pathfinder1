@@ -1,0 +1,64 @@
+{
+  "_id": "ftdyhjze9zqhk7oe",
+  "name": "Bestow Insight",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "gjulmjtztu5dmf4q",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "one creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "cleric": 3,
+        "oracle": 3,
+        "bard": 2,
+        "witch": 2,
+        "inquisitor": 2,
+        "psychic": 2,
+        "medium": 2,
+        "mesmerist": 2
+      }
+    },
+    "level": 2,
+    "school": "enc",
+    "subschool": "compulsion",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>When casting this spell, choose a single skill that you have at least one rank in. The target gains a +2 insight bonus on skill checks with this skill and is considered trained in that skill. The insight bonus increases by 1 for every four levels of the caster (maximum +6). Furthermore, once before the spell's duration, the target can choose to roll two checks and take the greater result. Doing so ends the spell's other effects.</p>"
+  }
+}

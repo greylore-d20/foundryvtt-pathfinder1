@@ -1,0 +1,48 @@
+{
+  "_id": "q3hwveEbUcLrNz73",
+  "name": "Elemental Movement (Earth)",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/yellow_42.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 15th level, you gain a <em>burrow</em> speed of 30 feet.</p>"
+    },
+    "actions": [
+      {
+        "_id": "87dng2gct8333nsr",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/yellow_42.jpg",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "changes": [
+      {
+        "_id": "kr1a13wt",
+        "formula": "30",
+        "subTarget": "burrowSpeed",
+        "modifier": "base"
+      }
+    ],
+    "tag": "classFeat_elementalMovementEarth",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "ex"
+  }
+}

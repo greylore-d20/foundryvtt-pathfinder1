@@ -1,0 +1,54 @@
+{
+  "_id": "W3ddByVcwf0N2ar6",
+  "name": "Moral Crisis",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can target a living creature within 30 feet of you, reminding it of its moral failings. The target must succeed at a Will save or be staggered for a number of rounds equal to your oracle level. The target can attempt a new saving throw at the end of each of its turns to end this effect. This is a mind-affecting emotion effect.</p>"
+    },
+    "actions": [
+      {
+        "_id": "kqseq08hj8ryf01n",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.oracle.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day"
+    },
+    "tag": "classFeat_moralCrisis",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "_id": "tYu3rUq8aRx69fet",
+  "name": "Steadfast Example",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman touches a willing creature and bolsters its mental and emotional defenses. The next time the target attempts a Will saving throw, the subject can use the shaman’s Will saving throw bonus instead of his own.</p>\n<p>The shaman can have only one creature under the effect of this hex at a time, and a creature affected by this hex cannot be affected by it again for 24 hours.</p>"
+    },
+    "actions": [
+      {
+        "_id": "c0dyans1x26if6er",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "seeText"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_steadfastExample",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

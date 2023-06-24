@@ -1,0 +1,71 @@
+{
+  "_id": "lbnf34az7psatur2",
+  "name": "Shadowmind",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "3vqkao4f0sk5jngo",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "up to one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "cleric": 3,
+        "oracle": 3,
+        "druid": 3,
+        "witch": 2,
+        "inquisitor": 2,
+        "antipaladin": 2,
+        "shaman": 3,
+        "psychic": 3,
+        "mesmerist": 3,
+        "occultist": 3,
+        "hunter": 3
+      }
+    },
+    "level": 3,
+    "school": "ill",
+    "subschool": "phantasm",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a small square of black silk"
+    },
+    "shortDescription": "<p>You dim your targets' perceptions of light and shadow, convincing them the space they occupy is dark. Each creature that fails its save perceives the world around it as one light level darker than its true illumination level. The spell does not change the light level outside of the targets' perception, and does not create magical darkness. However, the spell creates an illusion of darkness rather than actual darkness, so low-light and darkvision don't allow a target to see in the conditions created by the spell. Even targets that see normally through magical darkness suffer a loss of vision from this spell.</p>"
+  }
+}

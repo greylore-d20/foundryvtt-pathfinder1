@@ -1,0 +1,50 @@
+{
+  "_id": "37MSf261Dj1nfPDM",
+  "name": "Diamond Soul (UC)",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/fire_07.jpg",
+  "system": {
+    "description": {
+      "value": "<p>A monk can spend 2 points from his ki pool as a swift action to gain spell resistance equal to his monk level + 10. This spell resistance lasts for a number of rounds equal to the monk’s level.</p>\n<p>A monk must be at least 12th level before selecting this ki power.</p>"
+    },
+    "actions": [
+      {
+        "_id": "clfeiit919oimzct",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/fire_07.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.monkUnchained.level",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "uses": {
+          "autoDeductChargesCost": "2"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_diamondSoulUc",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Monk (Unchained)"]]
+    },
+    "abilityType": "ex"
+  }
+}

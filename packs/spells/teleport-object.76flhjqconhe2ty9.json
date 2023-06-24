@@ -1,0 +1,57 @@
+{
+  "_id": "76flhjqconhe2ty9",
+  "name": "Teleport Object",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "wis0z8gnjmkp5sqs",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one touched object of up to 50 lbs./level and 3 cu. ft./level"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 7,
+        "wizard": 7,
+        "witch": 7,
+        "psychic": 7
+      }
+    },
+    "level": 7,
+    "school": "con",
+    "subschool": "teleportation",
+    "components": {
+      "verbal": true
+    },
+    "shortDescription": "<p>This spell functions like <i>teleport,</i> except that it teleports an object, not you. Creatures and magical forces cannot be teleported.</p><p>If desired, the target object can be sent to a distant location on the Ethereal Plane. In this case, the point from which the object was teleported remains faintly magical until the item is retrieved. A successful targeted <i>dispel magic</i> spell cast on that point brings the vanished item back from the Ethereal Plane.</p>"
+  }
+}

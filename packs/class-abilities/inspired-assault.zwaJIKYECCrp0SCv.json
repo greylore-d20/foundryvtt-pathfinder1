@@ -1,0 +1,48 @@
+{
+  "_id": "zwaJIKYECCrp0SCv",
+  "name": "Inspired Assault",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/leadership.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can inspire a living creature with a touch by expending 1 point of mental focus. The creature receives a morale bonus on attack rolls equal to 1 + 1 for every 6 occultist levels you possess (to a maximum bonus of +4 at 18th level). This bonus also applies on saving throws against fear effects. This bonus lasts for 1 minute.</p>"
+    },
+    "actions": [
+      {
+        "_id": "sg1hezehaojnjc7d",
+        "name": "Use",
+        "img": "systems/pf1/icons/feats/leadership.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_inspiredAssault",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Occultist"]]
+    },
+    "abilityType": "sp"
+  }
+}

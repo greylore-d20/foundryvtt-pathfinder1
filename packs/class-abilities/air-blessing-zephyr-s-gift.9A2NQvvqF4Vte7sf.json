@@ -1,0 +1,47 @@
+{
+  "_id": "9A2NQvvqF4Vte7sf",
+  "name": "Air Blessing: Zephyr's Gift",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/wind-blue-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can touch any one ranged weapon and enhance it with the quality of air. For 1 minute, any attacks made with the weapon take no penalties due to range. In addition, making a ranged attack with this weapon doesn’t provoke an attack of opportunity.</p>"
+    },
+    "actions": [
+      {
+        "_id": "30rbmeu3voo57pk8",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/wind-blue-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "weapon touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_airBlessingZephyrsGift",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

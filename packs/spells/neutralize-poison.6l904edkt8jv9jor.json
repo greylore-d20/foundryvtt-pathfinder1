@@ -1,0 +1,75 @@
+{
+  "_id": "6l904edkt8jv9jor",
+  "name": "Neutralize Poison",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "9tesjpevzvg876ii",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous or 10 min./level; see text"
+        },
+        "target": {
+          "value": "creature or object of up to 1 cu. ft./level touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "heal",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 4,
+        "oracle": 4,
+        "druid": 3,
+        "ranger": 3,
+        "bard": 4,
+        "paladin": 4,
+        "alchemist": 4,
+        "witch": 4,
+        "inquisitor": 4,
+        "adept": 3,
+        "shaman": 4,
+        "spiritualist": 4,
+        "hunter": 3
+      },
+      "subDomain": {
+        "Restoration": 4
+      }
+    },
+    "level": 4,
+    "school": "con",
+    "subschool": "healing",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "charcoal"
+    },
+    "shortDescription": "<p>You detoxify any sort of venom in the creature or object touched. If the target is a creature, you must make a caster level check (1d20 + caster level) against the DC of each poison affecting the target. Success means that the poison is neutralized. A cured creature suffers no additional effects from the poison, and any temporary effects are ended, but the spell does not reverse instantaneous effects, such as hit point damage, temporary ability damage, or effects that don't go away on their own.</p><p>This spell can instead neutralize the poison in a poisonous creature or object for 10 minutes per level, at the caster's option.</p><p>If cast on a creature, the creature receives a Will save to negate the effect.</p>"
+  }
+}

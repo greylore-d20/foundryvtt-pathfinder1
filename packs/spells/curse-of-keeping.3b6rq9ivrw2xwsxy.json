@@ -1,0 +1,60 @@
+{
+  "_id": "3b6rq9ivrw2xwsxy",
+  "name": "Curse of Keeping",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ow43bd5n9il9kgh2",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 day/level"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "witch": 2,
+        "antipaladin": 2,
+        "shaman": 2,
+        "mesmerist": 2
+      }
+    },
+    "level": 2,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "curse",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>You curse the target with the inability to sell, barter, or give away any item it owns, other than ordinary currency, for as long as the spell remains in effect. The target cannot sell, trade, drop, or give away possessions. The target can purchase items using ordinary currency but can't then sell the purchased items. The target can accept gifts from others but can't offer anything in exchange. A <i>Curse of Keeping</i> can be ended by <i>break enchantment</i>, <i>limited <i>wish</i></i>, <i>remove curse</i>, <i>miracle</i>, or <i>wish</i>. <i>Dispel magic</i> does not affect a <i>Curse of Keeping</i>.</p>"
+  }
+}

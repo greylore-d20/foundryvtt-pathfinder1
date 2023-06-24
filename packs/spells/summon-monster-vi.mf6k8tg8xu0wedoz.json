@@ -1,0 +1,65 @@
+{
+  "_id": "mf6k8tg8xu0wedoz",
+  "name": "Summon Monster VI",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "di3myyoo91w31fpi",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "other",
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "one summoned creature"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "cleric": 6,
+        "oracle": 6,
+        "bard": 6,
+        "witch": 6,
+        "psychic": 6,
+        "spiritualist": 6,
+        "unchained Summoner": 5
+      }
+    },
+    "level": 6,
+    "school": "con",
+    "subschool": "summoning",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true,
+      "divineFocus": 3
+    },
+    "materials": {
+      "focus": "a tiny bag and a small candle"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>summon monster I,</i> except you can summon one creature from the 6th-level list, 1d3 creatures of the same kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list.</p>"
+  }
+}

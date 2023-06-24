@@ -1,0 +1,31 @@
+{
+  "_id": "b8xMDIYXwftLYTaU",
+  "name": "Trap Sense (SOR)",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/hook-hand.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 3rd level, you develop a sixth sense that helps you avoid traps. You gain a +2 bonus on <em>Perception</em> checks made to notice traps. You also gain a +1 bonus on <em>Reflex</em> saves to avoid traps and a +1 <em>dodge bonus</em> to AC against attacks made by traps. These bonuses increase by +1 at 7th level and for every four <em>sorcerer</em> levels you gain thereafter (to a maximum of +5 at 19th level). This bonus stacks with that provided by a <em>rogue’s</em> <em>trap sense</em> and similar abilities.</p>"
+    },
+    "contextNotes": [
+      {
+        "text": "+[[2]] to notice traps",
+        "subTarget": "skill.per"
+      },
+      {
+        "text": "+[[min(5, 1 + floor((@classes.sorcerer.level - 3) / 4))]] vs traps",
+        "subTarget": "ref"
+      },
+      {
+        "text": "+[[min(5, 1 + floor((@classes.sorcerer.level - 3) / 4))]] dodge vs traps",
+        "subTarget": "ac"
+      }
+    ],
+    "tag": "classFeat_trapSenseSor",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    }
+  }
+}

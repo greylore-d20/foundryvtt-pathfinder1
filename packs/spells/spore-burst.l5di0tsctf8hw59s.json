@@ -1,0 +1,63 @@
+{
+  "_id": "l5di0tsctf8hw59s",
+  "name": "Spore Burst",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "62y8vvgc5dy3na8f",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "see text"
+        },
+        "target": {
+          "value": "one plant creature; see text"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "description": "special; see text"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "druid": 2,
+        "ranger": 3,
+        "witch": 2,
+        "shaman": 2,
+        "hunter": 2
+      }
+    },
+    "level": 2,
+    "school": "con",
+    "types": "poison",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a tiny puffball mushroom"
+    },
+    "sr": false,
+    "shortDescription": "<p>You cause a willing plant creature's body to sprout small, puffy mushrooms that remain for 1 round per caster level or until the creature uses them. As a standard action, the target can cause these mushrooms to burst open, releasing a cloud of toxic spores that affect all creatures in a 20-foot-radius spread. Those in the area must succeed at Fortitude saves or be sickened for 1d6 rounds as they are overcome by sneezing and coughing. The caster is immune to this poison effect, as are all creatures of the plant type.</p>"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "_id": "tuofaj8ofz6a97qc",
+  "name": "Synaptic Pulse",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "1pjwprp2jtnicoh5",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        },
+        "spellArea": "30-ft.-radius spread centered on you"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "psychic": 3,
+        "mesmerist": 3
+      }
+    },
+    "level": 3,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true
+    },
+    "shortDescription": "<p>You emit a pulsating mental blast that stuns all creatures in range of your psychic shriek for 1 round.</p>"
+  }
+}

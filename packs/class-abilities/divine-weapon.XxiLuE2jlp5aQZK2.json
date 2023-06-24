@@ -1,0 +1,55 @@
+{
+  "_id": "XxiLuE2jlp5aQZK2",
+  "name": "Divine Weapon",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/light_09.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 5th level, an omdura forms a divine bond with her god. This bond allows the omdura to enhance her weapon as a <em>standard action</em> by calling upon the aid of a divine spirit. This aid lasts for 1 minute per omdura level. When called, the spirit causes the weapon to shed light as a <em>torch</em>. At 5th level, this spirit grants the weapon a +1 <em>enhancement bonus</em>. For every 3 levels beyond 5th, the weapon gains another +1 <em>enhancement bonus</em>, to a maximum of +6 at 20th level. These bonuses can be added to the weapon, stacking with existing weapon bonuses to a maximum of +5, or they can be used to add any of the following weapon special abilities: <em>brilliant energy</em>, <em>defending</em>, <em>flaming</em>, <em>flaming burst</em>, <em>keen</em>, or <em>speed</em>.</p>\n<p>A lawful omdura can also choose from <em>axiomatic</em> and <em>merciful</em>. A chaotic omdura can also choose from <em>anarchic</em> and <em>vicious</em>. A good omdura can also choose from <em>disruption</em> and <em>holy</em>.</p>\n<p>An evil omdura can also choose from <em>unholy</em> and <em>wounding</em>. A neutral omdura can also add <em>vorpal</em>. Adding a special ability consumes an amount of bonus equal to the special ability’s cost (see Table: Melee Weapon Special Abilities). These bonuses are in addition to any special abilities the weapon already has, but duplicate abilities do not stack. If the weapon is not magic, at least a +1 <em>enhancement bonus</em> must be added before any other special abilities can be added. The bonus and special abilities granted by the spirit are determined when the spirit is called and cannot be changed until the spirit is called again. The divine spirit imparts no bonuses if the weapon is held by anyone other than the omdura, but it resumes granting bonuses if the weapon is returned to the omdura. These bonuses apply to only one end of a double weapon.</p>\n<p>An omdura can use this ability once per day at 5th level, and one additional time per day for every 4 levels beyond 5th, to a total of four times per day at 17th level.</p>\n<p>If a weapon bonded with a divine spirit is destroyed, the omdura loses the use of this ability for 30 days or until she gains a level, whichever comes first. During this 30-day period, the omdura takes a-1 penalty on weapon attack and damage rolls.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ockn02rpzuemnzrl",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/light_09.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "weapon held"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.omdura.level"
+    },
+    "tag": "classFeat_divineWeapon",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Omdura"]]
+    },
+    "abilityType": "su"
+  }
+}

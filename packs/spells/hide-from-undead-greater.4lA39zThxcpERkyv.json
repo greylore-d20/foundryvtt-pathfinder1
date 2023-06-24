@@ -1,0 +1,59 @@
+{
+  "_id": "4lA39zThxcpERkyv",
+  "name": "Hide from Undead, Greater",
+  "type": "spell",
+  "img": "icons/magic/death/skull-energy-light-white.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "u39zpdhepiwcxi7r",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level (D)"
+        },
+        "target": {
+          "value": "one touched creature/level"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "inquisitor": 3,
+        "warpriest": 3
+      }
+    },
+    "level": 3,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "spellbook": "",
+    "shortDescription": "<p>This spell functions as @Compendium[pf1.spells.rekl0ikgnorz60jc]{Hide from Undead}, except the spell does not immediately end if a warded creature attempts to turn or command undead, channels positive energy, touches an undead creature, or attacks any creature. Instead, when the warded creature takes one of these actions, an intelligent undead creature can attempt another Will saving throw to negate the effects of the spell.</p>"
+  }
+}

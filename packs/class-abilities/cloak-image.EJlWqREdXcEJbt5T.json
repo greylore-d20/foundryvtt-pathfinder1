@@ -1,0 +1,48 @@
+{
+  "_id": "EJlWqREdXcEJbt5T",
+  "name": "Cloak Image",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/jewelry/ring-orange.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can expend 1 point of mental focus to hide your appearance behind an illusion, as @Compendium[pf1.spells.oj36nfak6jc2s5ky]{Disguise Self}. The effect lasts for 1 minute per occultist level you possess.</p>\n<p>At 5th level, you can instead expend 2 points of mental focus to appear as a creature of a different type, but you must remain the same size.</p>\n<p>At 7th level, you can expend 1 additional point of mental focus to target a willing creature other than yourself with this ability.</p>"
+    },
+    "actions": [
+      {
+        "_id": "tv48c55jd1c8tq84",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/jewelry/ring-orange.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.occultist.level",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_cloakImage",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Occultist"]]
+    },
+    "abilityType": "sp"
+  }
+}

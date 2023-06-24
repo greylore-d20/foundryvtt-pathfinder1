@@ -1,0 +1,47 @@
+{
+  "_id": "i50aazkiLMO0TXVK",
+  "name": "Shadow Blessing: Flicker of Shadows",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/shadow_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can cause a weapon you touch to warp and become insubstantial for a split second before an attack. The first attack made with this weapon each round ignores any shield bonus to Armor Class, as well as bonuses from cover. Total cover still provides a creature its full benefit.</p>\n<p>This effect lasts for 1 minute.</p>"
+    },
+    "actions": [
+      {
+        "_id": "gplyvs593fcym6d5",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/shadow_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "weapon touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_shadowBlessingFlickerOfShadows",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "_id": "jdsvncnna6oy189a",
+  "name": "Deeper Darkness",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "x33gjl1dr683gqf4",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 min./level (D)"
+        },
+        "target": {
+          "value": "object touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "60"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "adept": 3,
+        "shaman": 3,
+        "occultist": 3
+      },
+      "domain": {
+        "Darkness": 3
+      },
+      "bloodline": {
+        "Shadow": 3,
+        "Div": 3
+      }
+    },
+    "level": 3,
+    "school": "evo",
+    "types": "darkness",
+    "components": {
+      "verbal": true,
+      "material": true,
+      "divineFocus": 2
+    },
+    "materials": {
+      "value": "bat fur and a piece of coal"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions as <i>darkness</i>, except that objects radiate <i>darkness</i> in a 60-foot radius and the light level is lowered by two steps. Bright light becomes dim light and normal light becomes <i>darkness</i>. Areas of dim light and <i>darkness</i> become supernaturally dark. This functions like <i>darkness</i>, but even creatures with darkvision cannot see within the spell's confines.</p><p>This spell does not stack with itself. <b>Deeper</b> <i>darkness</i> can be used to counter or dispel any light spell of equal or lower spell level.</p>"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "_id": "Aw4xfA8YSYHGiUXV",
+  "name": "Aura of Madness",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/evil-eye-eerie-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can emit a 30-foot aura of madness for a number of rounds per day equal to your cleric level. Enemies within this aura are affected by confusion unless they make a Will save with a DC equal to 10 + 1/2 your cleric level + your Wisdom modifier. The confusion effect ends immediately when the creature leaves the area or the aura expires. Creatures that succeed on their saving throw are immune to this aura for 24 hours. These rounds do not need to be consecutive.</p>"
+    },
+    "actions": [
+      {
+        "_id": "mc81owbvxuhas70b",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/evil-eye-eerie-3.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "enemies in range"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.cleric.level"
+    },
+    "tag": "classFeat_auraOfMadness",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "_id": "ZIkxiA8MZ6Ov6e04",
+  "name": "Sun Blessing: Cleansing Fire",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-air-fire-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, you can touch a weapon and grant it either the flaming or undead-bane weapon special ability for 1 minute. If you spend two uses of your blessing when activating this ability, the weapon can have both weapon special abilities.</p>"
+    },
+    "actions": [
+      {
+        "_id": "qxvs7n95mpheex4n",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-air-fire-3.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "weapon touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_sunBlessingCleansingFire",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

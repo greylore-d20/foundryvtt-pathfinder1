@@ -1,0 +1,47 @@
+{
+  "_id": "2qcz39w9O2Qlms0Q",
+  "name": "Poison Resistance",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_16.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 2nd level, an alchemist gains a +2 bonus on all saving throws against poison. This bonus increases to +4 at 5th level, and then again to +6 at 8th level. At 10th level, an alchemist becomes completely immune to poison.</p>"
+    },
+    "actions": [
+      {
+        "_id": "2viyzm1ib3i6irh6",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_16.jpg",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "contextNotes": [
+      {
+        "subTarget": "allSavingThrows",
+        "target": "savingThrows",
+        "text": "+[[2]] vs poison"
+      }
+    ],
+    "tag": "classFeat_poisonResistance",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Alchemist"]]
+    },
+    "abilityType": "ex"
+  }
+}

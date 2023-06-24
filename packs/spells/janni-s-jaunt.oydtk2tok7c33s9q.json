@@ -1,0 +1,68 @@
+{
+  "_id": "oydtk2tok7c33s9q",
+  "name": "Janni's Jaunt",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "6887unm8eqibtmt8",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "creature touched, or up to eight willing creatures joining hands"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "cleric": 4,
+        "oracle": 4,
+        "summoner": 5,
+        "witch": 6,
+        "shaman": 6,
+        "psychic": 4,
+        "medium": 3,
+        "unchained Summoner": 5
+      }
+    },
+    "level": 6,
+    "school": "con",
+    "subschool": "teleportation",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "a forked metal rod attuned to the plane of travel"
+    },
+    "shortDescription": "<p>This spell functions as per <i>plane shift</i>, but with the following exceptions. First, you are able to transport only willing creatures. Second, the spell can transport you and any other willing targets only to an Elemental Plane, the Astral Plane, or the Material Plane.</p>"
+  }
+}

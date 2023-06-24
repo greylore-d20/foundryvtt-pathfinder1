@@ -1,0 +1,66 @@
+{
+  "_id": "pdwevsqydh1ps5e6",
+  "name": "Nixie's Lure",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "mduir8ihfwtrzqbp",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "concentration + 1 round/level (D)"
+        },
+        "target": {
+          "value": "all creatures within a 300-ft.-radius burst centered on you"
+        },
+        "range": {
+          "value": "300",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "druid": 4,
+        "bard": 3,
+        "summoner": 4,
+        "witch": 4,
+        "psychic": 3,
+        "mesmerist": 3,
+        "hunter": 4,
+        "unchained Summoner": 4
+      }
+    },
+    "level": 4,
+    "school": "enc",
+    "subschool": "charm",
+    "types": "mind-affecting, sonic",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell creates an unearthly and infectious song that seductively summons all who hear it. Nixie's lure affects a maximum of 24 Hit Dice of creatures. Creatures in the area who fail their saves are lured by the song and move toward you using the most direct means available. If the path leads them into a dangerous area such as through fire or off a cliff, the creatures each receive a second saving throw to end the effect before moving into peril. Creatures lured by the spell's song can take no actions other than to defend themselves. A victim within 5 feet of you simply stands still and for the duration of the spell remains fascinated.</p>"
+  }
+}

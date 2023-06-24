@@ -1,0 +1,52 @@
+{
+  "_id": "vkWkB9u6Al6SkraH",
+  "name": "Unbound Form",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman can assume a variety of forms, as per @Compendium[pf1.spells.t44p3oeq43jwcgwg]{Polymorph, Greater}, for 1 minute per day per shaman level. The minutes need not be consecutive, but they must be spent in 1-minute increments.</p>\n<p>When she assumes these forms, some element of the new shape always sets it apart from a typical specimen, such as strangely colored eyes, limbs that bend in unusual ways, or a slimy coating of mucus over the flesh.</p>"
+    },
+    "actions": [
+      {
+        "_id": "kbkkqyo6dmtlz4cr",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_20.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.shaman.level"
+    },
+    "tag": "classFeat_unboundForm",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

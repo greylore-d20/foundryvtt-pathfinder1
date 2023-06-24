@@ -1,0 +1,68 @@
+{
+  "_id": "vlzave855irdc7yu",
+  "name": "Ray of Exhaustion",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "sekt0xriuv51tlyc",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 min./level"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "rsak",
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude partial; see text"
+        },
+        "spellEffect": "ray"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 3,
+        "wizard": 3,
+        "witch": 3,
+        "magus": 3,
+        "bloodrager": 3,
+        "mesmerist": 3,
+        "spiritualist": 3
+      },
+      "bloodline": {
+        "Accursed": 3
+      }
+    },
+    "level": 3,
+    "school": "nec",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a drop of sweat"
+    },
+    "shortDescription": "<p>A black ray projects from your pointing finger. You must succeed on a ranged touch attack with the ray to strike a target.</p><p>The subject is immediately exhausted for the spell's duration. A successful Fortitude save means the creature is only fatigued.</p><p>A character that is already fatigued instead becomes exhausted.</p><p>This spell has no effect on a creature that is already exhausted.</p><p>Unlike normal exhaustion or fatigue, the effect ends as soon as the spell's duration expires.</p>"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "_id": "0onqjy8gfgop1xsi",
+  "name": "Ventriloquism",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "pobbxsb287od1329",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 min./level"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will disbelief (if interacted with)"
+        },
+        "spellEffect": "intelligible sound, usually speech"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "bard": 1,
+        "summoner": 1,
+        "psychic": 1,
+        "medium": 1,
+        "mesmerist": 1,
+        "spiritualist": 1,
+        "unchained Summoner": 1
+      },
+      "bloodline": {
+        "Maestro": 1
+      }
+    },
+    "school": "ill",
+    "subschool": "figment",
+    "components": {
+      "verbal": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "parchment rolled into cone"
+    },
+    "sr": false,
+    "shortDescription": "<p>You can make your voice (or any sound that you can normally make vocally) seem to issue from someplace else. You can speak in any language you know. With respect to such voices and sounds, anyone who hears the sound and rolls a successful save recognizes it as illusory (but still hears it).</p>"
+  }
+}

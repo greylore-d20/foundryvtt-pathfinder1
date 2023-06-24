@@ -1,0 +1,62 @@
+{
+  "_id": "5bhg2kgip9fwnlem",
+  "name": "Mirror Transport",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "lrwunnw35cn21pow",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level (D)"
+        },
+        "target": {
+          "value": "one mirror"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "description": "yes (object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "witch": 4,
+        "psychic": 4,
+        "occultist": 4,
+        "spiritualist": 4
+      }
+    },
+    "level": 4,
+    "school": "trs",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a glass or metal marble and a twisted loop of parchment"
+    },
+    "shortDescription": "<p>This spell functions as <i>mirror hideaway</i>, except any creature that enters the target mirror can spend a swift action to exit through another mirror within 500 feet as if using <i>dimension door</i>; this is a one-way transport. The creature can exit through a mirror only if it could fit through an opening the same size as the mirror. Each transport through the target mirror reduces the spell's duration by 1 hour.</p>"
+  }
+}

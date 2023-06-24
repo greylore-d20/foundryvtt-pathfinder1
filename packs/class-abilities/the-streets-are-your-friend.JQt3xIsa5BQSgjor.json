@@ -1,0 +1,48 @@
+{
+  "_id": "JQt3xIsa5BQSgjor",
+  "name": "The Streets Are Your Friend",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As long as you are in an urban environment, you can call upon the city to help an ally within 30 feet succeed at a task. The ally gets a +2 competence bonus on skill checks with a particular skill as long as you concentrate. This bonus increases to +3 at 9th level, and to +4 at 15th level.</p>"
+    },
+    "actions": [
+      {
+        "_id": "sp3kn4b50nojwnqi",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "seeText"
+        },
+        "target": {
+          "value": "one ally"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_theStreetsAreYourFriend",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "ex"
+  }
+}

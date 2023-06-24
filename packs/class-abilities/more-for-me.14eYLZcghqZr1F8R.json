@@ -1,0 +1,53 @@
+{
+  "_id": "14eYLZcghqZr1F8R",
+  "name": "More for Me",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/mech_9.jpg",
+  "system": {
+    "description": {
+      "value": "<p>When another character within 30 feet casts a spell with a range greater than touch, you can attempt a caster level check as an immediate action (DC = 15 + the spell’s level). If you succeed at the check, you receive the spell’s benefit instead of one of the spell’s intended targets (chosen by you). If you are already a target of the spell, you are affected as though you were targeted by the same spell twice (which may or may not benefit you; remember that bonuses from the same source do not stack). This ability does not grant you knowledge of the spell being cast. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>\n<p>This power replaces the Copycat power of the Trickery Domain.</p>"
+    },
+    "actions": [
+      {
+        "_id": "t4cf4jp2fmrzb541",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/mech_9.jpg",
+        "activation": {
+          "type": "immediate"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "reaction"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.wis.mod"
+    },
+    "tag": "classFeat_moreForMe",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "su"
+  }
+}

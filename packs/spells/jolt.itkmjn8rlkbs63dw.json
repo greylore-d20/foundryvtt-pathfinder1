@@ -1,0 +1,74 @@
+{
+  "_id": "itkmjn8rlkbs63dw",
+  "name": "Jolt",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "yjr222uq30o68ovx",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d3",
+              "type": {
+                "values": ["electric"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "label": ""
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0"
+        },
+        "touch": true,
+        "spellEffect": "spark of electricity"
+      }
+    ],
+    "uses": {
+      "autoDeductChargesCost": "0"
+    },
+    "learnedAt": {
+      "class": {
+        "sorcerer": 0,
+        "wizard": 0
+      }
+    },
+    "level": 0,
+    "school": "trs",
+    "types": "electricity",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>You cause a spark of electricity to strike the target with a successful ranged touch attack. The spell deals 1d3 points of electricity damage.</p>"
+  }
+}

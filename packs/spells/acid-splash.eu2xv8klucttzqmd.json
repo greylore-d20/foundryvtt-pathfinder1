@@ -1,0 +1,76 @@
+{
+  "_id": "eu2xv8klucttzqmd",
+  "name": "Acid Splash",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "h5sudeo3vcmxwkxf",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d3",
+              "type": {
+                "values": ["acid"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "one missile of acid"
+      }
+    ],
+    "uses": {
+      "autoDeductChargesCost": "0"
+    },
+    "learnedAt": {
+      "class": {
+        "sorcerer": 0,
+        "wizard": 0,
+        "summoner": 0,
+        "inquisitor": 0,
+        "magus": 0,
+        "unchained Summoner": 0
+      }
+    },
+    "level": 0,
+    "school": "con",
+    "subschool": "creation",
+    "types": "acid",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "sr": false,
+    "shortDescription": "<p>You fire a small orb of acid at the target. You must succeed on a ranged touch attack to hit your target. The orb deals 1d3 points of acid damage. This acid disappears after 1 round.</p>"
+  }
+}

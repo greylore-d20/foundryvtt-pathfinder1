@@ -1,0 +1,65 @@
+{
+  "_id": "mEwZ60gPM2NUr2wk",
+  "name": "Wave Strike",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, the shaman can perform a melee touch attack that drenches a creature and pushes it away. The opponent takes 1d6 points of nonlethal damage + 1 point for every 2 shaman levels they possess and is pushed 5 feet directly away from the shaman. This movement does not provoke attacks of opportunity.</p>\n<p>A shaman can use this ability a number of times per day equal to 3 + her Charisma modifier.</p>\n<p>At 11th level, any melee weapon she wields is treated as if it had the quenching weapon special ability.</p>"
+    },
+    "actions": [
+      {
+        "_id": "866eiblt9wi5hejh",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_20.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "msak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d6 + floor(@classes.shaman.level / 2)",
+              "type": {
+                "values": ["untyped"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_waveStrike",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

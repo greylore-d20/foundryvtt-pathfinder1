@@ -1,0 +1,58 @@
+{
+  "_id": "z6xg1ckozmmx2s3q",
+  "name": "Ego Whip I",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "q637exnro3s47vyk",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will partial"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "psychic": 3
+      },
+      "bloodline": {
+        "Psychic": 3
+      }
+    },
+    "level": 3,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "emotion, mind-affecting",
+    "components": {
+      "somatic": true
+    },
+    "shortDescription": "<p>You can use your psychic power to overwhelm the target's ego, leaving the target feeling hopeless and unsure of itself. Choose Intelligence, Wisdom, or Charisma. The target takes a -2 penalty to that ability score, and is also staggered for the first round it's affected. A successful Will save negates the staggered effect and reduces the duration of the penalty to 1 round.</p>"
+  }
+}

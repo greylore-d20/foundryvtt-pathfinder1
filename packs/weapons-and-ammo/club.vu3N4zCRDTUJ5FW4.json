@@ -1,0 +1,69 @@
+{
+  "_id": "vu3N4zCRDTUJ5FW4",
+  "name": "Club",
+  "type": "weapon",
+  "img": "systems/pf1/icons/items/weapons/club.PNG",
+  "system": {
+    "description": {
+      "value": "<p><b>Source</b> <em>Ultimate Equipment pg. 17</em>, <em>PRPG Core Rulebook pg. 142</em></p><h3><span title=\"PFS Legal\">[PFS]</span> Statistics</h3><p><b>Cost</b> - <b>Weight</b> 3 lbs.</p><p><b>Damage</b> 1d4 (small), 1d6 (medium); <b>Critical</b> x2; <b>Range</b> 10 ft.; <b>Type</b> B; <b>Special</b> -</p><p><b>Category</b> One-Handed; <b>Proficiency</b> Simple</p><p><b>Weapon Groups</b> Hammers; Thrown; Tribal</p><h3>Description</h3><p>This weapon is usually just a shaped piece of wood, sometimes with a few nails or studs embedded in it.</p>"
+    },
+    "tags": ["Club"],
+    "weight": {
+      "value": 3
+    },
+    "hp": {
+      "max": 5,
+      "value": 5
+    },
+    "hardness": 10,
+    "actions": [
+      {
+        "_id": "6dmu5en9jjonxti9",
+        "name": "Attack",
+        "img": "systems/pf1/icons/items/weapons/club.PNG",
+        "activation": {
+          "type": "attack"
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "range": {
+          "value": "10",
+          "units": "melee"
+        },
+        "actionType": "mwak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "sizeRoll(1, 6, @size)",
+              "type": {
+                "values": ["bludgeoning"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "formulaicAttacks": {
+          "count": {
+            "formula": "min(3, ceil(@attributes.bab.total / 5) - 1)"
+          },
+          "bonus": {
+            "formula": "@formulaicAttack * -5"
+          }
+        },
+        "ability": {
+          "attack": "str",
+          "damage": "str"
+        },
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "club",
+    "weaponGroups": {
+      "value": ["hammers", "thrown", "tribal"]
+    },
+    "weaponSubtype": "1h"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "_id": "wanrkyd9fzl4uo8v",
+  "name": "Sky Steed",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ldndft8tcosgu9m0",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level (D)"
+        },
+        "target": {
+          "value": "a creature you are mounted upon"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "paladin": 3
+      }
+    },
+    "level": 3,
+    "school": "trs",
+    "subschool": "polymorph",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>The target sprouts angelic wings and gains a fly speed equal to its base speed with average maneuverability. It also gains a bonus on Fly checks equal to your caster level.</p>"
+  }
+}

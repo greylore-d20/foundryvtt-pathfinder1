@@ -1,0 +1,55 @@
+{
+  "_id": "Bw3GiobZvSJb8dGI",
+  "name": "Resistant Touch",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/shadow_21.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can touch an ally to grant him your resistance bonus for 1 minute. When you use this ability, you lose your resistance bonus granted by the Protection domain for 1 minute. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "e4x7tfc4vbdkz0g2",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/shadow_21.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "ally touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.wis.mod"
+    },
+    "tag": "classFeat_resistantTouch",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "sp"
+  }
+}

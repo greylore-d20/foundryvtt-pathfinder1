@@ -1,0 +1,63 @@
+{
+  "name": "Realm Retribution",
+  "type": "spell",
+  "img": "icons/magic/control/silhouette-hold-beam-blue.webp",
+  "system": {
+    "actions": [
+      {
+        "_id": "ENM56QJ4NKPUVyDi",
+        "name": "Use",
+        "img": "icons/magic/control/silhouette-hold-beam-blue.webp",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "msak",
+        "formulaicAttacks": {
+          "label": ""
+        },
+        "save": {
+          "type": "will",
+          "description": "Will negates (see text)"
+        },
+        "touch": true
+      }
+    ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
+    "learnedAt": {
+      "class": {
+        "cleric": 8,
+        "inquisitor": 6,
+        "oracle": 8,
+        "warpriest": 6
+      }
+    },
+    "level": 8,
+    "school": "con",
+    "subschool": "teleportation",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "spellbook": "",
+    "sr": false,
+    "shortDescription": "<p>All attacks made by the target match your alignment, counting as either chaotic, evil, good, or lawful as appropriate. If your alignment includes multiple alignment components, such as lawful good, you select one alignment component to impart to the target. Whenever the target confirms a critical hit against or takes damage from a creature, that creature must attempt a Will save. On a failed save, the creature is sent to the Outer Plane matching your alignment, as per @Compendium[pf1.spells.q3st18udsalnyz5v]{plane shift}, and the spell ends. A warpriest treats this spell as a 6th-level cleric spell for the purposes of preparing the spell, determining DCs, and so forth.</p>"
+  },
+  "_id": "DElMwKX5Ub8hWCoT"
+}

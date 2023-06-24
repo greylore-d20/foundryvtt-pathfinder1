@@ -1,0 +1,51 @@
+{
+  "_id": "Ha0My5BLwap3Ls5U",
+  "name": "Wings of Darkness",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a swift action, you can manifest a set of translucent, inky wings that grant you a fly speed of 60 feet with good maneuverability. You can use these wings for 1 minute per day per oracle level. This duration does not need to be consecutive, but it must be spent in 1-minute increments.</p>\n<p>At 11th level, you can use these wings to fly as if with @Compendium[pf1.spells.wqvy12w1xgk6l9b0]{Overland Flight} once per day. Used in this way, the ability lasts for up to 1 hour per level, and counts as your total use of this ability for the day.</p>\n<p>You must be at least 7th level to select this revelation.</p>"
+    },
+    "actions": [
+      {
+        "_id": "vaot51wyy0mmy7eu",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.oracle.level"
+    },
+    "tag": "classFeat_wingsOfDarkness",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

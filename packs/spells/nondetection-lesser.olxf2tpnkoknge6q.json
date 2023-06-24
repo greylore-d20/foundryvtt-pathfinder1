@@ -1,0 +1,67 @@
+{
+  "_id": "olxf2tpnkoknge6q",
+  "name": "Nondetection, Lesser",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "satqya0ihae9qp8u",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "ranger": 3,
+        "alchemist": 2,
+        "summoner": 2,
+        "inquisitor": 2,
+        "antipaladin": 2,
+        "hunter": 3,
+        "unchained Summoner": 2
+      }
+    },
+    "level": 2,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "material": true
+    },
+    "materials": {
+      "value": "a drop of mercury"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions like <i>nondetection</i>, except it blocks the effects of only divination spells and effects that target an area, rather than you or an object in your possession specifically. For example, lesser <i>nondetection</i> doesn't ward you against a spellcaster who is attempting to scry on you with the <i>scrying</i> spell or find an object in your possession with <i>locate object</i>, but it does protect  you against effects that target an area you happen to be in, such as detect spells or <i>clairaudience/clairvoyance</i>.</p>"
+  }
+}

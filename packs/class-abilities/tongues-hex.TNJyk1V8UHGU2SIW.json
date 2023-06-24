@@ -1,0 +1,53 @@
+{
+  "_id": "TNJyk1V8UHGU2SIW",
+  "name": "Tongues Hex",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_02.jpg",
+  "system": {
+    "description": {
+      "value": "<p>A witch with this hex can understand any spoken language for a number of minutes per day equal to her level, as @Compendium[pf1.spells.jcs7ba5depdyitey]{Comprehend Languages}. This duration does not need to be consecutive, but it must be spent in 1-minute increments.</p>\n<p>At 5th level, a witch can use this ability to speak any language, as per @Compendium[pf1.spells.m1rmcpcaixcpz9ib]{Tongues}.</p>"
+    },
+    "tags": ["Hex"],
+    "actions": [
+      {
+        "_id": "fnglijw32nm5ar72",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.witch.level"
+    },
+    "tag": "classFeat_tonguesHex",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Witch"]]
+    },
+    "abilityType": "su"
+  }
+}

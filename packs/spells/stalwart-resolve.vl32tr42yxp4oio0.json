@@ -1,0 +1,62 @@
+{
+  "_id": "vl32tr42yxp4oio0",
+  "name": "Stalwart Resolve",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "4ydg8ao97rw7jvom",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 2,
+        "oracle": 2,
+        "paladin": 1,
+        "alchemist": 2,
+        "witch": 2,
+        "inquisitor": 1
+      }
+    },
+    "level": 2,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>(harmless) <i>Stalwart resolve</i> was originally created to temporarily aid those suffering from certain afflictions. The recipient of <i>stalwart resolve</i> ignores the effects of ability damage and penalties to a single ability score of your choice, except that damage equal to or greater than the ability score still causes unconsciousness or death. This applies whether or not the ability damage or penalty happened before or during the spell's duration, and whether or not multiple sources are involved. This spell has no effect on ability drain.</p>"
+  }
+}

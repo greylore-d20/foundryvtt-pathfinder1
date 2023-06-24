@@ -1,0 +1,68 @@
+{
+  "_id": "ud4xukzhan89qhm4",
+  "name": "Confusion, Lesser",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "fhyqy81hapofblpe",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round"
+        },
+        "target": {
+          "value": "one living creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "bard": 1,
+        "psychic": 1,
+        "medium": 1,
+        "mesmerist": 1
+      },
+      "domain": {
+        "Madness": 1
+      },
+      "subDomain": {
+        "Protean": 1
+      },
+      "bloodline": {
+        "Impossible": 1
+      }
+    },
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>This spell causes a single creature to become confused for 1 round.</p>"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "_id": "mww7sucok0sg22cp",
+  "name": "Inner Focus",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ob522sht8qzsf3u9",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10 minutes/level"
+        },
+        "target": {
+          "value": "you"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "description": "none (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 2,
+        "oracle": 2,
+        "druid": 2,
+        "ranger": 1,
+        "paladin": 1,
+        "inquisitor": 2,
+        "antipaladin": 1,
+        "adept": 2,
+        "hunter": 1
+      }
+    },
+    "level": 2,
+    "school": "ill",
+    "subschool": "glamer",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "sr": false,
+    "shortDescription": "<p>For the duration of this spell, you may ignore any divine focus components of your spells, allowing you to cast such spells without holding or revealing your holy or unholy symbol.</p>"
+  }
+}

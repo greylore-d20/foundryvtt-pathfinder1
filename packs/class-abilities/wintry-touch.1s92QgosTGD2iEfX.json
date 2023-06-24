@@ -1,0 +1,65 @@
+{
+  "_id": "1s92QgosTGD2iEfX",
+  "name": "Wintry Touch",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action, you can perform a melee touch attack that deals 1d6 points of cold damage + 1 point for every two oracle levels you possess.</p>\n<p>You can use the wintry touch ability a number of times per day equal to 3 + your Charisma modifier.</p>\n<p>At 11th level, any weapon that you wield is treated as a frost weapon.</p>"
+    },
+    "actions": [
+      {
+        "_id": "2trcwuoxjxlftlze",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-royal-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "msak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d6 + floor(@classes.oracle.level / 2)",
+              "type": {
+                "values": ["cold"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "ability": {
+          "attack": "dex"
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_wintryTouch",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Oracle"]]
+    },
+    "abilityType": "su"
+  }
+}

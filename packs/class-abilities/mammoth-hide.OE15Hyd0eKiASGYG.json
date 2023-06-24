@@ -1,0 +1,52 @@
+{
+  "_id": "OE15Hyd0eKiASGYG",
+  "name": "Mammoth Hide",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/green_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The shaman can touch a willing ally and cause its skin to thicken and sprout thick, shaggy fur. The creature gains a +2 enhancement bonus to natural armor and cold resistance 5 for 10 minutes.</p>\n<p>At 9th level, the enhancement bonus increases to +3 and the cold resistance to 10.</p>\n<p>At 15th level, this enhancement bonus increases to +4 and the cold resistance to 15.</p>\n<p>The shaman can use this ability a number of times per day equal to 3 + her Charisma bonus.</p>"
+    },
+    "actions": [
+      {
+        "_id": "3rm765jtpmjkwdj3",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/green_03.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "10",
+          "units": "minute"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_mammothHide",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

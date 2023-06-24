@@ -1,0 +1,52 @@
+{
+  "_id": "q1vwjTxyJnFHz8kA",
+  "name": "Locate Focus",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, once per day you may use either @Compendium[pf1.spells.vl2mznu91c3efcam]{Locate Creature} or @Compendium[pf1.spells.tcnirpnzjdaym1fd]{Locate Object} as a spell-like ability using your current focus as the target. The range of this effect is 1 mile per level.</p>"
+    },
+    "actions": [
+      {
+        "_id": "uhdkudt2f1aojubo",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/inventory/badge-cross.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "focus object or person"
+        },
+        "range": {
+          "value": "1",
+          "units": "mi"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1"
+    },
+    "tag": "classFeat_locateFocus",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Inquisitor"]]
+    },
+    "abilityType": "sp"
+  }
+}

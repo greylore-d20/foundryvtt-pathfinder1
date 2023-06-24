@@ -1,0 +1,67 @@
+{
+  "_id": "1iufahgx3qwd8cng",
+  "name": "Lead Plating",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "outm8pk3kuogppas",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level (D)"
+        },
+        "target": {
+          "value": "a creature or object weighing up to 100 lbs./level"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (harmless, object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "cleric": 2,
+        "oracle": 2,
+        "druid": 2,
+        "ranger": 2,
+        "alchemist": 3,
+        "witch": 2,
+        "hunter": 2
+      }
+    },
+    "level": 2,
+    "school": "con",
+    "subschool": "creation",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "an ounce of lead"
+    },
+    "shortDescription": "<p>You enclose the target in a thin sheath of lead. This doesn't restrict the target's movement or functionality, but protects it from the effects of radiation and prevents the penetration of many divination spells. The lead doesn't coat the target's equipment.</p>"
+  }
+}

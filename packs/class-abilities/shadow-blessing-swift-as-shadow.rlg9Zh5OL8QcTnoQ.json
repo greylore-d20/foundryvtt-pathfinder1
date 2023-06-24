@@ -1,0 +1,43 @@
+{
+  "_id": "rlg9Zh5OL8QcTnoQ",
+  "name": "Shadow Blessing: Swift as Shadow",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/shadow_19.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, you can spend a swift action to empower yourself or an ally within 30 feet to move over the ground as easily as its shadow. The subject’s land speed increases by 10 feet and it takes no movement penalties for darkness, difficult terrain, or slickness. The creature can safely move over areas of ice and even those affected by a grease spell. When a creature affected by this ability hits with a charge attack, that attack deals an amount of additional cold damage equal to your level.</p>"
+    },
+    "actions": [
+      {
+        "_id": "nev0bmktishjmccg",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/shadow_19.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "target": {
+          "value": "one ally"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_shadowBlessingSwiftAsShadow",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

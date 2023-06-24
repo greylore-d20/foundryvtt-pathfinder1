@@ -1,0 +1,56 @@
+{
+  "_id": "rsiczoknsnyykpvd",
+  "name": "Magnifying Chime",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "vqsu3xbk6uapk0ek",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "cost": 10,
+          "type": "minute"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "Effect disruptive vibrations   one unattended object or object in your possession"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude half (see text)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "bard": 6
+      }
+    },
+    "level": 6,
+    "school": "trs",
+    "types": "sonic",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You cause the touched object to vibrate and release sonic energy once per round as a loud, dangerous chime. The sound grows in strength as time passes. On your turn in the round after you cast the spell, the chime deals 1d6 points of sonic damage to all creatures and objects within 5 feet of the target. Each round after that, the damage increases by 1d6 and reaches 5 feet farther in all directions. A successful Fortitude save halves the damage for that round only.</p>"
+  }
+}

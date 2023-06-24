@@ -1,0 +1,51 @@
+{
+  "_id": "75Y2PY8Uha3o0fHE",
+  "name": "Aura of Despair",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/affliction_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 8th level, you can emit a 30-foot aura of despair for a number of rounds per day equal to your wizard level. Enemies within this aura take a –2 penalty on ability checks, attack rolls, damage rolls, <em>saving throw</em>s, and skill checks. These rounds do not need to be consecutive. This is a mind-affecting effect.</p>"
+    },
+    "actions": [
+      {
+        "_id": "gjirq0jlenci26eu",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/affliction_03.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "range": {
+          "units": "seeText"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.wizard.level"
+    },
+    "tag": "classFeat_auraOfDespair",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Wizard"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "_id": "MQUxV2Y3FquOg7zr",
+  "name": "Sun Blessing: Blinding Strike",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/light-air-fire-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can create a flash of sunlight in the eyes of one of your opponents. The target is blinded for 1 round. If it succeeds at a Reflex saving throw, it’s instead dazzled for 1 round. Creatures with light blindness or light sensitivity take a –4 penalty on this saving throw. This is a light effect.</p>\n<p>Sightless creatures are unaffected by this ability.</p>"
+    },
+    "actions": [
+      {
+        "_id": "ckbzs41tpk8fcnou",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/light-air-fire-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "one foe"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "0",
+          "type": "ref",
+          "description": "Reflex dazzles instead of blinds"
+        }
+      }
+    ],
+    "tag": "classFeat_sunBlessingBlindingStrike",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

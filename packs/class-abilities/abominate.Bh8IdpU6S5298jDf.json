@@ -1,0 +1,51 @@
+{
+  "_id": "Bh8IdpU6S5298jDf",
+  "name": "Abominate",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_02.jpg",
+  "system": {
+    "description": {
+      "value": "<p>The witch transforms a creature within 30 feet into an aberration. This hex acts as @Compendium[pf1.spells.t8ei2mrmqg7252vw]{Baleful Polymorph}, except the target is transmuted into a Small, Medium, or Large aberration. The target’s abilities are modified as @Compendium[pf1.spells.6jc9e9qooa4c89vr]{Monstrous Physique IV}.</p>\n<p>Whether or not its save is successful, a creature cannot be the target of this hex again for 1 day.</p>"
+    },
+    "tags": ["Hex", "Grand Hex"],
+    "actions": [
+      {
+        "_id": "ix2eg9ckrrgm00sp",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_02.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "perm"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "save",
+        "save": {
+          "dc": "10 + floor(@classes.witch.level / 2) + @abilities.int.mod",
+          "type": "fort",
+          "description": "Fortitude negates, Will partial"
+        }
+      }
+    ],
+    "tag": "classFeat_abominate",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Witch"]]
+    },
+    "abilityType": "sp"
+  }
+}

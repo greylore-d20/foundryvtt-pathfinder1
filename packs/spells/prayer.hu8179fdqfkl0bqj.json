@@ -1,0 +1,65 @@
+{
+  "_id": "hu8179fdqfkl0bqj",
+  "name": "Prayer",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "i49g9tyvpoesfkff",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "range": {
+          "value": "40",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "40"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        },
+        "spellArea": "all allies and foes within a 40-ft.-radius burst centered on you"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 3,
+        "oracle": 3,
+        "paladin": 3,
+        "inquisitor": 3
+      },
+      "domain": {
+        "Community": 3
+      },
+      "subDomain": {
+        "Archon": 3,
+        "Leadership": 3
+      }
+    },
+    "level": 3,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>You bring special favor upon yourself and your allies while bringing disfavor to your enemies. You and each of your allies gain a +1 luck bonus on attack rolls, weapon damage rolls, saves, and skill checks, while each of your foes takes a -1 penalty on such rolls.</p>"
+  }
+}

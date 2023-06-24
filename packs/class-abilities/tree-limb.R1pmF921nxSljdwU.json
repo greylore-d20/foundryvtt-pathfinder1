@@ -1,0 +1,51 @@
+{
+  "_id": "R1pmF921nxSljdwU",
+  "name": "Tree Limb",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/violet_20.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a swift action, the shaman can turn one of her arms into a heavy, branch-like limb. She must drop anything held in that hand, and she can’t use this ability if she is wearing a shield on that arm. Until the beginning of her next turn, she gains a slam attack that deals 1d8 points of damage (for a Medium shaman; 1d6 if Small, 2d6 if Large).</p>\n<p>At 8th level, the reach of this slam attack increases by 5 feet.</p>\n<p>At 16th level, the shaman can transform both of her arms, gaining two slam attacks.</p>\n<p>A shaman can use this ability a number of times per day equal to 3 + her Charisma modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "bapxz4weidasg7n9",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/violet_20.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.cha.mod"
+    },
+    "tag": "classFeat_treeLimb",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Shaman"]]
+    },
+    "abilityType": "su"
+  }
+}

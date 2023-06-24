@@ -1,0 +1,66 @@
+{
+  "_id": "qrtu0gbzzshr99aw",
+  "name": "Summon Minor Monster",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "sj9lsjypvj5h24kl",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "round"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level (D)"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "other",
+        "save": {
+          "dc": "0"
+        },
+        "spellEffect": "1d3 summoned creatures"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 1,
+        "wizard": 1,
+        "cleric": 1,
+        "oracle": 1,
+        "bard": 1,
+        "summoner": 1,
+        "witch": 1,
+        "antipaladin": 1,
+        "psychic": 1,
+        "medium": 1,
+        "unchained Summoner": 1
+      }
+    },
+    "school": "con",
+    "subschool": "summoning",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true,
+      "divineFocus": 3
+    },
+    "materials": {
+      "focus": "a tiny bag and a small candle"
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions as <i>summon monster I</i>, except you can summon 1d3 Tiny or smaller animals, such as bats, lizards, monkeys, rats, ravens, toads, or weasels. The summoned animals must all be the same type of creature. As with animals summoned with <i>summon monster I</i>, you may apply one alignment-appropriate template to these animals.</p>"
+  }
+}

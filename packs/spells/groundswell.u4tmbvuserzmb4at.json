@@ -1,0 +1,60 @@
+{
+  "_id": "u4tmbvuserzmb4at",
+  "name": "Groundswell",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "i54f282sbxdoowt2",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fortitude negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 2,
+        "oracle": 2,
+        "druid": 2,
+        "ranger": 2,
+        "magus": 2,
+        "hunter": 2
+      }
+    },
+    "level": 2,
+    "school": "trs",
+    "types": "earth",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>This spell allows the target to cause the ground to rise up beneath him. As a swift action, the target can cause the ground to rise 5 feet, while all adjacent squares are treated as steep slopes (<i>Core Rulebook</i> 428). The <i>groundswell</i> precludes flanking from creatures standing at lower elevations than the target. If the target moves after creating a <i>groundswell</i>, the ground returns to its normal elevation at the end of his turn; otherwise, it remains in place until the target moves or uses a swift action to return the ground to normal. A <i>groundswell</i> cannot increase elevation of the ground beyond 5 feet.</p>"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "_id": "Lebipph87ARrlM40",
+  "name": "Seize the Initiative",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/ice_12.jpg",
+  "system": {
+    "description": {
+      "value": "<p>Whenever you and your allies roll for initiative, you can grant one ally within 30 feet the ability to roll twice and take either result. This decision is made before results are revealed. You can use this ability a number of times per day equal to 3 + your Wisdom modifier.</p>\n<p>This power replaces the Battle Rage power of the War Domain.</p>"
+    },
+    "actions": [
+      {
+        "_id": "6rof8fpf0gw85iy1",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/ice_12.jpg",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "one ally"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.wis.mod"
+    },
+    "tag": "classFeat_seizeTheInitiative",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Cleric"]]
+    },
+    "abilityType": "su"
+  }
+}

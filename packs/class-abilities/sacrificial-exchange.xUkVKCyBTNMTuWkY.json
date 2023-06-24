@@ -1,0 +1,48 @@
+{
+  "_id": "xUkVKCyBTNMTuWkY",
+  "name": "Sacrificial Exchange",
+  "type": "feat",
+  "img": "systems/pf1/icons/skills/blood_03.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 15th level, as a <em>swift action</em> once per day, you can take 2 points of temporary <em>ability damage</em> to one of your ability scores and add a temporary +2 inherent bonus to any other ability score. This bonus lasts for a maximum of 1 hour per <em>sorcerer</em> level or until you choose to prematurely dismiss it (a <em>free action</em>), during which time the temporary <em>ability damage</em> cannot be healed by any means. After this effect ends, you can heal the <em>ability damage</em> normally.</p>\n<ul>\n<li>At 20th level, you can use this ability twice per day.</li>\n</ul>"
+    },
+    "actions": [
+      {
+        "_id": "3iabj0cr4m3jotyc",
+        "name": "Use",
+        "img": "systems/pf1/icons/skills/blood_03.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "@classes.sorcerer.level",
+          "units": "hour"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.sorcerer.level >= 20 ? 2 : 1"
+    },
+    "tag": "classFeat_sacrificialExchange",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "_id": "ks8rck8sp5p7lg5y",
+  "name": "Radiation Ward",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "jg36wm4cxy2tmdmz",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level (D)"
+        },
+        "target": {
+          "value": "creature touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "fort",
+          "description": "Fort negates (harmless)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "cleric": 2,
+        "oracle": 2,
+        "druid": 2,
+        "ranger": 1,
+        "alchemist": 2,
+        "shaman": 2,
+        "hunter": 1
+      }
+    },
+    "level": 2,
+    "school": "abj",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>A creature warded by this spell gains a +4 bonus on saving throws against radiation-based effects. In addition, the warded creature is immediately aware when it enters an area  of radiation, as well as the radiation level (low, medium, high, or severe) suffusing the area.</p>"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "_id": "lqbbvb9w0rby8hse",
+  "name": "Control Summoned Creature",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "6ezmytx2095azgsd",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one summoned creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 4,
+        "wizard": 4,
+        "cleric": 4,
+        "oracle": 4,
+        "bard": 3,
+        "summoner": 3,
+        "psychic": 4,
+        "mesmerist": 3,
+        "occultist": 3,
+        "unchained Summoner": 3
+      }
+    },
+    "level": 4,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You seize control of a summoned creature by disrupting the bond between it and the caster who summoned it. If the creature fails its save, you may command it as if you had summoned it. The original caster can attempt to regain control of the creature as a standard action by making an opposed Spellcraft check against you. When your spell ends, control reverts to the original summoner. If the summoning spell ends before this spell ends, the remaining duration of this spell is lost.</p>"
+  }
+}

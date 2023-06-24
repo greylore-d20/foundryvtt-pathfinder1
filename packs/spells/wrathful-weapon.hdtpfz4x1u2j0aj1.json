@@ -1,0 +1,57 @@
+{
+  "_id": "hdtpfz4x1u2j0aj1",
+  "name": "Wrathful Weapon",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "jt7g6oqgi58xxcij",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 minute/level"
+        },
+        "target": {
+          "value": "melee weapon touched (see text)"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will (harmless, object)"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "cleric": 4,
+        "oracle": 4
+      }
+    },
+    "level": 4,
+    "school": "trs",
+    "types": "see text",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "divineFocus": 1
+    },
+    "shortDescription": "<p>You grant the targeted weapon one of the following weapon special abilities: <i>anarchic</i>, <i>axiomatic</i>, <i>holy</i>, or un<i>holy</i>. If <i>anarchic</i>, this spell has the chaos descriptor; if <i>axiomatic</i>, the law descriptor; if <i>holy</i>, the good descriptor; and if un<i>holy</i>, the evil descriptor. If the caster attempts to place a special ability on a weapon that already has that special ability, the spell fails.  If a warpriest casts this spell on his sacred weapon, the duration doubles. Warpriests with unarmed strike as a sacred weapon can cast this spell on their unarmed strike.</p>"
+  }
+}

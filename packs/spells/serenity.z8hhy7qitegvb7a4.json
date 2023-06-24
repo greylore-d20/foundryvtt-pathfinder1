@@ -1,0 +1,63 @@
+{
+  "_id": "z8hhy7qitegvb7a4",
+  "name": "Serenity",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "g8gq92pp3omrgxkb",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 round/level"
+        },
+        "target": {
+          "value": "one creature/level, no two of which can be more than 30 ft. apart"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "15"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 6,
+        "wizard": 6,
+        "cleric": 5,
+        "oracle": 5,
+        "bard": 4,
+        "psychic": 5,
+        "mesmerist": 4
+      }
+    },
+    "level": 6,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "emotion, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "shortDescription": "<p>You fill the targets' minds with feelings of tranquility. Those attempting to commit violence become stricken with wracking pain and take 3d6 points of nonlethal damage each round they attempt to harm another creature. If attacked, affected individuals can defend themselves and may participate in combat by using Combat Expertise, fighting defensively, or taking the total defense action without triggering the spell's nonlethal damage.</p>"
+  }
+}

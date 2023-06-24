@@ -1,0 +1,47 @@
+{
+  "_id": "WdUiIGyGEQIzVhsK",
+  "name": "Nobility Blessing: Lead by Example",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/haste-royal-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 10th level, as a swift action you can inspire your allies to follow your lead. If the following action on your turn is an attack or skill check, all allies within 30 feet who take the same action against the same foe or obstacle on their next turn gain a +4 morale bonus on that roll.</p>"
+    },
+    "actions": [
+      {
+        "_id": "56c7pajkd873y9iq",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/haste-royal-2.jpg",
+        "activation": {
+          "type": "swift"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "allies"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_nobilityBlessingLeadByExample",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

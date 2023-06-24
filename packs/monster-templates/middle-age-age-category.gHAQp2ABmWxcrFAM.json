@@ -1,0 +1,53 @@
+{
+  "name": "Middle Age (Age Category)",
+  "type": "feat",
+  "img": "icons/magic/time/hourglass-tilted-gray.webp",
+  "_id": "gHAQp2ABmWxcrFAM",
+  "system": {
+    "description": {
+      "value": "<p>You suffer a -1 penalty to your physical ability scores, and gain a +1 to your mental ability scores, due to your age category.</p>"
+    },
+    "changes": [
+      {
+        "_id": "ngi43p28",
+        "formula": "-min(1, @abilities.str.total - 1)",
+        "subTarget": "str",
+        "modifier": "untypedPerm",
+        "priority": -500
+      },
+      {
+        "_id": "kndqvezz",
+        "formula": "-min(1, @abilities.dex.total - 1)",
+        "subTarget": "dex",
+        "modifier": "untypedPerm",
+        "priority": -500
+      },
+      {
+        "_id": "1ose1les",
+        "formula": "-min(1, @abilities.con.total - 1)",
+        "subTarget": "con",
+        "modifier": "untypedPerm",
+        "priority": -500
+      },
+      {
+        "_id": "70k8rdw0",
+        "formula": "1",
+        "subTarget": "int",
+        "modifier": "untypedPerm"
+      },
+      {
+        "_id": "81zqir3h",
+        "formula": "1",
+        "subTarget": "wis",
+        "modifier": "untypedPerm"
+      },
+      {
+        "_id": "c8y6ubiw",
+        "formula": "1",
+        "subTarget": "cha",
+        "modifier": "untypedPerm"
+      }
+    ],
+    "subType": "misc"
+  }
+}

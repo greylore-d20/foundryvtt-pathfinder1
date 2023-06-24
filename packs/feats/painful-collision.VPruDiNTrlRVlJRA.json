@@ -1,0 +1,34 @@
+{
+  "name": "Painful Collision",
+  "type": "feat",
+  "img": "icons/skills/wounds/injury-pain-body-orange.webp",
+  "system": {
+    "description": {
+      "value": "<p><b>Source</b> Martial Arts Handbook pg. 24</p><p><em>You shove your opponents into each other, causing painful and damaging collisions.</em></p><p><b>Prerequisites</b>: Str 13, Improved Bull Rush, Power Attack.</p><p><b>Benefit</b>: When you bull rush an enemy into another creature, both creatures take 1d6 points of bludgeoning damage, plus an additional 1d6 points of bludgeoning damage for every 5 feet your original target has moved as a result of your bull rush. For instance, if you successfully bull rush a goblin 10 feet and it then collides with another goblin, both creatures would take 3d6 points of bludgeoning damage.</p>"
+    },
+    "tags": ["Combat"],
+    "actions": [
+      {
+        "_id": "1wduG7UiNLPVl4D0",
+        "name": "Use",
+        "img": "icons/skills/wounds/injury-pain-body-orange.webp",
+        "activation": {
+          "type": "passive"
+        },
+        "actionType": "other",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d6",
+              "type": {
+                "values": ["bludgeoning"],
+                "custom": ""
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "_id": "VPruDiNTrlRVlJRA"
+}

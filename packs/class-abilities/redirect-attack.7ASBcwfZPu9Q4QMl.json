@@ -1,0 +1,44 @@
+{
+  "_id": "7ASBcwfZPu9Q4QMl",
+  "name": "Redirect Attack",
+  "type": "feat",
+  "img": "systems/pf1/icons/items/weapons/butterfly-knife.PNG",
+  "system": {
+    "description": {
+      "value": "<p>Once per day, when a rogue with this talent is hit with a melee attack, she can redirect the attack to strike at an adjacent creature with a free action. The creature targeted must be within melee reach of the attack that hit the rogue, and the creature that made the attack against the rogue must make a new attack roll against the new target.</p>"
+    },
+    "actions": [
+      {
+        "_id": "7nwqqoudl0egkx18",
+        "name": "Use",
+        "img": "systems/pf1/icons/items/weapons/butterfly-knife.PNG",
+        "activation": {
+          "type": "free"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "free"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "1"
+    },
+    "tag": "classFeat_redirectAttack",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Rogue"]]
+    },
+    "abilityType": "ex"
+  }
+}

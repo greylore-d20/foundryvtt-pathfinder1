@@ -1,0 +1,58 @@
+{
+  "_id": "c11j5pcp0f6itlr8",
+  "name": "Track Ship",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "ydikyrs3ahce82k2",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "dc": "0",
+          "type": "will",
+          "description": "Will negates (object)"
+        },
+        "spellEffect": "magical icon"
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 2,
+        "wizard": 2,
+        "cleric": 2,
+        "oracle": 2,
+        "bard": 2
+      }
+    },
+    "level": 2,
+    "school": "div",
+    "subschool": "scrying",
+    "components": {
+      "verbal": true,
+      "somatic": true,
+      "focus": true
+    },
+    "materials": {
+      "focus": "piece of ship"
+    },
+    "shortDescription": "<p>In order to cast this spell, you must have a piece of the ship you wish to track. Merchants often preserve slivers from their trade ships specifically for this purpose. You also need a nautical chart.</p><p>When you cast this spell, an icon of the targeted ship appears on the nautical chart. The icon moves as the ship moves for the duration of this spell. If the ship is not within the area delineated by the chart, the spell fails. If the ship is reduced to 0 or fewer hit points, its icon changes from a ship to a skull and crossbones.</p>"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "_id": "pGfHEBWjXuZvfsOI",
+  "name": "Solar Ascension",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/fog-orange-3.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 20th level, as a full-round action, you can become an <em>incorporeal</em> being of light for 1 round per sorcerer level. While in this form, you gain the <em>incorporeal subtype</em> and take half the normal damage from corporeal magic attacks (you take no damage from nonmagical weapons and objects). Your spells deal half damage to corporeal creatures, but spells and abilities that do not deal damage function normally. The duration need not be continuous, but it must be used in 1-round increments. While in this form, any creature you move through (as the <em>overrun</em> combat maneuver) takes 2d6 points of fire damage.</p>"
+    },
+    "actions": [
+      {
+        "_id": "oh0xsf998ijyveib",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/fog-orange-3.jpg",
+        "activation": {
+          "type": "full"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "round"
+        },
+        "target": {
+          "value": "self"
+        },
+        "range": {
+          "units": "personal"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "@classes.sorcere.level"
+    },
+    "tag": "classFeat_solarAscension",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Sorcerer"]]
+    },
+    "abilityType": "su"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "_id": "kjw6oazi96eg90z8",
+  "name": "Contagious Suggestion",
+  "type": "spell",
+  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "system": {
+    "actions": [
+      {
+        "_id": "k0vu5yh5l98lac4s",
+        "name": "Use",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level or until completed (D)"
+        },
+        "target": {
+          "value": "one living creature"
+        },
+        "range": {
+          "units": "close"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "learnedAt": {
+      "class": {
+        "sorcerer": 5,
+        "wizard": 5,
+        "bard": 4,
+        "witch": 5,
+        "psychic": 5,
+        "medium": 4,
+        "mesmerist": 4,
+        "occultist": 5
+      }
+    },
+    "level": 5,
+    "school": "enc",
+    "subschool": "compulsion",
+    "types": "language-dependent, mind-affecting",
+    "components": {
+      "verbal": true,
+      "somatic": true
+    },
+    "sr": false,
+    "shortDescription": "<p>This spell functions as per <i>suggestion</i>, except the target can pass on the enchantment to other targets. The target is compelled to communicate your <i>suggestion</i> to another creature, forcing the new target to attempt a saving throw as if it were the initial target. If a secondary target successfully saves, the <i>suggestion</i> effect on the initial target isn't negated. If a secondary target fails, it is placed under the same compulsion as the initial target and can further spread the <i>suggestion</i>. This spell can affect a total number of Hit Dice of creatures equal to your caster level. Creatures that save against this spell cannot be affected by that particular casting of contagious <i>suggestion</i> for 24 hours.</p>"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "_id": "lQdbofjqgE2deCEv",
+  "name": "Earth Blessing: Acid Strike",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/rock-acid-2.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 1st level, you can touch one weapon and enhance it with acidic potency. For 1 minute, this weapon emits acrid fumes that deal an additional 1d4 points of acid damage with each strike.</p>\n<p>This additional damage doesn’t stack with the additional damage from the corrosive weapon special ability.</p>"
+    },
+    "actions": [
+      {
+        "_id": "e5e124u0tbh96qc4",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/rock-acid-2.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1",
+          "units": "minute"
+        },
+        "target": {
+          "value": "weapon touched"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "tag": "classFeat_earthBlessingAcidStrike",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Warpriest"]]
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "_id": "eYuNS8kf9Z3V6kjO",
+  "name": "Divine Grace",
+  "type": "feat",
+  "img": "systems/pf1/icons/feats/alignment-channel.jpg",
+  "system": {
+    "description": {
+      "value": "<p>At 2nd level, a paladin gains a bonus equal to her <em>Charisma</em> bonus (if any) on all <em>Saving Throws</em>.</p>"
+    },
+    "actions": [
+      {
+        "_id": "tfdmrix0lpb6ruxw",
+        "name": "Use",
+        "img": "systems/pf1/icons/feats/alignment-channel.jpg",
+        "activation": {
+          "type": "passive"
+        },
+        "unchainedAction": {
+          "activation": {
+            "type": "passive"
+          }
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "",
+        "save": {
+          "dc": 0
+        }
+      }
+    ],
+    "changes": [
+      {
+        "_id": "ojf9ujzu",
+        "formula": "@abilities.cha.mod",
+        "subTarget": "allSavingThrows",
+        "modifier": "untyped"
+      }
+    ],
+    "tag": "classFeat_divineGrace",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Paladin"]]
+    },
+    "abilityType": "su"
+  }
+}

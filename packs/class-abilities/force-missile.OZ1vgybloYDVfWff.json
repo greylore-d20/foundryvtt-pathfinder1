@@ -1,0 +1,65 @@
+{
+  "_id": "OZ1vgybloYDVfWff",
+  "name": "Force Missile",
+  "type": "feat",
+  "img": "systems/pf1/icons/spells/fireball-eerie-1.jpg",
+  "system": {
+    "description": {
+      "value": "<p>As a standard action you can unleash a force missile that automatically strikes a foe, as @Compendium[pf1.spells.49yc9dpr4kvgki2s]{Magic Missile}. The force missile deals 1d4 points of damage plus the damage from your intense spells evocation power. This is a force effect. You can use this ability a number of times per day equal to 3 + your <em>Intelligence</em> modifier.</p>"
+    },
+    "actions": [
+      {
+        "_id": "undctjx4dh0rw0ch",
+        "name": "Use",
+        "img": "systems/pf1/icons/spells/fireball-eerie-1.jpg",
+        "activation": {
+          "type": "standard"
+        },
+        "unchainedAction": {
+          "activation": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "target": {
+          "value": "one creature"
+        },
+        "range": {
+          "units": "medium"
+        },
+        "measureTemplate": {
+          "size": "0"
+        },
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d4 + (floor(@classes.wizard.level / 2))",
+              "type": {
+                "values": ["force"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "0"
+        }
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.int.mod"
+    },
+    "tag": "classFeat_forceMissile",
+    "useCustomTag": true,
+    "subType": "classFeat",
+    "associations": {
+      "classes": [["Wizard"]]
+    },
+    "abilityType": "sp"
+  }
+}

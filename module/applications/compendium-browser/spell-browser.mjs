@@ -36,11 +36,6 @@ export class SpellBrowser extends CompendiumBrowser {
           .filter((typeString) => typeString.length) ?? [];
     }
 
-    // Handle learnedAt tuples
-    result.system.learnedAt ??= {};
-    for (const [category, learnedAtData] of Object.entries(entry.system.learnedAt ?? {})) {
-      result.system.learnedAt[category] = Object.fromEntries(learnedAtData);
-    }
     return result;
   }
 }

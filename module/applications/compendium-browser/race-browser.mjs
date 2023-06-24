@@ -10,10 +10,4 @@ export class RaceBrowser extends CompendiumBrowser {
     raceFilters.CreatureSubTypeFilter,
     commonFilters.TagFilter,
   ];
-
-  static _mapEntry(entry, pack) {
-    const result = super._mapEntry(entry, pack);
-    result.system.subTypes = [...new Set(entry.system.subTypes.flat())];
-    return result;
-  }
 }

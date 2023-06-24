@@ -14,8 +14,7 @@ export class FeatBrowser extends CompendiumBrowser {
   /** @override */
   static _mapEntry(entry, pack) {
     const result = super._mapEntry(entry, pack);
-    result.system.tags = [...new Set(entry.system.tags?.flat(2) ?? [])];
-    result.system.associations.classes = [...new Set(entry.system.associations?.classes?.flat(2) ?? [])];
+    result.system.associations.classes = [...new Set(result.system.associations?.classes?.flat() ?? [])];
     return result;
   }
 }

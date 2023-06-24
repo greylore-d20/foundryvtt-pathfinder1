@@ -336,14 +336,8 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   // Migrate action data
   const alreadyHasActions = item.system.actions instanceof Array && item.system.actions.length > 0;
   const itemActionData = alreadyHasActions ? item.system.actions : updateData["system.actions"];
-  // The following check is necessary to filter out items with no possible actions
   if (itemActionData instanceof Array) {
-    const actionDataList = [];
-    for (const action of itemActionData) {
-      actionDataList.push(migrateItemActionData(action, item));
-    }
-
-    updateData["system.actions"] = actionDataList.filter(filterItemActions);
+    updateData["system.actions"] = itemActionData.map((action) => migrateItemActionData(action, item));
   }
 
   // Migrate container items

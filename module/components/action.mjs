@@ -451,8 +451,8 @@ export class ItemAction {
       },
       formula: "",
       ability: {
-        attack: null,
-        damage: null,
+        attack: "",
+        damage: "",
         damageMult: 1,
         critRange: 20,
         critMult: 2,
@@ -466,7 +466,7 @@ export class ItemAction {
       attackNotes: [],
       soundEffect: "",
       powerAttack: {
-        multiplier: null,
+        multiplier: "",
         damageBonus: 2,
         critMultiplier: 1,
       },

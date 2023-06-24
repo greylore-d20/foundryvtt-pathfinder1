@@ -1808,11 +1808,13 @@ const _migrateActorUnusedData = (actor, updateData) => {
 
 /**
  * Flatten item tuple arrays
+ * Since 0.83.0
  *
  * @param item
  * @param updateData
  */
 const _migrateItemTuples = (item, updateData) => {
+  // Race subtypes
   if (item.type === "race") {
     if (item.system.subTypes?.length) {
       if (typeof item.system.subTypes[0] !== "string") {
@@ -1820,9 +1822,19 @@ const _migrateItemTuples = (item, updateData) => {
       }
     }
   }
+
+  // Tags
   if (item.system.tags?.length) {
     if (typeof item.system.tags[0] !== "string") {
       updateData["system.tags"] = item.system.tags.flat();
+    }
+  }
+
+  // Feat class associations
+  const classAssociations = item.system.associations?.classes;
+  if (classAssociations?.length) {
+    if (typeof classAssociations[0] !== "string") {
+      updateData["system.associations.classes"] = classAssociations.flat();
     }
   }
 };

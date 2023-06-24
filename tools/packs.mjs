@@ -4,6 +4,8 @@ import path from "node:path";
 import url from "node:url";
 import yargs from "yargs";
 import prettier from "prettier";
+import { oraPromise } from "ora";
+
 import * as utils from "./utils.mjs";
 import { getActionDefaultData, getChangeDefaultData } from "./pack-default-data.mjs";
 import { ViteLoggerPF } from "./vite-logger.mjs";
@@ -60,14 +62,7 @@ if (process.argv[1] === __filename) {
         const options = {
           reset: !argv.keepDeleted ?? true,
         };
-        if (argv.packs?.length) {
-          const results = await Promise.allSettled(argv.packs.map((pack) => extractPack(`${pack}.db`, options)));
-          results
-            .filter((res) => res.status === "rejected")
-            .forEach((res) => logger.error(`Error: ${res.reason.message}`));
-        } else {
-          await extractAllPacks(options);
-        }
+        await extractPacks(argv.packs, options);
       },
     })
     // Option to overwrite the default `reset` option
@@ -125,16 +120,62 @@ function loadManifest() {
  */
 
 /**
- * Extracts all db files from {@link PACK_CACHE} into {@link PACK_SRC}
+ * Extracts db files from {@link PACK_CACHE} into {@link PACK_SRC}
+ * If no packs are specified, all packs are extracted.
  *
+ * @param {string[]} packNames - The names of the packs to extract
  * @param {PackOptions} options - Additional options modifying the extraction process
+ * @returns {Promise<PackResult[]>} An array of pack results
  */
-async function extractAllPacks(options) {
-  const packs = await fs.readdir(resolveDist(), { withFileTypes: true });
+async function extractPacks(packNames = [], options) {
+  const packFiles = await fs.readdir(resolveDist(), { withFileTypes: true });
+  const packs = packNames.length
+    ? packFiles.filter((p) => packNames.includes(path.basename(p.name, ".db")))
+    : packFiles;
   return Promise.all(
-    packs.filter((p) => p.isFile() && path.extname(p.name) === ".db").map((p) => extractPack(p.name, options))
+    packs
+      .filter((packFile) => packFile.isFile() && path.extname(packFile.name) === ".db")
+      .map(async (packFile) => {
+        return oraPromise(
+          async (spinner) => {
+            const packResult = await extractPack(packFile.name, options);
+            const warnings = [];
+
+            if (packResult.removedFiles.length) {
+              warnings.push(`Removed ${packResult.removedFiles.length} files`);
+            }
+            if (packResult.mismatchedIdFiles.length) {
+              warnings.push(
+                `Files with similar names but different ids marked for removal: ${packResult.mismatchedIdFiles
+                  .map((f) => path.basename(f))
+                  .join(", ")}`
+              );
+            }
+            if (warnings.length) {
+              const indent = " ".repeat(logger.constructor.prefix().length / 3); // account for color codes
+              spinner.warn(`Extracted ${packFile.name} with warnings:\n${indent}${warnings.join(`\n${indent}`)}`);
+            }
+
+            return packResult;
+          },
+          {
+            text: `Extracting ${packFile.name}`,
+            successText: `Extracted ${packFile.name}`,
+            failText: `Failed to extract ${packFile.name}`,
+            prefixText: logger.constructor.prefix(),
+          }
+        );
+      })
   );
 }
+
+/**
+ * @typedef {object} PackResult
+ * @property {string} filename - The name of the db file
+ * @property {string[]} writtenFiles - The files written during the extraction
+ * @property {string[]} removedFiles - The files removed during the extraction
+ * @property {string[]} mismatchedIdFiles - The files with possibly mismatched ids
+ */
 
 /**
  * Extracts a single db file, creating a directory with the file's name in {@link PACK_SRC},
@@ -142,6 +183,7 @@ async function extractAllPacks(options) {
  *
  * @param {string} filename - The db file name from {@link PACK_CACHE}
  * @param {PackOptions} options - Additional options modifying the extraction process
+ * @returns {Promise<PackResult>} The result of the extraction
  */
 async function extractPack(filename, options) {
   // This db files directory in PACK_SRC
@@ -149,8 +191,6 @@ async function extractPack(filename, options) {
   const directory = resolveSource(path.basename(filename, ".db"));
   if (!fs.existsSync(resolveDist(filename))) throw new Error(`${filename} does not exist`);
   const db = new Datastore({ filename: resolveDist(filename), autoload: true });
-
-  logger.info(`Extracting pack ${filename}`);
 
   // Index of already existing files, to be checked for files not touched with this extraction
   const currentFiles = [];
@@ -196,22 +236,14 @@ async function extractPack(filename, options) {
   const writtenFiles = await Promise.all(docPromises);
 
   const removedFiles = [];
+  const mismatchedIdFiles = [];
   if (options.reset) {
     const toRemove = currentFiles.filter((f) => !writtenFiles.includes(f));
     if (toRemove.length > 0) {
-      logger.info(`Removing ${toRemove.length} files from ${dbFileNameBase}`);
-
       // If a file with the same name but different id was written and the old one marked for removal,
       // emit a warning since this might be an accidental ID change
       sameNameFiles = [...new Set(sameNameFiles)];
-      const mismatchedIdFiles = toRemove.filter((f) => sameNameFiles.includes(f));
-      if (mismatchedIdFiles.length > 0) {
-        logger.warn(
-          `${dbFileNameBase}: files with similar names but different ids marked for removal: ${mismatchedIdFiles
-            .map((f) => path.basename(f))
-            .join(", ")}`
-        );
-      }
+      mismatchedIdFiles.push(...toRemove.filter((f) => sameNameFiles.includes(f)));
 
       // Remove file and track successful removals for logging
       await Promise.all(
@@ -223,7 +255,7 @@ async function extractPack(filename, options) {
     }
   }
 
-  return { filename, writtenFiles, removedFiles };
+  return { filename, writtenFiles, removedFiles, mismatchedIdFiles };
 }
 
 /**

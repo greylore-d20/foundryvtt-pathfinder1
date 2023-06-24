@@ -79,6 +79,10 @@ export class ItemContainerPF extends ItemPF {
     }
 
     await this.update({ "system.inventoryItems": inventory });
+
+    // Mimic createEmbeddedDocuments()
+    const newItemIds = new Set(items.map((i) => i._id));
+    return this.items.filter((i) => newItemIds.has(i.id));
   }
 
   getContainerContent(itemId) {

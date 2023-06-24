@@ -150,7 +150,7 @@ export class CurrencyTransfer extends FormApplication {
     return void ui.notifications.error(game.i18n.localize("PF1.CurrencyFailed") + game.i18n.localize(i18nKey));
   }
 
-  static _directoryDrop(docDestId, event) {
+  static async _directoryDrop(docDestId, event) {
     event.preventDefault();
 
     // try to extract the data
@@ -165,7 +165,9 @@ export class CurrencyTransfer extends FormApplication {
     const destDoc = event.currentTarget.classList.contains("item")
       ? game.items.get(docDestId)
       : game.actors.get(docDestId);
-    const sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId;
+
+    let sourceActor = await fromUuid(data.actorUuid || "");
+    if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
 
     if (data.currency && sourceActor) {
       return new CurrencyTransfer(

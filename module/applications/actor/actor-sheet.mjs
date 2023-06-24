@@ -2893,8 +2893,11 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   async _onDropCurrency(event, data) {
-    const sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId,
-      dataType = "currency";
+    let sourceActor = await fromUuid(data.actorUuid || "");
+    if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
+
+    const dataType = "currency";
+
     return new CurrencyTransfer(
       { actor: sourceActor, container: data.containerId, alt: data.alt },
       { actor: this.actor, amount: Object.fromEntries([[data.currency, parseInt(data.amount)]]) }
@@ -2910,20 +2913,24 @@ export class ActorSheetPF extends ActorSheet {
     const item = await ItemPF.implementation.fromDropData(data);
     const itemData = item.toObject();
 
+    let sourceActor = await fromUuid(data.actorUuid || "");
+    if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
+
     // Handle item sorting within the same actor
-    const sameActor = item.parent?.uuid === this.actor.uuid && !data.containerId;
+    const sameActor = item.actor === this.actor && !data.containerId;
     if (sameActor) return this._onSortItem(event, itemData);
-
-    // Remove from container
-    if (data.containerId) {
-      const container = this.actor.allItems.find((o) => o.id === data.containerId);
-
-      if (container) container.deleteContainerContent(itemData._id);
-    }
 
     // Create the owned item
     this._alterDropItemData(itemData);
-    return this._onDropItemCreate(itemData);
+    const rv = await this._onDropItemCreate(itemData);
+
+    // Remove from container if item was successfully created
+    if (data.containerId && rv?.length && sourceActor === this.actor) {
+      const container = this.actor.allItems.find((o) => o.id === data.containerId);
+      if (container) container.deleteContainerContent(data.itemId);
+    }
+
+    return rv;
   }
 
   _alterDropItemData(data) {
@@ -3009,9 +3016,7 @@ export class ActorSheetPF extends ActorSheet {
     if (elem.classList.contains("denomination")) {
       if (this.actor.permission < 3) return;
       const dragData = {
-        actorId: this.actor.id,
-        sceneId: this.actor.isToken ? canvas.scene?.id : null,
-        tokenId: this.actor.isToken ? this.actor.token.id : null,
+        actorUuid: this.actor.uuid,
         type: "Currency",
         alt: elem.classList.contains("alt-currency"),
         currency: [...elem.classList].find((o) => /[pgsc]p/.test(o)),

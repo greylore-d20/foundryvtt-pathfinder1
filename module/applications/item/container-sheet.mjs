@@ -466,15 +466,13 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         data: item.toObject(),
         containerId: this.item.id,
       };
+      dragData.itemId = item.id;
+      // Core bug: sidebar drop breaks in v10 without this, works fine in v11 without
+      delete dragData.data._id;
     }
 
     // Add actor to drag data
-    const actor = this.item.actor;
-    if (actor) {
-      dragData.actorId = actor.id;
-      dragData.sceneId = actor.isToken ? canvas.scene?.id : null;
-      dragData.tokenId = actor.isToken ? actor.token.id : null;
-    }
+    dragData.actorUuid = this.item.actor?.uuid;
 
     // Set data transfer
     event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
@@ -509,7 +507,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   async _onDropCurrency(event, data) {
-    const sourceActor = data.tokenId ? game.actors.tokens[data.tokenId] : data.actorId;
+    let sourceActor = await fromUuid(data.actorUuid || "");
+    if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
+
     return new CurrencyTransfer(
       { actor: sourceActor, container: data.containerId, alt: data.alt },
       {
@@ -523,12 +523,21 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   async _onDropItem(event, data) {
     if (!this.item.isOwner) return false;
 
-    const item = await ItemPF.fromDropData(data);
-    const actor = item.actor;
+    const { actorUuid, containerId } = data;
+    let sourceActor = await fromUuid(actorUuid || "");
+    if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
+
+    const item = await Item.implementation.fromDropData(data);
+    sourceActor ??= item.actor;
+
     const itemData = item.toObject();
 
+    const sameActor = sourceActor && sourceActor === this.item.actor;
+
     // Sort item
-    if (data.containerId === this.item.id) return this._onSortItem(event, itemData);
+    if (sameActor && containerId === this.item.id) {
+      return this._onSortItem(event, itemData);
+    }
 
     // Create consumable from spell
     if (itemData.type === "spell") {
@@ -540,15 +549,15 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     // Create or transfer item
     if (item.isPhysical) {
       await this.item.createContainerContent(itemData);
+      // TODO: Verify item was created so we don't delete source item without reason
 
-      if (actor && actor === this.item.actor) {
-        if (actor.items.get(item.id)) {
-          await actor.deleteEmbeddedDocuments("Item", [item.id]);
+      if (sameActor) {
+        if (containerId) {
+          sourceActor.containerItems
+            .find((i) => i.id === data.itemId && i.parentItem?.id === containerId)
+            ?.parentItem.deleteContainerContent(data.itemId);
         } else {
-          const containerItem = actor.containerItems.find((i) => i.id === item.id);
-          if (containerItem) {
-            await containerItem.parentItem.deleteContainerContent(item.id);
-          }
+          sourceActor.items.get(item.id)?.delete();
         }
       }
     }

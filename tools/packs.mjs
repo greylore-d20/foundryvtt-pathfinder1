@@ -304,6 +304,11 @@ function enforceTemplate(object, template, options = {}) {
       delete flattened[path];
     }
 
+    // Delete null values if template has empty string
+    const currentValue = utils.getProperty(object, path);
+    const templateValue = utils.getProperty(template, path);
+    if (templateValue === "" && currentValue === null) delete flattened[path];
+
     const templateHasArray = Array.isArray(utils.getProperty(template, path));
     const isEmptyArray = flattened[path] instanceof Array && flattened[path].length === 0;
     if (templateHasArray && isEmptyArray) {
@@ -322,6 +327,10 @@ function enforceTemplate(object, template, options = {}) {
     // Delete erroneous keys containing paths to delete
     if (path.includes(".-=")) {
       delete flattened[path];
+    }
+
+    if (options.componentType === "Action") {
+      // if (path === "uses.per") delete flattened[path];
     }
   }
 

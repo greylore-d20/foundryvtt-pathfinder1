@@ -10,11 +10,4 @@ export class FeatBrowser extends CompendiumBrowser {
     featFilter.FeatClassFilter,
     commonFilters.TagFilter,
   ];
-
-  /** @override */
-  static _mapEntry(entry, pack) {
-    const result = super._mapEntry(entry, pack);
-    result.system.associations.classes = [...new Set(result.system.associations?.classes?.flat() ?? [])];
-    return result;
-  }
 }

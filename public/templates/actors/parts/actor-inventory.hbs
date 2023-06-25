@@ -76,7 +76,7 @@
       </li>
 
       {{#each section.items as |item iid|}}
-      <li class="item flexrow{{#if item.empty}} disabled{{/if}}" data-item-id="{{item.id}}">
+      <li class="item flexrow{{#if item.disabled}} disabled{{/if}}" data-item-id="{{item.id}}">
         <div class="item-name">
           <div class="item-image rollable" style='background-image: url("{{item.img}}")' data-tooltip="PF1.DisplayInChat"></div>
           <h4 class="rollable">

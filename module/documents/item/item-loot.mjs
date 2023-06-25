@@ -60,7 +60,10 @@ export class ItemLootPF extends ItemPF {
   }
 
   get isActive() {
-    if (this.subType === "gear") return this.system.equipped;
+    if (this.subType === "gear") {
+      if (this.system.hp.value <= 0) return false;
+      return this.system.equipped ?? false;
+    }
     return true;
   }
 

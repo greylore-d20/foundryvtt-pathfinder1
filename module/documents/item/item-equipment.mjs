@@ -187,7 +187,8 @@ export class ItemEquipmentPF extends ItemPF {
   }
 
   get isActive() {
-    return this.system.equipped;
+    if (this.system.hp.value <= 0) return false;
+    return this.system.equipped ?? false;
   }
 
   /**

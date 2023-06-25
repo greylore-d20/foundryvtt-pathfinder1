@@ -295,6 +295,9 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       const itemQuantity = item.system.quantity ?? 1;
       const itemCharges = item.system.uses?.value ?? 1;
       item.empty = itemQuantity <= 0 || (item.isCharged && itemCharges <= 0);
+      item.destroyed = item.system.hp?.value <= 0;
+      item.disabled = item.empty || item.destroyed;
+
       arr.push(item);
       return arr;
     }, []);

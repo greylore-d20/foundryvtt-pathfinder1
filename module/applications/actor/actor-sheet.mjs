@@ -274,6 +274,8 @@ export class ActorSheetPF extends ActorSheet {
       const itemQuantity = i.quantity != null ? i.quantity : 1;
       const itemCharges = i.uses?.value != null ? i.uses.value : 1;
       i.empty = itemQuantity <= 0 || (i.isCharged && !i.isSingleUse && itemCharges <= 0);
+      i.destroyed = i.hp?.value <= 0;
+      i.disabled = i.empty || i.destroyed;
 
       return i;
     });

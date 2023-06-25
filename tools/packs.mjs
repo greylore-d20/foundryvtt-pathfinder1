@@ -138,7 +138,9 @@ async function extractPacks(packNames = [], options) {
       .map(async (packFile) => {
         return oraPromise(
           async (spinner) => {
+            spinner.prefixText = logger.constructor.prefix(); // Prefix with start time while extracting
             const packResult = await extractPack(packFile.name, options);
+            spinner.prefixText = logger.constructor.prefix(); // Prefix with end time while logging result
             const warnings = [];
 
             if (packResult.removedFiles.length) {
@@ -162,7 +164,6 @@ async function extractPacks(packNames = [], options) {
             text: `Extracting ${packFile.name}`,
             successText: `Extracted ${packFile.name}`,
             failText: `Failed to extract ${packFile.name}`,
-            prefixText: logger.constructor.prefix(),
           }
         );
       })
@@ -194,7 +195,6 @@ async function extractPack(filename, options) {
 
   // Index of already existing files, to be checked for files not touched with this extraction
   const currentFiles = [];
-  let sameNameFiles = [];
 
   if (!fs.existsSync(directory)) {
     await fs.mkdir(directory);
@@ -214,16 +214,6 @@ async function extractPack(filename, options) {
   const docPromises = docs.map(async (doc) => {
     doc = sanitizePackEntry(doc, packData?.type);
     const slugName = utils.sluggify(doc.name);
-
-    // Check for files with the same name but different ids, track them for possible warnings later
-    currentFiles.forEach((f) => {
-      const baseName = path.basename(f, ".json");
-      if (baseName.includes(".")) {
-        const [id, ...name] = baseName.split(".").reverse();
-        if (name.reverse().join(".") === slugName && id !== doc._id) sameNameFiles.push(f);
-      }
-    });
-
     const entryFilepath = resolveSource(directory, `${slugName}.${doc._id}.json`);
 
     const formattedContent = prettier.format(JSON.stringify(doc, null, 2), {
@@ -240,10 +230,13 @@ async function extractPack(filename, options) {
   if (options.reset) {
     const toRemove = currentFiles.filter((f) => !writtenFiles.includes(f));
     if (toRemove.length > 0) {
-      // If a file with the same name but different id was written and the old one marked for removal,
-      // emit a warning since this might be an accidental ID change
-      sameNameFiles = [...new Set(sameNameFiles)];
-      mismatchedIdFiles.push(...toRemove.filter((f) => sameNameFiles.includes(f)));
+      // If there are files to be removed, check if their slug names match any written files
+      // If they do, these might be docs whose ids have accidentally changed
+      const writtenSlugs = writtenFiles.map((f) => path.basename(f, ".json").split(".").slice(0, -1).join("."));
+      const toRemoveSlugs = toRemove.map((f) => [path.basename(f, ".json").split(".").slice(0, -1).join("."), f]);
+      toRemoveSlugs.forEach(([removeSlug, removeFile]) => {
+        if (writtenSlugs.includes(removeSlug)) mismatchedIdFiles.push(removeFile);
+      });
 
       // Remove file and track successful removals for logging
       await Promise.all(

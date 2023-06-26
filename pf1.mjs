@@ -116,6 +116,7 @@ Hooks.once("init", function () {
 
   CONFIG.Token.documentClass = documents.TokenDocumentPF;
   CONFIG.ActiveEffect.documentClass = documents.ActiveEffectPF;
+  CONFIG.ActiveEffect.legacyTransferral = false; // TODO: Remove once legacy transferral is no longer default.
   CONFIG.Combat.documentClass = documents.CombatPF;
   CONFIG.ChatMessage.documentClass = documents.ChatMessagePF;
 

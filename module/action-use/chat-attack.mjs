@@ -62,7 +62,7 @@ export class ChatAttack {
 
   get critRange() {
     if (this.action.item.system.broken) return 20;
-    return this.action.data.ability?.critRange || 20;
+    return this.rollData.action.ability?.critRange || 20;
   }
 
   /**
@@ -291,7 +291,7 @@ export class ChatAttack {
     }
 
     // Handle nonlethal attacks
-    if (this.action.data.nonlethal || this.action.item.system.properties?.nnl) {
+    if (this.rollData.action.nonlethal || this.action.item.system.properties?.nnl) {
       this.nonlethal = true;
       flavor = game.i18n.localize("PF1.Nonlethal");
     }

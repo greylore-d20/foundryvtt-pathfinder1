@@ -74,17 +74,6 @@ export class ItemSheetPF extends ItemSheet {
     return super.title;
   }
 
-  get actor() {
-    let actor = this.item.actor;
-    let p = this.parentItem;
-    while (!actor && p) {
-      actor = p.actor;
-      p = p.parentItem;
-    }
-
-    return actor;
-  }
-
   /* -------------------------------------------- */
 
   /**
@@ -153,7 +142,7 @@ export class ItemSheetPF extends ItemSheet {
         },
       };
 
-      if (!item.parent) context.hasSpellbook = true; // Not true, but avoids unwanted behaviour.
+      if (!item.actor) context.hasSpellbook = true; // Not true, but avoids unwanted behaviour.
       else {
         context.hasSpellbook = Object.values(rollData.spells ?? {}).find(
           (book) => !!book.class && book.class === itemData.tag && book.inUse
@@ -1233,7 +1222,7 @@ export class ItemSheetPF extends ItemSheet {
       dataType = "compendium";
     }
     // Case 2 - Import from same actor
-    else if (targetItem.parent === this.document.actor) {
+    else if (targetItem.actor === this.document.actor) {
       dataType = "data";
       itemLink = targetItem.id;
     }

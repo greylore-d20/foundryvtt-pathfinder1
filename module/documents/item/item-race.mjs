@@ -2,7 +2,7 @@ import { ItemPF } from "./item-pf.mjs";
 
 export class ItemRacePF extends ItemPF {
   async _preCreate(data, options, user) {
-    const actor = this.parent instanceof Actor ? this.parent : null;
+    const actor = this.actor;
 
     // Overwrite race
     if (actor) {
@@ -21,7 +21,7 @@ export class ItemRacePF extends ItemPF {
   async _preUpdate(update, context, user) {
     await super._preUpdate(update, context, user);
 
-    const actor = this.parent;
+    const actor = this.actor;
     if (actor?.type === "basic") return;
 
     // Track size change
@@ -37,7 +37,7 @@ export class ItemRacePF extends ItemPF {
   _onUpdate(data, context, userId) {
     super._onUpdate(data, context, userId);
 
-    const actor = this.parent;
+    const actor = this.actor;
     // Change actor size if the old size is same as old race size.
     if (actor && context._pf1SizeChanged && game.user.id === userId) {
       actor.update({ "system.traits.size": this.system.size });
@@ -47,7 +47,7 @@ export class ItemRacePF extends ItemPF {
   _onDelete(data, context, userId) {
     super._onDelete(data, context, userId);
 
-    if (this.parent?.race === this) this.parent.race = null;
+    if (this.actor?.race === this) this.actor.race = null;
   }
 
   /**

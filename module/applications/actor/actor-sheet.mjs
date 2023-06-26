@@ -487,7 +487,7 @@ export class ActorSheetPF extends ActorSheet {
 
         skillRanks.allowed += o.value;
         sourceData.push({
-          name: o.parent ? o.parent.name : game.i18n.localize("PF1.Change"),
+          name: o.parent?.name ?? game.i18n.localize("PF1.Change"),
           value: o.value,
         });
       });

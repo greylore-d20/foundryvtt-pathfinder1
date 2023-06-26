@@ -55,7 +55,7 @@ export const registerHandlebarsHelpers = function () {
     if (!action.hasDamage) return null;
 
     const actor = action.actor,
-      item = action.parent,
+      item = action.item,
       actorData = actor?.system,
       actionData = action.data,
       combine = options.hash.combine ?? true;

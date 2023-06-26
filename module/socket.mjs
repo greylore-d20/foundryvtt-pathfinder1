@@ -30,7 +30,7 @@ const runSocketFunction = async function (args, senderId) {
       case "giveItem": {
         if (!isFirstGM) return;
         const item = await fromUuid(args.item);
-        const sourceActor = item.parent;
+        const sourceActor = item.actor;
         if (!sourceActor.testUserPermission(sender, "OWNER")) return;
         const targetActor = await fromUuid(args.targetActor);
         const itemData = item.toObject();

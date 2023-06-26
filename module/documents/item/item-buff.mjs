@@ -95,9 +95,10 @@ export class ItemBuffPF extends ItemPF {
 
   // Creates a simple ActiveEffect from a buff item. Returns the effect
   async toEffect({ noCreate = false } = {}) {
-    if (!this.parent) return;
+    const actor = this.actor;
+    if (!actor) return;
 
-    const existing = this.parent.effects.find((e) => e.origin == this.uuid);
+    const existing = actor.effects.find((e) => e.origin == this.uuid);
     if (existing || noCreate) return existing;
 
     // Add a new effect
@@ -113,7 +114,7 @@ export class ItemBuffPF extends ItemPF {
         },
       },
     };
-    const effect = ActiveEffect.create(createData, { parent: this.parent });
+    const effect = ActiveEffect.create(createData, { parent: actor });
 
     return effect;
   }

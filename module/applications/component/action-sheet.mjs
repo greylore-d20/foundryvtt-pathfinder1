@@ -147,9 +147,10 @@ export class ItemActionSheet extends FormApplication {
    * Copy from core DocumentSheet#isEditable
    */
   get isEditable() {
-    let editable = this.options.editable && this.object.parent.isOwner;
-    if (this.object.parent.pack) {
-      const pack = game.packs.get(this.object.parent.pack);
+    const parentItem = this.object.item;
+    let editable = this.options.editable && parentItem.isOwner;
+    if (parentItem.pack) {
+      const pack = game.packs.get(parentItem.pack);
       if (pack.locked) editable = false;
     }
     return editable;

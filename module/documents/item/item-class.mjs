@@ -16,7 +16,7 @@ export class ItemClassPF extends ItemPF {
   _onCreate(data, options, userId) {
     super._onCreate(data, options, userId);
     if (userId !== game.user.id) return;
-    const actor = this.parent;
+    const actor = this.actor;
     if (!actor) return;
 
     // Create spellbook if the class has spellcasting defined
@@ -28,7 +28,7 @@ export class ItemClassPF extends ItemPF {
   _onDelete(options, userId) {
     super._onDelete(options, userId);
     if (userId !== game.user.id) return;
-    const actor = this.parent;
+    const actor = this.actor;
     if (!actor) return;
 
     // Disable book associated with this class, if it has spellcasting defined
@@ -51,7 +51,7 @@ export class ItemClassPF extends ItemPF {
 
     // Update class
     const newLevel = updateData.system?.level;
-    if (newLevel !== undefined && this.parent) {
+    if (newLevel !== undefined && this.actor) {
       const prevLevel = this._prevLevel;
       if (prevLevel !== undefined) {
         delete this._prevLevel;
@@ -72,8 +72,8 @@ export class ItemClassPF extends ItemPF {
    * @param {number} newLevel New level, after the level change.
    */
   async _onLevelChange(curLevel, newLevel) {
-    if (!this.parent) return;
     const actor = this.actor;
+    if (!actor) return;
 
     // Add items associated to this class
     if (newLevel > curLevel) {
@@ -132,7 +132,7 @@ export class ItemClassPF extends ItemPF {
       const associations = duplicate(this.getFlag("pf1", "links.classAssociations") || {});
       const itemIds = [];
       for (const [id, level] of Object.entries(associations)) {
-        const item = this.parent.items.get(id);
+        const item = actor.items.get(id);
         if (!item) {
           delete associations[id];
           continue;
@@ -144,7 +144,7 @@ export class ItemClassPF extends ItemPF {
         }
       }
       await this.setFlag("pf1", "links.classAssociations", associations);
-      await Item.implementation.deleteDocuments(itemIds, { parent: this.parent });
+      await Item.implementation.deleteDocuments(itemIds, { parent: actor });
     }
 
     // Call level change hook

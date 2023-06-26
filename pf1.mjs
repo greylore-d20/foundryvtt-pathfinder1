@@ -561,7 +561,7 @@ Hooks.on("preCreateToken", (token, initialData, options, userId) => {
 });
 
 Hooks.on("createItem", (item, options, userId) => {
-  const actor = item.parent instanceof documents.actor.ActorPF ? item.parent : null;
+  const actor = item.actor;
   if (userId !== game.user.id) return;
 
   // Show buff if active
@@ -640,7 +640,7 @@ Hooks.on("preDeleteItem", (item, options, userId) => {
 
 Hooks.on("deleteItem", async (item, options, userId) => {
   if (userId !== game.user.id) return;
-  const actor = item.parent instanceof documents.actor.ActorPF ? item.parent : null;
+  const actor = item.actor;
 
   if (actor) {
     // Remove links
@@ -667,7 +667,7 @@ Hooks.on("deleteItem", async (item, options, userId) => {
 
 Hooks.on("updateItem", async (item, changedData, options, userId) => {
   if (userId !== game.user.id) return;
-  const actor = item.parent instanceof documents.actor.ActorPF ? item.parent : null;
+  const actor = item.actor;
 
   if (actor) {
     // Toggle buff

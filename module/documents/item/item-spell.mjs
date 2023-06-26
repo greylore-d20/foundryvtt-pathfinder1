@@ -93,12 +93,12 @@ export class ItemSpellPF extends ItemPF {
   getRollData() {
     const result = super.getRollData();
 
-    if (this.parent != null) {
+    if (this.actor) {
       const spellbook = this.spellbook;
       if (spellbook != null) {
         const spellAbility = spellbook.ability;
         let ablMod = "";
-        if (spellAbility !== "") ablMod = this.parent?.system.abilities?.[spellAbility]?.mod;
+        if (spellAbility !== "") ablMod = this.actor.system.abilities?.[spellAbility]?.mod;
 
         result.cl = this.casterLevel || 0;
         result.sl = this.spellLevel || 0;
@@ -170,7 +170,7 @@ export class ItemSpellPF extends ItemPF {
    * @returns {Promise<this | void>} Updated document or undefined if no update is possible or required.
    */
   async addCharges(value, data = null) {
-    if (!this.parent) return;
+    if (!this.actor) return;
     if (this.system.atWill) return;
 
     const spellbook = this.spellbook;
@@ -183,7 +183,7 @@ export class ItemSpellPF extends ItemPF {
       const curUses = this.getSpellUses();
       const updateData = {};
       updateData[`system.attributes.spells.spellbooks.${spellbookKey}.spellPoints.value`] = curUses + value;
-      await this.parent.update(updateData);
+      await this.actor.update(updateData);
       return this;
     } else {
       const newCharges = isSpontaneous
@@ -203,7 +203,7 @@ export class ItemSpellPF extends ItemPF {
         const key = `system.attributes.spells.spellbooks.${spellbookKey}.spells.spell${spellLevel}.value`;
         const actorUpdateData = {};
         actorUpdateData[key] = newCharges;
-        await this.parent.update(actorUpdateData);
+        await this.actor.update(actorUpdateData);
         return this;
       }
     }
@@ -304,12 +304,12 @@ export class ItemSpellPF extends ItemPF {
 
   get spellbook() {
     const bookId = this.system.spellbook;
-    return this.parent?.system?.attributes?.spells.spellbooks[bookId];
+    return this.actor?.system?.attributes?.spells.spellbooks[bookId];
   }
 
   getDC(rollData = null) {
     // No actor? No DC!
-    if (!this.parent) return 0;
+    if (!this.actor) return 0;
 
     const spellbook = this.spellbook;
     if (spellbook) {
@@ -328,7 +328,7 @@ export class ItemSpellPF extends ItemPF {
   }
 
   getSpellUses(max = false) {
-    if (!this.parent) return 0;
+    if (!this.actor) return 0;
     const itemData = this.system;
     if (itemData.atWill) return Number.POSITIVE_INFINITY;
 

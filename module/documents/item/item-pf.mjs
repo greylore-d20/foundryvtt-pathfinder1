@@ -970,7 +970,7 @@ export class ItemPF extends Item {
     const identified = Boolean(rollData.item?.identified ?? true);
 
     const templateData = {
-      actor: this.parent,
+      actor: this.actor,
       token,
       tokenId: token?.uuid,
       item: this.toObject(),
@@ -1422,8 +1422,8 @@ export class ItemPF extends Item {
    * @returns {object} An object with data to be used in rolls in relation to this item.
    */
   getRollData() {
-    const parentActor = this.actor;
-    const result = parentActor ? parentActor.getRollData() : {};
+    const actor = this.actor;
+    const result = actor?.getRollData() ?? {};
 
     result.item = deepClone(this.system);
 
@@ -1622,7 +1622,7 @@ export class ItemPF extends Item {
    * @returns {boolean} Whether a link to the item is possible here.
    */
   canCreateItemLink(linkType, dataType, targetItem, itemLink) {
-    const actor = this.parent;
+    const actor = this.actor;
     const sameActor = actor && targetItem.actor && targetItem.actor.id === actor.id;
 
     // Don't create link to self
@@ -1715,7 +1715,7 @@ export class ItemPF extends Item {
       // Default to spell-like tab until a selector is designed in the Links tab or elsewhere
       if (itemData.type === "spell") itemData.system.spellbook = "spelllike";
 
-      const newItem = await this.parent.createEmbeddedDocuments("Item", [itemData]);
+      const newItem = await this.actor.createEmbeddedDocuments("Item", [itemData]);
 
       await this.createItemLink("children", "data", newItem, newItem._id);
     }
@@ -1801,7 +1801,7 @@ export class ItemPF extends Item {
     }
     // Same actor's item
     else {
-      item = this.parent?.items?.get(linkData.id);
+      item = this.actor?.items?.get(linkData.id);
     }
 
     // Package extra data
@@ -1838,12 +1838,12 @@ export class ItemPF extends Item {
     const result = {};
     // Add specific skills
     if (target === "skill") {
-      if (this.parent == null) {
+      if (!this.actor) {
         for (const [s, skl] of Object.entries(pf1.config.skills)) {
           result[`skill.${s}`] = skl;
         }
       } else {
-        const actorSkills = mergeObject(duplicate(pf1.config.skills), this.parent.data.skills);
+        const actorSkills = mergeObject(duplicate(pf1.config.skills), this.actor.system.skills);
         for (const [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;

@@ -719,11 +719,12 @@ export class ActionUse {
     const template = pf1.canvas.AbilityTemplate.fromData(templateOptions);
     let result;
     if (template) {
-      const sheetRendered = this.item.parent?.sheet?._element != null;
-      if (sheetRendered) this.item.parent.sheet.minimize();
+      const actorSheet = this.item.actor?.sheet;
+      const sheetRendered = actorSheet?._element != null;
+      if (sheetRendered) actorSheet.minimize();
       result = await template.drawPreview(this.shared.event);
       if (!result.result) {
-        if (sheetRendered) this.item.parent.sheet.maximize();
+        if (sheetRendered) actorSheet.maximize();
         return result;
       }
     }
@@ -854,8 +855,8 @@ export class ActionUse {
     }
 
     // Add CL notes
-    if (this.item.type === "spell" && this.item.parent) {
-      const clNotes = this.item.parent.getContextNotesParsed(`spell.cl.${this.item.system.spellbook}`);
+    if (this.item.type === "spell" && actor) {
+      const clNotes = actor.getContextNotesParsed(`spell.cl.${this.item.system.spellbook}`);
 
       if (clNotes.length) {
         props.push({
@@ -917,9 +918,9 @@ export class ActionUse {
     }
 
     // Add spell info
-    if (this.item.type === "spell" && this.item.parent != null) {
+    if (this.item.type === "spell" && actor) {
       // Spell failure
-      if (this.item.parent.spellFailure > 0 && this.item.system.components.somatic) {
+      if (actor.spellFailure > 0 && this.item.system.components.somatic) {
         const spellbook = getProperty(actor.system, `attributes.spells.spellbooks.${this.item.system.spellbook}`);
         if (spellbook && spellbook.arcaneSpellFailure) {
           const roll = RollPF.safeRoll("1d100");

@@ -1,0 +1,57 @@
+{
+  "name": "Enlarge Person",
+  "type": "buff",
+  "img": "systems/pf1/icons/skills/yellow_14.jpg",
+  "system": {
+    "description": {
+      "value": "<p>See @UUID[Compendium.pf1.spells.jnlr9cuepka1l26e]{Enlarge Person} spell for details.</p><p>Included carry capacity adjustments partially account for your gear not changing in size.</p>"
+    },
+    "changes": [
+      {
+        "_id": "xRCU1fzc",
+        "formula": "2",
+        "subTarget": "str",
+        "modifier": "size",
+        "priority": null
+      },
+      {
+        "_id": "0mV4oumV",
+        "formula": "-2",
+        "subTarget": "dex",
+        "modifier": "size",
+        "priority": null
+      },
+      {
+        "_id": "Arn47LiL",
+        "formula": "-2",
+        "subTarget": "carryStr",
+        "modifier": "untyped",
+        "priority": null
+      },
+      {
+        "_id": "LgrZLyFq",
+        "formula": "-.5",
+        "subTarget": "carryMult",
+        "modifier": "untyped",
+        "priority": null
+      }
+    ],
+    "scriptCalls": [
+      {
+        "_id": "jqq7XX7qM19jsC6N",
+        "name": "Toggle Actor Size (Enlarge)",
+        "img": "icons/svg/dice-target.svg",
+        "type": "script",
+        "value": "if (!actor) return;\n\nconst defaultSize = 'med'; // Fallback if no size info is found\nconst naturalSize = actor.race?.system.size || defaultSize;\nconst currentSize = actor.system.traits?.size || defaultSize;\n\nlet newSize = naturalSize;\nif (state) {\n\tconst steps = Object.keys(CONFIG.PF1.sizeChart);\n\tconst current = steps.indexOf(currentSize);\n\tconst adjusted = Math.clamped(current + 1, 0, steps.length - 1);\n\tnewSize = steps[adjusted];\n}\n\nactor.update({ 'system.traits.size': newSize });\n",
+        "category": "toggle",
+        "hidden": false
+      }
+    ],
+    "level": 1,
+    "duration": {
+      "value": "@item.level",
+      "units": "minute"
+    }
+  },
+  "_id": "1ovEWVzSp5yZXeVm"
+}

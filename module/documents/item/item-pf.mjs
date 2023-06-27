@@ -1489,9 +1489,6 @@ export class ItemPF extends Item {
   }
 
   static async _onChatCardAction(action, { button = null, item = null } = {}) {
-    // Get card targets
-    // const targets = isTargetted ? this._getChatCardTargets(card) : [];
-
     // Apply damage
     if (action === "applyDamage") {
       let asNonlethal = [...(button.closest(".chat-message")?.querySelectorAll(".tag") ?? [])]
@@ -1597,22 +1594,6 @@ export class ItemPF extends Item {
   }
 
   /* -------------------------------------------- */
-
-  /**
-   * Get the Actor which is the author of a chat card
-   *
-   * @param {HTMLElement} card    The chat card being used
-   * @returns {Array.<Actor>}      The Actor Document or null
-   * @private
-   */
-  static _getChatCardTargets(card) {
-    const character = game.user.character;
-    const controlled = canvas.tokens.controlled;
-    const targets = controlled.reduce((arr, t) => (t.actor ? arr.concat([t.actor]) : arr), []);
-    if (character && controlled.length === 0) targets.push(character);
-    if (!targets.length) throw new Error(`You must designate a specific Token as the roll target`);
-    return targets;
-  }
 
   /**
    * @param {string} linkType - The type of link.

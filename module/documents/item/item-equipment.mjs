@@ -78,8 +78,8 @@ export class ItemEquipmentPF extends ItemPF {
     return labels;
   }
 
-  prepareData() {
-    super.prepareData();
+  prepareDerivedData() {
+    super.prepareDerivedData();
     const itemData = this.system;
 
     // AC labels

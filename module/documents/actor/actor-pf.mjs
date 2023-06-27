@@ -393,17 +393,6 @@ export class ActorPF extends Actor {
     super.applyActiveEffects();
   }
 
-  prepareData() {
-    this.sourceInfo = {};
-    this.changeFlags = {};
-
-    // Prepare data
-    super.prepareData();
-
-    this._initialized = true;
-    this._setSourceDetails(this.sourceInfo);
-  }
-
   /**
    * Deletes expired temporary active effects and disables linked expired buffs.
    *
@@ -489,6 +478,9 @@ export class ActorPF extends Actor {
    */
   prepareBaseData() {
     super.prepareBaseData();
+
+    this.sourceInfo = {};
+    this.changeFlags = {};
 
     // Reset item types cache
     this._itemTypes = null;
@@ -1151,6 +1143,9 @@ export class ActorPF extends Actor {
       item.prepareDerivedItemData();
       this.updateItemResources(item);
     });
+
+    this._initialized = true;
+    this._setSourceDetails(this.sourceInfo);
   }
 
   /**

@@ -461,41 +461,6 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
 
   /**
-   * Augment the basic Item data model with additional dynamic data.
-   */
-  prepareData() {
-    super.prepareData();
-    const itemData = this.system;
-
-    this.prepareLinks();
-
-    // Update changes
-    if (itemData.changes instanceof Array) {
-      this.changes = this._prepareChanges(itemData.changes);
-    }
-
-    // Update actions
-    if (itemData.actions instanceof Array) {
-      this.actions = this._prepareActions(itemData.actions);
-    }
-
-    // Update script calls
-    if (itemData.scriptCalls instanceof Array) {
-      this.scriptCalls = this._prepareScriptCalls(itemData.scriptCalls);
-    }
-
-    // Update contained items
-    if (itemData.inventoryItems instanceof Array) {
-      this.items = this._prepareInventory(itemData.inventoryItems);
-    }
-    this.prepareWeight();
-
-    if (!this.actor) {
-      this.prepareDerivedItemData();
-    }
-  }
-
-  /**
    * Prepare this item's {@link ItemWeightData}
    */
   prepareWeight() {
@@ -538,6 +503,31 @@ export class ItemPF extends Item {
 
   prepareDerivedData() {
     super.prepareDerivedData();
+
+    this.prepareLinks();
+
+    const itemData = this.system;
+
+    // Update changes
+    if (itemData.changes instanceof Array) {
+      this.changes = this._prepareChanges(itemData.changes);
+    }
+
+    // Update actions
+    if (itemData.actions instanceof Array) {
+      this.actions = this._prepareActions(itemData.actions);
+    }
+
+    // Update script calls
+    if (itemData.scriptCalls instanceof Array) {
+      this.scriptCalls = this._prepareScriptCalls(itemData.scriptCalls);
+    }
+
+    this.prepareWeight();
+
+    if (!this.actor) {
+      this.prepareDerivedItemData();
+    }
 
     // Physical items
     if (this.isPhysical && this.showUnidentifiedData) {

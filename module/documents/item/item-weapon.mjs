@@ -68,8 +68,8 @@ export class ItemWeaponPF extends ItemPF {
   }
 
   /** @inheritDoc */
-  prepareData() {
-    super.prepareData();
+  prepareDerivedData() {
+    super.prepareDerivedData();
 
     this._prepareWeaponGroups();
   }

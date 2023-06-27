@@ -9,8 +9,8 @@ export class ItemAttackPF extends ItemPF {
     return result;
   }
 
-  prepareData() {
-    super.prepareData();
+  prepareDerivedData() {
+    super.prepareDerivedData();
 
     const weaponGroups = this.system.weaponGroups || { value: [], custom: "" };
 

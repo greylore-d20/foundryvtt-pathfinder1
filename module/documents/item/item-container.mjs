@@ -7,6 +7,12 @@ export class ItemContainerPF extends ItemPF {
    */
   static system = Object.freeze(foundry.utils.mergeObject(super.system, { isPhysical: true }, { inplace: false }));
 
+  constructor(...args) {
+    super(...args);
+
+    this.items ??= null;
+  }
+
   /**
    * @override
    * @param {object} context
@@ -36,6 +42,13 @@ export class ItemContainerPF extends ItemPF {
     // Set base weight to weight of coins, which can be calculated without knowing contained items
     const weightReduction = (100 - (this.system.weightReduction ?? 0)) / 100;
     this.system.weight.currency = this._calculateCoinWeight() * weightReduction;
+  }
+
+  prepareDerivedData() {
+    // Update contained items
+    this.items = this._prepareInventory(this.system.inventoryItems);
+
+    super.prepareDerivedData();
   }
 
   /** @inheritDoc */

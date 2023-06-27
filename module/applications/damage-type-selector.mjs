@@ -55,7 +55,7 @@ export class DamageTypeSelector extends FormApplication {
       });
     }
 
-    data.damageModifiers = damageTypes.filter((o) => o.isModifier).map((o) => o.toJSON());
+    data.damageModifiers = damageTypes.filter((o) => o.isModifier);
     data.data = this._data;
 
     return data;

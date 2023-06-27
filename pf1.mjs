@@ -198,6 +198,9 @@ Hooks.once("init", function () {
     });
   }
 
+  // Register vision modes
+  CONFIG.Canvas.visionModes.darkvision = pf1.canvas.visionModes.darkvision;
+
   // Initialize socket listener
   initializeSocket();
 

@@ -1235,13 +1235,14 @@ export class ActionUse {
   /**
    * Executes the item's script calls.
    *
-   * @returns {object} The resulting data from the script calls.
+   * @param {"use"|"postUse"} [category="use"] Script call category
    */
-  async executeScriptCalls() {
-    // Execute script call
-    this.shared.scriptData = await this.item.executeScriptCalls("use", {
+  async executeScriptCalls(category = "use") {
+    const rv = await this.item.executeScriptCalls(category, {
       attackData: this.shared,
     });
+
+    if (category === "use") this.shared.scriptData = rv;
   }
 
   /**
@@ -1410,6 +1411,9 @@ export class ActionUse {
       // Above does not communicate targets to other users, so..
       game.user.broadcastActivity({ targets: [] });
     }
+
+    // Call post-use script calls
+    await this.executeScriptCalls("postUse");
 
     Hooks.callAll("pf1PostActionUse", this, result instanceof pf1.documents.ChatMessagePF ? result : null);
 

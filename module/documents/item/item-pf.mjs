@@ -774,7 +774,7 @@ export class ItemPF extends ItemBasePF {
    */
   async executeScriptCalls(category, extraParams = {}) {
     const scripts = this.scriptCalls?.filter((o) => o.category === category) ?? [];
-    const shared = {};
+    const shared = { category };
     if (extraParams.attackData) {
       shared.attackData = extraParams.attackData;
       delete extraParams.attackData;

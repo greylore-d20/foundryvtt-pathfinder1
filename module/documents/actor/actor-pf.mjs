@@ -849,7 +849,7 @@ export class ActorPF extends Actor {
       for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
         slots[spellLevel] = new SpellbookSlots({
           value: book.spells[`spell${spellLevel}`].max,
-          domain: book.domainSlotValue,
+          domain: book.domainSlotValue ?? 0,
         });
       }
 

@@ -35,6 +35,14 @@
       .name-xp {
         flex: 0;
 
+        > div {
+          flex: 3 16em;
+
+          &.hd-level {
+            flex: 2 12em;
+          }
+        }
+
         h1.char-name {
           input {
             height: 2.5rem;
@@ -187,14 +195,20 @@
       gap: 2px;
 
       table {
+        flex: 0;
+
         &:hover {
           a.config-icon {
             color: @colorBeige;
           }
         }
 
-        th.level {
-          width: 32px;
+        th {
+          &.tier,
+          &.level,
+          &.challenge-rating {
+            width: 4em;
+          }
         }
 
         tr {
@@ -204,7 +218,7 @@
           }
           td.experience,
           th.experience {
-            width: 50%;
+            width: 10em;
           }
 
           a.config-icon {

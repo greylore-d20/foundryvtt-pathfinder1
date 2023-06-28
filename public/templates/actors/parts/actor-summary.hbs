@@ -72,8 +72,8 @@
               {{#if system.details.mythicTier}}
               <th class="tier">{{localize "PF1.Tier"}}</th>
               {{/if}}
-              <th>{{localize "PF1.ChallengeRatingShort"}}</th>
-              <th>{{localize "PF1.Experience"}}</th>
+              <th class="challenge-rating">{{localize "PF1.ChallengeRatingShort"}}</th>
+              <th class="experience">{{localize "PF1.Experience"}}</th>
             </tr>
           </thead>
           <tbody>
@@ -86,7 +86,7 @@
                 {{system.details.mythicTier}}
               </td>
               {{/if}}
-              <td>
+              <td class="challenge-rating">
                 <span class="text-box cr-input" name="system.details.cr.base">{{labels.cr}}</span>
               </td>
               <td class="experience">

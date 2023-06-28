@@ -119,7 +119,7 @@ export const sizeReach = function (size = "M", reach = false, stature = "tall") 
 
   return [
     new NumericTerm({
-      number: CONFIG.Actor.documentClasses.default.getReach(size, stature)[reach ? "reach" : "melee"],
+      number: Actor.implementation.getReach(size, stature)[reach ? "reach" : "melee"],
     }),
   ];
 };

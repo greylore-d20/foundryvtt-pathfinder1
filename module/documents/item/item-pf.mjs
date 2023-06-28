@@ -1497,7 +1497,7 @@ export class ItemPF extends Item {
       if (button.dataset.tags?.split(" ").includes("nonlethal")) asNonlethal = true;
 
       const value = button.dataset.value;
-      if (!isNaN(parseInt(value))) CONFIG.Actor.documentClasses.default.applyDamage(parseInt(value), { asNonlethal });
+      if (!isNaN(parseInt(value))) Actor.implementation.applyDamage(parseInt(value), { asNonlethal });
     }
     // Recover ammunition
     else if (["recoverAmmo", "forceRecoverAmmo"].includes(action)) {

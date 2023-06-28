@@ -1367,7 +1367,7 @@ export class ItemPF extends Item {
     let result;
     if (shared.scriptData?.hideChat !== true) {
       result = await actionUse.postMessage();
-    } else return;
+    }
 
     // Deselect targets
     if (game.settings.get("pf1", "clearTargetsAfterAttack")) {

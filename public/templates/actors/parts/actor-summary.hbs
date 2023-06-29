@@ -151,14 +151,14 @@
           {{/if}}
         </div>
 
-        {{#if race}}
         <div class="race-info tag-list">
+          {{#if race}}
           <span class="tag type3">{{lookup config.creatureTypes race.system.creatureType}}</span>
           {{#each race.system.subTypes as |v|}}
           <span class="tag">{{v}}</span>
           {{/each}}
+          {{/if}}
         </div>
-        {{/if}}
       </div>
       <div class="flexrow item-list misc-header-items">
         {{!-- Rest --}}

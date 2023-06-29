@@ -23,6 +23,7 @@ export class HealthConfig extends FormApplication {
           navSelector: ".tabs",
           contentSelector: ".tabbed",
           initial: "base",
+          group: "primary",
         },
       ],
     });

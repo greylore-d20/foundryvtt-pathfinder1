@@ -11,7 +11,9 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
       classes: ["pf1", "sheet", "actor", "npc", "lite"],
       width: 440,
       height: 640,
-      tabs: [{ navSelector: "nav.tabs", contentSelector: "section.primary-body", initial: "summary" }],
+      tabs: [
+        { navSelector: "nav.tabs", contentSelector: "section.primary-body", initial: "summary", group: "primary" },
+      ],
     });
   }
 

@@ -45,12 +45,19 @@ export class ItemSheetPF extends ItemSheet {
           navSelector: "nav.tabs[data-group='primary']",
           contentSelector: "section.primary-body",
           initial: "description",
+          group: "primary",
         },
-        { navSelector: "nav.tabs[data-group='links']", contentSelector: "section.links-body", initial: "children" },
+        {
+          navSelector: "nav.tabs[data-group='links']",
+          contentSelector: "section.links-body",
+          initial: "children",
+          group: "links",
+        },
         {
           navSelector: "nav.tabs[data-group='description']",
           contentSelector: "section.description-body",
           initial: "identified",
+          group: "description",
         },
       ],
     });

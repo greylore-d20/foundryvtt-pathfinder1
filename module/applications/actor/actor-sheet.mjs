@@ -142,16 +142,19 @@ export class ActorSheetPF extends ActorSheet {
           navSelector: "nav.tabs[data-group='primary']",
           contentSelector: "section.primary-body",
           initial: "summary",
+          group: "primary",
         },
         {
           navSelector: "nav.tabs[data-group='skillset']",
           contentSelector: "section.skillset-body",
           initial: "adventure",
+          group: "skills",
         },
         {
           navSelector: "nav.tabs[data-group='spellbooks']",
           contentSelector: "section.spellbooks-body",
           initial: "primary",
+          group: "spellbooks",
         },
       ],
     });

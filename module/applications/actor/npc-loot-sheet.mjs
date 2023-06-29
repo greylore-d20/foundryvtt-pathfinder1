@@ -10,7 +10,9 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "sheet", "actor", "npc", "loot"],
-      tabs: [{ navSelector: "nav.tabs", contentSelector: "section.primary-body", initial: "inventory" }],
+      tabs: [
+        { navSelector: "nav.tabs", contentSelector: "section.primary-body", initial: "inventory", group: "primary" },
+      ],
       width: 620,
       height: 420,
     });

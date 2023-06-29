@@ -25,6 +25,7 @@ export class ItemActionSheet extends FormApplication {
           navSelector: "nav.tabs[data-group='primary']",
           contentSelector: "section.primary-body",
           initial: "description",
+          group: "primary",
         },
       ],
       dragDrop: [

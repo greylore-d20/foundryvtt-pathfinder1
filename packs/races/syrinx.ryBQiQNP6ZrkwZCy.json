@@ -5,7 +5,7 @@
   "img": "systems/pf1/icons/skills/red_26.jpg",
   "system": {
     "description": {
-      "value": "<h2>Standard Racial Traits</h2><ul><li><b>Ability Score Modifiers</b>: Syrinx are contemplative and patient, traits that make them somewhat slow to act. As a result, syrinx gain a +2 bonus to <em>Wisdom</em> but suffer a –2 penalty to <em>Dexterity</em>.</li><li><b>Speed</b>: Syrinx have a base speed of 30 feet.</li><li><b>Flight</b>: Syrinx have a fly speed of 60 feet with average maneuverability.</li><li><b>Languages</b>: Syrinx begin play speaking Syrinx. Syrinx with high <em>Intelligence</em> scores can choose from the following: Auran, Celestial, Strix, or Infernal.</li></ul><h3>Senses</h3><ul><li><b>Low-Light Vision</b>: Syrinx can see twice as far as humans in conditions of dim light.</li><li><b>Darkvision</b>: Syrinx have <em>darkvision</em> and so can see perfectly in the dark up to 60 feet.</li></ul><h3>Skill Racial Abilities</h3><ul><li><b>Nocturnal:</b> Syrinx gain a +2 <em>racial bonus</em> on <em>Perception</em> and <em>Stealth</em> checks at night.</li></ul><h3>Other Racial Traits</h3><ul><li><b>Speak with Avians:</b> Syrinx can speak with all birds of the <em>animal</em> creature type and birdlike <em>magical beasts</em> (like <em>phoenixes</em> and <em>thunderbirds</em>).</li></ul><h3>Defense Racial Abilities</h3><ul><li><b>Pride</b>: Syrinx receive a +2 <em>racial bonus</em> on saving throws against <em>mind-affecting</em> effects.</li></ul>"
+      "value": "<h2>Standard Racial Traits</h2><ul><li><strong>Ability Score Modifiers</strong>: Syrinx are contemplative and patient, traits that make them somewhat slow to act. As a result, syrinx gain a +2 bonus to <em>Wisdom</em> but suffer a –2 penalty to <em>Dexterity</em>.</li><li><strong>Type</strong>: Syrinx are <em>humanoids</em> with the <em>Syrinx </em>subtype.</li><li><strong>Size</strong>: Syrinx are Medium creatures and receive no bonuses or penalties due to their size.</li><li><strong>Base Speed</strong>: Syrinx have a base speed of 30 feet.</li><li><strong>Languages</strong>: Syrinx begin play speaking Syrinx. Syrinx with high <em>Intelligence</em> scores can choose from the following: Auran, Celestial, Strix, or Infernal.</li></ul><h3>Defense Racial Traits</h3><ul><li><strong>Pride</strong>: Syrinx receive a +2 <em>racial bonus</em> on saving throws against <em>mind-affecting</em> effects.</li></ul><h3>Feat and Skill Racial Traits</h3><ul><li><strong>Nocturnal</strong>: Syrinx gain a +2 <em>racial bonus</em> on <em>Perception</em> and <em>Stealth</em> checks at night.</li></ul><h3>Senses Racial Traits</h3><ul><li><strong>Low-Light Vision</strong>: Syrinx can see twice as far as humans in conditions of dim light.</li><li><strong>Darkvision</strong>: Syrinx have <em>darkvision</em> and so can see perfectly in the dark up to 60 feet.</li></ul><h3>Other Racial Traits</h3><ul><li><strong>Speak with Avians</strong>: Syrinx can speak with all birds of the <em>animal</em> creature type and birdlike <em>magical beasts</em> (like <em>phoenixes</em> and <em>thunderbirds</em>).</li><li><strong>Flight</strong>: Syrinx have a fly speed of 60 feet with average maneuverability.</li></ul>"
     },
     "tags": ["Western (Arcadia)", "Bestiary"],
     "changes": [
@@ -13,13 +13,15 @@
         "_id": "atvhssz0",
         "formula": "2",
         "subTarget": "wis",
-        "modifier": "racial"
+        "modifier": "racial",
+        "priority": null
       },
       {
         "_id": "m66aoz86",
         "formula": "-2",
         "subTarget": "dex",
-        "modifier": "racial"
+        "modifier": "racial",
+        "priority": null
       }
     ],
     "contextNotes": [
@@ -57,6 +59,9 @@
     "languages": {
       "custom": "Syrinx"
     },
-    "subTypes": ["Syrinx"]
+    "subTypes": ["Syrinx"],
+    "classSkills": {
+      "fly": true
+    }
   }
 }

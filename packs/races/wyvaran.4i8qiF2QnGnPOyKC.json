@@ -5,7 +5,7 @@
   "img": "systems/pf1/icons/races/creature-types/dragon.png",
   "system": {
     "description": {
-      "value": "<h2>Standard Racial Traits</h2><ul><li><b>+2 </b><em><b>Dexterity</b></em><b>, –2 </b><em><b>Intelligence</b></em><b>, +2 </b><em><b>Wisdom</b></em>: Wyvarans have a reptilian grace and a strong will, but are a little dim-witted.</li><li><b>Dragon</b>: Wyvarans have the dragon type.</li><li><b>Medium</b>: Wyvarans are Medium creatures and have no bonuses or penalties due to their size.</li><li><b>Normal Speed</b>: Wyvarans have a base speed of 30 feet.</li><li><b>Flight</b>: Wyvarans have dragonlike wings that grant them a fly speed of 30 feet with clumsy maneuverability.</li><li><b>Slapping Tail</b>: Wyvarans have a <em>tail attack</em> they can use only when making attacks of opportunity. This slapping tail attack deals a number of points of damage equal to 1d8 + the wyvaran's Strength modifier.</li><li><b>Darkvision</b>: Wyvarans can see in the dark up to 60 feet.</li><li><b>Low-Light Vision</b>: Wyvarans have low-light vision.</li><li><b>Languages</b>: Wyvarans speak Common and Draconic. A wyvaran with a high Intelligence score can choose from the following: Dwarven, Elven, Gnome, Goblin, and Orc.</li></ul>"
+      "value": "<h2>Standard Racial Traits</h2><ul><li><strong>Ability Score Modifiers</strong>: Wyvarans have a reptilian grace and a strong will, but are a little dim-witted. They gain +2 <em>Dexterity</em>, –2 <em>Intelligence</em>, +2 <em>Wisdom.</em></li><li><strong>Type</strong>: Wyvarans have the dragon type.</li><li><strong>Size</strong>: Wyvarans are Medium creatures and have no bonuses or penalties due to their size.</li><li><strong>Base Speed</strong>: Wyvarans have a base speed of 30 feet.</li><li><strong>Languages</strong>: Wyvarans speak Common and Draconic. A wyvaran with a high Intelligence score can choose from the following: Dwarven, Elven, Gnome, Goblin, and Orc.</li></ul><h3>Movement Racial Traits</h3><ul><li><strong>Flight</strong>: Wyvarans have dragonlike wings that grant them a fly speed of 30 feet with clumsy maneuverability.</li></ul><h3>Offensive Racial Traits</h3><ul><li><strong>Slapping Tail</strong>: Wyvarans have a <em>tail attack</em> they can use only when making attacks of opportunity. This slapping tail attack deals a number of points of damage equal to 1d8 + the wyvaran's Strength modifier.</li></ul><h3>Senses Racial Traits</h3><ul><li><strong>Darkvision</strong>: Wyvarans can see in the dark up to 60 feet.</li><li><strong>Low-Light Vision</strong>: Wyvarans have low-light vision.</li></ul>"
     },
     "tags": ["Rare"],
     "changes": [
@@ -13,24 +13,30 @@
         "_id": "ph22l8t2",
         "formula": "2",
         "subTarget": "dex",
-        "modifier": "racial"
+        "modifier": "racial",
+        "priority": null
       },
       {
         "_id": "auzka50v",
         "formula": "-2",
         "subTarget": "int",
-        "modifier": "racial"
+        "modifier": "racial",
+        "priority": null
       },
       {
         "_id": "oeqfxrp3",
         "formula": "2",
         "subTarget": "wis",
-        "modifier": "racial"
+        "modifier": "racial",
+        "priority": null
       }
     ],
     "languages": {
       "value": ["common", "draconic"]
     },
-    "creatureType": "dragon"
+    "creatureType": "dragon",
+    "classSkills": {
+      "fly": true
+    }
   }
 }

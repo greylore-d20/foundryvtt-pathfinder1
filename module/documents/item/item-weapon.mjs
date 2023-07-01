@@ -7,20 +7,33 @@ export class ItemWeaponPF extends ItemPF {
    */
   static system = Object.freeze(foundry.utils.mergeObject(super.system, { isPhysical: true }, { inplace: false }));
 
-  async _preUpdate(update, context) {
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
+
     // Set weapon subtype if not present
-    const newWeaponType = update.system?.subType;
+    const newWeaponType = changed.system?.subType;
     if (newWeaponType != null && newWeaponType !== this.system.subType) {
-      const subtype = update.system.weaponSubtype ?? this.system.weaponSubtype ?? "";
+      const subtype = changed.system.weaponSubtype ?? this.system.weaponSubtype ?? "";
       const keys = Object.keys(pf1.config.weaponTypes[newWeaponType]).filter((o) => !o.startsWith("_"));
       if (!subtype || !keys.includes(subtype)) {
-        update.system.weaponSubtype = keys[0];
+        changed.system.weaponSubtype = keys[0];
       }
     }
   }
 
-  async _preDelete(options, user) {
-    if (user.id === game.user.id) {
+  /**
+   * @override
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preDelete(context, user) {
+    if (user.isSelf) {
       if (this.isActive) {
         this.executeScriptCalls("equip", { equipped: false });
       }
@@ -30,7 +43,7 @@ export class ItemWeaponPF extends ItemPF {
       }
     }
 
-    return super._preDelete(options, user);
+    await super._preDelete(context, user);
   }
 
   /** @inheritDoc */

@@ -1,14 +1,19 @@
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemFeatPF extends ItemPF {
-  async _preDelete(options, user) {
-    if (user.id === game.user.id) {
+  /**
+   * @override
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preDelete(context, user) {
+    if (user.isSelf) {
       if (this.isActive) {
         this.executeScriptCalls("toggle", { state: false });
       }
     }
 
-    return super._preDelete(options, user);
+    await super._preDelete(context, user);
   }
 
   /**

@@ -1,7 +1,15 @@
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemRacePF extends ItemPF {
-  async _preCreate(data, options, user) {
+  /**
+   * @override
+   * @param {object} data
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preCreate(data, context, user) {
+    await super._preCreate(data, context, user);
+
     const actor = this.actor;
 
     // Overwrite race
@@ -18,14 +26,20 @@ export class ItemRacePF extends ItemPF {
     }
   }
 
-  async _preUpdate(update, context, user) {
-    await super._preUpdate(update, context, user);
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
 
     const actor = this.actor;
     if (actor?.type === "basic") return;
 
     // Track size change
-    const newSize = update.system?.size;
+    const newSize = changed.system?.size;
     if (actor && newSize !== undefined) {
       const oldSize = actor.system.traits?.size;
       if (this.system.size === oldSize && newSize !== oldSize) {
@@ -34,6 +48,12 @@ export class ItemRacePF extends ItemPF {
     }
   }
 
+  /**
+   * @override
+   * @param {object} data
+   * @param {object} context
+   * @param {string} userId
+   */
   _onUpdate(data, context, userId) {
     super._onUpdate(data, context, userId);
 
@@ -44,8 +64,13 @@ export class ItemRacePF extends ItemPF {
     }
   }
 
-  _onDelete(data, context, userId) {
-    super._onDelete(data, context, userId);
+  /**
+   * @override
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onDelete(context, userId) {
+    super._onDelete(context, userId);
 
     if (this.actor?.race === this) this.actor.race = null;
   }

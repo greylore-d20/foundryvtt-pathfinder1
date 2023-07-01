@@ -11,21 +11,32 @@ export class ItemLootPF extends ItemPF {
     return this.system.extraType;
   }
 
-  async _preUpdate(update, options, userId) {
-    await super._preUpdate(update, options, userId);
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
 
     // Reset loot extra type when loot subtype is changed
     if (
-      update.system?.subType !== undefined &&
-      update.system?.subType !== this.system.subType &&
-      update.system?.extraType === undefined
+      changed.system?.subType !== undefined &&
+      changed.system?.subType !== this.system.subType &&
+      changed.system?.extraType === undefined
     ) {
-      setProperty(update, "system.extraType", "");
+      setProperty(changed, "system.extraType", "");
     }
   }
 
-  async _preDelete(options, user) {
-    if (user.id === game.user.id) {
+  /**
+   * @override
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preDelete(context, user) {
+    if (user.isSelf) {
       if (this.isActive) {
         this.executeScriptCalls("equip", { equipped: false });
       }
@@ -35,7 +46,7 @@ export class ItemLootPF extends ItemPF {
       }
     }
 
-    return super._preDelete(options, user);
+    await super._preDelete(context, user);
   }
 
   /**

@@ -2,16 +2,27 @@ import { ItemPF } from "./item-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
 export class ItemBuffPF extends ItemPF {
-  async _preUpdate(changed, options, userId) {
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
     // Add activation time when not present
     if (changed.system?.active && changed.system?.duration?.start === undefined) {
       setProperty(changed, "system.duration.start", game.time.worldTime);
     }
 
-    return super._preUpdate(changed, options, userId);
+    await super._preUpdate(changed, context, user);
   }
 
-  async _preDelete(options, user) {
+  /**
+   * @override
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preDelete(context, user) {
     // Delete associated effect
     const effect = this.effect;
     if (effect) {
@@ -19,13 +30,13 @@ export class ItemBuffPF extends ItemPF {
     }
 
     // Run script call(s)
-    if (user.id === game.user.id) {
+    if (user.isSelf) {
       if (this.isActive) {
         this.executeScriptCalls("toggle", { state: false });
       }
     }
 
-    return super._preDelete(options, user);
+    await super._preDelete(context, user);
   }
 
   /** @inheritDoc */

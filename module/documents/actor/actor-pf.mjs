@@ -97,14 +97,14 @@ export class ActorPF extends Actor {
 
   /**
    * @override
-   * @param {object} data Creation data
-   * @param {object} options Options
-   * @param {string} userId Invoking user's ID
+   * @param {object} data
+   * @param {object} context
+   * @param {User} user
    */
-  _preCreate(data, options, userId) {
-    super._preCreate(data, options, userId);
+  async _preCreate(data, context, user) {
+    await super._preCreate(data, context, user);
 
-    const updates = this.preCreateData(data, options, userId);
+    const updates = this.preCreateData(data, context, user);
 
     // Set typed image
     if (data.img === undefined) {
@@ -1821,17 +1821,23 @@ export class ActorPF extends Actor {
   /*  Socket Listeners and Handlers
   /* -------------------------------------------- */
 
-  async _preUpdate(update, options, userId) {
-    await super._preUpdate(update, options, userId);
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
 
-    this._syncTokenImage(update);
+    this._syncTokenImage(changed);
 
-    if (!update.system) return; // No system updates.
+    if (!changed.system) return; // No system updates.
 
     const oldData = this.system;
 
     // Offset HP values
-    const attributes = update.system.attributes;
+    const attributes = changed.system.attributes;
     if (this._initialized && attributes != undefined) {
       for (const key of ["hp", "wounds", "vigor"]) {
         const hp = attributes[key];
@@ -1844,19 +1850,19 @@ export class ActorPF extends Actor {
     }
 
     // Apply changes in Actor size to Token width/height
-    const newSize = update.system.traits?.size;
+    const newSize = changed.system.traits?.size;
     if (newSize !== undefined && oldData.traits.size !== undefined) {
       const size = pf1.config.tokenSizes[newSize];
       if (!this.isToken && !this.prototypeToken.flags?.pf1?.staticSize) {
-        if (!update.token) update.token = {};
-        update.token.width = size.w;
-        update.token.height = size.h;
-        update.token.scale = size.scale;
+        if (!changed.token) changed.token = {};
+        changed.token.width = size.w;
+        changed.token.height = size.h;
+        changed.token.scale = size.scale;
       }
     }
 
     // Make certain variables absolute
-    const abilities = update.system.abilities;
+    const abilities = changed.system.abilities;
     if (abilities) {
       const absoluteKeys = ["userPenalty", "damage", "drain"];
       const keys = Object.keys(abilities);
@@ -1869,13 +1875,13 @@ export class ActorPF extends Actor {
       }
     }
 
-    const energyDrain = update.system.attributes?.energyDrain;
+    const energyDrain = changed.system.attributes?.energyDrain;
     if (energyDrain !== undefined) {
-      update.system.attributes.energyDrain = Math.abs(energyDrain);
+      changed.system.attributes.energyDrain = Math.abs(energyDrain);
     }
 
     // Make only 1 fear or fatigue condition active at most
-    const conditions = update.system.attributes?.conditions;
+    const conditions = changed.system.attributes?.conditions;
     if (conditions) {
       const keys = Object.keys(conditions);
       for (const conditionGroup of Object.values(pf1.config.conditionTracks)) {
@@ -1890,7 +1896,7 @@ export class ActorPF extends Actor {
     }
 
     // Update experience
-    this._updateExp(update);
+    this._updateExp(changed);
   }
 
   /**
@@ -1911,21 +1917,27 @@ export class ActorPF extends Actor {
     this.updateSource({ "prototypeToken.texture.src": update.img });
   }
 
-  _onUpdate(updateData, options, userId, context = {}) {
-    super._onUpdate(updateData, options, userId, context);
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onUpdate(changed, context, userId) {
+    super._onUpdate(changed, context, userId);
 
     // No system data updated
-    if (!updateData.system) return;
+    if (!changed.system) return;
 
     const sourceUser = game.user.id === userId;
 
     let refreshVision = false;
-    if (hasProperty(updateData, "system.attributes.conditions")) {
+    if (hasProperty(changed, "system.attributes.conditions")) {
       if (game.user.id === userId) this.toggleConditionStatusIcons({ render: false });
       refreshVision = true;
-    } else if (hasProperty(updateData, "system.traits.senses")) {
+    } else if (hasProperty(changed, "system.traits.senses")) {
       refreshVision = true;
-    } else if (updateData.flags?.pf1?.visionPermissions) {
+    } else if (changed.flags?.pf1?.visionPermissions) {
       refreshVision = true;
     }
 
@@ -1944,7 +1956,7 @@ export class ActorPF extends Actor {
     }
 
     // Resize token(s)
-    const sizeKey = updateData.system.traits?.size;
+    const sizeKey = changed.system.traits?.size;
     if (sourceUser && sizeKey) {
       const size = CONFIG.PF1.tokenSizes[sizeKey];
       const tokens = this.getActiveTokens(false, true).filter((token) => !token.getFlag("pf1", "staticSize"));
@@ -1962,7 +1974,15 @@ export class ActorPF extends Actor {
     }
   }
 
-  _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
+  /**
+   * @override
+   * @param {"Item"|"ActiveEffect"} embeddedName
+   * @param {Item[]|ActiveEffect[]} documents
+   * @param {*} result
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onCreateEmbeddedDocuments(embeddedName, documents, result, context, userId) {
     super._onCreateEmbeddedDocuments(...arguments);
 
     if (userId === game.user.id && embeddedName === "Item") {
@@ -1979,8 +1999,16 @@ export class ActorPF extends Actor {
     }
   }
 
-  _onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
-    super._onUpdateEmbeddedDocuments(embeddedName, documents, result, options, userId);
+  /**
+   * @override
+   * @param {"Item"|"ActiveEffect"} embeddedName
+   * @param {Item[]|ActiveEffect[]} documents
+   * @param {*} result
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onUpdateEmbeddedDocuments(embeddedName, documents, result, context, userId) {
+    super._onUpdateEmbeddedDocuments(embeddedName, documents, result, context, userId);
 
     if (userId === game.user.id && embeddedName === "Item") {
       // Toggle conditions only if updated items included buffs and the buff's active state was changed

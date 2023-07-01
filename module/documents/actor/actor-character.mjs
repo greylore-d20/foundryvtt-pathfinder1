@@ -3,11 +3,13 @@ import { RollPF } from "../../dice/roll.mjs";
 
 export class ActorCharacterPF extends ActorPF {
   /**
-   * @param {object} data Creation data
-   * @param {User} user User instance
+   * @override
+   * @param {object} data
+   * @param {object} context
+   * @param {User} user
    */
-  async _preCreate(data, user) {
-    await super._preCreate(data, user);
+  async _preCreate(data, context, user) {
+    await super._preCreate(data, context, user);
 
     const tokenUpdateData = {};
     // Link token data by default

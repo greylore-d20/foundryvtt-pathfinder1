@@ -4,17 +4,30 @@ import { RollPF } from "../../dice/roll.mjs";
 import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 export class ItemClassPF extends ItemPF {
-  async _preUpdate(update, context, userId) {
-    await super._preUpdate(update, context, userId);
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
 
     // Set level marker
-    if (update.system?.level !== undefined) {
+    if (changed.system?.level !== undefined) {
       this._prevLevel = this.system.level;
     }
   }
 
-  _onCreate(data, options, userId) {
-    super._onCreate(data, options, userId);
+  /**
+   * @override
+   * @param {object} data
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onCreate(data, context, userId) {
+    super._onCreate(data, context, userId);
+
     if (userId !== game.user.id) return;
     const actor = this.actor;
     if (!actor) return;
@@ -25,8 +38,14 @@ export class ItemClassPF extends ItemPF {
     actor.createSpellbook(bookData);
   }
 
-  _onDelete(options, userId) {
-    super._onDelete(options, userId);
+  /**
+   * @override
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onDelete(context, userId) {
+    super._onDelete(context, userId);
+
     if (userId !== game.user.id) return;
     const actor = this.actor;
     if (!actor) return;

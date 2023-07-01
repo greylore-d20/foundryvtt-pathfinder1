@@ -7,28 +7,41 @@ export class ItemEquipmentPF extends ItemPF {
    */
   static system = Object.freeze(foundry.utils.mergeObject(super.system, { isPhysical: true }, { inplace: false }));
 
-  async _preUpdate(update, context) {
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
+
     // Set equipment subtype and slot
-    const type = update.system?.subType;
+    const type = changed.system?.subType;
     if (type !== undefined && type !== this.subType) {
       // Set subtype
-      const subtype = update.system?.equipmentSubtype ?? this.system.equipmentSubtype ?? "";
+      const subtype = changed.system?.equipmentSubtype ?? this.system.equipmentSubtype ?? "";
       const subtypes = Object.keys(pf1.config.equipmentTypes[type] ?? {}).filter((o) => !o.startsWith("_"));
       if (!subtype || !subtypes.includes(subtype)) {
-        update.system.equipmentSubtype = subtypes[0];
+        changed.system.equipmentSubtype = subtypes[0];
       }
 
       // Set slot
-      const slot = update.system?.slot ?? this.system.slot ?? "";
+      const slot = changed.system?.slot ?? this.system.slot ?? "";
       const slotTypes = Object.keys(pf1.config.equipmentSlots[type] ?? {});
       if (!slot || !slotTypes.includes(slot)) {
-        setProperty(update, "system.slot", slotTypes[0]);
+        setProperty(changed, "system.slot", slotTypes[0]);
       }
     }
   }
 
-  async _preDelete(options, user) {
-    if (user.id === game.user.id) {
+  /**
+   * @override
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preDelete(context, user) {
+    if (user.isSelf) {
       if (this.isActive) {
         this.executeScriptCalls("equip", { equipped: false });
       }
@@ -38,7 +51,7 @@ export class ItemEquipmentPF extends ItemPF {
       }
     }
 
-    return super._preDelete(options, user);
+    await super._preDelete(context, user);
   }
 
   /** @inheritDoc */

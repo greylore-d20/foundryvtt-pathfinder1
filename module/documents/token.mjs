@@ -1,12 +1,26 @@
 export class TokenDocumentPF extends TokenDocument {
-  async _preCreate(data, options, userId) {
+  /**
+   * @override
+   * @param {object} data
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preCreate(data, context, user) {
+    super._preCreate(data, context, user);
+
     this._preCreateSetSize();
   }
 
-  async _preUpdate(updateData, options, user) {
-    await super._preUpdate(updateData, options, user);
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
 
-    const flags = updateData.flags?.pf1;
+    const flags = changed.flags?.pf1;
     if (flags) {
       // Delete flags instead of turning them false
       const deleteFlags = ["staticSize", "disableLowLight", "customVisionRules"];

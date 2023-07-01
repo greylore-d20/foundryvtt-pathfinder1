@@ -37,14 +37,21 @@ export class TokenPF extends Token {
     return game.user.isGM || hasTokenVision(this);
   }
 
-  _onUpdate(data, options, user) {
-    if (options.render === false) return;
+  /**
+   * @override
+   * @param {object} data
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onUpdate(data, context, userId) {
+    if (context.render === false) return;
 
     if (hasProperty(data, "flags.pf1.customVisionRules")) {
       // Make sure this token's perception changes
       data.sight ||= {};
     }
-    return super._onUpdate(data, options, user);
+
+    super._onUpdate(data, context, userId);
   }
 
   updateVisionSource(...args) {

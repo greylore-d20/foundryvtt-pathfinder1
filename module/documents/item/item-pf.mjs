@@ -72,8 +72,14 @@ export class ItemPF extends Item {
     return CONFIG.Item.documentClasses[type]?.isPhysical ?? false;
   }
 
-  async _preCreate(data, options, user) {
-    await super._preCreate(data, options, user);
+  /**
+   * @override
+   * @param {object} data
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preCreate(data, context, user) {
+    await super._preCreate(data, context, user);
 
     // Set typed image
     // The test against DEFAULT_ICON is to deal with a Foundry bug with unlinked actors.
@@ -101,7 +107,7 @@ export class ItemPF extends Item {
       if (updated) this.updateSource({ "system.changes": changes });
     }
 
-    const updates = this.preCreateData(data, options, user);
+    const updates = this.preCreateData(data, context, user);
 
     if (Object.keys(updates).length) return this.updateSource(updates);
   }
@@ -823,8 +829,14 @@ export class ItemPF extends Item {
     }
   }
 
-  _onUpdate(changed, options, userId) {
-    super._onUpdate(changed, options, userId);
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onUpdate(changed, context, userId) {
+    super._onUpdate(changed, context, userId);
 
     if (userId === game.user.id) {
       // Call 'toggle' script calls
@@ -882,8 +894,9 @@ export class ItemPF extends Item {
 
       const diffData = diffObjectAndArray(memoryItemData, itemUpdateData, { keepLength: true });
       if (!foundry.utils.isEmpty(diffData)) {
+        /** @type {Item} */
         const item = this.items.get(memoryItemData._id);
-        item._onUpdate(diffData, options, userId);
+        item._onUpdate(diffData, context, userId);
       }
     }
 

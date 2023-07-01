@@ -1823,6 +1823,7 @@ export class ActorPF extends ActorBasePF {
       "attributes.attack.natural": 0,
       "attributes.attack.ranged": 0,
       "attributes.attack.thrown": 0,
+      "attributes.attack.shared": 0,
       "attributes.attack.critConfirm": 0,
       "attributes.mDex": { armorBonus: 0, shieldBonus: 0 },
       "attributes.damage.general": 0,
@@ -1841,11 +1842,17 @@ export class ActorPF extends ActorBasePF {
       "attributes.woundThresholds.penaltyBase": 0,
       "attributes.woundThresholds.penalty": 0,
       "abilities.str.checkMod": 0,
+      "abilities.str.total": 0,
       "abilities.dex.checkMod": 0,
+      "abilities.dex.total": 0,
       "abilities.con.checkMod": 0,
+      "abilities.con.total": 0,
       "abilities.int.checkMod": 0,
+      "abilities.int.total": 0,
       "abilities.wis.checkMod": 0,
+      "abilities.wis.total": 0,
       "abilities.cha.checkMod": 0,
+      "abilities.cha.total": 0,
       "attributes.spells.spellbooks.primary.concentration.total": 0,
       "attributes.spells.spellbooks.secondary.concentration.total": 0,
       "attributes.spells.spellbooks.tertiary.concentration.total": 0,
@@ -1856,6 +1863,13 @@ export class ActorPF extends ActorBasePF {
       "attributes.spells.spellbooks.spelllike.cl.total": 0,
       "details.carryCapacity.bonus.total": 0,
       "details.carryCapacity.multiplier.total": 0,
+      "details.feats.bonus": 0,
+      "details.skills.bonus": 0,
+      "attributes.speed.land.add": 0,
+      "attributes.speed.swim.add": 0,
+      "attributes.speed.fly.add": 0,
+      "attributes.speed.climb.add": 0,
+      "attributes.speed.burrow.add": 0,
     };
 
     // Determine skill keys
@@ -1871,6 +1885,24 @@ export class ActorPF extends ActorBasePF {
     return keys;
   }
 
+  /**
+   * Data to reset base value of, but only if missing.
+   *
+   * @private
+   * @see {@link _resetInherentTotals}
+   * @returns {Record<string,number>}
+   */
+  _getBaseValueFillKeys() {
+    return [
+      { parent: "abilities.str", key: "base", value: 0 },
+      { parent: "abilities.dex", key: "base", value: 0 },
+      { parent: "abilities.con", key: "base", value: 0 },
+      { parent: "abilities.int", key: "base", value: 0 },
+      { parent: "abilities.wis", key: "base", value: 0 },
+      { parent: "abilities.cha", key: "base", value: 0 },
+    ];
+  }
+
   _resetInherentTotals() {
     const keys = this._getInherentTotalsKeys();
 
@@ -1881,6 +1913,12 @@ export class ActorPF extends ActorBasePF {
       } catch (err) {
         console.log(err, k);
       }
+    }
+
+    for (const data of this._getBaseValueFillKeys()) {
+      const { parent, key, value } = data;
+      const o = getProperty(this.system, parent);
+      o[key] ??= value;
     }
   }
 

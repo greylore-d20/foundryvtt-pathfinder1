@@ -740,52 +740,66 @@ Hooks.once("ready", () => {
 });
 
 // Render TokenConfig
-Hooks.on("renderTokenConfig", async (app, html) => {
-  // Add vision inputs
-  let token = app.object;
-  // Prototype token
-  if (token instanceof Actor) token = token.prototypeToken;
+Hooks.on(
+  "renderTokenConfig",
+  /**
+   * @param {TokenConfig} app - Config application
+   * @param {JQuery<HTMLElement>} html - HTML element
+   */
+  async (app, html) => {
+    // Add vision inputs
+    let token = app.object;
+    // Prototype token
+    if (token instanceof Actor) token = token.prototypeToken;
 
-  const flags = token.flags?.pf1;
+    const flags = token.flags?.pf1 ?? {};
 
-  // Add static size checkbox
-  let newHTML = `<div class="form-group"><label>${game.i18n.localize(
-    "PF1.StaticSize"
-  )}</label><input type="checkbox" name="flags.pf1.staticSize" data-dtype="Boolean"`;
-  if (flags?.staticSize) newHTML += " checked";
-  newHTML += "/></div>";
-  html.find('.tab[data-tab="appearance"] > *:nth-child(3)').after(newHTML);
+    // Add static size checkbox
+    const sizingTemplateData = { flags };
+    const sizeContent = await renderTemplate(
+      "systems/pf1/templates/foundry/token/token-sizing.hbs",
+      sizingTemplateData
+    );
 
-  // Disable vision elements if custom vision is disabled
-  const enableCustomVision = flags?.customVisionRules === true;
-  if (!enableCustomVision) {
-    const tabElem = html.find(`.tab[data-tab="vision"]`);
-    // Disable vision mode selection
-    tabElem.find("select[name='sight.visionMode']").prop("disabled", true);
-    // Disable detection mode tab entirely
-    const dmTab = tabElem.find(".tab[data-tab='detection']");
-    dmTab.find("input,select").prop("disabled", true);
-    dmTab.find("a.action-button").unbind();
+    html.find('.tab[data-tab="appearance"] > *:nth-child(3)').after(sizeContent);
+
+    const visionTab = html[0].querySelector(`.tab[data-tab="vision"]`);
+
+    // Disable vision elements if custom vision is disabled
+    const enableCustomVision = flags.customVisionRules === true;
+    let addDetectionModeButtonListener;
+    const toggleCustomVision = (enabled) => {
+      // Disable vision mode selection
+      visionTab.querySelector("select[name='sight.visionMode']").disabled = !enabled;
+
+      // Disable detection mode tab
+      const dmTab = visionTab.querySelector(".tab[data-tab='detection']");
+      for (const el of dmTab.querySelectorAll("input,select")) {
+        el.disabled = !enabled;
+      }
+
+      // Disable detection mode tab buttons via CSS
+      dmTab.classList.toggle("disabled", !enabled);
+    };
+
+    if (!enableCustomVision) toggleCustomVision(enableCustomVision);
+
+    const visionContent = await renderTemplate("systems/pf1/templates/foundry/token/custom-vision.hbs", {
+      enabled: enableCustomVision,
+    });
+
+    $(visionTab).append(visionContent);
+
+    // Add listener for custom vision rules checkbox
+    // Soft toggle to work nicer with Foundry's preview behaviour
+    visionTab.querySelector(`input[name="flags.pf1.customVisionRules"]`).addEventListener("change", async (event) => {
+      toggleCustomVision(event.target.checked);
+    });
+
+    // Resize windows
+    app.setPosition();
   }
-  // Add custom vision checkbox
-  newHTML = `<div class="form-group" data-tooltip="PF1.CustomVisionRules.Description"><label>${game.i18n.localize(
-    "PF1.CustomVisionRules.Label"
-  )}</label><input type="checkbox" name="flags.pf1.customVisionRules" data-dtype="Boolean"`;
-  if (enableCustomVision) newHTML += " checked";
-  newHTML += "/></div>";
-  html.find(`.tab[data-tab="vision"]`).append(newHTML);
-  // Add listener for custom vision rules checkbox
-  html.find(`.tab[data-tab="vision"] input[name="flags.pf1.customVisionRules"]`).on("change", async (event) => {
-    await app._onSubmit(event, { preventClose: true });
-    return app.render();
-  });
-
-  // Add disable low-light vision checkbox
-  _canvas.lowLightVision.addLowLightVisionToTokenConfig(app, html);
-
-  // Resize windows
-  app.setPosition();
-});
+);
 
 // Render Sidebar
 Hooks.on("renderSidebarTab", (app, html) => {

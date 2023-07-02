@@ -19,27 +19,6 @@ export const addLowLightVisionToLightConfig = function (app, html) {
   html.find('div.tab[data-tab="basic"]').append(checkbox);
 };
 
-/**
- * Add a checkbox to enable/disable low-light vision to a token's configuration
- *
- * @param {FormApplication} app - The TokenConfig app
- * @param {jQuery} html - The jQuery of the inner html
- */
-export const addLowLightVisionToTokenConfig = function (app, html) {
-  /** @type {TokenDocument} */
-  const token = app.object;
-
-  // Create checkbox HTML element
-  let checkboxStr = `<div class="form-group"><label>${game.i18n.localize("PF1.DisableLightLowLightVision")}</label>`;
-  checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
-  if (token.getFlag("pf1", "disableLowLight")) checkboxStr += " checked";
-  checkboxStr += "/></div>";
-  const checkbox = $(checkboxStr);
-
-  // Insert new checkbox
-  html.find('.tab[data-group="light"][data-tab="basic"]').append(checkbox);
-};
-
 export const patchCore = function () {
   // Low-light vision light radius initialization (v10 & v11)
   const LightSource_initialize = LightSource.prototype.initialize;

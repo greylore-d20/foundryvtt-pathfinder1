@@ -12,9 +12,6 @@ async function rollD20(formula, options = {}) {
   return roll;
 }
 
-/**
- *
- */
 export function registerD20RollTests() {
   quench.registerBatch(
     "pf1.dice.d20roll",

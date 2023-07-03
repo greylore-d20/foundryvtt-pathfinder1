@@ -127,13 +127,41 @@ Hooks.once("init", function () {
   CONFIG.ui.items = applications.ItemDirectoryPF;
 
   // Dice config
-  CONFIG.Dice.rolls.splice(0, 0, dice.RollPF);
+  CONFIG.Dice.rolls.unshift(dice.RollPF);
   CONFIG.Dice.termTypes.SizeRollTerm = dice.terms.SizeRollTerm;
-  CONFIG.Dice.RollPF = dice.RollPF;
   CONFIG.Dice.rolls.push(dice.D20RollPF);
-  CONFIG.Dice.rolls.D20RollPF = dice.D20RollPF;
   CONFIG.Dice.rolls.push(dice.DamageRoll);
-  CONFIG.Dice.rolls.DamageRoll = dice.DamageRoll;
+  Object.defineProperties(CONFIG.Dice, {
+    RollPF: {
+      get() {
+        foundry.utils.logCompatibilityWarning(
+          "CONFIG.Dice.RollPF is deprecated in favor of RollPF global and pf1.dice.RollPF",
+          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+        );
+        return pf1.dice.RollPF;
+      },
+    },
+  });
+  Object.defineProperties(CONFIG.Dice.rolls, {
+    DamageRoll: {
+      get() {
+        foundry.utils.logCompatibilityWarning(
+          "CONFIG.Dice.rolls.DamageRoll is deprecated in favor of pf1.dice.DamageRoll",
+          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+        );
+        return pf1.dice.DamageRoll;
+      },
+    },
+    D20RollPF: {
+      get() {
+        foundry.utils.logCompatibilityWarning(
+          "CONFIG.Dice.rolls.D20RollPF is deprecated in favor of pf1.dice.D20RollPF",
+          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+        );
+        return pf1.dice.D20RollPF;
+      },
+    },
+  });
 
   CONFIG.time.roundTime = 6;
 

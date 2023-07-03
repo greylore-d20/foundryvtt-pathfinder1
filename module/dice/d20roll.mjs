@@ -428,7 +428,7 @@ export async function d20Roll(options = {}) {
   } = options;
   const formula = [dice, ...parts].join("+");
 
-  const roll = new CONFIG.Dice.rolls.D20RollPF(formula, rollData, { flavor, staticRoll, bonus });
+  const roll = new pf1.dice.D20RollPF(formula, rollData, { flavor, staticRoll, bonus });
   if (!skipDialog) {
     const title = speaker?.alias ? `${speaker.alias}: ${flavor}` : flavor;
     const dialogResult = await roll.promptDialog({ title, rollMode, subject });

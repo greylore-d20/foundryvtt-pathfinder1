@@ -825,9 +825,13 @@ export class ItemAction {
       parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
     }
 
-    const roll = await new D20RollPF([rollData.d20 || "1d20", ...parts.filter((p) => !!p)].join("+"), rollData, {
-      critical: this.critRange,
-    }).evaluate({ async: true });
+    const roll = await new pf1.dice.D20RollPF(
+      [rollData.d20 || "1d20", ...parts.filter((p) => !!p)].join("+"),
+      rollData,
+      {
+        critical: this.critRange,
+      }
+    ).evaluate({ async: true });
     return roll;
   }
 

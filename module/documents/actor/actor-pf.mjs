@@ -3129,15 +3129,61 @@ export class ActorPF extends Actor {
         healingInvert = -1;
         value = -1 * value;
       }
+
       const tokens = controlled.map((tok) => {
         const isToken = tok instanceof Token;
         const actor = isToken ? tok.actor : tok;
+
+        const buildResistances = (damage) => {
+          const format = (amount, type, operator, type2) => {
+            let translatedType = type;
+            if (type2) {
+              switch (operator) {
+                case false: {
+                  // Combine with AND
+                  translatedType = game.i18n.format(
+                    "PF1.Application.DamageResistanceSelector.CombinationFormattedAnd",
+                    {
+                      type1: type,
+                      type2: type2,
+                    }
+                  );
+                  break;
+                }
+                default:
+                case true: {
+                  // Combine with OR
+                  translatedType = game.i18n.format("PF1.Application.DamageResistanceSelector.CombinationFormattedOr", {
+                    type1: type,
+                    type2: type2,
+                  });
+                  break;
+                }
+              }
+            }
+
+            return damage === "dr" ? `${amount}/${translatedType}` : `${translatedType} ${amount}`;
+          };
+
+          const resistances = actor.system.traits[damage].value.map((entry) => {
+            const [amount, operator] = [entry.amount, entry.operator];
+            const type1 = pf1.registry.damageTypes.get(entry.types[0]?.toLowerCase())?.name ?? "-";
+            const type2 = pf1.registry.damageTypes.get(entry.types[1]?.toLowerCase())?.name ?? "";
+
+            return format(amount, type1, operator, type2);
+          });
+
+          resistances.push(...(actor.system.traits[damage].custom.match(sliceReg) ?? []));
+
+          return resistances;
+        };
+
         return {
           _id: isToken ? tok.id : actor.id,
           name: isToken ? tok.name : actor.name,
           isToken,
-          dr: actor.system.traits.dr.match(sliceReg),
-          eres: actor.system.traits.eres.match(sliceReg),
+          dr: buildResistances("dr"),
+          eres: buildResistances("eres"),
           di: [...actor.system.traits.di.value, ...(actor.system.traits.di.custom.match(sliceReg2) ?? [])],
           dv: [...actor.system.traits.dv.value, ...(actor.system.traits.dv.custom.match(sliceReg2) ?? [])],
           checked: true,

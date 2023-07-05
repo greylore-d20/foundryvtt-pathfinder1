@@ -259,6 +259,7 @@ export const migrateActorData = function (actor, token) {
   _migrateActorSkillJournals(actor, updateData, linked);
   _migrateActorSubskillData(actor, updateData);
   _migrateActorUnusedData(actor, updateData);
+  _migrateActorDRandER(actor, updateData);
 
   // Migrate Owned Items
   if (!actor.items) return updateData;
@@ -1622,6 +1623,25 @@ const _migrateActorSubskillData = (actor, updateData) => {
         updateData[`system.skills.${skillId}.subSkills.${subSkillId}.-=mod`] = null;
       }
     }
+  }
+};
+
+const _migrateActorDRandER = function (ent, updateData) {
+  const oldDR = ent.system.traits?.dr;
+  const oldER = ent.system.traits?.eres;
+
+  if (typeof oldDR === "string") {
+    updateData["system.traits.dr"] = {
+      value: [],
+      custom: oldDR,
+    };
+  }
+
+  if (typeof oldER === "string") {
+    updateData["system.traits.eres"] = {
+      value: [],
+      custom: oldER,
+    };
   }
 };
 

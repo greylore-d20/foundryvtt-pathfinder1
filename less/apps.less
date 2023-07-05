@@ -370,6 +370,23 @@
 }
 
 /* ----------------------------------------- */
+/*  Resistance Selectors Specifically             */
+/* ----------------------------------------- */
+
+.pf1.resistance-selector {
+  form {
+    max-height: 720px;
+    height: 100%;
+  }
+
+  ol li {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-rows: fit-content 2em 2em;
+  }
+}
+
+/* ----------------------------------------- */
 /*  Doc Sheets Specifically               */
 /* ----------------------------------------- */
 
@@ -795,6 +812,51 @@
   input[type="text"] {
     height: 24px;
     margin: 2px;
+  }
+}
+
+.resistance-selector {
+  .trait-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+  }
+
+  a.resistance-control.add-entry {
+    margin: 0.5em 0 0.7em 1em;
+    display: block;
+  }
+}
+
+.pf1.resistance {
+  table {
+    border: 1px solid rgb(136, 136, 136);
+    font-weight: normal;
+    table-layout: fixed;
+
+    thead {
+      background-color: #3c6d98;
+    }
+
+    tbody {
+      tr {
+        background-color: white;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f3f3f3;
+      }
+    }
+
+    th.resistance-control,
+    td.resistance-control {
+      width: 16px;
+    }
+
+    tr {
+      height: 16px;
+    }
   }
 }
 

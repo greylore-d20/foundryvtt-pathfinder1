@@ -1,4 +1,5 @@
 import { ActorTraitSelector } from "../trait-selector.mjs";
+import { ActorResistanceSelector } from "../damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
 import {
   createTag,
@@ -409,6 +410,8 @@ export class ActorSheetPF extends ActorSheet {
     // Update traits
     this._prepareTraits(data.system.traits);
     data.senses = this._prepareSenses(data.system.traits.senses);
+    data.dr = this._prepareResistance(data.system.traits.dr, "dr");
+    data.eres = this._prepareResistance(data.system.traits.eres, "eres");
 
     // Prepare owned items
     this._prepareItems(data);
@@ -715,6 +718,67 @@ export class ActorSheetPF extends ActorSheet {
     return result;
   }
 
+  /**
+   *
+   * @param {Object<string, any>} damages - The traits object containing both custom text input and more structured resistances
+   * @param {string} damageType  - The type of resistance to check ("dr" or "eres" for damage reduction or energy resistance, respectively)
+   * @returns {Object<string, string>} - An object of key-value pairs of string labels for the actor sheet
+   */
+  _prepareResistance(damages, damageType) {
+    const result = {};
+
+    const format = (amount, type, operator, type2) => {
+      let translatedType = type;
+      if (type2) {
+        switch (operator) {
+          case false: {
+            // Combine with AND
+            translatedType = game.i18n.format("PF1.Application.DamageResistanceSelector.CombinationFormattedAnd", {
+              type1: type,
+              type2: type2,
+            });
+            break;
+          }
+          default:
+          case true: {
+            // Combine with OR
+            translatedType = game.i18n.format("PF1.Application.DamageResistanceSelector.CombinationFormattedOr", {
+              type1: type,
+              type2: type2,
+            });
+            break;
+          }
+        }
+      }
+
+      return damageType === "dr" ? `${amount}/${translatedType}` : `${translatedType} ${amount}`;
+    };
+
+    for (const [key, value] of Object.entries(damages)) {
+      if (key === "custom") {
+        if (value.length) {
+          value.split(pf1.config.re.traitSeparator).forEach((term, counter) => {
+            const split = term.split(damageType === "dr" ? /\s*\/\s*/ : /\s+/);
+            const type = split[damageType === "dr" ? 1 : 0];
+            const amount = split[damageType === "dr" ? 0 : 1];
+
+            result[`custom${counter + 1}`] = format(amount, type, null, "");
+          });
+        }
+        continue;
+      }
+
+      value.forEach((entry, counter) => {
+        const [amount, operator] = [entry.amount, entry.operator];
+        const type1 = pf1.registry.damageTypes.get(entry.types[0]?.toLowerCase())?.name ?? "-";
+        const type2 = pf1.registry.damageTypes.get(entry.types[1]?.toLowerCase())?.name ?? "";
+
+        result[`${counter + 1}`] = format(amount, type1, operator, type2);
+      });
+    }
+
+    return result;
+  }
   /* -------------------------------------------- */
 
   /**
@@ -1040,6 +1104,9 @@ export class ActorSheetPF extends ActorSheet {
 
     // Trait Selector
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
+
+    // Resistance Selector
+    html.find(".resistance-selector").click(this._onResistanceSelector.bind(this));
 
     // Display defenses
     html.find(".generic-defenses .rollable").click((ev) => {
@@ -2816,6 +2883,31 @@ export class ActorSheetPF extends ActorSheet {
     });
     if (app) app.render(true, { focus: true });
     else new ActorTraitSelector(this.document, options).render(true);
+  }
+
+  /**
+   * Handle spawning the ActorResistanceSelector application which allows a number entry of multiple trait options
+   *
+   * @param {Event} event   The click event which originated the selection
+   * @private
+   */
+  _onResistanceSelector(event) {
+    event.preventDefault();
+    const a = event.currentTarget;
+
+    const options = {
+      name: a.getAttribute("for"),
+      title: a.innerText,
+      fields: a.dataset.fields,
+      dtypes: a.dataset.dtypes,
+      isDR: a.dataset.options === "dr" ? true : false,
+    };
+
+    const app = Object.values(this.document.apps).find((o) => {
+      return o instanceof ActorResistanceSelector && o.options.name === options.name && o._element;
+    });
+    if (app) app.render(true, { focus: true });
+    else new ActorResistanceSelector(this.document, options).render(true);
   }
 
   setItemUpdate(id, key, value) {

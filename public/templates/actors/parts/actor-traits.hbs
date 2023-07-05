@@ -46,12 +46,22 @@
     </span>
   </div>
 
-  <div class="form-group {{#unless system.traits.dr}}inactive{{/unless}} tooltip">
-    <label>{{localize "PF1.DamRed"}}</label>
-    <input type="text" name="system.traits.dr" value="{{system.traits.dr}}" placeholder="{{localize "PF1.None"}}"/>
-    <span class="tooltipcontent">
-      @traits.dr
-    </span>
+  <div class="form-group {{#unless system.traits.dr}}inactive{{/unless}} data-selector tooltip">
+    <label for="system.traits.dr.value">{{localize "PF1.DamRed"}}</label>
+    <ul class="traits-list tooltip tag-list">
+      {{#each dr as |value key|}}
+        <li class="tag {{key}}">{{value}}</li>
+      {{/each}}
+      {{#if sourceDetails.system.traits.dr.length}}
+        <div class="tooltipcontent">
+          @traits.dr.total<br>
+          <br>
+          {{localize "PF1.FromSources"}}:<br/>
+          {{#each sourceDetails.system.traits.dr as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+        </div>
+      {{/if}}
+    </ul>
+    <a class="resistance-selector" for="system.traits.dr" data-options="dr" data-fields="{{localize "PF1.Application.DamageResistanceSelector.DamageAmount"}};{{localize "PF1.Application.DamageResistanceSelector.Bypassed"}};{{localize "PF1.Application.DamageResistanceSelector.CombinationType"}};{{localize "PF1.Application.DamageResistanceSelector.Bypassed"}}" data-dtypes="Number;String;Boolean;String"><i class="fas fa-edit"></i></a>
   </div>
 
   <div class="form-group {{#unless system.traits.regen}}inactive{{/unless}} tooltip">
@@ -71,11 +81,21 @@
   </div>
 
   <div class="form-group {{#unless system.traits.eres}}inactive{{/unless}} tooltip">
-    <label>{{localize "PF1.EnRes"}}</label>
-    <input type="text" name="system.traits.eres" value="{{system.traits.eres}}" placeholder="{{localize "PF1.None"}}"/>
-    <span class="tooltipcontent">
-      @traits.eres
-    </span>
+    <label for="system.traits.eres.value">{{localize "PF1.EnRes"}}</label>
+    <ul class="traits-list tooltip tag-list">
+      {{#each eres as |value key|}}
+        <li class="tag {{key}}">{{value}}</li>
+      {{/each}}
+      {{#if sourceDetails.system.traits.eres.length}}
+        <div class="tooltipcontent">
+          @traits.eres.total<br>
+          <br>
+          {{localize "PF1.FromSources"}}:<br/>
+          {{#each sourceDetails.system.traits.eres as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+        </div>
+      {{/if}}
+    </ul>
+    <a class="resistance-selector" for="system.traits.eres"  data-options="eres" data-fields="{{localize "PF1.Application.DamageResistanceSelector.DamageAmount"}};{{localize "PF1.Application.DamageResistanceSelector.Resisted"}};{{localize "PF1.Application.DamageResistanceSelector.CombinationType"}};{{localize "PF1.Application.DamageResistanceSelector.Resisted"}}" data-dtypes="Number;String;Boolean;String"><i class="fas fa-edit"></i></a>
   </div>
 
   <div class="form-group {{#unless system.traits.cres}}inactive{{/unless}} tooltip">

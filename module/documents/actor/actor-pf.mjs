@@ -406,10 +406,13 @@ export class ActorPF extends Actor {
    *
    * @param {object} [options] Additional options
    * @param {Combat} [options.combat] Combat to expire data in, if relevant
+   * @param {number} [options.timeOffset=0] Time offset from world time
    * @param {DocumentModificationContext} [context] Document update context
    */
-  async expireActiveEffects({ combat } = {}, context = {}) {
-    const worldTime = game.time.worldTime;
+  async expireActiveEffects({ combat, timeOffset = 0 } = {}, context = {}) {
+    if (!this.isOwner) throw new Error("Must be owner");
+
+    const worldTime = game.time.worldTime + timeOffset;
 
     const temporaryEffects = this.temporaryEffects.filter((ae) => {
       const { seconds, rounds, startTime, startRound } = ae.duration;

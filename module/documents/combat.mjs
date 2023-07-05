@@ -256,34 +256,45 @@ export class CombatPF extends Combat {
   }
 
   /**
-   * Process current combatant: expire active effects & buffs.
+   * Expire active effects & buffs.
+   *
+   * @param {object} data Update data
+   * @param {options} options Context options
+   * @param {string} userId Triggering user ID
    */
-  async _processCurrentCombatant() {
+  async _expireEffectsOnUpdate(data, options, userId) {
+    if (data.turn === undefined && data.round === undefined) return;
+
+    const actor = this.combatant?.actor;
+    if (!actor) return;
+
+    const timeOffset = options.advanceTime ?? 0;
+
+    // Attempt to perform expiration on owning active user
+    const firstOwner = Object.entries(actor.ownership)
+      .filter(([_, level]) => level >= CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)
+      .map(([userId, _]) => game.users.get(userId))
+      .filter((u) => u?.active)
+      .sort((a, b) => a.id.localeCompare(b.id))[0];
+
+    if (firstOwner) {
+      if (firstOwner.id !== game.user.id) return;
+    } else if (!game.user.isGM) return;
+
+    actor.expireActiveEffects({ timeOffset, combat: this });
+  }
+
+  /**
+   * @override
+   * @param {object} data Update data
+   * @param {options} options Context options
+   * @param {string} userId Triggering user ID
+   */
+  _onUpdate(data, options, userId) {
     try {
-      this.combatant?.actor?.expireActiveEffects({ combat: this });
+      this._expireEffectsOnUpdate(data, options, userId);
     } catch (error) {
       console.error(error);
     }
-  }
-
-  /**
-   * @override
-   * @returns {Promise<Combat>}
-   */
-  async nextRound() {
-    const combat = await super.nextRound();
-    // TODO: Process skipped turns.
-    await this._processCurrentCombatant();
-    return combat;
-  }
-
-  /**
-   * @override
-   * @returns {Promise<Combat>}
-   */
-  async nextTurn() {
-    const combat = await super.nextTurn();
-    await this._processCurrentCombatant();
-    return combat;
   }
 }

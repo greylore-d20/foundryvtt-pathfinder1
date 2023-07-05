@@ -388,6 +388,9 @@ export class ActorPF extends Actor {
     this.containerItems = this._prepareContainerItems(this.items);
     this._prepareItemFlags(this.allItems);
     this._prepareChanges();
+
+    // Apply active effects. Required for status effects in v11 and onward, such as blind and invisible.
+    super.applyActiveEffects();
   }
 
   prepareData() {

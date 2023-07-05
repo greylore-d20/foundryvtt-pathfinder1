@@ -2149,16 +2149,16 @@ export class ActorPF extends Actor {
 
   /* -------------------------------------------- */
 
-  getSkillInfo(skillId) {
+  getSkillInfo(skillId, { rollData } = {}) {
     let skill, skillName, parentSkill;
     const [mainSkillId, subSkillDelim, subSkillId] = skillId.split(".", 3),
       isSubSkill = subSkillDelim === "subSkills" && !!subSkillId,
       mainSkill = this.system.skills[mainSkillId];
-    if (!mainSkill) return null;
+    if (!mainSkill) throw new Error(`Invalid skill ID '${skillId}'`);
 
     if (isSubSkill) {
       skill = mainSkill.subSkills[subSkillId];
-      if (!skill) return null;
+      if (!skill) throw new Error(`Invalid skill ID '${skillId}'`);
       skillName = `${pf1.config.skills[mainSkillId]} (${skill.name})`;
       parentSkill = this.getSkillInfo(mainSkillId);
     } else {
@@ -2166,12 +2166,14 @@ export class ActorPF extends Actor {
       skillName = skill.name ?? pf1.config.skills[skillId];
     }
 
-    const result = duplicate(skill);
-    result.id = skillId;
+    rollData ??= this.getRollData();
+    const dataSkill = getProperty(rollData.skills, skillId);
+    if (!dataSkill) throw new Error(`Invalid skill ID '${skillId}'`);
+
+    const result = deepClone(dataSkill);
     result.name = skillName;
-
+    result.id = skillId;
     if (parentSkill) result.parentSkill = parentSkill;
-
     return result;
   }
 

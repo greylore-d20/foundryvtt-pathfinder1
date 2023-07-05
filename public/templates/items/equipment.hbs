@@ -55,10 +55,6 @@
 
       {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
 
-      <h3 class="form-header">{{localize "PF1.Details"}}</h3>
-      {{!-- Proficiencies --}}
-      {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
-
       {{!-- Equipment Type --}}
       <h3 class="form-header">{{localize "PF1.InventoryArmorEquipment"}}</h3>
       <div class="form-group">
@@ -173,6 +169,9 @@
           <input type="text" name="system.spellFailure" value="{{system.spellFailure}}" data-dtype="Number" placeholder="0"/>
         </div>
       </div>
+
+      {{!-- Proficiencies --}}
+      {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
 
       {{!-- Advanced --}}
       {{#unless showUnidentifiedData}}

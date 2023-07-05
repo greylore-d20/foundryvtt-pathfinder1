@@ -112,9 +112,6 @@
         </div>
       </div>
 
-      {{!-- Proficiencies --}}
-      {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
-
       <h4 class="form-header">{{localize "PF1.SavingThrowPlural"}}</h4>
 
       {{!-- Saving Throws --}}
@@ -212,6 +209,9 @@
         <input type="text" name="system.fc.alt.notes" value="{{system.fc.alt.notes}}" data-dtype="String" />
       </div>
       {{/if}}
+
+      {{!-- Proficiencies --}}
+      {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
 
       <h4 class="form-header">{{localize "PF1.ClassSkills"}}</h4>
 

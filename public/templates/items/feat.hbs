@@ -85,9 +85,6 @@
       </div>
       {{/if}}
 
-      {{!-- Proficiencies --}}
-      {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
-
       {{!-- Feat Tags --}}
       <div class="form-group stacked">
         {{#if isClassFeature}}
@@ -116,6 +113,9 @@
         {{/unless}}
         {{/if}}
       </div>
+
+      {{!-- Proficiencies --}}
+      {{~> "systems/pf1/templates/items/parts/item-proficiencies.hbs"}}
 
       <!-- Class Skills -->
       <h4 class="form-header">{{localize "PF1.ClassSkills"}}</h4>

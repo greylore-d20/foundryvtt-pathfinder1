@@ -6,7 +6,7 @@ export class TokenDocumentPF extends TokenDocument {
    * @param {User} user
    */
   async _preCreate(data, context, user) {
-    super._preCreate(data, context, user);
+    await super._preCreate(data, context, user);
 
     this._preCreateSetSize();
   }

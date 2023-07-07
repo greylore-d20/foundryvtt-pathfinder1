@@ -721,6 +721,7 @@ Hooks.on("hotbarDrop", (bar, data, slot) => {
   else if (data.type === "save") macro = macros.createSaveMacro(data.altType, data.actor, slot);
   else if (["defenses", "cmb", "concentration", "cl", "bab"].includes(data.type))
     macro = macros.createMiscActorMacro(data.type, data.actor, slot, data.altType);
+  else if (data.type === "action") macro = macros.createActionMacro(data, slot);
   else return true;
 
   if (macro == null || macro instanceof Promise) return false;

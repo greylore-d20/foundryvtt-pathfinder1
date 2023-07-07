@@ -36,6 +36,44 @@ export const createItemMacro = async (data, slot) => {
 };
 
 /**
+ * Create action use macro from dropped action.
+ *
+ * @param {object} dropData
+ * @param {number} slot
+ * @returns {Promise<User>} The updated User
+ */
+export const createActionMacro = async (dropData, slot) => {
+  const { source, data } = dropData;
+  const item = fromUuidSync(source);
+
+  const action = item?.actions.get(data._id);
+
+  if (!action) {
+    return void ui.notifications.error(
+      game.i18n.format("PF1.ErrorActionNotFound", { id: data._id, item: item?.name, actor: item?.actor?.name })
+    );
+  }
+
+  const command = `fromUuidSync("${source}")\n\t.actions.get("${action.id}")\n\t.use();`;
+
+  let macro = game.macros.contents.find((m) => m.name === item.name && m.data.command === command);
+  if (!macro) {
+    macro = await Macro.create(
+      {
+        name: `${action.name} (${item.name})`,
+        type: "script",
+        img: action.img || item.img,
+        command,
+        flags: { pf1: { actionMacro: { item: source, action: data._id } } },
+      },
+      { displaySheet: false }
+    );
+  }
+
+  return game.user.assignHotbarMacro(macro, slot);
+};
+
+/**
  * Create a Macro from skill data to roll an actor's skill, or get an existing one.
  *
  * @async

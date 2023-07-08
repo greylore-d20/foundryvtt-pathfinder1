@@ -1,15 +1,17 @@
 .pf1.sheet {
   .action.roll {
-    img {
-      width: 24px;
-      height: 24px;
-      border: unset;
-    }
+    justify-self: center;
+    display: inline-flex;
 
-    img:hover {
-      animation: dice-spin 250ms cubic-bezier(0.6, -0.28, 0.735, 0.045) 1 forwards;
-      transform-origin: 50% 40%;
-      filter: @filterAuburn;
+    color: var(--color-text-dark-primary);
+
+    > i {
+      font-size: var(--font-size-16);
+
+      &:hover {
+        animation: dice-spin 250ms cubic-bezier(0.6, -0.28, 0.735, 0.045) 1 forwards;
+        color: var(--pf1-color-text-hover);
+      }
     }
   }
 }

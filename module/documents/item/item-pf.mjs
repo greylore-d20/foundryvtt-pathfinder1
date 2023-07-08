@@ -2142,7 +2142,7 @@ export class ItemPF extends Item {
       : pf1.config.sizeSpecialMods[rollData.traits.size];
 
     // Add size bonus
-    if (sizeBonus != 0) describePart(sizeBonus, game.i18n.localize("PF1.Size"), -20);
+    if (sizeBonus != 0) describePart(sizeBonus, game.i18n.localize("PF1.Size"), "size", -20);
 
     srcDetails(this.actor.sourceDetails["system.attributes.attack.shared"]);
     if (isManeuver) srcDetails(this.actor.sourceDetails["system.attributes.cmb.bonus"]);
@@ -2155,44 +2155,44 @@ export class ItemPF extends Item {
       this.actor.changes.filter((c) => changeSources.includes(c.subTarget)),
       { ignoreTarget: true }
     );
-    effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, -800));
+    effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, ic.modifier, -800));
 
     if (actionData.ability.attack) {
       const ablMod = actorData.abilities?.[actionData.ability.attack]?.mod ?? 0;
-      describePart(ablMod, pf1.config.abilities[actionData.ability.attack], -50);
+      describePart(ablMod, pf1.config.abilities[actionData.ability.attack], "untyped", -50);
     }
 
     // Attack bonus formula
     const bonusRoll = RollPF.safeRoll(actionData.attackBonus || "0", rollData);
     if (bonusRoll.total != 0)
-      describePart(bonusRoll.total, bonusRoll.flavor ?? game.i18n.localize("PF1.AttackRollBonus"), -100);
+      describePart(bonusRoll.total, bonusRoll.flavor ?? game.i18n.localize("PF1.AttackRollBonus"), "untyped", -100);
 
     // Masterwork or enhancement bonus
     // Only add them if there's no larger enhancement bonus from some other source
     const virtualEnh = action.enhancementBonus ?? (itemData.masterwork ? 1 : 0);
     if (!effectiveChanges.find((i) => i.modifier === "enh" && i.value > virtualEnh)) {
       if (Number.isFinite(action.enhancementBonus) && action.enhancementBonus !== 0) {
-        describePart(action.enhancementBonus, game.i18n.localize("PF1.EnhancementBonus"), -300);
+        describePart(action.enhancementBonus, game.i18n.localize("PF1.EnhancementBonus"), "enh", -300);
       } else if (itemData.masterwork) {
-        describePart(1, game.i18n.localize("PF1.Masterwork"), -300);
+        describePart(1, game.i18n.localize("PF1.Masterwork"), "enh", -300);
       }
     }
 
     // Add proficiency penalty
     if (!itemData.proficient) {
-      describePart(-4, game.i18n.localize("PF1.ProficiencyPenalty"), -500);
+      describePart(-4, game.i18n.localize("PF1.ProficiencyPenalty"), "penalty", -500);
     }
 
     // Broken condition
     if (itemData.broken) {
-      describePart(-2, game.i18n.localize("PF1.Broken"), -500);
+      describePart(-2, game.i18n.localize("PF1.Broken"), "penalty", -500);
     }
 
     // Add secondary natural attack penalty
     if (actionData.naturalAttack.primaryAttack !== true && itemData.subType === "natural") {
       const attackBonus = actionData.naturalAttack?.secondary?.attackBonus || "-5";
       const secondaryModifier = RollPF.safeTotal(`${attackBonus}`, rollData);
-      describePart(secondaryModifier, game.i18n.localize("PF1.SecondaryAttack"), -400);
+      describePart(secondaryModifier, game.i18n.localize("PF1.SecondaryAttack"), "untyped", -400);
     }
 
     // Conditional modifiers
@@ -2203,7 +2203,7 @@ export class ItemPF extends Item {
           if (cc.subTarget === "allAttack") {
             const bonusRoll = RollPF.safeRoll(cc.formula, rollData);
             if (bonusRoll.total == 0) return;
-            describePart(bonusRoll.total, c.name, -5000);
+            describePart(bonusRoll.total, c.name, cc.type, -5000);
           }
         });
       });

@@ -40,7 +40,7 @@
     {{/if}}
     </span><span class="span1 align-right">
     {{#if src.modifier.length}}
-      [{{src.modifier}}]
+      [{{lookup @root.config.bonusModifiers src.modifier}}]
     {{/if}}</span>
   {{/each}}
 {{/if}}

@@ -1,0 +1,53 @@
+.pf1.sheet.actor {
+  .tab.settings {
+    overflow: hidden scroll;
+
+    // Ability Score Links
+    .ability-scores {
+      flex: 0;
+
+      > .links {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: min-content;
+        gap: 3px;
+
+        > div {
+          display: grid;
+          grid-template-columns: 3fr 2fr;
+          grid-template-rows: min-content;
+          gap: 1px;
+
+          h3 {
+            grid-column: span 2;
+
+            margin: 0;
+
+            color: #f0f0e0;
+            text-shadow: rgb(0, 0, 0) 1px 1px 0;
+
+            background: rgba(0, 0, 0, 0.3);
+          }
+
+          label {
+            color: #4b4a44;
+            font-weight: bold;
+
+            height: 2em;
+            display: inline-flex;
+            align-items: center;
+
+            &:nth-of-type(even) {
+              background: rgba(0, 0, 0, 0.05);
+            }
+          }
+
+          h3,
+          label {
+            padding: 0 0.3rem;
+          }
+        }
+      }
+    }
+  }
+}

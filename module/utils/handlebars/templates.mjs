@@ -23,6 +23,7 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/actors/parts/actor-buffs.hbs",
   "systems/pf1/templates/actors/parts/actor-attributes.hbs",
   "systems/pf1/templates/actors/parts/actor-settings.hbs",
+  "systems/pf1/templates/actors/parts/actor-settings-ability-scores.hbs",
   "systems/pf1/templates/actors/parts/actor-cmb.hbs",
   "systems/pf1/templates/actors/parts/actor-contextNotes.hbs",
   "systems/pf1/templates/actors/parts/actor-source-details.hbs",

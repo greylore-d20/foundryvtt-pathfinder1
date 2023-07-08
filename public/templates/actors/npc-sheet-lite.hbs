@@ -2,7 +2,7 @@
 
   {{!-- NPC Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{actor.img}}" data-tooltip="{{actor.name}}" data-edit="img"/>
+    <img class="profile" src="{{actor.img}}" data-edit="img"/>
 
     <div class="header-details flexcol">
       <!-- <div class="header-top flexrow"> -->
@@ -43,9 +43,12 @@
         </table>
 
         <span class="tooltipcontent">
-          @attributes.hd.total : {{system.attributes.hd.total}}<br/>
-          @details.cr.base : {{system.details.cr.base}}<br/>
-          @details.cr.total : {{system.details.cr.total}}
+          <span class="span2 align-left">@attributes.hd.total</span>
+          <span class="span1 align-right">{{system.attributes.hd.total}}</span>
+          <span class="span2 align-left">@details.cr.base</span>
+          <span class="span1 align-right">{{system.details.cr.base}}</span>
+          <span class="span2 align-left">@details.cr.total</span>
+          <span class="span1 align-right">{{system.details.cr.total}}</span>
         </span>
       </div>
 
@@ -238,12 +241,9 @@
                 {{/if}}
 
                 <div class="item-detail item-actions">
-                  <div class="item-action tooltip">
+                  <div class="item-action">
                     {{#if item.hasAction}}
-                    <span class="tooltipcontent">
-                      {{localize "PF1.PerformAttack"}}
-                    </span>
-                    <a class="item-control item-action action roll">
+                    <a class="item-control item-action action roll" data-tooltip="PF1.PerformAttack">
                       <i class="fa-solid fa-dice-d20"></i>
                     </a>
                     {{/if}}
@@ -256,8 +256,8 @@
                   <span class="sep"> / </span>
                   <span class="text-box">{{item.uses.max}}</span>
                   <span class="tooltipcontent">
-                    @resources.{{item.tag}}.value : {{item.uses.value}}<br>
-                    @resources.{{item.tag}}.max : {{item.uses.max}}
+                    <span class="span2">@resources.{{item.tag}}.value :</span><span class="span1"> {{item.uses.value}}</span>
+                    <span class="span2">@resources.{{item.tag}}.max :</span><span class="span1"> {{item.uses.max}}</span>
                   </span>
                   {{/if}}
                 </div>

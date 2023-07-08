@@ -35,6 +35,7 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/items/parts/item-actions.hbs",
   "systems/pf1/templates/items/parts/item-advanced.hbs",
   "systems/pf1/templates/items/parts/item-aura.hbs",
+  "systems/pf1/templates/items/parts/item-base-types.hbs",
   "systems/pf1/templates/items/parts/item-changes.hbs",
   "systems/pf1/templates/items/parts/item-contents.hbs",
   "systems/pf1/templates/items/parts/item-description.hbs",

@@ -26,7 +26,7 @@ export class ItemBuffPF extends ItemPF {
     // Delete associated effect
     const effect = this.effect;
     if (effect) {
-      await effect.delete({ type: "delete", document: this });
+      await effect.delete({ pf1: { delete: this.uuid } });
     }
 
     // Run script call(s)

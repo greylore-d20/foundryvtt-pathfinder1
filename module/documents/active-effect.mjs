@@ -28,7 +28,8 @@ export class ActiveEffectPF extends ActiveEffect {
       await parentActor.update(updates, context);
     } else if (origin) {
       const item = parentActor.items.get(origin);
-      if (!(context.type === "delete" && context.document === item)) {
+      // Avoid looping
+      if (context.pf1?.delete !== item.uuid) {
         item?.setActive(false, context);
       }
     }

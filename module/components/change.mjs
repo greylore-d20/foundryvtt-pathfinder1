@@ -244,49 +244,82 @@ export class ItemChange {
     }
   }
 
+  /**
+   * Applies this change's info to an actor's `sourceInfo`.
+   * Info is only added if either the {@link modifier | modifier type} allows stacking or the {@link value} is higher than the previous value.
+   * If the modifier type is not stacking and this change's info is added, existing and now ineffective info entries are removed.
+   *
+   * @param {ActorPF} actor - The actor to apply the change's data to.
+   * returns {void}
+   */
   applySourceInfo(actor) {
     const sourceInfoTargets = this.getSourceInfoTargets(actor);
-    let value = this.value;
+    const value = this.value;
+
+    // This Change's info entry data
+    const infoEntryData = {
+      value: value,
+      name: this.parent ? this.parent.name : this.flavor,
+      modifier: this.modifier,
+      type: this.parent ? this.parent.type : null,
+      change: this,
+    };
 
     switch (this.operator) {
       case "add":
       case "function":
         if (pf1.config.stackingBonusModifiers.includes(this.modifier)) {
+          // Always add stacking entries
           const sourceInfoGroup = value >= 0 ? "positive" : "negative";
           for (const si of sourceInfoTargets) {
-            getSourceInfo(actor.sourceInfo, si)[sourceInfoGroup].push({
-              value: value,
-              name: this.parent ? this.parent.name : this.flavor,
-              modifier: this.modifier,
-              type: this.parent ? this.parent.type : null,
-              change: this,
-            });
+            getSourceInfo(actor.sourceInfo, si)[sourceInfoGroup].push(infoEntryData);
           }
         } else {
-          for (const si of sourceInfoTargets) {
+          for (const infoTarget of sourceInfoTargets) {
             const sourceInfoGroup = value >= 0 ? "positive" : "negative";
-            const sInfo = getSourceInfo(actor.sourceInfo, si)[sourceInfoGroup];
+            const sInfo = getSourceInfo(actor.sourceInfo, infoTarget)[sourceInfoGroup];
 
-            // Remove entries with lower values
+            // Assume this Change's info entry should be added
             let doAdd = true;
-            sInfo.forEach((infoEntry) => {
+
+            // Check if there already is an info entry with which this Change should be combined
+            // This is the case for `enhancement` and `base` entries otherwise sharing parent and target
+            const existingInfoEntry = sInfo.find((infoEntry) => {
               const hasSameParent = infoEntry.change?.parent === this.parent;
               const isEnh =
                 (infoEntry.change?.modifier === "base" && this.modifier === "enhancement") ||
                 (infoEntry.change?.modifier === "enhancement" && this.modifier === "base");
               const hasSameTarget = infoEntry.change?.subTarget === this.subTarget;
-              const alterBase = hasSameParent && isEnh && hasSameTarget;
+              return hasSameParent && isEnh && hasSameTarget;
+            });
+            if (existingInfoEntry) {
+              doAdd = false;
+              if (existingInfoEntry.change?.modifier === "base") {
+                // This Change enhances an existing base
+                existingInfoEntry.value += value;
+                continue;
+              } else {
+                // This Change replaces an existing `enhancement` entry with its own `base` entry, using the sum of both values
+                infoEntryData.value += existingInfoEntry.value;
+                // Check whether the combined entry should exist, or if another entry is already better than it
+                const hasHighestValue = !sInfo.some((infoEntry) => {
+                  const isSameModifier = infoEntry.modifier === infoEntryData.modifier;
+                  const subTarget = infoEntry.change?.subTarget;
+                  const isSameTarget = subTarget ? subTarget === this.subTarget : true;
+                  const hasHigherValue = infoEntry.value > infoEntryData.value;
+                  return isSameModifier && isSameTarget && hasHigherValue;
+                });
+                // If the merged entry is the best, replace the existing entry with it
+                sInfo.findSplice((entry) => entry === existingInfoEntry, hasHighestValue ? infoEntryData : undefined);
+              }
+            }
 
-              if (infoEntry.change?.modifier === this.modifier || alterBase) {
-                if (alterBase) {
-                  if (infoEntry.change?.modifier === "base") {
-                    infoEntry.value += value;
-                    doAdd = false;
-                  } else {
-                    value += infoEntry.value;
-                    sInfo.splice(sInfo.indexOf(infoEntry), 1);
-                  }
-                } else if (infoEntry.value < value) {
+            // Determine whether there is an entry with a higher value; remove entries with lower values
+            sInfo.forEach((infoEntry) => {
+              const isSameModifier =
+                infoEntry.change?.modifier === infoEntryData.modifier || infoEntry.modifier === infoEntryData.modifier;
+              if (isSameModifier) {
+                if (infoEntry.value < infoEntryData.value) {
                   sInfo.splice(sInfo.indexOf(infoEntry), 1);
                 } else {
                   doAdd = false;
@@ -295,13 +328,7 @@ export class ItemChange {
             });
 
             if (doAdd) {
-              sInfo.push({
-                value: value,
-                name: this.parent ? this.parent.name : this.flavor,
-                modifier: this.modifier,
-                type: this.parent ? this.parent.type : null,
-                change: this,
-              });
+              sInfo.push(infoEntryData);
             }
           }
         }

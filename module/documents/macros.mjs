@@ -214,6 +214,29 @@ export const createMiscActorMacro = async (type, uuid, slot, data) => {
       name = game.i18n.format("PF1.RollBABMacroName", { actor: actor.name });
       img = "systems/pf1/icons/skills/yellow_08.jpg";
       break;
+    case "initiative":
+      command += ".rollInitiative();";
+      name = game.i18n.format("PF1.RollInitiativeMacroName", { actor: actor.name });
+      img = "systems/pf1/icons/skills/weapon_41.jpg";
+      break;
+    case "attack": {
+      const { attack } = data;
+      const isMelee = attack === "melee";
+      command += `.rollAttack({ melee: ${isMelee ? "true" : "false"}});`;
+      name = game.i18n.format(isMelee ? "PF1.RollMeleeMacroName" : "PF1.RollRangedMacroName", { actor: actor.name });
+      img = isMelee ? "systems/pf1/icons/skills/weapon_23.jpg" : "systems/pf1/icons/skills/arrow_07.jpg";
+      break;
+    }
+    case "abilityScore": {
+      const { ability } = data;
+      command += `.rollAbilityTest("${ability}");`;
+      name = game.i18n.format("PF1.RollAbilityMacroName", {
+        actor: actor.name,
+        ability: CONFIG.PF1.abilities[ability],
+      });
+      img = "systems/pf1/icons/skills/blue_35.jpg";
+      break;
+    }
   }
 
   if (!name) return;

@@ -134,7 +134,10 @@ export class ActorSheetPF extends ActorSheet {
         { dragSelector: "th.saving-throw[data-savingthrow]" },
         { dragSelector: "th.attribute.cmb[data-attribute]" },
         { dragSelector: "th.attribute.bab[data-attribute]" },
+        { dragSelector: "th.attribute.initiative[data-attribute]" },
         { dragSelector: "li.generic-defenses[data-drag]" },
+        { dragSelector: ".ability-scores .ability[data-ability]" },
+        { dragSelector: ".attribute.attack[data-attack]" },
         { dragSelector: ".spellcasting-concentration[data-drag]" },
         { dragSelector: ".spellcasting-cl" },
       ],
@@ -1396,19 +1399,38 @@ export class ActorSheetPF extends ActorSheet {
     event.dataTransfer.setData("text/plain", JSON.stringify(result));
   }
 
-  _onDragMiscStart(event, type) {
+  /**
+   * @param {DragEvent} event
+   * @param {"bab"|"cmb"|"defenses"|"concentration"|"cl"|"initiative"|"abilityScore"|"attack"} type
+   * @param {string} [subType] Type specific subtype
+   */
+  _onDragMiscStart(event, type, subType) {
     const result = {
       type: type,
       uuid: this.document.uuid,
     };
 
     switch (type) {
+      case "bab":
+      case "cmb":
+      case "initiative":
+      case "defenses":
+        // No special handling
+        break;
       case "concentration":
       case "cl": {
         const elem = event.currentTarget.closest(".tab.spellbook-group");
         result.bookId = elem.dataset.tab;
         break;
       }
+      case "abilityScore":
+        result.ability = subType;
+        break;
+      case "attack":
+        result.attack = subType;
+        break;
+      default:
+        throw new Error(`Unrecognized drag source: ${type}`);
     }
 
     event.dataTransfer.setData("text/plain", JSON.stringify(result));
@@ -2979,8 +3001,6 @@ export class ActorSheetPF extends ActorSheet {
     let sourceActor = await fromUuid(data.actorUuid || "");
     if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
 
-    const dataType = "currency";
-
     const { currency, amount, containerId, alt } = data;
 
     return new CurrencyTransfer(
@@ -3091,15 +3111,17 @@ export class ActorSheetPF extends ActorSheet {
    * Foundry blocks this if sheet is not editable, which blocks copying items.
    *
    * @override
+   * @param {string} selector Selector string
    */
   _canDragStart(selector) {
+    // Conditionally block currency transfer
+    if (selector.includes(".denomination")) return this.isEditable;
     return true;
   }
 
   _onDragStart(event) {
     const elem = event.target;
     if (elem.classList.contains("denomination")) {
-      if (this.actor.permission < 3) return;
       const dragData = {
         actorUuid: this.actor.uuid,
         type: "Currency",
@@ -3116,7 +3138,13 @@ export class ActorSheetPF extends ActorSheet {
       this._onDragMiscStart(event, elem.dataset.drag);
     } else if (elem.dataset?.savingthrow) {
       this._onDragSaveStart(event, elem.dataset.savingthrow);
-    } else super._onDragStart(event);
+    } else if (elem.dataset?.ability) {
+      this._onDragMiscStart(event, "abilityScore", elem.dataset.ability);
+    } else if (elem.dataset?.attack) {
+      this._onDragMiscStart(event, "attack", elem.dataset.attack);
+    } else {
+      super._onDragStart(event);
+    }
   }
 
   async _onConfigControl(event) {

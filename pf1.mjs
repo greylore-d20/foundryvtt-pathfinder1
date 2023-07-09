@@ -736,6 +736,9 @@ Hooks.once("ready", () => {
       case "cmb":
       case "concentration":
       case "cl":
+      case "attack":
+      case "abilityScore":
+      case "initiative":
       case "bab":
         macro = macros.createMiscActorMacro(type, uuid, slot, data);
         break;

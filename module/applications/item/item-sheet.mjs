@@ -433,28 +433,31 @@ export class ItemSheetPF extends ItemSheet {
       armorProf: pf1.config.armorProficiencies,
       weaponProf: pf1.config.weaponProficiencies,
       languages: pf1.config.languages,
+      weaponGroups: pf1.config.weaponGroups,
     };
-    for (const [t, choices] of Object.entries(profs)) {
-      if (t in itemData) {
-        const trait = itemData[t];
-        if (!trait) continue;
-        let values = [];
-        if (trait.value) {
-          values = trait.value instanceof Array ? trait.value : [trait.value];
-        }
-        trait.selected = values.reduce((obj, t) => {
-          obj[t] = choices[t];
-          return obj;
-        }, {});
 
-        // Add custom entry
-        if (trait.custom) {
-          trait.custom
-            .split(pf1.config.re.traitSeparator)
-            .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
-        }
-        trait.cssClass = !foundry.utils.isEmpty(trait.selected) ? "" : "inactive";
+    for (const [t, choices] of Object.entries(profs)) {
+      if (!itemData[t]) continue;
+
+      const trait = deepClone(itemData[t]);
+      context[t] = trait;
+
+      let values = [];
+      if (trait.value) {
+        values = trait.value instanceof Array ? trait.value : [trait.value];
       }
+      trait.selected = values.reduce((obj, t) => {
+        obj[t] = choices[t];
+        return obj;
+      }, {});
+
+      // Add custom entry
+      if (trait.custom) {
+        trait.custom
+          .split(pf1.config.re.traitSeparator)
+          .forEach((c, i) => (trait.selected[`custom${i + 1}`] = c.trim()));
+      }
+      trait.active = !foundry.utils.isEmpty(trait.selected);
     }
 
     // Prepare stuff for active effects on items

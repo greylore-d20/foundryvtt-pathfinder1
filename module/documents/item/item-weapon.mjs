@@ -67,13 +67,6 @@ export class ItemWeaponPF extends ItemPF {
     return labels;
   }
 
-  /** @inheritDoc */
-  prepareDerivedData() {
-    super.prepareDerivedData();
-
-    this._prepareWeaponGroups();
-  }
-
   /**
    * @param {boolean} active
    * @param {object} context Optional update context
@@ -86,23 +79,5 @@ export class ItemWeaponPF extends ItemPF {
 
   get isActive() {
     return this.system.equipped;
-  }
-
-  _prepareWeaponGroups() {
-    const weaponGroups = this.system.weaponGroups || { value: [], custom: "" };
-
-    weaponGroups.selected = weaponGroups.value.reduce((obj, t) => {
-      obj[t] = pf1.config.weaponGroups[t];
-      return obj;
-    }, {});
-
-    // Add custom entry
-    if (weaponGroups.custom) {
-      weaponGroups.custom
-        .split(pf1.config.re.traitSeparator)
-        .forEach((c, i) => (weaponGroups.selected[`custom${i + 1}`] = c.trim()));
-    }
-
-    weaponGroups.cssClass = foundry.utils.isEmpty(weaponGroups.selected) ? "inactive" : "";
   }
 }

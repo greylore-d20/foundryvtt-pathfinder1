@@ -21,7 +21,7 @@ export const registerActorConditionsTests = () => {
         await actor.delete();
       });
 
-      const shakenCondition = { name: "Shaken", value: -2, modifier: "Penalty" };
+      const shakenCondition = { name: "Shaken", value: -2, modifier: "penalty" };
 
       // ---------------------------------- //
       // Shaken                             //
@@ -102,7 +102,7 @@ export const registerActorConditionsTests = () => {
           await actor.setCondition("sickened", false);
         });
 
-        const sickenedCondition = { name: "Sickened", value: -2, modifier: "Penalty" };
+        const sickenedCondition = { name: "Sickened", value: -2, modifier: "penalty" };
 
         it("can be enabled", async function () {
           expect(actor.hasCondition("sickened")).to.be.true;
@@ -218,7 +218,7 @@ export const registerActorConditionsTests = () => {
             expect(actor.system.abilities[ability].mod).to.equal(baseModifier - 1);
             expect(actor.sourceDetails[`system.abilities.${ability}.penalty`]).to.be.an("array").that.deep.includes({
               name: "Fatigued",
-              modifier: "Penalty",
+              modifier: "penalty",
               value: -2,
             });
           }
@@ -236,7 +236,7 @@ export const registerActorConditionsTests = () => {
             expect(actor.system.abilities[ability].mod).to.equal(baseModifier - 3);
             expect(actor.sourceDetails[`system.abilities.${ability}.penalty`]).to.be.an("array").that.deep.includes({
               name: "Exhausted",
-              modifier: "Penalty",
+              modifier: "penalty",
               value: -6,
             });
           }

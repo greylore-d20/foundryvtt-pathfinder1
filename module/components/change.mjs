@@ -97,9 +97,7 @@ export class ItemChange {
     }
 
     // Return default targets
-    let flats = getChangeFlat.call(actor, this.subTarget, this.modifier);
-    if (!(flats instanceof Array)) flats = [flats];
-    return flats;
+    return getChangeFlat.call(actor, this.subTarget, this.modifier);
   }
 
   prepareData() {}
@@ -147,10 +145,7 @@ export class ItemChange {
    */
   applyChange(actor, targets = null, { applySourceInfo = true } = {}) {
     // Prepare change targets
-    if (!targets) {
-      targets = getChangeFlat.call(actor, this.subTarget, this.modifier);
-      if (!(targets instanceof Array)) targets = [targets];
-    }
+    targets ??= getChangeFlat.call(actor, this.subTarget, this.modifier);
 
     const rollData = this.parent ? this.parent.getRollData({ refresh: true }) : actor.getRollData({ refresh: true });
 

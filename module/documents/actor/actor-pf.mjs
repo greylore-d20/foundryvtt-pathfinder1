@@ -1591,8 +1591,7 @@ export class ActorPF extends Actor {
     const sourceDetails = {};
     // Get empty source arrays
     for (const b of Object.keys(pf1.config.buffTargets)) {
-      let buffTargets = getChangeFlat.call(this, b, null);
-      if (!(buffTargets instanceof Array)) buffTargets = [buffTargets];
+      const buffTargets = getChangeFlat.call(this, b, null);
       for (const bt of buffTargets) {
         if (!sourceDetails[bt]) sourceDetails[bt] = [];
       }
@@ -1634,8 +1633,7 @@ export class ActorPF extends Actor {
         if (wtData.level > 0) {
           const changeFlatKeys = ["~attackCore", "cmd", "init", "allSavingThrows", "ac", "skills", "abilityChecks"];
           for (const fk of changeFlatKeys) {
-            let flats = getChangeFlat.call(this, fk, "penalty");
-            if (!(flats instanceof Array)) flats = [flats];
+            const flats = getChangeFlat.call(this, fk, "penalty");
             for (const k of flats) {
               if (!k) continue;
               sourceDetails[k].push({
@@ -2208,8 +2206,7 @@ export class ActorPF extends Actor {
     const parts = [];
     const changes = getHighestChanges(
       this.changes.filter((c) => {
-        let cf = getChangeFlat.call(this, c.subTarget, c.modifier);
-        if (!(cf instanceof Array)) cf = [cf];
+        const cf = getChangeFlat.call(this, c.subTarget, c.modifier);
 
         if (haveParentSkill && cf.includes(`system.skills.${mainSkillId}.changeBonus`)) return true;
         return cf.includes(`system.skills.${skillId}.changeBonus`);
@@ -3399,8 +3396,7 @@ export class ActorPF extends Actor {
     const penalty = wt.penalty;
     const changeFlatKeys = pf1.config.woundThresholdChangeTargets;
     for (const fk of changeFlatKeys) {
-      let flats = getChangeFlat.call(this, fk, "penalty");
-      if (!(flats instanceof Array)) flats = [flats];
+      const flats = getChangeFlat.call(this, fk, "penalty");
       for (const k of flats) {
         if (!k) continue;
         const curValue = getProperty(this, k) ?? 0;

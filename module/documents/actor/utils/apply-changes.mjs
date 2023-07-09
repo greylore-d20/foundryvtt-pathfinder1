@@ -57,8 +57,7 @@ export function applyChanges() {
   // Apply all changes
   for (let a = 0; a < changes.length; a++) {
     const change = changes[a];
-    let flats = getChangeFlat.call(this, change.subTarget, change.modifier, change.value);
-    if (!(flats instanceof Array)) flats = [flats];
+    const flats = getChangeFlat.call(this, change.subTarget, change.modifier, change.value);
     for (const f of flats) {
       if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
     }
@@ -69,8 +68,7 @@ export function applyChanges() {
     for (const cc of continuousChanges) {
       if (cc === change) continue;
 
-      let flats = getChangeFlat.call(this, cc.subTarget, cc.modifier, cc.value);
-      if (!(flats instanceof Array)) flats = [flats];
+      const flats = getChangeFlat.call(this, cc.subTarget, cc.modifier, cc.value);
       for (const f of flats) {
         if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
       }
@@ -147,7 +145,7 @@ const getSortChangePriority = function () {
  * @returns {Array<string>} Array of target paths to modify
  */
 export const getChangeFlat = function (changeTarget, changeType, modifier) {
-  if (changeTarget == null) return null;
+  if (changeTarget == null) return [];
 
   const curData = this.system;
   /** @type {string[]} */

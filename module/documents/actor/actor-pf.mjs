@@ -2488,7 +2488,7 @@ export class ActorPF extends Actor {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
-    if (Hooks.call("pf1PreActorRollCl", this, bookId, rollOptions) === false) return;
+    if (Hooks.call("pf1PreActorRollCl", this, rollOptions, bookId) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollCl", this, result, bookId);
     return result;

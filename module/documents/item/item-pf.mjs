@@ -127,6 +127,45 @@ export class ItemPF extends Item {
   }
 
   /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
+
+    if (!changed.system) return;
+
+    await this._chargePreUpdate(changed, context);
+  }
+
+  /**
+   * Handle charge update sanity checking, constraining them to reasonable values,
+   *   and propagating to parent items if charges are shared.
+   *
+   * @private
+   * @param {object} changed
+   * @param {object} context
+   */
+  async _chargePreUpdate(changed, context) {
+    // Make sure charges doesn't exceed max charges
+    const uses = changed.system.uses;
+    if (uses?.value && this.isCharged) {
+      const maxCharges = this.maxCharges;
+      if (uses.value > maxCharges) uses.value = maxCharges;
+
+      const link = this.links.charges;
+      if (link) {
+        // Update charges for linked item. This will cascade if items are linked more.
+        await link.update({ "system.uses.value": uses.value }, context);
+        // Remove updating current item's inherited value
+        delete changed.system.uses.value;
+      }
+    }
+  }
+
+  /**
    * @returns {string[]} The keys of data variables to memorize between updates, for e.g. determining the difference in update.
    */
   get memoryVariables() {
@@ -715,69 +754,26 @@ export class ItemPF extends Item {
       return super.update(data, context);
     }
 
+    data = expandObject(data);
+
     // Make sure stuff remains an array
-    {
-      const keepPaths = [
-        "system.attackNotes",
-        "system.effectNotes",
-        "system.contextNotes",
-        "system.scriptCalls",
-        "system.actions",
-        "system.inventoryItems",
-        "system.changes",
-      ];
+    const keepPaths = [
+      "system.attackNotes",
+      "system.effectNotes",
+      "system.contextNotes",
+      "system.scriptCalls",
+      "system.actions",
+      "system.inventoryItems",
+      "system.changes",
+    ];
 
-      data = expandObject(data);
-      for (const path of keepPaths) {
-        keepUpdateArray(this, data, path);
-      }
-      data = flattenObject(data);
-    }
-
-    // Make sure charges doesn't exceed max charges, and vice versa
-    if (this.isCharged) {
-      let charges = 0;
-      let maxCharges = 0;
-      let target = "value";
-
-      if (this.type === "spell") {
-        if (data["system.preparation.maxAmount"] != null) target = "max";
-        charges = data["system.preparation.preparedAmount"] ?? this.charges;
-        maxCharges = data["system.preparation.maxAmount"] ?? this.maxCharges;
-      } else {
-        if (data["system.uses.max"] != null) target = "max";
-        charges = data["system.uses.value"] ?? this.charges;
-        maxCharges = data["system.uses.max"] ?? this.maxCharges;
-      }
-
-      if (target === "value" && charges > maxCharges) maxCharges = charges;
-      else if (target === "max" && maxCharges < charges) charges = maxCharges;
-
-      const link = this.links.charges;
-      if (!link) {
-        if (this.type === "spell") {
-          if (charges !== undefined) data["system.preparation.preparedAmount"] = charges;
-          if (maxCharges !== undefined) data["system.preparation.maxAmount"] = maxCharges;
-        } else {
-          if (charges !== undefined) data["system.uses.value"] = charges;
-          if (maxCharges !== undefined) data["system.uses.max"] = maxCharges;
-        }
-      } else {
-        // Update charges for linked items
-        const uses = data["system.uses.value"];
-        if (uses !== undefined) {
-          if (link && link.links?.charges == null) {
-            await link.update({ "system.uses.value": uses });
-            // Remove updating current item's inherited value
-            delete data["system.uses.value"];
-          }
-        }
-      }
+    for (const path of keepPaths) {
+      keepUpdateArray(this, data, path);
     }
 
     this.memorizeVariables();
 
-    const diff = diffObject(flattenObject(this.toObject()), data);
+    const diff = diffObject(this.toObject(), data);
 
     if (Object.keys(diff).length) {
       const parentItem = this.parentItem;

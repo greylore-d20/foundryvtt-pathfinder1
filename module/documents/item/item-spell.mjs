@@ -15,6 +15,42 @@ export class ItemSpellPF extends ItemPF {
     this._assignLevelOnCreate(data, options);
   }
 
+  async _preUpdate(changed, options, user) {
+    await super._preUpdate(changed, options, user);
+
+    if (!changed.system) return;
+
+    this._preparationPreUpdate(changed);
+  }
+
+  /**
+   * Constrains and alters prepared slot updates to result in meaningful end results.
+   *
+   * @private
+   * @param {object} changed Change data in pre-update
+   */
+  _preparationPreUpdate(changed) {
+    const prep = changed.system.preparation;
+    if (!prep) return;
+
+    const current = this.system.preparation;
+    const max = prep.maxAmount ?? current.maxAmount ?? 0;
+    const left = prep.preparedAmount ?? current.preparedAmount ?? 0;
+
+    // Constrain left and max to sane values
+    if (left > max) {
+      if (prep.maxAmount !== undefined) {
+        prep.preparedAmount = max;
+      } else if (prep.preparedAmount !== undefined) {
+        prep.maxAmount = left;
+      }
+    }
+
+    // TODO: Remove following once DataModel is implemented with relevant constraints
+    if (prep.maxAmount < 0) prep.maxAmount = 0;
+    if (prep.preparedAmount < 0) prep.preparedAmount = 0;
+  }
+
   /**
    * Assign spell level according to spellbook class if present.
    *

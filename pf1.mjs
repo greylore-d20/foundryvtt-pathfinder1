@@ -714,17 +714,37 @@ Hooks.on("dropActorSheetData", (act, sheet, data) => {
 /*  Hotbar Macros                               */
 /* -------------------------------------------- */
 
-Hooks.on("hotbarDrop", (bar, data, slot) => {
-  let macro;
-  if (data.type === "Item") macro = macros.createItemMacro(data, slot);
-  else if (data.type === "skill") macro = macros.createSkillMacro(data.skill, data.actor, slot);
-  else if (data.type === "save") macro = macros.createSaveMacro(data.altType, data.actor, slot);
-  else if (["defenses", "cmb", "concentration", "cl", "bab"].includes(data.type))
-    macro = macros.createMiscActorMacro(data.type, data.actor, slot, data.altType);
-  else if (data.type === "action") macro = macros.createActionMacro(data, slot);
-  else return true;
+// Delay hotbarDrop handler registration to allow modules to override it.
+Hooks.once("ready", () => {
+  Hooks.on("hotbarDrop", (bar, data, slot) => {
+    let macro;
+    const { type, uuid } = data;
+    switch (type) {
+      case "Item":
+        macro = macros.createItemMacro(uuid, slot);
+        break;
+      case "action":
+        macro = macros.createActionMacro(data.data?._id, uuid, slot);
+        break;
+      case "skill":
+        macro = macros.createSkillMacro(data.skill, uuid, slot);
+        break;
+      case "save":
+        macro = macros.createSaveMacro(data.save, uuid, slot);
+        break;
+      case "defenses":
+      case "cmb":
+      case "concentration":
+      case "cl":
+      case "bab":
+        macro = macros.createMiscActorMacro(type, uuid, slot, data);
+        break;
+      default:
+        return true;
+    }
 
-  if (macro == null || macro instanceof Promise) return false;
+    if (macro == null || macro instanceof Promise) return false;
+  });
 });
 
 // Render TokenConfig

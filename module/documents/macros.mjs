@@ -2,6 +2,31 @@ import { ActorPF } from "./actor/actor-pf.mjs";
 import { getActorFromId, getItemOwner } from "../utils/lib.mjs";
 
 /**
+ * Temporary shared shim for getting actor and printing compatibility warning.
+ * Remove once compatibility period is over.
+ *
+ * @param {string} uuid Actor UUID
+ * @returns {Actor|undefined} Actor instance if found, undefined otherwise.
+ */
+const getActorShim = (uuid) => {
+  const doc = fromUuidSync(uuid);
+  let actor = doc.actor ?? doc;
+
+  // Compatibility shim
+  if (!actor) {
+    actor = getActorFromId(uuid);
+    if (actor) {
+      foundry.utils.logCompatibilityWarning("Actor ID for macro creation functions is deprecated in favor of UUID", {
+        since: "PF1 0.83.0",
+        until: "PF1 0.84.0",
+      });
+    }
+  }
+
+  return actor;
+};
+
+/**
  * Various functions dealing with the creation and usage of macros.
  *
  * @module macros
@@ -10,15 +35,15 @@ import { getActorFromId, getItemOwner } from "../utils/lib.mjs";
 /**
  * Create a Macro from an Item drop, or get an existing one.
  *
- * @param {object} item     The item data
- * @param {string} actor    The actor ID
- * @param data
- * @param {number} slot     The hotbar slot to use
+ * @param {object} item The item data
+ * @param {string} actor The actor ID
+ * @param {object} uuid
+ * @param {number} slot The hotbar slot to use
  * @returns {Promise<User>} The updated User
  */
-export const createItemMacro = async (data, slot) => {
-  const item = fromUuidSync(data.uuid);
-  const command = `fromUuidSync("${item.uuid}")\n\t.use();`;
+export const createItemMacro = async (uuid, slot) => {
+  const item = fromUuidSync(uuid);
+  const command = `fromUuidSync("${uuid}").use();`;
   let macro = game.macros.contents.find((m) => m.name === item.name && m.data.command === command);
   if (!macro) {
     macro = await Macro.create(
@@ -38,23 +63,23 @@ export const createItemMacro = async (data, slot) => {
 /**
  * Create action use macro from dropped action.
  *
- * @param {object} dropData
- * @param {number} slot
+ * @param {string} actionId Action ID
+ * @param {string} uuid UUID to parent item
+ * @param {number} slot Hotbar slot to assign to
  * @returns {Promise<User>} The updated User
  */
-export const createActionMacro = async (dropData, slot) => {
-  const { source, data } = dropData;
-  const item = fromUuidSync(source);
+export const createActionMacro = async (actionId, uuid, slot) => {
+  const item = fromUuidSync(uuid);
 
-  const action = item?.actions.get(data._id);
+  const action = item?.actions.get(actionId);
 
   if (!action) {
     return void ui.notifications.error(
-      game.i18n.format("PF1.ErrorActionNotFound", { id: data._id, item: item?.name, actor: item?.actor?.name })
+      game.i18n.format("PF1.ErrorActionNotFound", { id: actionId, item: item?.name, actor: item?.actor?.name })
     );
   }
 
-  const command = `fromUuidSync("${source}")\n\t.actions.get("${action.id}")\n\t.use();`;
+  const command = `fromUuidSync("${uuid}")\n\t.actions.get("${actionId}")\n\t.use();`;
 
   let macro = game.macros.contents.find((m) => m.name === item.name && m.data.command === command);
   if (!macro) {
@@ -64,7 +89,7 @@ export const createActionMacro = async (dropData, slot) => {
         type: "script",
         img: action.img || item.img,
         command,
-        flags: { pf1: { actionMacro: { item: source, action: data._id } } },
+        flags: { pf1: { actionMacro: { item: uuid, action: actionId } } },
       },
       { displaySheet: false }
     );
@@ -78,12 +103,12 @@ export const createActionMacro = async (dropData, slot) => {
  *
  * @async
  * @param {string} skillId - The skill's identifier
- * @param {string} actorId - The actor's identifier
+ * @param {string} uuid - The actor's UUID
  * @param {number} slot - The hotbar slot to use
  * @returns {Promise<User>} The updated User
  */
-export const createSkillMacro = async (skillId, actorId, slot) => {
-  const actor = getActorFromId(actorId);
+export const createSkillMacro = async (skillId, uuid, slot) => {
+  const actor = getActorShim(uuid);
   if (!actor) return;
 
   const skillInfo = actor.getSkillInfo(skillId);
@@ -111,14 +136,15 @@ export const createSkillMacro = async (skillId, actorId, slot) => {
  *
  * @async
  * @param {string} saveId - The save's identifier
- * @param {string} actorId - The actor's identifier
+ * @param {string} uuid - The actor's UUID
  * @param {number} slot - The hotbar slot to use
  * @returns {Promise<User>} The updated User
  */
-export const createSaveMacro = async (saveId, actorId, slot) => {
-  const actor = getActorFromId(actorId);
-  const saveName = game.i18n.localize("PF1.SavingThrow" + saveId.capitalize());
+export const createSaveMacro = async (saveId, uuid, slot) => {
+  const actor = getActorShim(uuid);
   if (!actor) return;
+
+  const saveName = game.i18n.localize("PF1.SavingThrow" + saveId.capitalize());
 
   const command = `fromUuidSync("${actor.uuid}")\n\t.rollSavingThrow("${saveId}");`;
   const name = game.i18n.format("PF1.RollSaveMacroName", { actor: actor.name, type: saveName });
@@ -143,17 +169,17 @@ export const createSaveMacro = async (saveId, actorId, slot) => {
  * Create a Macro to roll one of various checks for an actor
  *
  * @async
- * @param {string} type - The type of macro to create
- * @param {string} actorId - The actor's identifier
- * @param {number} slot - The hotbar slot to use
- * @param {string} [altType] - An alternative type, used to denote a spellbook
+ * @param {string} type The type of macro to create
+ * @param {string} uuid The actor's UUID
+ * @param {number} slot The hotbar slot to use
+ * @param {object} [data] Additional context data
  * @returns {Promise<User|void>} The updated User, if an update is triggered
  */
-export const createMiscActorMacro = async (type, actorId, slot, altType = null) => {
-  const actor = getActorFromId(actorId);
+export const createMiscActorMacro = async (type, uuid, slot, data) => {
+  const actor = getActorShim(uuid);
   if (!actor) return;
 
-  const altTypeLabel = altType ? actor.system.attributes?.spells?.spellbooks?.[altType]?.label : null;
+  const getBookLabel = (bookId) => actor.system.attributes?.spells?.spellbooks?.[bookId]?.label;
 
   let name,
     img,
@@ -169,16 +195,20 @@ export const createMiscActorMacro = async (type, actorId, slot, altType = null) 
       name = game.i18n.format("PF1.RollCMBMacroName", { actor: actor.name });
       img = "systems/pf1/icons/feats/improved-grapple.jpg";
       break;
-    case "cl":
-      command += `.rollCL("${altType}");`;
-      name = game.i18n.format("PF1.RollCLMacroName", { actor: actor.name, book: altTypeLabel });
+    case "cl": {
+      const { bookId } = data;
+      command += `.rollCL("${bookId}");`;
+      name = game.i18n.format("PF1.RollCLMacroName", { actor: actor.name, book: getBookLabel(bookId) });
       img = "systems/pf1/icons/spells/wind-grasp-eerie-3.jpg";
       break;
-    case "concentration":
-      command += `.rollConcentration("${altType}");`;
-      name = game.i18n.format("PF1.RollConcentrationMacroName", { actor: actor.name, book: altTypeLabel });
+    }
+    case "concentration": {
+      const { bookId } = data;
+      command += `.rollConcentration("${bookId}");`;
+      name = game.i18n.format("PF1.RollConcentrationMacroName", { actor: actor.name, book: getBookLabel(bookId) });
       img = "systems/pf1/icons/skills/light_01.jpg";
       break;
+    }
     case "bab":
       command += `.rollBAB();`;
       name = game.i18n.format("PF1.RollBABMacroName", { actor: actor.name });
@@ -188,19 +218,17 @@ export const createMiscActorMacro = async (type, actorId, slot, altType = null) 
 
   if (!name) return;
 
-  let macro = game.macros.contents.find((o) => o.name === name && o.data.command === command);
-  if (!macro) {
-    macro = await Macro.create(
-      {
-        name: name,
-        type: "script",
-        img: img,
-        command: command,
-        flags: { "pf1.miscMacro": true },
-      },
-      { displaySheet: false }
-    );
-  }
+  let macro = game.macros.contents.find((o) => o.name === name && o.command === command);
+  macro ??= await Macro.create(
+    {
+      name,
+      type: "script",
+      img,
+      command,
+      flags: { pf1: { type, actor: uuid } },
+    },
+    { displaySheet: false }
+  );
 
   return game.user.assignHotbarMacro(macro, slot);
 };

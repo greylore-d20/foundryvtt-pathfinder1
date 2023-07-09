@@ -1389,13 +1389,9 @@ export class ActorSheetPF extends ActorSheet {
 
     const result = {
       type: "skill",
-      actor: this.document.id,
+      uuid: this.document.uuid,
       skill: subSkill ? `${mainSkill}.subSkills.${subSkill}` : mainSkill,
     };
-    if (this.document.isToken) {
-      result.sceneId = canvas.scene.id;
-      result.tokenId = this.document.token.id;
-    }
 
     event.dataTransfer.setData("text/plain", JSON.stringify(result));
   }
@@ -1403,18 +1399,14 @@ export class ActorSheetPF extends ActorSheet {
   _onDragMiscStart(event, type) {
     const result = {
       type: type,
-      actor: this.document.id,
+      uuid: this.document.uuid,
     };
-    if (this.document.isToken) {
-      result.sceneId = canvas.scene.id;
-      result.tokenId = this.document.token.id;
-    }
 
     switch (type) {
       case "concentration":
       case "cl": {
         const elem = event.currentTarget.closest(".tab.spellbook-group");
-        result.altType = elem.dataset.tab;
+        result.bookId = elem.dataset.tab;
         break;
       }
     }
@@ -1425,13 +1417,9 @@ export class ActorSheetPF extends ActorSheet {
   _onDragSaveStart(event, type) {
     const result = {
       type: "save",
-      altType: type,
-      actor: this.document.id,
+      save: type,
+      uuid: this.document.uuid,
     };
-    if (this.document.isToken) {
-      result.sceneId = canvas.scene.id;
-      result.tokenId = this.document.token.id;
-    }
 
     event.dataTransfer.setData("text/plain", JSON.stringify(result));
   }
@@ -2993,9 +2981,11 @@ export class ActorSheetPF extends ActorSheet {
 
     const dataType = "currency";
 
+    const { currency, amount, containerId, alt } = data;
+
     return new CurrencyTransfer(
-      { actor: sourceActor, container: data.containerId, alt: data.alt },
-      { actor: this.actor, amount: Object.fromEntries([[data.currency, parseInt(data.amount)]]) }
+      { actor: sourceActor, container: containerId, alt },
+      { actor: this.actor, amount: Object.fromEntries([[currency, parseInt(amount)]]) }
     ).render(true);
   }
 

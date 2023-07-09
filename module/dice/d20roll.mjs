@@ -407,5 +407,6 @@ export async function d20Roll(options = {}) {
     const dialogResult = await roll.promptDialog({ title, rollMode, subject });
     if (dialogResult === null) return;
   }
-  return roll.toMessage({ speaker }, { create: chatMessage, noSound, chatTemplateData, compendium, subject });
+
+  return roll.toMessage({ speaker }, { create: chatMessage, noSound, chatTemplateData, compendium, subject, rollMode });
 }

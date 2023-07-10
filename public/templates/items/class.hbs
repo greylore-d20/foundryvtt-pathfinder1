@@ -18,7 +18,7 @@
         <li>
           {{lookup config.classTypes system.subType}}
         </li>
-        <li data-tooltip="@classes.{{system.tag}}.level : {{system.level}}<br>@item.level : {{system.level}}<br>@classes.{{system.tag}}.hitDice : {{system.hitDice}}">
+        <li data-tooltip="@classes.{{system.tag}}.level : {{system.level}}<br>@item.level : {{system.level}}{{#unless isMythicPath}}<br>@classes.{{system.tag}}.hitDice : {{system.hitDice}}{{/unless}}">
           <input type="text" name="system.level" value="{{system.level}}" placeholder="{{#if isMythicPath}}{{localize "PF1.Tier"}}{{else}}{{localize "PF1.Level"}}{{/if}}" data-dtype="Number"/>
         </li>
       </ul>
@@ -61,19 +61,21 @@
 
       {{!-- HD --}}
       <div class="form-group">
-        <label>{{localize "PF1.HitDie"}}</label>
+        <label>{{#if isMythicPath}}{{localize "PF1.HealthPerTier"}}{{else}}{{localize "PF1.HitDie"}}{{/if}}</label>
         <div class="form-fields">
           <input type="text" name="system.hd" value="{{system.hd}}" data-dtype="Number" data-tooltip="@classes.{{system.tag}}.hd"/>
         </div>
       </div>
 
       {{!-- HD count --}}
+      {{#unless isMythicPath}}
       <div class="form-group">
         <label>{{localize "PF1.CustomHitDice"}}</label>
         <div class="form-fields">
           <input type="text" class="formula" name="system.customHD" value="{{system.customHD}}" data-dtype="String" placeholder="{{localize "PF1.CustomHitDiceHint"}}"/>
         </div>
       </div>
+      {{/unless}}
 
       {{!-- Hit Points --}}
       {{#unless healthConfig.auto}}

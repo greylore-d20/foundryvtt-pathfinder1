@@ -676,17 +676,26 @@ export const addDefaultChanges = function (changes) {
     pushHealth(health, healthSource);
   };
   const autoHealth = (healthSource, options, maximized = 0) => {
-    if (healthSource.system.hd === 0) return;
+    const hpPerHD = healthSource.system.hd ?? 0;
+    if (hpPerHD === 0) return;
 
-    let dieHealth = 1 + (healthSource.system.hd - 1) * options.rate;
-    if (!continuous) dieHealth = round(dieHealth);
+    let health = 0;
+    if (healthSource.subType === "mythic") {
+      const hpPerTier = hpPerHD ?? 0;
+      if (hpPerTier === 0) return;
+      const tiers = healthSource.system.level ?? 0;
+      if (tiers === 0) return;
+      health = hpPerTier * tiers;
+    } else {
+      let dieHealth = 1 + (hpPerHD - 1) * options.rate;
+      if (!continuous) dieHealth = round(dieHealth);
 
-    const hitDice = healthSource.hitDice;
-    const maxedHealth = Math.min(hitDice, maximized) * healthSource.system.hd;
-    const levelHealth = Math.max(0, hitDice - maximized) * dieHealth;
-    const favorHealth = (healthSource.system.subType === "base") * healthSource.system.fc.hp.value;
-    const health = maxedHealth + levelHealth + favorHealth;
-
+      const hitDice = healthSource.hitDice;
+      const maxedHealth = Math.min(hitDice, maximized) * hpPerHD;
+      const levelHealth = Math.max(0, hitDice - maximized) * dieHealth;
+      const favorHealth = (healthSource.system.subType === "base") * healthSource.system.fc.hp.value;
+      health = maxedHealth + levelHealth + favorHealth;
+    }
     pushHealth(health, healthSource);
   };
   const computeHealth = (healthSources, options) => {

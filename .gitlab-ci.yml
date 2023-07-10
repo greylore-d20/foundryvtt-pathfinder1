@@ -72,7 +72,7 @@ build:
     expire_in: 1 week
   # Run for version tags to prepare release, and for MRs to check successful build
   rules:
-    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/'
+    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+(\.[0-9]+)+$/'
 
 # Build docs from master branch
 pages:
@@ -114,7 +114,7 @@ publish_artifacts:
     - echo "" >> recent-changes.md
     - echo "$(rg -U --multiline-dotall '(?P<latest>^[#]{2}\sv?\d.*?)(?:\n^[#]{1,3}\sv?\d.*)' -r '$latest' CHANGELOG.md)" >> recent-changes.md
   rules:
-    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/'
+    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+(\.[0-9]+)+$/'
   artifacts:
     paths:
       - recent-changes.md
@@ -127,7 +127,7 @@ release:
   needs:
     - publish_artifacts
   rules:
-    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/'
+    - if: '$CI_COMMIT_TAG =~ /^v[0-9]+(\.[0-9]+)+$/'
   script:
     - |
       release-cli create --name "Release ${CI_COMMIT_TAG:1}" \

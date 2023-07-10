@@ -6,14 +6,8 @@
   "system": {
     "inventoryItems": [
       {
-        "_id": "lSCPUK5Ea6R0t4fz",
         "name": "Backpack",
         "type": "container",
-        "flags": {
-          "core": {
-            "sourceId": "Item.CcUuzTh1CCp2NMRv"
-          }
-        },
         "img": "systems/pf1/icons/items/inventory/backpack.jpg",
         "system": {
           "description": {
@@ -23,20 +17,19 @@
             "value": 2
           },
           "price": 2
-        }
-      },
-      {
-        "_id": "wjvxmolafiegvesl",
-        "name": "Pouch, Belt",
-        "type": "loot",
+        },
         "flags": {
           "core": {
-            "sourceId": "Compendium.pf1.items.wjvxmolafiegvesl"
+            "sourceId": "Compendium.pf1.items.lSCPUK5Ea6R0t4fz"
           }
         },
+        "_id": "aHwIdcruTBEb8fCL"
+      },
+      {
+        "name": "Pouch, Belt",
+        "type": "loot",
         "img": "icons/containers/bags/coinpouch-simple-leather-tan.webp",
         "system": {
-          "subType": "gear",
           "description": {
             "value": "<p class=\"source\"><b>Source</b> <em>PZO1110</em></p>\n<p>A belt pouch is crafted of soft cloth or leather. They typically hold up to 10 lb. or 1/5 cubic ft. of items.</p>\n<p><b>Empty Weight</b>: 1/2 lb.<sup>1</sup> <b>Capacity</b>: 1/5 cubic ft./10 lb.<sup>1</sup></p>\n<p class=\"source\"><sup>1</sup> When made for Medium characters. Weighs one-quarter the normal amount when made for Small characters. Weighs twice the normal amount when made for Large characters. Containers carry one-quarter the normal amount when made for Small characters.</p>"
           },
@@ -44,148 +37,149 @@
             "value": 0.5
           },
           "price": 1,
-          "equipped": false
-        }
+          "equipped": false,
+          "subType": "gear"
+        },
+        "flags": {
+          "core": {
+            "sourceId": "Compendium.pf1.items.wjvxmolafiegvesl"
+          }
+        },
+        "_id": "6dD9XUSmWoLZigIj"
       },
       {
-        "_id": "ygmrcisvftnvjyob",
         "name": "Flint And Steel",
         "type": "loot",
+        "img": "icons/commodities/stone/rock-chunk-grey.webp",
+        "system": {
+          "description": {
+            "value": "<p>Lighting a <em>torch</em> with a <em>flint and steel</em> is a full-round action. Lighting any other fire with them takes at least that long.</p>"
+          },
+          "price": 1,
+          "equipped": false,
+          "subType": "gear"
+        },
         "flags": {
           "core": {
             "sourceId": "Compendium.pf1.items.ygmrcisvftnvjyob"
           }
         },
-        "img": "icons/commodities/stone/rock-chunk-grey.webp",
-        "system": {
-          "subType": "gear",
-          "description": {
-            "value": "<p>Lighting a <em>torch</em> with a <em>flint and steel</em> is a full-round action. Lighting any other fire with them takes at least that long.</p>"
-          },
-          "price": 1,
-          "equipped": false
-        }
+        "_id": "VHSTR3J2O4RCZgok"
       },
       {
-        "_id": "yMoclCylbCRKyaZF",
         "name": "Soap",
         "type": "consumable",
-        "flags": {
-          "core": {
-            "sourceId": "Item.cDlDlPy1JSnN6KyN"
-          }
-        },
         "img": "systems/pf1/icons/items/inventory/soap.jpg",
         "system": {
-          "uses": {
-            "value": 50,
-            "maxFormula": "50",
-            "per": "charges",
-            "autoDeductChargesCost": "1"
-          },
           "description": {
             "value": "<p class=\"source\"><b>Source</b> <em>PPZO9410</em></p>\n<p>You can use this thick block of soap to scrub clothes, pots, linens, or anything else that might be dirty. A bar of soap has approximately 50 uses.</p>"
+          },
+          "weight": {
+            "value": 0.5
           },
           "price": 0.01,
           "actions": [
             {
-              "_id": "Ta7Vi7AUbmucvL4q",
+              "_id": "ootoocddr3l2eoat",
               "name": "Use",
               "img": "systems/pf1/icons/items/inventory/soap.jpg",
               "activation": {
                 "type": "special"
               },
-              "actionType": "",
-              "save": {
-                "dc": 0
+              "unchainedAction": {
+                "activation": {
+                  "type": "special"
+                }
               },
-              "effectNotes": "",
-              "attackNotes": ""
+              "actionType": ""
             }
           ],
+          "uses": {
+            "per": "charges",
+            "value": 50,
+            "maxFormula": "50"
+          },
+          "tag": "soap",
           "subType": "misc"
-        }
+        },
+        "flags": {
+          "core": {
+            "sourceId": "Compendium.pf1.items.yMoclCylbCRKyaZF"
+          }
+        },
+        "_id": "oFYFyKM3iLN2Xgw6"
       },
       {
-        "_id": "snfogneawzopfzzl",
         "name": "Torch",
         "type": "loot",
+        "img": "systems/pf1/icons/items/inventory/torch.jpg",
+        "system": {
+          "description": {
+            "value": "<p><b>Price</b> 1 cp; <b>Weight</b> 1 lb.</p>\n<p>A torch burns for 1 hour, shedding normal light in a 20-foot radius and increasing the light level by one step for an additional 20 feet beyond that area (darkness becomes dim light and dim light becomes normal light). A torch does not increase the light level in normal light or bright light. If a torch is used in combat, treat it as a one-handed improvised weapon that deals bludgeoning damage equal to that of a gauntlet of its size, plus 1 point of fire damage.</p>"
+          },
+          "weight": {
+            "value": 1
+          },
+          "price": 0.01,
+          "equipped": false,
+          "subType": "gear"
+        },
         "flags": {
           "core": {
             "sourceId": "Compendium.pf1.items.snfogneawzopfzzl"
           }
         },
-        "img": "systems/pf1/icons/items/inventory/torch.jpg",
-        "system": {
-          "subType": "gear",
-          "description": {
-            "value": "<p><b>Price</b> 1 cp; <b>Weight</b> 1 lb.</p>\n<p>A torch burns for 1 hour, shedding normal light in a 20-foot radius and increasing the light level by one step for an additional 20 feet beyond that area (darkness becomes dim light and dim light becomes normal light). A torch does not increase the light level in normal light or bright light. If a torch is used in combat, treat it as a one-handed improvised weapon that deals bludgeoning damage equal to that of a gauntlet of its size, plus 1 point of fire damage.</p>"
-          },
-          "quantity": 10,
-          "weight": {
-            "value": 1
-          },
-          "price": 0.01,
-          "equipped": false
-        }
+        "_id": "lFvtZClnAbXQvuSf"
       },
       {
-        "_id": "bsztkhkrhgmsbqpt",
         "name": "Waterskin",
         "type": "loot",
-        "flags": {
-          "core": {
-            "sourceId": "Compendium.pf1.items.bsztkhkrhgmsbqpt"
-          }
-        },
         "img": "systems/pf1/icons/items/inventory/waterskin.jpg",
         "system": {
-          "subType": "gear",
           "description": {
-            "value": "<p class=\"source\"><b>Source</b> <em>PZO1110</em></p>\n<p>A water or wineskin holds 1/2 gallon of liquid and weighs 4 lb when full.</p>\n<p><b>Empty Weight</b>: -; <b>Capacity</b>: 1/2 gallon/4 lb.<sup>1</sup></p>\n<p class=\"source\"><sup>1</sup> When made for Medium characters. Weighs one-quarter the normal amount when made for Small characters. Weighs twice the normal amount when made for Large characters. Containers carry one-quarter the normal amount when made for Small characters.</p>\n<p></p>\n<h3>Magic Containers</h3>\n<p>Magic containers come in almost as many varieties as there are <em>alchemists</em>, and so are of inestimable value to <em>alchemists</em> with specific needs. Some of the most well-known magic containers are described here.</p>\n<p>Because of a varied nature of alchemical items and their effects, not all combinations of alchemical items and magic bottles are viable or even make sense, even though they technically might be allowed by the rules. The GM should have the final say on whether or not a particular alchemical item can function within one of the magical containers listed in this section.</p>\n<table border=\"1\" cellpadding=\"5\">\n<thead>\n<tr>\n<th colspan=\"4\">Magic Containers</th>\n</tr>\n<tr>\n<th>Item</th>\n<th>Price</th>\n<th>Weight</th>\n<th>Source</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><i>Focusing Flask</i></td>\n<td>700 gp</td>\n<td>1 lb.</td>\n<td class=\"source text\"><em>PPC:AM</em></td>\n</tr>\n<tr>\n<td><i>Retort of Control</i></td>\n<td>13,000 gp</td>\n<td class=\"marker\">-</td>\n<td class=\"source text\"><em>PPC:AM</em></td>\n</tr>\n<tr>\n<td><i>Vial of Efficacious Medicine</i></td>\n<td>7,000 gp</td>\n<td class=\"marker\">-</td>\n<td class=\"source text\"><em>PPC:AM</em></td>\n</tr>\n<tr>\n<td><i>Winged Bottle</i></td>\n<td>1,620 gp</td>\n<td>1 lb.</td>\n<td class=\"source text\"><em>PPC:AM</em></td>\n</tr>\n</tbody>\n</table>"
+            "value": "<p class=\"source\"><b>Source</b> <em>PZO1110</em></p>\n<p>A water or wineskin holds 1/2 gallon of liquid and weighs 4 lb when full.</p>\n<p><b>Empty Weight</b>: -; <b>Capacity</b>: 1/2 gallon/4 lb.<sup>1</sup></p>\n<p class=\"source\"><sup>1</sup> When made for Medium characters. Weighs one-quarter the normal amount when made for Small characters. Weighs twice the normal amount when made for Large characters. Containers carry one-quarter the normal amount when made for Small characters.</p>\n<h3>Magic Containers</h3>\n<p>Magic containers come in almost as many varieties as there are <em>alchemists</em>, and so are of inestimable value to <em>alchemists</em> with specific needs. Some of the most well-known magic containers are described here.</p>\n<p>Because of a varied nature of alchemical items and their effects, not all combinations of alchemical items and magic bottles are viable or even make sense, even though they technically might be allowed by the rules. The GM should have the final say on whether or not a particular alchemical item can function within one of the magical containers listed in this section.</p>\n<table>\n<thead>\n<tr>\n<th colspan=\"4\">Magic Containers</th>\n</tr>\n<tr>\n<th>Item</th>\n<th>Price</th>\n<th>Weight</th>\n<th>Source</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td><i>Focusing Flask</i></td>\n<td>700 gp</td>\n<td>1 lb.</td>\n<td class=\"source text\"><em>PPC:AM</em></td>\n</tr>\n<tr>\n<td><i>Retort of Control</i></td>\n<td>13,000 gp</td>\n<td>-</td>\n<td class=\"source text\"><em>PPC:AM</em></td>\n</tr>\n<tr>\n<td><i>Vial of Efficacious Medicine</i></td>\n<td>7,000 gp</td>\n<td>-</td>\n<td class=\"source text\"><em>PPC:AM</em></td>\n</tr>\n<tr>\n<td><i>Winged Bottle</i></td>\n<td>1,620 gp</td>\n<td>1 lb.</td>\n<td class=\"source text\"><em>PPC:AM</em></td>\n</tr>\n</tbody>\n</table>"
           },
           "weight": {
             "value": 4
           },
           "price": 1,
-          "equipped": false
-        }
+          "equipped": false,
+          "subType": "gear"
+        },
+        "flags": {
+          "core": {
+            "sourceId": "Compendium.pf1.items.bsztkhkrhgmsbqpt"
+          }
+        },
+        "_id": "1HuqT5PUwrN04Ofe"
       },
       {
-        "_id": "manvtbznrwjmnrua",
         "name": "Rations, Trail",
         "type": "loot",
+        "img": "systems/pf1/icons/items/inventory/meat.jpg",
+        "system": {
+          "description": {
+            "value": "<h4>Rations, Trail</h4>\n<p><b>Price</b> 5 sp; <b>Weight</b> 1 lb.</p>\n<p>The listed price is for a day's worth of food. This bland food is usually some kind of hard tack, jerky, and dried fruit, though the contents vary from region to region and the race of those creating it. As long as it stays dry, it can go for months without spoiling.</p>"
+          },
+          "weight": {
+            "value": 1
+          },
+          "price": 0.5,
+          "equipped": false,
+          "subType": "gear"
+        },
         "flags": {
           "core": {
             "sourceId": "Compendium.pf1.items.manvtbznrwjmnrua"
           }
         },
-        "img": "systems/pf1/icons/items/inventory/meat.jpg",
-        "system": {
-          "subType": "gear",
-          "description": {
-            "value": "<h4>Rations, Trail</h4>\n<p><b>Price</b> 5 sp; <b>Weight</b> 1 lb.</p>\n<p>The listed price is for a day's worth of food. This bland food is usually some kind of hard tack, jerky, and dried fruit, though the contents vary from region to region and the race of those creating it. As long as it stays dry, it can go for months without spoiling.</p>"
-          },
-          "quantity": 5,
-          "weight": {
-            "value": 1
-          },
-          "price": 0.5,
-          "equipped": false
-        }
+        "_id": "Vs4JmVzVaK2SHuC3"
       },
       {
-        "_id": "iegwwsarycqwoezj",
         "name": "Bedroll",
         "type": "loot",
-        "flags": {
-          "core": {
-            "sourceId": "Compendium.pf1.items.iegwwsarycqwoezj"
-          }
-        },
         "img": "systems/pf1/icons/items/inventory/cloth-blue.jpg",
         "system": {
-          "subType": "gear",
           "description": {
             "value": "<p>This consists of two woolen sheets sewn together along the bottom and one side to create a bag for sleeping in. Some have cloth straps along the open side so the bedroll can be tied closed while you are sleeping. It can be rolled and tied into a tight coil for storage or transport. Most people use a <em>blanket</em> with the bedroll to stay warm or provide a ground cushion.</p>"
           },
@@ -193,21 +187,21 @@
             "value": 5
           },
           "price": 0.1,
-          "equipped": false
-        }
-      },
-      {
-        "_id": "habofoapdifirevm",
-        "name": "Pot, Cooking (Iron)",
-        "type": "loot",
+          "equipped": false,
+          "subType": "gear"
+        },
         "flags": {
           "core": {
-            "sourceId": "Compendium.pf1.items.habofoapdifirevm"
+            "sourceId": "Compendium.pf1.items.iegwwsarycqwoezj"
           }
         },
+        "_id": "sxITR3a3kKdyM9k6"
+      },
+      {
+        "name": "Pot, Cooking (Iron)",
+        "type": "loot",
         "img": "icons/tools/cooking/cauldron-empty.webp",
         "system": {
-          "subType": "gear",
           "description": {
             "value": "<p class=\"source\"><b>Source</b> <em>PZO1110</em></p>\n<p>Cooking pots come in a variety of materials, but the most common is formed of iron.</p>\n<p>A mithral cooking pot weighs 2 lbs. and costs 2,001 gp.</p>\n<p><b>Empty Weight</b>: 2 lb.; <b>Capacity</b>: 1 gallon/8 lb.</p>"
           },
@@ -215,95 +209,146 @@
             "value": 4
           },
           "price": 0.8,
-          "equipped": false
-        }
-      },
-      {
-        "_id": "Ueae6c2qqJJGpncA",
-        "name": "Mess Kit",
-        "type": "container",
+          "equipped": false,
+          "subType": "gear"
+        },
         "flags": {
           "core": {
-            "sourceId": "Item.F1QKvOYGM9u5YI1x"
+            "sourceId": "Compendium.pf1.items.habofoapdifirevm"
           }
         },
+        "_id": "7Sw3enAdaX0Qw5AJ"
+      },
+      {
+        "name": "Mess Kit",
+        "type": "container",
         "img": "icons/containers/chest/chest-simple-box-red.webp",
         "system": {
           "description": {
             "value": "<p>This kit includes a plate, bowl, cup, fork, knife, and spoon, made of wood, horn, or tin. Each item has a handle or small hole, and can be tied together using the included leather cord.</p>"
           },
-          "weight": {
-            "value": 0.1
-          },
-          "price": 0.2,
           "inventoryItems": [
             {
               "name": "Plate",
               "type": "loot",
-              "_id": "t95qxxcbkgau4zwa",
               "img": "systems/pf1/icons/items/inventory/dice.jpg",
               "system": {
-                "subType": "tradeGoods",
+                "tags": ["Mundane", "Cooking"],
                 "weight": {
                   "value": 0.4
                 },
-                "equipped": false
-              }
+                "equipped": false,
+                "subType": "tradeGoods"
+              },
+              "flags": {
+                "core": {
+                  "sourceId": "Compendium.pf1.items.tVkpdPfIJomoFjUl"
+                }
+              },
+              "_id": "HrXDTu0yJArUbpYe"
             },
             {
               "name": "Bowl",
               "type": "loot",
               "img": "icons/containers/kitchenware/bowl-clay-brown.webp",
-              "_id": "q4asw26dyrjavece",
               "system": {
-                "subType": "tradeGoods",
+                "tags": ["Mundane", "Cooking"],
                 "weight": {
                   "value": 0.2
                 },
-                "equipped": false
-              }
+                "equipped": false,
+                "subType": "tradeGoods"
+              },
+              "flags": {
+                "core": {
+                  "sourceId": "Compendium.pf1.items.fASUzJozDXZldwNT"
+                }
+              },
+              "_id": "B5gFNbiUqEKlkI3d"
             },
             {
               "name": "Fork",
               "type": "loot",
               "img": "icons/tools/cooking/fork-steel-tan.webp",
-              "_id": "e1r0sdabl9awmxid",
               "system": {
-                "subType": "tradeGoods",
+                "tags": ["Mundane", "Cooking"],
                 "weight": {
                   "value": 0.1
                 },
-                "equipped": false
-              }
+                "equipped": false,
+                "subType": "gear"
+              },
+              "flags": {
+                "core": {
+                  "sourceId": "Compendium.pf1.items.jzu5QqK20bW9gkN1"
+                }
+              },
+              "_id": "75V6g53wDWtG50uT"
             },
             {
               "name": "Knife",
               "type": "loot",
               "img": "icons/tools/cooking/knife-chef-steel-brown.webp",
-              "_id": "swpiosj6uadvp8xy",
               "system": {
-                "subType": "tradeGoods",
+                "tags": ["Mundane", "Cooking", "Crafting", "Survival"],
                 "weight": {
                   "value": 0.1
                 },
-                "equipped": false
-              }
+                "equipped": false,
+                "subType": "gear"
+              },
+              "flags": {
+                "core": {
+                  "sourceId": "Compendium.pf1.items.GZtAdQ7gJlCe9z64"
+                }
+              },
+              "_id": "G0t7OoDwQXQgSuli"
             },
             {
               "name": "Spoon",
               "type": "loot",
               "img": "icons/tools/cooking/soup-ladle.webp",
-              "_id": "pxs9209y5ybsemki",
               "system": {
-                "subType": "tradeGoods",
+                "tags": ["Mundane", "Cooking"],
                 "weight": {
                   "value": 0.1
                 },
-                "equipped": false
-              }
+                "equipped": false,
+                "subType": "gear"
+              },
+              "flags": {
+                "core": {
+                  "sourceId": "Compendium.pf1.items.Asg5Ek4CFqb80P7C"
+                }
+              },
+              "_id": "wPKymHrQQpgJ2oYO"
+            },
+            {
+              "name": "Cup",
+              "type": "loot",
+              "img": "systems/pf1/icons/items/inventory/dice.jpg",
+              "system": {
+                "tags": ["Mundane", "Cooking"],
+                "weight": {
+                  "value": 0.1
+                },
+                "subType": "tradeGoods"
+              },
+              "flags": {
+                "core": {
+                  "sourceId": "Compendium.pf1.items.QqdYeaj0M8e5FWWK"
+                }
+              },
+              "_id": "ssTkq1uXfAO6KeFH"
             }
           ]
-        }
+        },
+        "flags": {
+          "core": {
+            "sourceId": "Compendium.pf1.items.Ueae6c2qqJJGpncA"
+          }
+        },
+        "_id": "Af1EK4fgdPfrFUVQ"
       }
     ]
   }

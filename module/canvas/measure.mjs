@@ -118,16 +118,16 @@ export class TemplateLayerPF extends TemplateLayer {
 
 export class MeasuredTemplatePF extends MeasuredTemplate {
   getHighlightedSquares() {
-    if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone", "ray"].includes(this.document.t)) return [];
+    if (!this.id || !this.shape) return [];
+
+    const templateType = this.document.t;
+    if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone", "ray"].includes(templateType)) return [];
 
     const grid = canvas.grid,
       gridSizePx = canvas.dimensions.size, // Size of each cell in pixels
       gridSizeUnits = canvas.dimensions.distance; // feet, meters, etc.
 
-    if (!this.id || !this.shape) return [];
-
-    const templateType = this.document.t,
-      templateDirection = this.document.direction,
+    const templateDirection = this.document.direction,
       templateAngle = this.document.angle;
 
     // Parse rays as per Bresenham's algorithm
@@ -246,18 +246,25 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
       gridSizePx = dimensions.size,
       gridSizeUnits = dimensions.distance;
 
-    const result = [];
+    const maxDistance = Math.max(this.height, this.width);
+    // Get tokens within max potential distance from the template
+    const relevantTokens = new Set(
+      canvas.tokens.placeables.filter((t) => new Ray(t.center, this.center).distance + t.sizeErrorMargin <= maxDistance)
+    );
+
+    const result = new Set();
     // Special handling for gridless
     if (canvas.grid.type === CONST.GRID_TYPES.GRIDLESS && ["circle", "cone", "rect"].includes(shape)) {
       // TODO: Test against vision points and ensure ~third of them are inside the template instead.
-      for (const t of canvas.tokens.placeables) {
+      // BUG: Behaves incorrectly with large tokens
+      for (const t of relevantTokens) {
         switch (shape) {
           case "circle": {
             const ray = new Ray(this.center, t.center);
             // Calculate ray length in relation to circle radius
             const raySceneLength = (ray.distance / gridSizePx) * gridSizeUnits;
             // Include this token if its center is within template radius
-            if (raySceneLength <= this.document.distance) result.push(t);
+            if (raySceneLength <= this.document.distance) result.add(t);
             break;
           }
           case "cone": {
@@ -273,7 +280,7 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
             // Calculate ray length in relation to circle radius
             const raySceneLength = (ray.distance / gridSizePx) * gridSizeUnits;
             // Include token if its within template distance and within the cone's angle
-            if (rayWithinAngle && raySceneLength <= this.document.distance) result.push(t);
+            if (rayWithinAngle && raySceneLength <= this.document.distance) result.add(t);
             break;
           }
           case "rect": {
@@ -283,36 +290,30 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
               width: this.width,
               height: this.width,
             };
-            if (withinRect(t.center, rect)) result.push(t);
+            if (withinRect(t.center, rect)) result.add(t);
             break;
           }
         }
       }
-      return result;
     }
+    // Non-gridless
+    else {
+      const highlightSquares = this.getHighlightLayer().positions.map((p) => {
+        const [x, y] = p.split(".");
+        return { x: Number(x), y: Number(y), width: gridSizePx, height: gridSizePx };
+      });
 
-    const highlightSquares = this.getHighlightedSquares();
-
-    for (const s of highlightSquares) {
-      for (const t of canvas.tokens.placeables) {
-        if (result.includes(t)) continue;
-
-        const tokenData = {
-          x: Math.round(t.document.x / gridSizePx),
-          y: Math.round(t.document.y / gridSizePx),
-          width: t.document.width,
-          height: t.document.height,
-        };
-        const squareData = {
-          x: Math.round(s.x / gridSizePx),
-          y: Math.round(s.y / gridSizePx),
-        };
-
-        if (withinRect(squareData, tokenData)) result.push(t);
+      for (const square of highlightSquares) {
+        for (const t of relevantTokens) {
+          if (withinRect(t.center, square)) {
+            result.add(t);
+            relevantTokens.delete(t);
+          }
+        }
       }
     }
 
-    return result;
+    return Array.from(result);
   }
 
   // Highlight grid in PF1 style

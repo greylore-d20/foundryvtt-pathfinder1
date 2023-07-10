@@ -145,4 +145,15 @@ export class TokenPF extends Token {
     const posY = number === 0 ? this.h - h : 0;
     bar.position.set(0, posY);
   }
+
+  /**
+   * Returns error margin, in pixels, for measuring to and from token center.
+   *
+   * Defined as larger of half the token's width and height.
+   *
+   * @type {number}
+   */
+  get sizeErrorMargin() {
+    return Math.max(this.w / 2, this.h / 2);
+  }
 }

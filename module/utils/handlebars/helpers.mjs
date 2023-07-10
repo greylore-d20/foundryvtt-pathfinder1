@@ -95,17 +95,15 @@ export const registerHandlebarsHelpers = function () {
   Handlebars.registerHelper("actionDamage", actionDamage);
 
   Handlebars.registerHelper("damageTypes", (typeInfo) => {
+    foundry.utils.logCompatibilityWarning(`damageTypes HBS helper is deprecated with no replacement.`, {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
     const rv = [];
     const { custom, values } = typeInfo;
     if (custom) rv.push(custom);
     values.forEach((dtId) => rv.push(game.i18n.localize(pf1.registry.damageTypes.get(dtId)?.name ?? "PF1.Undefined")));
     return rv.join(", ");
-  });
-
-  Handlebars.registerHelper("itemDamage", (item, rollData) => {
-    console.warn("{{itemDamage}} handlebars helper is deprecated, use {{actionDamage}} instead");
-    const action = item.document?.firstAction;
-    return actionDamage(action, rollData);
   });
 
   Handlebars.registerHelper("actionAttacks", (action) => {
@@ -120,27 +118,13 @@ export const registerHandlebarsHelpers = function () {
   });
 
   /**
-   * Returns true if there are conditionals disabled by default.
+   * Fetches ability mod value based on ability key.
+   * Avoids contaminating rollData or item data with excess strings.
+   *
+   * @deprecated Remove for v10
    */
-  Handlebars.registerHelper("optionalConditionals", (item) => {
-    return item.firstAction?.data.conditionals.find((c) => !c.default);
-  });
-
-  // Fetches ability mod value based on ability key.
-  // Avoids contaminating rollData or item data with excess strings.
   Handlebars.registerHelper("abilityMod", (abl, rollData, multiplier) => {
     return Math.floor(rollData.abilities[abl]?.mod * multiplier ?? 1);
-  });
-
-  Handlebars.registerHelper("hasContextNotes", (actor, context) => {
-    return !!actor.getContextNotes(context).find((n) => n.notes.length);
-  });
-
-  Handlebars.registerHelper("contextNotes", (actor, context, options) => {
-    const rollData = options.data.root.rollData;
-    const roll = options.hash["roll"] ?? false;
-    const noteObjs = actor.getContextNotes(context);
-    return actor.formatContextNotes(noteObjs, rollData, { roll });
   });
 
   Handlebars.registerHelper("json-string", (obj) => {

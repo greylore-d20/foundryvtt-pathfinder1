@@ -12,7 +12,7 @@
 
   {{! Skill Ranks }}
   <div class="flexrow skill-ranks">
-    <div class="info-box-joined adventure tooltip">
+    <div class="info-box-joined adventure" data-tooltip-extended="skills.adventure">
       <div class="info-box available">
         <h5>{{localize "PF1.SkillRankPlural"}}</h5>
         <span class="value">{{skillRanks.allowed}}</span>
@@ -21,9 +21,6 @@
         <h5>{{localize "PF1.Used"}}</h5>
         <span class="value">{{skillRanks.used}}</span>
       </div>
-      <span class="tooltipcontent">
-        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceData.skillRanks label="PF1.FromSources" skipLine=true}}
-      </span>
     </div>
 
     {{#if useBGSkills}}
@@ -32,7 +29,7 @@
       <span class="value">{{skillRanks.sentToBG}}</span>
     </div>
 
-    <div class="info-box-joined background tooltip">
+    <div class="info-box-joined background" data-tooltip-extended="skills.background">
       <div class="info-box available">
         <h5>{{localize "PF1.BGSkillRanks"}}</h5>
         <span class="value">{{skillRanks.bgAllowed}}</span>
@@ -41,13 +38,10 @@
         <h5>{{localize "PF1.BGUsed"}}</h5>
         <span class="value">{{skillRanks.bgUsed}}</span>
       </div>
-      <span class="tooltipcontent">
-        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceData.bgSkillRanks label="PF1.FromSources" skipLine=true}}
-      </span>
     </div>
     {{/if}}
 
-    <div class="info-box acp">
+    <div class="info-box acp" data-tooltip-extended="acp">
       <h5>{{localize "PF1.ACP"}}</h5>
       <span class="value">{{system.attributes.acp.total}}</span>
     </div>

@@ -25,9 +25,6 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/actors/parts/actor-attributes.hbs",
   "systems/pf1/templates/actors/parts/actor-settings.hbs",
   "systems/pf1/templates/actors/parts/actor-settings-ability-scores.hbs",
-  "systems/pf1/templates/actors/parts/actor-cmb.hbs",
-  "systems/pf1/templates/actors/parts/actor-contextNotes.hbs",
-  "systems/pf1/templates/actors/parts/actor-source-details.hbs",
   "systems/pf1/templates/actors/parts/actor-item-summary.hbs",
 
   "systems/pf1/templates/internal/item-search.hbs",
@@ -107,6 +104,14 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/apps/level-up/ability-score.hbs",
   "systems/pf1/templates/apps/level-up/fcb.hbs",
   "systems/pf1/templates/apps/level-up/summary.hbs",
+
+  // Level Up summary
+  "systems/pf1/templates/apps/level-up/summary/health.hbs",
+  "systems/pf1/templates/apps/level-up/summary/fc.hbs",
+  "systems/pf1/templates/apps/level-up/summary/ability-score.hbs",
+
+  // Dynamic tooltips
+  "systems/pf1/templates/extended-tooltip.hbs",
 ]);
 
 /**

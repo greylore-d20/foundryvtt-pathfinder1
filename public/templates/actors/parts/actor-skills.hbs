@@ -1,14 +1,6 @@
 {{#*inline "skill"}}
 <li class="skill{{#if arbitrary}} arbitrary{{/if}}{{#if subSkillId}} sub-skill{{/if}}{{#if untrained}} untrained{{/if}}{{#if compendiumEntry}} compendium{{/if}}" data-sub-skill="{{subSkillId}}" data-skill="{{skillId}}">
-  <div class="skill-name tooltip">
-    <span class="tooltipcontent">
-      <span class="span2 align-left">@skills.{{key}}.mod :</span><span class="span1 align-right">{{mod}}</span>
-      <span class="span2 align-left">@skills.{{key}}.rank :</span><span class="span1 align-right">{{rank}}</span>
-
-      {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails }}
-
-      {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target=(concat "skill." key)}}
-    </span>
+  <div class="skill-name" data-tooltip-extended="skill.{{key}}">
     {{#if arbitrary}}
     <a class="control skill-create" data-tooltip="PF1.AddSkill">
       <i class="fas fa-plus"></i>

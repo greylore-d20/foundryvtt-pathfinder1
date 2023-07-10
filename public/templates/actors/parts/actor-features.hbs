@@ -70,26 +70,17 @@
           </div>
         </div>
 
-        <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
+        <div class="item-detail item-uses flexrow" data-tooltip-extended="item.{{item.id}}.resources">
           {{#if item.isCharged}}
           <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.uses.value}}</span>
           <span class="sep"> / </span>
           <span class="max">{{item.uses.max}}</span>
-          <span class="tooltipcontent">
-            <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.uses.value}}</span>
-            <span class="span2 align-left">@resources.{{item.tag}}.max :</span><span class="span1 align-right"> {{item.uses.max}}</span>
-          </span>
           {{/if}}
         </div>
         <div class="item-detail item-usage">
           {{#if item.labels.activation}}
           <span>{{item.labels.activation}}</span>
           {{/if}}
-        </div>
-        {{else if section.isClass}}
-        <div class="item-detail item-feat-level tooltip">
-          <span>{{localize "PF1.Level"}} {{item.level}}</span>
-          <span class="tooltipcontent"><span class="span2">@classes.{{item.tag}}.level :</span><span class="span1"> {{item.level}}</span></span>
         </div>
         {{/if}}
 
@@ -110,11 +101,7 @@
 
 <hr>
 
-<footer class="tooltip">
-  <span class="tooltipcontent">
-    {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceData.bonusFeats skipLine=true}}
-  </span>
-
+<footer data-tooltip-extended="feats" data-tooltip-direction="UP">
   {{! Arbitrary Bonus Feats }}
   <div class="flexrow form-group extra-feats">
     <label>{{localize "PF1.BonusFeatFormula"}}</label>

@@ -4,43 +4,24 @@
     {{! AC, TAC and FFAC }}
     <div class="info-box-joined ac-tac-ffac">
     {{#each system.attributes.ac as |ac id|}}
-      <div class="info-box tooltip ac-{{id}}">
+      <div class="info-box ac-{{id}}" data-tooltip-extended="ac.{{id}}">
         <h5>{{ac.label}}</h5>
         <span class="value">{{ac.total}}</span>
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.ac.{{id}}.total :</span> <span class="span1 align-right">{{ac.total}}</span>
-          <span class="span2 align-left">@armor.type :</span> <span class="span1 align-right">{{@root.rollData.armor.type}}</span>
-          <span class="span2 align-left">@shield.type :</span> <span class="span1 align-right">{{@root.rollData.shield.type}}</span>
-
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=ac.sourceDetails plain=true}}
-          {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.ac"}}
-        </div>
       </div>
     {{/each}}
     </div>
 
     <div class="info-box-joined cmd-ff">
       {{! CMD }}
-      <div class="info-box cmd tooltip">
+      <div class="info-box cmd" data-tooltip-extended="cmd.total">
         <h5>{{localize "PF1.CMDAbbr"}}</h5>
         <span class="value">{{system.attributes.cmd.total}}</span>
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.cmd.total :</span> <span class="span1 align-right">{{system.attributes.cmd.total}}</span>
-
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.cmd.total }}
-          {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.cmd"}}
-        </div>
       </div>
 
       {{! FF CMD }}
-      <div class="info-box ffcmd tooltip">
+      <div class="info-box ffcmd" data-tooltip-extended="cmd.flatFootedTotal">
         <h5>{{localize "PF1.CMDFFAbbr"}}</h5>
         <span class="value">{{system.attributes.cmd.flatFootedTotal}}</span>
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.cmd.flatFootedTotal :</span> <span class="span1 align-right">{{system.attributes.cmd.flatFootedTotal}}</span>
-
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.cmd.flatFootedTotal }}
-        </div>
       </div>
     </div>
   </div>
@@ -50,31 +31,17 @@
     {{! Saves }}
     <div class="info-box-joined saves">
       {{#each system.attributes.savingThrows as |savingThrow id|}}
-      <div class="info-box tooltip saving-throw {{id}}" data-savingthrow="{{id}}">
+      <div class="info-box saving-throw {{id}}" data-savingthrow="{{id}}" data-tooltip-extended="save.{{id}}">
         <h5><a class="rollable"><i class="fas fa-dice"></i><span>{{label}}</span></a></h5>
         <span class="value">{{numberFormat savingThrow.total decimals=0 sign=true}}</span>
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.savingThrows.{{id}}.total :</span> <span class="span1 align-right">{{total}}</span>
-
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=savingThrow.sourceDetails plain=true}}
-
-          {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target=(concat "savingThrow." id)}}
-        </div>
       </div>
       {{/each}}
     </div>
 
     {{! SR }}
-    <div class="info-box tooltip sr">
+    <div class="info-box sr" data-tooltip-extended="sr">
       <h5>{{localize "PF1.SpellResistance"}}</h5>
       <span class="value">{{system.attributes.sr.total}}</span>
-      <div class="tooltipcontent">
-        <span class="span2 align-left">@attributes.sr.total :</span> <span class="span1 align-right">{{system.attributes.sr.total}}</span>
-
-        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.sr.total }}
-
-        {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.sr"}}
-      </div>
     </div>
   </div>
 </div>

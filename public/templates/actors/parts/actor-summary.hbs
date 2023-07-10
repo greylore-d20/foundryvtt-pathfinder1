@@ -79,7 +79,7 @@
 {{!-- Header Attributes --}}
 <div class="attributes flexrow">
   {{#unless useWoundsAndVigor}}
-  <div class="info-box-header health-details tooltip">
+  <div class="info-box-header health-details" data-tooltip-extended="hit-points">
     <h3>{{localize "PF1.HitPoints"}}</h3>
 
     <div class="info-box-joined tooltip">
@@ -91,17 +91,6 @@
         <h5>{{localize "PF1.Maximum"}}</h5>
         <span class="value text-box readonly hp-max">{{system.attributes.hp.max}}</span>
       </div>
-
-      {{! Placed here to avoid :last-of-type mismatch}}
-      <div class="tooltipcontent">
-        <span class="span2 align-left">@attributes.hp.value :</span><span class="span1 align-right"> {{system.attributes.hp.value}}</span>
-        <span class="span2 align-left">@attributes.hp.max :</span><span class="span1 align-right"> {{system.attributes.hp.max}}</span>
-        <span class="span2 align-left">@attributes.hp.temp :</span><span class="span1 align-right"> {{system.attributes.hp.temp}}</span>
-        <span class="span2 align-left">@attributes.hp.nonlethal :</span><span class="span1 align-right"> {{system.attributes.hp.nonlethal}}</span>
-
-        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.hp.max }}
-      </div>
-
       <div class="info-box temp">
         <h5>{{localize "PF1.TempShort"}}</h5>
         <span class="value text-box direct allow-relative hp-temp-input" name="system.attributes.hp.temp" data-dtype="Number">{{#if system.attributes.hp.temp}}{{system.attributes.hp.temp}}{{/if}}</span>
@@ -116,7 +105,7 @@
   {{!-- Wounds & Vigor --}}
   <div class="wounds-vigor health-details flexrow">
     {{!-- Vigor --}}
-    <div class="info-box-header vigor">
+    <div class="info-box-header vigor" data-tooltip-extended="vigor">
       <h3>{{localize "PF1.Vigor"}}</h3>
       <div class="info-box-joined health-details vigor tooltip">
 
@@ -132,15 +121,6 @@
           <span class="value text-box readonly">{{system.attributes.vigor.max}}</span>
         </div>
 
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.vigor.min :</span><span class="span1 align-right"> {{system.attributes.vigor.min}}</span>
-          <span class="span2 align-left">@attributes.vigor.value :</span><span class="span1 align-right"> {{system.attributes.vigor.value}}</span>
-          <span class="span2 align-left">@attributes.vigor.max :</span><span class="span1 align-right"> {{system.attributes.vigor.max}}</span>
-          <span class="span2 align-left">@attributes.vigor.temp :</span><span class="span1 align-right"> {{system.attributes.vigor.temp}}</span>
-
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.vigor.max }}
-        </div>
-
         <div class="info-box current">
           <h5>{{localize "PF1.TempShort"}}</h5>
           <span class="value text-box direct allow-relative vigor-temp-input" name="system.attributes.vigor.temp" data-dtype="Number">
@@ -151,7 +131,7 @@
     </div>
 
     {{!-- Wounds --}}
-    <div class="info-box-header wounds">
+    <div class="info-box-header wounds" data-tooltip-extended="wounds">
       <h3>{{localize "PF1.Wounds"}}</h3>
       <div class="info-box-joined health-details wounds tooltip">
 
@@ -160,14 +140,6 @@
           <span class="value text-box direct allow-relative wounds-current-input" name="system.attributes.wounds.value" data-dtype="Number">
             {{system.attributes.wounds.value}}
           </span>
-        </div>
-
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.wounds.min :</span><span class="span1 align-right"> {{system.attributes.wounds.min}}</span>
-          <span class="span2 align-left">@attributes.wounds.value :</span><span class="span1 align-right"> {{system.attributes.wounds.value}}</span>
-          <span class="span2 align-left">@attributes.wounds.max :</span><span class="span1 align-right"> {{system.attributes.wounds.max}}</span>
-
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.wounds.max }}
         </div>
 
         <div class="info-box current">
@@ -183,78 +155,25 @@
   <div class="info-box-header speed-details flexcol">
     <h3>{{localize "PF1.Movement.Speed"}}</h3>
     <div class="info-box-joined">
-      <div class="info-box land tooltip">
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.land.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.land.total}} {{@root.units.distance.tactical}}</span>
-          {{#if system.attributes.speed.land.total}}
-          <span class="span2 align-left">@attributes.speed.land.overland :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.land.overland}} {{@root.units.distance.overland}}</span>
-          {{/if}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.base forceLabel=1 isDistance=true skipLabel=0}}
-
-          {{#if sourceDetails.system.attributes.speed.land.base.length}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.total skipLabel=1 skipLine=true isDistance=true}}
-          {{else}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.total skipLabel=0 isDistance=true}}
-          {{/if}}
-        </div>
+      <div class="info-box land" data-tooltip-extended="speed.land">
         <h5>{{localize "PF1.Movement.Mode.land"}}</h5>
         <span class="value text-box direct speed" name="system.attributes.speed.land.base" data-dtype="Number">
           {{#if system.attributes.speed.land.total}}{{convertDistance system.attributes.speed.land.total}}{{/if}}
         </span>
       </div>
-      <div class="info-box climb tooltip">
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.climb.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.climb.total}} {{@root.units.distance.tactical}}</span>
-          {{#if system.attributes.speed.climb.total}}
-          <span class="span2 align-left">@attributes.speed.climb.overland :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.climb.overland}} {{@root.units.distance.overland}}</span>
-          {{/if}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.base forceLabel=1 isDistance=true skipLabel=0}}
-
-          {{#if sourceDetails.system.attributes.speed.climb.base.length}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.total skipLabel=1 skipLine=true isDistance=true}}
-          {{else}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.total skipLabel=0 isDistance=true}}
-          {{/if}}
-        </div>
+      <div class="info-box climb" data-tooltip-extended="speed.climb">
         <h5>{{localize "PF1.Movement.Mode.climb"}}</h5>
         <span class="value text-box direct speed" name="system.attributes.speed.climb.base" data-dtype="Number">
           {{#if system.attributes.speed.climb.total}}{{convertDistance system.attributes.speed.climb.total}}{{/if}}
         </span>
       </div>
-      <div class="info-box swim tooltip">
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.swim.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.swim.total}} {{@root.units.distance.tactical}}</span>
-          {{#if system.attributes.speed.swim.total}}
-          <span class="span2 align-left">@attributes.speed.swim.overland :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.swim.overland}} {{@root.units.distance.overland}}</span>
-          {{/if}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.base forceLabel=1 isDistance=true skipLabel=0}}
-
-          {{#if sourceDetails.system.attributes.speed.swim.base.length}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.total skipLabel=1 skipLine=true isDistance=true}}
-          {{else}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.swim.total skipLabel=0 isDistance=true}}
-          {{/if}}
-        </div>
-
+      <div class="info-box swim" data-tooltip-extended="speed.swim">
         <h5>{{localize "PF1.Movement.Mode.swim"}}</h5>
         <span class="value text-box direct speed" name="system.attributes.speed.swim.base" data-dtype="Number">
           {{#if system.attributes.speed.swim.total}}{{convertDistance system.attributes.speed.swim.total}}{{/if}}
         </span>
       </div>
-      <div class="info-box burrow tooltip">
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.burrow.total :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.burrow.total}} {{@root.units.distance.tactical}}</span>
-          {{#if system.attributes.speed.burrow.total}}
-          <span class="span2 align-left">@attributes.speed.burrow.overland :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.burrow.overland}} {{@root.units.distance.overland}}</span>
-          {{/if}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.base forceLabel=1 isDistance=true skipLabel=0}}
-
-          {{#if sourceDetails.system.attributes.speed.burrow.base.length}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.total skipLabel=1 skipLine=true isDistance=true}}
-          {{else}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.total skipLabel=0 isDistance=true}}
-          {{/if}}
-        </div>
+      <div class="info-box burrow" data-tooltip-extended="speed.burrow">
         <h5>{{localize "PF1.Movement.Mode.burrow"}}</h5>
         <span class="value text-box direct speed" name="system.attributes.speed.burrow.base" data-dtype="Number">
           {{#if system.attributes.speed.burrow.total}}{{convertDistance system.attributes.speed.burrow.total}}{{/if}}
@@ -262,32 +181,15 @@
       </div>
 
       {{! Fly }}
-      <div class="info-box fly tooltip">
+      <div class="info-box fly" data-tooltip-extended="speed.fly">
         <h5>{{localize "PF1.Movement.Mode.fly"}}</h5>
         <span class="value text-box direct speed" name="system.attributes.speed.fly.base" data-dtype="Number">
           {{#if system.attributes.speed.fly.total}}{{convertDistance system.attributes.speed.fly.total}}{{/if}}
         </span>
-
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.fly.total :</span><span class="span1 align-right"> {{system.attributes.speed.fly.total}} {{@root.units.distance.tactical}}</span>
-          {{#if system.attributes.speed.fly.total}}
-          <span class="span2 align-left">@attributes.speed.fly.overland :</span><span class="span1 align-right"> {{convertDistance system.attributes.speed.fly.overland}} {{@root.units.distance.overland}}</span>
-          {{/if}}
-          {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.base forceLabel=1 isDistance=true skipLabel=0}}
-
-          {{#if sourceDetails.system.attributes.speed.fly.base.length}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.total skipLabel=1 skipLine=true isDistance=true}}
-          {{else}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.total skipLabel=0 isDistance=true}}
-          {{/if}}
-        </div>
       </div>
 
-      <div class="info-box maneuverability-details tooltip">
+      <div class="info-box maneuverability-details" data-tooltip-extended="flyManeuverability">
         <h5>{{localize "PF1.Movement.FlyManeuverability.Abbr"}}</h5>
-        <div class="tooltipcontent">
-          <span class="span2 align-left">@attributes.speed.fly.maneuverability :</span><span class="span1 align-right"> "{{system.attributes.speed.fly.maneuverability}}"</span>
-        </div>
         <span class="value">
           <select name="system.attributes.speed.fly.maneuverability">
             {{selectOptions config.flyManeuverabilities selected=system.attributes.speed.fly.maneuverability}}
@@ -315,32 +217,21 @@
 
       <div class="combat-stats">
         {{! BAB }}
-        <div class="info-box attribute bab tooltip" data-attribute="bab">
+        <div class="info-box attribute bab" data-attribute="bab" data-tooltip-extended="bab">
           <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.BABAbbr"}}</span></a></h5>
           <span class="value">{{numberFormat system.attributes.bab.total sign=true}}</span>
-          <span class="tooltipcontent">
-            <span class="span2 align-left">@attributes.bab.total :</span><span class="span1 align-right"> {{system.attributes.bab.total}}</span>
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.bab.total }}
-          </span>
         </div>
 
         {{! CMB }}
-        <div class="info-box attribute cmb tooltip" data-attribute="cmb">
+        <div class="info-box attribute cmb" data-attribute="cmb" data-tooltip-extended="cmb">
           <h5><a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a></h5>
           <span class="value">{{numberFormat system.attributes.cmb.total decimals=0 sign=true}}</span>
-          {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
         </div>
 
         {{! Initiative }}
-        <div class="info-box attribute initiative tooltip" data-attribute="initiative">
+        <div class="info-box attribute initiative" data-attribute="initiative" data-tooltip-extended="init">
           <h5><a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a></h5>
           <span class="value">{{numberFormat system.attributes.init.total sign=true}}</span>
-          <span class="tooltipcontent">
-            <span class="span2 align-left">@attributes.init.total :</span><span class="span1 align-right"> {{system.attributes.init.total}}</span>
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.init.total }}
-
-            {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
-          </span>
         </div>
       </div>
     </div>
@@ -403,9 +294,9 @@
             <h4>{{item.name}}</h4>
           </div>
 
-          <div class="item-detail item-feat-level tooltip">
+          <div class="item-detail item-feat-level tooltip"
+            data-tooltip-extended="item.{{item.id}}.level">
             <span>{{localize "PF1.Level"}} {{item.level}}</span>
-            <span class="tooltipcontent"><span class="span2">@classes.{{item.tag}}.level :</span><span class="span1"> {{item.level}}</span></span>
           </div>
 
           {{#if ../levelUp}}

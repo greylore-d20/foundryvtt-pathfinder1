@@ -133,16 +133,12 @@
         </div>
         {{/if}}
 
-        <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
+        <div class="item-detail item-uses flexrow" data-tooltip-extended="item.{{item.id}}.resources">
           {{#unless showUnidentifiedData}}
           {{#if item.hasResource}}
           <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.uses.value}}</span>
           <span class="sep"> / </span>
           <span class="max">{{item.uses.max}}</span>
-          <span class="tooltipcontent">
-            <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.uses.value}}</span>
-            <span class="span2 align-left">@resources.{{item.tag}}.max :</span><span class="span1 align-right"> {{item.uses.max}}</span>
-          </span>
           {{/if}}
           {{/unless}}
         </div>
@@ -169,18 +165,7 @@
 
 <hr>
 {{#unless isLootSheet}}
-<footer class="tooltip">
-  <div class="tooltipcontent">
-    <span class="span2 align-left">@attributes.encumbrance.level :</span><span class="span1 align-right"> {{system.attributes.encumbrance.level}}</span>
-    <span class="span3"><br></span>
-    <span class="span2 align-left">@details.carryCapacity.bonus.total :</span><span class="span1 align-right"> {{system.details.carryCapacity.bonus.total}}</span>
-    {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.details.carryCapacity.bonus.total}}
-
-    <span class="span3"><br></span>
-    <span class="span2 align-left">@details.carryCapacity.multiplier.total :</span><span class="span1 align-right"> {{system.details.carryCapacity.multiplier.total}}</span>
-    {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.details.carryCapacity.multiplier.total}}
-  </div>
-
+<footer data-tooltip-extended="carryCapacity" data-tooltip-direction="UP">
   {{! Carry Bonus }}
   <div class="carry-bonus">
     <label>
@@ -230,7 +215,7 @@
     </div>
   </div>
 {{/with}}
-</footerdiv>
+</footer>
 {{else}}
 {{#with encumbrance}}
 <footer>

@@ -265,15 +265,11 @@
                   </div>
                 </div>
 
-                <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
+                <div class="item-detail item-uses flexrow" data-tooltip-extended="item.{{item.id}}.resources">
                   {{#if item.isCharged}}
                   <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.uses.value}}</span>
                   <span class="sep"> / </span>
                   <span class="max">{{item.uses.max}}</span>
-                  <span class="tooltipcontent">
-                    <span class="span2">@resources.{{item.tag}}.value :</span><span class="span1"> {{item.uses.value}}</span>
-                    <span class="span2">@resources.{{item.tag}}.max :</span><span class="span1"> {{item.uses.max}}</span>
-                  </span>
                   {{/if}}
                 </div>
 

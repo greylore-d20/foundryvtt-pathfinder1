@@ -1,6 +1,7 @@
 import { ItemSheetPF } from "./item-sheet.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
 import { CurrencyTransfer } from "../currency-transfer.mjs";
+import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 export class ItemSheetPF_Container extends ItemSheetPF {
   constructor(...args) {

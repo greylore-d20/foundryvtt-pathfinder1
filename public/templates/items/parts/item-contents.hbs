@@ -70,17 +70,12 @@
         </div>
         {{/if}}
 
-        <div class="item-detail item-uses flexrow {{#if (and @root.actor isCharged)}}tooltip{{/if}}">
+        <div class="item-detail item-uses flexrow"
+          data-tooltip-extended="item.{{id}}.resources">
           {{#if isCharged}}
           <input type="text" class="select-on-click blended" data-wheel-step="1" value="{{system.uses.value}}" data-dtype="Number">
           <span class="sep"> / </span>
           <span class="max">{{system.uses.max}}</span>
-          {{#if @root.actor}}
-          <span class="tooltipcontent">
-            <span class="span2 align-left">@resources.{{tag}}.value :</span><span class="span1 align-right"> {{system.uses.value}}</span>
-            <span class="span2 align-left">@resources.{{tag}}.max :</span><span class="span1 align-right"> {{system.uses.max}}</span>
-          </span>
-          {{/if}}
           {{/if}}
         </div>
 

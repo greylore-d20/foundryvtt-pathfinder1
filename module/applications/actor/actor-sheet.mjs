@@ -11,6 +11,7 @@ import { LevelUpForm } from "../level-up.mjs";
 import { CurrencyTransfer } from "../currency-transfer.mjs";
 import { getHighestChanges } from "../../documents/actor/utils/apply-changes.mjs";
 import { RollPF } from "../../dice/roll.mjs";
+import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 
 /**
  * Extend the basic ActorSheet class to do all the PF things!
@@ -280,95 +281,40 @@ export class ActorSheetPF extends ActorSheet {
       });
     }
 
-    // Hit point sources
-    data.sourceDetails = foundry.utils.expandObject(this.actor.sourceDetails);
-
     // Ability Scores
     for (const [a, abl] of Object.entries(data.system.abilities)) {
       abl.label = pf1.config.abilities[a];
       abl.totalLabel = abl.total == null ? "-" : abl.total;
-
-      abl.sourceDetails = [
-        ...(data.sourceDetails.system.abilities?.[a]?.total ?? []),
-        ...(data.sourceDetails.system.abilities?.[a]?.penalty ?? []),
-      ];
     }
 
     // Armor Class
     for (const [a, ac] of Object.entries(data.system.attributes.ac)) {
       ac.label = pf1.config.ac[a];
-      ac.sourceDetails = data.sourceDetails.system.attributes.ac[a].total ?? [];
     }
 
     // Saving Throws
     for (const [a, savingThrow] of Object.entries(data.system.attributes.savingThrows)) {
       savingThrow.label = pf1.config.savingThrows[a];
-      savingThrow.sourceDetails = data.sourceDetails.system.attributes.savingThrows[a].total ?? [];
     }
 
     // Update skill labels
-    const acp = this.document.system.attributes?.acp?.total;
     for (const [skillId, skill] of Object.entries(data.system.skills ?? {})) {
-      skill.label = pf1.config.skills[skillId];
-      skill.skillId = skillId;
       skill.key = skillId;
-      skill.label ||= skill.name;
+      skill.skillId = skillId;
+      skill.label = pf1.config.skills[skillId] || skill.name;
       skill.arbitrary = pf1.config.arbitrarySkills.includes(skillId);
-      skill.sourceDetails = [];
-      skill.compendiumEntry = pf1.config.skillCompendiumEntries[skillId] ?? skill.journal ?? null;
-
-      // Add skill rank source
-      if (skill.rank > 0) {
-        skill.sourceDetails.push({ name: game.i18n.localize("PF1.SkillRankPlural"), value: skill.rank });
-
-        // Add class skill bonus source
-        if (skill.cs) {
-          skill.sourceDetails.push({ name: game.i18n.localize("PF1.CSTooltip"), value: 3 });
-        }
-      }
-
-      // Add ACP source
-      if (skill.acp && acp > 0) {
-        skill.sourceDetails.push({ name: game.i18n.localize("PF1.ACPLong"), value: -acp });
-      }
-
-      // Add ability modifier source
-      if (skill.ability) {
-        skill.sourceDetails.push({
-          name: pf1.config.abilities[skill.ability],
-          value: data.rollData.abilities[skill.ability]?.mod ?? 0,
-        });
-      }
-
-      // Add misc skill bonus source
-      if (data.sourceDetails.system.skills[skillId]) {
-        skill.sourceDetails.push(...data.sourceDetails.system.skills[skillId].mod);
-      }
-
+      skill.compendiumEntry = pf1.config.skillCompendiumEntries[skillId] || skill.journal || null;
       skill.untrained = skill.rt === true && !(skill.rank > 0);
+
       if (skill.subSkills != null) {
         for (const [subSkillId, subSkill] of Object.entries(skill.subSkills)) {
-          subSkill.compendiumEntry = subSkill.journal ?? null;
           subSkill.key = `${skillId}.subSkills.${subSkillId}`;
           subSkill.skillId = skillId;
           subSkill.subSkillId = subSkillId;
           subSkill.label ||= subSkill.name;
-          subSkill.custom = true; // All subskills are custom
-          subSkill.sourceDetails = [];
-          if (subSkill.rank > 0) {
-            subSkill.sourceDetails.push({ name: game.i18n.localize("PF1.SkillRankPlural"), value: subSkill.rank });
-            if (subSkill.cs) {
-              subSkill.sourceDetails.push({ name: game.i18n.localize("PF1.CSTooltip"), value: 3 });
-            }
-          }
-          subSkill.sourceDetails.push({
-            name: pf1.config.abilities[subSkill.ability],
-            value: data.system.abilities[subSkill.ability]?.mod ?? 0,
-          });
-          if (data.sourceDetails.system.skills[skillId]?.subSkills[subSkillId]) {
-            subSkill.sourceDetails.push(...data.sourceDetails.system.skills[skillId].subSkills[subSkillId].mod);
-          }
+          subSkill.compendiumEntry = subSkill.journal || null;
           subSkill.untrained = subSkill.rt === true && !(subSkill.rank > 0);
+          subSkill.custom = true; // All subskills are custom
         }
       }
     }
@@ -392,9 +338,6 @@ export class ActorSheetPF extends ActorSheet {
 
     // Feat count
     {
-      const sourceData = [];
-      data.sourceData.bonusFeats = sourceData;
-
       // Feat count
       const feats = this.actor.getFeatCount();
       // Additional values
@@ -403,26 +346,6 @@ export class ActorSheetPF extends ActorSheet {
       if (feats.missing > 0 || feats.excess) feats.issues += 1;
       if (feats.disabled > 0) feats.issues += 1;
       data.featCount = feats;
-
-      // Generate fake sources for feats
-      // TODO: Move this to the real source info generation
-      this.actor.changes
-        .filter((c) => c.subTarget === "bonusFeats")
-        .forEach((c) => {
-          if (c.parent || c.flavor) {
-            sourceData.push({
-              name: c.parent?.name ?? c.flavor,
-              value: c.value,
-            });
-          }
-        });
-
-      if (feats.formula !== 0) {
-        sourceData.push({
-          name: game.i18n.localize("PF1.BonusFeatFormula"),
-          value: feats.formula,
-        });
-      }
     }
 
     // Fetch the game settings relevant to sheet rendering.
@@ -479,7 +402,7 @@ export class ActorSheetPF extends ActorSheet {
       });
 
     // Prepare (interactive) labels
-    {
+    if (this.actor.itemTypes.class.length === 0) {
       data.labels.firstClass = game.i18n
         .format("PF1.Info_FirstClass", {
           html: `<a data-action="compendium" data-action-target="classes" data-tooltip="PF1.OpenCompendium">${game.i18n.localize(
@@ -794,6 +717,8 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   /**
+   * Calculate used and available skill ranks.
+   *
    * @internal
    * @param {object} context
    * @param {object} rollData
@@ -824,24 +749,13 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Allowed skill ranks from HD, classes, intelligence, FCB, etc.
-    const sourceData = [],
-      bgSourceData = [];
-    context.sourceData.skillRanks = sourceData;
-    context.sourceData.bgSkillRanks = bgSourceData;
     this.document.itemTypes.class
       .filter((cls) => cls.system.subType !== "mythic")
       .forEach((cls) => {
         // Favoured Class Bonus
         // Apply FCB regardless if mindless if user applied such
         const fcSkills = cls.system.fc?.skill?.value ?? 0;
-        if (fcSkills > 0) {
-          skillRanks.allowed += fcSkills;
-
-          sourceData.push({
-            name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: cls.name }),
-            value: fcSkills,
-          });
-        }
+        if (fcSkills > 0) skillRanks.allowed += fcSkills;
 
         // Mindless get nothing else
         if (isMindless) return;
@@ -859,66 +773,31 @@ export class ActorSheetPF extends ActorSheet {
         // Background skills
         if (context.useBGSkills && pf1.config.backgroundSkillClasses.includes(cls.subType)) {
           const bgranks = hd * pf1.config.backgroundSkillsPerLevel;
-          if (bgranks > 0) {
-            skillRanks.bgAllowed += bgranks;
-            bgSourceData.push({
-              name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
-              value: bgranks,
-            });
-          }
+          if (bgranks > 0) skillRanks.bgAllowed += bgranks;
         }
-
-        sourceData.push({
-          name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
-          value: perLevel * hd,
-        });
       });
 
     // Count from intelligence
     const intMod = context.system.abilities?.int?.mod;
-    if (intMod !== 0 && !isMindless) {
-      sourceData.push({
-        name: game.i18n.localize("PF1.AbilityInt"),
-        value: intMod * context.system.attributes?.hd?.total,
-      });
-    }
 
     // Count from bonus skill rank formula
     if (context.system.details.bonusSkillRankFormula !== "") {
       const roll = RollPF.safeRoll(context.system.details.bonusSkillRankFormula, rollData);
       if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
       skillRanks.allowed += roll.total;
-      sourceData.push({
-        name: game.i18n.localize("PF1.SkillBonusRankFormula"),
-        value: roll.total,
-      });
     }
 
     // Calculate from changes
+    // TODO: Turn bonus skill ranks into actual change target
     this.actor.changes
-      .filter((o) => o.subTarget === "bonusSkillRanks")
-      .forEach((o) => {
-        if (!o.value) return;
-
-        skillRanks.allowed += o.value;
-        sourceData.push({
-          name: o.parent?.name ?? game.i18n.localize("PF1.Change"),
-          value: o.value,
-        });
-      });
+      .filter((c) => c.subTarget === "bonusSkillRanks" && !!c.value)
+      .forEach((c) => (skillRanks.allowed += c.value));
 
     // Adventure skills transferred to background skills
     if (context.useBGSkills && skillRanks.bgUsed > skillRanks.bgAllowed) {
       skillRanks.sentToBG = skillRanks.bgUsed - skillRanks.bgAllowed;
       skillRanks.allowed -= skillRanks.sentToBG;
       skillRanks.bgAllowed += skillRanks.sentToBG;
-
-      if (skillRanks.sentToBG > 0) {
-        bgSourceData.push({
-          name: game.i18n.localize("PF1.Transferred"),
-          value: skillRanks.sentToBG,
-        });
-      }
     }
 
     context.skillRanks = skillRanks;
@@ -1342,6 +1221,950 @@ export class ActorSheetPF extends ActorSheet {
     /* -------------------------------------------- */
 
     html.find('a[data-action="compendium"]').click(this._onOpenCompendium.bind(this));
+
+    html
+      // "mouseenter" would be better, but Foundry tooltip behaves unpredictably with it.
+      .on("mouseover", "[data-tooltip-extended]", this._activateExtendedTooltip.bind(this))
+      .on("mouseleave", "[data-tooltip-extended]", () => game.tooltip.deactivate());
+  }
+
+  /**
+   * Handle extended tooltip on hover activation.
+   *
+   * Async to reduce UX impact.
+   *
+   * @private
+   * @param {Event} event
+   */
+  async _activateExtendedTooltip(event) {
+    const el = event.currentTarget;
+    const id = el.dataset.tooltipExtended;
+    if (!id) return;
+
+    const context = { actor: this.actor, bonusTypes: pf1.config.bonusTypes, config: pf1.config };
+    this._getTooltipContext(id, context);
+
+    context.sources = context.sources?.filter((list) => list.sources?.length > 0);
+
+    if (
+      !(
+        context.header ||
+        context?.paths?.length > 0 ||
+        context?.sources?.length > 0 ||
+        context?.details?.length > 0 ||
+        context?.notes?.length > 0
+      )
+    )
+      return;
+
+    for (const src of context.sources) {
+      src.sources = src.sources.map((s) => ({
+        ...s,
+        type: s.type || pf1.config.bonusTypes[s.modifier || "untyped"] || s.modifier,
+      }));
+    }
+
+    const text = renderCachedTemplate("systems/pf1/templates/extended-tooltip.hbs", context);
+
+    game.tooltip.activate(el, {
+      text,
+      cssClass: "pf1 extended",
+      direction: el.dataset.tooltipDirection || undefined,
+    });
+  }
+
+  /**
+   * @private
+   * @param {string} fullId - Target ID
+   * @param {object} context - Context object to store data into
+   * @throws {Error} - If provided ID is invalid.
+   */
+  _getTooltipContext(fullId, context) {
+    const actor = this.actor,
+      system = actor.system;
+
+    // Lazy roll data
+    const lazy = {
+      get rollData() {
+        this._rollData ??= actor.getRollData();
+        return this._rollData;
+      },
+    };
+
+    const getSource = (path) => this.actor.sourceDetails[path];
+
+    const getNotes = (context) => {
+      const noteObjs = actor.getContextNotes(context);
+      return actor.formatContextNotes(noteObjs, lazy.rollData, { roll: false });
+    };
+
+    const damageTypes = (d) =>
+      [
+        ...(d.values?.map((dv) => pf1.registry.damageTypes.get(dv)?.name || dv) ?? []),
+        ...(d.custom
+          ?.split(";")
+          .map((dv) => dv?.trim())
+          .filter((dv) => !!dv) ?? []),
+      ].flat();
+
+    const details = [];
+    const paths = [];
+    const sources = [];
+    let notes;
+
+    const re = /^(?<id>[\w-]+)(?:\.(?<detail>.*))?$/.exec(fullId);
+    const { id, detail } = re?.groups ?? {};
+
+    switch (id) {
+      case "level":
+        paths.push({ path: "@attributes.hd.total", value: system.attributes?.hd?.total });
+        if (system.details?.mythicTier > 0) {
+          paths.push({ path: "@details.mythicTier", value: system.details.mythicTier });
+        }
+        break;
+      case "hit-points":
+        paths.push(
+          { path: "@attributes.hp.value", value: system.attributes.hp.value },
+          { path: "@attributes.hp.max", value: system.attributes.hp.max },
+          { path: "@attributes.hp.temp", value: system.attributes.hp.temp },
+          { path: "@attributes.hp.nonlethal", value: system.attributes.hp.nonlethal }
+        );
+        sources.push({ sources: getSource("system.attributes.hp.max") });
+        break;
+      case "vigor": // Wounds & Vigor
+        paths.push(
+          { path: "@attributes.vigor.value", value: system.attributes.vigor.value },
+          { path: "@attributes.vigor.temp", value: system.attributes.vigor.temp },
+          { path: "@attributes.vigor.max", value: system.attributes.vigor.max }
+        );
+
+        sources.push({
+          sources: getSource("system.attributes.vigor.max"),
+        });
+        break;
+      case "wounds": // Wounds & Vigor
+        paths.push(
+          { path: "@attributes.wounds.value", value: system.attributes.wounds.value },
+          { path: "@attributes.wounds.max", value: system.attributes.wounds.max }
+        );
+
+        sources.push({
+          sources: getSource("system.attributes.wounds.max"),
+        });
+        break;
+      case "speed": {
+        sources.push(
+          { sources: getSource("system.attributes.speed.land.base") },
+          { sources: getSource("system.attributes.speed.land.total") }
+        );
+
+        const isMetricDist = pf1.utils.getDistanceSystem() === "metric";
+
+        const mode = detail;
+
+        // Add base speed
+        const [tD] = pf1.utils.convertDistance(system.attributes.speed[mode].total);
+        const tU = isMetricDist ? pf1.config.measureUnitsShort.m : pf1.config.measureUnitsShort.ft;
+        paths.push({ path: `@attributes.speed.${mode}.total`, value: tD, unit: tU });
+        // Add overland speed if we have actual speed
+        if (tD > 0) {
+          const [oD] = pf1.utils.convertDistance(system.attributes.speed[mode].overland);
+          const oU = isMetricDist ? pf1.config.measureUnitsShort.km : pf1.config.measureUnitsShort.mi;
+          paths.push({ path: `@attributes.speed.${mode}.overland`, value: oD, unit: oU });
+        }
+        break;
+      }
+      case "flyManeuverability":
+        paths.push({
+          path: "@attributes.speed.fly.maneuverability",
+          value: system.attributes.speed.fly.maneuverability,
+        });
+        break;
+      case "ac": {
+        const ac = system.attributes.ac[detail];
+        paths.push(
+          { path: `@attributes.ac.${detail}.total`, value: ac?.total },
+          { path: "@armor.type", value: lazy.rollData.armor?.type },
+          { path: "@shield.type", value: lazy.rollData.shield?.type }
+        );
+        sources.push({
+          sources: getSource(`system.attributes.ac.${detail}.total`),
+        });
+        break;
+      }
+      case "cmd":
+        paths.push({
+          path: `@attributes.cmd.${detail}`,
+          value: system.attributes.cmd[detail],
+        });
+
+        sources.push({
+          sources: getSource(`system.attributes.cmd.${detail}`),
+        });
+
+        notes = getNotes(`misc.cmd`);
+        break;
+      case "save":
+        paths.push({
+          path: `@attributes.savingThrows.${detail}.total`,
+          value: system.attributes.savingThrows[detail]?.total,
+        });
+
+        sources.push({
+          sources: getSource(`system.attributes.savingThrows.${detail}.total`),
+        });
+
+        notes = getNotes(`savingThrow.${detail}`);
+        break;
+      case "sr":
+        paths.push({
+          path: "@attributes.sr.total",
+          value: system.attributes.sr.total,
+        });
+
+        sources.push({
+          sources: getSource("system.attributes.sr.total"),
+        });
+
+        notes = getNotes("misc.sr");
+        break;
+      case "bab":
+        paths.push({
+          path: "@attributes.bab.total",
+          value: system.attributes.bab.total,
+        });
+
+        sources.push({
+          sources: getSource("system.attributes.bab.total"),
+        });
+        break;
+      case "cmb":
+        paths.push({
+          path: "@attributes.cmb.total",
+          value: system.attributes.cmb.total,
+          // omit: + @attributes.attack.shared
+          // omit: + @attributes.attack.general
+        });
+
+        if (system.traits.size !== "med") {
+          sources.push({
+            sources: [{ name: game.i18n.localize("PF1.Size"), value: pf1.config.sizeSpecialMods[system.traits.size] }],
+          });
+        }
+
+        sources.push({
+          sources: getSource("system.attributes.attack.shared"),
+        });
+
+        if (system.attributes.cmbAbility) {
+          sources.push({
+            sources: [
+              {
+                name: pf1.config.abilities[system.attributes.cmbAbility],
+                value: system.abilities[system.attributes.cmbAbility]?.mod,
+              },
+            ],
+          });
+        }
+
+        sources.push(
+          { sources: getSource("system.attributes.attack.general") },
+          { sources: getSource("system.attributes.cmb.bonus") }
+        );
+
+        notes = getNotes("misc.cmb");
+        break;
+      case "init":
+        paths.push({
+          path: "@attributes.init.total",
+          value: system.attributes.init.total,
+        });
+
+        sources.push({
+          sources: getSource("system.attributes.init.total"),
+        });
+
+        notes = getNotes("misc.init");
+        break;
+      case "abilityScore": {
+        const abl = detail;
+        const ability = system.abilities[detail] ?? {};
+        paths.push(
+          { path: `@abilities.${abl}.total`, value: ability.total, sign: false },
+          { path: `@abilities.${abl}.value`, value: ability.value, sign: false },
+          { path: `@abilities.${abl}.mod`, value: ability.mod },
+          { path: `@abilities.${abl}.damage`, value: ability.damage, sign: false },
+          { path: `@abilities.${abl}.drain`, value: ability.drain, sign: false },
+          { path: `@abilities.${abl}.penalty`, value: ability.penalty, sign: false },
+          { path: `@abilities.${abl}.base`, value: ability.base, sign: false },
+          { path: `@abilities.${abl}.baseMod`, value: ability.baseMod }
+        );
+
+        sources.push(
+          { sources: getSource(`system.abilities.${abl}.total`) },
+          { sources: getSource(`system.abilities.${abl}.penalty`) },
+          {
+            label: game.i18n.localize("PF1.ModifierOnly"),
+            sources: getSource(`system.abilities.${abl}.mod`),
+          }
+        );
+
+        notes = getNotes(`abilityChecks.${abl}`);
+        break;
+      }
+      case "acp":
+        paths.push({
+          path: "@attributes.acp.total",
+          value: system.attributes.acp.total,
+        });
+
+        sources.push(
+          {
+            sources: getSource("system.attributes.acp.total"),
+          },
+          {
+            label: game.i18n.localize("PF1.EquipSlots.armor"),
+            sources: getSource("system.attributes.acp.armorBonus"),
+          },
+          {
+            label: game.i18n.localize("PF1.EquipSlots.shield"),
+            sources: getSource("system.attributes.acp.shieldBonus"),
+          }
+        );
+        break;
+      case "max-dex":
+        paths.push({
+          path: "@attributes.maxDexBonus",
+          value: system.attributes.maxDexBonus,
+        });
+
+        sources.push(
+          {
+            sources: getSource("system.attributes.maxDexBonus"),
+          },
+          {
+            label: game.i18n.localize("PF1.EquipSlots.armor"),
+            sources: getSource("system.attributes.mDex.armorBonus"),
+          },
+          {
+            label: game.i18n.localize("PF1.EquipSlots.shield"),
+            sources: getSource("system.attributes.mDex.shieldBonus"),
+          }
+        );
+        break;
+      case "asf": {
+        // TODO: Make ASF proper change target
+        const asfSources = [];
+        this.actor.itemTypes.equipment
+          .filter((item) => item.isActive)
+          .reduce((cur, item) => {
+            const itemASF = item.system.spellFailure || 0;
+            if (itemASF > 0) asfSources.push({ name: item.name, value: `${itemASF}%` });
+            return cur + itemASF;
+          }, 0);
+
+        if (asfSources.length) {
+          sources.push({ sources: asfSources });
+        }
+        break;
+      }
+      case "size":
+        paths.push({ path: "@traits.size", value: system.traits.size }, { path: "@size", value: lazy.rollData.size });
+        break;
+      case "stature":
+        paths.push({ path: "@traits.stature", value: system.traits.stature });
+        break;
+      case "aura":
+        paths.push({ path: "@traits.aura.custom", empty: true });
+        break;
+      case "fastHeal":
+        paths.push({ path: "@traits.fastHealing", empty: true });
+        break;
+      case "regen":
+        paths.push({ path: "@traits.regen", empty: true });
+        break;
+      case "conditionResistance":
+        paths.push({ path: "@traits.cres", empty: true });
+        break;
+      case "conditionImmunity":
+        paths.push({ path: "@traits.ci.value", empty: true }, { path: "@traits.ci.custom", empty: true });
+        break;
+      case "energyResistance":
+        paths.push({ path: "@traits.eres.total", empty: true });
+        break;
+      case "damageReduction":
+        paths.push({ path: "@traits.dr.total", empty: true });
+        break;
+      case "damageImmunity":
+        paths.push({ path: "@traits.di.value", empty: true }, { path: "@traits.di.custom", empty: true });
+        break;
+      case "damageVulnerability":
+        paths.push({ path: "@traits.dv.value", empty: true }, { path: "@traits.dv.custom", empty: true });
+        break;
+      case "proficiency":
+        switch (detail) {
+          case "language":
+            paths.push({ path: "@traits.languages.total", empty: true });
+            sources.push({ sources: getSource("system.traits.languages"), left: true, untyped: true });
+            break;
+          case "weapon":
+            paths.push({ path: "@traits.weaponProf.total", empty: true });
+            sources.push({ sources: getSource("system.traits.weaponProf"), left: true, untyped: true });
+            break;
+          case "armor":
+            paths.push({ path: "@traits.armorProf.total", empty: true });
+            sources.push({ sources: getSource("system.traits.armorProf"), left: true, untyped: true });
+            break;
+        }
+        break;
+      case "quadruped":
+        paths.push({ path: "@attributes.quadruped", value: String(system.attributes.quadruped) });
+        break;
+      case "negativeLevels":
+        paths.push({ path: "@attributes.energyDrain", value: system.attributes.energyDrain, signed: false });
+        break;
+      case "item": {
+        const [itemId, target] = detail.split(".");
+        const item = this.actor.items.get(itemId);
+        if (!item) return;
+        switch (target) {
+          case "level":
+            paths.push({
+              path: `@classes.${item.system.tag}.level`,
+              value: item.system.level,
+            });
+            break;
+          case "resources": {
+            if (item.isCharged && item.system.uses?.max > 0) {
+              paths.push(
+                { path: `@resources.${item.system.tag}.value`, value: item.system.uses?.value },
+                { path: `@resources.${item.system.tag}.max`, value: item.system.uses?.max }
+              );
+            }
+            break;
+          }
+          case "attacks": {
+            const action = item.firstAction;
+            const attacks =
+              action
+                ?.getAttacks({ full: true, resolve: true, conditionals: true, bonuses: true })
+                ?.map((atk) => atk.bonus) ?? [];
+
+            if (attacks.length == 0) return;
+
+            const formatter = new Intl.NumberFormat("nu", { signDisplay: "always" });
+            context.header = attacks.map((n) => formatter.format(n)).join("/");
+
+            sources.push({
+              sources: item.attackSources,
+            });
+            break;
+          }
+          case "damage": {
+            const action = item.firstAction;
+            if (!action?.hasDamage) return;
+
+            const actionData = action.data;
+            const parts = [];
+            const rollData = action.getRollData();
+
+            const handleFormula = (formula, change) => {
+              try {
+                switch (typeof formula) {
+                  case "string": {
+                    // Ensure @item.level and similar gets parsed correctly
+                    const rd = formula.indexOf("@") >= 0 ? change?.parent?.getRollData() ?? rollData : {};
+                    if (formula != 0) {
+                      const newformula = pf1.utils.formula.simplify(formula, rd);
+                      if (newformula != 0) parts.push(newformula);
+                    }
+                    break;
+                  }
+                  case "number":
+                    if (formula != 0) parts.push(`${formula}`);
+                    break;
+                }
+              } catch (err) {
+                console.error(`Formula parsing error with "${formula}"`, err);
+                parts.push("NaN");
+              }
+            };
+
+            const handleParts = (parts) => parts.forEach(({ formula }) => handleFormula(formula));
+
+            // Normal damage parts
+            handleParts(actionData.damage.parts);
+
+            const isNatural = action.item.subType === "natural";
+
+            // Include ability score only if the string isn't too long yet
+            const dmgAbl = actionData.ability.damage;
+            const dmgAblBaseMod = system.abilities[dmgAbl]?.mod ?? 0;
+            let dmgMult = actionData.ability.damageMult || 1;
+            if (isNatural && !(actionData.naturalAttack?.primaryAttack ?? true)) {
+              dmgMult = actionData.naturalAttack?.secondary?.damageMult ?? 0.5;
+            }
+            const dmgAblMod = Math.floor(dmgAblBaseMod * dmgMult);
+            if (dmgAblMod != 0) parts.push(dmgAblMod);
+
+            // Include damage parts that don't happen on crits
+            handleParts(actionData.damage.nonCritParts);
+
+            // Include general sources. Item enhancement bonus is among these.
+            action.allDamageSources.forEach((s) => handleFormula(s.formula, s));
+
+            if (parts.length === 0) parts.push("NaN"); // Something probably went wrong
+
+            const semiFinal = pf1.utils.formula.compress(parts.join("+"));
+
+            context.header = semiFinal;
+
+            const dmgSources = [];
+
+            context.subHeader = game.i18n.localize("PF1.Details");
+
+            const damage = action.data.damage;
+            for (const { formula, type } of damage.parts ?? []) {
+              dmgSources.push({
+                name: formula,
+                value: pf1.utils.formula.simplify(formula, rollData),
+                type: damageTypes(type).join(", "),
+                //unvalued: true,
+              });
+            }
+            for (const { formula, type } of damage.nonCritParts ?? []) {
+              dmgSources.push({
+                name: formula,
+                value: pf1.utils.formula.simplify(formula, rollData),
+                type: damageTypes(type).join(", "),
+                //unvalued: true,
+              });
+            }
+            const abl = actionData.ability?.damage;
+            if (abl) {
+              const mult = actionData.ability?.damageMult ?? 1;
+              dmgSources.push({
+                value: Math.floor(rollData.abilities[abl]?.mod * mult),
+                type: pf1.config.abilities[abl],
+              });
+            }
+
+            sources.push({ sources: dmgSources });
+
+            sources.push({
+              sources: action.allDamageSources.map((s) => ({ name: s.flavor, ...s })),
+            });
+
+            const hasOptionalConditionals = action?.data.conditionals.find((c) => !c.default);
+            if (hasOptionalConditionals) {
+              // <span class="span3">+ {{localize "PF1.Conditionals"}}</span>
+            }
+
+            if (damage.critParts?.length) {
+              // <span class="span3">+ {{localize "PF1.OnCritBonusFormula"}}</span>
+            }
+            break;
+          }
+          case "range": {
+            const action = item.firstAction;
+            if (!action?.hasRange) return;
+
+            const maxIncr = action.data.range?.maxIncrements ?? 1;
+            if (maxIncr <= 1) return;
+
+            details.push({
+              key: game.i18n.localize("PF1.MaximumRangeIncrements"),
+              value: action.data.range.maxIncrements,
+              left: true,
+            });
+
+            const rollData = action.getRollData();
+            const range = {
+              ...(action.data.range ?? {}),
+              min: action.getRange({ type: "min", rollData }),
+              max: action.getRange({ type: "max", rollData }),
+            };
+
+            const u = pf1.utils.convertDistance(0, "ft")[1];
+            const mu = pf1.utils.convertDistance(0, range.units)[1];
+
+            details.push({
+              key: game.i18n.localize("PF1.Range"),
+              value: `${range.min} ${u} – ${range.max} ${mu}`,
+              left: true,
+            });
+            break;
+          }
+          default:
+            throw new Error(`Invalid extended tooltip identifier "${fullId}"`);
+        }
+        break;
+      }
+      case "carryCapacity":
+        paths.push(
+          { path: "@attributes.encumbrance.level", value: system.attributes.encumbrance.level },
+          { path: "@details.carryCapacity.bonus.total", value: system.details.carryCapacity.bonus.total },
+          { path: "@details.carryCapacity.multiplier.total", value: system.details.carryCapacity.multiplier.total }
+        );
+
+        sources.push({
+          label: game.i18n.localize("PF1.CarryStrength"),
+          sources: getSource("system.details.carryCapacity.bonus.total"),
+        });
+        sources.push({
+          label: game.i18n.localize("PF1.CarryMultiplier"),
+          sources: getSource("system.details.carryCapacity.multiplier.total"),
+        });
+        break;
+      case "feats": {
+        const featSources = [];
+
+        // Generate fake sources
+        // TODO: Move this to the real source info generation
+        this.actor.changes
+          .filter((c) => c.subTarget === "bonusFeats")
+          .forEach((c) => {
+            if (c.parent || c.flavor) {
+              featSources.push({
+                name: c.parent?.name ?? c.flavor,
+                value: c.value,
+              });
+            }
+          });
+
+        const feats = this.actor.getFeatCount();
+        if (feats.formula !== 0) {
+          featSources.push({
+            name: game.i18n.localize("PF1.BonusFeatFormula"),
+            value: feats.formula,
+          });
+        }
+        sources.push({ sources: featSources });
+        break;
+      }
+      case "skills": {
+        const useBGSkills = game.settings.get("pf1", "allowBackgroundSkills");
+        const isMindless = system.abilities?.int?.value === null;
+
+        const skillSources = [];
+        const isBG = detail === "background";
+
+        let bgAllowed = 0;
+
+        this.actor.itemTypes.class
+          .filter((cls) => cls.system.subType !== "mythic")
+          .forEach((cls) => {
+            // Favoured Class Bonus
+            // Apply FCB regardless if mindless if user applied such
+            const fcSkills = cls.system.fc?.skill?.value ?? 0;
+            if (fcSkills > 0 && !isBG) {
+              skillSources.push({
+                name: game.i18n.format("PF1.SourceInfoSkillRank_ClassFC", { className: cls.name }),
+                value: fcSkills,
+                untyped: true,
+              });
+            }
+
+            // Mindless get nothing else
+            if (isMindless) return;
+
+            const hd = cls.hitDice;
+            if (hd === 0) return;
+
+            // Background skills
+            if (useBGSkills && pf1.config.backgroundSkillClasses.includes(cls.subType)) {
+              const bgranks = hd * pf1.config.backgroundSkillsPerLevel;
+              if (bgranks > 0 && isBG) {
+                bgAllowed += bgranks;
+                skillSources.push({
+                  name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
+                  value: bgranks,
+                  untyped: true,
+                });
+              }
+            }
+
+            if (!isBG) {
+              const perLevel = cls.system.skillsPerLevel || 0;
+              skillSources.push({
+                name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
+                value: perLevel * hd,
+                untyped: true,
+              });
+            }
+          });
+
+        // Ability ability score
+        if (!isBG && !isMindless) {
+          const intMod = system.abilities?.int?.mod;
+          if (intMod !== 0) {
+            skillSources.push({
+              name: game.i18n.localize("PF1.AbilityInt"),
+              value: intMod * system.attributes?.hd?.total,
+            });
+          }
+        }
+
+        // Count from bonus skill rank formula
+        if (system.details.bonusSkillRankFormula !== "") {
+          const roll = RollPF.safeRoll(system.details.bonusSkillRankFormula, lazy.rollData);
+          if (roll.err) console.error(`An error occurred in the Bonus Skill Rank formula of actor ${this.actor.name}.`);
+          skillSources.push({
+            name: game.i18n.localize("PF1.SkillBonusRankFormula"),
+            value: roll.total,
+          });
+        }
+
+        // Calculate from changes
+        this.actor.changes
+          .filter((o) => o.subTarget === "bonusSkillRanks")
+          .forEach((o) => {
+            if (!o.value) return;
+
+            skillSources.push({
+              name: o.parent?.name ?? game.i18n.localize("PF1.Change"),
+              value: o.value,
+            });
+          });
+
+        // Count transfers for background skills
+        if (useBGSkills && isBG) {
+          let bgUsed = 0;
+
+          // Count used skill ranks
+          for (const skl of Object.values(lazy.rollData.skills)) {
+            if (skl.subSkills) {
+              for (const subSkl of Object.values(skl.subSkills)) {
+                if (skl.background) {
+                  bgUsed += subSkl.rank;
+                }
+              }
+            } else if (skl.background) {
+              bgUsed += skl.rank;
+            }
+          }
+
+          // Adventure skills transferred to background skills
+          const sentToBG = bgUsed - bgAllowed;
+          if (sentToBG > 0) {
+            skillSources.push({
+              name: game.i18n.localize("PF1.Transferred"),
+              value: sentToBG,
+            });
+          }
+        }
+
+        sources.push({
+          sources: skillSources,
+        });
+        break;
+      }
+      case "skill": {
+        const fullSkillId = detail;
+        const skillIdParts = fullSkillId.split(".");
+        const mainId = skillIdParts[0];
+        const subSkillId = skillIdParts.length > 1 ? skillIdParts.at(-1) : null;
+
+        const skill = this.actor.getSkillInfo(fullSkillId, { rollData: lazy.rollData });
+
+        paths.push(
+          { path: `@skills.${fullSkillId}.mod`, value: skill.mod },
+          { path: `@skills.${fullSkillId}.rank`, value: skill.rank }
+        );
+
+        const acp = system.attributes?.acp?.total || 0;
+
+        const skillSources = [];
+        // Add skill rank source
+        if (skill.rank > 0) {
+          skillSources.push({ name: game.i18n.localize("PF1.SkillRankPlural"), value: skill.rank });
+
+          // Add class skill bonus source
+          if (skill.cs) {
+            skillSources.push({ name: game.i18n.localize("PF1.CSTooltip"), value: pf1.config.classSkillBonus });
+          }
+        }
+
+        // Add ACP source
+        if (skill.acp && acp > 0) {
+          skillSources.push({ name: game.i18n.localize("PF1.ACPLong"), value: -acp });
+        }
+
+        // Add ability modifier source
+        if (skill.ability) {
+          skillSources.push({
+            name: pf1.config.abilities[skill.ability],
+            value: lazy.rollData.abilities[skill.ability]?.mod ?? 0,
+          });
+        }
+
+        sources.push({ sources: skillSources }, { sources: getSource(`system.skills.${fullSkillId}.mod`) });
+
+        notes = getNotes(`skill.${fullSkillId}`);
+        break;
+      }
+      case "spellbook": {
+        const [bookId, target, subTarget] = detail.split(".");
+        const spellbook = system.attributes?.spells?.spellbooks?.[bookId];
+        switch (target) {
+          case "class": {
+            paths.push(
+              { path: "@cl", value: spellbook.cl.total },
+              { path: `@spells.${bookId}.cl.total`, value: spellbook.cl.total }
+            );
+
+            const cls = lazy.rollData.classes?.[spellbook.class];
+            if (cls) paths.push({ path: "@classLevel", value: cls.level });
+
+            sources.push({
+              sources: getSource(`system.attributes.spells.spellbooks.${bookId}.cl.total`),
+            });
+            break;
+          }
+          case "level":
+            paths.push({
+              path: `@spells.${bookId}.cl.total`,
+              value: spellbook.cl?.total,
+            });
+            sources.push({
+              sources: getSource(`system.attributes.spells.spellbooks.${bookId}.cl.total`),
+            });
+            break;
+          case "concentration": {
+            paths.push({
+              path: `@spells.${bookId}.concentration.total`,
+              value: spellbook.concentration?.total,
+            });
+            sources.push({
+              sources: getSource(`system.attributes.spells.spellbooks.${bookId}.concentration.total`),
+            });
+            break;
+          }
+          case "range": {
+            const unit = subTarget;
+            paths.push({
+              path: `@spells.${bookId}.range.${unit}`,
+              value: spellbook.range?.[unit],
+              unit:
+                pf1.utils.getDistanceSystem() === "metric"
+                  ? pf1.config.measureUnitsShort.m
+                  : pf1.config.measureUnitsShort.ft,
+            });
+            break;
+          }
+          case "spellPoints":
+            paths.push(
+              { path: `@spells.${bookId}.spellPoints.value`, value: spellbook.spellPoints.value },
+              { path: `@spells.${bookId}.spellPoints.max`, value: spellbook.spellPoints.max }
+            );
+
+            break;
+        }
+        break;
+      }
+      case "spell": {
+        const [itemId, target] = detail.split(".");
+        const item = this.actor.items.get(itemId);
+        switch (target) {
+          case "material": {
+            const materials = item.system.materials ?? {};
+            if (materials.focus) {
+              details.push({
+                key: game.i18n.localize("PF1.SpellComponents.Type.focus.Label"),
+                value: materials.focus,
+              });
+            }
+            if (materials.value) {
+              details.push({
+                key: game.i18n.localize("PF1.SpellComponents.Type.material.Label"),
+                value: materials.value,
+              });
+            }
+            break;
+          }
+          case "school": {
+            if (item.system.subschool) {
+              details.push({
+                key: game.i18n.localize("PF1.SubSchool"),
+                value: item.system.subschool,
+              });
+            }
+
+            if (item.system.descriptors?.total?.size) {
+              details.push({
+                key: game.i18n.localize("PF1.DescriptorPlural"),
+                value: Array.from(item.system.descriptors?.total).join(", "),
+              });
+            }
+
+            const action = item.firstAction;
+
+            if (action?.hasDamage) {
+              const types = action.data.damage?.parts?.map((d) => d.type).map(damageTypes) ?? [];
+
+              if (types.length) {
+                details.push({
+                  key: game.i18n.localize("PF1.Damage"),
+                  value: types.join(", "),
+                });
+              }
+            }
+            break;
+          }
+        }
+        break;
+      }
+      // Generics
+      case "generic": {
+        const [target, subTarget] = detail.split(".");
+        switch (target) {
+          case "attack": {
+            paths.push(
+              { path: "@attributes.attack.shared", value: system.attributes.attack.shared },
+              { path: "@attributes.attack.general", value: system.attributes.attack.general },
+              { path: `@attributes.attack.${subTarget}`, value: system.attributes.attack[subTarget] }
+            );
+
+            const abl = system.attributes.attack[`${subTarget}Ability`];
+
+            sources.push(
+              { sources: getSource("system.attributes.attack.shared") },
+              {
+                sources: [
+                  {
+                    name: pf1.config.abilities[abl] || abl,
+                    value: lazy.rollData.abilities[abl]?.mod,
+                  },
+                ],
+              }
+            );
+
+            if (system.traits.size !== "med") {
+              sources.push({
+                sources: [
+                  {
+                    name: game.i18n.localize("PF1.Size"),
+                    value: pf1.config.sizeMods[system.traits.size],
+                  },
+                ],
+              });
+            }
+
+            sources.push({ sources: getSource("system.attributes.attack.general") });
+            sources.push({ sources: getSource(`system.attributes.attack.${subTarget}`) });
+            break;
+          }
+        }
+        break;
+      }
+      default:
+        throw new Error(`Invalid extended tooltip identifier "${fullId}"`);
+    }
+
+    context.details = details;
+    context.paths = paths;
+    context.sources = sources;
+    context.notes = notes ?? [];
   }
 
   /* -------------------------------------------- */
@@ -2573,21 +3396,16 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     if (hasASF) {
-      const asfSources = [];
+      // TODO: Make ASF proper change target
       const asf = this.actor.itemTypes.equipment
-        .filter((item) => item.system.equipped === true)
+        .filter((item) => item.isActive)
         .reduce((cur, item) => {
-          const itemASF = item.system.spellFailure ?? 0;
-          if (itemASF > 0) {
-            asfSources.push({ item, asf: itemASF });
-            return cur + itemASF;
-          }
-          return cur;
+          const itemASF = item.system.spellFailure || 0;
+          return cur + itemASF;
         }, 0);
 
       data.asf = {
         total: asf,
-        sources: asfSources,
       };
     }
 

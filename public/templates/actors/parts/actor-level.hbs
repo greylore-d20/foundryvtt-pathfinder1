@@ -1,15 +1,5 @@
-<div class="hd-level flexcol">
-  <div class="inputs"
-    data-tooltip="
-    {{#if hasHD}}
-      @attributes.hd.total : {{system.attributes.hd.total}}
-    {{/if}}
-    {{#if system.details.mythicTier}}<br>@details.mythicTier : {{system.details.mythicTier}}{{/if}}
-    {{#unless isCharacter}}
-      {{#if hasHD}}<br>{{/if}}
-      @details.cr.base : {{system.details.cr.base}}
-      <br>@details.cr.total : {{system.details.cr.total}}
-    {{/unless}}">
+<div class="hd-level flexcol" data-tooltip-extended="level">
+  <div class="inputs">
     <div class="info-box-joined level">
       {{#if hasHD}}
       <div class="info-box level">

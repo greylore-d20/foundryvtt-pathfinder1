@@ -1198,32 +1198,28 @@ export class ItemPF extends Item {
     // Old use method
     if (!this.hasAction) {
       // Use
-      const useScriptCalls = this.scriptCalls.filter((o) => o.category === "use");
-      let shared;
-      if (useScriptCalls.length > 0) {
-        shared = await this.executeScriptCalls("use", {
-          attackData: { event: ev, skipDialog, chatMessage, rollMode },
-        });
-        if (shared.reject) return shared;
-        if (shared.hideChat !== true) await this.displayCard();
-      }
-      // Show a chat card if this item doesn't have 'use' type script call(s)
+      const shared = await this.executeScriptCalls("use", {
+        attackData: { event: ev, skipDialog, chatMessage, rollMode },
+      });
+      rollMode = shared.rollMode || rollMode;
+      if (shared.reject) return shared;
+      if (shared.hideChat !== true && chatMessage) await this.displayCard({ rollMode });
       else {
-        if (chatMessage) return this.displayCard({ rollMode });
-        else return { descriptionOnly: true }; // nothing to show for printing description
+        shared.descriptionOnly = true;
+        return shared; // nothing to show for printing description
       }
 
       // Deduct charges
       if (this.isCharged) {
-        if (this.charges < this.chargeCost) {
+        const chargeCost = this.getDefaultChargeCost();
+        if (this.charges < chargeCost) {
           if (this.isSingleUse) {
             return void ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
           }
           return void ui.notifications.warn(game.i18n.format("PF1.ErrorInsufficientCharges", { name: this.name }));
         }
-        if (this.autoDeductCharges) {
-          await this.addCharges(-this.chargeCost);
-        }
+
+        await this.addCharges(-chargeCost);
       }
 
       return shared;

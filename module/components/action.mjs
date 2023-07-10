@@ -159,38 +159,23 @@ export class ItemAction {
   }
 
   /**
-   * @deprecated
-   * @returns {number} The action's range (in system configured units)
+   * @type {number} The action's first increment range (in system configured units)
    */
   get range() {
-    foundry.utils.logCompatibilityWarning("Action.range is deprecated. Please use Action#getRange instead.", {
-      since: "0.82.2",
-      until: "0.83.0",
-    });
     return this.getRange({ type: "single" });
   }
 
   /**
-   * @deprecated
-   * @returns {number} The action's minimum range.
+   * @type {number} The action's minimum range.
    */
   get minRange() {
-    foundry.utils.logCompatibilityWarning("Action.minRange is deprecated. Please use Action#getRange instead.", {
-      since: "0.82.2",
-      until: "0.83.0",
-    });
     return this.getRange({ type: "min" });
   }
 
   /**
-   * @deprecated
-   * @returns {number} The action's maximum range (range multiplied by range increments).
+   * @type {number} The action's maximum range (range multiplied by range increments).
    */
   get maxRange() {
-    foundry.utils.logCompatibilityWarning("Action.maxRange is deprecated. Please use Action#getRange instead.", {
-      since: "0.82.2",
-      until: "0.83.0",
-    });
     return this.getRange({ type: "max" });
   }
 

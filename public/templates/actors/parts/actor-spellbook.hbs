@@ -388,16 +388,10 @@
       <div class="item-detail spell-uses">
         {{#if section.usesSlots}}
         {{#unless (and (eq section.level 0) ../spellbook.orig.autoSpellLevelCalculation)}}
-        <div class="tooltip spell-slots{{#if ../spellbook.orig.spontaneous}} spontaneous{{/if}}">
+        <div class="spell-slots{{#if ../spellbook.orig.spontaneous}} spontaneous{{/if}}"
+          data-tooltip="{{#unless ../spellbook.orig.spontaneous}}PF1.LeftToPrepare{{else}}PF1.CastsLeft{{/unless}}">
           <span class="{{#unless ../spellbook.orig.spontaneous}}spell-input-readonly{{else}}text-box{{/unless}}" data-dtype="Number" {{#if ../spellbook.orig.spontaneous}}name="system.attributes.spells.spellbooks.{{../bookId}}.spells.spell{{section.level}}.value"{{/if}}>
             {{section.uses}}
-          </span>
-          <span class="tooltipcontent">
-            {{#unless ../spellbook.orig.spontaneous}}
-            {{localize "PF1.LeftToPrepare"}}
-            {{else}}
-            {{localize "PF1.CastsLeft"}}
-            {{/unless}}
           </span>
         </div>
         <span class="sep"> / </span>
@@ -448,17 +442,11 @@
         </div>
 
         {{#unless ../../spellbook.orig.spontaneous}}
-        <div class="tooltip">
-          <span class="tooltipcontent">
-            {{localize "PF1.Prepared"}}
-          </span>
+        <div data-tooltip="PF1.Prepared">
           <span class="text-box" data-type="amount" data-dtype="Number">{{item.preparation.preparedAmount}}</span>
         </div>
         <span class="sep"> / </span>
-        <div class="tooltip">
-          <span class="tooltipcontent">
-            {{localize "PF1.InitiallyPrepared"}}
-          </span>
+        <div data-tooltip="PF1.InitiallyPrepared">
           <span class="text-box" data-type="max" data-dtype="Number">{{item.preparation.maxAmount}}</span>
         </div>
         {{else}}

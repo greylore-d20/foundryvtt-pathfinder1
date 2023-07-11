@@ -4609,8 +4609,10 @@ export class ActorPF extends ActorBasePF {
     const allowed = Hooks.call("pf1PreActorRest", this, options, updateData, itemUpdates);
     if (allowed === false) return;
 
-    if (itemUpdates.length) await this.updateEmbeddedDocuments("Item", itemUpdates);
-    if (!foundry.utils.isEmpty(updateData.system)) await this.update(updateData);
+    const context = { pf1: { action: "rest", restOptions: options } };
+
+    if (itemUpdates.length) await this.updateEmbeddedDocuments("Item", itemUpdates, deepClone(context));
+    if (!foundry.utils.isEmpty(updateData.system)) await this.update(updateData, deepClone(context));
 
     Hooks.callAll("pf1ActorRest", this, options, updateData, itemUpdates);
 

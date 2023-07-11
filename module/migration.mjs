@@ -421,7 +421,13 @@ export function migrateActorData(actorData, token, { actor } = {}) {
       effects.push(aeUpdate);
     }
   }
+
   if (effects.length) updateData.effects = effects;
+
+  // Record migrated version
+  if (!foundry.utils.isEmpty(updateData)) {
+    updateData["flags.pf1.migration"] = game.system.version;
+  }
 
   return updateData;
 }
@@ -525,6 +531,11 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
     });
   }
 
+  // Record migrated version
+  if (!foundry.utils.isEmpty(updateData)) {
+    updateData["flags.pf1.migration"] = game.system.version;
+  }
+
   // Return the migrated update data
   return updateData;
 };
@@ -616,11 +627,18 @@ export const migrateSceneData = function (scene) {
     if (game.release.generation >= 11) foundry.utils.mergeObject(t.delta, actorUpdate);
     else foundry.utils.mergeObject(t.actorData, actorUpdate);
 
+    // Record migrated version
+    t["flags.pf1.migration"] = game.system.version;
+
     migrateTokenData(t);
 
     tokens.push(t);
   }
-  return { tokens };
+
+  return {
+    tokens,
+    "flags.pf1.migration": game.system.version, // Mark last migrated version
+  };
 };
 
 /**

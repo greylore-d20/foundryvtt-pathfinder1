@@ -1,0 +1,44 @@
+.pf1.pointbuy-calculator {
+  .info {
+    .usage {
+      text-align: center;
+    }
+
+    .categories {
+      .closest {
+        font-weight: bold;
+      }
+    }
+  }
+
+  ol.ability-list {
+    margin: 0;
+    padding: 0;
+
+    li {
+      height: 2em;
+      background-color: rgba(155, 155, 155, 0.3);
+      &:nth-child(odd) {
+        background-color: rgba(210, 210, 210, 0.3);
+      }
+    }
+
+    h4 {
+      margin: 0;
+    }
+
+    .name {
+      padding: 0 3px;
+    }
+
+    .ability {
+      gap: 1px;
+
+      .controls,
+      .value {
+        flex: 0 0 32px;
+        text-align: center;
+      }
+    }
+  }
+}

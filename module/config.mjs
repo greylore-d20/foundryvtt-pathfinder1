@@ -59,6 +59,16 @@ export const abilityCost = {
 };
 
 /**
+ * Point buy calculator.
+ */
+export const pointBuy = {
+  low: { label: "PF1.PointBuyCalculatorLowFantasy", points: 10 },
+  standard: { label: "PF1.PointBuyCalculatorStandardFantasy", points: 15 },
+  high: { label: "PF1.PointBuyCalculatorHighFantasy", points: 20 },
+  epic: { label: "PF1.PointBuyCalculatorEpicFantasy", points: 25 },
+};
+
+/**
  * At which levels you receive how many new ability points.
  */
 export const levelAbilityScores = {

@@ -21,7 +21,6 @@ export class PointBuyCalculator extends DocumentSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "pointbuy-calculator"],
-      title: "Point Buy Calculator",
       template: "systems/pf1/templates/apps/point-buy-calculator.hbs",
       width: 320,
       height: "auto",
@@ -31,7 +30,7 @@ export class PointBuyCalculator extends DocumentSheet {
   }
 
   get title() {
-    return `${this.options.title}: ${this.object.name}`;
+    return `${game.i18n.localize("PF1.PointBuyCalculator")}: ${this.object.name}`;
   }
 
   get actor() {
@@ -39,11 +38,25 @@ export class PointBuyCalculator extends DocumentSheet {
   }
 
   getData() {
-    const points = this.getSpentPoints();
+    const usedPoints = this.getSpentPoints();
+
+    const pointBuy = pf1.config.pointBuy;
+    const limitsArr = Object.entries(pointBuy).map(([key, ldata]) => ({ ...ldata, key }));
+    limitsArr.sort((a, b) => a.points - b.points);
+
+    // Find most relevant category
+    let closest = limitsArr[0].key;
+    for (const l of limitsArr) {
+      const prev = pointBuy[closest].points;
+      if (prev < usedPoints) closest = l.key;
+    }
 
     return {
       abilities: this.abilities,
-      points: points,
+      points: usedPoints,
+      limits: limitsArr,
+      closest,
+      invalidPoints: pointBuy[closest].points !== usedPoints,
     };
   }
 
@@ -53,19 +66,20 @@ export class PointBuyCalculator extends DocumentSheet {
     for (const a of this.abilities) {
       result += pf1.config.abilityCost[a.value];
     }
+
     return result;
   }
 
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.find(".ability-control").click(this._onAbilityControl.bind(this));
+    html.find(".control").click(this._onAbilityControl.bind(this));
   }
 
   _onAbilityControl(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const ablKey = a.closest(".item").dataset.ability;
+    const ablKey = a.closest(".ability").dataset.ability;
     const abl = this.abilities.find((o) => o.key === ablKey);
 
     if (a.classList.contains("add")) {

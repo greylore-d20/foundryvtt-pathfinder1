@@ -18,8 +18,7 @@
         <li>
           {{labels.subType}}
         </li>
-        <li class="tooltip">
-          <span class="tooltipcontent">@item.level : {{system.level}}</span>
+        <li data-tooltip="@item.level : {{system.level}}">
           <input type="text" name="system.level" data-dtype="Number" value="{{#if system.level}}{{system.level}}{{/if}}" placeholder="{{localize "PF1.Level"}}"/>
         </li>
         <li>

@@ -81,8 +81,8 @@
           <input type="text" value="{{item.system.uses.max}}" disabled data-dtype="Number"/>
           {{#if @root.actor}}
           <span class="tooltipcontent">
-            @resources.{{item.tag}}.value : {{item.system.uses.value}}<br>
-            @resources.{{item.tag}}.max : {{item.system.uses.max}}
+            <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.system.uses.value}}</span>
+            <span class="span2 align-left">@resources.{{item.tag}}.max :</span><span class="span1 align-right"> {{item.system.uses.max}}</span>
           </span>
           {{/if}}
           {{/if}}

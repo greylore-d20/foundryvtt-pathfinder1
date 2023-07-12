@@ -354,9 +354,8 @@
   <h3>{{localize "PF1.SpellPoints"}}</h3>
   <div class="tooltip value">
     <span class="tooltipcontent">
-      {{localize "PF1.SpellPointsCurrent"}}<br><br>
-
-      <span class="span2 align-left">@spells.{{bookId}}.spellPoints.value :</span><span class="span1 align-right"> {{spellbook.orig.spellPoints.value}}</span>
+      <span class="span3">{{localize "PF1.SpellPointsCurrent"}}</span>
+      <span class="span2 align-left">@spells.{{bookId}}.spellPoints.value :</span><span class="span1 align-right">{{spellbook.orig.spellPoints.value}}</span>
     </span>
 
     <span class="text-box" name="system.attributes.spells.spellbooks.{{bookId}}.spellPoints.value"
@@ -365,8 +364,7 @@
   <span class="sep"> / </span>
   <div class="tooltip max">
     <span class="tooltipcontent">
-      {{localize "PF1.SpellPointsMax"}}<br><br>
-
+      <span class="span3">{{localize "PF1.SpellPointsMax"}}</span>
       <span class="span2 align-left">@spells.{{bookId}}.spellPoints.max :</span><span class="span1 align-right"> {{spellbook.orig.spellPoints.max}}</span>
     </span>
 
@@ -399,7 +397,7 @@
         <div class="spell-max" data-tooltip="PF1.SpellsTotalEachDay">
           <span class="{{#if ../spellbook.orig.autoSpellLevelCalculation}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="system.attributes.spells.spellbooks.{{../bookId}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
         </div>
-        {{ else }}
+        {{else}}
         <span class="spell-slots">{{{section.uses}}}</span>
         <span class="sep"> / </span>
         <span class="spell-max">{{{section.slots}}}</span>
@@ -472,23 +470,22 @@
       </div>
 
       <div class="item-detail spell-activation"><span>{{labels.activation}}</span></div>
-
       <div class="item-detail spell-components tooltip">
-        {{#if (or system.materials.value system.materials.focus)}}
+        {{#if (or materials.value materials.focus)}}
         <span class="tooltipcontent">
-          {{#if system.materials.focus}}<span class="span2 align-left">{{localize "PF1.SpellComponentFocus"}}:</span><span class="span1 align-right"> {{system.materials.focus}}</span>{{/if}}
-            {{#if system.materials.value}}<span class="span2 align-left">{{localize "PF1.SpellComponentValue"}}:</span><span class="span1 align-right"> {{system.materials.value}}</span>{{/if}}
+          {{#if materials.focus}}<span class="span2 align-left">{{localize "PF1.SpellComponentFocus"}}:</span><span class="span1 align-right"> {{materials.focus}}</span>{{/if}}        
+          {{#if materials.value}}<span class="span2 align-left">{{localize "PF1.SpellMaterialValue"}}:</span><span class="span1 align-right"> {{materials.value}}</span>{{/if}}
         </span>
         {{/if}}
         <span>{{labels.components}}</span>
       </div>
 
       <div class="item-detail spell-school tooltip">
-        {{#if (or system.subschool system.types labels.damageTypes)}}
+        {{#if (or subschool types labels.damageTypes)}}
         <span class="tooltipcontent">
-          {{#if system.subschool}}<span class="span2 align-left"></span>{{localize "PF1.SubSchool"}}:</span><span class="span1 align-right"></span> {{system.subschool}}</span>{{/if}}
-          {{#if system.types}}<span class="span2 align-left"></span>{{localize "PF1.TypePlural"}}:</span><span class="span1 align-right"></span> {{system.types}}</span>{{/if}}
-          {{#if labels.damageTypes}}<span class="span2 align-left"></span>{{localize "PF1.Damage"}}:</span><span class="span1 align-right"></span> {{labels.damageTypes}}</span>{{/if}}
+          {{#if subschool}}<span class="span2 align-left">{{localize "PF1.SubSchool"}}:</span><span class="span1 align-right">{{subschool}}</span>{{/if}}
+          {{#if types}}<span class="span2 align-left">{{localize "PF1.TypePlural"}}:</span><span class="span1 align-right">{{types}}</span>{{/if}}
+          {{#if labels.damageTypes}}<span class="span2 align-left">{{localize "PF1.Damage"}}:</span><span class="span1 align-right">{{labels.damageTypes}}</span>{{/if}}
         </span>
         {{/if}}
         <span>{{labels.school}}</span>

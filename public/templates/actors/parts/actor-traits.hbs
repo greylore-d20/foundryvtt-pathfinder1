@@ -42,7 +42,7 @@
     <label>{{localize "PF1.AuraPlural"}}</label>
     <input type="text" name="system.traits.aura.custom" value="{{system.traits.aura.custom}}" placeholder="{{localize "PF1.None"}}"/>
     <span class="tooltipcontent">
-      @traits.aura.custom
+      <span class="span3">@traits.aura.custom</span>
     </span>
   </div>
 
@@ -54,10 +54,12 @@
       {{/each}}
       {{#if sourceDetails.system.traits.dr.length}}
         <div class="tooltipcontent">
-          @traits.dr.total<br>
-          <br>
-          {{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.system.traits.dr as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+          <span class="span3">@traits.dr.total</span>
+          <span class="span3"><br></span>
+          <span class="span3">{{localize "PF1.FromSources"}}:</span>
+          {{#each sourceDetails.system.traits.dr as |src|}}
+            <span class="span2 align-left">{{src.name}}:</span><span class="span1 align-left">{{src.value}}</span>
+          {{/each}}
         </div>
       {{/if}}
     </ul>
@@ -68,7 +70,7 @@
     <label>{{localize "PF1.Regeneration"}}</label>
     <input type="text" name="system.traits.regen" value="{{system.traits.regen}}" placeholder="{{localize "PF1.None"}}"/>
     <span class="tooltipcontent">
-      @traits.regen
+      <span class="span3">@traits.regen</span>
     </span>
   </div>
 
@@ -76,7 +78,7 @@
     <label>{{localize "PF1.FastHealing"}}</label>
     <input type="text" name="system.traits.fastHealing" value="{{system.traits.fastHealing}}" placeholder="{{localize "PF1.None"}}"/>
     <span class="tooltipcontent">
-      @traits.fastHealing
+      <span class="span3">@traits.fastHealing</span>
     </span>
   </div>
 
@@ -88,10 +90,12 @@
       {{/each}}
       {{#if sourceDetails.system.traits.eres.length}}
         <div class="tooltipcontent">
-          @traits.eres.total<br>
-          <br>
-          {{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.system.traits.eres as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+          <span class="span3">@traits.eres.total</span>
+          <span class="span3"><br></span>
+          <span class="span3">{{localize "PF1.FromSources"}}:</span>
+          {{#each sourceDetails.system.traits.eres as |src|}}
+            <span class="span2 align-left">{{src.name}}:</span><span class="span1 align-left">{{src.value}}</span>
+          {{/each}}
         </div>
       {{/if}}
     </ul>
@@ -102,7 +106,7 @@
     <label>{{localize "PF1.ConRes"}}</label>
     <input type="text" name="system.traits.cres" value="{{system.traits.cres}}" placeholder="{{localize "PF1.None"}}"/>
     <span class="tooltipcontent">
-      @traits.cres
+      <span class="span3">@traits.cres</span>
     </span>
   </div>
 
@@ -115,8 +119,8 @@
     </ul>
     <a class="trait-selector" data-options="damageTypes"><i class="fas fa-edit"></i></a>
     <span class="tooltipcontent">
-      @traits.di.value<br>
-      @traits.di.custom
+      <span class="span3">@traits.di.value</span>
+      <span class="span3">@traits.di.custom</span>
     </span>
   </div>
 
@@ -129,8 +133,8 @@
     </ul>
     <a class="trait-selector" data-options="damageTypes"><i class="fas fa-edit"></i></a>
     <span class="tooltipcontent">
-      @traits.dv.value<br>
-      @traits.dv.custom
+      <span class="span3">@traits.dv.value</span>
+      <span class="span3">@traits.dv.custom</span>
     </span>
   </div>
 
@@ -143,8 +147,8 @@
     </ul>
     <a class="trait-selector" data-options="conditionTypes"><i class="fas fa-edit"></i></a>
     <span class="tooltipcontent">
-      @traits.ci.value<br>
-      @traits.ci.custom
+      <span class="span3">@traits.ci.value</span>
+      <span class="span3">@traits.ci.custom</span>
     </span>
   </div>
 
@@ -156,10 +160,12 @@
       {{/each}}
       {{#if sourceDetails.system.traits.languages.length}}
         <div class="tooltipcontent">
-          @traits.languages.total<br>
-          <br>
-          {{localize "PF1.FromSources"}}:<br/>
-          {{#each sourceDetails.system.traits.languages as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+          <span class="span3">@traits.languages.total</span>
+          <span class="span3"><br></span>
+          <span class="span3">{{localize "PF1.FromSources"}}:</span>
+          {{#each sourceDetails.system.traits.languages as |src|}}
+          <span class="span1 align-left">{{src.name}}:</span><span class="span2 align-left">{{src.value}}</span>
+          {{/each}}
         </div>
       {{/if}}
     </ul>
@@ -177,10 +183,12 @@
         {{/each}}
         {{#if sourceDetails.system.traits.weaponProf.length}}
           <div class="tooltipcontent">
-            @traits.weaponProf.total<br>
-            <br>
-            {{localize "PF1.FromSources"}}:<br/>
-            {{#each sourceDetails.system.traits.weaponProf as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            <span class="span3">@traits.weaponProf.total</span>
+            <span class="span3"><br></span>
+            <span class="span3">{{localize "PF1.FromSources"}}:</span>
+            {{#each sourceDetails.system.traits.weaponProf as |src|}}
+              <span class="span1 align-left">{{src.name}}:</span><span class="span2 align-left">{{src.value}}</span>
+            {{/each}}
           </div>
         {{/if}}
       </ul>
@@ -197,10 +205,12 @@
         {{/each}}
         {{#if sourceDetails.system.traits.armorProf.length}}
           <div class="tooltipcontent">
-            @traits.armorProf.total<br>
-            <br>
-            {{localize "PF1.FromSources"}}:<br/>
-            {{#each sourceDetails.system.traits.armorProf as |src|}}{{src.name}}: {{src.value}}<br/>{{/each}}
+            <span class="span3">@traits.armorProf.total</span>
+            <span class="span3"><br></span>
+            <span class="span3">{{localize "PF1.FromSources"}}:</span>
+            {{#each sourceDetails.system.traits.armorProf as |src|}}
+              <span class="span1 align-left">{{src.name}}:</span><span class="span2 align-left">{{src.value}}</span>
+            {{/each}}
           </div>
         {{/if}}
       </ul>

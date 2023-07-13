@@ -15,11 +15,15 @@ import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 export let isMigrating = false; // eslint-disable-line prefer-const -- pf1.migrations.isMigrating is changed at runtime
 
 /**
- * Perform a system migration for the entire World, applying migrations for Actors, Items, and Compendium packs
+ * Perform a system migration for the entire World,
+ * applying migrations for Actors, Items, Scenes, Tokens and Compendium packs
  *
- * @returns {Promise}      A Promise which resolves once the migration is completed
+ * @param {object} [options={}] - Additional options
+ * @param {boolean} [options.unlock=false] - If false, locked compendiums are ignored.
+ * @param {boolean} [options.systemPacks=false] - Migrate system packs.
+ * @returns {Promise<void>} - A Promise which resolves once the migration is completed
  */
-export const migrateWorld = async function () {
+export const migrateWorld = async function ({ unlock = false, systemPacks = false } = {}) {
   if (!game.user.isGM) {
     return void ui.notifications.error(game.i18n.localize("PF1.ErrorUnauthorizedAction"));
   }
@@ -48,63 +52,29 @@ export const migrateWorld = async function () {
   await _migrateWorldSettings();
 
   // Migrate World Actors
-  console.log("Migrating Actor documents");
-  for (const a of game.actors.contents) {
-    try {
-      const updateData = migrateActorData(a.toObject());
-      if (!foundry.utils.isEmpty(updateData)) {
-        console.log(`Migrating Actor document ${a.name}`);
-        await a.update(updateData, { enforceTypes: false });
-      }
-    } catch (err) {
-      console.error(`Error migrating actor document ${a.name}`, err);
-    }
-  }
+  await migrateActors();
 
   // Migrate World Items
-  console.log("Migrating Item documents.");
-  for (const i of game.items.contents) {
-    try {
-      const updateData = migrateItemData(i.toObject());
-      if (!foundry.utils.isEmpty(updateData)) {
-        console.log(`Migrating Item document ${i.name}`);
-        await i.update(updateData, { enforceTypes: false });
-      }
-    } catch (err) {
-      console.error(`Error migrating item document ${i.name}`, err);
-    }
-  }
+  await migrateItems();
 
   // Migrate Actor Override Tokens
-  console.log("Migrating Scene documents.");
-  for (const s of game.scenes.contents) {
-    try {
-      const updateData = await migrateSceneData(s.toObject());
-      if (!foundry.utils.isEmpty(updateData)) {
-        console.log(`Migrating Scene document ${s.name}`);
-        await s.update(updateData, { enforceTypes: false });
-        // If we do not do this, then synthetic token actors remain in cache
-        // with the un-updated actorData.
-        s.tokens.contents.forEach((t) => {
-          t._actor = null;
-        });
-      }
-    } catch (err) {
-      console.error(`Error migrating scene document ${s.name}`, err);
-    }
-  }
+  await migrateScenes();
 
-  // Migrate World Compendium Packs
+  // Migrate Compendium Packs
   const packs = game.packs.filter((p) => {
-    return (
-      (["world", "pf1"].includes(p.metadata.package) || p.metadata.system === "pf1") &&
-      ["Actor", "Item", "Scene"].includes(p.metadata.type) &&
-      !p.locked
-    );
+    // Ingore locked unless we're allowed to unlock them
+    if (p.locked && !unlock) return false;
+
+    const source = p.metadata.packageType;
+    // Ignore modules, adventures, etc.
+    if (!["world", "system"].includes(source)) return false;
+    // Ignore system packs unless configured to include them
+    if (source === "system" && !systemPacks) return false;
+    // Ignore unsupported pack types
+    return ["Actor", "Item", "Scene"].includes(p.metadata.type);
   });
-  for (const p of packs) {
-    await migrateCompendium(p);
-  }
+
+  await migrateCompendiums(packs, { unlock });
 
   // Set the migration as complete
   await game.settings.set("pf1", "systemMigrationVersion", game.system.version);
@@ -112,12 +82,126 @@ export const migrateWorld = async function () {
     ui.notifications.queue.find((o) => o.permanent && o.message == startMessage) ||
     ui.notifications.active.find((o) => o.hasClass("permanent") && o[0].innerText === startMessage);
   if (infoElem) removeNotification(infoElem);
+
   // Remove migration notification
-  ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.version }));
+  ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.version }), { console: false });
   console.log("System Migration completed.");
   pf1.migrations.isMigrating = false;
+
   callOldNamespaceHookAll("pf1.migrationFinished", "pf1MigrationFinished");
   Hooks.callAll("pf1MigrationFinished");
+};
+
+/**
+ * Migrate actors directory.
+ *
+ * @returns {Promise<void>}
+ */
+export async function migrateActors() {
+  console.log("Actors directory migration starting...");
+  for (const actor of game.actors) {
+    try {
+      const updateData = migrateActorData(actor.toObject());
+      if (!foundry.utils.isEmpty(updateData)) {
+        console.log(`Migrating Actor document ${actor.name}`);
+        await actor.update(updateData);
+      }
+    } catch (err) {
+      console.error(`Error migrating actor document ${actor.name}`, err);
+    }
+  }
+  console.log("Actors directory migration complete!");
+}
+
+/**
+ * Migrate items directory.
+ *
+ * @returns {Promise<void>}
+ */
+export const migrateItems = async () => {
+  console.log("Items directory migration starting...");
+  for (const item of game.items) {
+    try {
+      const updateData = migrateItemData(item.toObject());
+      if (!foundry.utils.isEmpty(updateData)) {
+        console.log(`Migrating Item document ${item.name}`);
+        await item.update(updateData);
+      }
+    } catch (err) {
+      console.error(`Error migrating item document ${item.name}`, err);
+    }
+  }
+  console.log("Items directory migation complete!");
+};
+
+/**
+ * Migrate all scenes.
+ *
+ * @see {@link migrateScene}
+ *
+ * @returns {Promise<void>}
+ */
+export const migrateScenes = async () => {
+  console.log("Scene migration starting...");
+  for (const scene of game.scenes) {
+    console.log(`Migrating Scene document "${scene.name}"`);
+    await migrateScene(scene);
+  }
+  console.log("Scene migration finished!");
+};
+
+/**
+ * Migrate compendiums.
+ *
+ * @see {@link migrateCompendium}
+ *
+ * @param {Array<string|WorldCollection>|null} [packIds=null] - Array of pack IDs or packs to migrate. If null, all packs will be migrated.
+ * @param {object} [options={}] - Additional options to pass along.
+ * @param {boolean} [options.unlock=false] - If false, locked compendiums are ignored.
+ * @returns {Promise<void>} - Promise that resolves once all migrations are complete.
+ * @throws {Error} - If defined pack is not found.
+ */
+export const migrateCompendiums = async (packIds = null, { unlock = false } = {}) => {
+  if (packIds === null) packIds = [...game.packs];
+  for (const pack of packIds) {
+    try {
+      await migrateCompendium(pack, { unlock });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+};
+
+/**
+ * Migrate system compendia.
+ *
+ * Convenience wrapper for migrateCompendiums.
+ *
+ * @see {@link migrateCompendiums}
+ *
+ * @param {object} [options={}] - Additional options
+ * @param {boolean} [options.unlock] - Unlock compendiums
+ * @returns {Promise<void>}
+ */
+export const migrateSystem = async ({ unlock = true } = {}) => {
+  const packs = game.packs.filter((p) => p.metadata.packageType === "system");
+  return migrateCompendiums(packs, { unlock });
+};
+
+/**
+ * Migrate module compendia.
+ *
+ * Convenience wrapper for migrateCompendiums.
+ *
+ * @see {@link migrateCompendiums}
+ *
+ * @param {object} [options={}] Additional options
+ * @param {boolean} [options.unlock] Unlock compendiums
+ * @returns {Promise<void>}
+ */
+export const migrateModules = ({ unlock = true } = {}) => {
+  const packs = game.packs.filter((p) => p.metadata.packageType === "module");
+  return migrateCompendiums(packs, { unlock });
 };
 
 /* -------------------------------------------- */
@@ -125,44 +209,52 @@ export const migrateWorld = async function () {
 /**
  * Apply migration rules to all Documents within a single Compendium pack
  *
- * @param pack
- * @returns {Promise}
+ * @param {CompendiumCollection|string} pack - Compendium (or its ID) to migrate
+ * @param {object} [options={}] - Additional options
+ * @param {boolean} [options.unlock=false] - If false, locked compendium will be ignored.
+ * @returns {Promise<void>} - Promise that resolves once migration is complete.
+ * @throws {Error} - If defined pack is not found.
  */
-export const migrateCompendium = async function (pack) {
-  const doc = pack.metadata.type;
-  if (!["Actor", "Item", "Scene"].includes(doc)) return;
+export const migrateCompendium = async function (pack, { unlock = false } = {}) {
+  if (typeof pack === "string") {
+    pack = game.packs.get(pack);
+    if (!pack) throw new Error(`Compendium "${pack}" not found.`);
+  }
+
+  if (pack.locked && !unlock) return;
+
+  const docType = pack.metadata.type;
+  if (!["Actor", "Item", "Scene"].includes(docType)) return;
+
+  const wasLocked = pack.locked;
+  if (wasLocked) await pack.configure({ locked: false });
 
   // Begin by requesting server-side data model migration and get the migrated content
   await pack.migrate();
-  const content = await pack.getDocuments();
 
   // Iterate over compendium entries - applying fine-tuned migration functions
-  console.log(`Migrating ${doc} documents in Compendium ${pack.collection}`);
-  const updates = [];
-  for (const ent of content) {
-    try {
-      let updateData = null;
-      if (doc === "Item") updateData = migrateItemData(ent.toObject());
-      else if (doc === "Actor") updateData = migrateActorData(ent.toObject());
-      else if (doc === "Scene") updateData = await migrateSceneData(ent.toObject());
+  console.log(`Migrating ${docType} documents in Compendium ${pack.collection}`);
 
-      if (!foundry.utils.isEmpty(updateData)) {
-        updateData = expandObject(updateData);
-        updateData._id = ent.id;
-        updates.push(updateData);
-      }
-    } catch (err) {
-      console.error(`Error migrating ${doc} document ${ent.name} in Compendium ${pack.collection}`, err);
-    }
-  }
   try {
-    if (doc === "Item") await Item.updateDocuments(updates, { pack: pack.collection });
-    else if (doc === "Actor") await Actor.updateDocuments(updates, { pack: pack.collection });
-    else if (doc === "Scene") await Scene.updateDocuments(updates, { pack: pack.collection });
+    switch (docType) {
+      case "Item":
+        await pack.updateAll((item) => migrateItemData(item.toObject()));
+        break;
+      case "Actor":
+        await pack.updateAll((actor) => migrateActorData(actor.toObject()));
+        break;
+      case "Scene": {
+        await pack.updateAll((scene) => migrateSceneData(scene.toObject()));
+        break;
+      }
+    }
   } catch (err) {
     console.error(`Error migrating Compendium ${pack.collection}`, err);
   }
-  console.log(`Migrated all ${doc} documents from Compendium ${pack.collection}`);
+
+  if (wasLocked) await pack.configure({ locked: true });
+
+  console.log(`Compendium "${pack.collection}" migration complete!`);
 };
 
 /**
@@ -213,14 +305,42 @@ export const migrateTokenData = function (token) {
 };
 
 /**
+ * Migrate token.
+ *
+ * @param {TokenDocument} token - Token to migrate
+ * @returns {Promise<TokenDocument|null>} - Promise to updated document,. or null if no update was done.
+ */
+export async function migrateToken(token) {
+  const updateData = migrateTokenData(token.toObject());
+  if (!foundry.utils.isEmpty(updateData)) {
+    return token.update(updateData);
+  }
+  return null;
+}
+
+/**
+ * Migrate singular actor document.
+ *
+ * @param {Actor} actor - Actor to migrate.
+ * @returns {Promise<Actor|null>}
+ */
+export async function migrateActor(actor) {
+  const updateData = migrateActorData(actor.toObject(), actor.token);
+  if (!foundry.utils.isEmpty(updateData)) {
+    return actor.update(updateData);
+  }
+  return null;
+}
+
+/**
  * Migrate a single Actor document to incorporate latest data model changes
  * Return an Object of updateData to be applied
  *
  * @param {ActorData} actor   The actor data to derive an update from
- * @param {Token} token
+ * @param {TokenDocument} token
  * @returns {object}          The updateData to apply
  */
-export const migrateActorData = function (actor, token) {
+export function migrateActorData(actor, token) {
   // Ignore basic actor type
   if (actor.type === "basic") return {};
 
@@ -278,9 +398,23 @@ export const migrateActorData = function (actor, token) {
   }, []);
   if (items.length > 0) updateData.items = items;
   return updateData;
-};
+}
 
 /* -------------------------------------------- */
+
+/**
+ *  Migrate singular item document.
+ *
+ * @param {Item} item - Item document to update.
+ * @returns {Promise<Item|null>} - Promise to updated item document, or null if no update was performed.
+ */
+export async function migrateItem(item) {
+  const updateData = migrateItemData(item.toObject(), item.actor);
+  if (!foundry.utils.isEmpty(updateData)) {
+    return item.update(updateData);
+  }
+  return null;
+}
 
 /**
  * Migrate a single Item document to incorporate latest data model changes
@@ -403,38 +537,51 @@ export const migrateItemActionData = function (action, item) {
 /* -------------------------------------------- */
 
 /**
- * Migrate a single Scene document to incorporate changes to the data model of it's actor data overrides
- * Return an Object of updateData to be applied
+ * Migrate singular scene document.
  *
- * @param {object} scene - The Scene to Update
- * @returns {object} The updateData to apply
+ * @param {Scene} scene - Scene document to update.
+ * @returns {Promise<void>}
+ */
+export async function migrateScene(scene) {
+  try {
+    await migrateSceneTokens(scene);
+    await migrateSceneActors(scene);
+  } catch (err) {
+    console.error(`Error migrating scene document "${scene.name}"`, err);
+  }
+}
+
+/**
+ * Migrate a single Scene data object to incorporate changes to the data model of it's actor data overrides
+ *
+ * @param {object} scene - Scene data to Update
+ * @returns {object} Update data to apply
  */
 export const migrateSceneData = async function (scene) {
   const tokens = [];
   for (const token of scene.tokens) {
-    const t = deepClone(token);
-    if (!t.actorId || t.actorLink) {
-      t.actorData = {};
-    } else if (!game.actors.has(t.actorId)) {
-      t.actorId = null;
-      t.actorData = {};
-    } else if (!t.actorLink) {
-      const mergedData = foundry.utils.mergeObject(game.actors.get(t.actorId).toObject(), t.actorData, {
-        inplace: false,
-      });
-      const update = migrateActorData(mergedData, token);
-      ["items", "effects"].forEach((embeddedName) => {
-        if (!update[embeddedName]?.length) return;
-        const updates = new Map(update[embeddedName].map((u) => [u._id, u]));
-        mergedData[embeddedName].forEach((original) => {
-          const update = updates.get(original._id);
-          if (update) foundry.utils.mergeObject(original, update);
-        });
-        delete update[embeddedName];
-      });
+    if (token.actorLink) continue;
+    const actorId = token.actorId;
+    const actor = game.actors.get(token.actorId);
+    if (!actor) continue;
 
-      foundry.utils.mergeObject(t.actorData, update);
-    }
+    const t = deepClone(token);
+
+    const mergedData = foundry.utils.mergeObject(actor.toObject(), t.delta ?? t.actorData);
+
+    const actorUpdate = migrateActorData(mergedData, token);
+    ["items", "effects"].forEach((embeddedName) => {
+      if (!actorUpdate[embeddedName]?.length) return;
+      const updates = new Map(actorUpdate[embeddedName].map((u) => [u._id, u]));
+      mergedData[embeddedName].forEach((original) => {
+        const update = updates.get(original._id);
+        if (update) foundry.utils.mergeObject(original, update);
+      });
+      delete actorUpdate[embeddedName];
+    });
+
+    if (game.release.generation >= 11) foundry.utils.mergeObject(t.delta, actorUpdate);
+    else foundry.utils.mergeObject(t.actorData, actorUpdate);
 
     migrateTokenData(t);
 
@@ -442,6 +589,45 @@ export const migrateSceneData = async function (scene) {
   }
   return { tokens };
 };
+
+/**
+ * Migrate tokens in a single scene.
+ *
+ * @param {Scene} scene - The Scene to Update
+ */
+export async function migrateSceneTokens(scene) {
+  const tokens = [];
+  for (const token of scene.tokens) {
+    if (token.isLinked) continue;
+
+    await migrateToken(token);
+  }
+}
+
+/**
+ * Migrate unlinked actors on a single scene.
+ *
+ * @param {Scene} scene - Scene to migrate actors in.
+ * @returns {Promise<void>}
+ */
+export async function migrateSceneActors(scene) {
+  for (const token of scene.tokens) {
+    if (token.isLinked) continue;
+    const actor = token.actor;
+    if (!actor) continue;
+
+    const updateData = migrateActorData(actor.toObject(), token);
+    if (!foundry.utils.isEmpty(updateData)) {
+      const items = updateData.items;
+      delete updateData.items;
+      const effects = updateData.effects;
+      delete updateData.effects;
+      if (!foundry.utils.isEmpty(updateData)) await actor.update(updateData);
+      if (items?.length) await actor.updateEmbeddedDocuments("Item", items);
+      if (effects?.length) await actor.updateEmbeddedDocuments("ActiveEffect", effects);
+    }
+  }
+}
 
 /* -------------------------------------------- */
 

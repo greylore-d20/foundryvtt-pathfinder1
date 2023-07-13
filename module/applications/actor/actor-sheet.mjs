@@ -250,7 +250,9 @@ export class ActorSheetPF extends ActorSheet {
       i.hasUses = i.uses?.max > 0;
 
       const firstAction = item.firstAction;
-      i.labels = item.getLabels({ actionId: firstAction?.id });
+      const firstActionRollData = firstAction?.getRollData();
+
+      i.labels = item.getLabels({ actionId: firstAction?.id, rollData: firstActionRollData });
       i.hasAttack = firstAction?.hasAttack;
       i.hasMultiAttack = firstAction?.hasMultiAttack;
       i.hasDamage = firstAction?.hasDamage;
@@ -260,8 +262,8 @@ export class ActorSheetPF extends ActorSheet {
       i.range = mergeObject(
         firstAction?.data?.range ?? {},
         {
-          min: firstAction?.getRange({ type: "min" }),
-          max: firstAction?.getRange({ type: "max" }),
+          min: firstAction?.getRange({ type: "min", rollData: firstActionRollData }),
+          max: firstAction?.getRange({ type: "max", rollData: firstActionRollData }),
         },
         { inplace: false }
       );

@@ -603,9 +603,10 @@ export class ItemPF extends Item {
    *
    * @param {object} [options={}] - Additional options
    * @param {string} [options.actionId] - ID of one of this item's actions to get labels for; defaults to first action
+   * @param {object} [options.rollData] - Roll data to use.
    * @returns {Record<string, string>} This item's labels
    */
-  getLabels({ actionId } = {}) {
+  getLabels({ actionId, rollData } = {}) {
     const labels = {};
     const itemData = this.system;
 
@@ -637,7 +638,7 @@ export class ItemPF extends Item {
     }
 
     const action = actionId ? this.actions.get(actionId) : this.firstAction;
-    return { ...labels, ...(action?.getLabels() ?? {}) };
+    return { ...labels, ...(action?.getLabels({ rollData }) ?? {}) };
   }
 
   prepareLinks() {
@@ -973,7 +974,7 @@ export class ItemPF extends Item {
       token,
       tokenId: token?.uuid,
       item: this.toObject(),
-      labels: this.getLabels(),
+      labels: this.getLabels({ rollData }),
       hasAttack: this.hasAttack,
       hasMultiAttack: this.hasMultiAttack,
       hasAction: this.hasAction,
@@ -1064,9 +1065,11 @@ export class ItemPF extends Item {
     const data = {};
     const { actionId = null } = options;
     const action = actionId ? this.actions.get(actionId) : this.firstAction;
-    const labels = this.getLabels({ actionId });
 
     enrichOptions.rollData ??= action ? action.getRollData() : this.getRollData();
+
+    const labels = this.getLabels({ actionId, rollData: enrichOptions.rollData });
+
     enrichOptions.secrets ??= this.isOwner;
     enrichOptions.async = false; // @TODO: Work on making this async, somehow
 
@@ -1099,7 +1102,7 @@ export class ItemPF extends Item {
       dynamicLabels.level = labels.sl || "";
       // Range
       if (actionData.range != null) {
-        const range = action.getRange({ type: "max" }),
+        const range = action.getRange({ type: "max", rollData: enrichOptions.rollData }),
           units = actionData.range.units === "mi" ? "mi" : "ft";
         const distanceValues = convertDistance(range, units);
         dynamicLabels.range =

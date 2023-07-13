@@ -31,8 +31,8 @@ export class ItemFeatPF extends ItemPF {
   }
 
   /** @inheritDoc */
-  getLabels({ actionId } = {}) {
-    const labels = super.getLabels({ actionId });
+  getLabels({ actionId, rollData } = {}) {
+    const labels = super.getLabels({ actionId, rollData });
     const { subType, abilityType } = this.system;
 
     labels.featType = pf1.config.featTypes[subType];

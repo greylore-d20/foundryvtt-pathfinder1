@@ -40,8 +40,8 @@ export class ItemBuffPF extends ItemPF {
   }
 
   /** @inheritDoc */
-  getLabels({ actionId } = {}) {
-    const labels = super.getLabels({ actionId });
+  getLabels({ actionId, rollData } = {}) {
+    const labels = super.getLabels({ actionId, rollData });
 
     const itemData = this.system;
     labels.subType = pf1.config.buffTypes[itemData.subType];

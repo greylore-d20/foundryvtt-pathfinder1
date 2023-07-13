@@ -55,8 +55,8 @@ export class ItemEquipmentPF extends ItemPF {
   }
 
   /** @inheritDoc */
-  getLabels({ actionId } = {}) {
-    const labels = super.getLabels({ actionId });
+  getLabels({ actionId, rollData } = {}) {
+    const labels = super.getLabels({ actionId, rollData });
     const itemData = this.system;
 
     let eType = this.subType;

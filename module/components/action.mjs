@@ -193,7 +193,7 @@ export class ItemAction {
       return null;
     }
 
-    if (!rollData) rollData = this.getRollData();
+    rollData ??= this.getRollData();
     const singleIncrementRange = calculateRange(range, rangeType, rollData);
 
     if (["single", "min"].includes(type)) return singleIncrementRange;
@@ -258,7 +258,7 @@ export class ItemAction {
     // No actor? No DC!
     if (!this.actor) return 0;
 
-    rollData = rollData ?? this.getRollData();
+    rollData ??= this.getRollData();
     let result = 10;
 
     // Get conditional save DC bonus
@@ -475,9 +475,10 @@ export class ItemAction {
   }
 
   prepareData() {
+    const rollData = this.rollData;
     // Parse formulaic attacks
     if (this.hasAttack) {
-      this.parseFormulaicAttacks();
+      this.parseFormulaicAttacks({ rollData });
     }
 
     // Update conditionals
@@ -488,7 +489,7 @@ export class ItemAction {
     // Prepare max personal charges
     if (this.data.uses.self?.per) {
       const maxFormula = this.data.uses.self.per === "single" ? "1" : this.data.uses.self.maxFormula;
-      const maxUses = RollPF.safeTotal(maxFormula, this.getRollData());
+      const maxUses = RollPF.safeTotal(maxFormula, rollData);
       setProperty(this.data, "uses.self.max", maxUses);
     }
 
@@ -591,10 +592,10 @@ export class ItemAction {
    * @param {object} [options.rollData] - Pre-determined roll data. If not provided, finds the action's own roll data.
    * @returns {Record<string, string>} This action's labels
    */
-  getLabels(options = {}) {
+  getLabels({ rollData } = {}) {
     const actionData = this.data;
     const labels = {};
-    const rollData = options.rollData ?? this.getRollData();
+    rollData ??= this.getRollData();
 
     const isUnchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
 
@@ -620,7 +621,8 @@ export class ItemAction {
 
     // Difficulty Class
     if (this.hasSave) {
-      labels.save = game.i18n.format("PF1.DCThreshold", { threshold: this.getDC() });
+      const totalDC = rollData.dc + (rollData.dcBonus ?? 0);
+      labels.save = game.i18n.format("PF1.DCThreshold", { threshold: totalDC });
     }
 
     if (this.hasRange) {
@@ -646,13 +648,13 @@ export class ItemAction {
 
   // -----------------------------------------------------------------------
 
-  parseFormulaicAttacks({ formula = null } = {}) {
+  parseFormulaicAttacks({ formula = null, rollData } = {}) {
     if (!this.actor) return;
 
     const exAtkCountFormula = formula || this.data.formulaicAttacks?.count?.formula || "0";
     let extraAttacks = 0,
       xaroll;
-    const rollData = this.getRollData();
+    rollData ??= this.getRollData();
     if (exAtkCountFormula.length > 0) {
       xaroll = RollPF.safeRoll(exAtkCountFormula, rollData);
       extraAttacks = Math.clamped(xaroll.total, 0, 50); // Arbitrarily clamp attacks

@@ -68,7 +68,7 @@ export class ItemSpellPF extends ItemPF {
 
   /** @inheritDoc */
   getLabels({ actionId, rollData } = {}) {
-    const labels = super.getLabels({ actionId });
+    const labels = super.getLabels({ actionId, rollData });
     const itemData = this.system;
 
     // Spell Level, School, and Components

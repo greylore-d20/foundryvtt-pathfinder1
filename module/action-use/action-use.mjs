@@ -112,7 +112,7 @@ export class ActionUse {
    * @returns {object} The roll data object for this attack.
    */
   getRollData() {
-    const rollData = duplicate(this.shared.action.getRollData());
+    const rollData = deepClone(this.shared.action.getRollData());
     rollData.d20 = this.shared.dice !== "1d20" ? this.shared.dice : "";
 
     return rollData;

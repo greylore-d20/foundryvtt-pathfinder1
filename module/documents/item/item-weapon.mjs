@@ -47,8 +47,8 @@ export class ItemWeaponPF extends ItemPF {
   }
 
   /** @inheritDoc */
-  getLabels({ actionId } = {}) {
-    const labels = super.getLabels({ actionId });
+  getLabels({ actionId, rollData } = {}) {
+    const labels = super.getLabels({ actionId, rollData });
 
     const { weaponTypes } = pf1.config;
 

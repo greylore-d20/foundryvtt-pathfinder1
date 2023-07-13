@@ -2,7 +2,7 @@ import { RollPF } from "../dice/roll.mjs";
 
 export class ChatAttack {
   constructor(action, { label = "", rollData = {}, targets = null } = {}) {
-    this._rollData = rollData;
+    this.rollData = rollData;
     this.setAction(action);
     this.label = label;
 
@@ -68,18 +68,16 @@ export class ChatAttack {
   /**
    * Sets the attack's item reference.
    *
-   * @param {ItemAction} item - The action to reference.
-   * @param action
+   * @param {ItemAction} action - The action to reference.
    */
   setAction(action) {
     if (action == null) {
-      this.rollData = this._rollData;
+      this.rollData = null;
       this.action = null;
       return;
     }
 
     this.action = action;
-    this.rollData = mergeObject(this.action.getRollData(), this._rollData, { inplace: false });
     this.isHealing = action.isHealing;
 
     this.setRollData();

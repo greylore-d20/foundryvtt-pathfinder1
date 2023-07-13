@@ -20,6 +20,7 @@ import * as chatUtils from "./module/utils/chat.mjs";
 import { initializeModuleIntegration } from "./module/modules.mjs";
 import { ActorPFProxy } from "@actor/actor-proxy.mjs";
 import { ItemPFProxy } from "@item/item-proxy.mjs";
+import "module/tours.mjs";
 
 // New API
 import * as PF1 from "./module/config.mjs";
@@ -736,8 +737,10 @@ Hooks.on("renderSidebarTab", (app, html) => {
     html
       .find("#game-details")
       .after(
-        $(`<h2>${game.i18n.localize("PF1.Title")}</h2>`),
-        $("<div id='pf1-details'>").append(chlogButton, helpButton, tshooterButton)
+        $(`<div id="pf1-sidebar">`).append(
+          $(`<h2>${game.i18n.localize("PF1.Title")}</h2>`),
+          $("<div id='pf1-details'>").append(chlogButton, helpButton, tshooterButton)
+        )
       );
 
     chlogButton.click(() => {

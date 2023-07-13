@@ -1923,27 +1923,32 @@ export class ActorPF extends Actor {
 
     const sourceUser = game.user.id === userId;
 
-    let refreshVision = false;
-    if (hasProperty(changed, "system.attributes.conditions")) {
+    let refreshVision = false,
+      refreshLighting = false;
+    if (hasProperty(changed.system, "attributes.conditions")) {
       if (game.user.id === userId) this.toggleConditionStatusIcons({ render: false });
       refreshVision = true;
-    } else if (hasProperty(changed, "system.traits.senses")) {
-      refreshVision = true;
+    } else if (hasProperty(changed.system, "traits.senses")) {
+      if (sourceUser) this._syncTokenVision(context);
+      if (changed.system.traits.senses.ll) {
+        refreshLighting = true;
+      }
     } else if (changed.flags?.pf1?.visionPermissions) {
       refreshVision = true;
+      refreshLighting = true;
     }
 
-    if (refreshVision) {
+    if (refreshVision || refreshLighting) {
       if (this.testUserPermission(game.user, "OBSERVER")) {
-        // Refresh canvas perception
-        canvas.perception.update(
-          {
-            initializeVision: true,
-            refreshLighting: true,
-            refreshVision: true,
-          },
-          true
-        );
+        const visionUpdate = {
+          refreshLighting: true,
+          refreshVision: true,
+        };
+        if (refreshLighting) {
+          visionUpdate.initializeLighting = true;
+        }
+
+        canvas.perception.update(visionUpdate, true);
       }
     }
 
@@ -1967,6 +1972,29 @@ export class ActorPF extends Actor {
   }
 
   /**
+   * Synchronize vision for all relevant tokens.
+   */
+  async _syncTokenVision() {
+    if (!this.isOwner) return;
+
+    const scene = canvas?.scene;
+    if (!scene) return;
+
+    const updates = [];
+
+    const tokens = this.getActiveTokens(false, true);
+    for (const token of scene.tokens) {
+      const update = token._getSyncVisionData();
+      if (update) {
+        update._id = token.id;
+        updates.push(update);
+      }
+    }
+
+    return scene.updateEmbeddedDocuments("Token", updates);
+  }
+
+  /**
    * @override
    * @param {"Item"|"ActiveEffect"} embeddedName
    * @param {Item[]|ActiveEffect[]} documents
@@ -1974,7 +2002,7 @@ export class ActorPF extends Actor {
    * @param {object} context
    * @param {string} userId
    */
-  _onCreateEmbeddedDocuments(embeddedName, documents, result, context, userId) {
+  _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
     super._onCreateEmbeddedDocuments(...arguments);
 
     if (userId === game.user.id && embeddedName === "Item") {

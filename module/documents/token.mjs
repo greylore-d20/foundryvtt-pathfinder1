@@ -9,6 +9,9 @@ export class TokenDocumentPF extends TokenDocument {
     await super._preCreate(data, context, user);
 
     this._preCreateSetSize();
+
+    const visionUpdate = this._getSyncVisionData();
+    if (visionUpdate) this.updateSource(visionUpdate);
   }
 
   /**
@@ -83,101 +86,76 @@ export class TokenDocumentPF extends TokenDocument {
   }
 
   /**
-   * Refresh sight and detection modes according to the actor's senses associated with this token.
+   * Synchronize vision from actor.
+   *
+   * @returns {object|null} - Update object or null.
    */
-  refreshDetectionModes() {
-    if (!this.sight.enabled) return;
-    if (!["character", "npc"].includes(this.actor?.type)) return;
-    if (this.getFlag("pf1", "customVisionRules")) return;
+  _getSyncVisionData() {
+    if (this.getFlag("pf1", "customVisionRules")) return null;
 
-    // Reset sight properties
-    this.sight.visionMode = "basic";
-    const baseRange = this.sight.range;
+    if (!this.actor?.isOwner) return;
 
-    // Prepare sight
-    const darkvisionRange = this.actor?.system?.traits?.senses?.dv ?? 0;
-    if (darkvisionRange > 0) {
-      // Apply greater of darkvision and basic guaranteed vision
-      this.sight.range = Math.max(baseRange, pf1.utils.convertDistance(darkvisionRange)[0]);
-      this.sight.visionMode = "darkvision";
-      // Copy over darkvision configuration to current mode (since we don't do .update on visionMode)
-      const dvConf = CONFIG.Canvas.visionModes.darkvision.vision.defaults;
-      this.sight.saturation = dvConf.saturation;
-      this.sight.attenuation = dvConf.attenuation;
-      this.sight.brightness = dvConf.brightness;
-      this.sight.contrast = dvConf.contrast;
-    } else {
-      // Make sure sight is reset
-      const baseSight = this._source.sight;
-      this.sight.saturation = baseSight.saturation;
-      this.sight.attenuation = baseSight.attenuation;
-      this.sight.brightness = baseSight.brightness;
-      this.sight.contrast = baseSight.contrast;
+    const baseRange = 0;
+    const detectionModes = [];
+
+    const sightUpdate = { visionMode: "basic", range: baseRange };
+    const updateData = { sight: sightUpdate, detectionModes };
+
+    const senses = this.actor?.system?.traits?.senses ?? {};
+
+    // Basic detection
+    const basicMode = { id: DetectionMode.BASIC_MODE_ID, enabled: true, range: baseRange };
+    detectionModes.push(basicMode);
+
+    // Darkvision
+    const darkvision = senses.dv ?? 0;
+    if (darkvision > 0) {
+      sightUpdate.visionMode = "darkvision";
+      // Upgrade basic mode range if greater
+      basicMode.range = Math.max(baseRange, pf1.utils.convertDistance(darkvision)[0]);
+      // Clobber guaranteed vision
+      sightUpdate.range = basicMode.range;
     }
 
-    // Set basic detection mode
-    const basicId = DetectionMode.BASIC_MODE_ID;
-    const basicMode = this.detectionModes.find((m) => m.id === basicId);
-    if (!basicMode) this.detectionModes.push({ id: basicId, enabled: true, range: baseRange });
-    else basicMode.range = baseRange;
-
-    // Set see invisibility detection mode
-    const seeInvId = "seeInvisibility";
-    const seeInvMode = this.detectionModes.find((m) => m.id === seeInvId);
-    if (!seeInvMode && (this.actor?.system?.traits?.senses?.si || this.actor?.system?.traits?.senses?.tr)) {
-      this.detectionModes.push({ id: seeInvId, enabled: true, range: this.sight.range });
-    } else if (seeInvMode != null) {
-      if (!(this.actor?.system?.traits?.senses?.si || this.actor?.system?.traits?.senses?.tr)) {
-        this.detectionModes.splice(this.detectionModes.indexOf(seeInvMode, 1));
-      } else {
-        seeInvMode.range = this.sight.range;
-      }
+    // -----------------------
+    // See invisibility or Truesight
+    if (senses.si || senses.tr) {
+      detectionModes.push({ id: "seeInvisibility", enabled: true, range: basicMode.range });
     }
 
-    // Set blind sense detection mode
-    const blindSenseId = "blindSense";
-    const blindSenseMode = this.detectionModes.find((m) => m.id === blindSenseId);
-    const blindSenseRange = this.actor?.system?.traits?.senses?.bse;
-    if (!blindSenseMode && blindSenseRange) {
-      this.detectionModes.push({ id: blindSenseId, enabled: true, range: blindSenseRange });
-    } else if (blindSenseMode != null) {
-      if (!blindSenseRange) {
-        this.detectionModes.splice(this.detectionModes.indexOf(blindSenseMode, 1));
-      } else {
-        blindSenseMode.range = blindSenseRange;
-      }
+    // Tremor sense
+    if (senses.ts) {
+      detectionModes.push({ id: "feelTremor", enabled: true, range: senses.ts });
     }
 
-    // Set blind sight detection mode
-    const blindSightId = "blindSight";
-    const blindSightMode = this.detectionModes.find((m) => m.id === blindSightId);
-    const blindSightRange = this.actor?.system?.traits?.senses?.bs;
-    if (!blindSightMode && blindSightRange) {
-      this.detectionModes.push({ id: blindSightId, enabled: true, range: blindSightRange });
-    } else if (blindSightMode != null) {
-      if (!blindSightRange) {
-        this.detectionModes.splice(this.detectionModes.indexOf(blindSightMode, 1));
-      } else {
-        blindSightMode.range = blindSightRange;
-      }
+    // Blind sense
+    if (senses.bse) {
+      detectionModes.push({ id: "blindSense", enabled: true, range: senses.bse });
     }
 
-    // Set tremor sense detection mode
-    const tremorSenseId = "feelTremor";
-    const tremorSenseMode = this.detectionModes.find((m) => m.id === tremorSenseId);
-    const tremorSenseRange = this.actor?.system?.traits?.senses?.ts;
-    if (!blindSightMode && tremorSenseRange) {
-      this.detectionModes.push({ id: tremorSenseId, enabled: true, range: tremorSenseRange });
-    } else if (tremorSenseMode != null) {
-      if (!tremorSenseRange) {
-        this.detectionModes.splice(this.detectionModes.indexOf(tremorSenseMode, 1));
-      } else {
-        tremorSenseMode.range = tremorSenseRange;
-      }
+    // Blind sight
+    if (senses.bs) {
+      detectionModes.push({ id: "blindSight", enabled: true, range: senses.bs });
     }
 
     // Sort detection modes
-    this.detectionModes.sort(this._sortDetectionModes.bind(this));
+    detectionModes.sort(this._sortDetectionModes);
+
+    // Update vision advanced fields with current mode's defaults
+    const visionDefaults = CONFIG.Canvas.visionModes[sightUpdate.visionMode]?.vision?.defaults || {};
+    for (const fieldName of ["attenuation", "brightness", "saturation", "contrast"]) {
+      if (fieldName in visionDefaults) {
+        sightUpdate[fieldName] = visionDefaults[fieldName];
+      }
+    }
+
+    return updateData;
+  }
+
+  _syncVision() {
+    const updateData = this._getSyncVisionData();
+    if (updateData) return this.update(updateData);
+    return null;
   }
 
   _sortDetectionModes(a, b) {

@@ -38,28 +38,6 @@ export class TokenPF extends Token {
   }
 
   /**
-   * @override
-   * @param {object} data
-   * @param {object} context
-   * @param {string} userId
-   */
-  _onUpdate(data, context, userId) {
-    if (context.render === false) return;
-
-    if (hasProperty(data, "flags.pf1.customVisionRules")) {
-      // Make sure this token's perception changes
-      data.sight ||= {};
-    }
-
-    super._onUpdate(data, context, userId);
-  }
-
-  updateVisionSource(...args) {
-    this.document.refreshDetectionModes();
-    super.updateVisionSource(...args);
-  }
-
-  /**
    * @param {object} data         Resource data for this bar
    * @returns {number|null}       The number to boost the bar by, if any.
    * @protected

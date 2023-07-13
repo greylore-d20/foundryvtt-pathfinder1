@@ -218,6 +218,8 @@ export class ActorSheetPF extends ActorSheet {
     data.rollData = rollData;
     data.system = deepClone(this.document.system);
 
+    data.inCharacterGeneration = this.inCharacterGeneration;
+
     data.hasProficiencies = data.isCharacter || game.settings.get("pf1", "npcProficiencies");
 
     // Show whether the item has currency
@@ -641,6 +643,19 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   /* -------------------------------------------- */
+
+  /**
+   * Determine if this actor is in character generation state.
+   *
+   * @private
+   * @returns {boolean} True if character generation guides are desirable.
+   */
+  get inCharacterGeneration() {
+    return (
+      this.actor.system.attributes.hd.total <= 1 ||
+      Object.values(this.actor.system.abilities).every((abl) => abl.value === 10)
+    );
+  }
 
   _prepareHiddenElements() {
     // Hide spellbook info

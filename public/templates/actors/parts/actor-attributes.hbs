@@ -69,6 +69,20 @@
         </tbody>
     </table>
 
+    {{!-- Point Buy Calculator (Temporary) --}}
+    {{#if @root.inCharacterGeneration}}
+    <div class="form-group temporary">
+        <button type="button" class="pointbuy-calculator">
+            <i class="fa-solid fa-calculator"></i>
+            {{localize "PF1.PointBuyCalculator"}}
+        </button>
+        <p class="hint">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            {{localize "PF1.PointBuyCalculatorSetupHint"}}
+        </p>
+    </div>
+    {{/if}}
+
     <table>
         <thead>
             <th class="tooltip">

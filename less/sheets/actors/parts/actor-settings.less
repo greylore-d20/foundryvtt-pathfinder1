@@ -1,10 +1,37 @@
 .pf1.sheet.actor {
   .tab.settings {
     overflow: hidden scroll;
+    gap: 0.5em;
+
+    h2,
+    h3 {
+      margin: 0;
+      flex: 0;
+    }
+
+    > div {
+      flex: 0;
+    }
+
+    .base-setup {
+      display: grid;
+      grid-template-columns: 5fr 2fr;
+      gap: 0.3em;
+
+      h2 {
+        grid-column: 1 / -1;
+      }
+
+      .flexcol {
+        gap: 0.3em;
+      }
+    }
 
     // Ability Score Links
     .ability-scores {
-      flex: 0;
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 0.3em;
 
       > .links {
         display: grid;

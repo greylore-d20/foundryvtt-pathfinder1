@@ -214,4 +214,179 @@ export class TokenPF extends Token {
   get isSquare() {
     return this.document.width === this.document.height;
   }
+
+  /**
+   * Get current light level of a token.
+   *
+   * @param {object} [options] - Additional options.
+   * @param {number} [options.points=2] - Number of visibility points needed to qualify for light. Max 5.
+   * @param {number} [options.maxRange=Infinity] - Maximum range (in scene scale units) to seek relevant lights from.
+   * @param {boolean} [options.visualize=false] - Draw debug visualizations.
+   * @param {number} [options.tolerance=0.05] - Extra distance granted to lights, relative to scene scale. Max 0.3, min 0.
+   * @returns {0|1|2} Light level. 0 for dark, 1 for dim, 2 for bright.
+   * @todo Allow defining observer token for darkvision handling.
+   */
+  getLightLevel({ points = 2, maxRange = Infinity, tolerance = 0.05, visualize = false } = {}) {
+    const tokenCenter = this.center;
+
+    tolerance = Math.clamped(tolerance, 0, 0.3);
+    points = Math.clamped(points, 1, 5);
+
+    const { size: gridPx, distance: gridScale } = this.scene.grid;
+
+    if (maxRange <= gridScale / 2)
+      throw new Error(`getLightLevel() maxRange parameter must be a decent positive value`);
+
+    const errorMargin = this.sizeErrorMargin;
+    const errorMarginScaled = (errorMargin / gridPx) * gridScale;
+
+    // Arbitrary reduction in size to not get light level from corners
+    const t = errorMargin * 0.65;
+
+    // Token offset points for light tests
+    // TODO: Add option of more or less points, and different patterns
+    const offsets = [
+      [0, 0],
+      [-t, -t],
+      [-t, t],
+      [t, t],
+      [t, -t],
+      [-t, 0],
+      [t, 0],
+      [0, -t],
+      [0, t],
+    ].map(([x, y]) => ({ x: tokenCenter.x + x, y: tokenCenter.y + y }));
+
+    const drawDot = ({ x, y } = {}, color, { r = 3, z = 1000 } = {}) => {
+      const drawing = new PIXI.Graphics();
+      drawing.zIndex = z;
+      drawing.beginFill(color);
+      drawing.lineStyle(1, 0x000000, 0, 1);
+      drawing.drawCircle(x, y, r);
+      canvas.interface.addChild(drawing);
+      drawings.push(drawing);
+    };
+
+    const drawings = [];
+    if (visualize) for (const point of offsets) drawDot(point.x, point.y, 0xff0000, { r: 5, z: 500 });
+
+    const getSceneDistance = (p0, p1) => (new Ray(p0, p1).distance / gridPx) * gridScale;
+
+    const halfGrid = gridScale / 2;
+
+    // TODO: Account for token lights, too.
+    const relevantLights = this.scene.lights
+      .filter((light) => !light.hidden)
+      .map((light) => {
+        const distance = getSceneDistance(tokenCenter, light);
+        const { bright, dim } = light.config;
+        // Treat the light somewhat closer based on how large the token is
+        const relaxedDistance = distance - errorMarginScaled;
+
+        return {
+          light,
+          x: light.x,
+          y: light.y,
+          range: Math.max(bright, dim) + gridScale * tolerance,
+          dim,
+          bright,
+          inBright: bright >= relaxedDistance,
+          isBright: false,
+          inDim: dim >= relaxedDistance,
+          isDim: false,
+          distance,
+          relaxedDistance,
+        };
+      })
+      .filter(
+        (light) =>
+          light.relaxedDistance <= light.range && light.distance <= maxRange && light.range + halfGrid >= light.distance
+      )
+      // Filter lights based on wall collisions and inject
+      .filter((light) => {
+        light.brights = 0;
+        light.dims = 0;
+        light.points = 0;
+
+        // Test if there's sufficiently many points we can get no collision with
+        offsets.forEach((target, idx) => {
+          const source = { x: light.x, y: light.y };
+          // Ignore points too far away
+          const distance = getSceneDistance(source, target);
+          if (distance > light.range) {
+            console.log("-FAR:", idx, light.light.id, { distance, range: light.range });
+            return;
+          }
+
+          // Test light blocking walls
+          if (!ClockwiseSweepPolygon.testCollision(source, target, { type: "light", mode: "any" })) {
+            light.points += 1;
+            const isBright = distance <= light.bright;
+
+            if (isBright) light.brights += 1;
+            else light.dims += 1;
+
+            if (visualize) {
+              const line = new PIXI.Graphics();
+              line.position.set(source.x, source.y);
+              line.lineStyle(isBright ? 3 : 2, isBright ? 0xf9ee13 : 0x795e13);
+              line.zIndex = isBright ? 1050 : 1000;
+              line.lineTo(target.x - source.x, target.y - source.y);
+              canvas.interface.addChild(line);
+              drawings.push(line);
+
+              drawDot(target, 0x00ff00, { r: 3, z: 1200 });
+            }
+
+            console.log("+HIT:", idx, light.light.id, { distance, range: light.range });
+          } else {
+            console.log("-HIT:", idx, light.light.id, { distance, range: light.range });
+
+            if (visualize) drawDot(target, 0x773300, { r: 5, z: 700 });
+          }
+        });
+
+        if (light.brights >= points) {
+          light.isBright = true;
+        } else if (light.dims + light.brights >= points) {
+          light.isDim = true;
+        }
+
+        if (visualize)
+          drawDot(light, light.isBright ? 0xffdf00 : light.isDim ? 0xdfaf00 : 0x7f3f00, { r: 10, z: 1500 });
+
+        return light.points > 0;
+      })
+      // Try to sort "better" lights front
+      .sort((a, b) => {
+        if (a.isBright && !b.isBright) return -1;
+        if (!a.isBright && b.isBright) return 1;
+        if (a.isDim && !b.isDim) return -1;
+        if (!a.isDim && b.isDim) return 1;
+        return a.points - b.points;
+      });
+
+    // Remove visualizations after a period
+    if (visualize) {
+      setTimeout(() => {
+        for (const p of drawings) {
+          canvas.interface.removeChild(p);
+        }
+      }, 5_000);
+    }
+
+    console.log({ relevantLights });
+
+    // Without this loop, we may incorrectly return dim light when they in fact are not in such
+    for (const light of relevantLights) {
+      if (light.isBright) return 2;
+      if (light.isDim) return 1;
+    }
+
+    // Alternative (and probably incorrect):
+    // const bestLight = relevantLights[0];
+    // return bestLight ? (bestLight.isBright ? 2 : 1) : 0;
+
+    return 0;
+  }
 }

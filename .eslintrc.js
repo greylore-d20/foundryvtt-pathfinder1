@@ -504,5 +504,6 @@ module.exports = {
     OutlineOverlayFilter: "readonly",
     SearchFilter: "readonly",
     TooltipManager: "readonly",
+    ClockwiseSweepPolygon: "readonly",
   },
 };

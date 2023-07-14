@@ -46,7 +46,18 @@ export class Troubleshooter extends Application {
     el.classList.remove("finished");
     el.disabled = true;
 
-    await pf1.migrations.migrateWorld();
+    const target = el.dataset.target;
+    switch (target) {
+      case "world":
+        await pf1.migrations.migrateWorld();
+        break;
+      case "modules":
+        await pf1.migrations.migrateModules({ unlock: false });
+        break;
+      default:
+        throw new Error(`Unrecognized migration target: "${target}"`);
+    }
+
     el.disabled = false;
     el.classList.add("finished");
   }
@@ -64,13 +75,23 @@ export class Troubleshooter extends Application {
 
     const [html] = jq;
 
-    const migrationButton = html.querySelector("button[data-action='migrate']");
-    migrationButton.addEventListener("click", this._runMigration.bind(this));
+    const migrationButtons = html.querySelectorAll("button[data-action='migrate']");
+
+    for (const button of migrationButtons) {
+      button.addEventListener("click", this._runMigration.bind(this));
+    }
 
     // React to external migration to minimal degree
     if (pf1.migrations.isMigrating) {
-      migrationButton.disabled = true;
-      Hooks.once("pf1MigrationFinished", () => (migrationButton.disabled = false));
+      for (const button of migrationButtons) {
+        button.disabled = true;
+      }
+
+      Hooks.once("pf1MigrationFinished", () => {
+        for (const button of migrationButtons) {
+          button.disabled = false;
+        }
+      });
     }
 
     html.querySelector("a[data-action='help']").addEventListener("click", this._openHelp.bind(this));

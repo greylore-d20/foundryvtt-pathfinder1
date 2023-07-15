@@ -1,13 +1,11 @@
-import { DicePF, formulaHasDice } from "../../dice/dice.mjs";
+import { formulaHasDice } from "../../dice/dice.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
 import { createTag, convertDistance, keepUpdateArray, diffObjectAndArray } from "../../utils/lib.mjs";
-import { getWeightSystem } from "@utils";
 import { ItemChange } from "../../components/change.mjs";
 import { ItemAction } from "../../components/action.mjs";
 import { getHighestChanges } from "../actor/utils/apply-changes.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 import { ActionUse } from "@actionUse/action-use.mjs";
-import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs";
 import { getSkipActionPrompt } from "../settings.mjs";
 
 /**
@@ -1329,14 +1327,7 @@ export class ItemPF extends Item {
     }
 
     // Call itemUse hook and determine whether the item can be used based off that
-    let allowed = Hooks.call("pf1PreActionUse", actionUse);
-    allowed = callOldNamespaceHook("itemUse", "pf1PreUseAttack", allowed, this, "attack", {
-      ev,
-      skipDialog,
-      dice,
-      shared,
-    });
-    if (allowed === false) {
+    if (Hooks.call("pf1PreActionUse") === false) {
       await measureResult?.delete();
       return;
     }
@@ -1438,7 +1429,6 @@ export class ItemPF extends Item {
     this._rollData = result.item;
 
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
-    callOldNamespaceHookAll("pf1.getRollData", "pf1GetRollData", this, result, true);
 
     return result;
   }
@@ -1683,7 +1673,6 @@ export class ItemPF extends Item {
 
       // Call link creation hook
       await this.update(updateData);
-      callOldNamespaceHookAll("createItemLink", "pf1CreateItemLink", this, link, linkType);
       Hooks.callAll("pf1CreateItemLink", this, link, linkType);
 
       return true;

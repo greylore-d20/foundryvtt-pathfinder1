@@ -1,5 +1,4 @@
 import { RollPF } from "../../../dice/roll.mjs";
-import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 /**
  * @this {import("@actor/actor-pf.mjs").ActorPF}
@@ -591,7 +590,6 @@ export const getChangeFlat = function (target, modifierType, value) {
   }
 
   // Call hooks to enable modules to add or adjust the result array
-  callOldNamespaceHookAll("pf1.getChangeFlat", "pf1GetChangeFlat", target, modifierType, { keys: result });
   Hooks.callAll("pf1GetChangeFlat", result, target, modifierType, value, this);
 
   // Return results directly when deprecation is removed
@@ -626,7 +624,6 @@ export const addDefaultChanges = function (changes) {
   const actorData = this.system;
   // Call hook
   const tempChanges = [];
-  callOldNamespaceHookAll("pf1.addDefaultChanges", "pf1AddDefaultChanges", this, tempChanges);
   Hooks.callAll("pf1AddDefaultChanges", this, tempChanges);
   changes.push(...tempChanges.filter((c) => c instanceof pf1.components.ItemChange));
 

@@ -1,7 +1,6 @@
 import { ItemPF } from "./item-pf.mjs";
 import { createTag } from "../../utils/lib.mjs";
 import { RollPF } from "../../dice/roll.mjs";
-import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 export class ItemClassPF extends ItemPF {
   /**
@@ -167,7 +166,6 @@ export class ItemClassPF extends ItemPF {
     }
 
     // Call level change hook
-    callOldNamespaceHookAll("pf1.classLevelChange", "pf1ClassLevelChange", this.actor, this, curLevel, newLevel);
     Hooks.callAll("pf1ClassLevelChange", this.actor, this, curLevel, newLevel);
   }
 

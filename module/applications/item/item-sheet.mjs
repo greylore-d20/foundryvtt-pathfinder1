@@ -4,7 +4,6 @@ import { ScriptEditor } from "../script-editor.mjs";
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { Widget_CategorizedItemPicker } from "../categorized-item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
-import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -1591,7 +1590,6 @@ export class ItemSheetPF extends ItemSheet {
       updateData[`system.links.${linkType}`] = links;
 
       // Call hook for deleting a link
-      callOldNamespaceHookAll("deleteItemLink", "pf1DeleteItemLink", this.item, link, linkType);
       Hooks.callAll("pf1DeleteItemLink", this.item, link, linkType);
 
       await this._onSubmit(event, { updateData });

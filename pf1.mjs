@@ -19,7 +19,6 @@ import { SemanticVersion } from "./module/utils/semver.mjs";
 import * as chat from "./module/utils/chat.mjs";
 import * as macros from "./module/documents/macros.mjs";
 import { initializeModules } from "./module/modules.mjs";
-import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 import { ActorPFProxy } from "@actor/actor-proxy.mjs";
 import { ItemPFProxy } from "@item/item-proxy.mjs";
 
@@ -229,7 +228,6 @@ Hooks.once("init", function () {
   });
 
   // Call post-init hook
-  callOldNamespaceHookAll("pf1.postInit", "pf1PostInit");
   Hooks.callAll("pf1PostInit");
 });
 
@@ -378,7 +376,6 @@ Hooks.once("setup", function () {
   // Register controls
   documents.controls.registerSystemControls();
 
-  callOldNamespaceHookAll("pf1.postSetup", "pf1PostSetup");
   Hooks.callAll("pf1PostSetup");
 });
 
@@ -434,7 +431,6 @@ Hooks.once("ready", async function () {
     }
   }
 
-  callOldNamespaceHookAll("pf1.postReady", "pf1PostReady");
   Hooks.callAll("pf1PostReady");
 });
 
@@ -512,7 +508,6 @@ Hooks.on("updateActor", (actor, data, options, userId) => {
   {
     const conditions = data.system?.attributes?.conditions || {};
     for (const [k, v] of Object.entries(conditions)) {
-      callOldNamespaceHookAll("pf1.toggleActorCondition", "pf1ToggleActorCondition", actor, k, v);
       Hooks.callAll("pf1ToggleActorCondition", actor, k, v);
     }
   }
@@ -571,7 +566,6 @@ Hooks.on("createItem", (item, options, userId) => {
   if (item.type === "buff" && item.system.active === true) {
     // Call hook
     if (actor) {
-      callOldNamespaceHookAll("pf1.toggleActorBuff", "pf1ToggleActorBuff", actor, item, true);
       Hooks.callAll("pf1ToggleActorBuff", actor, item, true);
     }
 
@@ -662,7 +656,6 @@ Hooks.on("deleteItem", async (item, options, userId) => {
 
     // Call buff removal hook
     if (item.type === "buff" && item.system.active === true) {
-      callOldNamespaceHookAll("pf1.toggleActorBuff", "pf1ToggleActorBuff", actor, item, false);
       Hooks.callAll("pf1ToggleActorBuff", actor, item, false);
     }
   }
@@ -677,7 +670,6 @@ Hooks.on("updateItem", async (item, changedData, options, userId) => {
     const isActive = changedData.system?.active;
     if (item.type === "buff" && isActive !== undefined) {
       // Call hook
-      callOldNamespaceHookAll("pf1.toggleActorBuff", "pf1ToggleActorBuff", actor, item, isActive);
       Hooks.callAll("pf1ToggleActorBuff", actor, item, isActive);
     }
   }

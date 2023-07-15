@@ -538,22 +538,6 @@ declare global {
       ) => boolean;
 
       // ------------------------- //
-      //            Dice           //
-      // ------------------------- //
-      // TODO: Fix types for actual function, then adjust in hook
-      /**
-       * A hook event fired by the system when a generic dice roll is made.
-       *
-       * @see {@link pf1.dice.DicePF.d20Roll DicePF.d20Roll}
-       * @deprecated Use `PreActorRoll*` hooks instead.
-       * @group Dice
-       * @remarks Called by {@link Hooks.call}
-       * @param data - Data used for the roll.
-       * @returns Explicitly return `false` to prevent the roll from being made.
-       */
-      pf1PreRoll: (data: Record<string, unknown>) => boolean;
-
-      // ------------------------- //
       //         Item Links        //
       // ------------------------- //
       /**
@@ -695,9 +679,6 @@ export declare const pf1MigrationFinished: Hooks.StaticCallbacks["pf1MigrationFi
 
 // Sheet Events
 export declare const pf1DropContainerSheetData: Hooks.StaticCallbacks["pf1DropContainerSheetData"];
-
-// Dice
-export declare const pf1PreRoll: Hooks.StaticCallbacks["pf1PreRoll"];
 
 // Item Links
 export declare const pf1CreateItemLink: Hooks.StaticCallbacks["pf1CreateItemLink"];

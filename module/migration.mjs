@@ -1,9 +1,6 @@
 import { ItemPF } from "./documents/item/item-pf.mjs";
-import { ExperienceConfig } from "./applications/settings/experience.mjs";
 import { createTag } from "./utils/lib.mjs";
 import { ItemChange } from "./components/change.mjs";
-import { SemanticVersion } from "./utils/semver.mjs";
-import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 
 /**
  * An indicator for whether the system is currently migrating the world.
@@ -88,7 +85,6 @@ export const migrateWorld = async function ({ unlock = false, systemPacks = fals
   console.log("System Migration completed.");
   pf1.migrations.isMigrating = false;
 
-  callOldNamespaceHookAll("pf1.migrationFinished", "pf1MigrationFinished");
   Hooks.callAll("pf1MigrationFinished");
 };
 

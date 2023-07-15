@@ -2,7 +2,6 @@ import { createTag, convertDistance } from "@utils";
 import { ChatAttack } from "./chat-attack.mjs";
 import { createCustomChatMessage } from "@utils/chat.mjs";
 import { RollPF } from "../dice/roll.mjs";
-import { callOldNamespaceHookAll } from "@utils/hooks.mjs";
 import { getDistanceSystem } from "@utils";
 
 // Documentation/type imports
@@ -1128,7 +1127,6 @@ export class ActionUse {
       templateData: this.shared.templateData,
       shared: this.shared,
     };
-    callOldNamespaceHookAll("itemUse", "pf1PreDisplayActionUse", this.item, "postAttack", hookData);
 
     this.shared.chatTemplate ||= "systems/pf1/templates/chat/attack-roll.hbs";
     this.shared.templateData.damageTypes = pf1.registry.damageTypes.toObject();

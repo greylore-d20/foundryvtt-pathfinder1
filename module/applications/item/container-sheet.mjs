@@ -1,10 +1,8 @@
 import { ItemSheetPF } from "./item-sheet.mjs";
-import { ItemPF } from "../../documents/item/item-pf.mjs";
 import { splitCurrency } from "../../utils/lib.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
 import { createConsumableSpellDialog } from "../../utils/lib.mjs";
 import { CurrencyTransfer } from "../currency-transfer.mjs";
-import { callOldNamespaceHook } from "@utils/hooks.mjs";
 import { getWeightSystem } from "@utils";
 
 export class ItemSheetPF_Container extends ItemSheetPF {
@@ -492,8 +490,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const item = this.item;
 
     // Handle the drop with a Hooked function
-    let allowed = Hooks.call("pf1DropContainerSheetData", item, this, data);
-    allowed = callOldNamespaceHook("dropContainerSheetData", "pf1DropContainerSheetData", allowed, item, this, data);
+    const allowed = Hooks.call("pf1DropContainerSheetData", item, this, data);
     if (allowed === false) return;
 
     // Handle different data types

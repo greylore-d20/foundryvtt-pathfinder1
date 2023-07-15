@@ -14,7 +14,6 @@ import {
 import { RollPF } from "../../dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
 import { ItemChange } from "../../components/change.mjs";
-import { callOldNamespaceHook, callOldNamespaceHookAll } from "@utils/hooks.mjs";
 import { VisionPermissionSheet } from "module/applications/vision-permission.mjs";
 
 /**
@@ -498,7 +497,6 @@ export class ActorPF extends Actor {
     this.system.resources ??= {};
 
     this._resetInherentTotals();
-    callOldNamespaceHookAll("pf1.prepareBaseActorData", "pf1PrepareBaseActorData", this);
     Hooks.callAll("pf1PrepareBaseActorData", this);
 
     // Update total level and mythic tier
@@ -1232,7 +1230,6 @@ export class ActorPF extends Actor {
   }
 
   prepareSpecificDerivedData() {
-    callOldNamespaceHookAll("pf1.prepareDerivedActorData", "pf1PrepareDerivedActorData", this);
     Hooks.callAll("pf1PrepareDerivedActorData", this);
 
     this.refreshDerivedData();
@@ -2210,9 +2207,6 @@ export class ActorPF extends Actor {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
-    if (callOldNamespaceHook("actorRoll", "pf1PreActorRollSkill", undefined, this, "skill", skillId, options) === false)
-      return;
-
     const skl = this.getSkillInfo(skillId);
 
     const skillMatch = /^(?<mainSkillId>\w+).subSkills.(?<subSkillId>\w+)$/.exec(skillId);
@@ -2309,9 +2303,6 @@ export class ActorPF extends Actor {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
-    if (callOldNamespaceHook("actorRoll", "pf1PreActorRollBab", undefined, this, "bab", null, options) === false)
-      return;
-
     const token = options.token ?? this.token;
 
     const rollOptions = {
@@ -2340,9 +2331,6 @@ export class ActorPF extends Actor {
 
     options.ranged ??= false;
     options.ability ??= null;
-
-    if (callOldNamespaceHook("actorRoll", "pf1PreActorRollCmb", undefined, this, "cmb", null, options) === false)
-      return;
 
     // Add contextual notes
     const rollData = this.getRollData();
@@ -2481,9 +2469,6 @@ export class ActorPF extends Actor {
     const spellbook = this.system.attributes.spells.spellbooks[bookId];
     const rollData = duplicate(this.getRollData());
     rollData.cl = spellbook.cl.total;
-
-    if (callOldNamespaceHook("actorRoll", "pf1PreActorRollCl", undefined, this, "cl", bookId, options) === false)
-      return;
 
     // Set up roll parts
     const parts = [];
@@ -2745,12 +2730,6 @@ export class ActorPF extends Actor {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
-    if (
-      callOldNamespaceHook("actorRoll", "pf1PreActorRollSave", undefined, this, "save", savingThrowId, options) ===
-      false
-    )
-      return;
-
     // Add contextual notes
     const rollData = this.getRollData();
     const noteObjects = this.getContextNotes(`savingThrow.${savingThrowId}`);
@@ -2831,12 +2810,6 @@ export class ActorPF extends Actor {
     if (!this.isOwner) {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
-
-    if (
-      callOldNamespaceHook("actorRoll", "pf1PreActorRollAbility", undefined, this, "ability", abilityId, options) ===
-      false
-    )
-      return;
 
     // Add contextual notes
     const rollData = this.getRollData();
@@ -3932,7 +3905,6 @@ export class ActorPF extends Actor {
 
     // Call hook
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
-    callOldNamespaceHookAll("pf1.getRollData", "pf1GetRollData", this, result, true);
 
     return result;
   }
@@ -4400,8 +4372,7 @@ export class ActorPF extends Actor {
     }
 
     options = { restoreHealth, restoreDailyUses, longTermCare, hours };
-    let allowed = Hooks.call("pf1PreActorRest", this, options, updateData, itemUpdates);
-    allowed = callOldNamespaceHook("actorRest", "pf1PreActorRest", allowed, this, options, updateData, itemUpdates);
+    const allowed = Hooks.call("pf1PreActorRest", this, options, updateData, itemUpdates);
     if (allowed === false) return;
 
     if (itemUpdates.length) await this.updateEmbeddedDocuments("Item", itemUpdates);

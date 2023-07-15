@@ -13,9 +13,7 @@ export function getActionDefaultData() {
     activation: {
       cost: 1,
       type: "",
-    },
-    unchainedAction: {
-      activation: {
+      unchained: {
         cost: 1,
         type: "",
       },

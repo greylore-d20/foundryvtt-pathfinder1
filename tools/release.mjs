@@ -1,7 +1,8 @@
 import fs from "fs-extra";
-import { releaseLog } from "./changelog.mjs";
 import yargs from "yargs";
 import git from "simple-git";
+
+import { releaseLog } from "./changelog.mjs";
 
 yargs(process.argv.slice(2))
   .demandCommand(1, 1)
@@ -11,10 +12,6 @@ yargs(process.argv.slice(2))
   })
   .command("minor", "Bump version to next minor", async () => {
     await inc("minor");
-    await commitTag();
-  })
-  .command("patch", "Bump version to next patch", async () => {
-    await inc("patch");
     await commitTag();
   })
   .help()
@@ -39,22 +36,17 @@ function getTagVersion() {
 /**
  * Increments the system's version and writes manifest
  *
- * @param {"major" | "minor" | "patch" } importance - The step by which the version should be increased
+ * @param {"major" | "minor" } importance - The step by which the version should be increased
  */
 async function inc(importance) {
   const version = getTagVersion();
   if (version) {
     let newVersion = version.split(".");
     switch (importance) {
-      case "patch":
-        newVersion[2]++;
-        break;
       case "minor":
-        newVersion[2] = 0;
         newVersion[1]++;
         break;
       case "major":
-        newVersion[2] = 0;
         newVersion[1] = 0;
         newVersion[0]++;
         break;
@@ -81,8 +73,12 @@ async function commitTag() {
   if (version) {
     console.log(`Committing manifest and changelog for version ${version}`);
     await git().commit(`Release v${version}`, ["public/system.json", "CHANGELOG.md", "changelogs"]);
+    console.log(`Checking out branch for release generation v${version.split(".")[0]}.x`);
+    await git().checkoutLocalBranch(`v${version.split(".")[0]}.x`);
     console.log(`Creating tag v${version}`);
     await git().addAnnotatedTag(`v${version}`, `Release v${version}`);
+    console.log(`Release creation complete!`);
+    console.log(`To publish, run: git push --follow-tags origin v${version.split(".")[0]}.x`);
   } else {
     throw new Error("Could not determine version!");
   }

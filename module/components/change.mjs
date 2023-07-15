@@ -164,9 +164,18 @@ export class ItemChange {
       let value = 0;
       if (this.formula) {
         if (operator === "script") {
+          ui.notifications?.warn(game.i18n.format("SETTINGS.pf1AllowScriptChangesF", { parent: this.parent?.name }), {
+            console: false,
+          });
+          console.warn(
+            game.i18n.format("SETTINGS.pf1AllowScriptChangesF", { parent: this.parent?.uuid || this.parent?.name }),
+            {
+              change: this,
+              item: this.parent,
+              actor: this.parent?.actor,
+            }
+          );
           if (!game.settings.get("pf1", "allowScriptChanges")) {
-            ui.notifications?.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), { console: false });
-            console.warn(game.i18n.localize("SETTINGS.pf1AllowScriptChangesE"), this.parent);
             value = 0;
             operator = "add";
           } else {

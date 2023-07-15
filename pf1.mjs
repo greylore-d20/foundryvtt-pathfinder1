@@ -431,6 +431,12 @@ Hooks.once("ready", async function () {
     }
   }
 
+  // Create permanent warning if script changes are allowed
+  if (game.settings.get("pf1", "allowScriptChanges")) {
+    ui.notifications.warn("SETTINGS.pf1AllowScriptChangesD", { localize: true, permanent: true });
+  }
+
+  callOldNamespaceHookAll("pf1.postReady", "pf1PostReady");
   Hooks.callAll("pf1PostReady");
 });
 

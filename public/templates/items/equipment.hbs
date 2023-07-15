@@ -71,6 +71,7 @@
       </div>
 
       {{!-- Equipment Subtype --}}
+      {{#if hasSubCategory}}
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
         <div class="form-fields">
@@ -83,6 +84,7 @@
           </select>
         </div>
       </div>
+      {{/if}}
 
       {{!-- Equipment Slot --}}
       {{#if hasMultipleSlots}}

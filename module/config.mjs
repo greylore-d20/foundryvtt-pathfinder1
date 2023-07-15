@@ -707,11 +707,14 @@ export const equipmentTypes = {
     towerShield: "PF1.EquipTypeTowerShield",
     other: "PF1.EquipTypeOtherShield",
   },
-  misc: {
-    _label: "PF1.Misc",
-    wondrous: "PF1.EquipTypeWondrousItem",
-    clothing: "PF1.EquipTypeClothing",
-    other: "PF1.Other",
+  wondrous: {
+    _label: "PF1.EquipTypeWondrousItem",
+  },
+  clothing: {
+    _label: "PF1.EquipTypeClothing",
+  },
+  other: {
+    _label: "PF1.Other",
   },
 };
 
@@ -725,7 +728,7 @@ export const equipmentSlots = {
   shield: {
     shield: "PF1.EquipSlotShield",
   },
-  misc: {
+  wondrous: {
     slotless: "PF1.EquipSlotSlotless",
     head: "PF1.EquipSlotHead",
     headband: "PF1.EquipSlotHeadband",
@@ -739,6 +742,12 @@ export const equipmentSlots = {
     hands: "PF1.EquipSlotHands",
     ring: "PF1.EquipSlotRing",
     feet: "PF1.EquipSlotFeet",
+  },
+  clothing: {
+    clothing: "PF1.EquipTypeClothing",
+  },
+  other: {
+    other: "PF1.Other",
   },
 };
 

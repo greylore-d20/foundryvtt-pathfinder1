@@ -442,6 +442,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateClassDynamics(item, updateData);
   _migrateClassType(item, updateData);
   _migrateWeaponCategories(item, updateData);
+  _migrateArmorCategories(item, updateData);
   _migrateEquipmentCategories(item, updateData);
   _migrateItemSize(item, updateData);
   _migrateAbilityTypes(item, updateData);
@@ -979,7 +980,7 @@ const _migrateWeaponCategories = function (ent, updateData) {
   }
 };
 
-const _migrateEquipmentCategories = function (ent, updateData) {
+const _migrateArmorCategories = function (ent, updateData) {
   if (ent.type !== "equipment") return;
 
   const oldType = getProperty(ent, "system.armor.type");
@@ -1001,6 +1002,28 @@ const _migrateEquipmentCategories = function (ent, updateData) {
   }
 
   updateData["system.armor.-=type"] = null;
+};
+
+const _migrateEquipmentCategories = (item, updateData) => {
+  if (item.type !== "equipment") return;
+
+  const subtype = updateData["system.subType"] ?? item.system.subType;
+  if (subtype !== "misc") return;
+
+  switch (item.system.equipmentSubtype) {
+    case "wondrous":
+      updateData["system.subType"] = "wondrous";
+      updateData["system.-=equipmentSubtype"] = null;
+      break;
+    case "clothing":
+      updateData["system.subType"] = "clothing";
+      updateData["system.-=equipmentSubtype"] = null;
+      break;
+    case "other":
+      updateData["system.subType"] = "other";
+      updateData["system.-=equipmentSubtype"] = null;
+      break;
+  }
 };
 
 const _migrateItemSize = function (ent, updateData, linked) {

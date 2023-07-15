@@ -337,22 +337,24 @@ export class ItemSheetPF extends ItemSheet {
       for (const [k, v] of Object.entries(pf1.config.equipmentTypes)) {
         if (typeof v === "object") context.equipmentCategories.types[k] = v._label;
       }
-      const type = itemData.subType;
-      if (type in pf1.config.equipmentTypes) {
-        for (const [k, v] of Object.entries(pf1.config.equipmentTypes[type])) {
+      const subType = itemData.subType;
+      if (subType in pf1.config.equipmentTypes) {
+        for (const [k, v] of Object.entries(pf1.config.equipmentTypes[subType])) {
           // Add static targets
           if (!k.startsWith("_")) context.equipmentCategories.subTypes[k] = v;
         }
       }
 
       // Prepare slots for equipment
-      context.equipmentSlots = pf1.config.equipmentSlots[type];
+      context.equipmentSlots = pf1.config.equipmentSlots[subType] ?? {};
 
       // Whether the equipment should show armor data
-      context.showArmorData = ["armor", "shield"].includes(type);
+      context.showArmorData = ["armor", "shield"].includes(subType);
 
       // Whether the current equipment type has multiple slots
-      context.hasMultipleSlots = Object.keys(context.equipmentSlots).length > 1;
+      context.hasMultipleSlots = ["wondrous", "other"].includes(subType);
+
+      context.hasSubCategory = ["armor", "shield"].includes(subType);
     }
 
     // Prepare spell specific stuff
@@ -738,15 +740,18 @@ export class ItemSheetPF extends ItemSheet {
     } else if (item.type === "spell") {
       props.push(labels.components, labels.materials);
     } else if (item.type === "equipment") {
+      const subType = item.subType;
       // Obfuscate wondrous item as clothing or other, if unidentified
-      if (!item.showUnidentifiedData || item.system.subType !== "misc") {
-        props.push(pf1.config.equipmentTypes[item.system.subType][item.system.equipmentSubtype]);
-      } else {
-        if (item.system.slot === "slotless") {
-          props.push(pf1.config.equipmentTypes[item.system.subType]["other"]);
+      if (subType === "wondrous") {
+        if (!item.showUnidentifiedData) {
+          props.push(pf1.config.equipmentTypes.wondrous._label);
         } else {
-          props.push(pf1.config.equipmentTypes[item.system.subType]["clothing"]);
+          props.push(pf1.config.equipmentTypes.other._label);
         }
+      } else {
+        const subtypeLabels = pf1.config.equipmentTypes[subType];
+        const typeLabel = subtypeLabels[item.system.equipmentSubtype] ?? subtypeLabels._label;
+        if (typeLabel) props.push(typeLabel);
       }
       // Add AC
       props.push(labels.armor);

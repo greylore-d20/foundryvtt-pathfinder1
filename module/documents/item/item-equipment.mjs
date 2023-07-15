@@ -24,13 +24,16 @@ export class ItemEquipmentPF extends ItemPF {
       const subtypes = Object.keys(pf1.config.equipmentTypes[type] ?? {}).filter((o) => !o.startsWith("_"));
       if (!subtype || !subtypes.includes(subtype)) {
         changed.system.equipmentSubtype = subtypes[0];
+      } else {
+        // Clear otherwise
+        changed.system.equipmentSubtype = "";
       }
 
       // Set slot
       const slot = changed.system?.slot ?? this.system.slot ?? "";
       const slotTypes = Object.keys(pf1.config.equipmentSlots[type] ?? {});
       if (!slot || !slotTypes.includes(slot)) {
-        setProperty(changed, "system.slot", slotTypes[0]);
+        changed.system.slot = slotTypes[0];
       }
     }
   }
@@ -67,8 +70,9 @@ export class ItemEquipmentPF extends ItemPF {
     const subtypeKeys = Object.keys(pf1.config.equipmentTypes[eType]).filter((o) => !o.startsWith("_"));
     if (!subtypeKeys.includes(eSubtype)) eSubtype = subtypeKeys[0];
 
-    labels.equipmentType = pf1.config.equipmentTypes[eType]._label;
-    labels.equipmentSubtype = pf1.config.equipmentTypes[eType][eSubtype];
+    const subtypeLabels = pf1.config.equipmentTypes[eType];
+    labels.equipmentType = subtypeLabels._label;
+    labels.equipmentSubtype = subtypeLabels[eSubtype] ?? subtypeLabels._label;
 
     const ac = this.showUnidentifiedData
       ? itemData.armor.value || 0

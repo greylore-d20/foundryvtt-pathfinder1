@@ -1232,11 +1232,9 @@ const _migrateLootEquip = function (ent, updateData) {
 
 const _migrateUnchainedActionEconomy = (action, item) => {
   action.activation ??= {};
-  // Migrate .unchainedAction to .activation.unchained
-  if (action.unchainedAction) {
-    if (!action.activation.unchained) {
-      action.activation.unchained = action.unchainedAction;
-    }
+  // Migrate .unchainedAction.activation to .activation.unchained
+  if (action.unchainedAction?.activation) {
+    action.activation.unchained = action.unchainedAction.activation;
     delete action.unchainedAction;
   }
 };

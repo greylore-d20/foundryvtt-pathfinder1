@@ -192,6 +192,13 @@ export class ItemChange {
       this.data.value = value;
 
       if (!t) continue;
+
+      // HACK: Data prep change application creates overrides; only changes meant for manual comparison lack them,
+      // and those do not have to be applied to the actor.
+      // This hack enables calling applyChange on Changes that are not meant to be applied, but require a call to
+      // determine effective operator and/or value.
+      if (!override) continue;
+
       const prior = override[operator][this.modifier];
 
       switch (operator) {

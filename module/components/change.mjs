@@ -147,6 +147,21 @@ export class ItemChange {
     // Prepare change targets
     targets ??= getChangeFlat.call(actor, this.subTarget, this.modifier);
 
+    // Ensure application of script changes creates a warning
+    if (this.operator === "script") {
+      ui.notifications?.warn(game.i18n.format("SETTINGS.pf1AllowScriptChangesF", { parent: this.parent?.name }), {
+        console: false,
+      });
+      console.warn(
+        game.i18n.format("SETTINGS.pf1AllowScriptChangesF", { parent: this.parent?.uuid || this.parent?.name }),
+        {
+          change: this,
+          item: this.parent,
+          actor: this.parent?.actor,
+        }
+      );
+    }
+
     const rollData = this.parent ? this.parent.getRollData({ refresh: true }) : actor.getRollData({ refresh: true });
 
     const overrides = actor.changeOverrides;
@@ -156,6 +171,12 @@ export class ItemChange {
       if (operator === "+") operator = "add";
       if (operator === "=") operator = "set";
 
+      // HACK: Data prep change application creates overrides; only changes meant for manual comparison lack them,
+      // and those do not have to be applied to the actor.
+      // This hack enables calling applyChange on Changes that are not meant to be applied, but require a call to
+      // determine effective operator and/or value.
+      if (!override) continue;
+
       const modifierChanger = t != null ? t.match(/^system\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/) : null;
       const isModifierChanger = modifierChanger != null;
       const abilityTarget = modifierChanger?.[1];
@@ -164,17 +185,6 @@ export class ItemChange {
       let value = 0;
       if (this.formula) {
         if (operator === "script") {
-          ui.notifications?.warn(game.i18n.format("SETTINGS.pf1AllowScriptChangesF", { parent: this.parent?.name }), {
-            console: false,
-          });
-          console.warn(
-            game.i18n.format("SETTINGS.pf1AllowScriptChangesF", { parent: this.parent?.uuid || this.parent?.name }),
-            {
-              change: this,
-              item: this.parent,
-              actor: this.parent?.actor,
-            }
-          );
           if (!game.settings.get("pf1", "allowScriptChanges")) {
             value = 0;
             operator = "add";
@@ -201,12 +211,7 @@ export class ItemChange {
       this.data.value = value;
 
       if (!t) continue;
-
-      // HACK: Data prep change application creates overrides; only changes meant for manual comparison lack them,
-      // and those do not have to be applied to the actor.
-      // This hack enables calling applyChange on Changes that are not meant to be applied, but require a call to
-      // determine effective operator and/or value.
-      if (!override) continue;
+      if (operator === "script") continue; // HACK: Script Changes without formula are not evaluated
 
       const prior = override[operator][this.modifier];
 

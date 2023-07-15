@@ -436,7 +436,6 @@ Hooks.once("ready", async function () {
     ui.notifications.warn("SETTINGS.pf1AllowScriptChangesD", { localize: true, permanent: true });
   }
 
-  callOldNamespaceHookAll("pf1.postReady", "pf1PostReady");
   Hooks.callAll("pf1PostReady");
 });
 

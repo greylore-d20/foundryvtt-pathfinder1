@@ -35,10 +35,9 @@ export class ItemAction {
    * General activation accessor that removes determining which action economy is in use.
    */
   get activation() {
-    if (game.settings.get("pf1", "unchainedActionEconomy")) {
-      return this.data.unchainedAction.activation ?? {};
-    }
-    return this.data.activation ?? {};
+    return (
+      (game.settings.get("pf1", "unchainedActionEconomy") ? this.data.activation.unchained : this.data.activation) ?? {}
+    );
   }
 
   /**
@@ -382,9 +381,7 @@ export class ItemAction {
       activation: {
         cost: 1,
         type: "",
-      },
-      unchainedAction: {
-        activation: {
+        unchained: {
           cost: 1,
           type: "",
         },

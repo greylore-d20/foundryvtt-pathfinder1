@@ -524,6 +524,7 @@ export const migrateItemActionData = function (action, item) {
 
   _migrateActionRange(action, item);
   _migrateActionDamageParts(action, item);
+  _migrateUnchainedActionEconomy(action, item);
   _migrateActionDamageType(action, item);
   _migrateActionConditionals(action, item);
   _migrateActionEnhOverride(action, item);
@@ -1203,6 +1204,17 @@ const _migrateSpellCosts = function (ent, updateData) {
 const _migrateLootEquip = function (ent, updateData) {
   if (ent.type === "loot" && !hasProperty(ent, "system.equipped")) {
     updateData["system.equipped"] = false;
+  }
+};
+
+const _migrateUnchainedActionEconomy = (action, item) => {
+  action.activation ??= {};
+  // Migrate .unchainedAction to .activation.unchained
+  if (action.unchainedAction) {
+    if (!action.activation.unchained) {
+      action.activation.unchained = action.unchainedAction;
+    }
+    delete action.unchainedAction;
   }
 };
 

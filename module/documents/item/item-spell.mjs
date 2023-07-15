@@ -547,8 +547,8 @@ export class ItemSpellPF extends ItemPF {
     // Set activation method
     action.activation.type = "standard";
     // Set activation for unchained action economy
-    action.unchainedAction.activation.type = "action";
-    action.unchainedAction.activation.cost = 2;
+    action.activation.unchained.type = "action";
+    action.activation.unchained.cost = 2;
 
     // Set measure template and range
     if (type !== "potion") {

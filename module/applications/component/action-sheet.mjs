@@ -103,7 +103,11 @@ export class ItemActionSheet extends FormApplication {
     data.owner = this.item.isOwner;
     data.isGM = game.user.isGM;
     data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
-    data.hasActivationType = this.action.activation.type;
+    data.activation = this.action.activation;
+    data.hasActivationType = data.activation.type;
+    data.abilityActivationTypes = data.unchainedActionEconomy
+      ? pf1.config.abilityActivationTypes_unchained
+      : pf1.config.abilityActivationTypes;
 
     // Add description
     data.descriptionHTML = await TextEditor.enrichHTML(data.data.description, {

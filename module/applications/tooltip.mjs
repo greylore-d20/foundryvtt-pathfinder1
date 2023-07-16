@@ -297,6 +297,8 @@ export class TooltipPF extends Application {
     if (this.forceHide) return;
     if (this.config.disable === true || this.worldConfig.disable === true) return;
 
+    if (!game.user.isGM && this.object.document.disposition === CONST.TOKEN_DISPOSITIONS.SECRET) return;
+
     this.element.css("visibility", "visible");
   }
 

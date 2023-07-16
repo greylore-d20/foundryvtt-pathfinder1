@@ -170,8 +170,8 @@
   "PF1.AccessibilityConfigHint": "Ändere Einstellungen zur Barrierefreiheit",
   "PF1.AccessibilityFontSize": "Schriftgröße",
   "PF1.AccessibilityFontSizeHint": "Ändert die Schriftgröße an einigen Stellen im Spiel (z.B. in den Char-Karten der Angriffswürfe)",
-  "PF1.TooltipConfigName": "Tooltip-Konfiguration",
-  "PF1.TooltipConfigLabel": "Tooltip",
+  "PF1.TooltipConfigName": "Konfiguration Token-Tooltip",
+  "PF1.TooltipConfigLabel": "Token-Tooltip",
   "PF1.TooltipConfigHint": "Tooltip-Einstellungen ändern",
   "PF1.TooltipConfigResetInfo": "Tooltip-Einstellungen zurücksetzen.",
   "PF1.TooltipConfigUpdateInfo": "Tooltip-Einstellungen anwenden.",
@@ -191,9 +191,9 @@
     "Item": "Generischer Gegenstand",
     "Container": "Behälter"
   },
-  "PF1.TooltipWorldConfigName": "Tooltip Welt-Konfiguration",
-  "PF1.TooltipWorldConfigLabel": "Tooltip (Welt)",
-  "PF1.TooltipWorldConfigHint": "Ändere weltweite Tooltip-Einstellungen",
+  "PF1.TooltipWorldConfigName": "Globale Konfiguration Token-Tooltip",
+  "PF1.TooltipWorldConfigLabel": "Globale Konfiguration",
+  "PF1.TooltipWorldConfigHint": "Ändere Tooltip-Einstellungen für alle Nutzer",
   "PF1.TooltipWorldConfigHidePortraits": "Alle Portraits verstecken",
   "PF1.TooltipWorldConfigDisable": "Alle Tooltips verstecken",
   "PF1.TooltipWorldConfigHideHeld": "Alle gehaltenen Gegenstände verstecken",
@@ -622,8 +622,8 @@
   "PF1.TargetSpace": "Raum",
   "PF1.TargetWall": "Wand",
   "PF1.TimeInst": "Sofort",
-  "PF1.TimeTurn": "Züge",
-  "PF1.TimeTurnShort": "Züge",
+  "PF1.TimeTurn": "Zug",
+  "PF1.TimeTurnShort": "Zug",
   "PF1.TimeRound": "Runden",
   "PF1.TimeRoundShort": "Runden",
   "PF1.TimeMinute": "Minuten",
@@ -645,7 +645,10 @@
   "PF1.Psychic": "Mentalist",
   "PF1.Spellcasting": {
     "Progression": {
-      "Label": "Progression"
+      "Label": "Progression",
+      "LowHint": "Zaubergrade gehen bis 4.",
+      "HighHint": "Zaubergrade gehen bis 9.",
+      "MediumHint": "Zaubergrade gehen bis 6."
     },
     "Type": {
       "Label": "Zauberart",
@@ -1103,7 +1106,8 @@
     "ChangeLevel": {
       "Name": "Stufenänderung",
       "Info": "Wird aufgerufen, wenn sich die Stufe des Gegenstands ändert. Hat die zusätzlichen Variablen `quantity.previous` und `quantity.new`, beides sind Zahlen."
-    }
+    },
+    "Create": "Erzeuge eingebetteten Scriptaufruf"
   },
   "PF1.Abundant": "Reichlich",
   "PF1.AbundantDesc": "Entferne nie diese Munition nach Benutzung.",
@@ -1627,7 +1631,7 @@
   "PF1.Large": "Groß",
   "PF1.ExtraLarge": "Sehr Groß",
   "PF1.Changelog": "Changelog",
-  "PF1.DontShowAgain": "Nicht nochmal zeigen",
+  "PF1.DontShowAgain": "Changelog nach System-Updates nicht zeigen",
   "PF1.IdentifyDC": "Identifizierungs-SG",
   "PF1.IdentifyDCNumber": "Identifizierungs-SG {dc}",
   "PF1.MagicItems": "Magische Gegenstände",
@@ -1658,8 +1662,8 @@
     "Label": "Eigene Sichtregeln",
     "Description": "Ignoriere die Sinne des Aktors, um eigene Sichtregeln korrekt anzuwenden."
   },
-  "PF1.DomainSlotValue": "Domänenzauberplatzmenge",
-  "PF1.DomainSlotValueDesc": "Wie viele 'freie' Zauberplätze sollen für Domänen- und Schulenzauber für jeden Grad zur Verfügung stehen?",
+  "PF1.DomainSlotValue": "Domänen- und Schulzauberplätze",
+  "PF1.DomainSlotValueDesc": "Wie viele Bonus-Zauberplätze für Domänen- und Schulenzauber für jeden Grad zu Verfügung stehen.",
   "PF1.DisableLightLowLightVision": "Deaktiviere Dämmersicht für diese Lichtquelle",
   "PF1.Command": "Befehl",
   "PF1.MaximumRangeIncrements": "Grundreichweiten",
@@ -1707,6 +1711,22 @@
     },
     "EntrySelector": {
       "Title": "Eingabeauswahl"
+    },
+    "TraitSelector": {
+      "CustomHint": "Du kannst verschiedene Einträge mit einem Semikolon (;) trennen."
+    },
+    "DamageResistanceSelector": {
+      "DRTitle": "Auswahl Schadensreduzierung",
+      "Resisted": "Gegen",
+      "TypeNothing": "Nichts",
+      "CombinationType": "Operator",
+      "CombinationOr": "oder",
+      "CombinationAnd": "und",
+      "Bypassed": "Überwindet durch",
+      "CombinationFormattedAnd": "{type1} und {type2}",
+      "ERTitle": "Auswahl Energieresistenz",
+      "DamageAmount": "Höhe",
+      "CombinationFormattedOr": "{type1} oder {type2}"
     }
   },
   "PF1.Dialog": {
@@ -1742,5 +1762,83 @@
     "TypeContainer": "Behälter"
   },
   "PF1.CastsPerDayUsedFormula": "Zauber-pro-Tag-Kostenformel",
-  "PF1.Any": "Irgendeiner"
+  "PF1.Any": "Irgendeiner",
+  "PF1.FilterBooleanOperatorHint": "Ob alle Filter auf einen Gegenstand passen müssen, oder ein beliebiger einzelner.",
+  "PF1.FilterNoChoices": "Nichts passendes gefunden.",
+  "PF1.QuickActionUseAny": "Benutze: {name}",
+  "PF1.BuffTarUntrainedSkills": "Ungeübte Fertigkeiten",
+  "PF1.Enhancement": "+{bonus} Verbesserung",
+  "PF1.SecondaryAttackModifier": "Sekundärer Angriffsmodifikator",
+  "PF1.SecondaryAttackAbilityMultiplier": "Sekundärer Attributsmultiplikator",
+  "PF1.ProficientAttack": "Geübt (Angriff)",
+  "PF1.DisplayInChat": "Im Chat anzeigen",
+  "PF1.DCOffsetFormula": "SG-Offset-Formel",
+  "PF1.DCFormula": "SG-Formel",
+  "PF1.CompendiumBrowser": {
+    "ShowPack": "Zeige in Kompendium-Browser",
+    "HidePack": "Verstecke in Kompendium-Browser",
+    "HiddenPack": "Paket versteckt in Kompendium-Browser"
+  },
+  "PF1.SpellMaterialValue": "Materialwert",
+  "PF1.SpellMaterialDescription": "Materialbeschreibung",
+  "PF1.RechargeFormula": "Aufladungsformel",
+  "PF1.BonusModifierHaste": "Hast",
+  "PF1.Troubleshooter": {
+    "Button": "Fehlersuche",
+    "Title": "Fehlersucher des Pathfinder-1e-Systems",
+    "Prelude": "Hier sind einige Dinge, die du tun kannst, wenn du Fehlern begegnest.",
+    "Steps": {
+      "Label": "Schritte",
+      "HelpLink": "Hilfe-Browser",
+      "FAQ": "Guck in die FAQ",
+      "Log": "Überprüfe die Entwickler-Konsole nach Fehlern (F12 [oder Wahltaste+Befehlstaste+I bei Macs], Console-Tab)",
+      "Modules": "Stelle sicher, dass keine Module der Grund sind.",
+      "ModuleSuggest": "{link} kann dabei helfen, Module auszuschließen.",
+      "Discord": "Schau im Discord-Server ({link}) vorbei.",
+      "DiscordHint": "Angepinnte Nachrichten im Kanal enthalten meist wichtige Informationen.",
+      "ReportLinkText": "Dein Problem melden",
+      "Help": "Schau {link} an (Hilfeknopf in der Nähe wo du diesen Dialog geöffnet hast).",
+      "DisableModules": "Foundry VTT im sicheren Konfigurationsmodus starten ist ein schneller Weg, um alle Module zu deaktivieren.",
+      "DiscordChannel": "Im Kanal <code>{channel}</code> findest du Hilfe zu Pathfinder 1e.",
+      "Report": "Melde eventuelle Bugs oder frage nach Features hier: {reportlink}."
+    },
+    "Actions": {
+      "Label": "Tätigkeiten",
+      "Migrate": "Systemmigration durchführen",
+      "MigrateHint": "Wenn wichtige Änderungen vorliegen, dann läuft eine Migration normallerweise von selbst ab, wenn der SL sich das erste mal nach einem Update einloggt.<br>Die Migration manuell duchzuführen kann manchmal Probleme beheben, wie zum Beispiel bei Dokumenten, die von unmigrierten Quellen importiert wurden.",
+      "MigrateWorld": "Migriere Welt",
+      "MigrateModules": "Migriere Kompendium-Pakete von Modulen",
+      "MigrateModulesHint": "Falls du Module mit Kompendiums hast, die noch nicht komplett migriert wurden, um mit der aktuellen Version kompatibel zu sein.",
+      "MigrateWorldHint": "Wenn wichtige Änderungen vorliegen, dann läuft eine Migration normallerweise von selbst ab, wenn der SL sich das erste mal nach einem Update einloggt.<br>Die Migration manuell duchzuführen kann manchmal Probleme beheben, wie zum Beispiel bei Dokumenten, die von unmigrierten Quellen importiert wurden."
+    }
+  },
+  "SETTINGS.pf1SpellPointCostN": "Default Zauberpunktekosten",
+  "SETTINGS.pf1SpellPointCostH": "Zauberpunktekosten für Zauber, für die keine eigenen Kosten konfiguriert sind.",
+  "PF1.Identify": "Identifizieren",
+  "PF1.Unidentify": "Unidentifizieren",
+  "PF1.InitiativeCheck": "{name}: Initiativewurf",
+  "PF1.TimeFormat": "{value} {unit}",
+  "PF1.RollSkill": "Würfle Fertigkeitswurf",
+  "PF1.UseBuff": "Benutze Buff",
+  "PF1.Identifier": "Identifikator",
+  "PF1.WeaponPropScatter": "Streuwaffe",
+  "PF1.WeaponPropSpecial": "Speziell",
+  "PF1.WeaponPropAutomatic": "Automatik",
+  "PF1.ProficienciesGranted": "Gewährte Geübtheiten",
+  "PF1.BaseTypes": {
+    "Label": "Ausrüstungsgrundtypen",
+    "Description": "Für Talente, die für spezifische Ausrüstungstypen gelten, wie zum Beispiel Waffenfokus."
+  },
+  "PF1.WarningInvalidUUID": "Ungültige UUID \"{uuid}\"",
+  "PF1.RollAbilityMacroName": "{actor}: Würfle {ability}",
+  "PF1.RollRangedMacroName": "{actor}: Würfle Fernkampfangriff",
+  "PF1.RollInitiativeMacroName": "{actor}: Initiativewurf",
+  "PF1.RollMeleeMacroName": "{actor}: Würfle Nahkampfangriff",
+  "PF1.HealthPerTier": "Trefferpunkte pro Legendenstufe",
+  "PF1.PointBuyCalculatorInvalidPoints": "Ungültige Punkteverteilung.",
+  "PF1.PointBuyCalculatorSetupHint": "Der Punkte-Kauf-Rechner ist hier nur temporär. Du kannst ihn jederzeit im Einstellungstab finden.",
+  "PF1.BaseSetup": "Grundeinstellungen",
+  "PF1.UtilityFunctions": "Hilfsmittel",
+  "SETTINGS.pf1AllowScriptChangesD": "Script-Änderungen werden bald nicht mehr unterstützt. Ersetze sie und schalte \"Script-Änderungen zulassen\" aus um diese Warnung abzuschalten.",
+  "SETTINGS.pf1AllowScriptChangesF": "Eine Änderung des veralteten Types \"Script\" wurde bei {parent} gefunden. Benutze bitte einen anderen Operator. Details wurden in die Console geschrieben."
 }

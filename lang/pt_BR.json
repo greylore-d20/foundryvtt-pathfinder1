@@ -429,6 +429,22 @@
     },
     "EntrySelector": {
       "Title": "Seletor de entrada"
+    },
+    "TraitSelector": {
+      "CustomHint": "Você pode separar entradas distintas com ponto e vírgula (;)."
+    },
+    "DamageResistanceSelector": {
+      "ERTitle": "Seleção de Resistência a Energia",
+      "DamageAmount": "Quantidade",
+      "DRTitle": "Seleção de Redução de Dano",
+      "Bypassed": "Ignorado por",
+      "Resisted": "Contra",
+      "TypeNothing": "Nada",
+      "CombinationType": "Operador",
+      "CombinationOr": "ou",
+      "CombinationAnd": "e",
+      "CombinationFormattedOr": "{type1} ou {type2}",
+      "CombinationFormattedAnd": "{type1} e {type2}"
     }
   },
   "PF1.Dialog": {
@@ -560,8 +576,8 @@
   "PF1.AccessibilityConfigName": "Configuração de Acessibilidade",
   "PF1.AccessibilityConfigLabel": "Acessibilidade",
   "PF1.AccessibilityConfigHint": "Alterar configurações de acessibilidade",
-  "PF1.TooltipConfigName": "Configuração da dica de ferramenta",
-  "PF1.TooltipConfigLabel": "Dica de ferramenta",
+  "PF1.TooltipConfigName": "Configuração da dica de ferramenta de Token",
+  "PF1.TooltipConfigLabel": "Dica de ferramenta de Token",
   "PF1.TooltipConfigHint": "Alterar configurações de dica de ferramenta",
   "PF1.TooltipConfigResetInfo": "Redefina a configuração da dica de ferramenta do Pathfinder.",
   "PF1.Sheet": {
@@ -579,8 +595,8 @@
   "PF1.OnMouse": "No mouse",
   "PF1.TooltipConfigOffset": "Deslocamento da dica de ferramenta",
   "PF1.TooltipConfigAnchor": "Local da dica de ferramenta",
-  "PF1.TooltipWorldConfigName": "Dica de configuração do mundo",
-  "PF1.TooltipWorldConfigLabel": "Dica de ferramenta (Mundo)",
+  "PF1.TooltipWorldConfigName": "Configuração Global de dica de ferramenta de Token",
+  "PF1.TooltipWorldConfigLabel": "Configuração Global",
   "PF1.TooltipWorldConfigHidePortraits": "Ocultar retratos",
   "PF1.TooltipWorldConfigDisable": "Desativar dicas de ferramentas",
   "PF1.TooltipWorldConfigHideHeld": "Ocultar itens segurados",
@@ -949,7 +965,7 @@
     "Label": "Regras de visão personalizada",
     "Description": "Ignore os sentidos do ator, permitindo que as regras de visão personalizadas sejam aplicadas corretamente."
   },
-  "PF1.DomainSlotValue": "Valor do Espaço de Domínio",
+  "PF1.DomainSlotValue": "Espaços de Domínio/Escola",
   "PF1.DisableLightLowLightVision": "Desativar visão na penumbra para fonte de luz",
   "PF1.Command": "Comando",
   "PF1.MaximumRangeIncrements": "Incrementos máximos de alcance",
@@ -965,7 +981,7 @@
   "PF1.AccessibilityFontSizeHint": "Altera o tamanho da fonte em certos aspectos do jogo (como em cartões de chat de ataque)",
   "PF1.TooltipConfigUpdateInfo": "Configuração atualizada da dica de ferramenta do Pathfinder.",
   "PF1.TooltipConfigHideWithoutKey": "Ocultar a menos que {tecla} seja mantida",
-  "PF1.TooltipWorldConfigHint": "Alterar configurações de dica de ferramenta no mundo",
+  "PF1.TooltipWorldConfigHint": "Alterar configurações de dica de ferramenta para todos usuários",
   "PF1.TooltipWorldConfigHideHeld_Hint": "Ocultar itens segurados de todos os jogadores",
   "PF1.TooltipWorldConfigHideConditions_Hint": "Ocultar Condições de todos os jogadores",
   "PF1.TooltipWorldConfigHideActorNameByDisposition_Hint": "Esconder o nome de todos os jogadores quando a disposição do token for pior do que a configurada.",
@@ -991,7 +1007,7 @@
   "PF1.Vision": "Visão",
   "PF1.MaxDexArmor": "Bônus Máximo de Destreza (Armadura)",
   "PF1.ReducedMovementSpeed": "Velocidade de movimento reduzida",
-  "PF1.DomainSlotValueDesc": "Quantos espaços 'livres' as magias de Domínio/Escola fornecem para um nível de magia?",
+  "PF1.DomainSlotValueDesc": "Número de espaços adicionais de magias que as magias de Domínio/Escola têm para cada nível de magia.",
   "PF1.SkillKNa": "Conhecimento (Natureza)",
   "PF1.SkillSen": "Sentir Motivação",
   "PF1.BuffTarAllSavingThrows": "Todas as Jogadas de Salvamento",
@@ -1053,8 +1069,8 @@
   "PF1.TargetSpace": "Espaço",
   "PF1.TargetWall": "Parede",
   "PF1.TimeInst": "Instantâneo",
-  "PF1.TimeTurn": "Turnos",
-  "PF1.TimeTurnShort": "turnos",
+  "PF1.TimeTurn": "Turno",
+  "PF1.TimeTurnShort": "turno",
   "PF1.TimeRound": "Rodadas",
   "PF1.SpellsKnown": "Magias Conhecidas",
   "PF1.Spellcasting": {
@@ -1066,7 +1082,10 @@
       "Psychic": "Psíquica"
     },
     "Progression": {
-      "Label": "Progressão"
+      "Label": "Progressão",
+      "HighHint": "Os níveis de magia vão até 9.",
+      "MediumHint": "Os níveis de magia vão até 6.",
+      "LowHint": "Os níveis de magia vão até 4."
     }
   },
   "PF1.AutoSpellClassLevelOffset": {
@@ -1304,7 +1323,7 @@
   "PF1.ChangeFlagNoDex": "Sem Destreza",
   "PF1.ChangeFlagNoStr": "Sem Força",
   "PF1.Undefined": "Indefinido",
-  "PF1.ErrorGenericPermission": "Você não tem permissão para executar a ação",
+  "PF1.ErrorGenericPermission": "Você não tem permissão para executar essa ação",
   "PF1.ErrorNoActorPermission": "Você não tem permissão para controlar este ator",
   "PF1.ErrorNoActorPermissionAlt": "Você não tem permissão para controlar o ator '{name}'",
   "PF1.ErrorNoFormula": "{name} não tem uma fórmula para rolar!",
@@ -1609,7 +1628,8 @@
     "Toggle": {
       "Name": "Alternar",
       "Info": "Chamado quando o item foi habilitado ou desabilitado. Tem a variável extra 'state', que é 'verdadeiro' ou 'falso'."
-    }
+    },
+    "Create": "Criar chamada de script incorporada"
   },
   "PF1.AbundantDesc": "Nunca remova esta munição quando usada.",
   "PF1.Horizontal": "Horizontal",
@@ -1750,5 +1770,75 @@
   "PF1.SecondaryAttackAbilityMultiplier": "Multiplicador de Habilidades de Ataque Secundário",
   "PF1.SecondaryAttackModifier": "Modificador de Ataque Secundário",
   "PF1.ChargeSource": "Fonte da Carga",
-  "PF1.ProficientAttack": "Proficiente (Ataque)"
+  "PF1.ProficientAttack": "Proficiente (Ataque)",
+  "PF1.CompendiumBrowser": {
+    "ShowPack": "Mostrar em navegadores de compêndio",
+    "HiddenPack": "Pacote oculto em navegadores de compêndio",
+    "HidePack": "Ocultar em navegadores de compêndio"
+  },
+  "PF1.SpellMaterialValue": "Valor do material",
+  "PF1.DCFormula": "Fórmula da CD",
+  "PF1.DCOffsetFormula": "Fórmula de Deslocamento da CD",
+  "PF1.DisplayInChat": "Mostrar no chat",
+  "PF1.SpellMaterialDescription": "Descrição do material",
+  "PF1.Troubleshooter": {
+    "Button": "Solucionador de problemas",
+    "Title": "Solução de problemas do Sistema Pathfinder 1e",
+    "Prelude": "Aqui estão algumas coisas que você pode fazer ao enfrentar problemas.",
+    "Steps": {
+      "Label": "Passos",
+      "Help": "Verifique o {link} (botão de ajuda perto de onde você abriu esta caixa de diálogo).",
+      "HelpLink": "navegador de ajuda",
+      "FAQ": "Verifique as perguntas frequentes",
+      "Log": "Verifique se há erros no registro do console das ferramentas de desenvolvimento (F12 [ou Option+Command+I no Mac], guia do console)",
+      "Modules": "Certifique-se de que os módulos não são a causa.",
+      "DisableModules": "Iniciar no modo de segurança é uma maneira rápida de desativar todos os módulos.",
+      "ModuleSuggest": "{link} pode alternativamente acelerar a exclusão de módulos.",
+      "Discord": "Vá no servidor Discord em {link}.",
+      "DiscordChannel": "O canal <code>{channel}</code> é para suas necessidades do Pathfinder 1e.",
+      "DiscordHint": "Os pinos do canal geralmente contêm qualquer informação pertinente.",
+      "Report": "Considere {reportlink} como um bug ou uma solicitação de recurso.",
+      "ReportLinkText": "relatando seu problema"
+    },
+    "Actions": {
+      "Label": "Operações",
+      "Migrate": "Executar migração do sistema",
+      "MigrateHint": "Normalmente, a migração é executada automaticamente, se houver migrações pertinentes pendentes, sempre que a atualização PF1 ocorrer e o GM fizer logon pela primeira vez.<br>Executar a migração manualmente às vezes pode resolver problemas, como documentos importados de fontes não migradas.",
+      "MigrateModules": "Migrar Pacotes de Módulos",
+      "MigrateModulesHint": "Caso você tenha módulos com compêndios que ainda não foram migrados para serem totalmente compatíveis com a versão atual.",
+      "MigrateWorld": "Migrar Mundo",
+      "MigrateWorldHint": "Normalmente, a migração é executada automaticamente sempre que houver migrações pertinentes pendentes, durante a atualização do PF1 e quando o Mestre fizer login pela primeira vez. Executar a migração manualmente às vezes pode resolver problemas, como com documentos importados de fontes não migradas."
+    }
+  },
+  "PF1.BonusModifierHaste": "Velocidade",
+  "PF1.RechargeFormula": "Fórmula de Recarga",
+  "SETTINGS.pf1SpellPointCostN": "Custo padrão de pontos de magia",
+  "SETTINGS.pf1SpellPointCostH": "O ponto de feitiço de custo padrão usando feitiços é usado se não for configurado por feitiço.",
+  "PF1.Identify": "Identificar",
+  "PF1.Unidentify": "Não identificado",
+  "PF1.UseBuff": "Usar Buff",
+  "PF1.RollSkill": "Rolar Jogada de Perícia",
+  "PF1.InitiativeCheck": "{name}: Jogada de Iniciativa",
+  "PF1.TimeFormat": "{value} {unit}",
+  "PF1.PointBuyCalculatorSetupHint": "A calculadora de atributos por pontos está disponível aqui apenas temporariamente. Você sempre pode acessá-la na guia de configurações.",
+  "PF1.ProficienciesGranted": "Proficiências Concedidas",
+  "PF1.BaseSetup": "Configuração Básica",
+  "PF1.UtilityFunctions": "Funções de Utilidade",
+  "PF1.Identifier": "Identificador",
+  "PF1.WeaponPropAutomatic": "Automático",
+  "PF1.WeaponPropScatter": "Dispersão",
+  "PF1.WeaponPropSpecial": "Especial",
+  "PF1.BaseTypes": {
+    "Label": "Tipos Básicos de Equipamentos",
+    "Description": "Para habilidades que funcionam em tipos específicos, como Foco em Arma."
+  },
+  "PF1.WarningInvalidUUID": "UUID inválido \"{uuid}\"",
+  "PF1.RollInitiativeMacroName": "{actor}: Rolar Iniciativa",
+  "PF1.RollAbilityMacroName": "{actor}: Rolar {ability}",
+  "PF1.RollMeleeMacroName": "{actor}: Rolar Ataque Corpo a Corpo",
+  "PF1.RollRangedMacroName": "{actor}: Rolar Ataque à Distância",
+  "PF1.HealthPerTier": "Vida por Nível",
+  "PF1.PointBuyCalculatorInvalidPoints": "Uso de pontos inválido.",
+  "SETTINGS.pf1AllowScriptChangesD": "Alterações de script foram descontinuadas. Substitua-as e desative suas configurações para remover este aviso.",
+  "SETTINGS.pf1AllowScriptChangesF": "Foi encontrada uma alteração do tipo \"Script\" obsoleta em {parent}. Por favor, utilize outro operador. Detalhes foram registrados no console."
 }

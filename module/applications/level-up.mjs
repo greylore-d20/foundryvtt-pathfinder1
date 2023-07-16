@@ -260,9 +260,9 @@ export class LevelUpForm extends FormApplication {
     mergeObject(itemData, { "system.level": chatData.level.new });
     const levelingClass = this.object;
     const lvlwaiter = new Promise((resolve) => {
-      const hid = Hooks.on("pf1.classLevelChange", function _waiter(actor, item, curLevel, newLevel) {
+      const hid = Hooks.on("pf1ClassLevelChange", function _waiter(actor, item, curLevel, newLevel) {
         if (item.id === levelingClass.id) {
-          Hooks.off("pf1.classLevelChange", hid);
+          Hooks.off("pf1ClassLevelChange", hid);
           resolve();
         }
       });

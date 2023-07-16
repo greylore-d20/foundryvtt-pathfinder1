@@ -15,10 +15,8 @@
         "img": "systems/pf1/icons/skills/violet_02.jpg",
         "description": "<p>[[-1 - min(2, floor(@classes.witch.level / 8))]] penalty to stabilize.</p>",
         "activation": {
-          "type": "passive"
-        },
-        "unchainedAction": {
-          "activation": {
+          "type": "passive",
+          "unchained": {
             "type": "passive"
           }
         },
@@ -33,7 +31,7 @@
     "useCustomTag": true,
     "subType": "classFeat",
     "associations": {
-      "classes": [["Witch"]]
+      "classes": ["Witch"]
     },
     "abilityType": "su"
   }

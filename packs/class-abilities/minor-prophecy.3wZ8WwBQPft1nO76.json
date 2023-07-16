@@ -14,10 +14,8 @@
         "name": "Use",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
         "activation": {
-          "type": "minute"
-        },
-        "unchainedAction": {
-          "activation": {
+          "type": "minute",
+          "unchained": {
             "type": "minute"
           }
         },
@@ -37,8 +35,8 @@
         "name": "Forgo Material",
         "img": "systems/pf1/icons/skills/violet_02.jpg",
         "description": "<p>Augury accuracy reduced by 5%.</p>",
-        "unchainedAction": {
-          "activation": {
+        "activation": {
+          "unchained": {
             "type": "hour"
           }
         },
@@ -62,7 +60,7 @@
     "useCustomTag": true,
     "subType": "classFeat",
     "associations": {
-      "classes": [["Witch"]]
+      "classes": ["Witch"]
     },
     "abilityType": "su"
   }

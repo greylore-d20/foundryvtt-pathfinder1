@@ -64,8 +64,8 @@ export class ItemPF extends Item {
    */
   static isInventoryItem(type) {
     foundry.utils.logCompatibilityWarning(`ItemPF.isInventoryItem is deprecated. Use ItemPF.isPhysical instead.`, {
-      since: "0.83.0",
-      until: "0.84.0",
+      since: "PF1 v9",
+      until: "PF1 v10",
     });
     return CONFIG.Item.documentClasses[type]?.isPhysical ?? false;
   }
@@ -376,8 +376,8 @@ export class ItemPF extends Item {
    */
   get parentActor() {
     foundry.utils.logCompatibilityWarning("ItemPF.parentActor is deprecated in favor of Item.actor", {
-      since: "0.83.0",
-      until: "0.85.0",
+      since: "PF1 v9",
+      until: "PF1 v11",
     });
 
     return this.actor;
@@ -935,21 +935,6 @@ export class ItemPF extends Item {
   /**
    * Display the chat card for an Item as a message in chat
    *
-   * @deprecated Use {@link displayCard} instead.
-   * @param {object} [altChatData={}] - Optional data that will be merged into the chat data object.
-   * @returns {Promise<ChatMessage | void>}
-   */
-  async roll(altChatData = {}) {
-    foundry.utils.logCompatibilityWarning(`ItemPF#roll has been deprecated in favor of ItemPF#displayCard`, {
-      since: "PF1 0.82.0",
-      until: "PF1 0.83.0",
-    });
-    return this.displayCard(altChatData);
-  }
-
-  /**
-   * Display the chat card for an Item as a message in chat
-   *
    * @param {object} [altChatData={}] - Optional data that will be merged into the chat data object.
    * @param {object} [options=[]] Additional options.
    * @param {TokenDocument} [options.token] Relevant token if any.
@@ -1158,19 +1143,6 @@ export class ItemPF extends Item {
   /* -------------------------------------------- */
   /*  Item Rolls - Attack, Damage, Saves, Checks  */
   /* -------------------------------------------- */
-
-  /**
-   * @deprecated Use {@link use ItemPF#use} instead.
-   * @param options
-   * @returns {Promise<*>}
-   */
-  useAttack(options) {
-    foundry.utils.logCompatibilityWarning("ItemPF#useAttack has been deprecated in favor of ItemPF#use", {
-      since: "PF1 0.82.0",
-      until: "PF1 0.83.0",
-    });
-    return this.use(options);
-  }
 
   /**
    * Use an attack, using {@link SharedActionData}
@@ -1841,8 +1813,8 @@ export class ItemPF extends Item {
 
   getTotalCurrency() {
     foundry.utils.logCompatibilityWarning("ItemPF.getTotalCurrency is deprecated", {
-      since: "PF1 0.82.6",
-      until: "PF1 0.83.0",
+      since: "PF1 v9",
+      until: "PF1 v10",
     });
 
     return 0;
@@ -1887,8 +1859,8 @@ export class ItemPF extends Item {
 
   convertCurrency(type = "pp") {
     foundry.utils.logCompatibilityWarning("ItemPF.convertCurrency is deprecated", {
-      since: "PF1 0.82.6",
-      until: "PF1 0.83.0",
+      since: "PF1 v9",
+      until: "PF1 v10",
     });
 
     return 0;
@@ -2192,19 +2164,6 @@ export class ItemPF extends Item {
    */
   get attackSources() {
     return this.getAttackSources(this.firstAction.id);
-  }
-
-  /**
-   * Generic damage source retrieval
-   *
-   * @deprecated
-   */
-  get damageSources() {
-    foundry.utils.logCompatibilityWarning("ItemPF.damageSources is deprecated, use ItemAction.damageSources instead", {
-      since: "PF1 0.82.2",
-      until: "PF1 0.83.0",
-    });
-    return this.firstAction?.damageSources ?? [];
   }
 
   getAllDamageSources(actionId) {

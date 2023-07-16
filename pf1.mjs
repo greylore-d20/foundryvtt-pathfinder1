@@ -221,7 +221,7 @@ Hooks.once("init", function () {
       foundry.utils.logCompatibilityWarning(
         "Damage types have been moved into the DamageTypes registry. " +
           "Use pf1.registry.damageTypes.getLabels() for the old format, or access the collection for full damage type data.",
-        { since: "0.83.0", until: "0.84.0" }
+        { since: "PF1 v9", until: "PF1 v10" }
       );
       return pf1.registry.damageTypes.getLabels();
     },

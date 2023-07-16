@@ -988,8 +988,8 @@ export const splitCurrency = (cp) => {
  */
 export const getFirstActiveGM = () => {
   foundry.utils.logCompatibilityWarning("pf1.utils.getFirstActiveGM() is deprecated in favor of game.users.activeGM", {
-    since: "PF1 0.83.0",
-    until: "PF1 0.FUTURE",
+    since: "PF1 v9",
+    until: "PF1 v10",
   });
 
   return game.users.activeGM;

@@ -180,8 +180,8 @@ export class ActorPF extends Actor {
     foundry.utils.logCompatibilityWarning(
       "ActorPF.getActiveActor() is deprecated in favor of ChatMessage.getSpeakerActor(ChatMessage.getSpeaker())",
       {
-        since: "PF1 0.83.0",
-        until: "PF1 0.84.0",
+        since: "PF1 v9",
+        until: "PF1 v10",
       }
     );
 
@@ -211,8 +211,8 @@ export class ActorPF extends Actor {
     foundry.utils.logCompatibilityWarning(
       "ActorPF.getSelectedActors() is deprecated in favor of canvas.tokens.controlled",
       {
-        since: "PF1 0.83.0",
-        until: "PF1 0.84.0",
+        since: "PF1 v9",
+        until: "PF1 v10",
       }
     );
 
@@ -2856,15 +2856,6 @@ export class ActorPF extends Actor {
     const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollAbility", this, result, abilityId);
     return result;
-  }
-
-  async rollDefenses(options) {
-    foundry.utils.logCompatibilityWarning("Actor.rollDefenses is deprecated in favor of Actor.displayDefenseCard", {
-      since: "PF1 0.82.3",
-      until: "PF1 0.83.0",
-    });
-
-    return this.displayDefenseCard(options);
   }
 
   /**

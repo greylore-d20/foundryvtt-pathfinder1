@@ -190,8 +190,8 @@ export class ItemSpellPF extends ItemPF {
    */
   async addUses(value, data = null) {
     foundry.utils.logCompatibilityWarning("ItemSpellPF.addUses() is deprecated in favor of .addCharges()", {
-      since: "PF1 0.83.0",
-      until: "PF1 0.84.0",
+      since: "PF1 v9",
+      until: "PF1 v10",
     });
 
     return this.addCharges(value, data);

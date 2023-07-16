@@ -17,8 +17,8 @@ const getActorShim = (uuid) => {
     actor = getActorFromId(uuid);
     if (actor) {
       foundry.utils.logCompatibilityWarning("Actor ID for macro creation functions is deprecated in favor of UUID", {
-        since: "PF1 0.83.0",
-        until: "PF1 0.84.0",
+        since: "PF1 v9",
+        until: "PF1 v10",
       });
     }
   }
@@ -269,8 +269,8 @@ export const createMiscActorMacro = async (type, uuid, slot, data) => {
  */
 export const rollItemMacro = (itemName, { itemId, itemType, actorId } = {}) => {
   foundry.utils.logCompatibilityWarning("rollItemMacro() is deprecated in favor of Item.use()", {
-    since: "PF1 0.83.0",
-    until: "PF1 0.84.0",
+    since: "PF1 v9",
+    until: "PF1 v10",
   });
 
   const actor = getActorFromId(actorId);
@@ -307,8 +307,8 @@ export const rollItemMacro = (itemName, { itemId, itemType, actorId } = {}) => {
  */
 export const rollSkillMacro = (actorId, skillId) => {
   foundry.utils.logCompatibilityWarning("rollSkillMacro() is deprecated in favor of Actor.rollSkill()", {
-    since: "PF1 0.83.0",
-    until: "PF1 0.84.0",
+    since: "PF1 v9",
+    until: "PF1 v10",
   });
 
   const actor = getActorFromId(actorId);
@@ -329,8 +329,8 @@ export const rollSkillMacro = (actorId, skillId) => {
  */
 export const rollSaveMacro = (actorId, saveId) => {
   foundry.utils.logCompatibilityWarning("rollSaveMacro() is deprecated in favor of Actor.rollSavingThrow()", {
-    since: "PF1 0.83.0",
-    until: "PF1 0.84.0",
+    since: "PF1 v9",
+    until: "PF1 v10",
   });
 
   const actor = getActorFromId(actorId);
@@ -353,8 +353,8 @@ export const rollSaveMacro = (actorId, saveId) => {
  */
 export const displayDefenses = ({ actorName = null, actorId = null, rollMode = null } = {}) => {
   foundry.utils.logCompatibilityWarning("displayDefenses() is deprecated in favor of Actor.displayDefenseCard()", {
-    since: "PF1 0.83.0",
-    until: "PF1 0.84.0",
+    since: "PF1 v9",
+    until: "PF1 v10",
   });
 
   const actor = ActorPF.getActiveActor({ actorName: actorName, actorId: actorId });
@@ -382,8 +382,8 @@ export const rollActorAttributeMacro = (actorId, type, altType = null) => {
   foundry.utils.logCompatibilityWarning(
     "rollActorAttributeMacro() is deprecated in favor of directly calling functions on the actor.",
     {
-      since: "PF1 0.83.0",
-      until: "PF1 0.84.0",
+      since: "PF1 v9",
+      until: "PF1 v10",
     }
   );
 

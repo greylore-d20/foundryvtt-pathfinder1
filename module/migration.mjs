@@ -1441,7 +1441,7 @@ const _migrateItemChargeCost = function (item, updateData) {
 /**
  * Migrate damage part tuples into objects
  *
- * Introduced with 0.82.6
+ * Introduced with PF1 v9
  *
  * @param {*} action
  * @param {*} item
@@ -1834,7 +1834,7 @@ const _migrateActorSubskillData = (actor, updateData) => {
     for (const [subSkillId, subSkillData] of Object.entries(skillData.subSkills ?? {})) {
       if (subSkillData.mod !== undefined) {
         // Remove permanently stored .mod which is derived value
-        // Added with 0.82.6
+        // Added with PF1 v9
         updateData[`system.skills.${skillId}.subSkills.${subSkillId}.-=mod`] = null;
       }
     }
@@ -1943,7 +1943,7 @@ export const filterItemActions = function (action) {
 const _migrateContainerPrice = (item, updateData) => {
   if (item.type !== "container") return;
 
-  // .basePrice was merged into .price with 0.82.6
+  // .basePrice was merged into .price with PF1 v9
   if (item.system.basePrice !== undefined) {
     updateData["system.price"] = item.system.basePrice;
     updateData["system.-=basePrice"] = null;
@@ -1969,7 +1969,7 @@ const _migrateItemType = function (ent, updateData) {
  * @param updateData
  */
 const _migrateItemUnusedData = (item, updateData) => {
-  // .priceUnits was never used, removal added with 0.82.6
+  // .priceUnits was never used, removal added with PF1 v9
   if (item.system.priceUnits !== undefined) {
     updateData["system.-=priceUnits"] = null;
   }
@@ -1979,7 +1979,7 @@ const _migrateItemUnusedData = (item, updateData) => {
     updateData["system.description.-=chat"] = null;
   }
 
-  // .identifiedName was made obsolete with 0.82.6
+  // .identifiedName was made obsolete with PF1 v9
   if (item.system.identifiedName !== undefined) {
     updateData["system.-=identifiedName"] = null;
   }
@@ -2043,7 +2043,7 @@ const _migrateActorUnusedData = (actor, updateData) => {
 
 /**
  * Flatten item tuple arrays
- * Since 0.83.0
+ * Since PF1 v9
  *
  * @param item
  * @param updateData

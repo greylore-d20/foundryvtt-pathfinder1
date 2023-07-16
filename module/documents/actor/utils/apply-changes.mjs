@@ -593,17 +593,7 @@ export const getChangeFlat = function (target, modifierType, value) {
   Hooks.callAll("pf1GetChangeFlat", result, target, modifierType, value, this);
 
   // Return results directly when deprecation is removed
-  return result.map((key) => {
-    if (key.startsWith("data.")) {
-      const fixedKey = key.replace("data.", "system.");
-      foundry.utils.logCompatibilityWarning(
-        `Change targets pointing towards "data." (${key}) are deprecated. Use "system." (${fixedKey}) instead.`,
-        { since: "PF1 0.82.0", until: "PF1 0.83.0" }
-      );
-      return fixedKey;
-    }
-    return key;
-  });
+  return result;
 };
 
 const getBabTotal = function (d) {

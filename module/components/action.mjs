@@ -122,18 +122,6 @@ export class ItemAction {
   }
 
   /**
-   * @deprecated
-   * @returns {number} Cost in charges for this action.
-   */
-  get chargeCost() {
-    foundry.utils.logCompatibilityWarning("Action.chargeCost is deprecated. Please use Action#getChargeCost instead.", {
-      since: "0.82.2",
-      until: "0.83.0",
-    });
-    return this.getChargeCost();
-  }
-
-  /**
    * @param {object} [options] - Additional options to configure behavior.
    * @param {object} [options.rollData=null] - Pre-determined roll data to pass for determining the charge cost.
    * @returns {number} Cost in charges for this action.

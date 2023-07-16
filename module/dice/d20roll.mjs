@@ -92,8 +92,8 @@ export class D20RollPF extends RollPF {
    */
   get isFumble() {
     foundry.utils.logCompatibilityWarning("D20RollPF.isFumble is deprecated in favor of D20RollPF.isNat1", {
-      since: "PF1 0.82.6",
-      until: "PF1 0.83.0",
+      since: "PF1 v9",
+      until: "PF1 v10",
     });
     if (!this._evaluated) return undefined;
     if (!Number.isNumeric(this.options.fumble)) return false;

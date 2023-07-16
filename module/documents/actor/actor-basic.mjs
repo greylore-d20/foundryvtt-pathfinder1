@@ -8,8 +8,8 @@ import { ActorPF } from "./actor-pf.mjs";
 export class BasicActorPF extends ActorPF {
   constructor(...args) {
     foundry.utils.logCompatibilityWarning("Basic actor type will be obsolete with Foundry v11", {
-      since: "PF1 0.83.0",
-      until: "PF1 0.85.0",
+      since: "PF1 v9",
+      until: "PF1 v11",
     });
     super(...args);
   }

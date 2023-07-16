@@ -1327,7 +1327,7 @@ export class ItemPF extends Item {
     }
 
     // Call itemUse hook and determine whether the item can be used based off that
-    if (Hooks.call("pf1PreActionUse") === false) {
+    if (Hooks.call("pf1PreActionUse", actionUse) === false) {
       await measureResult?.delete();
       return;
     }

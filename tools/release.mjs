@@ -1,6 +1,7 @@
 import fs from "fs-extra";
 import yargs from "yargs";
 import git from "simple-git";
+import prettier from "prettier";
 
 import { releaseLog } from "./changelog.mjs";
 
@@ -59,7 +60,9 @@ async function inc(importance) {
 
     const manifest = fs.readJsonSync("public/system.json");
     manifest.version = newVersion;
-    fs.writeJsonSync("public/system.json", manifest);
+    const prettierConfig = await prettier.resolveConfig(".");
+    const formattedManifest = prettier.format(JSON.stringify(manifest, null, 2), { ...prettierConfig, parser: "json" });
+    await fs.writeFile("public/system.json", formattedManifest);
   } else {
     throw new Error("Could not determine version!");
   }

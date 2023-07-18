@@ -5,7 +5,7 @@ import { ActorPF } from "./actor-pf.mjs";
  *
  * @deprecated Obsolete with Foundry v11
  */
-export class BasicActorPF extends ActorPF {
+export class BasicActorPF extends Actor {
   constructor(...args) {
     foundry.utils.logCompatibilityWarning("Basic actor type will be obsolete with Foundry v11", {
       since: "PF1 v9",

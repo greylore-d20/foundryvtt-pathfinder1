@@ -1,5 +1,14 @@
 # Changelog
 
+## 9.1 - 2023-7-18
+
+### Bug Fixes
+
+- ItemAction.hasRange returned true when range was set to "none" ([1611](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1611))
+- Altering conditional modifiers could brick items and actors. ([2345](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2345))
+- Basic actor was nonfunctional.
+- Resource formulas on actions did not resolve referenced values
+
 ## 9.0 - 2023-7-17
 
 ### Bug Fixes

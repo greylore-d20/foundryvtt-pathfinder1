@@ -18,14 +18,16 @@ yargs(process.argv.slice(2))
   .help()
   .parse();
 
+const SYSTEM_MANIFEST = "public/system.json";
+
 /**
  * Gets the current system version
  *
- * @returns {string | boolean} The current version
+ * @returns {string | boolean} The current version, or false if it cannot be determined
  */
 function getTagVersion() {
   try {
-    const file = fs.readFileSync("public/system.json", "utf-8");
+    const file = fs.readFileSync(SYSTEM_MANIFEST, "utf-8");
     const data = JSON.parse(file);
     return data.version;
   } catch (e) {
@@ -51,40 +53,49 @@ async function inc(importance) {
         newVersion[1] = 0;
         newVersion[0]++;
         break;
-
       default:
         break;
     }
     newVersion = newVersion.join(".");
     await releaseLog(newVersion);
 
-    const manifest = fs.readJsonSync("public/system.json");
+    const manifest = fs.readJsonSync(SYSTEM_MANIFEST);
     manifest.version = newVersion;
     const prettierConfig = await prettier.resolveConfig(".");
     const formattedManifest = prettier.format(JSON.stringify(manifest, null, 2), { ...prettierConfig, parser: "json" });
-    await fs.writeFile("public/system.json", formattedManifest);
+    await fs.writeFile(SYSTEM_MANIFEST, formattedManifest);
   } else {
     throw new Error("Could not determine version!");
   }
 }
 
 /**
- * Commits current changes to the manifest and creates a new annotated tag
+ * Commits current changes to the manifest to the current branch,
+ * and creates a release tag on the version's release branch.
+ *
+ * @returns {Promise<void>} A promise that resolves when the commit and tag are complete
+ * @throws {Error} If the version cannot be determined
  */
 async function commitTag() {
   const version = getTagVersion();
   if (version) {
-    console.log(`Committing manifest and changelog for version ${version}`);
-    await git().commit(`Release v${version}`, ["public/system.json", "CHANGELOG.md", "changelogs"]);
     const releaseBranchName = `v${version.split(".")[0]}.x`;
+    const simpleGit = git();
+
+    console.log(`Committing manifest and changelog for version ${version}`);
+    await simpleGit.commit(`Release v${version}`, [SYSTEM_MANIFEST, "CHANGELOG.md", "changelogs"]);
+
     console.log(`Checking out branch for release generation ${releaseBranchName}`);
-    if ((await git().branchLocal()).all.includes(releaseBranchName)) {
-      await git().checkout(releaseBranchName);
-    } else {
-      await git().checkoutLocalBranch(releaseBranchName);
+    if ((await simpleGit.branchLocal().current) !== releaseBranchName) {
+      if ((await simpleGit.branchLocal()).all.includes(releaseBranchName)) {
+        await simpleGit.checkout(releaseBranchName);
+      } else {
+        await simpleGit.checkoutLocalBranch(releaseBranchName);
+      }
     }
     console.log(`Creating tag v${version}`);
-    await git().addAnnotatedTag(`v${version}`, `Release v${version}`);
+    await simpleGit.addAnnotatedTag(`v${version}`, `Release v${version}`);
+
     console.log(`Release creation complete!`);
     console.log(`To publish, run: git push --follow-tags origin ${releaseBranchName}`);
   } else {

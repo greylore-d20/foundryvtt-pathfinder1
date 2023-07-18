@@ -1490,6 +1490,10 @@ const _migrateActionConditionals = function (action, item) {
     // Create conditional ID
     if (!conditional._id) conditional._id = randomID(16);
 
+    if (!Array.isArray(conditional.modifiers)) {
+      conditional.modifiers = Object.values(conditional.modifiers);
+    }
+
     for (const modifier of conditional.modifiers) {
       // Create modifier ID
       if (!modifier._id) modifier._id = randomID(16);

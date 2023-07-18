@@ -71,13 +71,13 @@ export class ItemConditional {
   async update(updateData, options = {}) {
     const idx = this.parent.data.conditionals.indexOf(this.data);
     const prevData = deepClone(this.data);
-    const newUpdateData = flattenObject(mergeObject(prevData, updateData));
+    const newUpdateData = mergeObject(prevData, updateData);
 
     // Make sure modifiers remain in an array
     keepUpdateArray(this.data, newUpdateData, "modifiers");
 
     if (options.dryRun) return newUpdateData;
-    await this.parent.update({ [`conditionals.${idx}`]: expandObject(newUpdateData) });
+    await this.parent.update({ [`conditionals.${idx}`]: newUpdateData });
   }
 
   async delete() {
@@ -88,6 +88,10 @@ export class ItemConditional {
 }
 
 export class ItemConditionalModifier {
+  /**
+   * @param {object} data
+   * @param {ItemConditional} parent
+   */
   constructor(data, parent) {
     this.data = data;
     this.parent = parent;

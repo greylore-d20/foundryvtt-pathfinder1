@@ -76,12 +76,17 @@ async function commitTag() {
   if (version) {
     console.log(`Committing manifest and changelog for version ${version}`);
     await git().commit(`Release v${version}`, ["public/system.json", "CHANGELOG.md", "changelogs"]);
-    console.log(`Checking out branch for release generation v${version.split(".")[0]}.x`);
-    await git().checkoutLocalBranch(`v${version.split(".")[0]}.x`);
+    const releaseBranchName = `v${version.split(".")[0]}.x`;
+    console.log(`Checking out branch for release generation ${releaseBranchName}`);
+    if ((await git().branchLocal()).all.includes(releaseBranchName)) {
+      await git().checkout(releaseBranchName);
+    } else {
+      await git().checkoutLocalBranch(releaseBranchName);
+    }
     console.log(`Creating tag v${version}`);
     await git().addAnnotatedTag(`v${version}`, `Release v${version}`);
     console.log(`Release creation complete!`);
-    console.log(`To publish, run: git push --follow-tags origin v${version.split(".")[0]}.x`);
+    console.log(`To publish, run: git push --follow-tags origin ${releaseBranchName}`);
   } else {
     throw new Error("Could not determine version!");
   }

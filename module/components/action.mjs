@@ -462,7 +462,7 @@ export class ItemAction {
   }
 
   prepareData() {
-    const rollData = this.rollData;
+    const rollData = this.getRollData();
     // Parse formulaic attacks
     if (this.hasAttack) {
       this.parseFormulaicAttacks({ rollData });

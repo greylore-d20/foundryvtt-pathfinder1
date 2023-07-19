@@ -2221,6 +2221,7 @@ export class ActorSheetPF extends ActorSheet {
       system: duplicate(header.dataset),
     };
     delete itemData.system.type;
+    delete itemData.system.tooltip;
 
     const subType = itemData.system.subType;
     const sameSubgroup = (oldItem) => {

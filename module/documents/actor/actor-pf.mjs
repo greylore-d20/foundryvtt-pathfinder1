@@ -2268,7 +2268,12 @@ export class ActorPF extends Actor {
     // Add changes
     for (const c of changes) {
       if (!c.value) continue;
-      parts.push(`${c.value}[${c.flavor}]`);
+      // Hide complex change formulas in parenthesis.
+      if (typeof c.value === "string" && RollPF.parse(c.value).length > 1) {
+        parts.push(`(${c.value})[${c.flavor}]`);
+      } else {
+        parts.push(`${c.value}[${c.flavor}]`);
+      }
     }
 
     const props = [];

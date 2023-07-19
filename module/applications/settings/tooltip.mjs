@@ -113,7 +113,7 @@ export class TooltipConfig extends FormApplication {
     if (el.dataset?.dtype === "Boolean") value = Boolean(value);
     else if (el.dataset?.dtype === "Number") value = parseFloat(value);
 
-    setProperty(this._cachedData, `system.${key}`, value);
+    setProperty(this._cachedData, `data.${key}`, value);
     this.render();
   }
 

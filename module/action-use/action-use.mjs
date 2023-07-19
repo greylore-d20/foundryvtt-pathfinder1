@@ -25,9 +25,6 @@ export const ERR_REQUIREMENT = Object.freeze({
   INSUFFICIENT_AMMO: 6,
 });
 
-/**
- *
- */
 export class ActionUse {
   /**
    * The actor this action use is based on.
@@ -406,8 +403,6 @@ export class ActionUse {
     }
   }
 
-  /**
-   */
   handleConditionals() {
     if (this.shared.conditionals) {
       const conditionalData = {};
@@ -1180,6 +1175,112 @@ export class ActionUse {
     } else {
       if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true) result = this.item.roll();
       else result = { descriptionOnly: true };
+    }
+
+    return result;
+  }
+
+  /**
+   * Process everything
+   *
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.skipDialog=false] - Skip dialog
+   * @returns {Promise<ChatMessage|SharedActionData|void>}
+   */
+  async process({ skipDialog = false } = {}) {
+    const shared = this.shared;
+
+    // Check requirements for item
+    let reqErr = await this.checkRequirements();
+    if (reqErr > 0) return { err: pf1.actionUse.ERR_REQUIREMENT, code: reqErr };
+
+    // Get new roll data
+    shared.rollData = await this.getRollData();
+
+    // Show attack dialog, if appropriate
+    if (!skipDialog) {
+      const result = await this.createAttackDialog();
+
+      // Stop if result is a boolean (i.e. when closed is clicked on the dialog)
+      if (typeof result !== "object") return;
+
+      // Alter roll data
+      shared.fullAttack = result.fullAttack;
+      shared.attacks = result.attacks;
+      await this.alterRollData(result.html);
+    } else {
+      shared.attacks = await this.generateAttacks();
+      await this.alterRollData();
+    }
+
+    // Filter out attacks without ammo usage
+    if (shared.action.data.usesAmmo) {
+      shared.attacks = shared.attacks.filter((o) => o.ammo != null);
+      if (shared.attacks.length === 0) {
+        ui.notifications.error(game.i18n.localize("PF1.AmmoDepleted"));
+        return;
+      }
+    }
+
+    // Limit attacks to 1 if not full rounding
+    if (!shared.fullAttack) shared.attacks = shared.attacks.slice(0, 1);
+    // Handle conditionals
+    await this.handleConditionals();
+
+    // Check attack requirements, post-dialog
+    reqErr = await this.checkAttackRequirements();
+    if (reqErr > 0) return { err: pf1.actionUse.ERR_REQUIREMENT, code: reqErr };
+
+    // Generate chat attacks
+    await this.generateChatAttacks();
+
+    // Prompt measure template
+    let measureResult;
+    if (shared.useMeasureTemplate && canvas.scene) {
+      measureResult = await this.promptMeasureTemplate();
+      if (!measureResult.result) return;
+    }
+
+    // Call itemUse hook and determine whether the item can be used based off that
+    if (Hooks.call("pf1PreActionUse", this) === false) {
+      await measureResult?.delete();
+      return;
+    }
+
+    // Call script calls
+    await this.executeScriptCalls();
+    if (shared.scriptData?.reject) {
+      await measureResult?.delete();
+      return;
+    }
+
+    // Handle Dice So Nice
+    await this.handleDiceSoNice();
+
+    // Subtract uses
+    await this.subtractAmmo();
+
+    this.updateAmmoUsage();
+
+    if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
+      await this.addCharges(-shared.rollData.chargeCost);
+    if (shared.action.isSelfCharged)
+      await shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 });
+
+    // Retrieve message data
+    this.getMessageData();
+
+    // Post message
+    let result;
+    if (shared.scriptData?.hideChat !== true) {
+      result = await this.postMessage();
+    }
+
+    // Deselect targets
+    if (game.settings.get("pf1", "clearTargetsAfterAttack") && game.user.targets.size) {
+      game.user.updateTokenTargets([]);
+      // Above does not communicate targets to other users, so..
+      game.user.broadcastActivity({ targets: [] });
     }
 
     return result;

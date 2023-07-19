@@ -749,7 +749,7 @@ export class ItemSheetPF extends ItemSheet {
         }
       } else {
         const subtypeLabels = pf1.config.equipmentTypes[subType];
-        const typeLabel = subtypeLabels[item.system.equipmentSubtype] ?? subtypeLabels._label;
+        const typeLabel = subtypeLabels?.[item.system.equipmentSubtype] ?? subtypeLabels?._label;
         if (typeLabel) props.push(typeLabel);
       }
       // Add AC

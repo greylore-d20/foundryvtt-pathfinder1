@@ -303,6 +303,9 @@ export class ItemChange {
             // Assume this Change's info entry should be added
             let doAdd = true;
 
+            // The value of the this Change's source info entry for this specific target
+            let sumValue = value;
+
             // Check if there already is an info entry with which this Change should be combined
             // This is the case for `enhancement` and `base` entries otherwise sharing parent and target
             const existingInfoEntry = sInfo.find((infoEntry) => {
@@ -321,17 +324,20 @@ export class ItemChange {
                 continue;
               } else {
                 // This Change replaces an existing `enhancement` entry with its own `base` entry, using the sum of both values
-                infoEntryData.value += existingInfoEntry.value;
+                sumValue += existingInfoEntry.value;
                 // Check whether the combined entry should exist, or if another entry is already better than it
                 const hasHighestValue = !sInfo.some((infoEntry) => {
                   const isSameModifier = infoEntry.modifier === infoEntryData.modifier;
                   const subTarget = infoEntry.change?.subTarget;
                   const isSameTarget = subTarget ? subTarget === this.subTarget : true;
-                  const hasHigherValue = infoEntry.value > infoEntryData.value;
+                  const hasHigherValue = infoEntry.value > sumValue;
                   return isSameModifier && isSameTarget && hasHigherValue;
                 });
                 // If the merged entry is the best, replace the existing entry with it
-                sInfo.findSplice((entry) => entry === existingInfoEntry, hasHighestValue ? infoEntryData : undefined);
+                sInfo.findSplice(
+                  (entry) => entry === existingInfoEntry,
+                  hasHighestValue ? { ...infoEntryData, value: sumValue } : undefined
+                );
               }
             }
 
@@ -340,7 +346,7 @@ export class ItemChange {
               const isSameModifier =
                 infoEntry.change?.modifier === infoEntryData.modifier || infoEntry.modifier === infoEntryData.modifier;
               if (isSameModifier) {
-                if (infoEntry.value < infoEntryData.value) {
+                if (infoEntry.value < sumValue) {
                   sInfo.splice(sInfo.indexOf(infoEntry), 1);
                 } else {
                   doAdd = false;
@@ -349,7 +355,7 @@ export class ItemChange {
             });
 
             if (doAdd) {
-              sInfo.push(infoEntryData);
+              sInfo.push({ ...infoEntryData });
             }
           }
         }

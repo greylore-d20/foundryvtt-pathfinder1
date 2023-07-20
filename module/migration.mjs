@@ -474,8 +474,10 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
 
   // Migrate container items
   if (item.system?.inventoryItems instanceof Array) {
-    updateData["system.inventoryItems"] = item.system.inventoryItems.map((o) => {
-      const data = mergeObject(o, migrateItemData(o, actor, _d + 1), {
+    updateData["system.inventoryItems"] = item.system.inventoryItems.map((subItem) => {
+      subItem.system ??= {}; // HACK: For corrupt container items
+
+      const data = mergeObject(subItem, migrateItemData(subItem, actor, _d + 1), {
         inplace: false,
         performDeletions: true,
       });

@@ -197,10 +197,12 @@
           {{checked spellbook.orig.psychic}}/> {{localize "PF1.Psychic"}}
         </label>
         {{#unless spellbook.orig.autoSpellLevelCalculation}}
+        {{#unless spellbook.orig.spellPoints.useSystem}}
         <label class="checkbox">
           <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.spontaneous"
           {{checked spellbook.orig.spontaneous}}/> {{localize "PF1.SpellPrepSpontaneous"}}
         </label>
+        {{/unless}}
         <label class="checkbox">
           <input type="checkbox" name="system.attributes.spells.spellbooks.{{bookId}}.autoSpellLevels"
           {{checked spellbook.orig.autoSpellLevels}}/> {{localize "PF1.AutomaticSpellSlots"}}
@@ -473,7 +475,7 @@
       <div class="item-detail spell-components tooltip">
         {{#if (or materials.value materials.focus)}}
         <span class="tooltipcontent">
-          {{#if materials.focus}}<span class="span2 align-left">{{localize "PF1.SpellComponentFocus"}}:</span><span class="span1 align-right"> {{materials.focus}}</span>{{/if}}        
+          {{#if materials.focus}}<span class="span2 align-left">{{localize "PF1.SpellComponentFocus"}}:</span><span class="span1 align-right"> {{materials.focus}}</span>{{/if}}
           {{#if materials.value}}<span class="span2 align-left">{{localize "PF1.SpellMaterialValue"}}:</span><span class="span1 align-right"> {{materials.value}}</span>{{/if}}
         </span>
         {{/if}}

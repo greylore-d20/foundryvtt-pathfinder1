@@ -130,7 +130,7 @@ export class SpellbookMode {
   }
 
   get usesSpellpoints() {
-    return this.raw.spellPoints?.useSystem === true;
+    return this.book.spellPoints?.useSystem === true;
   }
 
   get isSemiSpontaneous() {
@@ -138,6 +138,8 @@ export class SpellbookMode {
   }
 
   constructor(book) {
+    this.book = book;
+
     let mode = book.spellPreparationMode;
 
     // Shunt invalid mode

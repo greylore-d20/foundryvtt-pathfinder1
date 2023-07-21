@@ -791,17 +791,19 @@ export class ActorPF extends Actor {
     const getAbilityBonus = (a) => (a !== 0 ? ActorPF.getSpellSlotIncrease(spellSlotAbilityMod, a) : 0);
 
     const mode = new SpellbookMode(book);
-    const useSpellPoints = book.spellPoints.useSystem === true;
 
     // Spell slots
     const useAuto = book.autoSpellLevelCalculation;
+
+    // Turn off spell points with auto slots
+    if (useAuto) book.spellPoints.useSystem = false;
+
+    const useSpellPoints = book.spellPoints.useSystem === true;
+
+    // Set base "spontaneous" based on spell prep mode when using auto slots or spell points
+    if (useAuto || useSpellPoints) book.spontaneous = mode.isSemiSpontaneous;
+
     if (useAuto) {
-      // turn off spell points
-      book.spellPoints.useSystem = false;
-
-      // set base "spontaneous" based on spell prep mode
-      book.spontaneous = mode.isSemiSpontaneous;
-
       let casterType = book.casterType;
       if (!casterType || (mode.isHybrid && casterType !== "high")) {
         book.casterType = casterType = "high";

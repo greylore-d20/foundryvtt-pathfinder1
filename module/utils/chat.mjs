@@ -1,13 +1,14 @@
 import Color from "color";
 
-/* -------------------------------------------- */
-
-export const createCustomChatMessage = async function (
-  chatTemplate,
-  chatTemplateData = {},
-  chatData = {},
-  { rolls = [] } = {}
-) {
+/**
+ * @param {string} chatTemplate - Chat message template path.
+ * @param {object} chatTemplateData - Data to feed to the chat message template.
+ * @param {object} chatData - Chat message data, excluding content.
+ * @param {object} [options] - Additional options
+ * @param {Roll[]} [options.rolls=[]] - Array of roll instances
+ * @returns {Promise<ChatMessage>} - Generated chat message instance.
+ */
+export async function createCustomChatMessage(chatTemplate, chatTemplateData = {}, chatData = {}, { rolls = [] } = {}) {
   chatData.user ??= game.user.id;
   chatData.type ??= CONST.CHAT_MESSAGE_TYPES.CHAT;
 
@@ -27,20 +28,25 @@ export const createCustomChatMessage = async function (
   }
 
   return ChatMessage.implementation.create(chatData);
-};
+}
 
-export const hideRollInfo = function (app, html, data) {
-  const whisper = app.whisper || [];
-  const isBlind = whisper.length && app.blind;
-  const isVisible = whisper.length ? whisper.includes(game.user.id) || (app.isAuthor && !isBlind) : true;
+/**
+ * @param {ChatMessage} cm - Chat message instance
+ * @param {JQuery<HTMLElement>} jq - JQuery instance
+ * @param {object} data  - Render options
+ */
+export function hideRollInfo(cm, jq, data) {
+  const whisper = cm.whisper || [];
+  const isBlind = whisper.length && cm.blind;
+  const isVisible = whisper.length ? whisper.includes(game.user.id) || (cm.isAuthor && !isBlind) : true;
   if (!isVisible) {
-    html.find(".dice-formula").text("???");
-    html.find(".dice-total").text("?");
-    html.find(".dice").text("");
-    html.find(".success").removeClass("success");
-    html.find(".failure").removeClass("failure");
+    jq.find(".dice-formula").text("???");
+    jq.find(".dice-total").text("?");
+    jq.find(".dice").text("");
+    jq.find(".success").removeClass("success");
+    jq.find(".failure").removeClass("failure");
   }
-};
+}
 
 /**
  * Generates an info block containing an item's identified info for GMs
@@ -50,7 +56,7 @@ export const hideRollInfo = function (app, html, data) {
  * @param {ChatMessagePFIdentifiedInfo} info - An object containing the item's identified info
  * @returns {string} HTML string containing the info block
  */
-const getIdentifiedBlock = (info) => {
+function getIdentifiedBlock(info) {
   const hasCombinedName = info.actionName && !info.actionDescription;
   return (
     _templateCache["systems/pf1/templates/chat/parts/gm-description.hbs"]?.(
@@ -58,7 +64,7 @@ const getIdentifiedBlock = (info) => {
       { allowProtoMethodsByDefault: true, allowProtoPropertiesByDefault: true }
     ) ?? ""
   );
-};
+}
 
 /**
  * Add GM-sensitive info for GMs and hide GM-sensitive info for players
@@ -67,7 +73,7 @@ const getIdentifiedBlock = (info) => {
  * @param {JQuery} html - The chat message's HTML
  * @param {object} data - Data used to render the chat message
  */
-export const hideGMSensitiveInfo = function (app, html, data) {
+export function hideGMSensitiveInfo(app, html, data) {
   // Handle adding of GM-sensitive info
   if (game.user.isGM) {
     // Show identified info box for GM if item was unidentified when rolled
@@ -145,13 +151,17 @@ export const hideGMSensitiveInfo = function (app, html, data) {
       parent.removeChild(elem);
     });
   }
-};
+}
 
-export const alterAmmoRecovery = function (app, html) {
-  const recoveryData = app.getFlag("pf1", "ammoRecovery");
+/**
+ * @param {ChatMessage} cm - Chat message instance
+ * @param {JQuery<HTMLElement>} jq - JQuery instance
+ */
+export function alterAmmoRecovery(cm, jq) {
+  const recoveryData = cm.getFlag("pf1", "ammoRecovery");
   if (!recoveryData) return;
 
-  html.find(".chat-attack .ammo[data-ammo-id]").each((a, el) => {
+  jq.find(".chat-attack .ammo[data-ammo-id]").each((a, el) => {
     const attackIndex = el.closest(".chat-attack").dataset.index;
     const ammoId = el.dataset.ammoId;
     const data = recoveryData[attackIndex]?.[ammoId];
@@ -164,22 +174,32 @@ export const alterAmmoRecovery = function (app, html) {
         if (data.failed) ia.classList.add("recovery-failed");
       });
   });
-};
+}
 
-export const alterTargetDefense = function (app, html) {
-  const defenseData = app.getFlag("pf1", "targetDefense");
+/**
+ * @param {ChatMessage} cm - Chat message instance
+ * @param {JQuery<HTMLElement>} jq - JQuery instance
+ */
+export function alterTargetDefense(cm, jq) {
+  const defenseData = cm.getFlag("pf1", "targetDefense");
   if (!defenseData) return;
 
-  html.find(".attack-targets .saving-throws div[data-saving-throw]").each((a, el) => {
+  jq.find(".attack-targets .saving-throws div[data-saving-throw]").each((a, el) => {
     const actorUUID = el.closest(".target").dataset.uuid;
     const save = el.dataset.savingThrow;
     const value = getProperty(defenseData, `${actorUUID}.save.${save}`);
     if (value == null) return;
     $(el).find(".value").text(value.toString());
   });
-};
+}
 
-export const applyAccessibilitySettings = function (app, html, data, conf) {};
+/**
+ * @param app
+ * @param html
+ * @param data
+ * @param conf
+ */
+export function applyAccessibilitySettings(app, html, data, conf) {}
 
 /**
  * Returns an inline roll string suitable for chat messages.
@@ -189,13 +209,18 @@ export const applyAccessibilitySettings = function (app, html, data, conf) {};
  * @param {boolean} [options.hide3d] - Whether the roll should be hidden from DsN
  * @returns {string} The inline roll string
  */
-export const createInlineRollString = (roll, { hide3d = true } = {}) =>
-  `<a class="inline-roll inline-result ${hide3d ? "inline-dsn-hidden" : ""}" \
+export function createInlineRollString(roll, { hide3d = true } = {}) {
+  return `<a class="inline-roll inline-result ${hide3d ? "inline-dsn-hidden" : ""}" \
   data-tooltip="${roll.formula}" data-roll="${escape(JSON.stringify(roll))}"> \
   <i class="fas fa-dice-d20"></i> ${roll.total}</a>`;
+}
 
-export const hideInvisibleTargets = async function (app, html) {
-  const targetElems = html.find(".attack-targets .target");
+/**
+ * @param {ChatMessage} cm - Chat message instance
+ * @param {JQuery<HTMLElement>} jq - JQuery instance
+ */
+export async function hideInvisibleTargets(cm, jq) {
+  const targetElems = jq.find(".attack-targets .target");
   const targets = targetElems.toArray().reduce((cur, o) => {
     cur.push({ uuid: o.dataset.uuid, elem: o });
     return cur;
@@ -213,10 +238,14 @@ export const hideInvisibleTargets = async function (app, html) {
     if (!t.token?.visible) elem.hide();
     else elem.show();
   }
-};
+}
 
-export const addTargetCallbacks = function (app, html) {
-  const targetElems = html.find(".attack-targets .target[data-uuid]");
+/**
+ * @param {ChatMessage} cm - Chat message instance
+ * @param {JQuery<HTMLElement>} jq - JQuery instance
+ */
+export function addTargetCallbacks(cm, jq) {
+  const targetElems = jq.find(".attack-targets .target[data-uuid]");
 
   // Define getter functions
   const _getTokenByElem = async function (elem) {
@@ -267,7 +296,7 @@ export const addTargetCallbacks = function (app, html) {
 
       _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
         if (!t?.actor) return;
-        pf1.utils.chat.targetACClick(app, html, t.actor, event);
+        pf1.utils.chat.targetACClick(cm, jq, t.actor, event);
       });
     });
     elem.find(".saving-throws .click").on("click", (event) => {
@@ -275,17 +304,29 @@ export const addTargetCallbacks = function (app, html) {
 
       _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
         if (!t?.actor) return;
-        pf1.utils.chat.targetSavingThrowClick(app, html, t.actor, event);
+        pf1.utils.chat.targetSavingThrowClick(cm, jq, t.actor, event);
       });
     });
   }
-};
+}
 
-export const targetACClick = async function (app, html, actor, event) {
+/**
+ * @param {ChatMessage}  cm - Chat message instance
+ * @param {JQuery<HTMLElement>} jq - JQuery instance
+ * @param {Actor} actor - Actor instance
+ * @param {Event} event - Triggering event
+ */
+export async function targetACClick(cm, jq, actor, event) {
   actor.displayDefenseCard({ rollMode: "selfroll" });
-};
+}
 
-export const targetSavingThrowClick = async function (app, html, actor, event) {
+/**
+ * @param {ChatMessage}  cm - Chat message instance
+ * @param {JQuery<HTMLElement>} jq - JQuery instance
+ * @param {Actor} actor - Actor instance
+ * @param {Event} event - Triggering event
+ */
+export async function targetSavingThrowClick(cm, jq, actor, event) {
   const elem = event.currentTarget;
   const save = elem.dataset.savingThrow;
 
@@ -295,6 +336,6 @@ export const targetSavingThrowClick = async function (app, html, actor, event) {
   // Replace saving throw value on original chat card's target
   if (total != null) {
     const actorUUID = elem.closest(".target").dataset.uuid;
-    await app.setFlag("pf1", "targetDefense", { [actorUUID]: { save: { [save]: total } } });
+    await cm.setFlag("pf1", "targetDefense", { [actorUUID]: { save: { [save]: total } } });
   }
-};
+}

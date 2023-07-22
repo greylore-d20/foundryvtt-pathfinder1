@@ -477,37 +477,45 @@ Hooks.on("canvasInit", function () {
 /*  Other Hooks                                 */
 /* -------------------------------------------- */
 
-Hooks.on("renderChatMessage", (app, html, data) => {
-  // Hide roll info
-  chat.hideRollInfo(app, html, data);
+Hooks.on(
+  "renderChatMessage",
+  /**
+   * @param {ChatMessage} cm - Chat message instance
+   * @param {JQuery<HTMLElement>} jq - JQuery instance
+   * @param {object} options - Render options
+   */
+  (cm, jq, options) => {
+    // Hide roll info
+    chat.hideRollInfo(cm, jq, options);
 
-  // Hide GM sensitive info
-  chat.hideGMSensitiveInfo(app, html, data);
+    // Hide GM sensitive info
+    chat.hideGMSensitiveInfo(cm, jq, options);
 
-  // Hide non-visible targets for players
-  if (!game.user.isGM) chat.hideInvisibleTargets(app, html);
+    // Hide non-visible targets for players
+    if (!game.user.isGM) chat.hideInvisibleTargets(cm, jq);
 
-  // Create target callbacks
-  chat.addTargetCallbacks(app, html);
+    // Create target callbacks
+    chat.addTargetCallbacks(cm, jq);
 
-  // Alter target defense options
-  chat.alterTargetDefense(app, html);
+    // Alter target defense options
+    chat.alterTargetDefense(cm, jq);
 
-  // Optionally collapse the content
-  if (game.settings.get("pf1", "autoCollapseItemCards")) html.find(".card-content").hide();
+    // Optionally collapse the content
+    if (game.settings.get("pf1", "autoCollapseItemCards")) jq.find(".card-content").hide();
 
-  // Optionally hide chat buttons
-  if (game.settings.get("pf1", "hideChatButtons")) html.find(".card-buttons").hide();
+    // Optionally hide chat buttons
+    if (game.settings.get("pf1", "hideChatButtons")) jq.find(".card-buttons").hide();
 
-  // Apply accessibility settings to chat message
-  chat.applyAccessibilitySettings(app, html, data, game.settings.get("pf1", "accessibilityConfig"));
+    // Apply accessibility settings to chat message
+    chat.applyAccessibilitySettings(cm, jq, options, game.settings.get("pf1", "accessibilityConfig"));
 
-  // Alter ammo recovery options
-  chat.alterAmmoRecovery(app, html);
+    // Alter ammo recovery options
+    chat.alterAmmoRecovery(cm, jq);
 
-  // Handle chat tooltips
-  html.find(".tooltip").on("mousemove", (ev) => handleChatTooltips(ev));
-});
+    // Handle chat tooltips
+    jq.find(".tooltip").on("mousemove", (ev) => handleChatTooltips(ev));
+  }
+);
 
 Hooks.on("renderChatPopout", (app, html, data) => {
   // Optionally collapse the content

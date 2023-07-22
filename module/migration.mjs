@@ -1181,11 +1181,22 @@ const _migrateItemWeight = function (ent, updateData) {
   }
 };
 
-const _migrateItemHealth = function (ent, updateData) {
-  const hp = getProperty(ent, "system.hp");
-  if (hp !== undefined) {
-    if (typeof hp.max === "string") updateData["system.hp.max"] = parseInt(hp.max);
-    if (typeof hp.value === "string") updateData["system.hp.value"] = parseInt(hp.value);
+const _migrateItemHealth = function (item, updateData) {
+  const isPhysical = CONFIG.Item.documentClasses[item.type]?.isPhysical;
+
+  const hp = item.system.hp;
+  if (isPhysical) {
+    if (hp) {
+      // Fix invalid data type
+      if (typeof hp.max === "string") updateData["system.hp.max"] = parseInt(hp.max);
+      if (typeof hp.value === "string") updateData["system.hp.value"] = parseInt(hp.value);
+    } else {
+      // Restore missing HP data
+      updateData["system.hp.value"] = 10;
+      updateData["system.hp.max"] = 10;
+    }
+  } else if (item.type !== "class" && hp !== undefined) {
+    updateData["system.-=hp"] = null;
   }
 };
 

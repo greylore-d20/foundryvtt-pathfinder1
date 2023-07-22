@@ -569,7 +569,8 @@ export class ItemSheetPF extends ItemSheet {
     for (const links of data.links.list) {
       const items = item.system.links?.[links.id] || [];
       for (let index = 0; index < items.length; index++) {
-        const linkData = items[index];
+        const linkData = deepClone(items[index]);
+        linkData.index = index; // Record index so sorted lists maintain data cohesion
 
         const linkedItem = item.getLinkedItemSync(linkData);
         if (!linkedItem) linkData.broken = true;
@@ -577,11 +578,6 @@ export class ItemSheetPF extends ItemSheet {
 
         // Add item to stack
         links.items.push(linkData);
-      }
-
-      // Sort items
-      if (links.id === "classAssociations") {
-        links.items = links.items.sort((a, b) => a.level - b.level);
       }
     }
   }
@@ -792,58 +788,56 @@ export class ItemSheetPF extends ItemSheet {
    * @private
    */
   async _updateObject(event, formData) {
-    // Handle links arrays
-    const links = Object.entries(formData).filter((e) => e[0].startsWith("system.links"));
-    for (const [key, value] of links) {
-      const [_s, _l, linkType, index, subkey] = key.split(".");
+    formData = expandObject(formData);
 
-      // Non-indexed formData is presumed to have been handled already
-      if (index == null) continue;
-      // No subkey means nothing to process here
-      if (subkey == null) continue;
+    const system = formData.system;
 
-      delete formData[key];
+    const links = system.links;
+    if (links) {
+      const oldLinks = this.item.system?.links ?? {};
+      // Handle links arrays
+      for (const [linkType, typedLinks] of Object.entries(links)) {
+        // Maintain array and merge new data in
+        links[linkType] = deepClone(oldLinks[linkType] ?? []);
+        for (const [index, linkData] of Object.entries(typedLinks)) {
+          links[linkType][index] = mergeObject(links[linkType][index] ?? {}, linkData);
+        }
 
-      const linkPath = `system.links.${linkType}`;
-      formData[linkPath] ??= deepClone(this.item.system.links?.[linkType]);
-      formData[linkPath][index][subkey] = value;
+        // Ensure internal data remains in order
+        links[linkType].sort((a, b) => (a.level ?? 0) - (b.level ?? 0));
+      }
     }
 
     // Handle weight to ensure `weight.value` is in lbs
-    if (formData["system.weight.value"]) {
-      formData["system.weight.value"] = pf1.utils.convertWeightBack(formData["system.weight.value"]);
+    if (system.weight?.value !== undefined) {
+      system.weight.value = pf1.utils.convertWeightBack(system.weight.value);
     }
 
-    // Change relative values
-    const relativeKeys = ["system.currency.pp", "system.currency.gp", "system.currency.sp", "system.currency.cp"];
-    for (const [k, v] of Object.entries(formData)) {
-      if (typeof v !== "string") continue;
-      // Add or subtract values
-      if (relativeKeys.includes(k)) {
-        const originalValue = getProperty(this.item.system, k);
-        let max = null;
-        const maxKey = k.replace(/\.value$/, ".max");
-        if (maxKey !== k) {
-          max = getProperty(this.item.system, maxKey);
-        }
+    // Change currencies with relative values
+    // @TODO: Create a common relative input handler.
+    const relativeKeys = ["currency.pp", "currency.gp", "currency.sp", "currency.cp"];
+    for (const key of relativeKeys) {
+      const value = getProperty(system, key);
+      if (typeof value !== "string") continue;
 
-        if (v.match(/(\+|--?)([0-9]+)/)) {
-          const operator = RegExp.$1;
-          let value = parseInt(RegExp.$2);
-          if (operator === "--") {
-            formData[k] = -value;
-          } else {
-            if (operator === "-") value = -value;
-            formData[k] = originalValue + value;
-            if (max) formData[k] = Math.min(formData[k], max);
-          }
-        } else if (v.match(/^[0-9]+$/)) {
-          formData[k] = parseInt(v);
-          if (max) formData[k] = Math.min(formData[k], max);
-        } else if (v === "") {
-          formData[k] = 0;
-        } else formData[k] = 0; // @TODO: definition?
+      // Add or subtract values
+      let newValue;
+      if (value.match(/(\+|-)(\d+)/)) {
+        const operator = RegExp.$1;
+        let value = parseInt(RegExp.$2);
+        if (operator === "-") value = -value;
+        const originalValue = getProperty(this.item.system, key);
+        newValue = originalValue + value;
+      } else if (value.match(/^[0-9]+$/)) {
+        newValue = parseInt(value);
+      } else if (value === "") {
+        newValue = 0;
+      } else {
+        // Invalid strings
+        newValue = 0;
       }
+
+      setProperty(system, key, Math.max(0, newValue));
     }
 
     // Update the Item
@@ -1577,6 +1571,8 @@ export class ItemSheetPF extends ItemSheet {
       const group = a.closest('div[data-group="links"]');
       const linkType = group.dataset.tab;
 
+      await this._onSubmit(event, { preventRender: true });
+
       let links = deepClone(this.item.system.links?.[linkType] ?? []);
       const { uuid, itemId } = li.dataset;
       const link = links.find((o) => {
@@ -1592,7 +1588,7 @@ export class ItemSheetPF extends ItemSheet {
       // Call hook for deleting a link
       Hooks.callAll("pf1DeleteItemLink", this.item, link, linkType);
 
-      await this._onSubmit(event, { updateData });
+      await this.document.update(updateData);
     }
   }
 

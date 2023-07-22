@@ -1113,6 +1113,12 @@ export class ActionUse {
         }
       }
 
+      // Record used ammo ID and quantity
+      if (chatAttack.ammo?.id) {
+        // Quantity is included for future proofing for supporting attacks that consume more than 1.
+        attackRolls.ammo = { id: chatAttack.ammo.id, quantity: 1 };
+      }
+
       metadata.rolls.attacks[attackIndex] = attackRolls;
     }
 

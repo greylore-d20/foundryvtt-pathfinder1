@@ -159,7 +159,7 @@ export class TooltipPF extends Application {
       actor.isOwner ||
       (!actor.system.details?.tooltip?.hideBuffs && !this.worldConfig.hideBuffs)
     ) {
-      const buffs = actor.items.filter((i) => i.type === "buff" && i.isActive && !i.system.hideFromToken);
+      const buffs = actor.itemTypes.buff?.filter((i) => i.isActive && !i.system.hideFromToken) ?? [];
       for (const b of buffs) {
         data.buffs = data.buffs || [];
         data.buffs.push({
@@ -179,9 +179,7 @@ export class TooltipPF extends Application {
       const held = actor.items.filter((i) => {
         if (!["weapon", "equipment"].includes(i.type)) return false;
         if (!i.system.equipped) return false;
-        if (i.type === "equipment") {
-          if (i.system.subType !== "shield") return false;
-        }
+        if (i.type === "equipment" && i.subType !== "shield") return false;
         return true;
       });
 
@@ -194,18 +192,15 @@ export class TooltipPF extends Application {
       }
     }
 
+    const equipment = actor.itemTypes.equipment?.filter((i) => i.system.equipped) ?? [];
+
     // Get armor
     if (
       (game.user.isGM && !this.forceHideGMInfo) ||
       actor.isOwner ||
       (!actor.system.details?.tooltip?.hideArmor && !this.worldConfig.hideArmor)
     ) {
-      const armor = actor.items.filter((i) => {
-        if (i.type !== "equipment") return false;
-        if (!i.system.equipped) return false;
-        if (i.system.subType !== "armor") return false;
-        return true;
-      });
+      const armor = equipment.filter((i) => i.subType === "armor");
 
       for (const i of armor) {
         data.armor = data.armor || [];
@@ -222,13 +217,7 @@ export class TooltipPF extends Application {
       actor.isOwner ||
       (!getProperty(actor, "item.details.tooltip.hideClothing") && !this.worldConfig.hideClothing)
     ) {
-      const clothing = actor.items.filter((i) => {
-        if (i.type !== "equipment") return false;
-        if (!i.system.equipped) return false;
-        if (i.system.subType !== "misc") return false;
-        if (i.system.equipmentSubtype !== "clothing") return false;
-        return true;
-      });
+      const clothing = equipment.filter((i) => i.subType === "clothing");
 
       for (const i of clothing) {
         data.clothing = data.clothing || [];

@@ -5,6 +5,8 @@ import prettier from "prettier";
 
 import { releaseLog } from "./changelog.mjs";
 
+const SYSTEM_MANIFEST = "public/system.json";
+
 yargs(process.argv.slice(2))
   .demandCommand(1, 1)
   .command("major", "Bump version to next major", async () => {
@@ -17,8 +19,6 @@ yargs(process.argv.slice(2))
   })
   .help()
   .parse();
-
-const SYSTEM_MANIFEST = "public/system.json";
 
 /**
  * Gets the current system version

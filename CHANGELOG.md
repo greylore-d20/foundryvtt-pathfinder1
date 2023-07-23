@@ -1,5 +1,27 @@
 # Changelog
 
+## 9.2 - 2023-7-23
+
+### Bug Fixes
+
+- Enhancement bonuses on armor items were doubled in tooltips ([2355](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2355))
+- Skip dialog state is now forcefully reset when window regains focus to help with sticky skip state. ([1572](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/1572))
+- Multiple issues with trait (language, proficiency, and other) selectors resolved. ([2215](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2215))
+- Complex change formulas would display poorly in skill roll breakdown. ([2348](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2348))
+- Adjusting class association levels would cause incorrect association to have its level adjusted. ([2349](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2349))
+- Measure templates in scenes with uneven grid size would provide incorrect grid highlight. ([2359](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2359))
+- Migrating classes with their HP field cleared would fail.
+- Character vision setting was ignored for new actors.
+- Spell points presented incorrect use interface. ([2358](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2358))
+- Token tooltip no longer displayed all items they should. ([2362](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2362))
+- Invalid item subtypes no longer prevent item sheets from opening.
+- Limited ownership affected actor sheets for GMs
+- Token tooltip settings did not react to input ([2350](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2350))
+
+### Changelog
+
+- Improve tolerance of invalid items in containers. ([2352](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2352))
+
 ## 9.1 - 2023-7-18
 
 ### Bug Fixes

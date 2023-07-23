@@ -913,3 +913,6 @@ const handleChatTooltips = function (event) {
   const w = rect.width;
   elem.find(".tooltipcontent").css("left", `${x}px`).css("top", `${y}px`).css("width", `${w}px`);
 };
+
+// Refresh skip state (alleviates sticky modifier issue #1572)
+window.addEventListener("focus", () => (pf1.skipConfirmPrompt = false), { passive: true });

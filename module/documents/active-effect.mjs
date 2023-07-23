@@ -38,6 +38,8 @@ export class ActiveEffectPF extends ActiveEffect {
 
   get isTemporary() {
     const duration = this.duration.seconds ?? (this.duration.rounds || this.duration.turns) ?? 0;
-    return duration > 0 || this.getFlag("core", "statusId") || this.getFlag("pf1", "show");
+    return (
+      duration > 0 || this.statuses?.size || this.getFlag("core", "statusId") || this.getFlag("pf1", "show") || false
+    );
   }
 }

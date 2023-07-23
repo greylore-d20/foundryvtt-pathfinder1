@@ -2906,11 +2906,11 @@ export class ActorSheetPF extends ActorSheet {
       choices: choices,
     };
 
-    const app = Object.values(this.document.apps).find((o) => {
-      return o instanceof ActorTraitSelector && o.options.name === options.name && o._element;
-    });
-    if (app) app.render(true, { focus: true });
-    else new ActorTraitSelector(this.document, options).render(true);
+    let app = Object.values(this.document.apps).find(
+      (app) => app instanceof ActorTraitSelector && app.options.name === options.name
+    );
+    app ??= new ActorTraitSelector(this.document, options);
+    app.render(true, { focus: true });
   }
 
   /**

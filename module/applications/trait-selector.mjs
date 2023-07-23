@@ -10,14 +10,23 @@ export class ActorTraitSelector extends DocumentSheet {
     this.options.classes.push(options.subject);
   }
 
+  get title() {
+    return `${this.options.title} – ${this.object.name}`;
+  }
+
+  get id() {
+    return `trait-selector-${this.document.uuid}-${this.options.subject}`;
+  }
+
   static get defaultOptions() {
-    const options = super.defaultOptions;
-    options.classes = ["pf1", "trait-selector"];
-    options.title = "Actor Trait Selection";
-    options.template = "systems/pf1/templates/apps/trait-selector.hbs";
-    options.width = 320;
-    options.height = "auto";
-    return options;
+    return {
+      ...super.defaultOptions,
+      classes: ["pf1", "trait-selector"],
+      template: "systems/pf1/templates/apps/trait-selector.hbs",
+      width: 320,
+      height: "auto",
+      sheetConfig: false,
+    };
   }
 
   /* -------------------------------------------- */

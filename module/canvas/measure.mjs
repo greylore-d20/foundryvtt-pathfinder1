@@ -124,7 +124,12 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     if (!game.settings.get("pf1", "measureStyle") || !["circle", "cone", "ray"].includes(templateType)) return [];
 
     const grid = canvas.grid,
-      gridSizePx = canvas.dimensions.size, // Size of each cell in pixels
+      // Size of each cell in pixels
+      gridSizePxBase = canvas.dimensions.size,
+      // Offset for uneven grids
+      gridSizePxOffset = gridSizePxBase % 2,
+      // Final grid size
+      gridSizePx = gridSizePxBase + gridSizePxOffset,
       gridSizeUnits = canvas.dimensions.distance; // feet, meters, etc.
 
     const templateDirection = this.document.direction,
@@ -181,22 +186,18 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
       minAngle = Math.normalizeDegrees(templateDirection - templateAngle / 2),
       maxAngle = Math.normalizeDegrees(templateDirection + templateAngle / 2);
 
-    const originOffset = { x: 0, y: 0 };
+    // Origin offset multiplier
+    const offsetMult = { x: 0, y: 0 };
     // Offset measurement for cones
     // Offset is to ensure that cones only start measuring from cell borders, as in https://www.d20pfsrd.com/magic/#Aiming_a_Spell
     if (templateType === "cone") {
       // Degrees anticlockwise from pointing right. In 45-degree increments from 0 to 360
       const dir = (templateDirection >= 0 ? 360 - templateDirection : -templateDirection) % 360;
       // If we're not on a border for X, offset by 0.5 or -0.5 to the border of the cell in the direction we're looking on X axis
-      const xOffset =
-        this.document.x % gridSizePx != 0
-          ? Math.sign((1 * Math.round(Math.cos(degtorad(dir)) * 100)) / 100) / 2 // /2 turns from 1/0/-1 to 0.5/0/-0.5
-          : 0;
+      // /2 turns from 1/0/-1 to 0.5/0/-0.5
+      offsetMult.x = x % gridSizePxBase != 0 ? Math.sign(Math.round(Math.cos(degtorad(dir)))) / 2 : 0;
       // Same for Y, but cos Y goes down on screens, we invert
-      const yOffset =
-        this.document.y % gridSizePx != 0 ? -Math.sign((1 * Math.round(Math.sin(degtorad(dir)) * 100)) / 100) / 2 : 0;
-      originOffset.x = xOffset;
-      originOffset.y = yOffset;
+      offsetMult.y = y % gridSizePxBase != 0 ? -Math.sign(Math.round(Math.sin(degtorad(dir)))) / 2 : 0;
     }
 
     const result = [];
@@ -209,8 +210,8 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
 
         // Determine point of origin
         const origin = {
-          x: this.document.x + originOffset.x * gridSizePx,
-          y: this.document.y + originOffset.y * gridSizePx,
+          x: x + offsetMult.x * gridSizePxBase,
+          y: y + offsetMult.y * gridSizePxBase,
         };
 
         // Determine point we're measuring the distance to - always in the center of a grid square

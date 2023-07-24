@@ -2687,9 +2687,9 @@ export class ActorPF extends Actor {
     // Obtain (or create) a combat encounter
     let combat = game.combat;
     if (!combat) {
-      if (game.user.isGM && canvas.scene) {
+      if (game.user.isGM) {
         const cls = getDocumentClass("Combat");
-        combat = await cls.create({ scene: canvas.scene.id, active: true });
+        combat = await cls.create({ scene: canvas.scene?.id, active: true });
       } else {
         ui.notifications.warn("COMBAT.NoneActive", { localize: true });
         return null;

@@ -330,7 +330,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     html.find(`.tab[data-tab="contents"] .item-take`).click(this._onItemTake.bind(this));
 
     // Quick edit item
-    html.find(".item .item-name h4").contextmenu(this._onItemEdit.bind(this));
+    html.find(".item .item-name").contextmenu(this._onItemEdit.bind(this));
 
     // Quick (un)identify item
     html.find("a.item-control.item-identify").click((ev) => {

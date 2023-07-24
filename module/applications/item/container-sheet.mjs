@@ -442,9 +442,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   _onDragStart(event) {
-    // Skip document links, since they should be handled differently
-    if (event.target.classList.contains("entity-link")) return;
-
     // Create drag data for an owned item
     const elem = event.currentTarget;
     let dragData;

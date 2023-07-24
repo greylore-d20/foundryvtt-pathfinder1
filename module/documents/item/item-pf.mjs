@@ -414,6 +414,11 @@ export class ItemPF extends ItemBasePF {
     return super.limited;
   }
 
+  get uuid() {
+    if (this.parentItem) this.parentItem.uuid + `.Item.${this.id}`;
+    return super.uuid;
+  }
+
   getName(forcePlayerPerspective = false) {
     if (game.user.isGM && forcePlayerPerspective) {
       if (this.system.identified === false) return this.system.unidentified?.name || this.name;

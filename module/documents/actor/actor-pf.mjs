@@ -4281,7 +4281,7 @@ export class ActorPF extends Actor {
         const actions = deepClone(item.system.actions);
         let _changed = false;
         for (const actionData of actions) {
-          if (actionData.uses.self?.per === "day") {
+          if (actionData.uses?.self?.per === "day") {
             const maxUses = actionData.uses.self.max || 0;
             if (actionData.uses.self.value < maxUses) {
               actionData.uses.self.value = maxUses;

@@ -5,6 +5,8 @@ import { ItemChange } from "./components/change.mjs";
 import { MigrationDialog } from "./applications/migration/migration-dialog.mjs";
 import { MigrationState } from "./migration/migration-state.mjs";
 
+const marker = () => ({ pf1: { action: "migration" } });
+
 /**
  * An indicator for whether the system is currently migrating the world.
  *
@@ -142,7 +144,7 @@ export async function migrateActors({ state, dialog = null } = {}) {
       const updateData = await migrateActorData(actor.toObject(), undefined, { actor });
       if (!foundry.utils.isEmpty(updateData)) {
         console.log(`PF1 | Migration | Actor: ${actor.name} | Applying updates`);
-        await actor.update(updateData);
+        await actor.update(updateData, marker());
       }
     } catch (err) {
       tracker.recordError(actor, err);
@@ -188,7 +190,7 @@ export async function migrateItems({ state, dialog = null } = {}) {
       const updateData = await migrateItemData(item.toObject());
       if (!foundry.utils.isEmpty(updateData)) {
         console.log(`PF1 | Migration | Item: ${item.name} | Applying updates`);
-        await item.update(updateData);
+        await item.update(updateData, marker());
       }
     } catch (err) {
       tracker.recordError(item, err);
@@ -426,7 +428,7 @@ export async function migrateCompendium(pack, { unlock = false } = {}) {
     console.debug(`PF1 | Migration | Pack: ${pack.collection} | Applying update(s) to ${updates.length} document(s)`);
     // Commit updates
     try {
-      await getDocumentClass(docType).updateDocuments(updates, { pack: pack.collection });
+      await getDocumentClass(docType).updateDocuments(updates, { pack: pack.collection, ...marker() });
     } catch (err) {
       console.error(`PF1 | Migration | Pack: ${pack.collection} | Error:`, err);
     }
@@ -522,7 +524,7 @@ export async function migrateToken(token) {
   const tokenData = token.toObject();
   const updateData = await migrateTokenData(tokenData, { token });
   if (!foundry.utils.isEmpty(updateData)) {
-    return token.update(expandObject(updateData));
+    return token.update(expandObject(updateData), marker());
   }
 }
 
@@ -535,7 +537,7 @@ export async function migrateToken(token) {
 export async function migrateActor(actor) {
   const updateData = await migrateActorData(actor.toObject(), actor.token, { actor });
   if (!foundry.utils.isEmpty(updateData)) {
-    return actor.update(updateData);
+    return actor.update(updateData, marker());
   }
   return null;
 }
@@ -629,7 +631,7 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
 export async function migrateItem(item) {
   const updateData = await migrateItemData(item.toObject(), item.actor, { item });
   if (!foundry.utils.isEmpty(updateData)) {
-    return item.update(updateData);
+    return item.update(updateData, marker());
   }
   return null;
 }
@@ -899,9 +901,9 @@ export async function migrateSceneActors(scene, { state = null, tracker = null }
         delete updateData.items;
         const effects = updateData.effects;
         delete updateData.effects;
-        if (!foundry.utils.isEmpty(updateData)) await actor.update(updateData);
-        if (items?.length) await actor.updateEmbeddedDocuments("Item", items);
-        if (effects?.length) await actor.updateEmbeddedDocuments("ActiveEffect", effects);
+        if (!foundry.utils.isEmpty(updateData)) await actor.update(updateData, marker());
+        if (items?.length) await actor.updateEmbeddedDocuments("Item", items, marker());
+        if (effects?.length) await actor.updateEmbeddedDocuments("ActiveEffect", effects, marker());
       }
     } catch (err) {
       tracker?.recordError(token, err);

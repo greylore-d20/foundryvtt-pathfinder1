@@ -11,6 +11,7 @@ export class ItemBrowser extends CompendiumBrowser {
     itemFilters.WeaponSubtypeFilter,
     itemFilters.WeaponPropertyFilter,
     itemFilters.WeaponGroupFilter,
+    itemFilters.EquipmentTypeFilter,
     itemFilters.EquipmentSubtypeFilter,
     itemFilters.ItemSlotFilter,
     itemFilters.ConsumableTypeFilter,

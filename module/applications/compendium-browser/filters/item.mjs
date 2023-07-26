@@ -64,6 +64,17 @@ export class WeaponGroupFilter extends CheckboxFilter {
   }
 }
 
+export class EquipmentTypeFilter extends CheckboxFilter {
+  static label = "PF1.EquipmentType";
+  static indexField = "system.subType";
+  static type = "equipment";
+
+  /** @inheritDoc */
+  prepareChoices() {
+    this.choices = this.constructor.getChoicesFromConfig(pf1.config.equipmentTypes);
+  }
+}
+
 export class EquipmentSubtypeFilter extends CheckboxFilter {
   static label = "PF1.EquipmentSubtype";
   static indexField = "system.equipmentSubtype";

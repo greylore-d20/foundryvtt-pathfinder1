@@ -25,11 +25,23 @@
         "range": {
           "units": "touch"
         },
-        "actionType": "spellsave",
+        "actionType": "msak",
         "save": {
           "type": "will",
           "description": "Will half; see text"
-        }
+        },
+        "damage": {
+          "parts": [
+            {
+              "formula": "min(150, 10 * @cl)",
+              "type": {
+                "values": ["negative"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "touch": true
       }
     ],
     "learnedAt": {
@@ -55,6 +67,6 @@
       "verbal": true,
       "somatic": true
     },
-    "shortDescription": "<p><i>Harm</i> charges a subject with negative energy that deals 10 points of damage per caster level (to a maximum of 150 points at 15th level). If the creature successfully saves, <i>harm</i> deals half this amount. <i>Harm</i> cannot reduce the target's hit points to less than 1.</p><p>If used on an undead creature, <i>harm</i> acts like <i>heal</i>.</p>"
+    "shortDescription": "<p><em>Harm</em> charges a subject with negative energy that deals 10 points of damage per caster level (to a maximum of 150 points at 15th level). If the creature successfully saves, <em>harm</em> deals half this amount. <em>Harm</em> cannot reduce the target's hit points to less than 1.</p><p>If used on an undead creature, <em>harm</em> acts like @UUID[Compendium.pf1.spells.4re1j2w8wkvsvnsi]{heal}.</p>"
   }
 }

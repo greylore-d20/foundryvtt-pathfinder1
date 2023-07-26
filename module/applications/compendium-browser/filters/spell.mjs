@@ -1,4 +1,4 @@
-import { CheckboxFilter } from "./checkbox.mjs";
+import { BOOLEAN_OPERATOR, CheckboxFilter } from "./checkbox.mjs";
 
 export class SpellSchoolFilter extends CheckboxFilter {
   static label = "PF1.SpellSchool";
@@ -54,6 +54,36 @@ export class SpellLevelFilter extends CheckboxFilter {
 
   /** @override */
   prepareChoices() {
-    this.choices = this.constructor.getChoicesFromConfig(pf1.config.spellLevels);
+    const choices = this.constructor.getChoicesFromConfig(pf1.config.spellLevels);
+    choices.forEach((choice) => {
+      choice.key = Number(choice.key);
+    });
+    this.choices = choices;
+  }
+
+  /** @override */
+  applyFilter(entry) {
+    const activeLearnedAtFilters = this.compendiumBrowser.filters.filter(
+      (filter) => filter.active && filter.constructor.indexField.startsWith("system.learnedAt.")
+    );
+
+    // Fall back to checking whether _anything_ can learn the spell at that level
+    if (activeLearnedAtFilters.length === 0) return super.applyFilter(entry);
+
+    // Otherwise, check whether active filters match the spell's learnedAt
+    const testMethod = this.booleanOperator === BOOLEAN_OPERATOR.OR ? "some" : "every";
+    const activeLevelChoices = this.choices.filter((choice) => choice.active);
+
+    // Require either any of the active filters to match if OR, or all filters to return a match if AND
+    return activeLearnedAtFilters[testMethod]((filter) => {
+      /** @type {Record<string, number>} */
+      const learnedAt = getProperty(entry, filter.constructor.indexField) ?? {};
+      const activeLearnedAtChoices = filter.choices.filter((choice) => choice.active);
+      // Require either one of the classes etc. to match if OR, or all classes etc. to match if AND
+      return activeLearnedAtChoices[testMethod]((learnedAtChoice) => {
+        const learnedAtLevel = learnedAt[learnedAtChoice.key];
+        return activeLevelChoices[testMethod]((levelChoice) => levelChoice.key === learnedAtLevel);
+      });
+    });
   }
 }

@@ -36,6 +36,15 @@ export class SpellBrowser extends CompendiumBrowser {
           .filter((typeString) => typeString.length) ?? [];
     }
 
+    /** @type {Record<string, Record<string, number>>} */
+    const learnedAtData = entry.system.learnedAt ?? {};
+    const learnedAtLevels = Object.values(learnedAtData)
+      .map((learnedAtSource) => Object.values(learnedAtSource))
+      .flat();
+    if (entry.system.level) learnedAtLevels.push(entry.system.level);
+    // NOTE: This results in `level` being a number[] instead of a number like in the source data.
+    result.system.level = [...new Set(learnedAtLevels)];
+
     return result;
   }
 }

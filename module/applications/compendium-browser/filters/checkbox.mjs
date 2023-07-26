@@ -18,7 +18,7 @@ export class CheckboxFilter extends baseFilter.BaseFilter {
    * If "OR", an entry will be included if at least one active choice matches.
    * If "AND", an entry will only be included if all active choices match.
    *
-   * @type {"AND" | "OR" | false}
+   * @type {BooleanOperator}
    */
   booleanOperator = BOOLEAN_OPERATOR.NONE;
 
@@ -166,7 +166,7 @@ export class CheckboxFilter extends baseFilter.BaseFilter {
     if (Array.isArray(data)) {
       return activeChoices[testMethod]((choice) => data.includes(choice.key));
     } else if (typeof data === "object" && data !== null) {
-      return activeChoices[testMethod]((choice) => choice.key in data && data[choice.key]);
+      return activeChoices[testMethod]((choice) => choice.key in data && data[choice.key] !== false);
     } else {
       return activeChoices.some((choice) => {
         return data == choice.key;
@@ -210,11 +210,19 @@ export class CheckboxFilter extends baseFilter.BaseFilter {
     });
   }
 
+  /**
+   * Filter this filter's choices based on a string query.
+   *
+   * @protected
+   * @param {Event} event - The originating input event
+   * @param {HTMLElement} html - The rendered HTML of this filter
+   */
   _onCustomSearchFilter(event, html) {
     if (event) {
       event.preventDefault();
       this._choiceQuery = SearchFilter.cleanQuery(event.target.value);
     }
+
     const matchingChoices = fuzzysort
       .go(this._choiceQuery, this.choices.contents, {
         key: "label",
@@ -222,6 +230,7 @@ export class CheckboxFilter extends baseFilter.BaseFilter {
       })
       .map((result) => `${result.obj.key}`);
     const choiceSet = new Set(matchingChoices);
+
     for (const li of html.querySelectorAll("li.filter-choice")) {
       const choiceKey = li.dataset.choice;
       if (choiceKey) {
@@ -235,13 +244,12 @@ export class CheckboxFilter extends baseFilter.BaseFilter {
   }
 }
 
+/** @typedef {typeof BOOLEAN_OPERATOR[keyof typeof BOOLEAN_OPERATOR]} BooleanOperator */
 /**
  * States for the boolean operator of a filter.
- *
- * @enum {string | false}
  */
-const BOOLEAN_OPERATOR = {
+export const BOOLEAN_OPERATOR = /** @type {const} */ ({
   AND: "AND",
   OR: "OR",
   NONE: false,
-};
+});

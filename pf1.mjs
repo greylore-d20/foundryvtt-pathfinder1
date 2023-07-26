@@ -823,11 +823,11 @@ Hooks.on("renderSidebarTab", (app, html) => {
 
 // Show experience distributor after combat
 Hooks.on("deleteCombat", (combat, options, userId) => {
-  const isGM = game.user.isGM;
+  if (game.user.id !== userId) return;
+
   const skipPrompt = documents.settings.getSkipActionPrompt();
   const { disableExperienceTracking, openXpDistributor } = game.settings.get("pf1", "experienceConfig");
   if (
-    isGM &&
     !disableExperienceTracking &&
     combat.started &&
     ((openXpDistributor && !skipPrompt) || (!openXpDistributor && skipPrompt))

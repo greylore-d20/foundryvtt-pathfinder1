@@ -27,8 +27,11 @@ module.exports = {
     "newline-per-chained-call": "off",
     "no-plusplus": "off",
     "valid-jsdoc": "off",
+    // JSDoc plugin
     "jsdoc/tag-lines": ["error", "any", { startLines: 1 }],
     "jsdoc/no-defaults": ["off"],
+    "jsdoc/require-jsdoc": ["warn", { enableFixer: false }],
+    "jsdoc/no-blank-blocks": ["error", { enableFixer: true }],
   },
   settings: {
     jsdoc: {

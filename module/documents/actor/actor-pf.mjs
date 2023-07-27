@@ -3281,79 +3281,74 @@ export class ActorPF extends ActorBasePF {
         };
       });
 
-      reductionDefault = reductionDefault ?? "";
-
       // Dialog configuration and callbacks
       const template = "systems/pf1/templates/apps/damage-dialog.hbs";
+
       const dialogData = {
         damage: value,
         healing: healingInvert == -1 ? true : false,
         damageReduction: reductionDefault,
-        tokens: tokens,
+        tokens,
         nonlethal: asNonlethal,
       };
-      const html = await renderTemplate(template, dialogData);
 
-      return new Promise((resolve) => {
-        const buttons = {};
-        buttons.normal = {
-          label: game.i18n.localize("PF1.Apply"),
-          callback: (html) => resolve(_submit.call(this, html, 1 * healingInvert)),
-        };
-        buttons.half = {
-          label: game.i18n.localize("PF1.ApplyHalf"),
-          callback: (html) => resolve(_submit.call(this, html, 0.5 * healingInvert)),
-        };
+      const content = await renderTemplate(template, dialogData);
 
-        new Dialog(
-          {
-            title: healingInvert > 0 ? game.i18n.localize("PF1.ApplyDamage") : game.i18n.localize("PF1.ApplyHealing"),
-            content: html,
-            buttons: buttons,
-            default: "normal",
-            close: (html) => {
-              resolve(false);
+      return Dialog.wait(
+        {
+          title: healingInvert > 0 ? game.i18n.localize("PF1.ApplyDamage") : game.i18n.localize("PF1.ApplyHealing"),
+          content,
+          buttons: {
+            normal: {
+              label: game.i18n.localize("PF1.Apply"),
+              callback: (html) => _submit.call(this, html, 1 * healingInvert),
             },
-            render: (inp) => {
-              /**
-               *
-               */
-              function swapSelected() {
-                const checked = [...inp[0].querySelectorAll('.selected-tokens input[type="checkbox"]')];
-                checked.forEach((chk) => (chk.checked = !chk.checked));
-              }
-              /**
-               * @param {Element} e
-               */
-              function setReduction(e) {
-                inp[0].querySelector('input[name="damage-reduction"]').value =
-                  e.currentTarget.innerText.match(numReg) ?? "";
-              }
-              /**
-               * @param {WheelEvent} event
-               */
-              function mouseWheelAdd(event) {
-                const el = event.currentTarget;
-
-                //Digits with optional sign only
-                if (/[^\d+-]|(?:\d[+-])/.test(el.value.trim())) return;
-
-                const value = parseFloat(el.value) || 0;
-                const increase = -Math.sign(event.originalEvent.deltaY);
-
-                el.value = (value + increase).toString();
-              }
-
-              inp.on("click", 'a[name="swap-selected"]', swapSelected);
-              inp.on("click", 'a[name="clear-reduction"], p.notes a', setReduction);
-              inp.on("wheel", "input", mouseWheelAdd);
+            half: {
+              label: game.i18n.localize("PF1.ApplyHalf"),
+              callback: (html) => _submit.call(this, html, 0.5 * healingInvert),
             },
           },
-          {
-            classes: [...Dialog.defaultOptions.classes, "pf1", "apply-hit-points"],
-          }
-        ).render(true);
-      });
+          default: "normal",
+          close: (html) => false,
+          render: (inp) => {
+            function swapSelected() {
+              const checked = [...inp[0].querySelectorAll('.selected-tokens input[type="checkbox"]')];
+              checked.forEach((chk) => (chk.checked = !chk.checked));
+            }
+            /**
+             * @param {Element} e
+             */
+            function setReduction(e) {
+              inp[0].querySelector('input[name="damage-reduction"]').value =
+                e.currentTarget.innerText.match(numReg) ?? "";
+            }
+            /**
+             * @param {WheelEvent} event
+             */
+            function mouseWheelAdd(event) {
+              const el = event.currentTarget;
+
+              //Digits with optional sign only
+              if (/[^\d+-]|(?:\d[+-])/.test(el.value.trim())) return;
+
+              const value = parseFloat(el.value) || 0;
+              const increase = -Math.sign(event.originalEvent.deltaY);
+
+              el.value = (value + increase).toString();
+            }
+
+            inp.on("click", 'a[name="swap-selected"]', swapSelected);
+            inp.on("click", 'a[name="clear-reduction"], p.notes a', setReduction);
+            inp.on("wheel", "input", mouseWheelAdd);
+          },
+        },
+        {
+          classes: [...Dialog.defaultOptions.classes, "pf1", "apply-hit-points"],
+        },
+        {
+          focus: true,
+        }
+      );
     } else return _submit();
   }
 

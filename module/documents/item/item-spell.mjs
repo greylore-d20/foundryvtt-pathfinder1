@@ -553,7 +553,7 @@ export class ItemSpellPF extends ItemPF {
     // Set measure template and range
     if (type !== "potion") {
       action.measureTemplate = actionData.measureTemplate;
-      if (["close", "medium", "long"].includes(actionData.range.units)) {
+      if (["close", "medium", "long"].includes(actionData.range?.units)) {
         action.range = {
           units: "ft",
           value: RollPF.safeTotal(pf1.config.spellRangeFormulas[actionData.range.units], rollData).toString(),

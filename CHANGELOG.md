@@ -1,5 +1,29 @@
 # Changelog
 
+## 9.3 - 2023-7-27
+
+### Bug Fixes
+
+- Spell Browser could not find cantrips if some other filters were active
+- Errors while applying Changes are handled more gracefully, preventing sheets from becoming inaccessible. ([2367](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2367))
+- Experience distributor dialog was shown to all GMs at end of combat. ([2316](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2316))
+- Rolling initiative would fail even for GM if no scene was active and combat was not pre-created. ([2341](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2341))
+- Active Effect overlays (e.g. defeated symbol over token) were nonfunctional in Foundry v11.
+- ActiveEffectPF.isTemporary could return non-boolean. ([2364](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2364))
+- Right click opening of items in containers was very particular on where to click.
+
+### Changelog
+
+- Use learned-at levels for spell level filter ([2366](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2366))
+- Add Equipment Type filter to Item Browser
+- Resting is now more tolerant of missing data in actions.
+
+### Compendium
+
+- Fixed incorrect or missing data in Heal and Harm spells. ([2363](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2363))
+- Fixed class data for Covetous Aura spell. ([2368](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2368))
+- Remove duplicate Maneuver Mastery and fix typo in Rakshasa's Fortune
+
 ## 9.2 - 2023-7-23
 
 ### Bug Fixes

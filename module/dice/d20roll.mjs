@@ -194,40 +194,44 @@ export class D20RollPF extends RollPF {
     };
 
     const dialogOptions = options.dialogOptions || {};
-    dialogOptions.subject = options.subject;
-    dialogOptions.jQuery = false;
     dialogOptions.classes ??= [];
     dialogOptions.classes.push(...Dialog.defaultOptions.classes, "pf1", "roll-prompt");
 
+    const renderOptions = options.renderOptions || {};
+
     const html = await renderTemplate(template, renderData);
 
-    return new Promise((resolve) => {
-      new Dialog(
-        {
-          title: options.title || game.i18n.localize("PF1.Roll"),
-          content: html,
-          buttons: {
-            normal: {
-              label: game.i18n.localize("PF1.Normal"),
-              callback: (html) => resolve(this._onDialogSubmit(html, null)),
-            },
-            takeTen: {
-              label: game.i18n.format("PF1.TakeX", { number: this.constructor.STATIC_ROLL.TEN }),
-              callback: (html) => resolve(this._onDialogSubmit(html, this.constructor.STATIC_ROLL.TEN)),
-            },
-            takeTwenty: {
-              label: game.i18n.format("PF1.TakeX", { number: this.constructor.STATIC_ROLL.TWENTY }),
-              callback: (html) => resolve(this._onDialogSubmit(html, this.constructor.STATIC_ROLL.TWENTY)),
-            },
+    return Dialog.wait(
+      {
+        title: options.title || game.i18n.localize("PF1.Roll"),
+        content: html,
+        buttons: {
+          normal: {
+            label: game.i18n.localize("PF1.Normal"),
+            callback: (html) => this._onDialogSubmit(html, null),
           },
-          default: "normal",
-          close: () => {
-            resolve(null);
+          takeTen: {
+            label: game.i18n.format("PF1.TakeX", { number: this.constructor.STATIC_ROLL.TEN }),
+            callback: (html) => this._onDialogSubmit(html, this.constructor.STATIC_ROLL.TEN),
+          },
+          takeTwenty: {
+            label: game.i18n.format("PF1.TakeX", { number: this.constructor.STATIC_ROLL.TWENTY }),
+            callback: (html) => this._onDialogSubmit(html, this.constructor.STATIC_ROLL.TWENTY),
           },
         },
-        dialogOptions
-      ).render(true);
-    });
+        default: "normal",
+        close: () => null,
+      },
+      {
+        ...dialogOptions,
+        jQuery: false,
+        subject: options.subject,
+      },
+      {
+        ...(options.renderOptions || {}),
+        focus: true,
+      }
+    );
   }
 
   /**

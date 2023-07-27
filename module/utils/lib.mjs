@@ -477,17 +477,17 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
     potion: {
       icon: '<i class="fas fa-prescription-bottle"></i>',
       label: game.i18n.localize("PF1.CreateItemPotion"),
-      callback: (html) => createConsumableSpell(getFormData(html), "potion"),
+      callback: (html) => pf1.documents.item.ItemSpellPF.toConsumable(getFormData(html), "potion"),
     },
     scroll: {
       icon: '<i class="fas fa-scroll"></i>',
       label: game.i18n.localize("PF1.CreateItemScroll"),
-      callback: (html) => createConsumableSpell(getFormData(html), "scroll"),
+      callback: (html) => pf1.documents.item.ItemSpellPF.toConsumable(getFormData(html), "scroll"),
     },
     wand: {
       icon: '<i class="fas fa-magic"></i>',
       label: game.i18n.localize("PF1.CreateItemWand"),
-      callback: (html) => createConsumableSpell(getFormData(html), "wand"),
+      callback: (html) => pf1.documents.item.ItemSpellPF.toConsumable(getFormData(html), "wand"),
     },
     spell: {
       icon: '<i class="fas fa-hand-sparkles"></i>',
@@ -512,13 +512,6 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
       itemData,
     }
   );
-};
-
-export const createConsumableSpell = async function (itemData, type) {
-  const data = await CONFIG.Item.documentClasses.spell.toConsumable(itemData, type);
-
-  if (data._id) delete data._id;
-  return data;
 };
 
 /**

@@ -136,6 +136,41 @@ export class ItemChange {
   }
 
   /**
+   * Safely apply this change to an actor, catching any errors.
+   *
+   * @internal
+   * @see {@link ItemChange#applyChange}
+   * @param {ActorPF} actor - The actor to apply the change's data to.
+   * @param {string[]} [targets] - Property paths to target on the actor's data.
+   * @param {object} [options] - Optional options to change the behavior of this function.
+   * @param {boolean} [options.applySourceInfo=true] - Whether to add the changes to the actor's source information.
+   */
+  _safeApplyChange(actor, targets = null, { applySourceInfo = true } = {}) {
+    try {
+      this.applyChange(actor, targets, { applySourceInfo });
+    } catch (error) {
+      if (this.parent?.isOwner || actor.isOwner) {
+        const msgSourceReference = this.parent
+          ? `from ${this.parent.name} [${this.parent.uuid}] to ${actor.name}`
+          : `to ${actor.name} [${actor.uuid}]]`;
+        const errorMessage = `Failed to apply ItemChange ${this.id} ${msgSourceReference}`;
+        const errorData = {
+          change: this,
+          parent: this.parent,
+          actor,
+          targets,
+        };
+        Hooks.onError("ItemChange#applyChange", error, {
+          msg: errorMessage,
+          log: "error",
+          data: errorData,
+        });
+        ui.notifications?.error(error.message, { console: false });
+      }
+    }
+  }
+
+  /**
    * Applies this change to an actor.
    *
    * @param {ActorPF} actor - The actor to apply the change's data to.

@@ -60,7 +60,7 @@ export function applyChanges() {
       if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
     }
 
-    change.applyChange(this, flats, { applySourceInfo: false });
+    change._safeApplyChange(this, flats, { applySourceInfo: false });
 
     // Apply continuous changes
     for (const cc of continuousChanges) {
@@ -71,7 +71,7 @@ export function applyChanges() {
         if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
       }
 
-      cc.applyChange(this, flats, { applySourceInfo: false });
+      cc._safeApplyChange(this, flats, { applySourceInfo: false });
     }
 
     this.refreshDerivedData();

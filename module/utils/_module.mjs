@@ -2,7 +2,6 @@ export * as handlebars from "./handlebars/_module.mjs";
 export * as canvas from "./canvas.mjs";
 export * as chat from "./chat.mjs";
 export * as dialog from "./dialog.mjs";
-export * as links from "./links.mjs";
 export * as rollPreProcess from "./roll-preprocess.mjs";
 export * as currency from "./currency.mjs";
 export { SemanticVersion } from "./semver.mjs";

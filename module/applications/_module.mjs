@@ -22,7 +22,6 @@ export { EntrySelector } from "./entry-selector.mjs";
 export { HelpBrowserPF } from "./help-browser.mjs";
 export { Widget_ItemPicker } from "./item-picker.mjs";
 export { LevelUpForm } from "./level-up.mjs";
-export { LinkOptions } from "./link-options.mjs";
 export { PointBuyCalculator } from "./point-buy-calculator.mjs";
 export { ScriptEditor } from "./script-editor.mjs";
 export { SensesSelector } from "./senses-selector.mjs";

@@ -3,7 +3,6 @@ import { getAbilityModifier } from "@utils";
 import { ItemPF, ItemRacePF } from "@item/_module.mjs";
 import { createTag, fractionalToString, enrichHTMLUnrolled } from "../../utils/lib.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
-import { LinkFunctions } from "../../utils/links.mjs";
 import {
   applyChanges,
   addDefaultChanges,
@@ -1613,14 +1612,26 @@ export class ActorPF extends ActorBasePF {
   }
 
   prepareItemLinks() {
-    if (!this.items) return;
+    for (const item of this.items) {
+      const links = item.system.links;
+      if (!links) continue;
 
-    for (const a of this.items) {
-      if (a.system.links == null) continue;
+      for (const type of Object.keys(links)) {
+        for (const link of links[type]) {
+          const linkedItem = this.items.get(link.id);
+          if (!linkedItem) continue;
 
-      for (const l of Object.keys(a.system.links)) {
-        if (LinkFunctions[l] != null) {
-          LinkFunctions[l].call(this, a, a.system.links[l]);
+          switch (type) {
+            case "charges": {
+              linkedItem.links.charges = item;
+              linkedItem.prepareLinks();
+              break;
+            }
+            case "children": {
+              linkedItem.links.parent = item;
+              break;
+            }
+          }
         }
       }
     }

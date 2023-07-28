@@ -44,15 +44,6 @@
 </div>
 
 {{#if data.actionType}}
-{{#if isSpell}}
-<div class="form-group">
-  <label>{{localize "PF1.SpellEffect"}}</label>
-  <div class="form-fields">
-    <input type="text" name="spellEffect" value="{{data.spellEffect}}" placeholder="{{localize "PF1.SpellEffectExample"}}"/>
-  </div>
-</div>
-{{/if}}
-
 {{#if hasAttackRoll}}
 {{!-- Attack Name --}}
 <h3 class="form-header">{{localize "PF1.Attack"}}</h3>

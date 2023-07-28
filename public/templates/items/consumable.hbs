@@ -45,11 +45,7 @@
       <div class="form-group">
         <label>{{localize "PF1.Type"}}</label>
         <select name="system.subType">
-          {{#select system.subType}}
-          {{#each config.consumableTypes as |name type|}}
-          <option value="{{type}}">{{name}}</option>
-          {{/each}}
-          {{/select}}
+          {{selectOptions config.consumableTypes selected=system.subType}}
         </select>
       </div>
 

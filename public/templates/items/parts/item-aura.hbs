@@ -24,12 +24,7 @@
   <div class="form-fields">
     <label class="aura-strength">{{auraStrength_name}}</label>
     <select name="system.aura.school">
-      {{#select system.aura.school}}
-      <option value=""></option>
-      {{#each config.spellSchools as |name k|}}
-      <option value="{{k}}">{{name}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions config.spellSchools selected=system.aura.school blank=""}}
     </select>
     <label class="checkbox">
       <input type="checkbox" name="system.aura.custom" {{checked system.aura.custom}}/> {{localize "PF1.Custom"}}

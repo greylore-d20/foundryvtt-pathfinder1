@@ -2,11 +2,7 @@
   <div class="form-group tooltip">
     <label>{{localize "PF1.Size"}}</label>
     <select name="system.traits.size">
-      {{#select system.traits.size}}
-      {{#each config.actorSizes as |label size|}}
-      <option value="{{size}}">{{label}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions config.actorSizes selected=system.traits.size}}
     </select>
     <span class="tooltipcontent">
       <span class="span2 align-left">@traits.size :</span><span class="span1 align-right"> {{system.traits.size}}</span>
@@ -17,11 +13,7 @@
   <div class="form-group tooltip">
     <label>{{localize "PF1.Stature"}}</label>
     <select name="system.traits.stature">
-      {{#select system.traits.stature}}
-      {{#each config.actorStatures as |label key|}}
-      <option value="{{key}}">{{label}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions config.actorStatures selected=system.traits.stature}}
     </select>
     <span class="tooltipcontent">
       <span class="span2 align-left">@traits.stature :</span><span class="span1 align-right"> {{system.traits.stature}}</span>

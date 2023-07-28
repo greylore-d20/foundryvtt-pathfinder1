@@ -2,12 +2,7 @@
 <div class="form-group select">
   <label>{{localize "PF1.TemplateType"}}</label>
   <select name="measureTemplate.type">
-    {{#select data.measureTemplate.type}}
-    <option value="">{{localize "PF1.None"}}</option>
-    {{#each config.measureTemplateTypes as |name type|}}
-    <option value="{{type}}">{{name}}</option>
-    {{/each}}
-    {{/select}}
+    {{selectOptions config.measureTemplateTypes selected=data.measureTemplate.type blank=""}}
   </select>
 </div>
 

@@ -76,11 +76,7 @@
   <div class="form-group select">
     <label>{{localize "PF1.Held"}}</label>
     <select name="held">
-      {{#select attributes.held}}
-      {{#each config.weaponHoldTypes as |name type|}}
-      <option value="{{type}}">{{name}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions config.weaponHoldTypes selected=attributes.held}}
     </select>
   </div>
   {{/unless}}
@@ -174,11 +170,7 @@
   <div class="form-group">
     <label>{{localize "PF1.RollMode"}}</label>
     <select name="rollMode">
-      {{#select attributes.rollMode}}
-      {{#each rollModes as |label mode|}}
-      <option value="{{mode}}">{{localize label}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions rollModes selected=attributes.rollMode localize=true}}
     </select>
   </div>
 

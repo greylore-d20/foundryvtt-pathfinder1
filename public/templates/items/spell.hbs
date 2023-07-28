@@ -74,11 +74,7 @@
         <label>{{localize "PF1.SpellLevel"}}</label>
         <div class="form-fields">
           <select name="system.level" data-dtype="Number" data-tooltip="@sl : {{system.level}}<br>@item.level : {{system.level}}">
-            {{#select system.level}}
-            {{#each config.spellLevels as |name lvl|}}
-            <option value="{{lvl}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions config.spellLevels selected=system.level}}
           </select>
         </div>
       </div>
@@ -114,11 +110,7 @@
         <label>{{localize "PF1.SpellSchool"}}</label>
         <div class="form-fields">
           <select name="system.school">
-            {{#select system.school}}
-            {{#each config.spellSchools as |name sch|}}
-            <option value="{{sch}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions config.spellSchools selected=system.school}}
           </select>
         </div>
       </div>
@@ -195,11 +187,7 @@
         <label>{{localize "PF1.SpellComponentDivineFocus"}}</label>
         <div class="form-fields">
           <select name="system.components.divineFocus" data-dtype="Number">
-            {{#select system.components.divineFocus}}
-            {{#each config.divineFocus as |name value|}}
-            <option value="{{value}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions config.divineFocus selected=system.components.divineFocus}}
           </select>
         </div>
       </div>

@@ -49,11 +49,7 @@
         <label>{{localize "PF1.Type"}}</label>
         <div class="form-fields">
           <select name="system.subType">
-            {{#select system.subType}}
-            {{#each equipmentCategories.types as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions equipmentCategories.types selected=system.subType}}
           </select>
         </div>
       </div>
@@ -64,11 +60,7 @@
         <label>{{localize "PF1.Category"}}</label>
         <div class="form-fields">
           <select name="system.equipmentSubtype">
-            {{#select system.equipmentSubtype}}
-            {{#each equipmentCategories.subTypes as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions equipmentCategories.subTypes selected=system.equipmentSubtype}}
           </select>
         </div>
       </div>
@@ -80,11 +72,7 @@
         <label>{{localize "PF1.Slot"}}</label>
         <div class="form-fields">
           <select name="system.slot">
-            {{#select system.slot}}
-            {{#each equipmentSlots as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions equipmentSlots selected=system.slot}}
           </select>
         </div>
       </div>

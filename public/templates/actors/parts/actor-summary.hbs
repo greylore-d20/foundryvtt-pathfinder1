@@ -351,11 +351,7 @@
     <div class='flexcol maneuverability-details pseudo-table tooltip'>
       <h3 class='header'>{{localize "PF1.FlyManeuverabilityShort"}}</h3>
       <select class='value' name="system.attributes.speed.fly.maneuverability">
-        {{#select system.attributes.speed.fly.maneuverability}}
-        {{#each config.flyManeuverabilities as |name type|}}
-        <option value="{{type}}">{{name}}</option>
-        {{/each}}
-        {{/select}}
+        {{selectOptions config.flyManeuverabilities selected=system.attributes.speed.fly.maneuverability}}
       </select>
     </div>
 </div>

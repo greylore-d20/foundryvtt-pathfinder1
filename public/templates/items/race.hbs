@@ -42,11 +42,7 @@
         <label>{{localize "PF1.CreatureType"}}</label>
         <div class="form-fields">
           <select name="system.creatureType">
-            {{#select system.creatureType}}
-            {{#each config.creatureTypes as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions config.creatureTypes selected=system.creatureType}}
           </select>
         </div>
       </div>

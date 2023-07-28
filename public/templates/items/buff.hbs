@@ -77,12 +77,7 @@
           <input class="formula" type="text" name="system.duration.value" value="{{system.duration.value}}" placeholder="{{localize "PF1.Formula"}}"/>
           {{/unless}}
           <select name="system.duration.units">
-            {{#select system.duration.units}}
-            <option value=""></option>
-            {{#each config.timePeriodsShort as |name key|}}
-            <option value="{{key}}">{{lookup @root.config.timePeriods key}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions config.timePeriodsShort selected=system.duration.units blank=""}}
           </select>
         </div>
       </div>

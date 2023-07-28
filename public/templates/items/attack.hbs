@@ -92,11 +92,7 @@
         <label>{{localize "PF1.AttackType"}}</label>
         <div class="form-fields">
           <select name="system.subType">
-            {{#select system.subType}}
-            {{#each config.attackTypes as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions config.attackTypes selected=system.subType}}
           </select>
         </div>
       </div>
@@ -107,11 +103,7 @@
         <label>{{localize "PF1.Held"}}</label>
         <div class="form-fields">
           <select name="system.held">
-            {{#select system.held}}
-            {{#each config.weaponHoldTypes as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions config.weaponHoldTypes selected=system.held}}
           </select>
         </div>
       </div>

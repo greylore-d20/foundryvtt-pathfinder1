@@ -33,12 +33,7 @@
   <label>{{localize "PF1.ActionType"}}</label>
   <div class="form-fields">
     <select name="actionType">
-      {{#select data.actionType}}
-      <option value=""></option>
-      {{#each config.itemActionTypes as |name type|}}
-      <option value="{{type}}">{{name}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions config.itemActionTypes selected=data.actionType blank=""}}
     </select>
   </div>
 </div>
@@ -110,12 +105,7 @@
   <label>{{localize "PF1.AttackAbility"}}</label>
   <div class="form-fields">
     <select name="ability.attack">
-      {{#select data.ability.attack}}
-      <option value=""></option>
-      {{#each config.abilities as |ability a|}}
-      <option value="{{a}}">{{ability}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions config.abilities selected=data.ability.attack blank=""}}
     </select>
   </div>
 </div>
@@ -167,12 +157,7 @@
   <label>{{localize "PF1.DamageAbility"}}</label>
   <div class="form-fields">
     <select name="ability.damage">
-      {{#select data.ability.damage}}
-      <option value=""></option>
-      {{#each config.abilities as |ability a|}}
-      <option value="{{a}}">{{ability}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions config.abilities selected=data.ability.damage blank=""}}
     </select>
     <select name="ability.damageMult" data-dtype="Number">
       {{selectOptions config.abilityDamageMultipliers selected=data.ability.damageMult nameAttr="value" labelAttr="label"}}

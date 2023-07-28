@@ -34,12 +34,7 @@
   <div class="form-fields">
     {{#if canInputRange}}<input class="formula" type="text" name="range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
     <select name="range.units">
-      {{#select data.range.units}}
-      <option value=""></option>
-      {{#each distanceUnits as |name key|}}
-      <option value="{{key}}">{{name}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions distanceUnits selected=data.range.units blank=""}}
     </select>
   </div>
 </div>
@@ -51,12 +46,7 @@
   <div class="form-fields">
     {{#if canInputMinRange}}<input class="formula" type="text" name="range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
     <select name="range.minUnits">
-      {{#select data.range.minUnits}}
-      <option value=""></option>
-      {{#each distanceUnits as |name key|}}
-      <option value="{{key}}">{{name}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions distanceUnits selected=data.range.minUnits blank=""}}
     </select>
   </div>
 </div>
@@ -89,12 +79,7 @@
     {{else}}
     {{#if canInputDuration}}<input class="formula" type="text" name="duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.Formula"}}"/>{{/if}}
     <select name="duration.units">
-      {{#select data.duration.units}}
-      <option value=""></option>
-      {{#each config.timePeriods as |name key|}}
-      <option value="{{key}}">{{name}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions config.timePeriods selected=data.duration.units blank=""}}
     </select>
     {{/if}}
   </div>
@@ -114,12 +99,7 @@
 <div class="form-group">
   <label>{{localize "PF1.AmmunitionSubtype"}}</label>
   <select name="ammoType">
-    {{#select data.ammoType}}
-    <option value=""></option>
-    {{#each config.ammoTypes as |name type|}}
-      <option value="{{type}}">{{name}}</option>
-    {{/each}}
-    {{/select}}
+    {{selectOptions config.ammoTypes selected=data.ammoType blank=""}}
   </select>
 </div>
 {{/if}}
@@ -157,12 +137,7 @@
       <input type="text" value="{{data.uses.self.max}}" disabled data-dtype="Number"/>
       {{/if}}
       <select name="uses.self.per">
-        {{#select data.uses.self.per}}
-        <option value=""></option>
-        {{#each config.limitedUsePeriods as |name key|}}
-        <option value="{{key}}">{{name}}</option>
-        {{/each}}
-        {{/select}}
+        {{selectOptions config.limitedUsePeriods selected=data.uses.self.per blank=""}}
       </select>
     </div>
   </div>

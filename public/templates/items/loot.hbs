@@ -44,11 +44,7 @@
         <label>{{localize "PF1.Type"}}</label>
         <div class="form-fields">
           <select name="system.subType">
-            {{#select system.subType}}
-            {{#each config.lootTypes as |name type|}}
-            <option value="{{type}}">{{name}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions config.lootTypes selected=system.subType}}
           </select>
         </div>
       </div>
@@ -61,12 +57,7 @@
           <label>{{localize "PF1.AmmunitionSubtype"}}</label>
           <div class="form-fields">
             <select name="system.extraType">
-              {{#select system.extraType}}
-              <option value=""></option>
-              {{#each config.ammoTypes as |name type|}}
-                <option value="{{type}}">{{name}}</option>
-              {{/each}}
-              {{/select}}
+              {{selectOptions config.ammoTypes selected=system.extraType blank=""}}
             </select>
           </div>
         </div>

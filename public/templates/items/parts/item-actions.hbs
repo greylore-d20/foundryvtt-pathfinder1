@@ -58,12 +58,7 @@
     <input type="text" value="{{system.uses.max}}" disabled data-dtype="Number" data-tooltip="@resources.{{system.tag}}.max : {{system.uses.max}}"/>
     {{/if}}
     <select name="system.uses.per" {{disabled inheritCharges}}>
-      {{#select system.uses.per}}
-      <option value=""></option>
-      {{#each config.limitedUsePeriods as |name key|}}
-      <option value="{{key}}">{{name}}</option>
-      {{/each}}
-      {{/select}}
+      {{selectOptions config.limitedUsePeriods selected=system.uses.per blank=""}}
     </select>
   </div>
 </div>

@@ -56,11 +56,7 @@
         <label>{{localize "PF1.Type"}}</label>
         <div class="form-fields">
           <select name="system.subType" value="{{system.subType}}">
-            {{#select system.subType}}
-            {{#each config.featTypes as |type a|}}
-            <option value="{{a}}">{{type}}</option>
-            {{/each}}
-            {{/select}}
+            {{selectOptions config.featTypes selected=system.subType}}
           </select>
 
           <select name="system.abilityType" value="{{system.abilityType}}">

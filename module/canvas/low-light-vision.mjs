@@ -45,10 +45,14 @@ export const patchCore = function () {
   const LightSource_initialize = LightSource.prototype.initialize;
   LightSource.prototype.initialize = function (data = {}) {
     const { dim, bright } = this.getRadius(data.dim, data.bright);
-    data.dim = dim;
-    data.bright = bright;
-    LightSource_initialize.call(this, data);
-    return this;
+
+    // Avoid NaN and introducing keys that shouldn't be in the data
+    // Without undefined check, global illumination will cause darkvision and similar vision modes to glitch.
+    // We're assuming getRadius gives sensible values otherwise.
+    if (data.dim !== undefined) data.dim = dim;
+    if (data.bright !== undefined) data.bright = bright;
+
+    return LightSource_initialize.call(this, data);
   };
 
   LightSource.prototype.getRadius = function (dim, bright) {

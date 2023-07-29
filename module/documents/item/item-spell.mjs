@@ -347,20 +347,12 @@ export class ItemSpellPF extends ItemPF {
     // No actor? No DC!
     if (!this.actor) return 0;
 
-    const spellbook = this.spellbook;
-    if (spellbook) {
-      let formula = spellbook.baseDCFormula;
+    foundry.utils.logCompatibilityWarning("ItemSpellPF.getDC() is deprecated in favor of ItemAction.getDC()", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
 
-      rollData = rollData ?? this.getRollData();
-      const data = rollData.item;
-      if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
-
-      // Get conditional save DC bonus
-      const dcBonus = rollData.dcBonus ?? 0;
-
-      return RollPF.safeRoll(formula, rollData).total + dcBonus;
-    }
-    return 10;
+    return this.firstAction?.getDC(rollData) ?? 10;
   }
 
   getSpellUses(max = false) {

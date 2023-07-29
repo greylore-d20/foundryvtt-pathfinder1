@@ -1331,7 +1331,7 @@ export class ItemPF extends Item {
     }
 
     // Deselect targets
-    if (game.settings.get("pf1", "clearTargetsAfterAttack")) {
+    if (game.settings.get("pf1", "clearTargetsAfterAttack") && game.user.targets.size) {
       game.user.updateTokenTargets([]);
       // Above does not communicate targets to other users, so..
       game.user.broadcastActivity({ targets: [] });

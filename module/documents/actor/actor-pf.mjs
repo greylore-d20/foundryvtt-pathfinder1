@@ -2085,6 +2085,7 @@ export class ActorPF extends Actor {
         enh: srcData.enh,
         broken: srcData.broken,
         baseTypes: srcData.baseTypes,
+        tags: srcData.tags,
         weaponGroups: srcData.weaponGroups,
         actions: deepClone(srcData.actions ?? []),
       },

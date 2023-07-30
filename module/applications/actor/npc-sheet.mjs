@@ -32,7 +32,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
    * @type {string}
    */
   get template() {
-    if (this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.hbs";
+    if (!game.user.isGM && this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.hbs";
     return "systems/pf1/templates/actors/npc-sheet.hbs";
   }
 

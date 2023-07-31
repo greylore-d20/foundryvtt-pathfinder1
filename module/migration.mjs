@@ -1276,6 +1276,11 @@ const _migrateItemLinks = function (ent, updateData) {
         delete link.img;
         updated = true;
       }
+
+      if (link._index !== undefined) {
+        delete link._index;
+        updated = true;
+      }
     }
 
     if (updated) {

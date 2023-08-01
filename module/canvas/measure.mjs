@@ -358,11 +358,40 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
     hl.clear();
     if (!this.isVisible) return;
 
+    const checkCollisions = this._checkCollisions();
+
+    const origin = { x: this.x, y: this.y };
+    const offset = this.scene.grid.size / 2;
+
     // Get grid squares to highlight
     const highlightSquares = this._getGridHighlightPositions();
     for (const s of highlightSquares) {
+      if (checkCollisions && this._testCollision(origin, { x: s.x + offset, y: s.y + offset })) continue;
+
       grid.grid.highlightGridPosition(hl, { x: s.x, y: s.y, color: fc, border: bc });
     }
+  }
+
+  /**
+   * Determine whether to check for collisions.
+   *
+   * @private
+   * @returns {boolean}
+   */
+  _checkCollisions() {
+    return this.document.getFlag("pf1", "walls") ?? false;
+  }
+
+  /**
+   * Tests for collisions between two points.
+   *
+   * @private
+   * @param {{x:number,y:number}} origin
+   * @param {{x:number,y:number}} point
+   * @returns {boolean}
+   */
+  _testCollision(origin, point) {
+    return CONFIG.Canvas.polygonBackends.move.testCollision(origin, point, { mode: "any", type: "move" });
   }
 
   getHighlightLayer() {

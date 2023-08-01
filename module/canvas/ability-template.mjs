@@ -47,6 +47,10 @@ export class AbilityTemplate extends MeasuredTemplatePF {
       _id: foundry.utils.randomID(16),
     };
 
+    if (options.walls) {
+      templateData.flags = { pf1: { walls: true } };
+    }
+
     // Additional type-specific data
     switch (type) {
       case "cone":

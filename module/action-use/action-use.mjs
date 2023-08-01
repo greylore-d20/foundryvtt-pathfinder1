@@ -816,6 +816,9 @@ export class ActionUse {
     }
     if (mt.texture) templateOptions.texture = mt.texture;
 
+    // TODO: Make this configurable in action
+    templateOptions.walls = true;
+
     // Create template
     this.shared.template = null;
     const template = pf1.canvas.AbilityTemplate.fromData(templateOptions);

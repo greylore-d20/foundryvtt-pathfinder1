@@ -307,11 +307,9 @@ export const migrateTokenData = function (token) {
  * @returns {Promise<TokenDocument|null>} - Promise to updated document,. or null if no update was done.
  */
 export async function migrateToken(token) {
-  const updateData = migrateTokenData(token.toObject());
-  if (!foundry.utils.isEmpty(updateData)) {
-    return token.update(updateData);
-  }
-  return null;
+  const tokenData = token.toObject();
+  migrateTokenData(tokenData);
+  return token.update(tokenData);
 }
 
 /**
@@ -596,10 +594,7 @@ export const migrateSceneData = async function (scene) {
  * @param {Scene} scene - The Scene to Update
  */
 export async function migrateSceneTokens(scene) {
-  const tokens = [];
   for (const token of scene.tokens) {
-    if (token.isLinked) continue;
-
     await migrateToken(token);
   }
 }

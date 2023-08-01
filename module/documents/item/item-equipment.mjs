@@ -147,4 +147,13 @@ export class ItemEquipmentPF extends ItemPF {
   get isActive() {
     return this.system.equipped;
   }
+
+  /**
+   * Does the equipment subtype use slots.
+   *
+   * @type {boolean}
+   */
+  get hasSlots() {
+    return ["wondrous", "other"].includes(this.subType);
+  }
 }

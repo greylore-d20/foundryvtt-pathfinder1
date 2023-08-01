@@ -990,7 +990,6 @@ const _migrateArmorCategories = function (ent, updateData) {
   } else if (oldType === "shield") {
     updateData["system.equipmentType"] = "shield";
     updateData["system.equipmentSubtype"] = "lightShield";
-    updateData["system.slot"] = "shield";
   } else if (oldType === "misc") {
     updateData["system.equipmentType"] = "misc";
     updateData["system.equipmentSubtype"] = "wondrous";

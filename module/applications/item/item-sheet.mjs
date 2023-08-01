@@ -345,13 +345,10 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       // Prepare slots for equipment
-      context.equipmentSlots = pf1.config.equipmentSlots[subType] ?? {};
-
-      // Whether the equipment should show armor data
-      context.showArmorData = ["armor", "shield"].includes(subType);
+      context.equipmentSlots = pf1.config.equipmentSlots.wondrous;
 
       // Whether the current equipment type has multiple slots
-      context.hasMultipleSlots = ["wondrous", "other"].includes(subType);
+      context.hasMultipleSlots = item.hasSlots;
 
       context.hasSubCategory = ["armor", "shield"].includes(subType);
     }

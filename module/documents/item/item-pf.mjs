@@ -626,13 +626,8 @@ export class ItemPF extends Item {
     else labels.identified = checkNo;
 
     // Slot label
-    if (itemData.slot) {
-      // Add equipment slot
-      const equipmentType = this.system.subType || null;
-      if (equipmentType != null) {
-        const equipmentSlot = this.system.slot || null;
-        labels.slot = equipmentSlot == null ? null : pf1.config.equipmentSlots[equipmentType]?.[equipmentSlot];
-      } else labels.slot = null;
+    if (this.hasSlots) {
+      labels.slot = pf1.config.equipmentSlots.wondrous[itemData.slot] ?? null;
     }
 
     const action = actionId ? this.actions.get(actionId) : this.firstAction;

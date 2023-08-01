@@ -42,19 +42,13 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
-      {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
-
-      <h3 class="form-header">{{localize "PF1.WeaponDetails"}}</h3>
       {{#if (and owner owned)}}
-      <label class="checkbox">
-        <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}} />
-        {{localize "PF1.ShowInQuickbar"}}
-      </label>
-
       <div class="form-group">
         <button type="button" name="create-attack">{{localize "PF1.CreateAttack"}}</button>
       </div>
       {{/if}}
+
+      <h3 class="form-header">{{localize "PF1.WeaponDetails"}}</h3>
 
       {{!-- Weapon Type --}}
       <div class="form-group">
@@ -101,6 +95,16 @@
         </div>
       </div>
 
+      {{#unless showUnidentifiedData}}
+      {{!-- Enhancement Bonus --}}
+      <div class="form-group">
+        <label>{{localize "PF1.EnhancementBonus"}}</label>
+        <div class="form-fields">
+          <input type="text" name="system.enh" value="{{ system.enh }}" data-dtype="Number" placeholder="0" />
+        </div>
+      </div>
+      {{/unless}}
+
       {{!-- Base Types --}}
       {{> "systems/pf1/templates/items/parts/item-base-types.hbs"}}
 
@@ -121,10 +125,6 @@
         <label class="checkbox">
           <input type="checkbox" name="system.broken" {{checked system.broken}} /> {{localize "PF1.Broken"}}
         </label>
-
-        <label class="checkbox">
-          <input type="checkbox" name="system.proficient" {{checked system.proficient}}/> {{localize "PF1.Proficient"}}
-        </label>
       </div>
 
       {{#unless showUnidentifiedData}}
@@ -138,14 +138,21 @@
         </label>
         {{/each}}
       </div>
-
-      <div class="form-group">
-        <label>{{localize "PF1.EnhancementBonus"}}</label>
-        <div class="form-fields">
-          <input type="text" name="system.enh" value="{{ system.enh }}" data-dtype="Number" placeholder="0" />
-        </div>
-      </div>
       {{/unless}}
+
+      <h3 class="form-header">{{localize "PF1.Misc"}}</h3>
+      <div class="form-group stacked">
+        <label class="checkbox">
+          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}} />
+          {{localize "PF1.ShowInQuickbar"}}
+        </label>
+
+        <label class="checkbox">
+          <input type="checkbox" name="system.proficient" {{checked system.proficient}}/> {{localize "PF1.Proficient"}}
+        </label>
+      </div>
+
+      {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
 
       {{!-- Advanced --}}
       {{#unless showUnidentifiedData}}

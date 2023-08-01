@@ -799,9 +799,6 @@ export class ItemSheetPF extends ItemSheet {
         for (const [index, linkData] of Object.entries(typedLinks)) {
           links[linkType][index] = mergeObject(links[linkType][index] ?? {}, linkData);
         }
-
-        // Ensure internal data remains in order
-        links[linkType].sort((a, b) => (a.level ?? 0) - (b.level ?? 0));
       }
     }
 

@@ -12,9 +12,18 @@ export class ItemClassPF extends ItemPF {
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
 
+    if (!changed.system) return;
+
     // Set level marker
-    if (changed.system?.level !== undefined) {
+    if (changed.system.level !== undefined) {
       this._prevLevel = this.system.level;
+    }
+
+    // Ensure class associations remain in level order
+    const classLinks = changed.system.links?.classAssociations;
+    if (classLinks?.length) {
+      classLinks.forEach((link) => (link.level ||= 1));
+      classLinks.sort((a, b) => a.level - b.level);
     }
   }
 

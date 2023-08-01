@@ -291,6 +291,7 @@ export class CombatPF extends Combat {
    * @param {string} userId Triggering user ID
    */
   _onUpdate(data, options, userId) {
+    super._onUpdate(data, options, userId);
     try {
       this._expireEffectsOnUpdate(data, options, userId);
     } catch (error) {

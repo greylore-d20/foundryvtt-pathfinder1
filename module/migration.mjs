@@ -464,7 +464,6 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateSpellCosts(item, updateData);
   _migrateLootEquip(item, updateData);
   _migrateItemLinks(item, updateData);
-  _migrateClassAssociations(item, updateData);
   _migrateProficiencies(item, updateData);
   _migrateItemNotes(item, updateData);
   _migrateSpellData(item, updateData);
@@ -1290,30 +1289,16 @@ const _migrateItemLinks = function (ent, updateData) {
         delete link._index;
         updated = true;
       }
+
+      if (link.hiddenLinks !== undefined) {
+        delete link.hiddenLinks;
+        updated = true;
+      }
     }
 
     if (updated) {
       updateData[`system.links.${linkType}`] = links;
     }
-  }
-};
-
-const _migrateClassAssociations = function (ent, updateData) {
-  if (ent.type !== "class") return;
-  const _assoc = ent.system?.links?.classAssociations;
-  if (_assoc === undefined) return;
-
-  let modified = false;
-  const newAssociations = deepClone(_assoc);
-  for (const assoc of newAssociations) {
-    if (assoc.hiddenLinks !== undefined) {
-      delete assoc.hiddenLinks;
-      modified = true;
-    }
-  }
-
-  if (modified) {
-    updateData["system.links.classAssociations"] = newAssociations;
   }
 };
 

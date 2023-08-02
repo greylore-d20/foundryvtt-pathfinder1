@@ -452,7 +452,6 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateClassType(item, updateData);
   _migrateWeaponCategories(item, updateData);
   _migrateArmorCategories(item, updateData);
-  _migrateEquipmentCategories(item, updateData);
   _migrateItemSize(item, updateData);
   _migrateAbilityTypes(item, updateData);
   _migrateClassLevels(item, updateData);
@@ -475,6 +474,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateItemType(item, updateData);
   _migrateItemLearnedAt(item, updateData);
   _migrateItemTuples(item, updateData);
+  _migrateEquipmentCategories(item, updateData);
   _migrateItemUnusedData(item, updateData);
 
   // Migrate action data

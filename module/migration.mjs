@@ -298,6 +298,21 @@ export const migrateTokenData = function (token) {
   if (flags.customVisionRules === false) {
     token["flags.pf1.-=customVisionRules"] = null;
   }
+
+  // Remove data from v9 vision handling
+  // Added with PF1 vNEXT
+  if (!flags.customVisionRules) {
+    // Attempt to preserve vision range after migration
+    if (token.sight.visionMode !== "basic") {
+      if (token.sight.range !== 0) token["sight.range"] = 0;
+      token["sight.visionMode"] = "basic";
+    }
+    if ("saturation" in token.sight) token["sight.-=saturation"] = null;
+    if ("brightness" in token.sight) token["sight.-=brightness"] = null;
+    if ("attenuation" in token.sight) token["sight.-=attenuation"] = null;
+    if ("contrast" in token.sight) token["sight.-=contrast"] = null;
+    if (token.detectionModes?.length) token["detectionModes"] = [];
+  }
 };
 
 /**

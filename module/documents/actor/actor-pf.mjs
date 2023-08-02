@@ -1922,27 +1922,37 @@ export class ActorPF extends Actor {
 
     const sourceUser = game.user.id === userId;
 
-    let refreshVision = false,
+    let initializeVision = false,
       refreshLighting = false;
+
     if (hasProperty(changed.system, "attributes.conditions")) {
       if (game.user.id === userId) this.toggleConditionStatusIcons({ render: false });
-      refreshVision = true;
     } else if (hasProperty(changed.system, "traits.senses")) {
-      if (sourceUser) this._syncTokenVision(context);
+      initializeVision = true;
       if (changed.system.traits.senses.ll) {
         refreshLighting = true;
       }
     } else if (changed.flags?.pf1?.visionPermissions) {
-      refreshVision = true;
+      initializeVision = true;
       refreshLighting = true;
     }
 
-    if (refreshVision || refreshLighting) {
+    if (initializeVision || refreshLighting) {
       if (this.testUserPermission(game.user, "OBSERVER")) {
         const visionUpdate = {
           refreshLighting: true,
           refreshVision: true,
         };
+
+        // Ensure vision immediately updates
+        if (initializeVision) {
+          for (const token of this.getActiveTokens(false, true)) {
+            token._syncSenses();
+          }
+          visionUpdate.initializeVision = true;
+        }
+
+        // Ensure LLV functions correctly
         if (refreshLighting) {
           visionUpdate.initializeLighting = true;
         }
@@ -1968,29 +1978,6 @@ export class ActorPF extends Actor {
         }))
       );
     }
-  }
-
-  /**
-   * Synchronize vision for all relevant tokens.
-   */
-  async _syncTokenVision() {
-    if (!this.isOwner) return;
-
-    const scene = canvas?.scene;
-    if (!scene) return;
-
-    const updates = [];
-
-    const tokens = this.getActiveTokens(false, true);
-    for (const token of scene.tokens) {
-      const update = token._getSyncVisionData();
-      if (update) {
-        update._id = token.id;
-        updates.push(update);
-      }
-    }
-
-    return scene.updateEmbeddedDocuments("Token", updates);
   }
 
   /**

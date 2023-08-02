@@ -770,9 +770,6 @@ Hooks.on("renderTokenConfig", async (app, html) => {
     const tabElem = html.find(`.tab[data-tab="vision"]`);
     // Disable vision mode selection
     tabElem.find("select[name='sight.visionMode']").prop("disabled", true);
-    // Disable basic range
-    // TODO: Add custom input for guaranteed vision range?
-    tabElem.find("input[name='sight.range']").prop("disabled", true);
     // Disable detection mode tab entirely
     const dmTab = tabElem.find(".tab[data-tab='detection']");
     dmTab.find("input,select").prop("disabled", true);
@@ -852,28 +849,6 @@ Hooks.on("controlToken", () => {
     true
   );
 });
-
-/**
- * Synchronize token senses from actors.
- *
- * @param scene
- * @returns {Promise} - Promise that resolves once all token updates finish.
- */
-async function syncTokenSenses(scene) {
-  const updates = [];
-
-  for (const token of scene.tokens) {
-    const updateData = token._getSyncVisionData();
-    if (updateData) {
-      updateData._id = token.id;
-      updates.push(updateData);
-    }
-  }
-
-  return scene.updateEmbeddedDocuments("Token", updates);
-}
-
-Hooks.on("canvasReady", (canvas) => syncTokenSenses(canvas.scene));
 
 /* ------------------------------- */
 /* Expire active effects

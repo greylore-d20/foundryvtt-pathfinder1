@@ -2212,49 +2212,51 @@ export class ActorSheetPF extends ActorSheet {
   _onItemCreate(event) {
     event.preventDefault();
     const header = event.currentTarget;
+
     const type = header.dataset.type;
-    const typeName = header.dataset.typeName || header.dataset.type;
-    const baseName = `New ${typeName.capitalize()}`;
+    let subType = header.dataset.subType;
+    const typeName = header.dataset.typeName || game.i18n.localize(pf1.config.itemTypes[type] || type);
+
     const itemData = {
-      name: baseName,
-      type: type,
+      name: game.i18n.format("PF1.NewItem", { type: typeName }),
+      type,
       system: duplicate(header.dataset),
     };
+
     delete itemData.system.type;
     delete itemData.system.tooltip;
-
-    const subType = itemData.system.subType;
-    const sameSubgroup = (oldItem) => {
-      if (subType) return subType === oldItem.subType;
-      if (type === "spell") {
-        return itemData.spellbook === oldItem.system.spellbook && itemData.level === oldItem.system.level;
-      }
-      // Assume everything else is only categorized by main type
-      return true;
-    };
-
-    // Get old items of same general category
-    const oldItems = this.document.items
-      .filter((i) => i.type === type && sameSubgroup(i))
-      .sort((a, b) => b.sort - a.sort);
-
-    if (oldItems.length) {
-      // Ensure new item is at the bottom of the list instead of seemingly random position
-      itemData.sort = oldItems[0].sort + 100;
-
-      // Ensure no duplicate names occur
-      let i = 2;
-      while (oldItems.find((item) => item.name === itemData.name)) {
-        itemData.name = `${baseName} (${i++})`;
-      }
-    }
+    delete itemData.system.typeName;
 
     // Ensure variable type is correct
     if (type === "spell") {
       if (typeof itemData.system?.level === "string") itemData.system.level = parseInt(itemData.system.level);
     }
 
-    return this.document.createEmbeddedDocuments("Item", [itemData]);
+    const newItem = new Item.implementation(itemData);
+
+    this._sortNewItem(newItem);
+
+    subType = newItem.subType;
+
+    // Get old items of same general category
+    const oldItems = this.actor.itemTypes[type]
+      .filter((oldItem) => this._isItemSameSubGroup(newItem, oldItem))
+      .sort((a, b) => b.sort - a.sort);
+
+    if (oldItems.length) {
+      // Ensure no duplicate names occur
+      const baseName = newItem.name;
+      let newName = baseName;
+      let i = 2;
+      const names = new Set(oldItems.map((i) => i.name));
+      while (names.has(newName)) {
+        newName = `${baseName} (${i++})`;
+      }
+
+      if (newName !== newItem.name) newItem.updateSource({ name: newName });
+    }
+
+    return this.document.createEmbeddedDocuments("Item", [newItem.toObject()]);
   }
 
   /* -------------------------------------------- */
@@ -2533,7 +2535,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         hasActions: false,
         items: [],
-        dataset: { type: "container" },
+        dataset: { type: "container", "type-name": game.i18n.localize("ITEM.TypeContainer") },
       },
     };
 
@@ -3064,6 +3066,46 @@ export class ActorSheetPF extends ActorSheet {
     }
   }
 
+  /**
+   * Tests if two items in same sub-group.
+   *
+   * @private
+   * @param {ItemPF} item0
+   * @param {ItemPF} item1
+   * @returns {boolean}
+   */
+  _isItemSameSubGroup(item0, item1) {
+    if (item0.type === "spell") {
+      return item0.system.spellbook === item1.system.spellbook && item0.system.level === item1.system.level;
+    }
+
+    if (item0.subType) return item0.subType === item1.subType;
+
+    // Assume everything else is only categorized by main type
+    return true;
+  }
+
+  /**
+   * Sort item at the bottom of the list instead of seemingly random position
+   *
+   * @private
+   * @param {ItemPF} item - Temporary item to do sorting on.
+   */
+  _sortNewItem(item) {
+    const type = item.type;
+
+    // Get old items of same general category
+    const oldItems = this.actor.itemTypes[type]
+      .filter((oldItem) => this._isItemSameSubGroup(item, oldItem))
+      .sort((a, b) => b.sort - a.sort);
+
+    if (oldItems.length) {
+      item.updateSource({
+        sort: oldItems[0].sort + CONST.SORT_INTEGER_DENSITY,
+      });
+    }
+  }
+
   async _onDropItemCreate(itemData) {
     const itemDatas = itemData instanceof Array ? itemData : [itemData];
 
@@ -3120,7 +3162,11 @@ export class ActorSheetPF extends ActorSheet {
         if (doReturn) return false;
       }
 
-      creationData.push(itemData);
+      const newItem = new Item.implementation(itemData);
+
+      this._sortNewItem(newItem);
+
+      creationData.push(newItem.toObject());
     }
 
     return this.document.createEmbeddedDocuments("Item", creationData);

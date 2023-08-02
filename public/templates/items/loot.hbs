@@ -36,7 +36,6 @@
     {{> "systems/pf1/templates/items/parts/item-description.hbs"}}
 
     <div class="tab details" data-group="primary" data-tab="details">
-      {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
 
       <h3 class="form-header">{{localize "PF1.Details"}}</h3>
 
@@ -53,6 +52,9 @@
           </select>
         </div>
       </div>
+
+      {{!-- Item Size --}}
+      {{> "systems/pf1/templates/items/parts/item-size.hbs" allowAutoResizing=true}}
 
       {{#if (eq system.subType "ammo")}}
         <div class="form-group">
@@ -86,17 +88,17 @@
         {{/unless}}
       {{/if}}
 
-      <hr>
-
-      {{!-- Item Size --}}
-      {{> "systems/pf1/templates/items/parts/item-size.hbs" allowAutoResizing=true}}
+      <h3 class="form-header">{{localize "PF1.Misc"}}</h3>
 
       {{#if isGM}}
-      <hr>
-      <label class="checkbox">
-        <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{localize "PF1.Identified"}}
-      </label>
+      <div class="form-group stacked">
+        <label class="checkbox">
+          <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{localize "PF1.Identified"}}
+        </label>
+      </div>
       {{/if}}
+
+      {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
 
       {{!-- Advanced --}}
       {{#unless showUnidentifiedData}}

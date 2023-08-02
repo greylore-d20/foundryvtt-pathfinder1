@@ -38,18 +38,6 @@
     <div class="tab details" data-group="primary" data-tab="details">
       {{> "systems/pf1/templates/items/parts/item-actions.hbs"}}
 
-      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
-
-      <div class="form-group stacked">
-        {{#if owner}}
-        <label class="checkbox">
-          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
-        </label>
-        {{/if}}
-      </div>
-
-      {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
-
       <h3 class="form-header">{{localize "PF1.Details"}}</h3>
 
       {{!-- Consumable Type --}}
@@ -66,11 +54,25 @@
       </div>
       {{/unless}}
 
+      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
+
       {{#if isGM}}
-      <label class="checkbox">
-        <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{localize "PF1.Identified"}}
-      </label>
+      <div class="form-group stacked">
+        <label class="checkbox">
+          <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{localize "PF1.Identified"}}
+        </label>
+      </div>
       {{/if}}
+
+      <h3 class="form-header">{{localize "PF1.Misc"}}</h3>
+
+      <div class="form-group stacked">
+        <label class="checkbox">
+          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+        </label>
+      </div>
+
+      {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}
 
       {{!-- Advanced --}}
       {{#unless showUnidentifiedData}}

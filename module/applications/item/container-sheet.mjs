@@ -44,7 +44,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     return mergeObject(super.defaultOptions, {
       width: 800,
       classes: ["pf1", "sheet", "item"],
-      scrollY: ["section.inventory-body"],
+      scrollY: [".item-groups-list"],
       dragDrop: [
         { dragSelector: "li.item[data-item-id]", dropSelector: '.tab[data-tab="contents"]' },
         { dragSelector: "label.denomination" },

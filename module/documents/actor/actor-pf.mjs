@@ -4135,18 +4135,6 @@ export class ActorPF extends ActorBasePF {
       const damage = this.system.abilities[k].damage;
       const newMod = getAbilityModifier(total, { penalty, damage });
       this.system.abilities[k].mod = newMod;
-
-      // Store previous ability score
-      if (!pf1.migrations.isMigrating && this._initialized && this._prevAbilityScores) {
-        const prevMod = this._prevAbilityScores?.[k].mod ?? 0;
-        const diffMod = newMod - prevMod;
-        const result = this.system.abilities[k].mod + diffMod;
-
-        this._prevAbilityScores[k] = {
-          total,
-          mod: result,
-        };
-      }
     }
   }
 

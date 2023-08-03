@@ -1,5 +1,34 @@
 # Changelog
 
+## 9.4 - 2023-8-3
+
+### Bug Fixes
+
+- Combats could not be cycled.
+- Scroll position was not restored in container sheets
+- Copy weapon tags to created attack
+- Equipment items sometimes required more than one migration
+- Darkvision in scene with global illumination would render visible areas grayscale. ([2347](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2347))
+- Compendium browser button layout was broken in compendium directory popout. ([2384](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2384))
+- Class associations level ordering was inconsistent. ([2390](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2390))
+- Other typed equipment displayed invalid slot choices. ([2391](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2391))
+- Items added to actors via sheet had inconsistent behaviour on where they would show up.
+- Woundrous items appeared as light armor in the item browser
+- Limited ownership affected NPC actor sheets for GMs
+- Spell effect field moved to usage tab and made it always visible for spells. ([2370](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2370))
+
+### Changelog
+
+- Senses no longer function via actively updating token data. ([2303](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2303))
+- Guaranteed vision can now be adjusted via vision range in token settings.
+
+### Compendium
+
+- Fix typo in Cytillesh Bomb name
+- Unchained Rogue had chained Rogue's sneak attack. ([2388](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2388))
+- Rename arcanist familiar exploit to familiar (ARC) to be in line with other class feats which name is used multiple times in the system.
+- Changed arcanist exploits to be uniformly named.
+
 ## 9.3 - 2023-7-27
 
 ### Bug Fixes

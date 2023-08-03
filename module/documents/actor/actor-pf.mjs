@@ -530,23 +530,18 @@ export class ActorPF extends ActorBasePF {
     this.system.details.mythicTier = mythicTier;
 
     // Refresh ability scores
-    {
-      const abs = Object.keys(this.system.abilities);
-      for (const ab of abs) {
-        const value = this.system.abilities[ab].value;
-        if (value == null) {
-          this.system.abilities[ab].total = null;
-          this.system.abilities[ab].base = null;
-          this.system.abilities[ab].baseMod = 0;
-        } else {
-          this.system.abilities[ab].total = value - this.system.abilities[ab].drain;
-          this.system.abilities[ab].penalty =
-            (this.system.abilities[ab].penalty || 0) - Math.abs(this.system.abilities[ab].userPenalty || 0);
-          this.system.abilities[ab].base = this.system.abilities[ab].total;
-        }
+    for (const ability of Object.values(this.system.abilities)) {
+      const value = ability.value;
+      if (value === null) {
+        ability.total = null;
+        ability.base = null;
+      } else {
+        ability.total = value - ability.drain;
+        ability.penalty = (ability.penalty || 0) - Math.abs(ability.userPenalty || 0);
+        ability.base = ability.total;
       }
-      this.refreshAbilityModifiers();
     }
+    this.refreshAbilityModifiers();
 
     // Reset BAB
     {

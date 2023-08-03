@@ -558,6 +558,7 @@ export class CompendiumBrowser extends Application {
             } else {
               const newHtml = await this.constructor._renderEntries(newEntries);
               listEnd.insertAdjacentHTML("beforebegin", newHtml);
+              this._dragDrop[0].bind(html);
             }
           }
         },

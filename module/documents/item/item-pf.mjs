@@ -239,6 +239,9 @@ export class ItemPF extends ItemBasePF {
     return this.isSingleUse || ["day", "week", "charges"].includes(this.system.uses?.per);
   }
 
+  /**
+   * @type {number} Remaining charges
+   */
   get charges() {
     // No actor? No charges!
     if (!this.actor) return 0;
@@ -248,12 +251,15 @@ export class ItemPF extends ItemBasePF {
     if (link) return link.charges;
 
     // Get own charges
-    if (this.isSingleUse) return this.system.quantity;
+    if (this.isSingleUse) return this.system.quantity ?? 0;
     return this.system.uses?.value ?? 0;
   }
 
+  /**
+   * @type {boolean} True if default charge cost is non-zero
+   */
   get autoDeductCharges() {
-    return this.getDefaultChargeCost() > 0;
+    return this.getDefaultChargeCost() != 0;
   }
 
   /**
@@ -269,17 +275,25 @@ export class ItemPF extends ItemBasePF {
     return RollPF.safeRoll(formula, rollData).total;
   }
 
+  /**
+   * Default charge formula.
+   *
+   * @returns {string} Charge formula
+   */
   getDefaultChargeFormula() {
     return this.system.uses?.autoDeductChargesCost || "1";
   }
 
+  /**
+   * @type {number} Maximum charges the item can have.
+   */
   get maxCharges() {
     // Get linked charges
     const link = this.links?.charges;
     if (link) return link.maxCharges;
 
     // Get own charges
-    if (this.isSingleUse) return this.system.quantity;
+    if (this.isSingleUse) return this.system.quantity ?? 0;
     return this.system.uses?.max ?? 0;
   }
 

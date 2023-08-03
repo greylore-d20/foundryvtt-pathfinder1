@@ -300,7 +300,7 @@ export const migrateTokenData = function (token) {
   }
 
   // Remove data from v9 vision handling
-  // Added with PF1 vNEXT
+  // Added with PF1 v9.4
   if (!flags.customVisionRules) {
     // Attempt to preserve vision range after migration
     if (token.sight.visionMode !== "basic") {

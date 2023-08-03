@@ -478,12 +478,8 @@ export class ItemPF extends ItemBasePF {
     if (link) return link.addCharges(value);
 
     // Add own charges
-    if (this.system.uses?.per === "single" && this.system.quantity == null) return;
-
-    const prevValue = this.isSingleUse ? this.system.quantity : this.system.uses?.value;
-
-    if (this.isSingleUse) return this.update({ "system.quantity": prevValue + value });
-    else return this.update({ "system.uses.value": prevValue + value });
+    if (this.isSingleUse) return this.update({ "system.quantity": (this.system.quantity ?? 0) + value });
+    else return this.update({ "system.uses.value": (this.system.uses?.value ?? 0) + value });
   }
 
   /**

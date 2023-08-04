@@ -4,9 +4,9 @@ import fs from "fs-extra";
 import { ViteLoggerPF } from "./vite-logger.mjs";
 import { removePrefix } from "./foundry-config.mjs";
 
-/** @type {import ("vite").ViteDevServer} */
+/** @type {import ("vite").ViteDevServer | undefined} */
 let server;
-/** @type {import ("chokidar").FSWatcher} */
+/** @type {import ("chokidar").FSWatcher | undefined} */
 let watcher;
 
 /**
@@ -22,6 +22,9 @@ export default function handlebarsReload() {
     },
 
     configResolved(config) {
+      // Don't do anything if we're not in dev mode
+      if (!server) return;
+
       const logger = new ViteLoggerPF(config.logger);
       const watchPath = path.resolve(config.publicDir, "**/*.hbs");
       watcher = chokidar.watch(watchPath);
@@ -75,7 +78,6 @@ export default function handlebarsReload() {
 
         // Don't spam the console with messages about files that are already in the dist directory
         if (!(await fs.pathExists(fileFromDist))) {
-          console.debug(`add: ${fileFromPublic} (${fileFromDist})`);
           return fileHandler(file);
         }
       });
@@ -84,7 +86,7 @@ export default function handlebarsReload() {
     },
 
     async buildEnd() {
-      await watcher.close();
+      if (watcher) await watcher.close();
     },
   };
 }

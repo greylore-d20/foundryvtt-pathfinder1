@@ -22,8 +22,8 @@ export default function handlebarsReload() {
     },
 
     configResolved(config) {
-      // Don't do anything if we're not in dev mode
-      if (!server) return;
+      // Don't do anything for full builds
+      if (config.command !== "serve") return;
 
       const logger = new ViteLoggerPF(config.logger);
       const watchPath = path.resolve(config.publicDir, "**/*.hbs");
@@ -56,7 +56,7 @@ export default function handlebarsReload() {
           // Trigger hot reload within dev server/Foundry
           const content = await fs.readFile(file, { encoding: "utf8" });
           logger.info(`Hot-reloading ${fileFromRoot} as ${foundryPath}`);
-          server.ws.send({
+          server?.ws.send({
             type: "custom",
             event: "hotHandle:update",
             data: { file: foundryPath, content },

@@ -31,7 +31,13 @@ export default function handlebarsReload() {
         .join(path.posix.sep)
         .replace(/^\/+|\/+$/g, "");
 
-      watcher.on("change", async (file) => {
+      /**
+       * Handle an individual file change, triggering a hot reload within Foundry
+       *
+       * @param {string} file - The file that changed
+       * @returns {Promise<void>}
+       */
+      const fileHandler = async (file) => {
         if (file.endsWith("hbs")) {
           // Transform OS path into Foundry-suitable path
           const filepathUrl = path
@@ -46,7 +52,7 @@ export default function handlebarsReload() {
 
           // Trigger hot reload within dev server/Foundry
           const content = await fs.readFile(file, { encoding: "utf8" });
-          logger.info(`Reload ${fileFromRoot} as ${foundryPath}`);
+          logger.info(`Hot-reloading ${fileFromRoot} as ${foundryPath}`);
           server.ws.send({
             type: "custom",
             event: "hotHandle:update",
@@ -58,7 +64,23 @@ export default function handlebarsReload() {
           await fs.copy(file, distFile);
           logger.info(`Copied ${fileFromRoot} to ${path.relative(config.root, distFile)}`);
         }
+      };
+
+      // Handle newly created files not already copied over
+      watcher.on("add", async (file) => {
+        // Only handle .hbs files
+        if (!file.endsWith("hbs")) return;
+        const fileFromPublic = path.relative(config.publicDir, file);
+        const fileFromDist = path.resolve(config.build.outDir, fileFromPublic);
+
+        // Don't spam the console with messages about files that are already in the dist directory
+        if (!(await fs.pathExists(fileFromDist))) {
+          console.debug(`add: ${fileFromPublic} (${fileFromDist})`);
+          return fileHandler(file);
+        }
       });
+      // Handle changed files
+      watcher.on("change", fileHandler);
     },
 
     async buildEnd() {

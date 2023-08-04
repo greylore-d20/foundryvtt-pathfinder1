@@ -39,8 +39,9 @@ const _TokenHUD_getStatusEffectChoices = TokenHUD.prototype._getStatusEffectChoi
 TokenHUD.prototype._getStatusEffectChoices = function () {
   const core = _TokenHUD_getStatusEffectChoices.call(this),
     buffs = {};
+
   // Only add buff textures for actors with that function (so not e.g. not actors introduced by modules)
-  for (const buff of Object.values(this.object.actor._calcBuffActiveEffects?.() ?? {})) {
+  for (const buff of Object.values(this.object.actor?._calcBuffActiveEffects?.() ?? {})) {
     if (!buff) continue;
     buffs[`buff-${buff.id}`] = {
       id: buff.id,

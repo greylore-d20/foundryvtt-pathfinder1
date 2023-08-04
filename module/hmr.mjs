@@ -49,4 +49,11 @@ if (import.meta.hot) {
       }
     }
   );
+
+  import.meta.hot.on("vite:beforeFullReload", () => {
+    // HACK: Prevent _all_ full-reloading by throwing in callback if reloads are disabled
+    if (import.meta.env.VITE_NO_RELOAD) {
+      throw "Reload prevented, VITE_NO_RELOAD is set";
+    }
+  });
 }

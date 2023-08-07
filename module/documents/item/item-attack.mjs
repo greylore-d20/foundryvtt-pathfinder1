@@ -1,6 +1,23 @@
 import { ItemPF } from "./item-pf.mjs";
 
 export class ItemAttackPF extends ItemPF {
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  _preUpdate(changed, context, user) {
+    super._preUpdate(changed, context, user);
+
+    if (!changed.system) return;
+
+    // Remove held option if type changed to natural attack
+    if (changed.system.subType === "natural") {
+      changed.system.held = null;
+    }
+  }
+
   getProficiency(weapon = true) {
     if (!weapon) throw new Error("Attacks do not support non-weapon proficiency");
 

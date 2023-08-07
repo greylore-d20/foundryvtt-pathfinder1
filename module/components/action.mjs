@@ -466,6 +466,7 @@ export class ItemAction {
           damageMult: 0.5,
         },
       },
+      held: "",
       nonlethal: false,
       touch: false,
       usesAmmo: false,

@@ -173,7 +173,8 @@ export class ActionUse {
     if (formData["measure-template"] != null) this.shared.useMeasureTemplate = formData["measure-template"];
 
     // Set held type
-    setProperty(this.shared.rollData, "item.held", formData["held"] ?? "normal");
+    const held = formData["held"] || this.shared.rollData.action.held || this.shared.rollData.item.held || "normal";
+    this.shared.rollData.item.held = held;
 
     // Damage multiplier
     const abilityDamageMultOverride = formData["damage-ability-multiplier"];
@@ -203,7 +204,6 @@ export class ActionUse {
             powerAttackMultiplier = 0.5;
           }
         } else {
-          const held = this.shared.rollData.item.held;
           if (held === "2h") powerAttackMultiplier = 1.5;
           else if (held === "oh") powerAttackMultiplier = 0.5;
         }

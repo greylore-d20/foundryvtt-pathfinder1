@@ -43,6 +43,18 @@
   </div>
 </div>
 
+{{!-- Held Override --}}
+{{#if inheritedHeld}}
+<div class="form-group select">
+  <label>{{localize "PF1.Held"}}</label>
+  <div class="form-fields">
+    <select name="held">
+      {{selectOptions @root.config.weaponHoldTypes selected=data.held blank=(localize "PF1.InheritAs" inherited=@root.inheritedHeld)}}
+    </select>
+  </div>
+</div>
+{{/if}}
+
 {{#if data.actionType}}
 {{#if hasAttackRoll}}
 {{!-- Attack Name --}}

@@ -151,6 +151,9 @@ export class ItemActionSheet extends FormApplication {
       }
     }
 
+    // Inherited held option's name if any
+    data.inheritedHeld = pf1.config.weaponHoldTypes[data.item.system.held];
+
     return data;
   }
 

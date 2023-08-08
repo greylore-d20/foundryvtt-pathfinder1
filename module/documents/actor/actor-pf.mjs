@@ -259,10 +259,6 @@ export class ActorPF extends Actor {
     this.system.traits.humanoid = creatureType === "humanoid";
   }
 
-  get typeColor() {
-    return "#FDE600";
-  }
-
   static _translateSourceInfo(type, subtype, name) {
     let result = "";
     if (type === "size") result = game.i18n.localize("PF1.SourceInfoSize");

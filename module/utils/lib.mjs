@@ -964,23 +964,6 @@ export function enrichHTMLUnrolled(content, { rollData, secrets, rolls = false, 
 }
 
 /**
- * Split copper currency into gold, silver and copper.
- *
- * @param {number} cp Copper
- * @returns {{gp:number,sp:number,cp:number}} Gold, silver, and copper.
- */
-export const splitCurrency = (cp) => {
-  const gp = Math.floor(cp / 100);
-  const sp = Math.floor(cp / 10) - gp * 10;
-  cp = cp - gp * 100 - sp * 10;
-  return {
-    gp: Math.max(0, gp),
-    sp: Math.max(0, sp),
-    cp: Math.max(0, cp),
-  };
-};
-
-/**
  * Get first active GM user.
  *
  * @deprecated Use `game.users.activeGM` instead

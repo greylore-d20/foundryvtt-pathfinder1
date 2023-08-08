@@ -1,5 +1,4 @@
 import { ItemSheetPF } from "./item-sheet.mjs";
-import { splitCurrency } from "../../utils/lib.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
 import { createConsumableSpellDialog } from "../../utils/lib.mjs";
 import { CurrencyTransfer } from "../currency-transfer.mjs";
@@ -201,8 +200,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
       this.item.getValue({ inLowestDenomination: true }) -
       this.item.getValue({ recursive: false, inLowestDenomination: true });
 
-    data.totalValue = splitCurrency(cpValue);
-    data.sellValue = splitCurrency(cpSellValue);
+    data.totalValue = pf1.utils.currency.split(cpValue);
+    data.sellValue = pf1.utils.currency.split(cpSellValue);
 
     // Set labels
     if (!data.labels) data.labels = {};

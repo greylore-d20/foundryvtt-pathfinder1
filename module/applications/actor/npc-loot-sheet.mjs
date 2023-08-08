@@ -1,5 +1,4 @@
 import { ActorSheetPFNPC } from "./npc-sheet.mjs";
-import { splitCurrency } from "../../utils/lib.mjs";
 
 export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
   /**
@@ -42,8 +41,8 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
       this.calculateSellItemValue({ inLowestDenomination: true }) +
       this.actor.mergeCurrency({ inLowestDenomination: true });
 
-    data.totalValue = splitCurrency(cpValue);
-    data.sellValue = splitCurrency(cpSellValue);
+    data.totalValue = pf1.utils.currency.split(cpValue);
+    data.sellValue = pf1.utils.currency.split(cpSellValue);
 
     // Set labels
     if (!data.labels) data.labels = {};

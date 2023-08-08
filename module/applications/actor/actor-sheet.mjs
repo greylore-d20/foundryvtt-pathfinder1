@@ -1,13 +1,7 @@
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { ActorResistanceSelector } from "../damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
-import {
-  createTag,
-  CR,
-  createConsumableSpellDialog,
-  adjustNumberByStringCommand,
-  splitCurrency,
-} from "../../utils/lib.mjs";
+import { createTag, CR, createConsumableSpellDialog, adjustNumberByStringCommand } from "../../utils/lib.mjs";
 import { getWeightSystem } from "@utils";
 import { PointBuyCalculator } from "../point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "../item-picker.mjs";
@@ -325,7 +319,7 @@ export class ActorSheetPF extends ActorSheet {
     // Add inventory value
     {
       const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true });
-      const totalValue = splitCurrency(cpValue);
+      const totalValue = pf1.utils.currency.split(cpValue);
       data.labels.totalValue = game.i18n.format("PF1.ItemContainerTotalItemValue", {
         gp: totalValue.gp,
         sp: totalValue.sp,

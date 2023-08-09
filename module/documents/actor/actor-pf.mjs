@@ -344,6 +344,11 @@ export class ActorPF extends Actor {
       const tag = item.system.tag;
       if (tag) {
         const flags = item.system.flags?.dictionary || {};
+        if (dFlags[tag] && this.isOwner) {
+          const msg = game.i18n.format("PF1.WarningDuplicateTag", { actor: this.uuid, item: item.name, tag });
+          ui.notifications.warn(msg, { console: false });
+          console.warn(msg, item);
+        }
         for (const [key, value] of Object.entries(flags)) {
           setProperty(dFlags, `${tag}.${key}`, item.isActive ? value : 0);
         }
@@ -1137,7 +1142,8 @@ export class ActorPF extends Actor {
     // Update item resources
     this.items.forEach((item) => {
       item.prepareDerivedItemData();
-      this.updateItemResources(item);
+      // because the resources were already set up above, this is just updating from current roll data - so do not warn on duplicates
+      this.updateItemResources(item, { warnOnDuplicate: false });
     });
 
     this._initialized = true;
@@ -2024,7 +2030,13 @@ export class ActorPF extends Actor {
     }
   }
 
-  updateItemResources(item) {
+  /**
+   * @param {ItemPF} item - the item to add to the actor's resources
+   * @param {object} [options] - extra options
+   * @param {boolean} [options.warnOnDuplicate] - Skips warning if item tag already exists in dictionary flags
+   * @returns {boolean} True if resources were set
+   */
+  updateItemResources(item, { warnOnDuplicate = true } = {}) {
     if (item.type === "spell") return false;
     if (item.isCharged) return false;
     if (item.isSingleUse) return false;
@@ -2035,6 +2047,17 @@ export class ActorPF extends Actor {
       max: item.maxCharges,
       _id: item.id,
     };
+
+    if (warnOnDuplicate && this.system.resources[itemTag] && this.isOwner) {
+      const msg = game.i18n.format("PF1.WarningDuplicateTag", {
+        actor: this.uuid,
+        item: item.name,
+        tag: itemTag,
+      });
+      ui.notifications.warn(msg, { console: false });
+      console.warn(msg, item);
+    }
+
     this.system.resources[itemTag] = resource;
     return true;
   }

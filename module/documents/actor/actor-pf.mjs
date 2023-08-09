@@ -2025,21 +2025,18 @@ export class ActorPF extends Actor {
   }
 
   updateItemResources(item) {
-    if (item.isCharged) {
-      if (item.isSingleUse) return false;
+    if (item.type === "spell") return false;
+    if (item.isCharged) return false;
+    if (item.isSingleUse) return false;
 
-      const itemTag = !item.system.useCustomTag ? createTag(item.name) : item.system.tag;
-
-      const res = {
-        value: item.charges,
-        max: item.maxCharges,
-        _id: item.id,
-      };
-      this.system.resources[itemTag] = res;
-      return true;
-    }
-
-    return false;
+    const itemTag = !item.system.useCustomTag ? createTag(item.name) : item.system.tag;
+    const resource = {
+      value: item.charges,
+      max: item.maxCharges,
+      _id: item.id,
+    };
+    this.system.resources[itemTag] = resource;
+    return true;
   }
 
   /* -------------------------------------------- */

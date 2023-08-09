@@ -96,6 +96,7 @@ Hooks.once("init", function () {
   CONFIG.Actor.documentClasses = {
     character: documents.actor.ActorCharacterPF,
     npc: documents.actor.ActorNPCPF,
+    haunt: documents.actor.ActorHauntPF,
     basic: documents.actor.BasicActorPF,
   };
   CONFIG.Item.documentClass = ItemPFProxy;
@@ -167,6 +168,11 @@ Hooks.once("init", function () {
     label: "PF1.Sheet.NPCLoot",
     types: ["npc"],
     makeDefault: false,
+  });
+  Actors.registerSheet("pf1", applications.actor.ActorSheetPFHaunt, {
+    label: "PF1.Sheet.Haunt",
+    types: ["haunt"],
+    makeDefault: true,
   });
   Actors.registerSheet("pf1", applications.actor.ActorSheetPFBasic, {
     label: "PF1.Sheet.Basic",

@@ -2616,6 +2616,7 @@ export const defaultIcons = {
   actors: {
     character: "icons/svg/mystery-man.svg",
     npc: "icons/svg/terror.svg",
+    haunt: "icons/svg/stoned.svg",
     basic: "icons/svg/castle.svg",
   },
 };

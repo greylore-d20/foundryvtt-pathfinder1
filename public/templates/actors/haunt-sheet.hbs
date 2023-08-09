@@ -1,0 +1,235 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  {{!-- NPC Sheet Header --}}
+  <header class="sheet-header flexrow">
+    <img class="profile" src="{{actor.img}}" title="{{actor.name}}" data-edit="img"/>
+
+    <div class="header-details flexcol">
+        <h1 class="charname">
+          <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}"/>
+        </h1>
+    </div>
+  </header>
+
+  {{!-- NPC Sheet Navigation --}}
+  <nav class="sheet-navigation tabs" data-group="primary">
+    <a class="item" data-tab="summary">{{localize "PF1.Summary"}}</a>
+    <a class="item" data-tab="notes">{{ localize "PF1.Notes" }}</a>
+  </nav>
+
+  <section class="primary-body">
+    <div class="tab summary" data-group="primary" data-tab="summary">
+      {{!-- HD/XP reward --}}
+      <div class="npc tooltip flexrow">
+        <table>
+          <thead>
+            <tr>
+              <th>{{localize "PF1.ChallengeRatingShort"}}</th>
+              <th>{{localize "PF1.Experience"}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-action="input-text" data-for=".cr-input" data-attr-name="system.details.cr.base">
+                <input readonly class="cr-input" type="text" value="{{labels.cr}}"/>
+              </td>
+              <td>
+                {{system.details.xp.value}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <span class="tooltipcontent">
+          <span class="span2 align-left">@details.cr.base :</span><span class="span1 align-right"> {{system.details.cr.base}}</span>
+        </span>
+      </div>
+
+      <div class="flexrow">
+        <table>
+          <thead>
+            <tr>
+              <th>{{localize "PF1.Alignment"}}</th>
+              <th>{{localize "PF1.Area"}}</th>
+              <th colspan="2">{{localize "PF1.Aura"}}</th>
+              <th>{{localize "PF1.CasterLevel"}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <input name="system.details.haunt.alignment"  value="{{system.details.haunt.alignment}}" type="text" />
+              </td>
+              <td>
+                <input name="system.details.haunt.area"  value="{{system.details.haunt.area}}" type="text" />
+              </td>
+              <td colspan="2">
+                <input name="system.details.haunt.aura"  value="{{system.details.haunt.aura}}" type="text"/>
+              </td>
+              <td>
+                <input name="system.details.haunt.cl"  value="{{system.details.haunt.cl}}"  data-dtype="Number" type="number"/>
+              </td>
+            </tr>
+            <thead>
+              <tr>
+                <th colspan="5">{{localize "PF1.Haunt.Notice"}}</th>
+              </tr>
+            </thead>
+            <tr>
+              <td colspan="5">
+                <input name="system.details.haunt.notice" value="{{system.details.haunt.notice}}" type="text"/>
+              </td>
+            </tr>
+            {{!-- Health/weakness --}}
+            <thead>
+              <tr>
+                <th colspan="2">{{localize "PF1.HitPoints"}}</th>
+                <th colspan="3">{{localize "PF1.Details"}}</th>
+              </tr>
+              <tr>
+                <th>{{localize "PF1.Current"}}</th>
+                <th>{{localize "PF1.Maximum"}}</th>
+                <th>{{localize "PF1.Haunt.Weakness"}}</th>
+                <th>{{localize "PF1.Trigger"}}</th>
+                <th>{{localize "PF1.Reset"}}</th>
+              </tr>
+            </thead>
+            <tr>
+              <td>
+                <span class="text-box direct wheel-change allow-relative hp-current-input" name="system.attributes.hp.value" data-dtype="Number">{{system.attributes.hp.value}}</span>
+              </td>
+              <td>
+                <span class="text-box direct hp-max-input" name="system.attributes.hp.max">{{system.attributes.hp.max}}</span>
+              </td>
+              <td>
+                <input name="system.details.haunt.weakness" value="{{system.details.haunt.weakness}}" type="text" />
+              </td>
+              <td>
+                <input name="system.details.haunt.trigger" value="{{system.details.haunt.trigger}}" type="text" />
+              </td>
+              <td>
+                <input name="system.details.haunt.reset" value="{{system.details.haunt.reset}}" type="text" />
+              </td>
+            </tr>
+            {{!-- Initiative --}}
+            <thead>
+              <tr>
+                <th colspan="5" class="attribute initiative">
+                  <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
+                </th>
+              </tr>
+            </thead>
+            {{!-- Effect --}}
+            <thead>
+              <tr>
+                <th colspan="5" >{{localize "PF1.Effect"}}</th>
+              </tr>
+            </thead>
+            <tr>
+              <td colspan="5">
+                <textarea rows="4" name="system.details.haunt.effect">{{system.details.haunt.effect}}</textarea>
+              </td>
+            </tr>
+            {{!-- Destruction --}}
+            <thead>
+              <tr>
+                <th colspan="5" >{{localize "PF1.Haunt.Destruction"}}</th>
+              </tr>
+            </thead>
+            <tr>
+              <td colspan="5">
+                <textarea rows="4" name="system.details.haunt.destruction">{{system.details.haunt.destruction}}</textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      {{!-- Actions --}}
+      <div class="combat-attacks">
+        <section class="attacks-body">
+          <ol class="item-groups-list">
+          {{#each attacks as |section sid|}}
+          {{#unless section._hidden}}
+            <ol class="item-list" data-type="attack" data-subtype="{{sid}}">
+              <li class="item-list-header flexrow attacks-{{sid}}">
+                <h3 class="item-name flexrow">{{section.label}}</h3>
+
+                {{#if section.showTypes}}<div class="item-detail item-type"><i class="icon icon-magic-palm large" title="{{localize "PF1.Type"}}"></i></div>{{/if}}
+
+                <div class="item-detail item-actions"><i class="icon icon-gears large" title="{{localize "PF1.ActionPlural"}}"></i></div>
+
+                <div class="item-detail item-uses"><i class="icon icon-battery-pack large" title="{{localize "PF1.ChargePlural"}}"></i></div>
+
+                {{#if @root.owner}}
+                <div class="item-controls">
+                  {{#if section.canCreate}}
+                  <a class="item-control item-create" title="Create Item" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+                    <i class="fas fa-plus"></i> {{localize "PF1.Add"}}
+                  </a>
+                  {{/if}}
+                </div>
+                {{/if}}
+              </li>
+
+              {{#each section.items as |item iid|}}
+              <li class="item flexrow" data-item-id="{{item.id}}">
+                <div class="item-name flexrow rollable">
+                  <div class="item-image" style='background-image: url("{{item.img}}")'></div>
+                  <h4>
+                    {{item.name~}}
+                  </h4>
+                </div>
+
+                {{#if section.showTypes}}
+                <div class="item-detail item-type">
+                  <span>{{lookup @root.config.attackTypes item.subType}}</span>
+                </div>
+                {{/if}}
+
+                <div class="item-detail item-actions">
+                  <div class="item-action">
+                    {{#if item.hasAction}}
+                    <a class="item-control item-action action roll" data-tooltip="PF1.PerformAttack">
+                      <i class="fa-solid fa-dice-d20"></i>
+                    </a>
+                    {{/if}}
+                  </div>
+                </div>
+
+                <div class="item-detail item-uses flexrow {{#if item.isCharged}}tooltip{{/if}}">
+                  {{#if item.isCharged}}
+                  <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.uses.value}}</span>
+                  <span class="sep"> / </span>
+                  <span class="text-box readonly">{{item.uses.max}}</span>
+                  <span class="tooltipcontent">
+                    <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.uses.value}}</span>
+                    <span class="span2 align-left">@resources.{{item.tag}}.max :</span><span class="span1 align-right"> {{item.uses.max}}</span>
+                  </span>
+                  {{/if}}
+                </div>
+
+                {{#if @root.owner}}
+                <div class="item-controls">
+                  <a class="item-control item-edit" title="{{localize "PF1.EditItem"}}"><i class="fas fa-edit"></i></a>
+                  <a class="item-control item-duplicate" title="{{localize "PF1.DuplicateItem"}}"><i class="fas fa-copy"></i></a>
+                  <a class="item-control item-delete" title="{{localize "PF1.DeleteItem"}}"><i class="fas fa-trash"></i></a>
+                </div>
+                {{/if}}
+              </li>
+              {{/each}}
+            </ol>
+          {{/unless}}
+          {{/each}}
+          </ol>
+        </section>
+      </div>
+    </div>
+
+    {{!-- Notes Tab --}}
+    <div class="tab actor-notes flexcol" data-group="primary" data-tab="notes">
+      <div class="primary-content">
+        {{editor notesHTML target="system.details.notes.value" button=true owner=owner editable=editable engine="prosemirror" collaborate=false}}
+      </div>
+    </div>
+  </section>
+</form>

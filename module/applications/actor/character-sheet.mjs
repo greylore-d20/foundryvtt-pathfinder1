@@ -14,11 +14,8 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
    * @returns {object}
    */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      classes: ["pf1", "sheet", "actor", "character"],
-      width: 800,
-      height: 840,
-    });
+    const options = super.defaultOptions;
+    return { ...options, classes: [...options.classes, "character"], width: 800, height: 840 };
   }
 
   /* -------------------------------------------- */

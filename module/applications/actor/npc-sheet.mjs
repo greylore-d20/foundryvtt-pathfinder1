@@ -15,11 +15,8 @@ export class ActorSheetPFNPC extends ActorSheetPF {
    * @returns {object}
    */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      classes: ["pf1", "sheet", "actor", "npc"],
-      width: 800,
-      height: 840,
-    });
+    const options = super.defaultOptions;
+    return { ...options, classes: [...options.classes, "npc"], width: 800, height: 840 };
   }
 
   /* -------------------------------------------- */

@@ -116,7 +116,10 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    const options = super.defaultOptions;
+    return {
+      ...options,
+      classes: [...options.classes, "pf1", "actor"],
       scrollY: [
         ".combat-attacks",
         ".item-groups-list",
@@ -161,7 +164,7 @@ export class ActorSheetPF extends ActorSheet {
           group: "spellbooks",
         },
       ],
-    });
+    };
   }
 
   /**

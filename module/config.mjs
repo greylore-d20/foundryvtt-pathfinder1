@@ -2618,5 +2618,6 @@ export const defaultIcons = {
     npc: "icons/svg/terror.svg",
     haunt: "icons/svg/stoned.svg",
     basic: "icons/svg/castle.svg",
+    trap: "icons/svg/net.svg",
   },
 };

@@ -7,7 +7,7 @@ import { CR } from "../../utils/lib.mjs";
  *
  * @type {ActorSheetPF}
  */
-export class ActorSheetPFHaunt extends ActorSheetPF {
+export class ActorSheetPFTrap extends ActorSheetPF {
   /**
    * Define default rendering options for the NPC sheet
    *
@@ -17,9 +17,9 @@ export class ActorSheetPFHaunt extends ActorSheetPF {
     const options = super.defaultOptions;
     return {
       ...options,
-      classes: [...options.classes, "haunt"],
-      width: 800,
-      height: 650,
+      classes: [...options.classes, "trap"],
+      width: 500,
+      height: 640,
       tabs: [{ navSelector: "nav.tabs", contentSelector: "section.primary-body", initial: "summary" }],
       scrollY: [".tab.summary"],
     };
@@ -36,7 +36,7 @@ export class ActorSheetPFHaunt extends ActorSheetPF {
    */
   get template() {
     if (this.actor.limited) return "systems/pf1/templates/actors/limited-sheet.hbs";
-    return "systems/pf1/templates/actors/haunt-sheet.hbs";
+    return "systems/pf1/templates/actors/trap-sheet.hbs";
   }
 
   /* -------------------------------------------- */
@@ -131,17 +131,6 @@ export class ActorSheetPFHaunt extends ActorSheetPF {
   /* -------------------------------------------- */
 
   /**
-   * Activate event listeners using the prepared sheet HTML
-   *
-   * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
-   */
-  activateListeners(html) {
-    super.activateListeners(html);
-
-    html.find('input[name="system.attributes.hp.max"]').keypress(this._onSubmitElement.bind(this));
-  }
-
-  /**
    * Organize and classify Owned Items - We just need attacks
    *
    * @param data
@@ -179,5 +168,16 @@ export class ActorSheetPFHaunt extends ActorSheetPF {
     }
 
     data.attacks = attackSections;
+  }
+
+  /**
+   * Return the amount of experience granted by killing a creature of a certain CR.
+   *
+   * @param cr {null | number}     The creature's challenge rating
+   * @returns {number}       The amount of experience granted per kill
+   */
+  getCRExp(cr) {
+    if (cr < 1.0) return Math.max(400 * cr, 0);
+    return pf1.config.CR_EXP_LEVELS[cr];
   }
 }

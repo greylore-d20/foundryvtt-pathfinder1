@@ -1905,19 +1905,19 @@ export class ActorPF extends Actor {
   /**
    * Sync images in _preUpdate when moving away from default
    *
-   * @param {object} update Update data
+   * @param {object} changed Update data
    */
-  _syncTokenImage(update) {
+  _syncTokenImage(changed) {
     // No image update
-    if (!update.img) return;
+    if (!changed.img) return;
     // Explicit token image update
-    if (update.prototypeToken?.texture?.src !== undefined) return;
+    if (changed.prototypeToken?.texture?.src !== undefined) return;
     // Old token image mismatch with default
     if (this.prototypeToken.texture.src !== pf1.config.defaultIcons.actors[this.type]) return;
     // Portrait and token image mismatch
     if (this.img !== this.prototypeToken.texture.src) return;
 
-    this.updateSource({ "prototypeToken.texture.src": update.img });
+    setProperty(changed, "prototypeToken.texture.src", changed.img);
   }
 
   /**

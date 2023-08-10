@@ -98,6 +98,7 @@ Hooks.once("init", function () {
     npc: documents.actor.ActorNPCPF,
     haunt: documents.actor.ActorHauntPF,
     trap: documents.actor.ActorTrapPF,
+    vehicle: documents.actor.ActorVehiclePF,
     basic: documents.actor.BasicActorPF,
   };
   CONFIG.Item.documentClass = ItemPFProxy;
@@ -178,6 +179,11 @@ Hooks.once("init", function () {
   Actors.registerSheet("pf1", applications.actor.ActorSheetPFTrap, {
     label: "PF1.Sheet.Trap",
     types: ["trap"],
+    makeDefault: true,
+  });
+  Actors.registerSheet("pf1", applications.actor.ActorSheetPFVehicle, {
+    label: "PF1.Sheet.Vehicle",
+    types: ["vehicle"],
     makeDefault: true,
   });
   Actors.registerSheet("pf1", applications.actor.ActorSheetPFBasic, {
@@ -316,6 +322,7 @@ Hooks.once("setup", function () {
     "abilityActivationTypesPlurals_unchained",
     "actorStatures",
     "ammoTypes",
+    "vehicles",
   ];
 
   // Config (sub-)objects to be sorted

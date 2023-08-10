@@ -1,6 +1,6 @@
 {
   "Actor": {
-    "types": ["character", "npc", "haunt", "trap", "basic"],
+    "types": ["character", "npc", "vehicle", "haunt", "trap", "basic"],
     "templates": {
       "common": {
         "abilities": {
@@ -773,6 +773,58 @@
         "cr": {
           "base": 1
         }
+      }
+    },
+    "vehicle": {
+      "abilities": {
+        "str": {
+          "value": 10
+        }
+      },
+      "attributes": {
+        "hp": {
+          "value": 0,
+          "max": 0
+        },
+        "init": {
+          "value": 0
+        },
+        "savingThrows": {
+          "save": {
+            "base": 0
+          }
+        },
+        "ac": {
+          "normal": {
+            "base": 0
+          }
+        },
+        "cmd": {
+          "value": 0
+        }
+      },
+      "details": {
+        "vehicle": {
+          "acceleration": 0,
+          "cost": 0,
+          "crew": 0,
+          "decks": 1,
+          "description": "",
+          "drivingCheck": "",
+          "drivingDevice": "",
+          "drivingSpace": "",
+          "forwardFacing": "",
+          "hardness": 0,
+          "maxSpeed": 0,
+          "notes": {
+            "value": ""
+          },
+          "propulsion": ""
+        }
+      },
+      "traits": {
+        "size": "lg",
+        "type": "land"
       }
     },
     "haunt": {

@@ -499,6 +499,35 @@ export const sizeStealthMods = {
 };
 
 /**
+ * Vehicle properties based on size and type
+ */
+export const vehicles = {
+  size: {
+    lg: {
+      label: "PF1.ActorSizeLarge",
+      space: "PF1.Vehicles.Space.Large",
+    },
+    huge: {
+      label: "PF1.ActorSizeHuge",
+      space: "PF1.Vehicles.Space.Huge",
+    },
+    grg: {
+      label: "PF1.ActorSizeGargantuan",
+      space: "PF1.Vehicles.Space.Gargantuan",
+    },
+    col: {
+      label: "PF1.ActorSizeColossal",
+      space: "PF1.Vehicles.Space.Colossal",
+    },
+  },
+  type: {
+    land: "PF1.Vehicles.Types.Land",
+    sea: "PF1.Vehicles.Types.Sea",
+    air: "PF1.Vehicles.Types.Air",
+  },
+};
+
+/**
  * The possible options for a creature's maneuverability
  */
 export const flyManeuverabilities = {
@@ -2619,5 +2648,6 @@ export const defaultIcons = {
     haunt: "icons/svg/stoned.svg",
     basic: "icons/svg/castle.svg",
     trap: "icons/svg/net.svg",
+    vehicle: "icons/svg/stone-path.svg",
   },
 };

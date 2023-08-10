@@ -6,5 +6,6 @@ export { ActorSheetPFNPCLoot } from "./npc-loot-sheet.mjs";
 export { ActorSheetPFHaunt } from "./haunt-sheet.mjs";
 export { ActorSheetPFTrap } from "./trap-sheet.mjs";
 export { ActorSheetPFNPC } from "./npc-sheet.mjs";
+export { ActorSheetPFVehicle } from "./vehicle-sheet.mjs";
 export { ActorSheetFlags } from "./actor-flags.mjs";
 export { ActorRestDialog } from "./actor-rest.mjs";

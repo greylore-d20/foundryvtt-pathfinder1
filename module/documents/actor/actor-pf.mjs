@@ -2038,7 +2038,7 @@ export class ActorPF extends Actor {
    */
   updateItemResources(item, { warnOnDuplicate = true } = {}) {
     if (item.type === "spell") return false;
-    if (item.isCharged) return false;
+    if (!item.isCharged) return false;
     if (item.isSingleUse) return false;
 
     const itemTag = !item.system.useCustomTag ? createTag(item.name) : item.system.tag;

@@ -182,6 +182,4 @@ export class ActorHauntPF extends ActorPF {
     this._rollData = result;
     return result;
   }
-
-  _updateExp() {}
 }

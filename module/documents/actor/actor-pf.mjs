@@ -1907,9 +1907,6 @@ export class ActorPF extends ActorBasePF {
         }
       }
     }
-
-    // Update experience
-    this._updateExp(changed);
   }
 
   /**

@@ -28,59 +28,36 @@ export class ActorCharacterPF extends ActorPF {
     }
   }
 
-  prepareBaseData() {
-    super.prepareBaseData();
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
 
-    const actorData = this.system;
+    if (!changed.system) return;
 
-    const maxExp = this.getLevelExp(actorData.details.level.value);
-    actorData.details.xp.max = maxExp;
-
-    if (!hasProperty(this, "system.details.level.value")) return;
-
-    // Experience bar
-    const prior = this.getLevelExp(actorData.details.level.value - 1 || 0),
-      max = this.getLevelExp(actorData.details.level.value || 1);
-
-    actorData.details.xp.pct =
-      ((Math.max(prior, Math.min(max, actorData.details.xp.value)) - prior) / (max - prior)) * 100 || 0;
+    // Update experience
+    this._updateExp(changed);
   }
 
-  _updateExp(updateData) {
-    const xpData = updateData.details?.xp;
-    if (xpData?.value == undefined) return;
+  /**
+   * Handle relative XP change and constrain it to appropriate minimum value.
+   *
+   * @private
+   * @param {object} changed
+   */
+  _updateExp(changed) {
+    const xpData = changed.system.details?.xp;
 
-    // Get total level
-    const classes = this.itemTypes.class;
-    const level = classes.filter((o) => o.system.subType !== "mythic").reduce((cur, o) => cur + o.system.level, 0);
+    if (xpData?.value === 0) {
+      // Reset XP to minimum possible
+      const level =
+        this.itemTypes.class?.filter((o) => o.subType !== "mythic").reduce((cur, o) => cur + o.system.level, 0) ?? 0;
 
-    const oldData = this.system;
-
-    // Translate update exp value to number
-    let newExp = xpData.value,
-      resetExp = false;
-    if (typeof newExp === "string") {
-      const curExp = Number(oldData.details.xp.value);
-      if (newExp.match(/^\+([0-9]+)$/)) {
-        newExp = curExp + parseInt(RegExp.$1);
-      } else if (newExp.match(/^-([0-9]+)$/)) {
-        newExp = curExp - parseInt(RegExp.$1);
-      } else if (newExp === "") {
-        resetExp = true;
-      } else if (newExp.match(/^([0-9]+)$/)) {
-        newExp = parseInt(newExp);
-      } else {
-        newExp = curExp;
-      }
-
-      xpData.value = newExp;
-    }
-    const maxExp = this.getLevelExp(level);
-    xpData.max = maxExp;
-
-    if (resetExp) {
-      const minExp = level > 0 ? this.getLevelExp(level - 1) : 0;
-      xpData.value = minExp;
+      xpData.value = level > 0 ? this.getLevelExp(level - 1) : 0;
     }
   }
 
@@ -112,5 +89,23 @@ export class ActorCharacterPF extends ActorPF {
       }
     }
     return Math.max(1, totalXP);
+  }
+
+  prepareBaseData() {
+    super.prepareBaseData();
+
+    const actorData = this.system;
+
+    const maxExp = this.getLevelExp(actorData.details.level.value);
+    actorData.details.xp.max = maxExp;
+
+    if (!hasProperty(this, "system.details.level.value")) return;
+
+    // Experience bar
+    const prior = this.getLevelExp(actorData.details.level.value - 1 || 0),
+      max = this.getLevelExp(actorData.details.level.value || 1);
+
+    actorData.details.xp.pct =
+      ((Math.max(prior, Math.min(max, actorData.details.xp.value)) - prior) / (max - prior)) * 100 || 0;
   }
 }

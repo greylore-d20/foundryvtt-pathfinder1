@@ -32,9 +32,6 @@ export class ActorNPCPF extends ActorPF {
     return game.settings.get("pf1", "npcProficiencies") ? super.hasArmorProficiency(item, proficiencyName) : true;
   }
 
-  /* Not used by NPCs */
-  _updateExp() {}
-
   /**
    * Get challegne rating.
    * Applies CR offset modifications from templates.

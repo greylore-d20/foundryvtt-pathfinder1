@@ -184,6 +184,4 @@ export class ActorTrapPF extends ActorPF {
     this._rollData = result;
     return result;
   }
-
-  _updateExp() {}
 }

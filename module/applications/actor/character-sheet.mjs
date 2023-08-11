@@ -43,8 +43,6 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
 
     // Experience Tracking
     data.disableExperience = xpSettings.disableExperienceTracking;
-    const level = this.actor.system.details?.level?.value ?? 0;
-    data.minimumExperience = this.actor.getLevelExp(Math.max(0, level - 1));
 
     data.hasClasses = this.actor.itemTypes.class.length > 0;
 

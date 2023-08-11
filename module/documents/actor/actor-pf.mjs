@@ -343,14 +343,24 @@ export class ActorPF extends Actor {
       // Process dictionary flags
       const tag = item.system.tag;
       if (tag) {
-        const flags = item.system.flags?.dictionary || {};
-        if (dFlags[tag] && this.isOwner) {
-          const msg = game.i18n.format("PF1.WarningDuplicateTag", { actor: this.uuid, item: item.name, tag });
-          ui.notifications.warn(msg, { console: false });
-          console.warn(msg, item);
-        }
-        for (const [key, value] of Object.entries(flags)) {
-          setProperty(dFlags, `${tag}.${key}`, item.isActive ? value : 0);
+        const dEntries = Object.entries(item.system.flags?.dictionary || {});
+        if (dEntries.length) {
+          dFlags[tag] ||= {};
+
+          for (const [key, value] of dEntries) {
+            if (dFlags[tag][key] !== undefined && this.isOwner) {
+              const msg = game.i18n.format("PF1.WarningDuplicateDFlag", {
+                actor: this.uuid,
+                item: item.name,
+                key,
+                tag,
+              });
+              ui.notifications.warn(msg, { console: false });
+              console.warn(msg, item);
+            }
+
+            dFlags[tag][key] = item.isActive ? value : 0;
+          }
         }
       }
     }

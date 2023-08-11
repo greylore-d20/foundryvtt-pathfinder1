@@ -381,7 +381,7 @@
   <ol class="item-list" data-type="spell" data-level="{{section.level}}" data-preparation-unused="{{section.preparation.unused}}" {{#if ../spellbook.orig.spontaneous}}data-known-unused="{{section.known.unused}}"{{/if}}>
     <li class="flexrow item-list-header spellbook-header {{#if section.lowAbilityScore}}insufficient-ability-score{{/if}}" data-level="{{section.level}}">
       <div class="item-name">
-        <h3>{{section.name}}</h3>
+        <h3>{{section.label}}</h3>
       </div>
 
       {{#unless ../spellbook.orig.spellPoints.useSystem}}

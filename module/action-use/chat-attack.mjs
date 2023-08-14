@@ -60,11 +60,6 @@ export class ChatAttack {
     }
   }
 
-  get critRange() {
-    if (this.action.item.system.broken) return 20;
-    return this.rollData.action.ability?.critRange || 20;
-  }
-
   /**
    * Sets the attack's item reference.
    *

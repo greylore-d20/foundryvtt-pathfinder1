@@ -205,6 +205,16 @@ export class ItemAction {
   }
 
   /**
+   * Effective critical range when accounting for broken status and action type.
+   *
+   * @type {number}
+   */
+  get critRange() {
+    if (this.item.system.broken || this.isCombatManeuver) return 20;
+    return this.data.ability?.critRange || 20;
+  }
+
+  /**
    * Does the item have range defined.
    *
    * @type {boolean}
@@ -805,9 +815,8 @@ export class ItemAction {
       parts.push(`@bonus[${game.i18n.localize("PF1.SituationalBonus")}]`);
     }
 
-    const critRange = itemData.broken || this.isCombatManeuver ? 20 : actionData.ability.critRange || 20;
     const roll = await new D20RollPF([rollData.d20 || "1d20", ...parts.filter((p) => !!p)].join("+"), rollData, {
-      critical: critRange,
+      critical: this.critRange,
     }).evaluate({ async: true });
     return roll;
   }

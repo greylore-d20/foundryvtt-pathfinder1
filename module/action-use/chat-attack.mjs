@@ -237,6 +237,10 @@ export class ChatAttack {
       notes.push(...(this.action.item?.actor?.getContextNotesParsed("misc.cmb") ?? []));
     }
 
+    if (this.hasCritConfirm) {
+      notes.push(...(this.action.actor?.getContextNotesParsed("attacks.critical") ?? []));
+    }
+
     this.attackNotes = notes;
     this.setAttackNotesHTML();
   }

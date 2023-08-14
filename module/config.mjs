@@ -2251,6 +2251,7 @@ export const buffTargetCategories = /** @type {const} */ ({
 
 export const contextNoteTargets = {
   attack: { label: "PF1.AttackRollPlural", category: "attacks" },
+  critical: { label: "PF1.CriticalHitPlural", category: "attacks" },
   effect: { label: "PF1.Effects", category: "attacks" },
   melee: { label: "PF1.Melee", category: "attacks" },
   meleeWeapon: { label: "PF1.MeleeWeapon", category: "attacks" },

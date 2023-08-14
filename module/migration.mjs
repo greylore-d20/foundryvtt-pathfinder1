@@ -1156,6 +1156,7 @@ const _migrateItemChanges = function (ent, updateData) {
         );
         newChanges.push(newChange.data);
       } else {
+        c._id ||= randomID(8); // Fill in missing ID
         const newChange = new ItemChange(c, null);
         newChanges.push(newChange.data);
       }

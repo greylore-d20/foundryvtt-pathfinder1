@@ -521,8 +521,7 @@ export class ItemAction {
 
   async delete() {
     const actions = deepClone(this.item.system.actions);
-    const idx = this.item.system.actions.indexOf(this.data);
-    actions.splice(idx, 1);
+    actions.findSplice((a) => a._id == this.id);
 
     // Close applications
     const promises = [];

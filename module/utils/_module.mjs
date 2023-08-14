@@ -5,6 +5,7 @@ export * as dialog from "./dialog.mjs";
 export * as rollPreProcess from "./roll-preprocess.mjs";
 export * as currency from "./currency.mjs";
 export { SemanticVersion } from "./semver.mjs";
+export * as formula from "./formulas.mjs";
 
 export {
   binarySearch,

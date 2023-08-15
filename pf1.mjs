@@ -240,10 +240,8 @@ if (import.meta.env.DEV) {
 /*  Foundry VTT Setup                           */
 /* -------------------------------------------- */
 
-/**
- * This function runs after game data has been requested and loaded from the servers, so documents exist
- */
-Hooks.once("setup", function () {
+// Pre-translation passes
+Hooks.once("i18nInit", function () {
   // Localize CONFIG objects once up-front
   const toLocalize = [
     "abilities",
@@ -364,7 +362,12 @@ Hooks.once("setup", function () {
       pf1.config[l][k].label = game.i18n.localize(v.label);
     }
   }
+});
 
+/**
+ * This function runs after game data has been requested and loaded from the servers, so documents exist
+ */
+Hooks.once("setup", () => {
   // Prepare registry data
   for (const registry of Object.values(pf1.registry)) {
     if (registry instanceof pf1.registry.Registry) registry.setup();

@@ -473,16 +473,16 @@ export class ActionUse {
     // Bonus cost, e.g. from a conditional modifier
     const bonusCost = this.shared.rollData["chargeCostBonus"] ?? 0;
 
-    const cost = baseCost + bonusCost;
+    let cost = baseCost + bonusCost;
 
     // Save chargeCost as rollData entry for anything else
     this.shared.rollData.chargeCost = cost;
 
     if (cost != 0) {
-      let uses = this.item.charges;
+      const uses = this.item.charges;
       if (this.item.type === "spell") {
-        if (this.item.useSpellPoints()) {
-          uses = this.item.getSpellUses();
+        if (this.item.spellbook?.spontaneous && !this.item.system.preparation?.spontaneousPrepared) {
+          cost = Infinity;
         }
       }
 

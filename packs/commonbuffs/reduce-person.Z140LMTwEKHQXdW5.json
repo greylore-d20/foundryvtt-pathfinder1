@@ -42,7 +42,7 @@
         "name": "Toggle Actor Size (Reduce)",
         "img": "icons/svg/dice-target.svg",
         "type": "script",
-        "value": "if (!actor) return;\n\nconst defaultSize = 'med'; // Fallback if no size info is found\nconst naturalSize = actor.race?.system.size || defaultSize;\nconst currentSize = actor.system.traits?.size || defaultSize;\n\nlet newSize = naturalSize;\nif (state) {\n\tconst steps = Object.keys(CONFIG.PF1.sizeChart);\n\tconst current = steps.indexOf(currentSize);\n\tconst adjusted = Math.clamped(current - 1, 0, steps.length - 1);\n\tnewSize = steps[adjusted];\n}\n\nactor.update({ 'system.traits.size': newSize });\n",
+        "value": "if (!actor) return;\n\nconst defaultSize = 'med'; // Fallback if no size info is found\nconst naturalSize = actor.race?.system.size || defaultSize;\nconst currentSize = actor.system.traits?.size || defaultSize;\n\nlet newSize = naturalSize;\nif (state) {\n\tconst steps = Object.keys(pf1.config.sizeChart);\n\tconst current = steps.indexOf(currentSize);\n\tconst adjusted = Math.clamped(current - 1, 0, steps.length - 1);\n\tnewSize = steps[adjusted];\n}\n\nactor.update({ 'system.traits.size': newSize });\n",
         "category": "toggle",
         "hidden": false
       }

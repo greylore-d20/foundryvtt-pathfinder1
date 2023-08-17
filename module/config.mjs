@@ -550,67 +550,45 @@ export const flyManeuverabilityValues = {
   perfect: 8,
 };
 
-/**
- * The resulting speed values when a base speed is reduced
- */
-export const speedReduction = {
-  5: 5,
-  15: 10,
-  20: 15,
-  30: 20,
-  35: 25,
-  45: 30,
-  50: 35,
-  60: 40,
-  65: 45,
-  75: 50,
-  80: 55,
-  90: 60,
-  95: 65,
-  105: 70,
-  110: 75,
-  120: 80,
-};
-
 /* -------------------------------------------- */
 
 /**
  * An array of maximum carry capacities, where the index is the ability/strength score.
  */
 // prettier-ignore
-export const encumbranceLoads =  [
-    0,
-    10,
-    20,
-    30,
-    40,
-    50,
-    60,
-    70,
-    80,
-    90,
-    100,
-    115,
-    130,
-    150,
-    175,
-    200,
-    230,
-    260,
-    300,
-    350,
-    400,
-    460,
-    520,
-    600,
-    700,
-    800,
-    920,
-    1040,
-    1200,
-    1400,
-    1600,
-  ];
+export const encumbranceLoads = [
+  0,
+  10,
+  20,
+  30,
+  40,
+  50,
+  60,
+  70,
+  80,
+  90,
+  100,
+  115,
+  130,
+  150,
+  175,
+  200,
+  230,
+  260,
+  300,
+  350,
+  400,
+  460,
+  520,
+  600,
+  700,
+  800,
+  920,
+  1040,
+  1200,
+  1400,
+  1600,
+];
 
 /**
  * Encumbrance levels for light, medium, and heavy loads.
@@ -696,13 +674,6 @@ export const itemActionTypes = {
   save: "PF1.ActionSave",
   heal: "PF1.ActionHeal",
   other: "PF1.ActionOther",
-};
-
-/* -------------------------------------------- */
-
-export const itemCapacityTypes = {
-  items: "PF1.ItemContainerCapacityItems",
-  weight: "PF1.ItemContainerCapacityWeight",
 };
 
 /* -------------------------------------------- */
@@ -996,29 +967,6 @@ export const measureUnitsShort = {
 export const actorStatures = {
   tall: "PF1.StatureTall",
   long: "PF1.StatureLong",
-};
-
-/* -------------------------------------------- */
-
-/**
- * This Object defines the types of single or area targets which can be applied in the game system.
- */
-export const targetTypes = {
-  none: "PF1.None",
-  self: "PF1.TargetSelf",
-  creature: "PF1.TargetCreature",
-  ally: "PF1.TargetAlly",
-  enemy: "PF1.TargetEnemy",
-  object: "PF1.TargetObject",
-  space: "PF1.TargetSpace",
-  radius: "PF1.TargetRadius",
-  sphere: "PF1.TargetSphere",
-  cylinder: "PF1.TargetCylinder",
-  cone: "PF1.TargetCone",
-  square: "PF1.TargetSquare",
-  cube: "PF1.TargetCube",
-  line: "PF1.TargetLine",
-  wall: "PF1.TargetWall",
 };
 
 /* -------------------------------------------- */
@@ -1429,17 +1377,6 @@ export const casterProgression = {
 
 /* -------------------------------------------- */
 
-// Healing Types
-/**
- * Types of healing
- */
-export const healingTypes = {
-  healing: "PF1.Healing",
-  temphp: "PF1.HealingTemp",
-};
-
-/* -------------------------------------------- */
-
 /**
  * Character senses options
  */
@@ -1588,15 +1525,6 @@ export const backgroundSkillClasses = ["base", "prestige"];
 export const classSkillBonus = 3;
 
 /* -------------------------------------------- */
-
-/**
- * Valid options for how a spell is prepared
- */
-export const spellPreparationModes = {
-  atwill: "PF1.SpellPrepAtWill",
-  prepared: "PF1.SpellPrepPrepared",
-  spontaneous: "PF1.SpellPrepSpontaneous",
-};
 
 export const classCasterType = {
   sorcerer: "high",
@@ -1797,17 +1725,6 @@ export const spellLevels = {
   7: "PF1.SpellLevel7",
   8: "PF1.SpellLevel8",
   9: "PF1.SpellLevel9",
-};
-
-/* -------------------------------------------- */
-
-/**
- * Weapon proficiency levels
- * Each level provides a proficiency multiplier
- */
-export const proficiencyLevels = {
-  "-4": "Not Proficient",
-  0: "Proficient",
 };
 
 /* -------------------------------------------- */
@@ -2628,8 +2545,6 @@ export const temporaryRollDataFields = {
     "mod",
   ],
 };
-
-export const keepItemLinksOnCopy = ["classAssociations"];
 
 export const defaultIcons = {
   items: {

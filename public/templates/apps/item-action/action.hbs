@@ -154,7 +154,7 @@
 {{!-- Damage Ability --}}
 <h3 class="form-header">{{localize "PF1.Damage"}}</h3>
 <div class="form-group select">
-  <label>{{localize "PF1.DamageAbility"}}</label>
+  <label>{{localize "PF1.AbilityBonus"}}</label>
   <div class="form-fields">
     <select name="ability.damage">
       {{selectOptions config.abilities selected=data.ability.damage blank=""}}
@@ -180,19 +180,22 @@
 {{!-- Damage Formula --}}
 <div class="damage" data-key="damage.parts">
   <h4 class="damage-header">
-    {{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}
+    {{localize "PF1.BaseFormula"}}
   </h4>
   <ol class="damage-parts form-group tooltip">
     {{#each data.damage.parts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
-      <input class="damage-formula formula" type="text" name="damage.parts.{{i}}.formula" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{formula}}"/>
+      <input class="damage-formula formula" type="text" name="damage.parts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}"/>
       {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=type name=(concat "damage.parts." i ".type") damageTypes=@root.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
-    <li class="damage-part flexrow"><a class="damage-control add-damage"><i class="fas fa-plus"></i>
-        {{#unless isHealing}}{{localize "PF1.AddDamage"}}{{else}}{{localize "PF1.AddHealing"}}{{/unless}}
-      </a></li>
+    <li class="damage-part flexrow">
+      <a class="damage-control add-damage">
+        <i class="fas fa-plus"></i>
+        {{localize "PF1.AddBaseInstance"}}
+      </a>
+    </li>
   </ol>
 </div>
 
@@ -202,17 +205,22 @@
 <hr>
 <div class="damage" data-key="damage.critParts">
   <h4 class="damage-header">
-    {{#unless isHealing }}{{localize "PF1.CritDamageBonusFormula"}}{{ else }}{{localize "PF1.CritHealingBonusFormula"}}{{/unless}}
+    {{localize "PF1.OnCritBonusFormula"}}
   </h4>
   <ol class="damage-parts form-group tooltip">
     {{#each data.damage.critParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
-      <input class="damage-formula formula" type="text" name="damage.critParts.{{i}}.formula" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{formula}}"/>
+      <input class="damage-formula formula" type="text" name="damage.critParts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}"/>
       {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=type name=(concat "damage.critParts." i ".type") damageTypes=@root.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
-    <li class="damage-part flexrow"><a class="damage-control add-damage"><i class="fas fa-plus"></i> {{localize "PF1.AddCriticalDamage"}}</a></li>
+    <li class="damage-part flexrow">
+      <a class="damage-control add-damage">
+        <i class="fas fa-plus"></i>
+        {{localize "PF1.AddOnCritInstance"}}
+      </a>
+    </li>
   </ol>
 </div>
 {{/if}}
@@ -222,17 +230,22 @@
 <hr>
 <div class="damage" data-key="damage.nonCritParts">
   <h4 class="damage-header">
-    {{#unless isHealing }}{{localize "PF1.NonCritDamageBonusFormula"}}{{ else }}{{localize "PF1.NonCritHealingBonusFormula"}}{{/unless}}
+    {{localize "PF1.NonMultBonusFormula"}}
   </h4>
   <ol class="damage-parts form-group">
     {{#each data.damage.nonCritParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
-      <input class="damage-formula formula" type="text" name="damage.nonCritParts.{{i}}.formula" placeholder="{{#unless isHealing }}{{localize "PF1.DamageFormula"}}{{ else }}{{localize "PF1.HealingFormula"}}{{/unless}}" value="{{formula}}"/>
+      <input class="damage-formula formula" type="text" name="damage.nonCritParts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}"/>
       {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=type name=(concat "damage.nonCritParts." i ".type") damageTypes=@root.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
     {{/each}}
-    <li class="damage-part flexrow"><a class="damage-control add-damage"><i class="fas fa-plus"></i> {{localize "PF1.AddNonCriticalDamage"}}</a></li>
+    <li class="damage-part flexrow">
+      <a class="damage-control add-damage">
+        <i class="fas fa-plus"></i>
+        {{localize "PF1.AddNonMultInstance"}}
+      </a>
+    </li>
   </ol>
 </div>
 {{/if}}

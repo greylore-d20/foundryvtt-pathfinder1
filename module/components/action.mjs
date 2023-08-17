@@ -1138,7 +1138,7 @@ export class ItemAction {
     if (target === "damage") {
       result = { ...result, normal: "PF1.Normal" };
       if (this.hasAttack) {
-        result = { ...result, crit: "PF1.CritDamageBonusFormula", nonCrit: "PF1.NonCritDamageBonusFormula" };
+        result = { ...result, crit: "PF1.OnCritBonusFormula", nonCrit: "PF1.NonMultBonusFormula" };
       }
     }
     return result;

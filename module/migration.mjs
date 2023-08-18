@@ -352,6 +352,8 @@ export async function migrateActor(actor) {
 export function migrateActorData(actor, token) {
   // Ignore basic actor type
   if (actor.type === "basic") return {};
+  // Ignore module introduced types
+  if (!game.system.template.Actor.types.includes(actor.type)) return {};
 
   const updateData = {};
   const linked = token?.isLinked ?? true;
@@ -442,6 +444,9 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
     item.system = item.data;
     delete item.data;
   }
+
+  // Ignore module introduced types
+  if (!game.system.template.Item.types.includes(item.type)) return {};
 
   _migrateItemArrayTypes(item, updateData);
   _migrateItemSpellUses(item, updateData);

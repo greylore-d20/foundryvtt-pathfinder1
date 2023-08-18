@@ -393,7 +393,8 @@ export class ItemSheetPF extends ItemSheet {
         spellbook = actorData?.attributes.spells?.spellbooks[bookId];
       }
 
-      context.isPreparedSpell = spellbook != null ? !spellbook.spontaneous && !spellbook.spellPoints?.useSystem : false;
+      context.isSpontaneousLike = spellbook?.spontaneous || spellbook?.spellPoints?.useSystem || false;
+      context.isPreparedSpell = !context.isSpontaneousLike;
       context.usesSpellpoints = spellbook != null ? spellbook.spellPoints?.useSystem ?? false : false;
       context.isAtWill = itemData.atWill;
       context.spellbooks = deepClone(actorData?.attributes.spells.spellbooks ?? {});

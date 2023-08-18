@@ -350,9 +350,6 @@ export class ItemSpellPF extends ItemPF {
   }
 
   getDC(rollData = null) {
-    // No actor? No DC!
-    if (!this.actor) return 0;
-
     foundry.utils.logCompatibilityWarning("ItemSpellPF.getDC() is deprecated in favor of ItemAction.getDC()", {
       since: "PF1 vNEXT",
       until: "PF1 vNEXT+1",
@@ -362,14 +359,12 @@ export class ItemSpellPF extends ItemPF {
   }
 
   getSpellUses(max = false) {
-    if (!this.actor) return 0;
     const itemData = this.system;
     if (itemData.atWill) return Number.POSITIVE_INFINITY;
 
     const spellbook = this.spellbook;
-    if (!spellbook) return 0;
 
-    const isSpontaneous = spellbook.spontaneous,
+    const isSpontaneous = spellbook?.spontaneous ?? false,
       spellLevel = itemData.level;
 
     if (this.useSpellPoints()) {

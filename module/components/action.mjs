@@ -260,9 +260,6 @@ export class ItemAction {
    * @returns {number} The Difficulty Class for this action.
    */
   getDC(rollData = null) {
-    // No actor? No DC!
-    if (!this.actor) return 0;
-
     rollData ??= this.getRollData();
     let result = 10;
 
@@ -278,13 +275,17 @@ export class ItemAction {
         if (data.save.dc.length > 0) formula += ` + ${data.save.dc}`;
 
         return RollPF.safeRoll(formula, rollData).total + dcBonus;
+      } else {
+        // Assume standard base formula for spells with minimum required abilty score
+        const level = this.item?.system.level ?? 1;
+        const minAbl = Math.floor(level / 2);
+        return 10 + level + minAbl + dcBonus;
       }
     } else {
       const dcFormula = this.data.save.dc.toString() || "0";
       result = RollPF.safeRoll(dcFormula, rollData).total + dcBonus;
       return result;
     }
-    return result;
   }
 
   get hasSound() {
@@ -713,10 +714,10 @@ export class ItemAction {
     const isRanged = ["rwak", "rsak", "rcman"].includes(actionData.actionType);
     const isCMB = this.isCombatManeuver;
 
+    const size = rollData.traits?.size ?? "med";
+
     // Determine size bonus
-    rollData.sizeBonus = !isCMB
-      ? pf1.config.sizeMods[rollData.traits.size]
-      : pf1.config.sizeSpecialMods[rollData.traits.size];
+    rollData.sizeBonus = !isCMB ? pf1.config.sizeMods[size] : pf1.config.sizeSpecialMods[size];
 
     // Add misc bonuses/penalties
     rollData.item.proficiencyPenalty = -4;
@@ -727,13 +728,13 @@ export class ItemAction {
     // Define Roll parts
     let parts = [];
 
-    this.actor.sourceDetails["system.attributes.attack.shared"]
+    this.actor?.sourceDetails["system.attributes.attack.shared"]
       ?.reverse()
       .forEach((s) => parts.push(`${s.value}[${s.name}]`));
 
     // CMB specific modifiers
     if (isCMB) {
-      this.actor.sourceDetails["system.attributes.cmb.bonus"]
+      this.actor?.sourceDetails["system.attributes.cmb.bonus"]
         ?.reverse()
         .forEach((s) => parts.push(`${s.value}[${s.name}]`));
     }
@@ -741,8 +742,9 @@ export class ItemAction {
     // Add size bonus
     if (rollData.sizeBonus !== 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
+    const ability = rollData.abilities?.[abl];
     // Add ability modifier
-    if (abl != "" && rollData.abilities[abl] != null && rollData.abilities[abl].mod !== 0) {
+    if (ability?.mod !== 0) {
       parts.push(`@abilities.${abl}.mod[${pf1.config.abilities[abl]}]`);
     }
     // Add bonus parts
@@ -1016,10 +1018,11 @@ export class ItemAction {
 
     // Determine ability score modifier
     const abl = this.data.ability.damage;
-    if (typeof abl === "string" && abl !== "") {
+    const ability = rollData.abilities?.[abl];
+    if (ability) {
       // Determine ability score bonus
-      rollData.ablDamage = Math.floor(rollData.abilities[abl].mod * rollData.ablMult);
-      if (rollData.abilities[abl].mod < 0) rollData.ablDamage = rollData.abilities[abl].mod;
+      rollData.ablDamage = Math.floor(ability.mod * rollData.ablMult);
+      if (ability.mod < 0) rollData.ablDamage = ability.mod;
 
       // Determine ability score label
       const ablLabel = pf1.config.abilities[abl];

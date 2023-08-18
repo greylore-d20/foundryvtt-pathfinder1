@@ -1379,6 +1379,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {ItemChange[]} The resulting changes.
    */
   getContextChanges(context = "attack") {
+    if (!this.actor) return [];
     let result = this.actor.changes;
 
     switch (context) {

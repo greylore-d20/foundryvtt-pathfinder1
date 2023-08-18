@@ -339,9 +339,9 @@ export class ActionUse {
     // Set ammo usage
     if (action.usesAmmo) {
       const ammoId = this.item.getFlag("pf1", "defaultAmmo");
-      const item = this.item.actor.items.get(ammoId);
+      const item = this.item.actor?.items.get(ammoId);
       const quantity = item?.system.quantity ?? 0;
-      const abundant = item?.flags.pf1?.abundant;
+      const abundant = item?.flags.pf1?.abundant ?? false;
       for (let a = 0; a < allAttacks.length; a++) {
         const atk = allAttacks[a];
         if (abundant || quantity >= a + 1) atk.ammo = ammoId;
@@ -833,7 +833,7 @@ export class ActionUse {
     };
 
     const actor = this.item.actor,
-      token = this.token ?? actor.token;
+      token = this.token ?? actor?.token;
 
     // Set chat data
     this.shared.chatData = {
@@ -1029,7 +1029,7 @@ export class ActionUse {
     if (this.shared.manyShot) properties.push(game.i18n.localize("PF1.Manyshot"));
 
     // Add Armor Check Penalty's application to attack rolls info
-    if (this.item.hasAttack && this.shared.rollData.attributes.acp.attackPenalty > 0)
+    if (this.item.hasAttack && this.shared.rollData.attributes?.acp?.attackPenalty > 0)
       properties.push(game.i18n.localize("PF1.ArmorCheckPenalty"));
 
     // Add conditionals info
@@ -1040,7 +1040,7 @@ export class ActionUse {
     }
 
     // Add Wound Thresholds info
-    if (this.shared.rollData.attributes.woundThresholds.level > 0)
+    if (this.shared.rollData.attributes?.woundThresholds?.level > 0)
       properties.push(
         game.i18n.localize(pf1.config.woundThresholdConditions[this.shared.rollData.attributes.woundThresholds.level])
       );

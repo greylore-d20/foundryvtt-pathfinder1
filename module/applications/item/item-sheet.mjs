@@ -1251,8 +1251,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Drag action
     if (elem.dataset?.itemId) {
-      const action = this.object.actions.get(elem.dataset.itemId);
-      const obj = { type: "action", source: this.object.uuid, data: action.data };
+      const action = this.item.actions.get(elem.dataset.itemId);
+      const obj = { type: "action", uuid: this.item.uuid, actionId: action.id, data: action.data };
       event.dataTransfer.setData("text/plain", JSON.stringify(obj));
     }
   }
@@ -1271,20 +1271,19 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     event.stopPropagation();
 
-    let data, type;
+    let data;
     try {
       data = JSON.parse(event.dataTransfer.getData("text/plain"));
-      // Surface-level check for action
-      if (data.type === "action" && data.source) type = "action";
     } catch (e) {
       return false;
     }
+    const { type, uuid, actionId } = data;
 
-    const item = this.object;
+    const item = this.item;
 
     // Handle actions
     if (type === "action") {
-      const srcItem = await fromUuid(data.source);
+      const srcItem = await fromUuid(uuid);
 
       // Re-order
       if (srcItem === item) {
@@ -1294,10 +1293,10 @@ export class ItemSheetPF extends ItemSheet {
         let targetIdx;
         if (!targetActionID) targetIdx = prevActions.length - 1;
         else targetIdx = prevActions.indexOf(prevActions.find((o) => o._id === targetActionID));
-        const srcIdx = prevActions.indexOf(prevActions.find((o) => o._id === data.data._id));
+        const srcIdx = prevActions.indexOf(prevActions.find((o) => o._id === actionId));
 
-        prevActions.splice(srcIdx, 1);
-        prevActions.splice(targetIdx, 0, data.data);
+        const [actionData] = prevActions.splice(srcIdx, 1);
+        prevActions.splice(targetIdx, 0, actionData);
         await this.object.update({ "system.actions": prevActions });
       }
 

@@ -725,7 +725,7 @@ Hooks.once("ready", () => {
         macro = macros.createItemMacro(uuid, slot);
         break;
       case "action":
-        macro = macros.createActionMacro(data.data?._id, uuid, slot);
+        macro = macros.createActionMacro(data.actionId, uuid, slot);
         break;
       case "skill":
         macro = macros.createSkillMacro(data.skill, uuid, slot);

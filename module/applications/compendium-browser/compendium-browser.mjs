@@ -192,7 +192,9 @@ export class CompendiumBrowser extends Application {
     // Add `pack` related fields to allow filtering by pack and label display
     result.__pack = pack.collection;
     result.__packLabel = pack.metadata.label;
-    result.__uuid = `Compendium.${pack.collection}.${entry._id}`;
+
+    result.__uuid =
+      game.release.generation >= 11 ? pack.getUuid(entry._id) : `Compendium.${pack.collection}.${entry._id}`;
     // Prepare `__name` field for fuzzy search optimisation
     result.__name = fuzzysort.prepare(entry.name.normalize("NFKD"));
     return result;

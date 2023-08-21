@@ -147,7 +147,7 @@
 
   {{!-- Ammo --}}
   {{#if atk.ammo}}
-    <div class="ammo group-container" data-ammo-id="{{atk.ammo.id}}">
+    <div class="ammo group-container" data-ammo-id="{{atk.ammo.id}}" data-tooltip="{{localize "PF1.AmmoRemaining" quantity=atk.ammo.remaining}}">
       <label class="group-title">{{localize "PF1.LootTypeAmmoSingle"}}</label>
       <img src="{{atk.ammo.img}}" />
       <span class="name">{{atk.ammo.name}}</span>

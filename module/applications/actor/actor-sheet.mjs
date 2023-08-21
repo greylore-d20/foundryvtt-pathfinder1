@@ -1,13 +1,7 @@
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { ActorResistanceSelector } from "../damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
-import {
-  createTag,
-  CR,
-  createConsumableSpellDialog,
-  adjustNumberByStringCommand,
-  openJournal,
-} from "../../utils/lib.mjs";
+import { createTag, CR, adjustNumberByStringCommand, openJournal } from "../../utils/lib.mjs";
 import { getWeightSystem } from "@utils";
 import { PointBuyCalculator } from "../point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "../item-picker.mjs";
@@ -3097,11 +3091,10 @@ export class ActorSheetPF extends ActorSheet {
       if (itemData.type === "spell" && this.currentPrimaryTab !== "spellbook") {
         const spellType =
           this.actor.system.attributes?.spells?.spellbooks?.[this.currentSpellbookKey]?.kind || "arcane";
-        const resultData = await createConsumableSpellDialog(itemData, { spellType });
-        if (resultData === "spell") {
-          // No action here.
-        } else if (resultData) return this.document.createEmbeddedDocuments("Item", [resultData]);
-        else return false;
+        const resultData = await pf1.documents.item.ItemSpellPF.toConsumablePrompt(itemData, { spellType });
+        if (resultData) return this.document.createEmbeddedDocuments("Item", [resultData]);
+        else if (resultData === null) return false;
+        // else continue with spell creation
       }
       // Choose how to import class
       if (itemData.type === "class" && itemData.system.subType !== "mythic" && !(event && event.shiftKey)) {

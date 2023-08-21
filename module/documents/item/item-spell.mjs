@@ -484,7 +484,16 @@ export class ItemSpellPF extends ItemPF {
       .replace(/@ablMod/g, `${rollData.ablMod}[${game.i18n.localize("PF1.AbilityScore")}]`);
   }
 
-  static async toConsumable(origData, type) {
+  /**
+   * Convert spell into a consumable item.
+   *
+   * @param {object} origData - Spell item data
+   * @param {"wand"|"scroll"|"potion"} type - Consumable type
+   * @param {object} [options] - Additional options
+   * @param {string} [options.spellType="arcane"] - Spell type
+   * @returns {object|null} - Item data for appropriate consumable, or null if dialog option was used and it was cancelled.
+   */
+  static async toConsumable(origData, type, { spellType = "arcane" } = {}) {
     const isWand = type === "wand",
       isPotion = type === "potion",
       isScroll = type === "scroll";
@@ -499,7 +508,7 @@ export class ItemSpellPF extends ItemPF {
       name: origData.name,
       system: {
         subType: type,
-        spellType: origData.spellType,
+        spellType: origData.spellType || spellType,
         description: {},
         identified: origData.identified ?? true,
         unidentified: {
@@ -647,6 +656,78 @@ export class ItemSpellPF extends ItemPF {
 
     // Create and return synthetic item data
     return new ItemPF(foundry.utils.expandObject(itemData)).toObject();
+  }
+
+  /**
+   * Open Consumable conversion dialog.
+   *
+   * Automatically calls {@link this.toConsumable} as appropriate.
+   *
+   * @param {object} itemData - Spell item data
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.allowSpell=true] - Allow spell creation
+   * @param {string} [options.spellType="arcane"] - Spell type
+   * @returns {Promise<null|false|object>} - Returns null if cancelled, false if no conversion is to take place, or converted data.
+   */
+  static async toConsumablePrompt(itemData, { allowSpell = true, spellType = "arcane" } = {}) {
+    const [sl, cl] = CONFIG.Item.documentClasses.spell.getMinimumCasterLevelBySpellData(itemData);
+
+    const getFormData = (html) => {
+      const formData = foundry.utils.expandObject(new FormDataExtended(html.querySelector("form")).object);
+      foundry.utils.mergeObject(itemData, formData);
+      // NaN check here to allow SL 0
+      if (Number.isNaN(itemData.sl)) itemData.sl = 1;
+      return itemData;
+    };
+
+    const createConsumable = (data, type) => this.toConsumable(data, type, { spellType: data.spellType });
+
+    const buttons = {
+      potion: {
+        icon: '<i class="fas fa-prescription-bottle"></i>',
+        label: game.i18n.localize("PF1.CreateItemPotion"),
+        callback: (html) => createConsumable(getFormData(html), "potion"),
+      },
+      scroll: {
+        icon: '<i class="fas fa-scroll"></i>',
+        label: game.i18n.localize("PF1.CreateItemScroll"),
+        callback: (html) => createConsumable(getFormData(html), "scroll"),
+      },
+      wand: {
+        icon: '<i class="fas fa-magic"></i>',
+        label: game.i18n.localize("PF1.CreateItemWand"),
+        callback: (html) => createConsumable(getFormData(html), "wand"),
+      },
+      spell: {
+        icon: '<i class="fas fa-hand-sparkles"></i>',
+        label: game.i18n.localize("TYPES.Item.spell"),
+        callback: () => false,
+      },
+    };
+
+    if (!allowSpell) delete buttons.spell;
+
+    return Dialog.wait(
+      {
+        title: game.i18n.format("PF1.CreateItemForSpell", { name: itemData.name }),
+        content: await renderTemplate("systems/pf1/templates/internal/create-consumable.hbs", {
+          name: itemData.name,
+          sl,
+          cl,
+          isGM: game.user.isGM,
+          config: pf1.config,
+          spellType,
+        }),
+        itemData,
+        buttons,
+        close: () => null,
+        default: "potion",
+      },
+      {
+        classes: [...Dialog.defaultOptions.classes, "pf1", "create-consumable"],
+        jQuery: false,
+      }
+    );
   }
 
   /**

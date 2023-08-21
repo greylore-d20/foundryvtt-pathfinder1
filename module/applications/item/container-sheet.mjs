@@ -1,6 +1,5 @@
 import { ItemSheetPF } from "./item-sheet.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
-import { createConsumableSpellDialog } from "../../utils/lib.mjs";
 import { CurrencyTransfer } from "../currency-transfer.mjs";
 import { getWeightSystem } from "@utils";
 
@@ -556,7 +555,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Create consumable from spell
     if (itemData.type === "spell") {
-      const resultData = await createConsumableSpellDialog(itemData, { allowSpell: false });
+      const resultData = await pf1.documents.item.ItemSpellPF.toConsumablePrompt(itemData, { allowSpell: false });
       if (resultData) return this.item.createContainerContent(resultData);
       else return false;
     }

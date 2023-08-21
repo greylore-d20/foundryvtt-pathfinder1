@@ -476,66 +476,6 @@ export const naturalSort = function (arr, propertyKey = "", { numeric = true, ig
   });
 };
 
-export const createConsumableSpellDialog = async function (itemData, { allowSpell = true, spellType = "arcane" } = {}) {
-  const [sl, cl] = CONFIG.Item.documentClasses.spell.getMinimumCasterLevelBySpellData(itemData);
-  const content = await renderTemplate("systems/pf1/templates/internal/create-consumable.hbs", {
-    name: itemData.name,
-    sl,
-    cl,
-    isGM: game.user.isGM,
-    config: pf1.config,
-    spellType,
-  });
-
-  const getFormData = (html) => {
-    const formData = foundry.utils.expandObject(new FormDataExtended(html.querySelector("form")).object);
-    foundry.utils.mergeObject(itemData, formData);
-    // NaN check here to allow SL 0
-    if (Number.isNaN(itemData.sl)) itemData.sl = 1;
-    return itemData;
-  };
-
-  const buttons = {
-    potion: {
-      icon: '<i class="fas fa-prescription-bottle"></i>',
-      label: game.i18n.localize("PF1.CreateItemPotion"),
-      callback: (html) => pf1.documents.item.ItemSpellPF.toConsumable(getFormData(html), "potion"),
-    },
-    scroll: {
-      icon: '<i class="fas fa-scroll"></i>',
-      label: game.i18n.localize("PF1.CreateItemScroll"),
-      callback: (html) => pf1.documents.item.ItemSpellPF.toConsumable(getFormData(html), "scroll"),
-    },
-    wand: {
-      icon: '<i class="fas fa-magic"></i>',
-      label: game.i18n.localize("PF1.CreateItemWand"),
-      callback: (html) => pf1.documents.item.ItemSpellPF.toConsumable(getFormData(html), "wand"),
-    },
-    spell: {
-      icon: '<i class="fas fa-hand-sparkles"></i>',
-      label: game.i18n.localize("TYPES.Item.spell"),
-      callback: () => "spell",
-    },
-  };
-
-  if (!allowSpell) delete buttons.spell;
-
-  return Dialog.wait(
-    {
-      title: game.i18n.format("PF1.CreateItemForSpell", { name: itemData.name }),
-      content,
-      buttons,
-      close: () => false,
-      default: "potion",
-    },
-    {
-      classes: ["dialog", "pf1", "create-consumable"],
-      jQuery: false,
-      itemData,
-    }
-  );
-};
-
 /**
  * Adjusts a string to a number, allowing relative adjustments.
  *

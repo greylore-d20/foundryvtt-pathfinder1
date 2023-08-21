@@ -42,11 +42,16 @@ export class ChatAttack {
     this.ammo = null;
   }
 
+  /** @type {Actor} */
+  get actor() {
+    return this.action?.actor;
+  }
+
   setAmmo(ammoId) {
     if (ammoId == null) {
       this.ammo = null;
     } else {
-      const ammoItem = this.action.item.actor?.items.get(ammoId);
+      const ammoItem = this.actor.items.get(ammoId);
       if (ammoItem == null) {
         this.ammo = null;
         return;

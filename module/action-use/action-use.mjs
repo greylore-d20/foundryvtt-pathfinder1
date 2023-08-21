@@ -361,17 +361,21 @@ export class ActionUse {
   async subtractAmmo(value = 1) {
     if (!this.shared.action.data.usesAmmo) return;
 
+    const actor = this.item.actor;
+
     const ammoUsage = {};
     for (const atk of this.shared.attacks) {
       if (atk.ammo) {
-        const item = this.item.actor.items.get(atk.ammo);
+        const item = actor.items.get(atk.ammo);
         // Don't remove abundant ammunition
         if (item.flags?.pf1?.abundant) continue;
 
-        if (!ammoUsage[atk.ammo]) ammoUsage[atk.ammo] = 1;
-        else ammoUsage[atk.ammo]++;
+        ammoUsage[atk.ammo] ??= 0;
+        ammoUsage[atk.ammo]++;
       }
     }
+
+    this.shared.ammoUsage = ammoUsage;
 
     if (!foundry.utils.isEmpty(ammoUsage)) {
       const updateData = Object.entries(ammoUsage).reduce((cur, o) => {
@@ -386,6 +390,19 @@ export class ActionUse {
       }, []);
 
       return this.item.actor.updateEmbeddedDocuments("Item", updateData);
+    }
+  }
+
+  /**
+   * Update remaining ammo in {@link ChatAttack}s
+   */
+  updateAmmoUsage() {
+    const actor = this.actor;
+    for (const atk of this.shared.attacks) {
+      if (!atk.ammo) continue;
+      const attack = atk.chatAttack;
+      const ammo = actor.items.get(atk.ammo)?.system.quantity ?? 0;
+      attack.ammo.remaining = ammo;
     }
   }
 
@@ -510,6 +527,7 @@ export class ActionUse {
     // Add attack cards
     this.shared.attacks.forEach((attack) => {
       if (!attack.ammo) return;
+      /** @type {ChatAttack} */
       const atk = attack.chatAttack;
       if (atk) atk.setAmmo(attack.ammo);
     });

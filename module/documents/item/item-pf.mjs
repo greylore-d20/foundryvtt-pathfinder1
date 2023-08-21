@@ -1317,6 +1317,9 @@ export class ItemPF extends Item {
 
     // Subtract uses
     await actionUse.subtractAmmo();
+
+    actionUse.updateAmmoUsage();
+
     if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
       await this.addCharges(-shared.rollData.chargeCost);
     if (shared.action.isSelfCharged)

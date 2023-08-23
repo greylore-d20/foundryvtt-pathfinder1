@@ -32,6 +32,10 @@ export class EntrySelector extends FormApplication {
     return `entry-selector-item-${this.object.uuid}-${this.options.name}`;
   }
 
+  get isEditable() {
+    return this.object.isEditable;
+  }
+
   get title() {
     const item = this.object;
     const actor = item.actor;
@@ -80,6 +84,8 @@ export class EntrySelector extends FormApplication {
   }
 
   activateListeners(html) {
+    if (!this.isEditable) return;
+
     html.find(".entry-control").click(this._onEntryControl.bind(this));
 
     html.find('tr td input[type="text"]').change(this._onEntryChange.bind(this));

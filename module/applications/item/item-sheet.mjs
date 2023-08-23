@@ -912,6 +912,13 @@ export class ItemSheetPF extends ItemSheet {
     // Action control
     html.find(".action-controls a").on("click", this._onActionControl.bind(this));
 
+    // Open help browser
+    html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
+
+    // Open entry/trait editor/viewer
+    html.find(".entry-selector").click(this._onEntrySelector.bind(this));
+    html.find(".trait-selector").click(this._onTraitSelector.bind(this));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");
@@ -923,9 +930,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add drop handler to textareas
     html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
-
-    // Open help browser
-    html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
 
     // Modify buff changes
     html.find(".change-control").click(this._onBuffControl.bind(this));
@@ -946,7 +950,6 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Listen to field entries
-    html.find(".entry-selector").click(this._onEntrySelector.bind(this));
     html.find(".entry-control a").click(this._onEntryControl.bind(this));
 
     // Add drop handler to link tabs
@@ -962,9 +965,6 @@ export class ItemSheetPF extends ItemSheet {
 
     // Edit change script contents
     html.find(".edit-change-contents").on("click", this._onEditChangeScriptContents.bind(this));
-
-    // Trait Selector
-    html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
     // Linked item clicks
     html.find(".tab[data-tab='links'] .links-item .links-item-name").on("contextmenu", this._openLinkedItem.bind(this));

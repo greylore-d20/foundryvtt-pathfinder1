@@ -51,7 +51,14 @@
         "monster-templates",
         "monster-abilities"
       ],
-      "color": "#996300"
+      "color": "#996300",
+      "folders": [
+        {
+          "name": "Skills",
+          "color": "#336133",
+          "packs": ["skills-core", "skills-background", "skills-consolidated"]
+        }
+      ]
     },
     {
       "name": "Roll Tables",
@@ -220,6 +227,30 @@
       "name": "ultimate-equipment",
       "label": "PF1.PACKS.ultimate-equipment",
       "type": "RollTable",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
+      "name": "skills-core",
+      "label": "Core Skills",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
+      "name": "skills-background",
+      "label": "Background Skills",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
+      "name": "skills-consolidated",
+      "label": "Consolidated Skills",
+      "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
       }

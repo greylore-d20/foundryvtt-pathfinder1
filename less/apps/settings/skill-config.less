@@ -1,0 +1,81 @@
+.app.pf1.skill-config {
+  form {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.5em;
+
+    h3,
+    h4 {
+      margin: 0;
+      padding: 0;
+    }
+
+    .packs,
+    .presets {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .presets {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 0.3em;
+      //justify-content: space-evenly;
+
+      > .preset {
+        white-space: nowrap;
+      }
+    }
+
+    .packs {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 1px;
+
+      > li {
+        display: flex;
+        flex-flow: row nowrap;
+
+        &.header {
+          background-color: rgba(0, 0, 0, 0.1);
+
+          > h4 {
+            font-weight: bold;
+          }
+        }
+
+        > .name,
+        > .source {
+          padding: 0.2em 0.3em;
+        }
+
+        > .name {
+          flex: 1 16em;
+        }
+
+        > .source {
+          flex: 0 16em;
+        }
+
+        > .controls {
+          flex: 0 4em;
+          display: inline-flex;
+          justify-content: center;
+        }
+
+        &:hover {
+          background-color: var(--pf1-item-list-hover-bg);
+        }
+      }
+    }
+
+    .warning {
+      text-align: center;
+    }
+
+    i {
+      pointer-events: none;
+    }
+  }
+}

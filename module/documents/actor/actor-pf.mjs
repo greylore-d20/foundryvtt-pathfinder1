@@ -477,6 +477,9 @@ export class ActorPF extends ActorBasePF {
     // Reset class info
     this.classes = {};
 
+    // Setup skills
+    this.skills = new Collection();
+
     //  Init resources structure
     this.system.resources ??= {};
 
@@ -544,8 +547,6 @@ export class ActorPF extends ActorBasePF {
       if (this.system.attributes.bab.value) this.system.attributes.bab.total += this.system.attributes.bab.value ?? 0;
     }
 
-    this._prepareClassSkills();
-
     // Reset HD
     foundry.utils.setProperty(this.system, "attributes.hd.total", levels.hd);
   }
@@ -610,24 +611,17 @@ export class ActorPF extends ActorBasePF {
   _prepareClassSkills() {
     const skillSet = new Set();
     this.items
-      .filter((actorItems) => ["class", "race", "feat"].includes(actorItems.type))
-      .forEach((relevantActorItems) => {
-        for (const [classSkillName, isClassSkill] of Object.entries(relevantActorItems.system.classSkills || {})) {
-          if (isClassSkill === true) skillSet.add(classSkillName);
+      .filter((item) => ["class", "race", "feat"].includes(item.type))
+      .forEach((item) => {
+        for (const [skillId, isClassSkill] of Object.entries(item.system.classSkills || {})) {
+          if (isClassSkill === true) skillSet.add(skillId);
         }
       });
 
-    for (const [skillKey, skillData] of Object.entries(this.system.skills)) {
-      if (!skillData) {
-        console.warn(`Bad skill data for "${skillKey}"`, this);
-        continue;
-      }
-      this.system.skills[skillKey].cs = skillSet.has(skillKey);
-      for (const k2 of Object.keys(skillData.subSkills ?? {})) {
-        foundry.utils.setProperty(skillData, `subSkills.${k2}.cs`, skillSet.has(skillKey));
-      }
-    }
+    this.classSkills = skillSet;
   }
+
+  classSkills = new Set();
 
   /**
    * Checks if there's any matching proficiency
@@ -1217,6 +1211,9 @@ export class ActorPF extends ActorBasePF {
       this.system.attributes ??= {};
       this.system.attributes.quadruped ??= race?.system.quadruped ?? false;
     }
+
+    this._prepareClassSkills();
+    this.itemTypes.skill?.forEach((skill) => skill.postPrepare());
 
     this.prepareProficiencies();
 
@@ -2632,122 +2629,13 @@ export class ActorPF extends ActorBasePF {
   /**
    * Roll a Skill Check
    *
-   * @example
-   * await actor.rollSkill("per", { skipDialog: true, bonus: "1d6", dice: "2d20kh" });
-   *
-   * @param {string} skillId      The skill id (e.g. "per", "prf.prf1", or "crf.alchemy")
-   * @param {ActorRollOptions} [options={}]      Options which configure how the skill check is rolled
-   * @returns {Promise<ChatMessage|object|void>} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
+   * @param {string} skillId - The skill id (e.g. "per", or "prf.subSkills.prf1")
+   * @param {ActorRollOptions} [options={}] - Options which configure how the skill check is rolled
+   * @throws - If skill is not found.
+   * @returns {Promise<ChatMessage|object|void>} - The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollSkill(skillId, options = {}) {
-    if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.Error.NoActorPermissionAlt", { name: this.name }));
-    }
-
-    const skillIdParts = skillId.split(".");
-    const mainSkillId = skillIdParts[0],
-      subSkillId = skillIdParts.length > 1 ? skillIdParts.at(-1) : null;
-    // Reconstruct skill ID to ensure it is valid for everything else.
-    skillId = subSkillId ? `${mainSkillId}.${subSkillId}` : mainSkillId;
-    const skillDataPathPart = subSkillId ? `${mainSkillId}.subSkills.${subSkillId}` : mainSkillId;
-
-    const skl = this.getSkillInfo(skillId);
-    const haveParentSkill = !!subSkillId;
-
-    // Add context notes
-    const rollData = this.getRollData();
-    const notes = await this.getContextNotesParsed(`skill.${skillId}`, { rollData });
-    if (haveParentSkill)
-      notes.push(...(await this.getContextNotesParsed(`skill.${mainSkillId}`, { rollData, all: false })));
-
-    // Add untrained note
-    if (skl.rt && !skl.rank) {
-      notes.push({ text: game.i18n.localize("PF1.Untrained") });
-    }
-
-    // Gather changes
-    const parts = [];
-    const changes = getHighestChanges(
-      this.changes.filter((c) => {
-        const cf = c.getTargets(this);
-
-        if (haveParentSkill && cf.includes(`system.skills.${mainSkillId}.mod`)) return true;
-        return cf.includes(`system.skills.${skillDataPathPart}.mod`);
-      }),
-      { ignoreTarget: true }
-    );
-
-    // Add ability modifier
-    if (skl.ability) {
-      parts.push(`@abilities.${skl.ability}.mod[${pf1.config.abilities[skl.ability]}]`);
-    }
-
-    // Add rank
-    if (skl.rank > 0) {
-      parts.push(`${skl.rank}[${game.i18n.localize("PF1.SkillRankPlural")}]`);
-      if (skl.cs) {
-        parts.push(`${pf1.config.classSkillBonus}[${game.i18n.localize("PF1.CSTooltip")}]`);
-      }
-    }
-
-    // Add armor check penalty
-    if (skl.acp && rollData.attributes.acp.skill !== 0) {
-      parts.push(`-@attributes.acp.skill[${game.i18n.localize("PF1.ACPLong")}]`);
-    }
-
-    // Add Wound Thresholds info
-    if (rollData.attributes.woundThresholds?.penalty > 0) {
-      const label = pf1.config.woundThresholdConditions[rollData.attributes.woundThresholds.level];
-      notes.push({ text: label });
-      parts.push(`- @attributes.woundThresholds.penalty[${label}]`);
-    }
-
-    // Add changes
-    for (const c of changes) {
-      if (!c.value) continue;
-      // Hide complex change formulas in parenthesis.
-      if (typeof c.value === "string" && RollPF.parse(c.value).length > 1) {
-        parts.push(`(${c.value})[${c.flavor}]`);
-      } else {
-        parts.push(`${c.value}[${c.flavor}]`);
-      }
-    }
-
-    const props = [];
-    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-
-    const token = options.token ?? this.token;
-
-    // Add metadata about the skill
-    const metadata = { skill: { rank: skl.rank ?? 0 } };
-    if (["acr", "swm", "clm"].includes(skillId)) {
-      const speeds = this.system.attributes?.speed ?? {};
-      metadata.speed = { base: speeds.land?.total ?? 0 };
-      if (skillId === "swm") metadata.speed.swim = speeds.swim?.total ?? 0;
-      if (skillId === "clm") metadata.speed.climb = speeds.climb?.total ?? 0;
-    }
-
-    const rollOptions = {
-      ...options,
-      parts,
-      rollData,
-      flavor: game.i18n.format("PF1.SkillCheck", { skill: skl.fullName }),
-      chatTemplateData: { properties: props },
-      compendium: { entry: pf1.config.skillCompendiumEntries[skillId] ?? skl.journal, type: "JournalEntry" },
-      subject: { skill: skillId },
-      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
-      messageData: {
-        flags: {
-          pf1: {
-            metadata,
-          },
-        },
-      },
-    };
-    if (Hooks.call("pf1PreActorRollSkill", this, rollOptions, skillId) === false) return;
-    const result = await pf1.dice.d20Roll(rollOptions);
-    if (result) Hooks.callAll("pf1ActorRollSkill", this, result, skillId);
-    return result;
+    return this.skills.get(skillId).use(options);
   }
 
   /* -------------------------------------------- */

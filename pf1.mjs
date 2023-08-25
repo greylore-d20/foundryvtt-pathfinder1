@@ -27,6 +27,7 @@ import * as PF1CONST from "./module/const.mjs";
 import * as applications from "./module/applications/_module.mjs";
 import * as documents from "./module/documents/_module.mjs";
 import * as models from "./module/models/_module.mjs";
+import * as itemModels from "./module/documents/item/models/_module.mjs";
 import * as actionUse from "./module/action-use/_module.mjs";
 import * as chat from "./module/chat/_module.mjs";
 import * as _canvas from "./module/canvas/_module.mjs";
@@ -35,7 +36,6 @@ import * as components from "./module/components/_module.mjs";
 import * as utils from "./module/utils/_module.mjs";
 import * as registry from "./module/registry/_module.mjs";
 import * as migrations from "./module/migration.mjs";
-import * as rollFunctions from "./module/utils/roll-functions.mjs";
 
 // ESM exports, to be kept in sync with globalThis.pf1
 export {
@@ -117,6 +117,7 @@ Hooks.once("init", function () {
   };
   CONFIG.Item.documentClass = ItemPFProxy;
   CONFIG.Item.documentClasses = {
+    skill: documents.item.ItemSkillPF,
     attack: documents.item.ItemAttackPF,
     buff: documents.item.ItemBuffPF,
     class: documents.item.ItemClassPF,
@@ -131,7 +132,10 @@ Hooks.once("init", function () {
     implant: documents.item.ItemImplantPF,
   };
 
-  // Active Effects
+  // Item data models
+  CONFIG.Item.systemDataModels.skill = itemModels.skill;
+
+  // Active Effets
   CONFIG.ActiveEffect.documentClass = documents.ActiveEffectPF;
   CONFIG.ActiveEffect.legacyTransferral = false; // TODO: Remove once legacy transferral is no longer default.
   CONFIG.ActiveEffect.dataModels.base = models.ae.AEBase;
@@ -222,6 +226,11 @@ Hooks.once("init", function () {
   Items.registerSheet("pf1", applications.item.ItemSheetPF_Container, {
     label: "PF1.Sheet.Container",
     types: ["container"],
+    makeDefault: true,
+  });
+  Items.registerSheet("pf1", applications.item.SkillSheetPF, {
+    label: "PF1.Sheet.Skill",
+    types: ["skill"],
     makeDefault: true,
   });
 

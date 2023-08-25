@@ -1,0 +1,138 @@
+.pf1.sheet.item.skill {
+  min-height: 360px;
+  form {
+    display: grid;
+    grid-template-columns: 2fr 5fr;
+    grid-auto-rows: min-content;
+    gap: 3px;
+
+    input {
+      &:invalid {
+        background-color: var(--pf1-color-invalid-input);
+      }
+    }
+
+    header {
+      grid-column: 1 / -1;
+
+      .summary {
+        > li {
+          display: flex;
+          flex-flow: row nowrap;
+
+          > label,
+          > input,
+          .value {
+            flex: 1;
+          }
+
+          .value,
+          > input {
+            text-align: center;
+          }
+        }
+
+        // Position class skill checkbox nicely
+        .class-skill {
+          label {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+
+            input {
+              flex: 0 16px;
+              width: 16px;
+              height: 16px;
+            }
+          }
+        }
+      }
+
+      .full-identifier {
+        flex: 1 100%;
+      }
+    }
+
+    section {
+      &.sidepanel {
+        display: flex;
+        flex-flow: column nowrap;
+
+        > * {
+          flex: 0;
+        }
+
+        label.checkbox {
+          display: inline-flex;
+          justify-content: space-between;
+
+          &:hover {
+            background: rgba(0, 0, 0, 0.05);
+          }
+
+          > input {
+            flex: 0 16px;
+            width: 16px;
+            height: 16px;
+          }
+        }
+      }
+
+      .reference {
+        // Make content link text overflow do ellipsis
+        .link {
+          display: inline-flex;
+          gap: 0.3em;
+
+          &:hover {
+            text-shadow: 0 0 8px var(--color-shadow-primary);
+          }
+        }
+
+        // Render content link without some visual flairs
+        .link {
+          flex: 1;
+          display: flex;
+          flex-flow: row nowrap;
+
+          .content-link {
+            border: none;
+            background-color: inherit;
+          }
+        }
+
+        .controls {
+          flex: 0;
+        }
+      }
+
+      .grouping {
+        .source {
+          display: flex;
+          flex-flow: row nowrap;
+          flex: 100%;
+          gap: 3px;
+          .spacer {
+            flex: 2;
+          }
+          .info,
+          .name {
+            flex: 3;
+          }
+        }
+      }
+    }
+
+    i {
+      // Let click events fall through FA icons
+      &.fa-solid,
+      &.fas {
+        pointer-events: none;
+      }
+    }
+
+    .selectable {
+      user-select: all;
+    }
+  }
+}

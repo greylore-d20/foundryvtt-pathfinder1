@@ -1705,7 +1705,6 @@ export class ActorPF extends ActorBasePF {
       "attributes.ac.touch.total": 10,
       "attributes.ac.flatFooted.total": 10,
       "attributes.bab.total": 0,
-      "attributes.bab.value": 0,
       "attributes.cmd.total": 10,
       "attributes.cmd.flatFootedTotal": 10,
       "attributes.acp.armorBonus": 0,

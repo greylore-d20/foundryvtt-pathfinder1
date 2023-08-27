@@ -1,0 +1,49 @@
+.pf1 {
+  .info-box {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+
+    border: 1px solid var(--color-border-dark-3);
+    border-radius: 0.3em;
+
+    > h5 {
+      flex: 0;
+      margin: 0;
+      text-align: center;
+
+      padding: 0.2em 0.3em;
+
+      font-size: var(--font-size-13);
+      color: var(--color-text-light-highlight);
+      text-shadow: 1px 1px var(--color-shadow-dark);
+      background-color: var(--pf1-bg-dark-3);
+    }
+
+    .value {
+      flex: 0;
+      display: flex;
+      flex-flow: column;
+      padding: 1px 3px;
+    }
+  }
+
+  .info-box-joined {
+    display: flex;
+    flex-flow: row nowrap;
+    flex: 1;
+
+    > .info-box {
+      border-radius: unset;
+      flex: 1;
+      border-right-style: unset;
+    }
+    > .info-box:first-child {
+      border-radius: 0.3em 0 0 0.3em;
+    }
+    > .info-box:last-child {
+      border-radius: 0 0.3em 0.3em 0;
+      border-right-style: solid;
+    }
+  }
+}

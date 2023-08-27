@@ -1,19 +1,17 @@
 <form class="{{cssClass}}" autocomplete="off">
 
-  {{!-- NPC Sheet Header --}}
+  {{!-- Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{actor.img}}" data-edit="img"/>
+    <img class="profile" src="{{actor.img}}" data-edit="img">
 
-    <div class="header-details flexcol">
-      <!-- <div class="header-top flexrow"> -->
-        <h1 class="char-name">
-          <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}"/>
-        </h1>
-      <!-- </div> -->
+    <div class="header-details">
+      <h1 class="char-name">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}"/>
+      </h1>
     </div>
   </header>
 
-  {{!-- NPC Sheet Navigation --}}
+  {{!-- Navigation --}}
   <nav class="sheet-navigation tabs" data-group="primary">
     <a class="item" data-tab="summary">{{localize "PF1.Summary"}}</a>
     <a class="item" data-tab="notes">{{ localize "PF1.Notes" }}</a>
@@ -33,7 +31,7 @@
           <tbody>
             <tr>
               <td data-action="input-text" data-for=".cr-input" data-attr-name="system.details.cr.base">
-                <input readonly class="cr-input" type="text" value="{{labels.cr}}"/>
+                <input readonly class="cr-input" type="text" value="{{labels.cr}}">
               </td>
               <td>
                 {{system.details.xp.value}}
@@ -54,148 +52,193 @@
 
       {{!-- Health --}}
       {{#unless useWoundsAndVigor}}
-      <table class="health-table">
-        <thead>
-          <tr>
-            <th colspan="4">
-              {{localize "PF1.HitPoints"}}
-            </th>
-          </tr>
+      <div class="health wounds-vigor">
+        <h3>{{localize "PF1.HitPoints"}}</h3>
+        <div class="info-box-joined current-max">
+          <div class="info-box current">
+            <h5>{{localize "PF1.Current"}}</h5>
+            <div class="value">
+              <span class="text-box direct wheel-change allow-relative" name="system.attributes.hp.value" data-dtype="Number">
+                {{system.attributes.hp.value}}
+              </span>
+            </div>
+          </div>
 
-          <tr>
-            <th>{{localize "PF1.Current"}}</th>
-            <th>{{localize "PF1.Maximum"}}</th>
-            <th>{{localize "PF1.TempShort"}}</th>
-            <th>{{localize "PF1.Nonlethal"}}</th>
-          </tr>
-        </thead>
+          <div class="info-box maximum">
+            <h5>{{localize "PF1.Maximum"}}</h5>
+            <div class="value">
+              <span class="text-box direct" name="system.attributes.hp.base">
+                {{system.attributes.hp.max}}
+              </span>
+            </div>
+          </div>
 
-        <tbody>
-          <tr>
-            <td>
-              <span class="text-box direct wheel-change allow-relative hp-current-input" name="system.attributes.hp.value" data-dtype="Number">{{system.attributes.hp.value}}</span>
-            </td>
-            <td>
-              <span class="text-box direct hp-max-input" name="system.attributes.hp.base">{{system.attributes.hp.max}}</span>
-            </td>
-            <td>
-              <span class="text-box direct allow-relative hp-temp-input" name="system.attributes.hp.temp" data-dtype="Number">{{#if system.attributes.hp.temp}}{{system.attributes.hp.temp}}{{/if}}</span>
-            </td>
-            <td>
-              <span class="text-box direct allow-relative hp-nonlethal-input" name="system.attributes.hp.nonlethal" data-dtype="Number">{{#if system.attributes.hp.nonlethal}}{{system.attributes.hp.nonlethal}}{{/if}}</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <div class="info-box temporary">
+            <h5>{{localize "PF1.TempShort"}}</h5>
+            <div class="value">
+              <span class="text-box direct allow-relative" name="system.attributes.hp.temp" data-dtype="Number">
+                {{#if system.attributes.hp.temp}}{{system.attributes.hp.temp}}{{/if}}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box nonlethal">
+          <h5>{{localize "PF1.Nonlethal"}}</h5>
+          <div class="value">
+            <span class="text-box direct allow-relative" name="system.attributes.hp.nonlethal" data-dtype="Number">
+              {{#if system.attributes.hp.nonlethal}}{{system.attributes.hp.nonlethal}}{{/if}}
+            </span>
+          </div>
+        </div>
+      </div>
+
       {{else}}
-      <table class="health-table wounds-vigor">
-        <thead>
-          <tr>
-            <th colspan="3">
-              {{localize "PF1.Vigor"}}
-            </th>
+      {{!-- Wounds & Vigor --}}
+      <div class="health wounds-vigor">
+        <div class="vigor">
+          <h3>{{localize "PF1.Vigor"}}</h3>
 
-            <th colspan="2">
-              {{localize "PF1.Wounds"}}
-            </th>
-          </tr>
+          <div class="info-box-joined current-max vigor">
+            <div class="info-box current">
+              <h5>{{localize "PF1.Current"}}</h5>
+              <div class="value">
+                <span class="text-box direct wheel-change allow-relative" name="system.attributes.vigor.value" data-dtype="Number">
+                  {{system.attributes.vigor.value}}
+                </span>
+              </div>
+            </div>
+            <div class="info-box maximum">
+              <h5>{{localize "PF1.Maximum"}}</h5>
+              <div class="value">
+                <span class="text-box direct" name="system.attributes.vigor.base">
+                  {{system.attributes.vigor.max}}
+                </span>
+              </div>
+            </div>
+            <div class="info-box temp">
+              <h5>{{localize "PF1.TempShort"}}</h5>
+              <div class="value">
+                <span class="text-box direct wheel-change allow-relative" name="system.attributes.vigor.temp" data-dtype="Number">
+                  {{#if system.attributes.vigor.temp}}{{system.attributes.vigor.temp}}{{/if}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-          <tr>
-            <th>{{localize "PF1.Current"}}</th>
-            <th>{{localize "PF1.Maximum"}}</th>
-            <th>{{localize "PF1.TempShort"}}</th>
-            <th>{{localize "PF1.Current"}}</th>
-            <th>{{localize "PF1.Maximum"}}</th>
-          </tr>
-        </thead>
+        <div class="wounds">
+          <h3>{{localize "PF1.Wounds"}}</h3>
 
-        <tbody>
-          <tr>
-            <td>
-              <span class="text-box direct wheel-change allow-relative" name="system.attributes.vigor.value" data-dtype="Number">{{system.attributes.vigor.value}}</span>
-            </td>
-            <td>
-              <span class="text-box direct" name="system.attributes.vigor.base">{{system.attributes.vigor.max}}</span>
-            </td>
-            <td>
-              <span class="text-box direct wheel-change allow-relative" name="system.attributes.vigor.temp" data-dtype="Number">{{#if system.attributes.vigor.temp}}{{system.attributes.vigor.temp}}{{/if}}</span>
-            </td>
-            <td>
-              <span class="text-box direct wheel-change allow-relative" name="system.attributes.wounds.value" data-dtype="Number">{{system.attributes.wounds.value}}</span>
-            </td>
-            <td>
-              <span class="text-box direct" name="system.attributes.wounds.base">{{system.attributes.wounds.max}}</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <div class="info-box-joined current-max wounds">
+            <div class="info-box current">
+              <h5>{{localize "PF1.Current"}}</h5>
+              <div class="value">
+                <span class="text-box direct wheel-change allow-relative" name="system.attributes.wounds.value" data-dtype="Number">
+                  {{system.attributes.wounds.value}}
+                </span>
+              </div>
+            </div>
+            <div class="info-box maximum">
+              <h5>{{localize "PF1.Maximum"}}</h5>
+              <div class="value">
+                <span class="text-box direct" name="system.attributes.wounds.base">
+                  {{system.attributes.wounds.max}}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {{/unless}}
 
-      <table>
-          <thead>
-              <tr>
-                  {{#each system.attributes.savingThrows as |savingThrow id|}}
-                  <th class="saving-throw" data-savingthrow="{{id}}">
-                      <a class="rollable"><i class="fas fa-dice"></i><span>{{savingThrow.label}}</span></a>
-                  </th>
-                  {{/each}}
-              </tr>
-          </thead>
+      <div class="defenses">
+        {{!-- Armor Class --}}
+        <div class="info-box">
+          <h5>{{localize "PF1.ACNormal"}}</h5>
+          <div class="value">
+            <span class="text-box direct armor-class-input" name="system.attributes.ac.normal.value">
+              {{system.attributes.ac.normal.total}}
+            </span>
+          </div>
+        </div>
 
-          <tbody>
-              <tr>
-                  {{#each system.attributes.savingThrows as |savingThrow id|}}
-                  <td>
-                      <span class="text-box direct savingthrow-{{id}}-input" name="system.attributes.savingThrows.{{id}}.base">{{savingThrow.total}}</span>
-                  </td>
-                  {{/each}}
-              </tr>
-          </tbody>
-      </table>
+        {{!-- CMD --}}
+        <div class="info-box">
+          <h5>{{localize "PF1.CMDAbbr"}}</h5>
+          <div class="value">
+            <span class="text-box direct armor-class-input" name="system.attributes.cmd.value">
+              {{system.attributes.cmd.total}}
+            </span>
+          </div>
+        </div>
 
-      <table>
+        {{!-- Saving Throws --}}
+        <div class="info-box-joined saves">
+          {{#each system.attributes.savingThrows as |savingThrow id|}}
+          <div class="info-box saving-throw rollable" data-savingthrow="{{id}}">
+            <h5 class="rollable">
+              <i class="fas fa-dice"></i>
+              <span>{{savingThrow.label}}</span>
+            </h5>
+            <div class="value">
+              <span class="text-box direct savingthrow-{{id}}-input" name="system.attributes.savingThrows.{{id}}.base">
+                {{savingThrow.total}}
+              </span>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+
+      <div class="miscellaneous">
+        {{!-- BAB --}}
+        <div class="info-box">
+          <h5>{{localize "PF1.BABAbbr"}}</h5>
+          <div class="value">
+            <span class="text-box direct bab-input" name="system.attributes.bab.value">
+              {{system.attributes.bab.total}}
+            </span>
+          </div>
+        </div>
+
         {{!-- Initiative --}}
-        <thead>
-          <tr>
-            <th class="attribute initiative">
-              <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
-            </th>
-            <th class="attribute">
-              {{localize "PF1.Size"}}
-            </th>
-            <th class="attribute">
-              {{localize "PF1.Stature"}}
-            </th>
-          </tr>
-        </thead>
+        <div class="info-box rollable initiative">
+          <h5>
+            <i class="fas fa-dice"></i>
+            <span>{{localize "PF1.Initiative"}}</span>
+          </h5>
+          <div class="value">
+            <span class="text-box direct allow-relative" name="system.attributes.init.value" data-dtype="Number">
+              {{system.attributes.init.total}}
+            </span>
+          </div>
+        </div>
 
-        {{!-- Size/Stature --}}
-        <tbody>
-          <tr>
-            <td>
-              <span class="text-box direct allow-relative hp-nonlethal-input" name="system.attributes.init.value" data-dtype="Number">{{system.attributes.init.total}}</span>
-            </td>
-            <td>
-              <select name="system.traits.size">
-                {{#select system.traits.size}}
-                {{#each config.actorSizes as |label size|}}
-                <option value="{{size}}">{{label}}</option>
-                {{/each}}
-                {{/select}}
-              </select>
-            </td>
-            <td>
-              <select name="system.traits.stature">
-                {{#select system.traits.stature}}
-                {{#each config.actorStatures as |label key|}}
-                <option value="{{key}}">{{label}}</option>
-                {{/each}}
-                {{/select}}
-              </select>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        {{!-- Size --}}
+        <div class="info-box attribute">
+          <h5>
+            {{localize "PF1.Size"}}
+          </h5>
+          <div class="value">
+            <select name="system.traits.size">
+              {{selectOptions config.actorSizes selected=system.traits.size}}
+            </select>
+          </div>
+        </div>
+
+        {{!-- Stature --}}
+        <div class="info-box attribute">
+          <h5>
+            {{localize "PF1.Stature"}}
+          </h5>
+          <div class="value">
+            <select name="system.traits.stature">
+              {{selectOptions config.actorStatures selected=system.traits.stature}}
+            </select>
+          </div>
+        </div>
+      </div>
 
       {{!-- Actions --}}
       <div class="combat-attacks">

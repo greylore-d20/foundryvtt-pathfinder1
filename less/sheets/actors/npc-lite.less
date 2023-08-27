@@ -47,4 +47,55 @@
       height: 20px;
     }
   }
+
+  .tab.summary {
+    .defenses {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 3px;
+
+      .saves {
+        flex: 3;
+      }
+    }
+
+    .health,
+    .miscellaneous,
+    .health .vigor,
+    .health .wounds {
+      display: flex;
+      flex-flow: row wrap;
+      gap: 1px 3px;
+    }
+
+    .health {
+      h3 {
+        flex: 1 100%;
+        margin: 0;
+        text-align: center;
+        border: none;
+      }
+
+      .vigor,
+      .current-max {
+        flex: 3;
+      }
+
+      .wounds {
+        flex: 2;
+      }
+    }
+
+    .info-box {
+      span.direct.text-box {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex: 2em;
+      }
+      select {
+        flex: 2em;
+      }
+    }
+  }
 }

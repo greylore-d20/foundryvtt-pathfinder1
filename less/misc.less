@@ -33,7 +33,7 @@ form {
   font-size: @fontSizeSmall;
   font-weight: normal;
   visibility: hidden;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--pf1-bg-dark-5);
   color: var(--color-text-light-0);
   text-align: center;
   padding: 5px;
@@ -133,7 +133,7 @@ form {
 span.text-box {
   display: inline-block;
   text-align: center;
-  border: 1px solid rgba(0, 0, 0, 0);
+  border: 1px solid transparent;
   border-radius: 3px;
   color: black;
   min-width: 20px;
@@ -160,7 +160,7 @@ input.text-box {
     * {
       color: @colorBeige;
     }
-    text-shadow: 0 0 rgba(0, 0, 0, 0);
+    text-shadow: 0 0 transparent;
     cursor: auto;
   }
 
@@ -175,7 +175,7 @@ input.text-box {
 
     tbody {
       th {
-        background: rgba(127, 127, 127, 0.5);
+        background: var(--pf1-bg-gray-4);
         color: white;
         text-shadow: 1px 1px black;
       }
@@ -254,7 +254,7 @@ input.text-box {
 }
 
 .pf1 div.container {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--pf1-bg-dark-0);
   border-radius: 3px;
   border: @borderLightThin;
   padding: 2px;

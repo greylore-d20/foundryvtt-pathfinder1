@@ -22,8 +22,6 @@
   /* ----------------------------------------- */
 
   .tab.summary {
-    border-left: @borderGroove;
-
     .summary-header {
       flex: 0;
       border-bottom: @borderGroove;
@@ -112,7 +110,7 @@
     }
 
     .pseudo-table {
-      background: rgba(0, 0, 0, 0.05);
+      background: var(--pf1-bg-dark-0);
       border-top: 1px solid #7a7971;
       border-bottom: 1px solid #7a7971;
 
@@ -137,10 +135,10 @@
       }
       .header {
         font-weight: bold;
-        background: rgba(0, 0, 0, 0.5);
+        background: var(--pf1-bg-dark-4);
       }
       .sub-header {
-        background: rgba(0, 0, 0, 0.35);
+        background: var(--pf1-bg-dark-3);
       }
       &.maneuverability-details {
         height: 100%;
@@ -374,7 +372,7 @@
         color: white;
         right: 0;
         border-top-left-radius: 5px;
-        background-color: rgba(0, 0, 0, 0.7);
+        background-color: var(--pf1-bg-dark-5);
         border: 1px solid rgba(255, 255, 255, 0.5);
         border-bottom: unset;
         border-right: unset;

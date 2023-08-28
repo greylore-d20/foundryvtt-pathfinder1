@@ -448,10 +448,12 @@ export class ActionUse {
               this.shared.rollData.cl += roll;
               break;
             case "effect.dc":
-              this.shared.rollData.dcBonus = roll;
+              this.shared.rollData.dcBonus ||= 0;
+              this.shared.rollData.dcBonus += roll;
               break;
             case "misc.charges":
-              this.shared.rollData.chargeCostBonus = roll;
+              this.shared.rollData.chargeCostBonus ||= 0;
+              this.shared.rollData.chargeCostBonus += roll;
               break;
           }
         }

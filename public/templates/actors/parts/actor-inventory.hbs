@@ -88,9 +88,7 @@
 
         {{#if section.hasSlots}}
         <div class="item-detail item-slot">
-          {{#if item.labels.slot}}
-          <span>{{item.labels.slot}}</span>
-          {{/if}}
+          <span data-tooltip="{{item.labels.slot}}">{{item.labels.slot}}</span>
         </div>
         {{/if}}
 
@@ -180,7 +178,7 @@
     <span class="span3"><br/></span>
     <span class="span2 align-left">@details.carryCapacity.bonus.total :</span><span class="span1 align-right"> {{system.details.carryCapacity.bonus.total}}</span>
     {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.details.carryCapacity.bonus.total}}
-    
+
     <span class="span3"><br/></span>
     <span class="span2 align-left">@details.carryCapacity.multiplier.total :</span><span class="span1 align-right"> {{system.details.carryCapacity.multiplier.total}}</span>
     {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.details.carryCapacity.multiplier.total}}

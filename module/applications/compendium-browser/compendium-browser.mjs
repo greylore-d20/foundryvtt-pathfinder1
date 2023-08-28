@@ -320,10 +320,20 @@ export class CompendiumBrowser extends Application {
     if (activeFilters.length)
       entries = entries.filter((entry) => activeFilters.every((filter) => filter.applyFilter(entry)));
 
-    if (this._query)
+    if (this._query) {
+      const collator = new Intl.Collator(game.settings.get("core", "language"), {
+        numeric: true,
+        ignorePunctuation: true,
+      });
       entries = fuzzysort
         .go(this._query.normalize("NFKD"), entries, { key: "__name", threshold: -10000 })
+        .sort((a, b) => {
+          // Sort by score first, then alphabetically by name
+          if (a.score !== b.score) return b.score - a.score;
+          else return collator.compare(a.obj.name, b.obj.name);
+        })
         .map((match) => match.obj);
+    }
 
     return entries;
   }

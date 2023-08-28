@@ -1,4 +1,3 @@
-import { formulaHasDice } from "../../dice/dice.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
 import { createTag, convertDistance, keepUpdateArray, diffObjectAndArray } from "../../utils/lib.mjs";
 import { ItemChange } from "../../components/change.mjs";
@@ -894,16 +893,23 @@ export class ItemPF extends Item {
       const maxFormula = this.system.uses.maxFormula;
       if (!maxFormula) {
         this.system.uses.max = 0;
-      } else if (!formulaHasDice(maxFormula)) {
-        const roll = RollPF.safeRoll(maxFormula, rollData);
-        this.system.uses.max = roll.total;
       } else {
-        const msg = game.i18n.format("PF1.WarningNoDiceAllowedInFormula", {
-          formula: maxFormula,
-          context: game.i18n.localize("PF1.ChargePlural"),
-        });
-        ui.notifications.warn(msg, { console: false });
-        console.warn(msg, this);
+        try {
+          const isDeterministic = Roll.parse(maxFormula).every((t) => t.isDeterministic);
+          if (isDeterministic) {
+            const roll = RollPF.safeRoll(maxFormula, rollData, [this], { suppressError: !this.isOwner });
+            this.system.uses.max = roll.total;
+          } else {
+            const msg = game.i18n.format("PF1.WarningNoDiceAllowedInFormula", {
+              formula: maxFormula,
+              context: game.i18n.localize("PF1.ChargePlural"),
+            });
+            ui.notifications.warn(msg, { console: false });
+            console.warn(msg, this);
+          }
+        } catch (err) {
+          console.error(err);
+        }
       }
     }
   }

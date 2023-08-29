@@ -1414,6 +1414,9 @@ const _migrateItemLearnedAt = (item, updateData) => {
   for (const [category, value] of Object.entries(learnedAt)) {
     if (Array.isArray(value)) {
       updateData[`system.learnedAt.${category}`] = value.reduce((learned, [classId, level]) => {
+        // Skip invalid entries
+        if (typeof classId !== "string" || classId.length == 0) return learned;
+        // Split combined entries and transform them to object format
         for (let clsId of classId.split("/")) {
           clsId = clsId.trim().replace(".", "-"); // Sanitize
           if (clsId) learned[clsId] = level;

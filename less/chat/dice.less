@@ -1,0 +1,26 @@
+.chat-message {
+  .dice-roll {
+    .roll {
+      &.die,
+      &.fatedie,
+      &.coin {
+        color: var(--pf1-roll-normal);
+      }
+
+      &.die.success,
+      &.die.max,
+      &.fatedie.success,
+      &.coin.heads {
+        color: var(--pf1-roll-success-alt);
+        filter: sepia(0.5) hue-rotate(60deg);
+      }
+
+      &.die.failure,
+      &.fatedie.failure,
+      &.coin.tails {
+        color: var(--pf1-roll-failure-alt);
+        filter: sepia(0.5) hue-rotate(-60deg);
+      }
+    }
+  }
+}

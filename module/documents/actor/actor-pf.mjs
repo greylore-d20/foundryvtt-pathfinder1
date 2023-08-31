@@ -2687,6 +2687,7 @@ export class ActorPF extends Actor {
    * @param {string|null} [options.bonus=null] - Formula for bonus to initiative
    * @param {boolean} [options.skipDialog] - Skip roll dialog
    * @param {string} [options.rollMode] - Roll mode override
+   * @param {TokenDocumentPF} [options.token=this.token] - For which token this initiative roll is for
    * @returns {Promise<pf1.documents.CombatPF|null>} The updated Combat document in which initiative was rolled, or null if no initiative was rolled
    */
   async rollInitiative({
@@ -2697,7 +2698,10 @@ export class ActorPF extends Actor {
     bonus = null,
     rollMode = null,
     skipDialog,
+    token,
   } = {}) {
+    token ||= this.token;
+
     // Obtain (or create) a combat encounter
     let combat = game.combat;
     if (!combat) {
@@ -2726,6 +2730,7 @@ export class ActorPF extends Actor {
     // Roll initiative for combatants
     const combatants = combat.combatants
       .filter((c) => {
+        if (token && c.token?.id !== token.id) return false;
         if (c.actor?.id !== this.id) return false;
         return rerollInitiative || c.initiative === null;
       })

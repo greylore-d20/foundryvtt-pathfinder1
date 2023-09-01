@@ -242,10 +242,10 @@ export class ItemContainerPF extends ItemPF {
     const fullOptions = { recursive, inLowestDenomination, ...options };
     let result = super.getValue(fullOptions);
 
+    if (!recursive) return result;
+
     // Add item's contained currencies at full value
     result += this.getTotalCurrency({ inLowestDenomination });
-
-    if (!recursive) return result;
 
     // Add item's content items' values
     this.items.forEach((i) => {

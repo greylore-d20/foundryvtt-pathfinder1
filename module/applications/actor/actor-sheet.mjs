@@ -74,20 +74,6 @@ export class ActorSheetPF extends ActorSheet {
     this._hiddenElems = {};
 
     /**
-     * Whether a submit has been queued in any way.
-     *
-     * @property
-     */
-    this._submitQueued = false;
-
-    /**
-     * Whether inner part of this sheet has been rendered already.
-     *
-     * @property
-     */
-    this._renderedInner = false;
-
-    /**
      * A dictionary of additional queued updates, to be added on top of the form's data (and cleared afterwards).
      *
      * @property
@@ -1543,11 +1529,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      if (!this._submitQueued) {
-        $(el).one("mouseleave", (event) => {
-          this._updateItems();
-        });
-      }
+      $(el).one("mouseleave", (event) => this._updateItems());
     } else this._updateItems();
   }
 
@@ -1569,11 +1551,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      if (!this._submitQueued) {
-        $(el).one("mouseleave", (event) => {
-          this._updateItems();
-        });
-      }
+      $(el).one("mouseleave", (event) => this._updateItems());
     } else this._updateItems();
   }
   _setMaxSpellUses(event) {
@@ -1597,11 +1575,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      if (!this._submitQueued) {
-        $(el).one("mouseleave", (event) => {
-          this._updateItems();
-        });
-      }
+      $(el).one("mouseleave", (event) => this._updateItems());
     } else this._updateItems();
   }
 
@@ -1628,11 +1602,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      if (!this._submitQueued) {
-        $(el).one("mouseleave", (event) => {
-          this._onSubmit(event);
-        });
-      }
+      $(el).one("mouseleave", (event) => this._onSubmit(event));
     } else this._onSubmit(event);
   }
 
@@ -1651,11 +1621,7 @@ export class ActorSheetPF extends ActorSheet {
 
     this.setItemUpdate(item.id, "system.level", value);
     if (event.originalEvent instanceof MouseEvent) {
-      if (!this._submitQueued) {
-        $(el).one("mouseleave", (event) => {
-          this._updateItems();
-        });
-      }
+      $(el).one("mouseleave", (event) => this._updateItems());
     } else this._updateItems();
   }
 
@@ -2986,8 +2952,6 @@ export class ActorSheetPF extends ActorSheet {
   async _onSubmit(event, { updateData = null, preventClose = false, preventRender = false } = {}) {
     event.preventDefault();
 
-    this._submitQueued = false;
-
     if (this._itemUpdates?.length) preventRender = true;
 
     await super._onSubmit(event, { updateData, preventClose, preventRender });
@@ -3009,7 +2973,6 @@ export class ActorSheetPF extends ActorSheet {
         console.error("Item update for non-existing item:", d._id, d);
         continue;
       }
-      item.memorizeVariables();
       delete d._id;
       await item.update(d);
     }

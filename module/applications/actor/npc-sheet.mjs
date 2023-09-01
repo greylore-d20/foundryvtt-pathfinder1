@@ -100,11 +100,7 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      if (!this._submitQueued) {
-        $(el).one("mouseleave", (event) => {
-          this._onSubmit(event);
-        });
-      }
+      $(el).one("mouseleave", (event) => this._onSubmit(event));
     } else this._onSubmit(event);
   }
 }

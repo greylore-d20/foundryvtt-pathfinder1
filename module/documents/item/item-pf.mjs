@@ -1888,10 +1888,17 @@ export class ItemPF extends ItemBasePF {
    * @param {number} [options.sellValue=0.5] - The sell value multiplier
    * @param {boolean} [options.inLowestDenomination=false] - Whether the value should be returned in the lowest denomination
    * @param {boolean} [options.forceUnidentified=false] - Override whether the value should use the unidentified price
+   * @param {boolean} [options.single=false] - Return value of singular item instead of the actual stack. Disables recursive option.
    * @returns {number} The item's value
    */
-  getValue({ recursive = true, sellValue = 0.5, inLowestDenomination = false, forceUnidentified = false } = {}) {
-    let result = 0;
+  getValue({
+    recursive = true,
+    sellValue = 0.5,
+    inLowestDenomination = false,
+    forceUnidentified = false,
+    single = false,
+  } = {}) {
+    if (single) recursive = false;
 
     const getActualValue = (identified = true) => {
       let value = 0;
@@ -1910,10 +1917,9 @@ export class ItemPF extends ItemBasePF {
       return value;
     };
 
-    const quantity = this.system.quantity || 0;
+    const quantity = single ? 1 : this.system.quantity || 0;
 
-    // Add item's price
-    result += getActualValue(forceUnidentified ? false : !this.showUnidentifiedData) * quantity;
+    let result = getActualValue(forceUnidentified ? false : !this.showUnidentifiedData) * quantity;
 
     // Modify sell value
     if (!(this.type === "loot" && this.system.subType === "tradeGoods")) result *= sellValue;

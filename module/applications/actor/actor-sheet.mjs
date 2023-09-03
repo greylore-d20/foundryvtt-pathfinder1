@@ -1071,12 +1071,6 @@ export class ActorSheetPF extends ActorSheet {
     // Select the whole text on click
     html.find(".select-on-click").click(this._selectOnClick.bind(this));
 
-    // Submit on blur
-    html.find(".submit-on-blur").on("blur", async (ev) => {
-      await this._onSubmit(ev, { preventRender: true });
-      this.render();
-    });
-
     /* -------------------------------------------- */
     /*  Abilities, Skills, Defenses and Traits
     /* -------------------------------------------- */

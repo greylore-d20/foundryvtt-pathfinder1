@@ -5,8 +5,9 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "system": {
     "description": {
-      "value": "<p>Your mystical bond with wood is such that your weapons become an extension of your body. You gain a +1 competence bonus on attack rolls when wielding a weapon made of or mostly consisting of wood (such as a bow, club, quarterstaff, or spear).</p>\n<p>This bonus increases by +1 at 5th level and every five levels thereafter.</p>"
+      "value": "<p><strong>Source</strong> Ultimate Magic pg. 57</p><p>Your mystical bond with wood is such that your weapons become an extension of your body. You gain a +1 competence bonus on attack rolls when wielding a weapon made of or mostly consisting of wood (such as a bow, club, quarterstaff, or spear).</p>\n<p>This bonus increases by +1 at 5th level and every five levels thereafter.</p>"
     },
+    "tags": ["Wood Mystery"],
     "actions": [
       {
         "_id": "uuj4buy59oimuqop",
@@ -26,7 +27,8 @@
         "_id": "z5ttwk4b",
         "formula": "1 + floor(@classes.oracle.level / 5)",
         "subTarget": "mattack",
-        "modifier": "competence"
+        "modifier": "competence",
+        "priority": null
       }
     ],
     "tag": "classFeat_woodBond",

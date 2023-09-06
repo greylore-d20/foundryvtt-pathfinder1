@@ -5,8 +5,9 @@
   "img": "systems/pf1/icons/spells/light-royal-1.jpg",
   "system": {
     "description": {
-      "value": "<p>As a standard action, you can target a creature within 30 feet and eliminate all memory of an event the target experienced, as @Compendium[pf1.spells.5ll7q13p0skbgonc]{Modify Memory}. A target can attempt a Will save to negate this effect. In addition, you can cause an account of the memory erased by this ability to appear on a blank page of any book you are carrying.</p>\n<p>You can use this ability once per day, plus one additional time per day at 15th level.</p>\n<p>You must be at least 11th level to select this revelation.</p>"
+      "value": "<p><strong>Source</strong> Pathfinder #139: The Dead Road pg. 66</p><p>As a standard action, you can target a creature within 30 feet and eliminate all memory of an event the target experienced, as @Compendium[pf1.spells.5ll7q13p0skbgonc]{Modify Memory}. A target can attempt a Will save to negate this effect. In addition, you can cause an account of the memory erased by this ability to appear on a blank page of any book you are carrying.</p><p>You can use this ability once per day, plus one additional time per day at 15th level.</p><p>You must be at least 11th level to select this revelation.</p>"
     },
+    "tags": ["Reaper Mystery"],
     "actions": [
       {
         "_id": "qcjhcrtvrrbofpyt",
@@ -38,7 +39,8 @@
     ],
     "uses": {
       "per": "day",
-      "maxFormula": "@classes.oracle.level >= 15 ? 2 : 1"
+      "maxFormula": "@classes.oracle.level >= 15 ? 2 : 1",
+      "autoDeductChargesCost": ""
     },
     "tag": "classFeat_obliterateMemory",
     "useCustomTag": true,

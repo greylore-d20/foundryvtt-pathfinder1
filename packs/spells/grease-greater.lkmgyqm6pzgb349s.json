@@ -2,13 +2,13 @@
   "_id": "lkmgyqm6pzgb349s",
   "name": "Grease, Greater",
   "type": "spell",
-  "img": "systems/pf1/icons/misc/magic-swirl.png",
+  "img": "icons/magic/control/silhouette-fall-slip-prone.webp",
   "system": {
     "actions": [
       {
         "_id": "7uvqq9dconrksss9",
         "name": "Use",
-        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "img": "icons/magic/control/silhouette-fall-slip-prone.webp",
         "activation": {
           "type": "standard",
           "unchained": {
@@ -27,10 +27,14 @@
         },
         "actionType": "spellsave",
         "save": {
-          "description": "see text"
+          "description": "see text",
+          "type": "ref"
         }
       }
     ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
     "learnedAt": {
       "class": {
         "sorcerer": 5,

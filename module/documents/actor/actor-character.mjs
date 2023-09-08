@@ -85,10 +85,13 @@ export class ActorCharacterPF extends ActorPF {
   }
 
   /**
-   * Return the amount of experience required to gain a certain character level.
+   * Amount of experience required to gain next level at specific character level.
    *
-   * @param level {number}  The desired level
-   * @returns {number}       The XP required
+   * @example
+   * getLevelExp(1) // -> 3000, the XP needed for level 2
+   *
+   * @param {number} level - Desired level to level-up.
+   * @returns {number} - The XP required for next level.
    */
   getLevelExp(level) {
     const expConfig = game.settings.get("pf1", "experienceConfig");

@@ -99,21 +99,25 @@ export class ActorCharacterPF extends ActorPF {
     return Math.max(1, totalXP);
   }
 
-  prepareBaseData() {
-    super.prepareBaseData();
+  prepareDerivedData() {
+    super.prepareDerivedData();
 
     const actorData = this.system;
 
-    const maxExp = this.getLevelExp(actorData.details.level.value);
+    // Prepare experience data
+    const level = actorData.details?.level?.value || 1;
+
+    const maxExp = this.getLevelExp(level);
     actorData.details.xp.max = maxExp;
 
-    if (!hasProperty(this, "system.details.level.value")) return;
-
     // Experience bar
-    const prior = this.getLevelExp(actorData.details.level.value - 1 || 0),
-      max = this.getLevelExp(actorData.details.level.value || 1);
-
-    actorData.details.xp.pct =
-      ((Math.max(prior, Math.min(max, actorData.details.xp.value)) - prior) / (max - prior)) * 100 || 0;
+    const curXp = actorData.details.xp.value;
+    // Maxed out XP needs no math
+    if (curXp >= maxExp) {
+      actorData.details.xp.pct = 100;
+    } else {
+      const prior = this.getLevelExp(level - 1 || 0);
+      actorData.details.xp.pct = ((Math.clamped(curXp, prior, maxExp) - prior) / (maxExp - prior)) * 100;
+    }
   }
 }

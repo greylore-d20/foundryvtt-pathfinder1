@@ -1257,6 +1257,16 @@ export class ItemSheetPF extends ItemSheet {
     }
   }
 
+  /**
+   * Allow non-GM to drag&drop actions and items (for containers) to this sheet.
+   *
+   * @override
+   * @protected
+   */
+  _canDragDrop() {
+    return this.isEditable;
+  }
+
   async _onDrop(event) {
     event.preventDefault();
     event.stopPropagation();

@@ -10,10 +10,27 @@
         "name": "Use",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "activation": {
-          "type": "standard"
-        }
+          "type": "standard",
+          "unchained": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "target": {
+          "value": "one disassembled siege engine"
+        },
+        "range": {
+          "units": "close"
+        },
+        "actionType": ""
       }
     ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
     "learnedAt": {
       "class": {
         "sorcerer": 2,
@@ -33,6 +50,7 @@
     "materials": {
       "focus": "a miniature of the target siege engine, costing 10 gp"
     },
+    "spellbook": "",
     "sr": false,
     "shortDescription": "<p>You assemble a siege engine, using up to one fewer worker per two caster levels you possess. You can do without one additional worker if you have any ranks in Knowledge (engineering), plus one additional worker per 5 ranks you have in that skill. If your  caster level combined with Knowledge (engineering) fails to eliminate the need for workers, this spell fails.</p>"
   }

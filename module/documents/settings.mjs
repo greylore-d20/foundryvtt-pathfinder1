@@ -68,7 +68,7 @@ export const registerSystemSettings = function () {
     default: ExperienceConfig.defaultSettings,
     type: Object,
     config: false,
-    onChange: () => pf1.utils.refreshActors(),
+    onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
   });
 
   // Accessibility configuration

@@ -1,36 +1,37 @@
 export class ExperienceConfig extends FormApplication {
-  constructor(object, options) {
-    super(object || ExperienceConfig.defaultSettings, options);
+  constructor(...args) {
+    super(...args);
 
-    this._init = false;
+    this._settings = duplicate(game.settings.get("pf1", "experienceConfig"));
   }
 
-  /** Collect data for the template. @override */
-  async getData() {
-    const data = {};
+  /** @override */
+  getData() {
+    const settings = this._settings;
 
-    if (!this._init) {
-      const settings = await game.settings.get("pf1", "experienceConfig");
-      this._settings = mergeObject(this.constructor.defaultSettings, settings);
-      this._init = true;
-    }
-    data.settings = this._settings;
-
-    // Custom experience track booleans
-    data.hasCustomFormula = data.settings.track === "customFormula";
-
-    return data;
+    return {
+      ...settings,
+      // Custom experience track booleans
+      enabled: settings.disableExperienceTracking !== true,
+      hasCustomFormula: settings.track === "customFormula",
+    };
   }
 
   /** @override */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    const options = super.defaultOptions;
+    return {
+      ...super.defaultOptions,
       title: game.i18n.localize("PF1.ExperienceConfigName"),
+      classes: [...options.classes, "pf1", "experience-config"],
       id: "experience-config",
       template: "systems/pf1/templates/settings/experience.hbs",
+      submitOnChange: true,
+      closeOnSubmit: false,
+      submitOnClose: false,
       width: 560,
       height: "auto",
-    });
+    };
   }
 
   static get defaultSettings() {
@@ -51,34 +52,21 @@ export class ExperienceConfig extends FormApplication {
    */
   activateListeners(html) {
     super.activateListeners(html);
-    html.find('button[type="submit"]').click(this._onButtonSubmit.bind(this));
+
+    this.form.querySelector("button.save").addEventListener("click", this._onSaveConfig.bind(this));
   }
 
-  _onButtonSubmit(event) {
-    this._onSubmit(event);
+  async _onSaveConfig(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    game.settings.set("pf1", "experienceConfig", this._settings);
+    this.close();
   }
 
-  _onChangeInput(event) {
-    super._onChangeInput(event);
-
-    this._updateApplicationSettings();
-  }
-
-  _updateApplicationSettings() {
-    // Update settings and re-render
-    this._settings = mergeObject(this._settings, expandObject(this._getSubmitData()));
-    this.render();
-  }
-
-  /**
-   * This method is called upon form submission after form data is validated.
-   *
-   * @override
-   */
+  /** @override */
   async _updateObject(event, formData) {
-    const settings = mergeObject(this._settings, expandObject(formData), { inplace: false });
-    // Some mild sanitation for the numeric values.
-    await game.settings.set("pf1", "experienceConfig", settings);
-    ui.notifications.info("Updated Pathfinder experience configuration.");
+    this._settings = mergeObject(this._settings, expandObject(formData));
+    this.render();
   }
 }

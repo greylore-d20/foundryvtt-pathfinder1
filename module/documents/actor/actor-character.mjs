@@ -69,22 +69,30 @@ export class ActorCharacterPF extends ActorPF {
    *
    * @param {number} level - Desired level to level-up.
    * @returns {number} - The XP required for next level.
+   * @throws {Error} - If invalid level is provided.
    */
   getLevelExp(level) {
-    const expConfig = game.settings.get("pf1", "experienceConfig");
-    const expTrack = expConfig.track;
+    if (!Number.isInteger(level) || !(level >= 0)) throw new Error(`Level "${level}" must be zero or greater integer.`);
+
+    const config = game.settings.get("pf1", "experienceConfig");
+    const track = config.track;
+
     // Preset experience tracks
-    if (["fast", "medium", "slow"].includes(expTrack)) {
-      const levels = pf1.config.CHARACTER_EXP_LEVELS[expTrack];
-      return levels[Math.min(level, levels.length - 1)];
+    if (["fast", "medium", "slow"].includes(track)) {
+      const levels = pf1.config.CHARACTER_EXP_LEVELS[track];
+      // Normal levels
+      if (level < levels.length) return levels[level];
+      // Otherwise return last possible
+      else return levels.at(-1);
     }
+
     // Custom formula experience track
     let totalXP = 0;
-    if (expConfig.custom.formula.length > 0) {
+    if (config.custom.formula.length > 0) {
       for (let a = 0; a < level; a++) {
         const rollData = this.getRollData();
         rollData.level = a + 1;
-        const roll = RollPF.safeRoll(expConfig.custom.formula, rollData);
+        const roll = RollPF.safeRoll(config.custom.formula, rollData);
         totalXP += roll.total;
       }
     }

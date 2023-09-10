@@ -79,6 +79,14 @@ export class ItemEquipmentPF extends ItemPF {
       : (itemData.armor.value || 0) + (itemData.armor.enh || 0);
     labels.armor = ac > 0 ? `${ac} AC` : "";
 
+    if (this.subType === "armor") {
+      labels.slot = pf1.config.equipmentSlots.armor.armor;
+    } else if (this.subType === "shield") {
+      labels.slot = pf1.config.equipmentSlots.shield.shield;
+    } else if (this.subType === "clothing") {
+      labels.slot = pf1.config.equipmentSlots.clothing.clothing;
+    }
+
     return labels;
   }
 

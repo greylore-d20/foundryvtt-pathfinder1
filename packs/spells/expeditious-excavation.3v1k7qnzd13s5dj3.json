@@ -27,11 +27,19 @@
         },
         "actionType": "spellsave",
         "save": {
-          "description": "see text"
+          "description": "see text",
+          "type": "ref"
         },
-        "spellArea": "dirt in a 5-ft. cube"
+        "spellArea": "dirt in a 5-ft. cube",
+        "measureTemplate": {
+          "type": "rect",
+          "size": "5"
+        }
       }
     ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
     "learnedAt": {
       "class": {
         "sorcerer": 1,

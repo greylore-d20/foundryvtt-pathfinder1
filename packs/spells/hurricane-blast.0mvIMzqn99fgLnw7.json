@@ -30,9 +30,16 @@
           "type": "will",
           "description": "Will negates (harmless, object)"
         },
-        "spellArea": "5-ft.-radius burst/2 levels (maximum 25-ft.-radius burst)"
+        "spellArea": "5-ft.-radius burst/2 levels (maximum 25-ft.-radius burst)",
+        "measureTemplate": {
+          "type": "circle",
+          "size": "min(25, floor(@cl/2) * 5)"
+        }
       }
     ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
     "learnedAt": {
       "class": {
         "arcanist": 4,

@@ -7,7 +7,7 @@
     "actions": [
       {
         "_id": "yx49djjmhelqpty5",
-        "name": "Use",
+        "name": "40-ft. Radius",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "activation": {
           "type": "full",
@@ -27,9 +27,44 @@
           "type": "will",
           "description": "Will negates (harmless)"
         },
+        "spellArea": "40-ft. radius from touched object or 60-ft. radius from touched object; see text",
+        "measureTemplate": {
+          "type": "circle",
+          "size": "40"
+        }
+      },
+      {
+        "_id": "avYWbnKuVFk62Ysq",
+        "name": "60-ft. Radius",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "full",
+          "unchained": {
+            "cost": 3,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "1 hour/level"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "60"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "type": "will",
+          "description": "Will negates (harmless)"
+        },
         "spellArea": "40-ft. radius from touched object or 60-ft. radius from touched object; see text"
       }
     ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
     "learnedAt": {
       "class": {
         "sorcerer": 5,

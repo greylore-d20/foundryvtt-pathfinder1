@@ -7,7 +7,7 @@
     "actions": [
       {
         "_id": "ze9ywtf1jhzcavfv",
-        "name": "Use",
+        "name": "Cone",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "activation": {
           "type": "standard",
@@ -28,9 +28,45 @@
           "type": "ref",
           "description": "Reflex half"
         },
+        "spellArea": "cone-shaped burst or line; see text",
+        "measureTemplate": {
+          "type": "cone",
+          "size": "30"
+        }
+      },
+      {
+        "_id": "v6Nt3rfxDIZyTVjD",
+        "name": "Line",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "type": "standard",
+          "unchained": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "value": "instantaneous"
+        },
+        "range": {
+          "value": "30",
+          "units": "ft"
+        },
+        "measureTemplate": {
+          "type": "ray",
+          "size": "30"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "type": "ref",
+          "description": "Reflex half"
+        },
         "spellArea": "cone-shaped burst or line; see text"
       }
     ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
     "learnedAt": {
       "class": {
         "druid": 5,
@@ -46,6 +82,7 @@
       "verbal": true,
       "somatic": true
     },
+    "spellbook": "",
     "sr": false,
     "shortDescription": "<p>If you cast <i>tidal surge</i> on land, you create an onrushing surge of water 10 feet high in a 30-foot cone that deals 1d6 points of bludgeoning damage for every 2 caster levels you have (maximum 10d6 at 20th level) and extinguishes all nonmagical fires in the area. Magical fire effects in the area of a <i>tidal surge</i> are affected as if you had cast <i>dispel magic</i>. In addition to taking damage, creatures that fail their Reflex saves are pushed 1d4x5 feet away from you, and Medium or smaller creatures are also knocked prone.</p><p>If you cast this spell in or on a body of water at least 30 feet across, you can shape the spell either as the cone described above or as a 60-foot line. In either shape, the water deals 1d10 points of bludgeoning damage for every 2 caster levels you have in addition to pushing away creatures that fail their Reflex saves.</p>"
   }

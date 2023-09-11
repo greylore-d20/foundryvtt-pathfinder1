@@ -7,7 +7,7 @@
     "actions": [
       {
         "_id": "ox1b4y3hidr4cdh8",
-        "name": "Use",
+        "name": "Object touched",
         "img": "systems/pf1/icons/misc/magic-swirl.png",
         "activation": {
           "cost": 10,
@@ -28,11 +28,47 @@
         },
         "actionType": "spellsave",
         "save": {
+          "description": "see text",
+          "type": "ref"
+        },
+        "spellArea": "object touched or up to 5 sq. ft./level"
+      },
+      {
+        "_id": "DZjoYKmb47KDUjtq",
+        "name": "Square",
+        "img": "systems/pf1/icons/misc/magic-swirl.png",
+        "activation": {
+          "cost": 10,
+          "type": "minute",
+          "unchained": {
+            "cost": 10,
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "permanent until discharged (D)"
+        },
+        "target": {
+          "value": "object touched or up to 5 sq. ft./level"
+        },
+        "range": {
+          "units": "touch"
+        },
+        "measureTemplate": {
+          "type": "rect",
+          "size": "5 * @cl"
+        },
+        "actionType": "spellsave",
+        "save": {
+          "type": "ref",
           "description": "see text"
         },
         "spellArea": "object touched or up to 5 sq. ft./level"
       }
     ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
     "learnedAt": {
       "class": {
         "witch": 5,

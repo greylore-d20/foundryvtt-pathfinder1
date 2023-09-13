@@ -1,0 +1,50 @@
+// Shared by actor and container sheets
+.pf1.sheet {
+  header {
+    .currency {
+      display: flex;
+      flex-flow: nowrap;
+      gap: 0.5em;
+
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: @fontSizeLarge;
+      align-items: center;
+
+      h3 {
+        .nodesto();
+        color: @colorOlive;
+        font-size: @fontSizeHeader;
+        margin: 0;
+        border: none;
+        flex: 0 0 160px;
+      }
+
+      > .denomination {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 0.3em;
+
+        text-align: right;
+        color: @colorTan;
+        cursor: grab;
+      }
+
+      input[type="text"],
+      span.text-box {
+        flex: 1;
+        text-align: center;
+        margin-left: 8px;
+        border-bottom: @borderGroove;
+        padding: 1px 3px;
+        margin: 0;
+        height: auto;
+        line-height: 20px;
+      }
+      .convert-currency {
+        flex: 0;
+      }
+    }
+  }
+}

@@ -1,30 +1,29 @@
-<div class="inventory-filters">
-
-  <ol class="currency flexrow{{#if hasCurrency}} has-currency{{/if}}">
-    <h3>
-      {{localize "PF1.Currency"}}
-      <!-- <a class="currency-convert" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-coins"></i></a> -->
-    </h3>
-    {{#each system.currency as |v k|}}
-    <label class="denomination {{k}}">{{ lookup ../config.currencies k }}</label>
-    <span class="text-box direct allow-relative" name="system.currency.{{k}}">{{#if v}}{{v}}{{/if}}</span>
-    <a class="convert-currency" data-type="{{k}}" data-category="currency" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-long-arrow-alt-left"></i></a>
-    {{/each}}
-  </ol>
-  {{#if isCharacter}}
-  <ol class="currency flexrow{{#if hasAltCurrency}} has-currency{{/if}}">
-    <h3>
-      {{localize "PF1.WeightlessCurrency"}}
-      <!-- <a class="currency-convert" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-coins"></i></a> -->
-    </h3>
-    {{#each system.altCurrency as |v k|}}
-    <label class="denomination {{k}} alt-currency">{{ lookup ../config.currencies k }}</label>
-    <span class="text-box direct allow-relative" name="system.altCurrency.{{k}}">{{#if v}}{{v}}{{/if}}</span>
-    <a class="convert-currency" data-type="{{k}}" data-category="altCurrency" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-long-arrow-alt-left"></i></a>
-    {{/each}}
-  </ol>
-  {{/if}}
-</div>
+<header>
+  <div class='currencies'>
+    <ol class="currency flexrow{{#if hasCurrency}} has-currency{{/if}} weighted">
+      <h3>{{localize "PF1.Currency"}}</h3>
+      {{#each system.currency as |v k|}}
+      <li class="denomination {{k}}" data-denomination="{{k}}">
+        <label>{{lookup @root.config.currencies k}}</label>
+        <span class="text-box direct allow-relative" name="system.currency.{{k}}">{{#if v}}{{v}}{{/if}}</span>
+        <a class="convert-currency" data-type="{{k}}" data-category="currency" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-long-arrow-alt-left"></i></a>
+      </li>
+      {{/each}}
+    </ol>
+    {{#if isCharacter}}
+    <ol class="currency flexrow{{#if hasAltCurrency}} has-currency{{/if}} weightless">
+      <h3>{{localize "PF1.WeightlessCurrency"}}</h3>
+      {{#each system.altCurrency as |v k|}}
+      <li class="denomination {{k}} alt-currency" data-denomination="{{k}}">
+        <label>{{lookup @root.config.currencies k}}</label>
+        <span class="text-box direct allow-relative" name="system.altCurrency.{{k}}">{{#if v}}{{v}}{{/if}}</span>
+        <a class="convert-currency" data-type="{{k}}" data-category="altCurrency" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-long-arrow-alt-left"></i></a>
+      </li>
+      {{/each}}
+    </ol>
+    {{/if}}
+  </div>
+</header>
 
 {{!-- Inventory Navigation --}}
 <hr>

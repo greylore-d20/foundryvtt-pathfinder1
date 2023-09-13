@@ -124,7 +124,7 @@ export class ActorSheetPF extends ActorSheet {
       ],
       dragDrop: [
         { dragSelector: "li.item[data-item-id]" },
-        { dragSelector: "label.denomination" },
+        { dragSelector: ".currency .denomination" },
         { dragSelector: ".race-container.item[data-item-id]" },
         { dragSelector: "li.skill[data-skill]" },
         { dragSelector: "li.sub-skill[data-skill]" },
@@ -3184,12 +3184,15 @@ export class ActorSheetPF extends ActorSheet {
   _onDragStart(event) {
     const elem = event.target;
     if (elem.classList.contains("denomination")) {
+      const isAlt = elem.classList.contains("alt-currency");
+      const denomination = elem.dataset.denomination;
+      const currency = isAlt ? this.actor.system.altCurrency : this.actor.system.currency;
       const dragData = {
         actorUuid: this.actor.uuid,
         type: "Currency",
-        alt: elem.classList.contains("alt-currency"),
-        currency: [...elem.classList].find((o) => /[pgsc]p/.test(o)),
-        amount: parseInt(elem.nextElementSibling.textContent || elem.nextElementSibling.value),
+        alt: isAlt,
+        currency: denomination,
+        amount: currency[denomination],
       };
       event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
     } else if (elem.dataset?.skill) {

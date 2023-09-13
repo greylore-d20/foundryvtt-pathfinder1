@@ -1,0 +1,28 @@
+.pf1.sheet.actor {
+  header .currencies {
+    h3 {
+      .nodesto();
+      color: @colorOlive;
+      font-size: @fontSizeHeader;
+      margin: 0;
+    }
+
+    .currency {
+      &:not(.has-currency):not(:hover) {
+        opacity: 0.25;
+      }
+
+      > .denomination {
+        &::before {
+          content: "\f58e";
+          font-weight: 900;
+          font-family: "Font Awesome 5 Free";
+          visibility: hidden;
+        }
+        &:hover::before {
+          visibility: visible;
+        }
+      }
+    }
+  }
+}

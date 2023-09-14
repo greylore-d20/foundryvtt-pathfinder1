@@ -502,7 +502,6 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
     {
       title: game.i18n.format("PF1.CreateItemForSpell", { name: itemData.name }),
       content,
-      itemData,
       buttons,
       close: () => false,
       default: "potion",
@@ -510,6 +509,7 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
     {
       classes: ["dialog", "pf1", "create-consumable"],
       jQuery: false,
+      itemData,
     }
   );
 };

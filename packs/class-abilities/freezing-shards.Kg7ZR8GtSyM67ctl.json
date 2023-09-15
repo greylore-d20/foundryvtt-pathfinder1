@@ -1,0 +1,69 @@
+{
+  "name": "Freezing Shards",
+  "type": "feat",
+  "img": "icons/magic/water/projectiles-ice-faceted-shard-salvo-blue.webp",
+  "system": {
+    "description": {
+      "value": "<p><strong>Source</strong> Elemental Master's Handbook pg. 21</p><p>As a standard action, you can cause shards of ice to burst forth from the ground around you. The shards deal 1d4 points of piercing damage and 1d6 points of cold damage + 1 point for every 2 wizard levels you have to all creatures within 5 feet of you. A successful Reflex save (DC = 10 + half your wizard level + your Intelligence modifier) negates the piercing damage and halves the cold damage. The shards remain until the beginning of your next turn; during this time, the area is difficult terrain. You are not affected by your own freezing shards and can move through the area normally. You can use this ability a number of times per day equal to 3 + your Intelligence modifier.</p>"
+    },
+    "tags": ["Ice School"],
+    "actions": [
+      {
+        "_id": "dLgiqFa3ynxuVKQM",
+        "name": "Use",
+        "img": "icons/magic/water/projectiles-ice-faceted-shard-salvo-blue.webp",
+        "activation": {
+          "type": "standard",
+          "unchained": {
+            "cost": 2,
+            "type": "action"
+          }
+        },
+        "duration": {
+          "units": "inst"
+        },
+        "measureTemplate": {
+          "type": "circle",
+          "size": "5"
+        },
+        "actionType": "save",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d4",
+              "type": {
+                "values": ["piercing"],
+                "custom": ""
+              }
+            },
+            {
+              "formula": "1d6 + floor(@classes.wizard.level / 2)",
+              "type": {
+                "values": ["cold"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "save": {
+          "dc": "10 + floor(@classes.wizard.level / 2) + @abilities.int.mod",
+          "type": "ref",
+          "description": "Reflex negates piercing and halfs cold"
+        },
+        "effectNotes": ["Affected area is difficult terrain (except for the caster) for one round."],
+        "spellArea": "5 ft. radius centered on you"
+      }
+    ],
+    "uses": {
+      "per": "day",
+      "maxFormula": "3 + @abilities.int.mod",
+      "autoDeductChargesCost": ""
+    },
+    "subType": "classFeat",
+    "associations": {
+      "classes": ["Wizard"]
+    },
+    "abilityType": "su"
+  },
+  "_id": "Kg7ZR8GtSyM67ctl"
+}

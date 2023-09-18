@@ -1645,10 +1645,16 @@ export class ItemPF extends Item {
       const itemData = this.toObject();
       const links = itemData.system.links?.[linkType] ?? [];
       links.push(link);
-      const updateData = { [`system.links.${linkType}`]: links };
+      const itemUpdates = [{ _id: this.id, [`system.links.${linkType}`]: links }];
+
+      // Clear value, maxFormula and per from link target to avoid odd behaviour
+      if (linkType === "charges") {
+        itemUpdates.push({ _id: itemLink, system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null } } });
+      }
+
+      await this.actor.updateEmbeddedDocuments("Item", itemUpdates);
 
       // Call link creation hook
-      await this.update(updateData);
       Hooks.callAll("pf1CreateItemLink", this, link, linkType);
 
       return true;

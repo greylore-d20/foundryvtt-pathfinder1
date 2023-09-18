@@ -111,7 +111,7 @@ export class CombatPF extends Combat {
    */
   async rollInitiative(
     ids,
-    { formula = null, bonus = null, rollMode, updateTurn = true, messageOptions = {}, skipDialog = null } = {}
+    { formula = null, d20, bonus = null, rollMode, updateTurn = true, messageOptions = {}, skipDialog = null } = {}
   ) {
     skipDialog ??= getSkipActionPrompt();
     // Structure input data
@@ -132,7 +132,7 @@ export class CombatPF extends Combat {
       });
       rollMode = dialogData.rollMode;
       bonus = dialogData.bonus || "";
-      formula = dialogData.d20;
+      d20 = dialogData.d20;
       if (dialogData.stop) return this;
     }
 
@@ -147,7 +147,7 @@ export class CombatPF extends Combat {
         if (!combatant?.isOwner) return results;
 
         // Produce an initiative roll for the Combatant
-        const roll = combatant.getInitiativeRoll(formula, bonus);
+        const roll = combatant.getInitiativeRoll(formula, d20, bonus);
         await roll.evaluate({ async: true });
         updates.push({ _id: id, initiative: roll.total });
 

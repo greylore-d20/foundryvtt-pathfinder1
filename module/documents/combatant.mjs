@@ -23,19 +23,19 @@ export class CombatantPF extends Combatant {
    *
    * @override
    * @param {string} [formula] Initiative formula override
-   * @param {number} [bonus=0] Bonus to initiative
+   * @param {string} [d20=null] D20 override
+   * @param {number} [bonus=null] Bonus to initiative
    * @returns {RollPF} Initiative roll instance
    *
    * Synchronized with Foundry VTT 10.291
    */
-  getInitiativeRoll(formula, bonus = 0) {
-    formula ||= this._getInitiativeFormula();
+  getInitiativeRoll(formula, d20 = null, bonus = null) {
+    formula ||= this._getInitiativeFormula(d20);
     const rollData = this.actor?.getRollData() || {};
     if (bonus) {
       rollData.bonus = bonus;
       formula += " + @bonus";
     }
-
     return RollPF.create(formula, rollData);
   }
 
@@ -56,6 +56,6 @@ export class CombatantPF extends Combatant {
       defaultParts.push(`(@attributes.init.total / 100)[${game.i18n.localize("PF1.Tiebreaker")}]`);
     const parts = CONFIG.Combat.initiative.formula ? CONFIG.Combat.initiative.formula.split(/\s*\+\s*/) : defaultParts;
     if (!actor) return parts[0] || "0";
-    return parts.filter((p) => p !== null).join(" + ");
+    return parts.filter((p) => !!p).join(" + ");
   }
 }

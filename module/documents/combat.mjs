@@ -176,14 +176,16 @@ export class CombatPF extends Combat {
 
         // Create base chat card data
         let chatData = {
-          speaker: {
-            scene: combatant.sceneId,
-            actor: combatant.actorId,
-            token: combatant.tokenId,
+          speaker: ChatMessage.getSpeaker({
+            actor: combatant.actor,
+            token: combatant.token,
             alias: combatant.name,
-          },
+          }),
           ...messageOptions,
         };
+
+        // Mimic core Foundry data
+        setProperty(chatData, "flags.core.initiativeRoll", true);
 
         // Generate message proper via D20RollPF
         chatData = await roll.toMessage(chatData, {

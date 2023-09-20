@@ -164,3 +164,10 @@ People and credits are listed in no particular order.
 ## Daniela Howe and Ivan Montiel
 
 - Created the [RPG Awesome font and CSS toolkit](https://github.com/nagoshiashumari/Rpg-Awesome)
+
+## McGreger
+
+- Added missing spells to compendium
+- Fixed various errors in compendium entries
+- Added various missing class feats to compendium
+- Harmonized pf1-system compendium with content of pf1-content module

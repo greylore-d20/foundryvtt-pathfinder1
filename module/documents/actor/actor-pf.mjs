@@ -4290,7 +4290,7 @@ export class ActorPF extends ActorBasePF {
       }
 
       // Append update to queue
-      if (!foundry.utils.isEmpty(itemUpdate)) {
+      if (!foundry.utils.isEmpty(itemUpdate.system)) {
         itemUpdate._id = item.id;
         itemUpdates.push(itemUpdate);
       }

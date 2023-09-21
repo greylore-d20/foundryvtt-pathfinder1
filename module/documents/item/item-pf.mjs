@@ -218,6 +218,15 @@ export class ItemPF extends ItemBasePF {
   /*  Item Properties                             */
   /* -------------------------------------------- */
 
+  /**
+   * @param {boolean} [weapon=true] - Get proficiency as a weapon. Armor otherwise.
+   * @returns {boolean} - Whether or not the owner of the item is proficient.
+   * @throws {Error} - If item type does not support proficiency.
+   */
+  getProficiency(weapon = true) {
+    throw new Error(`Item type ${this.type} has no concept of proficiency`);
+  }
+
   get isOwned() {
     return super.isOwned || this.parentItem != null;
   }
@@ -2171,8 +2180,12 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Add proficiency penalty
-    if (!itemData.proficient) {
-      describePart(-4, game.i18n.localize("PF1.ProficiencyPenalty"), "penalty", -500);
+    try {
+      if (!this.getProficiency(true)) {
+        describePart(-4, game.i18n.localize("PF1.ProficiencyPenalty"), "penalty", -500);
+      }
+    } catch (error) {
+      // Ignore proficiency incompatibility.
     }
 
     // Broken condition

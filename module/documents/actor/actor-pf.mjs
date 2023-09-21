@@ -1468,61 +1468,46 @@ export class ActorPF extends ActorBasePF {
    * @returns {MobilityPenaltyResult} The resulting penalties from armor.
    */
   _applyArmorPenalties() {
-    // Item type to proficiency maps
-    const proficiencyMaps = {
-      armor: {
-        lightArmor: "lgt",
-        mediumArmor: "med",
-        heavyArmor: "hvy",
-      },
-      shield: {
-        other: "shl", // buckler
-        lightShield: "shl",
-        heavyShield: "shl",
-        towerShield: "twr",
-      },
-    };
-
     let attackACPPenalty = 0; // ACP to attack penalty from lacking proficiency. Stacks infinitely.
     const acp = { armor: 0, shield: 0 };
     const broken = { armor: { value: 0, item: null }, shield: { value: 0, item: null } };
     const mdex = { armor: null, shield: null };
 
     this.items
-      .filter((obj) => {
-        return obj.type === "equipment" && obj.system.equipped;
+      .filter((item) => {
+        return item.type === "equipment" && item.system.equipped;
       })
-      .forEach((obj) => {
-        const eqType = obj.system.subType;
+      .forEach((item) => {
+        const eqType = item.system.subType;
         const isShieldOrArmor = ["armor", "shield"].includes(eqType);
-        let itemACP = Math.abs(obj.system.armor.acp);
-        if (obj.system.masterwork === true && isShieldOrArmor) itemACP = Math.max(0, itemACP - 1);
+        let itemACP = Math.abs(item.system.armor.acp);
+        if (item.system.masterwork === true && isShieldOrArmor) itemACP = Math.max(0, itemACP - 1);
 
         if (isShieldOrArmor) {
           itemACP = Math.max(0, itemACP + (this.system.attributes?.acp?.[`${eqType}Bonus`] ?? 0));
         }
 
         let brokenACP = 0;
-        if (obj.system.broken) {
+        if (item.system.broken) {
           brokenACP = itemACP;
           itemACP *= 2;
         }
 
         if (itemACP) {
           const sInfo = getSourceInfo(this.sourceInfo, "system.attributes.acp.total").negative.find(
-            (o) => o.itemId === obj.id
+            (o) => o.itemId === item.id
           );
 
           if (brokenACP) {
             broken[eqType].value = brokenACP;
-            broken[eqType].item = obj;
+            broken[eqType].item = item;
           }
 
           if (sInfo) sInfo.value = itemACP;
           else {
             getSourceInfo(this.sourceInfo, "system.attributes.acp.total").negative.push({
-              name: obj.name,
-              itemId: obj.id,
+              name: item.name,
+              itemId: item.id,
               value: itemACP,
             });
           }
@@ -1530,25 +1515,24 @@ export class ActorPF extends ActorBasePF {
 
         if (isShieldOrArmor) {
           if (itemACP > acp[eqType]) acp[eqType] = itemACP;
-          if (!this.hasArmorProficiency(obj, proficiencyMaps[eqType][obj.system.equipmentSubtype]))
-            attackACPPenalty += itemACP;
+          if (!item.getProficiency(false)) attackACPPenalty += itemACP;
         }
 
-        if (obj.system.armor.dex !== null && isShieldOrArmor) {
-          const mDex = Number.parseInt(obj.system.armor.dex, 10);
+        if (item.system.armor.dex !== null && isShieldOrArmor) {
+          const mDex = Number.parseInt(item.system.armor.dex, 10);
           if (Number.isInteger(mDex)) {
             const mod = this.system.attributes?.mDex?.[`${eqType}Bonus`] ?? 0;
             const itemMDex = mDex + mod;
             mdex[eqType] = Math.min(itemMDex, mdex[eqType] ?? Number.POSITIVE_INFINITY);
 
             const sInfo = getSourceInfo(this.sourceInfo, "system.attributes.maxDexBonus").negative.find(
-              (o) => o.itemId === obj.id
+              (o) => o.itemId === item.id
             );
             if (sInfo) sInfo.value = mDex;
             else {
               getSourceInfo(this.sourceInfo, "system.attributes.maxDexBonus").negative.push({
-                name: obj.name,
-                itemId: obj.id,
+                name: item.name,
+                itemId: item.id,
                 value: mDex,
                 ignoreNull: false,
               });

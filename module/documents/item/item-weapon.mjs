@@ -92,4 +92,10 @@ export class ItemWeaponPF extends ItemPF {
   get canEquip() {
     return !this.inContainer;
   }
+
+  getProficiency(weapon = true) {
+    if (!weapon) throw new Error("Weapons do not support non-weapon proficiency");
+
+    return this.system.proficient ?? true;
+  }
 }

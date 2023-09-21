@@ -807,8 +807,12 @@ export class ItemAction {
     }
 
     // Add proficiency penalty
-    if (["attack", "weapon", "equipment"].includes(this.item.type) && !itemData.proficient) {
-      parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
+    try {
+      if (this.item.getProficiency(true)) {
+        parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
+      }
+    } catch (error) {
+      // Ignore proficiency incompatibility.
     }
     // Add secondary natural attack penalty
     if (this.item.system.subType === "natural" && primaryAttack === false) {

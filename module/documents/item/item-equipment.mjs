@@ -198,4 +198,33 @@ export class ItemEquipmentPF extends ItemPF {
   get hasSlots() {
     return ["wondrous", "other"].includes(this.subType);
   }
+
+  getProficiency(weapon = true) {
+    if (weapon) return this.system.proficient ?? true;
+
+    const subType = this.subType;
+    if (!["armor", "shield"].includes(subType)) throw new Error(`"${subType}" does not support proficiency`);
+
+    const actor = this.actor;
+    if (!actor) return true; // No actor, so always proficient
+
+    // Item type to proficiency maps
+    const proficiencyMaps = {
+      armor: {
+        lightArmor: "lgt",
+        mediumArmor: "med",
+        heavyArmor: "hvy",
+      },
+      shield: {
+        other: "shl", // buckler
+        lightShield: "shl",
+        heavyShield: "shl",
+        towerShield: "twr",
+      },
+    };
+
+    const proficiencyType = proficiencyMaps[subType][this.system.equipmentSubtype];
+
+    return actor.hasArmorProficiency(this, proficiencyType);
+  }
 }

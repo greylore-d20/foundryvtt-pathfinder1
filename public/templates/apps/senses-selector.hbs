@@ -1,15 +1,15 @@
-<form autocomplete="off" onsubmit="event.preventDefault();">
+<form autocomplete="off">
+  {{#if noSystemVision}}
+  <p class="warning">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    {{localize "PF1.CustomVisionRules.Warning"}}
+  </p>
+  {{/if}}
   {{!-- Low Light vision --}}
   <div class="form-group">
     <label>{{localize "TOKEN.VisionLowLight"}}</label>
     <div class="form-fields">
-      <input
-        type="checkbox"
-        name="system.traits.senses.ll.enabled"
-        {{checked
-        system.traits.senses.ll.enabled}}
-        data-dtype="Boolean"
-      />
+      <input type="checkbox" name="system.traits.senses.ll.enabled" {{checked system.traits.senses.ll.enabled}} data-dtype="Boolean">
     </div>
   </div>
 
@@ -18,9 +18,9 @@
     <label>{{localize "TOKEN.VisionLowLightMultiplier"}}</label>
     <div class="form-fields">
       <label class="header">{{localize "LIGHT.Dim"}}</label>
-      <input type="text" data-dtype="Number" name="system.traits.senses.ll.multiplier.dim" value="{{system.traits.senses.ll.multiplier.dim}}" />
+      <input type="text" data-dtype="Number" name="system.traits.senses.ll.multiplier.dim" value="{{system.traits.senses.ll.multiplier.dim}}">
       <label class="header">{{localize "LIGHT.Bright"}}</label>
-      <input type="text" data-dtype="Number" name="system.traits.senses.ll.multiplier.bright" value="{{system.traits.senses.ll.multiplier.bright}}" />
+      <input type="text" data-dtype="Number" name="system.traits.senses.ll.multiplier.bright" value="{{system.traits.senses.ll.multiplier.bright}}">
     </div>
   </div>
 
@@ -28,7 +28,7 @@
   <div class="form-group">
     <label>{{localize "PF1.SenseDV"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="text" data-dtype="Number" name="system.traits.senses.dv" value="{{converted.system.traits.senses.dv}}" />
+      <input type="text" data-dtype="Number" name="system.traits.senses.dv" value="{{converted.system.traits.senses.dv}}">
     </div>
   </div>
 
@@ -36,7 +36,7 @@
   <div class="form-group">
     <label>{{localize "PF1.SenseTS"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="text" data-dtype="Number" name="system.traits.senses.ts" value="{{converted.system.traits.senses.ts}}" />
+      <input type="text" data-dtype="Number" name="system.traits.senses.ts" value="{{converted.system.traits.senses.ts}}">
     </div>
   </div>
 
@@ -44,7 +44,7 @@
   <div class="form-group">
     <label>{{localize "PF1.SenseBSense"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="text" data-dtype="Number" name="system.traits.senses.bse" value="{{converted.system.traits.senses.bse}}" />
+      <input type="text" data-dtype="Number" name="system.traits.senses.bse" value="{{converted.system.traits.senses.bse}}">
     </div>
   </div>
 
@@ -52,7 +52,7 @@
   <div class="form-group">
     <label>{{localize "PF1.SenseBS"}} <span class="units">({{gridUnits}})</span></label>
     <div class="form-fields">
-      <input type="text" data-dtype="Number" name="system.traits.senses.bs" value="{{converted.system.traits.senses.bs}}" />
+      <input type="text" data-dtype="Number" name="system.traits.senses.bs" value="{{converted.system.traits.senses.bs}}">
     </div>
   </div>
 
@@ -60,7 +60,7 @@
   <div class="form-group">
     <label>{{localize "PF1.SenseSC"}}*</label>
     <div class="form-fields">
-      <input type="number" data-dtype="Number" name="system.traits.senses.sc" value="{{converted.system.traits.senses.sc}}" min="0" placeholder="0" />
+      <input type="number" data-dtype="Number" name="system.traits.senses.sc" value="{{converted.system.traits.senses.sc}}" min="0" placeholder="0">
     </div>
   </div>
 
@@ -68,7 +68,7 @@
   <div class="form-group">
     <label>{{localize "PF1.SenseSI"}}</label>
     <div class="form-fields">
-      <input type="checkbox" data-dtype="Boolean" name="system.traits.senses.si" {{checked system.traits.senses.si}} />
+      <input type="checkbox" data-dtype="Boolean" name="system.traits.senses.si" {{checked system.traits.senses.si}}>
     </div>
   </div>
 
@@ -76,7 +76,7 @@
   <div class="form-group">
     <label>{{localize "PF1.SenseTR"}}</label>
     <div class="form-fields">
-      <input type="checkbox" data-dtype="Boolean" name="system.traits.senses.tr" {{checked system.traits.senses.tr}} />
+      <input type="checkbox" data-dtype="Boolean" name="system.traits.senses.tr" {{checked system.traits.senses.tr}}>
     </div>
   </div>
 
@@ -84,7 +84,7 @@
   <div class="form-group">
     <label>{{localize "PF1.SenseSID"}}*</label>
     <div class="form-fields">
-      <input type="checkbox" data-dtype="Boolean" name="system.traits.senses.sid" {{checked system.traits.senses.sid}} />
+      <input type="checkbox" data-dtype="Boolean" name="system.traits.senses.sid" {{checked system.traits.senses.sid}}>
     </div>
   </div>
 
@@ -92,7 +92,7 @@
   <div class="form-group">
     <label>{{localize "PF1.Custom"}}</label>
     <div class="form-fields">
-      <input type="text" data-dtype="String" name="system.traits.senses.custom" value="{{system.traits.senses.custom}}" />
+      <input type="text" data-dtype="String" name="system.traits.senses.custom" value="{{system.traits.senses.custom}}">
     </div>
   </div>
 

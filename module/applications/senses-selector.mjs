@@ -36,15 +36,21 @@ export class SensesSelector extends DocumentSheet {
   }
 
   async getData() {
-    const data = {
-      system: this.document.system,
+    const actor = this.document;
+    const context = {
+      noSystemVision:
+        !game.settings.get("pf1", "systemVision") ||
+        (actor.token?.getFlag("pf1", "customVisionRules") ??
+          actor.prototypeToken?.getFlag("pf1", "customVisionRules")) ||
+        false,
+      system: actor.system,
       converted: Object.entries(this.convertKeys).reduce((cur, [path, type]) => {
-        if (type === "distance") setProperty(cur, path, pf1.utils.convertDistance(getProperty(this.document, path))[0]);
+        if (type === "distance") setProperty(cur, path, pf1.utils.convertDistance(getProperty(actor, path))[0]);
         return cur;
       }, {}),
       gridUnits: getDistanceSystem() === "imperial" ? "ft" : "m",
     };
-    return data;
+    return context;
   }
 
   async _updateObject(event, formData) {

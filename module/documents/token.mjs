@@ -83,8 +83,6 @@ export class TokenDocumentPF extends TokenDocument {
   }
 
   prepareBaseData() {
-    this.detectionModes = [];
-
     this._syncSenses();
 
     super.prepareBaseData();
@@ -96,6 +94,9 @@ export class TokenDocumentPF extends TokenDocument {
   _syncSenses() {
     if (!this.actor) return;
     if (this.getFlag("pf1", "customVisionRules")) return;
+
+    this.detectionModes = [];
+
     if (!this.sight.enabled) return;
 
     // Get base range from source data

@@ -3152,7 +3152,7 @@ export class ActorPF extends Actor {
             if (newHP != hp.value) update["system.attributes.vigor.value"] = newHP;
           }
           if (woundAdjust != 0) {
-            const wounds = a.data.attributes.wounds;
+            const wounds = a.system.attributes.wounds;
             update["system.attributes.wounds.value"] = Math.clamped(wounds.value + woundAdjust, 0, wounds.max);
           }
         }

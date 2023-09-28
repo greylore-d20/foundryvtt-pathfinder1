@@ -19,14 +19,17 @@
         "name": "Attack",
         "img": "icons/weapons/guns/gun-topbarrel.webp",
         "activation": {
-          "type": "attack"
+          "type": "attack",
+          "unchained": {
+            "type": "attack"
+          }
         },
         "duration": {
           "units": "inst"
         },
         "range": {
           "value": "80",
-          "units": "melee"
+          "units": "ft"
         },
         "actionType": "mwak",
         "damage": {
@@ -46,12 +49,11 @@
           },
           "bonus": {
             "formula": "@formulaicAttack * -5"
-          }
+          },
+          "label": ""
         },
         "ability": {
-          "attack": "str",
-          "damage": "str",
-          "damageMult": 1.5,
+          "attack": "dex",
           "critRange": null,
           "critMult": 4
         },
@@ -66,6 +68,28 @@
     },
     "subType": "exotic",
     "weaponSubtype": "ranged",
+    "properties": {
+      "ato": false,
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "sct": false,
+      "spc": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
     "ammoType": "gunBullet"
   }
 }

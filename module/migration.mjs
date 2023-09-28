@@ -615,7 +615,11 @@ export const migrateSceneData = async function (scene) {
  */
 export async function migrateSceneTokens(scene) {
   for (const token of scene.tokens) {
-    await migrateToken(token);
+    try {
+      await migrateToken(token);
+    } catch (error) {
+      console.error(`Error migrating Token "${token.id}" on Scene "${scene.name}"`, token, error);
+    }
   }
 }
 
@@ -631,15 +635,19 @@ export async function migrateSceneActors(scene) {
     const actor = token.actor;
     if (!actor) continue;
 
-    const updateData = migrateActorData(actor.toObject(), token);
-    if (!foundry.utils.isEmpty(updateData)) {
-      const items = updateData.items;
-      delete updateData.items;
-      const effects = updateData.effects;
-      delete updateData.effects;
-      if (!foundry.utils.isEmpty(updateData)) await actor.update(updateData);
-      if (items?.length) await actor.updateEmbeddedDocuments("Item", items);
-      if (effects?.length) await actor.updateEmbeddedDocuments("ActiveEffect", effects);
+    try {
+      const updateData = migrateActorData(actor.toObject(), token);
+      if (!foundry.utils.isEmpty(updateData)) {
+        const items = updateData.items;
+        delete updateData.items;
+        const effects = updateData.effects;
+        delete updateData.effects;
+        if (!foundry.utils.isEmpty(updateData)) await actor.update(updateData);
+        if (items?.length) await actor.updateEmbeddedDocuments("Item", items);
+        if (effects?.length) await actor.updateEmbeddedDocuments("ActiveEffect", effects);
+      }
+    } catch (error) {
+      console.error(`Error migrating Token "${token.id}" on Scene "${scene.name}"`, token, error);
     }
   }
 }

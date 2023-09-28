@@ -458,6 +458,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateClassType(item, updateData);
   _migrateWeaponCategories(item, updateData);
   _migrateArmorCategories(item, updateData);
+  _migrateArmorMaxDex(item, updateData);
   _migrateItemSize(item, updateData);
   _migrateAbilityTypes(item, updateData);
   _migrateClassLevels(item, updateData);
@@ -1022,6 +1023,33 @@ const _migrateArmorCategories = function (ent, updateData) {
   }
 
   updateData["system.armor.-=type"] = null;
+};
+
+/**
+ * Convert string armor max dex to number.
+ *
+ * Introduced with PF1 vNEXT
+ *
+ * @param item
+ * @param updateData
+ */
+const _migrateArmorMaxDex = (item, updateData) => {
+  if (item.type !== "equipment") return;
+
+  let maxDex = item.system.armor?.dex;
+  // Skip valid states
+  if (maxDex === undefined || maxDex === null) return;
+  if (typeof maxDex === "number") return;
+
+  // Convert string to number
+  maxDex = parseInt(maxDex);
+  if (Number.isInteger(maxDex)) {
+    updateData["system.armor.dex"] = maxDex;
+  }
+  // Assume corrupt value otherwise
+  else {
+    updateData["system.armor.-=dex"] = null;
+  }
 };
 
 const _migrateEquipmentCategories = (item, updateData) => {

@@ -103,13 +103,8 @@ export class ItemEquipmentPF extends ItemPF {
     super.prepareDerivedData();
     const itemData = this.system;
 
-    // AC labels
-    if (itemData.armor.dex === "") itemData.armor.dex = null;
-    else if (typeof itemData.armor.dex === "string" && /\d+/.test(itemData.armor.dex)) {
-      itemData.armor.dex = parseInt(itemData.armor.dex);
-    }
     // Add enhancement bonus
-    if (itemData.armor.enh == null) itemData.armor.enh = 0;
+    itemData.armor.enh ??= 0;
 
     // Feed info back to actor
     if (itemData.equipped !== false) {

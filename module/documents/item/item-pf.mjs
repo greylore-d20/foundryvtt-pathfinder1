@@ -783,16 +783,14 @@ export class ItemPF extends ItemBasePF {
    *
    * @param {string} category - The category of script calls to call.
    * @param {Object<string, object>} [extraParams={}] - A dictionary of extra parameters to pass as variables for use in the script.
+   * @param {object} [shared={}] - Shared data object
    * @returns {Promise.<object>} The shared object between calls which may have been given data.
    */
-  async executeScriptCalls(category, extraParams = {}) {
+  async executeScriptCalls(category, extraParams = {}, shared = {}) {
     /** @type {pf1.components.ItemScriptCall[]} */
     const scripts = this.scriptCalls?.filter((o) => o.category === category) ?? [];
-    const shared = { category };
-    if (extraParams.attackData) {
-      shared.attackData = extraParams.attackData;
-      delete extraParams.attackData;
-    }
+
+    shared.category = category;
 
     for (const s of scripts) {
       await s.execute(shared, extraParams);
@@ -1200,9 +1198,21 @@ export class ItemPF extends ItemBasePF {
     // Old use method
     if (!this.hasAction) {
       // Use
-      const shared = await this.executeScriptCalls("use", {
-        attackData: { event: ev, skipDialog, chatMessage, rollMode },
+      const sharedData = { event: ev, skipDialog, chatMessage, rollMode };
+      Object.defineProperty(sharedData, "attackData", {
+        get: () => {
+          foundry.utils.logCompatibilityWarning(
+            "shared.attackData is deprecated in favor of directly accessing shared",
+            {
+              since: "PF1 vNEXT",
+              until: "PF1 vNEXT+2",
+            }
+          );
+          return sharedData;
+        },
       });
+
+      const shared = await this.executeScriptCalls("use", {}, sharedData);
       rollMode = shared.rollMode || rollMode;
       if (shared.reject) return shared;
 

@@ -1238,9 +1238,19 @@ export class ActionUse {
    * @param {"use"|"postUse"} [category="use"] Script call category
    */
   async executeScriptCalls(category = "use") {
-    const rv = await this.item.executeScriptCalls(category, {
-      attackData: this.shared,
+    const shared = this.shared;
+
+    Object.defineProperty(shared, "attackData", {
+      get: () => {
+        foundry.utils.logCompatibilityWarning("shared.attackData is deprecated in favor of directly accessing shared", {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+2",
+        });
+        return shared;
+      },
     });
+
+    const rv = await this.item.executeScriptCalls(category, {}, shared);
 
     if (category === "use") this.shared.scriptData = rv;
   }

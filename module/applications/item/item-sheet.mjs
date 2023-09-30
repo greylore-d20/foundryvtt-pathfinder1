@@ -109,6 +109,14 @@ export class ItemSheetPF extends ItemSheet {
 
     context.inContainer = item.inContainer ?? false;
 
+    // Add hit die size options for classes
+    if (item.type === "class") {
+      context.hitDieSizes = context.config.hitDieSizes.reduce((all, size) => {
+        all[size] = game.i18n.format("PF1.DieSize", { size });
+        return all;
+      }, {});
+    }
+
     // Item Type, Status, and Details
     context.itemType = this._getItemType(item);
     context.itemStatus = this._getItemStatus(item);

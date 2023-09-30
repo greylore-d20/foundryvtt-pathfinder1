@@ -63,7 +63,13 @@
       <div class="form-group">
         <label>{{#if isMythicPath}}{{localize "PF1.HealthPerTier"}}{{else}}{{localize "PF1.HitDie"}}{{/if}}</label>
         <div class="form-fields">
-          <input type="text" name="system.hd" value="{{system.hd}}" data-dtype="Number" data-tooltip="@classes.{{system.tag}}.hd"/>
+          {{#if isMythicPath}}
+          <input type="number" name="system.hd" value="{{system.hd}}" data-dtype="Number" data-tooltip="@classes.{{system.tag}}.hd">
+          {{else}}
+          <select name="system.hd" data-dtype="Number" data-tooltip="@classes.{{system.tag}}.hd">
+            {{selectOptions @root.hitDieSizes selected=system.hd}}
+          </select>
+          {{/if}}
         </div>
       </div>
 

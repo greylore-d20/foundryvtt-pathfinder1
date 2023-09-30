@@ -80,6 +80,11 @@ export const levelAbilityScores = {
 };
 
 /**
+ * Valid hit die sizes.
+ */
+export const hitDieSizes = [6, 8, 10, 12];
+
+/**
  * Data for the feature associated with ability scores gained from leveling.
  */
 export const levelAbilityScoreFeature = {

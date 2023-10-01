@@ -381,12 +381,13 @@ export function migrateActorData(actor, token) {
   _migrateActorChangeRevamp(actor, updateData, linked);
   _migrateActorCMBRevamp(actor, updateData, linked);
   _migrateActorConditions(actor, updateData, linked);
-  _migrateActorSkillRanks(actor, updateData, linked);
   _migrateCarryBonus(actor, updateData, linked);
   _migrateBuggedValues(actor, updateData, linked);
   _migrateSpellbookUsage(actor, updateData, linked);
   _migrateActorHP(actor, updateData, linked);
   _migrateActorSenses(actor, updateData, linked, token);
+  _migrateActorInvaliddSkills(actor, updateData, linked);
+  _migrateActorSkillRanks(actor, updateData, linked);
   _migrateActorSkillJournals(actor, updateData, linked);
   _migrateActorSubskillData(actor, updateData);
   _migrateActorUnusedData(actor, updateData);
@@ -1716,6 +1717,22 @@ const _migrateActorConditions = function (ent, updateData) {
   }
 };
 
+const _migrateActorInvaliddSkills = (actor, updateData) => {
+  const skills = actor.system.skills;
+  if (!skills) return;
+  for (const [key, sklData] of Object.entries(skills)) {
+    if (!sklData) {
+      updateData[`system.skills.-=${key}`] = null;
+      continue;
+    }
+    for (const [subKey, subSklData] of Object.entries(sklData.subSkills ?? {})) {
+      if (!subSklData) {
+        updateData[`system.skills.${key}.subSkills.-=${subKey}`] = null;
+      }
+    }
+  }
+};
+
 /**
  * Migrate abnormal skill rank values to 0.
  * Primarily changing nulls to 0 to match new actors.
@@ -1727,12 +1744,14 @@ const _migrateActorConditions = function (ent, updateData) {
 const _migrateActorSkillRanks = function (ent, updateData, linked) {
   const skills = getProperty(ent, "system.skills");
   if (!skills) return; // Unlinked with no skill overrides of any kind
-  for (const [key, data] of Object.entries(skills)) {
-    if (!linked && data.rank === undefined) continue; // Unlinked with no override
-    if (!Number.isFinite(data.rank)) updateData[`system.skills.${key}.rank`] = 0;
-    for (const [subKey, subData] of Object.entries(data.subSkills ?? {})) {
-      if (!linked && subData.rank === undefined) continue; // Unlinked with no override
-      if (!Number.isFinite(subData.rank)) updateData[`system.skills.${key}.subSkills.${subKey}.rank`] = 0;
+  for (const [key, sklData] of Object.entries(skills)) {
+    if (!sklData) continue;
+    if (!linked && sklData.rank === undefined) continue; // Unlinked with no override
+    if (!Number.isFinite(sklData.rank)) updateData[`system.skills.${key}.rank`] = 0;
+    for (const [subKey, subSklData] of Object.entries(sklData.subSkills ?? {})) {
+      if (!subSklData) continue;
+      if (!linked && subSklData.rank === undefined) continue; // Unlinked with no override
+      if (!Number.isFinite(subSklData.rank)) updateData[`system.skills.${key}.subSkills.${subKey}.rank`] = 0;
     }
   }
 };
@@ -1840,22 +1859,26 @@ const _migrateActorSenses = function (ent, updateData, linked, token) {
 
 const _migrateActorSkillJournals = function (ent, updateData, linked) {
   const reOldJournalFormat = /^[a-zA-Z0-9]+$/;
-  for (const [skillKey, skill] of Object.entries(ent.system.skills ?? {})) {
-    for (const [subSkillKey, subSkill] of Object.entries(skill.subSkills ?? {})) {
-      if (subSkill.journal?.match(reOldJournalFormat)) {
-        updateData[`system.skills.${skillKey}.subSkills.${subSkillKey}.journal`] = `JournalEntry.${subSkill.journal}`;
+  for (const [skillKey, sklData] of Object.entries(ent.system.skills ?? {})) {
+    if (!sklData) continue;
+    for (const [subSkillKey, subSklData] of Object.entries(sklData.subSkills ?? {})) {
+      if (!subSklData) continue;
+      if (subSklData.journal?.match(reOldJournalFormat)) {
+        updateData[`system.skills.${skillKey}.subSkills.${subSkillKey}.journal`] = `JournalEntry.${subSklData.journal}`;
       }
     }
 
-    if (skill.journal?.match(reOldJournalFormat)) {
-      updateData[`system.skills.${skillKey}.journal`] = `JournalEntry.${skill.journal}`;
+    if (sklData.journal?.match(reOldJournalFormat)) {
+      updateData[`system.skills.${skillKey}.journal`] = `JournalEntry.${sklData.journal}`;
     }
   }
 };
 
 const _migrateActorSubskillData = (actor, updateData) => {
   for (const [skillId, skillData] of Object.entries(actor.system.skills ?? {})) {
+    if (!skillData) continue;
     for (const [subSkillId, subSkillData] of Object.entries(skillData.subSkills ?? {})) {
+      if (!subSkillData) continue;
       if (subSkillData.mod !== undefined) {
         // Remove permanently stored .mod which is derived value
         // Added with PF1 v9

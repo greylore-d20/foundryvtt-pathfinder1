@@ -258,12 +258,11 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
 
     const tCenter = getCenter();
 
-    // Max distance from template center, 6 grid cells distance worth of offshoot is added for catching large tokens
-    // Note, max distance offshoots the template quite easily to begin with for rectangles.
-    const maxDistance = Math.max(this.height, this.width) + 6 * gridSizePx;
+    // Max distance from template center, +1 cell for proper detection, and +1 pixel for uneven grids and rounding protection
+    const maxDistance = Math.max(this.height, this.width) + gridSizePx + 1;
     // Get tokens within max potential distance from the template
     const relevantTokens = new Set(
-      canvas.tokens.placeables.filter((t) => new Ray(t.center, tCenter).distance + t.sizeErrorMargin <= maxDistance)
+      canvas.tokens.placeables.filter((t) => new Ray(t.center, tCenter).distance - t.sizeErrorMargin <= maxDistance)
     );
 
     const result = new Set();

@@ -315,35 +315,33 @@ export class ChatAttack {
   }
 
   addEffectNotes() {
-    if (!this.action.item) return;
+    this.effectNotes = [];
 
-    let notes = [];
-    if (this.action.item != null && this.action.item.actor != null) {
-      notes = this.action.item.actor.getContextNotes("attacks.effect").reduce((arr, o) => {
-        for (const n of o.notes) {
-          arr.push(...n.split(/[\n\r]+/));
-        }
-        return arr;
-      }, []);
+    const item = this.action.item;
+    if (!item) return;
 
-      // Spell specific notes
-      if (this.action.item.type === "spell") {
-        this.action.item.actor.getContextNotes("spell.effect").forEach((o) => {
-          for (const n of o.notes) notes.push(...n.split(/[\n\r]+/));
+    const actor = item.actor;
+
+    if (actor) {
+      const noteSources = ["attacks.effect"];
+      if (item.type === "spell") noteSources.push("spell.effect"); // Spell specific notes
+
+      for (const source of noteSources) {
+        actor.getContextNotes(source).forEach((ns) => {
+          for (const note of ns.notes) this.effectNotes.push(...note.split(/[\n\r]+/));
         });
       }
     }
 
     // Add item notes
-    if (this.action.item != null && this.action.item.system.effectNotes) {
-      notes.push(...this.action.item.system.effectNotes);
+    if (item.system.effectNotes?.length) {
+      this.effectNotes.push(...item.system.effectNotes);
     }
     // Add action notes
-    if (this.action.data.effectNotes) {
-      notes.push(...this.action.data.effectNotes);
+    if (this.action.data.effectNotes?.length) {
+      this.effectNotes.push(...this.action.data.effectNotes);
     }
 
-    this.effectNotes = this.effectNotes.concat(notes);
     this.setEffectNotesHTML();
   }
 

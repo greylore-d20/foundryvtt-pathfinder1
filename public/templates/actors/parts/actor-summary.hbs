@@ -135,7 +135,7 @@
 
     <div class="flexrow">
       <div class="race-container item flexrow" {{#if race}}data-item-id="{{race._id}}"{{/if}} data-tooltip="PF1.Race">
-        <div class="race item-image rollable" style="background-image: url({{race.img}})" data-tooltip="{{labels.race}}<br>{{localize "PF1.DisplayInChat"}}">
+        <div class="race item-image rollable" style='background-image: url("{{race.img}}")' data-tooltip="{{labels.race}}<br>{{localize "PF1.DisplayInChat"}}">
           {{#unless race}}{{localize "PF1.Race"}}{{/unless}}
         </div>
 

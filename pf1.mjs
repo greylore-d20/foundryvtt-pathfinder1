@@ -555,26 +555,6 @@ Hooks.on("updateToken", function (token, updateData, options, userId) {
   pf1.tooltip?.unbind(token);
 });
 
-/**
- * HACK: Fixes unlinked token updating not working correctly in _preCreate (in v10)
- * Remove when upstream issue is solved and brought live: https://github.com/foundryvtt/foundryvtt/issues/8761
- */
-Hooks.on("preCreateToken", (token, initialData, options, userId) => {
-  if (!token.actor) return;
-
-  // Apply token size
-  if (token.getFlag("pf1", "staticSize")) return;
-  const sizeConf = PF1.tokenSizes[token.actor?.system.traits?.size];
-  if (!sizeConf) return;
-
-  // token.updateSource() doesn't work here
-  initialData.width = sizeConf.w;
-  initialData.height = sizeConf.h;
-  initialData.texture ??= {};
-  initialData.texture.scaleX = sizeConf.scale * token.actor.prototypeToken.texture.scaleX;
-  initialData.texture.scaleY = sizeConf.scale * token.actor.prototypeToken.texture.scaleY;
-});
-
 Hooks.on("createItem", (item, options, userId) => {
   const actor = item.actor;
   if (userId !== game.user.id) return;

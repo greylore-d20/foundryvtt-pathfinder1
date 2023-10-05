@@ -9,6 +9,11 @@ export class ActorRestDialog extends DocumentSheet {
     });
   }
 
+  /** @type {ActorPF} */
+  get actor() {
+    return this.document;
+  }
+
   /* -------------------------------------------- */
 
   /**
@@ -17,7 +22,7 @@ export class ActorRestDialog extends DocumentSheet {
    * @type {string}
    */
   get title() {
-    return `${game.i18n.localize("PF1.Rest")}: ${this.object.name}`;
+    return `${game.i18n.localize("PF1.Rest")}: ${this.actor.name}`;
   }
 
   /* -------------------------------------------- */
@@ -30,11 +35,6 @@ export class ActorRestDialog extends DocumentSheet {
    * @param formData
    */
   async _updateObject(event, formData) {
-    this.object.performRest({
-      restoreHealth: formData.restoreHealth,
-      longTermCare: formData.longTermCare,
-      restoreDailyUses: formData.restoreDailyUses,
-      hours: formData.hours,
-    });
+    this.actor.performRest(formData);
   }
 }

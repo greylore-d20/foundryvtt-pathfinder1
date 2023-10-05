@@ -560,6 +560,8 @@ Hooks.on("updateToken", function (token, updateData, options, userId) {
  * Remove when upstream issue is solved and brought live: https://github.com/foundryvtt/foundryvtt/issues/8761
  */
 Hooks.on("preCreateToken", (token, initialData, options, userId) => {
+  if (!token.actor) return;
+
   // Apply token size
   if (token.getFlag("pf1", "staticSize")) return;
   const sizeConf = PF1.tokenSizes[token.actor?.system.traits?.size];
@@ -569,8 +571,8 @@ Hooks.on("preCreateToken", (token, initialData, options, userId) => {
   initialData.width = sizeConf.w;
   initialData.height = sizeConf.h;
   initialData.texture ??= {};
-  initialData.texture.scaleY = sizeConf.scale;
-  initialData.texture.scaleX = sizeConf.scale;
+  initialData.texture.scaleX = sizeConf.scale * token.actor.prototypeToken.texture.scaleX;
+  initialData.texture.scaleY = sizeConf.scale * token.actor.prototypeToken.texture.scaleY;
 });
 
 Hooks.on("createItem", (item, options, userId) => {

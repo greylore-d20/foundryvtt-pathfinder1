@@ -1847,7 +1847,8 @@ export class ActorPF extends ActorBasePF {
         if (!changed.token) changed.token = {};
         changed.token.width = size.w;
         changed.token.height = size.h;
-        changed.token.scale = size.scale;
+        changed.token.texture.scaleX = size.scale * this.prototypeToken.texture.scaleX;
+        changed.token.texture.scaleY = size.scale * this.prototypeToken.texture.scaleY;
       }
     }
 

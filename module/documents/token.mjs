@@ -48,8 +48,8 @@ export class TokenDocumentPF extends TokenDocument {
       width: sizeConf.w,
       height: sizeConf.h,
       texture: {
-        scaleY: sizeConf.scale,
-        scaleX: sizeConf.scale,
+        scaleX: sizeConf.scale * this.actor.prototypeToken.texture.scaleX,
+        scaleY: sizeConf.scale * this.actor.prototypeToken.texture.scaleY,
       },
     });
   }

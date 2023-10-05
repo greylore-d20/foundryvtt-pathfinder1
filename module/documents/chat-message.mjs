@@ -58,7 +58,7 @@ export class ChatMessagePF extends ChatMessage {
    * @type {MeasuredTemplatePF}
    */
   get measureTemplate() {
-    const templateId = this.system.flags?.pf1?.metadata?.template;
+    const templateId = this.flags?.pf1?.metadata?.template;
     if (!templateId) return null;
     const template = canvas.templates.get(templateId);
     return template || null;
@@ -68,7 +68,7 @@ export class ChatMessagePF extends ChatMessage {
    * @returns {TokenPF[]} The tokens which were targeted with this chat card.
    */
   get targets() {
-    const targetIds = this.system.flags?.pf1?.metadata?.targets ?? [];
+    const targetIds = this.flags?.pf1?.metadata?.targets ?? [];
     return canvas.tokens.placeables.filter((o) => targetIds.includes(o.id));
   }
 

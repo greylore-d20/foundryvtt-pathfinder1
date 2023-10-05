@@ -1,5 +1,11 @@
 .app.pf1.troubleshooter {
   form {
+    &.migrating {
+      > * {
+        pointer-events: none;
+      }
+    }
+
     h3 {
       margin: 0;
     }
@@ -50,13 +56,18 @@
           color: darkgreen;
         }
       }
-      &:disabled .progress.spinner {
-        visibility: visible;
-      }
     }
 
     .hint {
       padding: 0 10%;
+    }
+
+    &.migrating {
+      button {
+        .progress.spinner {
+          visibility: visible;
+        }
+      }
     }
   }
 }

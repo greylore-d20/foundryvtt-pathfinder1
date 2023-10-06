@@ -2,12 +2,18 @@ import { ActionUse } from "../action-use/action-use.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
 export class AttackDialog extends Application {
-  constructor(object, rollData = null, options = {}, appOptions = {}) {
+  /**
+   * @param {pf1.components.ItemAction} action
+   * @param {object} rollData
+   * @param {object} shared
+   * @param {object} appOptions
+   */
+  constructor(action, rollData = null, shared = {}, appOptions = {}) {
     super(appOptions);
 
-    this.object = object;
+    this.object = action;
 
-    this.rollData = rollData ? rollData : this.object.getRollData();
+    this.rollData = rollData ? rollData : action.getRollData();
 
     this.initAmmoUsage();
     this.initAttacks();
@@ -17,12 +23,12 @@ export class AttackDialog extends Application {
       sl: this.rollData.sl ?? 0,
     };
 
-    const isNaturalAttack = this.object.item.subType === "natural",
-      isPrimaryAttack = this.object.data.naturalAttack.primaryAttack !== false;
+    const isNaturalAttack = action.item.subType === "natural",
+      isPrimaryAttack = action.data.naturalAttack.primaryAttack !== false;
 
     this.flags = {
       "primary-attack": isPrimaryAttack,
-      "cl-check": this.object.clCheck === true,
+      "cl-check": action.clCheck === true,
       "measure-template": true,
     };
 
@@ -37,12 +43,13 @@ export class AttackDialog extends Application {
       "damage-bonus": "",
       "cl-offset": "0",
       "sl-offset": "0",
-      rollMode: options.rollMode || game.settings.get("core", "rollMode"),
+      rollMode: shared.rollMode || game.settings.get("core", "rollMode"),
       "damage-ability-multiplier": damageMult,
       held: this.rollData.item?.held ?? "normal",
     };
+
     this.conditionals = {};
-    this.object.conditionals?.contents.forEach((conditional, idx) => {
+    action.conditionals?.contents.forEach((conditional, idx) => {
       this.conditionals[`conditional.${idx}`] = conditional.data.default === true;
     });
 
@@ -53,12 +60,23 @@ export class AttackDialog extends Application {
     };
   }
 
+  /** @type {pf1.components.ItemAction} */
+  get action() {
+    return this.object;
+  }
+
   get title() {
-    return `Use: ${this.object.name}`;
+    const action = this.action,
+      item = action.item,
+      actor = action.actor;
+
+    if (actor) return `${action.name} (${item.name}) – ${actor.name}`;
+    return `${action.name} (${item.name})`;
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return {
+      ...super.defaultOptions,
       template: "systems/pf1/templates/apps/attack-roll-dialog.hbs",
       classes: ["pf1", "attack-dialog"],
       width: 440,
@@ -67,7 +85,7 @@ export class AttackDialog extends Application {
       sheetConfig: false,
       submitOnChange: false,
       submitOnClose: false,
-    });
+    };
   }
 
   static get defaultAttack() {
@@ -80,41 +98,44 @@ export class AttackDialog extends Application {
   }
 
   getData() {
+    const action = this.action,
+      item = action.item;
+
     return {
       data: this.rollData,
-      item: this.object.data,
+      item,
       config: pf1.config,
       rollMode: game.settings.get("core", "rollMode"),
       rollModes: CONFIG.Dice.rollModes,
-      hasAttack: this.object.hasAttack,
-      hasDamage: this.object.hasDamage,
-      hasDamageAbility: this.object.data.ability?.damage ?? "" !== "",
-      isNaturalAttack: this.object.item.system.subType === "natural",
-      isWeaponAttack: this.object.item.system.subType === "weapon",
-      isMeleeWeaponAttackAction: this.object.data.actionType === "mwak",
-      isRangedWeaponAttackAction: this.object.data.actionType === "rwak",
-      isAttack: this.object.item.type === "attack",
-      isWeapon: this.object.item.type === "weapon",
-      isSpell: this.object.item.type === "spell",
-      isFeat: this.object.item.type === "feat",
-      hasTemplate: this.object.hasTemplate,
+      hasAttack: action.hasAttack,
+      hasDamage: action.hasDamage,
+      hasDamageAbility: action.data.ability?.damage ?? "" !== "",
+      isNaturalAttack: item.system.subType === "natural",
+      isWeaponAttack: item.system.subType === "weapon",
+      isMeleeWeaponAttackAction: action.data.actionType === "mwak",
+      isRangedWeaponAttackAction: action.data.actionType === "rwak",
+      isAttack: item.type === "attack",
+      isWeapon: item.type === "weapon",
+      isSpell: item.type === "spell",
+      isFeat: item.type === "feat",
+      hasTemplate: action.hasTemplate,
       attacks: this.attacks,
       flags: this.flags,
       attributes: this.attributes,
       conditionals: this.conditionals,
-      usesAmmo: this.object.data.usesAmmo,
+      usesAmmo: action.data.usesAmmo,
       ammo: this.getAmmo(),
     };
   }
 
   getAmmo() {
-    const actor = this.object.actor;
+    const actor = this.action.actor;
     const ammo = actor.itemTypes.loot.filter(this._filterAmmo.bind(this));
 
     return ammo.map((o) => {
       return {
         data: o.toObject(),
-        isDefault: this.object.item.getFlag("pf1", "defaultAmmo") === o.id,
+        isDefault: this.action.item.getFlag("pf1", "defaultAmmo") === o.id,
       };
     });
   }
@@ -123,7 +144,7 @@ export class AttackDialog extends Application {
     if (!(item.type === "loot" && item.system.subType === "ammo")) return false;
     if (item.system.quantity <= 0) return false;
 
-    const weaponAmmoType = this.object.data.ammoType;
+    const weaponAmmoType = this.action.data.ammoType;
     const ammoType = item.extraType;
     if (!ammoType) return true;
     if (weaponAmmoType === ammoType) return true;
@@ -198,7 +219,7 @@ export class AttackDialog extends Application {
             attackBonusTotal: "", // Don't show anything in the mod field, as the data is not updated live
           })
         );
-        this.setAttackAmmo(place, this.object.item.getFlag("pf1", "defaultAmmo"));
+        this.setAttackAmmo(place, this.action.item.getFlag("pf1", "defaultAmmo"));
       } else {
         this.attacks = this.attacks.filter((o) => o.id !== elem.name);
       }
@@ -252,8 +273,8 @@ export class AttackDialog extends Application {
     const ammoId = elem.closest(".ammo-item").dataset.id;
     switch (elem.dataset.type) {
       case "set-default":
-        if (ammoId === "null") await this.object.item.unsetFlag("pf1", "defaultAmmo");
-        else await this.object.item.setFlag("pf1", "defaultAmmo", ammoId);
+        if (ammoId === "null") await this.action.item.unsetFlag("pf1", "defaultAmmo");
+        else await this.action.item.setFlag("pf1", "defaultAmmo", ammoId);
         // Apply CSS class, since we can't do a render in here and keep the dropdown menu open
         elem
           .closest("ul")
@@ -304,11 +325,14 @@ export class AttackDialog extends Application {
   }
 
   initAttacks() {
-    this.attacks = new ActionUse({ rollData: this.rollData, item: this.object.item })
+    const action = this.action,
+      item = action.item;
+
+    this.attacks = new ActionUse({ rollData: this.rollData, item })
       .generateAttacks(true)
       .map(({ label, attackBonus }) => ({
-        label: label,
-        attackBonus: attackBonus,
+        label,
+        attackBonus,
         // Reduce formula to a single number for easier display
         attackBonusTotal: RollPF.safeTotal(attackBonus, this.rollData),
         // Ammo data is discarded in favour of specialised handling via setAttackAmmo
@@ -316,7 +340,7 @@ export class AttackDialog extends Application {
       }));
 
     // Set ammo usage
-    const ammoId = this.object.item.getFlag("pf1", "defaultAmmo");
+    const ammoId = item.getFlag("pf1", "defaultAmmo");
     if (ammoId != null) {
       for (let a = 0; a < this.attacks.length; a++) {
         this.setAttackAmmo(a, ammoId);
@@ -348,11 +372,11 @@ export class AttackDialog extends Application {
   }
 
   setAttackAmmo(attackIndex, ammoId = null) {
-    if (!this.object.data.usesAmmo) return;
+    if (!this.action.data.usesAmmo) return;
 
     const atk = this.attacks[attackIndex];
     const curAmmo = atk.ammo?.data._id;
-    const ammoItem = this.object.actor?.items.get(ammoId) ?? null;
+    const ammoItem = this.action.actor?.items.get(ammoId) ?? null;
     const abundant = ammoItem?.flags?.pf1?.abundant ?? false;
 
     // Check if ammo exists

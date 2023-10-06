@@ -17,8 +17,8 @@ export class AttackDialog extends Application {
       sl: this.rollData.sl ?? 0,
     };
 
-    const isNaturalAttack = this.object.item.system.attackType === "natural",
-      isPrimaryAttack = this.object.data.naturalAttack.primaryAttack === true;
+    const isNaturalAttack = this.object.item.subType === "natural",
+      isPrimaryAttack = this.object.data.naturalAttack.primaryAttack !== false;
 
     this.flags = {
       "primary-attack": isPrimaryAttack,

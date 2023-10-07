@@ -721,7 +721,6 @@ Hooks.once("ready", () => {
     const { type, uuid } = data;
     switch (type) {
       case "Item":
-        if (!game.system.template.Item.types.includes(data.type)) return;
         macro = macros.createItemMacro(uuid, slot);
         break;
       case "action":

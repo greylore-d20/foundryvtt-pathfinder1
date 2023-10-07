@@ -1078,11 +1078,11 @@ export class ActionUse {
     };
 
     // Get template for later variables
-    const template = canvas.scene ? canvas.templates.get(metadata.template) : null;
+    const template = this.shared.template;
 
     // Add targets
-    if (template != null) {
-      metadata.targets = template
+    if (template) {
+      metadata.targets = template.object
         .getTokensWithin()
         .filter((t) => t.combatant?.isDefeated !== true)
         .map((o) => o.id);

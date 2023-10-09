@@ -1,3 +1,4 @@
+import { ActorBasePF } from "./actor-base.mjs";
 import { getAbilityModifier } from "@utils";
 import { ItemPF, ItemRacePF } from "@item/_module.mjs";
 import { createTag, fractionalToString, enrichHTMLUnrolled } from "../../utils/lib.mjs";
@@ -19,7 +20,7 @@ import { VisionPermissionSheet } from "module/applications/vision-permission.mjs
 /**
  * Extend the base Actor class to implement additional game system logic.
  */
-export class ActorPF extends Actor {
+export class ActorPF extends ActorBasePF {
   constructor(...args) {
     super(...args);
 

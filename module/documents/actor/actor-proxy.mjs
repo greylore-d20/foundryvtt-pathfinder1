@@ -1,4 +1,4 @@
-import { ActorPF } from "./actor-pf.mjs";
+import { ActorBasePF } from "./actor-base.mjs";
 
 const actorHandler = {
   construct(_, args) {
@@ -9,4 +9,4 @@ const actorHandler = {
   },
 };
 
-export const ActorPFProxy = new Proxy(ActorPF, actorHandler);
+export const ActorPFProxy = new Proxy(ActorBasePF, actorHandler);

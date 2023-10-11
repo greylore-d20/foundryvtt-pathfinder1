@@ -22,7 +22,7 @@ export let isMigrating = false; // eslint-disable-line prefer-const -- pf1.migra
  */
 export async function migrateWorld({ unlock = false, systemPacks = false } = {}) {
   if (!game.user.isGM) {
-    return void ui.notifications.error(game.i18n.localize("PF1.ErrorUnauthorizedAction"));
+    return void ui.notifications.error(game.i18n.localize("PF1.ErrorGenericPermission"));
   }
 
   if (pf1.migrations.isMigrating) {

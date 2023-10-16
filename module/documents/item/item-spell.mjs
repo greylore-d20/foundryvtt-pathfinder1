@@ -132,7 +132,7 @@ export class ItemSpellPF extends ItemPF {
       if (spellbook != null) {
         const spellAbility = spellbook.ability;
         let ablMod = "";
-        if (spellAbility !== "") ablMod = this.actor.system.abilities?.[spellAbility]?.mod;
+        if (spellAbility !== "") ablMod = result.abilities?.[spellAbility]?.mod;
 
         result.cl = this.casterLevel || 0;
         result.sl = this.spellLevel || 0;
@@ -141,6 +141,9 @@ export class ItemSpellPF extends ItemPF {
             ? result.attributes.hd?.total ?? result.details.level.value
             : result.classes?.[spellbook.class]?.level || 0;
         result.ablMod = ablMod;
+
+        // Add @spellbook shortcut to @spells[bookId]
+        result.spellbook = result.spells[this.system.spellbook];
       }
     }
 

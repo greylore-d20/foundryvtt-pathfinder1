@@ -850,14 +850,7 @@ Hooks.on("deleteCombat", (combat, options, userId) => {
     combat.started &&
     ((openXpDistributor && !skipPrompt) || (!openXpDistributor && skipPrompt))
   ) {
-    const combatants = combat.combatants.map((o) => o.actor);
-    const app = new applications.ExperienceDistributor(combatants);
-
-    if (app.getCharacters().length > 0) {
-      app.render(true);
-    } else {
-      app.close();
-    }
+    applications.ExperienceDistributor.fromCombat(combat);
   }
 });
 

@@ -1,0 +1,92 @@
+.pf1.xp-distributor {
+  form {
+    display: flex;
+    flex-flow: column nowrap;
+    overflow: hidden;
+
+    .selectors {
+      overflow-y: auto;
+      flex: 1;
+
+      .character-selector .actor {
+        grid-template-rows: 96px 36px 18px;
+      }
+
+      .npc-selector .actor {
+        grid-template-rows: 96px 36px 16px 18px;
+      }
+
+      .character-selector,
+      .npc-selector {
+        display: grid;
+        flex-flow: row wrap;
+        grid-template-columns: repeat(auto-fit, 96px);
+        grid-gap: 0.4rem;
+
+        .actor {
+          cursor: pointer;
+          width: 96px;
+          padding: 4px;
+          align-items: center;
+          border-radius: 4px;
+
+          display: grid;
+          justify-items: center;
+          grid-row-gap: 2px;
+
+          input[type="checkbox"] {
+            cursor: pointer;
+          }
+
+          img.portrait {
+            height: 88px;
+            width: 88px;
+            object-fit: cover;
+            object-position: 50% 0;
+          }
+
+          span {
+            overflow: hidden;
+            text-align: center;
+            text-overflow: ellipsis;
+            display: -webkit-inline-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+          }
+
+          &.toggled {
+            background: rgba(155, 155, 155, 0.5);
+            span.name {
+              text-shadow: 0 0 10px red;
+            }
+          }
+
+          &:hover {
+            background: rgba(155, 155, 155, 0.2);
+            span.name {
+              text-shadow: 0 0 10px red;
+            }
+          }
+        }
+      }
+    }
+
+    .footer {
+      flex: 0;
+      line-height: 24px;
+      margin-bottom: 5px;
+
+      display: flex;
+      flex-flow: column;
+      gap: 3px;
+    }
+
+    fieldset {
+      padding: 0 0.5em 0.3em 0.3em;
+
+      legend {
+        font-size: 1.5em;
+      }
+    }
+  }
+}

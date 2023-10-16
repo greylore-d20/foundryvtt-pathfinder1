@@ -1,17 +1,21 @@
 export class ExperienceDistributor extends FormApplication {
   /**
-   * @constructs ExperienceDistributor
+   * @type {number} - Bonus XP granted
+   */
+  _bonusXP = 0;
+
+  /**
+   * @type {XPDistributorActor[]} - Special actor data array
+   */
+  _actors = [];
+
+  /**
    * @param {ActorPF[]} [actors] - Actors to add to this distributor.
    * @param {object} [options] - Options for this application.
    */
   constructor(actors = [], options = {}) {
-    actors = actors
-      .map((o) => {
-        return ExperienceDistributor.getActorData(o);
-      })
-      .filter((o) => o != null);
-    super(actors, options);
-    this.bonusXP = 0;
+    super(undefined, options);
+    this._actors = actors.map((o) => this.constructor.getActorData(o)).filter((o) => o != null);
   }
 
   static get defaultOptions() {
@@ -27,37 +31,36 @@ export class ExperienceDistributor extends FormApplication {
   }
 
   getData() {
-    const result = super.getData();
-
-    // Add combatants
-    result.actors = {
-      characters: this.getCharacters(),
-      npcs: this.getNPCs(),
-    };
-
-    // Add labels
-    result.labels = {
-      xp: {
-        total: `+ ${this.getTotalExperience().toLocaleString()}`,
-        split: `+ ${this.getSplitExperience().toLocaleString()}`,
+    return {
+      // Add combatants
+      actors: {
+        characters: this.getCharacters(),
+        npcs: this.getNPCs(),
       },
+
+      // Add labels
+      xp: {
+        total: this.getTotalExperience(),
+        split: this.getSplitExperience(),
+      },
+
+      bonusXP: this._bonusXP,
     };
-
-    result.bonusXP = this.bonusXP;
-
-    return result;
   }
 
   getCharacters() {
-    return this.object.filter((o) => o.actor.type === "character");
+    return this._actors.filter((o) => !o.isNPC);
   }
 
   getNPCs() {
-    return this.object.filter((o) => o.actor.type === "npc");
+    return this._actors.filter((o) => o.isNPC);
   }
 
-  activateListeners(html) {
-    if (jQuery != null && html instanceof jQuery) html = html[0];
+  activateListeners(jq) {
+    super.activateListeners(jq);
+
+    const html = this.form;
+
     const addListener = (query, ev, callback) =>
       html.querySelectorAll(query).forEach((elem) => elem.addEventListener(ev, callback));
 
@@ -66,8 +69,8 @@ export class ExperienceDistributor extends FormApplication {
     addListener(".bonus-xp input", "change", (event) => {
       event.preventDefault();
 
-      this.bonusXP = parseInt(event.currentTarget.value);
-      if (isNaN(this.bonusXP)) this.bonusXP = 0;
+      this._bonusXP = parseInt(event.currentTarget.value);
+      if (isNaN(this._bonusXP)) this._bonusXP = 0;
 
       this.render();
     });
@@ -83,34 +86,37 @@ export class ExperienceDistributor extends FormApplication {
     event.preventDefault();
     const data = TextEditor.getDragEventData(event);
 
-    // Add actor
-    if (data.type === "Actor") {
-      const actor = await pf1.documents.actor.ActorPF.fromDropData(data);
+    if (data.type !== "Actor") return;
 
-      // Prevent duplicate characters (not NPCs)
-      if (actor.type !== "character" || this.object.find((o) => o.actor === actor) == null) {
-        // Add actor to list
-        this.object.push(mergeObject(this.constructor.getActorData(actor), { toggled: true }));
-        this.render(true);
-      }
+    // Add actor
+    const actor = await pf1.documents.actor.ActorPF.fromDropData(data);
+
+    // Prevent duplicate characters (not NPCs)
+    if (actor.type !== "character" || this._actors.find((o) => o.actor === actor) == null) {
+      // Add actor to list
+      const actorData = this.constructor.getActorData(actor);
+      actorData.selected = true;
+      this._actors.push(actorData);
+
+      this.render();
     }
   }
 
   _onClickActor(event) {
     event.preventDefault();
 
-    const a = event.currentTarget;
-    const actorID = event.currentTarget.dataset.id;
-    const actor = this.object.find((o) => o.id === actorID);
+    const el = event.currentTarget;
+    const actorID = el.dataset.id;
+    const actor = this._actors.find((o) => o.id === actorID);
 
     if (!actor) return;
 
-    if (actor.toggled) {
-      actor.toggled = false;
-      a.classList.remove("toggled");
+    if (actor.selected) {
+      actor.selected = false;
+      el.classList.remove("toggled");
     } else {
-      actor.toggled = true;
-      a.classList.add("toggled");
+      actor.selected = true;
+      el.classList.add("toggled");
     }
 
     this.render();
@@ -124,23 +130,21 @@ export class ExperienceDistributor extends FormApplication {
     const value = type === "split-evenly" ? this.getSplitExperience() : this.getTotalExperience();
 
     if (value > 0) {
-      const characters = this.getCharacters().filter((o) => o.toggled);
+      const characters = this.getCharacters().filter((o) => o.selected);
 
       for (const actorData of characters) {
-        const result = { value: value };
+        const result = { value };
         Hooks.callAll("pf1GainXp", actorData.actor, result);
-        actorData.value = result.value;
+        actorData.value = Math.floor(result.value);
       }
 
       const updates = characters
-        .map((o) => {
-          if (o.value === 0 || !Number.isFinite(o.value)) return null;
-          return {
-            _id: o.actor.id,
-            "system.details.xp.value": o.actor.system.details.xp.value + Math.floor(o.value),
-          };
-        })
-        .filter((o) => o != null);
+        .filter((o) => o.value > 0 && Number.isSafeInteger(o.value))
+        .map((o) => ({
+          _id: o.actor.id,
+          "system.details.xp.value": o.actor.system.details.xp.value + o.value,
+        }));
+
       Actor.implementation.updateDocuments(updates);
     }
 
@@ -153,44 +157,89 @@ export class ExperienceDistributor extends FormApplication {
     this.close();
   }
 
+  /**
+   * Total experience the encounter is worth, including regular XP reward and bonus XP.
+   *
+   * @returns {number} - Total value
+   */
   getTotalExperience() {
-    const npcs = this.getNPCs().filter((o) => o.toggled);
-
-    return npcs.reduce((cur, o) => {
-      return cur + o.xp;
-    }, this.bonusXP);
+    const npcs = this.getNPCs().filter((o) => o.selected);
+    return npcs.reduce((cur, o) => cur + o.xp, this._bonusXP);
   }
 
+  /**
+   * Split experience, as split across all characters.
+   *
+   * @returns {number} - Reward value
+   */
   getSplitExperience() {
-    const characters = this.getCharacters().filter((o) => o.toggled);
+    const characters = this.getCharacters().filter((o) => o.selected);
+    if (characters.length == 0) return 0;
+
     const xp = this.getTotalExperience();
 
-    const hasAnyCharacters = characters.length > 0;
-
-    if (hasAnyCharacters) return Math.floor(xp / characters.length);
-    return 0;
+    return Math.floor(xp / characters.length);
   }
 
+  /**
+   * @protected
+   * @param {Actor} actor
+   * @returns {XPDistributorActor}
+   */
   static getActorData(actor) {
     if (!(actor instanceof Actor)) return null;
-    const type = actor.type;
-    const xp = type === "npc" ? actor.system.details.xp.value ?? 0 : 0;
+
+    const xp = actor.system.details?.xp?.value ?? 0;
 
     return {
       id: randomID(16),
-      actor: actor,
-      toggled: this.shouldActorBeToggled(actor),
+      isNPC: actor.type !== "character",
+      actor,
+      selected: this._shouldActorBeSelected(actor),
       xp,
       xpString: xp.toLocaleString(),
     };
   }
 
-  static shouldActorBeToggled(actor) {
+  /**
+   * Should the actor be selected by default.
+   *
+   * @param {Actor} actor
+   * @returns {boolean}
+   */
+  static _shouldActorBeSelected(actor) {
     const isPC = actor.type === "character";
-    const isDefeated = actor.system.attributes.hp.value < 0;
+    if (isPC) return true;
 
-    if (!isPC && !isDefeated) return false;
+    const isDefeated = actor.system.attributes?.hp?.value < 0;
+    return isDefeated;
+  }
 
-    return true;
+  /**
+   * Open XP distributor dialog based on passed combat instance.
+   *
+   * @param {Combat} combat - Combat instance
+   * @returns {ExperienceDistributor} - Application instance
+   */
+  static fromCombat(combat) {
+    const app = new this(combat.combatants.map((c) => c.actor));
+
+    if (app.getCharacters().length > 0) {
+      app.render(true);
+    } else {
+      app.close();
+    }
+
+    return app;
   }
 }
+
+/**
+ * @typedef {object} XPDistributorActor
+ * @property {string} id - Internal reference ID
+ * @property {ActorPF} actor - Actor instance
+ * @property {boolean} isNPC - Is this an NPC?
+ * @property {boolean} selected - Is the actor selected
+ * @property {number} xp
+ * @property {string} xpString
+ */

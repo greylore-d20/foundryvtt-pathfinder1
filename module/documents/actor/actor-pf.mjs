@@ -4046,6 +4046,7 @@ export class ActorPF extends ActorBasePF {
     if (!this.testUserPermission(game.user, "OWNER")) return;
 
     const buffTextures = this._calcBuffActiveEffects();
+    /** @type {ActiveEffectPF[]} */
     const fx = [...this.effects];
 
     // Create and delete buff ActiveEffects
@@ -4076,7 +4077,7 @@ export class ActorPF extends ActorBasePF {
 
     // Create and delete condition ActiveEffects
     for (const condKey of Object.keys(pf1.config.conditions)) {
-      const idx = fx.findIndex((e) => e.getFlag("core", "statusId") === condKey);
+      const idx = fx.findIndex((e) => e._statusSet.has(condKey));
       const hasCondition = this.system.attributes.conditions[condKey] === true;
       const hasEffectIcon = idx >= 0;
 
@@ -4095,7 +4096,7 @@ export class ActorPF extends ActorBasePF {
           label: pf1.config.conditions[condKey],
         });
       } else if (!hasCondition && hasEffectIcon) {
-        const removeEffects = fx.filter((e) => e.getFlag("core", "statusId") === condKey);
+        const removeEffects = fx.filter((e) => e._statusSet.has(condKey));
         toDelete.push(...removeEffects.map((e) => e.id));
       }
     }

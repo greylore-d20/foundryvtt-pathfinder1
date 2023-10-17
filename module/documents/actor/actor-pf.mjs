@@ -4236,7 +4236,7 @@ export class ActorPF extends ActorBasePF {
     const itemUpdates = [];
 
     // Get data at path, either from passed updateData or directly from actor
-    const getPathData = (path) => updateData[path] ?? getProperty(this, path);
+    const getPathData = (path) => getProperty(updateData.system, path) ?? getProperty(this.system, path);
 
     // Update charged items
     for (const item of this.items) {
@@ -4260,19 +4260,18 @@ export class ActorPF extends ActorBasePF {
         if (spellbook.spontaneous) continue;
 
         if (itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {
-          itemUpdate["system.preparation.preparedAmount"] = itemData.preparation.maxAmount;
-          itemUpdates.push(itemUpdate);
+          setProperty(itemUpdate.system, "preparation.preparedAmount", itemData.preparation.maxAmount);
         }
         if (!item.system.domain) {
-          let sbUses = getPathData(`system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`) || 0;
+          let sbUses = getPathData(`attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`) || 0;
           sbUses -= itemData.preparation.maxAmount;
-          updateData[`system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`] = sbUses;
+          setProperty(updateData, `system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`, sbUses);
         }
       }
 
       // Update charged actions
       if (item.system.actions?.length > 0) {
-        const actions = deepClone(item.system.actions);
+        const actions = item.toObject().system.actions;
         let _changed = false;
         for (const actionData of actions) {
           if (actionData.uses?.self?.per === "day") {
@@ -4285,7 +4284,7 @@ export class ActorPF extends ActorBasePF {
         }
 
         if (_changed) {
-          itemUpdate["system.actions"] = actions;
+          itemUpdate.system.actions = actions;
         }
       }
 

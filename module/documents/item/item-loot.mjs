@@ -95,4 +95,10 @@ export class ItemLootPF extends ItemPF {
   get charges() {
     return this.system.quantity ?? 0;
   }
+
+  adjustContained() {
+    super.adjustContained();
+
+    this.system.carried = true;
+  }
 }

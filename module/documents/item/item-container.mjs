@@ -284,4 +284,10 @@ export class ItemContainerPF extends ItemPF {
   recharge() {
     return;
   }
+
+  adjustContained() {
+    super.adjustContained();
+
+    this.system.carried = true;
+  }
 }

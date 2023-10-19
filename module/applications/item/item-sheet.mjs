@@ -107,6 +107,8 @@ export class ItemSheetPF extends ItemSheet {
     // Include CONFIG values
     context.config = pf1.config;
 
+    context.inContainer = item.inContainer ?? false;
+
     // Item Type, Status, and Details
     context.itemType = this._getItemType(item);
     context.itemStatus = this._getItemStatus(item);
@@ -270,12 +272,21 @@ export class ItemSheetPF extends ItemSheet {
         value: itemData.hardness,
       });
 
+      let disableEquipping = false;
+      if (item.inContainer) {
+        if (item.type === "weapon") disableEquipping = true;
+        else if (item.type === "equipment" && ["armor", "shield", "clothing"].includes(item.subType)) {
+          disableEquipping = true;
+        }
+      }
+
       // Add equipped flag
       context.descriptionAttributes.push({
         isBoolean: true,
         name: "system.equipped",
         label: game.i18n.localize("PF1.Equipped"),
         value: itemData.equipped,
+        disabled: disableEquipping,
       });
 
       // Add carried flag
@@ -284,6 +295,7 @@ export class ItemSheetPF extends ItemSheet {
         name: "system.carried",
         label: game.i18n.localize("PF1.Carried"),
         value: itemData.carried,
+        disabled: item.inContainer,
       });
     }
 

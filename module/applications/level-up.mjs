@@ -508,8 +508,6 @@ export class LevelUpForm extends FormApplication {
   }
 
   async createChatMessage(formData) {
-    const speaker = ChatMessage.getSpeaker({ actor: this.actor, token: this.token });
-
     const templateData = {
       formData,
       config: pf1.config,
@@ -517,13 +515,16 @@ export class LevelUpForm extends FormApplication {
       actor: this.actor.toObject(),
     };
 
-    return ChatMessage.create({
+    const messageData = {
       content: await renderTemplate("systems/pf1/templates/chat/level-up.hbs", templateData),
-      user: game.user.id,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      speaker,
-      roll: formData.hp?.roll ?? RollPF.safeRoll("0"),
-    });
+      speaker: ChatMessage.getSpeaker({ actor: this.actor, token: this.token }),
+      rolls: [formData.hp?.roll ?? RollPF.safeRoll("0")],
+    };
+
+    ChatMessage.implementation.applyRollMode(messageData, game.settings.get("core", "rollMode"));
+
+    return ChatMessage.create(messageData);
   }
 
   activateListeners(html) {

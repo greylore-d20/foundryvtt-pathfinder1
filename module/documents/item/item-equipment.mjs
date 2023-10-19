@@ -90,6 +90,15 @@ export class ItemEquipmentPF extends ItemPF {
     return labels;
   }
 
+  adjustContained() {
+    super.adjustContained();
+
+    if (["armor", "shield", "clothing"].includes(this.subType)) {
+      this.system.equipped = false;
+    }
+    this.system.carried = true;
+  }
+
   prepareDerivedData() {
     super.prepareDerivedData();
     const itemData = this.system;
@@ -103,41 +112,50 @@ export class ItemEquipmentPF extends ItemPF {
     if (itemData.armor.enh == null) itemData.armor.enh = 0;
 
     // Feed info back to actor
-    if (itemData.equipped === true) {
-      const actor = this.actor;
-      // Guard against weirdness with unlinked data (data is undefined at this state), and also basic test for if this item has actor.
-      if (!actor?.system || !actor?.equipment) return;
+    if (itemData.equipped !== false) {
+      this.applyEquippedEffects();
+    }
+  }
 
-      const actorData = actor.system;
-      const shieldTypes = pf1.config.shieldTypes,
-        armorTypes = pf1.config.armorTypes;
+  /**
+   * Apply effects of equipping this item.
+   */
+  applyEquippedEffects() {
+    const itemData = this.system;
 
-      switch (itemData.subType) {
-        case "shield": {
-          const subtype = itemData.equipmentSubtype;
-          let shieldType = actor.equipment.shield.type;
-          if (subtype === "other" && shieldType < shieldTypes.other) shieldType = shieldTypes.other;
-          else if (subtype === "lightShield" && shieldType < shieldTypes.light) shieldType = shieldTypes.light;
-          else if (subtype === "heavyShield" && shieldType < shieldTypes.heavy) shieldType = shieldTypes.heavy;
-          else if (subtype === "towerShield" && shieldType < shieldTypes.tower) shieldType = shieldTypes.tower;
-          if (actor.equipment.shield.type !== shieldType) {
-            actor.equipment.shield.type = shieldType;
-            actor.equipment.shield.id = this.id;
-          }
-          break;
+    if (!this.isActive) return;
+
+    const actor = this.actor;
+    // Guard against weirdness with unlinked data (data is undefined at this state), and also basic test for if this item has actor.
+    if (!actor?.system || !actor?.equipment) return;
+
+    switch (this.subType) {
+      case "shield": {
+        const shieldTypes = pf1.config.shieldTypes;
+        const subtype = itemData.equipmentSubtype;
+        let shieldType = actor.equipment.shield.type;
+        if (subtype === "other" && shieldType < shieldTypes.other) shieldType = shieldTypes.other;
+        else if (subtype === "lightShield" && shieldType < shieldTypes.light) shieldType = shieldTypes.light;
+        else if (subtype === "heavyShield" && shieldType < shieldTypes.heavy) shieldType = shieldTypes.heavy;
+        else if (subtype === "towerShield" && shieldType < shieldTypes.tower) shieldType = shieldTypes.tower;
+        if (actor.equipment.shield.type !== shieldType) {
+          actor.equipment.shield.type = shieldType;
+          actor.equipment.shield.id = this.id;
         }
-        case "armor": {
-          const subtype = itemData.equipmentSubtype;
-          let armorType = actor.equipment.armor.type;
-          if (subtype === "lightArmor" && armorType < armorTypes.light) armorType = armorTypes.light;
-          else if (subtype === "mediumArmor" && armorType < armorTypes.medium) armorType = armorTypes.medium;
-          else if (subtype === "heavyArmor" && armorType < armorTypes.heavy) armorType = armorTypes.heavy;
-          if (armorType !== actor.equipment.armor.type) {
-            actor.equipment.armor.type = armorType;
-            actor.equipment.armor.id = this.id;
-          }
-          break;
+        break;
+      }
+      case "armor": {
+        const armorTypes = pf1.config.armorTypes;
+        const subtype = itemData.equipmentSubtype;
+        let armorType = actor.equipment.armor.type;
+        if (subtype === "lightArmor" && armorType < armorTypes.light) armorType = armorTypes.light;
+        else if (subtype === "mediumArmor" && armorType < armorTypes.medium) armorType = armorTypes.medium;
+        else if (subtype === "heavyArmor" && armorType < armorTypes.heavy) armorType = armorTypes.heavy;
+        if (armorType !== actor.equipment.armor.type) {
+          actor.equipment.armor.type = armorType;
+          actor.equipment.armor.id = this.id;
         }
+        break;
       }
     }
   }

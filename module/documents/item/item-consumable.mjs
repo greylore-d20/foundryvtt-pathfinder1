@@ -21,4 +21,10 @@ export class ItemConsumablePF extends ItemPF {
 
     await super._preDelete(context, user);
   }
+
+  adjustContained() {
+    super.adjustContained();
+
+    this.system.carried = true;
+  }
 }

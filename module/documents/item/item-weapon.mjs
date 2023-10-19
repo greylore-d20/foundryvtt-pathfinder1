@@ -67,6 +67,13 @@ export class ItemWeaponPF extends ItemPF {
     return labels;
   }
 
+  adjustContained() {
+    super.adjustContained();
+
+    this.system.equipped = false;
+    this.system.carried = true;
+  }
+
   /**
    * @param {boolean} active
    * @param {object} context Optional update context

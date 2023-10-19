@@ -13,7 +13,7 @@
       {{#if attr.isBoolean}}
       <div class="form-group">
         <label>{{attr.label}}</label>
-        <input type="checkbox" name="{{attr.name}}" {{checked attr.value}}/>
+        <input type="checkbox" name="{{attr.name}}" {{checked attr.value}} {{disabled disabled}}>
       </div>
       {{/if}}
       {{#if attr.isNumber}}
@@ -21,10 +21,10 @@
         <label>{{attr.label}}</label>
         {{#if attr.fakeName}}
           <div data-action="input-text" data-for=".{{attr.id}}-description-input" data-attr-name="{{attr.name}}" {{#if (or attr.inputValue (eq attr.inputValue 0))}}data-input-value="{{attr.inputValue}}"{{/if}}>
-          <input class="{{#if attr.id}}{{attr.id}}-description-input{{/if}}" type="number" readonly data-dtype="Number" value="{{numberFormat attr.value decimals=attr.decimals}}"/>
+          <input class="{{#if attr.id}}{{attr.id}}-description-input{{/if}}" type="number" readonly data-dtype="Number" value="{{numberFormat attr.value decimals=attr.decimals}}" {{disabled disabled}}>
         </div>
         {{else}}
-        <input class="{{#if attr.id}}{{attr.name}}-description-input{{/if}} select-on-click" name="{{attr.name}}" type="number" data-dtype="Number" value="{{numberFormat attr.value decimals=attr.decimals}}"/>
+        <input class="{{#if attr.id}}{{attr.name}}-description-input{{/if}} select-on-click" name="{{attr.name}}" type="number" data-dtype="Number" value="{{numberFormat attr.value decimals=attr.decimals}}" {{disabled disabled}}>
         {{/if}}
       </div>
       {{/if}}

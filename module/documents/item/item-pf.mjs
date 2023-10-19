@@ -588,7 +588,16 @@ export class ItemPF extends Item {
     if (itemData.useCustomTag !== true && taggedTypes.includes(this.type)) {
       itemData.tag = createTag(this.name);
     }
+
+    if (this.inContainer) this.adjustContained();
   }
+
+  /**
+   * Adjust data if the item is in container.
+   *
+   * @abstract
+   */
+  adjustContained() {}
 
   prepareDerivedItemData() {
     // Update maximum uses
@@ -2200,6 +2209,11 @@ export class ItemPF extends Item {
    */
   setActive(active, context) {
     throw new Error(`Item type ${this.type} does not support ItemPF#setActive`);
+  }
+
+  /** @type {boolean} - Is this item in a container? */
+  get inContainer() {
+    return !!this.parentItem;
   }
 }
 

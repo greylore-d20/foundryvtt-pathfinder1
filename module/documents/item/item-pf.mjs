@@ -884,7 +884,11 @@ export class ItemPF extends Item {
       if (!foundry.utils.isEmpty(diffData)) {
         /** @type {Item} */
         const item = this.items.get(memoryItemData._id);
-        item._onUpdate(diffData, context, userId);
+        if (item) item._onUpdate(diffData, context, userId);
+        else {
+          // BUG: Presumably item was deleted
+          console.error(`Memorized item ${memoryItemData._id} not found from container`, this);
+        }
       }
     }
 

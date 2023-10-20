@@ -274,9 +274,16 @@ export class ItemSheetPF extends ItemSheet {
 
       let disableEquipping = false;
       if (item.inContainer) {
+        // Apply similar logic as in .adjustContained()
         if (item.type === "weapon") disableEquipping = true;
-        else if (item.type === "equipment" && ["armor", "shield", "clothing"].includes(item.subType)) {
-          disableEquipping = true;
+        else if (item.type === "equipment") {
+          if (["armor", "shield", "clothing"].includes(item.subType)) {
+            disableEquipping = true;
+          }
+          // For items not matching the above, only slotless are allowed
+          else if (["wondrous", "other"].includes(item.subType) && itemData.slot !== "slotless") {
+            disableEquipping = true;
+          }
         }
       }
 

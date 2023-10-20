@@ -100,5 +100,12 @@ export class ItemLootPF extends ItemPF {
     super.adjustContained();
 
     this.system.carried = true;
+
+    this.system.equipped = false;
+  }
+
+  /** @type {boolean} - If the item can be equipped currently */
+  get canEquip() {
+    return !this.inContainer;
   }
 }

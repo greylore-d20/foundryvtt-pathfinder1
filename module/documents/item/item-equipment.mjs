@@ -90,13 +90,34 @@ export class ItemEquipmentPF extends ItemPF {
     return labels;
   }
 
+  /**
+   * Adjust item while in container.
+   */
   adjustContained() {
     super.adjustContained();
 
-    if (["armor", "shield", "clothing"].includes(this.subType)) {
-      this.system.equipped = false;
-    }
+    // Everything in containers count as carried
     this.system.carried = true;
+
+    // Auto-unequip
+    if (!this.canEquip) this.system.equipped = false;
+  }
+
+  /** @type {boolean} - If the item can be equipped currently */
+  get canEquip() {
+    // Always true if not in container
+    if (!this.inContainer) return true;
+
+    switch (this.subType) {
+      case "armor":
+      case "shield":
+      case "clothing":
+        return false;
+      case "wondrous":
+      case "other":
+        return this.system.slot === "slotless";
+    }
+    return true;
   }
 
   prepareDerivedData() {

@@ -84,7 +84,12 @@ export class ItemWeaponPF extends ItemPF {
     return this.update({ "system.equipped": active }, context);
   }
 
+  /** @type {boolean} - If the item can be equipped currently */
   get isActive() {
     return this.system.equipped;
+  }
+
+  get canEquip() {
+    return !this.inContainer;
   }
 }

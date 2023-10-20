@@ -27,4 +27,9 @@ export class ItemConsumablePF extends ItemPF {
 
     this.system.carried = true;
   }
+
+  /** @type {boolean} - If the item can be equipped currently */
+  get canEquip() {
+    return !this.inContainer;
+  }
 }

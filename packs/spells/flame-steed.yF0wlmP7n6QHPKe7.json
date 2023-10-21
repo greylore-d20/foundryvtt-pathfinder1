@@ -11,7 +11,11 @@
         "img": "icons/magic/fire/elemental-creature-horse.webp",
         "activation": {
           "cost": 10,
-          "type": "minute"
+          "type": "minute",
+          "unchained": {
+            "cost": 10,
+            "type": "minute"
+          }
         },
         "duration": {
           "value": "1 hour/level (D)"
@@ -20,16 +24,41 @@
           "value": "0",
           "units": "ft"
         },
-        "uses": {
-          "autoDeductChargesCost": "1 + @sl"
-        },
-        "actionType": "spellsave",
-        "save": {
-          "description": "none, see text"
-        },
+        "actionType": "",
         "spellEffect": "one quasi-real creature suitable for a mount"
+      },
+      {
+        "_id": "dLuA4LKBqawE4IRS",
+        "name": "Cone",
+        "img": "icons/magic/fire/elemental-creature-horse.webp",
+        "activation": {
+          "type": "free",
+          "unchained": {
+            "type": "free"
+          }
+        },
+        "duration": {
+          "value": "[[1d6]] rounds"
+        },
+        "range": {
+          "value": ""
+        },
+        "measureTemplate": {
+          "type": "cone",
+          "size": "15"
+        },
+        "actionType": "save",
+        "save": {
+          "type": "fort",
+          "description": "Fortitude negates"
+        },
+        "spellEffect": "sickens creatures in a 15-foot cone of smoke and ash",
+        "spellArea": "15 ft. Cone"
       }
     ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
     "learnedAt": {
       "class": {
         "bloodrager": 3,

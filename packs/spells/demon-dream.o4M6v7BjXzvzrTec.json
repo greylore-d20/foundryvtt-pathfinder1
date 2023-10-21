@@ -7,10 +7,15 @@
     "actions": [
       {
         "_id": "84hyc8bi93nz4l74",
-        "name": "Use",
+        "name": "Nightmare",
         "img": "icons/magic/perception/eye-ringed-glow-angry-large-teal.webp",
         "activation": {
-          "type": "special"
+          "type": "minute",
+          "cost": 10,
+          "unchained": {
+            "cost": 10,
+            "type": "minute"
+          }
         },
         "duration": {
           "value": "see text"
@@ -24,12 +29,46 @@
         "uses": {
           "autoDeductChargesCost": "1 + @sl"
         },
-        "actionType": "spellsave",
+        "actionType": "other",
         "save": {
-          "description": "see text"
+          "description": "see text",
+          "type": "will"
+        },
+        "formulaicAttacks": {
+          "label": ""
+        }
+      },
+      {
+        "_id": "iaU2v3tTWNG87NgL",
+        "name": "Dream",
+        "img": "icons/magic/perception/eye-ringed-glow-angry-large-teal.webp",
+        "activation": {
+          "type": "minute",
+          "unchained": {
+            "type": "minute"
+          }
+        },
+        "duration": {
+          "value": "see text"
+        },
+        "target": {
+          "value": "one living creature"
+        },
+        "range": {
+          "units": "unlimited"
+        },
+        "uses": {
+          "autoDeductChargesCost": "1 + @sl"
+        },
+        "actionType": "",
+        "formulaicAttacks": {
+          "label": ""
         }
       }
     ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
     "learnedAt": {
       "class": {
         "cleric": 6,
@@ -37,6 +76,7 @@
         "warpriest": 6
       }
     },
+    "level": 6,
     "school": "ill",
     "subschool": "phantasm",
     "types": "evil, mind-affecting",

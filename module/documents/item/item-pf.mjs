@@ -1427,6 +1427,11 @@ export class ItemPF extends ItemBasePF {
     // Set aura strength
     setProperty(result, "item.auraStrength", this.auraStrength);
 
+    // Resize item
+    if (this.system.resizing && result.size !== undefined) {
+      result.item.size = result.size;
+    }
+
     this._rollData = result.item;
 
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);

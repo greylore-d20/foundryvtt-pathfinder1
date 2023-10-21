@@ -10,7 +10,11 @@
         "name": "Use",
         "img": "icons/skills/wounds/blood-cells-red.webp",
         "activation": {
-          "type": "round"
+          "type": "round",
+          "unchained": {
+            "cost": 3,
+            "type": "action"
+          }
         },
         "duration": {
           "value": "instantaneous and 1 round/level; see text"
@@ -29,9 +33,12 @@
           "type": "fort",
           "description": "Fortitude negates"
         },
-        "effectNotes": ["<b>Save Fail Effect</b> [[2d4]] Constitution damage"]
+        "spellEffect": "[[2d4]] Constitution damage"
       }
     ],
+    "uses": {
+      "autoDeductChargesCost": ""
+    },
     "learnedAt": {
       "class": {
         "arcanist": 7,

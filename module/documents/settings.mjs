@@ -392,6 +392,7 @@ export const registerSystemSettings = function () {
     scope: "world",
     config: true,
     default: false,
+    onChange: () => pf1.utils.refreshSheets({ reset: false }),
     type: Boolean,
   });
 

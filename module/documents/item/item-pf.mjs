@@ -1190,10 +1190,9 @@ export class ItemPF extends Item {
       });
       rollMode = shared.rollMode || rollMode;
       if (shared.reject) return shared;
-      if (shared.hideChat !== true && chatMessage) await this.displayCard({ rollMode });
-      else {
+      if (shared.hideChat !== true && chatMessage) {
         shared.descriptionOnly = true;
-        return shared; // nothing to show for printing description
+        await this.displayCard({ rollMode });
       }
 
       // Deduct charges

@@ -9,21 +9,38 @@
     "changes": [
       {
         "_id": "D2POwZXV",
-        "formula": "2",
+        "formula": "2 + floor((@classes.barbarianUnchained.level - 2) / 9)",
         "subTarget": "mattack",
-        "modifier": "untyped"
+        "modifier": "untyped",
+        "priority": null
       },
       {
         "_id": "RBiWOi4D",
-        "formula": "2",
+        "formula": "2 + floor((@classes.barbarianUnchained.level - 2) / 9)",
         "subTarget": "will",
-        "modifier": "untyped"
+        "modifier": "untyped",
+        "priority": null
       },
       {
         "_id": "1waxjG3r",
         "formula": "-2",
         "subTarget": "ac",
-        "modifier": "untyped"
+        "modifier": "penalty",
+        "priority": null
+      }
+    ],
+    "contextNotes": [
+      {
+        "text": "+[[2 + floor((@classes.barbarianUnchained.level - 2 ) / 9)]] to melee attacks and damage",
+        "subTarget": "attack"
+      },
+      {
+        "text": "A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration while raging.",
+        "subTarget": "skills"
+      },
+      {
+        "text": "A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration while raging.",
+        "subTarget": "allChecks"
       }
     ],
     "scriptCalls": [
@@ -32,7 +49,7 @@
         "name": "Add Temporary Hit Points",
         "img": "icons/svg/dice-target.svg",
         "type": "script",
-        "value": "if (state) {\n  const oldTHP = actor.system.attributes.hp.temp ?? 0;\n  const hd = actor.system.attributes.hd.total;\n  const newTHP = oldTHP + hd * 2;\n  actor.update({ \"system.attributes.hp.temp\": newTHP });\n}",
+        "value": "if (state) {\n  const oldTHP = actor.system.attributes.hp.temp ?? 0;\n  const level = actor.classes.barbarianUnchained.level;\n  const hpPerLevel = 2 + Math.floor((level - 2) / 9);\n  const newTHP = oldTHP + level * hpPerLevel;\n  actor.update({ \"system.attributes.hp.temp\": newTHP });\n}",
         "category": "toggle",
         "hidden": false
       }

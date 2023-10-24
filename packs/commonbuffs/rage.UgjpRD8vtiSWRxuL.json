@@ -9,27 +9,41 @@
     "changes": [
       {
         "_id": "lIgrzIpA",
-        "formula": "4",
+        "formula": "4 + (floor((@classes.barbarian.level - 2) / 9) * 2)",
         "subTarget": "str",
-        "modifier": "morale"
+        "modifier": "morale",
+        "priority": null
       },
       {
         "_id": "6i7dqnX9",
-        "formula": "4",
+        "formula": "4 + (floor((@classes.barbarian.level - 2) / 9) * 2)",
         "subTarget": "con",
-        "modifier": "morale"
+        "modifier": "morale",
+        "priority": null
       },
       {
         "_id": "vNiZTayy",
-        "formula": "2",
+        "formula": "2 + (floor((@classes.barbarian.level - 2) / 9)",
         "subTarget": "will",
-        "modifier": "morale"
+        "modifier": "morale",
+        "priority": null
       },
       {
         "_id": "Ffm7Dn9d",
         "formula": "-2",
         "subTarget": "ac",
-        "modifier": "penalty"
+        "modifier": "penalty",
+        "priority": null
+      }
+    ],
+    "contextNotes": [
+      {
+        "text": "A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration while raging.",
+        "subTarget": "skills"
+      },
+      {
+        "text": "A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration while raging.",
+        "subTarget": "allChecks"
       }
     ],
     "level": null,

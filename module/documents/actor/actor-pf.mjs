@@ -2740,7 +2740,7 @@ export class ActorPF extends ActorBasePF {
     // No combatants. Possibly from reroll being disabled.
     if (combatants.length == 0) return combat;
 
-    mergeObject(initiativeOptions, { formula: dice, bonus, rollMode, skipDialog });
+    mergeObject(initiativeOptions, { d20: dice, bonus, rollMode, skipDialog });
     await combat.rollInitiative(combatants, initiativeOptions);
     return combat;
   }

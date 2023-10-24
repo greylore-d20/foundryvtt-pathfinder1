@@ -36,7 +36,8 @@ export class CombatantPF extends Combatant {
       rollData.bonus = bonus;
       formula += " + @bonus";
     }
-    return RollPF.create(formula, rollData);
+
+    return new CONFIG.Dice.rolls.D20RollPF(formula, rollData);
   }
 
   /**

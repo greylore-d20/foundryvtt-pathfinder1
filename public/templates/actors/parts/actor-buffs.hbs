@@ -1,11 +1,16 @@
 {{!-- Buffs --}}
 <div class="flexrow buffs-conditions">
-  {{#each conditions as |value con|}}
-  <div class="condition">
-    <a class="checkbox {{#if (lookup @root/system.conditions value.id)}}active{{/if}}" data-condition-id="{{value.id}}">
-      <img src="{{value.texture}}" width="32" height="32">
-      <span>{{value.name}}</span>
+  {{#each conditions}}
+  <div class="condition {{#if active}}active{{/if}}">
+    <a class="checkbox" data-condition-id="{{id}}">
+      <img src="{{img}}" width="32" height="32">
+      <span>{{label}}</span>
     </a>
+    {{#if compendium}}
+    <a class="compendium-entry" data-compendium-entry="{{compendium}}">
+      <i class="fas fa-book compendium-icon"></i>
+    </a>
+    {{/if}}
   </div>
   {{/each}}
 </div>

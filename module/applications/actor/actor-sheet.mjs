@@ -616,6 +616,16 @@ export class ActorSheetPF extends ActorSheet {
         .replace(/\n+/, "<br>");
     }
 
+    // Conditions
+    const conditions = this.actor.system.attributes?.conditions ?? {};
+    data.conditions = pf1.registry.conditions.map((cond) => ({
+      id: cond.id,
+      img: cond.texture,
+      active: conditions[cond.id] ?? false,
+      label: cond.name,
+      compendium: cond.journal,
+    }));
+
     // Return data to the sheet
     return data;
   }

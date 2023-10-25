@@ -35,9 +35,11 @@ export class Condition extends RegistryEntry {
           initial: null,
         }
       ),
+      journal: new fields.StringField({ nullable: true, blank: false, required: false }),
     };
   }
 }
+
 /**
  * The singleton registry of condition types.
  * At runtime this registry is accessible as `pf1.registry.conditions`.
@@ -62,11 +64,13 @@ export class Conditions extends Registry {
       _id: "bleed",
       name: "PF1.CondBleed",
       texture: "systems/pf1/icons/conditions/bleed.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.L6DTocj1PbOtuspU",
     },
     {
       _id: "blind",
       name: "PF1.CondBlind",
       texture: "systems/pf1/icons/conditions/blind.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.A9KUpd2bsdZZsQqj",
       mechanics: {
         changes: [
           {
@@ -82,11 +86,13 @@ export class Conditions extends Registry {
       _id: "confused",
       name: "PF1.CondConfused",
       texture: "systems/pf1/icons/conditions/confused.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.J2yma0xciBKRUh9t",
     },
     {
       _id: "cowering",
       name: "PF1.CondCowering",
       texture: "systems/pf1/icons/conditions/screaming.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.eNW5geiJqrnAjjNu",
       mechanics: {
         changes: [
           {
@@ -101,11 +107,13 @@ export class Conditions extends Registry {
       _id: "dazed",
       name: "PF1.CondDazed",
       texture: "systems/pf1/icons/conditions/dazed.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.2A6Gk60pLDKR2zT0",
     },
     {
       _id: "dazzled",
       name: "PF1.CondDazzled",
       texture: "systems/pf1/icons/conditions/dazzled.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.xHUnCadQ2qYsfvV0",
       mechanics: {
         changes: [
           {
@@ -120,6 +128,7 @@ export class Conditions extends Registry {
       _id: "deaf",
       name: "PF1.CondDeaf",
       texture: "systems/pf1/icons/conditions/deaf.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.3uIamlB0L1UZUwoF",
       mechanics: {
         changes: [
           {
@@ -134,6 +143,7 @@ export class Conditions extends Registry {
       _id: "entangled",
       name: "PF1.CondEntangled",
       texture: "systems/pf1/icons/conditions/entangled.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.oxmugd8SoxVjvRRl",
       mechanics: {
         changes: [
           {
@@ -153,6 +163,7 @@ export class Conditions extends Registry {
       _id: "exhausted",
       name: "PF1.CondExhausted",
       texture: "systems/pf1/icons/conditions/exhausted.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.ITxxh53qgl74wWcE",
       mechanics: {
         changes: [
           {
@@ -173,6 +184,7 @@ export class Conditions extends Registry {
       _id: "fatigued",
       name: "PF1.CondFatigued",
       texture: "systems/pf1/icons/conditions/fatigued.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.AVaxTNildXRzYnQm",
       mechanics: {
         changes: [
           {
@@ -193,6 +205,7 @@ export class Conditions extends Registry {
       _id: "frightened",
       name: "PF1.CondFrightened",
       texture: "systems/pf1/icons/conditions/frightened.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.uqpJ7ZMnWF5qjOTl",
       mechanics: {
         changes: [
           {
@@ -223,6 +236,7 @@ export class Conditions extends Registry {
       _id: "grappled",
       name: "PF1.CondGrappled",
       texture: "systems/pf1/icons/conditions/grappled.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.i4gHNAVajJWs4cFI",
       mechanics: {
         changes: [
           {
@@ -242,6 +256,7 @@ export class Conditions extends Registry {
       _id: "helpless",
       name: "PF1.CondHelpless",
       texture: "systems/pf1/icons/conditions/helpless.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.6dtCytJsNkO8Hwq4",
       mechanics: {
         changes: [
           {
@@ -259,6 +274,7 @@ export class Conditions extends Registry {
       _id: "incorporeal",
       name: "PF1.CondIncorporeal",
       texture: "systems/pf1/icons/conditions/incorporeal.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.acqGBiMxTbXZ47zU",
       mechanics: {
         changes: [
           {
@@ -281,16 +297,19 @@ export class Conditions extends Registry {
       _id: "invisible",
       name: "PF1.CondInvisible",
       texture: "systems/pf1/icons/conditions/invisible.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.Wr2ZWUZcyVWQ4GtX",
     },
     {
       _id: "nauseated",
       name: "PF1.CondNauseated",
       texture: "systems/pf1/icons/conditions/nauseated.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.ySiyyK1BMAyKPY4I",
     },
     {
       _id: "panicked",
       name: "PF1.CondPanicked",
       texture: "systems/pf1/icons/conditions/fear.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.nGTsTfpWcJTTU3rk",
       mechanics: {
         changes: [
           {
@@ -321,6 +340,7 @@ export class Conditions extends Registry {
       _id: "paralyzed",
       name: "PF1.CondParalyzed",
       texture: "systems/pf1/icons/conditions/paralyzed.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.24p2Koq4FFCLDKnj",
       mechanics: {
         changes: [
           {
@@ -346,6 +366,7 @@ export class Conditions extends Registry {
       _id: "pinned",
       name: "PF1.CondPinned",
       texture: "systems/pf1/icons/conditions/pinned.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.poCq8gXdDi5leaMT",
       mechanics: {
         changes: [
           {
@@ -374,6 +395,7 @@ export class Conditions extends Registry {
       _id: "prone",
       name: "PF1.CondProne",
       texture: "systems/pf1/icons/conditions/prone.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.VbagnIPQS523dwxa",
       mechanics: {
         changes: [
           {
@@ -388,6 +410,7 @@ export class Conditions extends Registry {
       _id: "shaken",
       name: "PF1.CondShaken",
       texture: "systems/pf1/icons/conditions/shaken.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.XxLUswkCuXnXmA5T",
       mechanics: {
         changes: [
           {
@@ -418,6 +441,7 @@ export class Conditions extends Registry {
       _id: "sickened",
       name: "PF1.CondSickened",
       texture: "systems/pf1/icons/conditions/sickened.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.7LwCMwrX3tchvrjW",
       mechanics: {
         changes: [
           {
@@ -452,6 +476,7 @@ export class Conditions extends Registry {
       _id: "sleep",
       name: "PF1.CondSleep",
       texture: "systems/pf1/icons/conditions/sleep.png",
+      journal: null,
       mechanics: {
         changes: [
           {
@@ -469,11 +494,13 @@ export class Conditions extends Registry {
       _id: "staggered",
       name: "PF1.CondStaggered",
       texture: "systems/pf1/icons/conditions/staggered.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.TTp8q9Vb2PNAujWu",
     },
     {
       _id: "stunned",
       name: "PF1.CondStunned",
       texture: "systems/pf1/icons/conditions/stunned.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.ZgsBPY0uVCVl6SGh",
       mechanics: {
         changes: [
           {
@@ -488,6 +515,7 @@ export class Conditions extends Registry {
       _id: "squeezing",
       name: "PF1.CondSqueezing",
       texture: "systems/pf1/icons/conditions/squeezing.png",
+      journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.jzeZ0Uf31CAMZra9",
       mechanics: {
         changes: [
           {

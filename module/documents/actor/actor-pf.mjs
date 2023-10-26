@@ -1405,13 +1405,13 @@ export class ActorPF extends ActorBasePF {
 
     // Reduce final speed under certain circumstances
     {
-      const armorItems = this.itemTypes.equipment.filter((eq) => eq.isActive && eq.subType === "armor");
       let reducedSpeed = false;
       const sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
 
-      const encLevel = attributes.encumbrance.level,
-        encLevels = pf1.config.encumbranceLevels;
+      // from encumbrance
+      const encLevel = attributes.encumbrance.level;
       if (encLevel > 0) {
+        const encLevels = pf1.config.encumbranceLevels;
         if (encLevel >= encLevels.heavy) {
           if (!this.changeFlags.noHeavyEncumbrance) {
             reducedSpeed = true;
@@ -1424,25 +1424,27 @@ export class ActorPF extends ActorBasePF {
           }
         }
       }
-      if (
-        armorItems.filter((o) => o.system.equipmentSubtype === "mediumArmor").length &&
-        !this.changeFlags["mediumArmorFullSpeed"]
-      ) {
-        reducedSpeed = true;
-        sInfo.name = game.i18n.localize("PF1.EquipTypeMedium");
-      }
-      if (
-        armorItems.filter((o) => o.system.equipmentSubtype === "heavyArmor").length &&
-        !this.changeFlags["heavyArmorFullSpeed"]
-      ) {
+
+      const armor = { type: 0 };
+      const eqData = this.equipment;
+      if (eqData) this._prepareArmorData(eqData.armor, armor);
+
+      // Wearing heavy armor
+      if (armor.type == 2 && !this.changeFlags.heavyArmorFullSpeed) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.EquipTypeHeavy");
       }
+      // Wearing medium armor
+      else if (armor.type == 1 && !this.changeFlags.mediumArmorFullSpeed) {
+        reducedSpeed = true;
+        sInfo.name = game.i18n.localize("PF1.EquipTypeMedium");
+      }
+
       if (reducedSpeed) {
         for (const speedKey of Object.keys(this.system.attributes.speed)) {
           const speedValue = this.system.attributes.speed[speedKey].total;
-          this.system.attributes.speed[speedKey].total = this.constructor.getReducedMovementSpeed(speedValue);
           if (speedValue > 0) {
+            this.system.attributes.speed[speedKey].total = this.constructor.getReducedMovementSpeed(speedValue);
             getSourceInfo(this.sourceInfo, `system.attributes.speed.${speedKey}.add`).negative.push(sInfo);
           }
         }

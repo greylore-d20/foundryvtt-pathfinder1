@@ -610,15 +610,14 @@ const getAbilityMod = function (ability) {
   };
 };
 
-export const addDefaultChanges = function (changes) {
-  const actorData = this.system;
-  // Call hook
-  const tempChanges = [];
-  Hooks.callAll("pf1AddDefaultChanges", this, tempChanges);
-  changes.push(...tempChanges.filter((c) => c instanceof pf1.components.ItemChange));
-
-  // Class hit points
-  const allClasses = this.itemTypes.class.sort((a, b) => a.sort - b.sort);
+/**
+ * Calculate actor health
+ *
+ * @param {ActorPF} actor - Actor
+ * @param {ItemPF[]} allClasses - All classes from the actor
+ * @param changes - Changes
+ */
+function calculateHealth(actor, allClasses, changes) {
   // Categorize classes
   const [classes, racialHD] = allClasses.reduce(
     (all, cls) => {
@@ -630,12 +629,22 @@ export const addDefaultChanges = function (changes) {
   );
 
   const healthConfig = game.settings.get("pf1", "healthConfig");
-  const classOptions = this.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
+  const classOptions = actor.type === "character" ? healthConfig.hitdice.PC : healthConfig.hitdice.NPC;
   const raceOptions = healthConfig.hitdice.Racial;
-  const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
-  const continuous = { discrete: false, continuous: true }[healthConfig.continuity];
 
-  const pushHealth = (value, source) => {
+  /**
+   * @function
+   * @param {number} value
+   * @returns {number}
+   */
+  const round = { up: Math.ceil, nearest: Math.round, down: Math.floor }[healthConfig.rounding];
+  const continuous = healthConfig.continuity === "continuous";
+
+  /**
+   * @param {number} value
+   * @param {ItemPF} source
+   */
+  function pushHealth(value, source) {
     changes.push(
       new pf1.components.ItemChange({
         formula: value,
@@ -654,50 +663,84 @@ export const addDefaultChanges = function (changes) {
         flavor: source.name,
       })
     );
-  };
-  const manualHealth = (healthSource) => {
+  }
+
+  /**
+   * @param {ItemPF} healthSource
+   */
+  function manualHealth(healthSource) {
     let health = healthSource.system.hp + (healthSource.system.subType === "base") * healthSource.system.fc.hp.value;
 
     if (!continuous) health = round(health);
     pushHealth(health, healthSource);
-  };
-  const autoHealth = (healthSource, options, maximized = 0) => {
+  }
+
+  /**
+   * @param {ItemPF} healthSource
+   * @param {object} options
+   * @param {number} options.rate
+   * @param {boolean} options.maximized
+   */
+  function autoHealth(healthSource, { rate, maximized } = {}) {
     const hpPerHD = healthSource.system.hd ?? 0;
     if (hpPerHD === 0) return;
 
     let health = 0;
+    // Mythic
     if (healthSource.subType === "mythic") {
       const hpPerTier = hpPerHD ?? 0;
       if (hpPerTier === 0) return;
       const tiers = healthSource.system.level ?? 0;
       if (tiers === 0) return;
       health = hpPerTier * tiers;
-    } else {
-      let dieHealth = 1 + (hpPerHD - 1) * options.rate;
+    }
+    // Everything else
+    else {
+      let dieHealth = 1 + (hpPerHD - 1) * rate;
       if (!continuous) dieHealth = round(dieHealth);
 
       const hitDice = healthSource.hitDice;
-      const maxedHealth = Math.min(hitDice, maximized) * hpPerHD;
-      const levelHealth = Math.max(0, hitDice - maximized) * dieHealth;
-      const favorHealth = (healthSource.system.subType === "base") * healthSource.system.fc.hp.value;
-      health = maxedHealth + levelHealth + favorHealth;
+
+      const maxedHp = Math.min(hitDice, maximized) * hpPerHD;
+      const levelHp = Math.max(0, hitDice - maximized) * dieHealth;
+      const fcbHp = healthSource.subType === "base" ? healthSource.system.fc.hp.value || 0 : 0;
+      health = maxedHp + levelHp + fcbHp;
     }
     pushHealth(health, healthSource);
-  };
-  const computeHealth = (healthSources, options) => {
+  }
+
+  /**
+   * @param {ItemPF[]} sources
+   * @param {object} options
+   * @param {boolean} [options.auto=false]
+   * @param {number} [options.rate=0.5]
+   * @param {number} [options.maximized=1]
+   */
+  function computeHealth(sources, { auto = false, rate = 0.5, maximized = 1 } = {}) {
     // Compute and push health, tracking the remaining maximized levels.
-    if (options.auto) {
-      let maximized = options.maximized;
-      for (const hd of healthSources) {
-        autoHealth(hd, options, maximized);
-        const hitDice = hd.hitDice;
+    if (auto) {
+      for (const cls of sources) {
+        autoHealth(cls, { rate, maximized });
+        const hitDice = cls.hitDice || 0;
         maximized = Math.max(0, maximized - hitDice);
       }
-    } else healthSources.forEach((race) => manualHealth(race));
-  };
+    } else sources.forEach((cls) => manualHealth(cls));
+  }
 
   computeHealth(racialHD, raceOptions);
   computeHealth(classes, classOptions);
+}
+
+export const addDefaultChanges = function (changes) {
+  const actorData = this.system;
+  // Call hook
+  const tempChanges = [];
+  Hooks.callAll("pf1AddDefaultChanges", this, tempChanges);
+  changes.push(...tempChanges.filter((c) => c instanceof pf1.components.ItemChange));
+
+  const allClasses = this.itemTypes.class.sort((a, b) => a.sort - b.sort);
+
+  calculateHealth(this, allClasses, changes);
 
   // Add class data to saving throws
   const useFractional = game.settings.get("pf1", "useFractionalBaseBonuses") === true;

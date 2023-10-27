@@ -8,7 +8,7 @@
   <!-- Base Tab -->
     <section class="tab" data-tab="base">
       <p class="notes">{{localize 'SETTINGS.pf1HealthConfigInstructions'}}</p>
-      <div id="hitdice">
+      <div class="hitdice-table">
         <label class="index table-header">{{localize 'PF1.HitDie'}}</label>
         {{#each hitdieOptions}}
           <label class="table-header">{{this}}</label>
@@ -33,9 +33,9 @@
         <label>{{localize 'SETTINGS.pf1HealthRoundingName'}}</label>
         <select name="rounding">
           {{#select rounding}}
-            <option value="up">&uarr;</option>
-            <option value="nearest">&#8597;</option>
-            <option value="down">&darr;</option>
+            <option value="up">{{localize "SETTINGS.pf1HealthRoundingUp"}}</option>
+            <option value="nearest">{{localize "SETTINGS.pf1HealthRoundingNearest"}}</option>
+            <option value="down">{{localize "SETTINGS.pf1HealthRoundingDown"}}</option>
           {{/select}}
         </select>
         <p class="notes">{{localize 'SETTINGS.pf1HealthRoundingHint'}}</p>

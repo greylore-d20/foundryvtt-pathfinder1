@@ -1,0 +1,77 @@
+.app.pf1.health-config form {
+  nav.tabs {
+    font-size: @fontSizeLarge;
+    line-height: 32px;
+    border-bottom: 1px solid var(--color-border-dark-primary);
+  }
+
+  .hitdice-table {
+    display: grid;
+    grid-template: 32px 1fr 1fr 1fr e("/") 1fr 1fr 1fr 1fr;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px 0;
+    align-items: center;
+
+    > * {
+      display: inline-flex;
+      align-items: center;
+      height: 100%;
+      padding: 5px;
+      border-bottom: 1px solid var(--color-border-dark-primary);
+    }
+
+    .table-header {
+      color: var(--color-text-light-highlight);
+      background: var(--pf1-dim-bg);
+      font-weight: bold;
+      text-shadow: 1px 1px black;
+      justify-content: center;
+
+      &.index {
+        justify-content: left;
+      }
+    }
+
+    .switch > label {
+      flex: 1;
+    }
+
+    .switch-check {
+      display: none;
+    }
+
+    .switch-label > span {
+      display: block;
+      border: 1px solid var(--color-border-dark-primary);
+      border-radius: 4px;
+      cursor: pointer;
+      margin: auto;
+      padding: 2px;
+      width: calc(100% - 2px);
+    }
+
+    .switch-label > span.switch-auto {
+      background-color: var(--pf1-dim-bg);
+      color: var(--color-text-light-highlight);
+    }
+
+    .switch-check:not(:checked) + .switch-label .switch-auto {
+      display: none;
+    }
+    .switch-check:checked + .switch-label .switch-manual {
+      display: none;
+    }
+
+    .switch-label > span {
+      display: block;
+      border: 1px solid var(--color-border-dark-primary);
+      border-radius: 4px;
+      cursor: pointer;
+      margin: auto;
+      padding: 2px;
+      width: calc(100% - 2px);
+      text-align: center;
+    }
+  }
+}

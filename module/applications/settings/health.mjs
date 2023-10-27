@@ -12,10 +12,13 @@ export class HealthConfig extends FormApplication {
 
   /** @override */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    const options = super.defaultOptions;
+    return {
+      ...options,
       title: game.i18n.localize("SETTINGS.pf1HealthConfigName"),
       id: "health-config",
       template: "systems/pf1/templates/settings/health.hbs",
+      classes: [...options.classes, "pf1", "health-config"],
       width: 480,
       height: "auto",
       tabs: [
@@ -26,7 +29,7 @@ export class HealthConfig extends FormApplication {
           group: "primary",
         },
       ],
-    });
+    };
   }
 
   static get defaultSettings() {

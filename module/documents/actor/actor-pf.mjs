@@ -428,11 +428,13 @@ export class ActorPF extends ActorBasePF {
       disableBuffs = [],
       actorUpdate = {};
 
+    const v11 = game.release.generation >= 11;
+
     for (const ae of temporaryEffects) {
       const re = ae.origin?.match(/Item\.(?<itemId>\w+)/);
       const item = this.items.get(re?.groups.itemId);
       if (item?.type !== "buff") {
-        const conditionId = ae.getFlag("core", "statusId");
+        const conditionId = v11 ? ae.statuses.first() : ae.getFlag("core", "statusId");
         if (conditionId) {
           // Disable expired conditions
           actorUpdate[`system.attributes.conditions.-=${conditionId}`] = null;
@@ -4056,19 +4058,19 @@ export class ActorPF extends ActorBasePF {
       const hasEffectIcon = idx >= 0;
 
       if (hasCondition && !hasEffectIcon) {
-        toCreate.push({
+        const aeData = {
           flags: {
-            core: {
-              statusId: condKey,
-            },
             pf1: {
               autoDelete: true,
             },
           },
+          statuses: [condKey],
           name: pf1.config.conditions[condKey],
           icon: pf1.config.conditionTextures[condKey],
           label: pf1.config.conditions[condKey],
-        });
+        };
+        if (game.release.generation < 11) setProperty(aeData, "flags.core.statusId", condKey);
+        toCreate.push(aeData);
       } else if (!hasCondition && hasEffectIcon) {
         const removeEffects = fx.filter((e) => e._statusSet.has(condKey));
         toDelete.push(...removeEffects.map((e) => e.id));

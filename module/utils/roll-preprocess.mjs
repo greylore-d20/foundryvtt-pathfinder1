@@ -1,6 +1,10 @@
 /**
  * Returns the result of a roll of die, which changes based on different sizes.
  *
+ * Applies size change damage progression as per Paizo's FAQ entry for it.
+ *
+ * @see https://paizo.com/paizo/faq/v5748nruor1fm#v5748eaic9t3f
+ *
  * @param {number} origCount - The original number of die to roll.
  * @param {number} origSides - The original number of sides per die to roll.
  * @param {string|number} [targetSize="M"] - The target size to change the die to.
@@ -16,60 +20,72 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
   };
   targetSize = _getSizeIndex(targetSize);
   initialSize = _getSizeIndex(initialSize);
-  let skipWarning = false;
 
-  // D10 special rule: https://paizo.com/paizo/faq/v5748nruor1fm#v5748eaic9t3f
-  if (origCount > 1 && origSides === 10 && (origCount % 2 === 0 || origCount === 3)) {
-    skipWarning = true;
-    const d10Arr = [
-      { orig: [2, 10], larger: [4, 8], smaller: [2, 8] },
-      { orig: [3, 10], larger: [6, 8], smaller: [3, 8] },
-      { orig: [4, 10], larger: [8, 8], smaller: [4, 8] },
-      { orig: [6, 10], larger: [12, 8], smaller: [6, 8] },
-      { orig: [8, 10], larger: [16, 8], smaller: [8, 8] },
-    ];
-    for (const v of d10Arr) {
-      if (v.orig[0] === origCount && v.orig[1] === origSides) {
-        if (targetSize < initialSize) {
-          initialSize--;
-          origCount = v.smaller[0];
-          origSides = v.smaller[1];
-        } else if (targetSize > initialSize) {
-          initialSize++;
-          origCount = v.larger[0];
-          origSides = v.larger[1];
-        }
+  // Do no conversion if no size change is occurring
+  if (targetSize === initialSize) {
+    return [new Die({ number: origCount, faces: origSides })];
+  }
+
+  // Special rules
+  // "If the die type is not referenced on this chart"
+  if (origCount > 1) {
+    // D10
+    if (origSides === 10) {
+      if (targetSize < initialSize) {
+        initialSize--;
+      } else {
+        origCount *= 2;
+        initialSize++;
       }
+      origSides = 8;
+    }
+    // D4
+    else if (origSides === 4) {
+      // 2d4=1d8, 3d4=2d6, 4d4=2d8, 5d4=3d6, 6d4=3d8, etc...
+      origSides = origCount % 2 == 0 ? 8 : 6;
+      origCount = Math.floor((origCount + 1) / 2);
+    }
+    // D12
+    else if (origSides === 12) {
+      origCount *= 2;
+      origSides = 6;
     }
   }
 
   // Get initial die type
-  const mediumDie = `${origCount}d${origSides}`;
-  const mediumDieMax = origCount * origSides;
-  let c = duplicate(pf1.config.sizeDie);
-  {
-    if (c.indexOf(mediumDie) === -1) {
-      c = c.map((d) => {
-        if (d.match(/^([0-9]+)d([0-9]+)$/)) {
-          const dieCount = parseInt(RegExp.$1);
-          const dieSides = parseInt(RegExp.$2);
-          const dieMaxValue = dieCount * dieSides;
+  let currentDie = `${origCount}d${origSides}`;
+  const c = pf1.config.sizeDie;
 
-          if (dieMaxValue === mediumDieMax) return mediumDie;
-        }
+  // "If the exact number of original dice is not found on this chart..."
+  if (c.indexOf(currentDie) === -1 && [6, 8].includes(origSides)) {
+    // Xd6: "find the next lowest number of d6 on the chart and use that number of d8 as the original damage value"
+    let shifted;
+    const fc = c.map((d) => d.split("d").map((n) => Number(n)));
+    if (origSides === 6) {
+      shifted = fc.filter(([c, s]) => c < origCount && s === origSides).at(-1);
+    }
+    // Xd8: "find the next highest number of d8 on the chart and use that number of d6 as the original damage value"
+    else if (origSides === 8) {
+      shifted = fc.filter(([c, s]) => c > origCount && s === origSides).at(0);
+    } else {
+      // Paizo has not provided instructions how to resolve this
+    }
 
-        return d;
-      });
+    if (shifted) {
+      const [count, sides] = shifted;
+      // Swap d6 to d8 and vice versa
+      const newSides = sides === 6 ? 8 : 6;
+      currentDie = `${count}d${newSides}`;
     }
   }
 
   // Pick an index from the chart
-  let index = c.indexOf(mediumDie),
-    formula = mediumDie;
+  let index = c.indexOf(currentDie);
+  let formula = currentDie;
+  // If found, shift size
   if (index >= 0) {
     const d6Index = c.indexOf("1d6");
-    let d8Index = c.indexOf("1d8");
-    if (d8Index === -1) d8Index = c.indexOf("2d4");
+    const d8Index = c.indexOf("1d8");
     let sizeOffset = initialSize - targetSize;
     let curSize = initialSize;
 
@@ -102,8 +118,8 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
     formula = c[index];
   }
 
-  if (index === -1 && !skipWarning) {
-    ui.notifications.warn(game.i18n.localize("PF1.WarningNoSizeDie", { baseline: mediumDie, fallback: formula }));
+  if (index === -1) {
+    ui.notifications.warn(game.i18n.format("PF1.WarningNoSizeDie", { fallback: currentDie, formula }));
   }
 
   const result = formula.split("d");

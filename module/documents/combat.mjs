@@ -148,6 +148,7 @@ export class CombatPF extends Combat {
 
         // Produce an initiative roll for the Combatant
         const roll = combatant.getInitiativeRoll(formula, d20, bonus);
+        roll.options.flavor = game.i18n.localize("PF1.Initiative");
         await roll.evaluate({ async: true });
         updates.push({ _id: id, initiative: roll.total });
 
@@ -173,28 +174,24 @@ export class CombatPF extends Combat {
         // Ensure roll mode is not lost
         if (rollMode) messageOptions.rollMode = rollMode;
 
-        // Create chat card data
-        const chatData = mergeObject(
-          {
-            user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-            sound: CONFIG.sounds.dice,
-            speaker: {
-              scene: combatant.sceneId,
-              actor: combatant.actorId,
-              token: combatant.tokenId,
-              alias: combatant.name,
-            },
-            flags: { pf1: { subject: { core: "init" } } },
-            flavor: game.i18n.format("PF1.RollsForInitiative", { name: combatant.name }),
-            rolls: [roll.toJSON()],
-            content: await renderTemplate("systems/pf1/templates/chat/roll-ext.hbs", templateData),
+        // Create base chat card data
+        let chatData = {
+          speaker: {
+            scene: combatant.sceneId,
+            actor: combatant.actorId,
+            token: combatant.tokenId,
+            alias: combatant.name,
           },
-          messageOptions
-        );
+          ...messageOptions,
+        };
 
-        // Handle different roll modes
-        ChatMessage.applyRollMode(chatData, rollMode);
+        // Generate message proper via D20RollPF
+        chatData = await roll.toMessage(chatData, {
+          create: false,
+          rollMode,
+          subject: { core: "init" },
+          chatTemplateData: templateData,
+        });
 
         if (i > 0) chatData.sound = null; // Only play 1 sound for the whole set
         messages.push(chatData);

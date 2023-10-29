@@ -131,6 +131,20 @@ export class D20RollPF extends RollPF {
   }
 
   /**
+   * @type {boolean} - Is static roll (e.g. Take 20)
+   */
+  get isStatic() {
+    return this.options.staticRoll !== null;
+  }
+
+  /**
+   * @type {boolean} - Is normal d20 roll
+   */
+  get isNormal() {
+    return this.terms[0].formula === "1d20";
+  }
+
+  /**
    * Modifier on the roll besides natural roll. Undefined if the roll isn't evaluated.
    *
    * @type {number|void}
@@ -278,6 +292,17 @@ export class D20RollPF extends RollPF {
         isNat20: this.isNat20,
         isNat1: this.isNat1,
         natural: this.natural,
+        options: this.options,
+        isStatic: this.isStatic,
+        isNormal: this.isNormal,
+        get isAbnormal() {
+          return this.isStatic || !this.isNormal;
+        },
+        get abnormalTooltip() {
+          if (this.isStatic) return game.i18n.format("PF1.TakeX", { number: this.options.staticRoll });
+          else if (this.isAbnormal) return "PF1.CustomRollDesc";
+          else return "";
+        },
         bonus: this.bonus,
         flavor: this.options.flavor,
         compendiumEntry: options.compendium?.entry,
@@ -300,7 +325,7 @@ export class D20RollPF extends RollPF {
     messageData.rolls = [this]; // merge/expandObject would otherwise destroy the `Roll` instance
     if (options.subject) foundry.utils.setProperty(messageData, "flags.pf1.subject", options.subject);
 
-    const messageClass = CONFIG.ChatMessage.documentClass;
+    const messageClass = ChatMessage.implementation;
     const message = new messageClass(messageData);
     const messageObject = message.toObject();
 
@@ -360,7 +385,6 @@ export class D20RollPF extends RollPF {
       const activeDie = d20.results.find((r) => r.active) ?? d20.results[0];
       activeDie.result = this.options.staticRoll;
       this._total = newTotal;
-      this.options.flavor += ` (${game.i18n.format("PF1.TakeX", { number: this.options.staticRoll })})`;
     }
   }
 }

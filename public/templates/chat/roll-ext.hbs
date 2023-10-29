@@ -1,21 +1,16 @@
-{{#if flavor}}
 <span class="flavor-text">
   {{#if compendiumEntry}}
   <a data-tooltip="PF1.OpenAssociatedCompendiumEntry" data-action="open-compendium-entry" data-compendium-entry="{{compendiumEntry}}"{{#if compendiumEntryType}} data-document-type="{{compendiumEntryType}}"{{/if}}>
     <i class="fas fa-book"></i>
   </a>
   {{/if}}
-  {{flavor}}
-</span>
-{{/if}}
 
-{{#unless flavor}}
-{{#if compendiumEntry}}
-<a data-tooltip="PF1.OpenAssociatedCompendiumEntry" data-action="open-compendium-entry" data-compendium-entry="{{compendiumEntry}}"{{#if compendiumEntryType}} data-document-type="{{compendiumEntryType}}"{{/if}}>
-  <i class="fas fa-book"></i>
-</a>
-{{/if}}
-{{/unless}}
+  {{flavor}}
+
+  {{#if isAbnormal}}
+  <i class="fas fa-dice-d20 abnormal {{#if isStatic}}take-x{{/if}}" data-tooltip="{{abnormalTooltip}}"></i>
+  {{/if}}
+</span>
 
 {{#if formula}}
 <div class="dice-roll">

@@ -8,7 +8,24 @@
       "value": "<i>Your clarity of thought allows you to resist mental attacks.</i>\n<p><b>Prerequisites</b></p>\n<p>Iron Will.</p>\n<p><b>Benefits</b></p>\n<p>Once per day, you may reroll a Will save. You must decide to use this ability before the results are revealed. You must take the second roll, even if it is worse.</p>"
     },
     "tags": ["General", "Saving Throw"],
+    "uses": {
+      "per": "day",
+      "value": 1,
+      "maxFormula": "1",
+      "autoDeductChargesCost": ""
+    },
     "tag": "feat_improvedIronWill",
-    "useCustomTag": true
+    "useCustomTag": true,
+    "scriptCalls": [
+      {
+        "_id": "sP1zwT8P2BFl8Z9O",
+        "name": "Reroll will",
+        "img": "icons/svg/dice-target.svg",
+        "type": "script",
+        "value": "actor.rollSavingThrow(\"will\");",
+        "category": "use",
+        "hidden": false
+      }
+    ]
   }
 }

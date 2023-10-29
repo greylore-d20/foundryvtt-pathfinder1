@@ -8,7 +8,24 @@
       "value": "<i>You have a knack for avoiding danger all around you.</i>\n<p><b>Prerequisites</b></p>\n<p>Lightning Reflexes.</p>\n<p><b>Benefits</b></p>\n<p>Once per day, you may reroll a Reflex save. You must decide to use this ability before the results are revealed. You must take the second roll, even if it is worse.</p>"
     },
     "tags": ["General", "Saving Throw"],
+    "uses": {
+      "per": "day",
+      "value": 1,
+      "maxFormula": "1",
+      "autoDeductChargesCost": ""
+    },
     "tag": "feat_improvedLightningReflexes",
-    "useCustomTag": true
+    "useCustomTag": true,
+    "scriptCalls": [
+      {
+        "_id": "GwdUAXxKeFyzfqsO",
+        "name": "Reroll reflex",
+        "img": "icons/svg/dice-target.svg",
+        "type": "script",
+        "value": "actor.rollSavingThrow(\"ref\");",
+        "category": "use",
+        "hidden": false
+      }
+    ]
   }
 }

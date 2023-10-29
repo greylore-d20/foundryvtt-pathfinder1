@@ -29,7 +29,21 @@
           "value": "30",
           "units": "ft"
         },
-        "actionType": ""
+        "actionType": "rsak",
+        "damage": {
+          "parts": [
+            {
+              "formula": "1d6 + (floor(@classes.cleric.level / 2))",
+              "type": {
+                "values": ["fire"],
+                "custom": ""
+              }
+            }
+          ]
+        },
+        "ability": {
+          "attack": "dex"
+        }
       }
     ],
     "uses": {

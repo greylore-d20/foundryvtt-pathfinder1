@@ -2381,6 +2381,7 @@ export const languages = {
   abyssal: "PF1.LanguageAbyssal",
   aklo: "PF1.LanguageAklo",
   ancientosiriani: "PF1.LanguageAncientOsiriani",
+  androffan: "PF1.LanguageAndroffan",
   aquan: "PF1.LanguageAquan",
   auran: "PF1.LanguageAuran",
   azlanti: "PF1.LanguageAzlanti",

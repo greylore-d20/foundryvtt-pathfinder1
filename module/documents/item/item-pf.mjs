@@ -1,3 +1,4 @@
+import { ItemBasePF } from "./item-base.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
 import { createTag, convertDistance, keepUpdateArray, diffObjectAndArray } from "../../utils/lib.mjs";
 import { ItemChange } from "../../components/change.mjs";
@@ -10,7 +11,7 @@ import { getSkipActionPrompt } from "../settings.mjs";
 /**
  * Override and extend the basic :class:`Item` implementation
  */
-export class ItemPF extends Item {
+export class ItemPF extends ItemBasePF {
   constructor(...args) {
     super(...args);
 

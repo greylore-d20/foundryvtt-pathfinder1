@@ -1,12 +1,11 @@
-import { ItemPF } from "./item-pf.mjs";
+import { ItemBasePF } from "./item-base.mjs";
 
 const itemHandler = {
   construct(_, args) {
     const type = args[0]?.type;
-    const cls = CONFIG.Item.documentClasses[type];
-    if (!cls) throw new Error(`"${type}" is not valid item type`);
+    const cls = CONFIG.Item.documentClasses[type] ?? ItemBasePF;
     return new cls(...args);
   },
 };
 
-export const ItemPFProxy = new Proxy(ItemPF, itemHandler);
+export const ItemPFProxy = new Proxy(ItemBasePF, itemHandler);

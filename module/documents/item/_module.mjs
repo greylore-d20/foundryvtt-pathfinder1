@@ -1,3 +1,4 @@
+export { ItemBasePF } from "./item-base.mjs";
 export { ItemAttackPF } from "./item-attack.mjs";
 export { ItemBuffPF } from "./item-buff.mjs";
 export { ItemClassPF } from "./item-class.mjs";

@@ -49,7 +49,7 @@
         "name": "Add Temporary Hit Points",
         "img": "icons/svg/dice-target.svg",
         "type": "script",
-        "value": "if (state) {\n  const oldTHP = actor.system.attributes.hp.temp ?? 0;\n  const level = actor.classes.barbarianUnchained.level;\n  const hpPerLevel = 2 + Math.floor((level - 2) / 9);\n  const newTHP = oldTHP + level * hpPerLevel;\n  actor.update({ \"system.attributes.hp.temp\": newTHP });\n}",
+        "value": "if (state) {\n  const oldTHP = actor.system.attributes.hp.temp ?? 0;\n  const level = actor.classes.barbarianUnchained.level;\n  const hpPerHD = 2 + Math.floor((level - 2) / 9);\n  const hd = actor.system.attributes.hd.total;\n  const newTHP = oldTHP + hd * hpPerHD;\n  actor.update({ \"system.attributes.hp.temp\": newTHP });\n}",
         "category": "toggle",
         "hidden": false
       }

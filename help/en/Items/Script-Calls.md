@@ -44,3 +44,14 @@ This call will have the additional variables `quantity.previous` and `quantity.n
 
 Called when the level of a item has been changed.
 This call will have the additional variables `level.previous` and `level.new`, which contains the numbers before and after the update respectively.
+
+## Shared Data Object
+
+You can control item use workflow by altering the shared object.
+
+| Variable          | Description                                                                                                                                         |
+| :---------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `shared.reject`   | If set to true, cancels processing as if user cancelled it via closing dialog or if requirements were not met. Only affects item use, not toggling. |
+| `shared.hideChat` | If set to true, eliminates chat card printing.                                                                                                      |
+
+The shared object contains additional data based on use that you can investigate via normal JS debugging methods, such as `console.log(shared)` or `debugger`. It is too expansive and variable to describe here.

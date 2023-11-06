@@ -277,7 +277,7 @@ export class ActorSheetPF extends ActorSheet {
       i.name = item.name; // Copy name over from item to handle identified state correctly
 
       i.isStack = i.quantity > 1;
-      i.price = item.getValue({ recursive: false, sellValue: 1 });
+      i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
 
       const itemQuantity = i.quantity != null ? i.quantity : 1;
       const itemCharges = i.uses?.value != null ? i.uses.value : 1;

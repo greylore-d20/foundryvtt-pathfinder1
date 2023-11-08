@@ -286,7 +286,7 @@ export class D20RollPF extends RollPF {
         user: game.user.id,
         formula: this.formula,
         tooltip: await this.getTooltip(),
-        total: this.total,
+        total: Math.floor(this.total * 100) / 100,
         isCrit: this.isCrit,
         isFumble: this.isNat1, // Deprecated until 0.83
         isNat20: this.isNat20,

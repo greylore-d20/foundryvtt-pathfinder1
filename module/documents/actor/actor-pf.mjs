@@ -3790,45 +3790,25 @@ export class ActorPF extends ActorBasePF {
   /**
    * Converts currencies of the given category to the given currency type
    *
-   * @param {string} category Either 'currency' or 'altCurrency'.
-   * @param {string} type Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
+   * @see {@link pf1.utils.currency.convert}
+   *
+   * @param {"currency"|"altCurrency"} [category="currency"] - Currency category, altCurrency is for weightless
+   * @param {"pp"|"gp"|"sp"|"cp"} [type="pp"] - Target currency.
    * @returns {Promise<this>|undefined} Updated document or undefined if no update occurred.
    */
   convertCurrency(category = "currency", type = "pp") {
-    const currency = {
-      pp: 0,
-      gp: 0,
-      sp: 0,
-      cp: this.getTotalCurrency(category, { inLowestDenomination: true }),
-    };
-
-    if (!Number.isFinite(currency.cp)) {
-      console.error(`Invalid total currency "${currency.cp}" in "${category}" category`);
+    const cp = this.getTotalCurrency(category, { inLowestDenomination: true });
+    if (!Number.isFinite(cp)) {
+      console.error(`Invalid total currency "${cp}" in "${category}" category`);
       return;
     }
 
-    const types = { pp: 3, gp: 2, sp: 1, cp: 0 };
-    const largestType = types[type];
-
-    if (largestType >= types.pp) {
-      currency.pp = Math.floor(currency.cp / 1_000);
-      currency.cp -= currency.pp * 1_000;
-    }
-    if (largestType >= types.gp) {
-      currency.gp = Math.max(0, Math.floor(currency.cp / 100));
-      currency.cp -= currency.gp * 100;
-    }
-    if (largestType >= types.sp) {
-      currency.sp = Math.max(0, Math.floor(currency.cp / 10));
-      currency.cp -= currency.sp * 10;
-    }
+    const currency = pf1.utils.currency.convert(cp, type);
 
     // Sanity check
     if (currency.cp < 0) currency.cp = 0;
 
-    const updateData = { system: { [category]: currency } };
-
-    return this.update(updateData);
+    return this.update({ system: { [category]: currency } });
   }
 
   /**

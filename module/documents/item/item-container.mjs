@@ -210,40 +210,16 @@ export class ItemContainerPF extends ItemPF {
   }
 
   /**
-   * Converts currencies of the given category to the given currency type
+   * Converts currencies to the given currency type
    *
    * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
    */
   convertCurrency(type = "pp") {
-    const totalValue = this.getTotalCurrency();
-    const values = [0, 0, 0, 0];
-    switch (type) {
-      case "pp":
-        values[0] = Math.floor(totalValue / 10);
-        values[1] = Math.max(0, Math.floor(totalValue) - values[0] * 10);
-        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[0] * 100 - values[1] * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[0] * 1000 - values[1] * 100 - values[2] * 10);
-        break;
-      case "gp":
-        values[1] = Math.floor(totalValue);
-        values[2] = Math.max(0, Math.floor(totalValue * 10) - values[1] * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[1] * 100 - values[2] * 10);
-        break;
-      case "sp":
-        values[2] = Math.floor(totalValue * 10);
-        values[3] = Math.max(0, Math.floor(totalValue * 100) - values[2] * 10);
-        break;
-      case "cp":
-        values[3] = Math.floor(totalValue * 100);
-        break;
-    }
+    const cp = this.getTotalCurrency({ inLowestDenomination: true });
 
-    const updateData = {};
-    updateData[`system.currency.pp`] = values[0];
-    updateData[`system.currency.gp`] = values[1];
-    updateData[`system.currency.sp`] = values[2];
-    updateData[`system.currency.cp`] = values[3];
-    return this.update(updateData);
+    const currency = pf1.utils.currency.convert(cp, type);
+
+    return this.update({ system: { currency } });
   }
 
   /**

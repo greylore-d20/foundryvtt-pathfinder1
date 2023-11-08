@@ -3757,14 +3757,16 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @param {object} [options] Additional options
-   * @param {boolean} [options.inLowestDenomination=false] Use copper for calculations and return.
-   * @returns {number} The total amount of currency this actor has, in gold pieces.
+   * Total coinage in both weighted and weightless.
+   *
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.inLowestDenomination=false] - Use copper for calculations and return.
+   * @returns {number} - The total amount of currency, in gold pieces.
    */
   mergeCurrency({ inLowestDenomination = false } = {}) {
     const total =
-      this.getTotalCurrency("currency", { inLowestDenomination }) +
-      this.getTotalCurrency("altCurrency", { inLowestDenomination });
+      this.getTotalCurrency("currency", { inLowestDenomination: true }) +
+      this.getTotalCurrency("altCurrency", { inLowestDenomination: true });
     return inLowestDenomination ? total : total / 100;
   }
 

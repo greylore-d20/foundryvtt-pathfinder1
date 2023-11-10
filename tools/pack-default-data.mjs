@@ -100,6 +100,7 @@ export function getActionDefaultData() {
     enh: {
       value: null,
     },
+    ammoType: "",
   };
 }
 

@@ -54,7 +54,29 @@
           "attack": "dex",
           "critMult": 4
         },
-        "usesAmmo": true
+        "usesAmmo": true,
+        "conditionals": [
+          {
+            "_id": "QibA5amUCRbyNl4q",
+            "default": false,
+            "name": "Both Barrels",
+            "modifiers": [
+              {
+                "_id": "xQOX8e0Fv6MZ89aY",
+                "formula": "-4",
+                "target": "attack",
+                "subTarget": "allAttack",
+                "type": "untyped",
+                "damageType": {
+                  "values": [],
+                  "custom": ""
+                },
+                "critical": "normal"
+              }
+            ]
+          }
+        ],
+        "ammoType": "gunBullet"
       }
     ],
     "tag": "doublebarreledPistol",
@@ -64,6 +86,28 @@
     },
     "subType": "exotic",
     "weaponSubtype": "ranged",
+    "properties": {
+      "ato": false,
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "sct": false,
+      "spc": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
     "ammoType": "gunBullet"
   }
 }

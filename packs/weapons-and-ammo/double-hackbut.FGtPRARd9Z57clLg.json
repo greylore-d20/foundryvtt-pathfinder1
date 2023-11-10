@@ -47,14 +47,37 @@
           },
           "bonus": {
             "formula": "@formulaicAttack * -5"
-          }
+          },
+          "label": ""
         },
         "ability": {
           "attack": "dex",
           "damageMult": 1.5,
           "critMult": 4
         },
-        "usesAmmo": true
+        "usesAmmo": true,
+        "conditionals": [
+          {
+            "_id": "zFPZc6OOv8Lbbyri",
+            "default": false,
+            "name": "Not Mounted",
+            "modifiers": [
+              {
+                "_id": "djiciLcAFuSoA7ih",
+                "formula": "-4",
+                "target": "attack",
+                "subTarget": "allAttack",
+                "type": "untyped",
+                "damageType": {
+                  "values": [],
+                  "custom": ""
+                },
+                "critical": "normal"
+              }
+            ]
+          }
+        ],
+        "ammoType": "gunBullet"
       }
     ],
     "tag": "doubleHackbut",
@@ -65,6 +88,28 @@
     },
     "subType": "exotic",
     "weaponSubtype": "ranged",
+    "properties": {
+      "ato": false,
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "sct": false,
+      "spc": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
     "ammoType": "gunBullet"
   }
 }

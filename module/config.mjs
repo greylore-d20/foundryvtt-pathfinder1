@@ -772,6 +772,7 @@ export const ammoTypes = {
   gunBullet: "PF1.AmmoTypeBulletGun",
   dragoonBullet: "PF1.AmmoTypeBulletDragoon",
   dart: "PF1.AmmoTypeDart",
+  siege: "PF1.AmmoTypeSiege",
 };
 
 /* -------------------------------------------- */

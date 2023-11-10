@@ -5,7 +5,7 @@
   "img": "systems/pf1/icons/items/weapons/crossbow-heavy.PNG",
   "system": {
     "description": {
-      "value": "<p><b>Source</b> <em>Monster Codex pg. 45</em></p><h3>Statistics</h3><p><b>Damage</b> 1d6 (small), 1d8 (medium); <b>Critical</b> 19-20/see \"bolas bolts\" text; <b>Range</b> 80 ft.; <b>Type</b> B</p><h3>Description</h3><p>This crossbow shoots ammunition called bolas bolts instead of crossbow bolts. It comes in both light and heavy varieties (but not double, hand, or repeating crossbow varieties) with the same reload action as a conventional crossbow of its type.</p>"
+      "value": "<p><strong>Source</strong> <em>Monster Codex pg. 45</em></p><h3>Statistics</h3><p><strong>Damage</strong> 1d6 (small), 1d8 (medium); <strong>Critical</strong> 19-20/see \"bolas bolts\" text; <strong>Range</strong> 80 ft.; <strong>Type</strong> B</p><h3>Description</h3><p>This crossbow shoots ammunition called @UUID[Compendium.pf1.weapons-and-ammo.Item.9y3Uo776SKY0Gtel]{bolas bolts} instead of crossbow bolts. It comes in both light and heavy varieties (but not double, hand, or repeating crossbow varieties) with the same reload action as a conventional crossbow of its type.</p>"
     },
     "weight": {
       "value": 12
@@ -49,14 +49,16 @@
           },
           "bonus": {
             "formula": "@formulaicAttack * -5"
-          }
+          },
+          "label": ""
         },
         "ability": {
           "attack": "dex",
           "critRange": 19,
           "critMult": 0
         },
-        "usesAmmo": true
+        "usesAmmo": true,
+        "ammoType": "bolt"
       }
     ],
     "tag": "heavySlaversCrossbow",
@@ -69,7 +71,24 @@
     "properties": {
       "trp": true,
       "nnl": true,
-      "spc": true
+      "spc": true,
+      "ato": false,
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "prf": false,
+      "rch": false,
+      "sct": false,
+      "snd": false,
+      "thr": false
     },
     "ammoType": "bolt"
   }

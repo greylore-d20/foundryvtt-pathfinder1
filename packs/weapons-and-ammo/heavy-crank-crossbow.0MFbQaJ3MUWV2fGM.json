@@ -5,7 +5,7 @@
   "img": "systems/pf1/icons/items/weapons/crossbow-crank.PNG",
   "system": {
     "description": {
-      "value": "<p><b>Source</b> <em>Ranged Tactics Toolbox pg. 18</em></p>\n<h3>Statistics</h3><p><b>Damage</b> 1d8 (small), 1d10 (medium); <b>Critical</b> 19-20/x2; <b>Range</b> 120 ft.; <b>Type</b> P</p>\n<h3>Description</h3>\n<p>This heavy crossbow has a winch mounted below the stock. Up to 50 feet of silk rope can be wound onto the winch as a full-round action that provokes attacks of opportunity. The wound rope can be attached to a @Compendium[pf1.weapons-and-ammo.84twkW8rwnUEX4EY]{Barbed Bolt} or grappling bolt<sup>UE</sup> as part of a loading action. After firing such a bolt, the wielder can use the winch to retract the rope or pull herself along the rope if the bolt is secure. When used with a barbed bolt, the winch provides a +2 bonus on grapple combat maneuver checks to pull the target toward you. When used with a grappling bolt<sup>UE</sup>, the winch provides a +2 bonus on @UUID[Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.ZAwjVOTwsBpZRgw4]{Climb} checks.</p>"
+      "value": "<p><strong>Source</strong> <em>Ranged Tactics Toolbox pg. 18</em></p><h3>Statistics</h3><p><strong>Damage</strong> 1d8 (small), 1d10 (medium); <strong>Critical</strong> 19-20/x2; <strong>Range</strong> 120 ft.; <strong>Type</strong> P</p><h3>Description</h3><p>This heavy crossbow has a winch mounted below the stock. Up to 50 feet of silk rope can be wound onto the winch as a full-round action that provokes attacks of opportunity. The wound rope can be attached to a @Compendium[pf1.weapons-and-ammo.84twkW8rwnUEX4EY]{Barbed Bolt} or grappling bolt<sup>UE</sup> as part of a loading action. After firing such a bolt, the wielder can use the winch to retract the rope or pull herself along the rope if the bolt is secure. When used with a barbed bolt, the winch provides a +2 bonus on grapple combat maneuver checks to pull the target toward you. When used with a grappling bolt<sup>UE</sup>, the winch provides a +2 bonus on @UUID[Compendium.pf1.pf1e-rules.x175kVqUfLGPt8tC.JournalEntryPage.ZAwjVOTwsBpZRgw4]{Climb} checks.</p>"
     },
     "tags": ["PFS"],
     "weight": {
@@ -50,13 +50,15 @@
           },
           "bonus": {
             "formula": "@formulaicAttack * -5"
-          }
+          },
+          "label": ""
         },
         "ability": {
           "attack": "dex",
           "critRange": 19
         },
-        "usesAmmo": true
+        "usesAmmo": true,
+        "ammoType": "bolt"
       }
     ],
     "tag": "heavyCrankCrossbow",
@@ -66,6 +68,28 @@
     },
     "subType": "exotic",
     "weaponSubtype": "ranged",
+    "properties": {
+      "ato": false,
+      "blc": false,
+      "brc": false,
+      "dea": false,
+      "dis": false,
+      "dst": false,
+      "dbl": false,
+      "fin": false,
+      "frg": false,
+      "grp": false,
+      "imp": false,
+      "mnk": false,
+      "nnl": false,
+      "prf": false,
+      "rch": false,
+      "sct": false,
+      "spc": false,
+      "snd": false,
+      "thr": false,
+      "trp": false
+    },
     "ammoType": "bolt"
   }
 }

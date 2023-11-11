@@ -187,8 +187,9 @@ export const classFractionalSavingThrowFormulas = {
     goodSave: true,
   },
   prestige: {
-    low: "(1 + @hitDice) / 3",
-    high: "(1 + @hitDice) / 2",
+    low: "@hitDice / 3",
+    high: "@hitDice / 2",
+    goodSave: true,
   },
   npc: {
     low: "@hitDice / 3",

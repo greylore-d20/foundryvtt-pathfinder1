@@ -30,7 +30,7 @@
   "SETTINGS.pf1MeasureStyleN": "Use o estilo de medida do Pathfinder",
   "SETTINGS.pf1LowLightVisionModeN": "Visão na penumbra requer seleção",
   "SETTINGS.pf1CoinWeightN": "Divisor de Peso da Moeda",
-  "SETTINGS.pf1CoinWeightH": "Quantas moedas pesam 1 libra",
+  "SETTINGS.pf1CoinWeightH": "Quantas moedas pesam 1 libra. Defina como zero (0) para desativar o peso das moedas.",
   "SETTINGS.pf1SharedVisionModeN": "Modo de Visão Compartilhada",
   "SETTINGS.pf1AutoCollapseCardL": "Recolher automaticamente as descrições do cartão de item no Registro do Chat",
   "SETTINGS.pf1SharedVisionModeH": "Como lidar com Visão Compartilhada entre jogadores.",
@@ -217,15 +217,15 @@
   "PF1.CondProne": "Caído",
   "PF1.CondFear": "Medo (qualquer)",
   "PF1.CondShaken": "Abalado",
-  "PF1.CondPanicked": "Apavorado",
-  "PF1.CondFrightened": "Assustado",
+  "PF1.CondPanicked": "Em Pânico",
+  "PF1.CondFrightened": "Amedrontado",
   "PF1.CondSickened": "Enjoado",
   "PF1.CondStaggered": "Zonzo",
   "PF1.CondStunned": "Atordoado",
   "PF1.CondNauseated": "Nauseado",
   "PF1.CondDazed": "Pasmo",
   "PF1.CondSleep": "Dormindo",
-  "PF1.CondCowering": "Amedrontado",
+  "PF1.CondCowering": "Acovardado",
   "PF1.CondSqueezing": "Espremido",
   "PF1.CondTypeBleed": "Sangrar",
   "PF1.CondTypeBlind": "Cegueira",
@@ -480,7 +480,10 @@
   "ACTOR": {
     "TypeCharacter": "Personagem Jogador (PJ)",
     "TypeNpc": "Personagem do Mestre (PdM)",
-    "TypeBasic": "Básico (para módulos)"
+    "TypeBasic": "Básico (para módulos)",
+    "TypeHaunt": "Assombração",
+    "TypeTrap": "Armadilha",
+    "TypeVehicle": "Veículo"
   },
   "PF1.AbilityDrain": "Drenagem de Atributo",
   "PF1.PointBuyCalculatorWarning": "A calculadora de compra de pontos irá SUBSTITUIR os valores básicos de atributo do personagem.",
@@ -586,7 +589,10 @@
     "NPCLite": "PdM Leve",
     "NPCLoot": "Espólios",
     "Item": "Item Genérico",
-    "Container": "Recipiente"
+    "Container": "Recipiente",
+    "Haunt": "Assombração",
+    "Trap": "Armadilha",
+    "Vehicle": "Veículo"
   },
   "PF1.TooltipConfigLocationPreview": "Visualização do local",
   "PF1.TooltipConfigHidePortraits": "Ocultar retratos",
@@ -662,7 +668,7 @@
       "Health": {
         "Header": "Vida",
         "Manual": "Vida manual: {add}",
-        "Roll": "Rolado para vida: {add}"
+        "Roll": "Vida rolada: {add}"
       },
       "FC": {
         "Header": "Bônus de Classe Favorita"
@@ -880,7 +886,7 @@
   "PF1.Ammunition": "Munição",
   "PF1.AmmunitionSubtype": "Subtipo de munição",
   "PF1.AmmunitionAbbr": "Munição",
-  "PF1.AmmoRemaining": "Munição restante: {0}",
+  "PF1.AmmoRemaining": "Munição restante: {quantity}",
   "PF1.AmmoDepleted": "Sem munição!",
   "PF1.Priority": "Prioridade",
   "PF1.Creatures": "Criaturas",
@@ -980,7 +986,7 @@
   "PF1.XPTrackCustomFormula": "Personalizado (Fórmula)",
   "PF1.AccessibilityFontSizeHint": "Altera o tamanho da fonte em certos aspectos do jogo (como em cartões de chat de ataque)",
   "PF1.TooltipConfigUpdateInfo": "Configuração atualizada da dica de ferramenta do Pathfinder.",
-  "PF1.TooltipConfigHideWithoutKey": "Ocultar a menos que {tecla} seja mantida",
+  "PF1.TooltipConfigHideWithoutKey": "Ocultar a menos que {key} seja mantida",
   "PF1.TooltipWorldConfigHint": "Alterar configurações de dica de ferramenta para todos usuários",
   "PF1.TooltipWorldConfigHideHeld_Hint": "Ocultar itens segurados de todos os jogadores",
   "PF1.TooltipWorldConfigHideConditions_Hint": "Ocultar Condições de todos os jogadores",
@@ -1025,7 +1031,7 @@
   "PF1.SkillClm": "Escalar",
   "PF1.SkillCrf": "Ofício",
   "PF1.SkillDip": "Diplomacia",
-  "PF1.SkillDev": "Operar Mecanismo",
+  "PF1.SkillDev": "Desativar Dispositivo",
   "PF1.SkillDis": "Disfarce",
   "PF1.SkillEsc": "Arte da Fuga",
   "PF1.SkillFly": "Voo",
@@ -1588,9 +1594,9 @@
   "PF1.HitPoints": "Pontos de Vida",
   "PF1.VulnerableTo": "Vulnerável a {vulnerability}",
   "PF1.ImmuneTo": "Imune a {immunity}",
-  "PF1.AbilityTest": "{ability} Teste de Atributo",
-  "PF1.SkillCheck": "{skill} Teste de Perícia",
-  "PF1.SavingThrowRoll": "{save} Jogada de Salvamento",
+  "PF1.AbilityTest": "Teste de Atributo {ability}",
+  "PF1.SkillCheck": "Teste de Perícia {skill}",
+  "PF1.SavingThrowRoll": "Jogada de Salvamento {save}",
   "PF1.SavingThrowButtonLabel": "{type} CD {dc}",
   "PF1.SavingThrowButtonLabelGMSensitive": "Salvamento de {save}",
   "PF1.SpellResistanceNote": "Resistência à Magia {value}",
@@ -1731,7 +1737,7 @@
   "PF1.DMG": "DMG",
   "PF1.PNL": "PNL",
   "PF1.DRN": "DRN",
-  "PF1.Raw": "Bruto",
+  "PF1.Raw": "Regra Escrita",
   "PF1.FeatPlural": "Talentos",
   "PF1.CMDFFAbbr": "DMC Desprevenido",
   "PF1.CMD": "Defesa contra Manobra de Combate",
@@ -1807,7 +1813,8 @@
       "MigrateModules": "Migrar Pacotes de Módulos",
       "MigrateModulesHint": "Caso você tenha módulos com compêndios que ainda não foram migrados para serem totalmente compatíveis com a versão atual.",
       "MigrateWorld": "Migrar Mundo",
-      "MigrateWorldHint": "Normalmente, a migração é executada automaticamente sempre que houver migrações pertinentes pendentes, durante a atualização do PF1 e quando o Mestre fizer login pela primeira vez. Executar a migração manualmente às vezes pode resolver problemas, como com documentos importados de fontes não migradas."
+      "MigrateWorldHint": "Normalmente, a migração é executada automaticamente sempre que houver migrações pertinentes pendentes, durante a atualização do PF1 e quando o Mestre fizer login pela primeira vez. Executar a migração manualmente às vezes pode resolver problemas, como com documentos importados de fontes não migradas.",
+      "UnlockPacks": "Desbloqueie pacotes para migração. Caso contrário, os pacotes bloqueados serão ignorados."
     }
   },
   "PF1.BonusModifierHaste": "Velocidade",
@@ -1841,5 +1848,47 @@
   "PF1.PointBuyCalculatorInvalidPoints": "Uso de pontos inválido.",
   "SETTINGS.pf1AllowScriptChangesD": "Alterações de script foram descontinuadas. Substitua-as e desative suas configurações para remover este aviso.",
   "SETTINGS.pf1AllowScriptChangesF": "Foi encontrada uma alteração do tipo \"Script\" obsoleta em {parent}. Por favor, utilize outro operador. Detalhes foram registrados no console.",
-  "PF1.NewItem": "Novo {type}"
+  "PF1.NewItem": "Novo {type}",
+  "PF1.ActorSheetPFHaunt": "Assombração",
+  "PF1.Trigger": "Ativação",
+  "PF1.Haunt": {
+    "Notice": "Perceber",
+    "Weakness": "Fraqueza",
+    "Destruction": "Destruição"
+  },
+  "PF1.Trap": {
+    "Type": "Tipo",
+    "PerceptionDC": "CD de Percepção",
+    "DisableDeviceDC": "CD de Desativar Dispositivo",
+    "EffectsDetails": "Efeitos",
+    "Trigger": "Ativação"
+  },
+  "PF1.ActorSheetPFTrap": "Armadilha",
+  "PF1.WarningDuplicateTag": "Identificador de item duplicado \"{tag}\" encontrado no item \"{item}\" no personagem \"{actor}\".",
+  "PF1.Vehicles": {
+    "Space": {
+      "Huge": "7-12 quadrados",
+      "Gargantuan": "13-20 quadrados",
+      "Colossal": "21+ quadrados",
+      "Large": "2-6 quadrados"
+    },
+    "Types": {
+      "Land": "Terrestre",
+      "Sea": "Aquático",
+      "Air": "Aéreo"
+    },
+    "OccupiedSpace": "Espaço Ocupado",
+    "MaximumSpeed": "Velocidade Máxima",
+    "Propulsion": "Propulsão",
+    "DrivingCheck": "Teste de Condução",
+    "ForwardFacing": "Virado para a Frente",
+    "DrivingDevice": "Dispositivo de Condução",
+    "DrivingSpace": "Espaço de Condução",
+    "Crew": "Tripulação",
+    "Decks": "Andares",
+    "Acceleration": "Aceleração"
+  },
+  "PF1.WarningDuplicateDFlag": "Conflito de bandeira no dicionário \"{key}\" para o item \"{item}\" (com identificador \"{tag}\") no personagem \"{actor}\".",
+  "PF1.LanguageAndroffan": "Androfanês",
+  "PF1.AmmoTypeSiege": "Cerco"
 }

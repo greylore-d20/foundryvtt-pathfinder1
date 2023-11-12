@@ -2033,7 +2033,7 @@ export class ActorSheetPF extends ActorSheet {
           name: "New Race",
           type: "race",
         };
-        this.document.createEmbeddedDocuments("Item", [itemData]);
+        this.document.createEmbeddedDocuments("Item", [itemData], { renderSheet: true });
       }
       // Delete race
       else if (a.classList.contains("delete")) {
@@ -2259,7 +2259,7 @@ export class ActorSheetPF extends ActorSheet {
       if (newName !== newItem.name) newItem.updateSource({ name: newName });
     }
 
-    return this.document.createEmbeddedDocuments("Item", [newItem.toObject()]);
+    return this.document.createEmbeddedDocuments("Item", [newItem.toObject()], { renderSheet: true });
   }
 
   /* -------------------------------------------- */

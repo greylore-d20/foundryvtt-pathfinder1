@@ -33,7 +33,7 @@
   "SETTINGS.pf1LowLightVisionModeN": "Dämmersicht benötigt Auswahl",
   "SETTINGS.pf1LowLightVisionModeH": "Wenn aktiviert, können Spieler welche kein Token ausgewählt haben nicht mehr die Dämmersicht ihrer Tokens nutzen (gilt auch für Dunkelsicht)",
   "SETTINGS.pf1CoinWeightN": "Münzgewicht Divisor",
-  "SETTINGS.pf1CoinWeightH": "Wie viele Münzen wiegen 1 Pfund",
+  "SETTINGS.pf1CoinWeightH": "Wie viele Münzen 1 Pfund wiegen. Setze auf null (0) um Geld gewichtlos zu machen.",
   "SETTINGS.pf1SharedVisionModeN": "Sicht teilen Modus",
   "SETTINGS.pf1SharedVisionModeH": "Wie die Sicht zwischen Spielern gehandhabt werden soll.",
   "SETTINGS.pf1characterVisionN": "Spielercharaktersicht",
@@ -189,7 +189,10 @@
     "NPCLite": "NSC-Lite",
     "NPCLoot": "Beute",
     "Item": "Generischer Gegenstand",
-    "Container": "Behälter"
+    "Container": "Behälter",
+    "Haunt": "Spukerscheinung",
+    "Trap": "Falle",
+    "Vehicle": "Fahrzeug"
   },
   "PF1.TooltipWorldConfigName": "Globale Konfiguration Token-Tooltip",
   "PF1.TooltipWorldConfigLabel": "Globale Konfiguration",
@@ -1568,7 +1571,7 @@
   "PF1.Ammunition": "Munition",
   "PF1.AmmunitionSubtype": "Munitionsart",
   "PF1.AmmunitionAbbr": "Mun.",
-  "PF1.AmmoRemaining": "Verbleibende Munition: {0}",
+  "PF1.AmmoRemaining": "Verbleibende Munition: {quantity}",
   "PF1.AmmoDepleted": "Keine Munition mehr!",
   "PF1.Priority": "Priorität",
   "PF1.Creatures": "Kreaturen",
@@ -1746,7 +1749,10 @@
   "ACTOR": {
     "TypeCharacter": "Spielercharakter (SC)",
     "TypeNpc": "Nichtspielercharakter (NSC)",
-    "TypeBasic": "Basic (für Module)"
+    "TypeBasic": "Basic (für Module)",
+    "TypeHaunt": "Spukerscheinung",
+    "TypeTrap": "Falle",
+    "TypeVehicle": "Fahrzeug"
   },
   "ITEM": {
     "TypeWeapon": "Waffe",
@@ -1809,7 +1815,8 @@
       "MigrateWorld": "Migriere Welt",
       "MigrateModules": "Migriere Kompendium-Pakete von Modulen",
       "MigrateModulesHint": "Falls du Module mit Kompendiums hast, die noch nicht komplett migriert wurden, um mit der aktuellen Version kompatibel zu sein.",
-      "MigrateWorldHint": "Wenn wichtige Änderungen vorliegen, dann läuft eine Migration normallerweise von selbst ab, wenn der SL sich das erste mal nach einem Update einloggt.<br>Die Migration manuell duchzuführen kann manchmal Probleme beheben, wie zum Beispiel bei Dokumenten, die von unmigrierten Quellen importiert wurden."
+      "MigrateWorldHint": "Wenn wichtige Änderungen vorliegen, dann läuft eine Migration normallerweise von selbst ab, wenn der SL sich das erste mal nach einem Update einloggt.<br>Die Migration manuell duchzuführen kann manchmal Probleme beheben, wie zum Beispiel bei Dokumenten, die von unmigrierten Quellen importiert wurden.",
+      "UnlockPacks": "Schreibschutz von Kompendien für die Migration lösen. Ansonsten werden schreibgeschützte Kompendien ignoriert."
     }
   },
   "SETTINGS.pf1SpellPointCostN": "Default Zauberpunktekosten",
@@ -1841,5 +1848,45 @@
   "PF1.UtilityFunctions": "Hilfsmittel",
   "SETTINGS.pf1AllowScriptChangesD": "Script-Änderungen werden bald nicht mehr unterstützt. Ersetze sie und schalte \"Script-Änderungen zulassen\" aus um diese Warnung abzuschalten.",
   "SETTINGS.pf1AllowScriptChangesF": "Eine Änderung des veralteten Types \"Script\" wurde bei {parent} gefunden. Benutze bitte einen anderen Operator. Details wurden in die Console geschrieben.",
-  "PF1.NewItem": "Neue/r {type}"
+  "PF1.NewItem": "Neue/r {type}",
+  "PF1.WarningDuplicateTag": "Gegenstand \"{item}\" in Aktor \"{actor}\" hat den gleichen Identifikator \"{tag}\".",
+  "PF1.Haunt": {
+    "Destruction": "Zerstörung",
+    "Notice": "Bemerken",
+    "Weakness": "Schwäche"
+  },
+  "PF1.Vehicles": {
+    "Propulsion": "Antrieb",
+    "Space": {
+      "Huge": "7-12 Felder",
+      "Gargantuan": "13-20 Felder",
+      "Colossal": "21+ Felder",
+      "Large": "2-6 Felder"
+    },
+    "Types": {
+      "Land": "Land",
+      "Sea": "See",
+      "Air": "Luft"
+    },
+    "OccupiedSpace": "Belegte Felder",
+    "MaximumSpeed": "Höchstgeschwindigkeit",
+    "Acceleration": "Beschleunigung",
+    "DrivingCheck": "Fahrzeuglenkwurf",
+    "ForwardFacing": "Frontseite",
+    "DrivingDevice": "Steuerung",
+    "DrivingSpace": "Platz des Fahrzeuglenkers",
+    "Crew": "Besatzung",
+    "Decks": "Decks"
+  },
+  "PF1.WarningDuplicateDFlag": "Konflikt im Dictionary-Flag \"{key}\" für Gegenstand \"{item}\" (mit Identifikator \"{tag}\") im Aktor \"{actor}\".",
+  "PF1.ActorSheetPFHaunt": "Spukerscheinung",
+  "PF1.ActorSheetPFTrap": "Falle",
+  "PF1.Trigger": "Auslöser",
+  "PF1.Trap": {
+    "Type": "Art",
+    "PerceptionDC": "Wahrnehmung SG",
+    "DisableDeviceDC": "Mechanismus ausschalten SG",
+    "EffectsDetails": "Effekt",
+    "Trigger": "Auslöser"
+  }
 }

@@ -7,13 +7,19 @@ import { D20RollPF } from "../dice/d20roll.mjs";
 import { getDistanceSystem } from "@utils";
 
 export class ItemAction {
+  /**
+   * @internal
+   * @type {pf1.applications.component.ItemActionSheet}
+   */
+  _sheet = null;
+  /** @type {import("../documents/item/item-pf.mjs").ItemPF} */
+  parent = null;
+  apps = {};
+
   constructor(data, parent) {
     this.data = mergeObject(ItemAction.defaultData, data);
 
-    /** @type {import("../documents/item/item-pf.mjs").ItemPF} */
     this.parent = parent;
-    this.apps = {};
-    this.sheet = null;
 
     this.prepareData();
   }
@@ -1157,5 +1163,25 @@ export class ItemAction {
     options.actionID = this.id;
 
     return this.item.use(options);
+  }
+
+  /**
+   * @type {pf1.applications.component.ItemActionSheet} - Returns current sheet for this action or creates one if it doesn't exist.
+   */
+  get sheet() {
+    if (!this._sheet) {
+      this._sheet = new pf1.applications.component.ItemActionSheet(this);
+    }
+    return this._sheet;
+  }
+
+  /**
+   * Render all connected application instances.
+   *
+   * @param {boolean} [force=false] - Force rendering
+   * @param {object} [context={}] - Optional context
+   */
+  render(force = false, context = {}) {
+    Object.values(this.apps).forEach((app) => app.render(force, context));
   }
 }

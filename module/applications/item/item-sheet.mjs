@@ -1481,8 +1481,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Open new window
-    const app = new pf1.applications.component.ItemActionSheet(action);
-    app.render(true);
+    action.sheet.render(true);
   }
 
   async _onBuffControl(event) {

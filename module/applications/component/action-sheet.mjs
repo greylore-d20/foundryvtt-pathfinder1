@@ -6,7 +6,6 @@ export class ItemActionSheet extends FormApplication {
 
     this.item.apps[this.appId] = this;
     this.action.apps[this.appId] = this;
-    this.action.sheet = this;
   }
 
   static get defaultOptions() {
@@ -508,7 +507,7 @@ export class ItemActionSheet extends FormApplication {
   async close(options) {
     delete this.item.apps[this.appId];
     delete this.action.apps[this.appId];
-    this.action.sheet = null;
+    this.action._sheet = null;
     return super.close(options);
   }
 }

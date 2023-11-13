@@ -643,10 +643,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     this._itemUpdates = [];
 
     for (const data of updates) {
-      const item = this.item.items.filter((o) => {
-        return o._id === data._id;
-      })[0];
-      if (item == null) continue;
+      const item = this.item.items.get(data._id);
+      if (!item) continue;
 
       delete data._id;
       if (item.testUserPermission(game.user, "OWNER")) promises.push(item.update(data));
@@ -656,10 +654,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   setItemUpdate(id, key, value) {
-    let obj = this._itemUpdates.filter((o) => {
-      return o._id === id;
-    })[0];
-    if (obj == null) {
+    let obj = this._itemUpdates.find((o) => o._id === id);
+    if (!obj) {
       obj = { _id: id };
       this._itemUpdates.push(obj);
     }

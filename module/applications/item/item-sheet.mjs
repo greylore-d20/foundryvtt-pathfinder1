@@ -1087,10 +1087,8 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   setActionUpdate(id, key, value) {
-    let obj = this._actionUpdates.filter((o) => {
-      return o._id === id;
-    })[0];
-    if (obj == null) {
+    let obj = this._actionUpdates.find((o) => o._id === id);
+    if (!obj) {
       obj = { _id: id };
       this._actionUpdates.push(obj);
     }

@@ -50,7 +50,7 @@ const duplicateCombatantInitiativeDialog = function (combats, combatantId) {
     ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
     return;
   }
-  const combatant = combat.combatants.filter((o) => o.id === combatantId)[0];
+  const combatant = combat.combatants.get(combatantId);
   if (!combatant) {
     ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
     return;

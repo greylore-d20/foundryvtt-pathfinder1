@@ -2946,10 +2946,8 @@ export class ActorSheetPF extends ActorSheet {
   }
 
   setItemUpdate(id, key, value) {
-    let obj = this._itemUpdates.filter((o) => {
-      return o._id === id;
-    })[0];
-    if (obj == null) {
+    let obj = this._itemUpdates.find((o) => o._id === id);
+    if (!obj) {
       obj = { _id: id };
       this._itemUpdates.push(obj);
     }

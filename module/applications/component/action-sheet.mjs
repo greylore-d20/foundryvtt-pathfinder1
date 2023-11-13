@@ -166,7 +166,7 @@ export class ItemActionSheet extends FormApplication {
     if (!this.isEditable) return;
 
     // Modify action image
-    html.find(`img[data-edit="img"]`).on("click", this._onEditImage.bind(this));
+    html.find("img[data-edit]").click((ev) => this._onEditImage(ev));
 
     // Add drop handler to textareas
     html.find("textarea, .notes input[type='text']").on("drop", this._onTextAreaDrop.bind(this));
@@ -184,9 +184,6 @@ export class ItemActionSheet extends FormApplication {
 
     // Modify conditionals
     html.find(".conditional-control").click(this._onConditionalControl.bind(this));
-
-    // Handle alternative file picker
-    html.find(".file-picker-alt").click(this._onFilePickerAlt.bind(this));
   }
 
   _onDragStart(event) {
@@ -421,40 +418,23 @@ export class ItemActionSheet extends FormApplication {
     }
   }
 
-  async _onFilePickerAlt(event) {
-    const button = event.currentTarget;
-    const attr = button.dataset.for;
-    const current = getProperty(this.item.data, attr);
-    const form = button.form;
-    const targetField = form[attr];
-    if (!targetField) return;
-
+  /**
+   * Clone of item/actor sheet image editor callback.
+   *
+   * @protected
+   * @param {Event} event
+   */
+  _onEditImage(event) {
+    const attr = event.currentTarget.dataset.edit;
+    const current = foundry.utils.getProperty(this.actor, attr);
     const fp = new FilePicker({
-      type: button.dataset.type,
-      current: current,
-      callback: (path) => {
-        targetField.value = path;
-        if (this.options.submitOnChange) {
-          this._onSubmit(event);
-        }
-      },
+      type: "image",
+      current,
+      callback: (path) => this.action.update({ img: path }),
       top: this.position.top + 40,
       left: this.position.left + 10,
     });
-    fp.browse(current);
-  }
-
-  async _onEditImage(event) {
-    event.preventDefault();
-    const filePicker = new FilePicker({
-      type: "image",
-      current: this.action.data.img,
-      callback: async (path) => {
-        await this.action.update({ img: path });
-        return this.render();
-      },
-    });
-    filePicker.render();
+    fp.browse();
   }
 
   async _onTextAreaDrop(event) {

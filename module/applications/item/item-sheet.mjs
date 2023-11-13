@@ -929,9 +929,6 @@ export class ItemSheetPF extends ItemSheet {
 
     html.find(".link-control").click(this._onLinkControl.bind(this));
 
-    // Handle alternative file picker
-    html.find(".file-picker-alt").click(this._onFilePickerAlt.bind(this));
-
     // Click to change text input
     html.find('*[data-action="input-text"]').click((event) => this._onInputText(event));
 
@@ -1617,29 +1614,6 @@ export class ItemSheetPF extends ItemSheet {
 
       await this.document.update(updateData);
     }
-  }
-
-  async _onFilePickerAlt(event) {
-    const button = event.currentTarget;
-    const attr = button.dataset.for;
-    const current = getProperty(this.item.system, attr);
-    const form = button.form;
-    const targetField = form[attr];
-    if (!targetField) return;
-
-    const fp = new FilePicker({
-      type: button.dataset.type,
-      current: current,
-      callback: (path) => {
-        targetField.value = path;
-        if (this.options.submitOnChange) {
-          this._onSubmit(event);
-        }
-      },
-      top: this.position.top + 40,
-      left: this.position.left + 10,
-    });
-    fp.browse(current);
   }
 
   /**

@@ -1,6 +1,6 @@
 <form autocomplete="off" class="flexcol">
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{data.img}}" data-tooltip="{{data.name}}" data-edit="img">
+    <img class="profile" src="{{data.img}}" data-edit="img">
     <div class="header-details flexrow">
       <h1 class="action-name">
         <input name="name" type="text" value="{{data.name}}" placeholder="{{localize "PF1.ActionName"}}" />
@@ -50,9 +50,7 @@
         <label>{{localize "PF1.SoundEffect"}}</label>
         <div class="form-fields">
           <input type="text" name="soundEffect" placeholder="path/audio.wav" value="{{data.soundEffect}}"/>
-          <button type="button" class="file-picker-alt" data-for="soundEffect" data-type="audio">
-            <i class="fas fa-file-import fa-fw"></i>
-          </button>
+          {{filePicker target="soundEffect" type="audio"}}
         </div>
       </div>
     </div>

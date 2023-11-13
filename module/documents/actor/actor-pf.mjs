@@ -3924,7 +3924,7 @@ export class ActorPF extends ActorBasePF {
     // Add item dictionary flags
     result.dFlags = this.itemFlags?.dictionary ?? {};
 
-    result.range = this.system.traits.reach.total;
+    result.range = this.system.traits?.reach?.total ?? NaN;
 
     // Add class info
     result.classes = this.classes;

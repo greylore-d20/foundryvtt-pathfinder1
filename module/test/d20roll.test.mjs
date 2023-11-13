@@ -174,13 +174,14 @@ export function registerD20RollTests() {
             expect(message.rolls[0].total).to.equal(17);
             expect(message.whisper).to.include(game.user.id);
             expect(message.flags.pf1.subject).to.deep.equal({ test: true });
-            expect(message.sound).to.equal(null);
+            expect(message.sound).to.equal(undefined);
 
             // HTML
             const element = document.createElement("div");
             element.innerHTML = message.content;
             expect(element.querySelector(".flavor-text").textContent).to.include("Test");
-            expect(element.querySelector(".flavor-text").textContent).to.include(
+            expect(element.querySelector(".flavor-text i.abnormal.take-x")).to.exist;
+            expect(element.querySelector(".flavor-text i.abnormal.take-x").dataset.tooltip).to.equal(
               game.i18n.format("PF1.TakeX", { number: 12 })
             );
           });
@@ -244,7 +245,8 @@ export function registerD20RollTests() {
           const messageElement = document.createElement("div");
           messageElement.innerHTML = message.content;
           expect(messageElement.querySelector(".flavor-text").textContent).to.include("Test");
-          expect(messageElement.querySelector(".flavor-text").textContent).to.include(
+          expect(element.querySelector(".flavor-text i.abnormal.take-x")).to.exist;
+          expect(element.querySelector(".flavor-text i.abnormal.take-x").dataset.tooltip).to.equal(
             game.i18n.format("PF1.TakeX", { number: 13 })
           );
         });

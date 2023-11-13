@@ -101,10 +101,9 @@ export const customRolls = function (message, speaker, rollData) {
     const type = RegExp.$1?.toUpperCase();
     const value = RegExp.$2;
     const flavor = RegExp.$3;
-    const cMsg = CONFIG.ChatMessage.documentClass;
 
-    speaker = speaker ?? cMsg.getSpeaker();
-    const actor = cMsg.getSpeakerActor(speaker);
+    speaker = speaker ?? ChatMessage.implementation.getSpeaker();
+    const actor = ChatMessage.implementation.getSpeakerActor(speaker);
     const scene = speaker.scene ? game.scenes.get(speaker.scene) : canvas.scene;
     const tokenDocument = scene?.tokens.get(speaker.token);
     const tokenUuid = tokenDocument?.uuid;
@@ -115,7 +114,7 @@ export const customRolls = function (message, speaker, rollData) {
       case "H":
       case "HEAL": {
         rollData = rollData ?? actor?.getRollData() ?? {};
-        const roll = Roll.create(value, rollData).evaluate({ async: true });
+        const roll = new Roll(value, rollData).evaluate({ async: true });
 
         return roll.then(async (roll) => {
           const total = roll.total;
@@ -136,7 +135,7 @@ export const customRolls = function (message, speaker, rollData) {
             content: content,
             flags: { pf1: { subject: { health: isHealing ? "healing" : "damage" } } },
           };
-          cMsg.create(chatOptions);
+          ChatMessage.implementation.create(chatOptions);
         });
       }
     }

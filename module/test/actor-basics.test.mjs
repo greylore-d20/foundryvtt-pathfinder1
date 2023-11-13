@@ -28,7 +28,7 @@ export const registerActorBasicTests = () => {
         await actor.delete();
 
         // Clean messages
-        CONFIG.ChatMessage.documentClass.deleteDocuments(messages.map((o) => o.id));
+        ChatMessage.implementation.deleteDocuments(messages.map((o) => o.id));
       });
 
       describe("ActorPF basic rolls", function () {

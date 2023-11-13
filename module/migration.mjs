@@ -397,7 +397,7 @@ export function migrateActorData(actor, token) {
   if (!actor.items) return updateData;
   const items = actor.items.reduce((arr, i) => {
     // Migrate the Owned Item
-    const itemData = i instanceof CONFIG.Item.documentClass ? i.toObject() : i;
+    const itemData = i instanceof Item ? i.toObject() : i;
     const itemUpdate = migrateItemData(itemData, actor);
 
     // Update the Owned Item

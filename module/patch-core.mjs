@@ -16,9 +16,6 @@ Hooks.once("init", () => {
   });
 });
 
-/**
- *
- */
 // Add inline support for extra /commands
 {
   const origParse = ChatLog.parse;
@@ -38,9 +35,8 @@ Hooks.once("init", () => {
     if (!a.classList.contains("custom")) return origClick.call(this, event);
 
     const chatMessage = `/${a.dataset.formula}`;
-    const cMsg = CONFIG.ChatMessage.documentClass;
-    const speaker = cMsg.getSpeaker();
-    const actor = cMsg.getSpeakerActor(speaker);
+    const speaker = ChatMessage.implementation.getSpeaker();
+    const actor = ChatMessage.implementation.getSpeakerActor(speaker);
     let rollData = actor ? actor.getRollData() : {};
 
     const sheet = a.closest(".sheet");

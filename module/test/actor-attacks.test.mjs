@@ -25,7 +25,7 @@ export const registerActorItemAttackTests = () => {
       });
       after(async () => {
         await actor.delete();
-        await CONFIG.ChatMessage.documentClass.deleteDocuments(messages.map((o) => o.id));
+        await ChatMessage.implementation.deleteDocuments(messages.map((o) => o.id));
       });
 
       describe("longsword", function () {

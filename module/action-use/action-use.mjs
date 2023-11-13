@@ -761,7 +761,7 @@ export class ActionUse {
       try {
         // Define common visibility options for whole attack
         const chatData = {};
-        ChatMessage.applyRollMode(chatData, this.shared.rollMode);
+        ChatMessage.implementation.applyRollMode(chatData, this.shared.rollMode);
 
         const mergeRolls = game.settings.get("dice-so-nice", "enabledSimultaneousRolls");
         const skipRolls = game.settings.get("dice-so-nice", "immediatelyDisplayChatMessages");

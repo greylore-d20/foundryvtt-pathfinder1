@@ -329,15 +329,14 @@ export class D20RollPF extends RollPF {
     messageData.rolls = [this]; // merge/expandObject would otherwise destroy the `Roll` instance
     if (options.subject) foundry.utils.setProperty(messageData, "flags.pf1.subject", options.subject);
 
-    const messageClass = ChatMessage.implementation;
-    const message = new messageClass(messageData);
+    const message = new ChatMessage.implementation(messageData);
     const messageObject = message.toObject();
 
     const create = options.create ?? true;
     if (create) {
-      return messageClass.create(message, { rollMode });
+      return ChatMessage.implementation.create(message, { rollMode });
     } else {
-      if (rollMode) messageClass.applyRollMode(messageObject, rollMode);
+      if (rollMode) ChatMessage.implementation.applyRollMode(messageObject, rollMode);
       return messageObject;
     }
   }

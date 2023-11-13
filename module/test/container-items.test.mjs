@@ -39,7 +39,7 @@ export const registerContainerItemTests = () => {
         await actor.delete();
 
         // Clean messages
-        await CONFIG.ChatMessage.documentClass.deleteDocuments(messages.map((o) => o.id));
+        await ChatMessage.implementation.deleteDocuments(messages.map((o) => o.id));
 
         // Reset settings
         await game.settings.set("pf1", "units", settingUnits);
@@ -48,7 +48,7 @@ export const registerContainerItemTests = () => {
 
       describe("basic container item", function () {
         before(async () => {
-          items.container = await CONFIG.Item.documentClass.create(
+          items.container = await Item.implementation.create(
             {
               name: "Some Container",
               type: "container",
@@ -126,7 +126,7 @@ export const registerContainerItemTests = () => {
               });
 
               it("create a message", function () {
-                expect(roll instanceof CONFIG.ChatMessage.documentClass).to.be.true;
+                expect(roll instanceof ChatMessage.implementation).to.be.true;
               });
               it("have the right formula", function () {
                 expect(roll.flags.pf1.metadata.rolls.attacks[0].attack.formula).to.equal("1d20 + 2[Dexterity]");

@@ -119,7 +119,7 @@ export const sizeReach = function (size = "M", reach = false, stature = "tall") 
 
   return [
     new NumericTerm({
-      number: Actor.implementation.getReach(size, stature)[reach ? "reach" : "melee"],
+      number: pf1.documents.actor.ActorPF.getReach(size, stature)[reach ? "reach" : "melee"],
     }),
   ];
 };

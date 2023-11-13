@@ -168,9 +168,6 @@
         <label class="checkbox nonlethal">
           <input type="checkbox" name="system.nonlethal" {{checked system.nonlethal}}/> {{localize "PF1.Nonlethal"}}
         </label>
-        <label class="checkbox">
-          <input type="checkbox" name="system.proficient" {{checked system.proficient}}/> {{localize "PF1.ProficientAttack"}}
-        </label>
       </div>
 
       <h4 class="form-header">{{localize "PF1.Misc"}}</h4>
@@ -181,6 +178,10 @@
           <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
         </label>
         {{/if}}
+
+        <label class="checkbox">
+          <input type="checkbox" name="system.proficient" {{checked system.proficient}}/> {{localize "PF1.ProficientAttack"}}
+        </label>
       </div>
 
       {{> "systems/pf1/templates/items/parts/item-aura.hbs"}}

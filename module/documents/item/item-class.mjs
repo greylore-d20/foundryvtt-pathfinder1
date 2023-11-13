@@ -134,8 +134,7 @@ export class ItemClassPF extends ItemPF {
         // Put new items at end of their types
         const _typeSorting = {};
         for (const item of itemsCreationData) {
-          _typeSorting[item.type] ??=
-            actor.items.filter((i) => i.type === item.type).sort((a, b) => b.sort - a.sort)[0]?.sort ?? 0;
+          _typeSorting[item.type] ??= actor.itemTypes[item.type].sort((a, b) => b.sort - a.sort)[0]?.sort ?? 0;
           _typeSorting[item.type] += CONST.SORT_INTEGER_DENSITY;
           item.sort = _typeSorting[item.type];
         }

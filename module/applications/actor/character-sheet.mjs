@@ -45,7 +45,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     data.disableExperience = xpSettings.disableExperienceTracking;
     data.minimumExperience = this.actor.getLevelExp(Math.max(0, (this.actor.system.details.level.value ?? 0) - 1));
 
-    data.hasClasses = this.actor.items.filter((o) => o.type === "class").length > 0;
+    data.hasClasses = this.actor.itemTypes.class.length > 0;
 
     const hpSettings = game.settings.get("pf1", "healthConfig");
     data.woundThresholds = hpSettings.variants.pc;

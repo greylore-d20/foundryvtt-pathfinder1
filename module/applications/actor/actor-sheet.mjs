@@ -202,8 +202,14 @@ export class ActorSheetPF extends ActorSheet {
    */
   async getData(options) {
     const isOwner = this.document.isOwner;
-    const data = mergeObject(await super.getData(options), {
+
+    const data = {
+      actor: this.actor,
+      document: this.actor,
+      effects: this.actor.effects,
+      options: this.options,
       owner: isOwner,
+      itemTypes: this.actor.itemTypes,
       limited: this.document.limited,
       editable: this.isEditable,
       cssClass: isOwner ? "editable" : "locked",
@@ -216,7 +222,10 @@ export class ActorSheetPF extends ActorSheet {
       usesAnySpellbook: this.document.system.attributes.spells.usedSpellbooks?.length > 0 ?? false,
       sourceData: {},
       skillsLocked: this._skillsLocked,
-    });
+    };
+
+    Object.values(data.itemTypes).forEach((items) => items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
+
     const rollData = this.document.getRollData();
     data.rollData = rollData;
     data.system = deepClone(this.document.system);
@@ -249,6 +258,7 @@ export class ActorSheetPF extends ActorSheet {
       i.type = item.type;
       i.id = item.id;
       i.img = item.img;
+      i.isPhysical = item.isPhysical ?? false;
       i.isSingleUse = item.isSingleUse;
       i.isCharged = item.isCharged;
       i.hasResource = i.isCharged && !i.isSingleUse;
@@ -525,14 +535,12 @@ export class ActorSheetPF extends ActorSheet {
       // Feat count
       // By level
       data.featCount = {};
-      data.featCount.value = this.actor.items.filter(
-        (o) => o.type === "feat" && o.system.subType === "feat" && !o.system.disabled
+      data.featCount.value = this.actor.itemTypes.feat.filter(
+        (feat) => feat.subType === "feat" && feat.isActive
       ).length;
-      const totalLevels = this.document.items
-        .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.system.subType))
-        .reduce((cur, o) => {
-          return cur + o.hitDice;
-        }, 0);
+      const totalLevels = this.actor.itemTypes.class
+        .filter((cls) => ["base", "npc", "prestige", "racial"].includes(cls.subType))
+        .reduce((cur, cls) => cur + cls.hitDice, 0);
       data.featCount.byLevel = Math.ceil(totalLevels / 2);
       sourceData.push({
         name: game.i18n.localize("PF1.Level"),
@@ -922,7 +930,7 @@ export class ActorSheetPF extends ActorSheet {
         if (hasTypeFilter && !filters.has(`type-${item.subType}`)) return false;
       }
 
-      if (item.document.isPhysical) {
+      if (item.isPhysical) {
         if (hasTypeFilter && item.type !== "loot" && !filters.has(`type-${item.type}`)) return false;
         else if (hasTypeFilter && item.type === "loot" && !filters.has(`type-${item.subType}`)) return false;
       }
@@ -2322,7 +2330,7 @@ export class ActorSheetPF extends ActorSheet {
     const item = this.document.items.get(itemId);
 
     const targets = game.actors.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o !== this.document);
-    targets.push(...this.document.items.filter((o) => o.type === "container"));
+    targets.push(...this.actor.itemTypes.container);
     targets.push(
       ...game.items.contents.filter((o) => o.testUserPermission(game.user, "OWNER") && o.type === "container")
     );
@@ -2543,16 +2551,17 @@ export class ActorSheetPF extends ActorSheet {
     };
 
     // Partition items by category
-    let [items, spells, feats, classes, attacks] = data.items.reduce(
+    let [items, spells, feats, classes, attacks, buffs] = data.items.reduce(
       (arr, item) => {
         if (item.type === "spell") arr[1].push(item);
         else if (item.type === "feat") arr[2].push(item);
         else if (item.type === "class") arr[3].push(item);
         else if (item.type === "attack") arr[4].push(item);
-        else if (item.document.isPhysical) arr[0].push(item);
+        else if (item.type === "buff") arr[5].push(item);
+        else if (item.isPhysical) arr[0].push(item);
         return arr;
       },
-      [[], [], [], [], []]
+      [[], [], [], [], [], []]
     );
 
     // Apply active item filters
@@ -2647,8 +2656,6 @@ export class ActorSheetPF extends ActorSheet {
     });
 
     // Buffs
-    let buffs = data.items.filter((obj) => obj.type === "buff");
-    buffs = this._filterItems(buffs, this._filters.buffs);
     const buffSections = {};
     Object.entries(pf1.config.buffTypes).forEach(([buffId, label]) => {
       buffSections[buffId] = {
@@ -2659,7 +2666,8 @@ export class ActorSheetPF extends ActorSheet {
       };
     });
 
-    for (const b of buffs) {
+    buffs = this._filterItems(buffs, this._filters.buffs);
+    for (const b of this._filterItems(buffs, this._filters.buffs)) {
       buffSections[b.subType]?.items.push(b);
     }
 

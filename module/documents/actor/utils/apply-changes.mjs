@@ -618,7 +618,7 @@ export const addDefaultChanges = function (changes) {
   changes.push(...tempChanges.filter((c) => c instanceof pf1.components.ItemChange));
 
   // Class hit points
-  const allClasses = this.items.filter((item) => item.type === "class").sort((a, b) => a.sort - b.sort);
+  const allClasses = this.itemTypes.class.sort((a, b) => a.sort - b.sort);
   // Categorize classes
   const [classes, racialHD] = allClasses.reduce(
     (all, cls) => {

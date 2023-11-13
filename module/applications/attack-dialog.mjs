@@ -109,7 +109,7 @@ export class AttackDialog extends Application {
 
   getAmmo() {
     const actor = this.object.actor;
-    const ammo = actor.items.filter(this._filterAmmo.bind(this));
+    const ammo = actor.itemTypes.loot.filter(this._filterAmmo.bind(this));
 
     return ammo.map((o) => {
       return {

@@ -45,7 +45,7 @@ export class ActorNPCPF extends ActorPF {
     const base = this.system.details?.cr?.base ?? 0;
 
     // Gather CR from templates
-    const templates = this.items.filter((item) => item.type === "feat" && item.subType === "template" && item.isActive);
+    const templates = this.itemTypes.feat.filter((item) => item.subType === "template" && item.isActive);
 
     return templates.reduce((cur, item) => {
       const crOffset = item.system.crOffset;

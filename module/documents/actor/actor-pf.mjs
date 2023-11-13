@@ -514,7 +514,7 @@ export class ActorPF extends ActorBasePF {
     Hooks.callAll("pf1PrepareBaseActorData", this);
 
     // Update total level and mythic tier
-    const classes = this.items.filter((o) => o.type === "class");
+    const classes = this.itemTypes.class;
     const { level, mythicTier } = classes.reduce(
       (cur, o) => {
         o.prepareDerivedData(); // HACK: Out of order preparation for later.
@@ -1042,7 +1042,7 @@ export class ActorPF extends ActorBasePF {
   _generateSpellbookCache() {
     const bookKeys = Object.keys(this.system.attributes.spells.spellbooks);
 
-    const allSpells = this.items.filter((i) => i.type === "spell");
+    const allSpells = this.itemTypes.spell;
 
     const cache = {
       spells: allSpells,
@@ -1373,7 +1373,7 @@ export class ActorPF extends ActorBasePF {
 
     // Reduce final speed under certain circumstances
     {
-      const armorItems = this.items.filter((o) => o.type === "equipment");
+      const armorItems = this.itemTypes.equipment;
       let reducedSpeed = false;
       const sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
       if (attributes.encumbrance.level >= pf1.config.encumbranceLevels.medium && !this.changeFlags["noEncumbrance"]) {
@@ -4120,8 +4120,7 @@ export class ActorPF extends ActorBasePF {
 
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
   _calcBuffActiveEffects() {
-    const buffs = this.items.filter((o) => o.type === "buff");
-    return buffs.reduce((acc, buff) => {
+    return this.itemTypes.buff.reduce((acc, buff) => {
       const id = buff.uuid;
       acc[id] ??= { id: buff.id, label: buff.name, icon: buff.img, item: buff };
       acc[id].active = buff.isActive;
@@ -4173,16 +4172,12 @@ export class ActorPF extends ActorBasePF {
    */
   getFeatCount() {
     const result = { max: 0, value: 0 };
-    result.value = this.items.filter((o) => {
-      return o.type === "feat" && o.system.subType === "feat" && !o.system.disabled;
-    }).length;
+    result.value = this.itemTypes.feat.filter((o) => o.subType === "feat" && o.isActive).length;
 
     // Add feat count by level
-    const totalLevels = this.items
-      .filter((o) => o.type === "class" && ["base", "npc", "prestige", "racial"].includes(o.system.subType))
-      .reduce((cur, o) => {
-        return cur + o.hitDice;
-      }, 0);
+    const totalLevels = this.itemTypes.class
+      .filter((cls) => ["base", "npc", "prestige", "racial"].includes(cls.subType))
+      .reduce((cur, cls) => cur + cls.hitDice, 0);
     result.max += Math.ceil(totalLevels / 2);
 
     // Bonus feat formula

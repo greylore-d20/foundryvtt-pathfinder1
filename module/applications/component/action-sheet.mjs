@@ -39,50 +39,56 @@ export class ItemActionSheet extends FormApplication {
     return `${this.item.name}: ${this.action.name}`;
   }
   get id() {
-    if (this.actor) return `actor-${this.actor.id}-item-${this.item.id}-action-${this.action.id}`;
-    return `item-${this.item.id}-action-${this.action.id}`;
+    return `item-${this.item.uuid}-action-${this.action.id}`;
   }
 
+  /** @type {ItemAction} */
   get action() {
     return this.object;
   }
+  /** @type {ItemPF} */
   get item() {
     return this.action.item;
   }
+  /** @type {ActorPF} */
   get actor() {
     return this.item.actor;
   }
 
   async getData() {
     const data = await super.getData();
-    data.action = this.action;
-    data.item = this.item;
-    data.actor = this.actor;
-    data.data = foundry.utils.mergeObject(this.action.constructor.defaultData, deepClone(this.action.data), {
+    const action = this.action;
+    const item = this.item;
+    const actor = this.actor;
+    data.action = action;
+    data.item = item;
+    data.actor = actor;
+    data.data = foundry.utils.mergeObject(action.constructor.defaultData, deepClone(action.data), {
       inplace: false,
     });
     data.damageTypes = pf1.registry.damageTypes.toObject();
-    data.rollData = this.object.getRollData();
+    data.rollData = action.getRollData();
 
     // Set tag
-    data.tag = createTag(data.action.name);
+    data.tag = createTag(action.name);
 
     // Include CONFIG values
     data.config = pf1.config;
 
     // Action Details
-    data.hasAttackRoll = this.action.hasAttack;
-    data.isHealing = data.data.actionType === "heal";
-    data.isCombatManeuver = ["mcman", "rcman"].includes(data.data.actionType);
-    data.hasAttack = ["mwak", "rwak", "msak", "rsak", "mcman", "rcman"].includes(data.data.actionType);
+    data.hasAttackRoll = action.hasAttack;
+    data.actionType = data.data.actionType;
+    data.isHealing = data.actionType === "heal";
+    data.isCombatManeuver = ["mcman", "rcman"].includes(data.actionType);
+    data.hasAttack = ["mwak", "rwak", "msak", "rsak", "mcman", "rcman"].includes(data.actionType);
     // Can have crit and non-crit damage, or simply show them if they've been defined.
     data.hasCritDamage = data.hasAttack || data.data.damage?.critParts?.length > 0;
     data.hasNonCritDamage = data.hasAttack || data.data.damage?.nonCritParts?.length > 0;
 
-    data.isCharged = this.action.isCharged;
-    data.isSelfCharged = this.action.isSelfCharged;
+    data.isCharged = action.isCharged;
+    data.isSelfCharged = action.isSelfCharged;
     data.showMaxChargeFormula = ["day", "week", "charges"].includes(data.data.uses.self.per);
-    if (this.action.hasRange) {
+    if (action.hasRange) {
       data.canInputRange = ["ft", "mi", "spec"].includes(data.data.range.units);
       data.canInputMinRange = ["ft", "mi", "spec"].includes(data.data.range.minUnits);
     }
@@ -91,18 +97,18 @@ export class ItemActionSheet extends FormApplication {
     }
 
     // Action Details
-    data.itemName = data.item.name;
-    data.itemEnh = data.item.system.enh || 0;
-    data.isSpell = this.item.type === "spell";
-    data.usesSpellPoints = this.item.spellbook?.spellPoints.useSystem;
-    data.defaultChargeFormula = this.item.getDefaultChargeFormula();
-    data.canUseAmmo = this.action.data.usesAmmo !== undefined;
-    data.owned = this.item.actor != null;
-    data.parentOwned = this.actor != null;
-    data.owner = this.item.isOwner;
+    data.itemName = item.name;
+    data.itemEnh = item.system.enh || 0;
+    data.isSpell = item.type === "spell";
+    data.usesSpellPoints = item.spellbook?.spellPoints.useSystem;
+    data.defaultChargeFormula = item.getDefaultChargeFormula();
+    data.canUseAmmo = action.data.usesAmmo !== undefined;
+    data.owned = actor != null;
+    data.parentOwned = actor != null;
+    data.owner = item.isOwner;
     data.isGM = game.user.isGM;
     data.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
-    data.activation = this.action.activation;
+    data.activation = action.activation;
     data.hasActivationType = data.activation.type;
     data.abilityActivationTypes = data.unchainedActionEconomy
       ? pf1.config.abilityActivationTypes_unchained
@@ -119,14 +125,14 @@ export class ItemActionSheet extends FormApplication {
     data.showMaxRangeIncrements = data.data.range.units === "ft";
 
     // Prepare attack specific stuff
-    if (data.item.type === "attack") {
-      data.isWeaponAttack = data.item.system.subType === "weapon";
-      data.isNaturalAttack = data.item.system.subType === "natural";
+    if (item.type === "attack") {
+      data.isWeaponAttack = item.system.subType === "weapon";
+      data.isNaturalAttack = item.system.subType === "natural";
     }
 
     // Add distance units
     data.distanceUnits = deepClone(pf1.config.distanceUnits);
-    if (this.item.type !== "spell") {
+    if (item.type !== "spell") {
       for (const d of ["close", "medium", "long"]) {
         delete data.distanceUnits[d];
       }
@@ -136,10 +142,10 @@ export class ItemActionSheet extends FormApplication {
     if (data.data.conditionals) {
       for (const conditional of data.data.conditionals) {
         for (const modifier of conditional.modifiers) {
-          modifier.targets = this.object.getConditionalTargets();
-          modifier.subTargets = this.object.getConditionalSubTargets(modifier.target);
-          modifier.conditionalModifierTypes = this.object.getConditionalModifierTypes(modifier.target);
-          modifier.conditionalCritical = this.object.getConditionalCritical(modifier.target);
+          modifier.targets = action.getConditionalTargets();
+          modifier.subTargets = action.getConditionalSubTargets(modifier.target);
+          modifier.conditionalModifierTypes = action.getConditionalModifierTypes(modifier.target);
+          modifier.conditionalCritical = action.getConditionalCritical(modifier.target);
         }
       }
     }
@@ -151,7 +157,7 @@ export class ItemActionSheet extends FormApplication {
    * Copy from core DocumentSheet#isEditable
    */
   get isEditable() {
-    const parentItem = this.object.item;
+    const parentItem = this.item;
     let editable = this.options.editable && parentItem.isOwner;
     if (parentItem.pack) {
       const pack = game.packs.get(parentItem.pack);

@@ -85,7 +85,7 @@ export class ExperienceDistributor extends FormApplication {
 
     // Add actor
     if (data.type === "Actor") {
-      const actor = await Actor.implementation.fromDropData(data);
+      const actor = await pf1.documents.actor.ActorPF.fromDropData(data);
 
       // Prevent duplicate characters (not NPCs)
       if (actor.type !== "character" || this.object.find((o) => o.actor === actor) == null) {

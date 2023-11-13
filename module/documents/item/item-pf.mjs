@@ -239,9 +239,12 @@ export class ItemPF extends ItemBasePF {
     return this.isSingleUse || ["day", "week", "charges"].includes(this.system.uses?.per);
   }
 
-  /**
-   * @type {number} Remaining charges
-   */
+  /** @type {boolean} Does the item has finite number of charges */
+  get hasFiniteCharges() {
+    return this.isSingleUse || ["charges"].includes(this.system.uses?.per);
+  }
+
+  /** @type {number} Remaining charges */
   get charges() {
     // No actor? No charges!
     if (!this.actor) return 0;
@@ -1881,6 +1884,10 @@ export class ItemPF extends ItemBasePF {
 
       if (inLowestDenomination) value *= 100;
       if (this.system.broken) value *= 0.75; // TODO: Make broken value configurable
+      if (this.system.timeworn) {
+        if (this.hasFiniteCharges && this.charges === 0) value *= 0.01;
+        else value *= 0.5;
+      }
       return value;
     };
 

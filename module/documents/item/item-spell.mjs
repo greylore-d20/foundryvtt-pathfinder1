@@ -250,6 +250,12 @@ export class ItemSpellPF extends ItemPF {
     return true;
   }
 
+  /** @inheritdoc */
+  get hasFiniteCharges() {
+    if (this.system.atWill) return false;
+    return this.getDefaultChargeCost() > 0;
+  }
+
   get charges() {
     return this.getSpellUses();
   }

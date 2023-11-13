@@ -38,10 +38,27 @@
   {{/if}}
 </div>
 
+<div class="form-group stacked">
+  {{#if @root.isGM}}
+  <label class="checkbox cursed">
+    <input type="checkbox" name="system.cursed" {{checked system.cursed}}/> {{localize "PF1.Cursed"}}
+  </label>
+  {{/if}}
+</div>
+
 {{!-- Identify DC --}}
 {{#if isGM}}
-<div class="form-group">
-  <label>{{labels.identify}}</label>
+<div class="form-group identification">
+  <div class='base-dc'>
+    <label>{{localize "PF1.IdentifyDC"}}</label>
+    <span class='value'>{{identify.dc}}</span>
+  </div>
+  {{#if system.cursed}}
+  <div class='curse-dc'>
+    <label>{{localize "PF1.IdentifyCurseDC"}}</label>
+    <span class='value'>{{identify.curse}}</span>
+  </div>
+  {{/if}}
 </div>
 {{/if}}
 {{/unless}}

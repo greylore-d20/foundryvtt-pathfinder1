@@ -88,12 +88,18 @@
         {{/unless}}
       {{/if}}
 
-      <h3 class="form-header">{{localize "PF1.Misc"}}</h3>
+      <h3 class="form-header">{{localize "PF1.Properties"}}</h3>
 
-      {{#if isGM}}
+      {{#if @root.showIdentifiedData}}
       <div class="form-group stacked">
+        {{#if isGM}}
         <label class="checkbox">
           <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{localize "PF1.Identified"}}
+        </label>
+        {{/if}}
+
+        <label class="checkbox artifact">
+          <input type="checkbox" name="system.artifact" {{checked system.artifact}}/> {{localize "PF1.Artifact"}}
         </label>
       </div>
       {{/if}}

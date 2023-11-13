@@ -134,7 +134,11 @@ export class ItemSheetPF extends ItemSheet {
     context.hasAction = item.hasAction;
     context.showIdentifyDescription = context.isGM && context.isPhysical;
     context.showUnidentifiedData = item.showUnidentifiedData;
+    context.showIdentifiedData = !context.showUnidentifiedData;
     context.unchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
+
+    // Identification information
+    context.identify ??= {};
     if (rollData.item.auraStrength != null) {
       const auraStrength = rollData.item.auraStrength;
       context.auraStrength = auraStrength;
@@ -142,7 +146,8 @@ export class ItemSheetPF extends ItemSheet {
       if (pf1.config.auraStrengths[auraStrength]) {
         context.auraStrength_name = pf1.config.auraStrengths[auraStrength];
 
-        context.labels.identify = game.i18n.format("PF1.IdentifyDCNumber", { dc: 15 + rollData.item.cl });
+        context.identify.dc = 15 + rollData.item.cl;
+        context.identify.curse = context.identify.dc + 10;
       }
     }
 

@@ -16,6 +16,7 @@
   - Concepts
     - [Description](Help/Items/Description)
     - [Changes](Help/Items/Changes)
+    - [Actions](Help/Items/Actions)
     - [Flags](Help/Items/Flags)
     - [Script Calls](Help/Items/Script-Calls)
 - Special

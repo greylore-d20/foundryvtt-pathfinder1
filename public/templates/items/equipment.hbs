@@ -154,6 +154,11 @@
         <label class="checkbox">
           <input type="checkbox" name="system.masterwork" {{checked system.masterwork}}/> {{localize "PF1.Masterwork"}}
         </label>
+        {{#if @root.showIdentifiedData}}
+        <label class="checkbox artifact">
+          <input type="checkbox" name="system.artifact" {{checked system.artifact}}/> {{localize "PF1.Artifact"}}
+        </label>
+        {{/if}}
         <label class="checkbox broken">
           <input type="checkbox" name="system.broken" {{checked system.broken}}/> {{localize "PF1.Broken"}}
         </label>

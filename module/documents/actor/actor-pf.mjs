@@ -513,6 +513,13 @@ export class ActorPF extends ActorBasePF {
     this._resetInherentTotals();
     Hooks.callAll("pf1PrepareBaseActorData", this);
 
+    // Prepare base reach
+    this.system.traits.reach ??= {};
+    this.system.traits.reach.base = this.constructor.getReach(this.system.traits.size, this.system.traits.stature);
+    // TODO: The following should be produced by change system
+    this.system.traits.reach.natural = this.system.traits.reach.base;
+    this.system.traits.reach.total = this.system.traits.reach.base;
+
     // Update total level and mythic tier
     const classes = this.itemTypes.class;
     const { level, mythicTier } = classes.reduce(
@@ -3917,8 +3924,7 @@ export class ActorPF extends ActorBasePF {
     // Add item dictionary flags
     result.dFlags = this.itemFlags?.dictionary ?? {};
 
-    // Add range info
-    result.range = this.constructor.getReach(this.system.traits.size, this.system.traits.stature);
+    result.range = this.system.traits.reach.total;
 
     // Add class info
     result.classes = this.classes;

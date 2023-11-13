@@ -8,6 +8,7 @@ export class ActionChooser extends Application {
   constructor(item, options = {}) {
     super(options);
 
+    this.useOptions = {};
     this.item = item;
   }
 
@@ -18,6 +19,7 @@ export class ActionChooser extends Application {
       width: 400,
     });
   }
+
   get title() {
     return game.i18n.format("PF1.Application.ActionChooser.Title", {
       actor: this.item.actor.name ?? "",
@@ -43,8 +45,8 @@ export class ActionChooser extends Application {
   _onClickAction(event) {
     event.preventDefault();
 
-    const id = event.currentTarget.dataset?.action;
-    this.item.use({ actionID: id, skipDialog: getSkipActionPrompt() });
+    const actionID = event.currentTarget.dataset?.action;
+    this.item.use({ ...this.useOptions, actionID, skipDialog: getSkipActionPrompt() });
     this.close();
   }
 }

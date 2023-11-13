@@ -1234,7 +1234,9 @@ export class ItemPF extends ItemBasePF {
       if (actionID) {
         action = this.actions.get(actionID);
       } else if (this.system.actions.length > 1 && skipDialog !== true) {
-        new pf1.applications.ActionChooser(this).render(true, { focus: true });
+        const selector = new pf1.applications.ActionChooser(this);
+        selector.useOptions = { ev, chatMessage, dice, rollMode, token };
+        selector.render(true, { focus: true });
         return;
       } else {
         action = this.firstAction;

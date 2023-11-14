@@ -1980,16 +1980,18 @@ export class ActorPF extends ActorBasePF {
   /**
    * @override
    * @param {Item|Actor} parent - Parent document
-   * @param {"Item"|"ActiveEffect"} embeddedName
-   * @param {Item[]|ActiveEffect[]} documents
-   * @param {*} result
-   * @param {object} context
-   * @param {string} userId
+   * @param {"items"|"effects"} collection - Collection name
+   * @param {Item[]|ActiveEffect[]} documents - Created documents
+   * @param {object[]} result - Creation data for the documents
+   * @param {object} context - Create context
+   * @param {string} userId - Triggering user's ID
    */
-  _onCreateDescendantDocuments(parent, embeddedName, documents, result, options, userId) {
+  _onCreateDescendantDocuments(parent, collection, documents, result, options, userId) {
     super._onCreateDescendantDocuments(...arguments);
 
-    if (userId === game.user.id && embeddedName === "Item") {
+    if (userId !== game.user.id) return;
+
+    if (collection === "items") {
       // Creating anything but active buffs should not prompt toggling conditions
       if (documents.some((item) => item.type === "buff" && item.isActive)) {
         this.toggleConditionStatusIcons({ render: false });
@@ -2006,16 +2008,18 @@ export class ActorPF extends ActorBasePF {
   /**
    * @override
    * @param {Item|Actor} parent - Parent document
-   * @param {"Item"|"ActiveEffect"} embeddedName
-   * @param {Item[]|ActiveEffect[]} documents
-   * @param {*} result
-   * @param {object} context
-   * @param {string} userId
+   * @param {"items"|"effects"} collection - Collection name
+   * @param {Item[]|ActiveEffect[]} documents - Updated documents
+   * @param {object[]} result - Document update data
+   * @param {object} context - Update context
+   * @param {string} userId - Triggering user ID
    */
-  _onUpdateDescendantDocuments(parent, embeddedName, documents, result, context, userId) {
-    super._onUpdateDescendantDocuments(parent, embeddedName, documents, result, context, userId);
+  _onUpdateDescendantDocuments(parent, collection, documents, result, context, userId) {
+    super._onUpdateDescendantDocuments(parent, collection, documents, result, context, userId);
 
-    if (userId === game.user.id && embeddedName === "Item") {
+    if (userId !== game.user.id) return;
+
+    if (collection === "items") {
       // Toggle conditions only if updated items included buffs and the buff's active state was changed
       if (
         documents.some(

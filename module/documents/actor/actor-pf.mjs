@@ -1898,6 +1898,7 @@ export class ActorPF extends ActorBasePF {
 
     // Backwards compatibility
     const conditions = changed.system.attributes?.conditions;
+
     if (conditions) {
       foundry.utils.logCompatibilityWarning(
         "Toggling conditions via Actor.update() is deprecated in favor of Actor.setCondition()",
@@ -3067,6 +3068,18 @@ export class ActorPF extends ActorBasePF {
     const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, chatData);
   }
 
+  _deprecatePF1PrefixConditions(key) {
+    if (/^pf1_/.test(key)) {
+      const newKey = key.replace(/^pf1_/, "");
+      foundry.utils.logCompatibilityWarning(`Condition "${key}" is deprecated in favor of "${newKey}"`, {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      });
+      key = newKey;
+    }
+    return key;
+  }
+
   /**
    * Easy way to toggle a condition.
    *
@@ -3106,6 +3119,15 @@ export class ActorPF extends ActorBasePF {
    */
   async setConditions(conditions = {}, context = {}) {
     conditions = deepClone(conditions);
+
+    // Backgrounds compatibility
+    for (const key of Object.keys(conditions)) {
+      const newKey = this._deprecatePF1PrefixConditions(key);
+      if (newKey !== key) {
+        conditions[newKey] = conditions[key];
+        delete conditions[key];
+      }
+    }
 
     // Handle Condition tracks
     const tracks = Object.values(pf1.config.conditionTracks);
@@ -3192,6 +3214,7 @@ export class ActorPF extends ActorBasePF {
    * @returns {boolean} Condition state
    */
   hasCondition(conditionId) {
+    conditionId = this._deprecatePF1PrefixConditions(conditionId);
     return this.statuses.has(conditionId);
   }
 

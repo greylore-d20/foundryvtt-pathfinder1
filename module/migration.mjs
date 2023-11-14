@@ -411,17 +411,8 @@ export function migrateActorData(actorData, token, { actor } = {}) {
   }, []);
   if (items.length > 0) updateData.items = items;
 
-  // Migate Active Effects
-  const effects = [];
-  for (const ae of actorData.effects) {
-    const aeUpdate = migrateActiveEffectData(ae, actor);
-    if (!foundry.utils.isEmpty(aeUpdate)) {
-      aeUpdate._id = ae._id;
-      effects.push(aeUpdate);
-    }
-  }
-
-  if (effects.length) updateData.effects = effects;
+  // Active Effects
+  _migrateActorActiveEffects(actorData, updateData, actor);
 
   // Record migrated version
   if (!foundry.utils.isEmpty(updateData)) {
@@ -2119,6 +2110,32 @@ const _migrateItemUnusedData = (item, updateData) => {
   }
 };
 
+/**
+ * Migrate Active Effect data.
+ * - Removes pf1_ status ID prefixes.
+ *
+ * Added with PF1 vNEXT
+ *
+ * @param {object} actorData - Actor data
+ * @param {object} updateData - Update data
+ * @param {object} [options={}] - Additional options
+ * @param {Actor} [options.actor] - Actor document
+ * @param actor
+ */
+const _migrateActorActiveEffects = (actorData, updateData, actor) => {
+  // Migate Active Effects
+  const effects = [];
+  for (const ae of actorData.effects ?? []) {
+    const aeUpdate = migrateActiveEffectData(ae, actor);
+    if (!foundry.utils.isEmpty(aeUpdate)) {
+      aeUpdate._id = ae._id;
+      effects.push(aeUpdate);
+    }
+  }
+
+  if (effects.length) updateData.effects = effects;
+};
+
 const _migrateActorUnusedData = (actor, updateData) => {
   // Obsolete vision
   if (getProperty(actor.system, "attributes.vision") !== undefined) {
@@ -2219,6 +2236,11 @@ const migrateActiveEffectData = (ae, actor) => {
     if (newOrigin && ae.origin !== newOrigin) {
       updateData.origin = newOrigin;
     }
+  }
+
+  // Remove pf1_ prefix from status effects
+  if (ae.statuses.some((s) => s.startsWith("pf1_"))) {
+    updateData.statuses = Array.from(new Set(ae.statuses.map((s) => s.replace(/^pf1_/, ""))));
   }
 
   return updateData;

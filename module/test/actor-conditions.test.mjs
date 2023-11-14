@@ -173,10 +173,10 @@ export const registerActorConditionsTests = () => {
       // ---------------------------------- //
       describe("blind", function () {
         before(async () => {
-          await actor.setCondition("pf1_blind", true);
+          await actor.setCondition("blind", true);
         });
         after(async () => {
-          await actor.setCondition("pf1_blind", false);
+          await actor.setCondition("blind", false);
         });
 
         it("lowered AC by 2", async function () {

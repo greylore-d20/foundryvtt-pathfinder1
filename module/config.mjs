@@ -1757,10 +1757,10 @@ export const conditionTypes = {
 
 export const conditions = {
   bleed: "PF1.CondBleed",
-  pf1_blind: "PF1.CondBlind",
+  blind: "PF1.CondBlind",
   confused: "PF1.CondConfused",
   dazzled: "PF1.CondDazzled",
-  pf1_deaf: "PF1.CondDeaf",
+  deaf: "PF1.CondDeaf",
   entangled: "PF1.CondEntangled",
   fatigued: "PF1.CondFatigued",
   exhausted: "PF1.CondExhausted",
@@ -1770,7 +1770,7 @@ export const conditions = {
   invisible: "PF1.CondInvisible",
   paralyzed: "PF1.CondParalyzed",
   pinned: "PF1.CondPinned",
-  pf1_prone: "PF1.CondProne",
+  prone: "PF1.CondProne",
   staggered: "PF1.CondStaggered",
   stunned: "PF1.CondStunned",
   shaken: "PF1.CondShaken",
@@ -1779,7 +1779,7 @@ export const conditions = {
   sickened: "PF1.CondSickened",
   nauseated: "PF1.CondNauseated",
   dazed: "PF1.CondDazed",
-  pf1_sleep: "PF1.CondSleep",
+  sleep: "PF1.CondSleep",
   cowering: "PF1.CondCowering",
   squeezing: "PF1.CondSqueezing",
 };
@@ -1793,7 +1793,7 @@ export const conditionTracks = {
 };
 
 export const conditionMechanics = {
-  pf1_blind: {
+  blind: {
     changes: [
       {
         formula: -2,
@@ -1812,7 +1812,7 @@ export const conditionMechanics = {
       },
     ],
   },
-  pf1_deaf: {
+  deaf: {
     changes: [
       {
         formula: -4,
@@ -1861,7 +1861,7 @@ export const conditionMechanics = {
       },
     ],
   },
-  pf1_sleep: {
+  sleep: {
     changes: [
       {
         formula: 0,
@@ -1893,7 +1893,7 @@ export const conditionMechanics = {
       },
     ],
   },
-  pf1_prone: {
+  prone: {
     changes: [
       {
         formula: -4,
@@ -2093,10 +2093,10 @@ export const conditionMechanics = {
 
 export const conditionTextures = {
   bleed: "systems/pf1/icons/conditions/bleed.png",
-  pf1_blind: "systems/pf1/icons/conditions/blind.png",
+  blind: "systems/pf1/icons/conditions/blind.png",
   confused: "systems/pf1/icons/conditions/confused.png",
   dazzled: "systems/pf1/icons/conditions/dazzled.png",
-  pf1_deaf: "systems/pf1/icons/conditions/deaf.png",
+  deaf: "systems/pf1/icons/conditions/deaf.png",
   entangled: "systems/pf1/icons/conditions/entangled.png",
   fatigued: "systems/pf1/icons/conditions/fatigued.png",
   exhausted: "systems/pf1/icons/conditions/exhausted.png",
@@ -2106,7 +2106,7 @@ export const conditionTextures = {
   invisible: "systems/pf1/icons/conditions/invisible.png",
   paralyzed: "systems/pf1/icons/conditions/paralyzed.png",
   pinned: "systems/pf1/icons/conditions/pinned.png",
-  pf1_prone: "systems/pf1/icons/conditions/prone.png",
+  prone: "systems/pf1/icons/conditions/prone.png",
   sickened: "systems/pf1/icons/conditions/sickened.png",
   staggered: "systems/pf1/icons/conditions/staggered.png",
   stunned: "systems/pf1/icons/conditions/stunned.png",
@@ -2115,7 +2115,7 @@ export const conditionTextures = {
   panicked: "systems/pf1/icons/conditions/fear.png",
   nauseated: "systems/pf1/icons/conditions/nauseated.png",
   dazed: "systems/pf1/icons/conditions/dazed.png",
-  pf1_sleep: "systems/pf1/icons/conditions/sleep.png",
+  sleep: "systems/pf1/icons/conditions/sleep.png",
   cowering: "systems/pf1/icons/conditions/screaming.png",
   squeezing: "systems/pf1/icons/conditions/squeezing.png",
 };

@@ -405,6 +405,9 @@
         {{/unless}}
         <div class="spell-max" data-tooltip="PF1.SpellsTotalEachDay">
           <span class="{{#if ../spellbook.orig.autoSpellLevelCalculation}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="system.attributes.spells.spellbooks.{{../bookId}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
+          {{#if (gt preparation.domain 0)}}
+          <span class="domain-bonus-slots">{{numberFormat preparation.domain sign=true}}</span>
+          {{/if}}
         </div>
         {{else}}
         <span class="spell-slots">{{{section.uses}}}</span>

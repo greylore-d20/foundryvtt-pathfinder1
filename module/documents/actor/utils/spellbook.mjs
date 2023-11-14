@@ -78,20 +78,28 @@ export class SpellbookLevel {
 }
 
 export class SpellbookSlots {
-  max;
-  value;
-  domain;
-  domainMax;
+  max = 0;
+  value = 0;
+  domain = 0;
+  domainMax = 0;
   domainUnused = 0;
   used = 0;
+  total = 0;
 
-  constructor({ value = 0, max = 0, domain = 0 } = {}) {
-    this.value = value ?? 0;
-    this.max = max ?? 0;
+  /**
+   * @param {object} options - Options
+   * @param {number} options.max - Maximum normal spells
+   * @param {number} options.domain - Maximum domain spells
+   */
+  constructor({ max = 0, domain = 0 } = {}) {
+    this.value = max + domain;
+    this.max = max;
 
-    this.domain = domain ?? 0;
-    this.domainMax = this.domain;
-    this.domainUnused = this.domainMax;
+    this.domain = domain;
+    this.domainMax = domain;
+    this.domainUnused = domain;
+
+    this.total = max + domain;
   }
 }
 

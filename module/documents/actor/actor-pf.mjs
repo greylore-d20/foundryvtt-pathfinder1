@@ -921,7 +921,7 @@ export class ActorPF extends ActorBasePF {
       const slots = {};
       for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
         slots[spellLevel] = new SpellbookSlots({
-          value: book.spells[`spell${spellLevel}`].max,
+          max: book.spells[`spell${spellLevel}`].max ?? 0,
           domain: book.domainSlotValue ?? 0,
         });
       }
@@ -929,20 +929,19 @@ export class ActorPF extends ActorBasePF {
       // Slot usage
       if (!book.spontaneous) {
         for (let level = 0; level < 10; level++) {
+          /** @type {pf1.documents.item.ItemSpellPF[]} */
           const levelSpells = bookInfo.level[level]?.spells ?? [];
           const lvlSlots = slots[level];
           for (const spell of levelSpells) {
             if (Number.isFinite(spell.maxCharges)) {
               const slotCost = spell.slotCost;
-              const subtract = { domain: 0, uses: 0 };
+              const slots = spell.maxCharges * slotCost;
               if (spell.isDomain) {
-                subtract.domain = Math.min(spell.maxCharges, lvlSlots.domain);
-                subtract.uses = (spell.maxCharges - subtract.domain) * slotCost;
+                lvlSlots.domain -= slots;
               } else {
-                subtract.uses = spell.maxCharges * slotCost;
+                lvlSlots.used += slots;
               }
-              lvlSlots.domain -= subtract.domain;
-              lvlSlots.value -= subtract.uses;
+              lvlSlots.value -= slots;
             }
           }
           book.spells[`spell${level}`].value = lvlSlots.value;
@@ -968,13 +967,14 @@ export class ActorPF extends ActorBasePF {
           }
 
           spellLevelData.known = { unused: 0, max: 0 };
-          spellLevelData.preparation = { unused: 0, max: 0 };
+          const domainSlotMax = spellLevel > 0 ? slots[spellLevel].domainMax ?? 0 : 0;
+          spellLevelData.preparation = { unused: 0, max: 0, domain: domainSlotMax };
 
-          let remaining;
+          let remaining = 0;
           if (mode.isPrepared) {
             // for prepared casters, just use the 'value' calculated above
             remaining = spellLevelData.value;
-            spellLevelData.preparation.max = spellLevelData.max;
+            spellLevelData.preparation.max = spellLevelData.max + domainSlotMax;
           } else {
             // spontaneous or hybrid
             // if not prepared then base off of casts per day
@@ -991,7 +991,7 @@ export class ActorPF extends ActorBasePF {
             // Count spell slots used
             let dSlots = slots[spellLevel].domain;
             const used =
-              bookInfo.level[spellLevel]?.spells.reduce((acc, i) => {
+              bookInfo.level[spellLevel]?.spells.reduce((acc, /** @type {pf1.documents.item.ItemSpellPF} */ i) => {
                 const { preparation, atWill, domain } = i.system;
                 if (!atWill && preparation.spontaneousPrepared) {
                   const slotCost = i.slotCost;
@@ -1006,17 +1006,26 @@ export class ActorPF extends ActorBasePF {
             remaining = available - used;
           }
 
-          if (!remaining) {
+          const lvlSlots = slots[spellLevel];
+          // Detect domain slot problems
+          const domainSlotsRemaining = spellLevel > 0 ? lvlSlots.domain ?? 0 : 0;
+
+          // Clear spell message if present
+          if (!remaining && domainSlotsRemaining <= 0) {
             spellLevelData.spellMessage = "";
             continue;
           }
 
+          // Add message about slots
           let spellRemainingMsg = "";
-
-          if (remaining < 0) {
+          // Out of slots or too many normal spells
+          if (remaining < 0 || lvlSlots.used > lvlSlots.max) {
+            if (remaining == 0) remaining = lvlSlots.used - lvlSlots.max; // Too many non-domain spells specifically
             spellRemainingMsg = game.i18n.format("PF1.TooManySpells", { quantity: Math.abs(remaining) });
             if (mode.isSpontaneous) spellLevelData.unusedKnown = remaining;
             else spellLevelData.preparation.unused = remaining;
+          } else if (domainSlotsRemaining > 0 && !mode.isSpontaneous) {
+            spellRemainingMsg = game.i18n.format("PF1.PrepareMoreDomainSpells", { quantity: domainSlotsRemaining });
           } else if (remaining > 0) {
             if (mode.isSpontaneous) {
               spellRemainingMsg =

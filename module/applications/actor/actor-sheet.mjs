@@ -3111,7 +3111,9 @@ export class ActorSheetPF extends ActorSheet {
 
       // Import spell as consumable
       if (itemData.type === "spell" && this.currentPrimaryTab !== "spellbook") {
-        const resultData = await createConsumableSpellDialog(itemData);
+        const spellType =
+          this.actor.system.attributes?.spells?.spellbooks?.[this.currentSpellbookKey]?.kind || "arcane";
+        const resultData = await createConsumableSpellDialog(itemData, { spellType });
         if (resultData === "spell") {
           // No action here.
         } else if (resultData) return this.document.createEmbeddedDocuments("Item", [resultData]);

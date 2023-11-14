@@ -17,6 +17,15 @@
     </div>
   </div>
 
+  <div class="form-group">
+    <label>{{localize "PF1.Spellcasting.Type.Label"}}</label>
+    <div class="form-fields">
+      <select name="spellType">
+      {{selectOptions config.spellcasting.spells selected=spellType localize=true}}
+      </select>
+    </div>
+  </div>
+
   {{#if isGM}}
   <div class="form-group">
     <label class="checkbox">

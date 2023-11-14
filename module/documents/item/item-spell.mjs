@@ -489,6 +489,8 @@ export class ItemSpellPF extends ItemPF {
       name: origData.name,
     };
 
+    data["system.spellType"] = origData.spellType;
+
     data["system.unidentified.name"] =
       origData.unidentifiedName || game.i18n.localize(`PF1.CreateItem${type.capitalize()}`);
     data["system.identified"] = origData.identified ?? true;

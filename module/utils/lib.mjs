@@ -453,21 +453,20 @@ export const naturalSort = function (arr, propertyKey = "", { numeric = true, ig
   });
 };
 
-export const createConsumableSpellDialog = async function (itemData, { allowSpell = true } = {}) {
+export const createConsumableSpellDialog = async function (itemData, { allowSpell = true, spellType = "arcane" } = {}) {
   const [sl, cl] = CONFIG.Item.documentClasses.spell.getMinimumCasterLevelBySpellData(itemData);
   const content = await renderTemplate("systems/pf1/templates/internal/create-consumable.hbs", {
     name: itemData.name,
     sl,
     cl,
     isGM: game.user.isGM,
+    config: pf1.config,
+    spellType,
   });
 
   const getFormData = (html) => {
     const formData = expandObject(new FormDataExtended(html.querySelector("form")).object);
-    itemData.sl = formData.sl ?? 1;
-    itemData.cl = formData.cl ?? 1;
-    itemData.identified = formData.identified;
-    itemData.unidentifiedName = formData.unidentifiedName;
+    mergeObject(itemData, formData);
     // NaN check here to allow SL 0
     if (Number.isNaN(itemData.sl)) itemData.sl = 1;
     return itemData;

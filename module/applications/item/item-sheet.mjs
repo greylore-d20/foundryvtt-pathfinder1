@@ -474,6 +474,10 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    if (item.type === "consumable") {
+      context.hasSpellType = ["potion", "scroll", "wand", "staff"].includes(item.subType);
+    }
+
     // Prepare proficiencies & languages
     const profs = {
       armorProf: pf1.config.armorProficiencies,

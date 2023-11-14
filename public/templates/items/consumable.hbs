@@ -52,6 +52,15 @@
           {{/select}}
         </select>
       </div>
+
+      {{#if hasSpellType}}
+      <div class="form-group">
+        <label>{{localize "PF1.Spellcasting.Type.Label"}}</label>
+        <select name="system.spellType">
+          {{selectOptions @root.config.spellcasting.spells selected=system.spellType blank="PF1.NonApplicable" localize=true}}
+        </select>
+      </div>
+      {{/if}}
       {{/unless}}
 
       <h3 class="form-header">{{localize "PF1.Properties"}}</h3>

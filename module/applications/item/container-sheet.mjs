@@ -461,8 +461,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         containerId: this.item.id,
       };
       dragData.itemId = item.id;
-      // Core bug: sidebar drop breaks in v10 without this, works fine in v11 without
-      delete dragData.data._id;
     }
 
     // Add actor to drag data

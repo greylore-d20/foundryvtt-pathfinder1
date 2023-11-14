@@ -255,8 +255,8 @@ export class CompendiumBrowser extends Application {
     if (pack.documentName !== this.constructor.documentName) return false;
     if (pack.metadata.system !== game.system.id) return false;
 
-    // Skip if set to private and the user is not a GM
-    if (pack.private && !game.user.isGM) return false;
+    // Skip if pack is not visible to current user
+    if (!pack.visible) return false;
 
     // Avoid unnecessarily adding packs that don't contain any relevant entries
     if (pack.index.contents.filter((entry) => this.handledTypes.has(entry.type)).length === 0) return false;

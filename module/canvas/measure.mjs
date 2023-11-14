@@ -21,9 +21,7 @@ export class TemplateLayerPF extends TemplateLayer {
   async _onDragLeftStart(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftStart(event);
 
-    const v11 = game.release.generation >= 11; // for v10/v11 cross-compatibility
-
-    const interaction = v11 ? event.interactionData : event.data;
+    const interaction = event.interactionData;
 
     // Call placeables layer super instead of templatelayer
     await PlaceablesLayer.prototype._onDragLeftStart.call(this, event);
@@ -67,11 +65,9 @@ export class TemplateLayerPF extends TemplateLayer {
   _onDragLeftMove(event) {
     if (!game.settings.get("pf1", "measureStyle")) return super._onDragLeftMove(event);
 
-    const v11 = game.release.generation >= 11; // for v10/v11 cross-compatibility
-
-    const interaction = v11 ? event.interactionData : event.data;
+    const interaction = event.interactionData;
     const { destination, preview, origin } = interaction;
-    const layerDragState = v11 ? interaction.layerDragState : interaction.createState;
+    const layerDragState = interaction.layerDragState;
 
     if (layerDragState === 0) return;
 
@@ -107,12 +103,10 @@ export class TemplateLayerPF extends TemplateLayer {
       preview.document.distance = baseDistance;
     }
 
-    if (v11) preview.renderFlags.set({ refreshShape: true });
-    else preview.refresh();
+    preview.renderFlags.set({ refreshShape: true });
 
     // Confirm the creation state
-    if (v11) interaction.layerDragState = 2;
-    else interaction.createState = 2;
+    interaction.layerDragState = 2;
   }
 }
 

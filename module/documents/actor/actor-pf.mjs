@@ -439,8 +439,6 @@ export class ActorPF extends ActorBasePF {
       disableBuffs = [],
       actorUpdate = {};
 
-    const v11 = game.release.generation >= 11;
-
     for (const ae of temporaryEffects) {
       const re = ae.origin?.match(/Item\.(?<itemId>\w+)/);
       const item = this.items.get(re?.groups.itemId);

@@ -4,18 +4,6 @@ import { parseRollStringVariable } from "./dice/roll.mjs";
 import { RollPF } from "./dice/roll.mjs";
 import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs";
 
-Hooks.once("init", () => {
-  if (game.release.generation >= 11) return;
-  // Mimic v11 game.users.activeGM for v10
-  Object.defineProperty(Users.prototype, "activeGM", {
-    get: function () {
-      const activeGMs = game.users.filter((u) => u.active && u.isGM);
-      activeGMs.sort((a, b) => (a.id > b.id ? 1 : -1));
-      return activeGMs[0] || null;
-    },
-  });
-});
-
 // Add inline support for extra /commands
 {
   const origParse = ChatLog.parse;

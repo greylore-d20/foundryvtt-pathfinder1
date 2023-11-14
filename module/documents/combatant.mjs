@@ -19,6 +19,19 @@ export class CombatantPF extends Combatant {
   }
 
   /**
+   * Duplicate combatant with added data.
+   *
+   * @param {object} data - Override data
+   * @param {object} context - Creation context
+   * @returns {Promise<Combatant>} - Created combatant
+   */
+  duplicateWithData(data = {}, context = {}) {
+    console.debug("Duplicating combatant:", this);
+    context.parent ??= this.combat;
+    return this.constructor.create(mergeObject(this.toObject(), data), context);
+  }
+
+  /**
    * Get unevaluated initiative roll instance.
    *
    * @override

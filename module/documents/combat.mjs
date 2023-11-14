@@ -44,59 +44,68 @@ export const addChatMessageContextOptions = function (html, options) {
   return options;
 };
 
-const duplicateCombatantInitiativeDialog = function (combats, combatantId) {
-  const combat = combats.find((c) => c.combatants.get(combatantId) !== undefined);
-  if (!combat) {
-    ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
-    return;
-  }
-  const combatant = combat.combatants.get(combatantId);
-  if (!combatant) {
-    ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
-    return;
-  }
+/**
+ * @param {string} combatantId - Combatant ID
+ */
+function duplicateCombatantInitiativeDialog(combatantId) {
+  /** @type {CombatantPF} */
+  const combatant = game.combat.combatants.get(combatantId);
+  if (!combatant) return void ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
 
-  new Dialog(
+  Dialog.wait(
     {
       title: `${game.i18n.localize("PF1.DuplicateInitiative")}: ${combatant.name}`,
-      content: `<div class="flexrow form-group">
-      <label>${game.i18n.localize("PF1.InitiativeOffset")}</label>
-      <input type="number" name="initiativeOffset" value="0"/>
-    </div>`,
+      content: `<form autocomplete="off"><div class="form-group">
+        <label>${game.i18n.localize("PF1.InitiativeOffset")}</label>
+        <div class="form-fields">
+          <input type="number" name="initiativeOffset" value="0">
+        </div>
+      </div><hr></form>`,
       buttons: {
         confirm: {
           label: game.i18n.localize("PF1.Confirm"),
+          icon: '<i class="fa-regular fa-circle-check"></i>',
           callback: (html) => {
-            const offset = parseFloat(html.find('input[name="initiativeOffset"]').val());
+            const offset = html.querySelector('input[name="initiativeOffset"]').valueAsNumber || 0;
             const prevInitiative = combatant.initiative != null ? combatant.initiative : 0;
             const newInitiative = prevInitiative + offset;
-            duplicateCombatantInitiative(combat, combatant, newInitiative);
+            combatant.duplicateWithData({ initiative: newInitiative });
           },
         },
         cancel: {
           label: game.i18n.localize("Cancel"),
+          icon: '<i class="fa-solid fa-ban"></i>',
+          callback: () => null,
         },
       },
       default: "confirm",
+      close: () => null,
     },
     {
       classes: [...Dialog.defaultOptions.classes, "pf1", "duplicate-initiative"],
+      jQuery: false,
+      rejectClose: false,
     }
-  ).render(true);
-};
+  );
+}
 
+// Deprecated
 export const duplicateCombatantInitiative = function (combat, combatant, initiative) {
-  console.debug("Duplicating combatant:", combatant);
-  combat.createEmbeddedDocuments("Combatant", [
-    mergeObject(combatant.toObject(), { initiative: initiative }, { inplace: false }),
-  ]);
+  foundry.utils.logCompatibilityWarning(
+    "pf1.documents.duplicateCombatantInitiative() is deprecated in favor of CombatantPF.duplicateWithData()",
+    {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    }
+  );
+  return combatant.duplicateWithData({ initiative });
 };
 
 Hooks.on("getCombatTrackerEntryContext", function addCombatTrackerContextOptions(html, menuItems) {
   menuItems.push({
     name: "PF1.DuplicateInitiative",
     icon: '<i class="fas fa-dice-d20"></i>',
-    callback: (li) => duplicateCombatantInitiativeDialog.call(game.combat, game.combats, li.data("combatant-id")),
+    callback: ([li]) => duplicateCombatantInitiativeDialog(li.dataset.combatantId),
   });
 });
 

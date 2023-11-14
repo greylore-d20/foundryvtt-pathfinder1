@@ -71,11 +71,6 @@ globalThis.pf1 = moduleToObject({
 Hooks.once("init", function () {
   console.log(`PF1 | Initializing Pathfinder 1 System`);
 
-  // Suppress v11 deprecation warnings
-  if (game.release.generation === 11) {
-    CONFIG.compatibility.excludePatterns.push(new RegExp("/systems/pf1/")); // compendium.private, ae.label, etc.
-  }
-
   // Redirect notifications to console before Notifications is ready
   ui.notifications = {
     info: (msg, opts = {}) => (opts.console !== false ? console.log(msg) : undefined),

@@ -2,8 +2,29 @@ export class ActiveEffectPF extends ActiveEffect {
   /**
    * @override
    * @param {object} data - Creation data
+   * @param {object} context - Creation context
+   * @param {User} user - Triggering user
+   */
+  async _preCreate(data, context, user) {
+    await super._preCreate(data, context, user);
+
+    const parent = this.parent;
+    const actor = parent instanceof Actor ? parent : parent.actor;
+    if (!actor) return;
+
+    // Record current initiative
+    // But only if the current actor is in combat
+    const combat = actor.getCombatants()[0]?.combat;
+    if (combat) {
+      this.updateSource({ "flags.pf1.initiative": combat.initiative });
+    }
+  }
+
+  /**
+   * @override
+   * @param {object} data - Creation data
    * @param {object} context - Context
-   * @param {string} userId
+   * @param {string} userId - Triggering user
    */
   _onCreate(data, context, userId) {
     super._onCreate(data, context, userId);
@@ -36,7 +57,7 @@ export class ActiveEffectPF extends ActiveEffect {
   /**
    * @override
    * @param {object} context - Delete context
-   * @param {string} userId
+   * @param {string} userId - Triggering user
    */
   _onDelete(context, userId) {
     super._onDelete(context, userId);
@@ -81,8 +102,17 @@ export class ActiveEffectPF extends ActiveEffect {
     return null;
   }
 
+  /**
+   * @override
+   * @type {boolean}
+   */
   get isTemporary() {
     const duration = this.duration.seconds ?? (this.duration.rounds || this.duration.turns) ?? 0;
     return duration > 0 || this.statuses.size || this.getFlag("pf1", "show") || false;
+  }
+
+  /** @type {number|undefined} - Initiative counter if this effect started during combat */
+  get initiative() {
+    return this.getFlag("pf1", "initiative");
   }
 }

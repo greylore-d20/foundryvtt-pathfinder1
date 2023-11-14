@@ -297,4 +297,13 @@ export class CombatPF extends Combat {
       console.error(error);
     }
   }
+
+  /**
+   * Get current initiative.
+   *
+   * @type {number|undefined}
+   */
+  get initiative() {
+    return this.combatant?.initiative;
+  }
 }

@@ -382,7 +382,6 @@ export function migrateActorData(actorData, token, { actor } = {}) {
   _migrateActorInitAbility(actorData, updateData, linked);
   _migrateActorChangeRevamp(actorData, updateData, linked);
   _migrateActorCMBRevamp(actorData, updateData, linked);
-  _migrateActorConditions(actorData, updateData, linked);
   _migrateCarryBonus(actorData, updateData, linked);
   _migrateBuggedValues(actorData, updateData, linked);
   _migrateSpellbookUsage(actorData, updateData, linked);
@@ -1770,22 +1769,6 @@ const _migrateActorChangeRevamp = function (ent, updateData) {
   });
 };
 
-const _migrateActorConditions = function (ent, updateData) {
-  // Migrate fear to shaken
-  {
-    const cond = getProperty(ent, "system.conditions.fear");
-    if (cond !== undefined) {
-      if (cond === true) updateData["system.attributes.conditions.shaken"] = true;
-      updateData["system.conditions.-=fear"] = null;
-    }
-    const condAlt = getProperty(ent, "system.attributes.conditions.fear");
-    if (condAlt !== undefined) {
-      if (condAlt === true) updateData["system.attributes.conditions.shaken"] = true;
-      updateData["system.attributes.conditions.-=fear"] = null;
-    }
-  }
-};
-
 const _migrateActorInvaliddSkills = (actor, updateData) => {
   const skills = actor.system.skills;
   if (!skills) return;
@@ -2154,6 +2137,11 @@ const _migrateActorUnusedData = (actor, updateData) => {
   // Actor resources have always been derived data
   if (actor.system.resources !== undefined) {
     updateData["system.-=resources"] = null;
+  }
+
+  // Conditions no longer are permanently stored in actor data (since PF1 vNEXT)
+  if (actor.system.attributes?.conditions !== undefined) {
+    updateData["system.attributes.-=conditions"] = null;
   }
 };
 

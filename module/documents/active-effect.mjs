@@ -29,28 +29,17 @@ export class ActiveEffectPF extends ActiveEffect {
   _onCreate(data, context, userId) {
     super._onCreate(data, context, userId);
 
+    if (this.parent instanceof Item) return;
     if (userId !== game.user.id) return;
 
     const actor = this.actor;
-    if (!actor) return;
+    if (!actor || !this.origin) return;
 
-    const statuses = this.statuses;
-    if (statuses.size) {
-      const condData = {};
-      for (const statusId of statuses) {
-        if (statusId in pf1.config.conditions) {
-          condData[statusId] = true;
-        }
-      }
-      if (!foundry.utils.isEmpty(condData)) {
-        actor.update({ "system.attributes.conditions": condData });
-      }
-    }
+    const item = fromUuidSync(this.origin);
+    if (!item || item.isActive) return;
 
-    // Enable related item if it exists
-    if (this.origin) {
-      const item = fromUuidSync(this.origin, { relative: actor });
-      if (item && !item.isActive) item.setActive(true);
+    if (!this.isSuppressed) {
+      item.setActive(true, { pf1: { reason: "effect-creation" } });
     }
   }
 
@@ -67,29 +56,11 @@ export class ActiveEffectPF extends ActiveEffect {
     const actor = this.actor;
     if (!actor) return;
 
-    const statuses = this.statuses;
-    if (statuses.size) {
-      // BUG: This will fail if multiple AEs provide same condition
-      const condData = {};
-      for (const statusId of statuses) {
-        if (statusId in pf1.config.conditions) {
-          // TODO: v11, check if actor.statuses still has the effect
-          condData[statusId] = false;
-        }
-      }
-
-      if (!foundry.utils.isEmpty(condData)) {
-        actor.update({ "system.attributes.conditions": condData }, context);
-      }
-    }
+    const item = fromUuidSync(this.origin, { relative: actor });
 
     // Disable associated buff if found
-    if (this.origin) {
-      const item = fromUuidSync(this.origin, { relative: actor });
-      // Avoid looping
-      if (context.pf1?.delete !== item?.uuid && item?.isActive) {
-        item.setActive(false, context);
-      }
+    if (context.pf1?.delete !== item?.uuid && item?.isActive) {
+      item.setActive(false, context);
     }
   }
 

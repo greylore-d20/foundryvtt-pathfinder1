@@ -535,16 +535,6 @@ Hooks.on("renderTokenHUD", (app, html, data) => {
   _canvas.TokenQuickActions.addQuickActions(app, html, data);
 });
 
-Hooks.on("updateActor", (actor, data, options, userId) => {
-  // Call hook for toggling conditions
-  {
-    const conditions = data.system?.attributes?.conditions || {};
-    for (const [k, v] of Object.entries(conditions)) {
-      Hooks.callAll("pf1ToggleActorCondition", actor, k, v);
-    }
-  }
-});
-
 Hooks.on("deleteToken", (token, options, userId) => {
   // Hide token tooltip on token deletion
   pf1.tooltip?.unbind(token.object);

@@ -226,8 +226,8 @@ export const registerActorConditionsTests = () => {
 
         it("applying exhausted removes fatigue", async function () {
           await actor.setCondition("exhausted", true);
-          expect(actor.system.attributes.conditions.fatigued).to.be.false;
-          expect(actor.system.attributes.conditions.exhausted).to.be.true;
+          expect(actor.system.conditions.fatigued).to.be.false;
+          expect(actor.system.conditions.exhausted).to.be.true;
         });
 
         it("Str and Dex penalty of -3 for exhausted", function () {

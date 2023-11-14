@@ -429,12 +429,8 @@ export const registerSystemSettings = function () {
         ...game.actors.filter((actor) => actor.prototypeToken.actorLink),
         ...Object.values(game.actors.tokens).filter((actor) => actor != null),
       ];
-      for (const actor of actors) {
-        if (actor.toggleConditionStatusIcons) {
-          promises.push(actor.toggleConditionStatusIcons({ render: false }));
-        }
-      }
-      return Promise.all(promises);
+
+      // TODO: Refresh status icons
     },
   });
 

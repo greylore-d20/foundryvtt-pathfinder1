@@ -1682,13 +1682,9 @@ export class ActorSheetPF extends ActorSheet {
   _onToggleCondition(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const key = a.name;
+    const conditionId = a.dataset.conditionId;
 
-    // Delete the stored condition status if setting to false
-    const newStatus = !getProperty(this.actor, key);
-    const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
-    const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
-    this.actor.update(updateData);
+    this.actor.toggleCondition(conditionId);
   }
 
   /**

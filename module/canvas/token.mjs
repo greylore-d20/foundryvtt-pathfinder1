@@ -6,12 +6,12 @@ export class TokenPF extends Token {
     if (typeof effect == "string") {
       const buffItem = this.actor.items.get(effect);
       if (buffItem) {
-        call = await buffItem.setActive(!buffItem.isActive);
+        await buffItem.setActive(!buffItem.isActive);
+        call = buffItem.isActive;
       } else call = await super.toggleEffect(effect, { active, overlay });
     } else if (effect && !midUpdate && Object.keys(pf1.config.conditions).includes(effect.id)) {
-      const updates = {};
-      updates["system.attributes.conditions." + effect.id] = !this.actor.system.attributes.conditions[effect.id];
-      call = await this.actor.update(updates);
+      await this.actor.toggleCondition(effect.id);
+      call = this.actor.hasCondition(effect.id);
     } else if (effect) {
       call = await super.toggleEffect(effect, { active, overlay });
     }

@@ -405,12 +405,14 @@ export class ActorPF extends ActorBasePF {
   }
 
   applyActiveEffects() {
+    // Apply active effects. Required for status effects in v11 and onward, such as blind and invisible.
+    super.applyActiveEffects();
+
+    this.prepareConditions();
+
     this.containerItems = this._prepareContainerItems(this.items);
     this._prepareItemFlags(this.allItems);
     this._prepareChanges();
-
-    // Apply active effects. Required for status effects in v11 and onward, such as blind and invisible.
-    super.applyActiveEffects();
   }
 
   /**
@@ -445,26 +447,18 @@ export class ActorPF extends ActorBasePF {
 
     const disableActiveEffects = [],
       deleteActiveEffects = [],
-      disableBuffs = [],
-      actorUpdate = {};
+      disableBuffs = [];
 
     for (const ae of temporaryEffects) {
       const item = fromUuidSync(ae.origin, { relative: this });
-      if (item?.type !== "buff") {
-        if (ae.statuses.size) {
-          // Disable expired conditions
-          for (const conditionId of ae.statuses) {
-            actorUpdate[`system.attributes.conditions.-=${conditionId}`] = null;
-          }
-        } else {
-          if (ae.getFlag("pf1", "autoDelete")) {
-            deleteActiveEffects.push(ae.id);
-          } else {
-            disableActiveEffects.push({ _id: ae.id, disabled: true });
-          }
-        }
-      } else {
+      if (item?.type === "buff") {
         disableBuffs.push({ _id: item.id, "system.active": false });
+      } else {
+        if (ae.getFlag("pf1", "autoDelete")) {
+          deleteActiveEffects.push(ae.id);
+        } else {
+          disableActiveEffects.push({ _id: ae.id, disabled: true });
+        }
       }
     }
 
@@ -472,23 +466,19 @@ export class ActorPF extends ActorBasePF {
     context.pf1 ??= {};
     context.pf1.reason = "duration";
 
-    const hasActorUpdates = !foundry.utils.isEmpty(actorUpdate);
-
-    const deleteAEContext = mergeObject(
-      { render: !disableBuffs.length && !disableActiveEffects.length && !hasActorUpdates },
-      context
-    );
-    if (deleteActiveEffects.length)
+    if (deleteActiveEffects.length) {
+      const deleteAEContext = mergeObject({ render: !disableBuffs.length && !disableActiveEffects.length }, context);
       await this.deleteEmbeddedDocuments("ActiveEffect", deleteActiveEffects, deleteAEContext);
+    }
 
-    const disableAEContext = mergeObject({ render: !disableBuffs.length && !hasActorUpdates }, context);
-    if (disableActiveEffects.length)
+    if (disableActiveEffects.length) {
+      const disableAEContext = mergeObject({ render: !disableBuffs.length }, context);
       await this.updateEmbeddedDocuments("ActiveEffect", disableActiveEffects, disableAEContext);
+    }
 
-    const disableBuffsContext = mergeObject({ render: !hasActorUpdates }, context);
-    if (disableBuffs.length) await this.updateEmbeddedDocuments("Item", disableBuffs, context);
-
-    if (hasActorUpdates) await this.update(actorUpdate, context);
+    if (disableBuffs.length) {
+      await this.updateEmbeddedDocuments("Item", disableBuffs, context);
+    }
   }
 
   /**
@@ -539,11 +529,6 @@ export class ActorPF extends ActorBasePF {
     this.system.details.level.value = level;
     this.system.details.mythicTier = mythicTier;
 
-    // Populate conditions
-    for (const condition of Object.keys(pf1.config.conditions)) {
-      this.system.attributes.conditions[condition] ??= false;
-    }
-
     // Refresh ability scores
     {
       const abs = Object.keys(this.system.abilities);
@@ -586,6 +571,36 @@ export class ActorPF extends ActorBasePF {
 
     // Reset HD
     setProperty(this.system, "attributes.hd.total", this.system.details.level.value);
+  }
+
+  prepareConditions() {
+    this.system.conditions = {};
+    const conditions = this.system.conditions;
+
+    // Populate condition base values
+    for (const condition of Object.keys(pf1.config.conditions)) {
+      conditions[condition] = false;
+    }
+
+    // Fill in actual state
+    // ??[] is to deal with the set not being available yet for some actors
+    for (const status of this.statuses) {
+      if (status in conditions) {
+        conditions[status] = true;
+      }
+    }
+
+    // Backwards compatibility.
+    Object.defineProperty(this.system.attributes, "conditions", {
+      get() {
+        foundry.utils.logCompatibilityWarning(
+          "actor.system.attributes.conditions is deprecated in favor of actor.system.conditions and actor.statuses",
+          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+        );
+        return conditions;
+      },
+      enumerable: false,
+    });
   }
 
   /**
@@ -1881,19 +1896,22 @@ export class ActorPF extends ActorBasePF {
       changed.system.attributes.energyDrain = Math.abs(energyDrain);
     }
 
-    // Make only 1 fear or fatigue condition active at most
+    // Backwards compatibility
     const conditions = changed.system.attributes?.conditions;
     if (conditions) {
-      const keys = Object.keys(conditions);
-      for (const conditionGroup of Object.values(pf1.config.conditionTracks)) {
-        const conditionKey = keys.find((condition) => conditionGroup.includes(condition));
-        if (!conditionKey) continue;
-        for (const key of conditionGroup) {
-          if (key !== conditionKey) {
-            conditions[`-=${key}`] = null;
-          }
+      foundry.utils.logCompatibilityWarning(
+        "Toggling conditions via Actor.update() is deprecated in favor of Actor.setCondition()",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
         }
-      }
+      );
+
+      // Prevent data storage
+      delete changed.system.attributes.conditions;
+
+      // Toggle AEs
+      await this.setConditions(conditions);
     }
   }
 
@@ -1932,9 +1950,7 @@ export class ActorPF extends ActorBasePF {
     let initializeVision = false,
       refreshLighting = false;
 
-    if (hasProperty(changed.system, "attributes.conditions")) {
-      if (game.user.id === userId) this.toggleConditionStatusIcons({ render: false });
-    } else if (hasProperty(changed.system, "traits.senses")) {
+    if (hasProperty(changed.system, "traits.senses")) {
       initializeVision = true;
       if (changed.system.traits.senses.ll) {
         refreshLighting = true;
@@ -2002,16 +2018,88 @@ export class ActorPF extends ActorBasePF {
     if (userId !== game.user.id) return;
 
     if (collection === "items") {
-      // Creating anything but active buffs should not prompt toggling conditions
-      if (documents.some((item) => item.type === "buff" && item.isActive)) {
-        this.toggleConditionStatusIcons({ render: false });
-      }
-
       // Apply race size to actor
       const race = documents.find((d) => d.type === "race");
       if (race?.system.size) {
         if (this.system.traits.size !== race.system.size) this.update({ "system.traits.size": race.system.size });
       }
+    }
+
+    if (collection === "effects") {
+      if (options.pf1?.updateConditionTracks !== false) {
+        this._handleConditionTracks(documents, options);
+      }
+    }
+  }
+
+  /**
+   * Handle condition track toggling post active effect creation if there's still some issues.
+   *
+   * @param {ActiveEffect[]} documents Updated active effect documents
+   * @returns {Promise}
+   */
+  async _handleConditionTracks(documents) {
+    // Record of previously update conditions that didn't get notified about
+    const previousConditions = {};
+
+    const conditions = {};
+    const tracks = Object.values(pf1.config.conditionTracks);
+    for (const ae of documents) {
+      for (const statusId of ae.statuses ?? []) {
+        // Skip non-conditions
+        if (!pf1.config.conditions[statusId]) continue;
+
+        // Mark this condition for notification
+        previousConditions[statusId] = true;
+
+        // Process condition tracks
+        for (const conditionGroup of tracks) {
+          if (!conditionGroup.includes(statusId)) continue;
+          // Disable other conditions in the track
+          for (const disableConditionId of conditionGroup) {
+            if (disableConditionId === statusId) continue;
+            conditions[disableConditionId] = false;
+          }
+        }
+      }
+    }
+
+    this._conditionToggleNotify(previousConditions);
+
+    if (!foundry.utils.isEmpty(conditions)) {
+      return this.setConditions(conditions);
+    }
+  }
+
+  _onDeleteDescendantDocuments(parent, collection, documents, result, options, userId) {
+    super._onDeleteDescendantDocuments(parent, collection, documents, result, options, userId);
+
+    if (collection === "effects") {
+      const updatedConditions = {};
+      for (const ae of documents) {
+        for (const statusId of ae.statuses ?? []) {
+          // Toggle off only if it's valid ID and there isn't any other AEs that have same condition still
+          if (statusId in pf1.config.conditions && !this.statuses.has(statusId)) {
+            updatedConditions[statusId] = false;
+          }
+        }
+      }
+
+      if (options?.pf1?.updateConditionTracks !== false) {
+        this._conditionToggleNotify(updatedConditions);
+      }
+    }
+  }
+
+  /**
+   * TODO: The condition notification needs to be smarter.
+   *
+   * @internal
+   * @param conditions
+   */
+  _conditionToggleNotify(conditions = {}) {
+    for (const [conditionId, state] of Object.entries(conditions)) {
+      Hooks.callAll("pf1ToggleActorCondition", this, conditionId, state);
     }
   }
 
@@ -2021,6 +2109,7 @@ export class ActorPF extends ActorBasePF {
    * @param {boolean} [options.warnOnDuplicate] - Skips warning if item tag already exists in dictionary flags
    * @returns {boolean} True if resources were set
    */
+
   updateItemResources(item, { warnOnDuplicate = true } = {}) {
     if (item.type === "spell") return false;
     if (!item.isCharged) return false;
@@ -2361,7 +2450,7 @@ export class ActorPF extends ActorBasePF {
     if (ablMod != 0) describePart(ablMod, pf1.config.abilities[abl]);
 
     // Add grapple note
-    if (this.system.attributes.conditions.grappled) {
+    if (this.system.conditions.grappled) {
       notes.push("+2 to Grapple");
     }
 
@@ -2981,42 +3070,129 @@ export class ActorPF extends ActorBasePF {
   /**
    * Easy way to toggle a condition.
    *
-   * @param {string} conditionId A direct condition identiifer, as per PF1.conditions, such as `shaken` or `dazed`.
-   * @returns {Promise<this>|undefined} Promise to updated document, or nothing if no update occurs.
+   * @example
+   * actor.toggleCondition("dazzled");
+   * @param {boolean} conditionId - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
+   * @returns {object} Condition ID to boolean mapping of actual updates.
    */
   async toggleCondition(conditionId) {
-    conditionId = `system.attributes.conditions.${conditionId}`;
-
-    const newStatus = !getProperty(this, conditionId);
-    const deleteKey = conditionId.replace(/(\w+)$/, (condition) => `-=${condition}`);
-    const updateData = newStatus ? { [conditionId]: true } : { [deleteKey]: null };
-    await this.update(updateData);
+    return this.setCondition(conditionId, !this.hasCondition(conditionId));
   }
 
   /**
    * Easy way to set a condition.
    *
-   * @param {string} key - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
+   * @example
+   * actor.setCondition("dazzled", true);
+   * @param {string} conditionId - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
    * @param {boolean} enabled - Whether to enable (true) the condition, or disable (false) it.
+   * @param {object} [context] Update context
+   * @returns {object} Condition ID to boolean mapping of actual updates.
    */
-  async setCondition(key, enabled) {
-    key = `system.attributes.conditions.${key}`;
+  async setCondition(conditionId, enabled, context) {
+    if (typeof enabled !== "boolean") throw new TypeError("Actor.setCondition() enabled state must be a boolean");
+    return this.setConditions({ [conditionId]: enabled }, context);
+  }
 
-    const newStatus = !getProperty(this, key);
-    if (newStatus !== enabled) return;
-    const deleteKey = key.replace(/(\w+)$/, (condition) => `-=${condition}`);
-    const updateData = newStatus ? { [key]: true } : { [deleteKey]: null };
-    await this.update(updateData);
+  /**
+   * Set state of multiple conditions.
+   * Also handles condition tracks to minimize number of updates.
+   *
+   * @example
+   * actor.setConditions({ blind: true, sleep: false, shaken:true });
+   * @param {object} conditions Condition ID to boolean mapping of new condition states.
+   * @param {object} [context] Update context
+   * @returns {object} Condition ID to boolean mapping of actual updates.
+   */
+  async setConditions(conditions = {}, context = {}) {
+    conditions = deepClone(conditions);
+
+    // Handle Condition tracks
+    const tracks = Object.values(pf1.config.conditionTracks);
+    for (const conditionGroup of tracks) {
+      const newTrackState = conditionGroup.find((c) => conditions[c] === true);
+      if (!newTrackState) continue;
+      const disableTrackEntries = conditionGroup.filter((c) => c !== newTrackState);
+      for (const key of disableTrackEntries) {
+        conditions[key] = false;
+      }
+    }
+
+    // Create update data
+    const toDelete = [],
+      toCreate = [];
+
+    for (const [conditionId, value] of Object.entries(conditions)) {
+      if (pf1.config.conditions[conditionId] === undefined) {
+        console.error("Unrecognized condition:", conditionId);
+        delete conditions[conditionId];
+        continue;
+      }
+
+      const oldAe = this.hasCondition(conditionId) ? this.effects.find((ae) => ae.statuses.has(conditionId)) : null;
+
+      // Create
+      if (value) {
+        if (!oldAe) {
+          const aeData = {
+            flags: {
+              pf1: {
+                autoDelete: true,
+              },
+            },
+            statuses: [conditionId],
+            name: pf1.config.conditions[conditionId],
+            icon: pf1.config.conditionTextures[conditionId],
+            label: pf1.config.conditions[conditionId],
+          };
+
+          toCreate.push(aeData);
+        } else {
+          delete conditions[conditionId];
+        }
+      }
+      // Delete
+      else {
+        if (oldAe) {
+          toDelete.push(oldAe.id);
+        } else {
+          delete conditions[conditionId];
+        }
+      }
+    }
+
+    // Perform updates
+    // Inform update handlers they don't need to do work
+    context.pf1 ??= {};
+    context.pf1.updateConditionTracks = false;
+
+    if (toDelete.length) {
+      const deleteContext = deepClone(context);
+      // Prevent double render
+      if (context.trender && toCreate.length) deleteContext.render = false;
+      // Without await the deletions may not happen at all, presumably due to race condition, if AEs are also created.
+      await this.deleteEmbeddedDocuments("ActiveEffect", toDelete, context);
+    }
+    if (toCreate.length) {
+      const createContext = deepClone(context);
+      await this.createEmbeddedDocuments("ActiveEffect", toCreate, context);
+    }
+
+    this._conditionToggleNotify(conditions);
+
+    return conditions;
   }
 
   /**
    * Easy way to determine whether this actor has a condition.
    *
-   * @param {string} conditionId Condition identifier, as per PF1.conditions, such as `shaken` or `dazed`.
-   * @returns {boolean} Confirmation as boolean.
+   * @example
+   * actor.hasCondition("grappled");
+   * @param {string} conditionId - A direct condition key, as per pf1.config.conditions, such as `shaken` or `dazed`.
+   * @returns {boolean} Condition state
    */
   hasCondition(conditionId) {
-    return this.system.attributes?.conditions?.[conditionId] === true;
+    return this.statuses.has(conditionId);
   }
 
   /* -------------------------------------------- */
@@ -3993,59 +4169,6 @@ export class ActorPF extends ActorBasePF {
           },
         };
       });
-  }
-
-  /**
-   * @param {DocumentModificationContext} context
-   */
-  async toggleConditionStatusIcons(context = {}) {
-    if (this._states.togglingStatusIcons) return;
-    this._states.togglingStatusIcons = true;
-
-    if (!this.isOwner) return;
-
-    const AEs = [...this.effects];
-
-    // Create and delete buff ActiveEffects
-    const toCreate = [];
-    const toDelete = [];
-    const toUpdate = [];
-
-    // Create and delete condition ActiveEffects
-    for (const condKey of Object.keys(pf1.config.conditions)) {
-      const idx = AEs.findIndex((e) => e.statuses.has(condKey));
-      const hasCondition = this.system.attributes.conditions[condKey] === true;
-      const hasEffectIcon = idx >= 0;
-
-      if (hasCondition && !hasEffectIcon) {
-        const aeData = {
-          flags: {
-            pf1: {
-              autoDelete: true,
-            },
-          },
-          statuses: [condKey],
-          name: pf1.config.conditions[condKey],
-          icon: pf1.config.conditionTextures[condKey],
-          label: pf1.config.conditions[condKey],
-        };
-        toCreate.push(aeData);
-      } else if (!hasCondition && hasEffectIcon) {
-        const removeEffects = AEs.filter((e) => e.statuses.has(condKey));
-        toDelete.push(...removeEffects.map((e) => e.id));
-      }
-    }
-
-    // Create sub-contexts and disable render if more updates are done
-    const deleteContext = deepClone(context);
-    if (context.render !== false) deleteContext.render = !toCreate.length && !toUpdate.length;
-    const createContext = deepClone(context);
-    if (context.render !== false) createContext.render = !toUpdate.length;
-
-    if (toDelete.length) await this.deleteEmbeddedDocuments("ActiveEffect", toDelete, deleteContext);
-    if (toCreate.length) await this.createEmbeddedDocuments("ActiveEffect", toCreate, createContext);
-    if (toUpdate.length) await this.updateEmbeddedDocuments("ActiveEffect", toUpdate, context);
-    this._states.togglingStatusIcons = false;
   }
 
   refreshAbilityModifiers() {

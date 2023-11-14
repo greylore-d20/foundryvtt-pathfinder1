@@ -154,7 +154,7 @@ export class TooltipPF extends Application {
       actor.isOwner ||
       (!actor.system.details?.tooltip?.hideConditions && !this.worldConfig?.hideConditions)
     ) {
-      const conditions = actor.system.attributes?.conditions || {};
+      const conditions = actor.system.conditions;
       for (const [conditionId, active] of Object.entries(conditions)) {
         if (active === true) {
           data.conditions = data.conditions || [];

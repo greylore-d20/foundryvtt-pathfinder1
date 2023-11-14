@@ -2,9 +2,8 @@
 <div class="flexrow buffs-conditions">
   {{#each config.conditions as |value con|}}
   <div class="condition">
-    <a class="checkbox {{#if (lookup ../system.attributes.conditions con)}}active{{/if}}" name="system.attributes.conditions.{{con}}">
+    <a class="checkbox {{#if (lookup ../system.conditions con)}}active{{/if}}" data-condition-id="{{con}}">
       <img src="{{lookup ../config.conditionTextures con}}" width="32" height="32">
-      {{!--  <input type="checkbox" name="system.attributes.conditions.{{con}}" {{checked (lookup ../system.attributes.conditions con)}}/>  --}}
       <span>{{lookup ../config.conditions con}}</span>
     </a>
   </div>

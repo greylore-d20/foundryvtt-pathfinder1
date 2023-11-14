@@ -1209,7 +1209,7 @@ export const addDefaultChanges = function (changes) {
   }
 
   // Add conditions
-  for (const [con, v] of Object.entries(actorData.attributes.conditions || {})) {
+  for (const [con, v] of Object.entries(actorData.conditions)) {
     if (!v) continue;
 
     const mechanic = pf1.config.conditionMechanics[con];

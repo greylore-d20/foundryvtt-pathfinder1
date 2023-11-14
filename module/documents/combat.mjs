@@ -125,7 +125,7 @@ export class CombatPF extends Combat {
     // Show initiative dialog
     if (!skipDialog) {
       const dialogData = await Combat.implementation.showInitiativeDialog({
-        formula,
+        d20,
         bonus,
         rollMode,
         name: rollerName,
@@ -216,16 +216,28 @@ export class CombatPF extends Combat {
 
   /**
    * @param {object} options
-   * @param {string} options.formula Formula override
+   * @param {string} options.d20 Formula override
    * @param {string} options.bonus Bonus formula override
    * @param {string} options.name Name of the roller
+   * @param {string} options.formula
    * @returns {object}
    */
-  static async showInitiativeDialog({ formula = null, bonus = null, name } = {}) {
+  static async showInitiativeDialog({ d20 = null, formula, bonus = null, name } = {}) {
     const rollMode = game.settings.get("core", "rollMode");
 
+    if (formula !== undefined) {
+      foundry.utils.logCompatibilityWarning(
+        "CombatPF.showInitiativeDialog() formula parameter is deprecated in favor of d20",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+      d20 ||= formula;
+    }
+
     const template = "systems/pf1/templates/chat/roll-dialog.hbs";
-    const dialogData = { d20: formula, bonus, rollMode, rollModes: CONFIG.Dice.rollModes };
+    const dialogData = { d20, bonus, rollMode, rollModes: CONFIG.Dice.rollModes };
 
     // Show dialog
     return Dialog.wait(

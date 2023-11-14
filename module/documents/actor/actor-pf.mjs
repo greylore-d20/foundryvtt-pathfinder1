@@ -445,10 +445,11 @@ export class ActorPF extends ActorBasePF {
       const re = ae.origin?.match(/Item\.(?<itemId>\w+)/);
       const item = this.items.get(re?.groups.itemId);
       if (item?.type !== "buff") {
-        const conditionId = v11 ? ae.statuses.first() : ae.getFlag("core", "statusId");
-        if (conditionId) {
+        if (ae.statuses.size) {
           // Disable expired conditions
-          actorUpdate[`system.attributes.conditions.-=${conditionId}`] = null;
+          for (const conditionId of ae.statuses) {
+            actorUpdate[`system.attributes.conditions.-=${conditionId}`] = null;
+          }
         } else {
           if (ae.getFlag("pf1", "autoDelete")) {
             deleteActiveEffects.push(ae.id);
@@ -4046,7 +4047,7 @@ export class ActorPF extends ActorBasePF {
 
     // Create and delete condition ActiveEffects
     for (const condKey of Object.keys(pf1.config.conditions)) {
-      const idx = fx.findIndex((e) => e._statusSet.has(condKey));
+      const idx = fx.findIndex((e) => e.statuses.has(condKey));
       const hasCondition = this.system.attributes.conditions[condKey] === true;
       const hasEffectIcon = idx >= 0;
 
@@ -4062,10 +4063,9 @@ export class ActorPF extends ActorBasePF {
           icon: pf1.config.conditionTextures[condKey],
           label: pf1.config.conditions[condKey],
         };
-        if (game.release.generation < 11) setProperty(aeData, "flags.core.statusId", condKey);
         toCreate.push(aeData);
       } else if (!hasCondition && hasEffectIcon) {
-        const removeEffects = fx.filter((e) => e._statusSet.has(condKey));
+        const removeEffects = fx.filter((e) => e.statuses.has(condKey));
         toDelete.push(...removeEffects.map((e) => e.id));
       }
     }

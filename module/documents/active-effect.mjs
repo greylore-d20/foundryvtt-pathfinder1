@@ -13,7 +13,7 @@ export class ActiveEffectPF extends ActiveEffect {
     const actor = this.actor;
     if (!actor) return;
 
-    const statuses = this._statusSet;
+    const statuses = this.statuses;
     if (statuses.size) {
       const condData = {};
       for (const statusId of statuses) {
@@ -48,7 +48,7 @@ export class ActiveEffectPF extends ActiveEffect {
     const actor = this.actor;
     if (!actor) return;
 
-    const statuses = this._statusSet;
+    const statuses = this.statuses;
     if (statuses.size) {
       // BUG: This will fail if multiple AEs provide same condition
       const condData = {};
@@ -77,20 +77,6 @@ export class ActiveEffectPF extends ActiveEffect {
   }
 
   /**
-   * For v10/v11 cross compatibility.
-   *
-   * Functions similarly to .statuses in v11.
-   *
-   * @private
-   * @type {Set<string>}
-   */
-  get _statusSet() {
-    if (game.release.generation >= 11) return this.statuses;
-    // Mimic v11 for v10
-    return new Set([this.getFlag("core", "statusId")].filter((s) => !!s));
-  }
-
-  /**
    * @type {Actor|null} Parent actor or null.
    */
   get actor() {
@@ -101,6 +87,6 @@ export class ActiveEffectPF extends ActiveEffect {
 
   get isTemporary() {
     const duration = this.duration.seconds ?? (this.duration.rounds || this.duration.turns) ?? 0;
-    return duration > 0 || this._statusSet.size || this.getFlag("pf1", "show") || false;
+    return duration > 0 || this.statuses.size || this.getFlag("pf1", "show") || false;
   }
 }

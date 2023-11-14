@@ -60,9 +60,11 @@ TokenHUD.prototype._getStatusEffectChoices = function () {
 TokenHUD.prototype._onToggleEffect = function (event, { overlay = false } = {}) {
   event.preventDefault();
   const img = event.currentTarget;
+  const statusId = img.dataset.statusId;
   const effect =
-    img.dataset.statusId && this.object.actor
-      ? CONFIG.statusEffects.find((e) => e.id === img.dataset.statusId) ?? img.dataset.statusId
+    statusId && this.object.actor
+      ? CONFIG.statusEffects.find((e) => e.id === statusId) ?? statusId
       : img.getAttribute("src");
+
   return this.object.toggleEffect(effect, { overlay });
 };

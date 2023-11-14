@@ -127,7 +127,7 @@ export class ItemClassPF extends ItemPF {
           continue;
         }
 
-        sources.set(link.uuid, link);
+        sources.set(item.uuid, link);
 
         // Apply Foundry's transformations for importing (automatically calls .toObject())
         // This adds flags.core.sourceId, removes extraneous permissions, resets sorting, etc.

@@ -91,7 +91,6 @@ export class ActorPF extends ActorBasePF {
     // Init race reference
     this.race ??= null;
 
-    this._itemTypes ??= null;
     this._visionPermissionSheet ??= null;
   }
 
@@ -493,9 +492,6 @@ export class ActorPF extends ActorBasePF {
 
     this.sourceInfo = {};
     this.changeFlags = {};
-
-    // Reset item types cache
-    this._itemTypes = null;
 
     // Reset equipment info
     this.equipment = {
@@ -4411,23 +4407,6 @@ export class ActorPF extends ActorBasePF {
 
   getItemByTag(tag) {
     return this.items.find((o) => o.system.tag === tag);
-  }
-
-  /**
-   * Cached result of .itemTypes
-   *
-   * @private
-   */
-  _itemTypes;
-
-  /**
-   * Cached override
-   *
-   * @override
-   */
-  get itemTypes() {
-    this._itemTypes ??= super.itemTypes;
-    return this._itemTypes;
   }
 
   /**

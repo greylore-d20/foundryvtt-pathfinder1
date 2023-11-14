@@ -950,15 +950,16 @@ export class ItemPF extends ItemBasePF {
     }
   }
 
-  // Determines the starting data for an ActiveEffect based off this item
+  /**
+   * Determines the starting data for an ActiveEffect based off this item.
+   */
   getRawEffectData() {
     return {
       name: this.name,
       icon: this.img,
-      origin: this.uuid,
-      flags: { pf1: { origin: { item: this.id } } },
-      disabled: !this.isActive,
+      origin: this.getRelativeUUID(this.actor),
       duration: {},
+      disabled: !this.isActive,
     };
   }
 

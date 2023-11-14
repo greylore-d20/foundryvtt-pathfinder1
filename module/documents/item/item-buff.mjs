@@ -171,8 +171,14 @@ export class ItemBuffPF extends ItemPF {
     return this.system.active;
   }
 
+  /**
+   * Associated ActiveEffect if any.
+   *
+   * @type {ActiveEffect|undefined}
+   */
   get effect() {
-    return this.actor?.effects.find((o) => o.origin?.indexOf(`Item.${this.id}`) > 0);
+    const actor = this.actor;
+    return actor?.effects.find((ae) => fromUuidSync(ae.origin || "", { relative: actor }) === this);
   }
 
   /**

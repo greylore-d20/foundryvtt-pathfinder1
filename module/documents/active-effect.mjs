@@ -27,10 +27,8 @@ export class ActiveEffectPF extends ActiveEffect {
     }
 
     // Enable related item if it exists
-    const origin = this.origin;
-    if (origin) {
-      const re = /Item\.(?<itemId>\w{16})/.exec(origin);
-      const item = actor?.items.get(re?.groups.itemId);
+    if (this.origin) {
+      const item = fromUuidSync(this.origin, { relative: actor });
       if (item && !item.isActive) item.setActive(true);
     }
   }
@@ -65,10 +63,8 @@ export class ActiveEffectPF extends ActiveEffect {
     }
 
     // Disable associated buff if found
-    const re = this.origin?.match(/Item\.(?<itemId>\w+)/),
-      origin = re?.groups.itemId;
-    if (origin) {
-      const item = actor.items.get(origin);
+    if (this.origin) {
+      const item = fromUuidSync(this.origin, { relative: actor });
       // Avoid looping
       if (context.pf1?.delete !== item?.uuid && item?.isActive) {
         item.setActive(false, context);

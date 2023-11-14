@@ -545,23 +545,6 @@ Hooks.on("updateActor", (actor, data, options, userId) => {
   }
 });
 
-Hooks.on("createToken", (token, options, userId) => {
-  if (game.user.id !== userId) return;
-  // Re-associate imported Active Effects which are sourced to Items owned by this same Actor
-  if (token.actor.effects?.size) {
-    const updates = [];
-    for (const effect of token.actor.effects) {
-      if (!effect.origin) continue;
-      const effectItemId = effect.origin.match(/Item\.(\w+)/)?.pop();
-      const foundItem = token.actor.items.get(effectItemId);
-      if (foundItem) {
-        updates.push({ _id: effect.id, origin: foundItem.uuid });
-      }
-    }
-    token.actor.updateEmbeddedDocuments("ActiveEffect", updates, { render: false });
-  }
-});
-
 Hooks.on("deleteToken", (token, options, userId) => {
   // Hide token tooltip on token deletion
   pf1.tooltip?.unbind(token.object);

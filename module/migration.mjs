@@ -97,7 +97,7 @@ export async function migrateActors() {
   console.log("Actors directory migration starting...");
   for (const actor of game.actors) {
     try {
-      const updateData = migrateActorData(actor.toObject());
+      const updateData = migrateActorData(actor.toObject(), undefined, { actor });
       if (!foundry.utils.isEmpty(updateData)) {
         console.log(`Migrating Actor document ${actor.name}`);
         await actor.update(updateData);
@@ -237,7 +237,7 @@ export const migrateCompendium = async function (pack, { unlock = false } = {}) 
         await pack.updateAll((item) => migrateItemData(item.toObject()));
         break;
       case "Actor":
-        await pack.updateAll((actor) => migrateActorData(actor.toObject()));
+        await pack.updateAll((actor) => migrateActorData(actor.toObject(), undefined, { actor }));
         break;
       case "Scene": {
         await pack.updateAll((scene) => migrateSceneData(scene.toObject()));
@@ -334,7 +334,7 @@ export async function migrateToken(token) {
  * @returns {Promise<Actor|null>}
  */
 export async function migrateActor(actor) {
-  const updateData = migrateActorData(actor.toObject(), actor.token);
+  const updateData = migrateActorData(actor.toObject(), actor.token, { actor });
   if (!foundry.utils.isEmpty(updateData)) {
     return actor.update(updateData);
   }
@@ -345,60 +345,62 @@ export async function migrateActor(actor) {
  * Migrate a single Actor document to incorporate latest data model changes
  * Return an Object of updateData to be applied
  *
- * @param {ActorData} actor   The actor data to derive an update from
+ * @param {ActorData} actorData   The actor data to derive an update from
  * @param {TokenDocument} token
- * @returns {object}          The updateData to apply
+ * @param {object} [options] - Additional options
+ * @param {Actor} [options.actor] - Associated actor document
+ * @returns {object} - The updateData to apply
  */
-export function migrateActorData(actor, token) {
+export function migrateActorData(actorData, token, { actor } = {}) {
   // Ignore basic actor type
-  if (actor.type === "basic") return {};
+  if (actorData.type === "basic") return {};
   // Ignore module introduced types
-  if (!game.system.template.Actor.types.includes(actor.type)) return {};
+  if (!game.system.template.Actor.types.includes(actorData.type)) return {};
 
   const updateData = {};
   const linked = token?.isLinked ?? true;
-  _migrateCharacterLevel(actor, updateData, linked);
-  _migrateActorEncumbrance(actor, updateData, linked);
-  _migrateActorNoteArrays(actor, updateData);
-  _migrateActorSpeed(actor, updateData, linked);
-  _migrateSpellDivineFocus(actor, updateData);
-  _migrateActorConcentration(actor, updateData);
-  _migrateActorSpellbookCL(actor, updateData);
-  _migrateActorSpellbookSlots(actor, updateData, linked);
-  _migrateActorConcentration(actor, updateData);
-  _migrateActorBaseStats(actor, updateData);
-  _migrateUnusedActorCreatureType(actor, updateData);
-  _migrateActorSpellbookDCFormula(actor, updateData, linked);
-  _migrateActorHPAbility(actor, updateData);
-  _migrateActorCR(actor, updateData, linked);
-  _migrateAttackAbility(actor, updateData, linked);
-  _migrateActorDefenseAbility(actor, updateData);
-  _migrateActorSpellbookUsage(actor, updateData, linked);
-  _migrateActorNullValues(actor, updateData);
-  _migrateActorSpellbookDomainSlots(actor, updateData);
-  _migrateActorStatures(actor, updateData, linked);
-  _migrateActorInitAbility(actor, updateData, linked);
-  _migrateActorChangeRevamp(actor, updateData, linked);
-  _migrateActorCMBRevamp(actor, updateData, linked);
-  _migrateActorConditions(actor, updateData, linked);
-  _migrateCarryBonus(actor, updateData, linked);
-  _migrateBuggedValues(actor, updateData, linked);
-  _migrateSpellbookUsage(actor, updateData, linked);
-  _migrateActorHP(actor, updateData, linked);
-  _migrateActorSenses(actor, updateData, linked, token);
-  _migrateActorInvaliddSkills(actor, updateData, linked);
-  _migrateActorSkillRanks(actor, updateData, linked);
-  _migrateActorSkillJournals(actor, updateData, linked);
-  _migrateActorSubskillData(actor, updateData);
-  _migrateActorUnusedData(actor, updateData);
-  _migrateActorDRandER(actor, updateData);
+  _migrateCharacterLevel(actorData, updateData, linked);
+  _migrateActorEncumbrance(actorData, updateData, linked);
+  _migrateActorNoteArrays(actorData, updateData);
+  _migrateActorSpeed(actorData, updateData, linked);
+  _migrateSpellDivineFocus(actorData, updateData);
+  _migrateActorConcentration(actorData, updateData);
+  _migrateActorSpellbookCL(actorData, updateData);
+  _migrateActorSpellbookSlots(actorData, updateData, linked);
+  _migrateActorConcentration(actorData, updateData);
+  _migrateActorBaseStats(actorData, updateData);
+  _migrateUnusedActorCreatureType(actorData, updateData);
+  _migrateActorSpellbookDCFormula(actorData, updateData, linked);
+  _migrateActorHPAbility(actorData, updateData);
+  _migrateActorCR(actorData, updateData, linked);
+  _migrateAttackAbility(actorData, updateData, linked);
+  _migrateActorDefenseAbility(actorData, updateData);
+  _migrateActorSpellbookUsage(actorData, updateData, linked);
+  _migrateActorNullValues(actorData, updateData);
+  _migrateActorSpellbookDomainSlots(actorData, updateData);
+  _migrateActorStatures(actorData, updateData, linked);
+  _migrateActorInitAbility(actorData, updateData, linked);
+  _migrateActorChangeRevamp(actorData, updateData, linked);
+  _migrateActorCMBRevamp(actorData, updateData, linked);
+  _migrateActorConditions(actorData, updateData, linked);
+  _migrateCarryBonus(actorData, updateData, linked);
+  _migrateBuggedValues(actorData, updateData, linked);
+  _migrateSpellbookUsage(actorData, updateData, linked);
+  _migrateActorHP(actorData, updateData, linked);
+  _migrateActorSenses(actorData, updateData, linked, token);
+  _migrateActorInvaliddSkills(actorData, updateData, linked);
+  _migrateActorSkillRanks(actorData, updateData, linked);
+  _migrateActorSkillJournals(actorData, updateData, linked);
+  _migrateActorSubskillData(actorData, updateData);
+  _migrateActorUnusedData(actorData, updateData);
+  _migrateActorDRandER(actorData, updateData);
 
   // Migrate Owned Items
-  if (!actor.items) return updateData;
-  const items = actor.items.reduce((arr, i) => {
+  if (!actorData.items) return updateData;
+  const items = actorData.items.reduce((arr, i) => {
     // Migrate the Owned Item
     const itemData = i instanceof Item ? i.toObject() : i;
-    const itemUpdate = migrateItemData(itemData, actor);
+    const itemUpdate = migrateItemData(itemData, actorData);
 
     // Update the Owned Item
     if (!foundry.utils.isEmpty(itemUpdate)) {
@@ -409,6 +411,18 @@ export function migrateActorData(actor, token) {
     return arr;
   }, []);
   if (items.length > 0) updateData.items = items;
+
+  // Migate Active Effects
+  const effects = [];
+  for (const ae of actorData.effects) {
+    const aeUpdate = migrateActiveEffectData(ae, actor);
+    if (!foundry.utils.isEmpty(aeUpdate)) {
+      aeUpdate._id = ae._id;
+      effects.push(aeUpdate);
+    }
+  }
+  if (effects.length) updateData.effects = effects;
+
   return updateData;
 }
 
@@ -576,23 +590,23 @@ export async function migrateScene(scene) {
  * @param {object} scene - Scene data to Update
  * @returns {object} Update data to apply
  */
-export const migrateSceneData = async function (scene) {
+export const migrateSceneData = function (scene) {
   const tokens = [];
   for (const token of scene.tokens) {
     if (token.actorLink) continue;
     const actorId = token.actorId;
-    const actor = game.actors.get(token.actorId);
+    const actor = token.actor;
     if (!actor) continue;
 
     const t = deepClone(token);
 
-    const mergedData = foundry.utils.mergeObject(actor.toObject(), t.delta ?? t.actorData);
+    const actorData = actor.toObject();
 
-    const actorUpdate = migrateActorData(mergedData, token);
+    const actorUpdate = migrateActorData(actorData, token, { actor });
     ["items", "effects"].forEach((embeddedName) => {
       if (!actorUpdate[embeddedName]?.length) return;
       const updates = new Map(actorUpdate[embeddedName].map((u) => [u._id, u]));
-      mergedData[embeddedName].forEach((original) => {
+      actorData[embeddedName].forEach((original) => {
         const update = updates.get(original._id);
         if (update) foundry.utils.mergeObject(original, update);
       });
@@ -2156,4 +2170,50 @@ const _migrateItemTuples = (item, updateData) => {
       updateData["system.associations.classes"] = classAssociations.flat();
     }
   }
+};
+
+/**
+ * Migrate Active Effect data
+ *
+ * @param {object} ae Active Effect data
+ * @param {Actor} actor Actor
+ */
+const migrateActiveEffectData = (ae, actor) => {
+  if (!actor) return;
+
+  const updateData = {};
+
+  /**
+   * @param {string} origin Origin string
+   * @returns {string|undefined} Relative UUID, if origin was found
+   */
+  const getNewRelativeOrigin = (origin) => {
+    const newOrigin = fromUuidSync(origin, { relative: actor });
+    if (newOrigin instanceof Item && newOrigin.actor === actor) {
+      return newOrigin.getRelativeUUID(actor);
+    }
+  };
+
+  // Convert no longer used flags.pf1.prigin to origin, if no origin is present
+  const originFlag = ae.flags?.pf1?.origin;
+  if (originFlag) {
+    if (!ae.origin) {
+      const newOrigin = getNewRelativeOrigin(originFlag);
+      if (newOrigin) updateData.origin = newOrigin;
+    }
+    updateData.flags ??= {};
+    updateData.flags.pf1 ??= {};
+    updateData.flags.pf1["-=origin"] = null;
+  }
+
+  // Convert origin to relative origin
+  if (ae.origin) {
+    const newOrigin = getNewRelativeOrigin(ae.origin);
+    // Avoid empty updates
+    if (newOrigin && ae.origin !== newOrigin) {
+      updateData.origin = newOrigin;
+    }
+  }
+
+  return updateData;
 };

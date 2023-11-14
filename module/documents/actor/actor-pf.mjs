@@ -439,8 +439,7 @@ export class ActorPF extends ActorBasePF {
       actorUpdate = {};
 
     for (const ae of temporaryEffects) {
-      const re = ae.origin?.match(/Item\.(?<itemId>\w+)/);
-      const item = this.items.get(re?.groups.itemId);
+      const item = fromUuidSync(ae.origin, { relative: this });
       if (item?.type !== "buff") {
         if (ae.statuses.size) {
           // Disable expired conditions
@@ -476,8 +475,8 @@ export class ActorPF extends ActorBasePF {
     if (disableActiveEffects.length)
       await this.updateEmbeddedDocuments("ActiveEffect", disableActiveEffects, disableAEContext);
 
-    const disableBuffContext = mergeObject({ render: !hasActorUpdates }, context);
-    if (disableBuffs.length) await this.updateEmbeddedDocuments("Item", disableBuffs, disableBuffContext);
+    const disableBuffsContext = mergeObject({ render: !hasActorUpdates }, context);
+    if (disableBuffs.length) await this.updateEmbeddedDocuments("Item", disableBuffs, context);
 
     if (hasActorUpdates) await this.update(actorUpdate, context);
   }
@@ -4018,25 +4017,25 @@ export class ActorPF extends ActorBasePF {
     if (this._states.togglingStatusIcons) return;
     this._states.togglingStatusIcons = true;
 
-    if (!this.testUserPermission(game.user, "OWNER")) return;
-
     const buffTextures = this._calcBuffActiveEffects();
     /** @type {ActiveEffectPF[]} */
-    const fx = [...this.effects];
+    const AEs = [...this.effects];
 
     // Create and delete buff ActiveEffects
-    const toCreate = [];
-    const toDelete = [];
-    const toUpdate = [];
+    const toCreate = [],
+      toDelete = [],
+      toUpdate = [];
+
     for (const [id, obj] of Object.entries(buffTextures)) {
-      const existing = fx.find((f) => {
-        return f.origin === id || f.flags.pf1?.origin?.item === obj.id;
-      });
+      const existing = AEs.find((f) => f.origin === id);
       if (!existing) {
-        if (obj.active) toCreate.push(obj.item.getRawEffectData());
+        if (obj.active) {
+          toCreate.push(obj.item.getRawEffectData());
+        }
       } else {
-        if (!obj.active) toDelete.push(existing.id);
-        else {
+        if (!obj.active) {
+          toDelete.push(existing.id);
+        } else {
           const existingData = existing.toObject();
           const mergedData = foundry.utils.mergeObject(existingData, obj.item.getRawEffectData(), { inplace: false });
           const hideIcon = obj.item.system.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
@@ -4052,7 +4051,7 @@ export class ActorPF extends ActorBasePF {
 
     // Create and delete condition ActiveEffects
     for (const condKey of Object.keys(pf1.config.conditions)) {
-      const idx = fx.findIndex((e) => e.statuses.has(condKey));
+      const idx = AEs.findIndex((e) => e.statuses.has(condKey));
       const hasCondition = this.system.attributes.conditions[condKey] === true;
       const hasEffectIcon = idx >= 0;
 
@@ -4070,7 +4069,7 @@ export class ActorPF extends ActorBasePF {
         };
         toCreate.push(aeData);
       } else if (!hasCondition && hasEffectIcon) {
-        const removeEffects = fx.filter((e) => e.statuses.has(condKey));
+        const removeEffects = AEs.filter((e) => e.statuses.has(condKey));
         toDelete.push(...removeEffects.map((e) => e.id));
       }
     }
@@ -4090,9 +4089,9 @@ export class ActorPF extends ActorBasePF {
   // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
   _calcBuffActiveEffects() {
     return this.itemTypes.buff.reduce((acc, buff) => {
-      const id = buff.uuid;
-      acc[id] ??= { id: buff.id, label: buff.name, icon: buff.img, item: buff };
-      acc[id].active = buff.isActive;
+      const ruuid = buff.getRelativeUUID(this);
+      acc[ruuid] ??= { id: buff.id, label: buff.name, icon: buff.img, item: buff };
+      acc[ruuid].active = buff.isActive;
       return acc;
     }, {});
   }

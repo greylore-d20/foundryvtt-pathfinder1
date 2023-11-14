@@ -74,9 +74,7 @@ export class ItemSpellPF extends ItemPF {
     // Spell Level, School, and Components
     labels.level = pf1.config.spellLevels[itemData.level];
     labels.school = pf1.config.spellSchools[itemData.school];
-    labels.components = this.getSpellComponents()
-      .map((o) => o[0])
-      .join(" ");
+    labels.components = this.getSpellComponents({ compact: true }).join(" ");
 
     return labels;
   }
@@ -344,9 +342,10 @@ export class ItemSpellPF extends ItemPF {
     return spellbook.cl.total + (this.system.clOffset || 0);
   }
 
+  /** @type {object|undefined} - Actor's linked spellbook data */
   get spellbook() {
     const bookId = this.system.spellbook;
-    return this.actor?.system?.attributes?.spells.spellbooks[bookId];
+    return this.actor?.system.attributes?.spells.spellbooks[bookId];
   }
 
   getDC(rollData = null) {
@@ -389,11 +388,16 @@ export class ItemSpellPF extends ItemPF {
     return this.spellbook?.spellPoints?.useSystem ?? false;
   }
 
-  getSpellComponents(srcData) {
-    if (!srcData) srcData = duplicate(this.system);
+  getSpellComponents({ compact = false } = {}) {
     const reSplit = pf1.config.re.traitSeparator,
       srcComponents = this.system.components ?? {},
       srcMaterials = this.system.materials ?? {};
+
+    const kind = this.spellbook?.kind,
+      //isArcane = kind === "arcane",
+      //isPsychic = kind === "psychic",
+      //isAlchemical = kind === "alchemy",
+      isDivine = kind === "divine";
 
     const components = [];
     const labels = {
@@ -411,22 +415,34 @@ export class ItemSpellPF extends ItemPF {
     if (srcComponents.thought) components.push(labels.thought);
     if (srcComponents.emotion) components.push(labels.emotion);
 
-    const df = srcComponents.divineFocus;
     // Reverse mapping of CONFIG.PF1.divineFocus for readability
     const dfVariants = { DF: 1, MDF: 2, FDF: 3 };
 
-    if (srcComponents.material) {
+    let df = srcComponents.divineFocus;
+
+    // Display focus and material only if they aren't overridden by DF variant
+    if (isDivine && df === dfVariants.MDF && compact) {
+      // Downgrade to DF since material is not used
+      df = dfVariants.DF;
+    } else if (srcComponents.material) {
       let material = labels.material;
-      if (df === dfVariants.MDF) material = `${material}/${labels.divineFocus}`;
-      if (srcMaterials.value) material = `${material} (${srcMaterials.value})`;
+      // Display indetermined M/DF only if spellcasting kind is not known
+      if ((!kind || !compact) && df === dfVariants.MDF) material = `${material}/${labels.divineFocus}`;
+      if (srcMaterials.value && !compact) material = `${material} (${srcMaterials.value})`;
       if (material) components.push(material);
     }
-    if (srcComponents.focus) {
+
+    if (isDivine && df === dfVariants.FDF && compact) {
+      // Downgrade to DF since focus is not used
+      df = dfVariants.DF;
+    } else if (srcComponents.focus) {
       let focus = labels.focus;
-      if (df === dfVariants.FDF) focus = `${focus}/${labels.divineFocus}`;
-      if (srcMaterials.focus) focus = `${focus} (${srcMaterials.focus})`;
+      // Display indeterminate F/DF only if spellcasting kind is not known
+      if ((!kind || !compact) && df === dfVariants.FDF) focus = `${focus}/${labels.divineFocus}`;
+      if (srcMaterials.focus && !compact) focus = `${focus} (${srcMaterials.focus})`;
       if (focus) components.push(focus);
     }
+
     if (df === dfVariants.DF) components.push(labels.divineFocus);
     if (labels.value) components.push(...srcComponents.value.split(reSplit));
 

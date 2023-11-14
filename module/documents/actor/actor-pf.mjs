@@ -2236,6 +2236,7 @@ export class ActorPF extends ActorBasePF {
     const updateData = {
       [`system.attributes.spells.spellbooks.${bookId}`]: {
         inUse: true,
+        kind: casting.spells,
         class: casting.class,
         spellPreparationMode: casting.type,
         casterType: casting.progression,

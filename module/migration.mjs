@@ -364,9 +364,9 @@ export function migrateActorData(actorData, token, { actor } = {}) {
   _migrateActorNoteArrays(actorData, updateData);
   _migrateActorSpeed(actorData, updateData, linked);
   _migrateSpellDivineFocus(actorData, updateData);
-  _migrateActorConcentration(actorData, updateData);
   _migrateActorSpellbookCL(actorData, updateData);
   _migrateActorSpellbookSlots(actorData, updateData, linked);
+  _migrateActorSpellbookKind(actorData, updateData, actor);
   _migrateActorConcentration(actorData, updateData);
   _migrateActorBaseStats(actorData, updateData);
   _migrateUnusedActorCreatureType(actorData, updateData);
@@ -802,6 +802,35 @@ const _migrateActorSpellbookSlots = function (ent, updateData, linked) {
     }
   }
 };
+
+/**
+ * Migrate spellbook kind (arcane, divine, psychic, ...)
+ *
+ * @param {object} actorData - Actor data
+ * @param {object} updateData - Update data
+ * @param {Actor} actor - Actor document
+ */
+function _migrateActorSpellbookKind(actorData, updateData, actor) {
+  for (const [bookId, book] of Object.entries(getProperty(actorData.system, "attributes.spells.spellbooks") || {})) {
+    if (book.kind === undefined) {
+      // Attempt to get data from class
+      const castingClass =
+        !!book.class && book.class !== "_hd" ? actor.itemTypes.class.find((i) => i.system.tag === book.class) : null;
+      let kind = castingClass?.system.casting?.spells;
+
+      if (!kind) {
+        // Attempt to determine kind without access to source class
+        kind = "arcane"; // Default to arcane if all else fails
+        if (book.arcaneSpellFailure) kind = "arcane";
+        else if (book.psychic) kind = "psychic";
+        else if (book.spellPreparationMode === "prepared" && book.ability === "int") kind = "alchemy";
+        else if (book.class !== "_hd") kind = "divine";
+      }
+
+      updateData[`system.attributes.spells.spellbooks.${bookId}.kind`] = kind;
+    }
+  }
+}
 
 const _migrateActorBaseStats = function (ent, updateData) {
   const keys = [

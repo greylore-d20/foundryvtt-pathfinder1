@@ -134,6 +134,13 @@
           </select>
         </div>
 
+        <div class="form-group spellcasting-kind">
+          <h3>{{localize "PF1.Spellcasting.Type.Label"}}</h3>
+          <select name="system.attributes.spells.spellbooks.{{bookId}}.kind">
+            {{selectOptions @root.config.spellcasting.spells selected=spellbook.orig.kind localize=true blank="PF1.NonApplicable"}}
+          </select>
+        </div>
+
         <div class="flexrow formulas">
           <h3>{{localize "PF1.BaseDCFormula"}}</h3>
           <input class="formula" type="text" name="system.attributes.spells.spellbooks.{{bookId}}.baseDCFormula"

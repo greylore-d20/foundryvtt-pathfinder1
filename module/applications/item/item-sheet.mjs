@@ -424,6 +424,14 @@ export class ItemSheetPF extends ItemSheet {
           relativeTo: this.actor,
         });
       }
+
+      // Reverse mapping of pf1.config.divineFocus for readability
+      const dfVariants = { DF: 1, MDF: 2, FDF: 3 };
+      itemData.components ??= {};
+      const df = itemData.components.divineFocus;
+      // Force intrinsic DF components
+      if (df === dfVariants.MDF) itemData.components.material = true;
+      if (df === dfVariants.FDF) itemData.components.focus = true;
     }
 
     // Prepare class specific stuff

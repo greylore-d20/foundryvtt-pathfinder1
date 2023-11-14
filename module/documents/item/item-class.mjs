@@ -58,6 +58,12 @@ export class ItemClassPF extends ItemPF {
     const actor = this.actor;
     if (!actor) return;
 
+    // Adjust associations if any exist
+    const prevLevel = this.system.level;
+    if (prevLevel > 0) {
+      this._onLevelChange(prevLevel, 0);
+    }
+
     // Disable book associated with this class, if it has spellcasting defined
     const tag = this.system.tag;
     if (!tag || !this.system.casting?.type) return;
@@ -70,37 +76,38 @@ export class ItemClassPF extends ItemPF {
     }
   }
 
-  async update(updateData, context = {}) {
-    // Ensure update data is always in expanded format instead of arbitrarily mixed or flattened depending on caller.
-    updateData = expandObject(updateData);
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {string} userId
+   */
+  _onUpdate(changed, context, userId) {
+    super._onUpdate(changed, context, userId);
 
-    await super.update(updateData, context);
+    // Do following processing only on the triggering user
+    if (game.user.id !== userId) return;
 
-    // Update class
-    const newLevel = updateData.system?.level;
-    if (newLevel !== undefined && this.actor) {
+    // Update class associations if level changed
+    const newLevel = changed.system?.level;
+    if (newLevel >= 0) {
       const prevLevel = this._prevLevel;
-      if (prevLevel !== undefined) {
-        delete this._prevLevel;
-        await this._onLevelChange(prevLevel, newLevel);
-      }
+      delete this._prevLevel;
+      this._onLevelChange(prevLevel ?? 0, newLevel ?? 0);
     }
-  }
-
-  async delete(context = {}) {
-    await this._onLevelChange(this.system.level, 0);
-    return super.delete(context);
   }
 
   /**
    * Add or remove class associations on level change.
    *
-   * @param {number} curLevel Current level, before the level change.
-   * @param {number} newLevel New level, after the level change.
+   * @param {number} curLevel Current level, before the change.
+   * @param {number} newLevel New level, after the change.
    */
-  async _onLevelChange(curLevel, newLevel) {
+  async _onLevelChange(curLevel = 0, newLevel = 0) {
     const actor = this.actor;
     if (!actor) return;
+
+    if (curLevel === newLevel) return;
 
     // Add items associated to this class
     if (newLevel > curLevel) {

@@ -19,6 +19,73 @@ export class ItemBuffPF extends ItemPF {
 
   /**
    * @override
+   * @param {object} changed - Update data
+   * @param {object} context - Update context options
+   * @param {string} userId - User ID
+   */
+  _onUpdate(changed, context, userId) {
+    super._onUpdate(changed, context, userId);
+
+    if (changed.system === undefined) return; // No system data updates
+    if (game.user.id !== userId) return;
+
+    this._updateTrackingEffect(changed);
+  }
+
+  /**
+   * @override
+   * @param {object} data - Creation data
+   * @param {object} context - Creation context
+   * @param {string} userId - User ID
+   */
+  _onCreate(data, context, userId) {
+    super._onCreate(data, context, userId);
+
+    if (game.user.id !== userId) return;
+
+    if (this.isActive) {
+      this._updateTrackingEffect(data);
+    }
+  }
+
+  /**
+   * Toggle active effect icon as necessary.
+   *
+   * @param {object} changed Update data
+   * @param {string} userId  User ID
+   */
+  _updateTrackingEffect(changed, userId) {
+    const actor = this.actor;
+    if (!actor) return;
+
+    // Toggle icon if active state has changed
+    const isActive = changed.system.active;
+    if (isActive === undefined) return;
+
+    const oldEffect = this.effect;
+
+    // Remove old AE
+    if (!isActive) {
+      oldEffect?.delete();
+    }
+    // Add new AE or update old AE
+    else {
+      const aeData = this.getRawEffectData();
+      aeData.active = isActive;
+
+      // Hide effect icon
+      const hideIcon = this.system.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
+      if (hideIcon) aeData.icon = null;
+
+      // Update old
+      if (oldEffect) oldEffect.update(aeData);
+      // Create new
+      else ActiveEffect.implementation.create(aeData, { parent: actor });
+    }
+  }
+
+  /**
+   * @override
    * @param {object} context
    * @param {User} user
    */
@@ -172,7 +239,7 @@ export class ItemBuffPF extends ItemPF {
   }
 
   /**
-   * Associated ActiveEffect if any.
+   * Retrieve associated Active Effect
    *
    * @type {ActiveEffect|undefined}
    */

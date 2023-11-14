@@ -2016,32 +2016,6 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
-   * @override
-   * @param {Item|Actor} parent - Parent document
-   * @param {"items"|"effects"} collection - Collection name
-   * @param {Item[]|ActiveEffect[]} documents - Updated documents
-   * @param {object[]} result - Document update data
-   * @param {object} context - Update context
-   * @param {string} userId - Triggering user ID
-   */
-  _onUpdateDescendantDocuments(parent, collection, documents, result, context, userId) {
-    super._onUpdateDescendantDocuments(parent, collection, documents, result, context, userId);
-
-    if (userId !== game.user.id) return;
-
-    if (collection === "items") {
-      // Toggle conditions only if updated items included buffs and the buff's active state was changed
-      if (
-        documents.some(
-          (item) => item.type === "buff" && result.some((ri) => ri._id == item.id && ri.system?.active !== undefined)
-        )
-      ) {
-        this.toggleConditionStatusIcons({ render: false });
-      }
-    }
-  }
-
-  /**
    * @param {ItemPF} item - the item to add to the actor's resources
    * @param {object} [options] - extra options
    * @param {boolean} [options.warnOnDuplicate] - Skips warning if item tag already exists in dictionary flags
@@ -4028,37 +4002,14 @@ export class ActorPF extends ActorBasePF {
     if (this._states.togglingStatusIcons) return;
     this._states.togglingStatusIcons = true;
 
-    const buffTextures = this._calcBuffActiveEffects();
-    /** @type {ActiveEffectPF[]} */
+    if (!this.isOwner) return;
+
     const AEs = [...this.effects];
 
     // Create and delete buff ActiveEffects
-    const toCreate = [],
-      toDelete = [],
-      toUpdate = [];
-
-    for (const [id, obj] of Object.entries(buffTextures)) {
-      const existing = AEs.find((f) => f.origin === id);
-      if (!existing) {
-        if (obj.active) {
-          toCreate.push(obj.item.getRawEffectData());
-        }
-      } else {
-        if (!obj.active) {
-          toDelete.push(existing.id);
-        } else {
-          const existingData = existing.toObject();
-          const mergedData = foundry.utils.mergeObject(existingData, obj.item.getRawEffectData(), { inplace: false });
-          const hideIcon = obj.item.system.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
-          if (hideIcon) mergedData.icon = null;
-          const diffData = foundry.utils.diffObject(existingData, mergedData);
-          if (!foundry.utils.isEmpty(diffData)) {
-            diffData._id = existing.id;
-            toUpdate.push(diffData);
-          }
-        }
-      }
-    }
+    const toCreate = [];
+    const toDelete = [];
+    const toUpdate = [];
 
     // Create and delete condition ActiveEffects
     for (const condKey of Object.keys(pf1.config.conditions)) {
@@ -4095,16 +4046,6 @@ export class ActorPF extends ActorBasePF {
     if (toCreate.length) await this.createEmbeddedDocuments("ActiveEffect", toCreate, createContext);
     if (toUpdate.length) await this.updateEmbeddedDocuments("ActiveEffect", toUpdate, context);
     this._states.togglingStatusIcons = false;
-  }
-
-  // @Object { id: { title: String, type: buff/string, img: imgPath, active: true/false }, ... }
-  _calcBuffActiveEffects() {
-    return this.itemTypes.buff.reduce((acc, buff) => {
-      const ruuid = buff.getRelativeUUID(this);
-      acc[ruuid] ??= { id: buff.id, label: buff.name, icon: buff.img, item: buff };
-      acc[ruuid].active = buff.isActive;
-      return acc;
-    }, {});
   }
 
   refreshAbilityModifiers() {

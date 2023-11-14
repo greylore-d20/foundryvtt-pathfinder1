@@ -40,16 +40,15 @@ TokenHUD.prototype._getStatusEffectChoices = function () {
   const core = _TokenHUD_getStatusEffectChoices.call(this),
     buffs = {};
 
-  // Only add buff textures for actors with that function (so not e.g. not actors introduced by modules)
-  for (const buff of Object.values(this.object.actor?._calcBuffActiveEffects?.() ?? {})) {
-    if (!buff) continue;
+  const items = this.object.actor?.itemTypes.buff ?? [];
+  for (const buff of items) {
     buffs[`buff-${buff.id}`] = {
       id: buff.id,
-      title: buff.label,
-      src: buff.icon,
-      isActive: buff.active,
+      title: buff.name,
+      src: buff.img,
+      isActive: buff.isActive,
       isOverlay: false,
-      cssClass: buff.active ? "active" : "",
+      cssClass: buff.isActive ? "active" : "",
     };
   }
 

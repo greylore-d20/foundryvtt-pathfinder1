@@ -113,21 +113,10 @@ export class ItemBuffPF extends ItemPF {
     if (existing || noCreate) return existing;
 
     // Add a new effect
-    const createData = {
-      label: this.name,
-      icon: this.img,
-      origin: this.uuid,
-      disabled: !this.isActive,
-      flags: {
-        pf1: {
-          show: !this.system.hideFromToken && !game.settings.get("pf1", "hideTokenConditions"),
-          origin: { item: this.id },
-        },
-      },
-    };
-    const effect = ActiveEffect.create(createData, { parent: actor });
-
-    return effect;
+    const createData = this.getRawEffectData();
+    const doSHow = !this.system.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
+    setProperty(createData, "flags.pf1.show", doSHow);
+    return ActiveEffect.implementation.create(createData, { parent: actor });
   }
 
   // Determines the starting data for an ActiveEffect based off this item

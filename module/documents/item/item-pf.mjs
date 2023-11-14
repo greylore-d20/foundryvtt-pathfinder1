@@ -953,7 +953,7 @@ export class ItemPF extends ItemBasePF {
   // Determines the starting data for an ActiveEffect based off this item
   getRawEffectData() {
     return {
-      label: this.name,
+      name: this.name,
       icon: this.img,
       origin: this.uuid,
       flags: { pf1: { origin: { item: this.id } } },

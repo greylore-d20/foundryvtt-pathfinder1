@@ -3918,15 +3918,15 @@ export class ActorPF extends ActorBasePF {
     };
   }
 
+  /**
+   * Determines carried weight.
+   *
+   * @returns {number} - kg or lbs of all carried things, including currency
+   */
   getCarriedWeight() {
-    // Determine carried weight
-    const physicalItems = this.items.filter((o) => {
-      return o.system.weight != null;
-    });
-    const weight = physicalItems.reduce((cur, o) => {
-      if (!o.system.carried) return cur;
-      return cur + o.system.weight.total;
-    }, this._calculateCoinWeight());
+    const weight = this.items
+      .filter((i) => i.isPhysical && i.system.carried !== false)
+      .reduce((cur, o) => cur + o.system.weight.total, this._calculateCoinWeight());
 
     return pf1.utils.convertWeight(weight);
   }

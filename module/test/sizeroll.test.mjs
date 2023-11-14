@@ -27,11 +27,11 @@ export function registerSizeRollTests() {
       });
 
       describe("Missing from chart", function () {
-        it("10d6 down by one, converted to 8d8 and stepped down to 6d8", function () {
-          expect(sizeRoll(10, 6, small)[0].formula).to.equal("6d8");
+        it("10d6 down by one, converted to 8d8 and stepped down to 8d6", function () {
+          expect(sizeRoll(10, 6, small)[0].formula).to.equal("8d6");
         });
-        it("2d12 down by one: converted to 4d6 and down to 3d6", function () {
-          expect(sizeRoll(2, 12, small)[0].formula).to.equal("3d6");
+        it("2d12 down by one: converted to 4d6 and down to 3d8", function () {
+          expect(sizeRoll(2, 12, small)[0].formula).to.equal("3d8");
         });
         // Converts 10d8 to 12d6 and then steps up normally to 16d6
         it("10d8 up by one: converted to 12d6 and stepped up to 16d6", function () {
@@ -40,8 +40,8 @@ export function registerSizeRollTests() {
         it("5d8 up by one: converted to 6d6 and stepped up to 8d6", function () {
           expect(sizeRoll(5, 8, large)[0].formula).to.equal("8d6");
         });
-        it("7d6 down by one: converted to 6d8 and stepped down to 4d8", function () {
-          expect(sizeRoll(7, 6, small)[0].formula).to.equal("4d8");
+        it("7d6 down by one: converted to 6d8 and stepped down to 6d6", function () {
+          expect(sizeRoll(7, 6, small)[0].formula).to.equal("6d6");
         });
       });
 

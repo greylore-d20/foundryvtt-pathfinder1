@@ -94,12 +94,37 @@ export class ActiveEffectPF extends ActiveEffect {
   }
 
   /**
+   * @override
+   * @type {boolean}
+   */
+  _onUpdate(changed, options, userId) {
+    super._onUpdate(changed, options, userId);
+
+    if (game.user.id !== userId) return;
+
+    if (changed.disabled !== undefined) {
+      this._setOriginDocumentState(!this.disabled);
+    }
+  }
+
+  /**
+   * @internal
+   * @param {boolean} [state=false]
+   * @param {object} context
+   * @returns {Promise<Item|undefined>}
+   */
+  async _setOriginDocumentState(state = false, context) {
+    const origin = await fromUuid(this.origin || "", { relative: this.actor });
+    if (origin) return origin.setActive(!this.disabled, context);
+  }
+
+  /**
    * @type {Actor|null} Parent actor or null.
    */
   get actor() {
     const parent = this.parent;
     if (parent instanceof Actor) return parent;
-    return null;
+    else return parent?.actor || null;
   }
 
   /**

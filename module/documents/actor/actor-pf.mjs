@@ -1983,14 +1983,15 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * @override
+   * @param {Item|Actor} parent - Parent document
    * @param {"Item"|"ActiveEffect"} embeddedName
    * @param {Item[]|ActiveEffect[]} documents
    * @param {*} result
    * @param {object} context
    * @param {string} userId
    */
-  _onCreateEmbeddedDocuments(embeddedName, documents, result, options, userId) {
-    super._onCreateEmbeddedDocuments(...arguments);
+  _onCreateDescendantDocuments(parent, embeddedName, documents, result, options, userId) {
+    super._onCreateDescendantDocuments(...arguments);
 
     if (userId === game.user.id && embeddedName === "Item") {
       // Creating anything but active buffs should not prompt toggling conditions
@@ -2008,14 +2009,15 @@ export class ActorPF extends ActorBasePF {
 
   /**
    * @override
+   * @param {Item|Actor} parent - Parent document
    * @param {"Item"|"ActiveEffect"} embeddedName
    * @param {Item[]|ActiveEffect[]} documents
    * @param {*} result
    * @param {object} context
    * @param {string} userId
    */
-  _onUpdateEmbeddedDocuments(embeddedName, documents, result, context, userId) {
-    super._onUpdateEmbeddedDocuments(embeddedName, documents, result, context, userId);
+  _onUpdateDescendantDocuments(parent, embeddedName, documents, result, context, userId) {
+    super._onUpdateDescendantDocuments(parent, embeddedName, documents, result, context, userId);
 
     if (userId === game.user.id && embeddedName === "Item") {
       // Toggle conditions only if updated items included buffs and the buff's active state was changed

@@ -1,0 +1,147 @@
+/* ----------------------------------------- */
+/* Level Up Dialog
+/* ----------------------------------------- */
+
+.pf1.level-up {
+  form {
+    display: flex;
+    flex-direction: column;
+
+    .tab {
+      display: flex;
+      min-height: min-content;
+      flex: 1;
+
+      h2 {
+        flex: 0;
+      }
+
+      .list-selector {
+        display: flex;
+        flex: 2;
+        flex-direction: column;
+        height: 100%;
+
+        a.item {
+          display: flex;
+          align-items: center;
+
+          .itemBackground();
+
+          img {
+            flex: 0;
+            border-radius: 0;
+          }
+          .fake-img {
+            flex: 0 0 3.6em;
+          }
+          img,
+          .fake-img {
+            margin-right: 0.4em;
+            width: 3.6em;
+            height: 3.6em;
+          }
+
+          span.name {
+            font-size: @fontSizeLarge;
+          }
+        }
+      }
+
+      .content {
+        flex: 3;
+        border: 1px solid @colorOlive;
+        border-radius: 0.4em;
+        padding: 0.2em;
+        height: 100%;
+      }
+
+      .ability-scores {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        font-size: @fontSizeLarge;
+
+        ul {
+          margin: 0;
+          padding: 0;
+          overflow-y: auto;
+          display: flex;
+          flex-direction: column;
+          min-height: min-content;
+          flex: 1 1 2.8em;
+
+          .ability-score {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            height: 2.8em;
+            flex: 0 0 2.8em;
+            gap: 1em;
+            overflow-y: auto;
+
+            .itemBackground();
+
+            .name {
+              flex: 1;
+              text-align: right;
+            }
+
+            .value {
+              display: flex;
+              flex-direction: row;
+              flex: 1;
+
+              .fake-operator,
+              .operator {
+                flex: 0 0 1.6em;
+              }
+
+              span {
+                flex: 0 0 2em;
+                text-align: center;
+              }
+            }
+
+            &.enhanced {
+              span {
+                color: dodgerblue;
+              }
+            }
+          }
+        }
+
+        footer {
+          display: flex;
+          flex-direction: column;
+          border-top: 1px solid @colorCrimson;
+          margin-top: 0.8em;
+          align-items: center;
+
+          .points-left {
+            height: 2em;
+            font-size: var(--font-size-16);
+          }
+        }
+      }
+    }
+
+    .nav-buttons {
+      border-top: @borderGroove;
+      padding-top: 0.4em;
+      height: 3em;
+      justify-content: center;
+      display: flex;
+      flex-direction: row;
+
+      button {
+        width: 14em;
+        height: 2.4em;
+
+        &:disabled {
+          opacity: 0.6;
+        }
+      }
+    }
+  }
+}

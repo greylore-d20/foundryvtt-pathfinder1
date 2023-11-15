@@ -67,7 +67,13 @@
     <h2>{{localize "PF1.LevelUp.Chat.Extra.Header"}}</h2>
 
     {{#if formData.extra.feats.new}}
-    <p class="feats">{{ formData.extra.feats.label }}</p>
+    <p class="feats">
+      {{#if (eq formData.extra.feats.new 1)}}
+      {{localize "PF1.LevelUp.Chat.Extra.NewFeat"}}
+      {{else}}
+      {{localize "PF1.LevelUp.Chat.Extra.NewFeats" newValue=formData.extra.feats.new}}
+      {{/if}}
+    </p>
     {{/if}}
   </div>
   {{/if}}

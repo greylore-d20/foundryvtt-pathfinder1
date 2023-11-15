@@ -1,9 +1,13 @@
 import { createInlineRollString } from "../utils/chat.mjs";
-import { RollPF } from "../dice/roll.mjs";
+import { RollPF } from "module/dice/roll.mjs";
 
 export class LevelUpForm extends FormApplication {
-  constructor(object, options = {}) {
-    super(object, options);
+  constructor(item, options = {}) {
+    super(item, options);
+
+    this.actor = item.actor ?? options.actor;
+
+    if (!this.actor) throw new Error("LevelUpForm needs an actor");
 
     /**
      * Relevant token if any.
@@ -33,8 +37,8 @@ export class LevelUpForm extends FormApplication {
     return mergeObject(super.defaultOptions, {
       classes: ["pf1", "level-up"],
       template: "systems/pf1/templates/apps/level-up.hbs",
-      width: 720,
-      height: 480,
+      width: 620,
+      height: 420,
       closeOnSubmit: true,
     });
   }
@@ -56,37 +60,17 @@ export class LevelUpForm extends FormApplication {
     return game.i18n.format("PF1.LevelUpForm_Title", { className: this.object.name });
   }
 
-  /** @type {Actor} */
-  get actor() {
-    return this.object.actor;
-  }
-
   static async addClassWizard(actor, rawData) {
     // Alter initial data
     setProperty(rawData, "system.hp", 0);
     setProperty(rawData, "system.level", 0);
 
     // Add class item
-    let itemData = await actor.createEmbeddedDocuments("Item", [rawData]);
-    itemData = itemData instanceof Array ? itemData : [itemData];
-    const item = actor.items.get(itemData[0].id);
-    if (!item) {
-      throw new Error("No class was created at class initialization wizard");
-    }
+    const item = new Item.implementation(rawData);
+    item.reset();
 
     // Add level up form for new class
-    return new Promise((resolve) => {
-      const _app = new LevelUpForm(item).render(true);
-      Hooks.on("closeLevelUpForm", function _onClose(app) {
-        if (app === _app) {
-          if (item.system.level === 0) {
-            actor.deleteEmbeddedDocuments("Item", [item.id]);
-          }
-          Hooks.off("closeLevelUpForm", _onClose);
-          resolve();
-        }
-      });
-    });
+    return new Promise((resolve) => new LevelUpForm(item, { actor, resolve }).render(true));
   }
 
   getData() {
@@ -222,32 +206,34 @@ export class LevelUpForm extends FormApplication {
 
   /**
    * @returns {boolean} Whether this form's associated class is a favoured class.
-   * @// TODO: Add better logic for determining this <26-01-22, Furyspark> //
+   * @todo Add better logic for determining this <26-01-22, Furyspark>
    */
   isFavouredClass() {
     return this.object.system.subType === "base";
   }
 
   async _updateObject(event, formData) {
-    const itemData = {};
-    const actorData = {};
-    const chatData = {
-      config: pf1.config,
+    const parsedData = {
+      item: { system: {} },
+      chatData: { config: pf1.config },
+      newItems: [],
+      summary: {},
+      callbacks: [],
     };
-    const newItems = [];
-    const callbacks = [];
 
     for (const section of this._sections) {
-      const data = this._parseSection(section);
-      mergeObject(itemData, data.item);
-      mergeObject(actorData, data.actor);
-      mergeObject(chatData, data.chatData);
-      callbacks.push(...data.callbacks);
-      for (const item of data.newItems) {
-        const prevItem = newItems.find((o) => o._id === item._id);
-        if (prevItem != null) mergeObject(prevItem, item);
-        else newItems.push(item);
-      }
+      this._parseSection(section, parsedData);
+    }
+
+    const itemData = parsedData.item ?? {},
+      chatData = parsedData.chatData,
+      newItems = [],
+      callbacks = parsedData.callbacks;
+
+    for (const item of parsedData.newItems) {
+      const prevItem = newItems.find((o) => o._id === item._id);
+      if (prevItem != null) mergeObject(prevItem, item);
+      else newItems.push(item);
     }
 
     // Add level
@@ -257,27 +243,20 @@ export class LevelUpForm extends FormApplication {
     };
 
     // Update class
-    mergeObject(itemData, { "system.level": chatData.level.new });
+    itemData.system.level = chatData.level.new;
     const levelingClass = this.object;
-    const lvlwaiter = new Promise((resolve) => {
-      const hid = Hooks.on("pf1ClassLevelChange", function _waiter(actor, item, curLevel, newLevel) {
-        if (item.id === levelingClass.id) {
-          Hooks.off("pf1ClassLevelChange", hid);
-          resolve();
-        }
-      });
-    });
-    await levelingClass.update(itemData);
-    await lvlwaiter;
-
-    // Update actor
-    if (Object.keys(actorData).length) {
-      await this.actor.update(actorData);
+    if (this.object.actor) {
+      await levelingClass.update(itemData, { render: newItems.length == 0 });
+    } else {
+      levelingClass.updateSource(itemData);
+      newItems.unshift(levelingClass.toObject());
     }
+
     // Add items
-    if (newItems.length > 0) {
+    if (newItems.length) {
       await this.actor.createEmbeddedDocuments("Item", newItems);
     }
+
     // Run callbacks
     for (const cb of callbacks) {
       await cb.call(this);
@@ -285,7 +264,7 @@ export class LevelUpForm extends FormApplication {
 
     // Add new class features to chat data
     {
-      const classAssociations = getProperty(this.object, "flags.pf1.links.classAssociations") || {};
+      const classAssociations = this.object.getFlag("pf1", "links")?.classAssociations || {};
       const newAssociations = Object.entries(classAssociations).filter((o) => {
         return o[1] === chatData.level.new;
       });
@@ -305,21 +284,19 @@ export class LevelUpForm extends FormApplication {
       const featCount = this.actor.getFeatCount();
       featCount.new = Math.max(0, featCount.max - featCount.value);
       ex.feats = featCount;
-      if (featCount.new > 0) {
-        ex.enabled = true;
-        if (featCount.new === 1) featCount.label = game.i18n.localize("PF1.LevelUp.Chat.Extra.NewFeat");
-        else featCount.label = game.i18n.format("PF1.LevelUp.Chat.Extra.NewFeats", { newValue: featCount.new });
-      }
+      ex.enabled = featCount.new > 0;
 
       // Show new ability score
       const hd = this.actor.system.attributes.hd.total;
-      if (typeof hd === "number" && hd % 4 === 0) {
+      if (pf1.config.levelAbilityScores[hd] > 0) {
         ex.enabled = true;
         ex.newAbilityScore = {
           label: game.i18n.localize("PF1.LevelUp.Chat.Extra.NewAbilityScore"),
         };
       }
     }
+
+    this.resolve?.(this.object);
 
     // Create chat message
     return this.createChatMessage(chatData);
@@ -337,11 +314,12 @@ export class LevelUpForm extends FormApplication {
   /**
    * Parses a section, and sets updateData as appropriate for a submit.
    *
-   * @param {object} section - The given section.
-   * @returns {LevelUp_UpdateData}
+   * @param {object} section The given section.
+   * @param {LevelUp_UpdateData} [result] Update data object to complement
+   * @returns {LevelUp_UpdateData} Update data
    */
-  _parseSection(section) {
-    const result = {
+  _parseSection(section, result) {
+    result ??= {
       item: {},
       actor: {},
       chatData: {},
@@ -451,6 +429,8 @@ export class LevelUpForm extends FormApplication {
         { inplace: false }
       );
 
+      newItem.name = game.i18n.localize(newItem.name);
+
       // Add changes
       setProperty(
         newItem,
@@ -472,7 +452,7 @@ export class LevelUpForm extends FormApplication {
     // If a level up ability score feature already exists, update it
     else {
       const cb = async function () {
-        const changes = duplicate(item.system.changes ?? []);
+        const changes = deepClone(item.system.changes ?? []);
         for (const [key, value] of Object.entries(added)) {
           const change = changes.find((o) => o.subTarget === key);
 
@@ -636,7 +616,20 @@ export class LevelUpForm extends FormApplication {
     }
   }
 
+  /**
+   * @param {Event} event
+   * @param  {...any} args
+   */
   _onSubmit(event, ...args) {
+    // Disable all buttons and set progress indicator
+    const html = this.element[0];
+    const form = html.querySelector("form");
+    form.style.cursor = "progress";
+    form.querySelectorAll("button").forEach((button) => {
+      button.disabled = true;
+      button.style.cursor = "progress";
+    });
+
     event.preventDefault();
     if (this._submitted) return;
 

@@ -1408,22 +1408,34 @@ export class ActorPF extends ActorBasePF {
 
     // Reduce final speed under certain circumstances
     {
-      const armorItems = this.itemTypes.equipment;
+      const armorItems = this.itemTypes.equipment.filter((eq) => eq.isActive && eq.subType === "armor");
       let reducedSpeed = false;
       const sInfo = { name: "", value: game.i18n.localize("PF1.ReducedMovementSpeed") };
-      if (attributes.encumbrance.level >= pf1.config.encumbranceLevels.medium && !this.changeFlags["noEncumbrance"]) {
-        reducedSpeed = true;
-        sInfo.name = game.i18n.localize("PF1.Encumbrance");
+
+      const encLevel = attributes.encumbrance.level,
+        encLevels = pf1.config.encumbranceLevels;
+      if (encLevel > 0) {
+        if (encLevel >= encLevels.heavy) {
+          if (!this.changeFlags.noHeavyEncumbrance) {
+            reducedSpeed = true;
+            sInfo.name = game.i18n.localize("PF1.HeavyEncumbrance");
+          }
+        } else if (encLevel >= encLevels.medium) {
+          if (!this.changeFlags.noMediumEncumbrance) {
+            reducedSpeed = true;
+            sInfo.name = game.i18n.localize("PF1.MediumEncumbrance");
+          }
+        }
       }
       if (
-        armorItems.filter((o) => o.system.equipmentSubtype === "mediumArmor" && o.system.equipped).length &&
+        armorItems.filter((o) => o.system.equipmentSubtype === "mediumArmor").length &&
         !this.changeFlags["mediumArmorFullSpeed"]
       ) {
         reducedSpeed = true;
         sInfo.name = game.i18n.localize("PF1.EquipTypeMedium");
       }
       if (
-        armorItems.filter((o) => o.system.equipmentSubtype === "heavyArmor" && o.system.equipped).length &&
+        armorItems.filter((o) => o.system.equipmentSubtype === "heavyArmor").length &&
         !this.changeFlags["heavyArmorFullSpeed"]
       ) {
         reducedSpeed = true;

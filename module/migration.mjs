@@ -475,6 +475,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
   _migrateSavingThrowTypes(item, updateData);
   _migrateCR(item, updateData);
   _migrateItemChanges(item, updateData);
+  _migrateItemChangeFlags(item, updateData);
   _migrateEquipmentSize(item, updateData);
   _migrateSpellCosts(item, updateData);
   _migrateLootEquip(item, updateData);
@@ -1241,6 +1242,20 @@ const _migrateItemChanges = function (ent, updateData) {
     if (newNotes.length !== 0 && notes.length !== 0) {
       updateData["system.contextNotes"] = newNotes;
     }
+  }
+};
+
+const _migrateItemChangeFlags = (item, updateData) => {
+  const flags = item.system?.changeFlags;
+  if (!flags) return;
+
+  // Dwarf-like encumbrance to distinct no medium/heavy encumbrance
+  if (flags.noEncumbrance !== undefined) {
+    if (flags.noEncumbrance === true) {
+      updateData["system.changeFlags.noMediumEncumbrance"] = true;
+      updateData["system.changeFlags.noHeavyEncumbrance"] = true;
+    }
+    updateData["system.changeFlags.-=noEncumbrance"] = null;
   }
 };
 

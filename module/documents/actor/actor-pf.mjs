@@ -1016,8 +1016,8 @@ export class ActorPF extends ActorBasePF {
           if (remaining < 0 || lvlSlots.used > lvlSlots.max) {
             if (remaining == 0) remaining = lvlSlots.used - lvlSlots.max; // Too many non-domain spells specifically
             spellRemainingMsg = game.i18n.format("PF1.TooManySpells", { quantity: Math.abs(remaining) });
-            if (mode.isSpontaneous) spellLevelData.unusedKnown = remaining;
-            else spellLevelData.preparation.unused = remaining;
+            if (mode.isSpontaneous) spellLevelData.known.unused = Math.max(0, remaining);
+            else spellLevelData.preparation.unused = Math.max(0, remaining);
           } else if (domainSlotsRemaining > 0 && !mode.isSpontaneous) {
             spellRemainingMsg = game.i18n.format("PF1.PrepareMoreDomainSpells", { quantity: domainSlotsRemaining });
           } else if (remaining > 0) {
@@ -1026,14 +1026,14 @@ export class ActorPF extends ActorBasePF {
                 remaining === 1
                   ? game.i18n.localize("PF1.LearnMoreSpell")
                   : game.i18n.format("PF1.LearnMoreSpells", { quantity: remaining });
-              spellLevelData.known.unused = remaining;
+              spellLevelData.known.unused = Math.max(0, remaining);
             } else {
               // hybrid or prepared
               spellRemainingMsg =
                 remaining === 1
                   ? game.i18n.localize("PF1.PrepareMoreSpell")
                   : game.i18n.format("PF1.PrepareMoreSpells", { quantity: remaining });
-              spellLevelData.preparation.unused = remaining;
+              spellLevelData.preparation.unused = Math.max(0, remaining);
             }
           }
 

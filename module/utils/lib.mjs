@@ -1024,6 +1024,7 @@ export function calculateRange(formula, type = "ft", rollData = {}) {
  */
 export function refreshActors({ renderOnly = false, renderForEveryone = false } = {}) {
   const resetOrRender = async (actor) => {
+    if (!actor) return;
     if (!renderOnly) actor.reset();
     else actor.render();
   };

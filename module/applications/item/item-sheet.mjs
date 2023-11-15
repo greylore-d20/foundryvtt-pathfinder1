@@ -1687,14 +1687,15 @@ export class ItemSheetPF extends ItemSheet {
     const a = event.currentTarget;
     const options = {
       name: a.getAttribute("for"),
-      title: a.innerText,
+      title: a.dataset.title,
       flag: a.dataset.flag === "true",
       boolean: a.dataset.boolean === "true",
       flat: a.dataset.flat === "true",
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,
     };
-    new pf1.applications.EntrySelector(this.item, options).render(true);
+
+    pf1.applications.EntrySelector.open(this.item, options);
   }
 
   _onEntryControl(event) {

@@ -1,6 +1,8 @@
 export class EntrySelector extends FormApplication {
-  constructor(...args) {
-    super(...args);
+  constructor(object, options) {
+    super(object, options);
+
+    if (options.title) this.subtitle = game.i18n.localize(options.title);
 
     // Prepare data and convert it into format compatible with the editor
     this.isFlag = this.options.flag === true;
@@ -13,19 +15,40 @@ export class EntrySelector extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      id: "entry-selector",
-      classes: ["pf1", "entry"],
+    const options = super.defaultOptions;
+    return {
+      ...options,
+      classes: [...options.classes, "pf1", "entry"],
       template: "systems/pf1/templates/apps/entry-selector.hbs",
       width: 320,
       height: "auto",
       closeOnSubmit: false,
       submitOnClose: false,
-    });
+    };
+  }
+
+  get id() {
+    // BUG?: Hypothetical: Behaves poorly on container items?
+    return `entry-selector-item-${this.object.uuid}-${this.options.name}`;
   }
 
   get title() {
-    return game.i18n.localize("PF1.Application.EntrySelector.Title");
+    const item = this.object;
+    const actor = item.actor;
+    const title = this.subtitle ?? game.i18n.localize("PF1.Application.EntrySelector.Title");
+    if (item) {
+      if (actor) {
+        return game.i18n.format("PF1.Application.EntrySelector.TitleOwned", {
+          item: item.name,
+          actor: actor.name,
+          title,
+        });
+      } else {
+        return game.i18n.format("PF1.Application.EntrySelector.TitleIsolated", { item: item.name, title });
+      }
+    } else {
+      return title;
+    }
   }
 
   get attribute() {
@@ -139,5 +162,19 @@ export class EntrySelector extends FormApplication {
     event.preventDefault();
     await this._onSubmit(event);
     this.close();
+  }
+
+  /**
+   * Opens selector for chosen with with options or re-opens previously open app if such is found.
+   *
+   * @param {Item} item Item passed to constructor
+   * @param {object} options Options passed to constructor
+   */
+  static open(item, options) {
+    const app = new this(item, options);
+
+    const old = Object.values(ui.windows).find((oldApp) => oldApp instanceof this && oldApp.id === app.id);
+    if (old) old.render(false, { focus: true });
+    else app.render(true, { focus: true });
   }
 }

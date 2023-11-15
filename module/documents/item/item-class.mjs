@@ -61,7 +61,7 @@ export class ItemClassPF extends ItemPF {
     // Adjust associations if any exist
     const prevLevel = this.system.level;
     if (prevLevel > 0) {
-      this._onLevelChange(prevLevel, 0);
+      this._onLevelChange(prevLevel, 0, { event: "delete" });
     }
 
     // Disable book associated with this class, if it has spellcasting defined
@@ -93,7 +93,7 @@ export class ItemClassPF extends ItemPF {
     if (newLevel >= 0) {
       const prevLevel = this._prevLevel;
       delete this._prevLevel;
-      this._onLevelChange(prevLevel ?? 0, newLevel ?? 0);
+      this._onLevelChange(prevLevel ?? 0, newLevel ?? 0, { event: "update" });
     }
   }
 
@@ -102,8 +102,10 @@ export class ItemClassPF extends ItemPF {
    *
    * @param {number} curLevel Current level, before the change.
    * @param {number} newLevel New level, after the change.
+   * @param {object} [options] - Additional options
+   * @param {"delete"|"update"|"create"} [options.event] - Relevant event
    */
-  async _onLevelChange(curLevel = 0, newLevel = 0) {
+  async _onLevelChange(curLevel = 0, newLevel = 0, { event } = {}) {
     const actor = this.actor;
     if (!actor) return;
 
@@ -176,7 +178,9 @@ export class ItemClassPF extends ItemPF {
           delete associations[id];
         }
       }
-      await this.setFlag("pf1", "links.classAssociations", associations);
+
+      if (event !== "delete") await this.setFlag("pf1", "links.classAssociations", associations);
+
       await Item.implementation.deleteDocuments(itemIds, { parent: actor });
     }
 

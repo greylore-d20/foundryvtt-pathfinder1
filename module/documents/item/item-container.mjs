@@ -237,8 +237,10 @@ export class ItemContainerPF extends ItemPF {
   }
 
   /** @inheritdoc */
-  getValue({ recursive = true, sellValue = 0.5, inLowestDenomination = false, forceUnidentified = false } = {}) {
-    let result = super.getValue(...arguments);
+  getValue({ recursive = false, inLowestDenomination = false, ...options } = {}) {
+    if (options.single) recursive = false;
+    const fullOptions = { recursive, inLowestDenomination, ...options };
+    let result = super.getValue(fullOptions);
 
     // Add item's contained currencies at full value
     result += this.getTotalCurrency({ inLowestDenomination });
@@ -247,7 +249,7 @@ export class ItemContainerPF extends ItemPF {
 
     // Add item's content items' values
     this.items.forEach((i) => {
-      result += i.getValue({ recursive: recursive, sellValue: sellValue, inLowestDenomination });
+      result += i.getValue(fullOptions);
     });
 
     return result;

@@ -1638,6 +1638,10 @@ export class ItemPF extends ItemBasePF {
     const actor = this.actor;
     const sameActor = actor && targetItem.actor && targetItem.actor.id === actor.id;
 
+    // Link happens between items on same actor?
+    const linkOnActor = ["children", "charges", "ammunition"].includes(linkType);
+    if (linkOnActor && !actor) return false;
+
     // Don't create link to self
     if (itemLink === this.id) return false;
 
@@ -1646,7 +1650,7 @@ export class ItemPF extends ItemBasePF {
     if (links.some((o) => o.id === itemLink || o.uuid === itemLink)) return false;
 
     const targetLinks = targetItem.system.links?.[linkType] ?? [];
-    if (["children", "charges", "ammunition"].includes(linkType) && sameActor) {
+    if (linkOnActor && sameActor) {
       if (linkType === "charges") {
         // Prevent the closing of charge link loops
         if (targetLinks.length > 0) {
@@ -1713,14 +1717,19 @@ export class ItemPF extends ItemBasePF {
       const itemData = this.toObject();
       const links = itemData.system.links?.[linkType] ?? [];
       links.push(link);
-      const itemUpdates = [{ _id: this.id, [`system.links.${linkType}`]: links }];
+      const itemUpdate = { _id: this.id, [`system.links.${linkType}`]: links };
+      const itemUpdates = [];
 
       // Clear value, maxFormula and per from link target to avoid odd behaviour
       if (linkType === "charges") {
         itemUpdates.push({ _id: itemLink, system: { uses: { "-=value": null, "-=maxFormula": null, "-=per": null } } });
       }
 
-      await this.actor.updateEmbeddedDocuments("Item", itemUpdates);
+      if (this.actor && itemUpdates.length > 0) {
+        await this.actor.updateEmbeddedDocuments("Item", [itemUpdate, ...itemUpdates]);
+      } else {
+        await this.update(itemUpdate);
+      }
 
       // Call link creation hook
       Hooks.callAll("pf1CreateItemLink", this, link, linkType);

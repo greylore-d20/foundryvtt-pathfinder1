@@ -181,6 +181,28 @@ export const convertDistanceBack = function (value, type = "ft") {
 };
 
 /**
+ * Calculate overland speed per hour
+ *
+ * @see {@link https://www.aonprd.com/Rules.aspx?Name=Movement&Category=Exploration}
+ *
+ * @example
+ * // metric
+ * overlandSpeed(9) // => {speed:6, unit:'km'}
+ * // imperial
+ * overlandSpeed(40) // => {speed:4, unit:'mi'}
+ *
+ * @param {number} speed - Tactical speed
+ * @returns {{speed:number,unit:string}} - Object with overland speed and unit.
+ */
+export function overlandSpeed(speed) {
+  const system = getDistanceSystem();
+  const variant = system === "metric" ? game.settings.get("pf1", "overlandMetricVariant") : "default";
+  const { per, out, unit } = pf1.config.overlandSpeed[system][variant];
+
+  return { speed: (speed / per) * out, unit };
+}
+
+/**
  * @returns {"metric"|"imperial"} Effective system of units
  */
 export const getDistanceSystem = () => {

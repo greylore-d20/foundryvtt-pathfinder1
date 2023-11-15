@@ -17,6 +17,7 @@ export {
   findInCompendia,
   getAbilityModifier,
   getDistanceSystem,
+  overlandSpeed,
   getWeightSystem,
   getActorFromId,
   getFirstActiveGM,

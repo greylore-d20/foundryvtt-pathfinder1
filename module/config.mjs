@@ -555,6 +555,37 @@ export const flyManeuverabilityValues = {
   perfect: 8,
 };
 
+/**
+ * Overland speeds
+ */
+export const overlandSpeed = {
+  imperial: {
+    // Default
+    // 1 mi per 10 ft
+    default: {
+      per: 10,
+      out: 1,
+      unit: "mi",
+    },
+  },
+  metric: {
+    // Metric system, used by German translation
+    // 1.5 km per 3 m
+    rounded: {
+      per: 3,
+      out: 1.5,
+      unit: "km",
+    },
+    // Exact metric system, used by Spanish translation
+    // 1.6 km per 3 m
+    exact: {
+      per: 3,
+      out: 1.6,
+      unit: "km",
+    },
+  },
+};
+
 /* -------------------------------------------- */
 
 /**

@@ -224,6 +224,21 @@ export const registerSystemSettings = function () {
     onChange: () => pf1.utils.refreshActors(),
   });
 
+  /**
+   * Overland speed variant for metric.
+   */
+  game.settings.register("pf1", "overlandMetricVariant", {
+    name: "SETTINGS.pf1OverlandVariantN",
+    hint: "SETTINGS.pf1OverlandVariantL",
+    scope: "world",
+    config: true,
+    default: "rounded",
+    choices: {
+      rounded: "SETTINGS.pf1OverlandMetricRounded",
+      exact: "SETTINGS.pf1OverlandMetricExact",
+    },
+  });
+
   // OPTIONAL RULES
 
   /**

@@ -1,8 +1,5 @@
 import { refreshActors } from "./utils/lib.mjs";
 
-/**
- *
- */
 export function initializeSocket() {
   game.socket.on("system.pf1", runSocketFunction);
 }
@@ -39,11 +36,13 @@ const runSocketFunction = async function (args, senderId) {
         break;
       }
       case "refreshActorSheets":
-        pf1.utils.refreshActors({ renderOnly: true });
+        if (sender.hasPermission(CONST.USER_PERMISSIONS.SETTINGS_MODIFY)) {
+          pf1.utils.refreshActors({ renderOnly: true });
+        }
         break;
     }
   } catch (err) {
-    console.log("PF1 | Socket Error: ", err);
+    console.log("PF1 | Socket Error: ", err);
   }
 };
 

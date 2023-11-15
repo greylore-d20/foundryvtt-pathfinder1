@@ -1018,21 +1018,21 @@ export function calculateRange(formula, type = "ft", rollData = {}) {
 /**
  * Refreshes all actor data and re-renders sheets.
  *
- * @param options
+ * @param {object} [options] - Additional options
+ * @param {boolean} [options.renderOnly=false] - If false, actors are reset also.
+ * @param {boolean} [options.renderForEveryone=false] - If true, other players are told to re-render, too.
  */
-export function refreshActors(options = { renderOnly: false, renderForEveryone: false }) {
-  game.actors.contents.forEach((o) => {
-    if (!options.renderOnly) o.reset();
-    if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-  });
-  Object.values(game.actors.tokens).forEach((o) => {
-    if (o) {
-      if (!options.renderOnly) o.reset();
-      if (o.sheet != null && o.sheet._state > 0) o.sheet.render();
-    }
-  });
+export function refreshActors({ renderOnly = false, renderForEveryone = false } = {}) {
+  const resetOrRender = async (actor) => {
+    if (!renderOnly) actor.reset();
+    else actor.render();
+  };
 
-  if (options.renderForEveryone) {
+  game.actors.forEach(resetOrRender);
+
+  Object.values(game.actors.tokens).forEach(resetOrRender);
+
+  if (renderForEveryone) {
     game.socket.emit("pf1", "refreshActorSheets");
   }
 }

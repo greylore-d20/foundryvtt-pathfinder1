@@ -193,8 +193,7 @@ export class CompendiumBrowser extends Application {
     result.__pack = pack.collection;
     result.__packLabel = pack.metadata.label;
 
-    result.__uuid =
-      game.release.generation >= 11 ? pack.getUuid(entry._id) : `Compendium.${pack.collection}.${entry._id}`;
+    result.__uuid = pack.getUuid(entry._id);
     // Prepare `__name` field for fuzzy search optimisation
     result.__name = fuzzysort.prepare(entry.name.normalize("NFKD"));
     return result;

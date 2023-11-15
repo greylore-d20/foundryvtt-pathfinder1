@@ -614,8 +614,8 @@ export const migrateSceneData = function (scene) {
       delete actorUpdate[embeddedName];
     });
 
-    if (game.release.generation >= 11) foundry.utils.mergeObject(t.delta, actorUpdate);
-    else foundry.utils.mergeObject(t.actorData, actorUpdate);
+    // TODO: Don't touch delta directly, that's just asking for trouble
+    foundry.utils.mergeObject(t.delta, actorUpdate);
 
     // Record migrated version
     t["flags.pf1.migration"] = game.system.version;

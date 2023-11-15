@@ -477,157 +477,175 @@ export class ItemSpellPF extends ItemPF {
   }
 
   static _replaceConsumableConversionString(string, rollData) {
-    string = string.replace(/@sl/g, rollData.sl);
-    string = string.replace(/@cl/g, "@item.cl");
-    return string;
+    return string
+      .replace(/@sl/g, `${rollData.sl}[${game.i18n.localize("PF1.SpellLevel")}]`)
+      .replace(/@cl/g, "@item.cl")
+      .replace(/@ablMod/g, `${rollData.ablMod}[${game.i18n.localize("PF1.AbilityScore")}]`);
   }
 
   static async toConsumable(origData, type) {
-    const actionData = origData.system.actions?.[0] ?? {};
-    const data = {
-      type: "consumable",
-      name: origData.name,
-    };
-
-    data["system.spellType"] = origData.spellType;
-
-    data["system.unidentified.name"] =
-      origData.unidentifiedName || game.i18n.localize(`PF1.CreateItem${type.capitalize()}`);
-    data["system.identified"] = origData.identified ?? true;
-
-    const action = pf1.components.ItemAction.defaultData;
+    const isWand = type === "wand",
+      isPotion = type === "potion",
+      isScroll = type === "scroll";
 
     const [minLevel, minCl] = this.getMinimumCasterLevelBySpellData(origData);
     const level = origData.sl ?? minLevel ?? 1;
     const cl = origData.cl ?? minCl ?? 1;
     const materialPrice = origData.system.materials?.gpValue ?? 0;
 
+    const itemData = {
+      type: "consumable",
+      name: origData.name,
+      system: {
+        subType: type,
+        spellType: origData.spellType,
+        description: {},
+        identified: origData.identified ?? true,
+        unidentified: {
+          name: origData.unidentifiedName || game.i18n.localize(`PF1.CreateItem${type.capitalize()}`),
+        },
+        cl, // Caster level
+        aura: { school: origData.system.school },
+        uses: { per: "single" },
+        price: 0,
+        hardness: 0,
+        hp: { value: 1, max: 1 },
+        actions: origData.system.actions ?? [],
+      },
+    };
+
+    // Initialize default action
+    if (itemData.system.actions.length == 0) itemData.system.actions.push(defaultAction);
+    const defaultAction = itemData.system.actions[0] ?? pf1.components.ItemAction.defaultData;
+    defaultAction.range ??= {};
+
+    // Prepare new action copying over with old data if present
+
+    // Override activation as required by consumables
+    defaultAction.activation.type = "standard";
+    defaultAction.activation.unchained.type = "action";
+    defaultAction.activation.unchained.cost = 2;
+
     // Fill in pseudo roll data object
-    const rollData = origData.system;
-    rollData.sl = level;
-    rollData.cl = cl;
+    const rollData = {
+      item: origData.system,
+      ablMod: Math.floor(level / 2), // Minimum usable ability modifier
+      sl: level,
+      cl,
+    };
 
-    // Set consumable type
-    data["system.subType"] = type;
-
-    // Set name
-    if (type === "wand") {
-      data.name = game.i18n.format("PF1.CreateItemWandOf", { name: origData.name });
-      data.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
-      data["system.price"] = 0;
-      data["system.uses.pricePerUse"] =
+    if (isWand) {
+      itemData.name = game.i18n.format("PF1.CreateItemWandOf", { name: origData.name });
+      defaultAction.name = game.i18n.localize("PF1.Use");
+      itemData.img = "systems/pf1/icons/items/inventory/wand-star.jpg";
+      itemData.system.uses.pricePerUse =
         Math.floor(((Math.max(0.5, level) * cl * 750 + materialPrice) / 50) * 100) / 100;
-      data["system.hardness"] = 5;
-      data["system.hp.max"] = 5;
-      data["system.hp.value"] = 5;
-      action.name = game.i18n.localize("PF1.Use");
-      action.img = data.img;
-    } else if (type === "potion") {
-      data.name = game.i18n.format("PF1.CreateItemPotionOf", { name: origData.name });
-      data.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
-      data["system.price"] = Math.max(0.5, level) * cl * 50 + materialPrice;
-      data["system.hardness"] = 1;
-      data["system.hp.max"] = 1;
-      data["system.hp.value"] = 1;
-      action.range = {
-        value: 0,
-        units: "personal",
-      };
-      action.name = game.i18n.localize("PF1.Drink");
-      action.img = data.img;
-    } else if (type === "scroll") {
-      data.name = game.i18n.format("PF1.CreateItemScrollOf", { name: origData.name });
-      data.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
-      data["system.price"] = Math.max(0.5, level) * cl * 25 + materialPrice;
-      data["system.hardness"] = 0;
-      data["system.hp.max"] = 1;
-      data["system.hp.value"] = 1;
-      action.name = game.i18n.localize("PF1.Use");
-      action.img = data.img;
+      itemData.system.hardness = 5;
+      itemData.system.hp.max = 5;
+      itemData.system.hp.value = 5;
+      // Set charges
+      itemData.system.uses.maxFormula = "50";
+      itemData.system.uses.value = 50;
+      itemData.system.uses.max = 50;
+      itemData.system.uses.per = "charges";
+    } else if (isPotion) {
+      itemData.name = game.i18n.format("PF1.CreateItemPotionOf", { name: origData.name });
+      defaultAction.name = game.i18n.localize("PF1.Drink");
+      itemData.img = "systems/pf1/icons/items/potions/minor-blue.jpg";
+      itemData.system.price = Math.max(0.5, level) * cl * 50 + materialPrice;
+      itemData.system.hardness = 1;
+    } else if (isScroll) {
+      itemData.name = game.i18n.format("PF1.CreateItemScrollOf", { name: origData.name });
+      defaultAction.name = game.i18n.localize("PF1.Use");
+      itemData.img = "systems/pf1/icons/items/inventory/scroll-magic.jpg";
+      itemData.system.price = Math.max(0.5, level) * cl * 25 + materialPrice;
     }
 
-    // Set charges
-    if (type === "wand") {
-      data["system.uses.maxFormula"] = "50";
-      data["system.uses.value"] = 50;
-      data["system.uses.max"] = 50;
-      data["system.uses.per"] = "charges";
-    } else {
-      data["system.uses.per"] = "single";
-    }
-    // Set activation method
-    action.activation.type = "standard";
-    // Set activation for unchained action economy
-    action.activation.unchained.type = "action";
-    action.activation.unchained.cost = 2;
+    const convertNotes = (data) => {
+      // Replace attack and effect formula data
+      for (const arrKey of ["attackNotes", "effectNotes"]) {
+        const arr = data[arrKey];
+        if (!arr) continue;
+        for (let idx = 0; idx < arr.length; idx++) {
+          arr[idx] = this._replaceConsumableConversionString(arr[idx], rollData);
+        }
+      }
+    };
 
-    // Set measure template and range
-    if (type !== "potion") {
-      action.measureTemplate = actionData.measureTemplate;
-      if (["close", "medium", "long"].includes(actionData.range?.units)) {
-        action.range = {
-          units: "ft",
-          value: RollPF.safeTotal(pf1.config.spellRangeFormulas[actionData.range.units], rollData).toString(),
-        };
+    // Adjust all actions
+    for (const action of itemData.system.actions) {
+      // Convert ranges
+      if (isPotion && defaultAction === action) {
+        // Special handling for potions
+        action.range.units = "personal";
+        delete action.range.value;
       } else {
-        action.range = actionData.range;
+        // Convert spell-only ranges
+        if (["close", "medium", "long"].includes(action.range?.units)) {
+          const rlabel = pf1.config.distanceUnits[action.range.units];
+          action.range.value = `${RollPF.safeTotal(
+            pf1.config.spellRangeFormulas[action.range.units],
+            rollData
+          )}[${rlabel}]`;
+          action.range.units = "ft";
+        }
       }
-    }
 
-    // Set damage formula
-    action.actionType = origData.actionType;
-    for (const d of actionData.damage?.parts ?? []) {
-      action.damage.parts.push({ formula: this._replaceConsumableConversionString(d.formula, rollData), type: d.type });
-    }
-
-    // Set saves
-    if (actionData.save) {
-      action.save.description = actionData.save.description;
-      action.save.type = actionData.save.type;
-      action.save.dc = `10 + ${origData.sl}[${game.i18n.localize("PF1.SpellLevel")}] + ${Math.floor(
-        origData.sl / 2
-      )}[${game.i18n.localize("PF1.SpellcastingAbility")}]`;
-    }
-
-    // Copy variables
-    action.actionType = actionData.actionType;
-    action.attackNotes = actionData.attackNotes;
-    action.effectNotes = actionData.effectNotes;
-    action.attackBonus = actionData.attackBonus;
-    action.critConfirmBonus = actionData.critConfirmBonus;
-
-    // Replace attack and effect formula data
-    for (const arrKey of ["attackNotes", "effectNotes"]) {
-      const arr = getProperty(action, arrKey);
-      if (!arr) continue;
-      for (let a = 0; a < arr.length; a++) {
-        const note = arr[a];
-        arr[a] = this._replaceConsumableConversionString(note, rollData);
+      // Convert template
+      if (action.measureTemplate?.type) {
+        action.measureTemplate.size = this._replaceConsumableConversionString(action.measureTemplate.size, rollData);
       }
+
+      // Convert extra attacks
+      const frmAtk = action.formulaicAttacks;
+      if (frmAtk) {
+        if (frmAtk.count?.formula?.length)
+          frmAtk.count.formula = this._replaceConsumableConversionString(frmAtk.count.formula, rollData);
+        if (frmAtk.bonus?.formula?.length)
+          frmAtk.bonus.formula = this._replaceConsumableConversionString(frmAtk.bonus.formula, rollData);
+      }
+
+      for (const bAtk of action.attackParts ?? []) {
+        bAtk[0] = this._replaceConsumableConversionString(bAtk[0], rollData);
+      }
+
+      // Set damage formula
+      for (const dmgPart of action.damage?.parts ?? []) {
+        dmgPart.formula = this._replaceConsumableConversionString(dmgPart.formula, rollData);
+      }
+
+      // Set save
+      if (action.save?.type) {
+        const oldSaveDC = action.save.dc;
+        action.save.dc = `10 + ${origData.sl}[${game.i18n.localize("PF1.SpellLevel")}] + ${Math.floor(
+          origData.sl / 2
+        )}[${game.i18n.localize("PF1.SpellcastingAbility")}]`;
+        // Add DC offset
+        if (oldSaveDC?.length) action.save.dc += ` + (${oldSaveDC})[${game.i18n.localize("PF1.DCOffset")}]`;
+      }
+
+      convertNotes(action);
     }
 
-    // Set Caster Level
-    data["system.cl"] = cl;
-    data["system.aura.school"] = origData.system.school;
+    convertNotes(itemData.system);
 
     // Set description
-    data["system.description.value"] = this._replaceConsumableConversionString(
+    itemData.system.description.value = this._replaceConsumableConversionString(
       await renderTemplate("systems/pf1/templates/internal/consumable-description.hbs", {
-        origData: origData,
-        data: data,
-        isWand: type === "wand",
-        isPotion: type === "potion",
-        isScroll: type === "scroll",
+        origData,
+        data: itemData,
+        isWand,
+        isPotion,
+        isScroll,
         sl: level,
-        cl: cl,
+        cl,
         config: pf1.config,
       }),
       rollData
     );
 
     // Create and return synthetic item data
-    data["system.actions"] = [action];
-    return new ItemPF(expandObject(data)).toObject();
+    return new ItemPF(expandObject(itemData)).toObject();
   }
 
   /**

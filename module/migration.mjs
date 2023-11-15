@@ -20,7 +20,7 @@ export let isMigrating = false; // eslint-disable-line prefer-const -- pf1.migra
  * @param {boolean} [options.systemPacks=false] - Migrate system packs.
  * @returns {Promise<void>} - A Promise which resolves once the migration is completed
  */
-export const migrateWorld = async function ({ unlock = false, systemPacks = false } = {}) {
+export async function migrateWorld({ unlock = false, systemPacks = false } = {}) {
   if (!game.user.isGM) {
     return void ui.notifications.error(game.i18n.localize("PF1.ErrorUnauthorizedAction"));
   }
@@ -33,18 +33,8 @@ export const migrateWorld = async function ({ unlock = false, systemPacks = fals
   }
 
   const startMessage = game.i18n.format("PF1.Migration.Start", { version: game.system.version });
-  ui.notifications.info(startMessage, {
-    permanent: true,
-  });
-  console.log("System Migration starting.");
-  // Overloaded. Can be jQuery notification or queue object
-  const removeNotification = function (li) {
-    if (li.fadeOut) {
-      li.fadeOut(66, () => li.remove());
-      ui.notifications.active = ui.notifications.active.filter((o) => o != li);
-      ui.notifications.fetch();
-    } else ui.notifications.queue = ui.notifications.queue.filter((o) => o != li);
-  };
+  const smsgId = ui.notifications.info(startMessage, { permanent: true, console: false });
+  console.log("PF1 | Migration | Starting...");
 
   await _migrateWorldSettings();
 
@@ -75,18 +65,17 @@ export const migrateWorld = async function ({ unlock = false, systemPacks = fals
 
   // Set the migration as complete
   await game.settings.set("pf1", "systemMigrationVersion", game.system.version);
-  const infoElem =
-    ui.notifications.queue.find((o) => o.permanent && o.message == startMessage) ||
-    ui.notifications.active.find((o) => o.hasClass("permanent") && o[0].innerText === startMessage);
-  if (infoElem) removeNotification(infoElem);
+
+  // Remove start message
+  ui.notifications.remove(smsgId);
 
   // Remove migration notification
   ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.version }), { console: false });
-  console.log("System Migration completed.");
+  console.log("PF1 | Migration | Completed!");
   pf1.migrations.isMigrating = false;
 
   Hooks.callAll("pf1MigrationFinished");
-};
+}
 
 /**
  * Migrate actors directory.
@@ -94,19 +83,19 @@ export const migrateWorld = async function ({ unlock = false, systemPacks = fals
  * @returns {Promise<void>}
  */
 export async function migrateActors() {
-  console.log("Actors directory migration starting...");
+  console.log("PF1 | Migration | Actors directory starting...");
   for (const actor of game.actors) {
     try {
-      const updateData = migrateActorData(actor.toObject(), undefined, { actor });
+      const updateData = await migrateActorData(actor.toObject(), undefined, { actor });
       if (!foundry.utils.isEmpty(updateData)) {
-        console.log(`Migrating Actor document ${actor.name}`);
+        console.log(`PF1 | Migration | Actor: ${actor.name} | Applying updates`);
         await actor.update(updateData);
       }
     } catch (err) {
-      console.error(`Error migrating actor document ${actor.name}`, err);
+      console.error(`PF1 | Migration | Actor: ${actor.name} | Error`, err);
     }
   }
-  console.log("Actors directory migration complete!");
+  console.log("PF1 | Migration | Actors directory complete!");
 }
 
 /**
@@ -114,21 +103,21 @@ export async function migrateActors() {
  *
  * @returns {Promise<void>}
  */
-export const migrateItems = async () => {
-  console.log("Items directory migration starting...");
+export async function migrateItems() {
+  console.log("PF1 | Migration | Items directory starting...");
   for (const item of game.items) {
     try {
-      const updateData = migrateItemData(item.toObject());
+      const updateData = await migrateItemData(item.toObject());
       if (!foundry.utils.isEmpty(updateData)) {
-        console.log(`Migrating Item document ${item.name}`);
+        console.log(`PF1 | Migration | Item: ${item.name} | Applying updates`);
         await item.update(updateData);
       }
     } catch (err) {
-      console.error(`Error migrating item document ${item.name}`, err);
+      console.error(`PF1 | Migration | Item: ${item.name} | Error`, err);
     }
   }
-  console.log("Items directory migation complete!");
-};
+  console.log("PF1 | Migration | Items directory complete!");
+}
 
 /**
  * Migrate all scenes.
@@ -137,14 +126,13 @@ export const migrateItems = async () => {
  *
  * @returns {Promise<void>}
  */
-export const migrateScenes = async () => {
-  console.log("Scene migration starting...");
+export async function migrateScenes() {
+  console.log("PF1 | Migration | Scene directory starting...");
   for (const scene of game.scenes) {
-    console.log(`Migrating Scene document "${scene.name}"`);
     await migrateScene(scene);
   }
-  console.log("Scene migration finished!");
-};
+  console.log("PF1 | Migration | Scene directory complete!");
+}
 
 /**
  * Migrate compendiums.
@@ -157,16 +145,16 @@ export const migrateScenes = async () => {
  * @returns {Promise<void>} - Promise that resolves once all migrations are complete.
  * @throws {Error} - If defined pack is not found.
  */
-export const migrateCompendiums = async (packIds = null, { unlock = false } = {}) => {
+export async function migrateCompendiums(packIds = null, { unlock = false } = {}) {
   if (packIds === null) packIds = [...game.packs];
   for (const pack of packIds) {
     try {
       await migrateCompendium(pack, { unlock });
     } catch (error) {
-      console.error(error);
+      console.error(`PF1 | Migration | Pack: ${pack.collection} | Error`, error);
     }
   }
-};
+}
 
 /**
  * Migrate system compendia.
@@ -179,10 +167,10 @@ export const migrateCompendiums = async (packIds = null, { unlock = false } = {}
  * @param {boolean} [options.unlock] - Unlock compendiums
  * @returns {Promise<void>}
  */
-export const migrateSystem = async ({ unlock = true } = {}) => {
+export async function migrateSystem({ unlock = true } = {}) {
   const packs = game.packs.filter((p) => p.metadata.packageType === "system");
   return migrateCompendiums(packs, { unlock });
-};
+}
 
 /**
  * Migrate module compendia.
@@ -195,12 +183,30 @@ export const migrateSystem = async ({ unlock = true } = {}) => {
  * @param {boolean} [options.unlock] Unlock compendiums
  * @returns {Promise<void>}
  */
-export const migrateModules = ({ unlock = true } = {}) => {
+export async function migrateModules({ unlock = true } = {}) {
   const packs = game.packs.filter((p) => p.metadata.packageType === "module");
   return migrateCompendiums(packs, { unlock });
-};
+}
 
 /* -------------------------------------------- */
+
+/**
+ * Clear messages generated by pack.migrate()
+ *
+ * @internal
+ * @param {string} marker - string to look for
+ */
+function clearCoreMessages(marker) {
+  const testActiveMsg = (el, marker) => {
+    if (el instanceof jQuery) el = el[0];
+    return el.textContent.includes(marker);
+  };
+  // Queue has special objects
+  ui.notifications.queue = ui.notifications.queue.filter((msg) => !msg.message.includes(marker));
+  // Active has jQuery elements
+  ui.notifications.active = ui.notifications.active.filter((msg) => !testActiveMsg(msg));
+  ui.notifications.fetch();
+}
 
 /**
  * Apply migration rules to all Documents within a single Compendium pack
@@ -211,7 +217,7 @@ export const migrateModules = ({ unlock = true } = {}) => {
  * @returns {Promise<void>} - Promise that resolves once migration is complete.
  * @throws {Error} - If defined pack is not found.
  */
-export const migrateCompendium = async function (pack, { unlock = false } = {}) {
+export async function migrateCompendium(pack, { unlock = false } = {}) {
   if (typeof pack === "string") {
     pack = game.packs.get(pack);
     if (!pack) throw new Error(`Compendium "${pack}" not found.`);
@@ -227,43 +233,74 @@ export const migrateCompendium = async function (pack, { unlock = false } = {}) 
 
   // Begin by requesting server-side data model migration and get the migrated content
   await pack.migrate();
+  clearCoreMessages(`Compendium pack ${pack.collection}`);
 
   // Iterate over compendium entries - applying fine-tuned migration functions
-  console.log(`Migrating ${docType} documents in Compendium ${pack.collection}`);
+  console.log(`PF1 | Migration | Pack: ${pack.collection} | Starting...`);
 
-  try {
-    switch (docType) {
-      case "Item":
-        await pack.updateAll((item) => migrateItemData(item.toObject()));
-        break;
-      case "Actor":
-        await pack.updateAll((actor) => migrateActorData(actor.toObject(), undefined, { actor }));
-        break;
-      case "Scene": {
-        await pack.updateAll((scene) => migrateSceneData(scene.toObject()));
-        break;
+  /** @type {Actor[]|Scene[]|Item[]} */
+  console.debug(`PF1 | Migration | Pack: ${pack.collection} | Requesting documents from server`);
+  const documents = await pack.getDocuments();
+
+  const updates = [];
+
+  console.debug(
+    `PF1 | Migration | Pack: ${pack.collection} | Building update data for ${documents.length} document(s)`
+  );
+  // Collect updates
+  for (const document of documents) {
+    try {
+      let updateData;
+      switch (docType) {
+        case "Item":
+          updateData = await migrateItemData(document.toObject(), undefined, { item: document });
+          break;
+        case "Actor":
+          updateData = await migrateActorData(document.toObject(), undefined, { actor: document });
+          break;
+        case "Scene": {
+          await migrateScene(document);
+          break;
+        }
       }
+
+      if (updateData && !foundry.utils.isEmpty(updateData)) {
+        updateData._id = document.id;
+        updates.push(updateData);
+      }
+    } catch (err) {
+      console.error(`PF1 | Migration | Pack: ${pack.collection} | Error!`, err);
     }
-  } catch (err) {
-    console.error(`Error migrating Compendium ${pack.collection}`, err);
+  }
+
+  if (updates.length) {
+    console.debug(`PF1 | Migration | Pack: ${pack.collection} | Applying update(s) to ${updates.length} document(s)`);
+    // Commit updates
+    try {
+      await getDocumentClass(docType).updateDocuments(updates, { pack: pack.collection });
+    } catch (err) {
+      console.error(`PF1 | Migration | Pack: ${pack.collection} | Error:`, err);
+    }
+  } else {
+    console.debug(`PF1 | Migration | Pack: ${pack.collection} | No updates needed`);
   }
 
   if (wasLocked) await pack.configure({ locked: true });
 
-  console.log(`Compendium "${pack.collection}" migration complete!`);
-};
+  console.log(`PF1 | Migration | Pack: ${pack.collection} | Migration complete!`);
+}
 
 /**
  * Migrates world settings.
  */
-const _migrateWorldSettings = async function () {
+async function _migrateWorldSettings() {
   const tooltipWorldConfig = game.settings.get("pf1", "tooltipWorldConfig");
   if (tooltipWorldConfig.hideActorName !== undefined) {
     // 1 (All) for true, -2 (None) for false
     tooltipWorldConfig.hideActorNameByDisposition == tooltipWorldConfig.hideActorName ? 1 : -2;
     game.settings.set("pf1", "tooltipWorldConfig", tooltipWorldConfig);
   }
-};
+}
 
 /* -------------------------------------------- */
 /*  Document Type Migration Helpers               */
@@ -272,48 +309,59 @@ const _migrateWorldSettings = async function () {
 /**
  * Migrate data in tokens that is no longer used.
  *
- * @param {object} token Token data
+ * @param {object} tokenData Token data
+ * @param {object} [options] - Additional options
+ * @param {TokenDocument} [options.token] - Token document
  */
-export const migrateTokenData = function (token) {
-  const flags = token.flags?.pf1 ?? {};
+export async function migrateTokenData(tokenData, { token }) {
+  const flags = tokenData.flags?.pf1 ?? {};
+
+  const updateData = {};
 
   // Remove obsolete flags
   if (flags.lowLightVision !== undefined) {
-    token["flags.pf1.-=lowLightVision"] = null;
+    updateData["flags.pf1.-=lowLightVision"] = null;
   }
   if (flags.lowLightVisionMultiplier !== undefined) {
-    token["flags.pf1.-=lowLightVisionMultiplier"] = null;
+    updateData["flags.pf1.-=lowLightVisionMultiplier"] = null;
   }
   if (flags.lowLightVisionMultiplierBright !== undefined) {
-    token["flags.pf1.-=lowLightVisionMultiplierBright"] = null;
+    updateData["flags.pf1.-=lowLightVisionMultiplierBright"] = null;
   }
 
   // Remove disabled but still in use flags
   if (flags.disableLowLight === false) {
-    token["flags.pf1.-=disableLowLight"] = null;
+    updateData["flags.pf1.-=disableLowLight"] = null;
   }
   if (flags.staticSize === false) {
-    token["flags.pf1.-=staticSize"] = null;
+    updateData["flags.pf1.-=staticSize"] = null;
   }
   if (flags.customVisionRules === false) {
-    token["flags.pf1.-=customVisionRules"] = null;
+    updateData["flags.pf1.-=customVisionRules"] = null;
   }
 
   // Remove data from v9 vision handling
   // Added with PF1 v9.4
   if (!flags.customVisionRules) {
     // Attempt to preserve vision range after migration
-    if (token.sight.visionMode !== "basic") {
-      if (token.sight.range !== 0) token["sight.range"] = 0;
-      token["sight.visionMode"] = "basic";
+    if (tokenData.sight.visionMode !== "basic") {
+      if (tokenData.sight.range !== 0) updateData["sight.range"] = 0;
+      updateData["sight.visionMode"] = "basic";
     }
-    if ("saturation" in token.sight) token["sight.-=saturation"] = null;
-    if ("brightness" in token.sight) token["sight.-=brightness"] = null;
-    if ("attenuation" in token.sight) token["sight.-=attenuation"] = null;
-    if ("contrast" in token.sight) token["sight.-=contrast"] = null;
-    if (token.detectionModes?.length) token["detectionModes"] = [];
+    if ("saturation" in tokenData.sight) updateData["sight.-=saturation"] = null;
+    if ("brightness" in tokenData.sight) updateData["sight.-=brightness"] = null;
+    if ("attenuation" in tokenData.sight) updateData["sight.-=attenuation"] = null;
+    if ("contrast" in tokenData.sight) updateData["sight.-=contrast"] = null;
+    if (tokenData.detectionModes?.length) updateData["detectionModes"] = [];
   }
-};
+
+  // Record migrated version
+  if (!foundry.utils.isEmpty(updateData)) {
+    updateData["flags.pf1.migration"] = game.system.version;
+  }
+
+  return updateData;
+}
 
 /**
  * Migrate token.
@@ -323,8 +371,10 @@ export const migrateTokenData = function (token) {
  */
 export async function migrateToken(token) {
   const tokenData = token.toObject();
-  migrateTokenData(tokenData);
-  return token.update(tokenData);
+  const updateData = migrateTokenData(tokenData, { token });
+  if (!foundry.utils.isEmpty(updateData)) {
+    return token.update(expandObject(updateData));
+  }
 }
 
 /**
@@ -351,7 +401,7 @@ export async function migrateActor(actor) {
  * @param {Actor} [options.actor] - Associated actor document
  * @returns {object} - The updateData to apply
  */
-export function migrateActorData(actorData, token, { actor } = {}) {
+export async function migrateActorData(actorData, token, { actor } = {}) {
   // Ignore basic actor type
   if (actorData.type === "basic") return {};
   // Ignore module introduced types
@@ -395,31 +445,29 @@ export function migrateActorData(actorData, token, { actor } = {}) {
   _migrateActorDRandER(actorData, updateData);
 
   // Migrate Owned Items
-  if (!actorData.items) return updateData;
-  const items = actorData.items.reduce((arr, i) => {
+  const items = [];
+  for (const item of actorData.items ?? []) {
     // Migrate the Owned Item
-    const itemData = i instanceof Item ? i.toObject() : i;
-    const itemUpdate = migrateItemData(itemData, actorData);
+    const itemData = item instanceof Item ? item.toObject() : item;
+    const itemUpdate = await migrateItemData(itemData, actor ?? actorData);
 
     // Update the Owned Item
     if (!foundry.utils.isEmpty(itemUpdate)) {
       itemUpdate._id = itemData._id;
-      arr.push(expandObject(itemUpdate));
+      items.push(expandObject(itemUpdate));
     }
-
-    return arr;
-  }, []);
+  }
   if (items.length > 0) updateData.items = items;
 
   // Active Effects
-  _migrateActorActiveEffects(actorData, updateData, actor);
+  await _migrateActorActiveEffects(actorData, updateData, actor);
 
   // Record migrated version
   if (!foundry.utils.isEmpty(updateData)) {
     updateData["flags.pf1.migration"] = game.system.version;
   }
 
-  return updateData;
+  return expandObject(updateData);
 }
 
 /* -------------------------------------------- */
@@ -431,7 +479,7 @@ export function migrateActorData(actorData, token, { actor } = {}) {
  * @returns {Promise<Item|null>} - Promise to updated item document, or null if no update was performed.
  */
 export async function migrateItem(item) {
-  const updateData = migrateItemData(item.toObject(), item.actor);
+  const updateData = await migrateItemData(item.toObject(), item.actor);
   if (!foundry.utils.isEmpty(updateData)) {
     return item.update(updateData);
   }
@@ -441,84 +489,90 @@ export async function migrateItem(item) {
 /**
  * Migrate a single Item document to incorporate latest data model changes
  *
- * @param {object} item    The item data to derive an update from
- * @param actor
- * @param _d
- * @returns {object}       The updateData to apply
+ * @param {object} itemData    The item data to derive an update from
+ * @param {Actor} actor - Parent actor document
+ * @param {object} [options] - Additional options
+ * @param {number} [options._depth=0] - Internal only. Recursion depth tracking.
+ * @param {Item} [options.item] - Item document
+ * @returns {object} - The updateData to apply
  */
-export const migrateItemData = function (item, actor = null, _d = 0) {
+export async function migrateItemData(itemData, actor = null, { item, _depth = 0 } = {}) {
   const updateData = {};
 
   // Migrate data to system
-  if (item.system == null && item.data != null) {
-    item = deepClone(item);
-    item.system = item.data;
-    delete item.data;
+  if (itemData.system == null && itemData.data != null) {
+    itemData = deepClone(itemData);
+    itemData.system = itemData.data;
+    delete itemData.data;
   }
 
   // Ignore module introduced types
-  if (!game.system.template.Item.types.includes(item.type)) return {};
+  if (!game.system.template.Item.types.includes(itemData.type)) return {};
 
-  _migrateItemArrayTypes(item, updateData);
-  _migrateItemSpellUses(item, updateData);
-  _migrateFlagsArrayToObject(item, updateData);
-  _migrateWeaponImprovised(item, updateData);
-  _migrateSpellDescription(item, updateData);
-  _migrateClassDynamics(item, updateData);
-  _migrateClassType(item, updateData);
-  _migrateWeaponCategories(item, updateData);
-  _migrateArmorCategories(item, updateData);
-  _migrateArmorMaxDex(item, updateData);
-  _migrateItemSize(item, updateData);
-  _migrateAbilityTypes(item, updateData);
-  _migrateClassLevels(item, updateData);
-  _migrateSavingThrowTypes(item, updateData);
-  _migrateCR(item, updateData);
-  _migrateItemChanges(item, updateData);
-  _migrateItemChangeFlags(item, updateData);
-  _migrateEquipmentSize(item, updateData);
-  _migrateSpellCosts(item, updateData);
-  _migrateLootEquip(item, updateData);
-  _migrateItemLinks(item, updateData);
-  _migrateProficiencies(item, updateData);
-  _migrateItemNotes(item, updateData);
-  _migrateSpellData(item, updateData);
-  _migrateItemActions(item, updateData, actor);
-  _migrateItemChargeCost(item, updateData);
-  _migrateItemWeight(item, updateData);
-  _migrateItemHealth(item, updateData);
-  _migrateContainerPrice(item, updateData);
-  _migrateItemType(item, updateData);
-  _migrateItemLearnedAt(item, updateData);
-  _migrateItemTuples(item, updateData);
-  _migrateEquipmentCategories(item, updateData);
-  _migrateItemUnusedData(item, updateData);
+  _migrateItemArrayTypes(itemData, updateData);
+  _migrateItemSpellUses(itemData, updateData);
+  _migrateFlagsArrayToObject(itemData, updateData);
+  _migrateWeaponImprovised(itemData, updateData);
+  _migrateSpellDescription(itemData, updateData);
+  _migrateClassDynamics(itemData, updateData);
+  _migrateClassType(itemData, updateData);
+  _migrateWeaponCategories(itemData, updateData);
+  _migrateArmorCategories(itemData, updateData);
+  _migrateArmorMaxDex(itemData, updateData);
+  _migrateItemSize(itemData, updateData);
+  _migrateAbilityTypes(itemData, updateData);
+  _migrateClassLevels(itemData, updateData);
+  _migrateSavingThrowTypes(itemData, updateData);
+  _migrateCR(itemData, updateData);
+  _migrateItemChanges(itemData, updateData);
+  _migrateItemChangeFlags(itemData, updateData);
+  _migrateEquipmentSize(itemData, updateData);
+  _migrateSpellCosts(itemData, updateData);
+  _migrateLootEquip(itemData, updateData);
+  _migrateItemLinks(itemData, updateData);
+  _migrateProficiencies(itemData, updateData);
+  _migrateItemNotes(itemData, updateData);
+  _migrateSpellData(itemData, updateData);
+  _migrateItemActions(itemData, updateData, actor);
+  _migrateItemChargeCost(itemData, updateData);
+  _migrateItemWeight(itemData, updateData);
+  _migrateItemHealth(itemData, updateData);
+  _migrateContainerPrice(itemData, updateData);
+  _migrateItemType(itemData, updateData);
+  _migrateItemLearnedAt(itemData, updateData);
+  _migrateItemTuples(itemData, updateData);
+  _migrateEquipmentCategories(itemData, updateData);
+  _migrateItemUnusedData(itemData, updateData);
 
   // Migrate action data
-  const alreadyHasActions = item.system.actions instanceof Array && item.system.actions.length > 0;
-  const itemActionData = alreadyHasActions ? item.system.actions : updateData["system.actions"];
+  const alreadyHasActions = itemData.system.actions instanceof Array && itemData.system.actions.length > 0;
+  const itemActionData = alreadyHasActions ? itemData.system.actions : updateData["system.actions"];
   if (itemActionData instanceof Array) {
-    updateData["system.actions"] = itemActionData.map((action) => migrateItemActionData(action, item));
+    updateData["system.actions"] = itemActionData.map((action) => migrateItemActionData(action, itemData));
   }
 
   // Migrate container items
-  if (item.system?.inventoryItems instanceof Array) {
-    updateData["system.inventoryItems"] = item.system.inventoryItems.map((subItem) => {
-      subItem.system ??= {}; // HACK: For corrupt container items
-
-      const data = mergeObject(subItem, migrateItemData(subItem, actor, _d + 1), {
-        inplace: false,
-        performDeletions: true,
-      });
-
-      // Migrate data to system
-      if (data.data != null) {
-        data.system = mergeObject(data.data, data.system);
-        delete data.data;
+  if (itemData.system?.inventoryItems instanceof Array) {
+    const items = [];
+    for (let oldItem of itemData.system.inventoryItems) {
+      // Fix for corrupt items
+      oldItem.system ??= {};
+      // Migrate data to system, shim for Foundry migration that doesn't happen for this
+      if ("data" in oldItem) {
+        oldItem.system = mergeObject(oldItem.data, oldItem.system);
+        delete oldItem.data;
       }
 
-      return data;
-    });
+      // Ensure basic data is correct
+      oldItem = new Item.implementation(oldItem).toObject();
+
+      // Migrate data
+      const updateData = await migrateItemData(oldItem, actor, { _depth: _depth + 1 });
+      const newData = mergeObject(oldItem, updateData, { inplace: false, performDeletions: true });
+
+      items.push(newData);
+    }
+    updateData["system.inventoryItems"] = items;
   }
 
   // Record migrated version
@@ -528,7 +582,7 @@ export const migrateItemData = function (item, actor = null, _d = 0) {
 
   // Return the migrated update data
   return updateData;
-};
+}
 
 /**
  * Older actors incorrectly has .range.value as number instead of string
@@ -577,59 +631,33 @@ export const migrateItemActionData = function (action, item) {
  * @returns {Promise<void>}
  */
 export async function migrateScene(scene) {
+  console.log(`PF1 | Migration | Scene: ${scene.name} | Starting...`);
   try {
     await migrateSceneTokens(scene);
     await migrateSceneActors(scene);
+
+    // Mark last migrated version
+    await scene.setFlag("pf1", "migration", game.system.version);
   } catch (err) {
-    console.error(`Error migrating scene document "${scene.name}"`, err);
+    console.error(`PF1 | Migration | Scene: ${scene.name} | Error`, err);
   }
 }
 
 /**
- * Migrate a single Scene data object to incorporate changes to the data model of it's actor data overrides
+ * Migrate a single Scene data object
  *
- * @param {object} scene - Scene data to Update
- * @returns {object} Update data to apply
+ * @deprecated
  */
-export const migrateSceneData = function (scene) {
-  const tokens = [];
-  for (const token of scene.tokens) {
-    if (token.actorLink) continue;
-    const actorId = token.actorId;
-    const actor = token.actor;
-    if (!actor) continue;
-
-    const t = deepClone(token);
-
-    const actorData = actor.toObject();
-
-    const actorUpdate = migrateActorData(actorData, token, { actor });
-    ["items", "effects"].forEach((embeddedName) => {
-      if (!actorUpdate[embeddedName]?.length) return;
-      const updates = new Map(actorUpdate[embeddedName].map((u) => [u._id, u]));
-      actorData[embeddedName].forEach((original) => {
-        const update = updates.get(original._id);
-        if (update) foundry.utils.mergeObject(original, update);
-      });
-      delete actorUpdate[embeddedName];
-    });
-
-    // TODO: Don't touch delta directly, that's just asking for trouble
-    foundry.utils.mergeObject(t.delta, actorUpdate);
-
-    // Record migrated version
-    t["flags.pf1.migration"] = game.system.version;
-
-    migrateTokenData(t);
-
-    tokens.push(t);
-  }
-
-  return {
-    tokens,
-    "flags.pf1.migration": game.system.version, // Mark last migrated version
-  };
-};
+export async function migrateSceneData() {
+  foundry.utils.logCompatibilityWarning(
+    "pf1.migrations.migrateSceneData() is obsolete, please use pf1.migrations.migrateScene() instead",
+    {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    }
+  );
+  return {};
+}
 
 /**
  * Migrate tokens in a single scene.
@@ -641,7 +669,7 @@ export async function migrateSceneTokens(scene) {
     try {
       await migrateToken(token);
     } catch (error) {
-      console.error(`Error migrating Token "${token.id}" on Scene "${scene.name}"`, token, error);
+      console.error(`PF1 | Migration | Scene: ${scene.name} | Token: ${token.id} | Error`, token, error);
     }
   }
 }
@@ -659,7 +687,7 @@ export async function migrateSceneActors(scene) {
     if (!actor) continue;
 
     try {
-      const updateData = migrateActorData(actor.toObject(), token);
+      const updateData = await migrateActorData(actor.toObject(), token);
       if (!foundry.utils.isEmpty(updateData)) {
         const items = updateData.items;
         delete updateData.items;
@@ -670,7 +698,7 @@ export async function migrateSceneActors(scene) {
         if (effects?.length) await actor.updateEmbeddedDocuments("ActiveEffect", effects);
       }
     } catch (error) {
-      console.error(`Error migrating Token "${token.id}" on Scene "${scene.name}"`, token, error);
+      console.error(`PF1 | Migration | Scene: ${scene.name} | Token: ${token.id} | Error`, token, error);
     }
   }
 }
@@ -813,7 +841,7 @@ const _migrateActorSpellbookSlots = function (ent, updateData, linked) {
  */
 function _migrateActorSpellbookKind(actorData, updateData, actor) {
   for (const [bookId, book] of Object.entries(getProperty(actorData.system, "attributes.spells.spellbooks") || {})) {
-    if (book.kind === undefined) {
+    if (book.kind === undefined && book.inUse) {
       // Attempt to get data from class
       const castingClass =
         !!book.class && book.class !== "_hd" ? actor.itemTypes.class.find((i) => i.system.tag === book.class) : null;
@@ -2164,11 +2192,11 @@ const _migrateItemUnusedData = (item, updateData) => {
  * @param {Actor} [options.actor] - Actor document
  * @param actor
  */
-const _migrateActorActiveEffects = (actorData, updateData, actor) => {
+const _migrateActorActiveEffects = async (actorData, updateData, actor) => {
   // Migate Active Effects
   const effects = [];
   for (const ae of actorData.effects ?? []) {
-    const aeUpdate = migrateActiveEffectData(ae, actor);
+    const aeUpdate = await migrateActiveEffectData(ae, actor);
     if (!foundry.utils.isEmpty(aeUpdate)) {
       aeUpdate._id = ae._id;
       effects.push(aeUpdate);
@@ -2243,17 +2271,20 @@ const _migrateItemTuples = (item, updateData) => {
  * @param {object} ae Active Effect data
  * @param {Actor} actor Actor
  */
-const migrateActiveEffectData = (ae, actor) => {
+const migrateActiveEffectData = async (ae, actor) => {
   if (!actor) return;
 
   const updateData = {};
+
+  // Fix broken AE
+  if (!ae.name) updateData.name = "No Name";
 
   /**
    * @param {string} origin Origin string
    * @returns {string|undefined} Relative UUID, if origin was found
    */
-  const getNewRelativeOrigin = (origin) => {
-    const newOrigin = fromUuidSync(origin, { relative: actor });
+  const getNewRelativeOrigin = async (origin) => {
+    const newOrigin = await fromUuid(origin, { relative: actor });
     if (newOrigin instanceof Item && newOrigin.actor === actor) {
       return newOrigin.getRelativeUUID(actor);
     }
@@ -2263,7 +2294,7 @@ const migrateActiveEffectData = (ae, actor) => {
   const originFlag = ae.flags?.pf1?.origin;
   if (originFlag) {
     if (!ae.origin) {
-      const newOrigin = getNewRelativeOrigin(originFlag);
+      const newOrigin = await getNewRelativeOrigin(originFlag);
       if (newOrigin) updateData.origin = newOrigin;
     }
     updateData.flags ??= {};
@@ -2273,7 +2304,7 @@ const migrateActiveEffectData = (ae, actor) => {
 
   // Convert origin to relative origin
   if (ae.origin) {
-    const newOrigin = getNewRelativeOrigin(ae.origin);
+    const newOrigin = await getNewRelativeOrigin(ae.origin);
     // Avoid empty updates
     if (newOrigin && ae.origin !== newOrigin) {
       updateData.origin = newOrigin;

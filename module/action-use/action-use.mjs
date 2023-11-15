@@ -725,7 +725,16 @@ export class ActionUse {
     const templateOptions = {
       type: this.shared.action.data.measureTemplate.type,
       distance: dist,
+      flags: {
+        pf1: {
+          origin: {
+            uuid: this.shared.item.uuid,
+            action: this.shared.action.id,
+          },
+        },
+      },
     };
+
     if (this.shared.action.data.measureTemplate.overrideColor) {
       templateOptions.color = this.shared.action.data.measureTemplate.customColor;
     }

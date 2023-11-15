@@ -354,4 +354,17 @@ export class MeasuredTemplatePF extends MeasuredTemplate {
   getHighlightLayer() {
     return canvas.grid.getHighlightLayer(this.highlightId);
   }
+
+  /**
+   * Return origin item if any.
+   *
+   * @type {Item|pf1.components.ItemAction|null}
+   */
+  get origin() {
+    const { uuid, action: actionId } = this.document.getFlag("pf1", "origin") ?? {};
+    if (!uuid) return null;
+    const item = fromUuidSync(uuid);
+    const action = item?.actions?.get(actionId);
+    return action ?? item ?? null;
+  }
 }

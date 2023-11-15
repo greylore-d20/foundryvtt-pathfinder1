@@ -9,14 +9,18 @@ export class AbilityTemplate extends MeasuredTemplatePF {
   /**
    * A factory method to create an AbilityTemplate instance using provided data
    *
-   * @param {string} type -             The type of template ("cone", "circle", "rect" or "ray")
-   * @param {number} distance -         The distance/size of the template
-   * @param options
-   * @returns {AbilityTemplate|null}     The template object, or null if the data does not produce a template
+   * @param {object} data - Data used to create the template
+   * @param {"cone" | "circle" | "rect" | "ray"} data.type - The type of template
+   * @param {number} data.distance - The distance/size of the template
+   * @param {string} [data.texture=null] - Path to template texture
+   * @param {string} [data.color=game.user.color] - Template color
+   * @param {object} [data.flags] - Additional flags stored on the template
+   * @returns {AbilityTemplate|null} - The template object, or null if the data does not produce a template
    */
-  static fromData(options) {
-    const type = options.type;
-    const distance = options.distance;
+  static fromData(data) {
+    const type = data.type;
+    const distance = data.distance;
+    const flags = data.flags;
     if (!type) return null;
     if (!distance) return null;
     if (!canvas.scene) return null;
@@ -30,8 +34,9 @@ export class AbilityTemplate extends MeasuredTemplatePF {
       direction: 0,
       x: 0,
       y: 0,
-      fillColor: options.color ? options.color : game.user.color,
-      texture: options.texture ? options.texture : null,
+      flags,
+      fillColor: data.color ? data.color : game.user.color,
+      texture: data.texture ? data.texture : null,
       _id: randomID(16),
     };
 

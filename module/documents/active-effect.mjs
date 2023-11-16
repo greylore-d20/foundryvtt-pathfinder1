@@ -60,6 +60,8 @@ export class ActiveEffectPF extends ActiveEffect {
 
     // Disable associated buff if found
     if (context.pf1?.delete !== item?.uuid && item?.isActive) {
+      context.pf1 ??= {};
+      context.pf1.startTime = this.duration.startTime;
       item.setActive(false, context);
     }
   }

@@ -14,6 +14,12 @@ export class ItemBuffPF extends ItemPF {
       setProperty(changed, "system.duration.start", game.time.worldTime);
     }
 
+    if (this.isActive && changed.system?.active == false) {
+      const effect = this.effect;
+      context.pf1 ??= {};
+      context.pf1.startTime = effect?.duration.startTime;
+    }
+
     await super._preUpdate(changed, context, user);
   }
 
@@ -92,6 +98,11 @@ export class ItemBuffPF extends ItemPF {
   async _preDelete(context, user) {
     // Delete associated effect
     const effect = this.effect;
+
+    const startTime = effect?.duration.startTime;
+    context.pf1 ??= {};
+    context.pf1.startTime = startTime;
+
     if (effect) {
       await effect.delete({ pf1: { delete: this.uuid } });
     }
@@ -99,7 +110,7 @@ export class ItemBuffPF extends ItemPF {
     // Run script call(s)
     if (user.isSelf) {
       if (this.isActive) {
-        this.executeScriptCalls("toggle", { state: false });
+        this.executeScriptCalls("toggle", { state: false, startTime });
       }
     }
 

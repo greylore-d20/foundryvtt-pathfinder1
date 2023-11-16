@@ -869,7 +869,8 @@ export class ItemPF extends ItemBasePF {
         else if (this.type === "feat" && changed.system?.disabled !== undefined)
           state = changed.system.disabled === true ? false : true;
         if (state != null) {
-          this.executeScriptCalls("toggle", { state });
+          const startTime = this.effect?.duration.startTime ?? game.time.worldTime;
+          this.executeScriptCalls("toggle", { state, startTime });
         }
       }
 

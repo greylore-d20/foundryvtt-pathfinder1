@@ -2,6 +2,29 @@ import { ActorPF } from "./actor-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
 
 export class ActorNPCPF extends ActorPF {
+  /**
+   * @override
+   * @param {object} data
+   * @param {object} context
+   * @param {User} user
+   */
+  async _preCreate(data, context, user) {
+    await super._preCreate(data, context, user);
+
+    const tokenUpdate = {};
+
+    if (data.prototypeToken?.disposition === undefined) {
+      const disposition = game.settings.get("pf1", "npcDisposition");
+      if (disposition !== "NONE") {
+        tokenUpdate.disposition = CONST.TOKEN_DISPOSITIONS[disposition];
+      }
+    }
+
+    if (!foundry.utils.isEmpty(tokenUpdate)) {
+      this.prototypeToken.updateSource(tokenUpdate);
+    }
+  }
+
   prepareBaseData() {
     super.prepareBaseData();
     this.system.details.cr.total = this.getCR(this.system);

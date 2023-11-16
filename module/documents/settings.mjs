@@ -330,6 +330,34 @@ export const registerSystemSettings = function () {
     type: Boolean,
   });
 
+  game.settings.register("pf1", "pcDisposition", {
+    name: "SETTINGS.pf1pcDispositionN",
+    hint: "SETTINGS.pf1pcDispositionH",
+    type: String,
+    choices: {
+      NONE: "PF1.NoOverride",
+      FRIENDLY: "TOKEN.DISPOSITION.FRIENDLY",
+      NEUTRAL: "TOKEN.DISPOSITION.NEUTRAL",
+    },
+    default: "FRIENDLY",
+    scope: "world",
+    config: true,
+  });
+
+  game.settings.register("pf1", "npcDisposition", {
+    name: "SETTINGS.pf1npcDispositionN",
+    hint: "SETTINGS.pf1npcDispositionH",
+    type: String,
+    choices: {
+      NONE: "PF1.NoOverride",
+      NEUTRAL: "TOKEN.DISPOSITION.NEUTRAL",
+      HOSTILE: "TOKEN.DISPOSITION.HOSTILE",
+    },
+    default: "NONE",
+    scope: "world",
+    config: true,
+  });
+
   // CHAT CARDS
 
   /**

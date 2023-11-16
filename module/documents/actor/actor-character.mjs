@@ -23,6 +23,13 @@ export class ActorCharacterPF extends ActorPF {
       tokenUpdate.sight = { enabled: true };
     }
 
+    if (data.prototypeToken?.disposition === undefined) {
+      const disposition = game.settings.get("pf1", "pcDisposition");
+      if (disposition !== "NONE") {
+        tokenUpdate.disposition = CONST.TOKEN_DISPOSITIONS[disposition];
+      }
+    }
+
     if (!foundry.utils.isEmpty(tokenUpdate)) {
       this.prototypeToken.updateSource(tokenUpdate);
     }

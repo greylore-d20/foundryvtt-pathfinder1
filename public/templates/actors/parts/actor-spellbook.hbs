@@ -125,7 +125,7 @@
         <div class="form-group spellcasting-ability">
           <h3>{{localize "PF1.SpellcastingAbility"}}</h3>
           <select name="system.attributes.spells.spellbooks.{{bookId}}.ability" data-dtype="String" data-tooltip="@ablMod : {{rollData.abilityMod}}<br>@spells.{{bookId}}.abilityMod : {{rollData.abilityMod}}<br>">
-            {{selectOptions @root.system.abilities selected=spellbook.orig.ability blank="PF1.None" localize=true}}
+            {{selectOptions @root.config.abilities selected=spellbook.orig.ability blank="PF1.None" localize=true}}
           </select>
         </div>
 

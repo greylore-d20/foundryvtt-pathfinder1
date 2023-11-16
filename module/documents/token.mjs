@@ -54,10 +54,18 @@ export class TokenDocumentPF extends TokenDocument {
     });
   }
 
-  // Todo: Declare this in TokenDocumentPF when/ if TokenDocument.getData calls the constructor's method
-  getTrackedAttributes(data, path = []) {
+  static getTrackedAttributes(data, path = []) {
     const attr = super.getTrackedAttributes(data, path);
-    if (path.length === 0) attr.value.push(["attributes", "hp", "temp"], ["attributes", "hp", "nonlethal"]);
+
+    // Only append extra vars when not dealing with specific document type to avoid inserting them multiple times
+    if (!data) {
+      attr.value.push(
+        ["attributes", "hp", "temp"],
+        ["attributes", "hp", "nonlethal"],
+        ["attributes", "ac", "normal", "total"]
+      );
+    }
+
     return attr;
   }
 

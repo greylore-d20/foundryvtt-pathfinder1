@@ -24,6 +24,15 @@ export class ItemSheetPF extends ItemSheet {
      * @type {object[]}
      */
     this._actionUpdates = [];
+
+    // Activate more reasonable default links sub-tab per item type.
+    // Related core issue: https://github.com/foundryvtt/foundryvtt/issues/9748
+    const links = this._tabs.find((t) => t.group === "links");
+    if (this.item.type === "class") {
+      links.active = "classAssociations";
+    } else if (["feat", "consumable", "attack", "equipment"].includes(this.item.type)) {
+      links.active = "charges";
+    }
   }
 
   /* -------------------------------------------- */
@@ -578,14 +587,6 @@ export class ItemSheetPF extends ItemSheet {
       list: [],
     };
 
-    // Add children link type
-    data.links.list.push({
-      id: "children",
-      label: game.i18n.localize("PF1.LinkTypeChildren"),
-      help: game.i18n.localize("PF1.LinkHelpChildren"),
-      items: [],
-    });
-
     // Add charges link type
     if (["feat", "consumable", "attack", "equipment"].includes(this.item.type)) {
       data.links.list.push({
@@ -611,6 +612,14 @@ export class ItemSheetPF extends ItemSheet {
         items: [],
       });
     }
+
+    // Add children link type
+    data.links.list.push({
+      id: "children",
+      label: game.i18n.localize("PF1.LinkTypeChildren"),
+      help: game.i18n.localize("PF1.LinkHelpChildren"),
+      items: [],
+    });
 
     // Post process data
     const item = this.item,

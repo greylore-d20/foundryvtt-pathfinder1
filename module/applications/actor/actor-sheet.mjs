@@ -977,7 +977,7 @@ export class ActorSheetPF extends ActorSheet {
   /**
    * Activate event listeners using the prepared sheet HTML
    *
-   * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
+   * @param {JQuery} html The prepared HTML object ready to be rendered into the DOM
    */
   activateListeners(html) {
     super.activateListeners(html);
@@ -1195,6 +1195,40 @@ export class ActorSheetPF extends ActorSheet {
       .on("click", (event) => {
         this._onSpanTextInput(event, this._setFeatUses.bind(this));
       });
+
+    // Dynamic tooltips
+
+    // Weight details tooltip
+    html[0].querySelectorAll(".item-list .item[data-item-id] .item-detail.item-weight").forEach((el) => {
+      el.addEventListener(
+        "mouseenter",
+        (ev) => {
+          const el0 = ev.currentTarget;
+          const item = this.actor.items.get(el0.closest("[data-item-id]").dataset.itemId);
+          const weight = item?.system.weight?.converted;
+
+          if (weight && weight.total > 0) {
+            const contents = [];
+            const quantity = item.system.quantity ?? 1;
+            contents.push(game.i18n.format("PF1.WeightDetails.Base", { value: weight.value }));
+            if (quantity > 1)
+              contents.push(game.i18n.format("PF1.WeightDetails.Stack", { value: weight.value * quantity }));
+            if (weight.contents > 0) {
+              contents.push(game.i18n.format("PF1.WeightDetails.Contents", { value: weight.contents }));
+              contents.push(game.i18n.format("PF1.WeightDetails.Total", { value: weight.total }));
+            }
+
+            game.tooltip.activate(el0, {
+              text: contents.join("<br>"),
+              direction: TooltipManager.TOOLTIP_DIRECTIONS.LEFT,
+              cssClass: "pf1",
+            });
+          }
+        },
+        { passive: true }
+      );
+      el.addEventListener("mouseleave", () => game.tooltip.deactivate(), { passive: true });
+    });
 
     /* -------------------------------------------- */
     /*  Feats

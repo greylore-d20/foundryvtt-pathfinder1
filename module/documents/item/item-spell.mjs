@@ -295,7 +295,9 @@ export class ItemSpellPF extends ItemPF {
   async recharge({ value, period = "day", exact = false, maximize = true, commit = true, rollData, context } = {}) {
     const itemData = this.system,
       spellbook = this.spellbook,
-      isSpontaneous = spellbook.spontaneous;
+      isSpontaneous = spellbook?.spontaneous ?? false;
+
+    if (!spellbook) return;
 
     if (period == "week") {
       // Spells do not recharge per week

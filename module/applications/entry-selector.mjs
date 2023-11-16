@@ -32,10 +32,6 @@ export class EntrySelector extends FormApplication {
     return `entry-selector-item-${this.object.uuid}-${this.options.name}`;
   }
 
-  get isEditable() {
-    return this.object.isEditable;
-  }
-
   get title() {
     const item = this.object;
     const actor = item.actor;
@@ -109,7 +105,6 @@ export class EntrySelector extends FormApplication {
         if (!newKeys.has(key)) updateData[`${this.attribute}.-=${key}`] = null;
       });
     } else {
-      console.log(deepClone(this.attribute), deepClone(this.entries));
       updateData[this.attribute] = this.entries;
     }
 

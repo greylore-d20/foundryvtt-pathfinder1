@@ -584,17 +584,20 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    // Backwards compatibility.
-    Object.defineProperty(this.system.attributes, "conditions", {
-      get() {
-        foundry.utils.logCompatibilityWarning(
-          "actor.system.attributes.conditions is deprecated in favor of actor.system.conditions and actor.statuses",
-          { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
-        );
-        return conditions;
-      },
-      enumerable: false,
-    });
+    // Conditions backwards compatibility
+    if (!Object.getOwnPropertyDescriptor(this.system.attributes, "conditions")?.["get"]) {
+      delete this.system.attributes.conditions;
+      Object.defineProperty(this.system.attributes, "conditions", {
+        get() {
+          foundry.utils.logCompatibilityWarning(
+            "actor.system.attributes.conditions is deprecated in favor of actor.system.conditions and actor.statuses",
+            { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+          );
+          return conditions;
+        },
+        enumerable: false,
+      });
+    }
   }
 
   /**

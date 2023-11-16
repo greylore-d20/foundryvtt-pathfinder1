@@ -285,12 +285,7 @@
   <div class="form-fields">
     <input class="formula" type="text" name="save.dc" value="{{data.save.dc}}" placeholder="0"/>
     <select name="save.type">
-      {{#select data.save.type}}
-      <option value=""></option>
-      {{#each config.savingThrows as |save type|}}
-      <option value="{{type}}">{{save}}</type>
-      {{/each}}
-      {{/select}}
+      {{selectOptions config.savingThrows selected=data.save.type blank="PF1.None"}}
     </select>
   </div>
 </div>

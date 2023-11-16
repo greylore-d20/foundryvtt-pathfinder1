@@ -46,6 +46,7 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/items/parts/item-size.hbs",
   "systems/pf1/templates/items/parts/item-tag.hbs",
   "systems/pf1/templates/items/parts/item-tags.hbs",
+  "systems/pf1/templates/items/parts/item-notes.hbs",
   "systems/pf1/templates/items/parts/item-weapon-groups.hbs",
 
   // Apps
@@ -73,6 +74,8 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/chat/parts/attack-roll-header.hbs",
   "systems/pf1/templates/chat/parts/attack-roll-footer.hbs",
   "systems/pf1/templates/chat/parts/attack-roll-targets.hbs",
+
+  "systems/pf1/templates/chat/parts/item-notes.hbs",
 
   // Internal Rendering Partials
   "systems/pf1/templates/internal/spell-description.hbs",

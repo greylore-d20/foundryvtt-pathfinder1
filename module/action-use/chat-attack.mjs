@@ -120,26 +120,27 @@ export class ChatAttack {
     )}</label><div class="flexrow tag-list">${inner}</div></div>`;
   }
 
-  setEffectNotesHTML() {
+  async setEffectNotesHTML() {
     if (this.effectNotes.length === 0) {
       this.effectNotesHTML = "";
       return;
     }
 
-    let result = "";
-    for (const n of this.effectNotes) {
-      if (n.length > 0) {
-        result += `<span class="tag">${n}</span>`;
-      }
-    }
-    const inner = TextEditor.enrichHTML(result, {
-      rollData: this.rollData,
+    const rollData = this.rollData;
+    const enrichOptions = {
+      rollData,
       async: false,
       relativeTo: this.action.actor,
+    };
+    const notes = this.effectNotes.map((note) => TextEditor.enrichHTML(note, enrichOptions));
+
+    const content = await renderTemplate("systems/pf1/templates/chat/parts/item-notes.hbs", {
+      notes,
+      css: "effect-notes",
+      title: "PF1.EffectNotes",
     });
-    this.effectNotesHTML = `<div class="flexcol property-group gm-sensitive effect-notes"><label>${game.i18n.localize(
-      "PF1.EffectNotes"
-    )}</label><div class="flexrow tag-list">${inner}</div></div>`;
+
+    this.effectNotesHTML = content;
   }
 
   async addAttack({ noAttack = false, bonus = null, extraParts = [], critical = false, conditionalParts = {} } = {}) {
@@ -314,7 +315,7 @@ export class ChatAttack {
     data.total = totalDamage;
   }
 
-  addEffectNotes() {
+  async addEffectNotes() {
     this.effectNotes = [];
 
     const item = this.action.item;
@@ -342,7 +343,7 @@ export class ChatAttack {
       this.effectNotes.push(...this.action.data.effectNotes);
     }
 
-    this.setEffectNotesHTML();
+    await this.setEffectNotesHTML();
   }
 
   finalize() {

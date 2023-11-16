@@ -285,39 +285,9 @@
 {{!-- Attack Notes --}}
 <h3 class="form-header">{{localize "PF1.Notes"}}</h3>
 {{#if hasAttackRoll}}
-<div class="form-group stacked notes attack" data-name="attackNotes">
-  <table>
-    <thead>
-      <th>{{localize "PF1.AttackNotes"}}</th>
-      <th class="entry-control"><a class="add-entry"><i class="fas fa-plus"></i></a></th>
-    </thead>
-    <tbody>
-      {{#each data.attackNotes as |entry index|}}
-      <tr class="entry" data-index="{{index}}">
-        <td class="nocenter"><input type="text" data-index="{{k}}" value="{{entry}}" name="attackNotes.{{index}}" /></td>
-        <td class="entry-control"><a class="delete-entry"><i class="fas fa-minus"></i></a></td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+{{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="attackNotes" title="PF1.AttackNotes" notes=data.attackNotes css="attack"}}
 {{/if}}
 
 {{!-- Effect Notes --}}
-<div class="form-group stacked notes effect" data-name="effectNotes">
-  <table>
-    <thead>
-      <th>{{localize "PF1.EffectNotes"}}</th>
-      <th class="entry-control"><a class="add-entry"><i class="fas fa-plus"></i></a></th>
-    </thead>
-    <tbody>
-      {{#each data.effectNotes as |entry index|}}
-      <tr class="entry" data-index="{{index}}">
-        <td class="nocenter"><input type="text" data-index="{{k}}" value="{{entry}}" name="effectNotes.{{index}}" /></td>
-        <td class="entry-control"><a class="delete-entry"><i class="fas fa-minus"></i></a></td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+{{~> "systems/pf1/templates/items/parts/item-notes.hbs" name="effectNotes" title="PF1.EffectNotes" notes=data.effectNotes css="effect"}}
 {{/if}}

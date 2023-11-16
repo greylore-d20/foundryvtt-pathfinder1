@@ -1,0 +1,26 @@
+.pf1.sheet {
+  .notes {
+    display: grid;
+    grid-template-columns: 2fr min-content;
+    grid-template-rows: min-content;
+    row-gap: 1px;
+
+    // Undo Foundry stylings
+    flex: 0;
+    margin: 0;
+    line-height: inherit;
+
+    font-size: @fontSizeNormal;
+
+    > * {
+      padding: 0.2em 0.3em;
+      align-self: center;
+    }
+
+    > .header {
+      background-color: var(--pf1-header-background);
+      color: var(--pf1-header-text);
+      text-shadow: var(--pf1-header-shadow);
+    }
+  }
+}

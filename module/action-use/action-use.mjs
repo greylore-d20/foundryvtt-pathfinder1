@@ -645,7 +645,7 @@ export class ActionUse {
 
       // Add effect notes
       if (atk.id !== "manyshot") {
-        attack.addEffectNotes();
+        await attack.addEffectNotes();
       }
 
       // Add to list
@@ -680,7 +680,7 @@ export class ActionUse {
     });
 
     // Add effect notes
-    attack.addEffectNotes();
+    await attack.addEffectNotes();
 
     // Add to list
     this.shared.chatAttacks.push(attack);
@@ -689,14 +689,14 @@ export class ActionUse {
   /**
    * Adds a ChatAttack entry for effect notes to an attack's shared context.
    */
-  addEffectNotes() {
+  async addEffectNotes() {
     const attack = new ChatAttack(this.shared.action, {
       rollData: this.shared.rollData,
       primaryAttack: this.shared.primaryAttack,
     });
 
     // Add effect notes
-    attack.addEffectNotes();
+    await attack.addEffectNotes();
 
     // Add to list
     this.shared.chatAttacks.push(attack);

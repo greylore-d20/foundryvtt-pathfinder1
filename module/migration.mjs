@@ -533,6 +533,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateProficiencies(itemData, updateData);
   _migrateItemNotes(itemData, updateData);
   _migrateSpellData(itemData, updateData);
+  _migrateScriptCalls(itemData, updateData);
   _migrateItemActions(itemData, updateData, actor);
   _migrateItemChargeCost(itemData, updateData);
   _migrateItemWeight(itemData, updateData);
@@ -1523,6 +1524,27 @@ const _migrateItemActions = function (item, updateData, actor = null) {
   updateData["system.effectNotes"] = [];
 
   updateData["system.actions"] = [actionData];
+};
+
+const _migrateScriptCalls = (item, updateData) => {
+  if (!(item.system.scriptCalls?.length > 0)) return;
+  let updated = false;
+
+  // Clear out unused name and image for linked macros.
+  const scripts = deepClone(item.system.scriptCalls);
+  for (const script of scripts) {
+    if (script.type == "macro") {
+      if (script.name || script.img) {
+        script.name = "";
+        script.img = "";
+        updated = true;
+      }
+    }
+  }
+
+  if (updated) {
+    updateData["system.scriptCalls"] = scripts;
+  }
 };
 
 /**

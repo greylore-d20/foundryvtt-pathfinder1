@@ -94,9 +94,17 @@
                         <h4>{{item.name}}</h4>
                     </div>
 
-                    {{#if ../../isGM}}
+                    {{#if @root.isGM}}
                     <div class="item-detail item-hidden">
-                        <a class="item-control item-hide"><span>{{{item.hiddenIcon}}}</span></a>
+                        <a class="item-control item-hide">
+                        <span class='hidden-icon'>
+                          {{#if hidden}}
+                          <i class="fas fa-check"></i>
+                          {{else}}
+                          <i class="fas fa-times"></i>
+                          {{/if}}
+                        </span>
+                        </a>
                     </div>
                     {{/if}}
 

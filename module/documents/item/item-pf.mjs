@@ -733,6 +733,7 @@ export class ItemPF extends ItemBasePF {
         scriptCall = prior.get(s.id);
         scriptCall.data = s;
       } else scriptCall = new pf1.components.ItemScriptCall(s, this);
+
       collection.set(s._id || scriptCall.data._id, scriptCall);
     }
     return collection;

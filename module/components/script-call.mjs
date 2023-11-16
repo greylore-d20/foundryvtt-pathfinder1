@@ -6,6 +6,12 @@ export class ItemScriptCall {
   constructor(data, parent) {
     this.data = mergeObject(this.constructor.defaultData, data);
     this.parent = parent;
+
+    if (this.type === "macro") {
+      const macro = fromUuidSync(this.value);
+      this.data.name = macro?.name || `${game.i18n.localize("PF1.Unknown")} (${game.i18n.localize("DOCUMENT.Macro")})`;
+      this.data.img = macro?.img || "icons/svg/hazard.svg";
+    }
   }
 
   /**

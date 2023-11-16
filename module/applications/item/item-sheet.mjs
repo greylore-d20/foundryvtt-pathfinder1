@@ -681,31 +681,9 @@ export class ItemSheetPF extends ItemSheet {
     const scriptCalls = Object.hasOwnProperty.call(this.document, "scriptCalls")
       ? deepClone(Array.from(this.document.scriptCalls).map((o) => o.data))
       : [];
-    {
-      const promises = [];
-      for (const o of scriptCalls) {
-        promises.push(
-          (async () => {
-            // Obtain macro info
-            if (o.type === "macro") {
-              const m = await fromUuid(o.value);
-              if (m == null) {
-                o.name = `${game.i18n.localize("PF1.Unknown")} (${game.i18n.localize("DOCUMENT.Macro")})`;
-                o.img = "icons/svg/hazard.svg";
-              } else {
-                o.name = m.data.name;
-                o.img = m.data.img;
-              }
-            }
 
-            // Add data
-            o.hiddenIcon = o.hidden ? checkYes : checkNo;
-            o.hide = o.hidden && !game.user.isGM;
-          })()
-        );
-      }
-      await Promise.all(promises);
-    }
+    // Add data
+    for (const o of scriptCalls) o.hide = o.hidden && !game.user.isGM;
 
     // Create categories, and assign items to them
     for (const c of categories) {
@@ -1232,7 +1210,7 @@ export class ItemSheetPF extends ItemSheet {
       const category = elem.dataset.category;
       const list = this.document.system.scriptCalls ?? [];
       await this._onSubmit(event, { preventRender: true });
-      return pf1.components.ItemScriptCall.create([{ type: "macro", value: uuid, category }], {
+      return pf1.components.ItemScriptCall.create([{ type: "macro", value: uuid, category, name: "", img: "" }], {
         parent: this.item,
       });
     }

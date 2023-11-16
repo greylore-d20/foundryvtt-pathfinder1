@@ -94,7 +94,7 @@
         <label>{{localize "PF1.BABAbbr"}}</label>
         <div class="form-fields">
           <select name="system.bab">
-            {{selectOptions config.classBAB selected=system.bab blank="PF1.None"}}
+            {{selectOptions config.classBAB selected=system.bab blank="PF1.None" localize=true}}
           </select>
           {{#if (eq system.bab "custom")}}
           <label>{{localize "PF1.Formula"}}</label>
@@ -118,7 +118,7 @@
       <div class="form-group">
         <label>{{savingThrow.label}}</label>
         <select name="system.savingThrows.{{id}}.value" data-tooltip="@classes.{{@root.system.tag}}.savingThrows.{{id}} : {{savingThrow.base}}">
-          {{selectOptions @root.config.classSavingThrows selected=savingThrow.value blank="PF1.None"}}
+          {{selectOptions @root.config.classSavingThrows selected=savingThrow.value blank="PF1.None" localize=true}}
         </select>
         {{#if (eq savingThrow.value "custom")}}
         <label>{{localize "PF1.Formula"}}</label>

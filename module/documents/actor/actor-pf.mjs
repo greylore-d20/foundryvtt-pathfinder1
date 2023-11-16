@@ -1891,19 +1891,6 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    // Apply changes in Actor size to Token width/height
-    const newSize = changed.system.traits?.size;
-    if (newSize !== undefined && oldData.traits.size !== undefined) {
-      const size = pf1.config.tokenSizes[newSize];
-      if (!this.isToken && !this.prototypeToken.flags?.pf1?.staticSize) {
-        if (!changed.token) changed.token = {};
-        changed.token.width = size.w;
-        changed.token.height = size.h;
-        changed.token.texture.scaleX = size.scale * this.prototypeToken.texture.scaleX;
-        changed.token.texture.scaleY = size.scale * this.prototypeToken.texture.scaleY;
-      }
-    }
-
     // Make certain variables absolute
     const abilities = changed.system.abilities;
     if (abilities) {
@@ -1925,6 +1912,8 @@ export class ActorPF extends ActorBasePF {
 
     // Backwards compatibility
     const conditions = changed.system.attributes?.conditions;
+    // Never allow updates to the new location
+    delete changed.system.conditions;
 
     if (conditions) {
       foundry.utils.logCompatibilityWarning(
@@ -2012,23 +2001,50 @@ export class ActorPF extends ActorBasePF {
       }
     }
 
-    // Resize token(s)
-    const sizeKey = changed.system.traits?.size;
-    if (sourceUser && sizeKey) {
-      const size = CONFIG.PF1.tokenSizes[sizeKey];
-      const tokens = this.getActiveTokens(false, true).filter((token) => !token.getFlag("pf1", "staticSize"));
-
-      const scene = tokens[0]?.object.scene;
-      scene?.updateEmbeddedDocuments(
-        "Token",
-        tokens.map((t) => ({
-          _id: t.id,
-          width: size.w,
-          height: size.h,
-          texture: { scaleX: size.scale, scaleY: size.scale },
-        }))
-      );
+    if (sourceUser) {
+      const sizeKey = changed.system.traits?.size;
+      if (sizeKey !== undefined) {
+        this._updateTokenSize(sizeKey);
+      }
     }
+  }
+
+  /**
+   * Resize token sizes based on actor size.
+   *
+   * Ignores tokens with static size set.
+   *
+   * @todo Add option to update token size on all scenes.
+   *
+   * @param {string} sizeKey - New size key
+   * @param {object} [options] - Additional options
+   * @returns {Promise<TokenDocument[]>|null} - Updated token documents, or null if no update was performed.
+   * @throws {Error} - On invalid parameters
+   */
+  async _updateTokenSize(sizeKey, options = {}) {
+    const size = pf1.config.tokenSizes[sizeKey];
+    if (!size) throw new Error(`Size key "${sizeKey}" is invalid`);
+    const scene = canvas.scene;
+    if (!scene) return null;
+
+    // Get relevant tokens
+    const tokens = this.token
+      ? [this.token]
+      : this.getActiveTokens(false, true).filter((token) => !token.getFlag("pf1", "staticSize"));
+
+    const protoTexture = this.prototypeToken?.texture ?? {};
+
+    const updates = tokens.map((t) => ({
+      _id: t.id,
+      width: size.w,
+      height: size.h,
+      texture: {
+        scaleX: size.scale * (protoTexture.scaleX || 1),
+        scaleY: size.scale * (protoTexture.scaleY || 1),
+      },
+    }));
+
+    return TokenDocument.implementation.updateDocuments(updates, { parent: scene });
   }
 
   /**

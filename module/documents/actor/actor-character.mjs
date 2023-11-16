@@ -108,11 +108,14 @@ export class ActorCharacterPF extends ActorPF {
 
   prepareDerivedData() {
     super.prepareDerivedData();
-
     const actorData = this.system;
 
+    actorData.details ??= {};
+
     // Prepare experience data
-    const level = actorData.details?.level?.value || 1;
+    const level = actorData.details.level?.value || 1;
+
+    actorData.details.xp ??= {};
 
     const maxExp = this.getLevelExp(level);
     actorData.details.xp.max = maxExp;

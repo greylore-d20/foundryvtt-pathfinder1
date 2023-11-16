@@ -2537,7 +2537,7 @@ export class ActorPF extends ActorBasePF {
       });
 
     // Add attack bonuses from changes
-    const attackTargets = ["attack"].concat(options.melee ? ["mattack"] : ["rattack"]);
+    const attackTargets = ["attack", options.melee ? "mattack" : "rattack"];
     const attackChanges = this.changes.filter((c) => {
       return attackTargets.includes(c.subTarget);
     });
@@ -2707,10 +2707,10 @@ export class ActorPF extends ActorBasePF {
     if (damageVulnerabilities) {
       // Damage vulnerabilities
       if (actorData.traits.dv.value.length || actorData.traits.dv.custom.length) {
-        const value = [].concat(
-          actorData.traits.dv.value.map((obj) => damageTypes[obj]),
-          actorData.traits.dv.custom.length > 0 ? actorData.traits.dv.custom.split(";") : []
-        );
+        const value = [
+          ...actorData.traits.dv.value.map((obj) => damageTypes[obj]),
+          ...(actorData.traits.dv.custom.length > 0 ? actorData.traits.dv.custom.split(";") : []),
+        ];
         headers.push({ header: game.i18n.localize("PF1.DamVuln"), value: value });
       }
     }
@@ -2725,14 +2725,12 @@ export class ActorPF extends ActorBasePF {
       actorData.traits.ci.value.length ||
       actorData.traits.ci.custom.length
     ) {
-      const value = [].concat(
-        actorData.traits.di.value.map((obj) => damageTypes[obj]),
-        actorData.traits.di.custom.length > 0 ? actorData.traits.di.custom.split(";") : [],
-        actorData.traits.ci.value.map((obj) => {
-          return pf1.config.conditionTypes[obj];
-        }),
-        actorData.traits.ci.custom.length > 0 ? actorData.traits.ci.custom.split(";") : []
-      );
+      const value = [
+        ...actorData.traits.di.value.map((obj) => damageTypes[obj]),
+        ...(actorData.traits.di.custom.length > 0 ? actorData.traits.di.custom.split(";") : []),
+        ...actorData.traits.ci.value.map((obj) => pf1.config.conditionTypes[obj]),
+        ...(actorData.traits.ci.custom.length > 0 ? actorData.traits.ci.custom.split(";") : []),
+      ];
       headers.push({ header: game.i18n.localize("PF1.ImmunityPlural"), value: value });
     }
     // Spell Resistance

@@ -729,7 +729,7 @@ export class ItemAction {
     const abl = actionData.ability.attack;
 
     // Define Roll parts
-    let parts = [];
+    const parts = [];
 
     this.actor?.sourceDetails["system.attributes.attack.shared"]
       ?.reverse()
@@ -751,7 +751,7 @@ export class ItemAction {
       parts.push(`@abilities.${abl}.mod[${pf1.config.abilities[abl]}]`);
     }
     // Add bonus parts
-    parts = parts.concat(extraParts);
+    parts.push(...extraParts);
     // Add attack bonus
     if (typeof actionData.attackBonus === "string" && !["", "0"].includes(actionData.attackBonus)) {
       parts.push(actionData.attackBonus);
@@ -919,7 +919,7 @@ export class ItemAction {
     if (rollData.ablMult == null) rollData.ablMult = rollData.action?.ability.damageMult;
 
     // Define Roll parts
-    let parts =
+    const parts =
       this.data.damage.parts?.map((damage) => {
         return { base: damage.formula, extra: [], damageType: damage.type, type: "normal" };
       }) ?? [];
@@ -932,8 +932,8 @@ export class ItemAction {
     if (critical === true) {
       const critParts = this.data.damage?.critParts;
       if (critParts) {
-        parts = parts.concat(
-          critParts.map((damage) => {
+        parts.push(
+          ...critParts.map((damage) => {
             return { base: damage.formula, extra: [], damageType: damage.type, type: "crit" };
           })
         );
@@ -948,8 +948,8 @@ export class ItemAction {
     if (critical === false) {
       const nonCritParts = this.data.damage?.nonCritParts;
       if (nonCritParts) {
-        parts = parts.concat(
-          nonCritParts.map((damage) => {
+        parts.push(
+          ...nonCritParts.map((damage) => {
             return { base: damage.formula, extra: [], damageType: damage.type, type: "nonCrit" };
           })
         );

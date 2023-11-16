@@ -264,8 +264,9 @@ export class ItemActionSheet extends FormApplication {
       data._id = randomID(16);
 
       // Append conditional
-      const conditionals = deepClone(action.data.conditionals || []).concat(data);
-      await this.object.update({ conditionals: conditionals });
+      const conditionals = deepClone(action.data.conditionals || []);
+      conditionals.push(data);
+      await this.object.update({ conditionals });
     }
   }
 
@@ -292,7 +293,8 @@ export class ItemActionSheet extends FormApplication {
 
     if (a.classList.contains("add-entry")) {
       const notes = deepClone(getProperty(this.object.data, key) ?? []);
-      const updateData = { [key]: notes.concat("") };
+      notes.push("");
+      const updateData = { [key]: notes };
       return this._onSubmit(event, { updateData });
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
@@ -368,7 +370,9 @@ export class ItemActionSheet extends FormApplication {
       // Add data
       const damage = getProperty(this.action.data, k2);
       const updateData = {};
-      updateData[path] = getProperty(damage, k3).concat([initialData]);
+      const damageParts = getProperty(damage, k3) ?? [];
+      damageParts.push(initialData);
+      updateData[path] = damageParts;
       return this._onSubmit(event, { updateData });
     }
 
@@ -376,10 +380,13 @@ export class ItemActionSheet extends FormApplication {
     if (a.classList.contains("delete-damage")) {
       const li = a.closest(".damage-part");
       const damage = deepClone(getProperty(this.action.data, k2));
-      getProperty(damage, k3).splice(Number(li.dataset.damagePart), 1);
-      const updateData = {};
-      updateData[path] = getProperty(damage, k3);
-      return this._onSubmit(event, { updateData });
+      const damageParts = getProperty(damage, k3) ?? [];
+      if (damageParts.length) {
+        damageParts.splice(Number(li.dataset.damagePart), 1);
+        const updateData = {};
+        updateData[path] = damageParts;
+        return this._onSubmit(event, { updateData });
+      }
     }
   }
 
@@ -416,8 +423,9 @@ export class ItemActionSheet extends FormApplication {
 
     // Add new attack component
     if (a.classList.contains("add-attack")) {
-      const attackParts = this.action.data.attackParts;
-      return this._onSubmit(event, { updateData: { attackParts: attackParts.concat([["", ""]]) } });
+      const attackParts = deepClone(this.action.data.attackParts);
+      attackParts.push(["", ""]);
+      return this._onSubmit(event, { updateData: { attackParts } });
     }
 
     // Remove an attack component

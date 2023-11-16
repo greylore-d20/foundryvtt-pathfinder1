@@ -1465,7 +1465,8 @@ export class ItemSheetPF extends ItemSheet {
       action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
       action._id = randomID(16);
       const actionParts = deepClone(this.item.system.actions ?? []);
-      return this._onSubmit(event, { updateData: { "system.actions": actionParts.concat(action) } });
+      actionParts.push(action);
+      return this._onSubmit(event, { updateData: { "system.actions": actionParts } });
     }
   }
 
@@ -1537,16 +1538,15 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new note
     if (a.classList.contains("add-note")) {
-      const contextNotes = this.item.system.contextNotes || [];
-      await this._onSubmit(event, {
-        updateData: { "system.contextNotes": contextNotes.concat([ItemPF.defaultContextNote]) },
-      });
+      const contextNotes = deepClone(this.item.system.contextNotes || []);
+      contextNotes.push(ItemPF.defaultContextNote);
+      await this._onSubmit(event, { updateData: { "system.contextNotes": contextNotes } });
     }
 
     // Remove a note
     if (a.classList.contains("delete-note")) {
       const li = a.closest(".context-note");
-      const contextNotes = duplicate(this.item.system.contextNotes);
+      const contextNotes = deepClone(this.item.system.contextNotes || []);
       contextNotes.splice(Number(li.dataset.note), 1);
       await this._onSubmit(event, {
         updateData: { "system.contextNotes": contextNotes },
@@ -1682,17 +1682,15 @@ export class ItemSheetPF extends ItemSheet {
     const key = a.closest(".notes").dataset.name;
 
     if (a.classList.contains("add-entry")) {
-      const notes = getProperty(this.document, key) ?? [];
-      const updateData = {};
-      updateData[key] = notes.concat("");
+      const notes = deepClone(getProperty(this.document, key) ?? []);
+      notes.push("");
+      const updateData = { [key]: notes };
       return this._onSubmit(event, { updateData });
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
-      const notes = duplicate(getProperty(this.document, key));
+      const notes = deepClone(getProperty(this.document, key) ?? []);
       notes.splice(index, 1);
-
-      const updateData = {};
-      updateData[key] = notes;
+      const updateData = { [key]: notes };
       return this._onSubmit(event, { updateData });
     }
   }

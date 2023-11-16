@@ -600,7 +600,7 @@ export class ActionUse {
       if (atk.id !== "manyshot") {
         // Add attack roll
         await attack.addAttack({
-          extraParts: duplicate(this.shared.attackBonus).concat([atk.attackBonus]),
+          extraParts: [...this.shared.attackBonus, atk.attackBonus],
           conditionalParts,
         });
       }

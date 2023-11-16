@@ -31,7 +31,10 @@ export const getConditions = function () {
     icon: pf1.config.conditionTextures[c],
   }));
   if (game.settings.get("pf1", "coreEffects")) sys.push(...core);
-  else sys = [core[0]].concat(sys);
+  else {
+    const deadCond = core.find((e) => e.id === "dead");
+    sys = [deadCond, ...sys];
+  }
   return sys.sort((a, b) => a.label.localeCompare(b.label));
 };
 

@@ -366,7 +366,7 @@ export class D20RollPF extends RollPF {
     if (this.options.bonus) {
       const bonusTerms = this.constructor.parse(`${this.options.bonus}`, this.data);
       if (!(bonusTerms[0] instanceof OperatorTerm)) bonusTerms.unshift(new OperatorTerm({ operator: "+" }));
-      this.terms = this.terms.concat(...bonusTerms);
+      this.terms.push(...bonusTerms);
       this._formula = this.constructor.getFormula(this.terms);
     }
   }

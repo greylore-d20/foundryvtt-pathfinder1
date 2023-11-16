@@ -302,9 +302,9 @@ export const weaponProficiencies = {
  * This describes the ways that an ability can be activated.
  */
 export const abilityActivationTypes = {
+  nonaction: "PF1.ActivationTypeNonaction",
   passive: "PF1.ActivationTypePassive",
   free: "PF1.ActivationTypeFree",
-  nonaction: "PF1.ActivationTypeNonaction",
   swift: "PF1.ActivationTypeSwift",
   immediate: "PF1.ActivationTypeImmediate",
   move: "PF1.ActivationTypeMove",
@@ -339,9 +339,9 @@ export const abilityActivationTypesPlurals = {
  * Unchained rules.
  */
 export const abilityActivationTypes_unchained = {
+  nonaction: "PF1.ActivationTypeNonaction",
   passive: "PF1.ActivationTypePassive",
   free: "PF1.ActivationTypeFree",
-  nonaction: "PF1.ActivationTypeNonaction",
   reaction: "PF1.ActivationTypeReaction",
   action: "PF1.ActivationTypeAction",
   attack: "PF1.ActivationTypeAttack",

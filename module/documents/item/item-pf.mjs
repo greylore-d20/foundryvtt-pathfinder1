@@ -1153,7 +1153,7 @@ export class ItemPF extends ItemBasePF {
       }
 
       // Ability activation properties
-      if (actionData.activation?.type) {
+      if (labels.activation) {
         props.push(labels.target, labels.activation, dynamicLabels.range, dynamicLabels.duration);
       }
 

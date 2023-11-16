@@ -387,10 +387,10 @@ export class ItemAction {
       tag: "",
       activation: {
         cost: 1,
-        type: "",
+        type: "nonaction",
         unchained: {
           cost: 1,
-          type: "",
+          type: "nonaction",
         },
       },
       duration: {
@@ -600,25 +600,27 @@ export class ItemAction {
     const labels = {};
     rollData ??= this.getRollData();
 
-    const isUnchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
-
     // Activation method
     if (actionData.activation) {
-      const activationTypes = isUnchainedActionEconomy
-        ? pf1.config.abilityActivationTypes_unchained
-        : pf1.config.abilityActivationTypes;
-      const activationTypesPlural = isUnchainedActionEconomy
-        ? pf1.config.abilityActivationTypesPlurals_unchained
-        : pf1.config.abilityActivationTypesPlurals;
-
       const activation = this.activation;
-      if (activation && activation.cost > 1 && activationTypesPlural[activation.type] != null) {
-        labels.activation = [activation.cost.toString(), activationTypesPlural[activation.type]].filterJoin(" ");
-      } else if (activation) {
-        labels.activation = [
-          ["minute", "hour", "action"].includes(activation.type) && activation.cost ? activation.cost.toString() : "",
-          activationTypes[activation.type],
-        ].filterJoin(" ");
+      if (activation) {
+        const isUnchainedActionEconomy = game.settings.get("pf1", "unchainedActionEconomy");
+        const activationTypes = isUnchainedActionEconomy
+          ? pf1.config.abilityActivationTypes_unchained
+          : pf1.config.abilityActivationTypes;
+        const activationTypesPlural = isUnchainedActionEconomy
+          ? pf1.config.abilityActivationTypesPlurals_unchained
+          : pf1.config.abilityActivationTypesPlurals;
+
+        const activationType = activation.type || "nonaction";
+        if (activation.cost > 1 && !!activationTypesPlural[activationType]) {
+          labels.activation = [activation.cost.toString(), activationTypesPlural[activationType]].filterJoin(" ");
+        } else {
+          labels.activation = [
+            ["minute", "hour", "action"].includes(activationType) && activation.cost ? activation.cost.toString() : "",
+            activationTypes[activationType],
+          ].filterJoin(" ");
+        }
       }
     }
 

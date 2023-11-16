@@ -203,7 +203,7 @@ export function overlandSpeed(speed) {
 }
 
 /**
- * @returns {"metric"|"imperial"} Effective system of units
+ * @returns {UnitSystem} Effective system of units
  */
 export const getDistanceSystem = () => {
   let system = game.settings.get("pf1", "distanceUnits"); // override
@@ -212,7 +212,7 @@ export const getDistanceSystem = () => {
 };
 
 /**
- * @returns {"metric"|"imperial"} Effective system of units
+ * @returns {UnitSystem} Effective system of units
  */
 export const getWeightSystem = () => {
   let system = game.settings.get("pf1", "weightUnits"); // override
@@ -238,7 +238,6 @@ export const getWeightSystem = () => {
  * @param {Point} p0 Start point on canvas
  * @param {Point} p1 End point on canvas
  * @param {object} options Measuring options.
- * @param {boolean} options.altReach Use alternate reach weapon diagonal rule at 10 ft range.
  * @param {"5105"|"555"} options.diagonalRule Used diagonal rule. Defaults to 5/10/5 PF measuring.
  * @param {Ray} options.ray Pre-generated ray to use instead of the points.
  * @param {MeasureState} options.state Optional state tracking across multiple measures.
@@ -1199,7 +1198,7 @@ export function moduleToObject(module) {
  *
  * `imperial` sets scaling to 5 ft, `metric` sets scaling to 1.5 m
  *
- * @param {"metric"|"imperial"|undefined} [system] System of units. Pull current setting if undefined.
+ * @param {UnitSystem | undefined} [system] System of units. Pull current setting if undefined.
  */
 export function setDefaultSceneScaling(system) {
   system ??= getDistanceSystem();

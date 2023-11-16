@@ -4006,7 +4006,7 @@ export class ActorPF extends ActorBasePF {
    * @see {@link pf1.utils.currency.convert}
    *
    * @param {"currency"|"altCurrency"} [category="currency"] - Currency category, altCurrency is for weightless
-   * @param {"pp"|"gp"|"sp"|"cp"} [type="pp"] - Target currency.
+   * @param {CoinType} [type="pp"] - Target currency.
    * @returns {Promise<this>|undefined} Updated document or undefined if no update occurred.
    */
   convertCurrency(category = "currency", type = "pp") {

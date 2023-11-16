@@ -19,7 +19,7 @@ export function split(cp) {
  * Convert given amount of copper to some other currency, excess is placed on less valuable coinage.
  *
  * @param {number} cp - Copper quantity
- * @param {"pp"|"gp"|"sp"|"cp"} [target="gp"] - Target unit
+ * @param {CoinType} [target="gp"] - Target unit
  * @returns {{pp:number,gp:number,sp:number,cp:number}} - Resulting conversion
  */
 export function convert(cp, target = "gp") {

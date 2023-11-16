@@ -77,6 +77,11 @@ export class CurrencyTransfer extends FormApplication {
     });
   }
 
+  /**
+   * Order of coin types, descending in value
+   *
+   * @type {CoinType[]}
+   */
   static get order() {
     return ["pp", "gp", "sp", "cp"]; // Object conversion ordering cannot be trusted in js
   }

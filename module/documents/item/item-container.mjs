@@ -212,7 +212,8 @@ export class ItemContainerPF extends ItemPF {
   /**
    * Converts currencies to the given currency type
    *
-   * @param {string} type - Either 'pp', 'gp', 'sp' or 'cp'. Converts as much currency as possible to this type.
+   * @param {CoinType} type - Converts as much currency as possible to this type.
+   * @returns {Promise<this>} The updated item
    */
   convertCurrency(type = "pp") {
     const cp = this.getTotalCurrency({ inLowestDenomination: true });

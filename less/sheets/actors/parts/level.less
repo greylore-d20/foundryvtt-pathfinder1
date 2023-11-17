@@ -1,0 +1,78 @@
+.pf1.actor.sheet {
+  .hd-level {
+    flex: 0;
+  }
+
+  // Sheet specific adjustments
+  &:is(.character, .npc) .hd-level {
+    flex: 1 fit-content;
+  }
+
+  // Shared layout
+  .hd-level {
+    gap: 3px;
+
+    .flexrow,
+    .flexcol {
+      flex: 1;
+    }
+
+    .info-box-joined.level {
+      flex: 2;
+    }
+
+    .info-box {
+      &.experience {
+        flex: 2;
+        > .value {
+          flex-flow: nowrap;
+          > span {
+            flex: 1;
+            &.separator {
+              flex: 0;
+            }
+          }
+
+          .reward {
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    > .inputs {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 1px;
+      flex: 0;
+    }
+
+    .xpbar {
+      flex: 0;
+      width: 100%;
+      height: 8px;
+      background: @colorTan;
+      border: 1px solid var(--color-border-dark-2);
+      border-radius: 4px;
+
+      span.bar {
+        background: #63ff00;
+        border: 1px solid #d0ffb2;
+        border-radius: 2px;
+        height: 6px;
+        display: block;
+      }
+    }
+  }
+
+  // NPC Lite Sheet overrides
+  &.npc.lite {
+    .hd-level {
+      flex: 0;
+
+      .level {
+        flex: 1;
+      }
+    }
+  }
+}

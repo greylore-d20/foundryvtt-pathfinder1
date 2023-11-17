@@ -24,6 +24,12 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
     return "systems/pf1/templates/actors/npc-sheet-lite.hbs";
   }
 
+  async getData() {
+    const context = await super.getData();
+    context.isLite = true;
+    return context;
+  }
+
   _prepareItems(data) {
     const attackSections = {
       all: {

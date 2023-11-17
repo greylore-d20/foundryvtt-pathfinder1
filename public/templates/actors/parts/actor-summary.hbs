@@ -1,110 +1,13 @@
 <div class="summary-header">
   <img class="profile" src="{{actor.img}}" data-edit="img"/>
 
-  <div class="flexcol">
+  <div class="flexcol basic-info">
     <div class="flexrow name-xp">
-      <div>
-        <h1 class="char-name">
-          <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}" data-tooltip="PF1.CharacterName"/>
-        </h1>
-      </div>
+      <h1 class="char-name">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}" data-tooltip="PF1.CharacterName">
+      </h1>
 
-      {{#if isCharacter}}
-      <div class="hd-level character tooltip">
-        <span class="tooltipcontent">
-          <span class="span2 align-left">@attributes.hd.total :</span><span class="span1 align-right"> {{system.attributes.hd.total}}</span>
-          {{#if system.details.mythicTier}}
-          <br />
-          <span class="span2 align-left">@details.mythicTier :</span><span class="span1 align-right">{{system.details.mythicTier}}</span>
-          {{/if}}
-        </span>
-
-        <table>
-          <thead>
-            <tr>
-              <th class="level">{{localize "PF1.Level"}}</th>
-              {{#if system.details.mythicTier}}
-              <th class="tier">{{localize "PF1.Tier"}}</th>
-              {{/if}}
-              {{#unless disableExperience}}
-              <th class="experience">{{localize "PF1.Experience"}}</th>
-              {{/unless}}
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="level">
-                {{system.details.level.value}}
-              </td>
-              {{#if system.details.mythicTier}}
-              <td class="tier">
-                {{system.details.mythicTier}}
-              </td>
-              {{/if}}
-              {{#unless disableExperience}}
-              <td class="experience">
-                <div class="flexrow">
-                  <span class="text-box direct allow-relative no-value-cap" name="system.details.xp.value" data-dtype="Number">{{system.details.xp.value}}</span>
-                  <span class="separator"> / </span>
-                  <span class="text-box max readonly">{{system.details.xp.max}}</span>
-                </div>
-              </td>
-              {{/unless}}
-            </tr>
-          </tbody>
-        </table>
-
-        {{#unless disableExperience}}
-        <div class="xpbar">
-          {{#if system.details.xp.pct}}
-          <span class="bar" style="width: {{system.details.xp.pct}}%"></span>
-          {{/if}}
-        </div>
-        {{/unless}}
-      </div>
-      {{else}}
-      <div class="hd-level npc tooltip flexrow">
-        <table>
-          <thead>
-            <tr>
-              <th class="level">{{localize "PF1.HitDieShort"}}</th>
-              {{#if system.details.mythicTier}}
-              <th class="tier">{{localize "PF1.Tier"}}</th>
-              {{/if}}
-              <th class="challenge-rating">{{localize "PF1.ChallengeRatingShort"}}</th>
-              <th class="experience">{{localize "PF1.Experience"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="level">
-                {{system.attributes.hd.total}}
-              </td>
-              {{#if system.details.mythicTier}}
-              <td class="tier">
-                {{system.details.mythicTier}}
-              </td>
-              {{/if}}
-              <td class="challenge-rating">
-                <span class="text-box cr-input" name="system.details.cr.base">{{labels.cr}}</span>
-              </td>
-              <td class="experience">
-                {{system.details.xp.value}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <span class="tooltipcontent">
-          <span class="span2 align-left">@attributes.hd.total :</span><span class="span1 align-right"> {{system.attributes.hd.total}}</span>
-          <span class="span2 align-left">@details.cr.base :</span><span class="span1 align-right"> {{system.details.cr.base}}</span>
-          <span class="span2 align-left">@details.cr.total :</span><span class="span1 align-right"> {{system.details.cr.total}}</span>
-          {{#if system.details.mythicTier}}
-          <span class="span2 align-left">@details.mythicTier :</span><span class="span1 align-right"> {{system.details.mythicTier}}</span>
-          {{/if}}
-        </span>
-      </div>
-      {{/if}}
+      {{> "systems/pf1/templates/actors/parts/actor-level.hbs"}}
     </div>
 
     {{!-- Character Summary --}}

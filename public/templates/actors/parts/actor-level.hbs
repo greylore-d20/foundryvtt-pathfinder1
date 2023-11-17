@@ -1,0 +1,58 @@
+<div class="hd-level flexcol">
+  <div class="inputs"
+    data-tooltip="@attributes.hd.total : {{system.attributes.hd.total}}
+    {{#if system.details.mythicTier}}<br>@details.mythicTier : {{system.details.mythicTier}}{{/if}}
+    {{#unless isCharacter}}
+      <br>@details.cr.base : {{system.details.cr.base}}
+      <br>@details.cr.total : {{system.details.cr.total}}
+    {{/unless}}">
+    <div class="info-box-joined level">
+      {{#unless isLite}}
+      <div class="info-box level">
+        <h5>{{#if isCharacter}}{{localize "PF1.Level"}}{{else}}{{localize "PF1.HitDieShort"}}{{/if}}</h5>
+        <span class="value">{{system.details.level.value}}</span>
+      </div>
+      {{/unless}}
+
+      {{#if system.details.mythicTier}}
+      <div class="info-box mythic">
+        <h5>{{localize "PF1.Tier"}}</h5>
+        <span class="value tier">{{system.details.mythicTier}}</span>
+      </div>
+      {{/if}}
+
+      {{#unless isCharacter}}
+      <div class="info-box challenge-rating">
+        <h5>{{localize "PF1.ChallengeRatingShort"}}</h5>
+        <span data-action="input-text" class="value" data-for=".cr-input" data-attr-name="system.details.cr.base">
+          <input readonly class="cr-input" type="text" value="{{labels.cr}}" />
+        </span>
+      </div>
+      {{/unless}}
+    </div>
+
+    {{#unless disableExperience}}
+    <div class="info-box experience">
+      <h5>{{localize "PF1.Experience"}}</h5>
+
+      <div class="value flexrow">
+        {{#if isCharacter}}
+        <span class="text-box current direct allow-relative no-value-cap" name="system.details.xp.value" {{#if
+          minimumExperience}}data-clear-value="{{minimumExperience}}" {{/if}}
+          data-dtype="Number">{{system.details.xp.value}}</span>
+        <span class="separator"> / </span>
+        <span class="text-box max readonly">{{system.details.xp.max}}</span>
+        {{else}}
+        <span class="reward">{{system.details.xp.value}}</span>
+        {{/if}}
+      </div>
+    </div>
+    {{/unless}}
+  </div>
+
+  {{#if showXpBar}}
+  <div class="xpbar">
+    <span class="bar" style="width: {{system.details.xp.pct}}%"></span>
+  </div>
+  {{/if}}
+</div>

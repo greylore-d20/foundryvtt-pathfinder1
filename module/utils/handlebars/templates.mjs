@@ -11,6 +11,7 @@
 const templatePaths = /** @type {const} */ ([
   // Actor Sheet Partials
   "systems/pf1/templates/actors/parts/actor-summary.hbs",
+  "systems/pf1/templates/actors/parts/actor-level.hbs",
   "systems/pf1/templates/actors/parts/actor-traits.hbs",
   "systems/pf1/templates/actors/parts/actor-inventory.hbs",
   "systems/pf1/templates/actors/parts/actor-features.hbs",

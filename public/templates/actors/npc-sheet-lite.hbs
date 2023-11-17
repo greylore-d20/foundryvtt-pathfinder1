@@ -20,35 +20,7 @@
   <section class="primary-body">
     <div class="tab summary" data-group="primary" data-tab="summary">
       {{!-- HD/XP reward --}}
-      <div class="hd-level npc tooltip flexrow">
-        <table>
-          <thead>
-            <tr>
-              <th>{{localize "PF1.ChallengeRatingShort"}}</th>
-              <th>{{localize "PF1.Experience"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td data-action="input-text" data-for=".cr-input" data-attr-name="system.details.cr.base">
-                <input readonly class="cr-input" type="text" value="{{labels.cr}}">
-              </td>
-              <td>
-                {{system.details.xp.value}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <span class="tooltipcontent">
-          <span class="span2 align-left">@attributes.hd.total</span>
-          <span class="span1 align-right">{{system.attributes.hd.total}}</span>
-          <span class="span2 align-left">@details.cr.base</span>
-          <span class="span1 align-right">{{system.details.cr.base}}</span>
-          <span class="span2 align-left">@details.cr.total</span>
-          <span class="span1 align-right">{{system.details.cr.total}}</span>
-        </span>
-      </div>
+      {{> "systems/pf1/templates/actors/parts/actor-level.hbs"}}
 
       {{!-- Health --}}
       {{#unless useWoundsAndVigor}}

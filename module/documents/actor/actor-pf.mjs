@@ -4124,10 +4124,38 @@ export class ActorPF extends ActorBasePF {
 
     this._rollData = result;
 
+    const casting = this._getDefaultBook();
+    if (casting) {
+      result.cl = casting.cl.total;
+      result.castingAbility = result.abilities[casting.ability]?.mod;
+    }
+
     // Call hook
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
 
     return result;
+  }
+
+  /**
+   * Return reference to default (best) spellbook.
+   *
+   * @returns {object|undefined} Reference to book data
+   */
+  _getDefaultBook() {
+    let best;
+
+    for (const [bookId, bookData] of Object.entries(this.system.attributes?.spells?.spellbooks ?? {})) {
+      if (!bookData.inUse) continue;
+
+      const clTotal = bookData.cl?.total ?? 0,
+        prevClTotal = best?.cl?.total ?? 0;
+
+      if (prevClTotal < clTotal) {
+        best = bookData;
+      }
+    }
+
+    return best;
   }
 
   static getReach(size = "med", stature = "tall") {

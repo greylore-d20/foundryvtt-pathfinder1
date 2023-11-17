@@ -297,8 +297,6 @@ export class ItemSpellPF extends ItemPF {
       spellbook = this.spellbook,
       isSpontaneous = spellbook?.spontaneous ?? false;
 
-    if (!spellbook) return;
-
     if (period == "week") {
       // Spells do not recharge per week
       if (exact) return;
@@ -309,13 +307,11 @@ export class ItemSpellPF extends ItemPF {
     // Spells do not restore on non-day period
     if (!["day", "any"].includes(period)) return;
 
-    if (!spellbook) return;
-
     // Spontaneous spells do not record charges in spell.
-    if (spellbook.spontaneous) return;
+    if (isSpontaneous) return;
 
     // Spellpoints are not on spells
-    if (spellbook.spellPoints?.useSystem ?? false) return;
+    if (spellbook?.spellPoints?.useSystem ?? false) return;
 
     const updateData = { system: { preparation: {} } };
 

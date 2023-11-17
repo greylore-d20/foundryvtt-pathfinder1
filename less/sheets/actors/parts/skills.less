@@ -1,0 +1,36 @@
+.pf1.actor.sheet {
+  .tab.skills {
+    header {
+      flex: 0;
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 1px;
+
+      .skill-rank-formula {
+        gap: 1em;
+        label {
+          flex: 0;
+        }
+      }
+
+      .skill-ranks {
+        flex: 0;
+
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 3px;
+
+        .transferred {
+          flex: 1;
+          h5 {
+            white-space: nowrap;
+          }
+        }
+
+        :is(.adventure, .background) {
+          flex: 2;
+        }
+      }
+    }
+  }
+}

@@ -231,7 +231,7 @@ export class ActorPF extends ActorBasePF {
    * @returns {Combatant[]} Related combatants.
    */
   getCombatants(combat = game.combat) {
-    return combat.combatants.filter((c) => c.actor === this);
+    return combat?.combatants.filter((c) => c.actor === this) ?? [];
   }
 
   get spellFailure() {

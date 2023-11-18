@@ -171,7 +171,7 @@
 
 <hr>
 {{#unless isLootSheet}}
-<div class="flexrow tab-footer tooltip">
+<footer class="tooltip">
   <div class="tooltipcontent">
     <span class="span2 align-left">@attributes.encumbrance.level :</span><span class="span1 align-right"> {{system.attributes.encumbrance.level}}</span>
     <span class="span3"><br/></span>
@@ -183,7 +183,8 @@
     {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.details.carryCapacity.multiplier.total}}
   </div>
 
-  <div class="form-group carry-bonus">
+  {{! Carry Bonus }}
+  <div class="form-group flexrow carry-bonus">
     <label>{{localize "PF1.BonusCarryStrength"}}</label>
     <span class="text-box direct" name="system.details.carryCapacity.bonus.user" data-dtype="Number" data-placeholder="0">{{system.details.carryCapacity.bonus.user}}</span>
     <label>{{localize "PF1.BonusCarryMultiplier"}}</label>
@@ -192,9 +193,11 @@
   {{#with encumbrance}}
   <div class="flexrow inventory-tags tag-list">
     <span class="tag">{{carryLabel}}</span>
-    <span class="tag">{{../labels.totalValue}}</span>
+    <span class="tag">{{@root.labels.totalValue}}</span>
   </div>
-  <div class="flexrow">
+
+  {{! Carry Capacity meters }}
+  <div class="flexrow carry-capacity">
     <div class="encumbrance {{#if encumbered.light}}encumbered{{/if}}">
       {{#if pct.light}}<span class="encumbrance-bar" style="width:{{pct.light}}%"></span>{{/if}}
       <span class="encumbrance-label">{{localize "PF1.CarryLightLoad"}} ({{light}})</span>
@@ -208,33 +211,32 @@
       <span class="encumbrance-label">{{localize "PF1.CarryHeavyLoad"}} ({{heavy}})</span>
     </div>
   </div>
-  <table class='lift'>
-    <thead>
-      <tr>
-        <th>{{localize "PF1.CarryAboveHead"}}</th>
-        <th>{{localize "PF1.CarryOffGround"}}</th>
-        <th>{{localize "PF1.CarryDragPush"}}</th>
-      </tr>
-    </thead>
 
-    <tbody>
-      <tr>
-        <td class='overhead'>{{aboveHead}}</td>
-        <td class='offground'>{{offGround}}</td>
-        <td class='drag-push'>{{dragPush}}</td>
-      </tr>
-    </tbody>
-  </table>
+  {{! Lifting }}
+  <div class="info-box-joined lift">
+    <div class="info-box overhead">
+      <h5>{{localize "PF1.CarryAboveHead"}}</h5>
+      <span class="value">{{aboveHead}}</span>
+    </div>
+    <div class="info-box offground">
+      <h5>{{localize "PF1.CarryOffGround"}}</h5>
+      <span class="value">{{offGround}}</span>
+    </div>
+    <div class="info-box drag-push">
+      <h5>{{localize "PF1.CarryDragPush"}}</h5>
+      <span class="value">{{dragPush}}</span>
+    </div>
+  </div>
 {{/with}}
-</div>
+</footerdiv>
 {{else}}
 {{#with encumbrance}}
-<div class="flexcol tab-footer">
+<footer>
   <div class="flexrow tag-list">
     <span class="tag carry-load">{{carryLabel}}</span>
-    <span class="tag gear-value">{{../labels.totalValue}}</span>
-    <span class="tag gear-value-sale">{{../labels.sellValue}}</span>
+    <span class="tag gear-value">{{@root.labels.totalValue}}</span>
+    <span class="tag gear-value-sale">{{@root.labels.sellValue}}</span>
   </div>
-</div>
+</footer>
 {{/with}}
 {{/unless}}

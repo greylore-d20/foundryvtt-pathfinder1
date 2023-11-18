@@ -21,11 +21,12 @@
     }
 
     .value {
-      flex: 0;
+      flex: 1;
       display: flex;
       flex-flow: column;
       padding: 1px 3px;
       align-items: center;
+      justify-content: center;
 
       > select {
         width: 100%;
@@ -46,13 +47,14 @@
       border-radius: unset;
       flex: 1;
       border-right-style: unset;
-    }
-    > .info-box:first-of-type {
-      border-radius: 0.3em 0 0 0.3em;
-    }
-    > .info-box:last-of-type {
-      border-radius: 0 0.3em 0.3em 0;
-      border-right-style: solid;
+
+      &:first-of-type {
+        border-radius: 0.3em 0 0 0.3em;
+      }
+      &:last-of-type {
+        border-radius: 0 0.3em 0.3em 0;
+        border-right-style: solid;
+      }
     }
   }
 }

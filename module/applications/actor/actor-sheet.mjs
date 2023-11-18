@@ -516,17 +516,18 @@ export class ActorSheetPF extends ActorSheet {
 
       // Feat count
       // By level
-      data.featCount = {};
-      data.featCount.value = this.actor.itemTypes.feat.filter(
-        (feat) => feat.subType === "feat" && feat.isActive
-      ).length;
+      const feats = {};
+
+      const allFeats = this.actor.itemTypes.feat.filter((feat) => feat.subType === "feat");
+      feats.owned = allFeats.length;
+      feats.active = allFeats.filter((i) => i.isActive).length;
       const totalLevels = this.actor.itemTypes.class
         .filter((cls) => ["base", "npc", "prestige", "racial"].includes(cls.subType))
         .reduce((cur, cls) => cur + cls.hitDice, 0);
-      data.featCount.byLevel = Math.ceil(totalLevels / 2);
+      feats.byLevel = Math.ceil(totalLevels / 2);
       sourceData.push({
         name: game.i18n.localize("PF1.Level"),
-        value: data.featCount.byLevel,
+        value: feats.byLevel,
       });
 
       // Bonus feat formula
@@ -544,10 +545,8 @@ export class ActorSheetPF extends ActorSheet {
           return !["set", "="].includes(c.operator);
         }),
         { ignoreTarget: true }
-      ).reduce((cur, c) => {
-        return cur + c.value;
-      }, 0);
-      data.featCount.byFormula = featCountRoll.total + changeBonus;
+      ).reduce((cur, c) => cur + c.value, 0);
+      feats.byFormula = featCountRoll.total + changeBonus;
       if (featCountRoll.err) {
         ui.notifications.error(
           game.i18n.format("PF1.ErrorActorFormula", {
@@ -563,8 +562,14 @@ export class ActorSheetPF extends ActorSheet {
         });
       }
 
-      // Count total
-      data.featCount.total = data.featCount.byLevel + data.featCount.byFormula;
+      // Count totals
+      feats.total = feats.byLevel + feats.byFormula;
+      const diff = feats.total - feats.active;
+      feats.missing = Math.max(0, diff);
+      feats.excess = Math.max(0, -diff);
+      feats.disabled = feats.owned - feats.active;
+      feats.issues = (diff != 0 ? 1 : 0) + (feats.disabled > 0 ? 1 : 0);
+      data.featCount = feats;
     }
 
     // Fetch the game settings relevant to sheet rendering.

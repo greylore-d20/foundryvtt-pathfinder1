@@ -109,30 +109,60 @@
 </section>
 
 <hr>
-<div class="tab-footer flexcol tooltip">
+
+<footer class="tooltip">
   <span class="tooltipcontent">
     {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceData.bonusFeats skipLine=true}}
   </span>
-  <div class="flexrow form-group">
+
+  {{! Arbitrary Bonus Feats }}
+  <div class="flexrow form-group extra-feats">
     <label>{{localize "PF1.BonusFeatFormula"}}</label>
     <input class="formula" type="text" name="system.details.bonusFeatFormula" value="{{system.details.bonusFeatFormula}}" placeholder="{{localize "PF1.Formula"}}" />
   </div>
-  <table class='feat-counts'>
-    <thead>
-      <tr>
-        <th>{{localize "PF1.Feats"}}</th>
-        <th>{{localize "PF1.ByLevel"}}</th>
-        <th>{{localize "PF1.ByBonus"}}</th>
-        <th>{{localize "PF1.Total"}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="center owned">{{featCount.value}}</td>
-        <td class="center by-level">{{featCount.byLevel}}</td>
-        <td class="center by-bonus">{{featCount.byFormula}}</td>
-        <td class="center total">{{featCount.total}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+
+  {{! Feat Counts }}
+  <div class="feat-counts">
+    <div class="info-box-joined stats">
+      <div class="info-box owned">
+        <h5>{{localize "PF1.Feats"}}</h5>
+        <span class="value">{{featCount.active}}</span>
+      </div>
+      <div class="info-box by-level">
+        <h5>{{localize "PF1.ByLevel"}}</h5>
+        <span class="value">{{featCount.byLevel}}</span>
+      </div>
+      <div class="info-box by-extra">
+        <h5>{{localize "PF1.ByBonus"}}</h5>
+        <span class="value">{{featCount.byFormula}}</span>
+      </div>
+      <div class="info-box total">
+        <h5>{{localize "PF1.Total"}}</h5>
+        <span class="value">{{featCount.total}}</span>
+      </div>
+    </div>
+
+    {{#if featCount.issues}}
+    <div class="info-box-joined issues" style="--issues:{{featCount.issues}};">
+      {{#if featCount.missing}}
+      <div class="info-box missing">
+        <h5>{{localize "PF1.Missing"}}</h5>
+        <span class="value">{{featCount.missing}}</span>
+      </div>
+      {{else if featCount.excess}}
+      <div class="info-box excess">
+        <h5>{{localize "PF1.Excess"}}</h5>
+        <span class="value">{{featCount.excess}}</span>
+      </div>
+      {{/if}}
+
+      {{#if featCount.disabled}}
+      <div class="info-box disabled">
+        <h5>{{localize "PF1.Disabled"}}</h5>
+        <span class="value">{{featCount.disabled}}</span>
+      </div>
+      {{/if}}
+    </div>
+    {{/if}}
+  </div>
+</footer>

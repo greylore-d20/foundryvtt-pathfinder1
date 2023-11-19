@@ -36,7 +36,8 @@
     </div>
 
     <div class="flexrow">
-      <div class="race-container item flexrow" {{#if race}}data-item-id="{{race._id}}"{{/if}} data-tooltip="PF1.Race">
+      {{! Race }}
+      <div class="race item flexrow" {{#if race}}data-item-id="{{race._id}}"{{/if}} data-tooltip="PF1.Race">
         <div class="race item-image rollable" style='background-image: url("{{race.img}}")' data-tooltip="{{labels.race}}<br>{{localize "PF1.DisplayInChat"}}">
           {{#unless race}}{{localize "PF1.Race"}}{{/unless}}
         </div>
@@ -53,12 +54,15 @@
           {{/if}}
         </div>
 
-        <div class="race-info tag-list">
+        <div class="info">
           {{#if race}}
-          <span class="tag type3">{{lookup config.creatureTypes race.system.creatureType}}</span>
-          {{#each race.system.subTypes as |v|}}
-          <span class="tag">{{v}}</span>
-          {{/each}}
+          <h4>{{race.name}}</h4>
+          <div class="tag-list">
+            <span class="tag type3">{{lookup config.creatureTypes race.system.creatureType}}</span>
+            {{#each race.system.subTypes as |v|}}
+            <span class="tag">{{v}}</span>
+            {{/each}}
+          </div>
           {{/if}}
         </div>
       </div>

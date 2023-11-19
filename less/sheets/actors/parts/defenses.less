@@ -1,0 +1,26 @@
+.pf1.sheet.actor {
+  .defenses {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 3px;
+
+    .ac-cmd,
+    .saves-sr {
+      display: flex;
+      flex-flow: row nowrap;
+      gap: 3px;
+
+      > .ac-tac-ffac {
+        flex: 3;
+      }
+
+      > .cmd-ff {
+        flex: 2;
+      }
+
+      > .saves {
+        flex: 3;
+      }
+    }
+  }
+}

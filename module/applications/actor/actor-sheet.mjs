@@ -114,7 +114,7 @@ export class ActorSheetPF extends ActorSheet {
         { dragSelector: ".race-container.item[data-item-id]" },
         { dragSelector: "li.skill[data-skill]" },
         { dragSelector: "li.sub-skill[data-skill]" },
-        { dragSelector: "th.saving-throw[data-savingthrow]" },
+        { dragSelector: ".saving-throw[data-savingthrow]" },
         { dragSelector: ".attribute[data-attribute]" },
         { dragSelector: ".attribute[data-attack]" },
         { dragSelector: "li.generic-defenses[data-drag]" },

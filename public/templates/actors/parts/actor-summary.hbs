@@ -274,51 +274,36 @@
 
       {{> "systems/pf1/templates/actors/parts/actor-defenses_tables.hbs"}}
 
-      <table>
-        <thead>
-          <tr>
-            <th class="attribute bab tooltip" data-attribute="bab">
-              <span class="tooltipcontent">
-                <span class="span2 align-left">@attributes.bab.total :</span><span class="span1 align-right"> {{system.attributes.bab.total}}</span>
-                {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.bab.total }}
-              </span>
+      <div class="combat-stats">
+        {{! BAB }}
+        <div class="info-box attribute bab tooltip" data-attribute="bab">
+          <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.BABAbbr"}}</span></a></h5>
+          <span class="value">{{numberFormat system.attributes.bab.total sign=true}}</span>
+          <span class="tooltipcontent">
+            <span class="span2 align-left">@attributes.bab.total :</span><span class="span1 align-right"> {{system.attributes.bab.total}}</span>
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.bab.total }}
+          </span>
+        </div>
 
-              <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.BABAbbr"}}</span></a>
-            </th>
-            <th class="attribute cmb tooltip" data-attribute="cmb">
-              {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
+        {{! CMB }}
+        <div class="info-box attribute cmb tooltip" data-attribute="cmb">
+          <h5><a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a></h5>
+          <span class="value">{{numberFormat system.attributes.cmb.total decimals=0 sign=true}}</span>
+          {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
+        </div>
 
-              <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a>
-            </th>
-            <th class="attribute initiative tooltip" data-attribute="initiative">
-              <span class="tooltipcontent">
-                <span class="span2 align-left">@attributes.init.total :</span><span class="span1 align-right"> {{system.attributes.init.total}}</span>
-                {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.init.total }}
+        {{! Initiative }}
+        <div class="info-box attribute initiative tooltip" data-attribute="initiative">
+          <h5><a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a></h5>
+          <span class="value">{{numberFormat system.attributes.init.total sign=true}}</span>
+          <span class="tooltipcontent">
+            <span class="span2 align-left">@attributes.init.total :</span><span class="span1 align-right"> {{system.attributes.init.total}}</span>
+            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.init.total }}
 
-                {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
-              </span>
-
-              <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td class="bab">
-              {{system.attributes.bab.total}}
-            </td>
-
-            <td class="cmb">
-              {{numberFormat system.attributes.cmb.total decimals=0 sign=true}}
-            </td>
-
-            <td class="initiative">
-              {{system.attributes.init.total}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
+          </span>
+        </div>
+      </div>
     </div>
 
     {{!-- Quick Actions --}}

@@ -1,77 +1,68 @@
 <div class="inventory-filters spellbook-configuration">
-  <div class="spell-summary">
-    <table class="spellcasting-summary">
-      <thead>
-        <tr>
-          <th class="spellcasting-concentration rollable tooltip" data-drag="concentration">
-            <i class="fas fa-dice"></i> {{localize "PF1.Concentration"}}
-            <span class="tooltipcontent">
-              <span class="span2 align-left">@spells.{{bookId}}.concentration.total :</span><span class="span1 align-right"> {{spellbook.orig.concentration.total}}</span>
-              {{#with (lookup sourceDetails.system.attributes.spells.spellbooks bookId)}}
-              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=concentration.total }}
-              {{/with}}
-            </span>
-          </th>
-          <th class="spellcasting-cl rollable tooltip" data-drag="cl">
-            <i class="fas fa-dice"></i> {{localize "PF1.CasterLevel"}}
-            <span class="tooltipcontent">
-              <span class="span2 align-left">@spells.{{bookId}}.cl.total :</span><span class="span1 align-right"> {{spellbook.orig.cl.total}}</span>
-              {{#with (lookup sourceDetails.system.attributes.spells.spellbooks bookId)}}
-              {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=cl.total }}
-              {{/with}}
-            </span>
-          </th>
-          {{#if @root.asf}}
-          <th class="arcane-spell-failure">
-            {{localize "PF1.ArcaneSpellFailureAbbr"}}
-          </th>
-          {{/if}}
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="spellcasting-concentration-total">{{numberFormat spellbook.orig.concentration.total sign=true decimals=0}}</td>
-          <td class="spellcasting-casterlevel-total">{{numberFormat spellbook.orig.cl.total sign=true decimals=0}}</td>
-          {{#if @root.asf}}
-          <td class="arcane-spell-failure-total">{{@root.asf.total}}%</td>
-          {{/if}}
-        </tr>
-      </tbody>
-    </table>
-    <table class="spell-range">
-      <thead>
-        <tr>
-          <th class="tooltip">
-            {{localize "PF1.DistClose"}}
+  <div class="summary">
+    {{! Concentration }}
+    <div class="info-box spellcasting-concentration rollable tooltip" data-drag="concentration">
+      <h5><i class="fas fa-dice"></i> {{localize "PF1.Concentration"}}</h5>
+      <span class="value">{{numberFormat spellbook.orig.concentration.total sign=true decimals=0}}</span>
+      <span class="tooltipcontent">
+        <span class="span2 align-left">@spells.{{bookId}}.concentration.total :</span><span class="span1 align-right"> {{spellbook.orig.concentration.total}}</span>
+        {{#with (lookup sourceDetails.system.attributes.spells.spellbooks bookId)}}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=concentration.total }}
+        {{/with}}
+      </span>
+    </div>
 
-            <div class="tooltipcontent">
-              <span class="span2 align-left">@spells.{{bookId}}.range.close :</span><span class="span1 align-right"> {{spellbook.orig.range.close}}</span>
-            </div>
-          </th>
-          <th class="tooltip">
-            {{localize "PF1.DistMedium"}}
+    {{! Caster Level }}
+    <div class="info-box spellcasting-cl rollable tooltip" data-drag="cl">
+      <h5><i class="fas fa-dice"></i> {{localize "PF1.CasterLevel"}}</h5>
+      <span class="value">{{numberFormat spellbook.orig.cl.total sign=true decimals=0}}</span>
+      <span class="tooltipcontent">
+        <span class="span2 align-left">@spells.{{bookId}}.cl.total :</span><span class="span1 align-right"> {{spellbook.orig.cl.total}}</span>
+        {{#with (lookup sourceDetails.system.attributes.spells.spellbooks bookId)}}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=cl.total }}
+        {{/with}}
+      </span>
+    </div>
 
-            <div class="tooltipcontent">
-              <span class="span2 align-left">@spells.{{bookId}}.range.medium :</span><span class="span1 align-right"> {{spellbook.orig.range.medium}}</span>
-            </div>
-          </th>
-          <th class="tooltip">
-            {{localize "PF1.DistLong"}}
+    {{! ASF }}
+    {{#if @root.asf}}
+    {{! TODO: Make sure this book suffers from ASF }}
+    <div class="info-box">
+      <h5>{{localize "PF1.ArcaneSpellFailureAbbr"}}</h5>
+      <span class="value">{{@root.asf.total}}%</span>
+    </div>
+    {{/if}}
 
-            <div class="tooltipcontent">
-              <span class="span2 align-left">@spells.{{bookId}}.range.long :</span><span class="span1 align-right"> {{spellbook.orig.range.long}}</span>
-            </div>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="range-close">{{spellbook.orig.range.close}}</td>
-          <td class="range-medium">{{spellbook.orig.range.medium}}</td>
-          <td class="range-long">{{spellbook.orig.range.long}}</td>
-        </tr>
-      </tbody>
-    </table>
+    {{! Spell Ranges }}
+    <div class="info-box-joined ranges">
+      {{! Close }}
+      <div class="info-box tooltip range close">
+        <h5>{{localize "PF1.DistClose"}}</h5>
+        <span class="value">{{spellbook.orig.range.close}}</span>
+        <div class="tooltipcontent">
+          <span class="span2 align-left">@spells.{{bookId}}.range.close :</span><span class="span1 align-right"> {{spellbook.orig.range.close}}</span>
+        </div>
+      </div>
+
+      {{! Medium }}
+      <div class="info-box tooltip range medium">
+        <h5>{{localize "PF1.DistMedium"}}</h5>
+        <span class="value">{{spellbook.orig.range.medium}}</span>
+        <div class="tooltipcontent">
+          <span class="span2 align-left">@spells.{{bookId}}.range.medium :</span><span class="span1 align-right"> {{spellbook.orig.range.medium}}</span>
+        </div>
+      </div>
+
+      {{! Long }}
+      <div class="info-box tooltip range long">
+        <h5>{{localize "PF1.DistLong"}}</h5>
+        <span class="value">{{spellbook.orig.range.long}}</span>
+        <div class="tooltipcontent">
+          <span class="span2 align-left">@spells.{{bookId}}.range.long :</span><span class="span1 align-right"> {{spellbook.orig.range.long}}</span>
+        </div>
+      </div>
+    </div>
+
     <div class="spellcasting-config">
       <a class="hide-show" data-for="spellbook-info_{{bookId}}"><i class="fas fa-cogs"></i></a>
     </div>

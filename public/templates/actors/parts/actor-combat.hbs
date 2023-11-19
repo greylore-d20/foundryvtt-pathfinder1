@@ -1,96 +1,78 @@
-{{!-- Misc Combat Header --}}
-<div class="combat-header">
-  <table>
-    <thead>
-      <tr>
-        <th class="attribute bab tooltip" data-attribute="bab">
-          <span class="tooltipcontent">
-            <span class="span2 align-left">@attributes.bab.total :</span><span class="span1 align-right"> &nbsp;{{system.attributes.bab.total}}</span>
-            
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.bab.total }}
-          </span>
+<header>
+  {{! BAB }}
+  <div class="info-box tooltip attribute bab" data-attribute="bab">
+    <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.BABAbbr"}}</span></a></h5>
+    <span class="value">
+      {{#if iteratives}}
+      {{iteratives}}
+      {{else}}
+      {{numberFormat system.attributes.bab.total decimals=0 sign=true}}
+      {{/if}}
+    </span>
+    <span class="tooltipcontent">
+      <span class="span2 align-left">@attributes.bab.total :</span><span class="span1 align-right"> &nbsp;{{system.attributes.bab.total}}</span>
 
-          <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.BABAbbr"}}</span></a>
-        </th>
-        <th class="attribute cmb tooltip" data-attribute="cmb">
-          {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
+      {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.bab.total }}
+    </span>
+  </div>
 
-          <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.CMBAbbr"}}</span></a>
-        </th>
-        <th class="attribute attack melee tooltip" data-attack="melee">
-          <span class="tooltipcontent">
-            <span class="span3">…</span>
-            <span class="span2 align-left">+ @attributes.attack.shared :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.shared}}</span>
-            <span class="span2 align-left">+ @attributes.attack.general :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.general}}</span>
-            <span class="span2 align-left">+ @attributes.attack.melee :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.melee}}</span>
-            
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.shared }}
-            {{#if genericAttacks.melee.ability}}<span class="span1 align-left">{{lookup @root.config.abilities genericAttacks.melee.ability}} :</span><span class="span1 align-rightspaced"> {{numberFormat genericAttacks.melee.abilityMod decimals=0 sign=true}}</span><span class="span1 align-right"></span>{{/if}}
-            {{#if (ne @root.system.traits.size "med")}}<span class="span1 align-left">{{localize "PF1.Size"}} : </span><span class="span1 align-rightspaced">{{lookup @root.config.sizeMods @root.system.traits.size }}</span><span class="span1 align-right"></span>{{/if}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=true skipLabel=1}}
+  {{! CMB }}
+  <div class="info-box tooltip attribute cmb" data-attribute="cmb">
+    <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.CMBAbbr"}}</span></a></h5>
+    <span class="value">{{numberFormat system.attributes.cmb.total decimals=0 sign=true}}</span>
+    {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
+  </div>
 
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.melee skipLine=true skipLabel=1}}
-          </span>
-          <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Melee"}}</span></a>
-        </th>
-        <th class="attribute attack ranged tooltip" data-attack="ranged">
-          <span class="tooltipcontent">
-            <span class="span3">…</span>
-            <span class="span2 align-left">+ @attributes.attack.shared :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.shared}}</span>
-            <span class="span2 align-left">+ @attributes.attack.general :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.general}}</span>
-            <span class="span2 align-left">+ @attributes.attack.ranged :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.ranged}}</span>
+  <div class="info-box-joined generic-attacks">
+    {{! Melee }}
+    <div class="info-box tooltip attribute attack melee" data-attack="melee">
+      <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.Melee"}}</span></a></h5>
+      <span class="value">{{numberFormat genericAttacks.melee.modifier decimals=0 sign=true}}</span>
+      <span class="tooltipcontent">
+        <span class="span2 align-left">+ @attributes.attack.shared :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.shared}}</span>
+        <span class="span2 align-left">+ @attributes.attack.general :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.general}}</span>
+        <span class="span2 align-left">+ @attributes.attack.melee :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.melee}}</span>
 
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.shared }}
-            {{#if genericAttacks.ranged.ability}}<span class="span1 align-left">{{lookup @root.config.abilities genericAttacks.ranged.ability}} :</span><span class="span1 align-rightspaced"> {{numberFormat genericAttacks.ranged.abilityMod decimals=0 sign=true}}</span><span class="span1 align-right"></span>{{/if}}
-            {{#if (ne @root.system.traits.size "med")}}<span class="span1 align-left">{{localize "PF1.Size"}} :</span> <span class="span1 align-rightspaced"> &nbsp;{{lookup @root.config.sizeMods @root.system.traits.size }}</span><span class="span1 align-right"></span>{{/if}}
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=true skipLabel=1}}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.shared }}
+        {{#if genericAttacks.melee.ability}}<span class="span1 align-left">{{lookup @root.config.abilities genericAttacks.melee.ability}} :</span><span class="span1 align-rightspaced"> {{numberFormat genericAttacks.melee.abilityMod decimals=0 sign=true}}</span><span class="span1 align-right"></span>{{/if}}
+        {{#if (ne @root.system.traits.size "med")}}<span class="span1 align-left">{{localize "PF1.Size"}} : </span><span class="span1 align-rightspaced">{{lookup @root.config.sizeMods @root.system.traits.size }}</span><span class="span1 align-right"></span>{{/if}}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=true skipLabel=1}}
 
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.ranged skipLine=true skipLabel=1}}
-          </span>
-          <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Ranged"}}</span></a>
-        </th>
-        <th class="attribute initiative tooltip" data-attribute="initiative">
-          <span class="tooltipcontent">
-            <span class="span2 align-left">@attributes.init.total :</span><span class="span1 align-right"> &nbsp;{{system.attributes.init.total}}</span>
-            {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.init.total }}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.melee skipLine=true skipLabel=1}}
+      </span>
+    </div>
 
-            {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
-          </span>
+    {{! Ranged }}
+    <div class="info-box tooltip attribute attack ranged" data-attack="ranged">
+      <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.Ranged"}}</span></a></h5>
+      <span class="value">{{numberFormat genericAttacks.ranged.modifier decimals=0 sign=true}}</span>
+      <span class="tooltipcontent">
+        <span class="span2 align-left">+ @attributes.attack.shared :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.shared}}</span>
+        <span class="span2 align-left">+ @attributes.attack.general :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.general}}</span>
+        <span class="span2 align-left">+ @attributes.attack.ranged :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.ranged}}</span>
 
-          <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
-        </th>
-      </tr>
-    </thead>
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.shared }}
+        {{#if genericAttacks.ranged.ability}}<span class="span1 align-left">{{lookup @root.config.abilities genericAttacks.ranged.ability}} :</span><span class="span1 align-rightspaced"> {{numberFormat genericAttacks.ranged.abilityMod decimals=0 sign=true}}</span><span class="span1 align-right"></span>{{/if}}
+        {{#if (ne @root.system.traits.size "med")}}<span class="span1 align-left">{{localize "PF1.Size"}} :</span> <span class="span1 align-rightspaced"> &nbsp;{{lookup @root.config.sizeMods @root.system.traits.size }}</span><span class="span1 align-right"></span>{{/if}}
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.general skipLine=true skipLabel=1}}
 
-    <tbody>
-      <tr>
-        <td class="bab">
-          {{#if iteratives}}
-          {{iteratives}}
-          {{else}}
-          {{numberFormat system.attributes.bab.total decimals=0 sign=true}}
-          {{/if}}
-        </td>
+        {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.attack.ranged skipLine=true skipLabel=1}}
+      </span>
+    </div>
+  </div>
 
-        <td class="cmb">
-          {{numberFormat system.attributes.cmb.total decimals=0 sign=true}}
-        </td>
+  {{! Initiative }}
+  <div class="info-box tooltip attribute initiative" data-attribute="initiative">
+    <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.Initiative"}}</span></a></h5>
+    <span class="value">{{numberFormat system.attributes.init.total sign=true}}</span>
+    <span class="tooltipcontent">
+      <span class="span2 align-left">@attributes.init.total :</span><span class="span1 align-right"> &nbsp;{{system.attributes.init.total}}</span>
+      {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.init.total }}
 
-        <td class="generic-melee">
-          {{numberFormat genericAttacks.melee.modifier decimals=0 sign=true}}
-        </td>
-
-        <td class="generic-ranged">
-          {{numberFormat genericAttacks.ranged.modifier decimals=0 sign=true}}
-        </td>
-
-        <td class="initiative">
-          {{system.attributes.init.total}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+      {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.init"}}
+    </span>
+  </div>
+</header>
 
 <hr>
 
@@ -168,7 +150,7 @@
                   {{numberFormat this decimals=0 sign=true}}{{#unless @last}}/{{/unless}}
                 {{~/each}}
               </span>
-              
+
               {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=item.document.attackSources label="PF1.Details"}}
             </span>
             {{/if}}

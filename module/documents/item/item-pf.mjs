@@ -1601,9 +1601,7 @@ export class ItemPF extends ItemBasePF {
 
     // Update chat popout size
     const popout = header.closest(".chat-popout");
-    if (popout) {
-      popout.style.height = "auto";
-    }
+    ui.windows[popout?.dataset.appid]?.setPosition();
   }
 
   /**

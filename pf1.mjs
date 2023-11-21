@@ -776,12 +776,15 @@ Hooks.on(
       sizingTemplateData
     );
 
+    const systemVision = game.settings.get("pf1", "systemVision");
+
     html.find('.tab[data-tab="appearance"] > *:nth-child(3)').after(sizeContent);
 
     const visionTab = html[0].querySelector(`.tab[data-tab="vision"]`);
 
     // Disable vision elements if custom vision is disabled
-    const enableCustomVision = flags.customVisionRules === true;
+    const enableCustomVision = flags.customVisionRules === true || !systemVision;
+
     let addDetectionModeButtonListener;
     const toggleCustomVision = (enabled) => {
       // Disable vision mode selection
@@ -790,6 +793,7 @@ Hooks.on(
       // Disable detection mode tab
       const dmTab = visionTab.querySelector(".tab[data-tab='detection']");
       for (const el of dmTab.querySelectorAll("input,select")) {
+        if (el.name === "flags.pf1.customVisionRules") continue;
         el.disabled = !enabled;
       }
 
@@ -800,7 +804,8 @@ Hooks.on(
     if (!enableCustomVision) toggleCustomVision(enableCustomVision);
 
     const visionContent = await renderTemplate("systems/pf1/templates/foundry/token/custom-vision.hbs", {
-      enabled: enableCustomVision,
+      enabled: enableCustomVision || !systemVision,
+      noSystemVision: !systemVision,
     });
 
     $(visionTab).append(visionContent);

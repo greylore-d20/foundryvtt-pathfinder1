@@ -358,6 +358,20 @@ export const registerSystemSettings = function () {
     config: true,
   });
 
+  game.settings.register("pf1", "systemVision", {
+    name: "SETTINGS.pf1systemVisionN",
+    hint: "SETTINGS.pf1systemVisionH",
+    scope: "world",
+    config: true,
+    default: true,
+    type: Boolean,
+    onChange: () => {
+      Object.values(ui.windows)
+        .filter((app) => app instanceof TokenConfig)
+        .forEach((app) => app.render());
+    },
+  });
+
   // CHAT CARDS
 
   /**

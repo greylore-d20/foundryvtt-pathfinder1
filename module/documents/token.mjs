@@ -101,6 +101,7 @@ export class TokenDocumentPF extends TokenDocument {
    */
   _syncSenses() {
     if (!this.actor) return;
+    if (!game.settings.get("pf1", "systemVision")) return;
     if (this.getFlag("pf1", "customVisionRules")) return;
 
     this.detectionModes = [];

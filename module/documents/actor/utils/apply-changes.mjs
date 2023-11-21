@@ -1058,6 +1058,35 @@ export const addDefaultChanges = function (changes) {
       })
     );
   }
+
+  // NPC Lite Sheet Values for Init, CMD, BAB and AC
+  {
+    const liteValues = {
+      init: null,
+      cmd: null,
+      bab: null,
+      ac: (data) => data.normal,
+    };
+
+    for (const [key, valfn] of Object.entries(liteValues)) {
+      let value = actorData.attributes[key];
+      if (typeof valfn === "function") value = valfn(value);
+      value = value.value;
+
+      if (value !== undefined) {
+        changes.push(
+          new pf1.components.ItemChange({
+            formula: value,
+            subTarget: key,
+            modifier: "base",
+            flavor: game.i18n.localize("PF1.Custom"),
+            operator: "set",
+          })
+        );
+      }
+    }
+  }
+
   // Natural armor
   {
     const ac = actorData.attributes.naturalAC || 0;

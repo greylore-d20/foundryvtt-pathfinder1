@@ -27,13 +27,7 @@ export class ActorNPCPF extends ActorPF {
 
   prepareBaseData() {
     super.prepareBaseData();
-    this.system.details.cr.total = this.getCR(this.system);
-
-    // Add base values for lite sheets
-    this.system.attributes.init.total = this.system.attributes.init.value ?? 0;
-    this.system.attributes.bab.total = this.system.attributes.bab.value ?? 0;
-    this.system.attributes.cmd.total = this.system.attributes.cmd.value ?? 0;
-    this.system.ac.normal.total = this.system.attributes.ac.normal.value ?? 0;
+    this.system.details.cr.total = this.getCR();
   }
 
   prepareSpecificDerivedData() {

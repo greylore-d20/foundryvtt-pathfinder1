@@ -38,13 +38,27 @@ export const patchCore = function () {
     const result = { dim, bright };
     let multiplier = { dim: 1, bright: 1 };
 
-    if (this.object?.document.getFlag("pf1", "disableLowLight")) return result;
+    if (!game.settings.get("pf1", "systemVision")) return result;
+
+    /**
+     * @param {TokenDocument} token
+     * @returns {boolean}
+     */
+    const hasSystemVision = (token) =>
+      token.getFlag("pf1", "disableLowLight") !== true && token.getFlag("pf1", "customVisionRules") !== true;
+
+    const token = this.object?.document;
+    if (token && !hasSystemVision(token)) return result;
 
     const requiresSelection = game.user.isGM || game.settings.get("pf1", "lowLightVisionMode");
-    const relevantTokens = canvas.tokens.placeables.filter(
-      (o) =>
-        !!o.actor && o.actor?.testUserPermission(game.user, "OBSERVER") && (requiresSelection ? o.controlled : true)
-    );
+    const relevantTokens = canvas.tokens.placeables.filter((token) => {
+      const tokenDoc = token.document;
+      return (
+        token.actor?.testUserPermission(game.user, "OBSERVER") &&
+        (requiresSelection ? token.controlled : true) &&
+        hasSystemVision(tokenDoc)
+      );
+    });
     const lowLightTokens = relevantTokens.filter((o) => o.actorVision.lowLight === true);
 
     if (requiresSelection) {

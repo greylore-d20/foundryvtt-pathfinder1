@@ -369,6 +369,9 @@ export const registerSystemSettings = function () {
       Object.values(ui.windows)
         .filter((app) => app instanceof TokenConfig)
         .forEach((app) => app.render());
+
+      // Initialize lighting is required for LLV to take effect
+      canvas.perception.update({ initializeLighting: true, refreshLighting: true, refreshVision: true }, true);
     },
   });
 

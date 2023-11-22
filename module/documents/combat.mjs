@@ -231,8 +231,8 @@ export class CombatPF extends Combat {
       foundry.utils.logCompatibilityWarning(
         "CombatPF.showInitiativeDialog() formula parameter is deprecated in favor of d20",
         {
-          since: "PF1 vNEXT",
-          until: "PF1 vNEXT+1",
+          since: "PF1 v9",
+          until: "PF1 v10",
         }
       );
       d20 ||= formula;

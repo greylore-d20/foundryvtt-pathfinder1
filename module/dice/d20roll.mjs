@@ -318,7 +318,6 @@ export class D20RollPF extends RollPF {
     const rollMode = options.rollMode || this.options.rollMode || game.settings.get("core", "rollMode");
     messageData = foundry.utils.mergeObject(
       {
-        user: game.user.id,
         type: CONST.CHAT_MESSAGE_TYPES.ROLL,
         sound: options.noSound ? undefined : CONFIG.sounds.dice,
         content: await renderTemplate(chatTemplate, chatTemplateData),
@@ -330,14 +329,13 @@ export class D20RollPF extends RollPF {
     if (options.subject) foundry.utils.setProperty(messageData, "flags.pf1.subject", options.subject);
 
     const message = new ChatMessage.implementation(messageData);
-    const messageObject = message.toObject();
+    if (rollMode) message.applyRollMode(rollMode);
+    messageData = message.toObject();
 
-    const create = options.create ?? true;
-    if (create) {
-      return ChatMessage.implementation.create(message, { rollMode });
+    if (options.create ?? true) {
+      return ChatMessage.implementation.create(messageData);
     } else {
-      if (rollMode) ChatMessage.implementation.applyRollMode(messageObject, rollMode);
-      return messageObject;
+      return messageData;
     }
   }
 

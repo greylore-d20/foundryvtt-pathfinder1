@@ -321,7 +321,6 @@ export class D20RollPF extends RollPF {
         type: CONST.CHAT_MESSAGE_TYPES.ROLL,
         sound: options.noSound ? undefined : CONFIG.sounds.dice,
         content: await renderTemplate(chatTemplate, chatTemplateData),
-        "flags.pf1.noRollRender": true,
       },
       messageData
     );

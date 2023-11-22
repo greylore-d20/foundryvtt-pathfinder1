@@ -27,10 +27,6 @@ export class ChatMessagePF extends ChatMessage {
     return maybeRollObject;
   }
 
-  get isRoll() {
-    return this.type === CONST.CHAT_MESSAGE_TYPES.ROLL || this.getFlag("pf1", "noRollRender");
-  }
-
   /**
    * Linked item.
    *

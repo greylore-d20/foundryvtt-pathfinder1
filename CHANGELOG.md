@@ -1,5 +1,20 @@
 # Changelog
 
+## 9.6 - 2023-11-22
+
+### Bug Fixes
+
+- Reducing class level did not clean associations until level was reduced below 1 (fix affects only newly added/leveled classes).
+- Linking class association to a class stored in compendium would fail. ([2617](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2617))
+- d20 parameter of ActorPF.rollInitiative() was ignored if dialog was not skipped.
+
+### Compendium
+
+- Added missing caster level progression to warpriest. ([2647](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2647))
+- Added missing class association to oracle only spells.
+- Harmonized and improved poison resistance and added poison immunity class feat to investigator and alchemist.
+- Fixed wrong class associations in some cleric spells. ([2623](https://gitlab.com/Furyspark/foundryvtt-pathfinder1/-/issues/2623))
+
 ## 9.5 - 2023-11-13
 
 ### Bug Fixes

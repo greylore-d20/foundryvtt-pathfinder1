@@ -10,7 +10,7 @@
     "changes": [
       {
         "_id": "bo1uudua",
-        "formula": "@size < 4 ? 10 : @size < 5 ? 20 : @size < 6 ? 30 : @size < 7 ? 40 : @size < 8 ? 60 : 80",
+        "formula": "(max(0, @size - 3) * 10) + (max(0, @size - 6) * 10)",
         "subTarget": "mhp",
         "modifier": "untypedPerm"
       }

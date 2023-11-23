@@ -1011,21 +1011,17 @@ export class ActorSheetPF extends ActorSheet {
 
     // Allow opening items even if the sheet isn't editable.
 
-    // Race item
-    html.find(".race").each((i, el) => {
-      if (el.closest(".item").dataset?.itemId) el.addEventListener("contextmenu", (ev) => this._onItemEdit(ev));
-    });
     // General items
     html.find(".item-edit").on("click", this._onItemEdit.bind(this));
     // General items (right click)
     html.find(".item .item-name").contextmenu(this._onItemEdit.bind(this));
     // Quick items (right click)
     html.find(".quick-actions li").contextmenu(this._onItemEdit.bind(this));
-    // Race controls (editable limitations done internally)
-    html.find(".race-container .item-control").click(this._onRaceControl.bind(this));
+    // Race item special right-click handler
+    html.find(".race.item").contextmenu(this._onItemEdit.bind(this));
 
     // Everything below here is only needed if the sheet is editable
-    if (!this.options.editable) {
+    if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");
       return;
     }
@@ -2025,30 +2021,6 @@ export class ActorSheetPF extends ActorSheet {
         },
         rejectClose: true,
       });
-    }
-  }
-
-  async _onRaceControl(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-
-    // Edit race (allow opening without edit rights)
-    if (a.classList.contains("edit")) {
-      this._onItemEdit(event);
-    }
-    // Add race
-    else if (this.isEditable) {
-      if (a.classList.contains("add")) {
-        const itemData = {
-          name: "New Race",
-          type: "race",
-        };
-        this.document.createEmbeddedDocuments("Item", [itemData], { renderSheet: true });
-      }
-      // Delete race
-      else if (a.classList.contains("delete")) {
-        this._onItemDelete(event);
-      }
     }
   }
 

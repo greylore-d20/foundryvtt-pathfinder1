@@ -45,10 +45,10 @@
         <div class="item-controls flexcol">
           {{#if owner}}
           {{#if race}}
-          <a class="item-control edit" data-tooltip="PF1.EditItem"><i class="fas fa-edit"></i></a>
-          <a class="item-control delete" data-tooltip="PF1.DeleteItem"><i class="fas fa-trash"></i></a>
+          <a class="item-control item-edit" data-tooltip="PF1.EditItem"><i class="fas fa-edit"></i></a>
+          <a class="item-control item-delete" data-tooltip="PF1.DeleteItem"><i class="fas fa-trash"></i></a>
           {{else}}
-          <a class="item-control add" data-tooltip="PF1.CreateItem"><i class="fas fa-plus"></i></a>
+          <a class="item-control item-create" data-tooltip="PF1.CreateItem" data-type="race"><i class="fas fa-plus"></i></a>
           <a data-action="compendium" data-action-target="races" data-tooltip="PF1.OpenCompendium"><i class="fas fa-folder-plus"></i></a>
           {{/if}}
           {{/if}}

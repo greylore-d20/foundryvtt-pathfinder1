@@ -79,10 +79,6 @@ export class ItemBuffPF extends ItemPF {
       const aeData = this.getRawEffectData();
       aeData.active = isActive;
 
-      // Hide effect icon
-      const hideIcon = this.system.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
-      if (hideIcon) aeData.icon = null;
-
       // Update old
       if (oldEffect) oldEffect.update(aeData);
       // Create new
@@ -192,8 +188,7 @@ export class ItemBuffPF extends ItemPF {
 
     // Add a new effect
     const createData = this.getRawEffectData();
-    const doSHow = !this.system.hideFromToken && !game.settings.get("pf1", "hideTokenConditions");
-    setProperty(createData, "flags.pf1.show", doSHow);
+
     return ActiveEffect.implementation.create(createData, { parent: actor });
   }
 
@@ -201,9 +196,8 @@ export class ItemBuffPF extends ItemPF {
   getRawEffectData() {
     const createData = super.getRawEffectData();
 
-    const hideIcon = this.system.hideFromToken || game.settings.get("pf1", "hideTokenConditions");
-    createData["flags.pf1.show"] = !hideIcon;
-    if (hideIcon) createData.icon = null;
+    const hideIcon = this.system.hideFromToken;
+    setProperty(createData, "flags.pf1.show", !hideIcon);
 
     // Add buff durations
     const duration = this.system.duration;

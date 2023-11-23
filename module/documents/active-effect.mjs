@@ -105,6 +105,8 @@ export class ActiveEffectPF extends ActiveEffect {
    * @type {boolean}
    */
   get isTemporary() {
+    if (this.getFlag("pf1", "show") === false || game.settings.get("pf1", "hideTokenConditions")) return false;
+
     const duration = this.duration.seconds ?? (this.duration.rounds || this.duration.turns) ?? 0;
     return duration > 0 || this.statuses.size || this.getFlag("pf1", "show") || false;
   }

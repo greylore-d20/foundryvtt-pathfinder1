@@ -481,17 +481,7 @@ export const registerSystemSettings = function () {
     config: true,
     default: false,
     type: Boolean,
-    onChange: () => {
-      if (!game.users.activeGM.isSelf) return;
-
-      const promises = [];
-      const actors = [
-        ...game.actors.filter((actor) => actor.prototypeToken.actorLink),
-        ...Object.values(game.actors.tokens).filter((actor) => actor != null),
-      ];
-
-      // TODO: Refresh status icons
-    },
+    onChange: () => canvas.tokens?.placeables?.forEach((t) => t._applyRenderFlags({ redrawEffects: true })),
   });
 
   // TRANSPARENCY

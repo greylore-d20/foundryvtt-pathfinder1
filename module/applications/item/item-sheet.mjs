@@ -4,6 +4,7 @@ import { ScriptEditor } from "../script-editor.mjs";
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { Widget_CategorizedItemPicker } from "../categorized-item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
+import { ContentSourceEditor } from "../content-source.mjs";
 
 /**
  * Override and extend the core ItemSheet implementation to handle game system specific item types
@@ -911,6 +912,9 @@ export class ItemSheetPF extends ItemSheet {
       html.find("span.text-box").addClass("readonly");
       return;
     }
+
+    // Content source editor
+    html.find(".content-source .control .edit").click(() => ContentSourceEditor.open(this.document));
 
     // Trigger form submission from textarea elements.
     html.find("textarea").change(this._onSubmit.bind(this));

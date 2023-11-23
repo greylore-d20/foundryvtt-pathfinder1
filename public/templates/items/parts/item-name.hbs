@@ -23,7 +23,5 @@
   {{/if}}
 </div>
 
-<div class="item-subtitle">
-  <h4 class="item-type">{{localize "PF1.Item"}}</h4>
-  <span class="item-status">{{ itemStatus }}</span>
-</div>
+{{! Content Source }}
+{{~> "systems/pf1/templates/internal/content-source-view.hbs" source=system.source}}

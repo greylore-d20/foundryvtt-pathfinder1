@@ -1,0 +1,27 @@
+{{#unless @root.showUnidentifiedData}}
+<div class="content-source {{#unless source.title}}missing{{/unless}}">
+	{{#if source.title}}
+	<span class="source"
+		{{#with source}}
+		data-tooltip="
+		{{~#if id}}{{localize "PF1.ContentSource.Info.ID"}}: {{id}}<br>{{/if~}}
+		{{~#if edition}}{{localize "PF1.ContentSource.Info.Edition"}}: {{edition}}<br>{{/if~}}
+		{{~#if errata}}{{localize "PF1.ContentSource.Info.Errata"}}: {{errata}}<br>{{/if~}}
+		{{~#if publisher}}{{localize "PF1.ContentSource.Info.Publisher"}}: {{publisher}}<br>{{/if~}}
+		"{{/with}}>
+    <span class="title">{{source.title}}</span>
+		{{#if source.pages}}
+    <span class="pages">{{localize "PF1.ContentSource.Pages" pages=source.pages}}</span>
+		{{else}}
+		{{/if}}
+	</span>
+	{{else}}
+	<span class="source">
+		{{localize "PF1.ContentSource.Missing"}}
+	</span>
+	{{/if}}
+	<div class="control">
+		<i class="fas fa-edit edit" data-tooltip="PF1.ContentSource.EditHint"></i>
+	</div>
+</div>
+{{/unless}}

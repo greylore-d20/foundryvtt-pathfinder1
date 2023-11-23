@@ -9,10 +9,8 @@
         <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.BuffName"}}"/>
       </h1>
 
-      <div class="item-subtitle">
-        <h4 class="item-type">{{itemType}}</h4>
-        <span class="item-status">{{itemStatus}}</span>
-      </div>
+      {{! Content Source }}
+      {{~> "systems/pf1/templates/internal/content-source-view.hbs" source=system.source}}
 
       <ul class="summary">
         <li>

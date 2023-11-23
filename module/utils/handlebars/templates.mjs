@@ -50,6 +50,8 @@ const templatePaths = /** @type {const} */ ([
   "systems/pf1/templates/items/parts/item-notes.hbs",
   "systems/pf1/templates/items/parts/item-weapon-groups.hbs",
 
+  "systems/pf1/templates/internal/content-source-view.hbs",
+
   // Apps
   "systems/pf1/templates/apps/attack-roll-dialog.hbs",
   "systems/pf1/templates/apps/vision-permission.hbs",

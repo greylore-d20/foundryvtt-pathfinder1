@@ -29,6 +29,7 @@ const TEMPLATE_EXCEPTION_PATHS = {
     "casting",
     "learnedAt",
     "properties",
+    "source",
   ],
   Component: [],
 };

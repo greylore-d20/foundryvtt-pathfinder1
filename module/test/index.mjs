@@ -13,11 +13,13 @@ import { registerD20RollTests } from "./d20roll.test.mjs";
 import { registerFormulaParsingTests } from "./formula.test.mjs";
 import { registerSizeRollTests } from "./sizeroll.test.mjs";
 import { registerActorRestTests } from "./actor-rest.test.mjs";
+import { registerActorStaticTests } from "./actor-static.tests.mjs";
 
 // Registers all `Quench` tests
 Hooks.on("quenchReady", () => {
   registerActorBasicTests();
   registerActorConditionsTests();
+  registerActorStaticTests();
   registerActorItemRaceTests();
   registerActorItemClassTests();
   registerActorItemAttackTests();

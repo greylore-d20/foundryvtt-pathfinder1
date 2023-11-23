@@ -4130,58 +4130,39 @@ export class ActorPF extends ActorBasePF {
     return result;
   }
 
+  /**
+   * Get melee and reach maximum ranges.
+   *
+   * @param {ActorSize|number} size - Actor size as size key or number
+   * @param {ActorStature} stature - Actor stature
+   * @returns {{melee:number,reach:number}} - Ranges
+   */
   static getReach(size = "med", stature = "tall") {
-    const result = {
-      melee: 5,
-      reach: 10,
-    };
+    let effectiveSize = size >= 0 ? size : Object.keys(pf1.config.sizeChart).indexOf(size);
+    // Long creatures count as one size smaller
+    if (stature !== "tall" && effectiveSize > 0) effectiveSize -= 1;
 
-    switch (size) {
-      case "fine":
-      case "dim":
-        result.melee = 0;
-        result.reach = 0;
-        break;
-      case "tiny":
-        result.melee = 0;
-        result.reach = 5;
-        break;
-      case "lg":
-        if (stature === "tall") {
-          result.melee = 10;
-          result.reach = 20;
-        }
-        break;
-      case "huge":
-        if (stature === "tall") {
-          result.melee = 15;
-          result.reach = 30;
-        } else {
-          result.melee = 10;
-          result.reach = 20;
-        }
-        break;
-      case "grg":
-        if (stature === "tall") {
-          result.melee = 20;
-          result.reach = 40;
-        } else {
-          result.melee = 15;
-          result.reach = 30;
-        }
-        break;
-      case "col":
-        if (stature === "tall") {
-          result.melee = 30;
-          result.reach = 60;
-        } else {
-          result.melee = 20;
-          result.reach = 40;
-        }
-        break;
+    const reachStruct = (melee, reach) => ({ melee, reach });
+
+    switch (effectiveSize) {
+      case 0: // Fine
+      case 1: // Diminutive
+        return reachStruct(0, 0);
+      case 2: // Tiny
+        return reachStruct(0, 5);
+      default:
+      case 3: // Small
+      case 4: // Medium
+        return reachStruct(5, 10);
+      case 5: // Large
+        return reachStruct(10, 20);
+      case 6: // Huge
+        return reachStruct(15, 30);
+      case 7: // Gargantuan
+        return reachStruct(20, 40);
+      case 8: // Colossal
+        return reachStruct(30, 60);
     }
-
-    return result;
   }
 
   async deleteEmbeddedDocuments(embeddedName, data, options = {}) {

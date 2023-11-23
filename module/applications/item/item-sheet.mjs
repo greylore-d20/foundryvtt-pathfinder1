@@ -463,8 +463,8 @@ export class ItemSheetPF extends ItemSheet {
         context.healthConfig = context.isRacialHD
           ? healthConfig.hitdice.Racial
           : actor.type === "character"
-          ? healthConfig.hitdice.PC
-          : healthConfig.hitdice.NPC;
+            ? healthConfig.hitdice.PC
+            : healthConfig.hitdice.NPC;
       } else context.healthConfig = { auto: false };
 
       // Add skill list

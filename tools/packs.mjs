@@ -1,10 +1,11 @@
-import Datastore from "@seald-io/nedb";
 import fs from "fs-extra";
 import path from "node:path";
 import url from "node:url";
 import yargs from "yargs";
-import prettier from "prettier";
-import { oraPromise } from "ora";
+import { Listr } from "listr2";
+import pc from "picocolors";
+import yaml from "js-yaml";
+import * as fvtt from "@foundryvtt/foundryvtt-cli";
 
 import * as utils from "./utils.mjs";
 import { getActionDefaultData, getChangeDefaultData } from "./pack-default-data.mjs";
@@ -36,7 +37,6 @@ const TEMPLATE_EXCEPTION_PATHS = {
 
 const templateData = loadDocumentTemplates();
 const manifest = loadManifest();
-const prettierConfig = await prettier.resolveConfig(".");
 
 /**
  * Helper function that resolves a path from the pack source directory
@@ -68,17 +68,14 @@ if (process.argv[1] === __filename) {
       command: "extract [packs...]",
       describe: `Extract packs from cache to source`,
       handler: async (argv) => {
-        const options = {
-          reset: !argv.keepDeleted ?? true,
-        };
-        await extractPacks(argv.packs, options);
+        await extractPacks(argv.packs, { reset: !argv.keepDeleted ?? true });
       },
     })
     // Option to overwrite the default `reset` option
     .option("keepDeleted", { alias: "k", type: "boolean" })
     .command({
       command: "compile",
-      describe: `Compile json files from source into db files in cache`,
+      describe: `Compile yaml files from source into dbs in cache`,
       handler: async () => {
         await compileAllPacks();
       },
@@ -124,140 +121,167 @@ function loadManifest() {
 }
 
 /**
- * @typedef {object} PackOptions
- * @property {boolean} reset Whether entries not in the db file are to be deleted
- */
-
-/**
- * Extracts db files from {@link PACK_CACHE} into {@link PACK_SRC}
+ * Extracts dbs from {@link PACK_CACHE} into {@link PACK_SRC}
  * If no packs are specified, all packs are extracted.
  *
  * @param {string[]} packNames - The names of the packs to extract
- * @param {PackOptions} options - Additional options modifying the extraction process
+ * @param {object} [options={}] - Additional options to augment the behavior.
+ * @param {boolean} [options.reset] - Whether to remove files not present in the db
  * @returns {Promise<PackResult[]>} An array of pack results
  */
-async function extractPacks(packNames = [], options) {
-  const packFiles = await fs.readdir(resolveDist(), { withFileTypes: true });
-  const packs = packNames.length
-    ? packFiles.filter((p) => packNames.includes(path.basename(p.name, ".db")))
-    : packFiles;
-  return Promise.all(
+async function extractPacks(packNames = [], options = {}) {
+  const packDirs = await fs.readdir(resolveDist(), { withFileTypes: true });
+  const packs = packNames.length ? packDirs.filter((p) => packNames.includes(p.name)) : packDirs;
+
+  const tasks = new Listr(
     packs
-      .filter((packFile) => packFile.isFile() && path.extname(packFile.name) === ".db")
-      .map(async (packFile) => {
-        return oraPromise(
-          async (spinner) => {
-            spinner.prefixText = logger.constructor.prefix(); // Prefix with start time while extracting
-            const packResult = await extractPack(packFile.name, options);
-            spinner.prefixText = logger.constructor.prefix(); // Prefix with end time while logging result
-            const warnings = [];
+      .filter((packDir) => packDir.isDirectory())
+      .map((packDir) => {
+        return {
+          task: async (_, task) => {
+            task.title = `Extracting ${packDir.name}`;
+            const packResult = await extractPack(packDir.name, options);
+            const yellowSign = pc.yellow("\u26a0");
+            const redSign = pc.red("\u26a0");
+            const notifications = [];
+
+            if (packResult.addedFiles.length) {
+              notifications.push(`${pc.green("\u26a0")} Added ${pc.bold(packResult.addedFiles.length)} files:`);
+              const addedFiles = packResult.addedFiles.map((f) => path.basename(f)).join(", ");
+              notifications.push(`${pc.dim(addedFiles)}`);
+            }
 
             if (packResult.removedFiles.length) {
-              warnings.push(`Removed ${packResult.removedFiles.length} files`);
-            }
-            if (packResult.mismatchedIdFiles.length) {
-              warnings.push(
-                `Files with similar names but different ids marked for removal: ${packResult.mismatchedIdFiles
-                  .map((f) => path.basename(f))
-                  .join(", ")}`
-              );
-            }
-            if (warnings.length) {
-              const indent = " ".repeat(logger.constructor.prefix().length / 3); // account for color codes
-              spinner.warn(`Extracted ${packFile.name} with warnings:\n${indent}${warnings.join(`\n${indent}`)}`);
+              if (options.reset) {
+                notifications.push(
+                  `${yellowSign} Removed ${pc.bold(packResult.removedFiles.length)} files without DB entry:`
+                );
+              } else {
+                notifications.push(
+                  `${yellowSign} Found ${pc.bold(packResult.removedFiles.length)} files without DB entry:`
+                );
+              }
+              const removedFiles = packResult.removedFiles.map((f) => path.basename(f)).join(", ");
+              notifications.push(`${pc.dim(removedFiles)}`);
             }
 
-            return packResult;
+            const conflictsNumber = Object.keys(packResult.conflicts).length;
+            if (conflictsNumber) {
+              notifications.push(`${redSign} Found ${pc.bold(conflictsNumber)} ID conflicts:`);
+              for (const [id, files] of Object.entries(packResult.conflicts)) {
+                notifications.push(pc.dim(`${id} in ${pc.dim([...files].map((f) => path.basename(f)).join(", "))}`));
+              }
+            }
+
+            if (notifications.length) {
+              task.title = `Extracted ${packDir.name} with notifications:\n${notifications.join(`\n`)}`;
+            } else {
+              task.title = `Extracted ${packDir.name}`;
+            }
           },
-          {
-            text: `Extracting ${packFile.name}`,
-            successText: `Extracted ${packFile.name}`,
-            failText: `Failed to extract ${packFile.name}`,
-          }
-        );
-      })
+        };
+      }),
+    { concurrent: true }
   );
+  return tasks.run();
 }
 
 /**
  * @typedef {object} PackResult
- * @property {string} filename - The name of the db file
- * @property {string[]} writtenFiles - The files written during the extraction
+ * @property {string} packName - The name of the db
+ * @property {string[][]} conflictingFiles - The files containing keys occuring more than once
+ * @property {string[]} addedFiles - The files written during the extraction
  * @property {string[]} removedFiles - The files removed during the extraction
- * @property {string[]} mismatchedIdFiles - The files with possibly mismatched ids
  */
 
 /**
- * Extracts a single db file, creating a directory with the file's name in {@link PACK_SRC},
- * and storing each db entry in its own file.
+ * Extracts a single LevelDB, creating a directory with the db's name in {@link PACK_SRC},
+ * and storing each entry in its own file.
  *
- * @param {string} filename - The db file name from {@link PACK_CACHE}
- * @param {PackOptions} options - Additional options modifying the extraction process
+ * @param {string} packName - The directory name from {@link PACK_CACHE}
+ * @param {object} [options={}] - Additional options to augment the behavior.
+ * @param {boolean} [options.reset] - Whether to remove files not present in the db
  * @returns {Promise<PackResult>} The result of the extraction
  */
-async function extractPack(filename, options) {
-  // This db files directory in PACK_SRC
-  const dbFileNameBase = path.basename(filename, ".db");
-  const directory = resolveSource(path.basename(filename, ".db"));
-  if (!fs.existsSync(resolveDist(filename))) throw new Error(`${filename} does not exist`);
-  const db = new Datastore({ filename: resolveDist(filename), autoload: true });
+async function extractPack(packName, options = {}) {
+  // This db directory in PACK_SRC
+  const directory = resolveSource(path.basename(packName));
+  if (!fs.existsSync(resolveDist(packName))) throw new Error(`${packName} does not exist`);
 
   // Index of already existing files, to be checked for files not touched with this extraction
-  const currentFiles = [];
-
+  const filesBefore = [];
+  const touchedFiles = [];
+  /** @type {Map<string, Set<string>>} */
+  const ids = new Map();
+  let isFirstExtraction = false;
   if (!fs.existsSync(directory)) {
+    isFirstExtraction = true;
     await fs.mkdir(directory);
-  } else if (options.reset) {
+  } else {
     for (const curFile of fs.readdirSync(directory)) {
-      currentFiles.push(resolveSource(directory, curFile));
+      filesBefore.push(resolveSource(directory, curFile));
     }
   }
 
   // Find associated manifest pack data
   const packData = manifest.packs.find((p) => {
-    return path.basename(p.path, ".db") === dbFileNameBase;
+    if (p.path) return path.basename(p.path) === packName;
+    else return p.name === packName;
+  });
+  if (!packData) logger.warn(`No data found for package ${packName} within the system manifest.`);
+
+  await fvtt.extractPack(resolveDist(packName), resolveSource(directory), {
+    transformEntry: (entry) => sanitizePackEntry(entry, packData?.type),
+    transformName: (entry) => {
+      const filename = `${utils.sluggify(entry.name)}.${entry._id}.yaml`;
+
+      // Abuse the callback to avoid having to read and parse the file later
+      const file = resolveSource(directory, filename);
+      touchedFiles.push(file);
+      if (ids.has(entry._id)) ids.get(entry._id).add(file);
+      else ids.set(entry._id, new Set([file]));
+
+      return filename;
+    },
+    yaml: true,
   });
 
-  if (!packData) logger.warn(`No data found for package ${filename} within the system manifest.`);
-  const docs = await db.findAsync({});
-  const docPromises = docs.map(async (doc) => {
-    doc = sanitizePackEntry(doc, packData?.type);
-    const slugName = utils.sluggify(doc.name);
-    const entryFilepath = resolveSource(directory, `${slugName}.${doc._id}.json`);
+  const filesAfter = fs.readdirSync(directory).map((f) => resolveSource(directory, f));
 
-    const formattedContent = prettier.format(JSON.stringify(doc, null, 2), {
-      ...prettierConfig,
-      parser: "json",
-    });
-    await fs.writeFile(entryFilepath, formattedContent);
-    return entryFilepath;
-  });
-  const writtenFiles = await Promise.all(docPromises);
+  // Find all untouched files whose IDs could not be retrieved while extracting
+  await Promise.all(
+    filesAfter
+      .filter((f) => f.endsWith("yaml") && !touchedFiles.includes(f))
+      .map(async (file) => {
+        const content = await fs.readFile(file, "utf-8");
+        const parsed = yaml.load(content);
+        const { _key, _id } = parsed;
+        const idFromKey = _key?.split("!").at(-1);
+        if (idFromKey !== _id) throw new Error(`ID mismatch in ${file}: ${idFromKey} !== ${_id}`);
+        if (ids.has(_id)) ids.get(_id).add(file);
+        else ids.set(_id, new Set([file]));
+      })
+  );
+  // Array of Sets containing conflicting files
+  // const conflicts = [...ids.values()].filter((f) => f.size > 1);
+  const conflicts = Object.fromEntries([...ids.entries()].filter(([, files]) => files.size > 1));
+  const conflictingFileNames = new Set(
+    Object.values(conflicts).flatMap((files) => [...files].map((f) => path.basename(f)))
+  );
 
-  const removedFiles = [];
-  const mismatchedIdFiles = [];
+  // Find all files that were added by this run
+  const addedFiles = isFirstExtraction ? [] : filesAfter.filter((f) => !filesBefore.includes(f)); //.filter((f) => !conflictingFiles.flat().includes(f));
+
+  // Find all files that were not touched by this run (and thus are candidates for deletion);
+  // exclude conflicting files, as they have to be checked manually
+  const removedFiles = options.reset
+    ? filesBefore.filter((f) => !touchedFiles.includes(f) && conflictingFileNames.has(f))
+    : [];
   if (options.reset) {
-    const toRemove = currentFiles.filter((f) => !writtenFiles.includes(f));
-    if (toRemove.length > 0) {
-      // If there are files to be removed, check if their slug names match any written files
-      // If they do, these might be docs whose ids have accidentally changed
-      const writtenSlugs = writtenFiles.map((f) => path.basename(f, ".json").split(".").slice(0, -1).join("."));
-      const toRemoveSlugs = toRemove.map((f) => [path.basename(f, ".json").split(".").slice(0, -1).join("."), f]);
-      toRemoveSlugs.forEach(([removeSlug, removeFile]) => {
-        if (writtenSlugs.includes(removeSlug)) mismatchedIdFiles.push(removeFile);
-      });
-
-      // Remove file and track successful removals for logging
-      await Promise.all(
-        toRemove.map(async (f) => {
-          await fs.remove(f);
-          removedFiles.push(f);
-        })
-      );
-    }
+    await Promise.all(removedFiles.map((f) => fs.remove(f)));
   }
 
-  return { filename, writtenFiles, removedFiles, mismatchedIdFiles };
+  return { packName, addedFiles, removedFiles, conflicts };
 }
 
 /**
@@ -272,9 +296,11 @@ async function extractPack(filename, options) {
 function sanitizePackEntry(entry, documentType = "") {
   // Delete unwanted fields
   delete entry.ownership;
-  delete entry.folder;
   delete entry._stats;
   if ("effects" in entry && entry.effects.length === 0) delete entry.effects;
+
+  // Ignore folders; not present on inventoryItems
+  if (entry._key?.startsWith("!folders")) return entry;
 
   // Remove non-system/non-core flags
   for (const key of Object.keys(entry.flags ?? {})) {
@@ -284,9 +310,10 @@ function sanitizePackEntry(entry, documentType = "") {
 
   // Remove top-level keys not part of Foundry's core data model
   // For usual documents, this is enforced by Foundry. For inventoy items, it is not.
+  const allowedCoreFields = ["name", "type", "img", "data", "flags", "items", "system", "_id", "_key", "folder"];
   if (["Actor", "Item"].includes(documentType)) {
     for (const key of Object.keys(entry)) {
-      if (!["name", "type", "img", "data", "flags", "items", "system", "_id"].includes(key)) delete entry[key];
+      if (!allowedCoreFields.includes(key)) delete entry[key];
     }
   }
 
@@ -386,7 +413,9 @@ function enforceTemplate(object, template, options = {}) {
 }
 
 /**
- * Compiles all directories in {@link PACK_SRC} into db files in {@link PACK_CACHE}
+ * Compiles all directories in {@link PACK_SRC} into dbs in {@link PACK_CACHE}
+ *
+ * @returns {Promise<void>}
  */
 async function compileAllPacks() {
   await fs.ensureDir(resolveCache());
@@ -396,25 +425,14 @@ async function compileAllPacks() {
 }
 
 /**
- * Compiles a directory containing json files into a single db file
+ * Compiles a directory containing yaml files into a leveldb
  * with the directory's name in {@link PACK_CACHE}
  *
- * @param {string} name - Name of the db file
+ * @param {string} name - Name of the db
+ * @returns {Promise<void>}
  */
 async function compilePack(name) {
-  logger.info(`Creating pack ${resolveCache(name)}.db`);
-  await fs.remove(`${resolveCache(name)}.db`);
-  const db = new Datastore({ filename: `${resolveCache(name)}.db`, autoload: true });
-  const files = (await fs.readdir(resolveSource(name))).filter((f) => path.extname(f) === ".json");
-  await Promise.all(
-    files.map(async (f) => {
-      const json = await fs.readJson(resolveSource(name, f));
-      try {
-        await db.insertAsync(json);
-      } catch (error) {
-        logger.error(`Could not insert entry ${json.name} with id ${json.id}\n`, error);
-      }
-    })
-  );
-  db.compactDatafile();
+  logger.info(`Creating pack ${resolveCache(name)}`);
+  await fs.remove(`${resolveCache(name)}`);
+  return fvtt.compilePack(resolveSource(name), resolveCache(name), { yaml: true });
 }

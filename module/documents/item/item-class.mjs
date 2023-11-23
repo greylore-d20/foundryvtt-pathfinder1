@@ -263,8 +263,8 @@ export class ItemClassPF extends ItemPF {
         classData.subType === "racial"
           ? healthConfig.hitdice.Racial
           : hasPlayerOwner
-          ? healthConfig.hitdice.PC
-          : healthConfig.hitdice.NPC;
+            ? healthConfig.hitdice.PC
+            : healthConfig.hitdice.NPC;
 
       if (!classData.subType) console.warn(`${this.name} lacks class type`, this);
       const isBaseClass = (classData.subType || "base") === "base";

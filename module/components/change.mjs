@@ -212,11 +212,6 @@ export class ItemChange {
       // determine effective operator and/or value.
       if (!override) continue;
 
-      const modifierChanger = t != null ? t.match(/^system\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/) : null;
-      const isModifierChanger = modifierChanger != null;
-      const abilityTarget = modifierChanger?.[1];
-      const ability = isModifierChanger ? deepClone(actor.system.abilities[abilityTarget]) : null;
-
       let value = 0;
       if (this.formula) {
         if (operator === "script") {
@@ -288,14 +283,14 @@ export class ItemChange {
       if (applySourceInfo) this.applySourceInfo(actor, value);
 
       // Adjust ability modifier
-      if (isModifierChanger) {
-        const newAbility = actor.system.abilities[abilityTarget];
-        const mod = getAbilityModifier(newAbility.total, {
-          damage: newAbility.damage,
-          penalty: newAbility.penalty,
+      const modifierChanger = t.match(/^system\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/);
+      const abilityTarget = modifierChanger?.[1];
+      if (abilityTarget) {
+        const ability = actor.system.abilities[abilityTarget];
+        ability.mod = getAbilityModifier(ability.total, {
+          damage: ability.damage,
+          penalty: ability.penalty,
         });
-
-        actor.system.abilities[abilityTarget].mod = mod;
       }
     }
   }

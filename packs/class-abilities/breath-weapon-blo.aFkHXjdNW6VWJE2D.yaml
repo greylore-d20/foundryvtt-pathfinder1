@@ -1,0 +1,52 @@
+_id: aFkHXjdNW6VWJE2D
+name: Breath Weapon (BLO)
+type: feat
+img: systems/pf1/icons/skills/red_05.jpg
+system:
+  description:
+    value: >-
+      <p>At 8th level, you gain a breath weapon that you can use once per day.
+      This breath weapon deals 1d6 points of damage of your energy type per
+      bloodrager level. Those caught in the area of the breath can attempt a
+      Reflex saving throw for half damage. The DC of this save is equal to 10 +
+      1/2 your bloodrager level + your Constitution modifier. The shape of the
+      breath weapon depends on your dragon type (as indicated on the above
+      table).</p>
+
+      <p>At 16th level, you can use this ability twice per day.</p>
+
+      <p>At 20th level, you can use this ability three times per day.</p>
+  actions:
+    - _id: a6gdpikmhgdxcild
+      name: Use
+      img: systems/pf1/icons/skills/red_05.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      actionType: save
+      damage:
+        parts:
+          - formula: (@classes.bloodrager.level)d6
+            type:
+              values:
+                - untyped
+              custom: ''
+      save:
+        type: ref
+        description: Reflex half
+  uses:
+    per: day
+    maxFormula: >-
+      @classes.bloodrager.level >= 20 ? 3 : ((@classes.bloodrager.level < 20 &&
+      @classes.bloodrager.level >= 16) ? 2 : 1)
+  tag: classFeat_breathWeaponBlo
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Bloodrager
+  abilityType: su
+_key: '!items!aFkHXjdNW6VWJE2D'
+

@@ -1,0 +1,45 @@
+_id: vv91nrdp63mno1hg
+name: Bloatbomb
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: wrcskh4czskg1s3u
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous and 1 minute/level (see text)
+      target:
+        value: living creature touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: ref
+        description: Fortitude negates or Reflex half (see text)
+  learnedAt:
+    class:
+      sorcerer: 4
+      wizard: 4
+      cleric: 4
+      oracle: 4
+      antipaladin: 4
+  level: 4
+  school: nec
+  types: acid, death
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>The target creature dies if it fails a Fortitude saving throw and its Hit
+    Dice are no more than half your caster level.</p><p>If it dies, its corpse
+    rapidly putrefies. The next creature to touch the corpse within 1 minute per
+    level of the target's death causes the corpse to explode in a 10-foot-radius
+    burst, dealing 3d6 points of acid damage (Reflex half).</p>
+_key: '!items!vv91nrdp63mno1hg'
+

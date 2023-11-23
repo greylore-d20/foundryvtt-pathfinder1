@@ -1,0 +1,53 @@
+_id: npc4636d0wmq3hs0
+name: Undeath Inversion
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: qwjbz1jna09lm0pf
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D); see text
+      target:
+        value: one undead creature
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates; see text
+  learnedAt:
+    class:
+      sorcerer: 4
+      wizard: 4
+      cleric: 4
+      oracle: 4
+      witch: 4
+  level: 4
+  school: nec
+  components:
+    verbal: true
+    somatic: true
+    focus: true
+    divineFocus: 3
+  materials:
+    focus: a gold piece with one scratched face
+  shortDescription: >-
+    <p>You alter an undead creature's energy affinity so that it takes damage
+    from negative energy and gains healing from positive energy, as if it were a
+    living creature. If the target was able to channel negative energy or
+    produce negative energy effects (such as inflict spells), these abilities
+    produce positive energy instead, healing living targets and harming the
+    undead. The target cannot impose negative levels on other creatures for the
+    duration of the spell. The target's creature type does not change, and it is
+    still considered an undead creature. Each round on its turn, the subject may
+    attempt a new saving throw to end the effect. This is a fullround action
+    that does not provoke attacks of opportunity.</p>
+_key: '!items!npc4636d0wmq3hs0'
+

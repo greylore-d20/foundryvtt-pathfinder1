@@ -1,0 +1,49 @@
+_id: uddlhatt6uq4e5yf
+name: Hold Person, Mass
+type: spell
+img: icons/magic/control/silhouette-hold-change-green.webp
+system:
+  actions:
+    - _id: ff8332gd8acq8t6l
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level; see text
+      target:
+        value: >-
+          one or more humanoid creatures, no two of which can be more than 30
+          ft. apart
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates; see text
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 7
+      wizard: 7
+      witch: 7
+      psychic: 7
+      mesmerist: 6
+  level: 7
+  school: enc
+  subschool: compulsion
+  types: mind-affecting
+  components:
+    verbal: true
+    somatic: true
+    focus: true
+    divineFocus: 3
+  materials:
+    focus: a small, straight piece of iron
+  shortDescription: <p>This spell functions like <i>hold person,</i> except as noted above.</p>
+_key: '!items!uddlhatt6uq4e5yf'
+

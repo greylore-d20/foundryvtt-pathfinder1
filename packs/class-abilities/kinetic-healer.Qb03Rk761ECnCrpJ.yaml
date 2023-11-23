@@ -1,0 +1,51 @@
+_id: Qb03Rk761ECnCrpJ
+name: Kinetic Healer
+type: feat
+img: systems/pf1/icons/spells/link-blue-2.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> aether, water; <b>Type</b> utility (Sp); <b>Level</b> 1;
+      <b>Burn</b> 1<br><b>Saving Throw</b> none; <b>SR</b> yes</p>
+
+      <p>With a touch, you can heal a willing living creature of an amount of
+      damage equal to your kinetic blast’s damage. Instead of paying the burn
+      cost yourself, you can cause the recipient to take 1 point of burn. If you
+      do so, the recipient takes 1 point of nonlethal damage per Hit Die he
+      possesses, as usual for burn; this damage can’t be healed by any means
+      until the recipient takes a full night’s rest.</p>
+  actions:
+    - _id: iqayhrdzwza8fhhc
+      name: Use
+      img: systems/pf1/icons/spells/link-blue-2.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: heal
+      damage:
+        parts:
+          - formula: >-
+              (ceil(@classes.kineticist.level / 2))d6 + floor(@abilities.con.mod
+              / 2) + min(@resources.classFeat_burn.value,
+              floor(@classes.kineticist.level / 3)) * 2
+            type:
+              values:
+                - untyped
+              custom: ''
+  tag: classFeat_kineticHealer
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+_key: '!items!Qb03Rk761ECnCrpJ'
+

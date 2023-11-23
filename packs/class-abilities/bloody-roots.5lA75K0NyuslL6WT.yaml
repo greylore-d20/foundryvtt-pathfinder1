@@ -1,0 +1,45 @@
+_id: 5lA75K0NyuslL6WT
+name: Bloody Roots
+type: feat
+img: systems/pf1/icons/skills/violet_20.jpg
+system:
+  description:
+    value: >-
+      <p>As a standard action, the shaman can cause a field of thick roots to
+      burrow up from the ground. This ability functions as
+      @Compendium[pf1.spells.wralcmyi4tdcai24]{Black Tentacles} with a caster
+      level equal to the shaman’s level. The area is centered on the shaman when
+      she activates the ability but remains stationary if she then moves. The
+      shaman is unaffected by the roots. Her allies treat the area as difficult
+      terrain, but the roots don’t attack them. The shaman can end the effect as
+      a free action.</p>
+
+      <p>She can use this ability a number of rounds per day equal to 3 + her
+      Charisma modifier, but these rounds do not need to be consecutive.</p>
+  actions:
+    - _id: w7cd9ctudzt7adow
+      name: Use
+      img: systems/pf1/icons/skills/violet_20.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.shaman.level'
+        units: round
+      target:
+        value: 20-ft. redius burst
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.cha.mod
+  tag: classFeat_bloodyRoots
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: sp
+_key: '!items!5lA75K0NyuslL6WT'
+

@@ -1,0 +1,39 @@
+_id: PuzO5wjdtfds1znM
+name: 'Madness Blessing: Madness Supremacy'
+type: feat
+img: systems/pf1/icons/spells/horror-acid-2.jpg
+system:
+  description:
+    value: >-
+      <p>At 1st level, as a swift action you can target a creature within 30
+      feet that has the cowering, frightened, panicked, or paralyzed condition.
+      That condition is suspended for 1 round, and the chosen creature gains the
+      confused condition instead. The confused creature rerolls any result other
+      than “attack self ” or “attack nearest creature.” The round spent confused
+      counts toward the duration of the suspended effect. At the end of the
+      confused round, the suspended condition resumes.</p>
+  actions:
+    - _id: vwi3x6eweiq60jlp
+      name: Use
+      img: systems/pf1/icons/spells/horror-acid-2.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  tag: classFeat_madnessBlessingMadnessSupremacy
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Warpriest
+_key: '!items!PuzO5wjdtfds1znM'
+

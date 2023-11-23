@@ -1,0 +1,69 @@
+_id: EIBbk25EwcmJqoKC
+name: Battle Aspergillum
+type: weapon
+img: systems/pf1/icons/items/weapons/battle-aspergillum.png
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Ultimate Equipment pg. 17</em>, <em>Advanced Player's
+      Guide pg. 176</em></p><h3>Statistics</h3><p><b>Damage</b> 1d4 (small), 1d6
+      (medium); <b>Critical</b> x2; <b>Range</b> -; <b>Type</b>
+      B</p><p><b>Weapon Groups</b> Hammers</p><h3>Description</h3><p>Named for
+      the common aspergillum, a macelike tool used by priests to sprinkle holy
+      water, this light mace has a hollow head and a metal plug closing off the
+      hole through which the head is filled. When the mace strikes a creature,
+      holy water sprinkles out through tiny holes throughout the weapon's head;
+      creatures subject to damage from holy water take 1 point of damage in
+      addition to the normal effect of being struck by the mace (a nonmagical
+      aspergillum can deal holy water damage to an incorporeal creature in this
+      manner, even if the mace itself deals no damage). After 5 hits, the battle
+      aspergillum is empty and needs to be refilled. Filling it with holy water
+      is a standard action that provokes attacks of opportunity (like drinking a
+      potion). A filled aspergillum is normally carried upright, to prevent the
+      holy water from leaking out as the weapon moves.</p>
+  tags:
+    - PFS
+  weight:
+    value: 4
+  price: 5
+  hp:
+    max: 2
+    value: 2
+  hardness: 10
+  actions:
+    - _id: sixmrf2e6ah1si6n
+      name: Attack
+      img: systems/pf1/icons/items/weapons/battle-aspergillum.png
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              values:
+                - bludgeoning
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+  tag: battleAspergillum
+  baseTypes:
+    - Battle Aspergillum
+  weaponGroups:
+    value:
+      - hammers
+  properties:
+    spc: true
+_key: '!items!EIBbk25EwcmJqoKC'
+

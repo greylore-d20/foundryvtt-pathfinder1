@@ -1,0 +1,30 @@
+_id: olTpyao476hOEzzm
+name: Shield
+type: buff
+img: systems/pf1/icons/spells/protect-blue-1.jpg
+system:
+  description:
+    value: >-
+      <p>An invisible shield of force hovers in front of you, with the following
+      effects:</p>
+
+      <ul>
+
+      <li>+4 Shield Bonus to AC</li>
+
+      <li>Negates Magic Missile attacks direct at you</li>
+
+      </ul>
+
+      <p>These bonuses apply to incorporeal touch attacks.</p>
+  changes:
+    - _id: gq5kc0g2
+      formula: '4'
+      subTarget: sac
+      modifier: base
+  level: '1'
+  duration:
+    value: '@item.level'
+    units: minute
+_key: '!items!olTpyao476hOEzzm'
+

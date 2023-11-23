@@ -1,0 +1,37 @@
+_id: ezpm33cvtlq8aswa
+name: Icy Prison, Mass
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: vviwh8laaxmwee5e
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level; see text
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart.
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: ref
+        description: Reflex partial
+  learnedAt:
+    class:
+      sorcerer: 9
+      wizard: 9
+  level: 9
+  school: evo
+  types: cold
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: <p>This spell functions as <i>icy prison</i>, except as noted above.</p>
+_key: '!items!ezpm33cvtlq8aswa'
+

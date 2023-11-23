@@ -1,0 +1,44 @@
+_id: ph2khttvpw88s4l6
+name: Toxic Gift
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 5tol5p91mwxnrco2
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous; see text
+      target:
+        value: living creature touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude negates (see text)
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+      antipaladin: 2
+      occultist: 3
+  level: 3
+  school: nec
+  types: poison
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>You can cast this spell only if you are currently poisoned. You draw upon
+    the poison in your body and duplicate its effects in the target, which is
+    affected by the same poison you are, except it uses this spell's DC instead
+    of the poison's normal DC. If you are affected by more than one poison, you
+    must choose one to afflict upon the target.</p>
+_key: '!items!ph2khttvpw88s4l6'
+

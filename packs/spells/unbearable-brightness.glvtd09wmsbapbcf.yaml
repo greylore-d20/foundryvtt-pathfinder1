@@ -1,0 +1,53 @@
+_id: glvtd09wmsbapbcf
+name: Unbearable Brightness
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 4khcb74mjyf06b0f
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      range:
+        units: personal
+      actionType: spellsave
+      save:
+        type: ref
+        description: none and Reflex partial (see text)
+      spellArea: 30-ft.-radius emanation centered on you
+      measureTemplate:
+        type: circle
+        size: '30'
+  learnedAt:
+    class:
+      sorcerer: 4
+      wizard: 4
+      alchemist: 4
+      witch: 4
+      psychic: 4
+      occultist: 4
+  level: 4
+  school: evo
+  types: light
+  components:
+    verbal: true
+    somatic: true
+  sr: false
+  shortDescription: >-
+    <p>Your body glows with a terrible light. Creatures within 30 feet of you
+    that can see you are dazzled (no saving throw).</p><p>Creatures with light
+    sensitivity must succeed at a Reflex saving throw or be blinded. This light
+    counts as <i>daylight</i> for the purpose of affecting darkness effects (and
+    vice versa).</p><p>If the emanation enters an area under the effect of
+    magical darkness (or vice versa), both effects are temporarily negated so
+    that the otherwise prevailing light conditions exist in the overlapping
+    areas of effect. Dazzled and blinded conditions from your light end when the
+    spell ends or when the creature is out of line of sight.</p>
+_key: '!items!glvtd09wmsbapbcf'
+

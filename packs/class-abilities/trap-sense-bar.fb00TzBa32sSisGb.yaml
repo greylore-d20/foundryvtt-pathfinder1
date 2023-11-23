@@ -1,0 +1,28 @@
+name: Trap Sense (BAR)
+type: feat
+img: systems/pf1/icons/items/inventory/hook-hand.jpg
+system:
+  description:
+    value: >-
+      <p>At 3rd level, this character gains a +1 bonus on <em>Reflex</em> saves
+      made to avoid traps and a +1 <em>dodge bonus</em> to <em>armor class</em>
+      against attacks made by traps. These bonuses increase by +1 every three
+      levels thereafter (6th, 9th, 12th, 15th, and 18th level). Trap sense
+      bonuses gained from multiple classes stack.</p>
+  contextNotes:
+    - subTarget: ref
+      target: savingThrows
+      text: +[[floor(@classes.barbarian.level / 3)]] vs. traps
+    - subTarget: ac
+      target: misc
+      text: +[[floor(@classes.barbarian.level / 3)]] dodge vs. traps
+  tag: classFeat_trapSense
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Barbarian
+  abilityType: ex
+_id: fb00TzBa32sSisGb
+_key: '!items!fb00TzBa32sSisGb'
+

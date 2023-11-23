@@ -1,0 +1,41 @@
+_id: 90Z23Z4U7ujOcvco
+name: Touch of Evil
+type: feat
+img: systems/pf1/icons/skills/violet_28.jpg
+system:
+  description:
+    value: >-
+      <p>You can cause a creature to become sickened as a melee touch attack.
+      Creatures sickened by your touch count as good for the purposes of spells
+      with the evil descriptor. This ability lasts for a number of rounds equal
+      to 1/2 your cleric level (minimum 1). You can use this ability a number of
+      times per day equal to 3 + your Wisdom modifier.</p>
+  actions:
+    - _id: s1l4tg46xas7tdq3
+      name: Use
+      img: systems/pf1/icons/skills/violet_28.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: max(1, floor(@classes.cleric.level / 2))
+        units: round
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.wis.mod
+  tag: classFeat_touchOfEvil
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cleric
+  abilityType: sp
+_key: '!items!90Z23Z4U7ujOcvco'
+

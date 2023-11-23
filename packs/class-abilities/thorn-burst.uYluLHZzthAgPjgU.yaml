@@ -1,0 +1,56 @@
+_id: uYluLHZzthAgPjgU
+name: Thorn Burst
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p><strong>Source</strong> Ultimate Magic pg. 57</p><p>As a swift action,
+      you can cause sharp splinters of wood to explode outward from your body.
+      These splinters deal 1d6 points of piercing damage per two oracle levels
+      (minimum 1d6) to all creatures within a 10-foot burst. A Reflex save
+      halves this damage. In addition, the sharp splinters count as caltrops in
+      the area until your next turn.</p>
+
+      <p>You can use this ability once per day, plus one additional time per day
+      at 5th level and every five levels thereafter.</p>
+  tags:
+    - Wood Mystery
+  actions:
+    - _id: 1wpfzaqtbc3xzk6i
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      target:
+        value: 10-ft. burst
+      range:
+        units: personal
+      actionType: spellsave
+      damage:
+        parts:
+          - formula: (max(1, floor(@classes.oracle.level / 2)))d6
+            type:
+              values:
+                - piercing
+              custom: ''
+      save:
+        type: ref
+        description: Reflex half
+  uses:
+    per: day
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+    autoDeductChargesCost: ''
+  tag: classFeat_thornBurst
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: su
+_key: '!items!uYluLHZzthAgPjgU'
+

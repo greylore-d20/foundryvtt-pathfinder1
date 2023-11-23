@@ -1,0 +1,49 @@
+_id: 6yeorbvt5ysym3nh
+name: Suffocation, Mass
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 3p4lo52jgqt2bdcp
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      target:
+        value: >-
+          one living creature/2 levels (no two of which may be more than 30 feet
+          apart)
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude partial
+  learnedAt:
+    class:
+      sorcerer: 9
+      wizard: 9
+      witch: 9
+      psychic: 9
+    subDomain:
+      Murder: 9
+  level: 9
+  school: nec
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a vial containing a bit of the caster's breath
+  shortDescription: >-
+    <p>This spell functions as suffocation except as noted above. Note that the
+    duration of this spell is much longer, forcing those suffering from the
+    effect to make far more Fortitude saves to stave off eventual
+    suffocation.</p>
+_key: '!items!6yeorbvt5ysym3nh'
+

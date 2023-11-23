@@ -1,0 +1,42 @@
+_id: 3ailyIke9KFvHEvT
+name: Elemental Form (SHA) (Water)
+type: feat
+img: systems/pf1/icons/skills/violet_20.jpg
+system:
+  description:
+    value: >-
+      <p>As a standard action, the shaman assumes the form of a Huge (or
+      smaller) water elemental, as
+      @Compendium[pf1.spells.v42t5kpxc8mvd615]{Elemental Body IV} with a
+      duration of 1 hour per level.</p>
+
+      <p>The shaman can use this ability once per day.</p>
+  actions:
+    - _id: 37r77y6v68veli7a
+      name: Use
+      img: systems/pf1/icons/skills/violet_20.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.shaman.level'
+        units: hour
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '1'
+  tag: classFeat_elementalFormShaWater
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!3ailyIke9KFvHEvT'
+

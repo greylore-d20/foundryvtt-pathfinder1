@@ -1,0 +1,39 @@
+_id: v3HhmRSKCqfrhEvF
+name: Basic Chaokinesis
+type: feat
+img: systems/pf1/icons/spells/rip-sky-1.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> void; <b>Type</b> utility (Sp); <b>Level</b> 1;
+      <b>Burn</b> 0</p>
+
+      <p>You can create a shadow that protects a target from bright light. You
+      can also change gravity to increase a creature’s carrying capacity by half
+      or grant a creature a +4 bonus on Acrobatics checks to jump.</p>
+
+      <p>Each benefit lasts 1 hour or until you use basic chaokinesis again.</p>
+  actions:
+    - _id: 76u1n2taft33gjzz
+      name: Use
+      img: systems/pf1/icons/spells/rip-sky-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: hour
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: ''
+  tag: classFeat_basicChaokinesis
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+_key: '!items!v3HhmRSKCqfrhEvF'
+

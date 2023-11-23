@@ -1,0 +1,41 @@
+_id: I22wXi9vOXV4Apwg
+name: Enlarge
+type: feat
+img: systems/pf1/icons/skills/red_01.jpg
+system:
+  description:
+    value: >-
+      <p>As a swift action you can enlarge yourself for 1 round, as if you were
+      the target of the @Compendium[pf1.spells.jnlr9cuepka1l26e]{Enlarge Person}
+      spell. You can use this ability a number of times per day equal to 3 +
+      your Wisdom modifier.</p>
+
+      <p>This power replaces the Wooden Fist power of the Plant Domain.</p>
+  actions:
+    - _id: r9pqevfh7rnf01j1
+      name: Use
+      img: systems/pf1/icons/skills/red_01.jpg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.wis.mod
+  tag: classFeat_enlarge
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cleric
+  abilityType: su
+_key: '!items!I22wXi9vOXV4Apwg'
+

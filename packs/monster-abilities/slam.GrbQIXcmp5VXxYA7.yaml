@@ -1,0 +1,45 @@
+name: Slam
+type: attack
+img: systems/pf1/icons/skills/fire_07.jpg
+system:
+  description:
+    value: >-
+      <p>A primary natural weapon attack where you slam with a part of your
+      body.</p><p>It deals bludgeoning damage.</p><hr><p>For general rules on
+      natural attacks, see:
+      @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural
+      Attacks} (UMR).</p>
+  actions:
+    - _id: lyysy62a9hqkvo9c
+      name: Attack
+      img: systems/pf1/icons/skills/fire_07.jpg
+      tag: slam
+      activation:
+        type: attack
+        unchained:
+          type: action
+      range:
+        value: 'null'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              values:
+                - bludgeoning
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: str
+        damage: str
+  subType: natural
+  baseTypes:
+    - Slam
+  weaponGroups:
+    value:
+      - natural
+_id: GrbQIXcmp5VXxYA7
+_key: '!items!GrbQIXcmp5VXxYA7'
+

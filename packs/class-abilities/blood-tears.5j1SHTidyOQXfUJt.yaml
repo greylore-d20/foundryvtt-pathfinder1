@@ -1,0 +1,41 @@
+_id: 5j1SHTidyOQXfUJt
+name: Blood Tears
+type: feat
+img: systems/pf1/icons/spells/runes-blue-2.jpg
+system:
+  description:
+    value: >-
+      <p>As a move action, the arcanist can expend 1 point from his arcane
+      reservoir to cause his eyes to turn red and weep tears of blood. During
+      this time, the arcanist’s vision is blurred by blood, and he treats all
+      gaze attacks as if he were averting his eyes from a creature, but that
+      creature does not gain concealment against him. At a distance of greater
+      than 30 feet, all creatures or objects viewed by the arcanist gain
+      concealment. As a standard action that ends the blood tears exploit, the
+      arcanist can wipe the tears from his face and flick them with a free hand,
+      splattering all creatures in a 15-foot cone. Creatures in this area must
+      succeed at a Will save to avoid becoming staggered with extreme pain and
+      anguish for 1 round. If the arcanist doesn’t wipe his bleeding tears away,
+      the effects of this exploit can persist for a maximum duration of 1 minute
+      per arcanist level.</p>
+  tags:
+    - Arcanist Exploit, Outer Rift
+  actions:
+    - _id: ir5sjql17inhkide
+      name: Use
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      activation:
+        type: move
+      duration:
+        value: '@classes.arcanist.level'
+        units: minute
+      actionType: ''
+  tag: classFeat_bloodTears
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Arcanist
+  abilityType: su
+_key: '!items!5j1SHTidyOQXfUJt'
+

@@ -1,0 +1,43 @@
+_id: muOUTOChMC2kMita
+name: Iomedae's Boon
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p>As a move action, you can call upon your deities to grant you courage.
+      You gain a +1 morale bonus on attack rolls, damage rolls, and Will saving
+      throws against fear effects for a number of rounds equal to your Charisma
+      bonus.</p>
+
+      <p>At 7th level, this bonus increases to +2, and at 14th level this bonus
+      increases to +3.</p>
+
+      <p>You can use this ability once per day, plus one additional time per day
+      at 5th level, and every 5 levels thereafter.</p>
+  actions:
+    - _id: hmnfg8kptcqejlau
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: move
+      duration:
+        value: '@abilities.cha.mod'
+        units: round
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+  tag: classFeat_iomedaesBoon
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: su
+_key: '!items!muOUTOChMC2kMita'
+

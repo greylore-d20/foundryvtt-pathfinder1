@@ -1,0 +1,34 @@
+_id: D1puzgiOIRi53VeN
+name: Guardian of the Tribe
+type: feat
+img: systems/pf1/icons/skills/violet_20.jpg
+system:
+  description:
+    value: >-
+      <p>The shaman can cast a harmless spell with a range of touch on a member
+      of her tribal bond as long as that creature is within 30 feet. The shaman
+      can use this ability a number of times per day equal to her Charisma
+      modifier (minimum 1). In addition, she is constantly aware of the
+      condition of all members of her tribal bond ability, as
+      @Compendium[pf1.spells.4ya1fs9tyvsqnwqx]{Status}.</p>
+  actions:
+    - _id: dynf0dw5vd5w8on3
+      name: Use
+      img: systems/pf1/icons/skills/violet_20.jpg
+      activation:
+        type: special
+        unchained:
+          type: special
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: max(1, @abilities.cha.mod)
+  tag: classFeat_guardianOfTheTribe
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!D1puzgiOIRi53VeN'
+

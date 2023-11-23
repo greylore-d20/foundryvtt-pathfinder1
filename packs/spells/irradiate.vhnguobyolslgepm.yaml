@@ -1,0 +1,56 @@
+_id: vhnguobyolslgepm
+name: Irradiate
+type: spell
+img: icons/magic/acid/dissolve-arm-flesh.webp
+system:
+  actions:
+    - _id: wkwxbaw2srl7phc8
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude partial (see below)
+      spellEffect: special (see below)
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+      cleric: 3
+      oracle: 3
+      druid: 4
+      summoner: 3
+      witch: 3
+      magus: 3
+      hunter: 4
+      summonerUnchained: 3
+  level: 3
+  school: con
+  subschool: creation
+  components:
+    verbal: true
+    somatic: true
+  sr: false
+  shortDescription: >-
+    <p>The spell's area of effect floods with dangerous radiation. The strength
+    of the radiation you create depends on your caster level, as detailed below.
+    The central irradiated area is always a 10-foot-radius spread that expands
+    normally per the rules for radiation areas of effect (see page 55).
+    Creatures within the area are exposed to the radiation only once; the
+    radiation does not linger in the area. The save to resist the radiation
+    effects is set by the spell, not the standard save DC for
+    radiation.</p><p>Caster <b>Level</b> Radiation <b>Level</b> 6th or lower Low
+    7th-9th Medium 10th-16th High 17th or higher Severe</p>
+_key: '!items!vhnguobyolslgepm'
+

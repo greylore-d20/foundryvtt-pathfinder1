@@ -1,0 +1,34 @@
+name: Water Supremacy
+type: feat
+img: icons/magic/water/barrier-ice-wall-snow.webp
+system:
+  description:
+    value: >-
+      <p><strong>Source:</strong> Advanced Player's Guide pg. 142</p><p>You gain
+      a +2 enhancement bonus on Swim skill checks. This bonus increases by +1
+      for every five wizard levels you possess. In addition, you can hold your
+      breath for a number of rounds equal to four times your Constitution score
+      before you must start making checks to avoid drowning. At 10th level, you
+      gain a swim speed equal to your base speed. At 20th level, whenever you
+      make a Swim skill check, assume the roll resulted in a natural 20.</p>
+  tags:
+    - Water School
+  changes:
+    - _id: RVa7BO1Z
+      formula: 2 + floor(@classes.wizard.level / 5)
+      subTarget: skill.swm
+      modifier: enh
+      priority: null
+    - _id: AkFyhVCy
+      formula: min(1, floor(@classes.wizard.level / 10)) * @attributes.speed.land.total
+      subTarget: swimSpeed
+      modifier: untyped
+      priority: null
+  subType: classFeat
+  associations:
+    classes:
+      - Wizard
+  abilityType: su
+_id: YXHy6atHdR2fH6aE
+_key: '!items!YXHy6atHdR2fH6aE'
+

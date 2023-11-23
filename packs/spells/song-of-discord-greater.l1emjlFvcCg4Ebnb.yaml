@@ -1,0 +1,49 @@
+name: Song of Discord, Greater
+type: spell
+img: icons/skills/melee/swords-parry-block-yellow.webp
+system:
+  actions:
+    - _id: ByApE3CQNI82bX4q
+      name: Use
+      img: icons/skills/melee/swords-parry-block-yellow.webp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      range:
+        units: medium
+      measureTemplate:
+        type: circle
+        size: '20'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will partial
+      spellArea: creatures within a 20-ft. radius spread
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      bard: 6
+      mesmerist: 6
+      psychic: 8
+      skald: 6
+  level: 6
+  school: enc
+  subschool: compulsion
+  types: mind-affecting, sonic
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>This spell functions as @Compendium[pf1.spells.1os71jpk7lrrl47b]{song of
+    discord} except that affected creatures automatically attack the nearest
+    target each round. In addition, all affected creatures gain a +4 morale
+    bonus to Strength for the duration of the spell. A creature that succeeds at
+    the Will save reduces the effect’s duration to 1 round.</p>
+_id: l1emjlFvcCg4Ebnb
+_key: '!items!l1emjlFvcCg4Ebnb'
+

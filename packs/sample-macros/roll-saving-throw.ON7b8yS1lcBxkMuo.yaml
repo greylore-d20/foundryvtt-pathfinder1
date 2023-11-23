@@ -1,0 +1,67 @@
+_id: ON7b8yS1lcBxkMuo
+name: Roll Saving Throw
+type: script
+scope: global
+command: >-
+  // CONFIGURATION
+
+  // Leave the actorNames array empty to guess the players
+
+  // Example actorNames: `actorNames: ["Bob", "John"],`
+
+  const c = {
+    actorNames: [],
+  };
+
+  // END CONFIGURATION
+
+
+  const tokens = canvas.tokens.controlled;
+
+  let actors = tokens.map(o => o.actor);
+
+  if (!actors.length && c.actorNames.length) actors = game.actors.filter(o =>
+  c.actorNames.includes(o.name));
+
+  if (!actors.length) actors = game.actors.filter(o => o.isPC &&
+  o.testUserPermission(game.user, "OWNER"));
+
+  actors = actors.filter(o => o.testUserPermission(game.user, "OWNER"));
+
+
+  if (!actors.length) ui.notifications.warn("No applicable actor(s) found");
+
+  else {
+    const _roll = async function(type) {
+      for (let a = 0; a < actors.length; a++) {
+        const o = actors[a];
+        await o.rollSavingThrow(type, { event: new MouseEvent({}), noSound: a > 0, });
+      }
+    };
+
+    const msg = `Choose a saving throw to roll for the following actor(s): <b>${actors.map(o => o.name).join("</b>, <b>")}</b>`;
+
+    new Dialog({
+      title: "Roll saving throw",
+      content: `<p>${msg}</p>`,
+      buttons: {
+        fort: {
+          label: "Fortitude",
+          callback: () => _roll("fort"),
+        },
+        ref: {
+          label: "Reflex",
+          callback: () => _roll("ref"),
+        },
+        will: {
+          label: "Will",
+          callback: () => _roll("will"),
+        },
+      },
+    }).render(true);
+  }
+author: T9i9xVjdkHeFZC72
+img: systems/pf1/icons/feats/diehard.jpg
+sort: 0
+_key: '!macros!ON7b8yS1lcBxkMuo'
+

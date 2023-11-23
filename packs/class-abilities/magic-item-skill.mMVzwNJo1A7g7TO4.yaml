@@ -1,0 +1,25 @@
+_id: mMVzwNJo1A7g7TO4
+name: Magic Item Skill
+type: feat
+img: systems/pf1/icons/items/equipment/belt-gems.jpg
+system:
+  description:
+    value: >-
+      <p>At 2nd level, an occultist’s knowledge of magic items grants him a
+      bonus when attempting to use them. He gains a bonus on all Use Magic
+      Device checks equal to 1/2 his occultist level.</p>
+  changes:
+    - _id: 4zwj3q9h
+      formula: floor(@classes.occultist.level / 2)
+      subTarget: skill.umd
+      modifier: untyped
+      priority: '0'
+  tag: classFeat_magicItemSkill
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Occultist
+  abilityType: ex
+_key: '!items!mMVzwNJo1A7g7TO4'
+

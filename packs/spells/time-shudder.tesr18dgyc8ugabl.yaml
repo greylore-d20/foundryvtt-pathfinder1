@@ -1,0 +1,48 @@
+_id: tesr18dgyc8ugabl
+name: Time Shudder
+type: spell
+img: icons/magic/time/clock-spinning-gold-pink.webp
+system:
+  actions:
+    - _id: e7qeuslof1ywrw63
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round
+      range:
+        value: '30'
+        units: ft
+      actionType: ''
+      spellArea: 30-ft.-radius emanation centered on you
+      measureTemplate:
+        type: circle
+        size: '30'
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 2
+      wizard: 2
+      summoner: 2
+      magus: 2
+      psychic: 2
+      summonerUnchained: 2
+  level: 2
+  school: trs
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a tiny hourglass
+  shortDescription: >-
+    <p>You cause a ripple in time that affects all creatures in the
+    area.</p><p>At the start of each creature's turn, there is a 50% chance the
+    creature is hasted (as haste); otherwise it is slowed (as slow).</p>
+_key: '!items!tesr18dgyc8ugabl'
+

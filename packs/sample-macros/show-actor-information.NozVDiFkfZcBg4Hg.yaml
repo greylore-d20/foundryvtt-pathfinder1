@@ -1,0 +1,84 @@
+name: Show Actor Information
+type: script
+scope: global
+command: >-
+  // CONFIGURATION
+
+  // Leave the actorNames array empty to guess the players
+
+  // Example actorNames: `actorNames: ["Bob", "John"],`
+
+  const c = {
+    actorNames: [],
+  };
+
+  // END CONFIGURATION
+
+
+  const tokens = canvas.tokens.controlled;
+
+  let actors = tokens.map(o => o.actor);
+
+  if (!actors.length && c.actorNames.length) actors =
+  game.actors.entities.filter(o => c.actorNames.includes(o.name));
+
+  if (!actors.length) actors = game.actors.entities.filter(o => o.isPC &&
+  o.testUserPermission(game.user, "OWNER"));
+
+  actors = actors.filter(o => o.testUserPermission(game.user, "OWNER"));
+
+
+  if (!actors.length) ui.notifications.warn("No applicable actor(s) found");
+
+  else {
+    const msg = `Choose the information you want to show for the following actor(s): <b>${actors.map(o => o.name).join("</b>, <b>")}</b>`;
+    
+    new Dialog({
+      title: "Show Actor Information",
+      content: `<p>${msg}</p>`,
+      buttons: {
+        fort: {
+          label: "Social Defenses",
+          callback: () => {
+            let c = "";
+            // Add demoralize DC
+            c += `<table><thead><tr><td colspan="2">Demoralize (Intimidate)</td><tr><td>Character</td><td>DC</td></thead><tbody>`;
+            for (let a of actors) {
+              const rollData = a.getRollData({ forceRefresh: false });
+              const dc = 10 + rollData.attributes.hd.total + rollData.abilities.wis.mod;
+              c += `<tr><td>${a.name}</td><td>${dc}</td></tr>`;
+            }
+            c += "</tbody></table>";
+            // Add diplomacy DCs
+            c += `<table><thead><tr><td colspan="3">Diplomacy</td></tr><tr><td>Character</td><td>Starting Attitude</td><td>DC</td><thead><tbody>`;
+            for (let a of actors) {
+              c += `<tr><td rowspan="5">${a.name}</td>`;
+              const rollData = a.getRollData({ forceRefresh: false });
+              const dipArr = [{ label: "Hostile", base: 25 }, { label: "Unfriendly", base: 20 }, { label: "Indifferent", base: 15 }, { label: "Friendly", base: 10 }, { label: "Helpful", base: 0 }];
+              for (let b = 0; b < dipArr.length; b++) {
+                const o = dipArr[b];
+                if (b > 0) c += "<tr>";
+                c += `<td>${o.label}</td><td>${o.base + rollData.abilities.cha.mod}</td></tr>`;
+              }
+            }
+            c += "</tbody></table>";
+            // Render chat message
+            let messageData = {
+              content: c,
+              user: game.user._id,
+              speaker: ChatMessage.getSpeaker({ user: game.user }),
+              type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+            };
+            messageData = ChatMessage.applyRollMode(messageData, game.settings.get("core", "rollMode"));
+            ChatMessage.create(messageData);
+          },
+        },
+      },
+    }).render(true);
+  }
+author: 61klraqiWb97OOLa
+img: systems/pf1/icons/skills/red_25.jpg
+_id: NozVDiFkfZcBg4Hg
+sort: 0
+_key: '!macros!NozVDiFkfZcBg4Hg'
+

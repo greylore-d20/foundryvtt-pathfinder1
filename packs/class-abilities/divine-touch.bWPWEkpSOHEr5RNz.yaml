@@ -1,0 +1,63 @@
+_id: bWPWEkpSOHEr5RNz
+name: Divine Touch
+type: feat
+img: systems/pf1/icons/skills/ice_16.jpg
+system:
+  description:
+    value: >-
+      <p>At 2nd level, an omdura can deliver divine energy by touch. She can
+      deliver either positive energy or negative energy. A good omdura (or a
+      neutral omdura of a good deity) must select positive energy. An evil
+      omdura (or a neutral omdura of an evil deity) must select negative energy.
+      An omdura who is neither good nor evil and whose deity is neither good nor
+      evil can select either positive or negative energy. This choice is made
+      when the omdura gains this ability and cannot be changed.</p>
+
+      <p>Each day the omdura can use this ability a number of times equal to
+      half her omdura level plus her <em>Charisma</em> modifier. With one use of
+      this ability, an omdura can use divine energy to restore to a target 1d6
+      <em>hit points</em> for every 2 omdura levels she has. Using this ability
+      is a <em>standard action</em>, unless the omdura targets herself, in which
+      case it is a <em>swift action</em>. An omdura who delivers negative energy
+      with her <em>touch</em> can instead deal 1d6 points of damage to a living
+      creature for every 2 omdura levels she has. Alternatively, an omdura can
+      use this divine energy to affect <em>undead</em> creatures, dealing damage
+      when delivering positive energy or restoring <em>hit points</em> when
+      delivering negative energy.</p>
+
+      <p>An omdura needs only one freehand to use this ability. Using divine
+      touch to harm a creature requires a successful melee <em>touch attack</em>
+      and doesn’t provoke an <em>attack of opportunity</em>. Creatures do not
+      receive a saving throw against the damage from divine touch. Divine touch
+      is modified by any feat, spell, or effect that specifically works with the
+      <em>lay on hands</em> <em>paladin</em> class feature. For example, the
+      <em>Extra Lay On Hands</em> feat grants an omdura two additional uses of
+      the divine touch class feature.</p>
+  actions:
+    - _id: lqcacztgedkiqevq
+      name: Use
+      img: systems/pf1/icons/skills/ice_16.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: floor(@classes.omdura.level / 2) + @abilities.cha.mod
+  tag: classFeat_divineTouch
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Omdura
+  abilityType: su
+_key: '!items!bWPWEkpSOHEr5RNz'
+

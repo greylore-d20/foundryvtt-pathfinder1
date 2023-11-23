@@ -1,0 +1,54 @@
+_id: smbkd2yobhshbpqf
+name: Charm Monster
+type: spell
+img: icons/magic/control/mouth-smile-deception-purple.webp
+system:
+  actions:
+    - _id: c9d7wx6tazvwbrfq
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level
+      target:
+        value: one living creature
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 4
+      wizard: 4
+      bard: 3
+      summoner: 3
+      witch: 4
+      psychic: 4
+      mesmerist: 3
+      occultist: 4
+      summonerUnchained: 4
+    domain:
+      Charm: 5
+    bloodline:
+      Infernal: 4
+      Oni: 4
+  level: 4
+  school: enc
+  subschool: charm
+  types: mind-affecting
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>This spell functions like <i>charm person</i>, except that the effect is
+    not restricted by creature type or size.</p>
+_key: '!items!smbkd2yobhshbpqf'
+

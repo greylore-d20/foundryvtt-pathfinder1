@@ -1,0 +1,58 @@
+_id: syLmLDQgeU4dfyos
+name: Energy Composite Blast
+type: feat
+img: systems/pf1/icons/skills/affliction_12.jpg
+system:
+  description:
+    value: >-
+      <p>Composite blasts combine elements to form a new blast. When a
+      kineticist gains a new element through expanded element, she gains access
+      to all composite blasts for which she qualifies. Most composite blasts are
+      either physical or energy blasts, like simple blasts. Physical composite
+      blasts deal an amount of damage equal to 2d6+2 + the kineticist’s
+      Constitution modifier, increasing by 2d6+2 for every 2 kineticist levels
+      beyond 1st; energy composite blasts deal an amount of damage equal to 2d6
+      + 1/2 the kineticist’s Constitution modifier, increasing by 2d6 for every
+      2 kineticist levels beyond 1st.</p>
+  actions:
+    - _id: cwmyjr1ycmp5a74r
+      name: Use
+      img: systems/pf1/icons/skills/affliction_12.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      range:
+        value: '30'
+        units: ft
+        maxIncrements: '1'
+      actionType: rsak
+      attackBonus: >-
+        min(@resources.classFeat_burn.value, floor(@classes.kineticist.level /
+        3))
+      damage:
+        parts:
+          - formula: >-
+              (2 * ceil(@classes.kineticist.level / 2))d6 +
+              floor(@abilities.con.mod / 2) +
+              min(@resources.classFeat_burn.value,
+              floor(@classes.kineticist.level / 3)) * 2
+            type:
+              values:
+                - untyped
+              custom: ''
+      ability:
+        attack: dex
+  tag: classFeat_energyCompositeBlast
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+  crOffset: '0'
+_key: '!items!syLmLDQgeU4dfyos'
+

@@ -1,0 +1,28 @@
+_id: ulvEcJsFba6Fg4g9
+name: Heroism
+type: buff
+img: systems/pf1/icons/skills/yellow_17.jpg
+system:
+  description:
+    value: >-
+      <p>You gain a +2 <em>morale bonus</em> on attack rolls, saves, and skill
+      checks.</p>
+  changes:
+    - _id: nueem2us
+      formula: '2'
+      subTarget: attack
+      modifier: morale
+    - _id: qmgiyv88
+      formula: '2'
+      subTarget: allSavingThrows
+      modifier: morale
+    - _id: zstphu4j
+      formula: '2'
+      subTarget: skills
+      modifier: morale
+  level: '5'
+  duration:
+    value: '@item.level * 10'
+    units: minute
+_key: '!items!ulvEcJsFba6Fg4g9'
+

@@ -1,0 +1,53 @@
+_id: JkZWJXPWSYLkLMOy
+name: Clay Skin
+type: spell
+img: icons/magic/earth/strike-fist-stone.webp
+system:
+  actions:
+    - _id: ifxkcbmeqkpdy8fl
+      name: Use
+      img: icons/magic/earth/strike-fist-stone.webp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level or until discharged
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (harmless)
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      alchemist: 3
+      arcanist: 3
+      bloodrager: 3
+      inquisitor: 3
+      investigator: 3
+      magus: 3
+      sorcerer: 3
+      wizard: 3
+      summoner: 3
+      summonerUnchained: 3
+  level: 3
+  school: abj
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: clay and iron fillings
+  shortDescription: >-
+    <p>The target's skin becomes as thick and tough as clay, granting the target
+    DR 5/adamantine. Once the spell has prevented a total of 5 points of damage
+    per caster level (maximum 50 points), it is discharged and the spell
+    ends.</p>
+_key: '!items!JkZWJXPWSYLkLMOy'
+

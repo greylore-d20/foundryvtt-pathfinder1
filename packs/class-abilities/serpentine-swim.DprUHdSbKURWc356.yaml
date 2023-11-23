@@ -1,0 +1,23 @@
+_id: DprUHdSbKURWc356
+name: Serpentine Swim
+type: feat
+img: systems/pf1/icons/skills/red_05.jpg
+system:
+  description:
+    value: >-
+      <p>At 4th level, you can swim sinuously, like a snake. You gain a swim
+      speed equal to your base speed.</p>
+  changes:
+    - _id: omd2o8ui
+      formula: '@attributes.speed.land.base'
+      subTarget: swimSpeed
+      modifier: base
+  tag: classFeat_serpentineSwim
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Bloodrager
+  abilityType: sp
+_key: '!items!DprUHdSbKURWc356'
+

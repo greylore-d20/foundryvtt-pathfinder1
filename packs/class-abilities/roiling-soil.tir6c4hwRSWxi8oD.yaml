@@ -1,0 +1,53 @@
+_id: tir6c4hwRSWxi8oD
+name: Roiling Soil
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p><strong>Source</strong> Elemental Master's Handbook pg.
+      29</p><p>Combining your mastery of earth and water, you shape the
+      battlefield in your favor, bending the terrain to benefit you and your
+      allies and hinder any who might oppose you. The ground within 5 feet per 2
+      oracle levels you have shifts and rolls unpredictably; if you use this
+      ability underwater, the surrounding waters churn. This area moves with
+      you, and you and your allies are unaffected by the roiling terrain. Other
+      creatures can move within the area at half speed with a successful DC 10
+      Acrobatics check. Failure means they stop moving for the round, while
+      failure by 5 or more causes them to fall prone; if underwater, creatures
+      gain the effects of being off-balance (Pathfinder RPG Core Rulebook 433)
+      instead of falling prone.</p><p>This effect lasts a number of rounds equal
+      to your oracle level, and you can use this ability a number of times per
+      day equal to 3 + your Charisma modifier.</p>
+  tags:
+    - Elemental Mystery
+  actions:
+    - _id: f982w7k8p0w89wys
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.oracle.level'
+        units: round
+      target:
+        value: self
+      range:
+        units: seeText
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @classes.oracle.level
+    autoDeductChargesCost: ''
+  tag: classFeat_roilingSoil
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: su
+_key: '!items!tir6c4hwRSWxi8oD'
+

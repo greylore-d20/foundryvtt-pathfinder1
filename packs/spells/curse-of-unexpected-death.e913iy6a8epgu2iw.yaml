@@ -1,0 +1,54 @@
+_id: e913iy6a8epgu2iw
+name: Curse of Unexpected Death
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: bp2311u8u3crveoz
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (see text)
+      target:
+        value: living creature touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude partial (see text)
+  learnedAt:
+    class:
+      cleric: 4
+      oracle: 4
+      witch: 5
+      shaman: 5
+  level: 4
+  school: nec
+  types: curse, death
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>You curse one living creature with a chance of instant and unexpected
+    death. When you cast this spell, your hand seethes with eerie gray fire. You
+    must succeed at a melee touch attack to touch the target, at which time the
+    fire buries itself within the target's body and disappears. On the round you
+    touch the creature and once per minute thereafter, roll 1d100. On a result
+    of 01-05, the spell is triggered and the creature takes 8d6 points of damage
+    + 1 point per caster level; the creature can attempt a saving throw to
+    reduce the damage to 2d6 points of damage + 1 point per caster level. On a
+    result of 06-100, nothing happens.  Once the spell is triggered or if the
+    duration expires before it triggers, the magic ends and no further 1d100
+    rolls are made. If the target has spell resistance, a caster level check is
+    made when you succeed at the touch attack. A creature can be affected by
+    only one instance of this spell at a time. The untriggered spell can be
+    removed with <i>dispel magic</i>, <i>remove curse</i>, or similar
+    effects.</p>
+_key: '!items!e913iy6a8epgu2iw'
+

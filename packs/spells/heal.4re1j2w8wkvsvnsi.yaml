@@ -1,0 +1,67 @@
+_id: 4re1j2w8wkvsvnsi
+name: Heal
+type: spell
+img: icons/magic/life/heart-cross-strong-green.webp
+system:
+  actions:
+    - _id: mj6kc8l17hp5foa3
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: heal
+      damage:
+        parts:
+          - formula: min(150, @cl * 10)
+            type:
+              values:
+                - positive
+              custom: ''
+      save:
+        type: will
+        description: Will negates (harmless)
+      touch: true
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      cleric: 6
+      oracle: 6
+      druid: 7
+      alchemist: 6
+      witch: 7
+      inquisitor: 6
+      adept: 5
+      shaman: 7
+      occultist: 6
+      spiritualist: 6
+    domain:
+      Healing: 6
+  level: 6
+  school: con
+  subschool: healing
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p><em>Heal</em> enables you to channel positive energy into a creature to
+    wipe away injury and afflictions. It immediately ends any and all of the
+    following adverse conditions affecting the target: ability damage, blinded,
+    confused, dazed, dazzled, deafened, diseased, exhausted, fatigued,
+    feebleminded, insanity, nauseated, poisoned, sickened, and stunned. It also
+    cures 10 hit points of damage per level of the caster, to a maximum of 150
+    points at 15th level.</p><p><em>Heal</em> does not remove negative levels or
+    restore permanently drained ability score points.</p><p>If used against an
+    undead creature, <em>heal</em> instead acts like
+    <em>@UUID[Compendium.pf1.spells.dvwyzofd0yifs1ac]{harm}.</em></p>
+_key: '!items!4re1j2w8wkvsvnsi'
+

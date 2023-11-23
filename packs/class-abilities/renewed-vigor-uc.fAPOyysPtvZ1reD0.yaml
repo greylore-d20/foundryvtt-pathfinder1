@@ -1,0 +1,54 @@
+_id: fAPOyysPtvZ1reD0
+name: Renewed Vigor (UC)
+type: feat
+img: systems/pf1/icons/feats/deafening-critical.jpg
+system:
+  description:
+    value: >-
+      <p>As a standard action, the barbarian heals 1d8 points of damage + her
+      Constitution modifier. For every 4 levels the barbarian has beyond 4th,
+      the amount healed increases by 1d8 (to a maximum of 5d8 at 20th
+      level).</p>
+
+      <p>This ability can be used only once per day.</p>
+
+      <p>The barbarian must be at least 4th level to select this rage power.</p>
+  actions:
+    - _id: 6k7ovkkg20lzer42
+      name: Use
+      img: systems/pf1/icons/feats/deafening-critical.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: self
+      range:
+        units: personal
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: heal
+      damage:
+        parts:
+          - formula: >-
+              (floor(@classes.barbarianUnchained.level / 4))d8 +
+              @abilities.con.mod
+            type:
+              values:
+                - untyped
+              custom: ''
+  uses:
+    per: day
+    maxFormula: '1'
+  tag: classFeat_renewedVigorUc
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Barbarian (Unchained)
+  abilityType: ex
+_key: '!items!fAPOyysPtvZ1reD0'
+

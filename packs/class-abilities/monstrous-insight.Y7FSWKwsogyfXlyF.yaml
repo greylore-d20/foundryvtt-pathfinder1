@@ -1,0 +1,45 @@
+_id: Y7FSWKwsogyfXlyF
+name: Monstrous Insight
+type: feat
+img: systems/pf1/icons/skills/violet_20.jpg
+system:
+  description:
+    value: >-
+      <p>The shaman can identify creatures and gain insight into their strengths
+      and weaknesses. As a standard action, the shaman can attempt a Knowledge
+      skill check to identify a creature and its abilities (using the
+      appropriate skill for the monster’s type) with an insight bonus equal to
+      her shaman level. Whether or not the check is successful, she also gains a
+      +2 insight bonus for 1 minute on attack rolls made against that creature
+      and a +2 insight bonus to her AC against attacks made by that creature.
+      These bonuses last for 1 minute.</p>
+
+      <p>The shaman can use this ability a number of times per day equal to 3 +
+      her Charisma modifier.</p>
+  actions:
+    - _id: 2vdu738xcgltl5cu
+      name: Use
+      img: systems/pf1/icons/skills/violet_20.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: minute
+      target:
+        value: one creature
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.cha.mod
+  tag: classFeat_monstrousInsight
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!Y7FSWKwsogyfXlyF'
+

@@ -1,0 +1,44 @@
+_id: tpgbeq1TBSoMNOY0
+name: Zealous Surge
+type: feat
+img: systems/pf1/icons/items/inventory/badge-cross.jpg
+system:
+  description:
+    value: >-
+      <p>Once per day, when you are reduced to 0 or fewer hit points, you heal a
+      number of hit points equal to your inquisitor level + your Wisdom
+      modifier.</p>
+  actions:
+    - _id: wxcps7db43rb22h9
+      name: Use
+      img: systems/pf1/icons/items/inventory/badge-cross.jpg
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        units: inst
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: heal
+      damage:
+        parts:
+          - formula: '@classes.inquisitor.level + @abilities.wis.mod'
+            type:
+              values:
+                - untyped
+              custom: ''
+  uses:
+    per: day
+    maxFormula: '1'
+  tag: classFeat_zealousSurge
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Inquisitor
+  abilityType: sp
+_key: '!items!tpgbeq1TBSoMNOY0'
+

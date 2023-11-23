@@ -1,0 +1,53 @@
+_id: gccemclhw5t0j16f
+name: Conjuration Foil
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 1bb3oimoevncfey7
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: 1 round
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: will
+        description: Will partial (see text)
+      spellArea: 20-foot radius spread
+      measureTemplate:
+        type: circle
+        size: '20'
+  learnedAt:
+    class:
+      sorcerer: 4
+      wizard: 4
+      bard: 4
+      summoner: 3
+      witch: 4
+      magus: 3
+      psychic: 4
+      medium: 4
+      occultist: 4
+      spiritualist: 4
+      summonerUnchained: 3
+  level: 4
+  school: abj
+  components:
+    somatic: true
+  shortDescription: >-
+    <p>All creatures in the area gain a +4 bonus on saving throws against
+    teleportation effects. If any creature would enter or depart the area via a
+    summoning or teleportation effect, that creature takes 1d6 points of damage
+    per spell level of the triggering effect (or half the HD of the originating
+    creature if the effect has no spell level) and arrives in a random similar
+    location within the triggering effect's range, rather than the intended
+    destination. A successful Will save halves the damage and negates the
+    altered destination.</p>
+_key: '!items!gccemclhw5t0j16f'
+

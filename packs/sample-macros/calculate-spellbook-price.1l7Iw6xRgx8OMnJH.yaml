@@ -1,0 +1,128 @@
+_id: 1l7Iw6xRgx8OMnJH
+name: Calculate Spellbook Price
+type: script
+img: icons/sundries/books/book-embossed-jewel-gold-purple.webp
+command: |-
+  const MCONFIG = {
+    basePrice: 15,
+    spellValue: {
+      "0": {
+        gp: 5,
+        pages: 1,
+      },
+      "1": {
+        gp: 10,
+        pages: 1,
+      },
+      "2": {
+        gp: 40,
+        pages: 2,
+      },
+      "3": {
+        gp: 90,
+        pages: 3,
+      },
+      "4": {
+        gp: 160,
+        pages: 4,
+      },
+      "5": {
+        gp: 250,
+        pages: 5,
+      },
+      "6": {
+        gp: 360,
+        pages: 6,
+      },
+      "7": {
+        gp: 490,
+        pages: 7,
+      },
+      "8": {
+        gp: 640,
+        pages: 8,
+      },
+      "9": {
+        gp: 810,
+        pages: 9,
+      },
+    },
+  };
+
+  let html = `
+  <table>
+    <thead>
+      <tr>
+        <th>Spell level</th>
+        <th>Amount of spells</th>
+      </tr>
+    </thead>
+    <tbody>
+  `;
+  for (const [k, v] of Object.entries(MCONFIG.spellValue)) {
+    html += `
+      <tr>
+        <td>${k}</td>
+        <td>
+          <input class="spell-input" type="number" name="level-${k}" value="0" data-price="${v.gp}" data-pages="${v.pages}" />
+        </td>
+      </tr>
+    `;
+  }
+  html += `
+    </tbody>
+    <thead>
+      <tr>
+        <th>Spellbook price</th>
+        <th>Pages required</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input class="spellbook-price" type="text" disabled name="spellbook-price" value="${MCONFIG.basePrice}" /></td>
+        <td><input class="spellbook-pages" type="text" disabled name="page-value" value="0" /></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="help-text">
+    Typical spellbooks can only hold 100 pages.
+  </div>
+  `;
+
+  // -------------------------
+  // Functions
+  // -------------------------
+
+  const _onChange = function (event) {
+    event.preventDefault();
+    const html = $(event.target.closest(".window-content"));
+
+    let pages = 0;
+    let price = MCONFIG.basePrice;
+    html.find(".spell-input").each((idx, elem) => {
+      const amount = Number(elem.value);
+      if (Number.isNaN(amount)) return;
+
+      price += Number(elem.dataset.price) * amount;
+      pages += Number(elem.dataset.pages) * amount;
+    });
+
+    html.find(".spellbook-price").attr("value", price);
+    html.find(".spellbook-pages").attr("value", pages);
+  };
+
+  // -------------------------
+  // Dialog
+  // -------------------------
+
+  const d = new Dialog({
+    title: "Calculate spellbook value",
+    content: html,
+    buttons: {},
+    render: (html) => {
+        html.find("input.spell-input").change(_onChange.bind(this));    
+    }
+  }).render(true);
+_key: '!macros!1l7Iw6xRgx8OMnJH'
+

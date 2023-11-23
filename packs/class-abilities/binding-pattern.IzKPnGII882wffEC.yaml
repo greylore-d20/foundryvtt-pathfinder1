@@ -1,0 +1,48 @@
+_id: IzKPnGII882wffEC
+name: Binding Pattern
+type: feat
+img: systems/pf1/icons/feats/leadership.jpg
+system:
+  description:
+    value: >-
+      <p>As a standard action, you can expend 1 point of mental focus to create
+      a binding pattern of psychic energy that causes a living creature to
+      become paralyzed. The target must be within 30 feet of you, and it can
+      attempt a Will saving throw to negate the effect. If it fails the save, it
+      is paralyzed for 1 round for every 2 occultist levels you possess.</p>
+
+      <p>At the end of each of its turns, it can attempt another Will save to
+      end the paralyzed effect and instead be staggered for the remaining
+      duration. This is a mind-affecting compulsion effect.</p>
+
+      <p>You must be at least 7th level to select this focus power.</p>
+  actions:
+    - _id: tik6nfwf3vj2qjag
+      name: Use
+      img: systems/pf1/icons/feats/leadership.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: floor(@classes.occultist.level / 2)
+        units: round
+      target:
+        value: one creature
+      range:
+        value: '30'
+        units: ft
+      actionType: save
+      save:
+        type: will
+        description: Will negates
+  tag: classFeat_bindingPattern
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Occultist
+  abilityType: sp
+_key: '!items!IzKPnGII882wffEC'
+

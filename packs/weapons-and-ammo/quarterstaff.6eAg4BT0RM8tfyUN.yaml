@@ -1,0 +1,61 @@
+_id: 6eAg4BT0RM8tfyUN
+name: Quarterstaff
+type: weapon
+img: systems/pf1/icons/items/weapons/quarterstaff.png
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Ultimate Equipment pg. 17</em>, <em>PRPG Core
+      Rulebook pg. 142</em></p><h3>Statistics</h3><p><b>Damage</b> 1d4/1d4
+      (small), 1d6/1d6 (medium); <b>Critical</b> x2; <b>Range</b> -; <b>Type</b>
+      B</p><p><b>Weapon Groups</b> Double; Monk</p><h3>Description</h3><p>A
+      quarterstaff is a simple piece of wood, about 5 feet in length. In battle,
+      it's held with one hand at the butt and the other a quarter of the way up
+      the staff, allowing it to block blows and make quick strikes.</p>
+  tags:
+    - PFS
+  weight:
+    value: 4
+  hardness: 10
+  actions:
+    - _id: aqd01i3ja2dxrrcu
+      name: Attack
+      img: systems/pf1/icons/items/weapons/quarterstaff.png
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              values:
+                - bludgeoning
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+        damageMult: 1.5
+  tag: quarterstaff
+  held: 2h
+  baseTypes:
+    - Quarterstaff
+  weaponGroups:
+    value:
+      - double
+      - monk
+  weaponSubtype: 2h
+  properties:
+    dbl: true
+    mnk: true
+_key: '!items!6eAg4BT0RM8tfyUN'
+

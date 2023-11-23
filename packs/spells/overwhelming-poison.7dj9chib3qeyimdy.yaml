@@ -1,0 +1,57 @@
+_id: 7dj9chib3qeyimdy
+name: Overwhelming Poison
+type: spell
+img: icons/skills/toxins/poison-bottle-corked-fire-green.webp
+system:
+  actions:
+    - _id: afodyioewu5woeji
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 minutes/level
+      target:
+        value: one creature or one dose of poison; see text
+      range:
+        units: close
+      actionType: ''
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      cleric: 6
+      oracle: 6
+      druid: 6
+      ranger: 4
+      witch: 6
+      antipaladin: 4
+      shaman: 6
+      hunter: 4
+  level: 6
+  school: nec
+  types: poison
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: an adder's fang
+  sr: false
+  shortDescription: >-
+    <p>This spell increases the virulence of the targeted dose of poison, making
+    the poison more difficult to resist. The poison is unaffected by <i>delay
+    poison</i>, and the DC to remove it with <i>neutralize poison</i> is
+    increased by 5. Additionally, the poison uses its own saving throw DC or
+    <i>overwhelming</i> poison's DC, whichever is higher.  If cast on a creature
+    that is currently suffering from exposure to one or more doses of poison,
+    the spell applies to one of the doses of your choice, or a random dose of
+    poison affecting the target if you don't know what poisons are afflicting
+    the target. If cast on a creature that is venomous, this spell affects the
+    first dose of poison that creature delivers before the end of the spell's
+    duration.</p>
+_key: '!items!7dj9chib3qeyimdy'
+

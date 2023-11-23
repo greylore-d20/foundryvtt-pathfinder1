@@ -1,0 +1,48 @@
+_id: dyyf3tu0livtznhv
+name: Spontaneous Immolation
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 8kiwymb735m9imni
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      target:
+        value: one creature
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: ref
+        description: Fortitude half and Reflex (see description)
+  learnedAt:
+    class:
+      sorcerer: 2
+      wizard: 2
+      psychic: 2
+  level: 2
+  school: evo
+  types: fire
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: pinch of saltpeter
+  shortDescription: >-
+    <p>You point your finger at a creature, causing it to spontaneously burst
+    into flame. The target takes 3d6 points of fire damage and catches on fire
+    (<i>Pathfinder RPG Core Rulebook</i> 444). A successful Fortitude save
+    reduces this damage by half and prevents the target from catching on fire.
+    Each round on your turn, a burning target can attempt a new save to
+    extinguish the flames (DC equal to the DC of the spell); otherwise it takes
+    another 1d6 fire damage.</p>
+_key: '!items!dyyf3tu0livtznhv'
+

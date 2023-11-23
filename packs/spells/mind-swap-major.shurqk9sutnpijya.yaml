@@ -1,0 +1,47 @@
+_id: shurqk9sutnpijya
+name: Mind Swap, Major
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: u9ey4wz62s3s8a7h
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: instantaneous
+      target:
+        value: one creature of your same race
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+  learnedAt:
+    class:
+      psychic: 9
+  level: 9
+  school: enc
+  subschool: compulsion
+  types: mind-affecting
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: diamonds worth 10,000 gp
+    gpValue: 10000
+  preparation:
+    spontaneousPrepared: false
+  shortDescription: >-
+    <p>The spell functions as <i>mind swap</i>, except as noted above. In
+    addition, after 24 hours, instead of using each other's hit points, you each
+    revert to your original hit points, modified by your new Constitution
+    modifiers. This spell can be reversed only with <i>miracle</i>, <i>wish</i>,
+    or another major <i>mind swap</i>.</p>
+_key: '!items!shurqk9sutnpijya'
+

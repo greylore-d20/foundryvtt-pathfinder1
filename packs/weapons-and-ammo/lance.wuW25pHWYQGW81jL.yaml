@@ -1,0 +1,61 @@
+_id: wuW25pHWYQGW81jL
+name: Lance
+type: weapon
+img: systems/pf1/icons/items/weapons/lance.PNG
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Ultimate Equipment pg. 19</em>, <em>PRPG Core
+      Rulebook pg. 143</em></p><h3>Statistics</h3><p><b>Damage</b> 1d6 (small),
+      1d8 (medium); <b>Critical</b> x3; <b>Range</b> -; <b>Type</b>
+      P</p><p><b>Weapon Groups</b> Spears</p><h3>Description</h3><p>A lance
+      deals double damage when used from the back of a charging mount. While
+      mounted, you can wield a lance with one hand.</p>
+  tags:
+    - PFS
+  weight:
+    value: 10
+  price: 10
+  hardness: 10
+  actions:
+    - _id: ro167oczjqvll7co
+      name: Attack
+      img: systems/pf1/icons/items/weapons/lance.PNG
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: reach
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              values:
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+        damageMult: 1.5
+        critMult: 3
+  tag: lance
+  held: 2h
+  baseTypes:
+    - Lance
+  weaponGroups:
+    value:
+      - spears
+  subType: martial
+  weaponSubtype: 2h
+  properties:
+    rch: true
+_key: '!items!wuW25pHWYQGW81jL'
+

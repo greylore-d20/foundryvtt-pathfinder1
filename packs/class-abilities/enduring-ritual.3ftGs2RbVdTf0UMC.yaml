@@ -1,0 +1,44 @@
+_id: 3ftGs2RbVdTf0UMC
+name: Enduring Ritual
+type: feat
+img: systems/pf1/icons/skills/affliction_02.jpg
+system:
+  description:
+    value: >-
+      <p>As a swift action when you cast a spell with a duration of at least 1
+      minute per caster level, you can increase the spell’s effective caster
+      level by 1 for the purpose of determining its duration and preventing
+      attempts to dispel it. The effective caster level increases by an
+      additional 1 for every 10 cleric levels you have (maximum +3). You can use
+      this ability a number of times per day equal to 3 + your Wisdom
+      modifier.</p>
+
+      <p>This power replaces the Hand of the Acolyte power of the Arcane
+      Domain.</p>
+  actions:
+    - _id: q9ebfh60hoc5dfzz
+      name: Use
+      img: systems/pf1/icons/skills/affliction_02.jpg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.wis.mod
+  tag: classFeat_enduringRitual
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cleric
+  abilityType: su
+_key: '!items!3ftGs2RbVdTf0UMC'
+

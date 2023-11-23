@@ -1,0 +1,41 @@
+_id: 6Dbps70vJNcDruqQ
+name: Kinetic Restoration
+type: feat
+img: systems/pf1/icons/spells/runes-blue-1.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> universal; <b>Type</b> utility (Su); <b>Level</b> 3;
+      <b>Burn</b> 1</p>
+
+      <p>You recover from 1d4 points of ability score damage to one of your
+      physical ability scores (Strength, Dexterity, or Constitution). This also
+      eliminates any fatigue that you suffer, and improves an exhaustion
+      condition to fatigued.<p>If you have the kinetic healer utility wild
+      talent, you can use both kineticist restoration and kinetic healer on the
+      same target with one standard action.</p>
+  actions:
+    - _id: 3jb1wry8cx9ijl50
+      name: Use
+      img: systems/pf1/icons/spells/runes-blue-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  tag: classFeat_kineticRestoration
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+_key: '!items!6Dbps70vJNcDruqQ'
+

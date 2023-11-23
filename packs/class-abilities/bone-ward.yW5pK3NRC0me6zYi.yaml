@@ -1,0 +1,44 @@
+_id: yW5pK3NRC0me6zYi
+name: Bone Ward
+type: feat
+img: systems/pf1/icons/skills/green_03.jpg
+system:
+  description:
+    value: >-
+      <p>A shaman touches a willing creature (including herself ) and grants a
+      bone ward. The warded creature becomes encircled by a group of flying
+      bones that grant it a +2 deflection bonus to AC for a number of rounds
+      equal to the shaman’s level.</p>
+
+      <p>At 8th level, the ward increases to +3 and lasts for 1 minute.</p>
+
+      <p>At 16th level, the bonus increases to +4 and lasts for 1 hour.</p>
+
+      <p>Once the bone ward ends, the creature cannot be the target of the hex
+      again for 24 hours.</p>
+  actions:
+    - _id: f592xqj7exqfdbjn
+      name: Use
+      img: systems/pf1/icons/skills/green_03.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.shaman.level'
+        units: round
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  tag: classFeat_boneWard
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!yW5pK3NRC0me6zYi'
+

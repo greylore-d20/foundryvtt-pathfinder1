@@ -1,0 +1,46 @@
+_id: g40XCY74YoGuxlU5
+name: Silkstring Snare
+type: feat
+img: systems/pf1/icons/skills/green_03.jpg
+system:
+  description:
+    value: >-
+      <p>The shaman causes ribbons of spider silk to erupt from the ground
+      beneath a single creature. The target must succeed at a Reflex save or be
+      entangled and anchored in place. The foe can escape the silk as a standard
+      action with a successful Escape Artist or Strength check at the same DC,
+      or by dealing an amount of damage to the silk equal to double the shaman’s
+      class level (the silk has hardness 0).</p>
+
+      <p>This hex lasts a number of rounds equal to 3 + the shaman’s Wisdom
+      modifier.</p>
+
+      <p>A creature affected by this hex cannot be affected by it again for 24
+      hours.</p>
+  actions:
+    - _id: 55ybidxqyhynour7
+      name: Use
+      img: systems/pf1/icons/skills/green_03.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 3 + @abilities.wis.mod
+        units: round
+      target:
+        value: one creature
+      actionType: save
+      save:
+        type: ref
+        description: Reflex negates
+  tag: classFeat_silkstringSnare
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!g40XCY74YoGuxlU5'
+

@@ -1,0 +1,39 @@
+_id: Z5urT0Y7k5SUqOeJ
+name: Aspect of Innocence
+type: feat
+img: systems/pf1/icons/spells/runes-blue-2.jpg
+system:
+  description:
+    value: >-
+      <p>An arcanist can expend 1 point from her arcane reservoir as an
+      immediate action to gain the benefits of
+      @Compendium[pf1.spells.4w51afqi5d9t8nl4]{Innocence}, with a caster level
+      equal to her arcanist level.</p>
+  tags:
+    - Arcanist Exploit
+  actions:
+    - _id: f9lqv32qw748pl9h
+      name: Use
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.arcanist.level'
+        units: minute
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  tag: classFeat_aspectOfInnocence
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Arcanist
+  abilityType: su
+_key: '!items!Z5urT0Y7k5SUqOeJ'
+

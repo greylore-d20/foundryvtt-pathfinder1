@@ -1,0 +1,59 @@
+_id: 4ahy3ap8ye816o40
+name: Kalistocrat's Nightmare
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: fu8xy5y61upygbny
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level (see text)
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+      cleric: 3
+      oracle: 3
+      bard: 2
+      alchemist: 2
+      witch: 2
+      inquisitor: 2
+      magus: 2
+      occultist: 2
+      investigator: 2
+  level: 3
+  school: trs
+  types: curse
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a copper piece
+  shortDescription: >-
+    <p>You temporarily curse a creature so its touch lessens the value of coins
+    it touches. While under the effects of this curse, whenever the target
+    touches a coin of higher value than copper piece, that coin changes into a
+    copper piece. The change takes place over the course of the following
+    minute, allowing the target to interact with multiple coins before the
+    effect of the curse becomes apparent. The affected coins are permanently
+    transmuted from their previous material (typically gold or silver) into
+    copper coins, though <i>remove curse</i> (which can affect up to 50 coins
+    with a single casting) or a similar spell can restore them to their previous
+    material.</p>
+_key: '!items!4ahy3ap8ye816o40'
+

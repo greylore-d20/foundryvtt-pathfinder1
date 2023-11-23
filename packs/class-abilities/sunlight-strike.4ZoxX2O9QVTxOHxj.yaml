@@ -1,0 +1,33 @@
+_id: 4ZoxX2O9QVTxOHxj
+name: Sunlight Strike
+type: feat
+img: systems/pf1/icons/items/weapons/rhoka.PNG
+system:
+  description:
+    value: >-
+      <p>The slayer can reflect sunlight (or other sources of bright light) into
+      the eyes of an adjacent target as a swift action, causing it to gain the
+      dazzled condition for 1 round.</p>
+  actions:
+    - _id: o0silxqd723elu5t
+      name: Use
+      img: systems/pf1/icons/items/weapons/rhoka.PNG
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: adjacent target
+      actionType: ''
+  tag: classFeat_sunlightStrike
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Slayer
+  abilityType: ex
+_key: '!items!4ZoxX2O9QVTxOHxj'
+

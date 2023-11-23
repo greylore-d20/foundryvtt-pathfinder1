@@ -1,0 +1,62 @@
+_id: uGfh3EEOi61LGdw1
+name: Crook
+type: weapon
+img: systems/pf1/icons/items/weapons/crook.PNG
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Melee Tactics Toolbox pg.
+      19</em></p><h3>Statistics</h3><p><b>Damage</b> 1d4 (small), 1d6 (medium);
+      <b>Critical</b> x2; <b>Range</b> -; <b>Type</b> B</p><p><b>Weapon
+      Groups</b> Polearms</p><h3>Description</h3><p>This common herder's tool is
+      a wooden pole with a hooked end. When using a crook, you can ignore the
+      penalty for not having two hands free when making a combat maneuver check
+      to initiate a grapple against a creature you threaten.</p>
+  tags:
+    - PFS
+  weight:
+    value: 5
+  price: 1
+  hardness: 10
+  actions:
+    - _id: zy1y41rs1p9l7v51
+      name: Attack
+      img: systems/pf1/icons/items/weapons/crook.PNG
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: reach
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              values:
+                - bludgeoning
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+        damageMult: 1.5
+  tag: crook
+  held: 2h
+  baseTypes:
+    - Crook
+  weaponGroups:
+    value:
+      - polearms
+  subType: exotic
+  weaponSubtype: 2h
+  properties:
+    rch: true
+    trp: true
+_key: '!items!uGfh3EEOi61LGdw1'
+

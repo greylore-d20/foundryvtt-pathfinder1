@@ -1,0 +1,52 @@
+_id: nkd3xocluvt1rovu
+name: Alter Winds
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: h2k1h9vxhand88jn
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: 1 hour/level
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+      spellArea: immobile 10-ft.-radius emanation
+      measureTemplate:
+        type: circle
+        size: '10'
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 1
+      wizard: 1
+      druid: 1
+      occultist: 1
+      spiritualist: 1
+      hunter: 1
+  school: trs
+  types: air
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>You subtly enhance or diminish the effects of natural winds within the
+    spell's area, which is an immobile emanation around a point touched by you
+    as the spell is cast. Within the area, natural (but not magical) wind
+    effects are either increased or decreased by one step in intensity (Core
+    Rulebook 439). The maximum wind force you can affect with this spell is
+    based on your caster level, as shown on the table below. Alter winds has no
+    effect on magical wind effects.</p><table><tr><th>Caster Level</th><th>Wind
+    Force</th></tr><tr><td>1st-3rd</td><td>Light</td></tr><tr><td>4th-9th</td><td>Moderate</td></tr><tr><td>10th-15th</td><td>Strong</td></tr><tr><td>16th
+    or higher</td><td>Severe</td></tr></table>
+_key: '!items!nkd3xocluvt1rovu'
+

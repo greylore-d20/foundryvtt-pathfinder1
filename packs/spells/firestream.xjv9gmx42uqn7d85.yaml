@@ -1,0 +1,53 @@
+_id: xjv9gmx42uqn7d85
+name: Firestream
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 6w93abxd1jb3uzdv
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: concentration, up to 1 round/level; see text
+      range:
+        value: '20'
+        units: ft
+      actionType: spellsave
+      save:
+        type: ref
+        description: Reflex half
+      spellArea: 20-ft. line
+      measureTemplate:
+        type: ray
+        size: '20'
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+      magus: 3
+      bloodrager: 3
+  level: 3
+  school: evo
+  types: fire
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>A rushing stream of fire sprays from your outstretched hand, dealing 2d6
+    points of fire damage to every creature in the area. Each round you continue
+    to concentrate on the spell, you can select a new area for it to affect.
+    <i>Firestream</i> sets fire to combustibles and damages objects in the area.
+    It can melt metals with low melting points, such as lead, gold, copper,
+    silver, and bronze. If the damage caused to an interposing barrier shatters
+    or breaks through it, the firestream may continue beyond the barrier if the
+    area permits; otherwise it stops at the barrier just as any other spell
+    effect does.</p>
+_key: '!items!xjv9gmx42uqn7d85'
+

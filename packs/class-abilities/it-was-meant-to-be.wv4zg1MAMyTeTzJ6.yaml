@@ -1,0 +1,34 @@
+_id: wv4zg1MAMyTeTzJ6
+name: It was Meant to Be
+type: feat
+img: systems/pf1/icons/skills/blue_14.jpg
+system:
+  description:
+    value: >-
+      <p>At 9th level, you may reroll any one attack roll, <em>critical hit</em>
+      confirmation roll, or level check made to overcome spell resistance. You
+      must decide to use this ability after the first roll is made but before
+      the results are revealed by the GM. You must take the second result, even
+      if it is worse. At 9th level, you can use this ability once per day. At
+      17th level, you can use this ability twice per day.</p>
+  actions:
+    - _id: qek7q22v9nqhgnof
+      name: Use
+      img: systems/pf1/icons/skills/blue_14.jpg
+      activation:
+        type: free
+        unchained:
+          type: free
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '@classes.sorcerer.level >= 17 ? 2 : 1'
+  tag: classFeat_itWasMeantToBe
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Sorcerer
+  abilityType: su
+_key: '!items!wv4zg1MAMyTeTzJ6'
+

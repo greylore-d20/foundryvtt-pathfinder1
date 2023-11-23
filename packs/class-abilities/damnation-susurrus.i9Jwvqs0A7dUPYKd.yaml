@@ -1,0 +1,46 @@
+_id: i9Jwvqs0A7dUPYKd
+name: Damnation Susurrus
+type: feat
+img: systems/pf1/icons/spells/runes-blue-2.jpg
+system:
+  description:
+    value: >-
+      <p>The arcanist can spend 1 point from his arcane reservoir as a standard
+      action to manifest a choir of insidious whispers, which echo in the mind
+      of a single target within 30 feet, urging the target to harm itself. A
+      creature that fails a Will save to resist this effect becomes overwhelmed
+      by the voices and succumbs to their suggestions. On its turn, it drops any
+      objects it holds and harms itself, inflicting 1d6 points of damage.</p>
+
+      <p>At 3rd level, and again at every 3 levels thereafter, the arcanist can
+      target an additional creature with this exploit, to a maximum of 7 targets
+      at 18th level. Damnation susurrus is a mind-affecting effect.</p>
+  tags:
+    - Arcanist Exploit, Outer Rift
+  actions:
+    - _id: yjsynqbftk9xv4rj
+      name: Use
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      target:
+        value: one creature
+      range:
+        value: '30'
+        units: ft
+      actionType: save
+      save:
+        type: will
+        description: Will negates
+  tag: classFeat_damnationSusurrus
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Arcanist
+  abilityType: su
+_key: '!items!i9Jwvqs0A7dUPYKd'
+

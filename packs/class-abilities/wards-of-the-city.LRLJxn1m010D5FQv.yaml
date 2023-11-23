@@ -1,0 +1,46 @@
+_id: LRLJxn1m010D5FQv
+name: Wards of the City
+type: feat
+img: systems/pf1/icons/skills/green_03.jpg
+system:
+  description:
+    value: >-
+      <p>The spirit of the city shrouds one creature the shaman touches from the
+      hazards of the slums. The warded creature gains a +5 bonus on saves
+      against disease and poison, and a +25% bonus on percentage chances to
+      negate critical hits and sneak attacks. (This stacks with effects such as
+      fortification, or abilities that grant a creature with no chance to negate
+      critical hits a flat 25% chance.) Each time the ward is used (whether the
+      roll is successful or not), the bonuses are reduced by 1 and 5%,
+      respectively. The ward ends when the bonuses are reduced to 0, when the
+      shaman wards a new creature, or after 24 hours, whichever comes first. At
+      8th level and 16th level, the ward’s starting bonuses increase by 2 and
+      10%, respectively.</p>
+
+      <p>A creature affected by this hex cannot be affected by it again for 24
+      hours.</p>
+  actions:
+    - _id: phniuu4gip5y0xpa
+      name: Use
+      img: systems/pf1/icons/skills/green_03.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: spec
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  tag: classFeat_wardsOfTheCity
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!LRLJxn1m010D5FQv'
+

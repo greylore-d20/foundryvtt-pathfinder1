@@ -1,0 +1,42 @@
+_id: Ih0QO6eZ3XmrDkQS
+name: Create Gear
+type: feat
+img: systems/pf1/icons/spells/rock-acid-1.jpg
+system:
+  description:
+    value: >-
+      <p>At 1st level, you can create any object that weighs no more than 1
+      pound per wizard level you possess. Creating an object in this way is a
+      <em>standard action</em>. The Item remains for 1 minute before fading
+      away, although it disappears after one round if it leaves your possession.
+      Creating an Item to an exact specification might require a <em>Craft</em>
+      skill check, subject to GM discretion. The object must be made of simple
+      materials, such as wood, stone, glass, or metal, and cannot contain any
+      moving parts. You could use this ability to create a dagger, but not a
+      vial of alchemist’s fire. You can use this ability a number of times per
+      day equal to 3 + your <em>Intelligence</em> modifier.</p>
+  actions:
+    - _id: gbxpgfkr1kgzc2ny
+      name: Use
+      img: systems/pf1/icons/spells/rock-acid-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: minute
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.int.mod
+  tag: classFeat_createGear
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Wizard
+  abilityType: su
+_key: '!items!Ih0QO6eZ3XmrDkQS'
+

@@ -1,0 +1,49 @@
+_id: albKb3GTBSu9LzNg
+name: Shift Earth
+type: feat
+img: systems/pf1/icons/spells/rock-sky-3.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> earth; <b>Type</b> utility (Sp); <b>Level</b> 4;
+      <b>Burn</b> 0<br><b>Prerequisite</b> kinetic cover<br><b>Saving Throw</b>
+      see text; <b>SR</b> no</p>
+
+      <p>As a standard action, you can push or pull a 5-foot cube of earth or
+      unworked stone within 30 feet, moving the cube 5 feet in any direction.
+      You can create raised platforms, stairs up a cliff, holes, or other useful
+      features. This doesn’t cause the earth to float in the air, although in
+      areas with plenty of earth, you can move a cube upward, creating a short
+      pillar.</p>
+
+      <p>If you move the earth beneath a creature’s feet, it can attempt a DC 20
+      Reflex save to leap elsewhere and avoid moving along with the earth.</p>
+  actions:
+    - _id: cyjs58k7cv6wq6bs
+      name: Use
+      img: systems/pf1/icons/spells/rock-sky-3.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      target:
+        value: 5-ft. cube of earth
+      range:
+        value: '30'
+        units: ft
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: save
+      save:
+        type: ref
+        description: see text
+  tag: classFeat_shiftEarth
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+_key: '!items!albKb3GTBSu9LzNg'
+

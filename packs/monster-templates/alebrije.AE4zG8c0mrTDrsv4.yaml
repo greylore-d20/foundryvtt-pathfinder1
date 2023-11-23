@@ -1,0 +1,115 @@
+_id: AE4zG8c0mrTDrsv4
+name: Alebrije
+type: feat
+img: systems/pf1/icons/skills/violet_07.jpg
+system:
+  description:
+    value: >-
+      <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
+      No<br><b>Usable with Summons</b> No<p><a
+      href="https://aonprd.com/MonsterDisplay.aspx?ItemName=Lion%20Alebrije">Alebrijes</a>
+      travel through dreams, visiting creatures as they sleep in hopes of
+      answering questions, jogging memories, or providing inspiration. Alebrijes
+      can take the shape of any animal or magical beast found throughout the
+      Material Plane, though they have unique colorations and patterns all over
+      their bodies, and some grow wings. These colorations typically include
+      bright, vibrant hues and decorative patterns like spirals and
+      stripes.<p>“Alebrije” is an acquired template that can be added to any
+      animal or magical beast (referred to hereafter as the base creature). An
+      alebrije uses the base creature’s statistics and special abilities except
+      as noted here.<p><b>Challenge Rating:</b> Base creature’s CR +
+      2.<p><b>Size:</b> An alebrije with 8 Hit Dice or more increases in size by
+      one category.<p><b>Type</b>: The creature’s type changes to magical beast
+      (extraplanar). Do not recalculate its base attack bonus, saves, or skill
+      ranks.<p><b>Senses:</b> The creature gains darkvision with a range of 120
+      feet, dreamsight, and scent.<p><b>Dreamsight (Su):</b> Alebrijes are able
+      to notice and locate sleeping creatures within 500 feet, as well as
+      creatures engaged in similar rest, such as meditation or resting
+      trances.<p><b>Armor Class:</b> Natural armor bonus increases by
+      2.<p><b>Hit Dice:</b> Change all the creature’s racial Hit Dice to d10s.
+      Hit Dice derived from class levels remain unchanged.<p><b>Defensive
+      Abilities:</b> An alebrije with 5 Hit Dice or more gains DR 5/magic (or DR
+      10/magic if it has 11 Hit Dice or more) and SR equal to its new CR + 6 (or
+      SR equal to its new CR + 11 if it has 11 Hit Dice or more). In addition,
+      an alebrije gains cold resistance 5 and fire resistance 5 (or cold
+      resistance 10 and fire resistance 10 if it has 11 Hit Dice or more).
+      Finally, an alebrije gains light fortification, as the <a
+      href="https://aonprd.com/MagicArmorDisplay.aspx?ItemName=Fortification%20(Light)">fortification</a>
+      armor special ability.<p><b>Speed:</b> An alebrije with 5 Hit Dice or more
+      grows wings and gains a fly speed of 20 feet (average). If the alebrije
+      has 11 Hit Dice or more, it gains a fly speed of 40 feet (average)
+      instead. An alebrije that already has a fly speed improves its
+      maneuverability by one step instead.<p><b>Melee:</b> An alebrije’s natural
+      attacks grow mighty and fantastical. Increase the damage die of the base
+      creature’s primary natural attacks by one step. An alebrije’s natural
+      attacks are considered magical for the purposes of damage
+      reduction.<p><b>Spell-like Abilities:</b> An alebrije gains the following
+      spell-like abilities, using its Charisma modifier to determine any save
+      DCs: 3/day—<a
+      href="https://aonprd.com/SpellDisplay.aspx?ItemName=dream">dream</a>, <a
+      href="https://aonprd.com/SpellDisplay.aspx?ItemName=nightmare">nightmare</a>;
+      1/day— <a
+      href="https://aonprd.com/SpellDisplay.aspx?ItemName=dream%20council">dream
+      council</a>, <a
+      href="https://aonprd.com/SpellDisplay.aspx?ItemName=dream%20travel">dream
+      travel</a>, <a
+      href="https://aonprd.com/SpellDisplay.aspx?ItemName=mind%20thrust%20III">mind
+      thrust III</a>, <a
+      href="https://aonprd.com/SpellDisplay.aspx?ItemName=plane%20shift">plane
+      shift</a> (self plus 50 lbs. of objects only). The caster level equals the
+      creature’s HD (or the caster level of the base creature’s spell-like
+      abilities, whichever is higher).<p><b>Ability Scores:</b> Str +4, Dex +6,
+      Con +4, Int +4, Wis +6, Cha +4.<p><b>Skills:</b> Alebrijes have a +8
+      racial bonus on Knowledge (arcana) and Knowledge (planes) checks. They
+      always treat these skills as class skills. Otherwise,their skills are the
+      same as the base creatures’.<p><b>Languages:</b> An alebrije gains
+      telepathy (100 ft.) and can speak one language of its choice.</p>
+  changes:
+    - _id: l8bsiwq4
+      formula: '2'
+      subTarget: nac
+      modifier: untyped
+    - _id: udsiao2d
+      formula: '4'
+      subTarget: str
+      modifier: untyped
+    - _id: 9443f9ta
+      formula: '6'
+      subTarget: dex
+      modifier: untyped
+    - _id: dkyjpxdm
+      formula: '4'
+      subTarget: con
+      modifier: untyped
+    - _id: me1ar6zd
+      formula: '4'
+      subTarget: int
+      modifier: untyped
+    - _id: 9ea40tic
+      formula: '6'
+      subTarget: wis
+      modifier: untyped
+    - _id: 9wqq6jyr
+      formula: '4'
+      subTarget: cha
+      modifier: untyped
+    - _id: ajqzybs1
+      formula: '8'
+      subTarget: skill.kar
+      modifier: untyped
+    - _id: pw22ygfy
+      formula: '8'
+      subTarget: skill.kpl
+      modifier: untyped
+    - _id: gsppmqas
+      formula: '@attributes.hd.total >= 5 ? 20 : 0'
+      subTarget: flySpeed
+      modifier: untyped
+    - _id: ocn0a9fk
+      formula: '@attributes.hd.total >= 11 ? 20 : 0'
+      subTarget: flySpeed
+      modifier: untyped
+  subType: template
+  crOffset: '2'
+_key: '!items!AE4zG8c0mrTDrsv4'
+

@@ -1,0 +1,37 @@
+_id: nBCKHaM5edwuFFnk
+name: Aura of Banishment
+type: feat
+img: systems/pf1/icons/spells/haste-fire-2.jpg
+system:
+  description:
+    value: >-
+      <p>At 8th level, you can emit a 30-foot aura of banishment for a number of
+      rounds per day equal to your wizard level. Any summoned or called creature
+      in the area must make a <em>Will</em> save each round. Once the creature
+      fails a <em>Will</em> <em>saving throw</em>, it is <em>staggered</em> as
+      long as it remains inside the aura. If it fails a second <em>Will</em>
+      <em>saving throw</em>, it is immediately sent back to its home plane and
+      the spell that summoned it immediately ends. If that spell summoned more
+      than one creature, only the creature that failed its <em>saving
+      throws</em> is affected. These rounds do not need to be consecutive.</p>
+  actions:
+    - _id: 0d5ndqt0tcahhzpe
+      name: Use
+      img: systems/pf1/icons/spells/haste-fire-2.jpg
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '@classes.wizard.level'
+  tag: classFeat_auraOfBanishment
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Wizard
+  abilityType: su
+_key: '!items!nBCKHaM5edwuFFnk'
+

@@ -1,0 +1,59 @@
+_id: gfpijdqnckv9i34s
+name: Shifting Sand
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: snbhmbylznn6slox
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: ref
+        description: Reflex negates; see text
+      spellArea: 20-ft. spread
+      measureTemplate:
+        type: circle
+        size: '20'
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+      druid: 3
+      hunter: 3
+  level: 3
+  school: trs
+  types: earth
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a handful of sand
+  sr: false
+  shortDescription: >-
+    <p>You cause an earthen or sandy surface to shift and churn within the area.
+    The <i>shifting sand</i> obliterates tracks and is considered difficult
+    terrain. Acrobatics checks in the area take a penalty equal to your caster
+    level (maximum +10). Creatures entering or beginning their turn in the
+    <i>shifting sand</i> must make a Reflex save each round or become entangled
+    until the beginning of their next turn. If they attempt to move while
+    entangled, they must make a second Reflex save or fall prone. Creatures with
+    the stability racial trait (like dwarves) may apply it as a bonus on their
+    saving throws.</p><p>As a move action, you may move the area of <i>shifting
+    sand</i> up to 10 feet in any direction. Creatures that are entangled or
+    prone in the spell's area are carried along with the <i>shifting sand</i> in
+    the same direction if possible. This movement does not provoke attacks of
+    opportunity. Unattended Medium or smaller objects may also be carried along
+    or shallowly buried by the <i>shifting sand</i>.</p>
+_key: '!items!gfpijdqnckv9i34s'
+

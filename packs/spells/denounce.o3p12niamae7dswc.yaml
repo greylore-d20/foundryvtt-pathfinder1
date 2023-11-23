@@ -1,0 +1,49 @@
+_id: o3p12niamae7dswc
+name: Denounce
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 43kvpbjcmbeifnkp
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+      spellArea: 30-ft.-radius burst
+      measureTemplate:
+        type: circle
+        size: '30'
+  learnedAt:
+    class:
+      bard: 4
+      inquisitor: 4
+      psychic: 5
+      mesmerist: 4
+  level: 4
+  school: enc
+  subschool: compulsion
+  types: language-dependent, mind-affecting
+  components:
+    verbal: true
+  shortDescription: >-
+    <p>You speak out against a single creature within line of sight and turn
+    possible allies against it by drawing upon the power of your voice and
+    conviction. Creatures in the area who can see the <i>denounce</i>d creature
+    must make a Will saving throw or have their starting attitude toward the
+    <i>denounce</i>d creature worsened by two levels (see page 94 of the <i>Core
+    Rulebook</i>). For example, creatures previously indifferent to the subject
+    turn unfriendly.</p><p>Diplomacy checks made to reverse the effects of
+    <i>denounce</i> are made at a -10 penalty.</p>
+_key: '!items!o3p12niamae7dswc'
+

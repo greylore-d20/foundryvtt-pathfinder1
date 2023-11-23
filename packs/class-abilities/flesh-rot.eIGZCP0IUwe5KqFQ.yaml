@@ -1,0 +1,54 @@
+_id: eIGZCP0IUwe5KqFQ
+name: Flesh Rot
+type: feat
+img: systems/pf1/icons/skills/affliction_08.jpg
+system:
+  description:
+    value: >-
+      <p>As a standard action, you can make a melee touch attack and expend 1
+      point of mental focus to cause the flesh of a living creature to rot and
+      wither. If the attack hits, the target takes 1d8 points of damage + 1
+      point per occultist level you possess.</p>
+
+      <p>For every 4 occultist levels you possess beyond 3rd, the target takes
+      an additional 1d8 points of damage (to a maximum of 5d8 at 19th level). If
+      you miss with the melee touch attack, this power is wasted with no
+      effect.</p>
+
+      <p>You must be at least 3rd level to select this focus power.</p>
+  actions:
+    - _id: 4ghvfck8cmnmx8xg
+      name: Use
+      img: systems/pf1/icons/skills/affliction_08.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: msak
+      damage:
+        parts:
+          - formula: >-
+              (1 + floor((@classes.occultist.level - 3) / 4))d8 +
+              @classes.occultist.level
+            type:
+              values:
+                - untyped
+              custom: ''
+      ability:
+        attack: dex
+  tag: classFeat_fleshRot
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Occultist
+  abilityType: sp
+_key: '!items!eIGZCP0IUwe5KqFQ'
+

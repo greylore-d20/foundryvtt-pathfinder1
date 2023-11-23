@@ -1,0 +1,62 @@
+_id: 4gxX2chWtbQNT2wP
+name: Rhoka Sword
+type: weapon
+img: icons/weapons/swords/greatsword-guard-split-eyes.webp
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Ultimate Equipment pg. 20</em>, <em>Into the
+      Darklands pg. 61</em>, <em>Adventurer's Armory pg.
+      4</em></p><h3>Statistics</h3><p><b>Damage</b> 1d6 (small), 1d8 (medium);
+      <b>Critical</b> 18-20/x2; <b>Range</b> -; <b>Type</b> S</p><p><b>Weapon
+      Groups</b> Blades, Heavy</p><h3>Description</h3><p>This sword is used
+      almost exclusively by the life-hating urdefhans (<em>Bestiary 2 </em>276).
+      The sword is the size of a longsword but consists of two serrated blades
+      placed side by side.</p>
+  tags:
+    - PFS
+  weight:
+    value: 6
+  price: 25
+  hp:
+    max: 5
+    value: 5
+  hardness: 10
+  actions:
+    - _id: 41iu7oho7bpuq6sk
+      name: Attack
+      img: icons/weapons/swords/greatsword-guard-split-eyes.webp
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              values:
+                - slashing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+        critRange: 18
+  tag: rhokaSword
+  baseTypes:
+    - Rhoka Sword
+  weaponGroups:
+    value:
+      - bladesHeavy
+  subType: exotic
+  weaponSubtype: 1h
+_key: '!items!4gxX2chWtbQNT2wP'
+

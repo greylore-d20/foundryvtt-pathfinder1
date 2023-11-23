@@ -1,0 +1,31 @@
+_id: r8wPs0bB3WhOLxbX
+name: Track
+type: feat
+img: systems/pf1/icons/skills/beast_01.jpg
+system:
+  description:
+    value: >-
+      <p>A ranger adds half his level (minimum 1) to <em>Survival</em> <em>skill
+      checks</em> made to follow tracks.</p>
+  actions:
+    - _id: i2kt03ybe5pgcnm1
+      name: Use
+      img: systems/pf1/icons/skills/beast_01.jpg
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      actionType: ''
+  contextNotes:
+    - subTarget: skill.sur
+      target: skill
+      text: +[[max(1, floor(@classes.ranger.level / 2))]] to follow tracks
+  tag: classFeat_track
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Ranger
+  abilityType: ex
+_key: '!items!r8wPs0bB3WhOLxbX'
+

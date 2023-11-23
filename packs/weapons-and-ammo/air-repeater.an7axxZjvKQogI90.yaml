@@ -1,0 +1,95 @@
+_id: an7axxZjvKQogI90
+name: Air Repeater
+type: weapon
+img: icons/weapons/guns/gun-wood.webp
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Heroes of Golarion pg. 18</em></p>
+
+      <h3>Statistics</h3><p><b>Damage</b> 1d6 (small), 1d8 (medium);
+      <b>Critical</b> x4; <b>Range</b> 50 ft.; <b>Type</b> B and P</p>
+
+      <p><b>Misfire</b> 1 (see text); <b>Capacity</b> 6</p>
+
+      <h3>Description</h3>
+
+      <p>This long-barreled firearm is powered by a removable compressed air
+      reservoir. A misfire while an air repeater has the broken condition does
+      not cause the firearm to explode, but it does destroy the air reservoir.
+      An air repeater can fire 6 shots before the air reservoir is depleted. An
+      air repeater comes with three air reservoirs. Replacing the air reservoir
+      requires 1 minute. The @Compendium[pf1.feats.11ClnanF4PdEPd9g]{Rapid
+      Reload} feat reduces this to a full-round action.</p>
+  tags:
+    - Early Firearm
+  weight:
+    value: 6
+  price: 600
+  hardness: 10
+  actions:
+    - _id: xbo6y6q19i789cf4
+      name: Attack
+      img: icons/weapons/guns/gun-wood.webp
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '50'
+        units: ft
+        maxIncrements: 10
+      actionType: rwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              values:
+                - bludgeoning
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+        label: ''
+      ability:
+        attack: dex
+        damageMult: 1.5
+        critMult: 4
+      usesAmmo: true
+      ammoType: gunBullet
+  tag: airRepeater
+  held: 2h
+  baseTypes:
+    - Air Repeater
+  weaponGroups:
+    value:
+      - firearms
+  subType: exotic
+  weaponSubtype: ranged
+  properties:
+    ato: false
+    blc: false
+    brc: false
+    dea: false
+    dis: false
+    dst: false
+    dbl: false
+    fin: false
+    frg: false
+    grp: false
+    imp: false
+    mnk: false
+    nnl: false
+    prf: false
+    rch: false
+    sct: false
+    spc: false
+    snd: false
+    thr: false
+    trp: false
+  ammoType: gunBullet
+_key: '!items!an7axxZjvKQogI90'
+

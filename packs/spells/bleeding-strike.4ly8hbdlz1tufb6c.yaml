@@ -1,0 +1,43 @@
+_id: 4ly8hbdlz1tufb6c
+name: Bleeding Strike
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 8zwa8meglic28qw9
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or until discharged
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (harmless, object)
+      spellEffect: one slashing melee weapon touched
+  learnedAt:
+    class:
+      cleric: 1
+      oracle: 1
+      ranger: 1
+      witch: 1
+      antipaladin: 1
+      hunter: 1
+  school: nec
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>You imbue a slashing melee weapon with the ability to create a bleeding
+    wound. As a free action when the weapon hits a living creature, the wielder
+    can discharge this spell to add 1 point of bleed damage to the weapon's base
+    damage. This bleeding is difficult to stop; add your spellcasting ability
+    modifier (Wisdom for clerics, and so on) to the DC to stop the bleeding.</p>
+_key: '!items!4ly8hbdlz1tufb6c'
+

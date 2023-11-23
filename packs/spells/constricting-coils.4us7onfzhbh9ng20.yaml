@@ -1,0 +1,48 @@
+_id: 4us7onfzhbh9ng20
+name: Constricting Coils
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: otadfzszjwk29iet
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D); see text
+      target:
+        value: one living creature
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates; see text
+  learnedAt:
+    class:
+      sorcerer: 5
+      wizard: 5
+      cleric: 5
+      oracle: 5
+  level: 5
+  school: enc
+  subschool: compulsion
+  types: mind-affecting
+  components:
+    verbal: true
+    somatic: true
+    material: true
+    divineFocus: 2
+  materials:
+    value: a snakeskin
+  shortDescription: >-
+    <p>This spell functions like <i>hold monster</i>, except that the target is
+    constricted as if by the coils of a large snake, taking 1d6+6 points of
+    bludgeoning damage each round that it fails its save. A successful save ends
+    both the paralyzing and constriction effects.</p>
+_key: '!items!4us7onfzhbh9ng20'
+

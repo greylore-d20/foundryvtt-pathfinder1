@@ -1,0 +1,41 @@
+_id: 8VcUUx7d4TX4WTkt
+name: Award XP
+type: script
+img: icons/svg/book.svg
+command: >-
+  // CONFIGURATION
+
+  // If one or more tokens are selected, those will be used instead of the
+  listed actors
+
+  // Leave the actorNames array empty to guess the players
+
+  // Example actorNames: `actorNames: ["Bob", "John"],`
+
+  const c = {
+    actorNames: [],
+  };
+
+  // END CONFIGURATION
+
+
+  const tokens = canvas.tokens.controlled;
+
+  let actors = tokens.map(o => o.actor);
+
+  if (!actors.length && c.actorNames.length) actors = game.actors.filter(o =>
+  c.actorNames.includes(o.name));
+
+  if (!actors.length) actors = game.actors.filter(o => o.isPC);
+
+  actors = actors.filter(o => o.testUserPermission(game.user, 'OWNER'));
+
+
+  if (!actors.length) ui.notifications.warn('No applicable actor(s) found');
+
+  else {
+    const appCls = pf1.applications.ExperienceDistributor;
+    new appCls(actors).render(true);
+  }
+_key: '!macros!8VcUUx7d4TX4WTkt'
+

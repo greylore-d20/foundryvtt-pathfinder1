@@ -1,0 +1,51 @@
+_id: 29b03n30uyprze11
+name: Cauterizing Weapon
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: w8fytanwu0oft3lv
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      target:
+        value: >-
+          one weapon or 50 projectiles, all of which must be together at the
+          time of casting
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (harmless, object)
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+      ranger: 2
+      bard: 2
+      magus: 2
+      hunter: 2
+  level: 3
+  school: trs
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a gobbet of melted wax
+  shortDescription: >-
+    <p>You infuse a weapon with faint but pernicious energy that stymies
+    accelerated healing. Damage dealt by the weapon or ammunition is treated as
+    acid, cold, electricity, and fire, but only for the purpose of negating a
+    creature's regeneration. The weapon is also treated as silver and cold iron
+    at 8th level and is treated as chaotic, evil, good, and lawful at 11th level
+    for the purpose of negating regeneration.</p>
+_key: '!items!29b03n30uyprze11'
+

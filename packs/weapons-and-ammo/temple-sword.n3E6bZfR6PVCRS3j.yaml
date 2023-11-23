@@ -1,0 +1,70 @@
+_id: n3E6bZfR6PVCRS3j
+name: Temple Sword
+type: weapon
+img: systems/pf1/icons/items/weapons/shotel.png
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Ultimate Equipment pg. 20</em>, <em>Pathfinder #9:
+      Escape from Old Korvosa pg. 83</em>, <em>Pathfinder Campaign Setting pg.
+      209</em>, <em>Adventurer's Armory pg. 33</em>, <em>Advanced Player's Guide
+      pg. 179</em></p><h3>Statistics</h3><p><b>Damage</b> 1d6 (small), 1d8
+      (medium); <b>Critical</b> 19-20/x2; <b>Range</b> -; <b>Type</b>
+      S</p><p><b>Weapon Groups</b> Blades, Heavy;
+      Monk</p><h3>Description</h3><p>Heavy blades typically used by guardians of
+      religious sites, temple swords have distinctive crescentshaped blades,
+      which appear to be an amalgam of sickle and sword. Many have holes drilled
+      into the blade or the pommel so that charms, bells, or other holy trinkets
+      can be attached to reflect the owner's devotion or to serve as foci for
+      prayer or meditation. Monks are proficient with the temple sword.</p>
+  tags:
+    - PFS
+  weight:
+    value: 3
+  price: 30
+  hp:
+    max: 5
+    value: 5
+  hardness: 10
+  actions:
+    - _id: 57k1g170k7hhbcpj
+      name: Attack
+      img: systems/pf1/icons/items/weapons/shotel.png
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              values:
+                - slashing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+        critRange: 19
+  tag: templeSword
+  baseTypes:
+    - Temple Sword
+  weaponGroups:
+    value:
+      - bladesHeavy
+      - monk
+  subType: exotic
+  weaponSubtype: 1h
+  properties:
+    mnk: true
+    trp: true
+_key: '!items!n3E6bZfR6PVCRS3j'
+

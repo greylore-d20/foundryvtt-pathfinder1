@@ -1,0 +1,48 @@
+_id: 67hykfkm8zbj53rn
+name: Mudball
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: g7fodri5z8g1osh3
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: ref
+        description: Reflex negates; see text
+      spellEffect: single fist-sized blob of sticky mud
+  learnedAt:
+    class:
+      sorcerer: 1
+      wizard: 1
+      druid: 1
+      witch: 1
+      magus: 1
+      hunter: 1
+  school: con
+  subschool: creation
+  types: earth
+  components:
+    verbal: true
+    somatic: true
+  sr: false
+  shortDescription: >-
+    <p>When you cast this spell, you conjure a single ball of sticky mud and
+    launch it at an enemy's face as a ranged touch attack. If the mudball hits,
+    the target is blinded. Each round at the beginning of its turn, a creature
+    blinded by this spell can attempt a Reflex saving throw to shake off the
+    mud, ending the effect. The mudball can also be wiped off by the creature
+    affected by it or by a creature adjacent to the creature affected by it as a
+    standard action.</p>
+_key: '!items!67hykfkm8zbj53rn'
+

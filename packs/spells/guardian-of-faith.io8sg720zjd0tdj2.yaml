@@ -1,0 +1,49 @@
+_id: io8sg720zjd0tdj2
+name: Guardian of Faith
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: nibzj4vrvhdwo2xf
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      target:
+        value: one ally
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (harmless)
+  learnedAt:
+    class:
+      cleric: 4
+      oracle: 4
+      paladin: 4
+  level: 4
+  school: abj
+  types: see text
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: parchment with a holy text written on it
+  sr: false
+  shortDescription: >-
+    <p>The target gains the benefit of <i>Shield of Faith</i> and your choice of
+    <i>Protection from Chaos</i>, <i>evil</i>, <i>good</i>, or <i>law</i>. As a
+    move action, the target can transfer this spell to a touched ally, who
+    becomes the new target of the spell.</p><p>The alignment descriptor of this
+    spell matches the alignment descriptor of the protection spell you chose
+    when casting it. For example, granting the target protection from
+    <i>evil</i> gives this spell the <i>good</i> descriptor.</p>
+_key: '!items!io8sg720zjd0tdj2'
+

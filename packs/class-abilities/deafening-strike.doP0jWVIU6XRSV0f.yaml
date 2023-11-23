@@ -1,0 +1,33 @@
+_id: doP0jWVIU6XRSV0f
+name: Deafening Strike
+type: feat
+img: systems/pf1/icons/items/weapons/sword-cane.png
+system:
+  description:
+    value: >-
+      <p>When an investigator deals damage with studied strike, the opponent
+      must succeed at a Fortitude saving throw or be permanently deafened. A
+      successful Fortitude saving throw reduces the duration of this effect to 1
+      round. The DC for this save is equal to 10 + 1/2 the investigator’s level
+      + his Intelligence modifier. This talent has no effect on deaf creatures.
+      Deafness can be cured by heal, regeneration, remove blindness, or similar
+      effects.</p>
+
+      <p>An investigator must be at least 15th level to select this talent.</p>
+  actions:
+    - _id: kxbj77tspzw7ymma
+      name: Use
+      img: systems/pf1/icons/items/weapons/sword-cane.png
+      actionType: save
+      save:
+        type: fort
+        description: Fortitude reduces duration to 1 round
+  tag: classFeat_deafeningStrike
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Investigator
+  abilityType: ex
+_key: '!items!doP0jWVIU6XRSV0f'
+

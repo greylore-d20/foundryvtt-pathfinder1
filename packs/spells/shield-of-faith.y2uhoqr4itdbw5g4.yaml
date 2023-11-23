@@ -1,0 +1,49 @@
+_id: y2uhoqr4itdbw5g4
+name: Shield of Faith
+type: spell
+img: icons/magic/holy/barrier-shield-winged-cross.webp
+system:
+  actions:
+    - _id: y0arso8n6lab3fap
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (harmless)
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      cleric: 1
+      oracle: 1
+      inquisitor: 1
+    domain:
+      Glory: 1
+    subDomain:
+      Agathion: 1
+  school: abj
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: parchment with a holy text written on it
+  shortDescription: >-
+    <p>This spell creates a shimmering, magical field around the target that
+    averts and deflects attacks. The spell grants the subject a +2 deflection
+    bonus to AC, with an additional +1 to the bonus for every six levels you
+    have (maximum +5 deflection bonus at 18th level).</p>
+_key: '!items!y2uhoqr4itdbw5g4'
+

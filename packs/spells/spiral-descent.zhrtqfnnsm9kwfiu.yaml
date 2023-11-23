@@ -1,0 +1,40 @@
+_id: zhrtqfnnsm9kwfiu
+name: Spiral Descent
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: dw2ogglt4sozd6uj
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      target:
+        value: you and touched objects
+      range:
+        units: long
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (object)
+  learnedAt:
+    class:
+      cleric: 2
+      oracle: 2
+      inquisitor: 2
+  level: 2
+  school: con
+  subschool: teleportation
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>This spell functions as <i>spiral ascent</i>, except the destination and
+    direction of travel is downward from your current location.</p>
+_key: '!items!zhrtqfnnsm9kwfiu'
+

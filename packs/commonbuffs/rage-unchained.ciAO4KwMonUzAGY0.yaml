@@ -1,0 +1,67 @@
+name: Rage (Unchained)
+type: buff
+img: systems/pf1/icons/feats/extra-rage.jpg
+system:
+  description:
+    value: >-
+      <p>Gain +2 bonus to melee attack and <span class="notImp" title="Not
+      Implemented">melee damage</span> rolls, <span class="notImp" title="Not
+      Implemented">thrown weapon damage rolls</span>, and Will saving throws.
+      Additionally you suffer -2 penalty to Armor Class. You also gain 2
+      temporary hit points per Hit Die.</p><p>Unable to use various skills,
+      refer to @UUID[Compendium.pf1.class-abilities.2Az38ZPYwjYBKZd2]{Rage}
+      class feature for details.</p>
+  changes:
+    - _id: D2POwZXV
+      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      subTarget: mattack
+      modifier: untyped
+      priority: null
+    - _id: RBiWOi4D
+      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      subTarget: will
+      modifier: untyped
+      priority: null
+    - _id: 1waxjG3r
+      formula: '-2'
+      subTarget: ac
+      modifier: penalty
+      priority: null
+  contextNotes:
+    - text: >-
+        +[[2 + floor((@classes.barbarianUnchained.level - 2 ) / 9)]] to melee
+        attacks and damage
+      subTarget: attack
+    - text: >-
+        A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based
+        skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability
+        that requires patience or concentration while raging.
+      subTarget: skills
+    - text: >-
+        A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based
+        skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability
+        that requires patience or concentration while raging.
+      subTarget: allChecks
+  scriptCalls:
+    - _id: BUBGIP6Ubbuf61l6
+      name: Add Temporary Hit Points
+      img: icons/svg/dice-target.svg
+      type: script
+      value: |-
+        if (state) {
+          const oldTHP = actor.system.attributes.hp.temp ?? 0;
+          const level = actor.classes.barbarianUnchained.level;
+          const hpPerHD = 2 + Math.floor((level - 2) / 9);
+          const hd = actor.system.attributes.hd.total;
+          const newTHP = oldTHP + hd * hpPerHD;
+          actor.update({ "system.attributes.hp.temp": newTHP });
+        }
+      category: toggle
+      hidden: false
+  level: null
+  duration:
+    value: 2 + @classes.barbarianUnchained.level * 2 + @abilities.con.mod
+    units: round
+_id: ciAO4KwMonUzAGY0
+_key: '!items!ciAO4KwMonUzAGY0'
+

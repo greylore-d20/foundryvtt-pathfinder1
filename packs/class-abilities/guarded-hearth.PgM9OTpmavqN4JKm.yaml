@@ -1,0 +1,49 @@
+_id: PgM9OTpmavqN4JKm
+name: Guarded Hearth
+type: feat
+img: systems/pf1/icons/skills/green_32.jpg
+system:
+  description:
+    value: >-
+      <p>At 8th level, you can create a ward that protects a specified area.
+      Creating this ward takes 10 minutes of uninterrupted work. This ward has a
+      maximum radius of 5 feet per 2 cleric levels you possess. When the ward is
+      completed, you designate any number of creatures inside its area. Should
+      any other creature enter the warded area, all of the selected creatures
+      are immediately alerted (and awoken if they were asleep). The designated
+      creatures also receive a sacred bonus equal to your Wisdom modifier on all
+      saving throws and attack rolls while inside the warded area. This ward
+      immediately ends if you leave the area. The ward lasts for 1 hour per
+      cleric level. You can use this ability once per day.</p>
+
+      <p>This power replaces the Unity power of the Community Subdomain.</p>
+  actions:
+    - _id: s1qirxkp3ido4h2e
+      name: Use
+      img: systems/pf1/icons/skills/green_32.jpg
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: '@classes.cleric.level'
+        units: hour
+      target:
+        value: area
+      range:
+        units: seeText
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '1'
+  tag: classFeat_guardedHearth
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cleric
+  abilityType: su
+_key: '!items!PgM9OTpmavqN4JKm'
+

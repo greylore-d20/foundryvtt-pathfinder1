@@ -1,0 +1,37 @@
+_id: nvWnVUF8to6NdlUl
+name: Restoring Flames
+type: feat
+img: systems/pf1/icons/skills/fire_10.jpg
+system:
+  description:
+    value: >-
+      <p>At 15th level, you can cast
+      @Compendium[pf1.spells.igmb8lisqcnsxd2d]{Restoration, Greater} once per
+      day as a <em>spell-like ability</em>.</p>
+  actions:
+    - _id: g2fel0d8yjt254la
+      name: Use
+      img: systems/pf1/icons/skills/fire_10.jpg
+      activation:
+        type: special
+        unchained:
+          type: special
+      duration:
+        units: inst
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '1'
+  tag: classFeat_restoringFlames
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Sorcerer
+  abilityType: sp
+_key: '!items!nvWnVUF8to6NdlUl'
+

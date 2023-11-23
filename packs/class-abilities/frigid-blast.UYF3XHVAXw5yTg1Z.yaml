@@ -1,0 +1,54 @@
+_id: UYF3XHVAXw5yTg1Z
+name: Frigid Blast
+type: feat
+img: systems/pf1/icons/skills/violet_20.jpg
+system:
+  description:
+    value: >-
+      <p>The shaman gains cold resistance 10. In addition, as a standard action,
+      she can summon an icy blast in a 20-foot-radius burst originating from a
+      point she can see within 30 feet. This blast deals cold damage equal to
+      1d6 per shaman level she has to each creature caught in the burst. Each
+      target can attempt a Reflex saving throw to halve this damage.</p>
+
+      <p>The shaman can use this ability three times per day, but she must wait
+      at least 1d4 rounds between each use.</p>
+  actions:
+    - _id: o9nycv344adft4ks
+      name: Use
+      img: systems/pf1/icons/skills/violet_20.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: 20-ft. redius burst
+      range:
+        value: '30'
+        units: ft
+      actionType: save
+      damage:
+        parts:
+          - formula: (@classes.shaman.level)d6
+            type:
+              values:
+                - cold
+              custom: ''
+      save:
+        type: ref
+        description: Reflex half
+  uses:
+    per: day
+    maxFormula: '3'
+  tag: classFeat_frigidBlast
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!UYF3XHVAXw5yTg1Z'
+

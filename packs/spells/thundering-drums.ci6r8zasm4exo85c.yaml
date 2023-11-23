@@ -1,0 +1,52 @@
+_id: ci6r8zasm4exo85c
+name: Thundering Drums
+type: spell
+img: systems/pf1/icons/items/inventory/drum.jpg
+system:
+  actions:
+    - _id: 0dzvmcwnn0c5qt5v
+      name: Use
+      img: systems/pf1/icons/items/inventory/drum.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      range:
+        value: '15'
+        units: ft
+        maxIncrements: '1'
+      measureTemplate:
+        type: cone
+        size: '15'
+      actionType: spellsave
+      damage:
+        parts:
+          - formula: (min(5, @cl))d8
+            type:
+              values:
+                - untyped
+              custom: ''
+      save:
+        type: fort
+        description: Fortitude partial
+      spellArea: cone-shaped burst
+  learnedAt:
+    class:
+      bard: 3
+  level: 3
+  school: evo
+  types: sonic
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>You strike the ground in front of you, filling the area in front of you
+    with the thunder of pounding drums. Any creature in the area takes 1d8
+    points of sonic damage per caster level (maximum 5d8) and is knocked prone.
+    A successful Fortitude save halves the damage and negates being knocked
+    prone.</p>
+_key: '!items!ci6r8zasm4exo85c'
+

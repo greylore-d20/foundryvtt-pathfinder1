@@ -1,0 +1,44 @@
+_id: qdljsq8ba8jzt9gh
+name: Spit Venom
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: ybm82448u2ygfbbo
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous; see text
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude partial
+      spellEffect: one stream of venom
+  learnedAt:
+    class:
+      cleric: 4
+      oracle: 4
+      druid: 3
+      witch: 3
+      shaman: 4
+      hunter: 3
+  level: 4
+  school: trs
+  types: poison
+  components:
+    verbal: true
+  sr: false
+  shortDescription: >-
+    <p>You spit a stream of venom at a target using a ranged touch attack. If
+    the venom hits, it causes blindness for 1 round. The target must also save
+    or be poisoned by black adder venom; the DC in successive rounds of the
+    poison is equal to the spell's DC.</p>
+_key: '!items!qdljsq8ba8jzt9gh'
+

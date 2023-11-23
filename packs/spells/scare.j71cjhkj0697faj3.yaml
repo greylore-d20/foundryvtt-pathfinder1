@@ -1,0 +1,55 @@
+_id: j71cjhkj0697faj3
+name: Scare
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: yabw7nw34k6ycerg
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level or 1 round; see text for cause fear
+      target:
+        value: >-
+          one living creature per three levels, no two of which can be more than
+          30 ft. apart
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: will
+        description: Will partial
+  learnedAt:
+    class:
+      sorcerer: 2
+      wizard: 2
+      bard: 2
+      witch: 2
+      antipaladin: 2
+      shaman: 2
+      psychic: 2
+      medium: 2
+      mesmerist: 2
+      occultist: 2
+      spiritualist: 2
+    subDomain:
+      Fear: 3
+  level: 2
+  school: nec
+  types: fear, mind-affecting, emotion
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a bone from an undead creature
+  shortDescription: >-
+    <p>This spell functions like <i>cause fear</i>, except that it causes all
+    targeted creatures of less than 6 HD to become frightened.</p>
+_key: '!items!j71cjhkj0697faj3'
+

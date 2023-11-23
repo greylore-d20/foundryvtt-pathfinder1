@@ -1,0 +1,39 @@
+_id: 4OTxw4aL6P2HR9Dl
+name: Slick
+type: feat
+img: systems/pf1/icons/spells/ice-blue-2.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> water; <b>Type</b> utility (Sp); <b>Level</b> 1;
+      <b>Burn</b> 0<br><b>Saving Throw</b> Reflex negates; <b>SR</b> no</p>
+
+      <p>As a standard action, you call forth slippery water or ice, creating
+      any of the effects of the @Compendium[pf1.spells.ik9u3eel5vfwrtb5]{Grease}
+      spell for 1 round.</p>
+
+      <p>You can accept 1 point of burn at the start of your next turn to extend
+      the duration to 1 minute per kineticist level you possess.</p>
+  actions:
+    - _id: 4dimmj81ewsm5srj
+      name: Use
+      img: systems/pf1/icons/spells/ice-blue-2.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  tag: classFeat_slick
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+_key: '!items!4OTxw4aL6P2HR9Dl'
+

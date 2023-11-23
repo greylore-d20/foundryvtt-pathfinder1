@@ -1,0 +1,31 @@
+_id: ZFkrafAaQF4395q4
+name: Pheremones
+type: feat
+img: systems/pf1/icons/items/potions/unique-3.jpg
+system:
+  description:
+    value: >-
+      <p>The alchemist exudes an imperceptible musk that grants him a permanent
+      +3 competence bonus on Bluff, Diplomacy, and Intimidate checks.</p>
+  changes:
+    - _id: d06xgjr8
+      formula: '3'
+      subTarget: skill.int
+      modifier: competence
+    - _id: 7exsikbi
+      formula: '3'
+      subTarget: skill.dip
+      modifier: competence
+    - _id: gp1x00is
+      formula: '3'
+      subTarget: skill.blf
+      modifier: competence
+  tag: classFeat_pheremones
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Alchemist
+  abilityType: su
+_key: '!items!ZFkrafAaQF4395q4'
+

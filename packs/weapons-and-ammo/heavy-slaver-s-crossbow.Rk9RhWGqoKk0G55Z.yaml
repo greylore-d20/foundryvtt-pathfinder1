@@ -1,0 +1,86 @@
+_id: Rk9RhWGqoKk0G55Z
+name: Heavy Slaver's Crossbow
+type: weapon
+img: systems/pf1/icons/items/weapons/crossbow-heavy.PNG
+system:
+  description:
+    value: >-
+      <p><strong>Source</strong> <em>Monster Codex pg.
+      45</em></p><h3>Statistics</h3><p><strong>Damage</strong> 1d6 (small), 1d8
+      (medium); <strong>Critical</strong> 19-20/see "bolas bolts" text;
+      <strong>Range</strong> 80 ft.; <strong>Type</strong>
+      B</p><h3>Description</h3><p>This crossbow shoots ammunition called
+      @UUID[Compendium.pf1.weapons-and-ammo.Item.9y3Uo776SKY0Gtel]{bolas bolts}
+      instead of crossbow bolts. It comes in both light and heavy varieties (but
+      not double, hand, or repeating crossbow varieties) with the same reload
+      action as a conventional crossbow of its type.</p>
+  weight:
+    value: 12
+  price: 400
+  hp:
+    max: 5
+    value: 5
+  hardness: 5
+  actions:
+    - _id: ziicko2d09mon115
+      name: Attack
+      img: systems/pf1/icons/items/weapons/crossbow-heavy.PNG
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '80'
+        units: ft
+      actionType: rwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              values:
+                - bludgeoning
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+        label: ''
+      ability:
+        attack: dex
+        critRange: 19
+        critMult: 0
+      usesAmmo: true
+      ammoType: bolt
+  tag: heavySlaversCrossbow
+  baseTypes:
+    - Heavy Slaver's Crossbow
+  weaponGroups:
+    value:
+      - crossbows
+  subType: exotic
+  weaponSubtype: ranged
+  properties:
+    trp: true
+    nnl: true
+    spc: true
+    ato: false
+    blc: false
+    brc: false
+    dea: false
+    dis: false
+    dst: false
+    dbl: false
+    fin: false
+    frg: false
+    grp: false
+    imp: false
+    mnk: false
+    prf: false
+    rch: false
+    sct: false
+    snd: false
+    thr: false
+  ammoType: bolt
+_key: '!items!Rk9RhWGqoKk0G55Z'
+

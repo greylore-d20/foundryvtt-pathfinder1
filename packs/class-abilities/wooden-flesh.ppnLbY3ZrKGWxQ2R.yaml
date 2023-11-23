@@ -1,0 +1,37 @@
+_id: ppnLbY3ZrKGWxQ2R
+name: Wooden Flesh
+type: feat
+img: systems/pf1/icons/spells/runes-blue-2.jpg
+system:
+  description:
+    value: >-
+      <p>The arcanist infuses herself with the toughness of the plant life that
+      she studies. The arcanist can spend 1 point from her arcane reservoir to
+      gain a +2 natural armor bonus and DR/slashing equal to her Charisma
+      modifier (minimum 1) for 1 minute per arcanist level. While this ability
+      is in effect, she counts as both her original creature type and a plant
+      creature for the purpose of abilities and spells.</p>
+  tags:
+    - Arcanist Exploit
+  actions:
+    - _id: 0u800oroi4lmjump
+      name: Use
+      img: systems/pf1/icons/spells/runes-blue-2.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.arcanist.level'
+        units: minute
+      actionType: ''
+  tag: classFeat_woodenFlesh
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Arcanist
+  abilityType: su
+_key: '!items!ppnLbY3ZrKGWxQ2R'
+

@@ -1,0 +1,47 @@
+_id: nbpuhkw5wui23axo
+name: Sunstalker
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 8bsnuk1u6o79gmk0
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (harmless)
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+      ranger: 3
+      bard: 3
+      hunter: 3
+  level: 3
+  school: ill
+  subschool: glamer
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>A touched creature becomes invisible (as per invisibility) as long as it
+    is in direct sunlight (or bright light shed by a <i>daylight</i> spell). If
+    an action the target creature takes causes the invisible creature to become
+    visible but does not end the <i>sunstalker</i> spell's duration, the
+    creature can use this spell's magic to become invisible again as a standard
+    action as long as it stands in an area of sunlight (as defined above). The
+    creature gains only concealment (20% miss chance) in normal light.</p>
+_key: '!items!nbpuhkw5wui23axo'
+

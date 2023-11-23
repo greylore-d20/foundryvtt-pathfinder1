@@ -1,0 +1,49 @@
+_id: t8ozhtmfet726cs3
+name: Depilate
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: ent4jh10y9u4lmv6
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous
+      target:
+        value: one creature with hair or fur
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+  learnedAt:
+    class:
+      sorcerer: 1
+      wizard: 1
+      druid: 1
+      bard: 1
+      witch: 1
+      hunter: 1
+  school: nec
+  components:
+    somatic: true
+    material: true
+  materials:
+    value: a sliver of cow's tongue
+  shortDescription: >-
+    <p>This simple jinx causes a target's hair or fur to fall out in patchy
+    clumps, leaving the creature disheveled and less commanding. A jinxed
+    creature takes a -2 penalty on all Diplomacy, Intimidate, and Perform checks
+    until the hair begins to regrow 1 week later, or until the damage can be
+    concealed with a successful Disguise or Heal check (the DC is equal to the
+    original save DC of the spell). A successful <i>break enchantment</i>,
+    <i>remove curse</i>, or similar effect instantly regrows the target's hair
+    or fur and removes the spell's effects.</p>
+_key: '!items!t8ozhtmfet726cs3'
+

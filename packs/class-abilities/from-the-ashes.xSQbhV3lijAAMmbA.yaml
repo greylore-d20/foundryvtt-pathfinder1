@@ -1,0 +1,43 @@
+_id: xSQbhV3lijAAMmbA
+name: From the Ashes
+type: feat
+img: systems/pf1/icons/spells/fireball-red-3.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> fire; <b>Type</b> utility (Sp); <b>Level</b> 9;
+      <b>Burn</b> 2</p>
+
+      <p>When you are about to fall unconscious or die from hit point damage, as
+      an immediate action you can burst into flames that leave behind only ash,
+      which cannot be appreciably affected by most attacks or effects, though a
+      disintegrate spell or similar magic can annihilate it.</p>
+
+      <p>At the start of your next turn, unless the ash has been completely
+      destroyed, you arise in the square where the most ash is located, having
+      taken the damage from the triggering effect but having also healed 5
+      points of damage per kineticist level you possess.</p>
+  actions:
+    - _id: cl02q0a8k0n9vopi
+      name: Use
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      target:
+        value: self
+      range:
+        units: personal
+      uses:
+        autoDeductChargesCost: '2'
+      actionType: ''
+  tag: classFeat_fromTheAshes
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+_key: '!items!xSQbhV3lijAAMmbA'
+

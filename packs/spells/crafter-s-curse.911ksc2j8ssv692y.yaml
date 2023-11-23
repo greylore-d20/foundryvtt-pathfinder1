@@ -1,0 +1,42 @@
+_id: 911ksc2j8ssv692y
+name: Crafter's Curse
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 4b023k44m83iycfo
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 day/level (D)
+      target:
+        value: one creature
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+  learnedAt:
+    class:
+      sorcerer: 1
+      wizard: 1
+      occultist: 1
+  school: trs
+  types: curse
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a broken tool
+  shortDescription: >-
+    <p>The target of crafter's curse takes a -5 penalty on all Craft skill
+    checks while the spell lasts.</p>
+_key: '!items!911ksc2j8ssv692y'
+

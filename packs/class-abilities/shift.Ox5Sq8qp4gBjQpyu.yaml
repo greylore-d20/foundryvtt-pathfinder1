@@ -1,0 +1,41 @@
+_id: Ox5Sq8qp4gBjQpyu
+name: Shift
+type: feat
+img: systems/pf1/icons/spells/haste-sky-2.jpg
+system:
+  description:
+    value: >-
+      <p>At 1st level, you can <em>teleport</em> to a nearby space as a
+      <em>swift action</em> as if using <em>dimension door</em>. This movement
+      does not provoke an <em>attack of opportunity</em>. You must be able to
+      see the space that you are moving into. You cannot take other creatures
+      with you when you use this ability (except for familiars). You can move 5
+      feet for every two wizard levels you possess (minimum 5 feet). You can use
+      this ability a number of times per day equal to 3 + your
+      <em>Intelligence</em> modifier.</p>
+  actions:
+    - _id: jhacwegoynxwcqkz
+      name: Use
+      img: systems/pf1/icons/spells/haste-sky-2.jpg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        units: inst
+      range:
+        value: 5*(@classes.wizard.level / 2)
+        units: spec
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.int.mod
+  tag: classFeat_shift
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Wizard
+  abilityType: su
+_key: '!items!Ox5Sq8qp4gBjQpyu'
+

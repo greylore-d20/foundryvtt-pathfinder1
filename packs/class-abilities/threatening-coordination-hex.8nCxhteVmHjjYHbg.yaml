@@ -1,0 +1,44 @@
+_id: 8nCxhteVmHjjYHbg
+name: Threatening Coordination Hex
+type: feat
+img: systems/pf1/icons/skills/green_03.jpg
+system:
+  description:
+    value: >-
+      <p>The shaman causes a creature within 30 feet to view the shaman’s allies
+      as obstacles. The target treats squares adjacent to the shaman’s allies as
+      difficult terrain for a number of rounds equal to the shaman’s level, or
+      for 1 round if the target succeeds at a Will saving throw.</p>
+
+      <p>Whether or not the save is successful, a creature affected by this hex
+      cannot be the target of it again for 24 hours.</p>
+  actions:
+    - _id: ydzvi61rdtnhgm8d
+      name: Use
+      img: systems/pf1/icons/skills/green_03.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.shaman.level'
+        units: round
+      target:
+        value: one creature
+      range:
+        value: '30'
+        units: ft
+      actionType: save
+      save:
+        type: will
+        description: Will reduces duration to 1 round
+  tag: classFeat_threateningCoordinationHex
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!8nCxhteVmHjjYHbg'
+

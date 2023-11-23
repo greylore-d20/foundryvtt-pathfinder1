@@ -1,0 +1,58 @@
+_id: ekhygw5fzfe52n35
+name: Protection from Law
+type: spell
+img: icons/magic/defensive/barrier-shield-dome-deflect-blue.webp
+system:
+  actions:
+    - _id: evv9alkz68931erq
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 min./level (D)
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (harmless)
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 1
+      wizard: 1
+      cleric: 1
+      oracle: 1
+      summoner: 1
+      inquisitor: 1
+      antipaladin: 1
+      adept: 1
+      bloodrager: 1
+      shaman: 1
+      medium: 1
+      spiritualist: 1
+      summonerUnchained: 1
+    domain:
+      Chaos: 1
+    subDomain:
+      Purity: 1
+  school: abj
+  types: chaotic
+  components:
+    verbal: true
+    somatic: true
+  sr: false
+  shortDescription: >-
+    <p>This spell functions like <i>Protection from Evil</i>, except that the
+    deflection and resistance bonuses apply to attacks made by lawful
+    creatures.</p><p>The target receives a new saving throw against control by
+    lawful creatures and lawful summoned creatures cannot touch the target.</p>
+_key: '!items!ekhygw5fzfe52n35'
+

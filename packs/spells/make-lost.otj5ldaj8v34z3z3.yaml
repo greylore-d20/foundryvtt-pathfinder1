@@ -1,0 +1,47 @@
+_id: otj5ldaj8v34z3z3
+name: Make Lost
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: wmrsb8p12ilqd7dy
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: instantaneous
+      target:
+        value: one creature/level, no two of which can be more than 30 ft. apart
+      range:
+        units: close
+      measureTemplate:
+        type: circle
+        size: '15'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+  learnedAt:
+    class:
+      druid: 2
+      ranger: 1
+      bard: 2
+      hunter: 1
+  level: 2
+  school: enc
+  subschool: compulsion
+  types: mind-affecting
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>You strip the targets of their senses of direction and recent memories of
+    travel. They immediately forget the route they  took in the last hour (but
+    not details of encounters along the way) and become lost (<i>Pathfinder RPG
+    Core Rulebook</i> 424).</p>
+_key: '!items!otj5ldaj8v34z3z3'
+

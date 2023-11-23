@@ -1,0 +1,22 @@
+_id: kG8EriOOSJmDmYZd
+name: Barkskin
+type: buff
+img: systems/pf1/icons/skills/blue_34.jpg
+system:
+  description:
+    value: >-
+      <p>Your skin is toughened, granting you an enhancement bonus to your
+      natural armor as per the barkskin spell.</p>
+
+      <p><b>Usage</b>: Set the buff's level to the caster level of Barkskin.</p>
+  changes:
+    - _id: zjfo24qt
+      formula: clamped(2 + floor((@item.level - 3) / 3), 2, 5)
+      subTarget: nac
+      modifier: enh
+  level: '3'
+  duration:
+    value: '@item.level * 10'
+    units: minute
+_key: '!items!kG8EriOOSJmDmYZd'
+

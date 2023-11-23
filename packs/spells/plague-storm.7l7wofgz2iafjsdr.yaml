@@ -1,0 +1,64 @@
+_id: 7l7wofgz2iafjsdr
+name: Plague Storm
+type: spell
+img: icons/magic/death/blood-corruption-vomit-red.webp
+system:
+  actions:
+    - _id: sun4x02d0vc6d9t7
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level and instantaneous (see text)
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude negates
+      spellEffect: cloud spreads in 20-ft. radius, 20 ft. high
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 7
+      wizard: 7
+      cleric: 6
+      oracle: 6
+      druid: 6
+      witch: 6
+      hunter: 6
+    subDomain:
+      Plague: 6
+  level: 7
+  school: nec
+  types: disease, evil
+  components:
+    verbal: true
+    somatic: true
+  sr: false
+  shortDescription: >-
+    <p>You create a hideous gray cloud, similar to <i>fog cloud</i>, that
+    occasionally crackles with foul-smelling bolts of sickly green lightning.
+    Creatures in the area must save or contract one of the following diseases:
+    blinding sickness, bubonic plague, cackle fever, demon fever, devil chills,
+    filth fever, leprosy, mindfire, red ache, shakes, or slimy doom (the disease
+    is chosen by you when you cast the spell and applies to all creatures that
+    fail the save). The disease is contracted immediately (the onset period does
+    not apply) and is an instantaneous effect. Use the disease's listed
+    frequency to determine further effects, but the disease's save DC increases
+    by +2. For more information see page 557 of the <i>Core
+    Rulebook</i>.</p><p>Unlike a <i>fog cloud</i>, the <i>plague storm</i> moves
+    away from you at 10 feet per round, rolling along the surface of the
+    ground.</p><p>Figure out the cloud's new spread each round based on its new
+    point of origin, which is 10 feet farther away from the point of origin
+    where you cast the spell.</p><p>Because the vapors are heavier than air,
+    they sink to the lowest level of the terrain, even pouring down den or
+    sinkhole openings. The cloud cannot penetrate liquids, nor can it be cast
+    underwater.</p>
+_key: '!items!7l7wofgz2iafjsdr'
+

@@ -1,0 +1,46 @@
+name: Tail Slap
+type: attack
+img: systems/pf1/icons/skills/weapon_07.jpg
+system:
+  description:
+    value: >-
+      <p>A secondary natural attack with your tail.</p><p>It deals bludgeoning
+      damage.</p><hr><p>For general rules on natural attacks, see:
+      @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural
+      Attacks} (UMR).</p>
+  actions:
+    - _id: 54ucgahdjkmgzp2s
+      name: Attack
+      img: systems/pf1/icons/skills/weapon_07.jpg
+      tag: tailSlap
+      activation:
+        type: attack
+        unchained:
+          type: action
+      range:
+        value: 'null'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              values:
+                - bludgeoning
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: str
+        damage: str
+      naturalAttack:
+        primaryAttack: false
+  subType: natural
+  baseTypes:
+    - Tail Slap
+  weaponGroups:
+    value:
+      - natural
+_id: ogIJ8XWiWFlJIF6S
+_key: '!items!ogIJ8XWiWFlJIF6S'
+

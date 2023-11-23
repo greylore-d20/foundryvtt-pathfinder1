@@ -1,0 +1,39 @@
+_id: K2pQcCaDxty6OsPD
+name: Flash Infusion
+type: feat
+img: systems/pf1/icons/spells/fireball-red-3.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> fire; <b>Type</b> substance infusion; <b>Level</b> 4;
+      <b>Burn</b> 3<br><b>Associated Blasts</b> blue flame, fire,
+      plasma<br><b>Saving Throw</b> Will negates</p>
+
+      <p>Your kinetic blast is so bright that it blinds your foes. Whenever an
+      infused blast hits a foe and penetrates its spell resistance, that foe
+      must succeed at a Will save or be blinded for 1 round, regardless of
+      whether it takes damage from the blast. You can reduce the blast’s damage
+      by half to increase the DC of this save by 2.</p>
+  actions:
+    - _id: 35h1oydg6sf2qjva
+      name: Use
+      img: systems/pf1/icons/spells/fireball-red-3.jpg
+      activation:
+        type: special
+        unchained:
+          type: special
+      duration:
+        value: '1'
+        units: round
+      actionType: save
+      save:
+        type: will
+        description: Will negates
+  tag: classFeat_flashInfusion
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+_key: '!items!K2pQcCaDxty6OsPD'
+

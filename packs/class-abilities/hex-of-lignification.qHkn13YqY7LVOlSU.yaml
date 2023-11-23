@@ -1,0 +1,43 @@
+_id: qHkn13YqY7LVOlSU
+name: Hex of Lignification
+type: feat
+img: systems/pf1/icons/skills/green_03.jpg
+system:
+  description:
+    value: >-
+      <p>The shaman causes a creature within 30 feet to turn into a twisted,
+      treelike shape for 2 rounds. The target gains hardness 5 but is staggered,
+      and can negate the effect with a successful Fortitude saving throw.</p>
+
+      <p>Whether or not the target succeeds at its save, it can’t be the target
+      of this hex again for 24 hours.</p>
+  actions:
+    - _id: pn1mf2xs2mqmh3wb
+      name: Use
+      img: systems/pf1/icons/skills/green_03.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '2'
+        units: round
+      target:
+        value: one creature
+      range:
+        value: '30'
+        units: ft
+      actionType: save
+      save:
+        type: fort
+        description: Fortitude negates
+  tag: classFeat_hexOfLignification
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!qHkn13YqY7LVOlSU'
+

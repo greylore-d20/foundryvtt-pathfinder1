@@ -1,0 +1,53 @@
+_id: zqde5f3fxhad7ub4
+name: Lightning Lash
+type: spell
+img: icons/magic/lightning/bolt-strike-blue.webp
+system:
+  actions:
+    - _id: 8npn8dsdiioz6cob
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level (D)
+      range:
+        units: personal
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude negates (harmless)
+      spellArea: 20-foot-radius spread
+      measureTemplate:
+        type: circle
+        size: '20'
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      cleric: 3
+      oracle: 3
+      ranger: 2
+      witch: 3
+      inquisitor: 3
+      hunter: 2
+  level: 3
+  school: evo
+  types: electricity
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>You create a crackling lash of unholy lightning that flickers and flashes
+    in your hand like a whip, shifting color in response to your mood and will.
+    Once per round, you can make a melee touch attack with the <i>lightning
+    lash</i> against a target within 15 feet. If the attack is successful, it
+    deals 1d6 points of electricity damage and 1d6 points of damage from divine
+    power (similar to <i>flame</i> strike), and allows you to attempt a trip
+    combat maneuver check as a free action against your target (using your
+    caster level as your CMB).</p>
+_key: '!items!zqde5f3fxhad7ub4'
+

@@ -1,0 +1,44 @@
+_id: hDf52MYziTylyfHb
+name: Instant Plan
+type: feat
+img: systems/pf1/icons/feats/deceitful.jpg
+system:
+  description:
+    value: >-
+      <p>The vigilante can quickly manage a situation that seems to be spiraling
+      out of control. Once per day, the vigilante can state a plan of action.
+      All allies within 30 feet that can hear him gain a +2 morale bonus on
+      saving throws against fear effects and are immune to being demoralized.
+      They also gain a +1 morale bonus on skill checks or combat maneuver checks
+      of the vigilante’s choice. The benefits last for 1 round per vigilante
+      level.</p>
+  actions:
+    - _id: vp31pvi3sueofmbc
+      name: Use
+      img: systems/pf1/icons/feats/deceitful.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.vigilante.level'
+        units: round
+      target:
+        value: allies
+      range:
+        value: '30'
+        units: ft
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '1'
+  tag: classFeat_instantPlan
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Vigilante
+  abilityType: ex
+_key: '!items!hDf52MYziTylyfHb'
+

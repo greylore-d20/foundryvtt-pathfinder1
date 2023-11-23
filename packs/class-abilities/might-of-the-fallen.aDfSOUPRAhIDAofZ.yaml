@@ -1,0 +1,41 @@
+_id: aDfSOUPRAhIDAofZ
+name: Might of the Fallen
+type: feat
+img: systems/pf1/icons/skills/green_03.jpg
+system:
+  description:
+    value: >-
+      <p>The shaman can call upon the ancestral heroes of her family to bolster
+      ailing allies. As a standard action, the shaman can cure 1 point of
+      temporary ability damage affecting the creature touched.</p>
+
+      <p>At 7th level, this increases to 1d4 points of temporary ability
+      damage.</p>
+
+      <p>Once a creature has been the target of this hex, it cannot be the
+      target of this hex again for 24 hours.</p>
+  actions:
+    - _id: tywrxb766u0p6v4s
+      name: Use
+      img: systems/pf1/icons/skills/green_03.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  tag: classFeat_mightOfTheFallen
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!aDfSOUPRAhIDAofZ'
+

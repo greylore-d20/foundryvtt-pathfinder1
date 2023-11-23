@@ -1,0 +1,52 @@
+_id: WMi33nd76D9zC4LH
+name: Spray of Shooting Stars
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p>As a standard action, you can unleash a ball of energy that explodes in
+      a 5-foot-radius burst dealing 1d4 points of fire damage per level. A
+      successful Reflex save halves this damage. This attack has a range of 60
+      feet.</p>
+
+      <p>You can fire one explosive ball per day, plus one additional ball per
+      day at 5th level and for every 5 levels thereafter. You can fire more than
+      one ball at a time, but creatures caught inside more than one simultaneous
+      explosions only take damage once.</p>
+  actions:
+    - _id: aucwjo6yk2a0tcz8
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: 5-ft. burst
+      range:
+        value: '60'
+        units: ft
+      actionType: save
+      damage:
+        parts:
+          - formula: (@classes.oracle.level)d6
+            type:
+              values:
+                - fire
+              custom: ''
+  uses:
+    per: day
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+  tag: classFeat_sprayOfShootingStars
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: su
+_key: '!items!WMi33nd76D9zC4LH'
+

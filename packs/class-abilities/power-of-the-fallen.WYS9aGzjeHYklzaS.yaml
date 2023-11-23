@@ -1,0 +1,45 @@
+_id: WYS9aGzjeHYklzaS
+name: Power of the Fallen
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p>You can touch a dying creature and channel its life energy into another
+      living creature. This ability acts as
+      @Compendium[pf1.spells.k0k8gvqyy3rd5gke]{Death Knell}, except you can
+      choose any ally (including yourself ) within 30 feet to gain the benefit
+      of this effect, and you can apply the +2 enhancement bonus to either
+      Strength, Dexterity, or Constitution. You can use this ability a number of
+      times per day equal to your Charisma modifier.</p>
+
+      <p>You must be at least 5th level to select this revelation.</p>
+  actions:
+    - _id: cl0hafr4s9i0nhvr
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.oracle.level * 10'
+        units: minute
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '@abilities.cha.mod'
+  tag: classFeat_powerOfTheFallen
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: sp
+_key: '!items!WYS9aGzjeHYklzaS'
+

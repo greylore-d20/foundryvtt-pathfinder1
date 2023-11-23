@@ -1,0 +1,50 @@
+_id: x48O0CAEs10yL68R
+name: Telekinetic Fist
+type: feat
+img: systems/pf1/icons/skills/blood_11.jpg
+system:
+  description:
+    value: >-
+      <p>As a standard action you can strike with a telekinetic fist, targeting
+      any foe within 30 feet as a ranged touch attack. The telekinetic fist
+      deals 1d4 points of bludgeoning damage + 1 for every two wizard levels you
+      possess. You can use this ability a number of times per day equal to 3 +
+      your <em>Intelligence</em> modifier.</p>
+  actions:
+    - _id: 0frm6i8nwgg5i2f4
+      name: Use
+      img: systems/pf1/icons/skills/blood_11.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: one creature
+      range:
+        value: '30'
+        units: spec
+      actionType: rsak
+      damage:
+        parts:
+          - formula: 1 + floor(@classes.wizard.level / 2)
+            type:
+              values:
+                - bludgeoning
+              custom: ''
+      ability:
+        attack: dex
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.int.mod
+  tag: classFeat_telekineticFist
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Wizard
+  abilityType: sp
+_key: '!items!x48O0CAEs10yL68R'
+

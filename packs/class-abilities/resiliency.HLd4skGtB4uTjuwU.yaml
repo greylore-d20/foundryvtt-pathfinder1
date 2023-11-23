@@ -1,0 +1,42 @@
+_id: HLd4skGtB4uTjuwU
+name: Resiliency
+type: feat
+img: systems/pf1/icons/items/weapons/dagger.PNG
+system:
+  description:
+    value: >-
+      <p>Once per day, a rogue with this ability can gain a number of temporary
+      hit points equal to the rogue's level. Activating this ability is an
+      immediate action that can only be performed when she is brought to below 0
+      hit points. This ability can be used to prevent her from dying. These
+      temporary hit points last for 1 minute. If the rogue's hit points drop
+      below 0 due to the loss of these temporary hit points, she falls
+      unconscious and is dying as normal.</p>
+  actions:
+    - _id: 40ajgnje13caxe85
+      name: Use
+      img: systems/pf1/icons/items/weapons/dagger.PNG
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        value: '1'
+        units: minute
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '1'
+  tag: classFeat_resiliency
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Rogue
+  abilityType: ex
+_key: '!items!HLd4skGtB4uTjuwU'
+

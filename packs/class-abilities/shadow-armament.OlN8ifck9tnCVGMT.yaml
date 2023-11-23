@@ -1,0 +1,59 @@
+_id: OlN8ifck9tnCVGMT
+name: Shadow Armament
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p>You can create a quasi-real simple or martial masterwork weapon
+      appropriate for your current size. You are considered proficient with this
+      weapon. The first time you hit a creature with this weapon, that creature
+      can attempt a Will save to disbelieve; failure means the weapon deals
+      damage normally, while success means the creature takes only 1 point of
+      damage from the weapon’s attacks. The weapon deals only 1 point of damage
+      to objects.</p>
+
+      <p>At 3rd level, and again at 11th level and 19th level, the weapon gains
+      a cumulative +1 enhancement bonus.</p>
+
+      <p>At 7th level, the weapon gains either the frost or keen weapon special
+      ability, chosen when the weapon is created. These abilities don’t function
+      against a target that succeeds at its Will save.</p>
+
+      <p>At 15th level, the weapon deals minimum damage (as if it had rolled a 1
+      on each of its damage dice) against targets that succeed at their saves
+      instead of 1 point of damage.</p>
+
+      <p>You can use this ability for a number of minutes per day equal to your
+      oracle level. This duration does not need to be consecutive, but it must
+      be used in 1-minute increments. The weapon disappears after 1 round if it
+      leaves your grasp.</p>
+  actions:
+    - _id: ptl400n016rhb43z
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: minute
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '@classes.oracle.level'
+  tag: classFeat_shadowArmament
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: su
+_key: '!items!OlN8ifck9tnCVGMT'
+

@@ -1,0 +1,44 @@
+_id: Uo6HdLirmPk8haqz
+name: Elemental Manipulation
+type: feat
+img: systems/pf1/icons/spells/air-burst-sky-2.jpg
+system:
+  description:
+    value: >-
+      <p>At 8th level, you can emit a 30-foot aura that transforms magical
+      energy. Choose an energy type from acid, cold, electricity, and fire, and
+      a second type to transform it into. Any magical source of energy of this
+      type with a <em>caster level</em> equal to or less than your wizard level
+      is altered to the chosen energy type. This includes <em>supernatural</em>
+      effects from creatures with <em>Hit Dice</em> no greater than your
+      <em>caster level</em>. For example, you could transform a <em>white
+      dragon’s</em> frigid breath weapon (a <em>supernatural</em> ability), but
+      not a <em>fire elemental’s</em> fiery touch (an extraordinary ability). If
+      an effect lies only partially within your aura, only the portions within
+      the aura are transformed. You can use this ability for a number of rounds
+      per day equal to your wizard level. The rounds do not need to be
+      consecutive.</p>
+  actions:
+    - _id: owf5vg4c9mmu603j
+      name: Use
+      img: systems/pf1/icons/spells/air-burst-sky-2.jpg
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        value: '1'
+        units: round
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '@classes.wizard.level'
+  tag: classFeat_elementalManipulation
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Wizard
+  abilityType: su
+_key: '!items!Uo6HdLirmPk8haqz'
+

@@ -1,0 +1,50 @@
+name: Rage
+type: buff
+img: systems/pf1/icons/feats/extra-rage.jpg
+system:
+  description:
+    value: >-
+      <p>Gain +4 morale bonus to <em>Strength</em> and <em>Constitution</em>, +2
+      morale bonus to <em>Will</em> saves, and -2 penalty to <em>Armor
+      Class</em>.</p><p>Unable to use various skills, refer to
+      @UUID[Compendium.pf1.class-abilities.WSqWT9ZIshtC5vlV]{Rage} class feature
+      for details.</p>
+  changes:
+    - _id: lIgrzIpA
+      formula: 4 + (floor((@classes.barbarian.level - 2) / 9) * 2)
+      subTarget: str
+      modifier: morale
+      priority: null
+    - _id: 6i7dqnX9
+      formula: 4 + (floor((@classes.barbarian.level - 2) / 9) * 2)
+      subTarget: con
+      modifier: morale
+      priority: null
+    - _id: vNiZTayy
+      formula: 2 + (floor((@classes.barbarian.level - 2) / 9)
+      subTarget: will
+      modifier: morale
+      priority: null
+    - _id: Ffm7Dn9d
+      formula: '-2'
+      subTarget: ac
+      modifier: penalty
+      priority: null
+  contextNotes:
+    - text: >-
+        A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based
+        skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability
+        that requires patience or concentration while raging.
+      subTarget: skills
+    - text: >-
+        A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based
+        skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability
+        that requires patience or concentration while raging.
+      subTarget: allChecks
+  level: null
+  duration:
+    value: 2 + @classes.barbarian.level * 2 + @abilities.con.mod
+    units: round
+_id: UgjpRD8vtiSWRxuL
+_key: '!items!UgjpRD8vtiSWRxuL'
+

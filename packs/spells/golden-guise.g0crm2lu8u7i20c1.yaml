@@ -1,0 +1,48 @@
+_id: g0crm2lu8u7i20c1
+name: Golden Guise
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: edap8gwij3uy1mq5
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      target:
+        value: one object weighing no more than 5 lbs./level
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (harmless)
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+      bard: 2
+      witch: 3
+  level: 3
+  school: trs
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: 10 gold pieces
+  shortDescription: >-
+    <p>You cause an object to briefly transform into gold. Affected items gain
+    the properties of gold (<i>Pathfinder RPG Ultimate Equipment</i> 53) until
+    the spell expires. Weapons reduce their hardness by half and gain the
+    fragile quality, while piercing and slashing weapons take a -2 penalty on
+    damage rolls (minimum 1 damage). This spell increases the affected item's
+    armor check penalty by 2 and decreases its armor or shield bonus by 2. Gold
+    armor has hardness 5.</p>
+_key: '!items!g0crm2lu8u7i20c1'
+

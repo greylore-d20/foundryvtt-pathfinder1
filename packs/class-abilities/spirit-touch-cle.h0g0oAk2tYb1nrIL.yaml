@@ -1,0 +1,43 @@
+_id: h0g0oAk2tYb1nrIL
+name: Spirit Touch (CLE)
+type: feat
+img: systems/pf1/icons/skills/light_05.jpg
+system:
+  description:
+    value: >-
+      <p>At 6th level, as a swift action, you can give your natural weapons or
+      any weapons you wield the ghost touch weapon special ability. You can use
+      this power a number of rounds per day equal to your cleric level. These
+      rounds need not be consecutive.</p>
+
+      <p>This power replaces the Death's Embrace power of the Death Domain or
+      the Ward Against Death power of the Repose Domain.</p>
+  actions:
+    - _id: gdzm05de67dsypbs
+      name: Use
+      img: systems/pf1/icons/skills/light_05.jpg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: held weapon
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '@classes.cleric.level'
+    autoDeductChargesCost: ''
+  tag: classFeat_spiritTouch
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cleric
+  abilityType: su
+_key: '!items!h0g0oAk2tYb1nrIL'
+

@@ -1,0 +1,46 @@
+_id: T8it0pfx9oikGEDX
+name: Liberty's Blessing
+type: feat
+img: systems/pf1/icons/skills/blue_35.jpg
+system:
+  description:
+    value: >-
+      <p>You touch a willing creature as a standard action, granting it a boon.
+      A creature with this boon can, as a swift action, make a saving throw
+      against a single spell or effect it is suffering from that grants a save.
+      The DC of the saving throw is equal to the original DC of the spell or
+      effect. If the saving throw is successful, the effect ends. This boon
+      lasts for 1 minute or until successfully used to remove a spell or effect,
+      whichever duration is shorter. You can use this ability for a number of
+      times equal to 3 + your Wisdom modifier.</p>
+
+      <p>This power replaces the Liberation power of the Liberation Domain.</p>
+  actions:
+    - _id: urwi5y6lzoen2e42
+      name: Use
+      img: systems/pf1/icons/skills/blue_35.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: minute
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.wis.mod
+  tag: classFeat_libertysBlessing
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cleric
+  abilityType: sp
+_key: '!items!T8it0pfx9oikGEDX'
+

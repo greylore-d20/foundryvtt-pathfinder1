@@ -1,0 +1,42 @@
+_id: H3ceKB8ybasY78t9
+name: Weather Master
+type: feat
+img: systems/pf1/icons/spells/wind-sky-3.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> air; <b>Type</b> utility (Sp); <b>Level</b> 8;
+      <b>Burn</b> 0</p>
+
+      <p>By focusing on your connection to air and seeding the air around you
+      for 10 minutes, you can create powerful weather effects, as
+      @Compendium[pf1.spells.578t0lra5ll3aifs]{Control Weather}. You can create
+      tornadoes or hurricane-force winds, as appropriate for the season.</p>
+
+      <p>If you have access to the fire element, you can create hot weather, a
+      heat wave, a thaw, or an early spring.</p>
+
+      <p>If you have access to the water element, you can create all other types
+      of weather listed in control weather.</p>
+  actions:
+    - _id: 6kzyyph5j6mdz2ys
+      name: Use
+      img: systems/pf1/icons/spells/wind-sky-3.jpg
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: ''
+  tag: classFeat_weatherMaster
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+_key: '!items!H3ceKB8ybasY78t9'
+

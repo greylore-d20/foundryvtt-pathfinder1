@@ -1,0 +1,25 @@
+_id: F9mKy0SmRo4bTdni
+name: Defensive Combat Training
+type: feat
+img: systems/pf1/icons/feats/defensive-combat-training.jpg
+system:
+  description:
+    value: >-
+      <em>You excel at defending yourself from all manner of combat
+      maneuvers.</em><p><b>Benefits</b><br>You treat your total Hit Dice as your
+      base attack bonus when calculating your Combat Maneuver Defense (see
+      Combat).<p><b>Combat Trick</b><br>When targeted with a combat maneuver,
+      you can spend any number of stamina points to gain a bonus to your CMD
+      equal to the number of stamina points you spent.
+  tags:
+    - PFS
+    - Combat
+  changes:
+    - _id: jbhziqyk
+      formula: '@attributes.hd.total - @attributes.bab.total'
+      subTarget: cmd
+      modifier: untyped
+  tag: feat_defensiveCombatTraining
+  useCustomTag: true
+_key: '!items!F9mKy0SmRo4bTdni'
+

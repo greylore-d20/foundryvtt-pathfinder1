@@ -1,0 +1,48 @@
+_id: CDukd682w0F0it7j
+name: Fearful Gaze
+type: feat
+img: systems/pf1/icons/skills/green_03.jpg
+system:
+  description:
+    value: >-
+      <p>With a single shout, the shaman causes one target creature within 30
+      feet to become shaken for 1 round. A successful Will saving throw negates
+      this effect.</p>
+
+      <p>At 8th level, she makes the target frightened instead.</p>
+
+      <p>At 16th level, she makes it panicked instead. This is a mind-affecting
+      fear effect.</p>
+
+      <p>A creature affected by this hex cannot be affected by it again for 24
+      hours.</p>
+  actions:
+    - _id: 7ai0l9s3flri161h
+      name: Use
+      img: systems/pf1/icons/skills/green_03.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: one creature
+      range:
+        value: '30'
+        units: ft
+      actionType: save
+      save:
+        type: will
+        description: Will negates
+  tag: classFeat_fearfulGaze
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!CDukd682w0F0it7j'
+

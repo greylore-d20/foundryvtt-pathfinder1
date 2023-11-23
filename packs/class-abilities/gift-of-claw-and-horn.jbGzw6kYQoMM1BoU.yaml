@@ -1,0 +1,45 @@
+_id: jbGzw6kYQoMM1BoU
+name: Gift of Claw and Horn
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p>As a swift action, you gain a natural weapon. The natural weapon lasts
+      for a number of rounds equal to half your oracle level (minimum 1). You
+      must choose a bite, claw, or gore attack. These attacks deal the normal
+      damage for a creature of your size (Pathfinder RPG Bestiary 302).</p>
+
+      <p>At 5th level, your natural weapon gains a +1 enhancement bonus. This
+      bonus increases by +1 at 10th, 15th, and 20th level.</p>
+
+      <p>At 11th level, you gain two natural weapons at a time. You can use this
+      ability a number of times per day equal to 3 + your Charisma modifier.</p>
+  actions:
+    - _id: d039nois1ryg2vec
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: max(1, floor(@classes.oracle.level / 2))
+        units: round
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.cha.mod
+  tag: classFeat_giftOfClawAndHorn
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: su
+_key: '!items!jbGzw6kYQoMM1BoU'
+

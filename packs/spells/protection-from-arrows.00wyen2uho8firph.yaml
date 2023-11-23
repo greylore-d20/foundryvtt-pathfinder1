@@ -1,0 +1,52 @@
+_id: 00wyen2uho8firph
+name: Protection from Arrows
+type: spell
+img: icons/magic/defensive/shield-barrier-deflect-teal.webp
+system:
+  actions:
+    - _id: p2biyolt75pirmsn
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level or until discharged
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (harmless)
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 2
+      wizard: 2
+      alchemist: 2
+      summoner: 2
+      bloodrager: 2
+      psychic: 2
+      spiritualist: 2
+      summonerUnchained: 2
+  level: 2
+  school: abj
+  components:
+    verbal: true
+    somatic: true
+    focus: true
+  materials:
+    focus: a piece of tortoiseshell or turtle shell
+  shortDescription: >-
+    <p>The warded creature gains resistance to ranged weapons.</p><p>The subject
+    gains damage reduction 10/magic against ranged weapons. This spell doesn't
+    grant you the ability to damage creatures with similar damage reduction.
+    Once the spell has prevented a total of 10 points of damage per caster level
+    (maximum 100 points), it is discharged.</p>
+_key: '!items!00wyen2uho8firph'
+

@@ -1,0 +1,63 @@
+_id: 3plb67e51webutdz
+name: Sleep
+type: spell
+img: icons/magic/control/sleep-bubble-purple.webp
+system:
+  actions:
+    - _id: 2etzse13ptdz5qbg
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 min./level
+      range:
+        units: medium
+      measureTemplate:
+        type: circle
+        size: '10'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+      spellArea: one or more living creatures within a 10-ft.-radius burst
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 1
+      wizard: 1
+      bard: 1
+      witch: 1
+      adept: 1
+      shaman: 1
+      psychic: 1
+      mesmerist: 1
+      occultist: 1
+    subDomain:
+      Night: 1
+    bloodline:
+      Dreamspun: 1
+  school: enc
+  subschool: compulsion
+  types: mind-affecting
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: fine sand, rose petals, or a live cricket
+  shortDescription: >-
+    <p>A <i>sleep</i> spell causes a magical slumber to come upon 4 HD of
+    creatures. Creatures with the fewest HD are affected first. Among creatures
+    with equal HD, those who are closest to the spell's point of origin are
+    affected first. HD that are not sufficient to affect a creature are wasted.
+    <i>Sleep</i>ing creatures are helpless. Slapping or wounding awakens an
+    affected creature, but normal noise does not. Awakening a creature is a
+    standard action (an application of the aid another action). <i>Sleep</i>
+    does not target unconscious creatures, constructs, or undead creatures.</p>
+_key: '!items!3plb67e51webutdz'
+

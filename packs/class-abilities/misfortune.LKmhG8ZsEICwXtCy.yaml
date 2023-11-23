@@ -1,0 +1,51 @@
+_id: LKmhG8ZsEICwXtCy
+name: Misfortune
+type: feat
+img: systems/pf1/icons/skills/violet_02.jpg
+system:
+  description:
+    value: >-
+      <p>The witch can cause a creature within 30 feet to suffer grave
+      misfortune for 1 round. Anytime the creature makes an ability check,
+      attack roll, saving throw, or skill check, it must roll twice and take the
+      worse result. A Will save negates this hex.</p>
+
+      <p>At 8th level and 16th level, the duration of this hex is extended by 1
+      round. This hex affects all rolls the target must make while it lasts.</p>
+
+      <p>Whether or not the save is successful, a creature cannot be the target
+      of this hex again for 1 day.</p>
+  tags:
+    - Hex
+  actions:
+    - _id: pdbc4o5h5jpeiihu
+      name: Use
+      img: systems/pf1/icons/skills/violet_02.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: one creature
+      range:
+        value: '30'
+        units: ft
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: save
+      save:
+        type: will
+        description: Will negates
+  tag: classFeat_misfortune
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Witch
+  abilityType: su
+_key: '!items!LKmhG8ZsEICwXtCy'
+

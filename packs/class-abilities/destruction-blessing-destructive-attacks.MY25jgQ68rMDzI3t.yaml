@@ -1,0 +1,35 @@
+_id: MY25jgQ68rMDzI3t
+name: 'Destruction Blessing: Destructive Attacks'
+type: feat
+img: systems/pf1/icons/spells/slice-orange-2.jpg
+system:
+  description:
+    value: >-
+      <p>At 1st level, you can touch an ally and bless it with the power of
+      destruction. For 1 minute, the ally gains a morale bonus on weapon damage
+      rolls equal to half your level (minimum 1).</p>
+  actions:
+    - _id: 3kx8iyfxrphkkn8i
+      name: Use
+      img: systems/pf1/icons/spells/slice-orange-2.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: minute
+      target:
+        value: ally touched
+      range:
+        units: touch
+      actionType: ''
+  tag: classFeat_destructionBlessingDestructiveAttacks
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Warpriest
+_key: '!items!MY25jgQ68rMDzI3t'
+

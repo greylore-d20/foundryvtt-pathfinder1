@@ -1,0 +1,64 @@
+_id: 3CB7btXEdhNgCWGn
+name: Swordbreaker Dagger
+type: weapon
+img: systems/pf1/icons/items/weapons/dagger-swordbreaker.PNG
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Ultimate Equipment pg. 20</em>, <em>Adventurer's
+      Armory pg. 5</em>, <em>Advanced Player's Guide pg.
+      179</em></p><h3>Statistics</h3><p><b>Damage</b> 1d3 (small), 1d4 (medium);
+      <b>Critical</b> x2; <b>Range</b> -; <b>Type</b> S</p><p><b>Weapon
+      Groups</b> Blades, Light</p><h3>Description</h3><p>You can use this dagger
+      to disarm or sunder enemy blades by catching them in the grooves on the
+      back of the blade and using your weapon as a lever. If you are proficient
+      with this weapon, add a +4 bonus on combat maneuver checks to disarm or
+      sunder bladed weapons while using it.</p>
+  tags:
+    - PFS
+  weight:
+    value: 3
+  price: 10
+  hp:
+    max: 2
+    value: 2
+  hardness: 10
+  actions:
+    - _id: 2gc4gbkrzh5ij8y1
+      name: Attack
+      img: systems/pf1/icons/items/weapons/dagger-swordbreaker.PNG
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              values:
+                - slashing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+  tag: swordbreakerDagger
+  baseTypes:
+    - Swordbreaker Dagger
+  weaponGroups:
+    value:
+      - bladesLight
+  subType: exotic
+  properties:
+    dis: true
+    spc: true
+_key: '!items!3CB7btXEdhNgCWGn'
+

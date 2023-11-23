@@ -1,0 +1,43 @@
+_id: xNJl1YTfmDqielcJ
+name: Fury of the Abyss
+type: feat
+img: systems/pf1/icons/skills/blood_08.jpg
+system:
+  description:
+    value: >-
+      <p>As a swift action, you can give yourself an enhancement bonus equal to
+      1/2 your cleric level (minimum +1) on melee attacks, melee damage rolls,
+      and combat maneuver checks. This bonus lasts for 1 round. During this
+      round, you take a –2 penalty to AC. You can use this ability for a number
+      of times per day equal to 3 + your Wisdom modifier.</p>
+
+      <p>This power replaces the Touch of Chaos power of the Chaos Domain or the
+      Touch of Evil power of the Evil Domain.</p>
+  actions:
+    - _id: zg5ah8ivqanpx76v
+      name: Use
+      img: systems/pf1/icons/skills/blood_08.jpg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.wis.mod
+  tag: classFeat_furyOfTheAbyss
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cleric
+  abilityType: su
+_key: '!items!xNJl1YTfmDqielcJ'
+

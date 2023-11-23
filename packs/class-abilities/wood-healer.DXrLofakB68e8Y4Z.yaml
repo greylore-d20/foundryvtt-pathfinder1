@@ -1,0 +1,55 @@
+_id: DXrLofakB68e8Y4Z
+name: Wood Healer
+type: feat
+img: systems/pf1/icons/spells/vines-jade-3.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> wood; <b>Type</b> utility (Sp); <b>Level</b> 1;
+      <b>Burn</b> 1<br><b>Prerequisite</b> positive blast<br><b>Saving Throw</b>
+      none; <b>SR</b> yes</p>
+
+      <p>This functions as kinetic healer, but you must base the amount of
+      healing on your positive blast, not wood blast.</p>
+
+      <p>A phytokineticist with positive blast as her first blast qualifies for
+      the kinetic chirurgeon archetype and gains this utility talent instead of
+      kinetic healer.</p>
+
+      <p>This wild talent counts as kinetic healer for prerequisites for
+      selecting other kineticist wild talents.</p>
+  actions:
+    - _id: 36225g0yuggo4x1o
+      name: Use
+      img: systems/pf1/icons/spells/vines-jade-3.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: heal
+      damage:
+        parts:
+          - formula: >-
+              (ceil(@classes.kineticist.level / 2))d6 + floor(@abilities.con.mod
+              / 2) + min(@resources.classFeat_burn.value,
+              floor(@classes.kineticist.level / 3)) * 2
+            type:
+              values:
+                - positive
+              custom: ''
+  tag: classFeat_woodHealer
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+_key: '!items!DXrLofakB68e8Y4Z'
+

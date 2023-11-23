@@ -1,0 +1,38 @@
+_id: r7csmpev5hk360gf
+name: Heal Mount
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: dhexubl2v8mgzwq1
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      target:
+        value: your mount touched
+      range:
+        units: touch
+      actionType: heal
+      save:
+        type: will
+        description: Will negates (harmless)
+  learnedAt:
+    class:
+      paladin: 3
+  level: 3
+  school: con
+  subschool: healing
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>This spell functions like <i>heal,</i> but it affects only the paladin's
+    special mount (typically a horse).</p>
+_key: '!items!r7csmpev5hk360gf'
+

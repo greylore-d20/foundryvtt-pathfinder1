@@ -1,0 +1,47 @@
+_id: dw9vwkp70rj39lyd
+name: Rejuvenate Eidolon, Greater
+type: spell
+img: systems/pf1/icons/spells/heal-royal-3.jpg
+system:
+  actions:
+    - _id: kvaoc88ljnjf3nyk
+      name: Use
+      img: systems/pf1/icons/spells/heal-royal-3.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      target:
+        value: eidolon touched
+      range:
+        units: touch
+      actionType: heal
+      damage:
+        parts:
+          - formula: 5d10 + min(@cl, 20)
+            type:
+              values:
+                - untyped
+              custom: ''
+  learnedAt:
+    class:
+      summoner: 5
+      summonerUnchained: 5
+  level: 5
+  school: con
+  subschool: healing
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a drop of your blood
+  sr: false
+  shortDescription: >-
+    <p>This spell functions as <i>lesser rejuvenate eidolon</i>, except that it
+    cures 5d10 points of damage +1 point per caster level (maximum +20).</p>
+_key: '!items!dw9vwkp70rj39lyd'
+

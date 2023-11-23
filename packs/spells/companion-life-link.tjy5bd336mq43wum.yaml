@@ -1,0 +1,49 @@
+_id: tjy5bd336mq43wum
+name: Companion Life Link
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: jyrmyswxxyqnerpv
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (see below)
+      target:
+        value: one of your animal companions or your familiar
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude negates (harmless)
+  learnedAt:
+    class:
+      sorcerer: 2
+      wizard: 2
+      druid: 2
+      ranger: 2
+      witch: 2
+      hunter: 2
+  level: 2
+  school: nec
+  components:
+    verbal: true
+    somatic: true
+    material: true
+    divineFocus: 2
+  materials:
+    value: a drop of eidolon ichor
+  shortDescription: >-
+    <p>You create a life link between yourself and the target.</p><p>You sense
+    whenever the target is wounded and are made immediately aware if the target
+    is slain. If you are wounded or slain, the target is made aware. As a free
+    action, you can call out to the target, causing it to return to you (if able
+    and willing); this ends the spell.</p>
+_key: '!items!tjy5bd336mq43wum'
+

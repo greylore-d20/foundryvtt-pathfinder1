@@ -1,0 +1,24 @@
+_id: vfu0FW2XYF7cBUQp
+name: Bonus Feat (CAV)
+type: feat
+img: systems/pf1/icons/items/inventory/map-treasure.jpg
+system:
+  description:
+    value: >-
+      <p>At 6th level, and at every six levels thereafter, a cavalier gains a
+      bonus feat in addition to those gained from normal advancement. These
+      bonus feats must be selected from those listed as combat feats. The
+      cavalier must meet the prerequisites of these bonus feats.</p>
+  changes:
+    - _id: 026yrsmu
+      formula: floor(@classes.cavalier.level / 6)
+      subTarget: bonusFeats
+      modifier: untyped
+  tag: classFeat_bonusFeatCav
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cavalier
+_key: '!items!vfu0FW2XYF7cBUQp'
+

@@ -1,0 +1,36 @@
+_id: khBs4i7bNmCLuY6c
+name: 'Flood Blessing: Lasting Breath'
+type: feat
+img: systems/pf1/icons/spells/beam-blue-2.jpg
+system:
+  description:
+    value: >-
+      <p>You can touch an ally to bless it with an extra reserve of breath. For
+      1 minute, while the ally holds its breath, standard and full-round actions
+      don’t decrease the number of rounds the ally can hold its breath (see page
+      445 of Pathfinder RPG Core Rulebook).</p>
+  actions:
+    - _id: 55p8vim70zaqslzb
+      name: Use
+      img: systems/pf1/icons/spells/beam-blue-2.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: minute
+      target:
+        value: ally touched
+      range:
+        units: touch
+      actionType: ''
+  tag: classFeat_floodBlessingLastingBreath
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Warpriest
+_key: '!items!khBs4i7bNmCLuY6c'
+

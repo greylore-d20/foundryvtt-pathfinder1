@@ -1,0 +1,50 @@
+_id: 5aHSLfOTwq0LWpOR
+name: Gift of Madness
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p>You tap into the unthinkable void between the stars and cause a single
+      living creature within 30 feet to become confused for 1 round. A
+      successful Will save negates the effect. This is a mind-affecting
+      compulsion effect.</p>
+
+      <p>At 7th level, the confusion lasts for a number of rounds equal to your
+      oracle level.</p>
+
+      <p>You can use this ability a number of times per day equal to 3 + your
+      Charisma modifier.</p>
+  actions:
+    - _id: wjqhgl70a9o5puie
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: one creature
+      range:
+        value: '30'
+        units: ft
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.cha.mod
+  tag: classFeat_giftOfMadness
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: su
+_key: '!items!5aHSLfOTwq0LWpOR'
+

@@ -1,0 +1,46 @@
+_id: R10w9PcHAIHHGF40
+name: Wind Ward
+type: feat
+img: systems/pf1/icons/skills/green_03.jpg
+system:
+  description:
+    value: >-
+      <p>The shaman can touch a willing creature (including herself ) and grants
+      a ward of wind. This ward lasts for a number of rounds equal to the
+      shaman’s level. When a warded creature is attacked with an arrow, ray, or
+      other ranged attack that requires an attack roll, that attack suffers a
+      20% miss chance.</p>
+
+      <p>At 8th level, the ward lasts for 1 minute for every level the shaman
+      possesses.</p>
+
+      <p>At 16th level, the miss chance increases to 50%.</p>
+
+      <p>Once affected, the creature cannot be the target of this hex again for
+      24 hours.</p>
+  actions:
+    - _id: lrivqce0apkc3eff
+      name: Use
+      img: systems/pf1/icons/skills/green_03.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.shaman.level'
+        units: round
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: ''
+  tag: classFeat_windWard
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!R10w9PcHAIHHGF40'
+

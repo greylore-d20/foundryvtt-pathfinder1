@@ -1,0 +1,50 @@
+_id: 9avh63v2izqxldze
+name: Terrible Remorse
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: g4zw8e9iapikit2x
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      target:
+        value: 1 living creature
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: will
+        description: Will partial (see text)
+  learnedAt:
+    class:
+      sorcerer: 4
+      wizard: 4
+      cleric: 4
+      oracle: 4
+      bard: 3
+      inquisitor: 3
+      psychic: 4
+      mesmerist: 3
+      spiritualist: 4
+  level: 4
+  school: enc
+  subschool: compulsion
+  types: emotion, mind-affecting
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>You fill a target with such profound remorse that it begins to harm
+    itself. Each round, the target must save or deal 1d8 points of damage + its
+    Strength modifier to itself using an item held in its hand or with unarmed
+    attacks. If the creature saves, it is staggered for 1 round and takes a -2
+    penalty to Armor Class, after which the spell ends.</p>
+_key: '!items!9avh63v2izqxldze'
+

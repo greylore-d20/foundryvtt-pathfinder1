@@ -1,0 +1,38 @@
+_id: 1wA36yYeYhpoYnzy
+name: Moonlight Bridge
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p>You summon a bridge of shimmering moonlight. The 10-foot-wide span
+      touches the ground at a point adjacent to your position. From this point
+      it can extend in any direction for 10 feet per oracle level. The path
+      persists until you have crossed over the bridge or for 24 hours, whichever
+      is shorter.</p>
+
+      <p>You may summon a moonlight bridge a number of times per day equal to
+      your Charisma bonus. Should the bridge be attacked, treat it as a wall of
+      force.</p>
+  actions:
+    - _id: 62ghm6ihcj9rhotz
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '@abilities.cha.mod'
+  tag: classFeat_moonlightBridge
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: su
+_key: '!items!1wA36yYeYhpoYnzy'
+

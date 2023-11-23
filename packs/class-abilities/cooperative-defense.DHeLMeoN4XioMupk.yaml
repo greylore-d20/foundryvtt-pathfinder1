@@ -1,0 +1,31 @@
+name: Cooperative Defense
+type: feat
+img: icons/magic/defensive/shield-barrier-glowing-triangle-green.webp
+system:
+  description:
+    value: >-
+      <p><strong>Source</strong> Ultimate Magic pg. 88</p><p>At 8th level,
+      whenever a spell or effect targets you and one or more allies within 30
+      feet, you can use this ability to allow your allies to use your saving
+      throw against the effect in place of their own. Each ally must make this
+      choice individually before the rolls are made. Using this ability is an
+      immediate action. You can use this ability once per day at 8th level, and
+      one additional time per day for every four wizard levels beyond 8th.</p>
+  tags:
+    - Wood School
+  actions:
+    - _id: EWX575qPm4wkmlUH
+      name: Use
+      img: icons/magic/defensive/shield-barrier-glowing-triangle-green.webp
+  uses:
+    per: day
+    maxFormula: max(0, floor(@classes.wizard.level / 4) - 1)
+    autoDeductChargesCost: ''
+  subType: classFeat
+  associations:
+    classes:
+      - Wizard
+  abilityType: su
+_id: DHeLMeoN4XioMupk
+_key: '!items!DHeLMeoN4XioMupk'
+

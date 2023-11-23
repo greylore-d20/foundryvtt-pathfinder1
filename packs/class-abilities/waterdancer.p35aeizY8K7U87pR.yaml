@@ -1,0 +1,29 @@
+_id: p35aeizY8K7U87pR
+name: Waterdancer
+type: feat
+img: systems/pf1/icons/spells/ice-blue-2.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> water; <b>Type</b> utility (Sp); <b>Level</b> 3;
+      <b>Burn</b> 0</p>
+
+      <p>You call forth a current of water to increase your speed and allow you
+      to swim with ease, as if under the effects of
+      @Compendium[pf1.spells.7fvsn0gbv6ynlp63]{Slipstream} with unlimited
+      duration.</p>
+  changes:
+    - _id: 42rdnik7
+      formula: '20'
+      subTarget: swimSpeed
+      modifier: base
+      priority: '0'
+  tag: classFeat_waterdancer
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+_key: '!items!p35aeizY8K7U87pR'
+

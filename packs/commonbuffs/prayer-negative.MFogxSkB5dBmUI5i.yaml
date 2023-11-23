@@ -1,0 +1,32 @@
+_id: MFogxSkB5dBmUI5i
+name: Prayer (Negative)
+type: buff
+img: systems/pf1/icons/skills/yellow_13.jpg
+system:
+  description:
+    value: >-
+      <p>You have a +1 luck bonus on attack rolls, weapon damage rolls, saves
+      and skill checks.</p>
+  changes:
+    - _id: xs01uvaa
+      formula: '-1'
+      subTarget: attack
+      modifier: untyped
+    - _id: ywa29n6c
+      formula: '-1'
+      subTarget: wdamage
+      modifier: untyped
+    - _id: 0wyddrhp
+      formula: '-1'
+      subTarget: allSavingThrows
+      modifier: untyped
+    - _id: qgh4wvhx
+      formula: '-1'
+      subTarget: skills
+      modifier: untyped
+  level: '5'
+  duration:
+    value: '@item.level'
+    units: round
+_key: '!items!MFogxSkB5dBmUI5i'
+

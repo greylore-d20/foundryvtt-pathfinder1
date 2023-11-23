@@ -1,0 +1,79 @@
+_id: kZD3bdHeImDGDvIo
+name: Gnarled Creature (Quick)
+type: feat
+img: systems/pf1/icons/skills/violet_07.jpg
+system:
+  description:
+    value: >-
+      <p><b>Acquired/Inherited Template</b> Acquired<br><b>Simple Template</b>
+      Yes<br><b>Usable with Summons</b> Yes<p>Creatures who have been “blessed”
+      with the demon lord Kostchtchie’s attention may acquire this template,
+      which leaves them hunched and knotted with corded muscles and awkwardly
+      formed limbs. Though slower and clumsier than their fellows, gnarled
+      creatures are much stronger and hardier and have thick, horny skin.
+      “Gnarled” is an acquired template that can be applied to any creature of
+      the animal, dragon, fey, humanoid, magical beast, monstrous humanoid,
+      outsider, undead, or vermin type.<p><b>Quick Rules:</b> +1 on all rolls
+      based on Str or Con, +1 hp/HD, –1 penalty on all rolls based on Dex, –2
+      penalty on all rolls based on Cha, gains Diehard as a bonus
+      feat.<p><b>Rebuild Rules:</b> AC increase natural armor by +3; Speed
+      reduce base speed by 10 ft. (cannot be lower than 10 ft.); Defensive
+      Abilities gains the ferocity ability; Ability Scores +2 Str, +2 Con, –2
+      Dex, –4 Cha.</p>
+  changes:
+    - _id: vlvqugco
+      formula: '1'
+      subTarget: mattack
+      modifier: untyped
+    - _id: jli7dqys
+      formula: '1'
+      subTarget: wdamage
+      modifier: untyped
+    - _id: ftc0u059
+      formula: '1'
+      subTarget: strSkills
+      modifier: untyped
+    - _id: byzb7fr2
+      formula: '1'
+      subTarget: strChecks
+      modifier: untyped
+    - _id: it4gmv1b
+      formula: '1'
+      subTarget: fort
+      modifier: untyped
+    - _id: ew04mwhu
+      formula: '1'
+      subTarget: conSkills
+      modifier: untyped
+    - _id: baxyzkor
+      formula: '1'
+      subTarget: conChecks
+      modifier: untyped
+    - _id: jeycf5xf
+      formula: '@attributes.hd.total'
+      subTarget: mhp
+      modifier: untyped
+    - _id: fn9dobfz
+      formula: '-1'
+      subTarget: ref
+      modifier: untyped
+    - _id: u6kh3x95
+      formula: '-1'
+      subTarget: dexChecks
+      modifier: untyped
+    - _id: 7mglwesu
+      formula: '-1'
+      subTarget: dexSkills
+      modifier: untyped
+    - _id: 93g6kfdr
+      formula: '-2'
+      subTarget: chaSkills
+      modifier: untyped
+    - _id: 4vm7db9q
+      formula: '-2'
+      subTarget: chaChecks
+      modifier: untyped
+  subType: template
+  crOffset: '1'
+_key: '!items!kZD3bdHeImDGDvIo'
+

@@ -1,0 +1,55 @@
+_id: GGIJUPfgLWU4FmNU
+name: Divine Might
+type: feat
+img: systems/pf1/icons/skills/blue_23.jpg
+system:
+  description:
+    value: >-
+      <p>At 4th level, an omdura can call on the powers of her god once per day
+      to aid in her struggle against her enemies. As a <em>swift action</em>,
+      the omdura chooses one target within sight to be the focus of her divine
+      might. If the target is opposed to the omdura’s <em>alignment</em> on
+      either the law/chaos or the good/evil axis, the omdura adds half her
+      <em>Charisma</em> bonus (minimum +o) to her <em>attack rolls</em> and adds
+      half her omdura level to damage rolls against the target of her divine
+      might. A neutral omdura can choose any target to be the target of her
+      divine might, but she adds only one­ third her <em>Charisma</em> bonus and
+      omdura level.</p>
+
+      <p>In addition, while divine might is in effect, the omdura gains a
+      <em>deflection bonus</em> equal to half her <em>Charisma</em> modifier
+      (one-third for a neutral omdura) to her AC against attacks made by the
+      target of the divine might. If a non­ neutral omdura targets a creature
+      that is not opposed to her <em>alignment</em>, the use of this ability is
+      wasted with no effect.</p>
+
+      <p>The divine might effect remains until the target of divine might is
+      <em>dead</em> or the next time the omdura rests and regains her uses of
+      this ability. At 9th level and every 5 levels thereafter, the omdura can
+      use divine might one additional time per day to a maximum of four times
+      per day at 19th level.</p>
+  actions:
+    - _id: 3d02i2ngazk8yi4d
+      name: Use
+      img: systems/pf1/icons/skills/blue_23.jpg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      target:
+        value: one creature
+      range:
+        units: seeText
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 1 + floor((@classes.omdura.level - 4) / 5)
+  tag: classFeat_divineMight
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Omdura
+  abilityType: su
+_key: '!items!GGIJUPfgLWU4FmNU'
+

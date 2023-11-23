@@ -1,0 +1,38 @@
+name: Iron Skin
+type: feat
+img: icons/magic/defensive/armor-stone-skin.webp
+system:
+  description:
+    value: >-
+      <p><strong>Source:</strong> Ultimate Magic pg. 87</p><p>You gain a +2
+      armor bonus to your Armor Class for 10 minutes; this bonus increases by +1
+      for every 5 caster levels (maximum +6 at 20th level). You can use this
+      ability a number of times per day equal to 3 + your Intelligence
+      bonus.</p>
+  tags:
+    - Metal School
+  actions:
+    - _id: 7wHGJeOwbzGFyaGU
+      name: Use
+      img: icons/magic/defensive/armor-stone-skin.webp
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '10'
+        units: minute
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @classes.wizard.level
+    autoDeductChargesCost: ''
+  subType: classFeat
+  associations:
+    classes:
+      - Wizard
+  abilityType: su
+_id: XRmCVkk55FNn4hml
+_key: '!items!XRmCVkk55FNn4hml'
+

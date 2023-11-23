@@ -1,0 +1,47 @@
+_id: L81aEeg5D7yQ6P2n
+name: Healing (SHA)
+type: feat
+img: systems/pf1/icons/skills/green_03.jpg
+system:
+  description:
+    value: >-
+      <p>A shaman soothes the wounds of those she touches. This acts as cure
+      light wounds, using the shaman’s caster level. Once a creature has
+      benefited from the healing hex, it cannot benefit from it again for 24
+      hours.</p>
+
+      <p>At 5th level, this acts as cure moderate wounds.</p>
+  actions:
+    - _id: 277oippk5ozx6d5a
+      name: Use
+      img: systems/pf1/icons/skills/green_03.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: creature touched
+      range:
+        units: touch
+      actionType: heal
+      damage:
+        parts:
+          - formula: >-
+              (@classes.shaman.level >= 5 ? 2 : 1)d8 + min(10,
+              @classes.shaman.level)
+            type:
+              values:
+                - positive
+              custom: ''
+  tag: classFeat_healingSha
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!L81aEeg5D7yQ6P2n'
+

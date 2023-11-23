@@ -1,0 +1,81 @@
+_id: cdedzw5d9ui73ua7
+name: Dragon's Breath
+type: spell
+img: icons/creatures/abilities/dragon-ice-breath-blue.webp
+system:
+  actions:
+    - _id: 75v240ev2mqf2uib
+      name: Cone
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      range:
+        value: '30'
+        units: ft
+      actionType: spellsave
+      save:
+        type: ref
+        description: Reflex half
+      spellArea: cone-shaped burst or line
+      measureTemplate:
+        type: cone
+        size: '30'
+    - _id: bm71NkIoXFYry4eX
+      name: Line
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      range:
+        value: '30'
+        units: ft
+      measureTemplate:
+        type: ray
+        size: '30'
+      actionType: spellsave
+      save:
+        type: ref
+        description: Reflex half
+      spellArea: cone-shaped burst or line
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 4
+      wizard: 4
+      alchemist: 4
+      bloodrager: 4
+    subDomain:
+      Dragon: 4
+    bloodline:
+      Kobold: 4
+  level: 4
+  school: evo
+  types: acid, cold, electricity, or fire
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a dragon scale
+  shortDescription: >-
+    <p>You breathe out a blast of energy. Creatures in the affected area take
+    1d6 points of energy damage per caster level (maximum of 12d6). A successful
+    Reflex save results in half damage. The spell's effect and energy type
+    depend on the type of dragon scale used:</p><p><i>Black dragon</i>: 60-foot
+    line of acid.</p><p><i>Blue or bronze dragon</i>: 60-foot line of
+    electricity.</p><p><i>Green dragon</i>: 30-foot cone of acid.</p><p><i>Gold
+    or red dragon</i>: 30-foot cone of fire.</p><p><i>Silver or white
+    dragon</i>: 30-foot cone of cold.</p><p><i>Brass dragon</i>: 60-foot line of
+    fire.</p><p><i>Copper dragon</i>: 60-foot line of acid.</p>
+_key: '!items!cdedzw5d9ui73ua7'
+

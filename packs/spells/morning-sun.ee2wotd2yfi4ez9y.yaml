@@ -1,0 +1,63 @@
+_id: ee2wotd2yfi4ez9y
+name: Morning Sun
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: c9qiwmvdscm2wnna
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: ref
+        description: Fortitude negates and Reflex half, see text
+      spellArea: 60-ft. radius
+      measureTemplate:
+        type: circle
+        size: '60'
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      cleric: 7
+      oracle: 7
+      druid: 7
+      inquisitor: 6
+      shaman: 7
+  level: 7
+  school: evo
+  types: light
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: 500 gp worth of gold dust
+    gpValue: 500
+  preparation:
+    spontaneousPrepared: false
+  sr: false
+  shortDescription: >-
+    <p>This spell conjures a miniature sphere of sunlight, approximately the
+    size of a human fist, at a desired location within range. The sphere sheds
+    bright light in a 60-foot-radius burst. Creatures that take penalties in
+    bright light do so while within the sphere's area of illumination. Creatures
+    that start their turns within the area of illumination and that are damaged
+    or destroyed by sunlight must succeed at a Fortitude save or become
+    staggered until 1d4+1 rounds after they leave the affected area.
+    Non-creatures, such as hazardous fungi and mold that are destroyed by
+    sunlight, become inert for the duration of the spell.  The sphere cannot be
+    moved from the place it was cast. The sphere deals 10d6 points of fire
+    damage to anything it touches and anything that passes within 5 feet of it.
+    A successful Reflex save reduces this damage by half.</p>
+_key: '!items!ee2wotd2yfi4ez9y'
+

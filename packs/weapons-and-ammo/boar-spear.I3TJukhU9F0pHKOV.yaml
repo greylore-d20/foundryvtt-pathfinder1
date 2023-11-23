@@ -1,0 +1,61 @@
+_id: I3TJukhU9F0pHKOV
+name: Boar Spear
+type: weapon
+img: systems/pf1/icons/items/weapons/boar-spear.png
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Ultimate Equipment pg. 17</em>, <em>Advanced Player's
+      Guide pg. 176</em></p><h3>Statistics</h3><p><b>Damage</b> 1d6 (small), 1d8
+      (medium); <b>Critical</b> x2; <b>Range</b> -; <b>Type</b>
+      P</p><p><b>Weapon Groups</b> Spears</p><h3>Description</h3><p>This spear
+      has a metal crossbar to protect you against onrushing attackers. If you
+      ready a boar spear against a charge and your attack hits, you gain a +2
+      shield bonus to your AC against that creature until your next turn.</p>
+  tags:
+    - PFS
+  weight:
+    value: 8
+  price: 5
+  hardness: 10
+  actions:
+    - _id: 0pa2awx87xkdb6z1
+      name: Attack
+      img: systems/pf1/icons/items/weapons/boar-spear.png
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              values:
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+        damageMult: 1.5
+  tag: boarSpear
+  held: 2h
+  baseTypes:
+    - Boar Spear
+  weaponGroups:
+    value:
+      - spears
+  weaponSubtype: 2h
+  properties:
+    brc: true
+    spc: true
+_key: '!items!I3TJukhU9F0pHKOV'
+

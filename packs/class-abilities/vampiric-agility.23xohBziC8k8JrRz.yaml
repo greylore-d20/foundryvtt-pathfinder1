@@ -1,0 +1,35 @@
+_id: 23xohBziC8k8JrRz
+name: Vampiric Agility
+type: feat
+img: systems/pf1/icons/skills/beast_02.jpg
+system:
+  description:
+    value: >-
+      <p>All of the vampire hunter’s movement speeds are increased by 5 feet. At
+      8th level, his movement speeds are increased by 10 feet and he gains
+      <em>evasion</em>, as the <em>rogue</em> class feature. At 16th level, the
+      vampire hunter gains <em>improved evasion</em>, as the <em>rogue</em>
+      <em>advanced talent</em>.</p>
+  actions:
+    - _id: h1mebz3ek9ekgx1i
+      name: Use
+      img: systems/pf1/icons/skills/beast_02.jpg
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      actionType: ''
+  changes:
+    - _id: ue6vlwdv
+      formula: '@classes.vampirehunter.level >= 8 ? 10 : 5'
+      subTarget: allSpeeds
+      modifier: untyped
+  tag: classFeat_vampiricAgility
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Vampire Hunter
+  abilityType: su
+_key: '!items!23xohBziC8k8JrRz'
+

@@ -1,0 +1,56 @@
+_id: p36hwjebinvtwcp7
+name: Flurry of Snowballs
+type: spell
+img: systems/pf1/icons/spells/fireball-sky-1.jpg
+system:
+  actions:
+    - _id: t9x2tat5bh2btiv5
+      name: Use
+      img: systems/pf1/icons/spells/fireball-sky-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      range:
+        value: '30'
+        units: ft
+        maxIncrements: '1'
+      measureTemplate:
+        type: cone
+        size: '30'
+      actionType: spellsave
+      damage:
+        parts:
+          - formula: 4d6
+            type:
+              values:
+                - cold
+              custom: ''
+      save:
+        type: ref
+        description: Reflex half
+      spellArea: cone-shaped burst
+  learnedAt:
+    class:
+      sorcerer: 2
+      wizard: 2
+      druid: 2
+      witch: 2
+      magus: 2
+      hunter: 2
+  level: 2
+  school: evo
+  types: cold, water
+  components:
+    verbal: true
+    somatic: true
+  sr: false
+  shortDescription: >-
+    <p>You send a Flurry of Snowballs hurtling at your foes. Any creature in the
+    area takes 4d6 points of cold damage from being pelted with the icy
+    spheres.</p>
+_key: '!items!p36hwjebinvtwcp7'
+

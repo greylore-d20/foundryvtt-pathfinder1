@@ -1,0 +1,63 @@
+_id: oAb9EXEzaLRGfYxL
+name: Sickle
+type: weapon
+img: systems/pf1/icons/items/weapons/sickle.png
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Ultimate Equipment pg. 17</em>, <em>PRPG Core
+      Rulebook pg. 142</em></p><h3>Statistics</h3><p><b>Damage</b> 1d4 (small),
+      1d6 (medium); <b>Critical</b> x2; <b>Range</b> -; <b>Type</b>
+      S</p><p><b>Weapon Groups</b> Blades,
+      Light</p><h3>Description</h3><p>Originating as a farming tool used for
+      reaping grain, this one-handed weapon has a blade with a strong curve that
+      can easily catch an opponent's limb or armor. Its blade can be either
+      smooth or serrated, and some fighting sickles are sharpened on both sides
+      near the point, making it easier to hook into an opponent's flesh.</p>
+  tags:
+    - PFS
+  weight:
+    value: 2
+  price: 6
+  hp:
+    max: 2
+    value: 2
+  hardness: 10
+  actions:
+    - _id: vrfgw17zhojys4ql
+      name: Attack
+      img: systems/pf1/icons/items/weapons/sickle.png
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              values:
+                - slashing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+        critRange: null
+  tag: sickle
+  baseTypes:
+    - Sickle
+  weaponGroups:
+    value:
+      - bladesLight
+  properties:
+    trp: true
+_key: '!items!oAb9EXEzaLRGfYxL'
+

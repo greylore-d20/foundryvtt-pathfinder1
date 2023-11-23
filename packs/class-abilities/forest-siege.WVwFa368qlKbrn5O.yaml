@@ -1,0 +1,39 @@
+_id: WVwFa368qlKbrn5O
+name: Forest Siege
+type: feat
+img: systems/pf1/icons/spells/vines-jade-3.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> wood; <b>Type</b> utility (Sp); <b>Level</b> 9;
+      <b>Burn</b> 0</p>
+
+      <p>You can transform available plant life into a besieging army. This
+      functions as @Compendium[pf1.spells.u0dx0en9u171f7t0]{Siege of Trees,
+      Greater}, except you need to concentrate or the effect ends, and you can
+      change targets as a free action.</p>
+
+      <p>If you accept 1 point of burn, you can prolong the effect without the
+      need for concentration until the next time you recover burn, but you need
+      to spend a standard action to change targets.</p>
+  actions:
+    - _id: fy5e69hl957yo1rf
+      name: Use
+      img: systems/pf1/icons/spells/vines-jade-3.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: seeText
+      actionType: ''
+  tag: classFeat_forestSiege
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: sp
+_key: '!items!WVwFa368qlKbrn5O'
+

@@ -1,0 +1,42 @@
+_id: xz8qrgucx8r9c6z2
+name: Screech
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: hl5ut5t6kmeb5u5c
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      range:
+        value: '30'
+        units: ft
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude negates
+      spellArea: 30-ft.-radius spread centered on you
+      measureTemplate:
+        type: circle
+        size: '30'
+  learnedAt:
+    class:
+      witch: 3
+  level: 3
+  school: evo
+  types: sonic
+  components:
+    verbal: true
+  shortDescription: >-
+    <p>You emit a shrill, piercing shriek, startling those around you into
+    dropping their guard. Enemies in the area must make a successful saving
+    throw or immediately provoke attacks of opportunity from foes that threaten
+    them. You and your allies are unaffected by your own <i>screech</i>.</p>
+_key: '!items!xz8qrgucx8r9c6z2'
+

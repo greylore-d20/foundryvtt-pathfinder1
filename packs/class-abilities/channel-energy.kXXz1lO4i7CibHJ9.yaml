@@ -1,0 +1,91 @@
+_id: kXXz1lO4i7CibHJ9
+name: Channel Energy
+type: feat
+img: systems/pf1/icons/skills/blue_20.jpg
+system:
+  description:
+    value: >-
+      <p>Regardless of alignment, any cleric can release a wave of energy by
+      channeling the power of her faith through her holy (or unholy) symbol.
+      This energy can be used to cause or heal damage, depending on the type of
+      energy channeled and the creatures targeted.</p>
+
+      <p>A good cleric (or a neutral cleric who worships a good deity) channels
+      positive energy and can choose to deal damage to <em>undead</em> creatures
+      or to heal living creatures. An evil cleric (or a neutral cleric who
+      worships an evil deity) channels negative energy and can choose to deal
+      damage to living creatures or to heal <em>undead</em> creatures. A neutral
+      cleric of a neutral deity (or one who is not devoted to a particular
+      deity) must choose whether she channels positive or negative energy. Once
+      this choice is made, it cannot be reversed. This decision also determines
+      whether the cleric can cast spontaneous cure or inflict spells (see
+      spontaneous casting).</p>
+
+      <p>Channeling energy causes a burst that affects all creatures of one type
+      (either <em>undead</em> or living) in a 30-foot radius centered on the
+      cleric. The amount of damage dealt or healed is equal to 1d6 points of
+      damage plus 1d6 points of damage for every two cleric levels beyond 1st
+      (2d6 at 3rd, 3d6 at 5th, and so on). Creatures that take damage from
+      channeled energy receive a <em>Will</em> save to halve the damage. The DC
+      of this save is equal to 10 + 1/2 the cleric’s level + the cleric’s
+      <em>Charisma</em> modifier. Creatures healed by channel energy cannot
+      exceed their maximum hit point total—all excess healing is lost. A cleric
+      may channel energy a number of times per day equal to 3 + her
+      <em>Charisma</em> modifier. This is a standard action that does not
+      provoke an attack of opportunity. A cleric can choose whether or not to
+      include herself in this effect.</p>
+
+      <p>A cleric must be able to present her holy symbol to use this
+      ability.</p>
+  actions:
+    - _id: 1f2894xiyq8pweq5
+      name: Use
+      img: systems/pf1/icons/skills/blue_20.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: self; affects living OR undead
+      range:
+        value: '30'
+        units: ft
+        maxIncrements: '1'
+      measureTemplate:
+        type: circle
+        size: '30'
+      actionType: heal
+      damage:
+        parts:
+          - formula: (ceil(@classes.cleric.level / 2))d6
+            type:
+              values:
+                - positive
+              custom: ''
+      save:
+        dc: 10 + floor(@classes.cleric.level / 2) + @abilities.cha.mod
+        type: will
+        description: Will halves damage
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.cha.mod
+  links:
+    charges:
+      - id: jTHOihihdodSu76X
+        name: Channel Smite
+      - id: A6x4JZZOs5zFVhry
+        name: Command Undead
+      - id: AEC0MwNgQcWessn5
+        name: Elemental Channel
+  tag: classFeat_channelEnergy
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cleric
+  abilityType: su
+_key: '!items!kXXz1lO4i7CibHJ9'
+

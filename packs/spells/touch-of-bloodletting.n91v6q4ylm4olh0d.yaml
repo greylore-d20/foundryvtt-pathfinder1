@@ -1,0 +1,48 @@
+_id: n91v6q4ylm4olh0d
+name: Touch of Bloodletting
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: pe7czqjjzg8smdvw
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      target:
+        value: living creature touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+  learnedAt:
+    class:
+      sorcerer: 2
+      wizard: 2
+      cleric: 1
+      oracle: 1
+      druid: 1
+      witch: 2
+      antipaladin: 2
+      hunter: 1
+  level: 2
+  school: nec
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>This spell causes any existing wounds that the target possesses to bleed
+    profusely. If the creature's current total hit points are less than its
+    maximum, this spell causes the creature to take 1 point of bleed damage each
+    round and become exhausted for the duration of the spell. A successful DC 15
+    Heal check or any spell that cures hit point damage negates the effects of
+    this spell.</p>
+_key: '!items!n91v6q4ylm4olh0d'
+

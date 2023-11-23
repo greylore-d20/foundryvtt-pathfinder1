@@ -1,0 +1,47 @@
+_id: h898kp5ne6ikwj6r
+name: Muffle Sound
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 7bzq7u9srdleqk32
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      target:
+        value: 1 ally/level
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+  learnedAt:
+    class:
+      cleric: 2
+      oracle: 2
+      bard: 2
+      inquisitor: 2
+      psychic: 2
+      mesmerist: 2
+  level: 2
+  school: ill
+  subschool: glamer
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>You suppress sounds made by the targets, granting them a +4 bonus on
+    Stealth checks. The targets have a 20% chance of spell failure when casting
+    spells with verbal components or using abilities that have audible
+    components (such as some bardic performances). This spell does not hamper
+    the targets' ability to hear other sounds and provides no protection against
+    language-dependent or sonic spells and effects.</p>
+_key: '!items!h898kp5ne6ikwj6r'
+

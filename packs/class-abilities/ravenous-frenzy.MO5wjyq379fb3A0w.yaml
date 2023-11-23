@@ -1,0 +1,41 @@
+_id: MO5wjyq379fb3A0w
+name: Ravenous Frenzy
+type: feat
+img: systems/pf1/icons/skills/affliction_03.jpg
+system:
+  description:
+    value: >-
+      <p>At 9th level, you gain the benefits of
+      @Compendium[pf1.spells.s9amdo5398alb5p0]{Haste} for a number of rounds per
+      day equal to your <em>sorcerer</em> level. These rounds don’t need to be
+      consecutive. Each time you hit a creature with two or more claw attacks
+      during a full attack while affected by this ability, that creature takes
+      1d4 points of <em>bleed</em> damage.</p>
+  actions:
+    - _id: joiv6eawt91m1woe
+      name: Use
+      img: systems/pf1/icons/skills/affliction_03.jpg
+      activation:
+        type: free
+        unchained:
+          type: free
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '@classes.sorcerer.level'
+  tag: classFeat_ravenousFrenzy
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Sorcerer
+  abilityType: ex
+_key: '!items!MO5wjyq379fb3A0w'
+

@@ -1,0 +1,52 @@
+_id: 1u9bbze5lx7hhbmf
+name: Unlock Flesh
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: gn9scy3h57poe0vk
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: >-
+          1 round/level (living target) or instantaneous (undead target); see
+          below
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fort negates
+      spellArea: creature touched
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 1
+      wizard: 1
+      witch: 1
+  school: nec
+  components:
+    verbal: true
+    somatic: true
+    focus: true
+  materials:
+    focus: any slashing weapon or cutting tool
+  shortDescription: >-
+    <p>By touching a creature with a bladed instrument, you cause the creature's
+    flesh to loosen and slide against its skeletal moorings. A living creature
+    touched becomes staggered by the disturbing and uncomfortable sensation for
+    1 round per level. Each round on its turn, the subject can attempt a new
+    saving throw to end the effect. This is a standard action that does not
+    provoke attacks of opportunity. A corporeal undead creature targeted by this
+    spell instead takes 1d6 points of damage per caster level (maximum 5d6 at
+    5th level) as wet, oozing chunks of flesh slough off its desiccated bones (a
+    successful Fortitude save halves this damage). Incorporeal creatures, or
+    creatures that do not have flesh, are immune to this spell's effects.</p>
+_key: '!items!1u9bbze5lx7hhbmf'
+

@@ -1,0 +1,35 @@
+_id: 41MoyGrqF22CTGoU
+name: Smoke Bomb (NIN)
+type: feat
+img: systems/pf1/icons/items/weapons/kunai.png
+system:
+  description:
+    value: >-
+      <p>This ability allows a ninja to throw a smoke bomb that creates a cloud
+      of smoke with a 15-foot radius. This acts like the smoke from a
+      smokestick. The ninja can center this smoke on herself, or throw the bomb
+      as a ranged touch attack with a range of 20 feet. Using this ability is a
+      standard action.</p>
+
+      <p>Each use of this ability uses up 1 ki point.</p>
+  tags:
+    - Ninja Trick
+  actions:
+    - _id: 9c2vdad41jtxezin
+      name: Use
+      img: systems/pf1/icons/items/weapons/kunai.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      actionType: ''
+  tag: classFeat_smokeBombNin
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Ninja
+  abilityType: ex
+_key: '!items!41MoyGrqF22CTGoU'
+

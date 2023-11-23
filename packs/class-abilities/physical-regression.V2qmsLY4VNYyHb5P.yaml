@@ -1,0 +1,43 @@
+_id: V2qmsLY4VNYyHb5P
+name: Physical Regression
+type: feat
+img: systems/pf1/icons/spells/slice-spirit-3.jpg
+system:
+  description:
+    value: >-
+      <p>At 13th level, you can spend 2 points from your phrenic pool as a
+      standard action once per day to take on the form of one of your previous
+      incarnations. This ability functions as the
+      @Compendium[pf1.spells.d40ia71c2eljm91k]{Polymorph} spell, but its range
+      is personal and its duration becomes 10 minutes per caster level.</p>
+  actions:
+    - _id: qlth3rhegjesdmc9
+      name: Use
+      img: systems/pf1/icons/spells/slice-spirit-3.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 10 * @classes.psychic.level
+        units: minute
+      target:
+        value: self
+      range:
+        units: personal
+      uses:
+        autoDeductChargesCost: '2'
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '1'
+  tag: classFeat_physicalRegression
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Psychic
+  abilityType: sp
+_key: '!items!V2qmsLY4VNYyHb5P'
+

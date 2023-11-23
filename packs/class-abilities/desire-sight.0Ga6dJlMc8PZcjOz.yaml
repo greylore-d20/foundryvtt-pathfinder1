@@ -1,0 +1,43 @@
+_id: 0Ga6dJlMc8PZcjOz
+name: Desire Sight
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p>As a standard action, you can learn the desires of any creature you can
+      see within 100 feet, as if you had concentrated until the third round of
+      detect desires. As usual for detect desires, the target can attempt a Will
+      save to negate the effect.</p>
+
+      <p>You can use this ability once per day at 1st level, plus one additional
+      time per day at 5th level and for every 5 levels beyond 5th.</p>
+  actions:
+    - _id: 7xwtxzexfbt5whxr
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: one creature
+      range:
+        value: '100'
+        units: ft
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+  tag: classFeat_desireSight
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: sp
+_key: '!items!0Ga6dJlMc8PZcjOz'
+

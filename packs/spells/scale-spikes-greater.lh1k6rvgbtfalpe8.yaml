@@ -1,0 +1,54 @@
+_id: lh1k6rvgbtfalpe8
+name: Scale Spikes, Greater
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: gtsm0vjvbzpcbu40
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 hour/level
+      target:
+        value: >-
+          one living creature/level that is a reptile, has the dragon type, or
+          has the reptilian subtype, and also has a natural armor bonus of at
+          least +1
+      range:
+        units: close
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fort negates (harmless)
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+      druid: 3
+      ranger: 3
+      alchemist: 4
+      witch: 3
+      bloodrager: 4
+      shaman: 3
+      hunter: 3
+  level: 3
+  school: trs
+  components:
+    verbal: true
+    somatic: true
+    material: true
+    divineFocus: 2
+  materials:
+    value: a bit of thistle
+  shortDescription: >-
+    <p>This spell functions like <i>scale spikes</i>, except that the spikes
+    growing out of the scales have an enhancement bonus on attack and damage
+    rolls equal to +1 for every 4 caster levels (maximum +5). This bonus does
+    not allow the spikes to bypass damage reduction aside from magic.</p>
+_key: '!items!lh1k6rvgbtfalpe8'
+

@@ -1,0 +1,64 @@
+_id: F4G4W6IN2adn2Ek6
+name: Blade Boot
+type: weapon
+img: systems/pf1/icons/items/weapons/blade-boot.png
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Adventurer's Armory pg.
+      2</em></p><h3>Statistics</h3><p><b>Damage</b> 1d3 (small), 1d4 (medium);
+      <b>Critical</b> x2; <b>Range</b> -; <b>Type</b>
+      P</p><h3>Description</h3><p>Blade boots come with a spring-mounted knife
+      that pops out when triggered with the right combination of toe presses.
+      You can use a blade boot as an off-hand weapon. Releasing the knife is a
+      swift action; rearming it is a full-round action. When the blade is
+      extended, you treat normal terrain as difficult and difficult terrain as
+      impassable.</p>
+  tags:
+    - PFS
+  weight:
+    value: 2
+  price: 25
+  hp:
+    max: 2
+    value: 2
+  hardness: 10
+  actions:
+    - _id: jy4gvpg3xlbxznaw
+      name: Attack
+      img: systems/pf1/icons/items/weapons/blade-boot.png
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              values:
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+  tag: bladeBoot
+  baseTypes:
+    - Blade Boot
+  weaponGroups:
+    value:
+      - bladesLight
+      - close
+  subType: martial
+  properties:
+    spc: true
+_key: '!items!F4G4W6IN2adn2Ek6'
+

@@ -1,0 +1,42 @@
+_id: SdVTnEgSeSG85b5O
+name: Tyrannical Strike
+type: feat
+img: systems/pf1/icons/skills/red_13.jpg
+system:
+  description:
+    value: >-
+      <p>At 8th level, as an immediate action upon successfully landing a melee
+      attack on an opponent, you can choose to forgo the damage (but not any
+      other effects of the attack) to instead affect the creature you hit as per
+      a greater command spell, with a caster level equal to your class level.
+      You can use this ability once per day at 8th level, and an additional time
+      per day for every 4 levels beyond 8th.</p>
+
+      <p>This power replaces the Staff of Order power of the Law Domain.</p>
+  actions:
+    - _id: s0zrc6x4utkuha0s
+      name: Use
+      img: systems/pf1/icons/skills/red_13.jpg
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      duration:
+        units: inst
+      target:
+        value: one creature
+      range:
+        units: touch
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: floor((@classes.cleric.level - 4) / 4)
+  tag: classFeat_tyrannicalStrike
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cleric
+  abilityType: su
+_key: '!items!SdVTnEgSeSG85b5O'
+

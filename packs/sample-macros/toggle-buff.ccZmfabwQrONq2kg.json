@@ -1,6 +1,0 @@
-{
-  "name": "Toggle Buff",
-  "type": "script",
-  "img": "systems/pf1/icons/spells/protect-blue-1.jpg",
-  "command": "// CONFIGURATION\n// If one or more tokens are selected, those will be used instead of the listed actors\n// Leave the actorNames array empty to guess the players\n// Example actorNames: `actorNames: [\"Bob\", \"John\"],`\nconst c = {\n\tactorNames: [],\n\tbuffName: 'Mage Armor'\n};\n// END CONFIGURATION\n\nconst tokens = canvas.tokens.controlled;\nlet actors = tokens.map(o => o.actor);\nif (!actors.length && c.actorNames.length) actors = game.actors.filter(o => c.actorNames.includes(o.name));\nif (!actors.length) actors = game.actors.filter(o => o.isPC);\nactors = actors.filter(o => o.isOwner);\nif (!actors.length) return void ui.notifications.warn('No applicable actor(s) found');\n\nfor (const actor of actors) {\n\tconst buff = actor.itemTypes.buff.find(o => o.name === c.buffName);\n\tbuff?.setActive(!buff.isActive);\n}"
-}

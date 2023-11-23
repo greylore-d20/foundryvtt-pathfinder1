@@ -1,0 +1,57 @@
+_id: aq4cspb2nxh71pm8
+name: Flaming Aura
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: a1bq1c13d5a1tbck
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      target:
+        value: you (see text)
+      range:
+        units: personal
+      actionType: spellsave
+      save:
+        description: none (harmless, see text)
+  learnedAt:
+    class:
+      sorcerer: 4
+      wizard: 4
+      cleric: 4
+      oracle: 4
+      summoner: 4
+      witch: 4
+      magus: 4
+      bloodrager: 4
+      shaman: 4
+      summonerUnchained: 4
+  level: 4
+  school: trs
+  types: fire
+  components:
+    verbal: true
+    somatic: true
+    material: true
+    divineFocus: 2
+  materials:
+    value: a small piece of charcoal
+  sr: false
+  shortDescription: >-
+    <p>The spell allows you channel fire into your very being. If you don't
+    already have the fire subtype, this spell grants you the fire subtype. If
+    you already have the fire subtype, you instead channel the flames from your
+    being outward, creating a 10-foot-radius aura of fire centered on you.
+    Creatures who enter or end their turns in the aura must succeed at a
+    Fortitude saving throw or take 1d8 points of fire damage.  Multiple castings
+    of this spell stack; you can cast it once on yourself to gain the fire
+    subtype, then again to manifest the aura of flames around you.</p>
+_key: '!items!aq4cspb2nxh71pm8'
+

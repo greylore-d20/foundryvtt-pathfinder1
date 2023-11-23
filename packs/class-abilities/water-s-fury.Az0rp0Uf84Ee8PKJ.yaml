@@ -1,0 +1,47 @@
+_id: Az0rp0Uf84Ee8PKJ
+name: Water's Fury
+type: feat
+img: systems/pf1/icons/spells/needles-blue-1.jpg
+system:
+  description:
+    value: >-
+      <p>At 9th level, you gain the ability to summon a rushing jet of water
+      from the elemental plane of water and direct it against your foes. As a
+      <em>standard action</em>, you can create a jet of water in a 60-foot line
+      that deals 1d6 points of damage per two sorcerer levels you possess, and
+      blinds the target that was struck for 1d6 rounds. A <em>Reflex</em> save
+      (DC 10 + 1/2 your sorcerer level + your <em>Charisma</em> bonus) reduces
+      the damage by half and negates the blinding effect.</p>
+  actions:
+    - _id: igxcbdi6vaker3im
+      name: Use
+      img: systems/pf1/icons/spells/needles-blue-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: one creature
+      range:
+        value: 60-ft. line
+        units: spec
+      actionType: spellsave
+      damage:
+        parts:
+          - formula: (floor(@classes.sorcerer.level / 2))d6
+            type:
+              values:
+                - cold
+              custom: ''
+  tag: classFeat_watersFury
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Sorcerer
+  abilityType: sp
+_key: '!items!Az0rp0Uf84Ee8PKJ'
+

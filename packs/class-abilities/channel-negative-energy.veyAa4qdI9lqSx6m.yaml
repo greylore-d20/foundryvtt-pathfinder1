@@ -1,0 +1,59 @@
+_id: veyAa4qdI9lqSx6m
+name: Channel Negative Energy
+type: feat
+img: systems/pf1/icons/skills/violet_17.jpg
+system:
+  description:
+    value: >-
+      <p>When an antipaladin reaches 4th level, he gains the supernatural
+      ability to channel negative energy like a <a
+      href="https://www.aonprd.com/ClassDisplay.aspx?ItemName=Cleric">cleric</a>.
+      Using this ability consumes two uses of his touch of corruption ability.
+      An antipaladin uses his level as his effective cleric level when
+      channeling negative energy. This is a Charisma-based ability.</p>
+  actions:
+    - _id: 88fpcie6kdn01ln5
+      name: Use
+      img: systems/pf1/icons/skills/violet_17.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: self; affects living OR undead
+      range:
+        value: '30'
+        units: ft
+        maxIncrements: '1'
+      uses:
+        autoDeductChargesCost: '2'
+      measureTemplate:
+        type: circle
+        size: '30'
+        overrideColor: true
+      actionType: save
+      damage:
+        parts:
+          - formula: (ceil(@classes.antipaladin.level / 2))d6
+            type:
+              values:
+                - negative
+              custom: ''
+      save:
+        dc: 10 + floor(@classes.antipaladin.level / 2) + @abilities.cha.mod
+        type: will
+        description: Will halves damage
+  uses:
+    per: charges
+  tag: classFeat_channelNegativeEnergy
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Antipaladin
+  abilityType: su
+_key: '!items!veyAa4qdI9lqSx6m'
+

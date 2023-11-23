@@ -1,0 +1,52 @@
+_id: Yp8tvkZep6oy5KkU
+name: Erosion Curse
+type: feat
+img: systems/pf1/icons/skills/green_03.jpg
+system:
+  description:
+    value: >-
+      <p>The shaman summons the powers of nature to erode a construct or object
+      within 30 feet. This erosion deals 1d6 points of damage per 2 shaman
+      levels, ignoring hardness and damage reduction. If used against a
+      construct or an object in another creature’s possession, the construct or
+      the creature possessing the object can attempt a Reflex saving throw to
+      halve the damage.</p>
+
+      <p>Once an object or a construct is damaged by this erosion, it cannot be
+      the target of this hex again for 24 hours.</p>
+  actions:
+    - _id: 1i1dnri0ucpntiwf
+      name: Use
+      img: systems/pf1/icons/skills/green_03.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: one construct or object
+      range:
+        value: '30'
+        units: ft
+      actionType: save
+      damage:
+        parts:
+          - formula: (floor(@classes.shaman.level / 2))d6
+            type:
+              values:
+                - untyped
+              custom: ''
+      save:
+        type: ref
+        description: Reflex half (attended objects)
+  tag: classFeat_erosionCurse
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!Yp8tvkZep6oy5KkU'
+

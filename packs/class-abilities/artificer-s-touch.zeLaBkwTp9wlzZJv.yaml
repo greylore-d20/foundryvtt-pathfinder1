@@ -1,0 +1,43 @@
+_id: zeLaBkwTp9wlzZJv
+name: Artificer's Touch
+type: feat
+img: systems/pf1/icons/items/inventory/pickaxe.jpg
+system:
+  description:
+    value: >-
+      <p>You can cast @Compendium[pf1.spells.24zg8a05hqum3e6j]{Mending} at will,
+      using your cleric level as the caster level to repair damaged objects. In
+      addition, you can cause damage to objects and construct creatures by
+      striking them with a melee touch attack. Objects and constructs take 1d6
+      points of damage +1 for every two cleric levels you possess. This attack
+      bypasses an amount of damage reduction and hardness equal to your cleric
+      level. You can use this ability a number of times per day equal to 3 +
+      your Wisdom modifier.</p>
+  actions:
+    - _id: iic5rot6ntiyw170
+      name: Use
+      img: systems/pf1/icons/items/inventory/pickaxe.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        units: inst
+      target:
+        value: object touched
+      range:
+        units: touch
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.wis.mod
+  tag: classFeat_artificersTouch
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Cleric
+  abilityType: sp
+_key: '!items!zeLaBkwTp9wlzZJv'
+

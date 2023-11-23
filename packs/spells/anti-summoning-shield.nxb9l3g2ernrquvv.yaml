@@ -1,0 +1,52 @@
+_id: nxb9l3g2ernrquvv
+name: Anti-Summoning Shield
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: zdmqx30h8jprg41m
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level (D)
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+      spellArea: 50-ft.-radius
+      measureTemplate:
+        type: circle
+        size: '50'
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 2
+      wizard: 2
+      bard: 2
+      summoner: 2
+      inquisitor: 3
+      summonerUnchained: 2
+  level: 2
+  school: abj
+  components:
+    verbal: true
+  shortDescription: >-
+    <p>Within the area of effect, this spell impedes the use of spells of the
+    summoning subschool and other effects that summon creatures. Any such
+    spells, spell-like abilities, or similar summoning effects used within the
+    area have a percent chance of failure equals 5% x your caster level, to a
+    maximum 75% chance of failure. If the summoning effect already has a percent
+    chance of failure (as is often the case with the summon spell-like ability
+    of outsiders), these percentages stack. This spell does not affect summoners
+    attempting to summon their eidolon, but it does affect summoners casting
+    other summoning spells.</p>
+_key: '!items!nxb9l3g2ernrquvv'
+

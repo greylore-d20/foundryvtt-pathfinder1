@@ -1,0 +1,53 @@
+_id: 2fcl60gfpjewgi2v
+name: Cursed Treasure
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 4ptvh5qamsp0m0xz
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: minute
+        unchained:
+          type: minute
+      duration:
+        value: permanent until discharged, then permanent (see text)
+      target:
+        value: unattended object touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude negates (object), then Will negates (see text)
+  learnedAt:
+    class:
+      sorcerer: 4
+      wizard: 4
+      cleric: 3
+      oracle: 3
+      witch: 3
+      antipaladin: 3
+      bloodrager: 4
+      shaman: 3
+      spiritualist: 3
+  level: 4
+  school: nec
+  types: curse
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a platinum piece
+  shortDescription: >-
+    <p>You touch a piece of treasure or container filled with treasure and place
+    a terrible curse upon it, choosing from any option available with <i>bestow
+    curse</i>. The next creature to take the treasure or remove items from the
+    container is affected by the curse, unless it succeeds at a Will save (spell
+    resistance applies). If you are the next creature to take the treasure or
+    get objects from the container, though, the spell discharges harmlessly
+    instead.</p>
+_key: '!items!2fcl60gfpjewgi2v'
+

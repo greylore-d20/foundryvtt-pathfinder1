@@ -1,0 +1,49 @@
+_id: uBx5tzUBqewNZuHk
+name: Guardian of the North
+type: feat
+img: systems/pf1/icons/skills/violet_20.jpg
+system:
+  description:
+    value: >-
+      <p>As a standard action, the shaman assumes the form, as
+      @Compendium[pf1.spells.br37848gchetel0q]{Beast Shape IV}, of one of the
+      following animals: <a
+      href="https://aonprd.com/MonsterDisplay.aspx?ItemName=Dire%20Bear%20(Cave%20Bear)">dire
+      bear</a>, <a
+      href="https://aonprd.com/MonsterDisplay.aspx?ItemName=Dire%20Tiger%20(Smilodon)">dire
+      tiger</a>, <a
+      href="https://aonprd.com/MonsterDisplay.aspx?ItemName=Mastodon">mastodon</a>,
+      or woolly rhinoceros.</p>
+
+      <p>The duration of this transformation is 1 hour per level.</p>
+
+      <p>The shaman can use this ability once per day.</p>
+  actions:
+    - _id: 8muulpaww578vtcr
+      name: Use
+      img: systems/pf1/icons/skills/violet_20.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '@classes.shaman.level'
+        units: hour
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '1'
+  tag: classFeat_guardianOfTheNorth
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Shaman
+  abilityType: su
+_key: '!items!uBx5tzUBqewNZuHk'
+

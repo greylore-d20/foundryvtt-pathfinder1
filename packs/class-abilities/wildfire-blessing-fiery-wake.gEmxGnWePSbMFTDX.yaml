@@ -1,0 +1,36 @@
+_id: gEmxGnWePSbMFTDX
+name: 'Wildfire Blessing: Fiery Wake'
+type: feat
+img: systems/pf1/icons/spells/fog-orange-3.jpg
+system:
+  description:
+    value: >-
+      <p>At 10th level, when you move, you can use a swift action to invoke a
+      blazing blessing on yourself. For the rest of your turn, your movement
+      leaves behind a 10-foot-tall wall of opaque fire in your path. The wall
+      burns for 1 minute. A creature that touches the wall takes 2d6 points of
+      fire damage.</p>
+  actions:
+    - _id: rlud2m60vz26a7qc
+      name: Use
+      img: systems/pf1/icons/spells/fog-orange-3.jpg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: '1'
+        units: minute
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  tag: classFeat_wildfireBlessingFieryWake
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Warpriest
+_key: '!items!gEmxGnWePSbMFTDX'
+

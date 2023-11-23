@@ -1,0 +1,25 @@
+_id: O0jbkTJcIji9BNiF
+name: Intimidating Prowess
+type: feat
+img: systems/pf1/icons/feats/intimidating-prowess.jpg
+system:
+  description:
+    value: >-
+      <i>Your physical might is intimidating to others.</i>
+
+      <p><b>Benefits</b></p>
+
+      <p>Add your Strength modifier to Intimidate skill checks in addition to
+      your Charisma modifier.</p>
+  tags:
+    - General
+    - Skill
+  changes:
+    - _id: zy5pz0i8
+      formula: max(0, @abilities.str.mod)
+      subTarget: skill.int
+      modifier: untyped
+  tag: feat_intimidatingProwess
+  useCustomTag: true
+_key: '!items!O0jbkTJcIji9BNiF'
+

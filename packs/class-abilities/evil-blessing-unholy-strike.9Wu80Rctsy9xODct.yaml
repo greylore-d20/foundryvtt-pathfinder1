@@ -1,0 +1,38 @@
+_id: 9Wu80Rctsy9xODct
+name: 'Evil Blessing: Unholy Strike'
+type: feat
+img: systems/pf1/icons/spells/enchant-red-2.jpg
+system:
+  description:
+    value: >-
+      <p>At 1st level, you can touch one weapon and give it an evil blessing.
+      For 1 minute, this weapon takes on a black, orange, or violet cast and
+      deals an additional 1d6 points of damage against good creatures. During
+      this time, it’s treated as evil for the purposes of overcoming damage
+      reduction. This additional damage doesn’t stack with the additional damage
+      from the unholy weapon special ability.</p>
+  actions:
+    - _id: lmylrfitysyiag5k
+      name: Use
+      img: systems/pf1/icons/spells/enchant-red-2.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: minute
+      target:
+        value: weapon touched
+      range:
+        units: touch
+      actionType: ''
+  tag: classFeat_evilBlessingUnholyStrike
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Warpriest
+_key: '!items!9Wu80Rctsy9xODct'
+

@@ -1,0 +1,30 @@
+_id: DT09HcrTJjBwRTM6
+name: Wasting Curse
+type: feat
+img: systems/pf1/icons/spells/horror-eerie-1.jpg
+system:
+  description:
+    value: >-
+      <p>Your body is slowly rotting away. You take a –4 penalty on
+      Charisma-based skill checks, except for Intimidate. You gain a +4
+      competence bonus on saves made against disease.</p>
+
+      <p>At 5th level, you are immune to the sickened condition (but not
+      nauseated).</p>
+
+      <p>At 10th level, you gain immunity to disease.</p>
+
+      <p>At 15th level, you are immune to the nauseated condition.</p>
+  changes:
+    - _id: gm73pnz9
+      formula: '-4'
+      subTarget: chaSkills
+      modifier: penalty
+  tag: classFeat_wastingCurse
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+_key: '!items!DT09HcrTJjBwRTM6'
+

@@ -1,0 +1,34 @@
+_id: 8pyBZYJDwuBVqxMe
+name: Planar Ward
+type: feat
+img: systems/pf1/icons/items/armor/shield-heavy-metal.png
+system:
+  description:
+    value: >-
+      <p>As a standard action, you can expend 2 points of mental focus to
+      surround yourself with a planar ward. Creatures not native to the plane
+      that you are currently on take a –4 penalty on attacks against you, and
+      you receive a +4 circumstance bonus on saving throws against the spells,
+      spell-like abilities, and supernatural abilities of such creatures. This
+      ward lasts for 1 minute.</p>
+  actions:
+    - _id: mwxhsunscqyxti2n
+      name: Use
+      img: systems/pf1/icons/items/armor/shield-heavy-metal.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      uses:
+        autoDeductChargesCost: '2'
+      actionType: ''
+  tag: classFeat_planarWard
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Occultist
+  abilityType: sp
+_key: '!items!8pyBZYJDwuBVqxMe'
+

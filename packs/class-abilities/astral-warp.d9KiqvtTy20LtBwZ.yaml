@@ -1,0 +1,55 @@
+_id: d9KiqvtTy20LtBwZ
+name: Astral Warp
+type: feat
+img: systems/pf1/icons/spells/haste-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p>At 1st level, you can create a sparkling field within 30 feet that
+      distorts time within a 5-foot cube. This field lasts until the beginning
+      of your next turn. Any creature that enters the area or that starts its
+      turn within the cube takes 1d4 points of force damage + 1 point of force
+      damage per 2 <em>sorcerer</em> levels you have (<em>Fort</em> negates).
+      While within the area, a creature takes a –1 penalty on <em>Reflex</em>
+      saves and to AC. You can use this ability a number of times per day equal
+      to 3 + your <em>Charisma</em> modifier.</p>
+  actions:
+    - _id: ynnmddg3r4zprs4y
+      name: Use
+      img: systems/pf1/icons/spells/haste-royal-1.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: 5-ft. cube area
+      range:
+        value: '30'
+        units: spec
+      actionType: spellsave
+      damage:
+        parts:
+          - formula: 1d4 + floor(@classes.sorcerer.level / 2)
+            type:
+              values:
+                - force
+              custom: ''
+      save:
+        type: fort
+        description: Negates
+  uses:
+    per: day
+    maxFormula: 3 + @abilities.cha.mod
+  tag: classFeat_astralWarp
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Sorcerer
+  abilityType: sp
+_key: '!items!d9KiqvtTy20LtBwZ'
+

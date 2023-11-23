@@ -1,0 +1,41 @@
+_id: N9pNy8Knym9U2CPn
+name: Commune
+type: feat
+img: systems/pf1/icons/skills/light_10.jpg
+system:
+  description:
+    value: >-
+      <p>At 7th level, the omdura can cast
+      @Compendium[pf1.spells.p2kosvizylhy8vfa]{Commune} once per day as a
+      <em>spell-like ability</em>. She can cast this a second time per day at
+      15th level.</p>
+  actions:
+    - _id: 72hhs3caciqw4082
+      name: Use
+      img: systems/pf1/icons/skills/light_10.jpg
+      activation:
+        cost: 10
+        type: minute
+        unchained:
+          cost: 10
+          type: minute
+      duration:
+        value: '@cl'
+        units: round
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '@classes.omdura.level >= 15 ? 2 : 1'
+  tag: classFeat_commune
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Omdura
+  abilityType: sp
+_key: '!items!N9pNy8Knym9U2CPn'
+

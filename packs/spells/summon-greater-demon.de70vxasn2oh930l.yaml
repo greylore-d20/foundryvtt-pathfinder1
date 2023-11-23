@@ -1,0 +1,48 @@
+_id: de70vxasn2oh930l
+name: Summon Greater Demon
+type: spell
+img: icons/creatures/unholy/demon-horned-winged-laughing.webp
+system:
+  actions:
+    - _id: ysu7mnu5nvnh0rez
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: round
+        unchained:
+          cost: 3
+          type: action
+      duration:
+        value: 1 round/level (D)
+      range:
+        units: close
+      actionType: other
+      spellEffect: one summoned creature
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 9
+      wizard: 9
+      cleric: 9
+      oracle: 9
+      witch: 9
+  level: 9
+  school: con
+  subschool: summoning
+  types: chaotic, evil
+  components:
+    verbal: true
+    somatic: true
+    focus: true
+    divineFocus: 3
+  materials:
+    focus: a tiny bag and a small candle
+  sr: false
+  shortDescription: >-
+    <p>This spell functions like <i>summon monster</i>, except it allows you to
+    summon a single coloxus (<i>Pathfinder RPG Bestiary 3</i> 72), an omox demon
+    (<i>Pathfinder RPG <i>Bestiary 2</i></i> 79), or 1d3 kalavakus demons
+    (<i>Bestiary 2</i> 78).</p>
+_key: '!items!de70vxasn2oh930l'
+

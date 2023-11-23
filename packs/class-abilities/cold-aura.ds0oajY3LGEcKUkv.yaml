@@ -1,0 +1,53 @@
+_id: ds0oajY3LGEcKUkv
+name: Cold Aura
+type: feat
+img: systems/pf1/icons/spells/light-royal-1.jpg
+system:
+  description:
+    value: >-
+      <p>As a swift action, you can cause waves of cold to radiate from your
+      body. This cold deals 1d6 points of cold damage per 2 oracle levels to all
+      creatures within 10 feet. A successful Fortitude save halves the damage.
+      In addition, a flurry of snow momentarily surrounds you, granting you
+      concealment until your next turn.</p>
+
+      <p>You can use this ability once per day, plus one additional time per day
+      at 5th level and every 5 levels thereafter.</p>
+  actions:
+    - _id: wfioc6qco4id9ig7
+      name: Use
+      img: systems/pf1/icons/spells/light-royal-1.jpg
+      activation:
+        type: swift
+        unchained:
+          type: action
+      duration:
+        value: '1'
+        units: round
+      target:
+        value: 10 ft.
+      range:
+        units: personal
+      actionType: spellsave
+      damage:
+        parts:
+          - formula: (max(1, floor(@classes.oracle.level / 2)))d6
+            type:
+              values:
+                - cold
+              custom: ''
+      save:
+        type: fort
+        description: Fortitude half
+  uses:
+    per: day
+    maxFormula: 1 + floor(@classes.oracle.level / 5)
+  tag: classFeat_coldAura
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Oracle
+  abilityType: su
+_key: '!items!ds0oajY3LGEcKUkv'
+

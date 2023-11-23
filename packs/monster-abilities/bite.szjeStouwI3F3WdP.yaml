@@ -1,0 +1,48 @@
+name: Bite
+type: attack
+img: systems/pf1/icons/skills/red_29.jpg
+system:
+  description:
+    value: >-
+      <p>A primary natural weapon that crushes, tears and tears with teeth and
+      jaws.</p><p>It deals bludgeoning, slashing or piercing damage, whichever
+      is most beneficial one.</p><hr><p>For general rules on natural attacks,
+      see:
+      @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural
+      Attacks} (UMR).</p>
+  actions:
+    - _id: jxtofrfc2lcw0osl
+      name: Attack
+      img: systems/pf1/icons/skills/red_29.jpg
+      tag: bite
+      activation:
+        type: attack
+        unchained:
+          type: action
+      range:
+        value: 'null'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              values:
+                - piercing
+                - bludgeoning
+                - slashing
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: str
+        damage: str
+  subType: natural
+  baseTypes:
+    - Bite
+  weaponGroups:
+    value:
+      - natural
+_id: szjeStouwI3F3WdP
+_key: '!items!szjeStouwI3F3WdP'
+

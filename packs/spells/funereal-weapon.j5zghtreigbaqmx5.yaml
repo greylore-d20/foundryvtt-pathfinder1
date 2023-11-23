@@ -1,0 +1,49 @@
+_id: j5zghtreigbaqmx5
+name: Funereal Weapon
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: tz7ceigmp0ltbw4i
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 minute/level
+      target:
+        value: >-
+          weapon touched or 50 projectiles (all of which must be together at the
+          time of casting)
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (harmless, object)
+  learnedAt:
+    class:
+      cleric: 1
+      oracle: 1
+      paladin: 1
+      inquisitor: 1
+      occultist: 1
+  school: trs
+  components:
+    verbal: true
+    somatic: true
+    divineFocus: 1
+  shortDescription: >-
+    <p>You imbue a weapon with a faint silvery glow that dimly illuminates a
+    5-foot square. An affected weapon also easily bypasses the physical defenses
+    of undead creatures, ignoring 5 points of an undead creature's damage
+    reduction, as long as the damage reduction is not DR/epic. For example,
+    attacks with a weapon affected by this spell completely ignore a zombie's DR
+    5/slashing or reduce a lich's damage reduction to DR 10/bludgeoning and
+    magic.  You can't cast this spell on a natural weapon, such as an unarmed
+    strike. <i>Funereal weapon</i> affects the DR of only undead creatures.</p>
+_key: '!items!j5zghtreigbaqmx5'
+

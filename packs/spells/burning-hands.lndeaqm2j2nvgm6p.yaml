@@ -1,0 +1,63 @@
+_id: lndeaqm2j2nvgm6p
+name: Burning Hands
+type: spell
+img: icons/magic/fire/flame-burning-hand-orange.webp
+system:
+  actions:
+    - _id: e7128zlyv5trui5n
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      range:
+        value: '15'
+        units: ft
+      measureTemplate:
+        type: cone
+        size: '15'
+      actionType: spellsave
+      damage:
+        parts:
+          - formula: (min(5, @cl))d4
+            type:
+              values:
+                - fire
+              custom: ''
+      save:
+        type: ref
+        description: Reflex half
+      spellArea: cone-shaped burst
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      sorcerer: 1
+      wizard: 1
+      witch: 1
+      magus: 1
+      adept: 1
+      bloodrager: 1
+      shaman: 1
+      occultist: 1
+    domain:
+      Fire: 1
+    bloodline:
+      Elemental: 1
+      Orc: 1
+  school: evo
+  types: fire
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>A cone of searing flame shoots from your fingertips. Any creature in the
+    area of the flames takes 1d4 points of fire damage per caster level (maximum
+    5d4). Flammable materials burn if the flames touch them. A character can
+    extinguish burning items as a full-round action.</p>
+_key: '!items!lndeaqm2j2nvgm6p'
+

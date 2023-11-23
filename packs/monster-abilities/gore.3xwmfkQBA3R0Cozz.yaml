@@ -1,0 +1,46 @@
+name: Gore
+type: attack
+img: systems/pf1/icons/skills/blood_08.jpg
+system:
+  description:
+    value: >-
+      <p>A primary natural weapon with your horn, antlers, or similar
+      appendage.</p><p>It deals piercing damage.</p><p>This is typical bite
+      attack, your particular one may vary from this.</p><hr><p>For general
+      rules on natural attacks, see:
+      @UUID[Compendium.pf1.pf1e-rules.nBnUY0koBzXqoEft.JournalEntryPage.8zivKFrhTVkbtjm3]{Natural
+      Attacks} (UMR).</p>
+  actions:
+    - _id: 062rhfvu44k49265
+      name: Attack
+      img: systems/pf1/icons/skills/blood_08.jpg
+      tag: gore
+      activation:
+        type: attack
+        unchained:
+          type: action
+      range:
+        value: 'null'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              values:
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: str
+        damage: str
+  subType: natural
+  baseTypes:
+    - Gore
+  weaponGroups:
+    value:
+      - natural
+_id: 3xwmfkQBA3R0Cozz
+_key: '!items!3xwmfkQBA3R0Cozz'
+

@@ -1,0 +1,45 @@
+_id: 7hFLTBScf4tz8wXh
+name: Quarry (VAM)
+type: feat
+img: systems/pf1/icons/skills/arrow_12.jpg
+system:
+  description:
+    value: >-
+      <p>At 14th level, as a <em>standard action</em> a vampire hunter can
+      denote one target within his line of sight that he knows is
+      <em>undead</em> as his quarry. Whenever he is following the tracks of his
+      quarry, a vampire hunter can take 10 on his <em>Survival</em> skill checks
+      while moving at normal speed, without penalty. In addition, he gains a +2
+      <em>insight bonus</em> on <em>attack rolls</em> against his quarry, and
+      all critical threats against his quarry are automatically confirmed. A
+      vampire hunter can have no more than one quarry at a time. He can dismiss
+      this effect at any time as a <em>free action</em>, but he cannot select a
+      new quarry for 24 hours. If the vampire hunter sees proof that his quarry
+      is <em>dead</em> or (somehow) was not actually <em>undead</em>, he can
+      select a new quarry after 1 hour.</p>
+  actions:
+    - _id: a40f5yq0zopx4q9f
+      name: Use
+      img: systems/pf1/icons/skills/arrow_12.jpg
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: '24'
+        units: hour
+      target:
+        value: undead within sight
+      range:
+        units: seeText
+      actionType: ''
+  tag: classFeat_quarryVam
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Vampire Hunter
+  abilityType: ex
+_key: '!items!7hFLTBScf4tz8wXh'
+

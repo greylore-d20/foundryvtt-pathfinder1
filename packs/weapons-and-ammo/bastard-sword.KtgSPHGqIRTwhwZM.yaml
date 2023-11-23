@@ -1,0 +1,61 @@
+_id: KtgSPHGqIRTwhwZM
+name: Bastard Sword
+type: weapon
+img: systems/pf1/icons/items/weapons/sword-bastard.PNG
+system:
+  description:
+    value: >-
+      <p><b>Source</b> <em>Ultimate Equipment pg. 20</em>, <em>PRPG Core
+      Rulebook pg. 143</em></p><h3>Statistics</h3><p><b>Damage</b> 1d8 (small),
+      1d10 (medium); <b>Critical</b> 19-20/x2; <b>Range</b> -; <b>Type</b>
+      S</p><p><b>Weapon Groups</b> Blades, Heavy</p><h3>Description</h3><p>A
+      bastard sword is about 4 feet in length, making it too large to use in one
+      hand without special training; thus, it is an exotic weapon. You can use a
+      bastard sword two-handed as a martial weapon.</p>
+  tags:
+    - PFS
+  weight:
+    value: 6
+  price: 35
+  hp:
+    max: 5
+    value: 5
+  hardness: 10
+  actions:
+    - _id: l4iuom4gf9rl7qbq
+      name: Attack
+      img: systems/pf1/icons/items/weapons/sword-bastard.PNG
+      activation:
+        type: attack
+      duration:
+        units: inst
+      range:
+        value: '0'
+        units: melee
+      actionType: mwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size)
+            type:
+              values:
+                - slashing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: str
+        damage: str
+        critRange: 19
+  tag: bastardSword
+  baseTypes:
+    - Bastard Sword
+  weaponGroups:
+    value:
+      - bladesHeavy
+  subType: exotic
+  weaponSubtype: 1h
+_key: '!items!KtgSPHGqIRTwhwZM'
+

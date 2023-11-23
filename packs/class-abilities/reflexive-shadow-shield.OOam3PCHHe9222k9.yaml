@@ -1,0 +1,36 @@
+_id: OOam3PCHHe9222k9
+name: Reflexive Shadow Shield
+type: feat
+img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
+system:
+  description:
+    value: >-
+      <p>Once per day as an immediate action, the rogue can gain an amount of
+      cold resistance or electricity resistance equal to half the rogue’s level.
+      This resistance lasts for 1 round. If the rogue has the shadowy resistance
+      racial trait, the cold or electricity resistance stacks with the
+      resistance that trait grants; otherwise, the energy resistance does not
+      stack with any cold or electricity resistance the rogue has. The rogue
+      must have the resiliencyPU rogue talent before choosing this talent.</p>
+  actions:
+    - _id: 7lgc9wpgub7n4frb
+      name: Use
+      img: systems/pf1/icons/items/weapons/butterfly-knife.PNG
+      activation:
+        type: immediate
+        unchained:
+          type: reaction
+      actionType: ''
+  uses:
+    per: day
+    maxFormula: '1'
+  tag: classFeat_reflexiveShadowShield
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Rogue
+      - Rogue (Unchained)
+  abilityType: su
+_key: '!items!OOam3PCHHe9222k9'
+

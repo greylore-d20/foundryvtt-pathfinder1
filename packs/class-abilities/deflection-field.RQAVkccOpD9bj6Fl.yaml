@@ -1,0 +1,33 @@
+_id: RQAVkccOpD9bj6Fl
+name: Deflection Field
+type: feat
+img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+system:
+  description:
+    value: >-
+      <p>Whenever the psychic casts a linked spell that grants her a deflection
+      bonus to AC, she can spend 2 points from her phrenic pool to automatically
+      reflect the first ranged attack that misses her (as long as the linked
+      spell remains active) back at the attacker. This reflected attack uses the
+      original attack roll plus a circumstance bonus equal to the psychic’s
+      caster level.</p>
+  actions:
+    - _id: 8n8jw9vtsioxski4
+      name: Use
+      img: systems/pf1/icons/spells/shielding-spirit-2.jpg
+      activation:
+        type: free
+        unchained:
+          type: free
+      uses:
+        autoDeductChargesCost: '2'
+      actionType: ''
+  tag: classFeat_deflectionField
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Psychic
+  abilityType: su
+_key: '!items!RQAVkccOpD9bj6Fl'
+

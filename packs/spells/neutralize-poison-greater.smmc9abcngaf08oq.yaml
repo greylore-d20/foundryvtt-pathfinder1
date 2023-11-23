@@ -1,0 +1,60 @@
+_id: smmc9abcngaf08oq
+name: Neutralize Poison, Greater
+type: spell
+img: icons/magic/life/cross-explosion-burst-green.webp
+system:
+  actions:
+    - _id: gbg4y22e0p713mid
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous or 1 hour/level (D)
+      target:
+        value: creature or object of up to 1 cu. ft./level touched
+      range:
+        units: touch
+      actionType: heal
+      save:
+        type: will
+        description: Will negates (harmless, object)
+  uses:
+    autoDeductChargesCost: ''
+  learnedAt:
+    class:
+      cleric: 6
+      oracle: 6
+      druid: 5
+      bard: 6
+      alchemist: 6
+      witch: 6
+      inquisitor: 6
+      hunter: 5
+  level: 6
+  school: con
+  subschool: healing
+  components:
+    verbal: true
+    somatic: true
+    material: true
+    divineFocus: 2
+  materials:
+    value: a lump of charcoal
+  shortDescription: >-
+    <p>This spell functions as
+    @Compendium[pf1.spells.6l904edkt8jv9jor]{Neutralize Poison}, except as noted
+    here. You automatically succeed at all caster level checks to neutralize any
+    poisons affecting the target creature. The spell also reverses all
+    instantaneous or permanent effects caused by poisons, such as temporary
+    ability damage or permanent ability drain (it does not heal ability drain
+    caused by anything other than poison, however). If you use the spell to
+    neutralize the poison in a poisonous creature or object, the duration is 1
+    hour per level rather than 10 minutes per level. If the spell is cast on a
+    creature, the creature can negate the effect by succeeding at a Will saving
+    throw.</p>
+_key: '!items!smmc9abcngaf08oq'
+

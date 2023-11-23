@@ -1,0 +1,45 @@
+_id: wfsfv3tocma2rqkr
+name: Forced Quiet
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: ex4tojp9j2h1q5jb
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: 1 round/level
+      target:
+        value: one creature
+      range:
+        units: medium
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+  learnedAt:
+    class:
+      sorcerer: 1
+      wizard: 1
+      bard: 1
+      witch: 1
+      inquisitor: 1
+      psychic: 1
+      mesmerist: 1
+  school: trs
+  types: sonic
+  components:
+    somatic: true
+  shortDescription: >-
+    <p>With a gesture, you muffle sound around the target, making it unable to
+    yell or otherwise make loud noises. This does not affect spellcasting by the
+    target. The target can still use sonic effects, but the DC of these effects
+    decreases by 2. The target gains a +2 bonus on saving throws against sonic
+    effects. The target gains a +4 circumstance bonus on Stealth checks.</p>
+_key: '!items!wfsfv3tocma2rqkr'
+

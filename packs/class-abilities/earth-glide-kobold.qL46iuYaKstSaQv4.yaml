@@ -1,0 +1,35 @@
+_id: qL46iuYaKstSaQv4
+name: Earth Glide (Kobold)
+type: feat
+img: systems/pf1/icons/skills/yellow_42.jpg
+system:
+  description:
+    value: >-
+      <p>At 15th level, you gain the <em>earth glide</em> universal monster
+      ability with a speed equal to your base speed. This does not give you the
+      ability to breathe while passing through earth, so you must hold your
+      breath or use some alternate method to breathe while using this
+      ability.</p>
+  actions:
+    - _id: tk7icov6at6z239z
+      name: Use
+      img: systems/pf1/icons/skills/yellow_42.jpg
+      activation:
+        type: passive
+        unchained:
+          type: passive
+      actionType: ''
+  changes:
+    - _id: zlikyzbw
+      formula: '@attributes.speed.land.base'
+      subTarget: burrowSpeed
+      modifier: base
+  tag: classFeat_earthGlideKobold
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Sorcerer
+  abilityType: su
+_key: '!items!qL46iuYaKstSaQv4'
+

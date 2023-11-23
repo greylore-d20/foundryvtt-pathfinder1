@@ -1,0 +1,46 @@
+_id: e3l7azfolx92ld2c
+name: Imbue With Addiction
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: ijibus5qp32js2ef
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      target:
+        value: one living creature
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude negates
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+      alchemist: 2
+      witch: 3
+      mesmerist: 3
+  level: 3
+  school: trs
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: a dose of an addictive drug or substance
+  shortDescription: >-
+    <p>The target immediately becomes addicted to the drug used as the material
+    component during the casting of the spell. If the target was ever addicted
+    to the drug at any point in the past, it takes a -4 penalty on its saving
+    throw.</p>
+_key: '!items!e3l7azfolx92ld2c'
+

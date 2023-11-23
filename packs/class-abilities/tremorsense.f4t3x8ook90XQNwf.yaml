@@ -1,0 +1,41 @@
+_id: f4t3x8ook90XQNwf
+name: Tremorsense
+type: feat
+img: systems/pf1/icons/spells/rock-sky-3.jpg
+system:
+  description:
+    value: >-
+      <p><b>Element</b> earth; <b>Type</b> utility (Su); <b>Level</b> 3;
+      <b>Burn</b> 0</p>
+
+      <p>You can take a move action to gain tremorsense 30 feet for 1 round on
+      any earth or stone surface that you touch. You can accept 1 point of burn
+      to increase the duration to 1 round per kineticist level you possess.</p>
+
+      <p>While benefiting from this tremorsense, your earth blasts and composite
+      blasts that include earth components don’t suffer a miss chance from
+      concealment or total concealment against creatures you detect with your
+      tremorsense.</p>
+  actions:
+    - _id: o8ful7lto0i6crbh
+      name: Use
+      img: systems/pf1/icons/spells/rock-sky-3.jpg
+      activation:
+        type: move
+      duration:
+        value: '@classes.kineticist.level'
+        units: round
+      target:
+        value: self
+      range:
+        units: personal
+      actionType: ''
+  tag: classFeat_tremorsense
+  useCustomTag: true
+  subType: classFeat
+  associations:
+    classes:
+      - Kineticist
+  abilityType: su
+_key: '!items!f4t3x8ook90XQNwf'
+

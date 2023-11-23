@@ -1,0 +1,48 @@
+_id: bkawkbomsjcarh2c
+name: Rune of Warding
+type: spell
+img: systems/pf1/icons/misc/magic-swirl.png
+system:
+  actions:
+    - _id: 683jnc5wtl6qdzx7
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: hour
+        unchained:
+          type: hour
+      duration:
+        value: permanent until discharged
+      target:
+        value: doorway or portal touched
+      range:
+        units: touch
+      actionType: spellsave
+      save:
+        type: ref
+        description: Reflex half
+  learnedAt:
+    class:
+      sorcerer: 3
+      wizard: 3
+  level: 3
+  school: abj
+  components:
+    verbal: true
+    somatic: true
+    material: true
+  materials:
+    value: powdered adamantine, diamond, or mithral worth 200 gp
+    gpValue: 200
+  preparation:
+    spontaneousPrepared: false
+  sr: false
+  shortDescription: >-
+    <p>You inscribe a series of runes upon the surface of a door or around the
+    border of an entryway. They function as a <i>Glyph of Warding</i> (blast
+    glyph), though unlike a <i>Glyph of Warding</i>, these runes are always
+    visible. The runes count as a <i>Glyph of Warding</i> for the purpose of
+    what spells can defeat it, placing multiple glyphs in the same area, and so
+    on.</p>
+_key: '!items!bkawkbomsjcarh2c'
+

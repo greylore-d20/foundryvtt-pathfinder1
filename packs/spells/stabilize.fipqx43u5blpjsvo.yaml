@@ -1,0 +1,53 @@
+_id: fipqx43u5blpjsvo
+name: Stabilize
+type: spell
+img: icons/magic/life/heart-glowing-red.webp
+system:
+  actions:
+    - _id: ncboqe1l7g4pnjr2
+      name: Use
+      img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
+      duration:
+        value: instantaneous
+      target:
+        value: one living creature
+      range:
+        units: close
+      actionType: heal
+      save:
+        type: will
+        description: Will negates (harmless)
+  uses:
+    autoDeductChargesCost: '0'
+  learnedAt:
+    class:
+      cleric: 0
+      oracle: 0
+      druid: 0
+      witch: 0
+      inquisitor: 0
+      adept: 0
+      shaman: 0
+      psychic: 0
+      medium: 0
+      occultist: 0
+      spiritualist: 0
+      hunter: 0
+  level: 0
+  school: con
+  subschool: healing
+  components:
+    verbal: true
+    somatic: true
+  shortDescription: >-
+    <p>Upon casting this spell, you target a living creature that has -1 or
+    fewer hit points. That creature is automatically stabilized and does not
+    lose any further hit points. If the creature later takes damage, it
+    continues dying normally.</p>
+_key: '!items!fipqx43u5blpjsvo'
+

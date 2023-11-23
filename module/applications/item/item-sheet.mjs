@@ -842,9 +842,14 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
-    // Handle weight to ensure `weight.value` is in lbs
-    if (system.weight?.value !== undefined) {
-      system.weight.value = pf1.utils.convertWeightBack(system.weight.value);
+    // Ensure values are stored as lbs
+    if (system.weight) {
+      if (system.weight.value !== undefined) {
+        system.weight.value = pf1.utils.convertWeightBack(system.weight.value);
+      }
+      if (system.weight.reduction?.value !== undefined) {
+        system.weight.reduction.value = pf1.utils.convertWeightBack(system.weight.reduction.value);
+      }
     }
 
     // Change currencies with relative values

@@ -531,38 +531,13 @@ export class ItemPF extends ItemBasePF {
     if (!this.isPhysical) return;
 
     const itemData = this.system;
-
-    // HACK: Migration shim. Allows unmigrated items to have their weight correct.
-    {
-      const weight = itemData.weight;
-      if (weight === undefined || Number.isFinite(weight)) {
-        const sourceData = this._source.system,
-          sourceWeight = sourceData.baseWeight ?? sourceData.weight ?? 0;
-        itemData.weight = { value: sourceWeight };
-      }
-    }
-
     const weight = itemData.weight;
 
-    // Make sure there is a weight value
-    weight.value ??= 0;
-    weight.total ??= 0;
-
-    // Determine actual item weight, including sub-items
-    const weightReduction = (100 - (itemData.weightReduction ?? 0)) / 100;
-    weight.total = (this.items ?? []).reduce((cur, o) => {
-      return cur + o.system.weight.total * weightReduction;
-    }, weight.value * itemData.quantity);
-
-    // Add contained currency (mainly containers)
-    weight.currency ??= 0;
-    weight.total += weight.currency;
+    weight.total += weight.value * itemData.quantity;
 
     // Convert weight according metric system (lb vs kg)
-    weight.converted = {
-      value: pf1.utils.convertWeight(weight.value),
-      total: pf1.utils.convertWeight(weight.total),
-    };
+    weight.converted.value = pf1.utils.convertWeight(weight.value);
+    weight.converted.total = pf1.utils.convertWeight(weight.total);
   }
 
   prepareDerivedData() {
@@ -609,6 +584,15 @@ export class ItemPF extends ItemBasePF {
     }
 
     this._prepareIdentifier();
+    const itemData = this.system;
+
+    // Init base weight values in case they're missing.
+    if (this.isPhysical) {
+      itemData.weight ??= {};
+      itemData.weight.value ??= 0;
+      itemData.weight.total = 0;
+      itemData.weight.converted ??= {};
+    }
   }
 
   /**

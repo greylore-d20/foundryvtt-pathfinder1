@@ -37,8 +37,14 @@
         {{/if}}
 
         <div class="form-group">
-          <label>{{localize "PF1.ItemContainerWeightReduction"}} %</label>
-          <input type="number" class="select-on-click" value="{{system.weightReduction}}" name="system.weightReduction"/>
+          <label>{{localize "PF1.WeightReduction"}} %</label>
+          <div class="form-fields">
+            <input type="number" class="select-on-click" value="{{system.weight.reduction.percent}}" name="system.weight.reduction.percent" placeholder="0">
+            <label>{{localize "PF1.WeightReductionFlat"}}</label>
+            <div data-action="input-text" data-for=".data-weight-reduction-flat-value" data-attr-value="system.weight.reduction.value" data-input-value="{{system.weight.converted.reduction}}">
+              <input type="number" class="data-weight-reduction-flat-value" value="{{system.weight.converted.reduction}}" name="system.weight.reduction.value" placeholder="0" readonly>
+            </div>
+          </div>
         </div>
 
         <div class="form-group">

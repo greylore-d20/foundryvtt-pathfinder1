@@ -538,6 +538,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateItemChargeCost(itemData, updateData);
   _migrateItemWeight(itemData, updateData);
   _migrateItemHealth(itemData, updateData);
+  _migrateContainerReduction(itemData, updateData);
   _migrateContainerPrice(itemData, updateData);
   _migrateItemType(itemData, updateData);
   _migrateItemLearnedAt(itemData, updateData);
@@ -2125,6 +2126,14 @@ const _migrateContainerPrice = (item, updateData) => {
   if (item.system.unidentified?.basePrice !== undefined) {
     updateData["system.unidentified.price"] = item.system.unidentified.basePrice;
     updateData["system.unidentified.-=basePrice"] = null;
+  }
+};
+
+const _migrateContainerReduction = (item, updateData) => {
+  if (item.type !== "container") return;
+  if (item.system.weightReduction !== undefined) {
+    updateData["system.weight.reduction.percent"] = item.system.weightReduction;
+    updateData["system.-=weightReduction"] = null;
   }
 };
 

@@ -28,22 +28,6 @@ export class ItemContainerPF extends ItemPF {
     await super._preDelete(context, user);
   }
 
-  /** @inheritdoc */
-  prepareBaseData() {
-    super.prepareBaseData();
-
-    // HACK: Migration shim
-    if (typeof this.system.weight !== "object") {
-      this.system.weight = {
-        value: this.system.weight,
-      };
-    }
-
-    // Set base weight to weight of coins, which can be calculated without knowing contained items
-    const weightReduction = (100 - (this.system.weightReduction ?? 0)) / 100;
-    this.system.weight.currency = this._calculateCoinWeight() * weightReduction;
-  }
-
   prepareDerivedData() {
     // Update contained items
     this.items = this._prepareInventory(this.system.inventoryItems);
@@ -53,13 +37,27 @@ export class ItemContainerPF extends ItemPF {
 
   /** @inheritDoc */
   prepareWeight() {
-    super.prepareWeight();
-
     /** @type {ItemWeightData} */
     const weight = this.system.weight;
-    // Quantity can be ignored for containers
-    weight.contents = this.items.reduce((total, item) => total + item.system.weight.total, this._calculateCoinWeight());
+
+    // Percentile weight reduction
+    const reductionPCt = (100 - (weight.reduction?.percent ?? 0)) / 100;
+
+    const currencyWeight = this._calculateCoinWeight();
+    weight.currency = currencyWeight * reductionPCt;
+
+    // Total unreduced weight of contents
+    weight.contents = this.items.reduce((total, item) => total + item.system.weight.total, 0);
+    weight.contents += currencyWeight;
+
+    const reductionFlat = weight.reduction?.value ?? 0;
+    weight.total += Math.max(0, weight.contents * reductionPCt - reductionFlat);
+
+    weight.converted.reduction = pf1.utils.convertWeight(reductionFlat);
     weight.converted.contents = pf1.utils.convertWeight(weight.contents);
+    weight.converted.currency = pf1.utils.convertWeight(weight.currency);
+
+    super.prepareWeight();
   }
 
   async createContainerContent(data, options = { raw: false }) {

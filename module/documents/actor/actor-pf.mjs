@@ -381,14 +381,11 @@ export class ActorPF extends ActorBasePF {
   }
 
   _prepareChanges() {
-    this.changeItems = this.items
-      .filter((obj) => {
-        return (
-          (obj.system.changes instanceof Array && obj.system.changes.length) ||
-          (obj.system.changeFlags && Object.values(obj.system.changeFlags).filter((o) => o === true).length)
-        );
-      })
-      .filter((obj) => obj.isActive);
+    this.changeItems = this.items.filter(
+      (item) =>
+        item.isActive &&
+        (item.system.changes?.length > 0 || Object.values(item.system.changeFlags ?? {}).filter((v) => !!v).length)
+    );
 
     const changes = [];
     for (const i of this.changeItems) {
@@ -398,7 +395,10 @@ export class ActorPF extends ActorBasePF {
 
     const c = new Collection();
     for (const change of changes) {
-      c.set(change._id, change);
+      // Avoid ID conflicts
+      const parentId = change.parent?.id ?? "Actor";
+      const uniqueId = `${parentId}-${change._id}`;
+      c.set(uniqueId, change);
     }
     this.changes = c;
   }
@@ -2567,9 +2567,7 @@ export class ActorPF extends ActorBasePF {
 
     // Add attack bonuses from changes
     const attackTargets = ["attack", options.melee ? "mattack" : "rattack"];
-    const attackChanges = this.changes.filter((c) => {
-      return attackTargets.includes(c.subTarget);
-    });
+    const attackChanges = this.changes.filter((c) => attackTargets.includes(c.subTarget));
     changes.push(
       ...attackChanges.map((c) => {
         c.applyChange(this);

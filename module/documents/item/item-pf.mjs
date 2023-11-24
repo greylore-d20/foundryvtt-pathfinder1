@@ -90,24 +90,17 @@ export class ItemPF extends ItemBasePF {
     const actor = this.actor;
     if (actor && data?.system?.changes?.length > 0) {
       const changes = data.system.changes;
-      let updated = false;
-      for (const c of changes) {
-        let i = 0;
-        // Forcibly seek unused ID.
-        while (actor.changes.get(c._id) !== undefined || !c._id) {
-          updated = true;
-          // Revert to default ID generation if too many iterations have passed. Just let it break if even more has passed.
-          if (i > 10_000) break;
-          else if (i++ > 1_000) c._id = foundry.utils.randomID();
-          else c._id = ItemChange.defaultData._id;
-        }
-      }
-      if (updated) this.updateSource({ "system.changes": changes });
+
+      let ids = new Set();
+      while (ids.size < changes.length) ids.add(foundry.utils.randomID(8));
+      ids = Array.from(ids);
+      for (const c of changes) c._id = ids.pop();
+      this.updateSource({ "system.changes": changes });
     }
 
     const updates = this.preCreateData(data, context, user);
 
-    if (Object.keys(updates).length) return this.updateSource(updates);
+    if (Object.keys(updates).length) this.updateSource(updates);
   }
 
   /**

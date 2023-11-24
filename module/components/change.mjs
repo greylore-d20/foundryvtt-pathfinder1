@@ -17,20 +17,43 @@ export class ItemChange {
    * @param {ItemPF} [context.parent] - The parent entity to create the change within.
    * @returns The resulting changes, or an empty array if nothing was created.
    */
-  static async create(data, context) {
+  static async create(data, context = {}) {
     const { parent } = context;
 
     if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
       data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
+
       const newChangeData = deepClone(parent.system.changes ?? []);
       newChangeData.push(...data);
+
+      // Ensure unique IDs within the item
+      const ids = new Set();
+      newChangeData.forEach((change) => ids.add(change._id));
+      // Unique ID count does not match number of changes
+      if (ids.size != newChangeData.length) {
+        while (ids.size < newChangeData.length) ids.add(foundry.utils.randomID(8));
+
+        // Remove already existing unique instances and build list of changes with bad IDs.
+        const reAssign = [];
+        for (const change of newChangeData) {
+          const cid = change._id;
+          if (ids.has(cid)) ids.delete(cid);
+          else reAssign.push(change);
+        }
+
+        // Assign remaining new IDs
+        for (const change of reAssign) {
+          change._id = ids.first;
+          ids.delete(ids.first);
+        }
+      }
 
       // Update parent
       await parent.update({ "system.changes": newChangeData });
 
       // Return results
-      return data.map((o) => parent.changes.get(o._id));
+      return [...parent.changes];
     }
 
     return [];
@@ -104,14 +127,17 @@ export class ItemChange {
   prepareData() {}
 
   preUpdate(data) {
+    // Ensure priority is a number
+    if (typeof data.priority === "string") {
+      data.priority = parseInt(data.priority);
+    }
+
     // Make sure sub-target is valid
-    {
-      if (data["target"]) {
-        const subTarget = data["subTarget"] || this.subTarget;
-        const changeSubTargets = this.parent.getChangeSubTargets(data["target"]);
-        if (changeSubTargets[subTarget] == null) {
-          data["subTarget"] = Object.keys(changeSubTargets)[0];
-        }
+    if (data.target) {
+      const subTarget = data.subTarget || this.subTarget;
+      const changeSubTargets = this.parent.getChangeSubTargets(data.target);
+      if (changeSubTargets[subTarget] == null) {
+        data.subTarget = Object.keys(changeSubTargets)[0];
       }
     }
 
@@ -119,20 +145,18 @@ export class ItemChange {
   }
 
   async update(data, options = {}) {
+    if (!this.parent) return;
+
     this.updateTime = new Date();
 
-    if (this.parent != null) {
-      data = this.preUpdate(data);
+    data = this.preUpdate(data);
 
-      const rawChange = this.parent.system.changes.find((o) => o._id === this._id);
-      const idx = this.parent.system.changes.indexOf(rawChange);
-      if (idx >= 0) {
-        data = Object.entries(data).reduce((cur, o) => {
-          cur[`system.changes.${idx}.${o[0]}`] = o[1];
-          return cur;
-        }, {});
-        return this.parent.update(data, options);
-      }
+    const changes = deepClone(this.parent.system.changes ?? []);
+
+    const idx = changes.findIndex((change) => change._id === this.id);
+    if (idx >= 0) {
+      changes[idx] = mergeObject(changes[idx], data);
+      return this.parent.update({ "system.changes": changes });
     }
   }
 

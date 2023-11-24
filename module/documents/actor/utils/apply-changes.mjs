@@ -13,10 +13,8 @@ export function applyChanges() {
     const typeB = priority.types.indexOf(b.subTarget);
     const modA = priority.modifiers.indexOf(a.modifier);
     const modB = priority.modifiers.indexOf(b.modifier);
-    let prioA = typeof a.priority === "string" ? parseInt(a.priority) : a.priority;
-    let prioB = typeof b.priority === "string" ? parseInt(b.priority) : b.priority;
-    prioA = (prioA || 0) + 1000;
-    prioB = (prioB || 0) + 1000;
+    const prioA = (a.priority ?? 0) + 1000;
+    const prioB = (b.priority ?? 0) + 1000;
 
     return prioB - prioA || typeA - typeB || modA - modB;
   };

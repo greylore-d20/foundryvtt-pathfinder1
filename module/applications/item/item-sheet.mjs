@@ -1371,8 +1371,8 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onEditChangeScriptContents(event) {
     const elem = event.currentTarget;
-    const changeID = elem.closest(".change").dataset.change;
-    const change = this.item.changes.find((o) => o._id === changeID);
+    const changeId = elem.closest(".change").dataset.change;
+    const change = this.item.changes.find((change) => change._id === changeId);
 
     if (!change) return;
 
@@ -1550,9 +1550,11 @@ export class ItemSheetPF extends ItemSheet {
     // Remove a change
     if (a.classList.contains("delete-change")) {
       const li = a.closest(".change");
-      const changes = deepClone(this.item.system.changes);
-      const change = changes.find((o) => o._id === li.dataset.change);
-      changes.splice(changes.indexOf(change), 1);
+      const changeId = li.dataset.change;
+
+      const changes = deepClone(this.item.system.changes ?? []);
+      changes.findSplice((c) => c._id === changeId);
+
       return this._onSubmit(event, { updateData: { "system.changes": changes } });
     }
   }
@@ -1561,7 +1563,8 @@ export class ItemSheetPF extends ItemSheet {
     const a = event.currentTarget;
 
     // Prepare categories and changes to display
-    const change = this.item.changes.get(a.closest(".change").dataset.change);
+    const changeId = a.closest(".change").dataset.change;
+    const change = this.item.changes.get(changeId);
     const categories = getBuffTargetDictionary(this.item.actor);
 
     const part1 = change?.subTarget?.split(".")[0];

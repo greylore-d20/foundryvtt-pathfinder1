@@ -1910,6 +1910,17 @@ export const conditionMechanics = {
       },
     ],
   },
+  incorporeal: {
+    changes: [
+      {
+        formula: 0,
+        subTarget: "nac",
+        modifier: "base",
+        operator: "set",
+        priority: -10,
+      },
+    ],
+  },
   prone: {
     changes: [
       {

@@ -1,0 +1,34 @@
+{{#if errors}}
+<h3>{{localize "PF1.Migration.Dialog.Errors"}}</h3>
+<ul class="issue-list errors">
+  <li class="header">
+    <h3>ID</h3>
+    <h3>Name</h3>
+    <h3>Message</h3>
+  </li>
+  {{#each errors}}
+  <li class="issue error">
+    <span class="id">{{entry.id}}</span>
+    <span class="name">{{entry.name}}</span>
+    <span class="message">{{error.message}}</span>
+  </li>
+  {{/each}}
+</ul>
+{{/if}}
+{{#if invalid}}
+<h3>{{localize "PF1.Migration.Dialog.InvalidDocuments"}}</h3>
+<ul class="issue-list invalid-documents">
+  <li class="header">
+    <h3>ID</h3>
+    <h3>Name</h3>
+  </li>
+  {{#each invalid}}
+  <li class="issue document">
+    <span class="id">{{entry.id}}</span>
+    <span class="name">{{entry.name}}</span>
+  </li>
+  {{/each}}
+</ul>
+{{/if}}
+
+<hr>

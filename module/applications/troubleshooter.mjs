@@ -58,15 +58,17 @@ export class Troubleshooter extends Application {
     this.element[0].querySelector("form").classList.add("migrating");
 
     const target = el.dataset.target;
+    const top = el.closest(".window-content").getBoundingClientRect().top + 20;
+
     switch (target) {
       case "world":
         this.migrating.world = true;
-        await pf1.migrations.migrateWorld({ unlock });
+        await pf1.migrations.migrateWorld({ unlock, dialog: { top } });
         this.migrating.world = false;
         break;
       case "modules":
         this.migrating.modules = true;
-        await pf1.migrations.migrateModules({ unlock });
+        await pf1.migrations.migrateModules({ unlock, dialog: { top } });
         this.migrating.modules = false;
         break;
       default:

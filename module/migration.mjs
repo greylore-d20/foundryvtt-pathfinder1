@@ -2,6 +2,9 @@ import { ItemPF } from "./documents/item/item-pf.mjs";
 import { createTag } from "./utils/lib.mjs";
 import { ItemChange } from "./components/change.mjs";
 
+import { MigrationDialog } from "./applications/migration/migration-dialog.mjs";
+import { MigrationState } from "./migration/migration-state.mjs";
+
 /**
  * An indicator for whether the system is currently migrating the world.
  *
@@ -12,25 +15,46 @@ import { ItemChange } from "./components/change.mjs";
 export let isMigrating = false; // eslint-disable-line prefer-const -- pf1.migrations.isMigrating is changed at runtime
 
 /**
+ * Initialize {@link MigrationState} and {@link MigrationDialog}
+ *
+ * @param {MigrationState} [state] - State tracker
+ * @param {string} [label] - Label
+ * @param {object} [dialog=null] - If falsy, disable dialog. Otherwise options for the dialog.
+ * @returns {MigrationState} - Original state or newly initialized one.
+ */
+function initializeStateAndDialog(state, label, dialog = null) {
+  state ??= new MigrationState(label);
+  if (dialog) MigrationDialog.initialize(state, label, dialog);
+  return state;
+}
+
+/**
  * Perform a system migration for the entire World,
  * applying migrations for Actors, Items, Scenes, Tokens and Compendium packs
  *
  * @param {object} [options={}] - Additional options
  * @param {boolean} [options.unlock=false] - If false, locked compendiums are ignored.
  * @param {boolean} [options.systemPacks=false] - Migrate system packs.
+ * @param {MigrationState} [options.state] - Migration state tracker
+ * @param {object} [options.dialog={}] - Progress dialog options. Set to falsy to disable the dialog.
  * @returns {Promise<void>} - A Promise which resolves once the migration is completed
  */
-export async function migrateWorld({ unlock = false, systemPacks = false } = {}) {
+export async function migrateWorld({ unlock = false, systemPacks = false, state, dialog = {} } = {}) {
   if (!game.user.isGM) {
     return void ui.notifications.error(game.i18n.localize("PF1.ErrorGenericPermission"));
   }
 
   if (pf1.migrations.isMigrating) {
     return void ui.notifications.error(game.i18n.localize("PF1.Migration.AlreadyInProgress"));
-  } else {
-    pf1.migrations.isMigrating = true;
-    Hooks.callAll("pf1MigrationStarted");
   }
+
+  pf1.migrations.isMigrating = true;
+  Hooks.callAll("pf1MigrationStarted");
+
+  state = initializeStateAndDialog(state, "PF1.Migration.Category.World", dialog);
+  state.unlock = unlock;
+
+  state.start();
 
   const startMessage = game.i18n.format("PF1.Migration.Start", { version: game.system.version });
   const smsgId = ui.notifications.info(startMessage, { permanent: true, console: false });
@@ -39,19 +63,16 @@ export async function migrateWorld({ unlock = false, systemPacks = false } = {})
   await _migrateWorldSettings();
 
   // Migrate World Actors
-  await migrateActors();
+  await migrateActors({ state });
 
   // Migrate World Items
-  await migrateItems();
+  await migrateItems({ state });
 
   // Migrate Actor Override Tokens
-  await migrateScenes();
+  await migrateScenes({ state });
 
   // Migrate Compendium Packs
   const packs = game.packs.filter((p) => {
-    // Ingore locked unless we're allowed to unlock them
-    if (p.locked && !unlock) return false;
-
     const source = p.metadata.packageType;
     // Ignore modules, adventures, etc.
     if (!["world", "system"].includes(source)) return false;
@@ -61,7 +82,7 @@ export async function migrateWorld({ unlock = false, systemPacks = false } = {})
     return ["Actor", "Item", "Scene"].includes(p.metadata.type);
   });
 
-  await migrateCompendiums(packs, { unlock });
+  await migrateCompendiums(packs, { unlock, state });
 
   // Set the migration as complete
   await game.settings.set("pf1", "systemMigrationVersion", game.system.version);
@@ -72,7 +93,9 @@ export async function migrateWorld({ unlock = false, systemPacks = false } = {})
   // Remove migration notification
   ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.version }), { console: false });
   console.log("PF1 | Migration | Completed!");
+
   pf1.migrations.isMigrating = false;
+  state.finish();
 
   Hooks.callAll("pf1MigrationFinished");
 }
@@ -80,11 +103,28 @@ export async function migrateWorld({ unlock = false, systemPacks = false } = {})
 /**
  * Migrate actors directory.
  *
+ * @param {object} [options={}]
+ * @param {MigrationState} [options.state]
+ * @param {object} [options.dialog=null]
  * @returns {Promise<void>}
  */
-export async function migrateActors() {
+export async function migrateActors({ state, dialog = null } = {}) {
+  // Locally generated state tracker
+  const localState = !state;
+  state ??= initializeStateAndDialog(state, "PF1.Migration.Category.Actors", dialog);
+
+  if (localState) state.start();
+
+  const tracker = state.createCategory("actors", "PF1.Migration.Category.Actors", true);
+
   console.log("PF1 | Migration | Actors directory starting...");
+  tracker.start();
+
+  tracker.setTotal(game.actors.size);
+  tracker.setInvalid(game.actors.invalidDocumentIds.size);
+
   for (const actor of game.actors) {
+    tracker.startEntry(actor);
     try {
       const updateData = await migrateActorData(actor.toObject(), undefined, { actor });
       if (!foundry.utils.isEmpty(updateData)) {
@@ -92,20 +132,42 @@ export async function migrateActors() {
         await actor.update(updateData);
       }
     } catch (err) {
+      tracker.recordError(actor, err);
       console.error(`PF1 | Migration | Actor: ${actor.name} | Error`, err);
     }
+    tracker.finishEntry(actor);
   }
+
   console.log("PF1 | Migration | Actors directory complete!");
+  tracker.finish();
+  if (localState) state.finish();
 }
 
 /**
  * Migrate items directory.
  *
+ * @param {object} [options={}]
+ * @param {MigrationState} [options.state]
+ * @param {object} [options.dialog=null]
  * @returns {Promise<void>}
  */
-export async function migrateItems() {
+export async function migrateItems({ state, dialog = null } = {}) {
+  // Locally generated state tracker
+  const localState = !state;
+  state ??= initializeStateAndDialog(state, "PF1.Migration.Category.Items", dialog);
+
+  if (localState) state.start();
+
+  const tracker = state.createCategory("items", "PF1.Migration.Category.Items", true);
+
   console.log("PF1 | Migration | Items directory starting...");
+  tracker.start();
+
+  tracker.setTotal(game.items.size);
+  tracker.setInvalid(game.items.invalidDocumentIds.size);
+
   for (const item of game.items) {
+    tracker.startEntry(item);
     try {
       const updateData = await migrateItemData(item.toObject());
       if (!foundry.utils.isEmpty(updateData)) {
@@ -113,9 +175,14 @@ export async function migrateItems() {
         await item.update(updateData);
       }
     } catch (err) {
+      tracker.recordError(item, err);
       console.error(`PF1 | Migration | Item: ${item.name} | Error`, err);
     }
+    tracker.finishEntry(item);
   }
+
+  tracker.finish();
+  if (localState) state.finish();
   console.log("PF1 | Migration | Items directory complete!");
 }
 
@@ -124,13 +191,36 @@ export async function migrateItems() {
  *
  * @see {@link migrateScene}
  *
+ * @param {object} [options={}]
+ * @param {MigrationState} [options.state]
+ * @param {object} [options.dialog=null]
+ *
  * @returns {Promise<void>}
  */
-export async function migrateScenes() {
+export async function migrateScenes({ state, dialog = null } = {}) {
+  // Locally generated state tracker
+  const localState = !state;
+  state ??= initializeStateAndDialog(state, "PF1.Migration.Category.Scenes", dialog);
+
+  if (localState) state.start();
+
+  const tracker = state.createCategory("scenes", "PF1.Migration.Category.Scenes", true);
+
   console.log("PF1 | Migration | Scene directory starting...");
+  tracker.start();
+
+  tracker.setTotal(game.scenes.size);
+  tracker.setInvalid(game.scenes.invalidDocumentIds.size);
+
   for (const scene of game.scenes) {
-    await migrateScene(scene);
+    tracker.startEntry(scene);
+    await migrateScene(scene, { state, tracker });
+    tracker.finishEntry(scene);
   }
+
+  tracker.finish();
+
+  if (localState) state.finish();
   console.log("PF1 | Migration | Scene directory complete!");
 }
 
@@ -142,18 +232,43 @@ export async function migrateScenes() {
  * @param {Array<string|WorldCollection>|null} [packIds=null] - Array of pack IDs or packs to migrate. If null, all packs will be migrated.
  * @param {object} [options={}] - Additional options to pass along.
  * @param {boolean} [options.unlock=false] - If false, locked compendiums are ignored.
+ * @param {MigrationState} [options.state] - Migration state tracker
+ * @param {object} [options.dialog=null] - Display migration dialog. Falsy disables.
  * @returns {Promise<void>} - Promise that resolves once all migrations are complete.
  * @throws {Error} - If defined pack is not found.
  */
-export async function migrateCompendiums(packIds = null, { unlock = false } = {}) {
+export async function migrateCompendiums(packIds = null, { unlock = false, state, dialog = null } = {}) {
   if (packIds === null) packIds = [...game.packs];
+
+  // Locally generated state tracker
+  const localState = !state;
+  if (dialog) state = initializeStateAndDialog(state, "PF1.Migration.Category.Packs", dialog);
+  if (state) state.unlock = unlock;
+
+  if (localState) state?.start();
+
+  const tracker = state?.createCategory("packs", "PF1.Migration.Category.Packs", true);
+  tracker?.start();
+
+  tracker?.setTotal(packIds.length);
+
   for (const pack of packIds) {
+    tracker?.startEntry(pack);
+
+    if (!unlock && pack.locked) tracker.ignoreEntry(pack);
+
     try {
       await migrateCompendium(pack, { unlock });
     } catch (error) {
       console.error(`PF1 | Migration | Pack: ${pack.collection} | Error`, error);
     }
+
+    tracker?.finishEntry(pack);
   }
+
+  tracker?.finish();
+
+  if (localState) state?.finish();
 }
 
 /**
@@ -165,11 +280,20 @@ export async function migrateCompendiums(packIds = null, { unlock = false } = {}
  *
  * @param {object} [options={}] - Additional options
  * @param {boolean} [options.unlock] - Unlock compendiums
+ * @param {MigrationState} [options.state]
+ * @param {object} [options.dialog={}] - Migration dialog options. Falsy disables the dialog.
  * @returns {Promise<void>}
  */
-export async function migrateSystem({ unlock = true } = {}) {
+export async function migrateSystem({ unlock = true, state, dialog = {} } = {}) {
+  state ??= initializeStateAndDialog(state, "PF1.Migration.Category.System", dialog);
+  state.unlock = unlock;
+
+  state.start();
+
   const packs = game.packs.filter((p) => p.metadata.packageType === "system");
-  return migrateCompendiums(packs, { unlock });
+  await migrateCompendiums(packs, { unlock, state, dialog: false });
+
+  state.finish();
 }
 
 /**
@@ -179,13 +303,22 @@ export async function migrateSystem({ unlock = true } = {}) {
  *
  * @see {@link migrateCompendiums}
  *
- * @param {object} [options={}] Additional options
- * @param {boolean} [options.unlock] Unlock compendiums
+ * @param {object} [options={}] - Additional options
+ * @param {boolean} [options.unlock] - Unlock compendiums
+ * @param {object} [options.dialog={}] - Dialog options. Falsy disables the dialog.
+ * @param {MigrationState} [options.state]
  * @returns {Promise<void>}
  */
-export async function migrateModules({ unlock = true } = {}) {
+export async function migrateModules({ unlock = true, state, dialog = {} } = {}) {
+  state ??= initializeStateAndDialog(state, "PF1.Migration.Category.Modules", dialog);
+  state.unlock = unlock;
+
+  state.start();
+
   const packs = game.packs.filter((p) => p.metadata.packageType === "module");
-  return migrateCompendiums(packs, { unlock });
+  await migrateCompendiums(packs, { unlock, state });
+
+  state.finish();
 }
 
 /* -------------------------------------------- */
@@ -630,19 +763,24 @@ export const migrateItemActionData = function (action, item) {
  * Migrate singular scene document.
  *
  * @param {Scene} scene - Scene document to update.
+ * @param {object} [options] - Additional options
+ * @param {MigrationState} [options.state=null]
+ * @param {MigrationCategory} [options.tracker=null]
  * @returns {Promise<void>}
  */
-export async function migrateScene(scene) {
+export async function migrateScene(scene, { state, tracker }) {
   console.log(`PF1 | Migration | Scene: ${scene.name} | Starting...`);
   try {
-    await migrateSceneTokens(scene);
-    await migrateSceneActors(scene);
+    await migrateSceneTokens(scene, { state, tracker });
+    await migrateSceneActors(scene, { state, tracker });
 
     // Mark last migrated version
     await scene.setFlag("pf1", "migration", game.system.version);
   } catch (err) {
+    tracker?.recordError(scene, err);
     console.error(`PF1 | Migration | Scene: ${scene.name} | Error`, err);
   }
+  console.log(`PF1 | Migration | Scene: ${scene.name} | Complete!`);
 }
 
 /**
@@ -665,12 +803,16 @@ export async function migrateSceneData() {
  * Migrate tokens in a single scene.
  *
  * @param {Scene} scene - The Scene to Update
+ * @param {object} [options] - Additional options
+ * @param {MigrationState} [options.state=null]
+ * @param {MigrationCategory} [options.tracker=null]
  */
-export async function migrateSceneTokens(scene) {
+export async function migrateSceneTokens(scene, { state = null, tracker = null } = {}) {
   for (const token of scene.tokens) {
     try {
       await migrateToken(token);
-    } catch (error) {
+    } catch (err) {
+      tracker?.recordError(token, err);
       console.error(`PF1 | Migration | Scene: ${scene.name} | Token: ${token.id} | Error`, token, error);
     }
   }
@@ -680,9 +822,12 @@ export async function migrateSceneTokens(scene) {
  * Migrate unlinked actors on a single scene.
  *
  * @param {Scene} scene - Scene to migrate actors in.
+ * @param {object} [options] - Additional options
+ * @param {MigrationState} [options.state=null]
+ * @param {MigrationCategory} [options.tracker=null]
  * @returns {Promise<void>}
  */
-export async function migrateSceneActors(scene) {
+export async function migrateSceneActors(scene, { state = null, tracker = null } = {}) {
   for (const token of scene.tokens) {
     if (token.isLinked) continue;
     const actor = token.actor;
@@ -699,8 +844,9 @@ export async function migrateSceneActors(scene) {
         if (items?.length) await actor.updateEmbeddedDocuments("Item", items);
         if (effects?.length) await actor.updateEmbeddedDocuments("ActiveEffect", effects);
       }
-    } catch (error) {
-      console.error(`PF1 | Migration | Scene: ${scene.name} | Token: ${token.id} | Error`, token, error);
+    } catch (err) {
+      tracker?.recordError(token, err);
+      console.error(`PF1 | Migration | Scene: ${scene.name} | Token: ${token.id} | Error`, token, err);
     }
   }
 }

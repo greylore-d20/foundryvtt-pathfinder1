@@ -1,0 +1,84 @@
+.app.pf1.migration {
+  min-width: 360px;
+
+  .window-content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.7em;
+
+    .categories {
+      display: grid;
+      grid-template-columns: 5fr 2em 1em 2em 2em 2em 2em 2em;
+      grid-auto-rows: min-content;
+      gap: 3px 0.5em;
+
+      .category {
+        display: contents;
+
+        h3 {
+          grid-column: 1 / -1;
+          display: flex;
+          justify-content: space-between;
+
+          .current {
+            font-size: var(--font-size-11);
+          }
+        }
+
+        .empty {
+          grid-column: span 6;
+        }
+
+        .value {
+          text-align: right;
+
+          &.has-details {
+            cursor: pointer;
+          }
+        }
+
+        .delimiter {
+          text-align: center;
+        }
+
+        .status {
+          text-align: center;
+          &.completed {
+            color: darkgreen;
+          }
+        }
+
+        &.item {
+          .processed {
+            color: darkgreen;
+            font-weight: bold;
+          }
+
+          .errors,
+          .invalid {
+            &.found {
+              color: darkred;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+
+    > .status {
+      text-align: center;
+      border: none;
+      margin: 0;
+
+      &.completed {
+        > i {
+          color: darkgreen;
+        }
+      }
+    }
+
+    > .migration-info {
+      text-align: center;
+    }
+  }
+}

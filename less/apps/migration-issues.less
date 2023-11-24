@@ -1,0 +1,67 @@
+.pf1.dialog.migration-issues {
+  .dialog-content {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 0.3em;
+    overflow: hidden;
+
+    h3 {
+      margin: 0;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      overflow: hidden scroll;
+      height: 420px;
+
+      display: grid;
+      grid-template-columns: 1fr 5fr;
+      &.errors {
+        grid-template-columns: 1fr 3fr 5fr;
+      }
+      grid-auto-rows: min-content;
+      gap: 3px;
+
+      h3 {
+        border: none;
+        background-color: #c6c6bc;
+        border-bottom: 2px solid #dcddd1;
+      }
+
+      li {
+        display: contents;
+
+        > * {
+          padding: 0 0.2em;
+        }
+      }
+
+      .header {
+        > h3 {
+          top: 0;
+          position: sticky;
+        }
+      }
+
+      .issue {
+        .id {
+          font-size: var(--font-size-11);
+          font-family: monospace;
+          align-self: center;
+        }
+
+        .id,
+        .name,
+        .message {
+          user-select: all;
+        }
+      }
+    }
+  }
+  .dialog-buttons {
+    flex: 0;
+  }
+}

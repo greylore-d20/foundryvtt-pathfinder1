@@ -390,15 +390,15 @@
         <span class="sep"> / </span>
         {{/unless}}
         <div class="spell-max" data-tooltip="PF1.SpellsTotalEachDay">
-          <span class="{{#if ../spellbook.orig.autoSpellLevelCalculation}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="system.attributes.spells.spellbooks.{{../bookId}}.spells.spell{{section.level}}.base">{{section.slots}}</span>
+          <span class="{{#if ../spellbook.orig.autoSpellLevelCalculation}}spell-input-readonly{{else}}text-box{{/if}}" data-dtype="Number" name="system.attributes.spells.spellbooks.{{../bookId}}.spells.spell{{section.level}}.base">{{section.slots.max}}</span>
           {{#if (gt preparation.domain 0)}}
           <span class="domain-bonus-slots">{{numberFormat preparation.domain sign=true}}</span>
           {{/if}}
         </div>
         {{else}}
-        <span class="spell-slots">{{{section.uses}}}</span>
+        <span class="spell-slots">{{section.uses}}</span>
         <span class="sep"> / </span>
-        <span class="spell-max">{{{section.slots}}}</span>
+        <span class="spell-max">{{section.slots}}</span>
         {{/if}}
       </div>
       {{/unless}}
@@ -499,11 +499,48 @@
     </li>
     {{/each}}
 
-    {{#if section.lowAbilityScore}}
-      <h4 class="spell-level-message">{{localize "PF1.SpellScoreTooLow"}}</h4>
-    {{/if}}
-    {{#if section.spellMessage}}
-      <h4 class="spell-level-message">{{section.spellMessage}}</h4>
+    {{! Spell Level Issues }}
+    {{#if hasIssues}}
+      <div class="spell-notifications">
+      {{#if lowAbilityScore}}
+        <div class="notification-box warning">
+          <h5>{{localize "PF1.Spellbook.InsufficientAbility"}}</h5>
+          <span class="value">{{lookup (lookup @root.system.abilities ../spellbook.orig.ability) 'total'}}</span>
+          <span class="label">{{lookup @root.config.abilitiesShort ../spellbook.orig.ability}}</span>
+        </div>
+      {{else if spontaneous}}
+        {{#if invalidKnown}}
+          <div class="notification-box{{#if (gt known.excess 0)}} warning{{/if}}">
+            <h5>{{localize "PF1.Spellbook.Known"}}</h5>
+          <span class="value">{{numberFormat mismatchKnown sign=true}}</span>
+          </div>
+        {{/if}}
+      {{else}}
+        {{! Slot Issues }}
+        {{#if invalidSlots}}
+          <div class="notification-box{{#if (lt mismatchSlots 0)}} warning{{/if}}">
+            <h5>{{localize "PF1.Spellbook.OpenSlots"}}</h5>
+            <span class="value">
+              {{numberFormat mismatchSlots sign=true}}
+            </span>
+          </div>
+        {{/if}}
+        {{! Available Domain slots }}
+        {{#if (gt domain.remaining 0)}}
+          <div class="notification-box">
+            <h5>{{localize "PF1.Spellbook.OpenSlots"}}</h5>
+            <span class="value">{{numberFormat domain.remaining sign=true}}</span>
+            <span class="label">
+              {{#if isSchool}}
+              {{localize 'PF1.School'}}
+              {{else}}
+              {{localize 'PF1.Domain'}}
+              {{/if}}
+            </span>
+          </div>
+        {{/if}}
+      {{/if}}
+      </div>
     {{/if}}
   </ol>
   {{/unless}}

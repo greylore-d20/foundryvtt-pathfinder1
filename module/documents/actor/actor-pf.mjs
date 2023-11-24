@@ -668,6 +668,8 @@ export class ActorPF extends ActorBasePF {
       return;
     }
 
+    book.isSchool = book.kind !== "divine";
+
     // Set spellbook label
     book.label = book.name || game.i18n.localize(`PF1.SpellBook${bookId.capitalize()}`);
 
@@ -839,6 +841,7 @@ export class ActorPF extends ActorBasePF {
 
     // Set base "spontaneous" based on spell prep mode when using auto slots or spell points
     if (useAuto || useSpellPoints) book.spontaneous = mode.isSemiSpontaneous;
+    const isSpontaneous = book.spontaneous ?? false;
 
     if (useAuto) {
       let casterType = book.casterType;
@@ -850,7 +853,7 @@ export class ActorPF extends ActorBasePF {
       }
 
       const castsForLevels =
-        pf1.config.casterProgression[book.spontaneous ? "castsPerDay" : "spellsPreparedPerDay"][mode.raw][casterType];
+        pf1.config.casterProgression[isSpontaneous ? "castsPerDay" : "spellsPreparedPerDay"][mode.raw][casterType];
       let classLevel = Math.clamped(book.cl.autoSpellLevelTotal, 1, 20);
 
       // Protect against invalid class level bricking actors
@@ -863,20 +866,19 @@ export class ActorPF extends ActorBasePF {
 
       rollData.ablMod = spellSlotAbilityMod;
 
-      const allLevelModFormula =
-        book[book.spontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"] || "0";
+      const allLevelModFormula = book[isSpontaneous ? "castPerDayAllOffsetFormula" : "preparedAllOffsetFormula"] || "0";
       const allLevelMod = RollPF.safeTotal(allLevelModFormula, rollData);
 
       for (let level = 0; level < 10; level++) {
         const levelData = book.spells[`spell${level}`];
         // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
         const spellsForLevel =
-          level === 0 && book.spontaneous
+          level === 0 && isSpontaneous
             ? pf1.config.casterProgression.spellsPreparedPerDay[mode.raw][casterType][classLevel - 1][level]
             : castsForLevels[classLevel - 1][level];
         levelData.base = spellsForLevel;
 
-        const offsetFormula = levelData[book.spontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula"] || "0";
+        const offsetFormula = levelData[isSpontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula"] || "0";
 
         const max =
           typeof spellsForLevel === "number" || (level === 0 && book.hasCantrips)
@@ -924,25 +926,42 @@ export class ActorPF extends ActorBasePF {
       }
 
       // Slot usage
-      if (!book.spontaneous) {
-        for (let level = 0; level < 10; level++) {
-          /** @type {pf1.documents.item.ItemSpellPF[]} */
-          const levelSpells = bookInfo.level[level]?.spells ?? [];
-          const lvlSlots = slots[level];
-          for (const spell of levelSpells) {
-            if (Number.isFinite(spell.maxCharges)) {
-              const slotCost = spell.slotCost;
-              const slots = spell.maxCharges * slotCost;
-              if (spell.isDomain) {
-                lvlSlots.domain -= slots;
-              } else {
-                lvlSlots.used += slots;
-              }
-              lvlSlots.value -= slots;
+      for (let level = 0; level < 10; level++) {
+        /** @type {pf1.documents.item.ItemSpellPF[]} */
+        const levelSpells = bookInfo.level[level]?.spells ?? [];
+        const lvlSlots = slots[level];
+        const levelData = book.spells[`spell${level}`];
+        levelData.slots = { used: 0, max: lvlSlots.max };
+
+        if (isSpontaneous) continue;
+
+        for (const spell of levelSpells) {
+          if (Number.isFinite(spell.maxCharges)) {
+            const slotCost = spell.slotCost;
+            const slots = spell.maxCharges * slotCost;
+            if (spell.isDomain) {
+              lvlSlots.domain -= slots;
+            } else {
+              lvlSlots.used += slots;
             }
+            lvlSlots.value -= slots;
           }
-          book.spells[`spell${level}`].value = lvlSlots.value;
         }
+        levelData.value = lvlSlots.value;
+
+        // Add slot statistics
+        levelData.slots.used = lvlSlots.used;
+        levelData.slots.remaining = levelData.slots.max - levelData.slots.used;
+        levelData.slots.excess = Math.max(0, -levelData.slots.remaining);
+        levelData.domain = { max: lvlSlots.domainMax, remaining: lvlSlots.domain };
+        levelData.domain.excess = Math.max(0, -levelData.domain.remaining);
+        levelData.mismatchSlots = -(
+          levelData.slots.excess +
+          levelData.domain.excess -
+          Math.max(0, levelData.slots.remaining)
+        );
+        if (levelData.mismatchSlots == 0) levelData.mismatchSlots = levelData.slots.remaining;
+        levelData.invalidSlots = levelData.mismatchSlots != 0 || levelData.slots.remaining != 0;
       }
 
       // Spells available hint text if auto spell levels is enabled
@@ -958,7 +977,9 @@ export class ActorPF extends ActorBasePF {
 
         for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
           const spellLevelData = book.spells[`spell${spellLevel}`];
+          // Insufficient ability score for the level
           if (maxLevelByAblScore < spellLevel) {
+            spellLevelData.hasIssues = true;
             spellLevelData.lowAbilityScore = true;
             continue;
           }
@@ -1005,42 +1026,23 @@ export class ActorPF extends ActorBasePF {
 
           const lvlSlots = slots[spellLevel];
           // Detect domain slot problems
-          const domainSlotsRemaining = spellLevel > 0 ? lvlSlots.domain ?? 0 : 0;
+          const domainSlotsRemaining = spellLevel > 0 ? lvlSlots.domain : 0;
 
-          // Clear spell message if present
-          if (!remaining && domainSlotsRemaining <= 0) {
-            spellLevelData.spellMessage = "";
-            continue;
+          spellLevelData.remaining = remaining;
+
+          // No more processing needed
+          if (remaining == 0 && domainSlotsRemaining <= 0) continue;
+
+          spellLevelData.hasIssues = true;
+
+          if (isSpontaneous) {
+            spellLevelData.known.unused = Math.max(0, remaining);
+            spellLevelData.known.excess = -Math.min(0, remaining);
+            spellLevelData.invalidKnown = spellLevelData.known.unused != 0 || spellLevelData.known.excess != 0;
+            spellLevelData.mismatchKnown = remaining;
+          } else {
+            spellLevelData.preparation.unused = Math.max(0, remaining);
           }
-
-          // Add message about slots
-          let spellRemainingMsg = "";
-          // Out of slots or too many normal spells
-          if (remaining < 0 || lvlSlots.used > lvlSlots.max) {
-            if (remaining == 0) remaining = lvlSlots.used - lvlSlots.max; // Too many non-domain spells specifically
-            spellRemainingMsg = game.i18n.format("PF1.TooManySpells", { quantity: Math.abs(remaining) });
-            if (mode.isSpontaneous) spellLevelData.known.unused = Math.max(0, remaining);
-            else spellLevelData.preparation.unused = Math.max(0, remaining);
-          } else if (domainSlotsRemaining > 0 && !mode.isSpontaneous) {
-            spellRemainingMsg = game.i18n.format("PF1.PrepareMoreDomainSpells", { quantity: domainSlotsRemaining });
-          } else if (remaining > 0) {
-            if (mode.isSpontaneous) {
-              spellRemainingMsg =
-                remaining === 1
-                  ? game.i18n.localize("PF1.LearnMoreSpell")
-                  : game.i18n.format("PF1.LearnMoreSpells", { quantity: remaining });
-              spellLevelData.known.unused = Math.max(0, remaining);
-            } else {
-              // hybrid or prepared
-              spellRemainingMsg =
-                remaining === 1
-                  ? game.i18n.localize("PF1.PrepareMoreSpell")
-                  : game.i18n.format("PF1.PrepareMoreSpells", { quantity: remaining });
-              spellLevelData.preparation.unused = Math.max(0, remaining);
-            }
-          }
-
-          spellLevelData.spellMessage = spellRemainingMsg;
         }
       }
     }

@@ -806,7 +806,7 @@ export class ActorSheetPF extends ActorSheet {
    * @private
    */
   _prepareSpellbook(data, spells, bookKey) {
-    const owner = this.document.isOwner;
+    const editable = this.isEditable;
     const book = this.document.system.attributes.spells.spellbooks[bookKey];
 
     const min = book.hasCantrips ? 0 : 1;
@@ -830,21 +830,27 @@ export class ActorSheetPF extends ActorSheet {
       }
       if (!isNaN(spellLevel.max)) {
         spellbook[level] = {
-          level: level,
+          level,
           usesSlots: true,
           spontaneous: book.spontaneous,
-          canCreate: owner === true,
+          canCreate: editable,
           canPrepare: data.actor.type === "character",
           label: pf1.config.spellLevels[level],
           items: [],
           uses: spellLevel.value || 0,
-          baseSlots: spellLevel.base || 0,
-          slots: spellLevel.max || 0,
           dataset: { type: "spell", level: level, spellbook: bookKey },
-          spellMessage: spellLevel.spellMessage,
+          hasIssues: spellLevel.hasIssues,
           lowAbilityScore: spellLevel.lowAbilityScore,
           known: spellLevel.known,
           preparation: spellLevel.preparation,
+          slots: spellLevel.slots,
+          invalidSlots: spellLevel.invalidSlots,
+          mismatchSlots: spellLevel.mismatchSlots,
+          invalidKnown: spellLevel.invalidKnown,
+          mismatchKnown: spellLevel.mismatchKnown,
+          domain: spellLevel.domain,
+          data: spellLevel,
+          isSchool: book.isSchool,
         };
       }
     }

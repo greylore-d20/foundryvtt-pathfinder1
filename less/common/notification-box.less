@@ -1,0 +1,33 @@
+.pf1 {
+  .notification-box {
+    display: inline-flex;
+    flex: 0;
+
+    border: 1px solid black;
+    border-radius: 3px;
+
+    font-size: var(--font-size-12);
+
+    > h5 {
+      margin: 0;
+      padding: 0;
+      background-color: rgba(0,0,0,0.6);
+      color: var(--color-text-light-highlight);
+      font-weight: normal;
+    }
+
+    > :is(h5,span) {
+      white-space: nowrap;
+      padding: 0 3px;
+      font-size: inherit;
+    }
+
+    > .value {
+      background-color: rgba(255,255,255,0.2);
+    }
+
+    &.warning > .value {
+      background-color: rgba(255,0,0,0.2);
+    }
+  }
+}

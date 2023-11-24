@@ -25,43 +25,65 @@ export class SensesSelector extends DocumentSheet {
   /**
    * Returns which keys to convert in distance or weight
    */
-  get convertKeys() {
+  static get convertKeys() {
     return {
-      "system.traits.senses.dv": "distance",
-      "system.traits.senses.ts": "distance",
-      "system.traits.senses.bse": "distance",
-      "system.traits.senses.bs": "distance",
-      "system.traits.senses.sc": "distance",
+      dv: "distance",
+      ts: "distance",
+      bse: "distance",
+      bs: "distance",
+      sc: "distance",
     };
   }
 
   async getData() {
     const actor = this.document;
-    const context = {
+
+    const senses = deepClone(actor.system.traits?.senses ?? {});
+    for (const [key, type] of Object.entries(this.constructor.convertKeys)) {
+      const value = senses[key];
+      if (type === "distance" && value > 0) {
+        senses[key] = pf1.utils.convertDistance(value)[0];
+      }
+    }
+
+    return {
       noSystemVision:
         !game.settings.get("pf1", "systemVision") ||
         (actor.token?.getFlag("pf1", "customVisionRules") ??
           actor.prototypeToken?.getFlag("pf1", "customVisionRules")) ||
         false,
-      system: actor.system,
-      converted: Object.entries(this.convertKeys).reduce((cur, [path, type]) => {
-        if (type === "distance") setProperty(cur, path, pf1.utils.convertDistance(getProperty(actor, path))[0]);
-        return cur;
-      }, {}),
-      gridUnits: getDistanceSystem() === "imperial" ? "ft" : "m",
+      senses,
+      gridUnits:
+        getDistanceSystem() === "imperial"
+          ? game.i18n.localize("PF1.DistFtShort")
+          : game.i18n.localize("PF1.DistMShort"),
     };
-    return context;
   }
 
   async _updateObject(event, formData) {
+    formData = foundry.utils.expandObject(formData);
+    const senses = formData.system.traits.senses;
+
     // Convert data back
-    Object.entries(this.convertKeys).forEach((o) => {
-      if (o[1] === "distance") formData[o[0]] = pf1.utils.convertDistanceBack(formData[o[0]])[0];
+    Object.entries(this.constructor.convertKeys).forEach(([key, type]) => {
+      const value = senses[key];
+      if (value > 0 && type === "distance") {
+        senses[key] = pf1.utils.convertDistanceBack(value)[0];
+      }
     });
 
-    // Update document
-    const result = await super._updateObject(event, formData);
+    // Delete undefined or disabled senses
+    // But only for linked actor since otherwise you can not override them to be disabled
+    if (!this.document.isToken) {
+      for (const [key, value] of Object.entries(senses)) {
+        if (!value) {
+          delete senses[key];
+          senses[`-=${key}`] = null;
+        }
+      }
+    }
 
-    return result;
+    // Update document
+    return super._updateObject(event, formData);
   }
 }

@@ -50,6 +50,28 @@ export class ItemRacePF extends ItemPF {
 
   /**
    * @override
+   * @param {object} data Creation data
+   * @param {object} context Create context
+   * @param {string} userId User ID
+   */
+  _onCreate(data, context, userId) {
+    super._onCreate(data, context, userId);
+
+    if (game.user.id !== userId) return;
+
+    // Update owning actor speed to match racial speed.
+    // TODO: Make this derived data on the actor instead, eliminating the update.
+    if (this.actor) {
+      const speedUpdates = {};
+      for (const [key, value] of Object.entries(this.system.speeds ?? {})) {
+        speedUpdates[key] = { base: value };
+      }
+      this.actor.update({ "system.attributes.speed": speedUpdates });
+    }
+  }
+
+  /**
+   * @override
    * @param {object} data
    * @param {object} context
    * @param {string} userId
@@ -72,7 +94,19 @@ export class ItemRacePF extends ItemPF {
   _onDelete(context, userId) {
     super._onDelete(context, userId);
 
-    if (this.actor?.race === this) this.actor.race = null;
+    const actor = this.actor;
+    if (actor) {
+      if (actor.race === this) actor.race = null;
+
+      // Reset actor speeds
+      actor.update({
+        "system.attributes.speed.land.base": 30,
+        "system.attributes.speed.fly.base": 0,
+        "system.attributes.speed.swim.base": 0,
+        "system.attributes.speed.climb.base": 0,
+        "system.attributes.speed.burrow.base": 0,
+      });
+    }
   }
 
   /**

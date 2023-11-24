@@ -1,0 +1,41 @@
+<form autocomplete="off">
+  {{! Base Land Speed}}
+  <div class="form-group">
+    <label>{{localize "PF1.SpeedLand"}} <span class="units">({{units}})</span></label>
+    <div class="form-fields">
+      <input type="number" data-dtype="Number" name="system.speeds.land" min="0" value="{{speeds.land}}">
+    </div>
+  </div>
+
+  {{! Fly Speed}}
+  <div class="form-group">
+    <label>{{localize "PF1.SpeedFly"}} <span class="units">({{units}})</span></label>
+    <div class="form-fields">
+      <input type="number" data-dtype="Number" name="system.speeds.fly" min="0" value="{{speeds.fly}}">
+    </div>
+  </div>
+
+  {{! Swim Speed }}
+  <div class="form-group">
+    <label>{{localize "PF1.SpeedSwim"}} <span class="units">({{units}})</span></label>
+    <div class="form-fields">
+      <input type="number" data-dtype="Number" name="system.speeds.swim" min="0" value="{{speeds.swim}}">
+    </div>
+  </div>
+
+  {{! Climb Speed }}
+  <div class="form-group">
+    <label>{{localize "PF1.SpeedClimb"}} <span class="units">({{units}})</span></label>
+    <div class="form-fields">
+      <input type="number" data-dtype="Number" name="system.speeds.climb" min="0" value="{{speeds.climb}}">
+    </div>
+  </div>
+
+  {{! Burrow Speed }}
+  <div class="form-group">
+    <label>{{localize "PF1.SpeedBurrow"}} <span class="units">({{units}})</span></label>
+    <div class="form-fields">
+      <input type="number" data-dtype="Number" name="system.speeds.burrow" min="0" value="{{speeds.burrow}}">
+    </div>
+  </div>
+</form>

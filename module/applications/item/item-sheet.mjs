@@ -1,7 +1,8 @@
-import { adjustNumberByStringCommand, getBuffTargetDictionary, getBuffTargets } from "@utils";
+import { adjustNumberByStringCommand, getBuffTargetDictionary, getBuffTargets, getDistanceSystem } from "@utils";
 import { ItemPF } from "@item/item-pf.mjs";
 import { ScriptEditor } from "../script-editor.mjs";
 import { ActorTraitSelector } from "../trait-selector.mjs";
+import { SpeedEditor } from "../speed-editor.mjs";
 import { Widget_CategorizedItemPicker } from "../categorized-item-picker.mjs";
 import { getSkipActionPrompt } from "../../documents/settings.mjs";
 import { ContentSourceEditor } from "../content-source.mjs";
@@ -580,6 +581,24 @@ export class ItemSheetPF extends ItemSheet {
     // Add actions
     this._prepareActions(context);
 
+    context.distanceUnit = game.i18n.localize(
+      getDistanceSystem() === "imperial" ? "PF1.DistFtShort" : "PF1.DistMShort"
+    );
+
+    // Prepare speeds
+    if (item.type === "race") {
+      context.speeds = [];
+      for (const key of ["land", "fly", "swim", "climb", "burrow"]) {
+        const value = item.system.speeds?.[key] ?? 0;
+        if (value == 0) continue;
+        context.speeds.push({
+          value: pf1.utils.convertDistance(value)[0],
+          mode: key,
+          label: `PF1.Speed${key.capitalize()}_Short`,
+        });
+      }
+    }
+
     return context;
   }
 
@@ -961,6 +980,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Edit change script contents
     html.find(".edit-change-contents").on("click", this._onEditChangeScriptContents.bind(this));
+
+    html.find(".speed-editor").click(this._onSpeedEdit.bind(this));
 
     // Linked item clicks
     html.find(".tab[data-tab='links'] .links-item .links-item-name").on("contextmenu", this._openLinkedItem.bind(this));
@@ -1379,6 +1400,16 @@ export class ItemSheetPF extends ItemSheet {
       choices: pf1.config[a.dataset.options],
     };
     new ActorTraitSelector(this.object, options).render(true);
+  }
+
+  _onSpeedEdit(event) {
+    event.preventDefault();
+
+    let app = Object.values(ui.windows).find(
+      (oldApp) => oldApp instanceof SpeedEditor && oldApp.document === this.document
+    );
+    app ??= new SpeedEditor(this.document);
+    app.render(true, { focus: true });
   }
 
   /**

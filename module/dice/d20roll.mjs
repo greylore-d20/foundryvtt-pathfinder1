@@ -332,7 +332,7 @@ export class D20RollPF extends RollPF {
     messageData = message.toObject();
 
     if (options.create ?? true) {
-      return ChatMessage.implementation.create(messageData);
+      return ChatMessage.implementation.create(messageData, { rollMode });
     } else {
       return messageData;
     }

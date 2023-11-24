@@ -210,6 +210,7 @@ export class ChatAttack {
     const typeMap = {
       rsak: ["ranged", /*"spell",*/ "rangedSpell"],
       rwak: ["ranged", /*"weapon",*/ "rangedWeapon"],
+      twak: ["ranged", /*"weapon",*/ "thrownWeapon", "rangedWeapon"],
       rcman: ["ranged"],
       mwak: ["melee", /*"weapon",*/ "meleeWeapon"],
       msak: ["melee", /*"spell",*/ "meleeSpell"],
@@ -220,10 +221,9 @@ export class ChatAttack {
     // Add actor notes
     if (this.action.item?.actor != null) {
       notes.push(...this.action.item.actor.getContextNotesParsed("attacks.attack"));
-      if ((typeMap[type]?.length || 0) > 0)
-        typeMap[type].forEach((subTarget) =>
-          notes.push(...this.action.item.actor.getContextNotesParsed(`attacks.${subTarget}`))
-        );
+      typeMap[type]?.forEach((subTarget) =>
+        notes.push(...this.action.item.actor.getContextNotesParsed(`attacks.${subTarget}`))
+      );
     }
     // Add item notes
     if (this.action.item?.system.attackNotes) {

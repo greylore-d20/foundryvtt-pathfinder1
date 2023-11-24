@@ -104,7 +104,7 @@ export class ItemAction {
     return !!this.data.actionType;
   }
   get hasAttack() {
-    return ["mwak", "rwak", "msak", "rsak", "mcman", "rcman"].includes(this.data.actionType);
+    return ["mwak", "rwak", "twak", "msak", "rsak", "mcman", "rcman"].includes(this.data.actionType);
   }
 
   get hasMultiAttack() {
@@ -302,11 +302,9 @@ export class ItemAction {
    * @type {ItemChange[]}
    */
   get damageSources() {
-    const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.actionType);
-    const isWeapon = ["mwak", "rwak"].includes(this.data.actionType);
-    const changes = this.parent.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
-    const highest = getHighestChanges(changes, { ignoreTarget: true });
-    return highest;
+    const context = pf1.const.actionTypeToContext[this.data.actionType] ?? "damage";
+    const changes = this.parent.getContextChanges(context);
+    return getHighestChanges(changes, { ignoreTarget: true });
   }
 
   /**
@@ -714,7 +712,7 @@ export class ItemAction {
 
     rollData.item.primaryAttack = primaryAttack;
 
-    const isRanged = ["rwak", "rsak", "rcman"].includes(actionData.actionType);
+    const isRanged = ["rwak", "twak", "rsak", "rcman"].includes(actionData.actionType);
     const isCMB = this.isCombatManeuver;
 
     const size = rollData.traits?.size ?? "med";
@@ -765,7 +763,7 @@ export class ItemAction {
     // Add change bonus
     const changes = this.item.getContextChanges(isRanged ? "rattack" : "mattack");
     // Add masterwork bonus to changes (if applicable)
-    if (["mwak", "rwak", "mcman", "rcman"].includes(this.data.actionType) && this.item.system.masterwork) {
+    if (["mwak", "rwak", "twak", "mcman", "rcman"].includes(this.data.actionType) && this.item.system.masterwork) {
       changes.push(
         new pf1.components.ItemChange({
           formula: "1",
@@ -963,9 +961,7 @@ export class ItemAction {
 
     if (!this.isHealing) {
       // Gather changes
-      const isSpell = ["msak", "rsak", "spellsave"].includes(this.data.actionType);
-      const isWeapon = ["mwak", "rwak"].includes(this.data.actionType);
-      const changes = this.item.getContextChanges(isSpell ? "sdamage" : isWeapon ? "wdamage" : "damage");
+      const changes = this.damageSources;
 
       // Add enhancement bonus to changes
       if (this.enhancementBonus) {

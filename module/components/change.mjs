@@ -81,7 +81,8 @@ export class ItemChange {
     return this.data.continuous;
   }
   get isDeferred() {
-    if (["damage", "wdamage", "sdamage", "skills"].includes(this.subTarget)) return true;
+    if (["damage", "wdamage", "mwdamage", "twdamage", "rwdamage", "sdamage", "skills"].includes(this.subTarget))
+      return true;
     return /^skill\./.test(this.subTarget);
   }
 

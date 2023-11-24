@@ -544,6 +544,15 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "wdamage":
       result.push("system.attributes.damage.weapon");
       break;
+    case "rwdamage":
+      result.push("system.attributes.damage.ranged");
+      break;
+    case "twdamage":
+      result.push("system.attributes.damage.thrown");
+      break;
+    case "mwdamage":
+      result.push("system.attributes.damage.melee");
+      break;
     case "sdamage":
       result.push("system.attributes.damage.spell");
       break;

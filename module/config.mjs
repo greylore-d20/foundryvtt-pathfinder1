@@ -702,6 +702,7 @@ export const itemTypes = {
 export const itemActionTypes = {
   mwak: "PF1.ActionMWAK",
   rwak: "PF1.ActionRWAK",
+  twak: "PF1.ActionTWAK",
   msak: "PF1.ActionMSAK",
   rsak: "PF1.ActionRSAK",
   mcman: "PF1.ActionMCMan",
@@ -2242,6 +2243,9 @@ export const buffTargets = /** @type {const} */ ({
   rattack: { label: "PF1.BuffTarRangedAttack", category: "attack", sort: 114000 },
   damage: { label: "PF1.BuffTarAllDamageRolls", category: "damage", sort: 120000 },
   wdamage: { label: "PF1.WeaponDamage", category: "damage", sort: 121000 },
+  mwdamage: { label: "PF1.MeleeWeaponDamage", category: "damage", sort: 122000 },
+  rwdamage: { label: "PF1.RangedWeaponDamage", category: "damage", sort: 123000 },
+  twdamage: { label: "PF1.ThrownWeaponDamage", category: "damage", sort: 124000 },
   sdamage: { label: "PF1.SpellDamage", category: "damage", sort: 122000 },
   critConfirm: { label: "PF1.CriticalConfirmation", category: "attack", sort: 130000 },
   allSavingThrows: { label: "PF1.BuffTarAllSavingThrows", category: "savingThrows", sort: 140000 },

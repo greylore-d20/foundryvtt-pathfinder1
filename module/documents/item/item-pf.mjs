@@ -1302,7 +1302,7 @@ export class ItemPF extends ItemBasePF {
   /**
    * Finds, filters and alters changes relevant to a context, and returns the result (as an array)
    *
-   * @param {string} [context="mattack"] - The given context. Either "mattack", "rattack", "wdamage", "sdamage".
+   * @param {"mattack"|"rattack"|"wdamage"|"sdamage"|"rwdamage"|"twdamage"|"mwdamage"} context - The given context.
    * @returns {ItemChange[]} The resulting changes.
    */
   getContextChanges(context = "attack") {
@@ -1313,25 +1313,32 @@ export class ItemPF extends ItemBasePF {
       case "mattack":
       case "rattack": {
         const subTargetList = ["attack", context];
-        result = result.filter((c) => {
-          if (!subTargetList.includes(c.subTarget)) return false;
-          return true;
-        });
+        result = result.filter((c) => subTargetList.includes(c.subTarget));
         break;
       }
+      case "attack":
+        result = result.filter((c) => c.subTarget === "attack");
+        break;
       case "wdamage":
       case "sdamage": {
         const subTargetList = ["damage", context];
-        result = result.filter((c) => {
-          if (!subTargetList.includes(c.subTarget)) return false;
-          return true;
-        });
+        result = result.filter((c) => subTargetList.includes(c.subTarget));
+        break;
+      }
+      case "mwdamage":
+      case "rwdamage":
+      case "twdamage": {
+        const subTargetList = ["damage", "wdamage", context];
+        result = result.filter((c) => subTargetList.includes(c.subTarget));
         break;
       }
       case "damage": {
         result = result.filter((c) => c.subTarget === "damage");
         break;
       }
+      default:
+        result = [];
+        break;
     }
 
     return result;
@@ -2058,7 +2065,7 @@ export class ItemPF extends ItemBasePF {
     const isMelee =
       ["mwak", "msak", "mcman"].includes(actionData.actionType) || ["melee", "reach"].includes(actionData.range.units);
     const isRanged =
-      ["rwak", "rsak", "rcman"].includes(actionData.actionType) || this.system.weaponSubtype === "ranged";
+      ["rwak", "twak", "rsak", "rcman"].includes(actionData.actionType) || this.system.weaponSubtype === "ranged";
     const isManeuver = action.isCombatManeuver;
 
     const describePart = (value, name, modifier, sort = 0) => {

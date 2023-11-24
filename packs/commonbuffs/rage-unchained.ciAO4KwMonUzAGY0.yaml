@@ -4,9 +4,8 @@ img: systems/pf1/icons/feats/extra-rage.jpg
 system:
   description:
     value: >-
-      <p>Gain +2 bonus to melee attack and <span class="notImp" title="Not
-      Implemented">melee damage</span> rolls, <span class="notImp" title="Not
-      Implemented">thrown weapon damage rolls</span>, and Will saving throws.
+      <p>Gain +2 bonus to melee attack and melee damage rolls, thrown weapon damage rolls,
+      and Will saving throws.
       Additionally you suffer -2 penalty to Armor Class. You also gain 2
       temporary hit points per Hit Die.</p><p>Unable to use various skills,
       refer to @UUID[Compendium.pf1.class-abilities.2Az38ZPYwjYBKZd2]{Rage}
@@ -15,6 +14,16 @@ system:
     - _id: D2POwZXV
       formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
       subTarget: mattack
+      modifier: untyped
+      priority: null
+    - _id: 8f4QV8tz
+      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      subTarget: mwdamage
+      modifier: untyped
+      priority: null
+    - _id: MUtCJV5t
+      formula: 2 + floor((@classes.barbarianUnchained.level - 2) / 9)
+      subTarget: twdamage
       modifier: untyped
       priority: null
     - _id: RBiWOi4D
@@ -28,10 +37,6 @@ system:
       modifier: penalty
       priority: null
   contextNotes:
-    - text: >-
-        +[[2 + floor((@classes.barbarianUnchained.level - 2 ) / 9)]] to melee
-        attacks and damage
-      subTarget: attack
     - text: >-
         A barbarian cannot use any Charisma-, Dexterity-, or Intelligence-based
         skills (except Acrobatics, Fly, Intimidate, and Ride) or any ability
@@ -64,4 +69,3 @@ system:
     units: round
 _id: ciAO4KwMonUzAGY0
 _key: '!items!ciAO4KwMonUzAGY0'
-

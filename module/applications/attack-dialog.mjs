@@ -113,7 +113,7 @@ export class AttackDialog extends Application {
       isNaturalAttack: item.system.subType === "natural",
       isWeaponAttack: item.system.subType === "weapon",
       isMeleeWeaponAttackAction: action.data.actionType === "mwak",
-      isRangedWeaponAttackAction: action.data.actionType === "rwak",
+      isRangedWeaponAttackAction: ["rwak", "twak"].includes(action.data.actionType),
       isAttack: item.type === "attack",
       isWeapon: item.type === "weapon",
       isSpell: item.type === "spell",

@@ -24,6 +24,7 @@ import { ItemPFProxy } from "@item/item-proxy.mjs";
 
 // New API
 import * as PF1 from "./module/config.mjs";
+import * as PF1CONST from "./module/const.mjs";
 import * as applications from "./module/applications/_module.mjs";
 import * as documents from "./module/documents/_module.mjs";
 import * as actionUse from "./module/action-use/_module.mjs";
@@ -54,6 +55,7 @@ globalThis.pf1 = moduleToObject({
   canvas: _canvas,
   components,
   config: PF1,
+  const: PF1CONST,
   dice,
   documents,
   migrations,

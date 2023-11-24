@@ -1,5 +1,5 @@
-.app.pf1 {
-  .compendium-browser {
+.app.pf1.compendium-browser {
+  .window-content > div {
     max-height: 100%;
 
     .search-form {
@@ -187,5 +187,11 @@
         }
       }
     }
+  }
+
+  transition: opacity 200ms ease-in-out;
+  &.active-drag {
+    opacity: 0.3;
+    pointer-events: none;
   }
 }

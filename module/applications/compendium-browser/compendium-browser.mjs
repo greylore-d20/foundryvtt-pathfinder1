@@ -125,7 +125,7 @@ export class CompendiumBrowser extends Application {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       template: "systems/pf1/templates/apps/compendium-browser/compendium-browser.hbs",
-      classes: ["pf1", "app"],
+      classes: ["pf1", "app", "compendium-browser"],
       id: `pf1-compendium-browser-${this.name}`,
       width: 800,
       height: window.innerHeight - 60,
@@ -500,6 +500,14 @@ export class CompendiumBrowser extends Application {
         uuid: uuid,
       })
     );
+
+    const html = this.element[0];
+    // Without the delay the following blocks the drag start
+    setTimeout(() => html.classList.add("active-drag"), 50);
+    document.body.addEventListener("dragend", () => html.classList.remove("active-drag"), {
+      once: true,
+      passive: true,
+    });
   }
 
   /**

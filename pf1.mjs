@@ -9,6 +9,7 @@ import "./less/pf1.less";
 import "./module/hmr.mjs";
 import "./module/patch-core.mjs";
 import "module/compendium-directory.mjs";
+import "./module/chatlog.mjs";
 
 // Import Modules
 import { tinyMCEInit } from "./module/mce/mce.mjs";

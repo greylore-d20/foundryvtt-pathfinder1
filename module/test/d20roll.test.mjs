@@ -242,8 +242,8 @@ export function registerD20RollTests() {
           const messageElement = document.createElement("div");
           messageElement.innerHTML = message.content;
           expect(messageElement.querySelector(".flavor-text").textContent).to.include("Test");
-          expect(element.querySelector(".flavor-text i.abnormal.take-x")).to.exist;
-          expect(element.querySelector(".flavor-text i.abnormal.take-x").dataset.tooltip).to.equal(
+          expect(messageElement.querySelector(".flavor-text i.abnormal.take-x")).to.exist;
+          expect(messageElement.querySelector(".flavor-text i.abnormal.take-x").dataset.tooltip).to.equal(
             game.i18n.format("PF1.TakeX", { number: 13 })
           );
         });

@@ -43,6 +43,7 @@ export {
   _canvas as canvas,
   components,
   PF1 as config,
+  PF1CONST as const,
   dice,
   documents,
   migrations,

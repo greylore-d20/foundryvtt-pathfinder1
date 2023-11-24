@@ -289,6 +289,9 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "mattack":
       result.push("system.attributes.attack.melee");
       break;
+    case "nattack":
+      result.push("system.attributes.attack.natural");
+      break;
     case "rattack":
       result.push("system.attributes.attack.ranged");
       break;
@@ -541,6 +544,12 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "damage":
       result.push("system.attributes.damage.general");
       break;
+    case "mdamage":
+      result.push("system.attributes.damage.meleeAll");
+      break;
+    case "rdamage":
+      result.push("system.attributes.damage.rangedAll");
+      break;
     case "wdamage":
       result.push("system.attributes.damage.weapon");
       break;
@@ -552,6 +561,9 @@ export const getChangeFlat = function (target, modifierType, value) {
       break;
     case "mwdamage":
       result.push("system.attributes.damage.melee");
+      break;
+    case "ndamage":
+      result.push("system.attributes.damage.natural");
       break;
     case "sdamage":
       result.push("system.attributes.damage.spell");

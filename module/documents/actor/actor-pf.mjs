@@ -1772,14 +1772,19 @@ export class ActorPF extends ActorBasePF {
       "attributes.wounds.max": this.system.attributes.wounds.base ?? 0,
       "attributes.attack.general": 0,
       "attributes.attack.melee": 0,
+      "attributes.attack.natural": 0,
       "attributes.attack.ranged": 0,
+      "attributes.attack.thrown": 0,
       "attributes.attack.critConfirm": 0,
       "attributes.mDex": { armorBonus: 0, shieldBonus: 0 },
       "attributes.damage.general": 0,
       "attributes.damage.weapon": 0,
-      "attributes.damage.melee": 0,
-      "attributes.damage.ranged": 0,
-      "attributes.damage.thrown": 0,
+      "attributes.damage.natural": 0,
+      "attributes.damage.melee": 0, // Melee weapon
+      "attributes.damage.meleeAll": 0,
+      "attributes.damage.ranged": 0, // Ranged weapon
+      "attributes.damage.rangedAll": 0,
+      "attributes.damage.thrown": 0, // Thrown weapon
       "attributes.damage.spell": 0,
       "attributes.damage.shared": 0,
       "attributes.woundThresholds.level": 0,

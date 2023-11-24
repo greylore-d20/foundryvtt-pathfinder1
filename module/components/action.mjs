@@ -296,14 +296,23 @@ export class ItemAction {
     return this.data.enh?.value ?? this.item.system.enh;
   }
 
+  get isRanged() {
+    return ["rwak", "twak", "rsak", "rcman"].includes(this.data.actionType);
+  }
+
   /**
    * An array of changes affecting this action's damage
    *
    * @type {ItemChange[]}
    */
   get damageSources() {
-    const context = pf1.const.actionTypeToContext[this.data.actionType] ?? "damage";
-    const changes = this.parent.getContextChanges(context);
+    // Build damage context
+    const contexts = [pf1.const.actionTypeToContext[this.data.actionType] ?? "damage"];
+    if (this.isRanged) contexts.push("rdamage");
+    else contexts.push("mdamage");
+    if (this.item.subType === "natural") contexts.push("ndamage");
+
+    const changes = this.item.getContextChanges(contexts);
     return getHighestChanges(changes, { ignoreTarget: true });
   }
 
@@ -697,6 +706,19 @@ export class ItemAction {
   }
 
   /**
+   * Get all appropriate context changes for attack rolls.
+   *
+   * @see {@link ItemPF.getContextChanges}
+   */
+  get attackSources() {
+    const context = [this.isRanged ? "rattack" : "mattack"];
+    if (this.item.subType === "natural") context.push("nattack");
+    if (this.data.actionType === "twak") context.push("tattack");
+
+    return this.item.getContextChanges(context);
+  }
+
+  /**
    * Place an attack roll using an item (weapon, feat, spell, or equipment)
    *
    * @param root0
@@ -712,7 +734,7 @@ export class ItemAction {
 
     rollData.item.primaryAttack = primaryAttack;
 
-    const isRanged = ["rwak", "twak", "rsak", "rcman"].includes(actionData.actionType);
+    const isRanged = this.isRanged;
     const isCMB = this.isCombatManeuver;
 
     const size = rollData.traits?.size ?? "med";
@@ -761,7 +783,8 @@ export class ItemAction {
     }
 
     // Add change bonus
-    const changes = this.item.getContextChanges(isRanged ? "rattack" : "mattack");
+    const changes = this.attackSources;
+
     // Add masterwork bonus to changes (if applicable)
     if (["mwak", "rwak", "twak", "mcman", "rcman"].includes(this.data.actionType) && this.item.system.masterwork) {
       changes.push(

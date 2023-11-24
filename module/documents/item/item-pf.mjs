@@ -1302,46 +1302,41 @@ export class ItemPF extends ItemBasePF {
   /**
    * Finds, filters and alters changes relevant to a context, and returns the result (as an array)
    *
-   * @param {"mattack"|"rattack"|"wdamage"|"sdamage"|"rwdamage"|"twdamage"|"mwdamage"} context - The given context.
+   * @param {"mattack"|"rattack"|"nattack"|"tattack"|"wdamage"|"sdamage"|"rwdamage"|"twdamage"|"mwdamage"|"ndamage"|"rdamage"|"tdamage"|"mdamage"} context - The given context.
    * @returns {ItemChange[]} The resulting changes.
    */
   getContextChanges(context = "attack") {
     if (!this.actor) return [];
-    let result = this.actor.changes;
+    const subTargets = new Set(this.getContextStack(context));
+    return this.actor.changes.filter((c) => subTargets.has(c.subTarget));
+  }
 
+  /**
+   * Retrieve stack of contexts related to the one given.
+   *
+   * @private
+   * @param {"mattack"|"rattack"|"nattack"|"tattack"|"wdamage"|"sdamage"|"rwdamage"|"twdamage"|"mwdamage"|"ndamage"|"rdamage"|"tdamage"|"mdamage"} context Context ID or array of them.
+   * @returns {string[]}
+   */
+  getContextStack(context) {
+    const contexts = Array.isArray(context) ? context : [context];
     switch (context) {
       case "mattack":
-      case "rattack": {
-        const subTargetList = ["attack", context];
-        result = result.filter((c) => subTargetList.includes(c.subTarget));
-        break;
-      }
-      case "attack":
-        result = result.filter((c) => c.subTarget === "attack");
+      case "rattack":
+      case "nattack":
+        contexts.unshift("attack");
         break;
       case "wdamage":
-      case "sdamage": {
-        const subTargetList = ["damage", context];
-        result = result.filter((c) => subTargetList.includes(c.subTarget));
+      case "sdamage":
+        contexts.unshift("damage");
         break;
-      }
       case "mwdamage":
       case "rwdamage":
-      case "twdamage": {
-        const subTargetList = ["damage", "wdamage", context];
-        result = result.filter((c) => subTargetList.includes(c.subTarget));
-        break;
-      }
-      case "damage": {
-        result = result.filter((c) => c.subTarget === "damage");
-        break;
-      }
-      default:
-        result = [];
+      case "twdamage":
+        contexts.unshift("damage", "wdamage");
         break;
     }
-
-    return result;
+    return contexts;
   }
 
   /* -------------------------------------------- */
@@ -2061,19 +2056,14 @@ export class ItemPF extends ItemBasePF {
     if (!actorData || !actionData) return sources;
     const rollData = action.getRollData();
 
-    // Attack type identification
-    const isMelee =
-      ["mwak", "msak", "mcman"].includes(actionData.actionType) || ["melee", "reach"].includes(actionData.range.units);
-    const isRanged =
-      ["rwak", "twak", "rsak", "rcman"].includes(actionData.actionType) || this.system.weaponSubtype === "ranged";
-    const isManeuver = action.isCombatManeuver;
-
     const describePart = (value, name, modifier, sort = 0) => {
       sources.push({ value, name, modifier, sort });
     };
 
     // BAB is last for some reason, array is reversed to try make it the first.
     const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, d.modifier, -10));
+
+    const isManeuver = action.isCombatManeuver;
 
     // Unreliable melee/ranged identification
     const sizeBonus = !isManeuver
@@ -2087,13 +2077,9 @@ export class ItemPF extends ItemBasePF {
     if (isManeuver) srcDetails(this.actor.sourceDetails["system.attributes.cmb.bonus"]);
     srcDetails(this.actor.sourceDetails["system.attributes.attack.general"]);
 
-    const changeSources = [];
-    if (isRanged) changeSources.push("rattack");
-    if (isMelee) changeSources.push("mattack");
-    const effectiveChanges = getHighestChanges(
-      this.actor.changes.filter((c) => changeSources.includes(c.subTarget)),
-      { ignoreTarget: true }
-    );
+    const changeSources = action.attackSources;
+
+    const effectiveChanges = getHighestChanges(changeSources, { ignoreTarget: true });
     effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor, ic.modifier, -800));
 
     if (actionData.ability.attack) {

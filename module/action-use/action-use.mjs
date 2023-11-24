@@ -350,7 +350,7 @@ export class ActionUse {
   }
 
   /**
-   * Subtracts ammo for this attack.
+   * Subtracts ammo for this attack, updating relevant items with new quantities.
    *
    * @param {number} [value=1] - How much ammo to subtract.
    * @returns {Promise}
@@ -760,64 +760,64 @@ export class ActionUse {
    * Handles Dice So Nice integration.
    */
   async handleDiceSoNice() {
-    if (game.dice3d != null && game.dice3d.isEnabled()) {
-      // Use try to make sure a chat card is rendered even if DsN fails
-      try {
-        // Define common visibility options for whole attack
-        const chatData = {};
-        ChatMessage.implementation.applyRollMode(chatData, this.shared.rollMode);
+    if (!game.dice3d?.isEnabled()) return;
 
-        const mergeRolls = game.settings.get("dice-so-nice", "enabledSimultaneousRolls");
-        const skipRolls = game.settings.get("dice-so-nice", "immediatelyDisplayChatMessages");
+    // Use try to make sure a chat card is rendered even if DsN fails
+    try {
+      // Define common visibility options for whole attack
+      const chatData = {};
+      ChatMessage.implementation.applyRollMode(chatData, this.shared.rollMode);
 
-        /**
-         * Visually roll dice
-         *
-         * @async
-         * @param {PoolTerm[]} pools - An array of PoolTerms to be rolled together
-         * @returns {Promise} A Promise that is resolved when all rolls have been displayed
-         */
-        const showRoll = async (pools) => {
-          const whisper = chatData.whisper?.length ? chatData.whisper : undefined; // DSN does not like empty array for whisper
-          if (mergeRolls) {
-            return Promise.all(
-              pools.map((pool) => game.dice3d.showForRoll(pool, game.user, true, whisper, chatData.blind))
-            );
-          } else {
-            for (const pool of pools) {
-              await game.dice3d.showForRoll(pool, game.user, true, whisper, chatData.blind);
-            }
+      const mergeRolls = game.settings.get("dice-so-nice", "enabledSimultaneousRolls");
+      const skipRolls = game.settings.get("dice-so-nice", "immediatelyDisplayChatMessages");
+
+      /**
+       * Visually roll dice
+       *
+       * @async
+       * @param {PoolTerm[]} pools - An array of PoolTerms to be rolled together
+       * @returns {Promise} A Promise that is resolved when all rolls have been displayed
+       */
+      const showRoll = async (pools) => {
+        const whisper = chatData.whisper?.length ? chatData.whisper : undefined; // DSN does not like empty array for whisper
+        if (mergeRolls) {
+          return Promise.all(
+            pools.map((pool) => game.dice3d.showForRoll(pool, game.user, true, whisper, chatData.blind))
+          );
+        } else {
+          for (const pool of pools) {
+            await game.dice3d.showForRoll(pool, game.user, true, whisper, chatData.blind);
           }
-        };
-
-        /** @type {PoolTerm[]} */
-        const pools = [];
-
-        for (const atk of this.shared.chatAttacks) {
-          // Create PoolTerm for attack and damage rolls
-          const attackPool = new PoolTerm();
-          if (atk.attack) attackPool.rolls.push(atk.attack);
-          attackPool.rolls.push(...(atk.damage?.rolls ?? []));
-
-          // Create PoolTerm for crit confirmation and crit damage rolls
-          const critPool = new PoolTerm();
-          if (atk.hasCritConfirm) critPool.rolls.push(atk.critConfirm);
-          critPool.rolls.push(...(atk.critDamage?.rolls ?? []));
-
-          // Add non-empty pools to the array of rolls to be displayed
-          if (attackPool.rolls.length) pools.push(attackPool);
-          if (critPool.rolls.length) pools.push(critPool);
         }
+      };
 
-        if (pools.length) {
-          // Chat card is to be shown immediately
-          if (skipRolls) showRoll(pools);
-          // Wait for rolls to finish before showing the chat card
-          else await showRoll(pools);
-        }
-      } catch (e) {
-        console.error(e);
+      /** @type {PoolTerm[]} */
+      const pools = [];
+
+      for (const atk of this.shared.chatAttacks) {
+        // Create PoolTerm for attack and damage rolls
+        const attackPool = new PoolTerm();
+        if (atk.attack) attackPool.rolls.push(atk.attack);
+        attackPool.rolls.push(...(atk.damage?.rolls ?? []));
+
+        // Create PoolTerm for crit confirmation and crit damage rolls
+        const critPool = new PoolTerm();
+        if (atk.hasCritConfirm) critPool.rolls.push(atk.critConfirm);
+        critPool.rolls.push(...(atk.critDamage?.rolls ?? []));
+
+        // Add non-empty pools to the array of rolls to be displayed
+        if (attackPool.rolls.length) pools.push(attackPool);
+        if (critPool.rolls.length) pools.push(critPool);
       }
+
+      if (pools.length) {
+        // Chat card is to be shown immediately
+        if (skipRolls) showRoll(pools);
+        // Wait for rolls to finish before showing the chat card
+        else await showRoll(pools);
+      }
+    } catch (e) {
+      console.error(e);
     }
   }
 
@@ -1202,7 +1202,7 @@ export class ActionUse {
     if (reqErr > 0) return { err: pf1.actionUse.ERR_REQUIREMENT, code: reqErr };
 
     // Get new roll data
-    shared.rollData = await this.getRollData();
+    shared.rollData = this.getRollData();
 
     // Show attack dialog, if appropriate
     if (!skipDialog) {
@@ -1261,18 +1261,22 @@ export class ActionUse {
       return;
     }
 
+    const premessage_promises = [];
     // Handle Dice So Nice
-    await this.handleDiceSoNice();
+    premessage_promises.push(this.handleDiceSoNice());
 
     // Subtract uses
-    await this.subtractAmmo();
-
-    this.updateAmmoUsage();
+    premessage_promises.push(this.subtractAmmo());
 
     if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
-      await this.addCharges(-shared.rollData.chargeCost);
+      premessage_promises.push(this.addCharges(-shared.rollData.chargeCost));
     if (shared.action.isSelfCharged)
-      await shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 });
+      premessage_promises.push(shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 }));
+
+    await Promise.all(premessage_promises);
+
+    // Update remaining ammo for chat message display
+    this.updateAmmoUsage();
 
     // Retrieve message data
     this.getMessageData();
@@ -1280,7 +1284,7 @@ export class ActionUse {
     // Post message
     let result;
     if (shared.scriptData?.hideChat !== true) {
-      result = await this.postMessage();
+      result = this.postMessage();
     }
 
     // Deselect targets

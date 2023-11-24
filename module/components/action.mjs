@@ -809,7 +809,7 @@ export class ItemAction {
 
     // Add proficiency penalty
     try {
-      if (this.item.getProficiency(true)) {
+      if (!this.item.getProficiency(true)) {
         parts.push(`@item.proficiencyPenalty[${game.i18n.localize("PF1.ProficiencyPenalty")}]`);
       }
     } catch (error) {

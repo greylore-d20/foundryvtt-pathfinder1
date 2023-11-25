@@ -26,7 +26,7 @@ export class ActorSheetPFNPCLite extends ActorSheetPFNPC {
 
   async getData() {
     const context = await super.getData();
-    context.isLite = true;
+    context.hasHD = false;
     return context;
   }
 

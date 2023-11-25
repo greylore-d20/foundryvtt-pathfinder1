@@ -79,6 +79,13 @@ export class ActorTrapPF extends ActorPF {
   }
 
   /**
+   * @override
+   */
+  prepareDerivedData() {
+    this.system.details.cr.total = this.system.details.cr.base;
+  }
+
+  /**
    * Needed to prevent unnecessary behavior in ActorPF
    *
    * @override
@@ -91,13 +98,6 @@ export class ActorTrapPF extends ActorPF {
    * @override
    */
   _setSourceDetails() {}
-
-  /**
-   * Needed to prevent unnecessary behavior in ActorPF
-   *
-   * @override
-   */
-  prepareDerivedData() {}
 
   /**
    * Needed to prevent unnecessary behavior in ActorPF
@@ -152,7 +152,7 @@ export class ActorTrapPF extends ActorPF {
 
     /* ----------------------------- */
     /* Always add the following data
-      /* ----------------------------- */
+    /* ----------------------------- */
 
     // Add combat round, if in combat
     if (game.combats?.viewed) {
@@ -166,14 +166,14 @@ export class ActorTrapPF extends ActorPF {
 
     /* ----------------------------- */
     /* Set the following data on a refresh
-      /* ----------------------------- */
+    /* ----------------------------- */
 
     // Set size index
     const sizeChart = Object.keys(pf1.config.sizeChart);
     result.size = sizeChart.indexOf(result.traits.size);
 
     // Add range info
-    result.range = this.constructor.getReach(this.system.traits.size, this.system.traits.stature);
+    result.range = pf1.documents.actor.ActorPF.getReach(this.system.traits.size, this.system.traits.stature);
 
     // Wound Threshold isn't applicable
     result.attributes.woundThresholds = { level: 0 };

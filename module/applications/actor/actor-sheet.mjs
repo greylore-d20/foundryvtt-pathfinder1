@@ -192,7 +192,7 @@ export class ActorSheetPF extends ActorSheet {
       editable: this.isEditable,
       cssClass: isOwner ? "editable" : "locked",
       isCharacter: this.document.type === "character",
-      hasRace: false,
+      hasHD: true,
       config: pf1.config,
       useBGSkills: game.settings.get("pf1", "allowBackgroundSkills"),
       isGM: game.user.isGM,

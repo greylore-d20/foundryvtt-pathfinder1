@@ -22,85 +22,59 @@
   <section class="primary-body">
     <div class="tab summary" data-group="primary" data-tab="summary">
       {{!-- HD/XP reward --}}
-      <div class="npc tooltip flexrow">
-        <table>
-          <thead>
-            <tr>
-              <th>{{localize "PF1.ChallengeRatingShort"}}</th>
-              <th>{{localize "PF1.Experience"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td data-action="input-text" data-for=".cr-input" data-attr-name="system.details.cr.base">
-                <input readonly class="cr-input" type="text" value="{{labels.cr}}"/>
-              </td>
-              <td>
-                {{system.details.xp.value}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <span class="tooltipcontent">
-          <span class="span2 align-left">@details.cr.base :</span><span class="span1 align-right"> {{system.details.cr.base}}</span>
-          <span class="span2 align-left">@details.cr.total :</span><span class="span1 align-right"> {{system.details.cr.total}}</span>
-        </span>
+      {{> "systems/pf1/templates/actors/parts/actor-level.hbs"}}
+
+      <div class="details">
+        <div class="info-box type">
+          <h5>{{localize "PF1.Trap.Type"}}</h5>
+          <span class="value">
+            <input name="system.details.trap.type" value="{{system.details.trap.type}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+
+        <div class="info-box perception">
+          <h5>{{localize "PF1.Trap.PerceptionDC"}}</h5>
+          <span class="value">
+            <input name="system.details.trap.perception" value="{{system.details.trap.perception}}" type="number" data-dtype="Number" step="1" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+
+        <div class="info-box disarm">
+          <h5>{{localize "PF1.Trap.DisableDeviceDC"}}</h5>
+          <span class="value">
+            <input name="system.details.trap.disarm" value="{{system.details.trap.disarm}}" type="number" data-dtype="Number" step="1" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
       </div>
 
-      <div class="flexrow">
-        <table>
-          <thead>
-            <tr>
-              <th>{{localize "PF1.Trap.Type"}}</th>
-              <th>{{localize "PF1.Trap.PerceptionDC"}}</th>
-              <th>{{localize "PF1.Trap.DisableDeviceDC"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <input name="system.details.trap.type" value="{{system.details.trap.type}}" type="text"/>
-              </td>
-              <td>
-                <input name="system.details.trap.perception" value="{{system.details.trap.perception}}" type="number" data-dtype="Number"/>
-              </td>
-              <td>
-                <input name="system.details.trap.disarm" value="{{system.details.trap.disarm}}" type="number" data-dtype="Number"/>
-              </td>
-            </tr>
-          <thead>
-            <tr>
-              <th colspan="3">{{localize "PF1.Trap.EffectsDetails"}}</th>
-            </tr>
-          </thead>
-          <tr>
-            <th>{{localize "PF1.Trap.Trigger"}}</th>
-            <th>{{localize "PF1.Duration"}}</th>
-            <th>{{localize "PF1.Reset"}}</th>
-          </tr>
-          <tr>
-            <td>
-              <input name="system.details.trap.trigger" value="{{system.details.trap.trigger}}" type="text"/>
-            </td>
-            <td>
-              <input name="system.details.trap.duration" value="{{system.details.trap.duration}}" type="text"/>
-            </td>
-            <td>
-               <input name="system.details.trap.reset" value="{{system.details.trap.reset}}" type="text"/>
-            </td>
-          </tr>
-          <thead>
-            <tr>
-              <th colspan="3">{{localize "PF1.Effect"}}</th>
-            </tr>
-          </thead>
-          <tr>
-            <td colspan="3">
-              <textarea name="system.details.trap.effect" rows="6">{{system.details.trap.effect}}</textarea>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+      <div class="effects">
+        <h3>{{localize "PF1.Trap.EffectsDetails"}}</h3>
+
+        <div class="effect-details">
+          {{! Trigger }}
+          <div class="info-box trigger">
+            <h5>{{localize "PF1.Trap.Trigger"}}</h5>
+            <span class="value">
+              <input name="system.details.trap.trigger" value="{{system.details.trap.trigger}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            </span>
+          </div>
+          {{! Duration }}
+          <div class="info-box duration">
+            <h5>{{localize "PF1.Duration"}}</h5>
+            <span class="value">
+              <input name="system.details.trap.duration" value="{{system.details.trap.duration}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            </span>
+          </div>
+          {{! Reset }}
+          <div class="info-box type">
+            <h5>{{localize "PF1.Reset"}}</h5>
+            <span class="value">
+              <input name="system.details.trap.reset" value="{{system.details.trap.reset}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            </span>
+          </div>
+        </div>
+
+        <textarea name="system.details.trap.effect" rows="6">{{system.details.trap.effect}}</textarea>
       </div>
 
       {{!-- Actions --}}

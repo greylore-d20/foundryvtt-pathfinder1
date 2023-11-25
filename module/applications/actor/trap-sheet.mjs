@@ -53,10 +53,9 @@ export class ActorSheetPFTrap extends ActorSheetPF {
       cssClass: isOwner ? "editable" : "locked",
       config: pf1.config,
       isGM: game.user.isGM,
+      system: this.document.system,
+      hasHD: false,
     };
-
-    data.system = deepClone(this.document.system);
-    data.system.details.cr.total = data.system.details.cr.base;
 
     // Challenge Rating
     data.labels = {

@@ -4,51 +4,63 @@
   min-width: 440px;
   min-height: 200px;
 
-  .tab.summary {
-    overflow: hidden scroll;
-  }
+  form {
+    .tab.summary {
+      overflow: hidden scroll;
 
-  .sheet-header {
-    img.profile {
-      flex: 0 0 100px;
-      max-width: 100px;
-      min-height: 100px;
-      max-height: 100px;
+      .details {
+        display: flex;
+        flex-flow: row;
+        gap: 3px;
+      }
+
+      .effects {
+        display: flex;
+        flex-flow: column;
+        gap: 3px;
+
+        .effect-details {
+          display: flex;
+          flex-flow: row;
+          gap: 3px;
+        }
+      }
     }
 
-    .header-top {
-      max-height: 40px;
+    .sheet-header {
+      img.profile {
+        flex: 0 0 100px;
+        max-width: 100px;
+        min-height: 100px;
+        max-height: 100px;
+      }
 
-      .charname {
-        padding: 0;
-        margin: 0;
+      .header-top {
+        max-height: 40px;
 
-        input[type="text"] {
+        .charname {
           padding: 0;
           margin: 0;
-          font-size: @fontSizeHeader;
+
+          input[type="text"] {
+            padding: 0;
+            margin: 0;
+            font-size: @fontSizeHeader;
+          }
+        }
+
+        .charlevel {
+          flex: 0 0 128px;
         }
       }
 
-      .charlevel {
-        flex: 0 0 128px;
+      .attribute.health {
+        border-right: 0;
       }
     }
 
-    .attribute.health {
-      border-right: 0;
+    .item-detail.item-type {
+      flex: 0 0 100px;
     }
-  }
-
-  table {
-    input[type="text"] {
-      padding: 0;
-      margin: 0;
-      height: 20px;
-    }
-  }
-
-  .item-detail.item-type {
-    flex: 0 0 100px;
   }
 }

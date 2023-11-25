@@ -18,8 +18,8 @@ export class ActorSheetPFHaunt extends ActorSheetPF {
     return {
       ...options,
       classes: [...options.classes, "haunt"],
-      width: 800,
-      height: 650,
+      width: 820,
+      height: 700,
       tabs: [{ navSelector: "nav.tabs", contentSelector: "section.primary-body", initial: "summary" }],
       scrollY: [".tab.summary"],
     };
@@ -53,10 +53,9 @@ export class ActorSheetPFHaunt extends ActorSheetPF {
       cssClass: isOwner ? "editable" : "locked",
       config: pf1.config,
       isGM: game.user.isGM,
+      system: this.document.system,
+      hasHD: false,
     };
-
-    data.system = deepClone(this.document.system);
-    data.system.details.cr.total = data.system.details.cr.base;
 
     // Challenge Rating
     data.labels = {

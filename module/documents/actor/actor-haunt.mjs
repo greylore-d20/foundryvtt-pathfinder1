@@ -1,13 +1,8 @@
-import { ActorPF } from "./actor-pf.mjs";
 import { RollPF } from "../../dice/roll.mjs";
+import { ActorBasePF } from "./actor-base.mjs";
 
-export class ActorHauntPF extends ActorPF {
+export class ActorHauntPF extends ActorBasePF {
   prepareBaseData() {
-    // Needed for getRollData and ActorPF, but useless for the actor
-    this.system.attributes.conditions = {
-      grappled: false,
-    };
-
     // Needed for getRollData and ActorPF, but useless for the actor
     this.system.abilities = {
       str: {
@@ -60,9 +55,6 @@ export class ActorHauntPF extends ActorPF {
       },
     };
 
-    // Add base initiative
-    this.system.attributes.init.total = this.system.attributes.init.value;
-
     // Needed for getRollData and ActorPF, but useless for the actor
     this.system.attributes.cmb = {
       bonus: this.system.abilities.str.value,
@@ -81,21 +73,10 @@ export class ActorHauntPF extends ActorPF {
    *
    * @override
    */
-  _resetInherentTotals() {}
-
-  /**
-   * Needed to prevent unnecessary behavior in ActorPF
-   *
-   * @override
-   */
-  _setSourceDetails() {}
-
-  /**
-   * Needed to prevent unnecessary behavior in ActorPF
-   *
-   * @override
-   */
-  prepareDerivedData() {}
+  prepareDerivedData() {
+    this.system.details.cr.total = this.system.details.cr.base;
+    this.system.attributes.init.total = this.system.attributes.init.value;
+  }
 
   /**
    * Needed to prevent unnecessary behavior in ActorPF

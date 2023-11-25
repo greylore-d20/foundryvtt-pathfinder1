@@ -20,128 +20,109 @@
   <section class="primary-body">
     <div class="tab summary" data-group="primary" data-tab="summary">
       {{!-- HD/XP reward --}}
-      <div class="npc tooltip flexrow">
-        <table>
-          <thead>
-            <tr>
-              <th>{{localize "PF1.ChallengeRatingShort"}}</th>
-              <th>{{localize "PF1.Experience"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td data-action="input-text" data-for=".cr-input" data-attr-name="system.details.cr.base">
-                <input readonly class="cr-input" type="text" value="{{labels.cr}}"/>
-              </td>
-              <td>
-                {{system.details.xp.value}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <span class="tooltipcontent">
-          <span class="span2 align-left">@details.cr.base :</span><span class="span1 align-right"> {{system.details.cr.base}}</span>
-        </span>
+      {{> "systems/pf1/templates/actors/parts/actor-level.hbs" hd=false}}
+
+      <div class="details">
+        {{! Alignment }}
+        <div class="info-box alignment">
+          <h5>{{localize "PF1.Alignment"}}</h5>
+          <span class="value">
+            <input name="system.details.haunt.alignment"  value="{{system.details.haunt.alignment}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+
+        {{! Area }}
+        <div class="info-box area">
+          <h5>{{localize "PF1.Area"}}</h5>
+          <span class="value">
+            <input name="system.details.haunt.area"  value="{{system.details.haunt.area}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+
+        {{! Aura }}
+        <div class="info-box aura">
+          <h5>{{localize "PF1.Aura"}}</h5>
+          <span class="value">
+            <input name="system.details.haunt.aura"  value="{{system.details.haunt.aura}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+
+        {{! Caster Level }}
+        <div class="info-box caster-level">
+          <h5>{{localize "PF1.CasterLevel"}}</h5>
+          <span class="value">
+            <input name="system.details.haunt.cl"  value="{{system.details.haunt.cl}}"  data-dtype="Number" type="number" step="1" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+
+        {{! Initiative }}
+        <div class="info-box attribute initiative">
+          <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.Initiative"}}</span></a></h5>
+          <span class="value">
+            <span class="text-box direct allow-relative" name="system.attributes.init.value" data-dtype="Number">
+              {{system.attributes.init.total}}
+            </span>
+          </span>
+        </div>
       </div>
 
-      <div class="flexrow">
-        <table>
-          <thead>
-            <tr>
-              <th>{{localize "PF1.Alignment"}}</th>
-              <th>{{localize "PF1.Area"}}</th>
-              <th colspan="2">{{localize "PF1.Aura"}}</th>
-              <th>{{localize "PF1.CasterLevel"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <input name="system.details.haunt.alignment"  value="{{system.details.haunt.alignment}}" type="text" />
-              </td>
-              <td>
-                <input name="system.details.haunt.area"  value="{{system.details.haunt.area}}" type="text" />
-              </td>
-              <td colspan="2">
-                <input name="system.details.haunt.aura"  value="{{system.details.haunt.aura}}" type="text"/>
-              </td>
-              <td>
-                <input name="system.details.haunt.cl"  value="{{system.details.haunt.cl}}"  data-dtype="Number" type="number"/>
-              </td>
-            </tr>
-            <thead>
-              <tr>
-                <th colspan="5">{{localize "PF1.Haunt.Notice"}}</th>
-              </tr>
-            </thead>
-            <tr>
-              <td colspan="5">
-                <input name="system.details.haunt.notice" value="{{system.details.haunt.notice}}" type="text"/>
-              </td>
-            </tr>
-            {{!-- Health/weakness --}}
-            <thead>
-              <tr>
-                <th colspan="2">{{localize "PF1.HitPoints"}}</th>
-                <th colspan="3">{{localize "PF1.Details"}}</th>
-              </tr>
-              <tr>
-                <th>{{localize "PF1.Current"}}</th>
-                <th>{{localize "PF1.Maximum"}}</th>
-                <th>{{localize "PF1.Haunt.Weakness"}}</th>
-                <th>{{localize "PF1.Trigger"}}</th>
-                <th>{{localize "PF1.Reset"}}</th>
-              </tr>
-            </thead>
-            <tr>
-              <td>
-                <span class="text-box direct wheel-change allow-relative hp-current-input" name="system.attributes.hp.value" data-dtype="Number">{{system.attributes.hp.value}}</span>
-              </td>
-              <td>
-                <span class="text-box direct hp-max-input" name="system.attributes.hp.max">{{system.attributes.hp.max}}</span>
-              </td>
-              <td>
-                <input name="system.details.haunt.weakness" value="{{system.details.haunt.weakness}}" type="text" />
-              </td>
-              <td>
-                <input name="system.details.haunt.trigger" value="{{system.details.haunt.trigger}}" type="text" />
-              </td>
-              <td>
-                <input name="system.details.haunt.reset" value="{{system.details.haunt.reset}}" type="text" />
-              </td>
-            </tr>
-            {{!-- Initiative --}}
-            <thead>
-              <tr>
-                <th colspan="5" class="attribute initiative">
-                  <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
-                </th>
-              </tr>
-            </thead>
-            {{!-- Effect --}}
-            <thead>
-              <tr>
-                <th colspan="5" >{{localize "PF1.Effect"}}</th>
-              </tr>
-            </thead>
-            <tr>
-              <td colspan="5">
-                <textarea rows="4" name="system.details.haunt.effect">{{system.details.haunt.effect}}</textarea>
-              </td>
-            </tr>
-            {{!-- Destruction --}}
-            <thead>
-              <tr>
-                <th colspan="5" >{{localize "PF1.Haunt.Destruction"}}</th>
-              </tr>
-            </thead>
-            <tr>
-              <td colspan="5">
-                <textarea rows="4" name="system.details.haunt.destruction">{{system.details.haunt.destruction}}</textarea>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="notice">
+        <h3>{{localize "PF1.Haunt.Notice"}}</h3>
+        <input name="system.details.haunt.notice" value="{{system.details.haunt.notice}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+      </div>
+
+      <div class="details">
+        {{! Health }}
+        <div class="info-box-joined health">
+          <h3>{{localize "PF1.HitPoints"}}</h3>
+          <div class="info-box current">
+            <h5>{{localize "PF1.Current"}}</h5>
+            <span class="value">
+              <span class="text-box direct wheel-change allow-relative hp-current-input" name="system.attributes.hp.value" data-dtype="Number">{{system.attributes.hp.value}}</span>
+            </span>
+          </div>
+          <div class="info-box maximum">
+            <h5>{{localize "PF1.Maximum"}}</h5>
+            <span class="value">
+              <span class="text-box direct hp-max-input" name="system.attributes.hp.max">{{system.attributes.hp.max}}</span>
+            </span>
+          </div>
+        </div>
+
+        {{! Details }}
+        <div class="extra-details">
+          <h3>{{localize "PF1.Details"}}</h3>
+          <div class="info-box weakness">
+            <h5>{{localize "PF1.Haunt.Weakness"}}</h5>
+            <span class="value">
+              <input name="system.details.haunt.weakness" value="{{system.details.haunt.weakness}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            </span>
+          </div>
+          <div class="info-box trigger">
+            <h5>{{localize "PF1.Trigger"}}</h5>
+            <span class="value">
+              <input name="system.details.haunt.trigger" value="{{system.details.haunt.trigger}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            </span>
+          </div>
+          <div class="info-box reset">
+            <h5>{{localize "PF1.Reset"}}</h5>
+            <span class="value">
+              <input name="system.details.haunt.reset" value="{{system.details.haunt.reset}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {{! Effect }}
+      <div class="effect">
+        <h3>{{localize "PF1.Effect"}}</h3>
+        <textarea rows="4" name="system.details.haunt.effect">{{system.details.haunt.effect}}</textarea>
+      </div>
+
+      {{! Destruction }}
+      <div class="destruction">
+        <h3>{{localize "PF1.Haunt.Destruction"}}</h3>
+        <textarea rows="4" name="system.details.haunt.destruction">{{system.details.haunt.destruction}}</textarea>
       </div>
 
       {{!-- Actions --}}

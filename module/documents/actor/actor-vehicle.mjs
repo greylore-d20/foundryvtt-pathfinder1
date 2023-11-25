@@ -13,7 +13,9 @@ export class ActorVehiclePF extends ActorPF {
 
     // For ActorPF compatibility only
     this.system.attributes.attack ??= {};
+    this.system.attributes.woundThresholds ??= {};
     this.system.skills ??= {};
+    this.system.attributes.speed ??= {};
 
     // Needed for getRollData and ActorPF, but useless for the actor
     const strValue = this.system.abilities.str.value;
@@ -69,12 +71,7 @@ export class ActorVehiclePF extends ActorPF {
     };
 
     // Needed for getRollData and ActorPF, but useless for the actor
-    this.system.attributes = {
-      ...this.system.attributes,
-      cmb: {
-        bonus: this.system.abilities.str.value,
-      },
-    };
+    this.system.attributes.cmb = { bonus: this.system.abilities.str.value };
 
     // Needed for getRollData and ActorPF, but useless for the actor
     this.sourceDetails = {

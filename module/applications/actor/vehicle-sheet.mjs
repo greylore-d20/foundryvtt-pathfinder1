@@ -56,6 +56,10 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
 
     data.system = deepClone(this.document.system);
 
+    data.vehicleSizes = Object.fromEntries(
+      Object.entries(pf1.config.vehicles.size).map(([key, data]) => [key, data.label])
+    );
+
     // The Actor and its Items
     data.actor = this.actor;
     data.token = this.token;

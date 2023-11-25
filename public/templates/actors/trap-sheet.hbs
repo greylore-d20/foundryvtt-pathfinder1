@@ -111,7 +111,9 @@
           {{#unless section._hidden}}
             <ol class="item-list" data-type="attack" data-subtype="{{sid}}">
               <li class="item-list-header flexrow attacks-{{sid}}">
-                <h3 class="item-name flexrow">{{section.label}}</h3>
+                <div class="item-name">
+                  <h3>{{section.label}}</h3>
+                </div>
 
                 {{#if section.showTypes}}<div class="item-detail item-type"><i class="icon icon-magic-palm large" title="{{localize "PF1.Type"}}"></i></div>{{/if}}
 

@@ -12,32 +12,25 @@
       {{!-- Options --}}
       <div class="flexcol">
         <ul class="summary options">
-          {{!-- Vehicle Size --}}
-          <li data-tooltip="{{localize "PF1.Size"}}">
-            <label>{{localize "PF1.Size"}}</label>
-            <select name="system.traits.size">
-              {{#select system.traits.size}}
-              {{#each config.vehicles.size as |label size|}}
-                {{#if (ne size "type")}}<option value="{{size}}">{{label.label}}</option>{{/if}}
-              {{/each}}
-              {{/select}}
-            </select>
-          </li>
-          {{!-- Vehicle Type --}}
+          {{! Vehicle Type }}
           <li data-tooltip="{{localize "PF1.Type"}}">
             <label>{{localize "PF1.Type"}}</label>
             <select name="system.traits.type">
-              {{#select system.traits.type}}
-              {{#each config.vehicles.type as |label type|}}
-                <option value="{{type}}">{{label}}</option>
-              {{/each}}
-              {{/select}}
+              {{selectOptions config.vehicles.type selected=system.traits.type}}
             </select>
           </li>
+          {{! Vehicle Size }}
+          <li data-tooltip="{{localize "PF1.Size"}}">
+            <label>{{localize "PF1.Size"}}</label>
+            <select name="system.traits.size">
+              {{selectOptions @root.vehicleSizes selected=system.traits.size}}
+            </select>
+          </li>
+          {{! Space }}
           <li data-tooltip="{{localize "PF1.Vehicles.OccupiedSpace"}}">
             <label>{{#with (lookup config.vehicles.size system.traits.size) as |vehicle|}}{{vehicle.space}}{{/with}}</label>
           </li>
-            {{!-- Vehicle cost --}}
+          {{! Cost }}
           <li>
             <input name="system.details.vehicle.cost" type="number" data-dtype="Number" value="{{system.details.vehicle.cost}}" placeholder="{{localize "PF1.CostGP"}}"
               data-tooltip="{{localize "PF1.CostGP"}}" />

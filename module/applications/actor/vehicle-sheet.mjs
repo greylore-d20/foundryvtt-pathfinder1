@@ -17,8 +17,8 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
     return {
       ...options,
       classes: [...options.classes, "vehicle"],
-      width: 800,
-      height: 650,
+      width: 680,
+      height: 680,
       tabs: [{ navSelector: "nav.tabs", contentSelector: "section.primary-body", initial: "summary" }],
       scrollY: [".tab.summary"],
     };

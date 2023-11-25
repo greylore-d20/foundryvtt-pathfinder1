@@ -5,47 +5,45 @@
     <img class="profile" src="{{actor.img}}" title="{{name}}" data-edit="img"/>
 
     <div class="header-details flexcol">
-      <!-- <div class="header-top flexrow"> -->
-        <h1 class="charname">
-          <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}"/>
-        </h1>
-      <!-- </div> -->
+      <h1 class="charname">
+        <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}"/>
+      </h1>
 
       {{!-- Options --}}
-          <div class="flexcol">
-            <ul class="summary options">
-              {{!-- Vehicle Size --}}
-              <li data-tooltip="{{localize "PF1.Size"}}">
-                <label>{{localize "PF1.Size"}}</label>
-                <select name="system.traits.size">
-                  {{#select system.traits.size}}
-                  {{#each config.vehicles.size as |label size|}}
-                    {{#if (ne size "type")}}<option value="{{size}}">{{label.label}}</option>{{/if}}
-                  {{/each}}
-                  {{/select}}
-                </select>
-              </li>
-              {{!-- Vehicle Type --}}
-              <li data-tooltip="{{localize "PF1.Type"}}">
-                <label>{{localize "PF1.Type"}}</label>
-                <select name="system.traits.type">
-                  {{#select system.traits.type}}
-                  {{#each config.vehicles.type as |label type|}}
-                    <option value="{{type}}">{{label}}</option>
-                  {{/each}}
-                  {{/select}}
-                </select>
-              </li>
-              <li data-tooltip="{{localize "PF1.Vehicles.OccupiedSpace"}}">
-                <label>{{#with (lookup config.vehicles.size system.traits.size) as |vehicle|}}{{vehicle.space}}{{/with}}</label>
-              </li>
-               {{!-- Vehicle cost --}}
-              <li>
-                <input name="system.details.vehicle.cost" type="number" data-dtype="Number" value="{{system.details.vehicle.cost}}" placeholder="{{localize "PF1.CostGP"}}"
-                  data-tooltip="{{localize "PF1.CostGP"}}" />
-              </li>
-            </ul>
-          </div>
+      <div class="flexcol">
+        <ul class="summary options">
+          {{!-- Vehicle Size --}}
+          <li data-tooltip="{{localize "PF1.Size"}}">
+            <label>{{localize "PF1.Size"}}</label>
+            <select name="system.traits.size">
+              {{#select system.traits.size}}
+              {{#each config.vehicles.size as |label size|}}
+                {{#if (ne size "type")}}<option value="{{size}}">{{label.label}}</option>{{/if}}
+              {{/each}}
+              {{/select}}
+            </select>
+          </li>
+          {{!-- Vehicle Type --}}
+          <li data-tooltip="{{localize "PF1.Type"}}">
+            <label>{{localize "PF1.Type"}}</label>
+            <select name="system.traits.type">
+              {{#select system.traits.type}}
+              {{#each config.vehicles.type as |label type|}}
+                <option value="{{type}}">{{label}}</option>
+              {{/each}}
+              {{/select}}
+            </select>
+          </li>
+          <li data-tooltip="{{localize "PF1.Vehicles.OccupiedSpace"}}">
+            <label>{{#with (lookup config.vehicles.size system.traits.size) as |vehicle|}}{{vehicle.space}}{{/with}}</label>
+          </li>
+            {{!-- Vehicle cost --}}
+          <li>
+            <input name="system.details.vehicle.cost" type="number" data-dtype="Number" value="{{system.details.vehicle.cost}}" placeholder="{{localize "PF1.CostGP"}}"
+              data-tooltip="{{localize "PF1.CostGP"}}" />
+          </li>
+        </ul>
+      </div>
     </div>
   </header>
 
@@ -57,160 +55,146 @@
 
   <section class="primary-body">
     <div class="tab summary" data-group="primary" data-tab="summary">
-
       {{!-- Defense --}}
-      <div class="vehicle flexrow">
-        <table>
-          <thead>
-            <tr>
-            <th colspan="3">
-              {{localize "PF1.Defense"}}
-            </th>
-          </tr>
-            <tr>
-                <th>{{localize "PF1.ACNormal"}}</th>
-                <th>{{localize "PF1.Hardness"}}</th>
-                <th>{{localize "PF1.SavingThrow"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <input name="system.attributes.ac.normal.base" type="number" value="{{system.attributes.ac.normal.base}}" data-dtype="Number" />
-              </td>
-              <td>
-                <input name="system.details.vehicle.hardness" type="number" value="{{system.details.vehicle.hardness}}" data-dtype="Number" />
-              </td>
-              <td>
-                <input name="system.attributes.savingThrows.save.base" type="number" value="{{system.attributes.savingThrows.save.base}}" data-dtype="Number" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="defenses">
+        <h3>{{localize "PF1.Defenses"}}</h3>
+
+        {{! AC }}
+        <div class="info-box ac">
+          <h5>{{localize "PF1.ACNormal"}}</h5>
+          <span class="value">
+            <input name="system.attributes.ac.normal.base" type="number" value="{{system.attributes.ac.normal.base}}" data-dtype="Number" step="1" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+        {{! Hardness }}
+        <div class="info-box ac">
+          <h5>{{localize "PF1.Hardness"}}</h5>
+          <span class="value">
+            <input name="system.details.vehicle.hardness" type="number" value="{{system.details.vehicle.hardness}}" data-dtype="Number" step="1" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+        {{! Saving Throw }}
+        <div class="info-box ac">
+          <h5>{{localize "PF1.SavingThrow"}}</h5>
+          <span class="value">
+            <input name="system.attributes.savingThrows.save.base" type="number" value="{{system.attributes.savingThrows.save.base}}" data-dtype="Number" step="1" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
       </div>
 
       {{!-- Hit Points --}}
-      <div class="npc flexrow">
-        <table>
-          <thead>
-            <tr>
-              <th colspan="4">
-                {{localize "PF1.HitPoints"}}
-              </th>
-            </tr>
-            <tr>
-              <th colspan="2">{{localize "PF1.Current"}}</th>
-              <th colspan="2">{{localize "PF1.Maximum"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan="2">
-                <span class="text-box direct wheel-change allow-relative hp-current-input" name="system.attributes.hp.value" data-dtype="Number">{{system.attributes.hp.value}}</span>
-              </td>
-              <td colspan="2">
-                <span class="text-box direct hp-max-input" name="system.attributes.hp.max" type="number" data-dtype="Number">{{system.attributes.hp.max}}</span>
-              </td>
-            </tr>
-          </tbody>
-          {{!-- Initiative --}}
-          <thead>
-          <tr>
-            <th class="attribute initiative" colspan="4">
-              <a class="rollable"><i class="fas fa-dice"></i><span>{{localize "PF1.Initiative"}}</span></a>
-            </th>
-          </tr>
-          </thead>
-          {{!-- Offense --}}
-          <thead>
-            <tr>
-              <th colspan="4">
-                {{localize "PF1.Combat"}}
-              </th>
-            </tr>
-            <tr>
-              <th>{{localize "PF1.Vehicles.MaximumSpeed"}}</th>
-              <th>{{localize "PF1.Vehicles.Acceleration"}}</th>
-              <th class="attribute cmb" data-attribute="cmb"><a class="rollable"><i class="fas fa-dice"></i>{{localize "PF1.CMBAbbr"}}</a></th>
-              <th>{{localize "PF1.CMDAbbr"}}</th>
-            </tr>
-          </thead>
-          <tr>
-            <td>
-              <input name="system.details.vehicle.maxSpeed" value="{{convertDistance system.details.vehicle.maxSpeed}}" type="number" data-dtype="Number" />
-            </td>
-            <td>
-              <input name="system.details.vehicle.acceleration" value="{{convertDistance system.details.vehicle.acceleration}}" type="number" data-dtype="Number" />
-            </td>
-            <td>
-              <input name="system.abilities.str.value" value="{{system.abilities.str.value}}" type="number" data-dtype="Number"/>
-            </td>
-            <td>
-              <input name="system.attributes.cmd.value" value="{{system.attributes.cmd.value}}" type="number" data-dtype="Number" />
-            </td>
-          </tr>
-          {{!-- Description --}}
-          <thead>
-            <tr>
-              <th colspan="4">{{localize "PF1.Description"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan="4">
-                <textarea rows="4" name="system.details.vehicle.description">{{system.details.vehicle.description}}</textarea>
-              </td>
-          </tbody>
-          <thead>
-            <tr>
-              <th colspan="2">{{localize "PF1.Vehicles.Propulsion"}}</th>
-              <th colspan="2">{{localize "PF1.Vehicles.DrivingCheck"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan="2">
-                <input name="system.details.vehicle.propulsion" value="{{system.details.vehicle.propulsion}}" type="text"/>
-              </td>
-              <td colspan="2">
-                <input name="system.details.vehicle.drivingCheck" value="{{system.details.vehicle.drivingCheck}}" type="text"/>
-              </td>
-          </tbody>
-          <thead>
-            <tr>
-              <th colspan="2">{{localize "PF1.Vehicles.ForwardFacing"}}</th>
-              <th colspan="2">{{localize "PF1.Vehicles.DrivingDevice"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan="2">
-                <input name="system.details.vehicle.forwardFacing" value="{{system.details.vehicle.forwardFacing}}" type="text"/>
-              </td>
-              <td colspan="2">
-                <input name="system.details.vehicle.drivingDevice" value="{{system.details.vehicle.drivingDevice}}" type="text"/>
-              </td>
-          </tbody>
-          <thead>
-            <tr>
-              <th colspan="2">{{localize "PF1.Vehicles.DrivingSpace"}}</th>
-              <th>{{localize "PF1.Vehicles.Crew"}}</th>
-              <th>{{localize "PF1.Vehicles.Decks"}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan="2">
-                <input name="system.details.vehicle.drivingSpace" value="{{system.details.vehicle.drivingSpace}}" type="text"/>
-              </td>
-              <td>
-                <input name="system.details.vehicle.crew" value="{{system.details.vehicle.crew}}" type="number" data-dtype="Number" />
-              </td>
-              <td>
-                <input name="system.details.vehicle.decks" value="{{system.details.vehicle.decks}}" type="number" data-dtype="Number" />
-              </td>
-          </tbody>
-        </table>
+      <div class="health">
+        <h3>{{localize "PF1.HitPoints"}}</h3>
+
+        <div class="info-box-joined">
+          <div class="info-box current">
+            <h5>{{localize "PF1.Current"}}</h5>
+            <span class="value">
+              <span class="text-box direct wheel-change allow-relative hp-current-input" name="system.attributes.hp.value" data-dtype="Number">{{system.attributes.hp.value}}</span>
+            </span>
+          </div>
+          <div class="info-box maximum">
+            <h5>{{localize "PF1.Maximum"}}</h5>
+            <span class="value">
+              <span class="text-box direct hp-max-input" name="system.attributes.hp.max" type="number" data-dtype="Number">{{system.attributes.hp.max}}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="combat">
+        {{! Max Speed }}
+        <div class="info-box">
+          <h5>{{localize "PF1.Vehicles.MaximumSpeed"}}</h5>
+          <span class="value">
+            <input name="system.details.vehicle.maxSpeed" value="{{convertDistance system.details.vehicle.maxSpeed}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+        {{! Acceleration }}
+        <div class="info-box">
+          <h5>{{localize "PF1.Vehicles.Acceleration"}}</h5>
+          <span class="value">
+            <input name="system.details.vehicle.acceleration" value="{{convertDistance system.details.vehicle.acceleration}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+        {{! CMB }}
+        <div class="info-box attribute cmb" data-attribute=cmb"">
+          <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.CMBAbbr"}}</span></a></h5>
+          <span class="value">
+            <input name="system.abilities.str.value" value="{{system.abilities.str.value}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+        {{! CMD }}
+        <div class="info-box">
+          <h5>{{localize "PF1.CMDAbbr"}}</h5>
+          <span class="value">
+            <input name="system.attributes.cmd.value" value="{{system.attributes.cmd.value}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+
+        {{!-- Initiative --}}
+        <div class="info-box attribute initiative">
+          <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.Initiative"}}</span></a></h5>
+          <span class="value">
+            <span class="text-box direct allow-relative" name="system.attributes.init.value" data-dtype="Number">
+              {{system.attributes.init.total}}
+            </span>
+          </span>
+        </div>
+      </div>
+
+      {{!-- Description --}}
+      <div class="description">
+        <h3>{{localize "PF1.Description"}}</h3>
+        <textarea rows="4" name="system.details.vehicle.description">{{system.details.vehicle.description}}</textarea>
+      </div>
+
+      <div class="driving">
+        <div class="info-box">
+          <h5>{{localize "PF1.Vehicles.Propulsion"}}</h5>
+          <span class="value">
+            <input name="system.details.vehicle.propulsion" value="{{system.details.vehicle.propulsion}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+        <div class="info-box">
+          <h5>{{localize "PF1.Vehicles.DrivingCheck"}}</h5>
+          <span class="value">
+            <input name="system.details.vehicle.drivingCheck" value="{{system.details.vehicle.drivingCheck}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+        <div class="info-box">
+          <h5>{{localize "PF1.Vehicles.ForwardFacing"}}</h5>
+          <span class="value">
+            <input name="system.details.vehicle.forwardFacing" value="{{system.details.vehicle.forwardFacing}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+        <div class="info-box">
+          <h5>{{localize "PF1.Vehicles.DrivingDevice"}}</h5>
+          <span class="value">
+            <input name="system.details.vehicle.drivingDevice" value="{{system.details.vehicle.drivingDevice}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+      </div>
+
+      <div class="capacity">
+        <div class="info-box">
+          <h5>{{localize "PF1.Vehicles.DrivingSpace"}}</h5>
+          <span class="value">
+            <input name="system.details.vehicle.drivingSpace" value="{{system.details.vehicle.drivingSpace}}" type="text" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+        <div class="info-box">
+          <h5>{{localize "PF1.Vehicles.Crew"}}</h5>
+          <span class="value">
+            <input name="system.details.vehicle.crew" value="{{system.details.vehicle.crew}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
+        <div class="info-box">
+          <h5>{{localize "PF1.Vehicles.Decks"}}</h5>
+          <span class="value">
+            <input name="system.details.vehicle.decks" value="{{system.details.vehicle.decks}}" type="number" data-dtype="Number" placeholder="{{localize "PF1.NonApplicable"}}">
+          </span>
+        </div>
       </div>
 
       {{!-- Actions --}}

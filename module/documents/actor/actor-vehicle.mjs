@@ -3,11 +3,17 @@ import { RollPF } from "../../dice/roll.mjs";
 
 export class ActorVehiclePF extends ActorPF {
   prepareBaseData() {
+    this.sourceInfo = {};
+
     // Add base initiative
     this.system.attributes.init.total = this.system.attributes.init.value;
     this.system.attributes.cmd.total = this.system.attributes.cmd.value;
     this.system.attributes.ac.normal.total = this.system.attributes.ac.normal.base;
     this.system.attributes.savingThrows.save.total = this.system.attributes.savingThrows.save.base;
+
+    // For ActorPF compatibility only
+    this.system.attributes.attack ??= {};
+    this.system.skills ??= {};
 
     // Needed for getRollData and ActorPF, but useless for the actor
     const strValue = this.system.abilities.str.value;
@@ -95,14 +101,11 @@ export class ActorVehiclePF extends ActorPF {
    *
    * @override
    */
-  _setSourceDetails() {}
+  prepareDerivedData() {
+    this.prepareCMB();
 
-  /**
-   * Needed to prevent unnecessary behavior in ActorPF
-   *
-   * @override
-   */
-  prepareDerivedData() {}
+    this._setSourceDetails(this.sourceInfo);
+  }
 
   /**
    * Needed to prevent unnecessary behavior in ActorPF

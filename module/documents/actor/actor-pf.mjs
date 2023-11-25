@@ -2529,6 +2529,7 @@ export class ActorPF extends ActorBasePF {
       chatTemplateData: { hasProperties: props.length > 0, properties: props },
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
     };
+    console.log({ rollOptions });
     if (Hooks.call("pf1PreActorRollCmb", this, rollOptions) === false) return;
     const result = await pf1.dice.d20Roll(rollOptions);
     Hooks.callAll("pf1ActorRollCmb", this, result);

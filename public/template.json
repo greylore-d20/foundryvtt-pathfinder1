@@ -883,6 +883,7 @@
       "buff",
       "attack",
       "race",
+      "spellcasting",
       "container"
     ],
     "htmlFields": ["description.value", "description.unidentified"],
@@ -1174,6 +1175,54 @@
       "showInQuickbar": false,
       "domain": false,
       "slotCost": 1
+    },
+    "spellcasting": {
+      "templates": ["tagged"],
+      "class": "",
+      "kind": "arcane",
+      "maxLevel": 9,
+      "cantrips": true,
+      "ability": "int",
+      "asf": true,
+      "cl": {
+        "formula": "",
+        "notes": ""
+      },
+      "casts": {
+        "_old": "castPerDayAllOffsetFormula",
+        "formula": ""
+      },
+      "prepared": {
+        "_old": "preparedAllOffsetFormula",
+        "formula": ""
+      },
+      "slots": {
+        "_old_auto": "autoSpellLevelCalculation",
+        "auto": true,
+        "ability": {
+          "_old_auto": "autoSpellLevels",
+          "auto": true,
+          "_old_spellSlotAbilityBonusFormula": "",
+          "formula": ""
+        }
+      },
+      "domain": {
+        "slots": 1
+      },
+      "concentration": {
+        "formula": "",
+        "notes": ""
+      },
+      "mode": "spontaneous",
+      "dc": {
+        "formula": ""
+      },
+      "spellPoints": {
+        "value": 0,
+        "maxFormula": "",
+        "restoreFormula": ""
+      },
+      "spells": {}
     },
     "weapon": {
       "templates": [

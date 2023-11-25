@@ -34,6 +34,12 @@
 
       > input {
         text-align: center;
+        line-height: inherit;
+        height: unset;
+      }
+
+      > * {
+        line-height: 1.5em;
       }
     }
   }
@@ -55,6 +61,30 @@
         border-radius: 0 0.3em 0.3em 0;
         border-right-style: solid;
       }
+    }
+  }
+
+  .info-box-header {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1px 3px;
+
+    > h3 {
+      flex: 1 100%;
+
+      margin: 0;
+      padding: 0;
+      border: unset;
+
+      color: var(--color-text-light-highlight);
+      text-shadow: 1px 1px var(--color-shadow-dark);
+
+      background-color: var(--pf1-bg-dark-4);
+
+      border: 1px solid var(--color-border-dark-3);
+      border-width: 1px 1px 0 1px;
+      text-align: center;
+      border-radius: 0.3em 0.3em 0 0;
     }
   }
 }

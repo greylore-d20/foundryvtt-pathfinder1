@@ -19,7 +19,7 @@ export class ActorSheetPFTrap extends ActorSheetPF {
       ...options,
       classes: [...options.classes, "trap"],
       width: 500,
-      height: 640,
+      height: 560,
       tabs: [{ navSelector: "nav.tabs", contentSelector: "section.primary-body", initial: "summary" }],
       scrollY: [".tab.summary"],
     };

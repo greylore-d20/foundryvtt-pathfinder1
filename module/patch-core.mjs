@@ -84,16 +84,6 @@ ParentheticalTerm.CLOSE_REGEXP = new RegExp(`\\)${RollTerm.FLAVOR_REGEXP_STRING}
 OperatorTerm.REGEXP = /(?:&&|\|\||\*\*|\+|-|\*|\/|\\%|\||:|\?)|(?<![a-z])[!=<>]+/g;
 OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<=", ">=", "??", "||", "&&", "**");
 
-// Add secondary indexing to compendium collections
-{
-  const origFunc = CompendiumCollection.prototype.getIndex;
-  CompendiumCollection.prototype.getIndex = async function ({ fields } = {}) {
-    const index = await origFunc.call(this, { fields });
-    this.fuzzyIndex = sortArrayByName([...index]);
-    return this.index;
-  };
-}
-
 // Document link attribute stuffing
 {
   const origFunc = TextEditor._createContentLink;

@@ -5,7 +5,7 @@
       {{selectOptions config.actorSizes selected=system.size}}
     </select>
     {{#if allowAutoResizing}}
-    <label>
+    <label class="resizing">
       <input type="checkbox" name="system.resizing" data-dtype="Boolean" {{checked system.resizing}}> {{localize "PF1.Resizing"}}
     </label>
     {{/if}}

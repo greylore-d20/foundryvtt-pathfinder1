@@ -125,8 +125,8 @@ export const registerSystemSettings = function () {
   game.settings.register("pf1", "tooltipWorldConfig", {
     name: "PF1.TooltipWorldConfigName",
     scope: "world",
-    default: TooltipWorldConfig.defaultSettings,
-    type: Object,
+    default: new TokenTooltipWorldConfigModel(),
+    type: TokenTooltipWorldConfigModel,
     config: false,
     onChange: (settings) => {
       TooltipPF.toggle(!settings.disable);

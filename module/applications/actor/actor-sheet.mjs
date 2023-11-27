@@ -2447,7 +2447,7 @@ export class ActorSheetPF extends ActorSheet {
 
   _onRollSavingThrow(event) {
     event.preventDefault();
-    const savingThrow = event.currentTarget.parentElement.dataset.savingthrow;
+    const savingThrow = event.currentTarget.closest(".saving-throw").dataset.savingthrow;
     this.document.rollSavingThrow(savingThrow, { token: this.token });
   }
 

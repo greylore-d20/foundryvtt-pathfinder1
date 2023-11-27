@@ -1,8 +1,8 @@
 import { HealthConfig, HealthConfigModel } from "../applications/settings/health.mjs";
 import { ExperienceConfig } from "../applications/settings/experience.mjs";
 import { AccessibilityConfig, AccessibilityConfigModel } from "../applications/settings/accessibility.mjs";
-import { TooltipConfig } from "../applications/settings/tooltip.mjs";
-import { TooltipWorldConfig } from "../applications/settings/tooltip_world.mjs";
+import { TooltipConfig, TokenTooltipConfigModel } from "../applications/settings/tooltip.mjs";
+import { TooltipWorldConfig, TokenTooltipWorldConfigModel } from "../applications/settings/tooltip_world.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
 import { setDefaultSceneScaling } from "@utils";
 
@@ -103,8 +103,8 @@ export const registerSystemSettings = function () {
   game.settings.register("pf1", "tooltipConfig", {
     name: "PF1.TooltipConfigName",
     scope: "client",
-    default: TooltipConfig.defaultSettings,
-    type: Object,
+    default: new TokenTooltipConfigModel(),
+    type: TokenTooltipConfigModel,
     config: false,
     onChange: (settings) => {
       const worldConf = game.settings.get("pf1", "tooltipWorldConfig");

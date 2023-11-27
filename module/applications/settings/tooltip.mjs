@@ -1,8 +1,35 @@
 import { TooltipWorldConfig } from "./tooltip_world.mjs";
 
+export class TokenTooltipConfigModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+
+    return {
+      disable: new fields.BooleanField({ initial: false }),
+      hideWithoutKey: new fields.BooleanField({ initial: false }),
+      anchor: new fields.SchemaField({
+        x: new fields.NumberField({ initial: 1 }),
+        y: new fields.NumberField({ initial: 1 }),
+      }),
+      offset: new fields.SchemaField({
+        x: new fields.NumberField({ initial: 0 }),
+        y: new fields.NumberField({ initial: 0 }),
+      }),
+      onMouse: new fields.BooleanField({ initial: false }),
+      portrait: new fields.SchemaField({
+        hide: new fields.BooleanField({ initial: false }),
+        maxSize: new fields.SchemaField({
+          width: new fields.NumberField({ initial: 280 }),
+          height: new fields.NumberField({ initial: 280 }),
+        }),
+      }),
+    };
+  }
+}
+
 export class TooltipConfig extends FormApplication {
   constructor(object, options) {
-    super(object || TooltipConfig.defaultSettings, options);
+    super(object, options);
 
     this._cachedData = null;
   }
@@ -45,9 +72,7 @@ export class TooltipConfig extends FormApplication {
     }
 
     // Get settings
-    let settings = game.settings.get("pf1", "tooltipConfig");
-    settings = mergeObject(this.constructor.defaultSettings, settings);
-    result.data = settings;
+    result.data = game.settings.get("pf1", "tooltipConfig");
 
     // Get hide key
     result.hideKey = game.i18n.localize("PF1.Key_Control");
@@ -64,29 +89,6 @@ export class TooltipConfig extends FormApplication {
       width: 720,
       height: "auto",
     });
-  }
-
-  static get defaultSettings() {
-    return {
-      disable: false,
-      anchor: {
-        x: 1,
-        y: 1,
-      },
-      offset: {
-        x: 0,
-        y: 0,
-      },
-      onMouse: false,
-      portrait: {
-        hide: false,
-        maxSize: {
-          width: 280,
-          height: 280,
-        },
-      },
-      hideWithoutKey: false,
-    };
   }
 
   activateListeners(html) {

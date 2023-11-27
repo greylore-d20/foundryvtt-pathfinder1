@@ -476,7 +476,7 @@ export class ItemAction {
       held: "",
       nonlethal: false,
       touch: false,
-      usesAmmo: false,
+      ammoType: "",
       spellEffect: "",
       spellArea: "",
       conditionals: [],
@@ -1171,6 +1171,17 @@ export class ItemAction {
     options.actionId = this.id;
 
     return this.item.use(options);
+  }
+
+  /**
+   * Effective ammo type.
+   *
+   * @type {string|null} - Ammo type string or null if this doesn't use ammo.
+   */
+  get ammoType() {
+    const type = this.data.ammoType;
+    if (type === "none") return null;
+    return type || this.item.system.ammo?.type || null;
   }
 
   /**

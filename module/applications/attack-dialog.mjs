@@ -123,7 +123,7 @@ export class AttackDialog extends Application {
       flags: this.flags,
       attributes: this.attributes,
       conditionals: this.conditionals,
-      usesAmmo: action.data.usesAmmo,
+      usesAmmo: !!this.action.ammoType,
       ammo: this.getAmmo(),
     };
   }
@@ -141,13 +141,14 @@ export class AttackDialog extends Application {
   }
 
   _filterAmmo(item) {
-    if (!(item.type === "loot" && item.system.subType === "ammo")) return false;
+    if (!(item.type === "loot" && item.subType === "ammo")) return false;
     if (item.system.quantity <= 0) return false;
 
-    const weaponAmmoType = this.action.data.ammoType;
-    const ammoType = item.extraType;
+    const ammoType = item.system.extraType;
     if (!ammoType) return true;
-    if (weaponAmmoType === ammoType) return true;
+
+    const type = this.action.ammoType;
+    if (type === ammoType) return true;
   }
 
   activateListeners(html) {
@@ -328,7 +329,7 @@ export class AttackDialog extends Application {
     const action = this.action,
       item = action.item;
 
-    this.attacks = new ActionUse({ rollData: this.rollData, item })
+    this.attacks = new ActionUse({ rollData: this.rollData, item, action })
       .generateAttacks(true)
       .map(({ label, attackBonus }) => ({
         label,
@@ -372,7 +373,7 @@ export class AttackDialog extends Application {
   }
 
   setAttackAmmo(attackIndex, ammoId = null) {
-    if (!this.action.data.usesAmmo) return;
+    if (!this.action.ammoType) return;
 
     const atk = this.attacks[attackIndex];
     const curAmmo = atk.ammo?.data._id;

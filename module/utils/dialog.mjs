@@ -1,3 +1,5 @@
+import { ItemSelector } from "module/applications/item-selector.mjs";
+
 /**
  * @param root0
  * @param root0.title
@@ -94,3 +96,61 @@ export const dialogGetActor = function (title = "", actors = []) {
     ).render(true);
   });
 };
+
+/**
+ * Choose item from actor.
+ *
+ * This is simplified interface to {@link pf1.applications.ItemSelector}
+ *
+ * @param {object} options - Options
+ * @param {boolean} [options.empty=true] - Allow empty selection.
+ * @param {string} [options.type] - Basic filter for item type.
+ * @param {string} [options.subType] - Basic filter for item subtype.
+ * @param {Function<Item>} [options.filter] - Filtering callback function.
+ * @param {Actor} [options.actor] - Actor from which to get items from.
+ * @param {Item[]} [options.items] - Item list to get item from. Used only if actor is undefined.
+ * @param {string} [options.title] - Dialog title
+ * @param {object} [options.appOptions={}] - Application options
+ * @param {object} [options.renderOptions={}] - Render options
+ * @returns {Promise<Item|null>} - Chosen item or null.
+ */
+export async function getItem({
+  empty = true,
+  type,
+  subType,
+  filter,
+  actor,
+  items,
+  title,
+  appOptions = {},
+  renderOptions = {},
+} = {}) {
+  if (!actor.testUserPermission(game.user, CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER))
+    throw new Error("Insufficient permission to actor");
+
+  if (!type && !subType && !filter) throw new Error("Insufficient filter rules provided.");
+
+  const filterFunc = (item) => {
+    if (type && item.type !== type) return false;
+    if (subType && item.subType !== subType) return false;
+    return filter?.(item) ?? true;
+  };
+
+  const options = {
+    actor,
+    items,
+    empty,
+    filter: filterFunc,
+  };
+
+  // Provide nice basic title
+  if (!title && !filter && type) {
+    if (subType) title = pf1.config[`${type}Types`]?.[subType];
+    else title = game.i18n.localize(pf1.config.itemTypes[type]);
+    if (title) title = game.i18n.format("PF1.SelectSpecific", { specifier: title });
+  }
+
+  appOptions.title = title;
+
+  return ItemSelector.wait(options, appOptions, renderOptions);
+}

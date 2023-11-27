@@ -683,7 +683,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   const alreadyHasActions = itemData.system.actions instanceof Array && itemData.system.actions.length > 0;
   const itemActionData = alreadyHasActions ? itemData.system.actions : updateData["system.actions"];
   if (itemActionData instanceof Array) {
-    updateData["system.actions"] = itemActionData.map((action) => migrateItemActionData(action, itemData));
+    updateData["system.actions"] = itemActionData.map((action) => migrateItemActionData(action, updateData, { item }));
   }
 
   // Migrate container items
@@ -738,10 +738,12 @@ const _migrateActionRange = (action, item) => {
  * Migrates a single action within an item.
  *
  * @param {object} action - The action's data, which also serves as the update data to pass on.
- * @param {object} item - The item data this action is in.
+ * @param {object} updateData - Item update data
+ * @param {object} [options] - Additional options
+ * @param {object} [options.item=null] - The item data this action is in.
  * @returns {object} The resulting action data.
  */
-export const migrateItemActionData = function (action, item) {
+export const migrateItemActionData = function (action, updateData, { item = null } = {}) {
   action = foundry.utils.mergeObject(pf1.components.ItemAction.defaultData, action);
 
   _migrateActionRange(action, item);
@@ -752,6 +754,7 @@ export const migrateItemActionData = function (action, item) {
   _migrateActionEnhOverride(action, item);
   _migrateActionPrimaryAttack(action, item);
   _migrateActionChargeUsage(action, item);
+  _migrateActionAmmunitionUsage(action, updateData, { item });
 
   // Return the migrated update data
   return action;
@@ -1725,6 +1728,29 @@ const _migrateActionChargeUsage = function (action, item) {
     } else if (action.uses.autoDeductChargesCost === "1") action.uses.autoDeductChargesCost = "";
     delete action.uses.autoDeductCharges;
   }
+};
+
+/**
+ * Migrate action..
+ * - ... usesAmmo boolean away
+ * - ... ammoType to item.system.ammo.type
+ *
+ * @param {object} action
+ * @param {object} updateData
+ * @param {object} [options] - Additional options
+ * @param {Item} [options.item=null]
+ */
+const _migrateActionAmmunitionUsage = function (action, updateData, { item = null } = {}) {
+  if (action.usesAmmo === false) {
+    delete action.ammoType;
+  }
+  if (action.usesAmmo === true) {
+    if (!item.system.ammo?.type) {
+      updateData["system.ammo.type"] = action.ammoType;
+      action.ammoType = ""; // Inherit from item
+    }
+  }
+  delete action.usesAmmo;
 };
 
 const _migrateItemChargeCost = function (item, updateData) {

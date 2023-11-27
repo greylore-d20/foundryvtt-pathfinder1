@@ -85,27 +85,27 @@
   </div>
 </div>
 
-{{!-- Uses and charges --}}
-{{#unless isSpell}}
+{{!-- Ammunition --}}
 {{#if canUseAmmo}}
 <h3 class="form-header">{{localize "PF1.Ammunition"}}</h3>
-<div class="form-group">
-  <label class="checkbox">
-    <input type="checkbox" name="usesAmmo" {{checked data.usesAmmo}} /> {{localize "PF1.UsesAmmo"}}
-  </label>
-</div>
 
-{{#if data.usesAmmo}}
 <div class="form-group">
-  <label>{{localize "PF1.AmmunitionSubtype"}}</label>
+  <label>{{localize "PF1.AmmunitionType"}}</label>
   <select name="ammoType">
-    {{selectOptions config.ammoTypes selected=data.ammoType blank=""}}
+  {{#select data.ammoType}}
+    <option value="none">{{localize "PF1.None"}}</option>
+    {{#if inheritedAmmoType}}
+    <option value="">{{localize "PF1.InheritAs" inherited=(lookup @root.config.ammoTypes inheritedAmmoType)}}</option>
+    {{/if}}
+    {{#each @root.config.ammoTypes as |name type|}}
+    <option value="{{type}}">{{name}}</option>
+    {{/each}}
+  {{/select}}
   </select>
 </div>
 {{/if}}
-{{/if}}
-{{/unless}}
 
+{{!-- Uses and charges --}}
 <h3 class="form-header">{{localize "PF1.LimitedUses"}}</h3>
 <h4 class="form-header">{{localize "PF1.Item"}}</h4>
 <div class="form-group">

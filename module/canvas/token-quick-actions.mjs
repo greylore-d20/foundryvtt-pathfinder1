@@ -33,7 +33,7 @@ export class TokenQuickActions {
         `<div data-item-id="${item.id}" data-item-type="${type}" class="control-icon token-quick-action type-${type}">`,
         `<img src="${icon}" width="36" height="36" data-tooltip="${title}">`
       );
-      if (action && (item.isCharged || action?.data.usesAmmo)) {
+      if (action && (item.isCharged || !!action?.ammoType)) {
         actionHTML.push(this.createChargeElement(action));
       }
       actionHTML.push("</div>");
@@ -60,7 +60,7 @@ export class TokenQuickActions {
    */
   static createChargeElement(action) {
     const item = action.item,
-      usesAmmo = action.data.usesAmmo ?? false,
+      usesAmmo = !!action.ammoType,
       chargeCost = action.getChargeCost(),
       isSingleUse = item.isSingleUse;
 

@@ -103,6 +103,7 @@ export class ItemActionSheet extends FormApplication {
     data.usesSpellPoints = item.spellbook?.spellPoints.useSystem;
     data.defaultChargeFormula = item.getDefaultChargeFormula();
     data.canUseAmmo = action.data.usesAmmo !== undefined;
+    data.inheritedAmmoType = item?.system.ammo?.type;
     data.owned = actor != null;
     data.parentOwned = actor != null;
     data.owner = item.isOwner;

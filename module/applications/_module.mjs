@@ -19,6 +19,7 @@ export { ChangeLogWindow } from "./change-log.mjs";
 export { CurrencyTransfer } from "./currency-transfer.mjs";
 export { DamageTypeSelector } from "./damage-type-selector.mjs";
 export { EntrySelector } from "./entry-selector.mjs";
+export { ItemSelector } from "./item-selector.mjs";
 export { HelpBrowserPF } from "./help-browser.mjs";
 export { Widget_ItemPicker } from "./item-picker.mjs";
 export { LevelUpForm } from "./level-up.mjs";

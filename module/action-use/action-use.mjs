@@ -334,7 +334,8 @@ export class ActionUse {
     }
 
     // Set ammo usage
-    if (action.usesAmmo) {
+    const ammoType = this.action.ammoType;
+    if (ammoType) {
       const ammoId = this.item.getFlag("pf1", "defaultAmmo");
       const item = this.item.actor?.items.get(ammoId);
       const quantity = item?.system.quantity ?? 0;
@@ -356,7 +357,7 @@ export class ActionUse {
    * @returns {Promise}
    */
   async subtractAmmo(value = 1) {
-    if (!this.shared.action.data.usesAmmo) return;
+    if (!this.shared.action.ammoType) return;
 
     const actor = this.item.actor;
 
@@ -1221,7 +1222,7 @@ export class ActionUse {
     }
 
     // Filter out attacks without ammo usage
-    if (shared.action.data.usesAmmo) {
+    if (shared.action.ammoType) {
       shared.attacks = shared.attacks.filter((o) => o.ammo != null);
       if (shared.attacks.length === 0) {
         ui.notifications.error(game.i18n.localize("PF1.AmmoDepleted"));

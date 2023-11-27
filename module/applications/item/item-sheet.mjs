@@ -489,6 +489,15 @@ export class ItemSheetPF extends ItemSheet {
       context.hasSpellType = ["potion", "scroll", "wand", "staff"].includes(item.subType);
     }
 
+    // Prepare ammunition
+    context.canUseAmmo = !context.isNaturalAttack && item.type !== "spell";
+    if (context.canUseAmmo && item.system.ammo?.type) {
+      context.defaultAmmo = actor.items.get(item.getFlag("pf1", "defaultAmmo"));
+      if (context.defaultAmmo) {
+        context.invalidDefaultAmmo = context.defaultAmmo.system.extraType !== item.system.ammo.type;
+      }
+    }
+
     // Prepare proficiencies & languages
     const profs = {
       armorProf: pf1.config.armorProficiencies,
@@ -966,6 +975,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Listen to field entries
     html.find(".entry-control a").click(this._onEntryControl.bind(this));
+    html.find(".item-selector").click(this._onItemSelector.bind(this));
 
     // Add drop handler to link tabs
     html.find('div[data-group="links"],a.item[data-tab="links"]').on("drop", this._onLinksDrop.bind(this));
@@ -999,10 +1009,10 @@ export class ItemSheetPF extends ItemSheet {
       });
 
     // Open charge source with right click
-    html.find(".uses-source [data-item-id]").on("contextmenu", (event) => {
+    html.find(".item-link[data-item-id]").on("contextmenu", (event) => {
       event.preventDefault();
       const itemId = event.currentTarget.dataset.itemId;
-      const item = this.document.actor.items.get(itemId);
+      const item = this.actor.items.get(itemId);
       item?.sheet.render(true, { focus: true });
     });
 
@@ -1726,6 +1736,40 @@ export class ItemSheetPF extends ItemSheet {
     };
 
     pf1.applications.EntrySelector.open(this.item, options);
+  }
+
+  async _onItemSelector(event) {
+    event.preventDefault();
+    if (!this.item.isOwner) return void ui.notifications.warn("Insufficient permissions to modify item.");
+    if (!this.actor) return void ui.notifications.warn("No actor to find items from.");
+
+    const { type, subType, kind, empty, selected, label, name } = event.currentTarget.dataset;
+
+    const filter = (item) => {
+      if (type && item.type !== type) return false;
+      if (subType && item.subType !== subType) return false;
+      if (subType === "ammo" && kind) {
+        if (item.system.extraType !== kind) return false;
+      }
+      return true;
+    };
+
+    const options = {
+      actor: this.actor,
+      empty: empty === "true" || empty !== "false",
+      filter,
+      selected,
+    };
+
+    const appOptions = {
+      title: `${game.i18n.format("PF1.SelectSpecific", { specifier: game.i18n.localize(label) })} - ${this.actor.name}`,
+      id: `${this.item.uuid}-item-selector`,
+    };
+
+    const item = await pf1.applications.ItemSelector.wait(options, appOptions);
+    if (item === null) return;
+
+    this.item.update({ [name]: item });
   }
 
   _onEntryControl(event) {

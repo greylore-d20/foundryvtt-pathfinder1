@@ -39,7 +39,7 @@
   </div>
 
   <div class="form-group {{#unless system.traits.dr}}inactive{{/unless}} data-selector tooltip">
-    <label for="system.traits.dr.value">{{localize "PF1.DamRed"}}</label>
+    <label>{{localize "PF1.DamRed"}}</label>
     <ul class="traits-list tooltip tag-list">
       {{#each dr as |value key|}}
         <li class="tag {{key}}">{{value}}</li>
@@ -55,7 +55,7 @@
         </div>
       {{/if}}
     </ul>
-    <a class="resistance-selector" for="system.traits.dr" data-options="dr" data-fields="{{localize "PF1.Application.DamageResistanceSelector.DamageAmount"}};{{localize "PF1.Application.DamageResistanceSelector.Bypassed"}};{{localize "PF1.Application.DamageResistanceSelector.CombinationType"}};{{localize "PF1.Application.DamageResistanceSelector.Bypassed"}}" data-dtypes="Number;String;Boolean;String"><i class="fas fa-edit"></i></a>
+    <a class="resistance-selector" data-for="system.traits.dr" data-options="dr" data-fields="{{localize "PF1.Application.DamageResistanceSelector.DamageAmount"}};{{localize "PF1.Application.DamageResistanceSelector.Bypassed"}};{{localize "PF1.Application.DamageResistanceSelector.CombinationType"}};{{localize "PF1.Application.DamageResistanceSelector.Bypassed"}}" data-dtypes="Number;String;Boolean;String"><i class="fas fa-edit"></i></a>
   </div>
 
   <div class="form-group {{#unless system.traits.regen}}inactive{{/unless}} tooltip">
@@ -75,7 +75,7 @@
   </div>
 
   <div class="form-group {{#unless system.traits.eres}}inactive{{/unless}} tooltip">
-    <label for="system.traits.eres.value">{{localize "PF1.EnRes"}}</label>
+    <label>{{localize "PF1.EnRes"}}</label>
     <ul class="traits-list tooltip tag-list">
       {{#each eres as |value key|}}
         <li class="tag {{key}}">{{value}}</li>
@@ -91,7 +91,7 @@
         </div>
       {{/if}}
     </ul>
-    <a class="resistance-selector" for="system.traits.eres"  data-options="eres" data-fields="{{localize "PF1.Application.DamageResistanceSelector.DamageAmount"}};{{localize "PF1.Application.DamageResistanceSelector.Resisted"}};{{localize "PF1.Application.DamageResistanceSelector.CombinationType"}};{{localize "PF1.Application.DamageResistanceSelector.Resisted"}}" data-dtypes="Number;String;Boolean;String"><i class="fas fa-edit"></i></a>
+    <a class="resistance-selector" data-for="system.traits.eres" data-options="eres" data-fields="{{localize "PF1.Application.DamageResistanceSelector.DamageAmount"}};{{localize "PF1.Application.DamageResistanceSelector.Resisted"}};{{localize "PF1.Application.DamageResistanceSelector.CombinationType"}};{{localize "PF1.Application.DamageResistanceSelector.Resisted"}}" data-dtypes="Number;String;Boolean;String"><i class="fas fa-edit"></i></a>
   </div>
 
   <div class="form-group {{#unless system.traits.cres}}inactive{{/unless}} tooltip">
@@ -103,13 +103,13 @@
   </div>
 
   <div class="form-group {{system.traits.di.cssClass}} tooltip">
-    <label for="system.traits.di">{{localize "PF1.DamImm"}}</label>
+    <label>{{localize "PF1.DamImm"}}</label>
     <ul class="traits-list tag-list">
       {{#each system.traits.di.selected as |v k|}}
       <li class="tag {{k}}">{{v}}</li>
       {{/each}}
     </ul>
-    <a class="trait-selector" data-options="damageTypes"><i class="fas fa-edit"></i></a>
+    <a class="trait-selector" data-for="system.traits.di" data-options="damageTypes"><i class="fas fa-edit"></i></a>
     <span class="tooltipcontent">
       <span class="span3">@traits.di.value</span>
       <span class="span3">@traits.di.custom</span>
@@ -117,13 +117,13 @@
   </div>
 
   <div class="form-group {{system.traits.dv.cssClass}} tooltip">
-    <label for="system.traits.dv">{{localize "PF1.DamVuln"}}</label>
+    <label>{{localize "PF1.DamVuln"}}</label>
     <ul class="traits-list tag-list">
       {{#each system.traits.dv.selected as |v k|}}
       <li class="tag {{k}}">{{v}}</li>
       {{/each}}
     </ul>
-    <a class="trait-selector" data-options="damageTypes"><i class="fas fa-edit"></i></a>
+    <a class="trait-selector" data-for="system.traits.dv" data-options="damageTypes"><i class="fas fa-edit"></i></a>
     <span class="tooltipcontent">
       <span class="span3">@traits.dv.value</span>
       <span class="span3">@traits.dv.custom</span>
@@ -131,13 +131,13 @@
   </div>
 
   <div class="form-group {{system.traits.ci.cssClass}} tooltip">
-    <label for="system.traits.ci">{{localize "PF1.ConImm"}}</label>
+    <label>{{localize "PF1.ConImm"}}</label>
     <ul class="traits-list tag-list">
       {{#each system.traits.ci.selected as |v k|}}
       <li class="tag {{k}}">{{v}}</li>
       {{/each}}
     </ul>
-    <a class="trait-selector" data-options="conditionTypes"><i class="fas fa-edit"></i></a>
+    <a class="trait-selector" data-for="system.traits.ci" data-options="conditionTypes"><i class="fas fa-edit"></i></a>
     <span class="tooltipcontent">
       <span class="span3">@traits.ci.value</span>
       <span class="span3">@traits.ci.custom</span>
@@ -145,7 +145,7 @@
   </div>
 
   <div class="form-group {{system.traits.languages.cssClass}} tooltip">
-    <label for="system.traits.languages">{{localize "PF1.Languages"}}</label>
+    <label>{{localize "PF1.Languages"}}</label>
     <ul class="traits-list tooltip tag-list">
       {{#each system.traits.languages.selected as |v k|}}
         <li class="tag {{k}}">{{v}}</li>
@@ -161,14 +161,12 @@
         </div>
       {{/if}}
     </ul>
-    <a class="trait-selector" data-options="languages"><i class="fas fa-edit"></i></a>
+    <a class="trait-selector" data-for="system.traits.languages" data-options="languages"><i class="fas fa-edit"></i></a>
   </div>
 
   {{#if hasProficiencies}}
     <div class="form-group {{system.traits.weaponProf.cssClass}} tooltip">
-      <label for="system.traits.weaponProf">
-        {{localize "PF1.TraitWeaponProf"}}
-      </label>
+      <label>{{localize "PF1.TraitWeaponProf"}}</label>
       <ul class="traits-list tooltip tag-list">
         {{#each system.traits.weaponProf.selected as |v k|}}
           <li class="tag {{k}}">{{v}}</li>
@@ -184,13 +182,11 @@
           </div>
         {{/if}}
       </ul>
-      <a class="trait-selector" data-options="weaponProficiencies"><i class="fas fa-edit"></i></a>
+      <a class="trait-selector" data-for="system.traits.weaponProf" data-options="weaponProficiencies"><i class="fas fa-edit"></i></a>
     </div>
 
     <div class="form-group {{system.traits.armorProf.cssClass}} tooltip">
-      <label for="system.traits.armorProf">
-        {{localize "PF1.TraitArmorProf"}}
-      </label>
+      <label>{{localize "PF1.TraitArmorProf"}}</label>
       <ul class="traits-list tooltip tag-list">
         {{#each system.traits.armorProf.selected as |v k|}}
           <li class="tag {{k}}">{{v}}</li>
@@ -206,7 +202,7 @@
           </div>
         {{/if}}
       </ul>
-      <a class="trait-selector" data-options="armorProficiencies"><i class="fas fa-edit"></i></a>
+      <a class="trait-selector" data-for="system.traits.armorProf" data-options="armorProficiencies"><i class="fas fa-edit"></i></a>
     </div>
   {{/if}}
 

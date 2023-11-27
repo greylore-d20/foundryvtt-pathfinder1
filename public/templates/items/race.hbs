@@ -46,13 +46,13 @@
 
       {{!-- Subtypes --}}
       <div class="form-group subtypes">
-        <label for="system.subTypes">{{localize "PF1.RaceSubtypePlural"}}</label>
+        <label>{{localize "PF1.RaceSubtypePlural"}}</label>
         <ul class="subtype-list traits-list tag-list">
           {{#each system.subTypes as |v k|}}
             <li class="tag {{k}}">{{v}}</li>
           {{/each}}
         </ul>
-        <a class="entry-selector" for="system.subTypes" data-fields="PF1.RaceSubtypePlural" data-dtypes="String" data-flat="true" data-title="PF1.RaceSubtypePlural"><i class="fas fa-edit"></i></a>
+        <a class="entry-selector" data-for="system.subTypes" data-fields="PF1.RaceSubtypePlural" data-dtypes="String" data-flat="true" data-title="PF1.RaceSubtypePlural"><i class="fas fa-edit"></i></a>
       </div>
 
       {{!-- Race Size --}}

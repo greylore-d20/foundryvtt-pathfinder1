@@ -1402,9 +1402,9 @@ export class ItemSheetPF extends ItemSheet {
   _onTraitSelector(event) {
     event.preventDefault();
     const a = event.currentTarget;
-    const label = a.parentElement.querySelector("label");
+    const label = a.closest("div.form-group").querySelector("label"); // TODO: Do not rely on HTML layout
     const options = {
-      name: label.getAttribute("for"),
+      name: a.dataset.for,
       title: label.innerText,
       subject: a.dataset.options,
       choices: pf1.config[a.dataset.options],
@@ -1726,7 +1726,7 @@ export class ItemSheetPF extends ItemSheet {
     event.preventDefault();
     const a = event.currentTarget;
     const options = {
-      name: a.getAttribute("for"),
+      name: a.dataset.for,
       title: a.dataset.title,
       flag: a.dataset.flag === "true",
       boolean: a.dataset.boolean === "true",

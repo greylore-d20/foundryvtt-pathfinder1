@@ -2895,7 +2895,7 @@ export class ActorSheetPF extends ActorSheet {
     const choices =
       a.dataset.options in pf1.registry ? pf1.registry[a.dataset.options].getLabels() : pf1.config[a.dataset.options];
     const options = {
-      name: label.getAttribute("for"),
+      name: a.dataset.for,
       title: label.innerText,
       subject: a.dataset.options,
       choices: choices,
@@ -2919,7 +2919,7 @@ export class ActorSheetPF extends ActorSheet {
     const a = event.currentTarget;
 
     const options = {
-      name: a.getAttribute("for"),
+      name: a.dataset.for,
       title: a.innerText,
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,

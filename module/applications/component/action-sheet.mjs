@@ -275,7 +275,7 @@ export class ItemActionSheet extends FormApplication {
     event.preventDefault();
     const a = event.currentTarget;
     const options = {
-      name: a.getAttribute("for"),
+      name: a.dataset.for,
       title: a.dataset.title,
       flag: a.dataset.flag === "true",
       boolean: a.dataset.boolean === "true",

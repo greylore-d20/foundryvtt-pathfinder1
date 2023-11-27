@@ -1056,9 +1056,6 @@ export class ActorSheetPF extends ActorSheet {
     // Trigger form submission from textarea elements.
     html.find("textarea").change(this._onSubmit.bind(this));
 
-    // Show configureable fields
-    html.find(".config .config-control").click(this._onConfigControl.bind(this));
-
     // Select the whole text on click
     html.find(".select-on-click").click(this._selectOnClick.bind(this));
 
@@ -3206,33 +3203,6 @@ export class ActorSheetPF extends ActorSheet {
       this._onDragMiscStart(event, "attack", elem.dataset.attack);
     } else {
       super._onDragStart(event);
-    }
-  }
-
-  async _onConfigControl(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-    const f = $(a).attr("for");
-    const html = this.element;
-
-    $(a).css("display", "none");
-
-    // Show CR field
-    if (f === "cr") {
-      const elem = html.find('input[for="system.details.cr"]');
-      elem.attr("value", CR.fromNumber(this.document.system.details.cr.base));
-      elem.attr("name", "system.details.cr.base");
-      elem.prop("disabled", false);
-      elem.focus();
-      elem.select();
-    }
-
-    // Show base Spell Slots field
-    else if (f === "spellSlots") {
-      const elem = $(a).closest(".spell-uses").find(".base");
-      elem.css("display", "block");
-      elem.focus();
-      elem.select();
     }
   }
 

@@ -1,6 +1,6 @@
 import { HealthConfig, HealthConfigModel } from "../applications/settings/health.mjs";
 import { ExperienceConfig } from "../applications/settings/experience.mjs";
-import { AccessibilityConfig } from "../applications/settings/accessibility.mjs";
+import { AccessibilityConfig, AccessibilityConfigModel } from "../applications/settings/accessibility.mjs";
 import { TooltipConfig } from "../applications/settings/tooltip.mjs";
 import { TooltipWorldConfig } from "../applications/settings/tooltip_world.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
@@ -85,8 +85,8 @@ export const registerSystemSettings = function () {
   game.settings.register("pf1", "accessibilityConfig", {
     name: "PF1.AccessibilityConfigName",
     scope: "client",
-    default: AccessibilityConfig.defaultSettings,
-    type: Object,
+    default: new AccessibilityConfigModel(),
+    type: AccessibilityConfigModel,
     config: false,
     onChange: () => pf1.utils.refreshActors(),
   });

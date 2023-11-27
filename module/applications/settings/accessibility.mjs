@@ -1,6 +1,12 @@
+export class AccessibilityConfigModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    return {};
+  }
+}
+
 export class AccessibilityConfig extends FormApplication {
   constructor(object, options) {
-    super(object || AccessibilityConfig.defaultSettings, options);
+    super(object, options);
 
     this._init = false;
   }
@@ -28,10 +34,6 @@ export class AccessibilityConfig extends FormApplication {
       width: 560,
       height: "auto",
     });
-  }
-
-  static get defaultSettings() {
-    return {};
   }
 
   /**

@@ -1,3 +1,26 @@
+export class ExperienceConfigModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+
+    return {
+      disable: new fields.BooleanField({ initial: false }),
+      track: new fields.StringField({ initial: "medium", choices: ["fast", "medium", "slow", "custom"] }),
+      custom: new fields.SchemaField({
+        formula: new fields.StringField({ initial: "", nullable: false }),
+      }),
+      openDistributor: new fields.BooleanField({ initial: true }),
+    };
+  }
+
+  static migrateData(data) {
+    super.migrateData(data);
+
+    data.disable ??= data.disableExperienceTracking;
+    if (data.track === "customFormula") data.track = "custom";
+    data.openDistributor ??= data.openXpDistributor;
+  }
+}
+
 export class ExperienceConfig extends FormApplication {
   constructor(...args) {
     super(...args);
@@ -12,8 +35,8 @@ export class ExperienceConfig extends FormApplication {
     return {
       ...settings,
       // Custom experience track booleans
-      enabled: settings.disableExperienceTracking !== true,
-      hasCustomFormula: settings.track === "customFormula",
+      enabled: settings.disable !== true,
+      hasCustomFormula: settings.track === "custom",
     };
   }
 
@@ -31,17 +54,6 @@ export class ExperienceConfig extends FormApplication {
       submitOnClose: false,
       width: 560,
       height: "auto",
-    };
-  }
-
-  static get defaultSettings() {
-    return {
-      track: "medium",
-      disableExperienceTracking: false,
-      openXpDistributor: true,
-      custom: {
-        formula: "",
-      },
     };
   }
 

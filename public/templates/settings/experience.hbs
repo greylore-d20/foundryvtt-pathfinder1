@@ -4,7 +4,7 @@
       {{localize "SETTINGS.pf1NoExpN"}}
     </label>
     <div class="form-fields">
-      <input type="checkbox" id="disable-experience-tracking" name="disableExperienceTracking" data-dtype="Boolean" {{checked disableExperienceTracking}}>
+      <input type="checkbox" id="disable-experience-tracking" name="disable" data-dtype="Boolean" {{checked disable}}>
     </div>
     <p class="notes">{{localize "SETTINGS.pf1NoExpL"}}</p>
   </div>
@@ -18,7 +18,7 @@
         <option value="slow">{{localize "PF1.XPTrackSlow"}}</option>
         <option value="medium">{{localize "PF1.XPTrackMedium"}}</option>
         <option value="fast">{{localize "PF1.XPTrackFast"}}</option>
-        <option value="customFormula">{{localize "PF1.XPTrackCustomFormula"}}</option>
+        <option value="custom">{{localize "PF1.XPTrackCustomFormula"}}</option>
         {{/select}}
       </select>
     </div>
@@ -39,7 +39,7 @@
       {{localize "SETTINGS.pf1OpenXPDistributorN"}}
     </label>
     <div class="form-fields">
-      <input type="checkbox" id="open-xp-distributor" name="openXpDistributor" data-dtype="Boolean" {{checked openXpDistributor}}>
+      <input type="checkbox" id="open-xp-distributor" name="openDistributor" data-dtype="Boolean" {{checked openDistributor}}>
     </div>
     <p class="notes">{{localize "SETTINGS.pf1OpenXPDistributorL"}}</p>
   </div>

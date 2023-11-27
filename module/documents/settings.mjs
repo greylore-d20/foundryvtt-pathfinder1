@@ -1,5 +1,5 @@
 import { HealthConfig, HealthConfigModel } from "../applications/settings/health.mjs";
-import { ExperienceConfig } from "../applications/settings/experience.mjs";
+import { ExperienceConfig, ExperienceConfigModel } from "../applications/settings/experience.mjs";
 import { AccessibilityConfig, AccessibilityConfigModel } from "../applications/settings/accessibility.mjs";
 import { TooltipConfig, TokenTooltipConfigModel } from "../applications/settings/tooltip.mjs";
 import { TooltipWorldConfig, TokenTooltipWorldConfigModel } from "../applications/settings/tooltip_world.mjs";
@@ -65,8 +65,8 @@ export const registerSystemSettings = function () {
   game.settings.register("pf1", "experienceConfig", {
     name: "PF1.ExperienceConfigName",
     scope: "world",
-    default: ExperienceConfig.defaultSettings,
-    type: Object,
+    default: new ExperienceConfigModel(),
+    type: ExperienceConfigModel,
     config: false,
     onChange: () => pf1.utils.refreshActors({ renderOnly: true }),
   });

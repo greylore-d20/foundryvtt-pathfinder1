@@ -238,6 +238,7 @@ export class ActorSheetPF extends ActorSheet {
       i.type = item.type;
       i.id = item.id;
       i.img = item.img;
+      i.isActive = item.isActive;
       i.isPhysical = item.isPhysical ?? false;
       i.isSingleUse = item.isSingleUse;
       i.isCharged = item.isCharged;
@@ -266,17 +267,21 @@ export class ActorSheetPF extends ActorSheet {
       i.showUnidentifiedData = item.showUnidentifiedData;
       i.name = item.name; // Copy name over from item to handle identified state correctly
 
-      i.isStack = i.quantity > 1;
-      i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
+      if (i.isPhysical) {
+        i.isStack = i.quantity > 1;
+        i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
+        i.destroyed = i.hp?.value <= 0;
+      }
 
       const itemQuantity = i.quantity != null ? i.quantity : 1;
       const itemCharges = i.uses?.value != null ? i.uses.value : 1;
       i.empty = itemQuantity <= 0 || (i.isCharged && !i.isSingleUse && itemCharges <= 0);
-      i.destroyed = i.hp?.value <= 0;
-      i.disabled = i.empty || i.destroyed;
+      i.disabled = i.empty || i.destroyed || false;
+      if (i.type === "feat" && !i.isActive) i.disabled = true;
 
       return i;
     });
+
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.labels = this.document.getLabels();
     data.filters = this._filters;

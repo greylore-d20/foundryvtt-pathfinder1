@@ -603,7 +603,7 @@ export class ItemSheetPF extends ItemSheet {
         context.speeds.push({
           value: pf1.utils.convertDistance(value)[0],
           mode: key,
-          label: `PF1.Speed${key.capitalize()}_Short`,
+          label: `PF1.Movement.Mode.${key}`,
         });
       }
     }

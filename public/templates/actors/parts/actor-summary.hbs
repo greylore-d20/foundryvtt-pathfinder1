@@ -169,7 +169,7 @@
     </div>
     {{/unless}}
     <div class='speed-details flexcol pseudo-table'>
-      <h3 class='header'>{{localize "PF1.Speed"}}</h3>
+      <h3 class='header'>{{localize "PF1.Movement.Speed"}}</h3>
       <ul class='flexrow'>
         <li class='flexcol land tooltip'>
           <div class="tooltipcontent">
@@ -182,7 +182,7 @@
               {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.land.add skipLabel=0 isDistance=true}}
             {{/if}}
           </div>
-          <h4 class='sub-header'>{{localize "PF1.SpeedLand_Short"}}</h4>
+          <h4 class='sub-header'>{{localize "PF1.Movement.Mode.land"}}</h4>
           <span class="value text-box direct speed" name="system.attributes.speed.land.base" data-dtype="Number">
             {{#if system.attributes.speed.land.total}}{{convertDistance system.attributes.speed.land.total}}{{/if}}
           </span>
@@ -198,7 +198,7 @@
               {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.climb.add skipLabel=0 isDistance=true}}
             {{/if}}
           </div>
-          <h4 class='sub-header'>{{localize "PF1.SpeedClimb_Short"}}</h4>
+          <h4 class='sub-header'>{{localize "PF1.Movement.Mode.climb"}}</h4>
           <span class="value text-box direct speed" name="system.attributes.speed.climb.base" data-dtype="Number">
             {{#if system.attributes.speed.climb.total}}{{convertDistance system.attributes.speed.climb.total}}{{/if}}
           </span>
@@ -215,7 +215,7 @@
             {{/if}}
           </div>
 
-          <h4 class='sub-header'>{{localize "PF1.SpeedSwim_Short"}}</h4>
+          <h4 class='sub-header'>{{localize "PF1.Movement.Mode.swim"}}</h4>
           <span class="value text-box direct speed" name="system.attributes.speed.swim.base" data-dtype="Number">
             {{#if system.attributes.speed.swim.total}}{{convertDistance system.attributes.speed.swim.total}}{{/if}}
           </span>
@@ -231,7 +231,7 @@
               {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.burrow.add skipLabel=0 isDistance=true}}
             {{/if}}
           </div>
-          <h4 class='sub-header'>{{localize "PF1.SpeedBurrow_Short"}}</h4>
+          <h4 class='sub-header'>{{localize "PF1.Movement.Mode.burrow"}}</h4>
           <span class="value text-box direct speed" name="system.attributes.speed.burrow.base" data-dtype="Number">
             {{#if system.attributes.speed.burrow.total}}{{convertDistance system.attributes.speed.burrow.total}}{{/if}}
           </span>
@@ -248,7 +248,7 @@
               {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.attributes.speed.fly.add skipLabel=0 isDistance=true}}
             {{/if}}
           </div>
-          <h4 class='sub-header'>{{localize "PF1.SpeedFly_Short"}}</h4>
+          <h4 class='sub-header'>{{localize "PF1.Movement.Mode.fly"}}</h4>
           <span class="value text-box direct speed" name="system.attributes.speed.fly.base" data-dtype="Number">
             {{#if system.attributes.speed.fly.total}}{{convertDistance system.attributes.speed.fly.total}}{{/if}}
           </span>

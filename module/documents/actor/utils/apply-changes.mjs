@@ -1180,7 +1180,7 @@ export const addDefaultChanges = function (changes) {
         subTarget: "skill.clm",
         modifier: "racial",
         priority: -1,
-        flavor: game.i18n.localize("PF1.SpeedClimb"),
+        flavor: game.i18n.localize("PF1.Movement.Mode.climb"),
       })
     );
 
@@ -1192,7 +1192,7 @@ export const addDefaultChanges = function (changes) {
         subTarget: "skill.swm",
         modifier: "racial",
         priority: -1,
-        flavor: game.i18n.localize("PF1.SpeedSwim"),
+        flavor: game.i18n.localize("PF1.Movement.Mode.swim"),
       })
     );
   }

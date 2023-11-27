@@ -19,7 +19,7 @@ export class SpeedEditor extends DocumentSheet {
 
   get title() {
     const actor = this.document.actor;
-    let title = `${game.i18n.localize("PF1.Movement")}: ${this.document.name}`;
+    let title = `${game.i18n.localize("PF1.Movement.Label")}: ${this.document.name}`;
     if (actor) title += ` — ${actor.name}`;
     return title;
   }

@@ -319,6 +319,23 @@ export class CombatPF extends Combat {
     }
   }
 
+  _onDelete(options, userId) {
+    super._onDelete(options, userId);
+
+    if (game.user.id !== userId) return;
+
+    // Show experience distributor after combat
+    if (!this.started) return;
+    const xpCfg = game.settings.get("pf1", "experienceConfig");
+    if (xpCfg.disable) return;
+
+    const openUI = xpCfg.openDistributor;
+    const skipPrompt = pf1.documents.settings.getSkipActionPrompt();
+    if (openUI ^ skipPrompt) {
+      pf1.applications.ExperienceDistributor.fromCombat(this);
+    }
+  }
+
   /**
    * Get current initiative.
    *

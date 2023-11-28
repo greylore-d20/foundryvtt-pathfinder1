@@ -740,17 +740,6 @@ Hooks.on("renderSidebarTab", (app, html) => {
   }
 });
 
-// Show experience distributor after combat
-Hooks.on("deleteCombat", (combat, options, userId) => {
-  if (game.user.id !== userId) return;
-
-  const skipPrompt = documents.settings.getSkipActionPrompt();
-  const { disable, openDistributor } = game.settings.get("pf1", "experienceConfig");
-  if (!disable && combat.started && ((openDistributor && !skipPrompt) || (!openDistributor && skipPrompt))) {
-    applications.ExperienceDistributor.fromCombat(combat);
-  }
-});
-
 Hooks.on("controlToken", () => {
   // Refresh lighting to (un)apply low-light vision parameters to them
   canvas.perception.update(

@@ -129,21 +129,10 @@ export class ItemPF extends ItemBasePF {
     const actor = this.actor;
     if (userId !== game.user.id) return;
 
-    const isActive = this.isActive;
-    if (isActive) {
-      // Simulate activation
-      switch (this.type) {
-        case "buff":
-          if (actor) {
-            Hooks.callAll("pf1ToggleActorBuff", actor, this, true);
-          }
-          // Execute script calls
-          this.executeScriptCalls("toggle", { state: true });
-          break;
-        // Simulate toggling a feature on
-        case "feat":
-          this.executeScriptCalls("toggle", { state: true });
-          break;
+    if (this.isActive) {
+      // Simulate toggling a feature or buff on
+      if (["buff", "feat"].includes(this.type)) {
+        this.executeScriptCalls("toggle", { state: true });
       }
     }
 

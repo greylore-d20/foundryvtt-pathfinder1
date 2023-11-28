@@ -33,6 +33,18 @@ export class ItemBuffPF extends ItemPF {
     super._onUpdate(changed, context, userId);
 
     if (changed.system === undefined) return; // No system data updates
+
+    // Following requires actor
+    const actor = this.actor;
+    if (!actor) return;
+
+    // Toggle buff hook
+    const isActive = changed.system?.active;
+    if (isActive !== undefined) {
+      Hooks.callAll("pf1ToggleActorBuff", actor, this, isActive);
+    }
+
+    // Following should only run on triggering user
     if (game.user.id !== userId) return;
 
     this._updateTrackingEffect(changed);
@@ -47,10 +59,33 @@ export class ItemBuffPF extends ItemPF {
   _onCreate(data, context, userId) {
     super._onCreate(data, context, userId);
 
+    const actor = this.actor;
+    const isActive = this.isActive;
+    if (actor && isActive) {
+      Hooks.callAll("pf1ToggleActorBuff", actor, this, true);
+    }
+
     if (game.user.id !== userId) return;
 
-    if (this.isActive) {
+    if (isActive) {
       this._updateTrackingEffect(data);
+    }
+  }
+
+  /**
+   * @override
+   * @param {object} options - Delete context options
+   * @param {string} userId - Triggering user ID
+   */
+  _onDelete(options, userId) {
+    super._onDelete(options, userId);
+
+    const actor = this.actor;
+    if (!actor) return;
+
+    // Call buff removal hook
+    if (this.isActive) {
+      Hooks.callAll("pf1ToggleActorBuff", actor, this, false);
     }
   }
 

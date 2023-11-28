@@ -619,25 +619,6 @@ Hooks.on("deleteItem", async (item, options, userId) => {
         }
       }
     }
-
-    // Call buff removal hook
-    if (item.type === "buff" && item.system.active === true) {
-      Hooks.callAll("pf1ToggleActorBuff", actor, item, false);
-    }
-  }
-});
-
-Hooks.on("updateItem", async (item, changedData, options, userId) => {
-  if (userId !== game.user.id) return;
-  const actor = item.actor;
-
-  if (actor) {
-    // Toggle buff
-    const isActive = changedData.system?.active;
-    if (item.type === "buff" && isActive !== undefined) {
-      // Call hook
-      Hooks.callAll("pf1ToggleActorBuff", actor, item, isActive);
-    }
   }
 });
 

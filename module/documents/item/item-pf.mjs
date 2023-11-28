@@ -1719,8 +1719,11 @@ export class ItemPF extends ItemBasePF {
    * Removes all link references to an item.
    *
    * @param {string} id - The id of the item to remove links to.
+   * @param {object} [options={}] - Additional options
+   * @param {boolean} [options.commit=true] - Commit changes to database. If false, resulting update data is returned instead.
+   * @returns {Promise<Item|object|undefined>}
    */
-  async removeItemLink(id) {
+  async removeItemLink(id, { commit = true } = {}) {
     const updateData = {};
     for (const [type, linkItems] of Object.entries(this.system.links ?? {})) {
       const items = deepClone(linkItems);
@@ -1732,7 +1735,8 @@ export class ItemPF extends ItemBasePF {
     }
 
     if (!foundry.utils.isEmpty(updateData)) {
-      return this.update(updateData);
+      if (commit) return this.update(updateData);
+      return updateData;
     }
   }
 

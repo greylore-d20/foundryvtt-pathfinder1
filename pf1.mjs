@@ -561,46 +561,6 @@ Hooks.on("renderTokenHUD", (app, html, data) => {
 Hooks.on("deleteToken", (token) => pf1.tooltip?.unbind(token));
 Hooks.on("updateToken", (token) => pf1.tooltip?.unbind(token));
 
-Hooks.on("preDeleteItem", (item, options, userId) => {
-  if (!item.actor) return;
-  if (options.handledChildren) return;
-
-  const visited = new Set();
-
-  // Remove linked children with item
-  const _getChildren = (item) => {
-    if (visited.has(item.id)) return [];
-    visited.add(item.id);
-
-    const result = [];
-    const links = item.system.links?.children ?? [];
-    for (const link of links) {
-      if (visited.has(link.id)) continue;
-
-      const child = item.actor.items.get(link.id);
-      if (child) {
-        result.push(child.id);
-        result.push(..._getChildren(child));
-      }
-    }
-    return result;
-  };
-
-  const children = _getChildren(item);
-
-  if (children.length > 0) {
-    const toRemove = [item.id, ...children]
-      .reduce((cur, o) => {
-        if (!cur.includes(o)) cur.push(o);
-        return cur;
-      }, [])
-      .filter((o) => item.actor.items.has(o));
-
-    item.actor.deleteEmbeddedDocuments("Item", toRemove, { handledChildren: true });
-    return false;
-  }
-});
-
 Hooks.on("deleteItem", async (item, options, userId) => {
   if (userId !== game.user.id) return;
   const actor = item.actor;

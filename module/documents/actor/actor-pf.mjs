@@ -2130,8 +2130,17 @@ export class ActorPF extends ActorBasePF {
     }
   }
 
-  _onDeleteDescendantDocuments(parent, collection, documents, result, options, userId) {
-    super._onDeleteDescendantDocuments(parent, collection, documents, result, options, userId);
+  /**
+   * @override
+   * @param {*} parent
+   * @param {"items"|"effects"} collection
+   * @param {Item|ActiveEffect[]} documents
+   * @param {string[]} ids
+   * @param {object} context - Delete context
+   * @param {string} userId
+   */
+  _onDeleteDescendantDocuments(parent, collection, documents, ids, context, userId) {
+    super._onDeleteDescendantDocuments(parent, collection, documents, ids, context, userId);
 
     if (collection === "effects") {
       const updatedConditions = {};
@@ -2144,9 +2153,63 @@ export class ActorPF extends ActorBasePF {
         }
       }
 
-      if (options?.pf1?.updateConditionTracks !== false) {
+      if (context?.pf1?.updateConditionTracks !== false) {
         this._conditionToggleNotify(updatedConditions);
       }
+    }
+
+    // Following process is done only on triggering user
+    if (game.user.id !== userId) return;
+
+    if (collection === "items") {
+      this._cleanItemLinksTo(ids);
+
+      // Delete child linked items
+      const toRemove = new Set();
+
+      // Remove linked children with item
+      const _enumChildren = (item) => {
+        toRemove.add(item.id);
+
+        const links = item.getLinkedItemsSync("children");
+        for (const link of links) {
+          if (toRemove.has(link.id)) continue;
+          const child = item.actor.items.get(link.id);
+          if (child) _enumChildren(child);
+        }
+      };
+
+      // Find children
+      for (const item of documents) _enumChildren(item);
+      // Remove already deleted items
+      for (const id of ids) toRemove.delete(id);
+
+      if (toRemove.size > 0) {
+        this.deleteEmbeddedDocuments("Item", Array.from(toRemove));
+      }
+    }
+  }
+
+  /**
+   * @internal
+   * @param {string[]} ids - Item IDs to clean links to.
+   */
+  async _cleanItemLinksTo(ids) {
+    const updates = [];
+    // Clean up references to this item
+    for (const itemId of ids) {
+      const item = this.items.get(itemId);
+      if (!item) continue;
+
+      const update = await item.removeItemLink(item, { commit: false });
+      if (update) {
+        update._id = item.id;
+        updates.push(update);
+      }
+    }
+
+    if (updates.length) {
+      return this.updateEmbeddedDocuments("Item", updates);
     }
   }
 
@@ -4174,37 +4237,6 @@ export class ActorPF extends ActorBasePF {
       case 8: // Colossal
         return reachStruct(30, 60);
     }
-  }
-
-  async deleteEmbeddedDocuments(embeddedName, data, options = {}) {
-    if (embeddedName === "Item") {
-      if (!(data instanceof Array)) data = [data];
-
-      // Add children to list of items to be deleted
-      const _addChildren = async function (id) {
-        const item = this.items.get(id);
-        if (!item) return;
-        const children = await item.getLinkedItems("children");
-        for (const child of children) {
-          if (!data.includes(child.id)) {
-            data.push(child.id);
-            await _addChildren.call(this, child.id);
-          }
-        }
-      };
-      for (const id of data) {
-        await _addChildren.call(this, id);
-      }
-
-      // Remove links to this item (and child items)
-      for (const id of data) {
-        for (const i of this.items) {
-          await i.removeItemLink(id);
-        }
-      }
-    }
-
-    await super.deleteEmbeddedDocuments(embeddedName, data, options);
   }
 
   getQuickActions() {

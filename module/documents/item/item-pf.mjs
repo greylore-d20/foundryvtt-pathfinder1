@@ -119,6 +119,50 @@ export class ItemPF extends ItemBasePF {
 
   /**
    * @override
+   * @param {object} data - Creation data
+   * @param {object} context - Creation context options
+   * @param {string} userId - Triggering user ID
+   */
+  _onCreate(data, context, userId) {
+    super._onCreate(data, context, userId);
+
+    const actor = this.actor;
+    if (userId !== game.user.id) return;
+
+    const isActive = this.isActive;
+    if (isActive) {
+      // Simulate activation
+      switch (this.type) {
+        case "buff":
+          if (actor) {
+            Hooks.callAll("pf1ToggleActorBuff", actor, this, true);
+          }
+          // Execute script calls
+          this.executeScriptCalls("toggle", { state: true });
+          break;
+        // Simulate toggling a feature on
+        case "feat":
+          this.executeScriptCalls("toggle", { state: true });
+          break;
+      }
+    }
+
+    if (this.isPhysical) {
+      // Simulate equipping items    {
+      if (this.system.equipped === true) {
+        this.executeScriptCalls("equip", { equipped: true });
+      }
+
+      // Quantity change
+      const quantity = this.system.quantity ?? 0;
+      if (quantity > 0) {
+        this.executeScriptCalls("changeQuantity", { quantity: { previous: 0, new: quantity } });
+      }
+    }
+  }
+
+  /**
+   * @override
    * @param {object} changed
    * @param {object} context
    * @param {User} user

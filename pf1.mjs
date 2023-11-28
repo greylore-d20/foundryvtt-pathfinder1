@@ -567,43 +567,6 @@ Hooks.on("updateToken", function (token, updateData, options, userId) {
   pf1.tooltip?.unbind(token);
 });
 
-Hooks.on("createItem", (item, options, userId) => {
-  const actor = item.actor;
-  if (userId !== game.user.id) return;
-
-  // Show buff if active
-  if (item.type === "buff" && item.system.active === true) {
-    // Call hook
-    if (actor) {
-      Hooks.callAll("pf1ToggleActorBuff", actor, item, true);
-    }
-
-    // Execute script calls
-    item.executeScriptCalls("toggle", { state: true });
-  }
-  // Simulate toggling a feature on
-  if (item.type === "feat") {
-    const disabled = item.system.disabled;
-    if (disabled === false) {
-      item.executeScriptCalls("toggle", { state: true });
-    }
-  }
-  // Simulate equipping items
-  {
-    const equipped = item.system.equipped;
-    if (equipped === true) {
-      item.executeScriptCalls("equip", { equipped: true });
-    }
-  }
-  // Quantity change
-  {
-    const quantity = item.system.quantity;
-    if (typeof quantity === "number" && quantity > 0) {
-      item.executeScriptCalls("changeQuantity", { quantity: { previous: 0, new: quantity } });
-    }
-  }
-});
-
 Hooks.on("preDeleteItem", (item, options, userId) => {
   if (!item.actor) return;
   if (options.handledChildren) return;

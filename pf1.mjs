@@ -257,6 +257,7 @@ Hooks.once("init", function () {
   const registries = /** @type {const} */ ([
     ["damageTypes", registry.DamageTypes],
     ["scriptCalls", registry.ScriptCalls],
+    ["sources", registry.Sources],
   ]);
   for (const [registryName, registryClass] of registries) {
     pf1.registry[registryName] = new registryClass();

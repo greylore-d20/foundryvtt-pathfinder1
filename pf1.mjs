@@ -745,12 +745,8 @@ Hooks.on("deleteCombat", (combat, options, userId) => {
   if (game.user.id !== userId) return;
 
   const skipPrompt = documents.settings.getSkipActionPrompt();
-  const { disableExperienceTracking, openXpDistributor } = game.settings.get("pf1", "experienceConfig");
-  if (
-    !disableExperienceTracking &&
-    combat.started &&
-    ((openXpDistributor && !skipPrompt) || (!openXpDistributor && skipPrompt))
-  ) {
+  const { disable, openDistributor } = game.settings.get("pf1", "experienceConfig");
+  if (!disable && combat.started && ((openDistributor && !skipPrompt) || (!openDistributor && skipPrompt))) {
     applications.ExperienceDistributor.fromCombat(combat);
   }
 });

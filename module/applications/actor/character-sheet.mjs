@@ -42,9 +42,9 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     const xpSettings = game.settings.get("pf1", "experienceConfig");
 
     // Experience Tracking
-    data.disableExperience = xpSettings.disableExperienceTracking;
-    data.showXpBar = !xpSettings.disableExperienceTracking;
-    if (!xpSettings.disableExperienceTracking) {
+    data.disableExperience = xpSettings.disable;
+    data.showXpBar = !xpSettings.disable;
+    if (!xpSettings.disable) {
       data.minimumExperience = this.actor.getLevelExp(Math.max(0, (this.actor.system.details.level.value ?? 0) - 1));
     }
 
@@ -63,7 +63,7 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     }
 
     // Add level up buttons to classes
-    if (xpSettings.disableExperienceTracking !== true && data.hasClasses) {
+    if (xpSettings.disable !== true && data.hasClasses) {
       const xp = this.actor.system.details?.xp;
       if (xp && xp.value >= xp.max) {
         data.levelUp = true;

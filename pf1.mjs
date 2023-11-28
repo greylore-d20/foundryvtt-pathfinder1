@@ -274,6 +274,9 @@ Hooks.once("init", function () {
     },
   });
 
+  // Diagonal ruleset implementation
+  SquareGrid.prototype.measureDistances = measureDistances;
+
   // Call post-init hook
   Hooks.callAll("pf1PostInit");
 });
@@ -485,16 +488,6 @@ Hooks.once("ready", async function () {
   }
 
   Hooks.callAll("pf1PostReady");
-});
-
-/* -------------------------------------------- */
-/*  Canvas Initialization                       */
-/* -------------------------------------------- */
-
-Hooks.on("canvasInit", function () {
-  // Extend Diagonal Measurement
-  canvas.grid.diagonalRule = game.settings.get("pf1", "diagonalMovement");
-  SquareGrid.prototype.measureDistances = measureDistances;
 });
 
 /* -------------------------------------------- */

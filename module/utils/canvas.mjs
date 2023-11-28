@@ -11,7 +11,7 @@ export const measureDistances = function (segments, options = {}) {
   if (!options.gridSpaces) return BaseGrid.prototype.measureDistances.call(this, segments, options);
 
   // Track the total number of diagonals
-  const diagonalRule = this.parent.diagonalRule;
+  const diagonalRule = game.settings.get("pf1", "diagonalMovement");
   const state = { diagonals: 0 };
 
   // Iterate over measured segments

@@ -162,7 +162,6 @@ export const registerSystemSettings = function () {
       555: "SETTINGS.pf1DiagPHB",
       5105: "SETTINGS.pf1DiagDMG",
     },
-    onChange: (rule) => (canvas.grid.diagonalRule = rule),
   });
 
   /**

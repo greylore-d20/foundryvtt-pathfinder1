@@ -69,7 +69,7 @@ export const registerSystemControls = () => {
 export const _hideTokenTooltipGMInfo = (keyDown) => {
   if (!pf1.tooltip) return;
   pf1.tooltip.forceHideGMInfo = keyDown;
-  pf1.tooltip?.refresh();
+  pf1.tooltip.refresh();
 };
 
 export const _stickyTokenTooltip = (stickify) => {
@@ -87,5 +87,5 @@ export const _hideTokenTooltip = (keyDown) => {
   if (!pf1.tooltip) return;
   if (game.settings.get("pf1", "tooltipConfig")?.hideWithoutKey === true) pf1.tooltip.forceHide = !keyDown;
   else pf1.tooltip.forceHide = keyDown;
-  pf1.tooltip?.refresh();
+  pf1.tooltip.refresh();
 };

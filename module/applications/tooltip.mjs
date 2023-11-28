@@ -12,7 +12,8 @@ export class TooltipPF extends Application {
       if (this.onMouse && !this.hidden) this._setPosition();
     });
 
-    this.object = null;
+    /** @type {TokenDocument|null} */
+    this.token = null;
 
     this.forceHideGMInfo = false;
     this.forceHide = false;
@@ -28,14 +29,24 @@ export class TooltipPF extends Application {
     };
   }
 
-  static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
-      template: "systems/pf1/templates/hud/tooltip.hbs",
-      popOut: false,
-    });
+  /** @type {TokenDocument|null} */
+  get token() {
+    return this.object;
   }
 
-  get config() {
+  set token(token) {
+    this.object = token;
+  }
+
+  static get defaultOptions() {
+    return {
+      ...super.defaultOptions,
+      template: "systems/pf1/templates/hud/tooltip.hbs",
+      popOut: false,
+    };
+  }
+
+  get clientConfig() {
     return game.settings.get("pf1", "tooltipConfig");
   }
 
@@ -43,81 +54,76 @@ export class TooltipPF extends Application {
     return game.settings.get("pf1", "tooltipWorldConfig");
   }
 
-  get anchor() {
-    return this.config.anchor;
-  }
-
-  get offset() {
-    return this.config.offset;
+  get actorConfig() {
+    return this.token?.actor?.system.details?.tooltip ?? {};
   }
 
   get onMouse() {
-    return this.config.onMouse;
+    return this.clientConfig.onMouse;
   }
 
   get hidden() {
     return this.element[0]?.style.visibility === "hidden";
   }
 
-  bind(object) {
+  /**
+   * @param {TokenDocument} token
+   */
+  bind(token) {
     if (this.lock.new) return;
     // If already stickied, don't replace it unless new sticky is tried.
     if (this.stickied && !this.sticky) return;
-    this.object = object;
+    this.token = token;
     if (this.sticky) this.stickied = true;
     this.render(true);
   }
 
-  unbind(object) {
+  /**
+   * @param {TokenDocument} token
+   */
+  unbind(token) {
+    if (token !== this.token) return;
+
     if (this.lock.old) return;
     // Sticky current tooltip. Don't track current state fully to avoid being far too sensitive about it.
     if (this.sticky) this.stickied = true;
     // Keep stickied tooltips
     if (this.stickied) return;
-    this.object = null;
+    this.token = null;
     this.hide();
   }
 
   clearBind() {
     this.stickied = false;
-    this.object = null;
+    this.token = null;
     this.hide();
   }
 
   async getData() {
-    if (typeof this.object === "string") {
-      return { stringContent: this.object };
-    } else if (this.object instanceof Token) {
-      return {
-        actorData: this.getTokenData(this.object),
-      };
-    } else if (this.object instanceof Actor) {
-      return {
-        actorData: this.getActorData(this.object),
-      };
-    }
-
-    return {};
+    return {
+      actorData: this.getTokenData(),
+    };
   }
 
-  getTokenData(token) {
-    const data = this.getActorData(token.actor);
+  getTokenData() {
+    const data = this.getActorData();
     if (!data) return null;
 
-    data.name = token.name;
+    const token = this.token;
+    const isGM = game.user.isGM;
+
+    const worldConfig = this.worldConfig;
+
     if (
-      (game.user.isGM && this.forceHideGMInfo) ||
-      (!game.user.isGM &&
-        !token.actor.testUserPermission(
-          game.user,
-          this.worldConfig.minimumPermission ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED
-        ))
+      (isGM && this.forceHideGMInfo) ||
+      (!isGM && !token.actor.testUserPermission(game.user, worldConfig.minimumPermission))
     ) {
-      const tooltipName = token.actor.system.details?.tooltip?.name || "";
-      const hideName = token.actor.system.details?.tooltip?.hideName === true;
+      const actorConfig = this.actorConfig;
+      const tooltipName = actorConfig.name || "";
+      const hideName = actorConfig.hideName === true;
       // Hide name if explicitly set to hide or disposition does not match
-      if (hideName || token.document.disposition <= this.worldConfig.hideActorNameByDisposition) {
-        data.name = this.worldConfig.hideActorNameReplacement || "???";
+      if (hideName || token.disposition <= worldConfig.hideActorNameByDisposition) {
+        data.name = worldConfig.hideActorNameReplacement || "???";
       }
       // Otherwise display custom name if configured
       else if (tooltipName) {
@@ -132,46 +138,43 @@ export class TooltipPF extends Application {
     return data;
   }
 
-  getActorData(actor) {
+  getActorData() {
+    const token = this.token;
+    const actor = token?.actor;
     if (!actor) return null;
 
     const data = {
       data: actor.system,
-      name: actor.name,
+      name: token.name,
     };
 
-    if (!(game.user.isGM && !this.forceHideGMInfo)) {
-      data.name = actor.system.details?.tooltip?.name || actor.name;
-    }
+    const isGM = game.user.isGM;
+    const isNonGMOwner = !isGM && actor.isOwner;
+    const actorConfig = this.actorConfig;
+    const worldConfig = this.worldConfig;
 
-    data.isOwner = game.user.isGM || actor.isOwner;
+    data.isOwner = isGM || isNonGMOwner;
     if (!data.isOwner) data.name = "???";
     this.getPortrait(data, actor.img);
 
+    const showForGM = isGM && !this.forceHideGMInfo;
+
     // Get conditions
-    if (
-      (game.user.isGM && !this.forceHideGMInfo) ||
-      actor.isOwner ||
-      (!actor.system.details?.tooltip?.hideConditions && !this.worldConfig?.hideConditions)
-    ) {
+    if (showForGM || isNonGMOwner || (!actorConfig.hideConditions && !worldConfig.hideConditions)) {
       const conditions = actor.system.conditions;
       for (const [conditionId, active] of Object.entries(conditions)) {
-        if (active === true) {
-          data.conditions = data.conditions || [];
-          data.conditions.push({
-            label: pf1.config.conditions[conditionId],
-            icon: pf1.config.conditionTextures[conditionId],
-          });
-        }
+        if (!active) continue;
+
+        data.conditions = data.conditions || [];
+        data.conditions.push({
+          label: pf1.config.conditions[conditionId],
+          icon: pf1.config.conditionTextures[conditionId],
+        });
       }
     }
 
     // Get buffs
-    if (
-      (game.user.isGM && !this.forceHideGMInfo) ||
-      actor.isOwner ||
-      (!actor.system.details?.tooltip?.hideBuffs && !this.worldConfig.hideBuffs)
-    ) {
+    if (showForGM || isNonGMOwner || (!actorConfig.hideBuffs && !worldConfig.hideBuffs)) {
       const buffs = actor.itemTypes.buff?.filter((i) => i.isActive && !i.system.hideFromToken) ?? [];
       for (const b of buffs) {
         data.buffs = data.buffs || [];
@@ -184,14 +187,10 @@ export class TooltipPF extends Application {
     }
 
     // Get held items
-    if (
-      (game.user.isGM && !this.forceHideGMInfo) ||
-      actor.isOwner ||
-      (!actor.system.details?.tooltip?.hideHeld && !this.worldConfig.hideHeld)
-    ) {
+    if (showForGM || actor.isOwner || (!actorConfig.hideHeld && !worldConfig.hideHeld)) {
       const held = actor.items.filter((i) => {
         if (!["weapon", "equipment"].includes(i.type)) return false;
-        if (!i.system.equipped) return false;
+        if (!i.isActive) return false;
         if (i.type === "equipment" && i.subType !== "shield") return false;
         return true;
       });
@@ -205,14 +204,10 @@ export class TooltipPF extends Application {
       }
     }
 
-    const equipment = actor.itemTypes.equipment?.filter((i) => i.system.equipped) ?? [];
+    const equipment = actor.itemTypes.equipment?.filter((i) => i.isActive) ?? [];
 
     // Get armor
-    if (
-      (game.user.isGM && !this.forceHideGMInfo) ||
-      actor.isOwner ||
-      (!actor.system.details?.tooltip?.hideArmor && !this.worldConfig.hideArmor)
-    ) {
+    if (showForGM || actor.isOwner || (!actorConfig.hideArmor && !worldConfig.hideArmor)) {
       const armor = equipment.filter((i) => i.subType === "armor");
 
       for (const i of armor) {
@@ -225,11 +220,7 @@ export class TooltipPF extends Application {
     }
 
     // Get clothing
-    if (
-      (game.user.isGM && !this.forceHideGMInfo) ||
-      actor.isOwner ||
-      (!getProperty(actor, "item.details.tooltip.hideClothing") && !this.worldConfig.hideClothing)
-    ) {
+    if (showForGM || actor.isOwner || (!actorConfig.hideClothing && !worldConfig.hideClothing)) {
       const clothing = equipment.filter((i) => i.subType === "clothing");
 
       for (const i of clothing) {
@@ -245,11 +236,12 @@ export class TooltipPF extends Application {
   }
 
   getPortrait(data, url) {
-    if (this.config.portrait?.hide === true || this.worldConfig.portrait?.hide === true) return;
+    const clientConfig = this.clientConfig;
+    if (clientConfig.portrait.hide === true || this.worldConfig.portrait.hide === true) return;
 
     data.portrait = {
-      maxWidth: this.config.portrait?.maxSize?.width || 100,
-      maxHeight: this.config.portrait?.maxSize?.height || 100,
+      maxWidth: clientConfig.portrait?.maxSize?.width || 100,
+      maxHeight: clientConfig.portrait?.maxSize?.height || 100,
       url: url,
     };
   }
@@ -270,6 +262,10 @@ export class TooltipPF extends Application {
     const mw = v.width - position.width - sb.width,
       mh = v.height - position.height;
 
+    const clientConfig = this.clientConfig;
+    const anchor = clientConfig.anchor;
+    const offset = clientConfig.offset;
+
     // Calculate final position
     if (this.onMouse) {
       const minPos = {
@@ -281,25 +277,26 @@ export class TooltipPF extends Application {
         y: minPos.y + mh,
       };
       const pos = {
-        x: this.mousePos.x - position.width + position.width * this.anchor.x + this.offset.x,
-        y: this.mousePos.y - position.height + position.height * this.anchor.y + this.offset.y,
+        x: this.mousePos.x - position.width + position.width * anchor.x + offset.x,
+        y: this.mousePos.y - position.height + position.height * anchor.y + offset.y,
       };
       position.left = Math.clamped(pos.x, minPos.x, maxPos.x);
       position.top = Math.clamped(pos.y, minPos.y, maxPos.y);
     } else {
-      position.left = v.left + mw * this.anchor.x + this.offset.x;
-      position.top = v.top + mh * this.anchor.y + this.offset.y;
+      position.left = v.left + mw * anchor.x + offset.x;
+      position.top = v.top + mh * anchor.y + offset.y;
     }
 
     this.element.css(position);
   }
 
   show() {
-    if (!this.object) return;
+    const token = this.token;
+    if (!token) return;
     if (this.forceHide) return;
-    if (this.config.disable === true || this.worldConfig.disable === true) return;
+    if (this.clientConfig.disable === true || this.worldConfig.disable === true) return;
 
-    if (!game.user.isGM && this.object.document.disposition === CONST.TOKEN_DISPOSITIONS.SECRET) return;
+    if (!game.user.isGM && token.disposition === CONST.TOKEN_DISPOSITIONS.SECRET) return;
 
     // Ensure tooltip is stickied
     if (this.sticky) this.stickied = true;
@@ -325,12 +322,12 @@ export class TooltipPF extends Application {
       let loadedContentCount = 0;
       loadableContent.one("load", () => {
         loadedContentCount++;
-        if (loadedContentCount === loadableContentCount && this.object) {
+        if (loadedContentCount === loadableContentCount && this.token) {
           this._setPosition();
           this.show();
         }
       });
-    } else if (this.object) {
+    } else if (this.token) {
       this._setPosition();
       this.show();
     }
@@ -362,7 +359,7 @@ export class TooltipPF extends Application {
         pf1.tooltip = new TooltipPF();
         Hooks.on("hoverToken", pf1.tooltip.tokenHover);
       }
-      pf1.tooltip?.setPosition();
+      pf1.tooltip.setPosition();
     } else {
       if (pf1.tooltip) {
         Hooks.off("hoverToken", pf1.tooltip.tokenHover);

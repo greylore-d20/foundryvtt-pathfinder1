@@ -557,15 +557,9 @@ Hooks.on("renderTokenHUD", (app, html, data) => {
   _canvas.TokenQuickActions.addQuickActions(app, html, data);
 });
 
-Hooks.on("deleteToken", (token, options, userId) => {
-  // Hide token tooltip on token deletion
-  pf1.tooltip?.unbind(token.object);
-});
-
-Hooks.on("updateToken", function (token, updateData, options, userId) {
-  // Hide token tooltip on token update
-  pf1.tooltip?.unbind(token);
-});
+// Hide token tooltip on token update or deletion
+Hooks.on("deleteToken", (token) => pf1.tooltip?.unbind(token));
+Hooks.on("updateToken", (token) => pf1.tooltip?.unbind(token));
 
 Hooks.on("preDeleteItem", (item, options, userId) => {
   if (!item.actor) return;

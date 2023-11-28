@@ -1,8 +1,6 @@
 import { Registry } from "./base-registry.mjs";
 import { RegistryEntry } from "./base-registry.mjs";
 
-// TODO: Convert dates into basic YYY-MM-DD format, inserting 00 when unknown
-
 const fields = foundry.data.fields;
 
 export class Source extends RegistryEntry {
@@ -11,8 +9,8 @@ export class Source extends RegistryEntry {
     return {
       ...super.defineSchema(),
       name: new fields.StringField({ nullable: false, blank: false, required: true }),
-      date: optionalString(), // Validate date
-      pages: optionalString(), // TODO: Validate format
+      date: optionalString(), // Validate date, expect YYYY-MM-DD format
+      pages: new fields.NumberField({ required: false, integer: true, initial: undefined }),
       isbn: optionalString(), // TODO: Validate ISBN
       level: new fields.NumberField({ required: false, min: 1, integer: true, initial: undefined }),
       tieIn: optionalString(),

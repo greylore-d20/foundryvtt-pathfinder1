@@ -69,17 +69,17 @@ function getIdentifiedBlock(info) {
 /**
  * Add GM-sensitive info for GMs and hide GM-sensitive info for players
  *
- * @param {ChatMessagePF} app - The chat message
+ * @param {ChatMessagePF} cm - The chat message
  * @param {JQuery} html - The chat message's HTML
  * @param {object} data - Data used to render the chat message
  */
-export function hideGMSensitiveInfo(app, html, data) {
+export function hideGMSensitiveInfo(cm, html, data) {
   // Handle adding of GM-sensitive info
   if (game.user.isGM) {
     // Show identified info box for GM if item was unidentified when rolled
-    const identifiedInfo = app.flags.pf1?.identifiedInfo ?? {};
+    const identifiedInfo = cm.flags.pf1?.identifiedInfo ?? {};
     const { identified = true } = identifiedInfo;
-    if (!identified && app.hasItemSource) {
+    if (!identified && cm.hasItemSource) {
       const cardContent = html.find(".card-content");
       cardContent.append(getIdentifiedBlock(identifiedInfo));
     }
@@ -113,18 +113,9 @@ export function hideGMSensitiveInfo(app, html, data) {
     });
   });
 
-  const speaker = app.speaker;
-  let actor = null;
-  if (speaker != null) {
-    if (speaker.token) {
-      actor = game.actors.tokens[speaker.token];
-    }
-    if (!actor) {
-      actor = game.actors.get(speaker.actor);
-    }
-  }
-
-  if (!actor || (actor && actor.testUserPermission(game.user, "OBSERVER"))) return;
+  const actor = ChatMessage.getSpeakerActor(cm.speaker);
+  // Exit if allowed to see, followup is for hiding info
+  if (actor?.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER)) return;
 
   // Hide info
   html.find(".gm-sensitive").remove();

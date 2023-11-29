@@ -938,14 +938,16 @@ export class ItemSheetPF extends ItemSheet {
     html.find(".entry-selector").click(this._onEntrySelector.bind(this));
     html.find(".trait-selector").click(this._onTraitSelector.bind(this));
 
+    // Content source editor
+    html
+      .find(".content-source .control .edit")
+      .click(() => ContentSourceEditor.open(this.document, { editable: this.isEditable }));
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");
       return;
     }
-
-    // Content source editor
-    html.find(".content-source .control .edit").click(() => ContentSourceEditor.open(this.document));
 
     // Trigger form submission from textarea elements.
     html.find("textarea").change(this._onSubmit.bind(this));

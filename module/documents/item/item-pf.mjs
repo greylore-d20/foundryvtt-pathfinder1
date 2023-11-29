@@ -159,7 +159,23 @@ export class ItemPF extends ItemBasePF {
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
 
+    // No system data changes
     if (!changed.system) return;
+
+    // Make sure stuff remains an array
+    const keepPaths = [
+      "system.attackNotes",
+      "system.effectNotes",
+      "system.contextNotes",
+      "system.scriptCalls",
+      "system.actions",
+      "system.inventoryItems",
+      "system.changes",
+    ];
+
+    for (const path of keepPaths) {
+      keepUpdateArray(this, changed, path);
+    }
 
     await this._chargePreUpdate(changed, context);
   }
@@ -826,30 +842,14 @@ export class ItemPF extends ItemBasePF {
 
     data = expandObject(data);
 
-    // Make sure stuff remains an array
-    const keepPaths = [
-      "system.attackNotes",
-      "system.effectNotes",
-      "system.contextNotes",
-      "system.scriptCalls",
-      "system.actions",
-      "system.inventoryItems",
-      "system.changes",
-    ];
-
-    for (const path of keepPaths) {
-      keepUpdateArray(this, data, path);
-    }
-
     this.memorizeVariables();
 
-    const diff = diffObject(this.toObject(), data);
-
-    if (Object.keys(diff).length) {
-      const parentItem = this.parentItem;
-      if (parentItem == null) {
-        return super.update(diff, context);
-      } else {
+    const parentItem = this.parentItem;
+    if (!parentItem) {
+      return super.update(data, context);
+    } else {
+      const diff = diffObject(this.toObject(), data);
+      if (Object.keys(diff).length) {
         // Determine item index to update in parent
         const parentInventory = parentItem.system.inventoryItems || [];
         const idx = parentInventory.findIndex((item) => item._id === this.id);

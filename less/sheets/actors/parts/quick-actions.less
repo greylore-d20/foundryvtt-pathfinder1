@@ -1,5 +1,32 @@
 .pf1.sheet.actor {
   .quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+
+    li {
+      cursor: pointer;
+      flex: 0 0 52px;
+      border-width: 2px;
+      border-style: solid;
+      border-radius: 4px;
+      display: flex;
+      margin: 2px;
+      overflow: hidden;
+
+      &:hover {
+        filter: brightness(150%);
+      }
+
+      img {
+        border: none;
+        width: 48px;
+        height: 48px;
+      }
+    }
+
     .item {
       border: 2px solid var(--pf1-quick-action-default-border);
 
@@ -21,14 +48,22 @@
       &[data-type="spell"] {
         border-color: var(--pf1-quick-action-spell-border);
       }
+    }
 
-      .icon-label {
-        position: absolute;
-        -webkit-text-stroke: 1px black;
-        font-weight: bold;
-        font-size: @fontSizeNormal;
-        color: white;
-      }
+    charges {
+      position: sticky;
+      display: inline-flex;
+      align-self: flex-end;
+      color: white;
+      right: 0;
+      border-top-left-radius: 5px;
+      background-color: var(--pf1-bg-dark-5);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-bottom: unset;
+      border-right: unset;
+      padding-left: 0.3em;
+      padding-top: 0.05em;
+      padding-right: 0.1em;
     }
   }
 }

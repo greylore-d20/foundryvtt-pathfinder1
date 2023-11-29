@@ -190,6 +190,29 @@ export class ItemPF extends ItemBasePF {
   }
 
   /**
+   * @override
+   * @param {object} context - Delete context options
+   * @param {string} userId - Triggering user
+   */
+  _onDelete(context, userId) {
+    super._onDelete(context, userId);
+
+    const actor = this.actor;
+    if (!actor) return;
+
+    // Remove special charge sharing links that don't clear on their own
+    const links = this.getLinkedItemsSync("charges");
+    if (links.length) {
+      for (const link of links) {
+        if (link.links?.charges) {
+          delete link.links.charges;
+          link.reset();
+        }
+      }
+    }
+  }
+
+  /**
    * @returns {string[]} The keys of data variables to memorize between updates, for e.g. determining the difference in update.
    */
   get memoryVariables() {

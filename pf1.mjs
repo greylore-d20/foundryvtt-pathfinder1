@@ -562,27 +562,6 @@ Hooks.on("renderTokenHUD", (app, html, data) => {
 Hooks.on("deleteToken", (token) => pf1.tooltip?.unbind(token));
 Hooks.on("updateToken", (token) => pf1.tooltip?.unbind(token));
 
-Hooks.on("deleteItem", async (item, options, userId) => {
-  if (userId !== game.user.id) return;
-  const actor = item.actor;
-
-  if (actor) {
-    // Remove links
-    const itemLinks = item.system.links;
-    if (itemLinks) {
-      for (const [linkType, links] of Object.entries(itemLinks)) {
-        for (const link of links) {
-          const item = actor.items.get(link.id);
-          const otherItemLinks = item?.links || {};
-          if (otherItemLinks[linkType]) {
-            delete otherItemLinks[linkType];
-          }
-        }
-      }
-    }
-  }
-});
-
 Hooks.on("chatMessage", (log, message, chatData) => {
   const result = documents.customRolls(message, chatData.speaker);
   return !result;

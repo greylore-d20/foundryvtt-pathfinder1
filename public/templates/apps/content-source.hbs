@@ -26,7 +26,7 @@
 	<div class="form-group">
 		<label>{{localize "PF1.ContentSource.Info.ID"}}</label>
 		<div class="form-fields">
-			<input name="system.source.id" type="text" value="{{system.source.id}}" placeholder="{{localize "PF1.ContentSource.Info.IDHint"}}">
+			<input name="system.source.id" type="text" value="{{system.source.id}}" placeholder="{{localize "PF1.ContentSource.Info.IDHint"}}" list="{{uuid}}-content-sources">
 		</div>
 	</div>
 	<div class="form-group">
@@ -47,4 +47,10 @@
         >
 		</div>
 	</div>
+
+  <datalist id="{{uuid}}-content-sources">
+    {{#each sources}}
+    <option value="{{id}}">{{name}}</option>
+    {{/each}}
+  </datalist>
 </form>

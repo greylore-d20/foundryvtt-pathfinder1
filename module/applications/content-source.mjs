@@ -15,6 +15,8 @@ export class ContentSourceEditor extends DocumentSheet {
     return {
       system: this.document.system,
       registry: this.getRegistry(),
+      sources: pf1.registry.sources,
+      uuid: this.document.uuid,
     };
   }
 

@@ -4064,18 +4064,32 @@ export class ActorPF extends ActorBasePF {
   /**
    * Total coinage in both weighted and weightless.
    *
+   * @deprecated Use {@link ActorPF.getTotalMergedCurrency} instead.
    * @param {object} [options] - Additional options
    * @param {boolean} [options.inLowestDenomination=false] - Use copper for calculations and return.
    * @returns {number} - The total amount of currency, in gold pieces.
    */
   mergeCurrency({ inLowestDenomination = false } = {}) {
-    const total =
-      this.getTotalCurrency("currency", { inLowestDenomination: true }) +
-      this.getTotalCurrency("altCurrency", { inLowestDenomination: true });
-    return inLowestDenomination ? total : total / 100;
+    foundry.utils.logCompatibilityWarning(
+      "ActorPF.mergeCurrency() is deprecated in favor of ActorPF.getTotalCurrency()",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
+
+    return this.getTotalCurrency({ inLowestDenomination }, { v2: true });
   }
 
-  getTotalCurrency(category = "currency", { inLowestDenomination = false } = {}) {
+  /**
+   * Get total currency in category.
+   *
+   * @param {"currency"|"altCurrency"} category - Currency category.
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.inLowestDenomination=true] - Return result in lowest denomination. If false, returns gold instead.
+   * @returns {number} - Total currency in category.
+   */
+  getCurrency(category = "currency", { inLowestDenomination = true } = {}) {
     const currencies = this.system[category];
     if (!currencies) {
       console.error(`Currency type "${category}" not found.`);
@@ -4083,6 +4097,36 @@ export class ActorPF extends ActorBasePF {
     }
     const total = currencies.pp * 1000 + currencies.gp * 100 + currencies.sp * 10 + currencies.cp;
     return inLowestDenomination ? total : total / 100;
+  }
+
+  /**
+   * Total coinage in both weighted and weightless.
+   *
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.inLowestDenomination=true] - Use copper for calculations and return.
+   * @param {object} [deprecated] - Deprecated options
+   * @returns {number} - The total amount of currency, in copper pieces.
+   */
+  getTotalCurrency(options, deprecated) {
+    if (typeof options === "string" || options === undefined) {
+      foundry.utils.logCompatibilityWarning(
+        "ActorPF.getTotalCurrency() parameters changed. Options are now the first and only parameter. Old behaviour is found in getCurrency()",
+        {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        }
+      );
+
+      return this.getCurrency(options, deprecated);
+    }
+
+    options ??= {};
+    options.inLowestDenomination ??= true;
+
+    const total =
+      this.getCurrency("currency", { inLowestDenomination: true }) +
+      this.getCurrency("altCurrency", { inLowestDenomination: true });
+    return options.inLowestDenomination ? total : total / 100;
   }
 
   /**

@@ -33,13 +33,11 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     data.isLootSheet = true;
     data.sellMultiplier = this.actor.getFlag("pf1", "sellMultiplier");
 
+    const baseCurrency = this.actor.getTotalCurrency({ inLowestDenomination: true });
+
     // Get total value
-    const cpValue =
-      this.calculateTotalItemValue({ inLowestDenomination: true }) +
-      this.actor.mergeCurrency({ inLowestDenomination: true });
-    const cpSellValue =
-      this.calculateSellItemValue({ inLowestDenomination: true }) +
-      this.actor.mergeCurrency({ inLowestDenomination: true });
+    const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true }) + baseCurrency;
+    const cpSellValue = this.calculateSellItemValue({ inLowestDenomination: true }) + baseCurrency;
 
     data.totalValue = pf1.utils.currency.split(cpValue);
     data.sellValue = pf1.utils.currency.split(cpSellValue);

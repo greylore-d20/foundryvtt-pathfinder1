@@ -1,20 +1,34 @@
 import { hasTokenVision } from "../applications/vision-permission.mjs";
 
 export class TokenPF extends Token {
-  async toggleEffect(effect, { active, overlay = false, midUpdate } = {}) {
+  /**
+   * Synced with Foundry 11.315
+   *
+   * @override
+   * @param {string|object} effect
+   * @param {object} options
+   * @param {boolean} options.active - Force active state
+   * @param {boolean} [options.overlay=false] - Overlay effect
+   * @returns {boolean} - was it applied or removed
+   */
+  async toggleEffect(effect, { active, overlay = false } = {}) {
     let call;
     if (typeof effect == "string") {
       const buffItem = this.actor.items.get(effect);
       if (buffItem) {
-        await buffItem.setActive(!buffItem.isActive);
+        await buffItem.setActive(active ?? !buffItem.isActive);
         call = buffItem.isActive;
-      } else call = await super.toggleEffect(effect, { active, overlay });
-    } else if (effect && !midUpdate && Object.keys(pf1.config.conditions).includes(effect.id)) {
-      await this.actor.toggleCondition(effect.id);
+      } else {
+        return super.toggleEffect(effect, { active, overlay });
+      }
+    } else if (Object.keys(pf1.config.conditions).includes(effect.id)) {
+      if (active === undefined) await this.actor.toggleCondition(effect.id);
+      else await this.actor.setCondition(effect.id, active);
       call = this.actor.hasCondition(effect.id);
-    } else if (effect) {
-      call = await super.toggleEffect(effect, { active, overlay });
+    } else {
+      return super.toggleEffect(effect, { active, overlay });
     }
+
     if (this.hasActiveHUD) canvas.tokens.hud.refreshStatusIcons();
     return call;
   }

@@ -35,7 +35,7 @@ export class ActiveEffectPF extends ActiveEffect {
     const actor = this.actor;
     if (!actor || !this.origin) return;
 
-    const item = fromUuidSync(this.origin);
+    const item = fromUuidSync(this.origin, { relative: actor });
     if (!item || item.isActive) return;
 
     if (!this.isSuppressed) {

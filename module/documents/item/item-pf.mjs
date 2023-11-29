@@ -1795,7 +1795,7 @@ export class ItemPF extends ItemBasePF {
   getLinkedItemSync(linkData = {}) {
     const { id, uuid } = linkData;
     const actor = this.actor;
-    if (uuid) return fromUuidSync(uuid, actor);
+    if (uuid) return fromUuidSync(uuid, { relative: actor });
     else return actor?.items.get(id);
   }
 

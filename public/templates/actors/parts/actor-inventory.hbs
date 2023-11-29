@@ -1,7 +1,7 @@
 <header>
   <div class='currencies'>
     <ol class="currency flexrow{{#if hasCurrency}} has-currency{{/if}} weighted">
-      <h3>{{localize "PF1.Currency"}}</h3>
+      <h3>{{localize "PF1.Currency.Label"}}</h3>
       {{#each system.currency as |v k|}}
       <li class="denomination {{k}}" data-denomination="{{k}}">
         <label>{{lookup @root.config.currencies k}}</label>
@@ -12,7 +12,7 @@
     </ol>
     {{#if isCharacter}}
     <ol class="currency flexrow{{#if hasAltCurrency}} has-currency{{/if}} weightless">
-      <h3>{{localize "PF1.WeightlessCurrency"}}</h3>
+      <h3>{{localize "PF1.Currency.Weightless"}}</h3>
       {{#each system.altCurrency as |v k|}}
       <li class="denomination {{k}} alt-currency" data-denomination="{{k}}">
         <label>{{lookup @root.config.currencies k}}</label>
@@ -107,7 +107,7 @@
 
         {{#if section.showValue}}
         <div class="item-detail item-value">
-          <span>{{item.price}} {{localize "PF1.CurrencyGP"}}</span>
+          <span>{{localize "PF1.Currency.Inline.gp" value=item.price}}</span>
         </div>
         {{/if}}
 

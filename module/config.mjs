@@ -897,10 +897,10 @@ export const abilityTypes = {
  * The valid currency denominations supported by the game system
  */
 export const currencies = {
-  pp: "PF1.CurrencyPP",
-  gp: "PF1.CurrencyGP",
-  sp: "PF1.CurrencySP",
-  cp: "PF1.CurrencyCP",
+  pp: "PF1.Currency.Abbr.pp",
+  gp: "PF1.Currency.Abbr.gp",
+  sp: "PF1.Currency.Abbr.sp",
+  cp: "PF1.Currency.Abbr.cp",
 };
 
 /**

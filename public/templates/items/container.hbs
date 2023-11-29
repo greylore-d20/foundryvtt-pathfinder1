@@ -51,7 +51,7 @@
           {{~> "systems/pf1/templates/internal/item-search.hbs" category="container"}}
 
           <ol class="currency flexrow{{#if hasCurrency}} has-currency{{/if}}">
-            <h3>{{localize "PF1.Currency"}}</h3>
+            <h3>{{localize "PF1.Currency.Label"}}</h3>
             {{#each config.currencies as |l k|}}
             <li class="denomination {{k}}" data-denomination="{{k}}">
               <label>{{l}}</label>

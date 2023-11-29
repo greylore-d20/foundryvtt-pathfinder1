@@ -57,7 +57,7 @@ export class CurrencyTransfer extends FormApplication {
     }
     title += "➤ ";
     if (this.source.actor == this.dest.actor && (this.source.alt || this.dest.alt))
-      title += this.dest.alt ? game.i18n.localize("PF1.WeightlessCurrency") : game.i18n.localize("PF1.Currency");
+      title += this.dest.alt ? game.i18n.localize("PF1.Currency.Weightless") : game.i18n.localize("PF1.Currency.Label");
     else {
       if (!this.dest.actor) title += this.dest.container.name;
       else {
@@ -152,7 +152,9 @@ export class CurrencyTransfer extends FormApplication {
   }
 
   static _failed(i18nKey) {
-    return void ui.notifications.error(game.i18n.localize("PF1.CurrencyFailed") + game.i18n.localize(i18nKey));
+    return void ui.notifications.error(
+      game.i18n.localize("PF1.Application.CurrencyTrancer.Failed") + game.i18n.localize(i18nKey)
+    );
   }
 
   static async _directoryDrop(docDestId, event) {
@@ -203,7 +205,8 @@ export class CurrencyTransfer extends FormApplication {
     if (typeof amount !== "object") amount = { gp: parseInt(amount) };
 
     this.order.forEach((c) => (amount[c] = amount[c] ?? 0));
-    if (!Object.values(amount).find((a) => a > 0)) return this._failed("PF1.CurrencyInsufficient"), false;
+    if (!Object.values(amount).find((a) => a > 0))
+      return this._failed("PF1.Application.CurrencyTransfer.Insufficient"), false;
 
     let sourceCurrency = duplicate(sourceAlt ? sourceDoc?.system.altCurrency : sourceDoc?.system.currency);
     const destCurrency = duplicate(destAlt ? destDoc.system.altCurrency : destDoc.system.currency);
@@ -213,7 +216,7 @@ export class CurrencyTransfer extends FormApplication {
     const totalAmount = this.order.reduce((acc, c, idx) => acc + amount[c] * 10 ** (1 - idx), 0);
     const totalSource = this.order.reduce((acc, c, idx) => acc + sourceCurrency[c] * 10 ** (1 - idx), 0);
 
-    if (totalAmount > totalSource) return this._failed("PF1.CurrencyInsufficient"), false;
+    if (totalAmount > totalSource) return this._failed("PF1.Application.CurrencyTransfer.Insufficient"), false;
 
     if (sourceCurrency) {
       this.order.some((a) => {
@@ -230,7 +233,9 @@ export class CurrencyTransfer extends FormApplication {
     if (!amount || Object.values(sourceCurrency).find((c) => c < 0)) return false;
 
     if (!sourceDoc.testUserPermission(game.user, 3) || !destDoc.testUserPermission(game.user, 3)) {
-      if (!game.users.find((o) => o.active && o.isGM)) return this._failed("PF1.CurrencyGMRequired"), false;
+      if (!game.users.find((o) => o.active && o.isGM))
+        return this._failed("PF1.Application.CurrencyTransfer.GMRequired"), false;
+
       game.socket.emit("system.pf1", {
         eventType: "currencyTransfer",
         data: {

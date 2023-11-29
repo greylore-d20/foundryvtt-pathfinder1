@@ -533,20 +533,28 @@
   "PF1.ChatReqMats": "Required Materials",
   "PF1.ChatOtherFormula": "Other Formula",
 
-  "PF1.Currency": "Currency",
-  "PF1.WeightlessCurrency": "Weightless Currency",
-  "PF1.CurrencyPP": "PP",
-  "PF1.CurrencyGP": "GP",
-  "PF1.CurrencySP": "SP",
-  "PF1.CurrencyCP": "CP",
-  "PF1.CurrencySend": "Send Currency",
-  "PF1.CurrencyPlatinumP": "Platinum Pieces",
-  "PF1.CurrencyGoldP": "Gold Pieces",
-  "PF1.CurrencySilverP": "Silver Pieces",
-  "PF1.CurrencyCopperP": "Copper Pieces",
-  "PF1.CurrencyFailed": "Currency Transfer Failed: ",
-  "PF1.CurrencyGMRequired": "A GM is required to finish the transfer.",
-  "PF1.CurrencyInsufficient": "Insufficient Currency",
+  "PF1.Currency": {
+    "Label": "Currency",
+    "Weightless": "Weightless Currency",
+    "Abbr": {
+      "pp": "PP",
+      "gp": "GP",
+      "sp": "SP",
+      "cp": "CP"
+    },
+    "Full": {
+      "pp": "Platinum",
+      "gp": "Gold",
+      "sp": "Silver",
+      "cp": "Copper"
+    },
+    "Inline": {
+      "pp": "{value} pp",
+      "gp": "{value} gp",
+      "sp": "{value} sp",
+      "cp": "{value} cp"
+    }
+  },
 
   "PF1.DistPersonal": "Personal",
   "PF1.DistTouch": "Touch",
@@ -578,9 +586,9 @@
   "PF1.ItemContainerProperties": "Container Properties",
   "PF1.WeightReduction": "Weight Reduction",
   "PF1.WeightReductionFlat": "Flat",
-  "PF1.ItemContainerTotalValue": "Total Value: {gp} GP, {sp} SP, {cp} CP",
-  "PF1.ItemContainerTotalItemValue": "Total Item Value: {gp} GP, {sp} SP, {cp} CP",
-  "PF1.ItemContainerSellValue": "Sell Value: {gp} GP, {sp} SP, {cp} CP",
+  "PF1.ItemContainerTotalValue": "Total Value: {gp} gp, {sp} sp, {cp} cp",
+  "PF1.ItemContainerTotalItemValue": "Total Item Value: {gp} gp, {sp} sp, {cp} cp",
+  "PF1.ItemContainerSellValue": "Sell Value: {gp} gp, {sp} sp, {cp} cp",
   "PF1.ItemContainerTakeContents": "Take from Container",
 
   "PF1.LootTypeGear": "Gear",
@@ -2015,6 +2023,12 @@
     },
     "ContextNoteTargetSelector": {
       "Title": "Select context note target"
+    },
+    "CurrencyTransfer": {
+      "Send": "Send Currency",
+      "Failed": "Currency Transfer Failed: ",
+      "GMRequired": "A GM is required to finish the transfer.",
+      "Insufficient": "Insufficient Currency"
     },
     "XPDistributor": {
       "Title": "Experience Distributor",

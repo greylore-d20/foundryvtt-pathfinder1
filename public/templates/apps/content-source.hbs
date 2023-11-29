@@ -1,8 +1,14 @@
 <form autocomplete="off">
 	<div class="form-group">
 		<label>{{localize "PF1.ContentSource.Info.Title"}}</label>
-		<div class="form-fields">
-			<input name="system.source.title" type="text" value="{{system.source.title}}" placeholder="{{localize "PF1.ContentSource.Info.TitleHint"}}">
+		<div class="form-fields" {{#if registry}}data-tooltip="PF1.ContentSource.Autofill"{{/if}}>
+      <input name="system.source.title" type="text"
+        {{#if registry}}
+        value="{{registry.name}}" readonly
+        {{else}}
+			  value="{{system.source.title}}" placeholder="{{localize "PF1.ContentSource.Info.TitleHint"}}"
+        {{/if}}
+        >
 		</div>
 	</div>
 	<div class="form-group">
@@ -31,8 +37,14 @@
 	</div>
 	<div class="form-group">
 		<label>{{localize "PF1.ContentSource.Info.Publisher"}}</label>
-		<div class="form-fields">
-			<input name="system.source.publisher" type="text" value="{{system.source.publisher}}" placeholder="{{localize "PF1.ContentSource.Info.PublisherHint"}}">
+		<div class="form-fields" {{#if registry}}data-tooltip="PF1.ContentSource.Autofill"{{/if}}>
+      <input name="system.source.publisher" type="text"
+        {{#if registry}}
+        value="{{registry.publisher}}" readonly
+        {{else}}
+        value="{{system.source.publisher}}" placeholder="{{localize "PF1.ContentSource.Info.PublisherHint"}}"
+        {{/if}}
+        >
 		</div>
 	</div>
 </form>

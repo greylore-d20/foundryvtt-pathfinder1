@@ -608,6 +608,18 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    // Content source, fill in from registry
+    context.bookSource = deepClone(itemData.source);
+    if (context.bookSource?.id) {
+      const rsource = pf1.registry.sources.get(itemData.source.id);
+      if (rsource) {
+        context.bookSource.title ||= rsource.name;
+        context.bookSource.publisher ||= rsource.publisher;
+        context.bookSource.errata ||= rsource.errata;
+        context.bookSource.edition ||= rsource.edition;
+      }
+    }
+
     return context;
   }
 

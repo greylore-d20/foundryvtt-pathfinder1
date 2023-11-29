@@ -1,15 +1,20 @@
 export class ContentSourceEditor extends DocumentSheet {
   get title() {
-    return game.i18n.format("PF1.ContentSource.Title", { name: this.object.name });
+    return game.i18n.format("PF1.ContentSource.Title", { name: this.document.name });
   }
 
   get template() {
     return "systems/pf1/templates/apps/content-source.hbs";
   }
 
+  getRegistry() {
+    return pf1.registry.sources.get(this.document.system.source?.id);
+  }
+
   getData() {
     return {
-      system: this.object.system,
+      system: this.document.system,
+      registry: this.getRegistry(),
     };
   }
 
@@ -29,6 +34,10 @@ export class ContentSourceEditor extends DocumentSheet {
   _updateObject(event, updateData) {
     updateData = foundry.utils.expandObject(updateData);
     const source = updateData.system.source;
+
+    const registry = this.getRegistry();
+
+    // Remove empty data
     let empty = true;
     for (const [key, value] of Object.entries(source)) {
       if (value === null || value === "") {
@@ -36,6 +45,15 @@ export class ContentSourceEditor extends DocumentSheet {
         delete source[key];
       } else empty = false;
     }
+
+    // Empty data that is auto-filled from registry
+    if (registry) {
+      source["-=title"] = null;
+      if (source.publisher === "Paizo") {
+        source["-=publisher"] = null;
+      }
+    }
+
     if (empty) {
       updateData.system[`-=source`] = null;
       delete updateData.system.source;

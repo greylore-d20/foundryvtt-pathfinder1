@@ -47,15 +47,15 @@ export class Troubleshooter extends Application {
    * @param {Event} event
    */
   async _runMigration(event) {
-    if (!game.user.isGM) return;
-
     const unlock = this.unlock ?? false;
 
     /** @type {Element} */
     const el = event.target;
+    if (el.disabled) return;
+
     el.classList.remove("finished");
     el.disabled = true;
-    this.element[0].querySelector("form").classList.add("migrating");
+    el.classList.add("active");
 
     const target = el.dataset.target;
     const top = el.closest(".window-content").getBoundingClientRect().top + 20;
@@ -77,6 +77,7 @@ export class Troubleshooter extends Application {
 
     this.element[0].querySelector("form").classList.remove("migrating");
     el.disabled = false;
+    el.classList.remove("active");
     el.classList.add("finished");
   }
 
@@ -105,6 +106,7 @@ export class Troubleshooter extends Application {
       this.migrating.modules = true;
       for (const button of migrationButtons) {
         button.disabled = true;
+        button.classList.add("active");
       }
 
       Hooks.once("pf1MigrationFinished", () => {

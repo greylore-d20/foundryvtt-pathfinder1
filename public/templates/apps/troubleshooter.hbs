@@ -28,12 +28,12 @@
 
   <div class="options">
     <label class="checkbox">
-      <input type="checkbox" name="unlock" {{checked unlockPacks}}>
+      <input type="checkbox" name="unlock" {{checked unlockPacks}} {{disabled (not isGM)}}>
       {{localize "PF1.Troubleshooter.Actions.UnlockPacks"}}
     </label>
   </div>
 
-	<button type="button" data-action="migrate" data-target="world" {{disabled (or (not isGM) migrating.world)}}>
+	<button type="button" data-action="migrate" data-target="world" {{disabled migrating.world}}>
 		<i class="progress spinner fa-solid fa-spinner"></i>
 		<h3>{{localize "PF1.Troubleshooter.Actions.MigrateWorld"}}</h3>
 		<i class="progress check fa-solid fa-check"></i>

@@ -460,8 +460,13 @@ Hooks.once("ready", async function () {
   const needMigration = SemanticVersion.fromString(NEEDS_MIGRATION_VERSION).isHigherThan(
     SemanticVersion.fromString(PREVIOUS_MIGRATION_VERSION)
   );
-  if (needMigration && game.user.isGM) {
+
+  if (needMigration) {
     await migrations.migrateWorld();
+  }
+
+  if (!game.user.isGM && game.settings.get("pf1", "migrating")) {
+    ui.notifications.warn("PF1.Migration.InProgress", { localize: true });
   }
 
   // Migrate system settings

@@ -17,6 +17,16 @@ export const registerSystemSettings = function () {
     type: String,
     default: "0.0.0",
   });
+
+  // Migration is in progress
+  game.settings.register("pf1", "migrating", {
+    scope: "world",
+    config: false,
+    type: Boolean,
+    default: false,
+    onChange: (value) => (pf1.migrations.isMigrating = value),
+  });
+
   /**
    * Track when the last changelog was shown
    */

@@ -40,13 +40,16 @@ function initializeStateAndDialog(state, label, dialog = null) {
  * @returns {Promise<void>} - A Promise which resolves once the migration is completed
  */
 export async function migrateWorld({ unlock = false, systemPacks = false, state, dialog = {} } = {}) {
-  if (!game.user.isGM) {
-    return void ui.notifications.error(game.i18n.localize("PF1.ErrorGenericPermission"));
+  const isGM = game.user.isGM;
+
+  // Deny migration if migration is in progress and there's an active GM,
+  // otherwise assume it's an error and allow migration to start anew.
+  // Don't check for the setting to avoid migration state getting stuck, only trust the in-memory state
+  if (pf1.migrations.isMigrating && game.users.activeGM) {
+    return void ui.notifications.error(game.i18n.localize("PF1.Migration.InProgress"));
   }
 
-  if (pf1.migrations.isMigrating) {
-    return void ui.notifications.error(game.i18n.localize("PF1.Migration.AlreadyInProgress"));
-  }
+  if (isGM) await game.settings.set("pf1", "migrating", true);
 
   pf1.migrations.isMigrating = true;
   Hooks.callAll("pf1MigrationStarted");
@@ -60,7 +63,9 @@ export async function migrateWorld({ unlock = false, systemPacks = false, state,
   const smsgId = ui.notifications.info(startMessage, { permanent: true, console: false });
   console.log("PF1 | Migration | Starting...");
 
-  await _migrateWorldSettings();
+  if (isGM) {
+    await _migrateWorldSettings();
+  }
 
   // Migrate World Actors
   await migrateActors({ state });
@@ -71,21 +76,20 @@ export async function migrateWorld({ unlock = false, systemPacks = false, state,
   // Migrate Actor Override Tokens
   await migrateScenes({ state });
 
-  // Migrate Compendium Packs
-  const packs = game.packs.filter((p) => {
-    const source = p.metadata.packageType;
-    // Ignore modules, adventures, etc.
-    if (!["world", "system"].includes(source)) return false;
-    // Ignore system packs unless configured to include them
-    if (source === "system" && !systemPacks) return false;
-    // Ignore unsupported pack types
-    return ["Actor", "Item", "Scene"].includes(p.metadata.type);
-  });
+  if (isGM) {
+    // Migrate Compendium Packs
+    const packs = game.packs.filter((p) => {
+      const source = p.metadata.packageType;
+      // Ignore modules, adventures, etc.
+      if (!["world", "system"].includes(source)) return false;
+      // Ignore system packs unless configured to include them
+      if (source === "system" && !systemPacks) return false;
+      // Ignore unsupported pack types
+      return ["Actor", "Item", "Scene"].includes(p.metadata.type);
+    });
 
-  await migrateCompendiums(packs, { unlock, state });
-
-  // Set the migration as complete
-  await game.settings.set("pf1", "systemMigrationVersion", game.system.version);
+    await migrateCompendiums(packs, { unlock, state });
+  }
 
   // Remove start message
   ui.notifications.remove(smsgId);
@@ -94,7 +98,13 @@ export async function migrateWorld({ unlock = false, systemPacks = false, state,
   ui.notifications.info(game.i18n.format("PF1.Migration.End", { version: game.system.version }), { console: false });
   console.log("PF1 | Migration | Completed!");
 
-  pf1.migrations.isMigrating = false;
+  if (isGM) {
+    // Set the migration as complete
+    await game.settings.set("pf1", "systemMigrationVersion", game.system.version);
+
+    await game.settings.set("pf1", "migrating", false);
+  }
+
   state.finish();
 
   Hooks.callAll("pf1MigrationFinished");
@@ -124,7 +134,10 @@ export async function migrateActors({ state, dialog = null } = {}) {
   tracker.setInvalid(game.actors.invalidDocumentIds.size);
 
   for (const actor of game.actors) {
+    if (!actor.isOwner) continue;
+
     tracker.startEntry(actor);
+
     try {
       const updateData = await migrateActorData(actor.toObject(), undefined, { actor });
       if (!foundry.utils.isEmpty(updateData)) {
@@ -167,7 +180,10 @@ export async function migrateItems({ state, dialog = null } = {}) {
   tracker.setInvalid(game.items.invalidDocumentIds.size);
 
   for (const item of game.items) {
+    if (!item.isOwner) continue;
+
     tracker.startEntry(item);
+
     try {
       const updateData = await migrateItemData(item.toObject());
       if (!foundry.utils.isEmpty(updateData)) {
@@ -813,6 +829,8 @@ export async function migrateSceneData() {
  */
 export async function migrateSceneTokens(scene, { state = null, tracker = null } = {}) {
   for (const token of scene.tokens) {
+    if (!token.isOwner) continue;
+
     try {
       await migrateToken(token);
     } catch (err) {
@@ -835,7 +853,7 @@ export async function migrateSceneActors(scene, { state = null, tracker = null }
   for (const token of scene.tokens) {
     if (token.isLinked) continue;
     const actor = token.actor;
-    if (!actor) continue;
+    if (!actor?.isOwner) continue;
 
     try {
       const updateData = await migrateActorData(actor.toObject(), token);

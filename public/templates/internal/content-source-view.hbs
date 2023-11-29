@@ -2,17 +2,17 @@
 <div class="content-source {{#unless source.title}}missing{{/unless}}">
   {{#with source}}
 	<span class="source"
-	{{#if title}}
+    {{#if title}}
 		data-tooltip="
 		{{~#if id}}{{localize "PF1.ContentSource.Info.ID"}}: {{id}}<br>{{/if~}}
 		{{~#if edition}}{{localize "PF1.ContentSource.Info.Edition"}}: {{edition}}<br>{{/if~}}
 		{{~#if errata}}{{localize "PF1.ContentSource.Info.Errata"}}: {{errata}}<br>{{/if~}}
 		{{~#if publisher}}{{localize "PF1.ContentSource.Info.Publisher"}}: {{publisher}}<br>{{/if~}}
-    ">
+    "{{/if}}>
+	{{#if title}}
     <span class="title">{{title}}</span>
 		{{#if pages}}
     <span class="pages">{{localize "PF1.ContentSource.Pages" pages=pages}}</span>
-		{{else}}
 		{{/if}}
 	{{else}}
 		{{localize "PF1.ContentSource.Missing"}}

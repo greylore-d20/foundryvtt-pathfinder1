@@ -169,6 +169,13 @@
         </div>
       </div>
 
+      <div class="form-group spellcasting-domain">
+        <label>{{localize "PF1.DomainSlotValue"}}</label>
+        <div class="form-fields">
+          <input type="number" name="system.casting.domain" value="{{system.casting.domain}}" min="0" step="1" placeholder="0">
+        </div>
+      </div>
+
       <div class="form-group spellcasting-cantrips">
         <label class="checkbox">
           <input type="checkbox" name="system.casting.cantrips" data-dtype="Boolean" {{checked system.casting.cantrips}}>

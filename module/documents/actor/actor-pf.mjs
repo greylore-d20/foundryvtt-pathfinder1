@@ -2329,15 +2329,15 @@ export class ActorPF extends ActorBasePF {
   /**
    * Enable and configure a new spellbook.
    *
-   * @param {object} [casting] Book casting configuration
-   * @param {"prepared"|"spontaneous"|"hybrid"} [casting.type="prepared"] Spellbook type
-   * @param {"high"|"med"|"low"} [casting.progression="high"] Casting progression type
-   * @param {string} [casting.ability="int"] Spellcasting ability score ID
-   * @param {"arcane"|"divine"|"psychic"|"alchemy"} [casting.spells="arcane"] Spell/spellcasting type
-   * @param {string} [casting.class="_hd"] Class tag
-   * @param {boolean} [casting.cantrips=true] Has cantrips?
-   * @param {number} [casting.domainSlots=1] Number of domain slots.
-   * @returns {Promise<this>} Promise to updated document
+   * @param {object} [casting] - Book casting configuration
+   * @param {"prepared"|"spontaneous"|"hybrid"} [casting.type="prepared"] - Spellbook type
+   * @param {"high"|"med"|"low"} [casting.progression="high"] - Casting progression type
+   * @param {string} [casting.ability="int"] - Spellcasting ability score ID
+   * @param {"arcane"|"divine"|"psychic"|"alchemy"} [casting.spells="arcane"] - Spell/spellcasting type
+   * @param {string} [casting.class="_hd"] - Class tag
+   * @param {boolean} [casting.cantrips=true] - Has cantrips?
+   * @param {number} [casting.domain=1] - Domain/School slots
+   * @returns {Promise<this>} - Promise to updated document
    */
   createSpellbook(casting = {}) {
     const books = this.system.attributes.spells.spellbooks ?? {};
@@ -2363,7 +2363,7 @@ export class ActorPF extends ActorBasePF {
     casting.spells ??= "arcane";
     casting.ability ??= "int";
     casting.cantrips ??= true;
-    casting.domainSlots ??= 1;
+    casting.domain ??= 1;
 
     const updateData = {
       [`system.attributes.spells.spellbooks.${bookId}`]: {
@@ -2376,7 +2376,7 @@ export class ActorPF extends ActorBasePF {
         psychic: casting.spells === "psychic",
         arcaneSpellFailure: casting.spells === "arcane",
         hasCantrips: casting.cantrips,
-        domainSlotValue: casting.domainSlots,
+        domainSlotValue: casting.domain,
       },
     };
 

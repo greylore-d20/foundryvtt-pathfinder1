@@ -649,6 +649,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateSpellDescription(itemData, updateData);
   _migrateClassDynamics(itemData, updateData);
   _migrateClassType(itemData, updateData);
+  _migrateClassCasting(itemData, updateData);
   _migrateWeaponCategories(itemData, updateData);
   _migrateArmorCategories(itemData, updateData);
   _migrateArmorMaxDex(itemData, updateData);
@@ -816,7 +817,7 @@ export async function migrateSceneTokens(scene, { state = null, tracker = null }
       await migrateToken(token);
     } catch (err) {
       tracker?.recordError(token, err);
-      console.error(`PF1 | Migration | Scene: ${scene.name} | Token: ${token.id} | Error`, token, error);
+      console.error(`PF1 | Migration | Scene: ${scene.name} | Token: ${token.id} | Error`, token, err);
     }
   }
 }
@@ -1185,6 +1186,23 @@ const _migrateClassType = function (ent, updateData) {
 
   if (getProperty(ent, "system.classType") == null) updateData["system.classType"] = "base";
 };
+
+// Added with PF1 vNEXT
+function _migrateClassCasting(itemData, updateData) {
+  const casting = itemData.system?.casting;
+  if (!casting) return;
+
+  if (!casting.type) {
+    updateData["system.-=casting"] = null;
+    return;
+  }
+
+  // domainSlots -> domain
+  if (casting.domainSlots !== undefined) {
+    updateData["system.casting.domain"] = casting.domain ?? casting.domainSlots ?? 1;
+    updateData["system.casting.-=domainSlots"] = null;
+  }
+}
 
 const _migrateWeaponCategories = function (ent, updateData) {
   if (ent.type !== "weapon") return;

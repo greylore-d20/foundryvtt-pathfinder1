@@ -2338,6 +2338,7 @@ export class ActorPF extends ActorBasePF {
    * @param {string} [casting.class="_hd"] - Class tag
    * @param {boolean} [casting.cantrips=true] - Has cantrips?
    * @param {number} [casting.domain=1] - Domain/School slots
+   * @param {number} [casting.offset] - Level offset
    * @returns {Promise<this>} - Promise to updated document
    */
   createSpellbook(casting = {}) {
@@ -2365,6 +2366,7 @@ export class ActorPF extends ActorBasePF {
     casting.ability ??= "int";
     casting.cantrips ??= true;
     casting.domain ??= 1;
+    if (casting.offset !== undefined) casting.offset = `${casting.offset}`;
 
     const updateData = {
       [`system.attributes.spells.spellbooks.${bookId}`]: {
@@ -2378,6 +2380,7 @@ export class ActorPF extends ActorBasePF {
         arcaneSpellFailure: casting.spells === "arcane",
         hasCantrips: casting.cantrips,
         domainSlotValue: casting.domain,
+        "cl.autoSpellLevelCalculationFormula": casting.offset || "",
       },
     };
 

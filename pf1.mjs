@@ -462,7 +462,7 @@ Hooks.once("ready", async function () {
   );
 
   if (needMigration) {
-    await migrations.migrateWorld();
+    await pf1.migrations.migrateWorld({ dialog: {} });
   }
 
   if (!game.user.isGM && game.settings.get("pf1", "migrating")) {

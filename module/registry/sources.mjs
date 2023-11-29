@@ -12,6 +12,7 @@ export class Source extends RegistryEntry {
       date: optionalString(), // Validate date, expect YYYY-MM-DD format
       pages: new fields.NumberField({ required: false, integer: true, initial: undefined }),
       isbn: optionalString(), // TODO: Validate ISBN
+      publisher: new fields.StringField({ required: false, blank: false, nullable: false, initial: "Paizo" }), // Assume Paizo
       level: new fields.NumberField({ required: false, min: 1, integer: true, initial: undefined }),
       tieIn: optionalString(),
       url: optionalString(), // TODO: Validate URL

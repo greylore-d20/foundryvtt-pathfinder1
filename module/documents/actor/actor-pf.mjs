@@ -129,10 +129,20 @@ export class ActorPF extends ActorBasePF {
 
   /* -------------------------------------------- */
 
+  /**
+   * Generic chatlog listener
+   *
+   * @internal
+   * @param {JQuery<HTMLElement>} html
+   */
   static chatListeners(html) {
     html.on("click", "button[data-action], a[data-action]", this._onChatCardButtonAction.bind(this));
   }
 
+  /**
+   * @internal
+   * @param {Event} event
+   */
   static async _onChatCardButtonAction(event) {
     event.preventDefault();
 
@@ -143,16 +153,17 @@ export class ActorPF extends ActorBasePF {
 
     // Roll saving throw
     if (action === "defense-save") {
-      const actor = await ItemPF._getChatCardActor(card);
+      const messageId = card.closest(".chat-message").dataset.messageId;
+      const message = game.messages.get(messageId);
+      const actor = ChatMessage.getSpeakerActor(message.speaker);
       const saveId = button.dataset.save;
-      if (actor) actor.rollSavingThrow(saveId, { event: event });
+      actor.rollSavingThrow(saveId, { event });
     } else if (action === "save") {
       const tokens = canvas.tokens.controlled;
       const saveId = button.dataset.type;
       let noSound = false;
       for (const token of tokens) {
-        const actor = token.actor;
-        actor?.rollSavingThrow(saveId, { event: event, noSound: noSound });
+        token.actor?.rollSavingThrow(saveId, { event, noSound });
         noSound = true;
       }
     }

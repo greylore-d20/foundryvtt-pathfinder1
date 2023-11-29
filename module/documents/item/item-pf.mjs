@@ -1440,24 +1440,24 @@ export class ItemPF extends ItemBasePF {
     const action = button.dataset.action;
 
     // Validate permission to proceed with the roll
+    // BUG: "save" is never actually used?
     const isTargetted = ["save", "applyDamage"].includes(action);
     if (!(isTargetted || game.user.isGM || message.isAuthor)) return;
 
-    // Get the Actor from a synthetic Token
-    const actor = await this._getChatCardActor(card);
-    if (!actor) {
-      if (action === "applyDamage") {
-        await this._onChatCardAction(action, { button: button });
-        button.disabled = false;
-      }
+    if (action === "applyDamage") {
+      await this._onChatCardAction(action, { button });
+      button.disabled = false;
       return;
     }
 
+    // TODO: Clarify the following. Only used for ammo recovery?
+
     // Get the Item
+    const actor = ChatMessage.getSpeakerActor(message.speaker);
     const item = actor.items.get(card.dataset.itemId);
 
     // Perform action
-    if (!(await this._onChatCardAction(action, { button: button, item: item }))) {
+    if (!(await this._onChatCardAction(action, { button, item }))) {
       button.disabled = false;
     }
   }
@@ -1544,25 +1544,6 @@ export class ItemPF extends ItemBasePF {
     // Update chat popout size
     const popout = header.closest(".chat-popout");
     ui.windows[popout?.dataset.appid]?.setPosition();
-  }
-
-  /**
-   * Get the Actor which is the author of a chat card
-   *
-   * @param {HTMLElement} card    The chat card being used
-   * @returns {Actor|null}         The Actor Document or null
-   * @private
-   */
-  static async _getChatCardActor(card) {
-    // Case 1 - a synthetic actor from a Token
-    const tokenUuid = card.dataset.tokenId;
-    if (tokenUuid) {
-      return (await fromUuid(tokenUuid))?.actor;
-    }
-
-    // Case 2 - use Actor ID directory
-    const actorId = card.dataset.actorId;
-    return game.actors.get(actorId) || null;
   }
 
   /* -------------------------------------------- */

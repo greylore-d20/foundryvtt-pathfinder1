@@ -94,18 +94,22 @@ export class ItemRacePF extends ItemPF {
   _onDelete(context, userId) {
     super._onDelete(context, userId);
 
+    // Reset race reference
     const actor = this.actor;
-    if (actor) {
-      if (actor.race === this) actor.race = null;
+    if (actor?.race === this) {
+      actor.race = null;
 
-      // Reset actor speeds
-      actor.update({
-        "system.attributes.speed.land.base": 30,
-        "system.attributes.speed.fly.base": 0,
-        "system.attributes.speed.swim.base": 0,
-        "system.attributes.speed.climb.base": 0,
-        "system.attributes.speed.burrow.base": 0,
-      });
+      if (game.user.id === userId) {
+        actor.update({
+          "system.attributes.speed": {
+            "land.base": 30,
+            "fly.base": 0,
+            "swim.base": 0,
+            "climb.base": 0,
+            "burrow.base": 0,
+          },
+        });
+      }
     }
   }
 

@@ -1781,7 +1781,7 @@ const _migrateActionAmmunitionUsage = function (action, updateData, { item = nul
     delete action.ammoType;
   }
   if (action.usesAmmo === true) {
-    if (!item.system.ammo?.type) {
+    if (item && !item.system.ammo?.type) {
       updateData["system.ammo.type"] = action.ammoType;
       action.ammoType = ""; // Inherit from item
     }

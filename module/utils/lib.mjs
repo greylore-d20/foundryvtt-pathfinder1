@@ -511,7 +511,7 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
     },
     spell: {
       icon: '<i class="fas fa-hand-sparkles"></i>',
-      label: game.i18n.localize("PF1.ItemTypeSpell"),
+      label: game.i18n.localize("TYPES.Item.spell"),
       callback: () => "spell",
     },
   };

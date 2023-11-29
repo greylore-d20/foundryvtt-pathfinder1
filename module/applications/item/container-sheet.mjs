@@ -245,7 +245,11 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         hasActions: false,
         items: [],
         canEquip: false,
-        dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeGearSingle"), "sub-type": "gear" },
+        dataset: {
+          type: "loot",
+          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.gear.Single"),
+          "sub-type": "gear",
+        },
       },
       ammo: {
         label: pf1.config.lootTypes["ammo"],
@@ -253,7 +257,11 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         hasActions: false,
         items: [],
         canEquip: false,
-        dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeAmmoSingle"), "sub-type": "ammo" },
+        dataset: {
+          type: "loot",
+          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.ammo.Single"),
+          "sub-type": "ammo",
+        },
       },
       misc: {
         label: pf1.config.lootTypes["misc"],
@@ -271,7 +279,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
         canEquip: false,
         dataset: {
           type: "loot",
-          "type-name": game.i18n.localize("PF1.LootTypeTradeGoodsSingle"),
+          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.tradeGoods.Single"),
           "sub-type": "tradeGoods",
         },
       },

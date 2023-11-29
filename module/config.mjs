@@ -682,21 +682,6 @@ export const abilityDamageMultipliers = [
 /* -------------------------------------------- */
 
 /**
- * The types for Items
- */
-export const itemTypes = {
-  equipment: "PF1.ItemTypeEquipment",
-  weapon: "PF1.ItemTypeWeapon",
-  loot: "PF1.ItemTypeLoot",
-  consumable: "PF1.ItemTypeConsumable",
-  class: "PF1.ItemTypeClass",
-  buff: "PF1.ItemTypeBuff",
-  spell: "PF1.ItemTypeSpell",
-  feat: "PF1.ItemTypeFeat",
-  attack: "PF1.ItemTypeAttack",
-};
-
-/**
  * Classification types for item action types
  */
 export const itemActionTypes = {
@@ -793,10 +778,10 @@ export const equipmentSlots = {
  * The subtypes for loot items
  */
 export const lootTypes = {
-  gear: "PF1.LootTypeGear",
-  ammo: "PF1.LootTypeAmmo",
-  tradeGoods: "PF1.LootTypeTradeGoods",
-  misc: "PF1.Misc",
+  gear: "PF1.Subtypes.Item.loot.gear.Plural",
+  ammo: "PF1.Subtypes.Item.loot.ammo.Plural",
+  tradeGoods: "PF1.Subtypes.Item.loot.tradeGoods.Plural",
+  misc: "PF1.Subtypes.Item.loot.misc.Plural",
 };
 
 /**
@@ -819,40 +804,40 @@ export const ammoTypes = {
  * Enumerate the valid consumable types which are recognized by the system
  */
 export const consumableTypes = {
-  potion: "PF1.ConsumableTypePotion",
-  poison: "PF1.ConsumableTypePoison",
-  drug: "PF1.ConsumableTypeDrug",
-  scroll: "PF1.ConsumableTypeScroll",
-  wand: "PF1.ConsumableTypeWand",
-  rod: "PF1.ConsumableTypeRod",
-  staff: "PF1.ConsumableTypeStaff",
+  potion: "PF1.Subtypes.Item.consumable.potion.Single",
+  poison: "PF1.Subtypes.Item.consumable.poison.Single",
+  drug: "PF1.Subtypes.Item.consumable.drug.Single",
+  scroll: "PF1.Subtypes.Item.consumable.scroll.Single",
+  wand: "PF1.Subtypes.Item.consumable.wand.Single",
+  rod: "PF1.Subtypes.Item.consumable.rod.Single",
+  staff: "PF1.Subtypes.Item.consumable.staff.Single",
   misc: "PF1.Misc",
 };
 
 export const attackTypes = {
-  weapon: "PF1.AttackTypeWeapon",
-  natural: "PF1.AttackTypeNatural",
-  ability: "PF1.AttackTypeAbility",
-  racialAbility: "PF1.AttackTypeRacial",
+  weapon: "PF1.Subtypes.Item.attack.weapon.Single",
+  natural: "PF1.Subtypes.Item.attack.natural.Single",
+  ability: "PF1.Subtypes.Item.attack.ability.Single",
+  racialAbility: "PF1.Subtypes.Item.attack.racialAbility.Single",
   item: "PF1.Item",
   misc: "PF1.Misc",
 };
 
 export const featTypes = {
-  feat: "PF1.FeatTypeFeat",
-  classFeat: "PF1.FeatTypeClassFeat",
-  trait: "PF1.FeatTypeTraits",
-  racial: "PF1.FeatTypeRacial",
+  feat: "PF1.Subtypes.Item.feat.feat.Single",
+  classFeat: "PF1.Subtypes.Item.feat.classFeat.Single",
+  trait: "PF1.Subtypes.Item.feat.trait.Single",
+  racial: "PF1.Subtypes.Item.feat.racial.Single",
   misc: "PF1.Misc",
-  template: "PF1.FeatTypeTemplate",
+  template: "PF1.Subtypes.Item.feat.template.Single",
 };
 
 export const featTypesPlurals = {
-  feat: "PF1.FeatPlural",
-  classFeat: "PF1.ClassFeaturePlural",
-  trait: "PF1.TraitPlural",
-  racial: "PF1.RacialTraitPlural",
-  template: "PF1.TemplatePlural",
+  feat: "PF1.Subtypes.Item.feat.feat.Plural",
+  classFeat: "PF1.Subtypes.Item.feat.classFeat.Plural",
+  trait: "PF1.Subtypes.Item.feat.trait.Plural",
+  racial: "PF1.Subtypes.Item.feat.racial.Plural",
+  template: "PF1.Subtypes.Item.feat.template.Plural",
 };
 
 export const traitTypes = {

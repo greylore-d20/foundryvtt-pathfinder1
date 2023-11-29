@@ -2208,7 +2208,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const type = header.dataset.type;
     let subType = header.dataset.subType;
-    const typeName = header.dataset.typeName || game.i18n.localize(pf1.config.itemTypes[type] || type);
+    const typeName = header.dataset.typeName || game.i18n.localize(CONFIG.Item.typeLabels[type] || type);
 
     const itemData = {
       name: game.i18n.format("PF1.NewItem", { type: typeName }),
@@ -2493,7 +2493,11 @@ export class ActorSheetPF extends ActorSheet {
         hasActions: false,
         items: [],
         canEquip: true,
-        dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeGearSingle"), "sub-type": "gear" },
+        dataset: {
+          type: "loot",
+          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.gear.Single"),
+          "sub-type": "gear",
+        },
       },
       ammo: {
         label: pf1.config.lootTypes["ammo"],
@@ -2501,7 +2505,11 @@ export class ActorSheetPF extends ActorSheet {
         hasActions: false,
         items: [],
         canEquip: false,
-        dataset: { type: "loot", "type-name": game.i18n.localize("PF1.LootTypeAmmoSingle"), "sub-type": "ammo" },
+        dataset: {
+          type: "loot",
+          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.ammo.Single"),
+          "sub-type": "ammo",
+        },
       },
       misc: {
         label: pf1.config.lootTypes["misc"],
@@ -2519,7 +2527,7 @@ export class ActorSheetPF extends ActorSheet {
         canEquip: false,
         dataset: {
           type: "loot",
-          "type-name": game.i18n.localize("PF1.LootTypeTradeGoodsSingle"),
+          "type-name": game.i18n.localize("PF1.Subtypes.Item.loot.tradeGoods.Single"),
           "sub-type": "tradeGoods",
         },
       },
@@ -2528,7 +2536,7 @@ export class ActorSheetPF extends ActorSheet {
         canCreate: true,
         hasActions: false,
         items: [],
-        dataset: { type: "container", "type-name": game.i18n.localize("ITEM.TypeContainer") },
+        dataset: { type: "container", "type-name": game.i18n.localize("TYPES.Item.container") },
       },
     };
 
@@ -2657,7 +2665,7 @@ export class ActorSheetPF extends ActorSheet {
     attacks = this._filterItems(attacks, this._filters.attacks);
     const attackSections = {
       weapon: {
-        label: game.i18n.localize("PF1.AttackTypeWeaponPlural"),
+        label: game.i18n.localize("PF1.Subtypes.Item.attack.weapon.Plural"),
         items: [],
         canCreate: true,
         initial: false,
@@ -2665,7 +2673,7 @@ export class ActorSheetPF extends ActorSheet {
         dataset: { type: "attack", "sub-type": "weapon" },
       },
       natural: {
-        label: game.i18n.localize("PF1.AttackTypeNaturalPlural"),
+        label: game.i18n.localize("PF1.Subtypes.Item.attack.natural.Plural"),
         items: [],
         canCreate: true,
         initial: false,
@@ -2673,7 +2681,7 @@ export class ActorSheetPF extends ActorSheet {
         dataset: { type: "attack", "sub-type": "natural" },
       },
       ability: {
-        label: game.i18n.localize("PF1.AttackTypeAbilityPlural"),
+        label: game.i18n.localize("PF1.Subtypes.Item.attack.class.Plural"),
         items: [],
         canCreate: true,
         initial: false,
@@ -2681,7 +2689,7 @@ export class ActorSheetPF extends ActorSheet {
         dataset: { type: "attack", "sub-type": "ability" },
       },
       racialAbility: {
-        label: game.i18n.localize("PF1.AttackTypeRacialPlural"),
+        label: game.i18n.localize("PF1.Subtypes.Item.attack.racial.Plural"),
         items: [],
         canCreate: true,
         initial: false,

@@ -167,6 +167,19 @@ Hooks.once("init", function () {
     },
   });
 
+  Object.defineProperty(pf1.config, "itemTypes", {
+    get() {
+      foundry.utils.logCompatibilityWarning("pf1.config.itemTypes is deprecated in favor of CONFIG.Item.typeLabels", {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      });
+
+      return Object.fromEntries(
+        Object.entries(CONFIG.Item.typeLabels).map(([key, label]) => [key, game.i18n.localize(label)])
+      );
+    },
+  });
+
   CONFIG.time.roundTime = 6;
 
   // Register System Settings

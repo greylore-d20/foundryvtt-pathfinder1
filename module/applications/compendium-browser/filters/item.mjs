@@ -10,10 +10,10 @@ export class ItemTypeFilter extends CheckboxFilter {
   prepareChoices() {
     this.choices = new foundry.utils.Collection(
       [
-        { key: "weapon", label: game.i18n.localize("PF1.ItemTypeWeapon") },
-        { key: "equipment", label: game.i18n.localize("PF1.ItemTypeEquipment") },
-        { key: "consumable", label: game.i18n.localize("PF1.ItemTypeConsumable") },
-        { key: "container", label: game.i18n.localize("ITEM.TypeContainer") },
+        { key: "weapon", label: game.i18n.localize("TYPES.Item.weapon") },
+        { key: "equipment", label: game.i18n.localize("TYPES.Item.equipment") },
+        { key: "consumable", label: game.i18n.localize("TYPES.Item.consumable") },
+        { key: "container", label: game.i18n.localize("TYPES.Item.container") },
         { key: "loot", label: game.i18n.localize("PF1.Misc") },
       ].map((choice) => [choice.key, choice])
     );

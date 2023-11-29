@@ -146,7 +146,7 @@ export async function getItem({
   // Provide nice basic title
   if (!title && !filter && type) {
     if (subType) title = pf1.config[`${type}Types`]?.[subType];
-    else title = game.i18n.localize(pf1.config.itemTypes[type]);
+    else title = game.i18n.localize(CONFIG.Item.typeLabels[type]);
     if (title) title = game.i18n.format("PF1.SelectSpecific", { specifier: title });
   }
 

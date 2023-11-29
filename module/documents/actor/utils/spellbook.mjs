@@ -78,6 +78,7 @@ export class SpellbookLevel {
 }
 
 export class SpellbookSlots {
+  level = 0;
   max = 0;
   value = 0;
   domain = 0;
@@ -90,8 +91,14 @@ export class SpellbookSlots {
    * @param {object} options - Options
    * @param {number} options.max - Maximum normal spells
    * @param {number} options.domain - Maximum domain spells
+   * @param {number} options.level - Spell level
    */
-  constructor({ max = 0, domain = 0 } = {}) {
+  constructor({ max = 0, domain = 0, level = 0 } = {}) {
+    this.level = level;
+
+    // Enforce lack of domain slots for level 0
+    if (level === 0) domain = 0;
+
     this.value = max + domain;
     this.max = max;
 

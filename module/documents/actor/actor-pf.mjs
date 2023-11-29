@@ -931,6 +931,7 @@ export class ActorPF extends ActorBasePF {
       const slots = {};
       for (let spellLevel = 0; spellLevel < 10; spellLevel++) {
         slots[spellLevel] = new SpellbookSlots({
+          level: spellLevel,
           max: book.spells[`spell${spellLevel}`].max ?? 0,
           domain: book.domainSlotValue ?? 0,
         });

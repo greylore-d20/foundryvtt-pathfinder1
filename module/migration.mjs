@@ -520,7 +520,7 @@ export async function migrateTokenData(tokenData, { token }) {
  */
 export async function migrateToken(token) {
   const tokenData = token.toObject();
-  const updateData = migrateTokenData(tokenData, { token });
+  const updateData = await migrateTokenData(tokenData, { token });
   if (!foundry.utils.isEmpty(updateData)) {
     return token.update(expandObject(updateData));
   }
@@ -533,7 +533,7 @@ export async function migrateToken(token) {
  * @returns {Promise<Actor|null>}
  */
 export async function migrateActor(actor) {
-  const updateData = migrateActorData(actor.toObject(), actor.token, { actor });
+  const updateData = await migrateActorData(actor.toObject(), actor.token, { actor });
   if (!foundry.utils.isEmpty(updateData)) {
     return actor.update(updateData);
   }

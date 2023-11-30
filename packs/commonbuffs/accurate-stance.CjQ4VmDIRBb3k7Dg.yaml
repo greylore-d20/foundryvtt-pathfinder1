@@ -1,0 +1,30 @@
+type: buff
+name: Accurate Stance
+system:
+  description:
+    value: >-
+      <p>The barbarian can focus her strikes. She gains a +1 competence bonus on
+      melee attack rolls and thrown weapon attack rolls. This bonus increases by
+      1 for every 4 levels the barbarian has. This is a stance rage power.</p>
+  changes:
+    - _id: GV1FtNjh
+      formula: 1 + floor(@classes.barbarianUnchained / 4)
+      subTarget: mattack
+      modifier: competence
+    - _id: AHACE8xi
+      formula: 1 + floor(@classes.barbarianUnchained / 4)
+      subTarget: tattack
+      modifier: competence
+  level: null
+  duration:
+    value: ''
+  source:
+    pages: '9'
+    id: PZO1131
+img: icons/skills/targeting/crosshair-pointed-orange.webp
+folder: null
+flags:
+  core: {}
+_id: CjQ4VmDIRBb3k7Dg
+_key: '!items!CjQ4VmDIRBb3k7Dg'
+

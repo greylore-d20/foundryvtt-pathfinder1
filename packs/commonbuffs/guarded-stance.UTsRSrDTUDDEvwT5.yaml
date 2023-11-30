@@ -1,0 +1,27 @@
+type: buff
+name: Guarded Stance
+system:
+  description:
+    value: >-
+      <p>The barbarian can take on a more defensive posture. This grants her a
+      +1 dodge bonus to her Armor Class for the duration of her current rage.
+      This bonus increases by 1 for every 4 levels the barbarian has. This is a
+      stance rage power.</p>
+  changes:
+    - _id: NR6NkphX
+      formula: 1 + floor(@classes.barbarianUnchained / 4)
+      subTarget: ac
+      modifier: dodge
+  level: null
+  duration:
+    value: ''
+  source:
+    pages: '11'
+    id: PZO1131
+img: icons/skills/melee/shield-block-gray-orange.webp
+folder: null
+flags:
+  core: {}
+_id: UTsRSrDTUDDEvwT5
+_key: '!items!UTsRSrDTUDDEvwT5'
+

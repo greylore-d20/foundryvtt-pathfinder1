@@ -1428,8 +1428,11 @@ const _migrateItemChanges = function (ent, updateData) {
       }
     }
 
-    // Alter the changes list, but only if at least one of them is nonzero length
-    if (newChanges.length !== 0 && changes.length !== 0) {
+    // Alter the changes list, but only if changes actually occurred. Bidirectional to detect deletions.
+    if (
+      !foundry.utils.isEmpty(diffObject(changes, newChanges)) ||
+      !foundry.utils.isEmpty(diffObject(newChanges, changes))
+    ) {
       updateData["system.changes"] = newChanges;
     }
   }
@@ -1444,7 +1447,7 @@ const _migrateItemChanges = function (ent, updateData) {
           foundry.utils.mergeObject(ItemPF.defaultContextNote, { text: n[0], subTarget: n[2] }, { inplace: false })
         );
       } else {
-        newNotes.push(n);
+        newNotes.push(deepClone(n));
       }
 
       // Migrate old note targets
@@ -1453,8 +1456,8 @@ const _migrateItemChanges = function (ent, updateData) {
       }
     }
 
-    // Alter the context note list, but only if at least one of them is nonzero length
-    if (newNotes.length !== 0 && notes.length !== 0) {
+    // Alter the context note list, but only if changes actually occurred. Bidirectional to detect deletions.
+    if (!foundry.utils.isEmpty(diffObject(notes, newNotes)) || !foundry.utils.isEmpty(diffObject(newNotes, notes))) {
       updateData["system.contextNotes"] = newNotes;
     }
   }

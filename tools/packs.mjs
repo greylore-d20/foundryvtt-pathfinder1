@@ -317,6 +317,9 @@ function sanitizePackEntry(entry, documentType = "") {
     }
   }
 
+  // Remove folders anyway if null
+  if (entry.folder === null) delete entry.folder;
+
   // Adhere to template data
   if (templateData) {
     const systemData = entry.system ?? entry.data;

@@ -159,11 +159,14 @@ export class ActorPF extends ActorBasePF {
       const saveId = button.dataset.save;
       actor.rollSavingThrow(saveId, { event });
     } else if (action === "save") {
-      const tokens = canvas.tokens.controlled;
       const saveId = button.dataset.type;
+
+      let actors = canvas.tokens.controlled.map((t) => t.actor).filter((t) => !!t);
+      if (actors.length == 0 && game.user.character) actors = [game.user.character];
+
       let noSound = false;
-      for (const token of tokens) {
-        token.actor?.rollSavingThrow(saveId, { event, noSound });
+      for (const actor of actors) {
+        actor?.rollSavingThrow(saveId, { event, noSound });
         noSound = true;
       }
     }

@@ -22,6 +22,18 @@
       <img class="target-image" src="{{t.img}}"/>
 
       {{!-- AC --}}
+      {{#if @root.action.isCombatManeuver}}
+      <div class="cmd" data-gm-sensitive-uuid="{{t.uuid}}">
+        <div class="normal" data-tooltip="PF1.CMDAbbr">
+          <i class="fas fa-shield-alt"></i>
+          <span class="value">{{t.actorData.system.attributes.cmd.total}}</span>
+        </div>
+        <div class="flatFooted" data-tooltip="PF1.CMDFlatFooted">
+          <i class="fas fa-shoe-prints"></i>
+          <span class="value">{{t.actorData.system.attributes.cmd.flatFootedTotal}}</span>
+        </div>
+      </div>
+      {{else}}
       <div class="ac" data-gm-sensitive-uuid="{{t.uuid}}">
         <div class="normal" data-tooltip="PF1.ACNormal">
           <i class="fas fa-shield-alt"></i>
@@ -36,6 +48,7 @@
           <span class="value">{{t.actorData.system.attributes.ac.flatFooted.total}}</span>
         </div>
       </div>
+      {{/if}}
     </div>
   {{/each}}
 </div>

@@ -1764,13 +1764,13 @@ export const weaponProperties = {
  * The components required for casting a spell
  */
 export const spellComponents = {
-  V: "PF1.SpellComponentVerbal",
-  S: "PF1.SpellComponentSomatic",
-  T: "PF1.SpellComponentThought",
-  E: "PF1.SpellComponentEmotion",
-  M: "PF1.SpellComponentMaterial",
-  F: "PF1.SpellComponentFocus",
-  DF: "PF1.SpellComponentDivineFocus",
+  verbal: "PF1.SpellComponentKeys.Verbal",
+  somatic: "PF1.SpellComponentKeys.Somatic",
+  thought: "PF1.SpellComponentKeys.Thought",
+  emotion: "PF1.SpellComponentKeys.Emotion",
+  material: "PF1.SpellComponentKeys.Material",
+  focus: "PF1.SpellComponentKeys.Focus",
+  divineFocus: "PF1.SpellComponentKeys.DivineFocus",
 };
 
 /**

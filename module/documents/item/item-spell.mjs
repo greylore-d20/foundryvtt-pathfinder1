@@ -409,15 +409,7 @@ export class ItemSpellPF extends ItemPF {
       isDivine = kind === "divine";
 
     const components = [];
-    const labels = {
-      verbal: game.i18n.localize("PF1.SpellComponentKeys.Verbal"),
-      somatic: game.i18n.localize("PF1.SpellComponentKeys.Somatic"),
-      thought: game.i18n.localize("PF1.SpellComponentKeys.Thought"),
-      emotion: game.i18n.localize("PF1.SpellComponentKeys.Emotion"),
-      material: game.i18n.localize("PF1.SpellComponentKeys.Material"),
-      focus: game.i18n.localize("PF1.SpellComponentKeys.Focus"),
-      divineFocus: game.i18n.localize("PF1.SpellComponentKeys.DivineFocus"),
-    };
+    const labels = pf1.config.spellComponents;
 
     if (srcComponents.verbal) components.push(labels.verbal);
     if (srcComponents.somatic) components.push(labels.somatic);

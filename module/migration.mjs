@@ -700,7 +700,14 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   const alreadyHasActions = itemData.system.actions instanceof Array && itemData.system.actions.length > 0;
   const itemActionData = alreadyHasActions ? itemData.system.actions : updateData["system.actions"];
   if (itemActionData instanceof Array) {
-    updateData["system.actions"] = itemActionData.map((action) => migrateItemActionData(action, updateData, { item }));
+    const newActionData = itemActionData.map((action) => migrateItemActionData(action, updateData, { item }));
+    // Update only if something changed. Bi-directional testing for detecting deletions.
+    if (
+      !foundry.utils.isEmpty(diffObject(itemActionData, newActionData)) ||
+      !foundry.utils.isEmpty(diffObject(newActionData, itemActionData))
+    ) {
+      updateData["system.actions"] = newActionData;
+    }
   }
 
   // Migrate container items
@@ -1202,7 +1209,9 @@ const _migrateClassDynamics = function (ent, updateData) {
 const _migrateClassType = function (ent, updateData) {
   if (ent.type !== "class") return;
 
-  if (getProperty(ent, "system.classType") == null) updateData["system.classType"] = "base";
+  if (ent.system.classType !== undefined && ent.system.subType === undefined) {
+    updateData["system.subType"] = "base";
+  }
 };
 
 // Added with PF1 vNEXT
@@ -2416,7 +2425,7 @@ const _migrateItemUnusedData = (item, updateData) => {
   // useCustomTag not used since PF1 vNEXT
   if (item.system.useCustomTag !== undefined) {
     updateData["system.-=useCustomTag"] = null;
-    if (item.system.useCustomTag === false) {
+    if (item.system.useCustomTag === false && item.system.tag !== undefined) {
       updateData["system.-=tag"] = null;
     }
   }

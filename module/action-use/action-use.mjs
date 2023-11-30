@@ -1273,7 +1273,7 @@ export class ActionUse {
     premessage_promises.push(this.subtractAmmo());
 
     if (shared.rollData.chargeCost < 0 || shared.rollData.chargeCost > 0)
-      premessage_promises.push(this.addCharges(-shared.rollData.chargeCost));
+      premessage_promises.push(this.item.addCharges(-shared.rollData.chargeCost));
     if (shared.action.isSelfCharged)
       premessage_promises.push(shared.action.update({ "uses.self.value": shared.action.data.uses.self.value - 1 }));
 

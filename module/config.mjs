@@ -947,7 +947,7 @@ export const bonusModifiers = {
 /**
  * An array of stacking bonus modifiers by their keys for {@link bonusModifiers}
  */
-export const stackingBonusModifiers = ["untyped", "untypedPerm", "dodge", "racial", "penalty"];
+export const stackingBonusModifiers = ["untyped", "untypedPerm", "dodge", "racial", "penalty", "circumstance"];
 
 /* -------------------------------------------- */
 

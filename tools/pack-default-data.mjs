@@ -80,7 +80,7 @@ export function getActionDefaultData() {
     attackNotes: [],
     soundEffect: "",
     powerAttack: {
-      multiplier: "",
+      multiplier: null,
       damageBonus: 2,
       critMultiplier: 1,
     },

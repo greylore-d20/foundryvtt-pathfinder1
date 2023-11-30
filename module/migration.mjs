@@ -562,7 +562,6 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
   _migrateActorEncumbrance(actorData, updateData, linked);
   _migrateActorNoteArrays(actorData, updateData);
   _migrateActorSpeed(actorData, updateData, linked);
-  _migrateSpellDivineFocus(actorData, updateData);
   _migrateActorSpellbookCL(actorData, updateData);
   _migrateActorSpellbookSlots(actorData, updateData, linked);
   _migrateActorSpellbookKind(actorData, updateData, actor);
@@ -666,6 +665,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateClassDynamics(itemData, updateData);
   _migrateClassType(itemData, updateData);
   _migrateClassCasting(itemData, updateData);
+  _migrateSpellDivineFocus(itemData, updateData);
   _migrateWeaponCategories(itemData, updateData);
   _migrateArmorCategories(itemData, updateData);
   _migrateArmorMaxDex(itemData, updateData);
@@ -1186,11 +1186,11 @@ const _migrateSpellDescription = function (ent, updateData) {
   else updateData["system.shortDescription"] = html.prop("innerHTML");
 };
 
-const _migrateSpellDivineFocus = function (ent, updateData) {
-  if (ent.type !== "spell") return;
+const _migrateSpellDivineFocus = function (item, updateData) {
+  if (item.type !== "spell") return;
 
-  const value = getProperty(ent, "system.components.divineFocus");
-  if (typeof value === "boolean") updateData["system.components.divineFocus"] = value === true ? 1 : 0;
+  const df = getProperty(item.system, "components.divineFocus");
+  if (typeof df === "boolean") updateData["system.components.divineFocus"] = Number(df);
 };
 
 const _migrateClassDynamics = function (ent, updateData) {

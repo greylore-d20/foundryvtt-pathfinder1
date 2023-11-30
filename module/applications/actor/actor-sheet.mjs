@@ -1382,7 +1382,7 @@ export class ActorSheetPF extends ActorSheet {
       }
 
       if (newEl.value.toString() === prevValue.toString()) {
-        this.render();
+        parent.replaceChild(el, newEl);
       } else if (typeof callback === "function") {
         callback.call(this, event);
       }
@@ -1396,7 +1396,7 @@ export class ActorSheetPF extends ActorSheet {
         }
 
         if (newEl.value.toString() === prevValue.toString()) {
-          this.render();
+          parent.replaceChild(el, newEl);
         } else if (typeof callback === "function") {
           callback.call(this, event);
         }
@@ -1868,7 +1868,10 @@ export class ActorSheetPF extends ActorSheet {
       if (changed) {
         this._onSubmit(event);
       } else {
-        this.render();
+        elem.prop("readonly", true);
+        elem.removeAttr("name");
+        elem.removeAttr("value");
+        return;
       }
     };
     const keyHandler = (event) => {

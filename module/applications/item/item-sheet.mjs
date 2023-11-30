@@ -132,7 +132,7 @@ export class ItemSheetPF extends ItemSheet {
     context.tag = this.item._source.system.tag;
 
     // Item Type, Status, and Details
-    context.itemType = CONFIG.Item.typeLabels[item.type];
+    context.itemType = game.i18n.localize(CONFIG.Item.typeLabels[item.type]);
     context.itemStatus = this._getItemStatus(item);
     context.itemProperties = this._getItemProperties();
     context.itemName = item.name;

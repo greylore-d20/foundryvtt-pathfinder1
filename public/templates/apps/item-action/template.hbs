@@ -9,10 +9,11 @@
 {{#if data.measureTemplate.type}}
 {{!-- Template Size --}}
 <div class="form-group">
-  <label>{{localize "PF1.Size"}}</label>
+  <label>{{localize "PF1.TemplateSizeFormula"}}</label>
   <div class="form-fields">
     <input class="formula" type="text" name="measureTemplate.size" value="{{data.measureTemplate.size}}" placeholder="{{localize "PF1.Formula"}}" />
   </div>
+  <p class="hint">{{localize "PF1.TemplateSizeFormulaHint"}}</p>
 </div>
 
 {{!-- Override Color --}}

@@ -274,9 +274,7 @@ async function extractPack(packName, options = {}) {
 
   // Find all files that were not touched by this run (and thus are candidates for deletion);
   // exclude conflicting files, as they have to be checked manually
-  const removedFiles = options.reset
-    ? filesBefore.filter((f) => !touchedFiles.includes(f) && conflictingFileNames.has(f))
-    : [];
+  const removedFiles = filesBefore.filter((f) => !touchedFiles.includes(f) && !conflictingFileNames.has(f));
   if (options.reset) {
     await Promise.all(removedFiles.map((f) => fs.remove(f)));
   }

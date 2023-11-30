@@ -1,6 +1,5 @@
 @navHeight: 30px;
 @headerHeight: 100px;
-@detailsHeight: 30px;
 
 /* ----------------------------------------- */
 /*  All PF1 Apps                           */
@@ -578,21 +577,19 @@
     /* Header Summary Details */
     .summary {
       display: flex;
-      flex: 0 0 100%;
-      height: @detailsHeight * 1.2;
+      flex: 0 100%;
       margin: 0;
       padding: 0;
       list-style: none;
       border-top: @borderGroove;
-      border-bottom: none;
 
       li {
+        display: inline-flex;
         width: 33.33%;
-        height: @detailsHeight - 6px;
         padding: 0 3px;
         border-right: @borderGroove;
         border-bottom: @borderGroove;
-        line-height: @detailsHeight - 6px;
+        height: 1.5em;
         color: @colorOlive;
 
         input {

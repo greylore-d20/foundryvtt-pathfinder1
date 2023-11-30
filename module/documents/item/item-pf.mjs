@@ -162,6 +162,8 @@ export class ItemPF extends ItemBasePF {
     // No system data changes
     if (!changed.system) return;
 
+    this._preUpdateNumericValueGuard(changed.system);
+
     // Make sure stuff remains an array
     const keepPaths = [
       "system.attackNotes",
@@ -178,6 +180,29 @@ export class ItemPF extends ItemBasePF {
     }
 
     await this._chargePreUpdate(changed, context);
+  }
+
+  // Fake DataModel-like behaviour
+  // Ensure numeric bits remain numbers
+  _preUpdateNumericValueGuard(system) {
+    if (system.quantity !== undefined && (!Number.isSafeInteger(system.quantity) || system.quantity < 0)) {
+      system.quantity = 0;
+    }
+    if (system.price !== undefined && !Number.isSafeInteger(system.price)) {
+      system.price = 0;
+    }
+    if (system.unidentified?.price !== undefined && !Number.isSafeInteger(system.unidentified.price)) {
+      system.unidentified.price = 0;
+    }
+    if (system.hardness !== undefined && (!Number.isSafeInteger(system.hardness) || system.hardness < 0)) {
+      system.hardness = 0;
+    }
+    if (system.hp?.value !== undefined && !Number.isSafeInteger(system.hp.value)) {
+      system.hp.value = 0;
+    }
+    if (system.hp?.max !== undefined && (!Number.isSafeInteger(system.hp.max) || system.hp.max < 0)) {
+      system.hp.max = 0;
+    }
   }
 
   /**

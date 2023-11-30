@@ -1084,6 +1084,9 @@ export class ActionUse {
 
     metadata.item = this.item.id;
     metadata.action = this.action.id;
+    if (this.actor && game.combat?.combatants.some((c) => c.actor === this.actor)) {
+      metadata.combat = game.combat.id;
+    }
     metadata.template = this.shared.template ? this.shared.template.id : null;
     metadata.rolls = {
       attacks: [],

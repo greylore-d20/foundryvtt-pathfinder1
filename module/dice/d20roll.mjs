@@ -327,6 +327,12 @@ export class D20RollPF extends RollPF {
     messageData.rolls = [this]; // merge/expandObject would otherwise destroy the `Roll` instance
     if (options.subject) foundry.utils.setProperty(messageData, "flags.pf1.subject", options.subject);
 
+    // Add combat reference if such exists
+    const actor = ChatMessage.getSpeakerActor(messageData.speaker);
+    if (actor && game.combat?.combatants.some((c) => c.actor === actor)) {
+      setProperty(messageData, "flags.pf1.metadata.combat", game.combat.id);
+    }
+
     const message = new ChatMessage.implementation(messageData);
     if (rollMode) message.applyRollMode(rollMode);
     messageData = message.toObject();

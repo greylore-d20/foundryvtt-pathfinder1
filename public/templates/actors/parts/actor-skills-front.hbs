@@ -67,13 +67,9 @@
 </section>
 {{else}}
 {{! Normal Skills }}
-<nav class="sheet-navigation tabs" data-group="skillset" style="display: none">
-  <a class="item" data-tab="all">{{localize "PF1.AllSkills"}}</a>
-</nav>
-
 <section class="skillset-body">
   {{! All Skills }}
-  <div class="tab" data-group="skillset" data-tab="all">
+  <div class="tab active" data-group="skillset" data-tab="all">
     {{> "systems/pf1/templates/actors/parts/actor-skills.hbs" skillset=skillsets.all.skills isBackgroundSkills="false" skillGroup="adventure"}}
   </div>
 </section>

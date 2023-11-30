@@ -957,6 +957,11 @@
   section.window-content {
     padding: 0;
 
+    a {
+      color: var(--color-text-hyperlink);
+      text-decoration: underline;
+    }
+
     .top-bar {
       padding: 6px;
       flex: 0 0 24px;
@@ -971,14 +976,6 @@
       }
       i.gray {
         color: gray;
-      }
-    }
-
-    .content,
-    nav {
-      a {
-        color: var(--color-text-hyperlink);
-        text-decoration: underline;
       }
     }
 
@@ -1014,12 +1011,11 @@
       }
 
       code {
-        padding: 0 0.1em;
-        background: #2b2b2b;
-        color: var(--color-text-light-4);
-        border: 1px solid #000;
+        padding: 0 3px;
+        background: var(--pf1-bg-light-1);
+        color: var(--color-text-dark-1);
+        border: 1px solid var(--color-border-light-secondary);
         border-radius: 3px;
-        box-shadow: 0 0 4px var(--color-border-dark-5);
       }
 
       img {

@@ -304,7 +304,8 @@ function sanitizePackEntry(entry, documentType = "") {
 
   // Remove non-system/non-core flags
   for (const key of Object.keys(entry.flags ?? {})) {
-    if (!["pf1", "core"].includes(key)) delete entry.flags[key];
+    if (utils.isEmpty(entry.flags[key])) delete entry.flags[key];
+    else if (!["pf1", "core"].includes(key)) delete entry.flags[key];
   }
   if (utils.isEmpty(entry.flags)) delete entry.flags;
 

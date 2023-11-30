@@ -26,6 +26,7 @@ export class ActorBasePF extends Actor {
    * Cached result of .itemTypes
    *
    * @internal
+   * @type {ItemTypesMap}
    */
   _itemTypes;
 
@@ -33,9 +34,27 @@ export class ActorBasePF extends Actor {
    * Cached override
    *
    * @override
+   * @type {ItemTypesMap}
    */
   get itemTypes() {
     this._itemTypes ??= super.itemTypes;
     return this._itemTypes;
   }
 }
+
+/**
+ * All items sorted by type.
+ *
+ * @typedef ItemTypesMap
+ * @property {ItemAttackPF[]} attack
+ * @property {ItemBuffPF[]} buff
+ * @property {ItemClassPF[]} class
+ * @property {ItemConsumablePF[]} consumable
+ * @property {ItemContainerPF[]} container
+ * @property {ItemEquipmentPF[]} equipment
+ * @property {ItemFeatPF[]} feat
+ * @property {ItemLootPF[]} loot
+ * @property {ItemRacePF[]} race
+ * @property {ItemSpellPF[]} spell
+ * @property {ItemWeaponPF[]} weapon
+ */

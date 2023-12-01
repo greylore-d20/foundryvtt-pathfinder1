@@ -20,7 +20,7 @@
     </div>
   </li>
   {{#each skill.subSkills as |subSkill b|}}
-  <li class="sub-skill {{#if subSkill.untrained}}untrained{{/if}}" data-skill="{{b}}" data-main-skill="{{s}}">
+  <li class="sub-skill{{#if subSkill.untrained}} untrained{{/if}}{{#if subSkill.unconfigured}} unconfigured{{/if}}" data-skill="{{b}}" data-main-skill="{{s}}">
     <div class="skill-name tooltip">
       <span class="tooltipcontent">
         <span class="span2 align-left">@skills.{{s}}.subSkills.{{b}}.mod :</span><span class="span1 align-right"> {{subSkill.mod}}</span>
@@ -32,10 +32,10 @@
       </span>
       {{#if subSkill.compendiumEntry}}
       <a class="compendium-entry" data-compendium-entry="{{subSkill.compendiumEntry}}" data-document-type="JournalEntry">
-        <h4>{{subSkill.name}}</h4><i class="fas fa-book compendium-icon"></i>
+        <h4>{{subSkill.label}}</h4><i class="fas fa-book compendium-icon"></i>
       </a>
       {{else}}
-      <h4>{{subSkill.name}}</h4>
+      <h4>{{subSkill.label}}</h4>
       {{/if}}
     </div>
     <div class="action roll" data-tooltip="PF1.RollSkill">
@@ -62,7 +62,7 @@
       </select>
     </div>
     <div class="skill-controls lockable{{#if @root.skillsLocked}} hide-contents{{/if}}">
-      {{#if @root.owner}}
+      {{#if subSkill.editable}}
       <a class="skill-control skill-edit" data-tooltip="PF1.EditSkill"><i class="fas fa-edit"></i></a>
       <a class="skill-control skill-delete" data-tooltip="PF1.DeleteSkill"><i class="fas fa-trash"></i></a>
       {{/if}}
@@ -70,7 +70,7 @@
   </li>
   {{/each}}
   {{else}}
-  <li class="skill {{#if skill.untrained}}untrained{{/if}}" data-skill="{{s}}">
+  <li class="skill{{#if skill.untrained}} untrained{{/if}}{{#if skill.unconfigured}} unconfigured{{/if}}" data-skill="{{s}}">
     <div class="skill-name tooltip">
       <span class="tooltipcontent">
         <span class="span2 align-left">@skills.{{s}}.mod :</span><span class="span1 align-right"> {{skill.mod}}</span>
@@ -82,10 +82,10 @@
       </span>
       {{#if compendiumEntry}}
       <a class="compendium-entry" data-compendium-entry="{{compendiumEntry}}" data-document-type="JournalEntry">
-        <h4>{{#if skill.custom}}{{skill.name}}{{else}}{{skill.label}}{{/if}}</h4><i class="fas fa-book compendium-icon"></i>
+        <h4>{{skill.label}}</h4><i class="fas fa-book compendium-icon"></i>
       </a>
       {{else}}
-      <h4>{{#if skill.custom}}{{skill.name}}{{else}}{{skill.label}}{{/if}}</h4>
+      <h4>{{skill.label}}</h4>
       {{/if}}
     </div>
     <div class="action roll" data-tooltip="PF1.RollSkill">
@@ -109,11 +109,12 @@
       </select>
     </div>
     <div class="skill-controls lockable{{#if @root.skillsLocked}} hide-contents{{/if}}">
-      {{#if @root.owner}}
+      {{#if skill.editable}}
       <a class="skill-control skill-edit" data-tooltip="PF1.EditSkill"><i class="fas fa-edit"></i></a>
       {{#if skill.custom}}
       <a class="skill-control skill-delete" data-tooltip="PF1.DeleteSkill"><i class="fas fa-trash"></i></a>
-      {{/if}}{{/if}}
+      {{/if}}
+      {{/if}}
     </div>
   </li>
   {{/if}}

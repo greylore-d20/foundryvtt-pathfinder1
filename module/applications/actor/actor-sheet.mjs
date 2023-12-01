@@ -348,10 +348,16 @@ export class ActorSheetPF extends ActorSheet {
         data.sourceDetails != null ? data.sourceDetails.system.attributes.savingThrows[a].total : [];
     }
 
-    // Update skill labels
+    // Update skill info
     const acp = this.document.system.attributes?.acp?.total;
     for (const [s, skl] of Object.entries(data.system.skills ?? {})) {
-      skl.label = pf1.config.skills[s];
+      skl.label = skl.name || pf1.config.skills[s];
+      skl.editable = !this._skillsLocked;
+      if (!skl.label) {
+        skl.label = game.i18n.localize("PF1.UnconfiguredSkill");
+        skl.unconfigured = true;
+        skl.editable = true;
+      }
       skl.arbitrary = pf1.config.arbitrarySkills.includes(s);
       skl.sourceDetails = [];
       skl.compendiumEntry = pf1.config.skillCompendiumEntries[s] ?? skl.journal ?? null;
@@ -387,6 +393,9 @@ export class ActorSheetPF extends ActorSheet {
       skl.untrained = skl.rt === true && skl.rank <= 0;
       if (skl.subSkills != null) {
         for (const [s2, skl2] of Object.entries(skl.subSkills)) {
+          skl2.editable = !skl2.name || !this._skillsLocked;
+          skl2.unconfigured = !skl2.name;
+          skl2.label = skl2.name || game.i18n.localize("PF1.UnconfiguredSkill");
           skl2.compendiumEntry = skl2.journal ?? null;
           skl2.sourceDetails = [];
           if (skl2.rank > 0) {
@@ -1899,7 +1908,7 @@ export class ActorSheetPF extends ActorSheet {
     const skillId = $(event.currentTarget).parents(".skill").attr("data-skill");
     const mainSkillData = this.document.system.skills[skillId];
     const skillData = {
-      name: game.i18n.format("DOCUMENT.New", { type: game.i18n.localize("PF1.Skill") }),
+      name: "",
       ability: mainSkillData.ability,
       rank: 0,
       rt: mainSkillData.rt,
@@ -1926,7 +1935,7 @@ export class ActorSheetPF extends ActorSheet {
     event.preventDefault();
     const isBackground = $(event.currentTarget).parents(".skills-list").attr("data-background") === "true";
     const skillData = {
-      name: game.i18n.format("DOCUMENT.New", { type: game.i18n.localize("PF1.Skill") }),
+      name: "",
       ability: "int",
       rank: 0,
       mod: 0,

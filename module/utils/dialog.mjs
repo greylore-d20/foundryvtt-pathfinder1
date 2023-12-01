@@ -1,50 +1,23 @@
 import { ItemSelector } from "module/applications/item-selector.mjs";
 
-/**
- * @param root0
- * @param root0.title
- * @param root0.initial
- * @param root0.min
- * @param root0.max
- */
-export function dialogGetNumber({
+export async function dialogGetNumber({
   title = "Input Number",
   initial = null,
   min = Number.NEGATIVE_INFINITY,
   max = Number.POSITIVE_INFINITY,
 } = {}) {
-  return new Promise((resolve) => {
-    let cancelled = true;
+  foundry.utils.logCompatibilityWarning(
+    "pf1.utils.dialog.dialogGetNumber is deprecated in favor of pf1.utils.dialog.getNumber",
+    {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    }
+  );
 
-    new Dialog(
-      {
-        title: title,
-        content: `<input type="number" name="result" min="${min}" max="${max}" value="${initial || 0}">`,
-        buttons: {
-          ok: {
-            label: "Submit",
-            callback: (html) => {
-              cancelled = false;
-              const input = html.find('input[name="result"]');
-              resolve(input.val());
-            },
-          },
-        },
-        close: () => {
-          if (!cancelled) {
-            resolve(initial);
-          }
-        },
-        default: "ok",
-        render: (htm) => {
-          htm.find("input").select();
-        },
-      },
-      {
-        classes: [...Dialog.defaultOptions.classes, "pf1", "get-number"],
-      }
-    ).render(true);
-  });
+  let num = await pf1.utils.dialog.getNumber({ title, initial, min, max });
+  // match old return type and value
+  if (Number.isNaN(num)) num = initial;
+  return `${num}`;
 }
 
 export const dialogGetActor = function (title = "", actors = []) {
@@ -153,4 +126,71 @@ export async function getItem({
   appOptions.title = title;
 
   return ItemSelector.wait(options, appOptions, renderOptions);
+}
+
+/**
+ * Query for a number from current user.
+ *
+ * @example
+ * const num = await pf1.utils.dialog.getNumber({
+ *   placeholder: "NaN",
+ *   hint: "Amazing",
+ *   label: "Gimme a number",
+ * });
+ *
+ * @param {object} [options={}] Additional options
+ * @param {number} [options.min=null] Minimum value
+ * @param {number} [options.max=null] Maximum value
+ * @param {number} [options.step] Value stepping
+ * @param {string} [options.title] Dialog title
+ * @param {string} [options.label] A label preceding the number input.
+ * @param {string} [options.hint] A hint displayed under the input.
+ * @param {number} [options.initial] Initial value
+ * @param {string} [options.placeholder] Placeholder value or description.
+ * @param {string[]} [options.classes=[]] CSS classes to add.
+ * @param {Function} [options.render] Render callback.
+ * @param {object} [options.dialog={}] Additional dialog options.
+ * @returns {Promise<number>} Provided value
+ */
+export async function getNumber({
+  title,
+  label,
+  hint,
+  initial,
+  placeholder,
+  min,
+  max,
+  step,
+  classes = [],
+  render,
+  dialog: dialogOptions = {},
+} = {}) {
+  const templateData = { value: initial, min, max, step, placeholder, label, hint };
+  const content = await renderTemplate("systems/pf1/templates/apps/get-number.hbs", templateData);
+
+  return Dialog.wait(
+    {
+      title: title || game.i18n.localize("PF1.Application.GetNumber.Title"),
+      content,
+      buttons: {
+        confirm: {
+          icon: '<i class="fas fa-check"></i>',
+          label: game.i18n.localize("PF1.Application.GetNumber.Confirm"),
+          callback: (html) => html.querySelector("input[name='number']").valueAsNumber,
+        },
+      },
+      default: "confirm",
+      render,
+      close: () => NaN,
+    },
+    {
+      jQuery: false,
+      classes: [...Dialog.defaultOptions.classes, "pf1", "get-number", ...classes],
+    },
+    {
+      focus: true,
+      width: 260,
+      ...dialogOptions,
+    }
+  );
 }

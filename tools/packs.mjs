@@ -301,6 +301,9 @@ function sanitizePackEntry(entry, documentType = "") {
   // Ignore folders; not present on inventoryItems
   if (entry._key?.startsWith("!folders")) return entry;
 
+  // Always delete system migration marker
+  delete entry.flags?.pf1?.migration;
+
   // Remove non-system/non-core flags
   for (const key of Object.keys(entry.flags ?? {})) {
     if (utils.isEmpty(entry.flags[key])) delete entry.flags[key];

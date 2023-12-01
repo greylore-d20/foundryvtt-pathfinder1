@@ -102,8 +102,6 @@ export class ItemActionSheet extends FormApplication {
     data.isSpell = item.type === "spell";
     data.usesSpellPoints = item.spellbook?.spellPoints.useSystem;
     data.defaultChargeFormula = item.getDefaultChargeFormula();
-    data.canUseAmmo = action.data.usesAmmo !== undefined;
-    data.inheritedAmmoType = item?.system.ammo?.type;
     data.owned = actor != null;
     data.parentOwned = actor != null;
     data.owner = item.isOwner;
@@ -131,6 +129,9 @@ export class ItemActionSheet extends FormApplication {
       data.isWeaponAttack = item.system.subType === "weapon";
       data.isNaturalAttack = item.system.subType === "natural";
     }
+
+    data.canUseAmmo = data.isNaturalAttack !== true;
+    data.inheritedAmmoType = item?.system.ammo?.type;
 
     // Add distance units
     data.distanceUnits = deepClone(pf1.config.distanceUnits);

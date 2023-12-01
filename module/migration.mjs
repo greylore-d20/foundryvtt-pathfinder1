@@ -1826,6 +1826,8 @@ const _migrateActionAmmunitionUsage = function (action, updateData, { item = nul
       updateData["system.ammo.type"] = action.ammoType;
       action.ammoType = ""; // Inherit from item
     }
+    // Delete the key in general if it's empty
+    if (!action.ammoType) delete action.ammoType;
   }
   delete action.usesAmmo;
 };

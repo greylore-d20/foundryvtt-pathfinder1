@@ -248,7 +248,7 @@ export const registerActorItemAttackTests = () => {
         describe("attack without ammo usage", function () {
           let roll;
           before(async () => {
-            await items.longbow.firstAction.update({ usesAmmo: false });
+            await items.longbow.update({ "system.ammo.type": "" });
             roll = await items.longbow.use({ skipDialog: true });
             messages.push(roll);
           });
@@ -267,7 +267,7 @@ export const registerActorItemAttackTests = () => {
         describe("attack with ammo usage and ammo present", function () {
           let roll;
           before(async () => {
-            await items.longbow.firstAction.update({ usesAmmo: true });
+            await items.longbow.update({ "system.ammo.type": "arrow" });
             items.arrows = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Arrow");
             await items.longbow.update({ "flags.pf1.defaultAmmo": items.arrows.id });
             await items.arrows.update({ "flags.pf1.abundant": false });

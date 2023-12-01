@@ -1010,7 +1010,7 @@ export class ActionUse {
     }
 
     // Add info for broken state
-    if (this.item.system.broken) {
+    if (this.shared.rollData.item.broken) {
       properties.push(game.i18n.localize("PF1.Broken"));
     }
 

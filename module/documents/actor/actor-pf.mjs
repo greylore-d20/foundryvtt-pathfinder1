@@ -1577,7 +1577,7 @@ export class ActorPF extends ActorBasePF {
         }
 
         let brokenACP = 0;
-        if (item.system.broken) {
+        if (item.isBroken) {
           brokenACP = itemACP;
           itemACP *= 2;
         }

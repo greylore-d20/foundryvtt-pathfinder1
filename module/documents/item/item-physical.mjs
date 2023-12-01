@@ -172,7 +172,7 @@ export class ItemPhysicalPF extends ItemPF {
       if (identified) value += (this.system.uses?.pricePerUse ?? 0) * (this.system.uses?.value ?? 0);
 
       if (inLowestDenomination) value *= 100;
-      if (this.system.broken) value *= 0.75; // TODO: Make broken value configurable
+      if (this.isBroken) value *= 0.75; // TODO: Make broken value configurable
       if (this.system.timeworn) {
         if (this.hasFiniteCharges && this.charges === 0) value *= 0.01;
         else value *= 0.5;
@@ -188,6 +188,23 @@ export class ItemPhysicalPF extends ItemPF {
     if (!(this.type === "loot" && this.system.subType === "tradeGoods")) result *= sellValue;
 
     return result;
+  }
+
+  /**
+   * @type {boolean} - Broken state
+   */
+  get isBroken() {
+    if (this.system.broken) return true;
+
+    const hp = this.system.hp ?? {};
+    const hpMax = hp.max ?? 0;
+    if (hpMax > 0) {
+      const hpCur = hp.value ?? 0;
+      const brokenThreshold = Math.floor(hpMax / 2);
+      return hpCur <= Math.floor(hpMax / 2);
+    }
+
+    return false;
   }
 
   getLabels({ actionId, rollData } = {}) {
@@ -229,6 +246,15 @@ export class ItemPhysicalPF extends ItemPF {
 
   get showUnidentifiedData() {
     return !game.user.isGM && this.system.identified === false;
+  }
+
+  getRollData() {
+    const result = super.getRollData();
+
+    // Overwrite broken state
+    result.item.broken = this.isBroken;
+
+    return result;
   }
 }
 

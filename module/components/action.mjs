@@ -216,7 +216,7 @@ export class ItemAction {
    * @type {number}
    */
   get critRange() {
-    if (this.item.system.broken || this.isCombatManeuver) return 20;
+    if (this.item.isBroken || this.isCombatManeuver) return 20;
     return this.data.ability?.critRange || 20;
   }
 
@@ -362,7 +362,7 @@ export class ItemAction {
 
     // Add special cases specific to the item
     // Broken
-    if (this.item.system.broken) {
+    if (this.item.isBroken) {
       allChanges.push({
         flavor: game.i18n.localize("PF1.Broken"),
         value: -2,
@@ -1016,7 +1016,7 @@ export class ItemAction {
       });
 
       // Add broken penalty
-      if (this.item.system.broken) {
+      if (this.item.isBroken) {
         const label = game.i18n.localize("PF1.Broken");
         parts[0].extra.push(`-2[${label}]`);
       }

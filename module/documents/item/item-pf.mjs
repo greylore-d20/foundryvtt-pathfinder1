@@ -1982,7 +1982,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Broken condition
-    if (itemData.broken) {
+    if (this.isBroken) {
       describePart(-2, game.i18n.localize("PF1.Broken"), "penalty", -500);
     }
 

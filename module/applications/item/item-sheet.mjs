@@ -617,6 +617,9 @@ export class ItemSheetPF extends ItemSheet {
         context.bookSource.publisher ||= rsource.publisher;
         context.bookSource.errata ||= rsource.errata;
         context.bookSource.edition ||= rsource.edition;
+        // Data only in registry
+        context.bookSource.date = rsource.date;
+        context.bookSource.abbr = rsource.abbr;
       }
     }
 

@@ -6,11 +6,14 @@
 		data-tooltip="
 		{{~#if id}}{{localize "PF1.ContentSource.Info.ID"}}: {{id}}<br>{{/if~}}
 		{{~#if edition}}{{localize "PF1.ContentSource.Info.Edition"}}: {{edition}}<br>{{/if~}}
-		{{~#if errata}}{{localize "PF1.ContentSource.Info.Errata"}}: {{errata}}<br>{{/if~}}
+		{{~#if errata}}{{localize "PF1.ContentSource.Info.Errata"}}: {{errata}}<br>{{else if date}}{{localize "PF1.ContentSource.Info.Release"}}: {{date}}<br>{{/if~}}
 		{{~#if publisher}}{{localize "PF1.ContentSource.Info.Publisher"}}: {{publisher}}<br>{{/if~}}
     "{{/if}}{{/with}}>
 	{{#if source.title}}
     <span class="title">{{source.title}}</span>
+    {{#if source.abbr}}
+    <span class="abbr">{{source.abbr}}</span>
+    {{/if}}
 		{{#if source.pages}}
     <span class="pages">{{localize "PF1.ContentSource.Pages" pages=source.pages}}</span>
 		{{/if}}

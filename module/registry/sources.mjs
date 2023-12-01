@@ -9,6 +9,7 @@ export class Source extends RegistryEntry {
     return {
       ...super.defineSchema(),
       name: new fields.StringField({ nullable: false, blank: false, required: true }),
+      abbr: new fields.StringField({ nullable: false, blank: false, required: false, initial: undefined }), // Add constraints
       date: optionalString(), // Validate date, expect YYYY-MM-DD format
       pages: new fields.NumberField({ required: false, integer: true, initial: undefined }),
       isbn: optionalString(), // TODO: Validate ISBN
@@ -42,6 +43,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1110",
       name: "Core Rulebook",
+      abbr: "CRB",
       date: "2009-08-13",
       pages: 576,
       isbn: "978-1-60125-150-3",
@@ -51,6 +53,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1114",
       name: "GameMastery Guide",
+      abbr: "GMG",
       date: "2010-06-23",
       pages: 320,
       isbn: "978-1-60125-217-3",
@@ -114,6 +117,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1129",
       name: "Advanced Class Guide",
+      abbr: "ACG",
       date: "2015-08-14",
       pages: 256,
       isbn: "978-1-60125-671-3",
@@ -123,6 +127,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1115",
       name: "Advanced Player’s Guide",
+      abbr: "APG",
       date: "2010-08-05",
       pages: 320,
       isbn: "978-1-60125-246-3",
@@ -132,6 +137,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1121",
       name: "Advanced Race Guide",
+      abbr: "ARG",
       date: "2012-06-20",
       pages: 256,
       isbn: "978-1-60125-390-3",
@@ -159,6 +165,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1132",
       name: "Occult Adventures",
+      abbr: "OA",
       date: "2015-07-29",
       pages: 272,
       isbn: "978-1-60125-762-8",
@@ -3392,6 +3399,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9272",
       name: "Technology Guide",
+      abbr: "TG",
       date: "2014-08-01",
       pages: 64,
       isbn: "978-1-60125-672-0",

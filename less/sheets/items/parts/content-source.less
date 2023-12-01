@@ -24,11 +24,19 @@
     }
 
     .source {
-      flex: 10;
       text-align: center;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
+    }
+
+    .abbr {
+      &::before {
+        content: "(";
+      }
+      &::after {
+        content: ")";
+      }
     }
 
     .control {

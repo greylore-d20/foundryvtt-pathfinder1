@@ -9,6 +9,9 @@
 			  value="{{system.source.title}}" placeholder="{{localize "PF1.ContentSource.Info.TitleHint"}}"
         {{/if}}
         >
+      {{#if registry.abbr}}
+        <input class="abbr" type="text" value="{{registry.abbr}}" size="3" readonly>
+      {{/if}}
 		</div>
 	</div>
 	<div class="form-group">
@@ -36,6 +39,12 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<label>{{localize "PF1.ContentSource.Info.Release"}}</label>
+		<div class="form-fields" data-tooltip="PF1.ContentSource.Autofill">
+			<input type="text" value="{{registry.date}}" placeholder="{{localize "PF1.NonApplicable"}}" readonly>
+		</div>
+	</div>
+	<div class="form-group">
 		<label>{{localize "PF1.ContentSource.Info.Publisher"}}</label>
 		<div class="form-fields" {{#if registry}}data-tooltip="PF1.ContentSource.Autofill"{{/if}}>
       <input name="system.source.publisher" type="text"
@@ -50,7 +59,7 @@
 
   <datalist id="{{uuid}}-content-sources">
     {{#each sources}}
-    <option value="{{id}}">{{name}}</option>
+    <option value="{{id}}">{{name}}{{#if abbr}} ({{abbr}}){{/if}}</option>
     {{/each}}
   </datalist>
 </form>

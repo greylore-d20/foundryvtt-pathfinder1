@@ -98,4 +98,18 @@ export class ItemWeaponPF extends ItemPF {
 
     return this.system.proficient ?? true;
   }
+
+  /**
+   * @inheritDoc
+   * @remarks
+   * Not 100% RAW correct as this applies armor table to weapons,
+   * but since Paizo did not provide a table for weapons
+   * besides stating weapons for small are half weight, we assume they use the same table.
+   *
+   * @see {@link pf1.documents.item.ItemEquipmentPF.getWeightMultiplier}
+   */
+  getWeightMultiplier() {
+    // Use same as armor, even though Paizo has only stats for halving for small and nothing else.
+    return this._getArmorWeightMultiplier();
+  }
 }

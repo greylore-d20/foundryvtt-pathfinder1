@@ -415,6 +415,55 @@ export const actorSizes = {
 };
 
 /**
+ * Armor & shield cost multipliers for different creature sizes.
+ *
+ * @see https://aonprd.com/Rules.aspx?Name=Armor%20for%20Unusual%20Creatures&Category=Armor
+ */
+export const armorCost = {
+  humanoid: {
+    fine: 0.5,
+    dim: 0.5,
+    tiny: 0.5,
+    sm: 1,
+    med: 1,
+    lg: 2,
+    huge: 4,
+    grg: 8,
+    col: 16,
+  },
+  nonhumanoid: {
+    fine: 1,
+    dim: 1,
+    tiny: 1,
+    sm: 2,
+    med: 2,
+    lg: 4,
+    huge: 8,
+    grg: 16,
+    col: 32,
+  },
+};
+
+/**
+ * Armor weight multipliers for different creature sizes.
+ *
+ * The values are same for both humanoid and non-humanoid.
+ *
+ * @see https://aonprd.com/Rules.aspx?Name=Armor%20for%20Unusual%20Creatures&Category=Armor
+ */
+export const armorWeight = {
+  fine: 0.1,
+  dim: 0.1,
+  tiny: 0.1,
+  sm: 0.5,
+  med: 1,
+  lg: 2,
+  huge: 5,
+  grg: 8,
+  col: 12,
+};
+
+/**
  * The possible creature sizes in their one-letter form
  */
 export const sizeChart = {

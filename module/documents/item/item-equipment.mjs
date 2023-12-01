@@ -228,4 +228,17 @@ export class ItemEquipmentPF extends ItemPF {
 
     return actor.hasArmorProficiency(this, proficiencyType);
   }
+
+  /**
+   * @see {@link https://aonprd.com/Rules.aspx?Name=Armor%20for%20Unusual%20Creatures&Category=Armor}
+   *
+   * @inheritdoc
+   * @remarks
+   * Only armor and shields get anything besides 1.
+   */
+  getWeightMultiplier() {
+    if (!["armor", "shield"].includes(this.subType)) return 1;
+
+    return this._getArmorWeightMultiplier();
+  }
 }

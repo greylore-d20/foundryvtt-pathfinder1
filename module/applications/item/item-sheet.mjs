@@ -870,8 +870,9 @@ export class ItemSheetPF extends ItemSheet {
 
     // Ensure values are stored as lbs
     if (system.weight) {
-      if (system.weight.value !== undefined) {
-        system.weight.value = pf1.utils.convertWeightBack(system.weight.value);
+      if (system.weight?.value !== undefined) {
+        const wmult = this.item.getWeightMultiplier();
+        system.weight.value = pf1.utils.convertWeightBack(system.weight.value / wmult);
       }
       if (system.weight.reduction?.value !== undefined) {
         system.weight.reduction.value = pf1.utils.convertWeightBack(system.weight.reduction.value);

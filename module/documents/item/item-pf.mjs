@@ -623,11 +623,37 @@ export class ItemPF extends ItemBasePF {
     const itemData = this.system;
     const weight = itemData.weight;
 
-    weight.total += weight.value * itemData.quantity;
+    // Adjust base weight
+    // Altering weight.value directly will corrupt the weight
+    const baseWeight = weight.value * this.getWeightMultiplier();
+
+    weight.total += baseWeight * itemData.quantity;
 
     // Convert weight according metric system (lb vs kg)
-    weight.converted.value = pf1.utils.convertWeight(weight.value);
+    weight.converted.value = pf1.utils.convertWeight(baseWeight);
     weight.converted.total = pf1.utils.convertWeight(weight.total);
+  }
+
+  /**
+   * Return weight multiplier affecting this item.
+   *
+   * Such as item size dictating how heavy an armor is.
+   *
+   * @returns {number} - Multiplier, 1 for most items regardless of size.
+   */
+  getWeightMultiplier() {
+    return 1;
+  }
+
+  // Generic weight scaling
+  // For use with getWeightMultiplier() across item types
+  _getArmorWeightMultiplier() {
+    // Scale weight for weapons, armor and shields
+    const actorSize = this.actor?.system.traits?.size;
+    const itemSize = this.system.size || "med";
+    const size = this.system.resizing ? actorSize || itemSize : itemSize;
+    const mult = pf1.config.armorWeight[size];
+    return mult ?? 1;
   }
 
   prepareDerivedData() {

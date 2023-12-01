@@ -961,6 +961,14 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    // Mark broken in indeterminate state if it's automatically designated broken but not explicitly
+    if (this.item.isPhysical) {
+      if (this.item.isBroken && this.item.system.broken !== true) {
+        const broken = html.find("input[name='system.broken']")[0];
+        if (broken) broken.indeterminate = true;
+      }
+    }
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {
       html.find("span.text-box").addClass("readonly");

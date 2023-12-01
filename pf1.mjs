@@ -35,6 +35,7 @@ import * as components from "./module/components/_module.mjs";
 import * as utils from "./module/utils/_module.mjs";
 import * as registry from "./module/registry/_module.mjs";
 import * as migrations from "./module/migration.mjs";
+import * as rollFunctions from "./module/utils/roll-functions.mjs";
 
 // ESM exports, to be kept in sync with globalThis.pf1
 export {
@@ -133,6 +134,12 @@ Hooks.once("init", function () {
   // Dice config
   CONFIG.Dice.rolls.unshift(dice.RollPF);
   CONFIG.Dice.termTypes.SizeRollTerm = dice.terms.SizeRollTerm;
+  for (const [key, term] of Object.entries(dice.terms.fn)) {
+    CONFIG.Dice.termTypes[key] = term;
+  }
+  for (const [key, term] of Object.entries(dice.terms.aux)) {
+    CONFIG.Dice.termTypes[key] = term;
+  }
   CONFIG.Dice.rolls.push(dice.D20RollPF);
   CONFIG.Dice.rolls.push(dice.DamageRoll);
   Object.defineProperties(CONFIG.Dice, {
@@ -177,6 +184,17 @@ Hooks.once("init", function () {
       return Object.fromEntries(
         Object.entries(CONFIG.Item.typeLabels).map(([key, label]) => [key, game.i18n.localize(label)])
       );
+    },
+  });
+
+  Object.defineProperty(pf1.utils, "rollPreProcess", {
+    get() {
+      foundry.utils.logCompatibilityWarning("pf1.utils.rollPreProcess.* is deprecated in favor of pf1.utils.roll.*", {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      });
+
+      return pf1.utils.roll;
     },
   });
 

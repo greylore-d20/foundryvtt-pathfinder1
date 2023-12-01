@@ -11,7 +11,7 @@
  *   Can be a string of values "F", "D", "T", "S", "M", "L", "H", "G" or "C" for the different sizes.
  *   Can also be a number in the range of 0 to 8, where 4 is Medium.
  * @param {string|number} [initialSize="M"] - The initial size of the creature. See targetSize above.
- * @returns {number} The result of the new roll.
+ * @returns {Die[]|NumericTerm[]} The resulting die roll.
  */
 export const sizeRoll = function (origCount, origSides, targetSize = "M", initialSize = "M") {
   const _getSizeIndex = function (size) {
@@ -114,7 +114,7 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
       }
     }
 
-    index = Math.clamped(index, 0, c.length - 1);
+    index = Math.max(0, Math.min(c.length - 1, index));
     formula = c[index];
   }
 
@@ -122,13 +122,19 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
     ui.notifications.warn(game.i18n.format("PF1.WarningNoSizeDie", { fallback: currentDie, formula }));
   }
 
-  const result = formula.split("d");
-  if (result.length === 1) {
-    return [new NumericTerm({ number: parseInt(result[0]) })];
-  }
-  return [new Die({ number: parseInt(result[0]), faces: parseInt(result[1]) })];
+  const [number, faces] = formula.split("d");
+  if (!faces) return [new NumericTerm({ number: parseInt(number) })];
+  return [new Die({ number: parseInt(number), faces: parseInt(faces) })];
 };
 
+/**
+ * Return reach information for defined size and stature.
+ *
+ * @param {string|number} [size="M"] PF1.sizeChart key or offset
+ * @param {boolean} [reach=false] Reach weapon
+ * @param {"tall"|"long"} [stature="tall"] Character stature
+ * @returns {NumericTerm[]}
+ */
 export const sizeReach = function (size = "M", reach = false, stature = "tall") {
   if (typeof size === "number") size = Object.values(pf1.config.sizeChart)[size];
   size = Object.entries(pf1.config.sizeChart).find((o) => o[1] === size)[0];

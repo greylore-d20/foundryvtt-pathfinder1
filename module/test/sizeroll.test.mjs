@@ -9,7 +9,7 @@ export function registerSizeRollTests() {
     async (context) => {
       const { describe, it, expect, after, assert } = context;
 
-      const sizeRoll = pf1.utils.rollPreProcess.sizeRoll;
+      const sizeRoll = pf1.utils.roll.sizeRoll;
       const medium = 4;
       const large = medium + 1;
       const small = medium - 1;

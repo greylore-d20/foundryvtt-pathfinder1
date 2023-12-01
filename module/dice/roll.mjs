@@ -16,7 +16,7 @@ export class RollPF extends Roll {
         .reduce((dice, t) => {
           if (t instanceof DiceTerm) dice.push(t);
           else if (t instanceof PoolTerm) dice = dice.concat(t.dice);
-          else if (t instanceof pf1.dice.terms.SizeRollTerm) dice = dice.concat(t.dice);
+          else if (t.inheritDice) dice = dice.concat(t.dice);
           return dice;
         }, [])
         // Append dice from parenthesis and similar eliminated rolls.
@@ -67,6 +67,7 @@ export class RollPF extends Roll {
         return terms;
       }
 
+      /*
       // Attach string terms as flavor texts to size roll terms, if appropriate
       // TODO: Review the need for this bit with Foundry v10, according to staff it will no longer be required.
       const priorSizeRoll = prior instanceof pf1.dice.terms.SizeRollTerm;
@@ -82,6 +83,19 @@ export class RollPF extends Roll {
           prior.modifiers = Array.from((modifiers || "").matchAll(DiceTerm.MODIFIER_REGEXP)).map((m) => m[0]);
         }
         return terms;
+      }
+      */
+
+      // Custom handling
+      if (prior && term instanceof StringTerm) {
+        const flavor = /^\[(?<flavor>.+)\]$/.exec(term.term)?.groups.flavor;
+        if (flavor) {
+          // Attach string terms as flavor texts to function terms, if appropriate
+          if (prior instanceof pf1.dice.terms.base.FunctionTerm) {
+            prior.options.flavor = flavor;
+            return terms;
+          }
+        }
       }
 
       // Combine StringTerm with a prior non-operator term
@@ -108,66 +122,8 @@ export class RollPF extends Roll {
 
     // Eliminate leading or trailing arithmetic
     if (simplified[0] instanceof OperatorTerm && simplified[0].operator !== "-") simplified.shift();
-    if (simplified[terms.length - 1] instanceof OperatorTerm) simplified.pop();
+    if (simplified.at(-1) instanceof OperatorTerm) simplified.pop();
     return simplified;
-  }
-
-  /**
-   * @override
-   *
-   * Split a formula by identifying its outer-most parenthetical and math terms
-   * @param {string} _formula      The raw formula to split
-   * @returns {string[]}          An array of terms, split on parenthetical terms
-   * @private
-   */
-  static _splitParentheses(_formula) {
-    return this._splitGroup(_formula, {
-      openRegexp: ParentheticalTerm.OPEN_REGEXP,
-      closeRegexp: ParentheticalTerm.CLOSE_REGEXP,
-      openSymbol: "(",
-      closeSymbol: ")",
-      onClose: (group) => {
-        // Extract group arguments
-        const fn = group.open.slice(0, -1);
-        const expression = group.terms.join("");
-        const options = { flavor: group.flavor ? group.flavor.slice(1, -1) : undefined };
-
-        const terms = [];
-        if (fn === "sizeRoll") {
-          // TODO: Make more generic
-          const args = this._splitMathArgs(expression);
-          terms.push(new pf1.dice.terms.SizeRollTerm({ terms: args, options }));
-        } else if (fn in pf1.utils.rollPreProcess) {
-          const fnParams = group.terms
-            // .slice(2, -1)
-            .reduce((cur, s) => {
-              cur.push(...s.split(/\s*,\s*/));
-              return cur;
-            }, [])
-            .map((o) => {
-              // Return raw string
-              if ((o.startsWith('"') && o.endsWith('"')) || (o.startsWith("'") && o.endsWith("'"))) {
-                return o.slice(1, -1);
-              }
-              // Return raw string without quotes
-              if (o.match(/^[a-zA-Z0-9]+$/)) {
-                return parseRollStringVariable(o);
-              }
-              // Return roll result
-              return RollPF.safeRoll(o, this.data).total;
-            });
-
-          return pf1.utils.rollPreProcess[fn](...fnParams);
-        } else if (fn in Math) {
-          const args = this._splitMathArgs(expression);
-          terms.push(new MathTerm({ fn, terms: args, options }));
-        } else {
-          if (fn) terms.push(new StringTerm({ term: fn }));
-          terms.push(new ParentheticalTerm({ term: expression, options }));
-        }
-        return terms;
-      },
-    });
   }
 
   static cleanFlavor(flavor) {
@@ -180,33 +136,83 @@ export class RollPF extends Roll {
    * @returns {Promise<string>} The rendered HTML tooltip as a string
    */
   async getTooltip() {
-    const parts = this.dice.map((d) => d.getTooltipData());
+    const parts = this.dice.filter((d) => d.results.some((r) => r.active)).map((d) => d.getTooltipData());
     const numericParts = this.terms.reduce((cur, t, idx, arr) => {
-      const result = t instanceof NumericTerm ? t.getTooltipData() : undefined;
+      const ttdata = t instanceof NumericTerm || t.hasNumericTooltip ? t.getTooltipData() : undefined;
 
-      const prior = arr[idx - 1];
-      if (t instanceof NumericTerm && prior && prior instanceof OperatorTerm && prior.operator === "-") {
-        result.total = -result.total;
-      }
+      if (ttdata !== undefined) {
+        const prior = arr[idx - 1];
+        if (t instanceof NumericTerm && prior && prior instanceof OperatorTerm && prior.operator === "-") {
+          ttdata.total = -ttdata.total;
+        }
 
-      if (result !== undefined) {
-        if (!result.flavor) result.flavor = game.i18n.localize("PF1.Undefined");
-        cur.push(result);
+        ttdata.flavor ??= game.i18n.localize("PF1.Undefined");
+        cur.push(ttdata);
       }
       return cur;
     }, []);
     return renderTemplate("systems/pf1/templates/dice/tooltip.hbs", { parts, numericParts });
   }
-}
 
-export const parseRollStringVariable = function (value) {
-  if (value === "false") return false;
-  if (value === "true") return true;
-  if (value === "null") return null;
-  if (value === "undefined") return undefined;
+  static parse(formula, data) {
+    const terms = super.parse(formula, data);
 
-  if (value.match(/^(?:[0-9]+)?(?:\.[0-9]+)?$/)) {
-    return parseFloat(value);
+    const final = [];
+
+    for (let i = 0; i < terms.length; i++) {
+      const term = terms[i],
+        next = terms[i + 1],
+        prior = terms[i - 1];
+
+      // Standalone terms
+      if (term instanceof StringTerm) {
+        const systerm = Object.values(pf1.dice.terms.aux).find((t) => t.matchTerm(term.term));
+        if (systerm) {
+          final.push(new systerm({ term: term.term }));
+          continue;
+        }
+      }
+      // Function terms
+      else if (term instanceof ParentheticalTerm && prior instanceof StringTerm) {
+        const systerm = Object.values(pf1.dice.terms.fn).find((t) => t.matchTerm(prior.term));
+        if (systerm?.isFunction) {
+          const args = systerm.parseArgs(this._lenientSplitArgs(term.term));
+          final.pop();
+          final.push(new systerm({ terms: args }));
+          continue;
+        }
+      }
+
+      final.push(term);
+    }
+
+    return final;
   }
-  return value;
-};
+
+  /**
+   * Variant of _splitMathArgs that takes system terms into consideration.
+   *
+   * @param {string} expression
+   * @returns {RollTerm[]}
+   */
+  static _lenientSplitArgs(expression) {
+    return expression.split(",").reduce((args, t) => {
+      t = t.trim();
+      if (!t) return args; // Blank args
+      if (!args.length) {
+        // First arg
+        args.push(t);
+        return args;
+      }
+      const p = args[args.length - 1]; // Prior arg
+      const priorValid = this.validate(p);
+      if (priorValid) args.push(t);
+      else {
+        const aux = Object.values(pf1.dice.terms.aux).find((t) => t.matchTerm(p));
+        if (aux) args.push(t);
+        else args[args.length - 1] = [p, t].join(","); // Collect inner parentheses or pools
+      }
+      return args;
+    }, []);
+  }
+}

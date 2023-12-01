@@ -1,6 +1,5 @@
 import { customRolls } from "./documents/chat-message.mjs";
 import { sortArrayByName } from "./utils/lib.mjs";
-import { parseRollStringVariable } from "./dice/roll.mjs";
 import { RollPF } from "./dice/roll.mjs";
 import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs";
 
@@ -52,23 +51,6 @@ import { patchCore as patchLowLightVision } from "./canvas/low-light-vision.mjs"
     if (!up) pf1.tooltip.lock.new = false;
   };
 }
-
-// Patch StringTerm
-StringTerm.prototype.evaluate = function (options = {}) {
-  const result = parseRollStringVariable(this.term);
-  if (typeof result === "string") {
-    const src = `with (sandbox) { return ${this.term}; }`;
-    try {
-      const evalFn = new Function("sandbox", src);
-      this._total = evalFn(RollPF.MATH_PROXY);
-    } catch (err) {
-      err.message = `Failed to evaluate: '${this.term}'\n${err.message}`;
-      throw err;
-    }
-  } else {
-    this._total = result;
-  }
-};
 
 // Patch NumericTerm
 NumericTerm.prototype.getTooltipData = function () {

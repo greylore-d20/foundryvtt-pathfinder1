@@ -148,4 +148,38 @@ export class TokenPF extends Token {
   get sizeErrorMargin() {
     return Math.max(this.w / 2, this.h / 2);
   }
+
+  /**
+   * Return origins of cells the token occupies.
+   *
+   * Bug: Does not work with hex grid.
+   * Bug: Does not account for rotation.
+   *
+   * @returns {Point[]} - Occupied cell origins.
+   */
+  getOccupiedCells() {
+    const doc = this.document;
+    const gridSizePx = this.scene.grid.size ?? 1;
+    const { x, y, width, height } = doc;
+
+    const squares = [];
+
+    const wr = width - 1,
+      hr = height - 1;
+
+    for (let x0 = 0; x0 <= wr; x0++) {
+      for (let y0 = 0; y0 <= hr; y0++) {
+        squares.push({ x: x + x0 * gridSizePx, y: y + y0 * gridSizePx });
+      }
+    }
+
+    return squares;
+  }
+
+  /**
+   * @type {boolean} - Is this token a square?
+   */
+  get isSquare() {
+    return this.document.width === this.document.height;
+  }
 }

@@ -3036,18 +3036,18 @@ export class ActorSheetPF extends ActorSheet {
   async _onDropItem(event, data) {
     if (!this.actor.isOwner) return false;
 
-    const item = await ItemPF.implementation.fromDropData(data);
-    const itemData = item.toObject();
+    const sourceItem = await Item.implementation.fromDropData(data);
+    const itemData = sourceItem.toObject();
 
     let sourceActor = await fromUuid(data.actorUuid || "");
     if (!(sourceActor instanceof Actor)) sourceActor = sourceActor?.actor;
 
     // Handle item sorting within the same actor
-    const sameActor = item.actor === this.actor && !data.containerId;
+    const sameActor = sourceItem.actor === this.actor && !data.containerId;
     if (sameActor) return this._onSortItem(event, itemData);
 
     // Create the owned item
-    this._alterDropItemData(itemData);
+    this._alterDropItemData(itemData, sourceItem);
     const rv = await this._onDropItemCreate(itemData);
 
     // Remove from container if item was successfully created
@@ -3059,9 +3059,28 @@ export class ActorSheetPF extends ActorSheet {
     return rv;
   }
 
-  _alterDropItemData(data) {
+  /**
+   * @internal
+   * @param {object} data - Item data
+   * @param {Item} source - Source item
+   */
+  _alterDropItemData(data, source) {
+    // Identify source location
+    const fromCompendium = !!source.pack;
+    const fromActor = !!source.parent;
+    const fromItemsDir = !fromCompendium && !fromActor && !!source.id;
+
+    // Set spellbook to currently viewed one
     if (data.type === "spell") {
       data.system.spellbook = this.currentSpellbookKey;
+    }
+
+    // Apply actor size to physical items, assuming they're appropriately sized for them
+    // But do so only when the drop originates from compendium or items directory
+    if (source.isPhysical) {
+      if (fromCompendium || fromItemsDir) {
+        data.system.size = this.actor.system.traits?.size || "med";
+      }
     }
   }
 

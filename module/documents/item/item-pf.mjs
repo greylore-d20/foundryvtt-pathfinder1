@@ -808,7 +808,11 @@ export class ItemPF extends ItemBasePF {
   async update(data, context = {}) {
     // Avoid regular update flow for explicitly non-recursive update calls
     if (context.recursive === false) {
-      return super.update(data, context);
+      if (this.inContainer) {
+        this.rootItem.update(this._transformContainerUpdateData(data, { recursive: true }), context);
+      } else {
+        return super.update(data, context);
+      }
     }
 
     data = foundry.utils.expandObject(data);
@@ -822,9 +826,35 @@ export class ItemPF extends ItemBasePF {
       // Update parent item
       context.pf1 ??= {};
       context.pf1.containerItem = this.id;
-      await parentItem.update({ system: { items: { [this.id]: data } } }, context);
+      await parentItem.update(this._transformContainerUpdateData(data), context);
       return this;
     }
+  }
+
+  /**
+   * Transform given data so it becomes valid update data within parent item.
+   *
+   * This can, for example, be used to generate batched update to the real item.
+   *
+   * @example
+   * ```js
+   * _transformContainerUpdateData({ name: "new name" })
+   * // => { system: { items: { [itemID]: { name: "new name" } } } }
+   * ```
+   * @internal
+   * @param {object} data Update data
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.recursive=false] - Create data recursively, meant for the real item document.
+   * @returns {object} - Transformed update data
+   */
+  _transformContainerUpdateData(data, { recursive = false } = {}) {
+    const parentItem = this.parentItem;
+    if (parentItem) {
+      const baseUpdate = { system: { items: { [this.id]: data } } };
+      if (recursive) return parentItem._transformContainerUpdateData(baseUpdate, { recursive });
+      else return baseUpdate;
+    }
+    return data;
   }
 
   memorizeVariables() {
@@ -2261,6 +2291,14 @@ export class ItemPF extends ItemBasePF {
   /** @type {boolean} - Is this item in a container? */
   get inContainer() {
     return !!this.parentItem;
+  }
+
+  /**
+   * @internal
+   * @type {Item} - Root item. The item at bottom of the container tree.
+   */
+  get rootItem() {
+    return this.parentItem?.rootItem ?? this;
   }
 }
 

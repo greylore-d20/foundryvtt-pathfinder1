@@ -1,4 +1,5 @@
 import { ItemPF } from "./item-pf.mjs";
+import { diffObjectAndArray } from "@utils";
 
 export class ItemContainerPF extends ItemPF {
   /**
@@ -11,6 +12,36 @@ export class ItemContainerPF extends ItemPF {
     super(...args);
 
     this.items ??= null;
+  }
+
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} options
+   * @param {User} user
+   */
+  async _preUpdate(changed, options, user) {
+    await super._preUpdate(changed, options, user);
+
+    // No system updates
+    if (!changed.system) return;
+
+    // Ensure contained item updates adhere to reason
+    const items = changed.system.items;
+    if (items) {
+      for (const [itemId, itemData] of Object.entries(items)) {
+        if (itemId.startsWith("-=")) continue; // No validation for deletions
+        const oldItem = this.items.get(itemId);
+        let diff;
+        if (oldItem) {
+          diff = oldItem.updateSource(itemData, { dryRun: true, fallback: false });
+          // Remove lingering .data if present, the above line prunes this out if done externally
+          if ("data" in this.system.items[itemId]) diff["-=data"] = null;
+        } else diff = new Item.implementation(itemData).toObject();
+
+        items[itemId] = diff;
+      }
+    }
   }
 
   /**
@@ -28,11 +59,74 @@ export class ItemContainerPF extends ItemPF {
     await super._preDelete(context, user);
   }
 
+  _onUpdate(changed, options, userId) {
+    // Call various document workflows for changed items
+    const items = changed.system?.items;
+    if (items) {
+      for (const [itemId, itemData] of Object.entries(items)) {
+        const item = this.items.get(itemId);
+        try {
+          if (itemId.startsWith("-=")) {
+            // TODO: Item reference is no longer available for _onDelete workflow
+            // item._onDelete(options, userId);
+          } else if (itemData._id) {
+            item._onCreate(itemData, options, userId);
+          } else {
+            item._onUpdate(itemData, options, userId);
+          }
+        } catch (err) {
+          console.error(err, { parent: this, item });
+        }
+
+        // TODO: createDocument, deleteDocument, updateDocument hooks
+      }
+    }
+
+    super._onUpdate(changed, options, userId);
+  }
+
+  /** @inheritdoc */
+  prepareBaseData() {
+    super.prepareBaseData();
+
+    // Set base weight to weight of coins, which can be calculated without knowing contained items
+    const weightReduction = (100 - (this.system.weightReduction ?? 0)) / 100;
+    this.system.weight.currency = this._calculateCoinWeight() * weightReduction;
+  }
+
   prepareDerivedData() {
-    // Update contained items
-    this.items = this._prepareInventory(this.system.inventoryItems);
+    this._prepareInventory();
 
     super.prepareDerivedData();
+  }
+
+  /**
+   * Prepare .items collection for contained items.
+   *
+   * @private
+   */
+  _prepareInventory() {
+    const prior = this.items;
+    const collection = new Collection();
+    this.system.items ??= {}; // Shim for items that haven't had template.json applied to them
+    for (const [itemId, itemData] of Object.entries(this.system.items)) {
+      try {
+        let item = prior?.get(itemId);
+        if (item) {
+          item.updateSource(itemData, { recursive: false });
+          item.reset();
+        } else {
+          item = new Item.implementation(itemData, { parent: this.actor });
+          item.parentItem = this;
+        }
+        collection.set(itemId, item);
+      } catch (err) {
+        console.error("Error preparing contained item:", { id: itemId, data: itemData }, this);
+        throw err;
+      }
+    }
+
+    this.items = collection;
   }
 
   /** @inheritDoc */
@@ -60,138 +154,141 @@ export class ItemContainerPF extends ItemPF {
     super.prepareWeight();
   }
 
-  async createContainerContent(data, options = { raw: false }) {
-    const embeddedName = "Item";
-    const user = game.user;
-    const itemOptions = { temporary: false, renderSheet: false };
-
-    let inventory = deepClone(this.system.inventoryItems ?? []);
-    // Iterate over data to create
-    data = data instanceof Array ? data : [data];
-    if (!(itemOptions.temporary || itemOptions.noHook)) {
-      for (const d of data) {
-        const allowed = Hooks.call(`preCreate${embeddedName}`, this, d, itemOptions, user.id);
-        if (allowed === false) {
-          console.debug(`${vtt} | ${embeddedName} creation prevented by preCreate hook`);
-          return null;
-        }
-
-        d._id = randomID(16);
-      }
-    }
-
-    // Add to updates
-    const items = data.map((o) => (options.raw ? o : new ItemPF(o).toObject()));
-    inventory.push(...items);
-
-    // Filter items with duplicate _id
-    {
-      const ids = [];
-      inventory = inventory.filter((i) => {
-        if (ids.includes(i._id)) return false;
-        ids.push(i._id);
-        return true;
-      });
-    }
-
-    await this.update({ "system.inventoryItems": inventory });
-
-    // Mimic createEmbeddedDocuments()
-    const newItemIds = new Set(items.map((i) => i._id));
-    return this.items.filter((i) => newItemIds.has(i.id));
-  }
-
   getContainerContent(itemId) {
     return this.items.get(itemId);
   }
 
+  /**
+   * @protected
+   * @param {object[]} data Item creation data
+   * @param {object} [options={}] Additional options
+   * @returns {Promise<this>} Promise to the updated document.
+   */
+  async createContainerContent(data, options = { raw: false, renderSheet: false }) {
+    data = data instanceof Array ? data : [data];
+
+    const itemOptions = { temporary: false, renderSheet: false };
+    const user = game.user;
+
+    const actuallyCreated = [];
+    const updateData = { system: { items: {} } };
+
+    // Iterate over data to create
+    for (const itemData of data) {
+      // Find unique ID
+      do {
+        itemData._id = randomID(16);
+      } while (this.system.items[itemData._id] !== undefined);
+
+      // Create temporary item
+      const item = new ItemPF(itemData);
+
+      // Run pre-create workflow
+      let allowed = (await item._preCreate(itemData, options, game.user)) ?? true;
+      allowed &&= options.noHook || Hooks.call("preCreateItem", item, itemData, itemOptions, user.id);
+      if (allowed === false) {
+        console.debug(`${vtt} | Item creation prevented during pre-create`);
+        continue;
+      }
+
+      // Update _stats
+      item.updateSource({
+        _stats: {
+          coreVersion: game.version,
+          systemVersion: game.system.version,
+          createdTime: Date.now(),
+          lastModifiedBy: user.id,
+        },
+      });
+
+      updateData.system.items[itemData._id] = options.raw ? itemData : item.toObject();
+      actuallyCreated.push(itemData._id);
+    }
+
+    await this.update(updateData, { pf1: { createContained: actuallyCreated } });
+
+    // Mimic createEmbeddedDocuments()
+    const created = this.items.filter((i) => actuallyCreated.includes(i.id));
+    if (options.renderSheet) created.forEach((i) => i.sheet.render(true));
+    return created;
+  }
+
   async deleteContainerContent(data) {
+    const ids = new Set(data instanceof Array ? data : [data]);
+
     const embeddedName = "ContainerContent";
     const user = game.user;
     const options = { noHook: false };
 
-    // Iterate over data to create
-    data = data instanceof Array ? data : [data];
-    const ids = new Set(data);
+    const updateData = { system: { items: {} } };
 
-    // Iterate over elements of the collection
-    const inventory = deepClone(this.system.inventoryItems ?? []).filter((item) => {
-      if (!ids.has(item._id)) return true;
+    const items = this.system.items ?? {};
 
-      // Call pre-update hooks to ensure the update is allowed to proceed
-      if (!options.noHook) {
-        const allowed = Hooks.call(`preDelete${embeddedName}`, this, item, options, user.id);
-        if (allowed === false) {
-          console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
-          return true;
-        }
+    const actuallyDeleted = [];
+
+    // Iterate over data to delete
+    for (const id of ids) {
+      const item = this.items.get(id);
+
+      // Run pre-delete workflow
+      let allowed = (await item._preDelete(options, user)) ?? true;
+      allowed &&= options.noHook || Hooks.call(`preDelete${embeddedName}`, item, options, user.id);
+      if (allowed === false) {
+        console.debug(`${vtt} | ${embeddedName} deletion prevented during pre-delete`);
+        continue;
       }
 
-      // Remove document from collection
-      return false;
-    }, []);
+      updateData.system.items[`-=${id}`] = null;
+      actuallyDeleted.push(id);
+    }
 
-    // Trigger the Socket workflow
-    await this.update({ "system.inventoryItems": inventory });
+    await this.update(updateData, { pf1: { removeContained: actuallyDeleted } });
   }
 
   async updateContainerContents(data) {
+    data = data instanceof Array ? data : [data];
+
     const embeddedName = "ContainerContent";
     const user = game.user;
     const options = { diff: true };
 
-    // Structure the update data
-    const pending = new Map();
-    data = data instanceof Array ? data : [data];
-    for (const d of data) {
-      if (!d._id) throw new Error("You must provide an id for every Embedded Document in an update operation");
-      pending.set(d._id, d);
-    }
+    const actuallyUpdated = [];
+    const updateData = { system: { items: {} } };
 
     // Difference each update against existing data
-    const updates = this.items.reduce((arr, d) => {
-      if (!pending.has(d.id)) return arr;
-      let update = pending.get(d.id);
+    for (const changes of data) {
+      if (!changes._id) throw new Error("You must provide an id for every Embedded Document in an update operation");
 
-      // Diff the update against current data
-      if (options.diff) {
-        update = diffObject(d, expandObject(update));
-        if (foundry.utils.isEmpty(update)) return arr;
-        update["_id"] = d.id;
+      const item = this.items.get(changes._id);
+
+      let diff = {};
+      try {
+        diff = item.updateSource(changes, { dryRun: true, fallback: false });
+      } catch (err) {
+        console.log(err);
+        continue;
       }
 
-      // Call pre-update hooks to ensure the update is allowed to proceed
-      if (!options.noHook) {
-        const allowed = Hooks.call(`preUpdate${embeddedName}`, this, d, update, options, user.id);
-        if (allowed === false) {
-          console.debug(`${vtt} | ${embeddedName} update prevented by preUpdate hook`);
-          return arr;
-        }
+      // Run pre-update workflow
+      let allowed = (await item._preUpdate(diff, options, user)) ?? true;
+      allowed &&= options.noHook || Hooks.call(`preUpdate${embeddedName}`, item, diff, options, user.id);
+      if (allowed === false) {
+        console.debug(`${vtt} | ${embeddedName} update prevented during pre-update`);
+        continue;
       }
 
-      // Stage the update
-      arr.push(update);
-      return arr;
-    }, []);
-    if (!updates.length) return [];
-    let inventory = duplicate(this.system.inventoryItems).map((o) => {
-      for (const u of updates) {
-        if (u._id === o._id) return mergeObject(o, u);
-      }
-      return o;
-    });
+      diff._stats = {
+        coreVersion: game.version,
+        systemVersion: game.system.version,
+        modifiedTime: Date.now(),
+        lastModifiedBy: user.id,
+      };
 
-    // Filter items with duplicate _id
-    {
-      const ids = [];
-      inventory = inventory.filter((i) => {
-        if (ids.includes(i._id)) return false;
-        ids.push(i._id);
-        return true;
-      });
+      updateData.system.items[changes._id] = diff;
+      actuallyUpdated.push(changes._id);
     }
 
-    await this.update({ "system.inventoryItems": inventory });
+    await this.update(updateData, { pf1: { updateContained: actuallyUpdated } });
   }
 
   /**

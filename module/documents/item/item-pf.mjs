@@ -1,6 +1,6 @@
 import { ItemBasePF } from "./item-base.mjs";
 import { createCustomChatMessage } from "../../utils/chat.mjs";
-import { createTag, convertDistance, keepUpdateArray, diffObjectAndArray } from "../../utils/lib.mjs";
+import { createTag, convertDistance, keepUpdateArray } from "../../utils/lib.mjs";
 import { ItemChange } from "../../components/change.mjs";
 import { ItemAction } from "../../components/action.mjs";
 import { getHighestChanges } from "../actor/utils/apply-changes.mjs";
@@ -257,7 +257,7 @@ export class ItemPF extends ItemBasePF {
    * @returns {string[]} The keys of data variables to memorize between updates, for e.g. determining the difference in update.
    */
   get memoryVariables() {
-    return ["quantity", "level", "inventoryItems"];
+    return ["quantity", "level"];
   }
 
   /**
@@ -844,25 +844,6 @@ export class ItemPF extends ItemBasePF {
     return collection;
   }
 
-  _prepareInventory(inventory) {
-    const prior = this.items;
-    const collection = new Collection();
-    for (const o of inventory) {
-      let item = null;
-      if (prior && prior.has(o._id)) {
-        item = prior.get(o._id);
-        item.updateSource(o);
-        item.reset();
-      } else {
-        item = new Item.implementation(o, { parent: this.actor });
-        item.parentItem = this;
-      }
-
-      collection.set(o._id || item.id, item);
-    }
-    return collection;
-  }
-
   /**
    * Executes all script calls on this item of a specified category.
    *
@@ -899,23 +880,11 @@ export class ItemPF extends ItemBasePF {
     if (!parentItem) {
       return super.update(data, context);
     } else {
-      const diff = diffObject(this.toObject(), data);
-      if (Object.keys(diff).length) {
-        // Determine item index to update in parent
-        const parentInventory = parentItem.system.inventoryItems || [];
-        const idx = parentInventory.findIndex((item) => item._id === this.id);
-
-        if (idx >= 0) {
-          // Replace keys to suit parent item
-          for (const [k, v] of Object.entries(diff)) {
-            delete diff[k];
-            diff[`system.inventoryItems.${idx}.${k}`] = v;
-          }
-
-          // Update parent item
-          return parentItem.update(diff);
-        }
-      }
+      // Update parent item
+      context.pf1 ??= {};
+      context.pf1.containerItem = this.id;
+      await parentItem.update({ system: { items: { [this.id]: data } } }, context);
+      return this;
     }
   }
 
@@ -990,24 +959,6 @@ export class ItemPF extends ItemBasePF {
         }
         if (level.new !== undefined && level.new !== level.previous) {
           this.executeScriptCalls("changeLevel", { level });
-        }
-      }
-    }
-
-    // Call _onUpdate for changed items
-    for (let a = 0; a < (changed.system?.inventoryItems ?? []).length; a++) {
-      const itemUpdateData = changed.system?.inventoryItems[a];
-      const memoryItemData = this._memoryVariables?.inventoryItems?.[a];
-      if (!memoryItemData) continue;
-
-      const diffData = diffObjectAndArray(memoryItemData, itemUpdateData, { keepLength: true });
-      if (!foundry.utils.isEmpty(diffData)) {
-        /** @type {Item} */
-        const item = this.items.get(memoryItemData._id);
-        if (item) item._onUpdate(diffData, context, userId);
-        else {
-          // BUG: Presumably item was deleted
-          console.error(`Memorized item ${memoryItemData._id} not found from container`, this);
         }
       }
     }

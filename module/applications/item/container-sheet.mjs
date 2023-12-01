@@ -395,12 +395,12 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const itemData = {
       name: `New ${typeName.capitalize()}`,
       type: type,
-      system: duplicate(header.dataset),
+      system: {
+        subType: header.dataset.subType,
+      },
     };
-    delete itemData.system.type;
-    delete itemData.system.typeName;
 
-    return this.item.createContainerContent(itemData);
+    return this.item.createContainerContent(itemData, { renderSheet: true });
   }
 
   _onItemEdit(event) {
@@ -585,16 +585,16 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     const itemId = $(a).parents(".item").attr("data-item-id");
     const item = this.item.getContainerContent(itemId);
-    const data = duplicate(item.data);
+    const itemData = item.toObject();
 
-    delete data._id;
-    data.name = `${data.name} (${game.i18n.localize("PF1.Copy")})`;
+    delete itemData._id;
+    itemData.name = `${itemData.name} (${game.i18n.localize("PF1.Copy")})`;
     if (item.isPhysical && !item.system.identified) {
-      data.system.unidentified.name = `${item.system.unidentified.name} (${game.i18n.localize("PF1.Copy")})`;
+      itemData.system.unidentified.name = `${item.system.unidentified.name} (${game.i18n.localize("PF1.Copy")})`;
     }
-    if (data.system.links?.children) delete data.system.links.children;
+    if (itemData.system.links?.children) delete itemData.system.links.children;
 
-    return this.item.createContainerContent(data);
+    return this.item.createContainerContent(itemData);
   }
 
   async _quickChangeItemQuantity(event, add = 1) {

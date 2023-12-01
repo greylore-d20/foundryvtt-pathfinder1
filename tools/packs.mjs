@@ -31,6 +31,7 @@ const TEMPLATE_EXCEPTION_PATHS = {
     "learnedAt",
     "properties",
     "source",
+    "items",
   ],
   Component: [],
 };
@@ -332,9 +333,11 @@ function sanitizePackEntry(entry, documentType = "") {
       // Treat embedded items like normal items for sanitization
       entry.items = entry.items.map((i) => sanitizePackEntry(i, "Item"));
     }
-    if (documentType === "Item" && entry.system.inventoryItems?.length > 0) {
+    if (documentType === "Item" && entry.system.items && Object.keys(entry.system.items).length > 0) {
       // Treat embedded items like normal items for sanitization
-      entry.system.inventoryItems = entry.system.inventoryItems.map((i) => sanitizePackEntry(i, "Item"));
+      for (const [itemId, itemData] of Object.entries(entry.system.items)) {
+        entry.system.items[itemId] = sanitizePackEntry(itemData, "Item");
+      }
     }
   }
   return entry;

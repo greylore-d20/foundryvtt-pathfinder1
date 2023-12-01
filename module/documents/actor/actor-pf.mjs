@@ -330,23 +330,26 @@ export class ActorPF extends ActorBasePF {
     return skills;
   }
 
-  _prepareContainerItems(items) {
+  _prepareContainerItems() {
     const collection = [];
 
-    const getContainerContents = function (item) {
+    /**
+     * @param {Item} item
+     */
+    function getContainerContents(item) {
       if (item.type !== "container") return;
 
       item.items.forEach((i) => {
         collection.push(i);
         getContainerContents(i);
       });
-    };
+    }
 
-    items.forEach((item) => {
+    this.itemTypes.container.forEach((item) => {
       getContainerContents(item);
     });
 
-    return collection;
+    this.containerItems = collection;
   }
 
   _prepareItemFlags(items) {
@@ -423,7 +426,7 @@ export class ActorPF extends ActorBasePF {
 
     this.prepareConditions();
 
-    this.containerItems = this._prepareContainerItems(this.items);
+    this._prepareContainerItems();
     this._prepareItemFlags(this.allItems);
     this._prepareChanges();
   }

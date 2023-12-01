@@ -710,29 +710,58 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
     }
   }
 
-  // Migrate container items
+  // Migrate container .inventoryItems array to .items map
+  // Introduced with PF1 vNEXT
   if (itemData.system?.inventoryItems instanceof Array) {
-    const items = [];
-    for (let oldItem of itemData.system.inventoryItems) {
-      // Fix for corrupt items
-      oldItem.system ??= {};
-      // Migrate data to system, shim for Foundry migration that doesn't happen for this
-      if ("data" in oldItem) {
-        oldItem.system = mergeObject(oldItem.data, oldItem.system);
-        delete oldItem.data;
+    updateData["system.items"] = {};
+    for (const sitem of itemData.system.inventoryItems) {
+      sitem._id ||= randomID(16);
+
+      // Deal with corrupt items or v9 or older items
+      sitem.system ??= {};
+      try {
+        if ("data" in sitem) {
+          sitem.system = mergeObject(sitem.data, sitem.system, { inplace: false });
+          delete sitem.data;
+        }
+
+        const subItem = new Item.implementation(sitem);
+
+        const itemUpdateData = await migrateItemData(subItem.toObject(), actor, { _depth: _depth + 1 });
+        subItem.updateSource(itemUpdateData);
+
+        updateData["system.items"][sitem._id] = subItem.toObject();
+      } catch (err) {
+        console.error("Failed to migrate container content:", { item: sitem, parent: item, actor });
       }
-
-      // Ensure basic data is correct
-      oldItem = new Item.implementation(oldItem).toObject();
-
-      // Migrate data
-      const updateData = await migrateItemData(oldItem, actor, { _depth: _depth + 1 });
-      const newData = mergeObject(oldItem, updateData, { inplace: false, performDeletions: true });
-
-      items.push(newData);
     }
-    updateData["system.inventoryItems"] = items;
+
+    updateData["system.-=inventoryItems"] = null;
   }
+
+  // Migrate container items
+  const migrateContainerItems = async (items) => {
+    if (!items) return;
+    for (const [itemId, itemData] of Object.entries(items)) {
+      try {
+        // Basic validation
+        const subItem = new Item.implementation(itemData);
+
+        // Migrate
+        const subUpdate = await migrateItemData(subItem.toObject(), actor, { item: subItem, _depth: _depth + 1 });
+
+        if (!foundry.utils.isEmpty(subUpdate)) {
+          const diff = subItem.updateSource(subUpdate);
+          updateData["system.items"] ??= {};
+          updateData["system.items"][itemId] = diff;
+        }
+      } catch (err) {
+        console.error("PF1 | Migration | Error", err, item);
+      }
+    }
+  };
+
+  await migrateContainerItems(itemData.system.items);
 
   // Record migrated version
   if (!foundry.utils.isEmpty(updateData)) {

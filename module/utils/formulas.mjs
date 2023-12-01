@@ -47,10 +47,12 @@ class FormulaPart {
   get formula() {
     const f = this.terms
       .map((t) => {
-        if (t.isDeterministic) return `${t.total}`;
+        if (t.constructor.isFunction) return `${t.simplify}`;
+        else if (t.isDeterministic) return `${t.total}`;
         else return t.formula;
       })
       .join("");
+
     const roll = Roll.create(f);
     if (roll.isDeterministic) return roll.evaluate({ async: false }).total.toString();
     else return f;

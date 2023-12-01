@@ -1,12 +1,6 @@
-import { ItemPF } from "./item-pf.mjs";
+import { ItemPhysicalPF } from "./item-physical.mjs";
 
-export class ItemLootPF extends ItemPF {
-  /**
-   * @inheritDoc
-   * @internal
-   */
-  static system = Object.freeze(foundry.utils.mergeObject(super.system, { isPhysical: true }, { inplace: false }));
-
+export class ItemLootPF extends ItemPhysicalPF {
   get extraType() {
     return this.system.extraType;
   }

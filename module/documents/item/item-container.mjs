@@ -1,13 +1,7 @@
-import { ItemPF } from "./item-pf.mjs";
+import { ItemPhysicalPF } from "./item-physical.mjs";
 import { diffObjectAndArray } from "@utils";
 
-export class ItemContainerPF extends ItemPF {
-  /**
-   * @inheritDoc
-   * @internal
-   */
-  static system = Object.freeze(foundry.utils.mergeObject(super.system, { isPhysical: true }, { inplace: false }));
-
+export class ItemContainerPF extends ItemPhysicalPF {
   constructor(...args) {
     super(...args);
 
@@ -181,7 +175,7 @@ export class ItemContainerPF extends ItemPF {
       } while (this.system.items[itemData._id] !== undefined);
 
       // Create temporary item
-      const item = new ItemPF(itemData);
+      const item = new Item.implementation(itemData);
 
       // Run pre-create workflow
       let allowed = (await item._preCreate(itemData, options, game.user)) ?? true;

@@ -287,6 +287,14 @@ export class ItemPF extends ItemBasePF {
     throw new Error(`Item type ${this.type} has no concept of proficiency`);
   }
 
+  /**
+   * @abstract
+   * @type {boolean} - Is proficient using this as weapon.
+   */
+  get isProficient() {
+    return true;
+  }
+
   get isOwned() {
     return super.isOwned || this.parentItem != null;
   }

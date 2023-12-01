@@ -923,6 +923,8 @@ export class ItemSheetPF extends ItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
+    const hasActor = !!this.actor;
+
     // Tooltips
     html.mousemove((ev) => this._moveTooltips(ev));
 
@@ -946,6 +948,18 @@ export class ItemSheetPF extends ItemSheet {
     html
       .find(".content-source .control .edit")
       .click(() => ContentSourceEditor.open(this.document, { editable: this.isEditable }));
+
+    // Mark proficiency in indeterminate state if not forced but actor has it.
+    if (
+      hasActor &&
+      this.item.system.proficient === false &&
+      ["weapon", "equipment", "attack"].includes(this.item.type)
+    ) {
+      if (this.item.isProficient) {
+        const proficiency = html.find("input[name='system.proficient']")[0];
+        if (proficiency) proficiency.indeterminate = true;
+      }
+    }
 
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) {

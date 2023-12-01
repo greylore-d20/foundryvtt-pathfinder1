@@ -21,6 +21,16 @@ export class ItemAttackPF extends ItemPF {
   getProficiency(weapon = true) {
     if (!weapon) throw new Error("Attacks do not support non-weapon proficiency");
 
-    return this.system.proficient ?? true;
+    return this.isProficient;
+  }
+
+  /** @type {boolean} - If actor is proficient with this weapon. */
+  get isProficient() {
+    if (this.system.proficient) return true;
+
+    // Non-weapon attacks always proficient
+    if (this.subType !== "weapon") return true;
+
+    return this.actor?.hasWeaponProficiency?.(this) ?? true;
   }
 }

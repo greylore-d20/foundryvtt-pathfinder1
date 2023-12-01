@@ -671,6 +671,36 @@ export class ActorPF extends ActorBasePF {
   }
 
   /**
+   * Test if actor is proficient with specified weapon.
+   *
+   * @param {ItemPF} item - Item to test
+   * @param {object} [options] - Additional options
+   * @param {boolean} [options.override=true] - Allow item's proficiency override to influence the result.
+   * @returns {boolean} - Proficiency state
+   */
+  hasWeaponProficiency(item, { override = true } = {}) {
+    if (override && item.system.proficient) return true; // Explicitly marked as proficient
+
+    const wprof = this.system.traits?.weaponProf;
+    if (!wprof) return false;
+
+    // Match basic proficiencies (only present on weapons)
+    if (item.type === "weapon") {
+      const subtype = item.subType;
+      if (subtype === "simple" && wprof.total.includes("sim")) return true;
+      if (subtype === "martial" && wprof.total.includes("mar")) return true;
+    }
+
+    // Match base types
+    const profs = wprof.customTotal?.split(";").map((p) => p.trim()) ?? [];
+    if (profs.length == 0) return false;
+    const baseTypes = item.system.baseTypes ?? [];
+    if (baseTypes.length == 0) return false;
+
+    return profs.some((prof) => baseTypes.includes(prof));
+  }
+
+  /**
    * Update specific spellbook.
    *
    * @param {string} bookId Spellbook identifier

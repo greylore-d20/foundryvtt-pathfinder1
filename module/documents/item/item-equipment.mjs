@@ -195,7 +195,7 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
   }
 
   getProficiency(weapon = true) {
-    if (weapon) return this.system.proficient ?? true;
+    if (weapon) return this.isProficient;
 
     const subType = this.subType;
     if (!["armor", "shield"].includes(subType)) throw new Error(`"${subType}" does not support proficiency`);
@@ -234,5 +234,11 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     if (!["armor", "shield"].includes(this.subType)) return 1;
 
     return this._getArmorWeightMultiplier();
+  }
+
+  /** @type {boolean} - If actor is proficient with this weapon. */
+  get isProficient() {
+    if (this.system.proficient) return true;
+    return this.actor?.hasWeaponProficiency?.(this) ?? true;
   }
 }

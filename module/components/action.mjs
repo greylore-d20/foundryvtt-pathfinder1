@@ -838,6 +838,7 @@ export class ItemAction {
     } catch (error) {
       // Ignore proficiency incompatibility.
     }
+
     // Add secondary natural attack penalty
     if (this.item.system.subType === "natural" && primaryAttack === false) {
       const penalty = -5;

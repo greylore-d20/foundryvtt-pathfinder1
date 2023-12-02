@@ -324,23 +324,14 @@ function sanitizePackEntry(entry, documentType = "") {
   // Remove folders anyway if null
   if (entry.folder === null) delete entry.folder;
 
-  // Clean up items
-  if (documentType === "Item") {
-    if (entry.type === "weapon") {
-      // Remove weapon properties that aren't there
-      for (const [key, value] of Object.entries(entry.system.properties ?? {})) {
-        if (value === false) delete entry.system.properties[key];
-      }
-    }
-  }
-
   // Adhere to template data
   if (templateData) {
     const systemData = entry.system ?? entry.data;
     const template = templateData[documentType]?.[entry.type];
     if (systemData && template) {
       entry.system = enforceTemplate(systemData, template, {
-        documentType,
+        documentName: documentType,
+        type: entry.type,
       });
     }
     if (documentType === "Actor" && entry.items?.length > 0) {
@@ -363,13 +354,14 @@ function sanitizePackEntry(entry, documentType = "") {
  * @param {object} object - The data object to be trimmed
  * @param {object} template - The template to enforce
  * @param {object} [options={}] - Additional options to augment the behavior.
- * @param {"Actor" | "Item" | "Component"} [options.documentType] - The document name to which this template belongs.
- * @param {"Action" | "Change"} [options.componentType] - The component name to which this template belongs.
+ * @param {"Actor" | "Item" | "Component"} [options.documentName] - The document(-like) name to which this template belongs.
+ * @param {"Action" | "Change"} [options.componentName] - The component name to which this template belongs.
+ * @param {string} [options.type] - The document type of the object, if it is not already present.
  * @returns {object} A data object which has been trimmed to match the template
  */
 function enforceTemplate(object, template, options = {}) {
   // Do not enforce templates on documents which do not have them
-  if (!object || !template || !["Actor", "Item", "Component"].includes(options.documentType)) return object;
+  if (!object || !template || !["Actor", "Item", "Component"].includes(options.documentName)) return object;
 
   // Create a diff of the object and template to remove all default values
   const diff = utils.diffObject(template, object);
@@ -378,8 +370,8 @@ function enforceTemplate(object, template, options = {}) {
     // Delete additional properties unless in template or in the exception list
     const inTemplate = utils.hasProperty(template, path);
     const isExempt =
-      options.documentType &&
-      TEMPLATE_EXCEPTION_PATHS[options.documentType].some((exceptionPath) => path.startsWith(exceptionPath));
+      options.documentName &&
+      TEMPLATE_EXCEPTION_PATHS[options.documentName].some((exceptionPath) => path.startsWith(exceptionPath));
     if (!inTemplate && !isExempt) {
       delete flattened[path];
     }
@@ -400,31 +392,38 @@ function enforceTemplate(object, template, options = {}) {
   /*  Handling special cases/cleanup              */
   /* -------------------------------------------- */
   for (const path of Object.keys(flattened)) {
-    // Delete false classSkills in class items
-    if (options.documentType === "Item" && path.startsWith("classSkills.") && flattened[path] === false) {
-      delete flattened[path];
-    }
     // Delete erroneous keys containing paths to delete
     if (path.includes(".-=")) {
       delete flattened[path];
     }
 
-    if (options.componentType === "Action") {
-      // if (path === "uses.per") delete flattened[path];
+    // Item cleanup
+    if (options.documentName === "Item") {
+      // Delete non-set class skills in classes
+      if (options.type === "class" && path.startsWith("classSkills.") && flattened[path] === false) {
+        delete flattened[path];
+      }
+
+      // Delete non-set properties in weapons
+      if (options.type === "weapon" && path.startsWith("properties.") && flattened[path] === false) {
+        delete flattened[path];
+      }
     }
   }
 
-  // Trimming components
+  /* -------------------------------------------- */
+  /*  Handling components                         */
+  /* -------------------------------------------- */
   if ("actions" in flattened && Array.isArray(flattened.actions)) {
     const defaultData = getActionDefaultData();
     flattened.actions = flattened.actions.map((action) =>
-      enforceTemplate(action, defaultData, { documentType: "Component", componentType: "Action" })
+      enforceTemplate(action, defaultData, { documentName: "Component", componentName: "Action" })
     );
   }
   if ("changes" in flattened && Array.isArray(flattened.changes)) {
     const defaultData = getChangeDefaultData();
     flattened.changes = flattened.changes.map((change) =>
-      enforceTemplate(change, defaultData, { documentType: "Component", componentType: "Change" })
+      enforceTemplate(change, defaultData, { documentName: "Component", componentName: "Change" })
     );
   }
 

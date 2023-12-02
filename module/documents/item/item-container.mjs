@@ -2,6 +2,14 @@ import { ItemPhysicalPF } from "./item-physical.mjs";
 import { diffObjectAndArray } from "@utils";
 
 export class ItemContainerPF extends ItemPhysicalPF {
+  /**
+   * @override
+   */
+  static system = Object.freeze({
+    ...super.system,
+    hasIdentifier: false,
+  });
+
   constructor(...args) {
     super(...args);
 

@@ -253,43 +253,55 @@ export class ItemClassPF extends ItemPF {
     // Feed info back to actor
     const actor = this.actor;
     // Test against actor.data to avoid unlinked token weirdness
+    if (actor && !actor?.system) console.error("Weirdness!");
     if (actor?.system) {
-      const actorData = actor.system,
-        classData = this.system;
-
-      let healthConfig = game.settings.get("pf1", "healthConfig");
-      const hasPlayerOwner = this.hasPlayerOwner;
-      healthConfig =
-        classData.subType === "racial"
-          ? healthConfig.hitdice.Racial
-          : hasPlayerOwner
-            ? healthConfig.hitdice.PC
-            : healthConfig.hitdice.NPC;
-
-      if (!classData.subType) console.warn(`${this.name} lacks class type`, this);
-      const isBaseClass = (classData.subType || "base") === "base";
-      if (!this.actor.classes) return;
-      actor.classes[classData.tag] = {
-        _id: this.id,
-        level: classData.level,
-        name: this.name,
-        hd: classData.hd,
-        hitDice: this.hitDice,
-        mythicTier: this.mythicTier,
-        bab: classData.bab,
-        hp: healthConfig.auto,
-        savingThrows: {
-          fort: classData.savingThrows.fort.base,
-          ref: classData.savingThrows.ref.base,
-          will: classData.savingThrows.will.base,
-        },
-        fc: {
-          hp: isBaseClass ? classData.fc.hp.value : 0,
-          skill: isBaseClass ? classData.fc.skill.value : 0,
-          alt: isBaseClass ? classData.fc.alt.value : 0,
-        },
-      };
+      this._registerOnActor();
     }
+  }
+
+  _registerOnActor() {
+    const actor = this.actor;
+    if (!actor.classes) return; // actor prep has not run for some reason
+
+    const actorData = actor.system,
+      itemData = this.system;
+
+    // Don't record a link of tag is missing or empty.
+    if (!itemData.tag) return void console.error("Class doesn't have a tag", this);
+
+    if (!itemData.subType) console.warn(`${this.name} lacks class type`, this);
+
+    let healthConfig = game.settings.get("pf1", "healthConfig");
+    const hasPlayerOwner = this.hasPlayerOwner;
+    healthConfig =
+      itemData.subType === "racial"
+        ? healthConfig.hitdice.Racial
+        : hasPlayerOwner
+          ? healthConfig.hitdice.PC
+          : healthConfig.hitdice.NPC;
+
+    const isBaseClass = (itemData.subType || "base") === "base";
+
+    actor.classes[itemData.tag] = {
+      _id: this.id,
+      level: itemData.level,
+      name: this.name,
+      hd: itemData.hd,
+      hitDice: this.hitDice,
+      mythicTier: this.mythicTier,
+      bab: itemData.bab,
+      hp: healthConfig.auto,
+      savingThrows: {
+        fort: itemData.savingThrows.fort.base,
+        ref: itemData.savingThrows.ref.base,
+        will: itemData.savingThrows.will.base,
+      },
+      fc: {
+        hp: isBaseClass ? itemData.fc.hp.value : 0,
+        skill: isBaseClass ? itemData.fc.skill.value : 0,
+        alt: isBaseClass ? itemData.fc.alt.value : 0,
+      },
+    };
   }
 
   get hitDice() {

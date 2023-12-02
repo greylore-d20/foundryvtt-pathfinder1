@@ -3,6 +3,14 @@ import { ItemPF } from "./item-pf.mjs";
 export class ItemRacePF extends ItemPF {
   /**
    * @override
+   */
+  static system = Object.freeze({
+    ...super.system,
+    hasIdentifier: false,
+  });
+
+  /**
+   * @override
    * @param {object} data
    * @param {object} context
    * @param {User} user

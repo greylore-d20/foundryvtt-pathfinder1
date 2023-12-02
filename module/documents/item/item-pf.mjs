@@ -53,6 +53,10 @@ export class ItemPF extends ItemBasePF {
      * @type {boolean}
      */
     isPhysical: false,
+    /**
+     * Whether this item receives an identifier.
+     */
+    hasIdentifier: true,
   });
 
   /**
@@ -620,23 +624,22 @@ export class ItemPF extends ItemBasePF {
   }
 
   prepareBaseData() {
+    super.prepareBaseData();
     this._prepareIdentifier();
-    const itemData = this.system;
+
+    if (this.inContainer) this.adjustContained();
   }
 
   /**
    * Initialize identifier
    */
   _prepareIdentifier() {
-    if (!this.system.tag) {
-      // TODO: remove template.json dependency
-      const isTaggedType = game.template.Item[this.type]?.templates.includes("tagged") ?? false;
-      if (isTaggedType) {
+    const isTaggedType = this.constructor.system?.hasIdentifier ?? false;
+    if (isTaggedType) {
+      if (!this.system.tag) {
         this.system.tag = createTag(this.name);
       }
     }
-
-    if (this.inContainer) this.adjustContained();
   }
 
   /**

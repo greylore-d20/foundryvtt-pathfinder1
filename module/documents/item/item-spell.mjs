@@ -6,6 +6,14 @@ import { renderCachedTemplate } from "@utils/handlebars/templates.mjs";
 export class ItemSpellPF extends ItemPF {
   /**
    * @override
+   */
+  static system = Object.freeze({
+    ...super.system,
+    hasIdentifier: false,
+  });
+
+  /**
+   * @override
    * @param {object} data Creation data
    * @param {object} options Context options
    * @param {User} user Triggering user

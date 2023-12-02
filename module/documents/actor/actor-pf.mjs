@@ -534,7 +534,7 @@ export class ActorPF extends ActorBasePF {
     const classes = this.itemTypes.class;
     const { level, mythicTier } = classes.reduce(
       (cur, o) => {
-        o.prepareDerivedData(); // HACK: Out of order preparation for later.
+        o.reset(); // HACK: Out of order preparation for later.
         cur.level += o.hitDice;
         cur.mythicTier += o.mythicTier;
         return cur;

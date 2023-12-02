@@ -324,6 +324,16 @@ function sanitizePackEntry(entry, documentType = "") {
   // Remove folders anyway if null
   if (entry.folder === null) delete entry.folder;
 
+  // Clean up items
+  if (documentType === "Item") {
+    if (entry.type === "weapon") {
+      // Remove weapon properties that aren't there
+      for (const [key, value] of Object.entries(entry.system.properties ?? {})) {
+        if (value === false) delete entry.system.properties[key];
+      }
+    }
+  }
+
   // Adhere to template data
   if (templateData) {
     const systemData = entry.system ?? entry.data;

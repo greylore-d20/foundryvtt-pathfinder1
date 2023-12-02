@@ -113,7 +113,7 @@ export class ItemSheetPF extends ItemSheet {
     context.rollData = rollData;
     context.labels = item.getLabels();
 
-    context.canClassLink = pf1.config.classAssociations.includes(item.type);
+    context.canClassLink = pf1.config.classAssociations.includes(item.type) && !!rollData.classes;
     if (context.canClassLink) {
       context.hasClassLink = !!item.system.class;
       context.classes = {};

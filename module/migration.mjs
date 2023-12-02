@@ -627,7 +627,7 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
  * @returns {Promise<Item|null>} - Promise to updated item document, or null if no update was performed.
  */
 export async function migrateItem(item) {
-  const updateData = await migrateItemData(item.toObject(), item.actor);
+  const updateData = await migrateItemData(item.toObject(), item.actor, { item });
   if (!foundry.utils.isEmpty(updateData)) {
     return item.update(updateData);
   }
@@ -700,7 +700,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   const alreadyHasActions = itemData.system.actions instanceof Array && itemData.system.actions.length > 0;
   const itemActionData = alreadyHasActions ? itemData.system.actions : updateData["system.actions"];
   if (itemActionData instanceof Array) {
-    const newActionData = itemActionData.map((action) => migrateItemActionData(action, updateData, { item }));
+    const newActionData = itemActionData.map((action) => migrateItemActionData(action, updateData, { itemData, item }));
     // Update only if something changed. Bi-directional testing for detecting deletions.
     if (
       !foundry.utils.isEmpty(diffObject(itemActionData, newActionData)) ||
@@ -775,10 +775,10 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
 /**
  * Older actors incorrectly has .range.value as number instead of string
  *
- * @param action
- * @param item
+ * @param {object} action - Action data
+ * @param {object} itemData - Parent item data
  */
-const _migrateActionRange = (action, item) => {
+const _migrateActionRange = (action, itemData) => {
   const range = action.range?.value;
   if (range === null || range === "") {
     delete action.range.value;
@@ -793,21 +793,22 @@ const _migrateActionRange = (action, item) => {
  * @param {object} action - The action's data, which also serves as the update data to pass on.
  * @param {object} updateData - Item update data
  * @param {object} [options] - Additional options
- * @param {object} [options.item=null] - The item data this action is in.
+ * @param {Item} [options.item=null] - Parent item document this action is in.
+ * @param {object} options.itemData - Parent item data
  * @returns {object} The resulting action data.
  */
-export const migrateItemActionData = function (action, updateData, { item = null } = {}) {
+export const migrateItemActionData = function (action, updateData, { itemData, item = null } = {}) {
   action = foundry.utils.mergeObject(pf1.components.ItemAction.defaultData, action);
 
-  _migrateActionRange(action, item);
-  _migrateActionDamageParts(action, item);
-  _migrateUnchainedActionEconomy(action, item);
-  _migrateActionDamageType(action, item);
-  _migrateActionConditionals(action, item);
-  _migrateActionEnhOverride(action, item);
-  _migrateActionPrimaryAttack(action, item);
-  _migrateActionChargeUsage(action, item);
-  _migrateActionAmmunitionUsage(action, updateData, { item });
+  _migrateActionRange(action, itemData);
+  _migrateActionDamageParts(action, itemData);
+  _migrateUnchainedActionEconomy(action, itemData);
+  _migrateActionDamageType(action, itemData);
+  _migrateActionConditionals(action, itemData);
+  _migrateActionEnhOverride(action, itemData);
+  _migrateActionPrimaryAttack(action, itemData);
+  _migrateActionChargeUsage(action, itemData);
+  _migrateActionAmmunitionUsage(action, itemData, updateData);
 
   // Return the migrated update data
   return action;
@@ -1798,7 +1799,11 @@ const _migrateItemLearnedAt = (item, updateData) => {
   }
 };
 
-const _migrateActionChargeUsage = function (action, item) {
+/**
+ * @param {object} action - Action data
+ * @param {object} itemData - Parent item data
+ */
+const _migrateActionChargeUsage = function (action, itemData) {
   if (action.uses?.autoDeductCharges !== undefined) {
     if (action.uses.autoDeductCharges === false) {
       action.uses.autoDeductChargesCost = "0";
@@ -1812,23 +1817,27 @@ const _migrateActionChargeUsage = function (action, item) {
  * - ... usesAmmo boolean away
  * - ... ammoType to item.system.ammo.type
  *
- * @param {object} action
- * @param {object} updateData
- * @param {object} [options] - Additional options
- * @param {Item} [options.item=null]
+ * @param {object} action - Action data
+ * @param {object} itemData - Parent item data
+ * @param {object} updateData - Item update data
  */
-const _migrateActionAmmunitionUsage = function (action, updateData, { item = null } = {}) {
+const _migrateActionAmmunitionUsage = function (action, itemData, updateData) {
   if (action.usesAmmo === false) {
     delete action.ammoType;
   }
   if (action.usesAmmo === true) {
-    if (item && !item.system.ammo?.type) {
+    if (!itemData.system.ammo?.type && !updateData["system.ammo.type"]) {
       updateData["system.ammo.type"] = action.ammoType;
       action.ammoType = ""; // Inherit from item
     }
-    // Delete the key in general if it's empty
+
+    // Same as base item
+    if (itemData.system.ammo?.type == action.ammoType) delete action.ammoType;
+
+    // Delete the key in general if it's empty (inherited)
     if (!action.ammoType) delete action.ammoType;
   }
+
   delete action.usesAmmo;
 };
 
@@ -1859,10 +1868,10 @@ const _migrateItemChargeCost = function (item, updateData) {
  *
  * Introduced with PF1 v9
  *
- * @param {*} action
- * @param {*} item
+ * @param {object} action - Action data
+ * @param {object} itemData - Parent item data
  */
-const _migrateActionDamageParts = function (action, item) {
+const _migrateActionDamageParts = function (action, itemData) {
   const categories = action.damage;
   for (const part of ["parts", "critParts", "nonCritParts"]) {
     const category = categories[part];
@@ -1877,7 +1886,11 @@ const _migrateActionDamageParts = function (action, item) {
   }
 };
 
-const _migrateActionDamageType = function (action, item) {
+/**
+ * @param {object} action - Action data
+ * @param {object} itemData - Parent item data
+ */
+const _migrateActionDamageType = function (action, itemData) {
   // Determine data paths using damage types
   const damageGroupPaths = ["damage.parts", "damage.critParts", "damage.nonCritParts"];
   for (const damageGroupPath of damageGroupPaths) {
@@ -1901,7 +1914,11 @@ const _migrateActionDamageType = function (action, item) {
   }
 };
 
-const _migrateActionConditionals = function (action, item) {
+/**
+ * @param {object} action - Action data
+ * @param {object} itemData - Parent item data
+ */
+const _migrateActionConditionals = function (action, itemData) {
   for (const conditional of action.conditionals ?? []) {
     // Create conditional ID
     if (!conditional._id) conditional._id = randomID(16);
@@ -1941,7 +1958,11 @@ const _migrateActionConditionals = function (action, item) {
   }
 };
 
-const _migrateActionEnhOverride = function (action, item) {
+/**
+ * @param {object} action - Action data
+ * @param {object} itemData - Parent item data
+ */
+const _migrateActionEnhOverride = function (action, itemData) {
   if (typeof action.enh !== "object") {
     action.enh = { value: action.enh ?? null };
   }
@@ -1958,9 +1979,13 @@ const _migrateActionEnhOverride = function (action, item) {
   delete action.enh.override;
 };
 
-const _migrateActionPrimaryAttack = function (action, item) {
+/**
+ * @param {object} action - Action data
+ * @param {object} itemData - Parent item data
+ */
+const _migrateActionPrimaryAttack = function (action, itemData) {
   if (action.naturalAttack?.primaryAttack === undefined) {
-    setProperty(action, "naturalAttack.primaryAttack", item.system.primaryAttack);
+    setProperty(action, "naturalAttack.primaryAttack", itemData.system.primaryAttack ?? true);
   }
 };
 
@@ -2458,6 +2483,15 @@ const _migrateItemUnusedData = (item, updateData) => {
     updateData["system.-=useCustomTag"] = null;
     if (item.system.useCustomTag === false && item.system.tag !== undefined) {
       updateData["system.-=tag"] = null;
+    }
+  }
+
+  // ammoType seems to have never been actually used, but it was stored in items
+  if (item.system.ammoType !== undefined) {
+    updateData["system.-=ammoType"] = null;
+    // Move it anyway just in case, if missing
+    if (!item.system.ammo?.type && item.system.ammoType) {
+      updateData["system.ammo.type"] = item.system.ammoType;
     }
   }
 };

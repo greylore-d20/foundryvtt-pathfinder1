@@ -32,6 +32,7 @@ const TEMPLATE_EXCEPTION_PATHS = {
     "properties",
     "source",
     "items",
+    "ammo",
   ],
   Component: [],
 };

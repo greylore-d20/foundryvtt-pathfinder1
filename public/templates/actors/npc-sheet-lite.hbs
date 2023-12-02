@@ -24,7 +24,7 @@
 
       {{!-- Health --}}
       {{#unless useWoundsAndVigor}}
-      <div class="health wounds-vigor">
+      <div class="health base-health info-box-header">
         <h3>{{localize "PF1.HitPoints"}}</h3>
         <div class="info-box-joined current-max">
           <div class="info-box current">
@@ -68,7 +68,7 @@
       {{else}}
       {{!-- Wounds & Vigor --}}
       <div class="health wounds-vigor">
-        <div class="vigor">
+        <div class="vigor info-box-header">
           <h3>{{localize "PF1.Vigor"}}</h3>
 
           <div class="info-box-joined current-max vigor">
@@ -99,7 +99,7 @@
           </div>
         </div>
 
-        <div class="wounds">
+        <div class="wounds info-box-header">
           <h3>{{localize "PF1.Wounds"}}</h3>
 
           <div class="info-box-joined current-max wounds">

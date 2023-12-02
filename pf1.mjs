@@ -133,7 +133,6 @@ Hooks.once("init", function () {
 
   // Dice config
   CONFIG.Dice.rolls.unshift(dice.RollPF);
-  CONFIG.Dice.termTypes.SizeRollTerm = dice.terms.SizeRollTerm;
   for (const [key, term] of Object.entries(dice.terms.fn)) {
     CONFIG.Dice.termTypes[key] = term;
   }

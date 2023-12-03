@@ -3,6 +3,10 @@ import { RegistryEntry } from "./base-registry.mjs";
 
 const fields = foundry.data.fields;
 
+// Notes
+// PPC = Player Companion
+// PRG is in rare cases used to refer to core rulebook, but also sometimes to refer to the game in its entirety
+
 export class Source extends RegistryEntry {
   static defineSchema() {
     const optionalString = () => new fields.StringField({ nullable: true, blank: true, initial: undefined });
@@ -193,6 +197,7 @@ export class Sources extends Registry {
     {
       _id: "PZO1130",
       name: "Monster Codex",
+      abbr: "MC",
       date: "2014-10-22",
       pages: 256,
       isbn: "978-1-60125-686-7",
@@ -2218,7 +2223,6 @@ export class Sources extends Registry {
       name: "Second Darkness",
       date: "2008-08-01",
       isbn: "978-1-60125-142-8",
-      tieIn: "Second Darkness",
       legacy: true,
       type: "companion",
     },
@@ -2376,6 +2380,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9422",
       name: "Pirates of the Inner Sea",
+      abbr: "PotIS",
       date: "2012-02-01",
       isbn: "978-1-60125-405-4",
       tieIn: "Skull & Shackles",
@@ -2435,6 +2440,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9430",
       name: "Dungeoneer's Handbook",
+      abbr: "DHB",
       date: "2013-03-08",
       isbn: "978-1-60125-510-5",
       type: "companion",
@@ -2535,6 +2541,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9444",
       name: "Undead Slayer's Handbook",
+      abbr: "USH",
       date: "2014-04-30",
       isbn: "978-1-60125-604-1",
       type: "companion",
@@ -2542,6 +2549,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9445",
       name: "Alchemy Manual",
+      abbr: "AM",
       date: "2014-04-30",
       isbn: "978-1-60125-605-8",
       type: "companion",
@@ -2606,6 +2614,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9454",
       name: "Familiar Folio",
+      abbr: "FF",
       date: "2015-01-28",
       isbn: "978-1-60125-731-4",
       type: "companion",
@@ -2843,6 +2852,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9487",
       name: "Potions & Poisons",
+      abbr: "P&P",
       date: "2017-12-13",
       isbn: "978-1-64078-000-2",
       type: "companion",
@@ -3005,14 +3015,17 @@ export class Sources extends Registry {
     {
       _id: "PZO9210",
       name: "Pathfinder Chronicles: Dungeon Denizens Revisited",
+      abbr: "DDR",
       date: "2009-05-01",
       pages: 64,
       isbn: "978-1-60125-172-5",
       type: "setting",
+      legacy: true,
     },
     {
       _id: "PZO9211",
       name: "Pathfinder Chronicles: Seekers of Secrets",
+      abbr: "SoS",
       date: "2009-10-01",
       pages: 64,
       isbn: "978-1-60125-178-7",
@@ -3158,6 +3171,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9235",
       name: "Pathfinder Society Field Guide",
+      abbr: "PSFG",
       date: "2011-07-01",
       pages: 64,
       isbn: "978-1-60125-305-7",

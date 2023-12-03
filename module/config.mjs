@@ -112,11 +112,11 @@ export const savingThrows = {
  * The types of classes
  */
 export const classTypes = {
-  base: "PF1.ClassTypeBase",
-  prestige: "PF1.ClassTypePrestige",
-  npc: "PF1.ClassTypeNPC",
-  racial: "PF1.ClassTypeRacial",
-  mythic: "PF1.ClassTypeMythic",
+  base: "PF1.Subtypes.Item.class.base.Single",
+  prestige: "PF1.Subtypes.Item.class.prestige.Single",
+  npc: "PF1.Subtypes.Item.class.npc.Single",
+  racial: "PF1.Subtypes.Item.class.racial.Single",
+  mythic: "PF1.Subtypes.Item.class.mythic.Single",
 };
 
 /**
@@ -309,36 +309,36 @@ export const weaponProficiencies = {
  * This describes the ways that an ability can be activated.
  */
 export const abilityActivationTypes = {
-  nonaction: "PF1.ActivationTypeNonaction",
-  passive: "PF1.ActivationTypePassive",
-  free: "PF1.ActivationTypeFree",
-  swift: "PF1.ActivationTypeSwift",
-  immediate: "PF1.ActivationTypeImmediate",
-  move: "PF1.ActivationTypeMove",
-  standard: "PF1.ActivationTypeStandard",
-  full: "PF1.ActivationTypeFullround",
-  attack: "PF1.ActivationTypeAttack",
-  aoo: "PF1.ActivationTypeAoO",
-  round: "PF1.ActivationTypeRound",
-  minute: "PF1.ActivationTypeMinute",
-  hour: "PF1.ActivationTypeHour",
-  special: "PF1.ActivationTypeSpecial",
+  nonaction: "PF1.Activation.nonaction.Single",
+  passive: "PF1.Activation.passive.Single",
+  free: "PF1.Activation.free.Single",
+  swift: "PF1.Activation.swift.Single",
+  immediate: "PF1.Activation.immediate.Single",
+  move: "PF1.Activation.move.Single",
+  standard: "PF1.Activation.standard.Single",
+  full: "PF1.Activation.fullRound.Single",
+  attack: "PF1.Activation.attack.Single",
+  aoo: "PF1.Activation.aoo.Single",
+  round: "PF1.Activation.round.Single",
+  minute: "PF1.Activation.minute.Single",
+  hour: "PF1.Activation.hour.Single",
+  special: "PF1.Activation.special.Single",
 };
 
 /**
  * This describes plurals for activation types.
  */
 export const abilityActivationTypesPlurals = {
-  free: "PF1.ActivationTypeFreePlural",
-  swift: "PF1.ActivationTypeSwiftPlural",
-  immediate: "PF1.ActivationTypeImmediatePlural",
-  move: "PF1.ActivationTypeMovePlural",
-  standard: "PF1.ActivationTypeStandardPlural",
-  full: "PF1.ActivationTypeFullroundPlural",
-  attack: "PF1.ActivationTypeAttackPlural",
-  round: "PF1.ActivationTypeRoundPlural",
-  minute: "PF1.ActivationTypeMinutePlural",
-  hour: "PF1.ActivationTypeHourPlural",
+  free: "PF1.Activation.free.Plural",
+  swift: "PF1.Activation.swift.Plural",
+  immediate: "PF1.Activation.immediate.Plural",
+  move: "PF1.Activation.move.Plural",
+  standard: "PF1.Activation.standard.Plural",
+  full: "PF1.Activation.fullRound.Plural",
+  attack: "PF1.Activation.attack.Plural",
+  round: "PF1.Activation.round.Plural",
+  minute: "PF1.Activation.minute.Plural",
+  hour: "PF1.Activation.hour.Plural",
 };
 
 /**
@@ -346,16 +346,16 @@ export const abilityActivationTypesPlurals = {
  * Unchained rules.
  */
 export const abilityActivationTypes_unchained = {
-  nonaction: "PF1.ActivationTypeNonaction",
-  passive: "PF1.ActivationTypePassive",
-  free: "PF1.ActivationTypeFree",
-  reaction: "PF1.ActivationTypeReaction",
-  action: "PF1.ActivationTypeAction",
-  attack: "PF1.ActivationTypeAttack",
-  aoo: "PF1.ActivationTypeAoO",
-  minute: "PF1.ActivationTypeMinute",
-  hour: "PF1.ActivationTypeHour",
-  special: "PF1.ActivationTypeSpecial",
+  nonaction: "PF1.Activation.nonaction.Single",
+  passive: "PF1.Activation.passive.Single",
+  free: "PF1.Activation.free.Single",
+  reaction: "PF1.Activation.reaction.Single",
+  action: "PF1.Activation.action.Single",
+  attack: "PF1.Activation.attack.Single",
+  aoo: "PF1.Activation.aoo.Single",
+  minute: "PF1.Activation.minute.Single",
+  hour: "PF1.Activation.hour.Single",
+  special: "PF1.Activation.special.Single",
 };
 
 /**
@@ -363,13 +363,13 @@ export const abilityActivationTypes_unchained = {
  * using Unchained rules.
  */
 export const abilityActivationTypesPlurals_unchained = {
-  passive: "PF1.ActivationTypePassive",
-  free: "PF1.ActivationTypeFreePlural",
-  reaction: "PF1.ActivationTypeReactionPlural",
-  action: "PF1.ActivationTypeActionPlural",
-  minute: "PF1.ActivationTypeMinutePlural",
-  hour: "PF1.ActivationTypeHourPlural",
-  special: "PF1.ActivationTypeSpecial",
+  passive: "PF1.Activation.passive.Plural",
+  free: "PF1.Activation.free.Plural",
+  reaction: "PF1.Activation.reaction.Plural",
+  action: "PF1.Activation.action.Plural",
+  minute: "PF1.Activation.minute.Plural",
+  hour: "PF1.Activation.hour.Plural",
+  special: "PF1.Activation.special.Plural",
 };
 
 /**
@@ -389,20 +389,17 @@ export const woundThresholdChangeTargets = ["~attackCore", "cmd", "allSavingThro
 
 export const divineFocus = {
   0: "",
-  1: "PF1.SpellComponentDivineFocusAlone",
-  2: "PF1.SpellComponentDivineFocusMaterial",
-  3: "PF1.SpellComponentDivineFocusFocus",
+  1: "PF1.SpellComponents.DFVariants.DF",
+  2: "PF1.SpellComponents.DFVariants.MDF",
+  3: "PF1.SpellComponents.DFVariants.FDF",
 };
 
 /**
- * The measure template types available e.g. for spells
+ * The measure template types available for actions.
+ *
+ * They're the same as Foundry's measure templates, so it's copy of CONFIG.MeasuredTemplate.types.
  */
-export const measureTemplateTypes = {
-  cone: "PF1.MeasureTemplateCone",
-  circle: "PF1.MeasureTemplateCircle",
-  ray: "PF1.MeasureTemplateRay",
-  rect: "PF1.MeasureTemplateRectangle",
-};
+export const measureTemplateTypes = CONFIG.MeasuredTemplate.types;
 
 /* -------------------------------------------- */
 
@@ -410,15 +407,15 @@ export const measureTemplateTypes = {
  * The possible creature sizes
  */
 export const actorSizes = {
-  fine: "PF1.ActorSizeFine",
-  dim: "PF1.ActorSizeDiminutive",
-  tiny: "PF1.ActorSizeTiny",
-  sm: "PF1.ActorSizeSmall",
-  med: "PF1.ActorSizeMedium",
-  lg: "PF1.ActorSizeLarge",
-  huge: "PF1.ActorSizeHuge",
-  grg: "PF1.ActorSizeGargantuan",
-  col: "PF1.ActorSizeColossal",
+  fine: "PF1.ActorSize.fine",
+  dim: "PF1.ActorSize.dim",
+  tiny: "PF1.ActorSize.tiny",
+  sm: "PF1.ActorSize.sm",
+  med: "PF1.ActorSize.med",
+  lg: "PF1.ActorSize.lg",
+  huge: "PF1.ActorSize.huge",
+  grg: "PF1.ActorSize.grg",
+  col: "PF1.ActorSize.col",
 };
 
 /**
@@ -593,11 +590,11 @@ export const vehicles = {
  * The possible options for a creature's maneuverability
  */
 export const flyManeuverabilities = {
-  clumsy: "PF1.FlyManeuverabilityClumsy",
-  poor: "PF1.FlyManeuverabilityPoor",
-  average: "PF1.FlyManeuverabilityAverage",
-  good: "PF1.FlyManeuverabilityGood",
-  perfect: "PF1.FlyManeuverabilityPerfect",
+  clumsy: "PF1.Movement.FlyManeuverability.Quality.clumsy",
+  poor: "PF1.Movement.FlyManeuverability.Quality.poor",
+  average: "PF1.Movement.FlyManeuverability.Quality.average",
+  good: "PF1.Movement.FlyManeuverability.Quality.good",
+  perfect: "PF1.Movement.FlyManeuverability.Quality.perfect",
 };
 
 /**
@@ -741,17 +738,17 @@ export const abilityDamageMultipliers = [
  * Classification types for item action types
  */
 export const itemActionTypes = {
-  mwak: "PF1.ActionMWAK",
-  rwak: "PF1.ActionRWAK",
-  twak: "PF1.ActionTWAK",
-  msak: "PF1.ActionMSAK",
-  rsak: "PF1.ActionRSAK",
-  mcman: "PF1.ActionMCMan",
-  rcman: "PF1.ActionRCMan",
-  spellsave: "PF1.ActionSpellSave",
-  save: "PF1.ActionSave",
-  heal: "PF1.ActionHeal",
-  other: "PF1.ActionOther",
+  mwak: "PF1.ActionTypes.mwak",
+  rwak: "PF1.ActionTypes.rwak",
+  twak: "PF1.ActionTypes.twak",
+  msak: "PF1.ActionTypes.msak",
+  rsak: "PF1.ActionTypes.rsak",
+  mcman: "PF1.ActionTypes.mcman",
+  rcman: "PF1.ActionTypes.rcman",
+  spellsave: "PF1.ActionTypes.spellSave",
+  save: "PF1.ActionTypes.save",
+  heal: "PF1.ActionTypes.heal",
+  other: "PF1.ActionTypes.other",
 };
 
 /* -------------------------------------------- */
@@ -774,23 +771,23 @@ export const limitedUsePeriods = {
  */
 export const equipmentTypes = {
   armor: {
-    _label: "PF1.EquipTypeArmor",
+    _label: "PF1.Subtypes.Item.equipment.armor.Single",
     lightArmor: "PF1.EquipTypeLight",
     mediumArmor: "PF1.EquipTypeMedium",
     heavyArmor: "PF1.EquipTypeHeavy",
   },
   shield: {
-    _label: "PF1.EquipTypeShield",
+    _label: "PF1.Subtypes.Item.equipment.shield.Single",
     lightShield: "PF1.EquipTypeLightShield",
     heavyShield: "PF1.EquipTypeHeavyShield",
     towerShield: "PF1.EquipTypeTowerShield",
     other: "PF1.EquipTypeOtherShield",
   },
   wondrous: {
-    _label: "PF1.EquipTypeWondrousItem",
+    _label: "PF1.Subtypes.Item.equipment.wondrous.Single",
   },
   clothing: {
-    _label: "PF1.EquipTypeClothing",
+    _label: "PF1.Subtypes.Item.equipment.clothing.Single",
   },
   other: {
     _label: "PF1.Other",
@@ -802,28 +799,28 @@ export const equipmentTypes = {
  */
 export const equipmentSlots = {
   armor: {
-    armor: "PF1.EquipSlotArmor",
+    armor: "PF1.EquipSlots.armor",
   },
   shield: {
-    shield: "PF1.EquipSlotShield",
+    shield: "PF1.EquipSlots.shield",
   },
   wondrous: {
-    slotless: "PF1.EquipSlotSlotless",
-    head: "PF1.EquipSlotHead",
-    headband: "PF1.EquipSlotHeadband",
-    eyes: "PF1.EquipSlotEyes",
-    shoulders: "PF1.EquipSlotShoulders",
-    neck: "PF1.EquipSlotNeck",
-    chest: "PF1.EquipSlotChest",
-    body: "PF1.EquipSlotBody",
-    belt: "PF1.EquipSlotBelt",
-    wrists: "PF1.EquipSlotWrists",
-    hands: "PF1.EquipSlotHands",
-    ring: "PF1.EquipSlotRing",
-    feet: "PF1.EquipSlotFeet",
+    slotless: "PF1.EquipSlots.none",
+    head: "PF1.EquipSlots.head",
+    headband: "PF1.EquipSlots.headband",
+    eyes: "PF1.EquipSlots.eyes",
+    shoulders: "PF1.EquipSlots.shoulders",
+    neck: "PF1.EquipSlots.neck",
+    chest: "PF1.EquipSlots.chest",
+    body: "PF1.EquipSlots.body",
+    belt: "PF1.EquipSlots.belt",
+    wrists: "PF1.EquipSlots.wrists",
+    hands: "PF1.EquipSlots.hands",
+    ring: "PF1.EquipSlots.ring",
+    feet: "PF1.EquipSlots.feet",
   },
   clothing: {
-    clothing: "PF1.EquipTypeClothing",
+    clothing: "PF1.EquipSlots.clothing",
   },
   other: {
     other: "PF1.Other",
@@ -844,14 +841,14 @@ export const lootTypes = {
  * The subtypes for ammo type loot items
  */
 export const ammoTypes = {
-  arrow: "PF1.AmmoTypeArrow",
-  bolt: "PF1.AmmoTypeBolt",
-  repeatingBolt: "PF1.AmmoTypeRepeatingBolt",
-  slingBullet: "PF1.AmmoTypeBulletSling",
-  gunBullet: "PF1.AmmoTypeBulletGun",
-  dragoonBullet: "PF1.AmmoTypeBulletDragoon",
-  dart: "PF1.AmmoTypeDart",
-  siege: "PF1.AmmoTypeSiege",
+  arrow: "PF1.AmmoType.arrow",
+  bolt: "PF1.AmmoType.bolt",
+  repeatingBolt: "PF1.AmmoType.repeatingBolt",
+  slingBullet: "PF1.AmmoType.slingBullet",
+  gunBullet: "PF1.AmmoType.gunBullet",
+  dragoonBullet: "PF1.AmmoType.dragoonBullet",
+  dart: "PF1.AmmoType.dart",
+  siege: "PF1.AmmoType.siege",
 };
 
 /* -------------------------------------------- */
@@ -897,21 +894,21 @@ export const featTypesPlurals = {
 };
 
 export const traitTypes = {
-  combat: "PF1.Trait.Combat",
-  magic: "PF1.Trait.Magic",
-  faith: "PF1.Trait.Faith",
-  social: "PF1.Trait.Social",
-  campaign: "PF1.Trait.Campaign",
-  cosmic: "PF1.Trait.Cosmic",
-  equipment: "PF1.Trait.Equipment",
-  exemplar: "PF1.Trait.Exemplar",
-  faction: "PF1.Trait.Faction",
-  family: "PF1.Trait.Family",
-  mount: "PF1.Trait.Mount",
-  race: "PF1.Trait.Race",
-  region: "PF1.Trait.Region",
-  religion: "PF1.Trait.Religion",
-  drawback: "PF1.Trait.Drawback",
+  combat: "PF1.Trait.combat",
+  magic: "PF1.Trait.magic",
+  faith: "PF1.Trait.faith",
+  social: "PF1.Trait.social",
+  campaign: "PF1.Trait.campaign",
+  cosmic: "PF1.Trait.cosmic",
+  equipment: "PF1.Trait.equipment",
+  exemplar: "PF1.Trait.exemplar",
+  faction: "PF1.Trait.faction",
+  family: "PF1.Trait.family",
+  mount: "PF1.Trait.mount",
+  race: "PF1.Trait.race",
+  region: "PF1.Trait.region",
+  religion: "PF1.Trait.religion",
+  drawback: "PF1.Trait.drawback",
 };
 
 /**
@@ -1053,24 +1050,27 @@ export const actorStatures = {
  * This Object defines the various lengths of time which can occur in PF1
  */
 export const timePeriods = {
-  inst: "PF1.TimeInst",
-  turn: "PF1.TimeTurn",
-  round: "PF1.TimeRound",
-  minute: "PF1.TimeMinute",
-  hour: "PF1.TimeHour",
-  day: "PF1.TimeDay",
-  month: "PF1.TimeMonth",
-  year: "PF1.TimeYear",
-  perm: "PF1.TimePerm",
+  inst: "PF1.Time.Period.inst.Label",
+  turn: "PF1.Time.Period.turn.Label",
+  round: "PF1.Time.Period.round.Label",
+  minute: "PF1.Time.Period.minute.Label",
+  hour: "PF1.Time.Period.hour.Label",
+  day: "PF1.Time.Period.day.Label",
+  month: "PF1.Time.Period.month.Label",
+  year: "PF1.Time.Period.year.Label",
+  perm: "PF1.Time.Period.perm.Label",
   seeText: "PF1.SeeText",
   spec: "PF1.Special",
 };
 
+/**
+ * Short form labels for time periods, and valid options for buff durations.
+ */
 export const timePeriodsShort = {
-  turn: "PF1.TimeTurnShort",
-  round: "PF1.TimeRoundShort",
-  minute: "PF1.TimeMinuteShort",
-  hour: "PF1.TimeHourShort",
+  turn: "PF1.Time.Period.turn.Short",
+  round: "PF1.Time.Period.round.Short",
+  minute: "PF1.Time.Period.minute.Short",
+  hour: "PF1.Time.Period.hour.Short",
 };
 
 /* -------------------------------------------- */
@@ -1662,10 +1662,10 @@ export const magicAuraByLevel = {
 };
 
 export const auraStrengths = {
-  1: "PF1.AuraStrength_Faint",
-  2: "PF1.AuraStrength_Moderate",
-  3: "PF1.AuraStrength_Strong",
-  4: "PF1.AuraStrength_Overwhelming",
+  1: "PF1.Aura.Strength.faint",
+  2: "PF1.Aura.Strength.moderate",
+  3: "PF1.Aura.Strength.strong",
+  4: "PF1.Aura.Strength.overwhelming",
 };
 
 /* -------------------------------------------- */
@@ -1764,28 +1764,28 @@ export const weaponProperties = {
  * The components required for casting a spell
  */
 export const spellComponents = {
-  verbal: "PF1.SpellComponentKeys.Verbal",
-  somatic: "PF1.SpellComponentKeys.Somatic",
-  thought: "PF1.SpellComponentKeys.Thought",
-  emotion: "PF1.SpellComponentKeys.Emotion",
-  material: "PF1.SpellComponentKeys.Material",
-  focus: "PF1.SpellComponentKeys.Focus",
-  divineFocus: "PF1.SpellComponentKeys.DivineFocus",
+  verbal: "PF1.SpellComponents.Type.verbal.Abbr",
+  somatic: "PF1.SpellComponents.Type.somatic.Abbr",
+  thought: "PF1.SpellComponents.Type.thought.Abbr",
+  emotion: "PF1.SpellComponents.Type.emotion.Abbr",
+  material: "PF1.SpellComponents.Type.material.Abbr",
+  focus: "PF1.SpellComponents.Type.focus.Abbr",
+  divineFocus: "PF1.SpellComponent.Type.divineFocus.Abbr",
 };
 
 /**
  * Spell schools
  */
 export const spellSchools = {
-  abj: "PF1.SpellSchoolAbjuration",
-  con: "PF1.SpellSchoolConjuration",
-  div: "PF1.SpellSchoolDivination",
-  enc: "PF1.SpellSchoolEnchantment",
-  evo: "PF1.SpellSchoolEvocation",
-  ill: "PF1.SpellSchoolIllusion",
-  nec: "PF1.SpellSchoolNecromancy",
-  trs: "PF1.SpellSchoolTransmutation",
-  uni: "PF1.SpellSchoolUniversal",
+  abj: "PF1.SpellSchools.abj",
+  con: "PF1.SpellSchools.con",
+  div: "PF1.SpellSchools.div",
+  enc: "PF1.SpellSchools.enc",
+  evo: "PF1.SpellSchools.evo",
+  ill: "PF1.SpellSchools.ill",
+  nec: "PF1.SpellSchools.nec",
+  trs: "PF1.SpellSchools.tra",
+  uni: "PF1.SpellSchools.uni",
   misc: "PF1.Misc",
 };
 
@@ -1793,16 +1793,16 @@ export const spellSchools = {
  * Spell levels
  */
 export const spellLevels = {
-  0: "PF1.SpellLevel0",
-  1: "PF1.SpellLevel1",
-  2: "PF1.SpellLevel2",
-  3: "PF1.SpellLevel3",
-  4: "PF1.SpellLevel4",
-  5: "PF1.SpellLevel5",
-  6: "PF1.SpellLevel6",
-  7: "PF1.SpellLevel7",
-  8: "PF1.SpellLevel8",
-  9: "PF1.SpellLevel9",
+  0: "PF1.SpellLevels.0",
+  1: "PF1.SpellLevels.1",
+  2: "PF1.SpellLevels.2",
+  3: "PF1.SpellLevels.3",
+  4: "PF1.SpellLevels.4",
+  5: "PF1.SpellLevels.5",
+  6: "PF1.SpellLevels.6",
+  7: "PF1.SpellLevels.7",
+  8: "PF1.SpellLevels.8",
+  9: "PF1.SpellLevels.9",
 };
 
 /* -------------------------------------------- */

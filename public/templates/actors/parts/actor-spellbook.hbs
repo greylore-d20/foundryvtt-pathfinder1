@@ -471,8 +471,8 @@
       <div class="item-detail spell-components tooltip">
         {{#if (or materials.value materials.focus)}}
         <span class="tooltipcontent">
-          {{#if materials.focus}}<span class="span2 align-left">{{localize "PF1.SpellComponentFocus"}}:</span><span class="span1 align-right"> {{materials.focus}}</span>{{/if}}
-          {{#if materials.value}}<span class="span2 align-left">{{localize "PF1.SpellMaterialValue"}}:</span><span class="span1 align-right"> {{materials.value}}</span>{{/if}}
+          {{#if materials.focus}}<span class="span2 align-left">{{localize "PF1.SpellComponents.Type.focus.Label"}}:</span><span class="span1 align-right"> {{materials.focus}}</span>{{/if}}
+          {{#if materials.value}}<span class="span2 align-left">{{localize "PF1.SpellComponents.Type.material.Value"}}:</span><span class="span1 align-right"> {{materials.value}}</span>{{/if}}
         </span>
         {{/if}}
         <span>{{labels.components}}</span>

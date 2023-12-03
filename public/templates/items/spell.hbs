@@ -156,33 +156,39 @@
         {{/if}}
       </div>
 
-      <h3 class="form-header">{{localize "PF1.SpellComponents"}}</h3>
+      <h3 class="form-header">{{localize "PF1.SpellComponents.Label"}}</h3>
 
       {{!-- Spell Components --}}
       <div class="spell-components form-group stacked">
         <label class="checkbox">
-          <input type="checkbox" name="system.components.verbal" {{checked system.components.verbal}}/> {{localize "PF1.SpellComponentVerbal"}}
+          <input type="checkbox" name="system.components.verbal" {{checked system.components.verbal}}>
+          {{localize "PF1.SpellComponents.Type.verbal.Label"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="system.components.somatic" {{checked system.components.somatic}}/> {{localize "PF1.SpellComponentSomatic"}}
+          <input type="checkbox" name="system.components.somatic" {{checked system.components.somatic}}>
+          {{localize "PF1.SpellComponents.Type.somatic.Label"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="system.components.thought" {{checked system.components.thought}}/> {{localize "PF1.SpellComponentThought"}}
+          <input type="checkbox" name="system.components.thought" {{checked system.components.thought}}>
+          {{localize "PF1.SpellComponents.Type.thought.Label"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="system.components.emotion" {{checked system.components.emotion}}/> {{localize "PF1.SpellComponentEmotion"}}
+          <input type="checkbox" name="system.components.emotion" {{checked system.components.emotion}}>
+          {{localize "PF1.SpellComponents.Type.emotion.Label"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="system.components.material" {{checked system.components.material}}/> {{localize "PF1.SpellComponentMaterial"}}
+          <input type="checkbox" name="system.components.material" {{checked system.components.material}}>
+          {{localize "PF1.SpellComponents.Type.material.Label"}}
         </label>
         <label class="checkbox">
-          <input type="checkbox" name="system.components.focus" {{checked system.components.focus}}/> {{localize "PF1.SpellComponentFocus"}}
+          <input type="checkbox" name="system.components.focus" {{checked system.components.focus}}>
+          {{localize "PF1.SpellComponents.Type.focus.Label"}}
         </label>
       </div>
 
       {{!-- Divine Focus --}}
       <div class="divine-focus form-group">
-        <label>{{localize "PF1.SpellComponentDivineFocus"}}</label>
+        <label>{{localize "PF1.SpellComponents.Type.divineFocus.Label"}}</label>
         <div class="form-fields">
           <select name="system.components.divineFocus" data-dtype="Number">
             {{selectOptions config.divineFocus selected=system.components.divineFocus}}
@@ -192,33 +198,33 @@
 
       {{!-- Misc Components --}}
       <div class="misc-components form-group">
-        <label>{{localize "PF1.SpellComponentsMisc"}}</label>
+        <label>{{localize "PF1.SpellComponents.Misc"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.components.value" value="{{system.components.value}}"/>
+          <input type="text" name="system.components.value" value="{{system.components.value}}">
         </div>
       </div>
 
       {{!-- Material Components --}}
       {{#if system.components.material}}
       <div class="form-group">
-        <label>{{localize "PF1.SpellMaterialDescription"}}</label>
+        <label>{{localize "PF1.SpellComponents.Type.material.Desc"}}</label>
         <div class="form-fields">
-          <input class="materials" type="text" name="system.materials.value" value="{{system.materials.value}}"/>
+          <input class="materials" type="text" name="system.materials.value" value="{{system.materials.value}}">
         </div>
       </div>
       <div class="form-group">
-        <label>{{localize "PF1.SpellMaterialValue"}}</label>
+        <label>{{localize "PF1.SpellComponents.Type.material.Value"}}</label>
         <div class="form-fields">
-          <input class="material-value" type="number" data-dtype="Number" name="system.materials.gpValue" value="{{system.materials.gpValue}}" placeholder="0" />
+          <input class="material-value" type="number" data-dtype="Number" name="system.materials.gpValue" value="{{system.materials.gpValue}}" placeholder="0">
         </div>
       </div>
       {{/if}}
 
       {{#if system.components.focus}}
       <div class="form-group">
-        <label>{{localize "PF1.SpellcastingFocus"}}</label>
+        <label>{{localize "PF1.SpellComponents.Type.focus.Label"}}</label>
         <div class="form-fields">
-          <input class="focus" type="text" name="system.materials.focus" value="{{system.materials.focus}}"/>
+          <input class="focus" type="text" name="system.materials.focus" value="{{system.materials.focus}}">
         </div>
       </div>
       {{/if}}

@@ -313,7 +313,7 @@ export class ActorSheetPF extends ActorSheet {
     {
       const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true });
       const totalValue = pf1.utils.currency.split(cpValue);
-      data.labels.totalValue = game.i18n.format("PF1.ItemContainerTotalItemValue", {
+      data.labels.totalValue = game.i18n.format("PF1.TotalItemValue", {
         gp: totalValue.gp,
         sp: totalValue.sp,
         cp: totalValue.cp,
@@ -2684,7 +2684,7 @@ export class ActorSheetPF extends ActorSheet {
         dataset: { type: "attack", "sub-type": "natural" },
       },
       ability: {
-        label: game.i18n.localize("PF1.Subtypes.Item.attack.class.Plural"),
+        label: game.i18n.localize("PF1.Subtypes.Item.attack.ability.Plural"),
         items: [],
         canCreate: true,
         initial: false,
@@ -2692,7 +2692,7 @@ export class ActorSheetPF extends ActorSheet {
         dataset: { type: "attack", "sub-type": "ability" },
       },
       racialAbility: {
-        label: game.i18n.localize("PF1.Subtypes.Item.attack.racial.Plural"),
+        label: game.i18n.localize("PF1.Subtypes.Item.attack.racialAbility.Plural"),
         items: [],
         canCreate: true,
         initial: false,

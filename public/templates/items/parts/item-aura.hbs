@@ -1,5 +1,5 @@
 {{#unless showUnidentifiedData}}
-<h3 class="form-header">{{localize "PF1.Aura"}}</h3>
+<h3 class="form-header">{{localize "PF1.Aura.Single"}}</h3>
 
 {{!-- Caster Level --}}
 <div class="form-group" data-tooltip="@item.cl : {{system.cl}}">
@@ -15,7 +15,7 @@
   {{#if system.aura.custom}}
   <div class="form-fields">
     <label class="aura-strength">{{auraStrength_name}}</label>
-    <input type="text" name="system.aura.school" value="{{system.aura.school}}" placeholder="{{localize "PF1.Aura"}}"/>
+    <input type="text" name="system.aura.school" value="{{system.aura.school}}" placeholder="{{localize "PF1.Aura.Single"}}"/>
     <label class="checkbox">
       <input type="checkbox" name="system.aura.custom" {{checked system.aura.custom}}/> {{localize "PF1.Custom"}}
     </label>

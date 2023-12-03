@@ -151,14 +151,46 @@
     }
   },
 
-  "PF1.SpellComponentKeys": {
-    "Verbal": "V",
-    "Somatic": "S",
-    "Thought": "T",
-    "Emotion": "E",
-    "Material": "M",
-    "Focus": "F",
-    "DivineFocus": "DF"
+  "PF1.SpellComponents": {
+    "Label": "Spell Components",
+    "Misc": "Misc Components",
+    "Type": {
+      "verbal": {
+        "Label": "Verbal",
+        "Abbr": "V"
+      },
+      "somatic": {
+        "Label": "Somatic",
+        "Abbr": "S"
+      },
+      "thought": {
+        "Label": "Thought",
+        "Abbr": "T"
+      },
+      "emotion": {
+        "Label": "Emotion",
+        "Abbr": "E"
+      },
+      "material": {
+        "Label": "Material",
+        "Abbr": "M",
+        "Desc": "Material description",
+        "Value": "Material value"
+      },
+      "focus": {
+        "Label": "Focus",
+        "Abbr": "F"
+      },
+      "divineFocus": {
+        "Label": "Divine Focus",
+        "Abbr": "DF"
+      }
+    },
+    "DFVariants": {
+      "DF": "DF",
+      "MDF": "M/DF",
+      "FDF": "F/DF"
+    }
   },
 
   "PF1.OptionalAndVariantRules": "Optional & Variant Rules",
@@ -493,17 +525,19 @@
 
   "PF1.ClassType": "Class Type",
 
-  "PF1.ActionMWAK": "Melee Weapon Attack",
-  "PF1.ActionRWAK": "Ranged Weapon Attack",
-  "PF1.ActionTWAK": "Thrown Weapon Attack",
-  "PF1.ActionMSAK": "Melee Spell Attack",
-  "PF1.ActionRSAK": "Ranged Spell Attack",
-  "PF1.ActionMCMan": "Melee Combat Maneuver",
-  "PF1.ActionRCMan": "Ranged Combat Maneuver",
-  "PF1.ActionSpellSave": "Saving Throw (Spell)",
-  "PF1.ActionSave": "Saving Throw",
-  "PF1.ActionHeal": "Healing",
-  "PF1.ActionOther": "Other",
+  "PF1.ActionTypes": {
+    "mwak": "Melee Weapon Attack",
+    "rwak": "Ranged Weapon Attack",
+    "twak": "Thrown Weapon Attack",
+    "msak": "Melee Spell Attack",
+    "rsak": "Ranged Spell Attack",
+    "mcman": "Melee Combat Maneuver",
+    "rcman": "Ranged Combat Maneuver",
+    "spellSave": "Saving Throw (Spell)",
+    "save": "Saving Throw",
+    "heal": "Healing",
+    "other": "Other"
+  },
 
   "PF1.Alignment": "Alignment",
   "PF1.AlignmentLG": "Lawful Good",
@@ -568,23 +602,20 @@
   "PF1.DistMShort": "m",
   "PF1.DistKMShort": "km",
 
-  "PF1.ItemContainerContentsWeight": "Contents Weight",
-  "PF1.ItemContainerContentsValue": "Contents Value",
-  "PF1.ItemContainerContentsSellValue": "Contents Sell Value",
-  "PF1.ItemContainerContents": "Contents",
-  "PF1.ItemContainerCapacity": "Capacity",
-  "PF1.ItemContainerCapacityItems": "Items",
-  "PF1.ItemContainerCapacityType": "Capacity Type",
-  "PF1.ItemContainerCapacityWeight": "Weight",
-  "PF1.ItemContainerDetails": "Container Details",
-  "PF1.ItemContainerHeader": "Containers",
-  "PF1.ItemContainerProperties": "Container Properties",
+  "PF1.Containers": {
+    "Contents": {
+      "Label": "Contents",
+      "Weight": "Contents Weight",
+      "Value": "Contents Value",
+      "SellValue": "Contents Sell Value",
+      "Take": "Take from Container"
+    },
+    "TotalValue": "Total Value: {gp} gp, {sp} sp, {cp} cp",
+    "SellValue": "Sell Value: {gp} gp, {sp} sp, {cp} cp"
+  },
+  "PF1.TotalItemValue": "Total Item Value: {gp} gp, {sp} sp, {cp} cp",
   "PF1.WeightReduction": "Weight Reduction",
   "PF1.WeightReductionFlat": "Flat",
-  "PF1.ItemContainerTotalValue": "Total Value: {gp} gp, {sp} sp, {cp} cp",
-  "PF1.ItemContainerTotalItemValue": "Total Item Value: {gp} gp, {sp} sp, {cp} cp",
-  "PF1.ItemContainerSellValue": "Sell Value: {gp} gp, {sp} sp, {cp} cp",
-  "PF1.ItemContainerTakeContents": "Take from Container",
 
   "PF1.Subtypes": {
     "Item": {
@@ -603,6 +634,22 @@
         },
         "mythic": {
           "Single": "Mythic Path"
+        }
+      },
+      "equipment": {
+        "shield": {
+          "Single": "Shield"
+        },
+        "armor": {
+          "Single": "Armor",
+          "Plural": "Armor"
+        },
+        "wondrous": {
+          "Single": "Wondrous"
+        },
+        "clothing": {
+          "Single": "Clothing",
+          "Plural": "Clothing"
         }
       },
       "loot": {
@@ -655,11 +702,11 @@
           "Single": "Natural Attack",
           "Plural": "Natural Attacks"
         },
-        "class": {
+        "ability": {
           "Single": "Class Ability",
           "Plural": "Class Abilities"
         },
-        "racial": {
+        "racialAbility": {
           "Single": "Racial Ability",
           "Plural": "Racial Abilities"
         }
@@ -689,14 +736,16 @@
     }
   },
 
-  "PF1.AmmoTypeArrow": "Arrow",
-  "PF1.AmmoTypeBolt": "Bolt",
-  "PF1.AmmoTypeRepeatingBolt": "Bolt (Repeating)",
-  "PF1.AmmoTypeBulletSling": "Bullet (Sling)",
-  "PF1.AmmoTypeBulletGun": "Bullet (Firearm)",
-  "PF1.AmmoTypeBulletDragoon": "Bullet (Dragoon Firearm)",
-  "PF1.AmmoTypeDart": "Dart",
-  "PF1.AmmoTypeSiege": "Siege",
+  "PF1.AmmoType": {
+    "arrow": "Arrow",
+    "bolt": "Bolt",
+    "repeatingBolt": "Bolt (Repeating)",
+    "slingBullet": "Bullet (Sling)",
+    "gunBullet": "Bullet (Firearm)",
+    "dragoonBullet": "Bullet (Dragoon Firearm)",
+    "dart": "Dart",
+    "siege": "Siege"
+  },
 
   "PF1.SenseBSense": "Blindsense",
   "PF1.SenseBS": "Blindsight",
@@ -707,12 +756,6 @@
   "PF1.SenseSI": "See Invisibility",
   "PF1.SenseSID": "See in darkness",
   "PF1.SenseSC": "Scent",
-
-  "PF1.FlyManeuverabilityClumsy": "Clumsy",
-  "PF1.FlyManeuverabilityPoor": "Poor",
-  "PF1.FlyManeuverabilityAverage": "Average",
-  "PF1.FlyManeuverabilityGood": "Good",
-  "PF1.FlyManeuverabilityPerfect": "Perfect",
 
   "PF1.BuffTarAC": "AC",
   "PF1.BuffTarACGeneric": "Generic AC",
@@ -792,35 +835,42 @@
 
   "PF1.AddSkill": "Add Skill",
 
-  "PF1.TargetAlly": "Ally",
-  "PF1.TargetCreature": "Creature",
-  "PF1.TargetCylinder": "Cylinder",
-  "PF1.TargetCone": "Cone",
-  "PF1.TargetCube": "Cube",
-  "PF1.TargetEnemy": "Enemy",
-  "PF1.TargetLine": "Line",
-  "PF1.TargetObject": "Object",
-  "PF1.TargetRadius": "Radius",
-  "PF1.TargetSelf": "Self",
-  "PF1.TargetSphere": "Sphere",
-  "PF1.TargetSquare": "Square",
-  "PF1.TargetSpace": "Space",
-  "PF1.TargetWall": "Wall",
-
-  "PF1.TimeInst": "Instantaneous",
-  "PF1.TimeTurn": "Turn",
-  "PF1.TimeTurnShort": "turn",
-  "PF1.TimeRound": "Rounds",
-  "PF1.TimeRoundShort": "rnds",
-  "PF1.TimeMinute": "Minutes",
-  "PF1.TimeMinuteShort": "mins",
-  "PF1.TimeHour": "Hours",
-  "PF1.TimeHourShort": "hrs",
-  "PF1.TimeDay": "Days",
-  "PF1.TimeMonth": "Months",
-  "PF1.TimeYear": "Years",
-  "PF1.TimePerm": "Permanent",
-  "PF1.TimeFormat": "{value} {unit}",
+  "PF1.Time": {
+    "Format": "{value} {unit}",
+    "Period": {
+      "inst": {
+        "Label": "Instantaneous"
+      },
+      "turn": {
+        "Label": "Turn",
+        "Short": "turn"
+      },
+      "round": {
+        "Label": "Rounds",
+        "Short": "rnds"
+      },
+      "minute": {
+        "Label": "Minutes",
+        "Short": "mins"
+      },
+      "hour": {
+        "Label": "Hours",
+        "Short": "hrs"
+      },
+      "day": {
+        "Label": "Days"
+      },
+      "month": {
+        "Label": "Months"
+      },
+      "year": {
+        "Label": "Years"
+      },
+      "perm": {
+        "Label": "Permanent"
+      }
+    }
+  },
 
   "PF1.AssociatedClass": "Associated Class",
 
@@ -853,18 +903,6 @@
     }
   },
 
-  "PF1.SpellComponentVerbal": "Verbal",
-  "PF1.SpellComponentSomatic": "Somatic",
-  "PF1.SpellComponentThought": "Thought",
-  "PF1.SpellComponentEmotion": "Emotion",
-  "PF1.SpellComponentMaterial": "Material",
-  "PF1.SpellComponentFocus": "Focus",
-  "PF1.SpellComponentDivineFocus": "Divine Focus",
-
-  "PF1.SpellComponentDivineFocusAlone": "DF",
-  "PF1.SpellComponentDivineFocusMaterial": "M/DF",
-  "PF1.SpellComponentDivineFocusFocus": "F/DF",
-
   "PF1.AutoSpellClassLevelOffset": {
     "Formula": "Class Level Modification",
     "InfoBox": "If you have a prestige class that alters your class level, add that here (e.g. @classes.mysticTheurge.level)"
@@ -875,11 +913,6 @@
     "OpenSlots": "Open Slots",
     "InsufficientAbility": "Insufficient Ability Score"
   },
-
-  "PF1.MeasureTemplateCone": "Cone",
-  "PF1.MeasureTemplateCircle": "Circle",
-  "PF1.MeasureTemplateRay": "Ray",
-  "PF1.MeasureTemplateRectangle": "Rectangle",
 
   "PF1.CompendiumBrowser": {
     "HiddenPack": "Pack hidden in compendium browsers",
@@ -926,9 +959,6 @@
   "PF1.WeaponPropTwoHanded": "Two-handed",
   "PF1.WeaponSubtypeRanged": "Ranged",
 
-  "PF1.EquipTypeShield": "Shield",
-  "PF1.EquipTypeArmor": "Armor",
-
   "PF1.EquipTypeLight": "Light Armor",
   "PF1.EquipTypeMedium": "Medium Armor",
   "PF1.EquipTypeHeavy": "Heavy Armor",
@@ -937,109 +967,138 @@
   "PF1.EquipTypeHeavyShield": "Heavy Shield",
   "PF1.EquipTypeTowerShield": "Tower Shield",
   "PF1.EquipTypeOtherShield": "Miscellaneous Shield",
-  "PF1.EquipTypeClothing": "Clothing",
-  "PF1.EquipTypeWondrousItem": "Wondrous Item",
 
-  "PF1.EquipSlotSlotless": "Slotless",
-  "PF1.EquipSlotArmor": "Armor",
-  "PF1.EquipSlotShield": "Shield",
-  "PF1.EquipSlotHead": "Head",
-  "PF1.EquipSlotHeadband": "Headband",
-  "PF1.EquipSlotEyes": "Eyes",
-  "PF1.EquipSlotShoulders": "Shoulders",
-  "PF1.EquipSlotNeck": "Neck",
-  "PF1.EquipSlotChest": "Chest",
-  "PF1.EquipSlotBody": "Body",
-  "PF1.EquipSlotBelt": "Belt",
-  "PF1.EquipSlotWrists": "Wrists",
-  "PF1.EquipSlotHands": "Hands",
-  "PF1.EquipSlotRing": "Ring",
-  "PF1.EquipSlotFeet": "Feet",
+  "PF1.EquipSlots": {
+    "none": "Slotless",
+    "armor": "Armor",
+    "shield": "Shield",
+    "clothing": "Clothing",
+    "head": "Head",
+    "headband": "Headband",
+    "eyes": "Eyes",
+    "shoulders": "Shoulders",
+    "neck": "Neck",
+    "chest": "Chest",
+    "body": "Body",
+    "belt": "Belt",
+    "wrists": "Wrists",
+    "hands": "Hands",
+    "ring": "Ring",
+    "feet": "Feet"
+  },
 
   "PF1.TraitType": "Trait Type",
   "PF1.Trait": {
-    "Combat": "Combat",
-    "Magic": "Magic",
-    "Faith": "Faith",
-    "Social": "Social",
-    "Campaign": "Campaign",
-    "Cosmic": "Cosmic",
-    "Equipment": "Equipment",
-    "Exemplar": "Exemplar",
-    "Faction": "Faction",
-    "Family": "Family",
-    "Mount": "Mount",
-    "Race": "Race",
-    "Region": "Region",
-    "Religion": "Religion",
-    "Drawback": "Drawback"
+    "combat": "Combat",
+    "magic": "Magic",
+    "faith": "Faith",
+    "social": "Social",
+    "campaign": "Campaign",
+    "cosmic": "Cosmic",
+    "equipment": "Equipment",
+    "exemplar": "Exemplar",
+    "faction": "Faction",
+    "family": "Family",
+    "mount": "Mount",
+    "race": "Race",
+    "region": "Region",
+    "religion": "Religion",
+    "drawback": "Drawback"
   },
 
-  "PF1.ActivationTypePassive": "Passive",
-  "PF1.ActivationTypeFree": "Free",
-  "PF1.ActivationTypeSwift": "Swift",
-  "PF1.ActivationTypeImmediate": "Immediate",
-  "PF1.ActivationTypeMove": "Move",
-  "PF1.ActivationTypeStandard": "Standard",
-  "PF1.ActivationTypeFullround": "Full-round",
-  "PF1.ActivationTypeAttack": "Attack",
-  "PF1.ActivationTypeRound": "Round",
-  "PF1.ActivationTypeMinute": "Minute",
-  "PF1.ActivationTypeHour": "Hour",
-  "PF1.ActivationTypeSpecial": "Special",
-  "PF1.ActivationTypeNonaction": "Nonaction",
-  "PF1.ActivationTypeAoO": "Attack of Opportunity",
-  "PF1.ActivationTypeReaction": "Reaction",
-  "PF1.ActivationTypeAction": "Action",
-
-  "PF1.ActivationTypeFreePlural": "Free Actions",
-  "PF1.ActivationTypeSwiftPlural": "Swift Actions",
-  "PF1.ActivationTypeImmediatePlural": "Immediate Actions",
-  "PF1.ActivationTypeMovePlural": "Move Actions",
-  "PF1.ActivationTypeStandardPlural": "Standard Actions",
-  "PF1.ActivationTypeFullroundPlural": "Full-round Actions",
-  "PF1.ActivationTypeAttackPlural": "Attack Actions",
-  "PF1.ActivationTypeRoundPlural": "Round",
-  "PF1.ActivationTypeMinutePlural": "Minutes",
-  "PF1.ActivationTypeHourPlural": "Hours",
-  "PF1.ActivationTypeReactionPlural": "Reactions",
-  "PF1.ActivationTypeActionPlural": "Actions",
+  "PF1.Activation": {
+    "passive": {
+      "Single": "Passive"
+    },
+    "free": {
+      "Single": "Free",
+      "Plural": "Free Actions"
+    },
+    "swift": {
+      "Single": "Swift",
+      "Plural": "Swift Actions"
+    },
+    "immediate": {
+      "Single": "Immediate",
+      "Plural": "Immediate Actions"
+    },
+    "move": {
+      "Single": "Move",
+      "Plural": "Move Actions"
+    },
+    "standard": {
+      "Single": "Standard",
+      "Plural": "Standard Actions"
+    },
+    "fullRound": {
+      "Single": "Full-round",
+      "Plural": "Full-round Actions"
+    },
+    "attack": {
+      "Single": "Attack",
+      "Plural": "Attack Actions"
+    },
+    "round": {
+      "Single": "Round",
+      "Plural": "Rounds"
+    },
+    "minute": {
+      "Single": "Minute",
+      "Plural": "Minutes"
+    },
+    "hour": {
+      "Single": "Hour",
+      "Plural": "Hours"
+    },
+    "special": {
+      "Single": "Special"
+    },
+    "nonaction": {
+      "Single": "Nonaction"
+    },
+    "aoo": {
+      "Single": "Attack of Opportunity",
+      "Plural": "Attacks of Opportunity"
+    },
+    "reaction": {
+      "Single": "Reaction",
+      "Plural": "Reactions"
+    },
+    "action": {
+      "Single": "Action",
+      "Plural": "Actions"
+    }
+  },
 
   "PF1.LimitedUseSingle": "Single Use",
   "PF1.LimitedUseDay": "Per Day",
   "PF1.LimitedUseWeek": "Per Week",
   "PF1.LimitedUseCharges": "Charges",
 
-  "PF1.ActorSizeFine": "Fine",
-  "PF1.ActorSizeDiminutive": "Diminutive",
-  "PF1.ActorSizeTiny": "Tiny",
-  "PF1.ActorSizeSmall": "Small",
-  "PF1.ActorSizeMedium": "Medium",
-  "PF1.ActorSizeLarge": "Large",
-  "PF1.ActorSizeHuge": "Huge",
-  "PF1.ActorSizeGargantuan": "Gargantuan",
-  "PF1.ActorSizeColossal": "Colossal",
+  "PF1.SpellSchools": {
+    "abj": "Abjuration",
+    "con": "Conjuration",
+    "div": "Divination",
+    "enc": "Enchantment",
+    "evo": "Evocation",
+    "ill": "Illusion",
+    "nec": "Necromancy",
+    "tra": "Transmutation",
+    "uni": "Universal"
+  },
 
-  "PF1.SpellSchoolAbjuration": "Abjuration",
-  "PF1.SpellSchoolConjuration": "Conjuration",
-  "PF1.SpellSchoolDivination": "Divination",
-  "PF1.SpellSchoolEnchantment": "Enchantment",
-  "PF1.SpellSchoolEvocation": "Evocation",
-  "PF1.SpellSchoolIllusion": "Illusion",
-  "PF1.SpellSchoolNecromancy": "Necromancy",
-  "PF1.SpellSchoolTransmutation": "Transmutation",
-  "PF1.SpellSchoolUniversal": "Universal",
-
-  "PF1.SpellLevel0": "Cantrip/Orison",
-  "PF1.SpellLevel1": "1st Level",
-  "PF1.SpellLevel2": "2nd Level",
-  "PF1.SpellLevel3": "3rd Level",
-  "PF1.SpellLevel4": "4th Level",
-  "PF1.SpellLevel5": "5th Level",
-  "PF1.SpellLevel6": "6th Level",
-  "PF1.SpellLevel7": "7th Level",
-  "PF1.SpellLevel8": "8th Level",
-  "PF1.SpellLevel9": "9th Level",
+  "PF1.SpellLevels": {
+    "0": "Cantrip/Orison",
+    "1": "1st Level",
+    "2": "2nd Level",
+    "3": "3rd Level",
+    "4": "4th Level",
+    "5": "5th Level",
+    "6": "6th Level",
+    "7": "7th Level",
+    "8": "8th Level",
+    "9": "9th Level"
+  },
 
   "PF1.FavouredClassBonuses": "Favoured Class Bonuses",
   "PF1.FavouredClassHP": "Hit Points",
@@ -1396,6 +1455,9 @@
   "PF1.HideClothing": "Hide Clothing",
   "PF1.HideName": "Hide Name",
   "PF1.Action": "Action",
+  "PF1.ActionPlural": "Actions",
+  "PF1.ActionType": "Action Type",
+  "PF1.ActionName": "Action Name",
   "PF1.All": "All",
   "PF1.Attack": "Attack",
   "PF1.FormulaAttack": "Attack #{0}",
@@ -1450,8 +1512,6 @@
   "PF1.Iterative": "Iterative",
   "PF1.Unidentified": "Unidentified",
   "PF1.Exhaustion": "Exhaustion",
-  "PF1.FlyManeuverability": "Fly Maneuverability",
-  "PF1.FlyManeuverabilityShort": "Fly Maneuv.",
   "PF1.Health": "Health",
   "PF1.Healing": "Healing",
   "PF1.HealingTemp": "Healing (Temporary)",
@@ -1496,7 +1556,29 @@
       "fly": "Fly",
       "climb": "Climb",
       "burrow": "Burrow"
+    },
+    "FlyManeuverability": {
+      "Label": "Fly Maneuverability",
+      "Abbr": "Fly Maneuv.",
+      "Quality": {
+        "clumsy": "Clumsy",
+        "poor": "Poor",
+        "average": "Average",
+        "good": "Good",
+        "perfect": "Perfect"
+      }
     }
+  },
+  "PF1.ActorSize": {
+    "fine": "Fine",
+    "dim": "Diminutive",
+    "tiny": "Tiny",
+    "sm": "Small",
+    "med": "Medium",
+    "lg": "Large",
+    "huge": "Huge",
+    "grg": "Gargantuan",
+    "col": "Colossal"
   },
   "PF1.Spells": "Spells",
   "PF1.Stature": "Stature",
@@ -1505,17 +1587,12 @@
   "PF1.Items": "Items",
   "PF1.Skill": "Skill",
   "PF1.Skills": "Skills",
-  "PF1.KnowledgeSkills": "Knowledge Skills",
-  "PF1.SubSkills": "Specialties",
-  "PF1.SpecialTraits": "Special Traits",
   "PF1.CharacterName": "Character Name",
   "PF1.Level": "Level",
   "PF1.Gender": "Gender",
   "PF1.Deity": "Deity",
   "PF1.Race": "Race",
-  "PF1.RaceTitle": "Race: {name}",
   "PF1.RaceSubtypePlural": "Subtypes",
-  "PF1.TypeSubType": "Type/(subtype)",
   "PF1.Age": "Age",
   "PF1.Height": "Height",
   "PF1.Weight": "Weight",
@@ -1536,7 +1613,6 @@
   "PF1.MaxDexShort": "Max Dex",
   "PF1.Type": "Type",
   "PF1.Subtype": "Subtype",
-  "PF1.ActionPlural": "Actions",
   "PF1.ChargePlural": "Charges",
   "PF1.ConditionPlural": "Conditions",
   "PF1.Add": "Add",
@@ -1544,7 +1620,6 @@
   "PF1.BuffName": "Buff Name",
   "PF1.SkillName": "Skill Name",
   "PF1.AttackName": "Attack Name",
-  "PF1.ActionName": "Action Name",
   "PF1.CreateAttack": "Create Attack",
   "PF1.CreateSpellbook": "Create Spellbook",
   "PF1.Active": "Active",
@@ -1557,12 +1632,7 @@
   "PF1.SpellBookSpelllike": "Spell-like",
   "PF1.SpellLevel": "Spell Level",
   "PF1.SpellSchool": "Spell School",
-  "PF1.SpellComponents": "Spell Components",
   "PF1.SpellResistance": "Spell Resistance",
-  "PF1.SpellcastingMaterials": "Spellcasting Materials",
-  "PF1.SpellMaterialDescription": "Material description",
-  "PF1.SpellMaterialValue": "Material value",
-  "PF1.SpellcastingFocus": "Spellcasting Focus",
   "PF1.SpellEffect": "Spell Effect",
   "PF1.SubSchool": "Subschool",
   "PF1.SubSchoolExample": "e.g. summoning, compulsion",
@@ -1571,7 +1641,6 @@
   "PF1.SpellDurationExample": "e.g. 10 min./level",
   "PF1.SpellEffectExample": "e.g. one glob of acid",
   "PF1.Area": "Area",
-  "PF1.Supply": "Supply",
   "PF1.Melee": "Melee",
   "PF1.MeleeWeapon": "Melee Weapon",
   "PF1.MeleeSpell": "Melee Spell",
@@ -1664,8 +1733,6 @@
   "PF1.SubDomain": "Subdomain",
   "PF1.CastingTime": "Casting Time",
   "PF1.Components": "Components",
-  "PF1.Aura": "Aura",
-  "PF1.AuraPlural": "Auras",
   "PF1.SpellRangeShort": "(25 ft. + 5 ft./2 levels)",
   "PF1.SpellRangeMedium": "(100 ft. + 10 ft./level)",
   "PF1.SpellRangeLong": "(400 ft. + 40 ft./level)",
@@ -1673,10 +1740,16 @@
   "PF1.SpellRangeMediumMetric": "(30 m + 3 m/level)",
   "PF1.SpellRangeLongMetric": "(120 m + 12 m/level)",
 
-  "PF1.AuraStrength_Faint": "Faint",
-  "PF1.AuraStrength_Moderate": "Moderate",
-  "PF1.AuraStrength_Strong": "Strong",
-  "PF1.AuraStrength_Overwhelming": "Overwhelming",
+  "PF1.Aura": {
+    "Single": "Aura",
+    "Plural": "Auras",
+    "Strength": {
+      "faint": "Faint",
+      "moderate": "Moderate",
+      "strong": "Strong",
+      "overwhelming": "Overwhelming"
+    }
+  },
 
   "PF1.Unknown": "Unknown",
   "PF1.ElementalSchool": "Elemental School",
@@ -1713,7 +1786,6 @@
   "PF1.Formula": "Formula",
   "PF1.BonusFormula": "Bonus Formula",
   "PF1.FormulaResult": "Formula Result",
-  "PF1.ActionType": "Action Type",
   "PF1.AttackRollBonus": "Attack Roll Bonus",
   "PF1.SecondaryAttackModifier": "Secondary Attack Modifier",
   "PF1.Rolls": {
@@ -1790,7 +1862,6 @@
   "PF1.AllSkills": "All Skills",
   "PF1.AutomaticSpellSlots": "Ability Score Bonus Slots",
   "PF1.Uses": "Uses",
-  "PF1.SpellComponentsMisc": "Misc Components",
   "PF1.SeeText": "See Text",
   "PF1.DC": "DC",
   "PF1.DCFormula": "DC Formula",

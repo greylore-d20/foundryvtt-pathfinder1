@@ -205,8 +205,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
 
     // Set labels
     if (!data.labels) data.labels = {};
-    data.labels.totalValue = game.i18n.format("PF1.ItemContainerTotalValue", data.totalValue);
-    data.labels.sellValue = game.i18n.format("PF1.ItemContainerSellValue", data.sellValue);
+    data.labels.totalValue = game.i18n.format("PF1.Containers.TotalValue", data.totalValue);
+    data.labels.sellValue = game.i18n.format("PF1.Containers.SellValue", data.sellValue);
 
     return data;
   }

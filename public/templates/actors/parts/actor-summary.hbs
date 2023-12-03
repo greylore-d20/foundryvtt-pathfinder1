@@ -38,7 +38,7 @@
     <div class="flexrow">
       {{! Race }}
       <div class="race item flexrow" {{#if race}}data-item-id="{{race._id}}"{{/if}} data-tooltip="PF1.Race">
-        <div class="race item-image rollable" style='background-image: url("{{race.img}}")' data-tooltip="{{labels.race}}<br>{{localize "PF1.DisplayInChat"}}">
+        <div class="race item-image rollable" style='background-image: url("{{race.img}}")' data-tooltip="PF1.DisplayInChat">
           {{#unless race}}{{localize "PF1.Race"}}{{/unless}}
         </div>
 
@@ -256,7 +256,7 @@
       </ul>
     </div>
     <div class='flexcol maneuverability-details pseudo-table tooltip'>
-      <h3 class='header'>{{localize "PF1.FlyManeuverabilityShort"}}</h3>
+      <h3 class='header'>{{localize "PF1.Movement.FlyManeuverability.Abbr"}}</h3>
       <select class='value' name="system.attributes.speed.fly.maneuverability">
         {{selectOptions config.flyManeuverabilities selected=system.attributes.speed.fly.maneuverability}}
       </select>

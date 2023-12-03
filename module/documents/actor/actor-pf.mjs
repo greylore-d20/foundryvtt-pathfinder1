@@ -1535,10 +1535,7 @@ export class ActorPF extends ActorBasePF {
    */
   getLabels() {
     const labels = {};
-    // Race
-    labels.race = this.race
-      ? game.i18n.format("PF1.RaceTitle", { name: this.race.name })
-      : game.i18n.localize("PF1.Race");
+
     labels.alignment = pf1.config.alignments[this.system.details.alignment];
 
     // Speed

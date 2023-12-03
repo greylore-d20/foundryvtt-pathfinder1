@@ -1165,7 +1165,7 @@ export const addDefaultChanges = function (changes) {
           target: "skill",
           subTarget: "skill.fly",
           modifier: "racial",
-          flavor: game.i18n.localize("PF1.FlyManeuverability"),
+          flavor: game.i18n.localize("PF1.Movement.FlyManeuverability.Label"),
         })
       );
     }

@@ -109,7 +109,10 @@ export class ItemSheetPF extends ItemSheet {
     const actor = item.actor,
       actorData = actor?.system;
 
-    const rollData = item.getRollData();
+    const firstAction = item.firstAction;
+
+    const rollData = firstAction?.getRollData() ?? item.getRollData();
+
     context.rollData = rollData;
     context.labels = item.getLabels();
 
@@ -429,9 +432,8 @@ export class ItemSheetPF extends ItemSheet {
         "systems/pf1/templates/internal/spell-description.hbs",
         item.spellDescriptionData
       );
-      const firstAction = item.firstAction;
       context.topDescription = await TextEditor.enrichHTML(desc, {
-        rollData: firstAction?.getRollData() ?? rollData,
+        rollData,
         async: true,
         relativeTo: this.actor,
       });
@@ -439,7 +441,7 @@ export class ItemSheetPF extends ItemSheet {
       // Enrich description
       if (itemData.shortDescription != null) {
         context.shortDescription = await TextEditor.enrichHTML(itemData.shortDescription, {
-          rollData: firstAction?.getRollData() ?? rollData,
+          rollData,
           secrets: context.owner,
           async: true,
           relativeTo: this.actor,

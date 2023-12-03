@@ -126,7 +126,7 @@ export class Sources extends Registry {
     },
     {
       _id: "PZO1115",
-      name: "Advanced Player’s Guide",
+      name: "Advanced Player's Guide",
       abbr: "APG",
       date: "2010-08-05",
       pages: 320,

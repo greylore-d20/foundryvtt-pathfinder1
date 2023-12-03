@@ -399,8 +399,8 @@ function enforceTemplate(object, template, options = {}) {
 
     // Item cleanup
     if (options.documentName === "Item") {
-      // Delete non-set class skills in classes
-      if (options.type === "class" && path.startsWith("classSkills.") && flattened[path] === false) {
+      // Delete non-set class skills
+      if (path.startsWith("classSkills.") && flattened[path] === false) {
         delete flattened[path];
       }
 

@@ -6,6 +6,7 @@ const fields = foundry.data.fields;
 // Notes
 // PPC = Player Companion
 // PRG is in rare cases used to refer to core rulebook, but also sometimes to refer to the game in its entirety
+// PCh = Pathfinder Chronicles
 
 export class Source extends RegistryEntry {
   static defineSchema() {
@@ -2512,6 +2513,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9440",
       name: "Magical Marketplace",
+      abbr: "MM",
       date: "2013-12-11",
       isbn: "978-1-60125-600-3",
       type: "companion",
@@ -3082,6 +3084,7 @@ export class Sources extends Registry {
     {
       _id: "PZO9221",
       name: "Pathfinder Chronicles: Faction Guide",
+      abbr: "FG", //  PCh:FG
       date: "2010-05-01",
       pages: 64,
       isbn: "978-1-60125-221-0",

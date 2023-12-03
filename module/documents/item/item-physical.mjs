@@ -16,10 +16,10 @@ export class ItemPhysicalPF extends ItemPF {
     if (system.quantity !== undefined && (!Number.isSafeInteger(system.quantity) || system.quantity < 0)) {
       system.quantity = 0;
     }
-    if (system.price !== undefined && !Number.isSafeInteger(system.price)) {
+    if (system.price !== undefined && !Number.isFinite(system.price)) {
       system.price = 0;
     }
-    if (system.unidentified?.price !== undefined && !Number.isSafeInteger(system.unidentified.price)) {
+    if (system.unidentified?.price !== undefined && !Number.isFinite(system.unidentified.price)) {
       system.unidentified.price = 0;
     }
     if (system.hardness !== undefined && (!Number.isSafeInteger(system.hardness) || system.hardness < 0)) {

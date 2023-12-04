@@ -57,10 +57,10 @@ export const registerContainerItemTests = () => {
           );
         });
 
-        it("should be able to be added to an actor", async function () {
+        it("should be able to be added to an actor", function () {
           expect(items.container instanceof CONFIG.Item.documentClasses.container).to.be.true;
         });
-        it("should have an empty 'items' collection", async function () {
+        it("should have an empty 'items' collection", function () {
           expect(items.container.items instanceof Collection).to.be.true;
           expect(items.container.items.contents.length).to.equal(0);
         });
@@ -76,6 +76,7 @@ export const registerContainerItemTests = () => {
 
       for (const { units, weightUnits } of configurations) {
         describe(`Using ${units} units and ${weightUnits} weight units:`, function () {
+          this.timeout(15_000); // These are too slow tests
           before(async () => {
             await game.settings.set("pf1", "units", units);
             await game.settings.set("pf1", "weightUnits", weightUnits);
@@ -97,7 +98,7 @@ export const registerContainerItemTests = () => {
               await items.container.deleteContainerContent(items.alchemistsFire.id);
             });
 
-            it("should be able to be added to the container", async function () {
+            it("should be able to be added to the container", function () {
               expect(items.container.items.contents.length).to.equal(1);
               expect(items.alchemistsFire instanceof CONFIG.Item.documentClasses.weapon).to.be.true;
             });
@@ -107,11 +108,11 @@ export const registerContainerItemTests = () => {
               expect(items.container.system.weight.total).to.equal(items.alchemistsFire.system.weight.value * 10);
               expect(items.container.system.weight.total).to.equal(items.alchemistsFire.system.weight.total);
             });
-            it("should add the weight of the item to the actor", async function () {
+            it("should add the weight of the item to the actor", function () {
               expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(convertWeight(10));
             });
             it("should increase the container's value", function () {
-              expect(items.container.getValue()).to.equal(100);
+              expect(items.container.getValue({ recursive: true })).to.equal(100);
             });
             it("should increase the actor's total item value in the sheet", function () {
               expect(actor.sheet.calculateTotalItemValue()).to.equal(200);
@@ -142,7 +143,7 @@ export const registerContainerItemTests = () => {
                 expect(actor.system.attributes.encumbrance.carriedWeight).to.equal(convertWeight(9));
               });
               it("reduce the container's overall value", function () {
-                expect(items.container.getValue()).to.equal(90);
+                expect(items.container.getValue({ recursive: true })).to.equal(90);
               });
               it("reduce the actor's total item value in the sheet", function () {
                 expect(actor.sheet.calculateTotalItemValue()).to.equal(180);
@@ -154,7 +155,7 @@ export const registerContainerItemTests = () => {
               before(async () => {
                 await items.alchemistsFire.update({ "system.quantity": 90 });
                 // NOTE: This value is to be kept until the last test in this configuration and only cleaned up after that
-                await items.container.update({ "system.weightReduction": 50 });
+                await items.container.update({ "system.weight.reduction.percent": 50 });
               });
 
               it("should have the right quantity", function () {
@@ -203,9 +204,9 @@ export const registerContainerItemTests = () => {
             });
 
             it("should have the correct value", function () {
-              expect(items.container.getValue()).to.equal(105);
+              expect(items.container.getValue({ recursive: true })).to.equal(105);
               expect(items.container.getTotalCurrency()).to.equal(105);
-              expect(items.container.getValue({ inLowestDenomination: true })).to.equal(10500);
+              expect(items.container.getValue({ recursive: true, inLowestDenomination: true })).to.equal(10500);
               expect(items.container.getTotalCurrency({ inLowestDenomination: true })).to.equal(10500);
             });
             it("should have the right weight", function () {
@@ -230,12 +231,12 @@ export const registerContainerItemTests = () => {
                 await items.container.update({
                   "system.price": 0,
                   "system.weight.value": 0,
-                  "system.weightReduction": 0,
+                  "system.weight.reduction.percent": 0,
                 });
               });
 
               it("should have the correct value", function () {
-                expect(items.container.getValue()).to.equal(155);
+                expect(items.container.getValue({ recursive: true })).to.equal(155);
                 expect(items.container.getTotalCurrency()).to.equal(105);
               });
               it("should add its value to the actor", function () {

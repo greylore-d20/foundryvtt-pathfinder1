@@ -45,6 +45,7 @@ export const registerItemWeightTests = () => {
 
       for (const { units, weightUnits } of configurations) {
         describe(`Using ${units} units and ${weightUnits} weight units:`, function () {
+          this.timeout(15_000); // These are slow tests
           before(async () => {
             await game.settings.set("pf1", "units", units);
             await game.settings.set("pf1", "weightUnits", weightUnits);

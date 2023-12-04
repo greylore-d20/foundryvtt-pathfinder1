@@ -564,9 +564,6 @@ Hooks.on(
 
     // Alter ammo recovery options
     chat.alterAmmoRecovery(cm, jq);
-
-    // Handle chat tooltips
-    jq.find(".tooltip").on("mousemove", (ev) => handleChatTooltips(ev));
   }
 );
 
@@ -790,18 +787,6 @@ Hooks.on("controlToken", () => {
     expireFromTokens();
   });
 }
-
-// Handle chat tooltips
-const handleChatTooltips = function (event) {
-  const elem = $(event.currentTarget);
-  const rect = event.currentTarget.getBoundingClientRect();
-  // const x = event.pageX;
-  // const y = event.pageY;
-  const x = rect.x;
-  const y = rect.y;
-  const w = rect.width;
-  elem.find(".tooltipcontent").css("left", `${x}px`).css("top", `${y}px`).css("width", `${w}px`);
-};
 
 // Refresh skip state (alleviates sticky modifier issue #1572)
 window.addEventListener("focus", () => (pf1.skipConfirmPrompt = false), { passive: true });

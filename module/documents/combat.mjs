@@ -45,48 +45,24 @@ export const addChatMessageContextOptions = function (html, options) {
 };
 
 /**
+ * @internal
  * @param {string} combatantId - Combatant ID
  */
-function duplicateCombatantInitiativeDialog(combatantId) {
+async function duplicateCombatantInitiativeDialog(combatantId) {
   /** @type {CombatantPF} */
   const combatant = game.combat.combatants.get(combatantId);
   if (!combatant) return void ui.notifications.warn(game.i18n.localize("PF1.WarningNoCombatantFound"));
 
-  Dialog.wait(
-    {
-      title: `${game.i18n.localize("PF1.DuplicateInitiative")}: ${combatant.name}`,
-      content: `<form autocomplete="off"><div class="form-group">
-        <label>${game.i18n.localize("PF1.InitiativeOffset")}</label>
-        <div class="form-fields">
-          <input type="number" name="initiativeOffset" value="0">
-        </div>
-      </div><hr></form>`,
-      buttons: {
-        confirm: {
-          label: game.i18n.localize("PF1.Confirm"),
-          icon: '<i class="fa-regular fa-circle-check"></i>',
-          callback: (html) => {
-            const offset = html.querySelector('input[name="initiativeOffset"]').valueAsNumber || 0;
-            const prevInitiative = combatant.initiative != null ? combatant.initiative : 0;
-            const newInitiative = prevInitiative + offset;
-            combatant.duplicateWithData({ initiative: newInitiative });
-          },
-        },
-        cancel: {
-          label: game.i18n.localize("Cancel"),
-          icon: '<i class="fa-solid fa-ban"></i>',
-          callback: () => null,
-        },
-      },
-      default: "confirm",
-      close: () => null,
-    },
-    {
-      classes: [...Dialog.defaultOptions.classes, "pf1", "duplicate-initiative"],
-      jQuery: false,
-      rejectClose: false,
-    }
-  );
+  const offset = await pf1.utils.dialog.getNumber({
+    title: `${game.i18n.localize("PF1.DuplicateInitiative")}: ${combatant.name}`,
+    label: game.i18n.localize("PF1.InitiativeOffset"),
+    initial: 0,
+    classes: ["duplicate-initiative"],
+  });
+
+  if (!Number.isFinite(offset)) return; // Cancelled
+
+  return combatant.duplicateWithData({ initiative: (combatant.initiative ?? 0) + offset });
 }
 
 // Deprecated

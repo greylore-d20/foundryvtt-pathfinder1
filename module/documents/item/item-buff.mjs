@@ -98,9 +98,6 @@ export class ItemBuffPF extends ItemPF {
    * @param {string} userId  User ID
    */
   _updateTrackingEffect(changed, userId) {
-    const actor = this.actor;
-    if (!actor) return;
-
     // Toggle icon if active state has changed
     const isActive = changed.system.active;
     if (isActive === undefined) return;
@@ -115,11 +112,13 @@ export class ItemBuffPF extends ItemPF {
     else {
       const aeData = this.getRawEffectData();
       aeData.active = isActive;
+      aeData.transfer = true;
+      setProperty(aeData, "flags.pf1.tracker", true);
 
       // Update old
       if (oldEffect) oldEffect.update(aeData, { render: false });
       // Create new
-      else ActiveEffect.implementation.create(aeData, { parent: actor, render: false });
+      else ActiveEffect.implementation.create(aeData, { parent: this, render: false });
     }
   }
 
@@ -281,13 +280,12 @@ export class ItemBuffPF extends ItemPF {
   }
 
   /**
-   * Retrieve associated Active Effect
+   * Retrieve associated tracking Active Effect
    *
    * @type {ActiveEffect|undefined}
    */
   get effect() {
-    const actor = this.actor;
-    return actor?.effects.find((ae) => fromUuidSync(ae.origin || "", { relative: actor }) === this);
+    return this.effects.find((ae) => ae.getFlag("pf1", "tracker") === true);
   }
 
   /**

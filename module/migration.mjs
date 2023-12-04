@@ -535,11 +535,45 @@ export async function migrateToken(token) {
  * @returns {Promise<Actor|null>}
  */
 export async function migrateActor(actor) {
+  await migrateActiveEffectsToItems(actor);
+
   const updateData = await migrateActorData(actor.toObject(), actor.token, { actor });
   if (!foundry.utils.isEmpty(updateData)) {
     return actor.update(updateData, marker());
   }
+
   return null;
+}
+
+/**
+ * Migrate active effects from actor to items that should own them instead.
+ *
+ * Added with PF1 vNEXT
+ *
+ * @param {ActorPF} actor
+ */
+export async function migrateActiveEffectsToItems(actor) {
+  const p = [];
+  for (const buff of actor.itemTypes.buff) {
+    if (!buff.isActive) continue;
+    try {
+      const ae = buff.effect;
+      if (!ae) continue;
+      if (ae.parent === buff) continue; // Already migrated
+
+      const aeData = ae.toObject();
+      setProperty(aeData, "flags.pf1.tracker", true);
+      aeData.transfer = true;
+
+      const p0 = ActiveEffect.implementation.create(aeData, { parent: buff });
+      const p1 = ae.delete();
+      p.push(p0, p1);
+    } catch (err) {
+      console.error("PF1 | Migration | Failed to transition buff tracker to origin", err);
+    }
+  }
+
+  await Promise.all(p);
 }
 
 /**

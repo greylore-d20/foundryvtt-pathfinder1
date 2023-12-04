@@ -17,10 +17,14 @@
   {{/if}}
   {{#if hasDamage}}
   <div class="form-group">
-    <label>{{localize "PF1.DamageBonus"}}</label>
+    <label>{{#if isHealing}}{{localize "PF1.HealBonus"}}{{else}}{{localize "PF1.DamageBonus"}}{{/if}}</label>
     <div class="form-fields">
+      {{#if isHealing}}
+      <i class="fa-solid fa-heart-pulse fa-fw"></i>
+      {{else}}
       <i class="fa-solid fa-heart-crack fa-fw"></i>
-      <input class="attribute" type="text" name="damage-bonus" value="{{attributes.damage-bonus}}" placeholder="{{localize "PF1.DamageBonusHint"}}"/>
+      {{/if}}
+      <input class="attribute" type="text" name="damage-bonus" value="{{attributes.damage-bonus}}" placeholder="{{#if isHealing}}{{localize "PF1.HealBonusHint"}}{{else}}{{localize "PF1.DamageBonusHint"}}{{/if}}">
     </div>
   </div>
   {{/if}}

@@ -36,8 +36,8 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     const baseCurrency = this.actor.getTotalCurrency({ inLowestDenomination: true });
 
     // Get total value
-    const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true }) + baseCurrency;
-    const cpSellValue = this.calculateSellItemValue({ inLowestDenomination: true }) + baseCurrency;
+    const cpValue = this.calculateTotalItemValue({ inLowestDenomination: true, recursive: true }) + baseCurrency;
+    const cpSellValue = this.calculateSellItemValue({ inLowestDenomination: true, recursive: true }) + baseCurrency;
 
     data.totalValue = pf1.utils.currency.split(cpValue);
     data.sellValue = pf1.utils.currency.split(cpSellValue);

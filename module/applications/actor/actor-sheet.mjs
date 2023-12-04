@@ -3283,19 +3283,19 @@ export class ActorSheetPF extends ActorSheet {
     return super._updateObject(event, formData);
   }
 
-  calculateTotalItemValue({ inLowestDenomination = false } = {}) {
+  calculateTotalItemValue({ inLowestDenomination = false, recursive = false } = {}) {
     const items = this.document.items.filter((o) => o.system.price != null);
     const total = items.reduce((cur, i) => {
-      return cur + i.getValue({ sellValue: 1, inLowestDenomination: true });
+      return cur + i.getValue({ recursive, sellValue: 1, inLowestDenomination: true });
     }, 0);
     return inLowestDenomination ? total : total / 100;
   }
 
-  calculateSellItemValue({ inLowestDenomination = false } = {}) {
+  calculateSellItemValue({ inLowestDenomination = false, recursive = false } = {}) {
     const items = this.document.items.filter((o) => o.system.price != null);
     const sellMultiplier = this.document.getFlag("pf1", "sellMultiplier") || 0.5;
     const total = items.reduce((cur, i) => {
-      return cur + i.getValue({ sellValue: sellMultiplier, inLowestDenomination: true });
+      return cur + i.getValue({ recursive, sellValue: sellMultiplier, inLowestDenomination: true });
     }, 0);
     return inLowestDenomination ? total : total / 100;
   }

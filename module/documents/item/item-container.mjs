@@ -92,7 +92,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
     super.prepareBaseData();
 
     // Set base weight to weight of coins, which can be calculated without knowing contained items
-    const weightReduction = (100 - (this.system.weightReduction ?? 0)) / 100;
+    const weightReduction = (100 - (this.system.weight?.reduction?.percent ?? 0)) / 100;
     this.system.weight.currency = this._calculateCoinWeight() * weightReduction;
   }
 

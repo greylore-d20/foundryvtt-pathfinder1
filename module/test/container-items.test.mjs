@@ -115,8 +115,8 @@ export const registerContainerItemTests = () => {
               expect(items.container.getValue({ recursive: true })).to.equal(100);
             });
             it("should increase the actor's total item value in the sheet", function () {
-              expect(actor.sheet.calculateTotalItemValue()).to.equal(200);
-              expect(actor.sheet.calculateSellItemValue()).to.equal(100);
+              expect(actor.sheet.calculateTotalItemValue({ recursive: true })).to.equal(200);
+              expect(actor.sheet.calculateSellItemValue({ recursive: true })).to.equal(100);
             });
 
             describe("should be usable from inside the container and", function () {
@@ -146,8 +146,8 @@ export const registerContainerItemTests = () => {
                 expect(items.container.getValue({ recursive: true })).to.equal(90);
               });
               it("reduce the actor's total item value in the sheet", function () {
-                expect(actor.sheet.calculateTotalItemValue()).to.equal(180);
-                expect(actor.sheet.calculateSellItemValue()).to.equal(90);
+                expect(actor.sheet.calculateTotalItemValue({ recursive: true })).to.equal(180);
+                expect(actor.sheet.calculateSellItemValue({ recursive: true })).to.equal(90);
               });
             });
 
@@ -219,8 +219,8 @@ export const registerContainerItemTests = () => {
               );
             });
             it("should add its value to the actor", function () {
-              expect(actor.sheet.calculateTotalItemValue()).to.equal(105);
-              expect(actor.sheet.calculateSellItemValue()).to.equal(105);
+              expect(actor.sheet.calculateTotalItemValue({ recursive: true })).to.equal(105);
+              expect(actor.sheet.calculateSellItemValue({ recursive: true })).to.equal(105);
             });
 
             describe("and own value", function () {
@@ -240,8 +240,8 @@ export const registerContainerItemTests = () => {
                 expect(items.container.getTotalCurrency()).to.equal(105);
               });
               it("should add its value to the actor", function () {
-                expect(actor.sheet.calculateTotalItemValue()).to.equal(205);
-                expect(actor.sheet.calculateSellItemValue()).to.equal(155);
+                expect(actor.sheet.calculateTotalItemValue({ recursive: true })).to.equal(205);
+                expect(actor.sheet.calculateSellItemValue({ recursive: true })).to.equal(155);
               });
             });
           });

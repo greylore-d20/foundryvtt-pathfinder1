@@ -200,6 +200,9 @@ export class ActorSheetPF extends ActorSheet {
       usesAnySpellbook: this.document.system.attributes.spells.usedSpellbooks?.length > 0 ?? false,
       sourceData: {},
       skillsLocked: this._skillsLocked,
+      units: {
+        weight: getWeightSystem() === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
+      },
     };
 
     Object.values(data.itemTypes).forEach((items) => items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
@@ -268,14 +271,16 @@ export class ActorSheetPF extends ActorSheet {
       i.name = item.name; // Copy name over from item to handle identified state correctly
 
       if (i.isPhysical) {
+        i.quantity ??= 0;
         i.isStack = i.quantity > 1;
         i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
         i.destroyed = i.hp?.value <= 0;
       }
 
-      const itemQuantity = i.quantity != null ? i.quantity : 1;
       const itemCharges = i.uses?.value != null ? i.uses.value : 1;
-      i.empty = itemQuantity <= 0 || (i.isCharged && !i.isSingleUse && itemCharges <= 0);
+      i.empty = false;
+      if (i.isPhysical && i.quantity <= 0) i.empty = true;
+      else if (i.isCharged && !i.isSingleUse && itemCharges <= 0) i.empty = true;
       i.disabled = i.empty || i.destroyed || false;
       if (i.type === "feat" && !i.isActive) i.disabled = true;
 
@@ -2605,9 +2610,6 @@ export class ActorSheetPF extends ActorSheet {
 
     for (const i of items) {
       const subType = i.type === "loot" ? i.subType || "gear" : i.subType;
-      i.quantity = i.quantity || 0;
-      i.totalWeight = Math.roundDecimals(i.weight.converted.total, 1);
-      i.units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       // Only loot has subType specific sections
       if (i.type === "loot") inventory[subType]?.items.push(i);

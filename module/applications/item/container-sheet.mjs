@@ -69,23 +69,39 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   async getData() {
     const data = await super.getData();
 
+    data.units = {
+      weight: getWeightSystem() === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs"),
+    };
+
     // Add filters
     data.filters = this._filters;
 
     // The item's items
     data.items = this.item.items.reduce((cur, item) => {
-      const data = item.toObject();
-      cur.push(data);
-      data.document = item;
-      data.labels = item.getLabels();
-      data.hasAttack = item.hasAttack;
-      data.hasMultiAttack = item.hasMultiAttack;
-      data.hasDamage = item.hasDamage;
-      data.hasRange = item.hasRange;
-      data.hasEffect = item.hasEffect;
-      data.hasAction = item.hasAction || item.isCharged;
-      data.showUnidentifiedData = item.showUnidentifiedData;
-      data.name = item.name;
+      const i = item.toObject();
+      const system = item.system;
+      cur.push(i);
+      i.document = item;
+      i.labels = item.getLabels();
+      i.hasAttack = item.hasAttack;
+      i.hasDamage = item.hasDamage;
+      i.hasAction = item.hasAction || item.isCharged;
+      i.showUnidentifiedData = item.showUnidentifiedData;
+      i.name = item.name;
+      i.id = item.id;
+
+      i.quantity = system.quantity ?? 0;
+      i.isStack = i.quantity > 1;
+      //i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
+      i.destroyed = system.hp?.value <= 0;
+
+      const itemCharges = system.uses?.value != null ? system.uses.value : 1;
+
+      i.empty = false;
+      if (item.isPhysical && i.quantity <= 0) i.empty = true;
+      else if (item.isCharged && !system.isSingleUse && itemCharges <= 0) i.empty = true;
+      i.disabled = i.empty || i.destroyed || false;
+
       return cur;
     }, []);
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
@@ -315,9 +331,6 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const units = usystem === "metric" ? game.i18n.localize("PF1.Kgs") : game.i18n.localize("PF1.Lbs");
     for (const i of items) {
       const subType = i.type === "loot" ? i.system.subType || "gear" : i.system.subType;
-      i.system.quantity ??= 0;
-      i.totalWeight = Math.roundDecimals(i.document.system.weight.converted.total, 2);
-      i.units = units;
       if (inventory[i.type] != null) inventory[i.type].items.push(i);
       // Only loot has subType specific sections
       if (i.type === "loot") inventory[subType]?.items.push(i);
@@ -603,7 +616,8 @@ export class ItemSheetPF_Container extends ItemSheetPF {
     const item = this.item.getContainerContent(itemId);
 
     const curQuantity = item.system.quantity || 0;
-    const newQuantity = Math.max(0, curQuantity + add);
+    let newQuantity = Math.max(0, curQuantity + add);
+    if (item.type === "container" && newQuantity > 1) newQuantity = 1;
     return item.update({ "system.quantity": newQuantity });
   }
 

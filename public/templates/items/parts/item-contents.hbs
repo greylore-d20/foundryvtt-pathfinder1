@@ -61,11 +61,7 @@
         {{/if}}
 
         <div class="item-detail item-weight">
-          {{#if item.totalWeight}}
-          <span>
-            {{ item.totalWeight }} {{ item.units }}
-          </span>
-          {{/if}}
+          <span{{#if (eq item.document.system.weight.total 0)}} class="null"{{/if}}>{{item.document.system.weight.converted.total}} {{@root.units.weight}}</span>
         </div>
 
         {{#if ../../isGM}}

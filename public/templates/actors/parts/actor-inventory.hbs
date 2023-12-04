@@ -112,10 +112,8 @@
         {{/if}}
 
         <div class="item-detail item-weight">
-          {{#if item.totalWeight}}
-          <span>
-            {{ item.totalWeight }} {{ item.units }}
-          </span>
+          {{#if isPhysical}}
+          <span>{{item.weight.converted.total}} {{@root.units.weight}}</span>
           {{/if}}
         </div>
 

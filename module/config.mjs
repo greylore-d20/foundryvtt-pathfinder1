@@ -1975,6 +1975,12 @@ export const conditionMechanics = {
         operator: "set",
         priority: -10,
       },
+      {
+        formula: "max(1, @abilities.cha.mod)",
+        operator: "add",
+        subTarget: "ac",
+        modifier: "deflection",
+      },
     ],
   },
   prone: {

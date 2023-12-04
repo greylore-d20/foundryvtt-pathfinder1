@@ -19,11 +19,11 @@ export class ItemContainerPF extends ItemPhysicalPF {
   /**
    * @override
    * @param {object} changed
-   * @param {object} options
+   * @param {object} context
    * @param {User} user
    */
-  async _preUpdate(changed, options, user) {
-    await super._preUpdate(changed, options, user);
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
 
     // No system updates
     if (!changed.system) return;
@@ -32,18 +32,53 @@ export class ItemContainerPF extends ItemPhysicalPF {
     const items = changed.system.items;
     if (items) {
       for (const [itemId, itemData] of Object.entries(items)) {
-        if (itemId.startsWith("-=")) continue; // No validation for deletions
-        const oldItem = this.items.get(itemId);
-        let diff;
-        if (oldItem) {
-          diff = oldItem.updateSource(itemData, { dryRun: true, fallback: false });
-          // Remove lingering .data if present, the above line prunes this out if done externally
-          if ("data" in this.system.items[itemId]) diff["-=data"] = null;
-        } else diff = new Item.implementation(itemData).toObject();
-
-        items[itemId] = diff;
+        await this._containedItemUpdate(itemId, itemData, items, context);
       }
     }
+  }
+
+  /**
+   * Handle conhtained item CRUD
+   *
+   * @internal
+   * @param {string} itemId - Item ID
+   * @param {object|null} itemData - Item's update data
+   * @param context
+   * @param {object} items - Parent's items update object
+   */
+  async _containedItemUpdate(itemId, itemData, items, context) {
+    // Deletion
+    if (itemId.startsWith("-=")) {
+      /** @type {ItemPF} */
+      const oldItem = this.items.get(itemId.replace(/^-=/, ""));
+
+      if (oldItem) {
+        await oldItem._preDelete(context, game.user);
+        // TODO: Run pre-delete on everything contained by this
+      }
+      return;
+    }
+
+    /** @type {ItemPF} */
+    const oldItem = this.items.get(itemId);
+
+    let diff;
+    // Existing contained item
+    if (oldItem) {
+      await oldItem._preUpdate(itemData, context, game.user);
+      diff = oldItem.updateSource(itemData, { dryRun: true, fallback: false });
+      // Remove lingering .data if present, the above line prunes this out if done externally
+      if ("data" in this.system.items[itemId]) diff["-=data"] = null;
+    }
+    // New contained item
+    else {
+      /** @type {ItemPF} */
+      const temp = new Item.implementation(itemData);
+      await temp._preCreate(itemData, context, game.user);
+      diff = temp.toObject();
+    }
+
+    items[itemId] = diff;
   }
 
   /**
@@ -162,21 +197,22 @@ export class ItemContainerPF extends ItemPhysicalPF {
 
   /**
    * @protected
-   * @param {object[]} data Item creation data
+   * @param {object[]} itemData Item creation data
+   * @param itemsData
    * @param {object} [options={}] Additional options
    * @returns {Promise<this>} Promise to the updated document.
    */
-  async createContainerContent(data, options = { raw: false, renderSheet: false }) {
-    data = data instanceof Array ? data : [data];
+  async createContainerContent(itemsData, options = { renderSheet: false }) {
+    itemsData = itemsData instanceof Array ? itemsData : [itemsData];
 
-    const itemOptions = { temporary: false, renderSheet: false };
+    const itemOptions = deepClone(options);
     const user = game.user;
 
     const actuallyCreated = [];
     const updateData = { system: { items: {} } };
 
     // Iterate over data to create
-    for (const itemData of data) {
+    for (const itemData of itemsData) {
       // Find unique ID
       do {
         itemData._id = foundry.utils.randomID(16);
@@ -203,7 +239,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
         },
       });
 
-      updateData.system.items[itemData._id] = options.raw ? itemData : item.toObject();
+      updateData.system.items[itemData._id] = item.toObject();
       actuallyCreated.push(itemData._id);
     }
 
@@ -215,16 +251,13 @@ export class ItemContainerPF extends ItemPhysicalPF {
     return created;
   }
 
-  async deleteContainerContent(data) {
+  async deleteContainerContent(data, context = {}) {
     const ids = new Set(data instanceof Array ? data : [data]);
 
     const embeddedName = "ContainerContent";
     const user = game.user;
-    const options = { noHook: false };
 
     const updateData = { system: { items: {} } };
-
-    const items = this.system.items ?? {};
 
     const actuallyDeleted = [];
 
@@ -233,8 +266,8 @@ export class ItemContainerPF extends ItemPhysicalPF {
       const item = this.items.get(id);
 
       // Run pre-delete workflow
-      let allowed = (await item._preDelete(options, user)) ?? true;
-      allowed &&= options.noHook || Hooks.call(`preDelete${embeddedName}`, item, options, user.id);
+      let allowed = (await item._preDelete(context, user)) ?? true;
+      allowed &&= context.noHook || Hooks.call(`preDelete${embeddedName}`, item, context, user.id);
       if (allowed === false) {
         console.debug(`${vtt} | ${embeddedName} deletion prevented during pre-delete`);
         continue;
@@ -267,7 +300,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
       try {
         diff = item.updateSource(changes, { dryRun: true, fallback: false });
       } catch (err) {
-        console.log(err);
+        console.error(err);
         continue;
       }
 

@@ -34,6 +34,7 @@ export class Troubleshooter extends Application {
           "PF1.Troubleshooter.Steps.ReportLinkText"
         )}</a>`,
         foundry: {
+          kb: `<a href="https://foundryvtt.com/kb/">${game.i18n.localize("PF1.Troubleshooter.Steps.FoundryLink")}</a>`,
           discord: `<a href="https://discord.gg/foundryvtt">Foundry VTT</a>`,
           channel: "#pf1",
         },

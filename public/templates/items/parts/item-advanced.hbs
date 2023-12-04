@@ -70,18 +70,18 @@
                     <h3>{{localize section.name}}</h3>
                 </div>
 
-                {{#if ../isGM}}
+                {{#if @root.isGM}}
                 <div class="item-detail item-hidden">
                     <i class="fas fa-eye-slash" data-tooltip="PF1.Hidden"></i>
                 </div>
                 {{/if}}
 
                 <div class="item-controls">
-                    {{#if ../owner}}
-                    <a class="item-control item-create" data-tooltip="PF1.ScriptCalls.Create">
-                        <i class="fas fa-plus"></i>
-                    </a>
-                    {{/if}}
+                  {{#if @root.owner}}
+                  <a class="item-control item-create" data-tooltip="PF1.ScriptCalls.Create">
+                      <i class="fas fa-plus"></i>
+                  </a>
+                  {{/if}}
                 </div>
             </li>
 

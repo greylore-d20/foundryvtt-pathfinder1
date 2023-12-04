@@ -9,8 +9,8 @@
         <span class="value">{{ac.total}}</span>
         <div class="tooltipcontent">
           <span class="span2 align-left">@attributes.ac.{{id}}.total :</span> <span class="span1 align-right">{{ac.total}}</span>
-          <span class="span2 align-left">@armor.type :</span> <span class="span1 align-right">{{../rollData.armor.type}}</span>
-          <span class="span2 align-left">@shield.type :</span> <span class="span1 align-right">{{../rollData.shield.type}}</span>
+          <span class="span2 align-left">@armor.type :</span> <span class="span1 align-right">{{@root.rollData.armor.type}}</span>
+          <span class="span2 align-left">@shield.type :</span> <span class="span1 align-right">{{@root.rollData.shield.type}}</span>
 
           {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=ac.sourceDetails plain=true}}
           {{> "systems/pf1/templates/actors/parts/actor-contextNotes.hbs" target="misc.ac"}}

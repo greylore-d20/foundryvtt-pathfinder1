@@ -42,7 +42,7 @@
     <h2>{{localize "PF1.LevelUp.Chat.AbilityScore.Header"}}</h2>
 
     {{#each formData.ability.choices as |value key|}}
-      <span>{{localize "PF1.LevelUp.Summary.AbilityScore.Gain" abl=(lookup ../config.abilities key) value=value}}</span>
+      <span>{{localize "PF1.LevelUp.Summary.AbilityScore.Gain" abl=(lookup @root.config.abilities key) value=value}}</span>
     {{/each}}
   </div>
   {{/if}}

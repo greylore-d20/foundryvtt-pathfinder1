@@ -13,12 +13,12 @@
         <div class="item-detail item-value"><i class="icon icon-coins large" data-tooltip="PF1.Value"></i></div>
         {{/if}}
         <div class="item-detail item-weight"><i class="icon icon-weight large" src="systems/pf1/icons/actions/weight.svg" data-tooltip="PF1.ItemWeight"></i></div>
-        {{#if ../isGM}}
+        {{#if @root.isGM}}
         <div class="item-detail item-identified"><i class="icon icon-quill-ink large" data-tooltip="PF1.Identified"></i></div>
         {{/if}}
         <div class="item-detail item-uses"><i class="icon icon-battery-pack large" data-tooltip="PF1.ChargePlural"></i></div>
 
-        {{#if ../owner}}
+        {{#if @root.owner}}
         <div class="item-controls">
           {{#if section.canCreate}}
           <a class="item-control item-create" data-tooltip="PF1.CreateItem" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
@@ -64,7 +64,7 @@
           <span{{#if (eq item.document.system.weight.total 0)}} class="null"{{/if}}>{{item.document.system.weight.converted.total}} {{@root.units.weight}}</span>
         </div>
 
-        {{#if ../../isGM}}
+        {{#if @root.isGM}}
         <div class="item-detail item-identified">
           <a class="item-control item-identify"><span>{{{item.labels.identified}}}</span></a>
         </div>
@@ -84,13 +84,13 @@
           {{/if}}
         </div>
 
-        {{#if ../../owner}}
+        {{#if @root.owner}}
         <div class="item-controls">
           <a class="item-control item-quantity-add"><i class="fas fa-plus"></i></a>
           <a class="item-control item-quantity-subtract"><i class="fas fa-minus"></i></a>
           <a class="item-control item-edit" data-tooltip="PF1.EditItem"><i class="fas fa-edit"></i></a>
           <a class="item-control item-duplicate" data-tooltip="PF1.DuplicateItem"><i class="fas fa-copy"></i></a>
-          {{#if ../../owned}}<a class="item-control item-take" data-tooltip="PF1.Containers.Contents.Take"><i class="fas fa-arrow-alt-circle-down"></i></a>{{/if}}
+          {{#if @root.owned}}<a class="item-control item-take" data-tooltip="PF1.Containers.Contents.Take"><i class="fas fa-arrow-alt-circle-down"></i></a>{{/if}}
           <a class="item-control item-delete" data-tooltip="PF1.DeleteItem"><i class="fas fa-trash"></i></a>
         </div>
         {{/if}}

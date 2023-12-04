@@ -29,7 +29,7 @@
 
                         {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=ability.sourceDetails sublabel="PF1.AbilityScore" plain=true}}
 
-                        {{#with (lookup ../sourceDetails.system.abilities id)}}
+                        {{#with (lookup @root.sourceDetails.system.abilities id)}}
                         {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=mod sublabel="PF1.Modifier"}}
                         {{/with}}
 

@@ -25,6 +25,7 @@ system:
         unchained:
           cost: 2
           type: action
+        type: standard
       duration:
         value: '@classes.witch.level'
         units: minute
@@ -40,6 +41,7 @@ system:
       activation:
         unchained:
           type: passive
+        type: passive
       actionType: save
       save:
         dc: 10 + floor(@classes.witch.level / 2) + @abilities.int.mod

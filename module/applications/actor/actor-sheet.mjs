@@ -1042,11 +1042,6 @@ export class ActorSheetPF extends ActorSheet {
       return;
     }
 
-    // Remove default change handler
-    html.off("change");
-    // Add alternative change handler
-    html.find("input,select,textarea").on("change", this._onChangeInput.bind(this));
-
     // Add general text box (span) handler
     html.find("span.text-box.direct").on("click", (event) => {
       this._onSpanTextInput(event, this._adjustActorPropertyBySpan.bind(this));

@@ -10,7 +10,7 @@
       {{#if action.isSelfCharged}}
         <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{action.data.uses.self.value}}</span>
         <span class="sep"> / </span>
-        <span class="text-box readonly">{{action.data.uses.self.max}}</span>
+        <span class="max">{{action.data.uses.self.max}}</span>
       {{/if}}
     </div>
 
@@ -53,9 +53,9 @@
   <label>{{localize "PF1.LimitedUses"}}</label>
   <div class="form-fields">
     {{#if isCharged}}
-    <input type="text" name="system.uses.value" value="{{system.uses.value}}" data-dtype="Number" data-tooltip="@resources.{{system.tag}}.value : {{system.uses.value}}" {{disabled inheritCharges}} />
+    <input type="text" name="system.uses.value" value="{{system.uses.value}}" data-dtype="Number" data-tooltip="@resources.{{system.tag}}.value : {{system.uses.value}}" {{disabled inheritCharges}}>
     <span class="sep"> / </span>
-    <input type="text" value="{{system.uses.max}}" disabled data-dtype="Number" data-tooltip="@resources.{{system.tag}}.max : {{system.uses.max}}"/>
+    <input type="text" value="{{system.uses.max}}" disabled data-dtype="Number" data-tooltip="@resources.{{system.tag}}.max : {{system.uses.max}}">
     {{/if}}
     <select name="system.uses.per" {{disabled inheritCharges}}>
       {{selectOptions config.limitedUsePeriods selected=system.uses.per blank=""}}
@@ -73,7 +73,7 @@
 </div>
 {{else}}
 <div class="form-group uses-per">
-  <input class="formula" type="text" name="system.uses.maxFormula" value="{{system.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
+  <input class="formula" type="text" name="system.uses.maxFormula" value="{{system.uses.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}">
 </div>
 {{/if}}
 <div class="form-group charges-per-use">
@@ -93,7 +93,7 @@
 {{#if isPhysical}}
   <div class="form-group">
     <label>{{localize "PF1.PricePerCharge"}}</label>
-    <input type="text" name="system.uses.pricePerUse" value="{{system.uses.pricePerUse}}" placeholder="0" type="Number"/>
+    <input type="text" name="system.uses.pricePerUse" value="{{system.uses.pricePerUse}}" placeholder="0" type="Number">
   </div>
 {{/if}}
 {{/if}}

@@ -24,7 +24,7 @@
 <div class="form-group input-select-select">
   <label>{{localize "PF1.Target"}}</label>
   <div class="form-fields">
-    <input type="text" name="target.value" value="{{data.target.value}}"/>
+    <input type="text" name="target.value" value="{{data.target.value}}">
   </div>
 </div>
 
@@ -32,7 +32,7 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.Range"}}</label>
   <div class="form-fields">
-    {{#if canInputRange}}<input class="formula" type="text" name="range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
+    {{#if canInputRange}}<input class="formula" type="text" name="range.value" value="{{data.range.value}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}">{{/if}}
     <select name="range.units">
       {{selectOptions distanceUnits selected=data.range.units blank=""}}
     </select>
@@ -44,7 +44,7 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.MinRange"}}</label>
   <div class="form-fields">
-    {{#if canInputMinRange}}<input class="formula" type="text" name="range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}"/>{{/if}}
+    {{#if canInputMinRange}}<input class="formula" type="text" name="range.minValue" value="{{data.range.minValue}}" placeholder="{{#unless isSpell}}{{localize "PF1.Formula"}}{{/unless}}">{{/if}}
     <select name="range.minUnits">
       {{selectOptions distanceUnits selected=data.range.minUnits blank=""}}
     </select>
@@ -57,7 +57,7 @@
 <div class="form-group input-select-select">
   <label>{{localize "PF1.MaximumRangeIncrements"}}</label>
   <div class="form-fields">
-    <input type="text" data-dtype="Number" name="range.maxIncrements" value="{{data.range.maxIncrements}}"/>
+    <input type="text" data-dtype="Number" name="range.maxIncrements" value="{{data.range.maxIncrements}}">
   </div>
 </div>
 {{/if}}
@@ -66,7 +66,7 @@
 <div class="form-group input-select-select">
   <label>{{localize "PF1.Area"}}</label>
   <div class="form-fields">
-    <input type="text" name="spellArea" value="{{data.spellArea}}"/>
+    <input type="text" name="spellArea" value="{{data.spellArea}}">
   </div>
 </div>
 
@@ -75,9 +75,9 @@
   <label>{{localize "PF1.Duration"}}</label>
   <div class="form-fields">
     {{#if isSpell}}
-    <input type="text" name="duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.SpellDurationExample"}}"/>
+    <input type="text" name="duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.SpellDurationExample"}}">
     {{else}}
-    {{#if canInputDuration}}<input class="formula" type="text" name="duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.Formula"}}"/>{{/if}}
+    {{#if canInputDuration}}<input class="formula" type="text" name="duration.value" value="{{data.duration.value}}" placeholder="{{localize "PF1.Formula"}}">{{/if}}
     <select name="duration.units">
       {{selectOptions config.timePeriods selected=data.duration.units blank=""}}
     </select>
@@ -120,9 +120,9 @@
   </label>
   <div class="form-fields">
     {{#if usesSpellPoints}}
-    <input class="formula" type="text" name="uses.spellPointCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.spellPointCost}}" />
+    <input class="formula" type="text" name="uses.spellPointCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.spellPointCost}}">
     {{else}}
-    <input class="formula" type="text" name="uses.autoDeductChargesCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.autoDeductChargesCost}}" />
+    <input class="formula" type="text" name="uses.autoDeductChargesCost" placeholder="{{defaultChargeFormula}}" value="{{data.uses.autoDeductChargesCost}}">
     {{/if}}
   </div>
 </div>
@@ -132,9 +132,9 @@
   <div class="form-group uses-per">
     <div class="form-fields">
       {{#if isSelfCharged}}
-      <input type="text" name="uses.self.value" value="{{data.uses.self.value}}" data-dtype="Number"/>
+      <input type="text" name="uses.self.value" value="{{data.uses.self.value}}" data-dtype="Number">
       <span class="sep"> / </span>
-      <input type="text" value="{{data.uses.self.max}}" disabled data-dtype="Number"/>
+      <input type="text" value="{{data.uses.self.max}}" disabled data-dtype="Number">
       {{/if}}
       <select name="uses.self.per">
         {{selectOptions config.limitedUsePeriods selected=data.uses.self.per blank=""}}
@@ -144,7 +144,7 @@
 
   {{#if showMaxChargeFormula}}
   <div class="form-group uses-per">
-    <input class="formula" type="text" name="uses.self.maxFormula" value="{{data.uses.self.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}"/>
+    <input class="formula" type="text" name="uses.self.maxFormula" value="{{data.uses.self.maxFormula}}" placeholder="{{localize "PF1.MaximumUsesFormula"}}">
   </div>
   {{/if}}
 </div>

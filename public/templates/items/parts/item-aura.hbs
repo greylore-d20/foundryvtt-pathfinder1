@@ -5,7 +5,7 @@
 <div class="form-group" data-tooltip="@item.cl : {{system.cl}}">
   <label class="header">{{localize "PF1.CasterLevel"}}</label>
   <div class="form-fields">
-    <input type="text" class="select-on-click" name="system.cl" value="{{system.cl}}" placeholder="{{localize "PF1.CasterLevel"}}" data-dtype="Number"/>
+    <input type="text" class="select-on-click" name="system.cl" value="{{system.cl}}" placeholder="{{localize "PF1.CasterLevel"}}" data-dtype="Number">
   </div>
 </div>
 
@@ -15,9 +15,9 @@
   {{#if system.aura.custom}}
   <div class="form-fields">
     <label class="aura-strength">{{auraStrength_name}}</label>
-    <input type="text" name="system.aura.school" value="{{system.aura.school}}" placeholder="{{localize "PF1.Aura.Single"}}"/>
+    <input type="text" name="system.aura.school" value="{{system.aura.school}}" placeholder="{{localize "PF1.Aura.Single"}}">
     <label class="checkbox">
-      <input type="checkbox" name="system.aura.custom" {{checked system.aura.custom}}/> {{localize "PF1.Custom"}}
+      <input type="checkbox" name="system.aura.custom" {{checked system.aura.custom}}> {{localize "PF1.Custom"}}
     </label>
   </div>
   {{else}}
@@ -27,7 +27,7 @@
       {{selectOptions config.spellSchools selected=system.aura.school blank=""}}
     </select>
     <label class="checkbox">
-      <input type="checkbox" name="system.aura.custom" {{checked system.aura.custom}}/> {{localize "PF1.Custom"}}
+      <input type="checkbox" name="system.aura.custom" {{checked system.aura.custom}}> {{localize "PF1.Custom"}}
     </label>
   </div>
   {{/if}}
@@ -36,7 +36,7 @@
 <div class="form-group stacked">
   {{#if @root.isGM}}
   <label class="checkbox cursed">
-    <input type="checkbox" name="system.cursed" {{checked system.cursed}}/> {{localize "PF1.Cursed"}}
+    <input type="checkbox" name="system.cursed" {{checked system.cursed}}> {{localize "PF1.Cursed"}}
   </label>
   {{/if}}
 </div>

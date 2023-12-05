@@ -138,7 +138,7 @@
           {{#if item.hasResource}}
           <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.uses.value}}</span>
           <span class="sep"> / </span>
-          <span class="text-box">{{item.uses.max}}</span>
+          <span class="max">{{item.uses.max}}</span>
           <span class="tooltipcontent">
             <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.uses.value}}</span>
             <span class="span2 align-left">@resources.{{item.tag}}.max :</span><span class="span1 align-right"> {{item.uses.max}}</span>
@@ -172,21 +172,25 @@
 <footer class="tooltip">
   <div class="tooltipcontent">
     <span class="span2 align-left">@attributes.encumbrance.level :</span><span class="span1 align-right"> {{system.attributes.encumbrance.level}}</span>
-    <span class="span3"><br/></span>
+    <span class="span3"><br></span>
     <span class="span2 align-left">@details.carryCapacity.bonus.total :</span><span class="span1 align-right"> {{system.details.carryCapacity.bonus.total}}</span>
     {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.details.carryCapacity.bonus.total}}
 
-    <span class="span3"><br/></span>
+    <span class="span3"><br></span>
     <span class="span2 align-left">@details.carryCapacity.multiplier.total :</span><span class="span1 align-right"> {{system.details.carryCapacity.multiplier.total}}</span>
     {{> "systems/pf1/templates/actors/parts/actor-source-details.hbs" target=sourceDetails.system.details.carryCapacity.multiplier.total}}
   </div>
 
   {{! Carry Bonus }}
-  <div class="form-group flexrow carry-bonus">
-    <label>{{localize "PF1.BonusCarryStrength"}}</label>
-    <span class="text-box direct" name="system.details.carryCapacity.bonus.user" data-dtype="Number" data-placeholder="0">{{system.details.carryCapacity.bonus.user}}</span>
-    <label>{{localize "PF1.BonusCarryMultiplier"}}</label>
-    <span class="text-box direct" name="system.details.carryCapacity.multiplier.user" data-dtype="Number" data-placeholder="0">{{system.details.carryCapacity.multiplier.user}}</span>
+  <div class="carry-bonus">
+    <label>
+      {{localize "PF1.BonusCarryStrength"}}
+      <input class="small" name="system.details.carryCapacity.bonus.user" value="{{system.details.carryCapacity.bonus.user}}" type="number" data-dtype="Number" placeholder="0">
+    </label>
+    <label>
+      {{localize "PF1.BonusCarryMultiplier"}}
+      <input class="small" name="system.details.carryCapacity.multiplier.user" value="{{system.details.carryCapacity.multiplier.user}}" type="number" data-dtype="Number" placeholder="0">
+    </label>
   </div>
   {{#with encumbrance}}
   <div class="flexrow inventory-tags tag-list">

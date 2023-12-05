@@ -2,7 +2,7 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img" />
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img">
 
     {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
   </header>
@@ -31,7 +31,7 @@
         <div class="form-group stacked">
           <label>{{localize "PF1.EquipmentStatus"}}</label>
           <label class="checkbox">
-            <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{localize "PF1.Identified"}}
+            <input type="checkbox" name="system.identified" {{checked system.identified}}> {{localize "PF1.Identified"}}
           </label>
         </div>
         {{/if}}
@@ -55,7 +55,7 @@
             {{#each config.currencies as |l k|}}
             <li class="denomination {{k}}" data-denomination="{{k}}">
               <label>{{l}}</label>
-              <input type="text" class="select-on-click" name="system.currency.{{k}}" value="{{#if (lookup @root.system.currency k)}}{{lookup @root.system.currency k}}{{/if}}" data-dtype="String"/>
+              <input type="text" class="select-on-click" name="system.currency.{{k}}" value="{{#if (lookup @root.system.currency k)}}{{lookup @root.system.currency k}}{{/if}}" data-dtype="String">
               <a class="convert-currency" data-type="{{k}}" data-category="currency" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-long-arrow-alt-left"></i></a>
             </li>
             {{/each}}

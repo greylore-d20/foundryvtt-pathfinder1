@@ -15,7 +15,7 @@
             {{/if}}
             {{!-- Name --}}
             <span class="name">{{localize dt.name}}</span>
-            <input type="checkbox" {{checked (arrayHas array=@root.data.values value=dt._id)}} />
+            <input type="checkbox" {{checked (arrayHas array=@root.data.values value=dt._id)}}>
           </div>
           {{/each}}
         </div>
@@ -36,7 +36,7 @@
             {{/if}}
             {{!-- Name --}}
           <span class="name">{{localize dt.name}}</span>
-          <input type="checkbox" {{checked (arrayHas array=@root.data.values value=dt._id)}} />
+          <input type="checkbox" {{checked (arrayHas array=@root.data.values value=dt._id)}}>
         </div>
         {{/each}}
       </div>
@@ -46,7 +46,7 @@
   <div class="flexrow misc-container">
     <div class="form-group custom">
       <label>{{localize "PF1.Custom"}}</label>
-      <input type="text" name="custom" value="{{@root.data.custom}}" />
+      <input type="text" name="custom" value="{{@root.data.custom}}">
     </div>
   </div>
 

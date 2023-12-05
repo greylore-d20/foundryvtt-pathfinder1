@@ -12,7 +12,7 @@ export const addLowLightVisionToLightConfig = function (app, html) {
   let checkboxStr = `<div class="form-group"><label>${game.i18n.localize("PF1.DisableLightLowLightVision")}</label>`;
   checkboxStr += '<input type="checkbox" name="flags.pf1.disableLowLight" data-dtype="Boolean"';
   if (light.getFlag("pf1", "disableLowLight")) checkboxStr += " checked";
-  checkboxStr += "/></div>";
+  checkboxStr += "></div>";
   const checkbox = $(checkboxStr);
 
   // Insert new checkbox

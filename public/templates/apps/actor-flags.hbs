@@ -9,7 +9,7 @@
         <label>{{localize flag.name}}</label>
 
         {{#if flag.isCheckbox}}
-        <input type="checkbox" name="{{key}}" data-dtype="Boolean" {{checked flag.value}}/>
+        <input type="checkbox" name="{{key}}" data-dtype="Boolean" {{checked flag.value}}>
 
         {{else if flag.isSelect}}
         <select name="{{key}}" data-dtype="{{flag.type}}">
@@ -21,7 +21,7 @@
         </select>
 
         {{else}}
-        <input type="text" name="{{key}}" value="{{flag.value}}" placeholder="{{flag.placeholder}}" data-dtype="{{flag.type}}"/>
+        <input type="text" name="{{key}}" value="{{flag.value}}" placeholder="{{flag.placeholder}}" data-dtype="{{flag.type}}">
         {{/if}}
 
         <p class="notes">{{flag.hint}}</p>

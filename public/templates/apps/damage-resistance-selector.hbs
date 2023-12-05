@@ -9,7 +9,7 @@
     <tbody>
       {{#each entries as |entry index|}}
       <tr class="resistance" data-index="{{index}}">
-        <td><input type="number" class="textarea" data-index="amount" value={{entry.amount}} data-dtype={{@root.dtypes.[0]}} name="{{index}}-amount" /></td>
+        <td><input type="number" class="textarea" data-index="amount" value={{entry.amount}} data-dtype={{@root.dtypes.[0]}} name="{{index}}-amount"></td>
         <td><select data-index="types0" value={{entry.types.[0]}} data-dtype={{@root.dtypes.[1]}} name="{{index}}-types0">
             {{#if @root.isDR}}
               {{selectOptions @root.damages localize=true selected=entry.types.[0] blank="PF1.Application.DamageResistanceSelector.TypeNothing"}}
@@ -36,7 +36,7 @@
 
   <div class="form-group stacked">
     <label>{{localize "PF1.Special"}}</label>
-    <input type="text" name="custom" value="{{@root.custom}}" data-dtype="String"/>
+    <input type="text" name="custom" value="{{@root.custom}}" data-dtype="String">
   </div>
 
   <button type="submit" name="submit" value="1"><i class="far fa-save"></i> {{localize "PF1.UpdateActor"}}</button>

@@ -4,14 +4,14 @@
     <label>{{localize "PF1.Rolls.Check.Override"}}</label>
     <div class="form-fields">
       <i class="fa-solid fa-dice-d20 fa-fw"></i>
-      <input class="attribute" type="text" name="d20" value="{{attributes.d20}}" placeholder="{{localize "PF1.Rolls.Check.OverrideHint"}}"/>
+      <input class="attribute" type="text" name="d20" value="{{attributes.d20}}" placeholder="{{localize "PF1.Rolls.Check.OverrideHint"}}">
     </div>
   </div>
   <div class="form-group">
     <label>{{localize "PF1.Rolls.Bonus"}}</label>
     <div class="form-fields">
       <i class="fa-solid fa-plus-minus fa-fw"></i>
-      <input class="attribute" type="text" name="attack-bonus" value="{{attributes.attack-bonus}}" placeholder="{{localize "PF1.Rolls.BonusHint"}}"/>
+      <input class="attribute" type="text" name="attack-bonus" value="{{attributes.attack-bonus}}" placeholder="{{localize "PF1.Rolls.BonusHint"}}">
     </div>
   </div>
   {{/if}}
@@ -34,30 +34,30 @@
   <div class="form-group stacked flags">
     <label>{{localize "PF1.Misc"}}</label>
     <label class="checkbox">
-      <input type="checkbox" name="haste-attack" {{checked flags.haste-attack}}/> {{localize "PF1.Haste"}}
+      <input type="checkbox" name="haste-attack" {{checked flags.haste-attack}}> {{localize "PF1.Haste"}}
     </label>
     {{#if isMeleeWeaponAttackAction}}
     <label class="checkbox">
-      <input type="checkbox" name="power-attack" {{checked flags.power-attack}}/> {{localize "PF1.PowerAttack"}}
+      <input type="checkbox" name="power-attack" {{checked flags.power-attack}}> {{localize "PF1.PowerAttack"}}
     </label>
     {{/if}}
     {{#if isRangedWeaponAttackAction}}
     <label class="checkbox">
-      <input type="checkbox" name="power-attack" {{checked flags.power-attack}}/> {{localize "PF1.DeadlyAim"}}
+      <input type="checkbox" name="power-attack" {{checked flags.power-attack}}> {{localize "PF1.DeadlyAim"}}
     </label>
     <label class="checkbox">
-      <input type="checkbox" name="manyshot" {{checked flags.manyshot}}/> {{localize "PF1.Manyshot"}}
+      <input type="checkbox" name="manyshot" {{checked flags.manyshot}}> {{localize "PF1.Manyshot"}}
     </label>
     <label class="checkbox">
-      <input type="checkbox" name="rapid-shot" {{checked flags.rapid-shot}}/> {{localize "PF1.RapidShot"}}
+      <input type="checkbox" name="rapid-shot" {{checked flags.rapid-shot}}> {{localize "PF1.RapidShot"}}
     </label>
     <label class="checkbox">
-      <input type="checkbox" name="point-blank-shot" {{checked flags.point-blank-shot}}/> {{localize "PF1.PointBlankShot"}}
+      <input type="checkbox" name="point-blank-shot" {{checked flags.point-blank-shot}}> {{localize "PF1.PointBlankShot"}}
     </label>
     {{/if}}
     {{#if isNaturalAttack}}
     <label class="checkbox">
-      <input type="checkbox" {{checked flags.primary-attack}} name="primary-attack"/> {{localize "PF1.PrimaryAttack"}}
+      <input type="checkbox" {{checked flags.primary-attack}} name="primary-attack"> {{localize "PF1.PrimaryAttack"}}
     </label>
     {{/if}}
   </div>
@@ -143,8 +143,8 @@
     </div>
     {{#each attacks as |atk idx|}}
     <div class="attack" data-index="{{idx}}">
-      <input class="name" disabled type="text" name="attack.{{idx}}.label" value="{{atk.label}}" data-tooltip="PF1.Name" />
-      <input class="bonus" disabled type="text" name="attack.{{idx}}.attackBonusTotal" value="{{atk.attackBonusTotal}}" data-tooltip="PF1.AttackRollBonus" />
+      <input class="name" disabled type="text" name="attack.{{idx}}.label" value="{{atk.label}}" data-tooltip="PF1.Name">
+      <input class="bonus" disabled type="text" name="attack.{{idx}}.attackBonusTotal" value="{{atk.attackBonusTotal}}" data-tooltip="PF1.AttackRollBonus">
       {{#if @root.usesAmmo}}
         <div class="ammo ammo-select">
           <div class="flexrow">
@@ -189,7 +189,7 @@
   <div class="form-group stacked">
     {{#if hasTemplate}}
     <label class="checkbox">
-      <input type="checkbox" name="measure-template" {{checked flags.measure-template}} /> {{localize "PF1.MeasureTemplate"}}
+      <input type="checkbox" name="measure-template" {{checked flags.measure-template}}> {{localize "PF1.MeasureTemplate"}}
     </label>
     {{/if}}
   </div>

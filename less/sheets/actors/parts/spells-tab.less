@@ -18,5 +18,254 @@
       flex: 0;
       margin: 2px;
     }
+
+    .spellbook-configuration {
+      display: flex;
+      flex-flow: column nowrap;
+      gap: 2px;
+
+      .form-group {
+        margin: 0; // Overrie Foundry's style
+      }
+
+      .spellbook-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3px;
+
+        h3 {
+          border-bottom: unset;
+        }
+
+        .spell-settings {
+          display: flex;
+          flex-flow: column nowrap;
+          gap: 1px;
+        }
+
+        .spell-level-mod-container {
+          gap: 1px 0.3em;
+          display: grid;
+          grid-auto-rows: auto;
+          grid-template-columns: min-content 1fr;
+
+          > h3 {
+            white-space: nowrap;
+          }
+
+          .spell-mod-formulas {
+            display: flex;
+            flex-direction: row;
+            gap: 3px;
+
+            .ppdoffset,
+            .cpdoffset {
+              overflow: none;
+              width: 50%;
+            }
+          }
+
+          &.hide-cpd {
+            .ppdoffset {
+              width: 100%;
+            }
+            .cpdoffset {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    .spellbook-group {
+      label {
+        margin: 0;
+      }
+
+      .spell-points-current {
+        flex: 0;
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+
+        h3 {
+          .nodesto();
+          font-size: @fontSizeHeader;
+          flex: 0 0 160px;
+          margin: 0;
+        }
+
+        :is(.value, .max) {
+          display: inline-flex;
+          justify-content: center;
+          flex: 0 0 3em;
+        }
+
+        .sep {
+          flex: 0;
+        }
+      }
+
+      .radios {
+        display: flex;
+        justify-content: space-evenly;
+
+        label {
+          white-space: nowrap;
+        }
+
+        label.checkbox {
+          display: flex;
+          &:first-child {
+            margin-top: unset;
+          }
+        }
+
+        input {
+          margin-inline-end: 4px;
+        }
+
+        *:not(:last-child) {
+          margin-inline-end: 4px;
+        }
+      }
+
+      .spell-uses {
+        white-space: nowrap;
+        overflow: hidden;
+        flex: 0 0 96px;
+        font-size: @fontSizeNormal;
+        text-align: center;
+        color: @colorTan;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        input[type="number"] {
+          width: calc(100% - 2px);
+          min-width: 40px;
+          height: 24px;
+          padding: 1px 3px;
+          margin: 0;
+          font-family: inherit;
+          font-size: inherit;
+          line-height: inherit;
+          border-radius: 3px;
+          -webkit-user-select: text;
+          -moz-user-select: text;
+          -ms-user-select: text;
+          user-select: text;
+        }
+
+        .spell-input-readonly {
+          color: black;
+        }
+
+        input[type="text"].base,
+        input[type="number"].base {
+          flex: 1;
+        }
+
+        input,
+        span.sep {
+          text-align: center;
+        }
+        span.sep {
+          flex: 0 0 8px;
+        }
+      }
+
+      .spell-uses {
+        display: flex;
+
+        .spell-slots,
+        .spell-max {
+          flex: 1;
+        }
+
+        input {
+          flex: 0 0 24px;
+        }
+      }
+
+      .spell-school {
+        white-space: nowrap;
+        overflow: hidden;
+        flex: 0 0 96px;
+        font-size: @fontSizeNormal;
+        color: @colorTan;
+        text-align: center;
+        border-right: 1px solid @colorFaint;
+      }
+
+      .spell-activation {
+        white-space: nowrap;
+        overflow: hidden;
+        flex: 0 0 120px;
+        font-size: @fontSizeNormal;
+        color: @colorTan;
+        text-align: center;
+        border-right: 1px solid @colorFaint;
+      }
+
+      .spell-components {
+        white-space: nowrap;
+        overflow: hidden;
+        flex: 0 0 80px;
+        font-size: @fontSizeNormal;
+        color: @colorTan;
+        text-align: center;
+        border-right: 1px solid @colorFaint;
+      }
+
+      // Empty spellbook controls
+      .spellbook-empty .item-controls {
+        flex: 1;
+      }
+
+      .alt-name,
+      .spell-failure {
+        input[type="text"] {
+          flex: 1;
+        }
+      }
+
+      .spell-level-message {
+        font-style: italic;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .spellcasting-summary {
+        flex: 2;
+        margin-right: 1px;
+        border-right: 1px solid black;
+      }
+
+      .spellcasting-config {
+        flex: 0;
+        margin-left: 3px;
+      }
+
+      .spell-range {
+        flex: 2;
+        border-right: 1px solid black;
+
+        label {
+          flex: 1 1 48px;
+          text-align: right;
+          margin-right: 8px;
+          white-space: nowrap;
+        }
+
+        input[type="text"] {
+          flex: 1 1 48px;
+        }
+
+        table {
+          margin-bottom: 4px;
+        }
+      }
+    }
   }
 }

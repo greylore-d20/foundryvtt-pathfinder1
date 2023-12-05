@@ -4,18 +4,18 @@
     <a class="item" data-tab="inventory">{{ localize "PF1.Inventory" }}</a>
     <a class="item" data-tab="notes">{{ localize "PF1.Notes" }}</a>
   </nav>
-  
+
   <section class="primary-body">
 
     {{!-- Inventory Tab --}}
     <div class="tab inventory flexcol" data-group="primary" data-tab="inventory">
       <header class="sheet-header flexrow">
-        <img class="profile" src="{{actor.img}}" data-tooltip="{{actor.name}}" data-edit="img"/>
-        
+        <img class="profile" src="{{actor.img}}" data-tooltip="{{actor.name}}" data-edit="img">
+
         <div class="header-details flexcol">
           <div class="header-top flexrow">
             <h1 class="char-name">
-              <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}"/>
+              <input name="name" type="text" value="{{actor.name}}" placeholder="{{localize "PF1.CharacterName"}}">
             </h1>
           </div>
 
@@ -25,7 +25,7 @@
               {{!-- Sell Multiplier --}}
               <li>
                 <input type="text" name="flags.pf1.sellMultiplier" value="{{sellMultiplier}}" placeholder="{{localize "PF1.HelpSellMultiplierN"}}" data-dtype="Number"
-                  data-tooltip="PF1.HelpSellMultiplier" />
+                  data-tooltip="PF1.HelpSellMultiplier">
               </li>
             </ul>
           </div>
@@ -47,5 +47,5 @@
     </div>
 
   </section>
-  
+
 </form>

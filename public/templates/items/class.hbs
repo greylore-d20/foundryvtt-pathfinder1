@@ -2,11 +2,11 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img">
 
     <div class="header-details flexrow">
       <h1 class="item-name">
-        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}"/>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}">
       </h1>
 
       {{! Content Source }}
@@ -17,7 +17,7 @@
           {{lookup config.classTypes system.subType}}
         </li>
         <li data-tooltip="@classes.{{system.tag}}.level : {{system.level}}<br>@item.level : {{system.level}}{{#unless isMythicPath}}<br>@classes.{{system.tag}}.hitDice : {{system.hitDice}}{{/unless}}">
-          <input type="text" name="system.level" value="{{system.level}}" placeholder="{{#if isMythicPath}}{{localize "PF1.Tier"}}{{else}}{{localize "PF1.Level"}}{{/if}}" data-dtype="Number"/>
+          <input type="text" name="system.level" value="{{system.level}}" placeholder="{{#if isMythicPath}}{{localize "PF1.Tier"}}{{else}}{{localize "PF1.Level"}}{{/if}}" data-dtype="Number">
         </li>
       </ul>
     </div>
@@ -72,7 +72,7 @@
       <div class="form-group">
         <label>{{localize "PF1.CustomHitDice"}}</label>
         <div class="form-fields">
-          <input type="text" class="formula" name="system.customHD" value="{{system.customHD}}" data-dtype="String" placeholder="{{localize "PF1.CustomHitDiceHint"}}"/>
+          <input type="text" class="formula" name="system.customHD" value="{{system.customHD}}" data-dtype="String" placeholder="{{localize "PF1.CustomHitDiceHint"}}">
         </div>
       </div>
       {{/unless}}
@@ -82,7 +82,7 @@
       <div class="form-group">
         <label>{{localize "PF1.HitPoints"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.hp" value="{{system.hp}}" data-dtype="Number" />
+          <input type="text" name="system.hp" value="{{system.hp}}" data-dtype="Number">
         </div>
       </div>
       {{/unless}}
@@ -105,7 +105,7 @@
       <div class="form-group">
         <label>{{localize "PF1.SkillsPerLevel"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.skillsPerLevel" value="{{system.skillsPerLevel}}" data-dtype="Number" />
+          <input type="text" name="system.skillsPerLevel" value="{{system.skillsPerLevel}}" data-dtype="Number">
         </div>
       </div>
 
@@ -120,7 +120,7 @@
         </select>
         {{#if (eq savingThrow.value "custom")}}
         <label>{{localize "PF1.Formula"}}</label>
-        <input name="system.savingThrows.{{id}}.custom" class="formula" type="text" value="{{savingThrow.custom}}" />
+        <input name="system.savingThrows.{{id}}.custom" class="formula" type="text" value="{{savingThrow.custom}}">
         {{/if}}
       </div>
       {{/each}}
@@ -207,12 +207,12 @@
       {{#each system.fc as |fc id|}}
       <div class="form-group">
         <label>{{fc.label}}</label>
-        <input type="text" name="system.fc.{{id}}.value" value="{{fc.value}}" data-dtype="Number" data-tooltip="@classes.{{@root.system.tag}}.fc.{{id}}" />
+        <input type="text" name="system.fc.{{id}}.value" value="{{fc.value}}" data-dtype="Number" data-tooltip="@classes.{{@root.system.tag}}.fc.{{id}}">
       </div>
       {{/each}}
       <div class="form-group">
         <label>{{localize 'PF1.Notes'}}</label>
-        <input type="text" name="system.fc.alt.notes" value="{{system.fc.alt.notes}}" data-dtype="String" />
+        <input type="text" name="system.fc.alt.notes" value="{{system.fc.alt.notes}}" data-dtype="String">
       </div>
       {{/if}}
 
@@ -226,7 +226,7 @@
         {{#each skills as |skill key|}}
         <li class="item flexrow" data-skill="{{key}}">
           <label class="checkbox skill-cs">
-            <input type="checkbox" name="system.classSkills.{{key}}" {{checked skill.classSkill}} /> {{skill.name}}
+            <input type="checkbox" name="system.classSkills.{{key}}" {{checked skill.classSkill}}> {{skill.name}}
           </label>
         </li>
         {{/each}}

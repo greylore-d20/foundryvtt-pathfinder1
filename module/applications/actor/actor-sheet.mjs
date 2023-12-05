@@ -2373,7 +2373,7 @@ export class ActorSheetPF extends ActorSheet {
     new Dialog(
       {
         title: game.i18n.format("PF1.Dialog.SplitItem.Title", { name: item.name }),
-        content: `<p>${game.i18n.format("PF1.Dialog.SplitItem.Desc")}</p><input type="text" name="value" value="1" />`,
+        content: `<p>${game.i18n.format("PF1.Dialog.SplitItem.Desc")}</p><input type="text" name="value" value="1">`,
         buttons: {
           split: {
             // icon: `<i class="fas fa-people-arrows></i>`,

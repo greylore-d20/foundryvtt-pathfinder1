@@ -161,7 +161,7 @@
               <label class="resolved-formula">{{actionDamage item.document.firstAction @root.rollData}}</label>
               <span class="tooltipcontent">
                 <span class="span3">{{actionDamage item.document.firstAction @root.rollData combine=false}}</span>
-                <span class="span3"><br/>{{localize "PF1.Details"}}:</span>
+                <span class="span3"><br>{{localize "PF1.Details"}}:</span>
                 {{#with item.document.firstAction}}
                   {{#each data.damage.parts as |pt ix|}}
                     <span class="span1 align-left">{{pt.formula}}</span><span class="span1 align-rightspaced">&nbsp;</span><span class="span1 align-right">{{#if pt.type}} [{{damageTypes pt.type}}]{{/if}}</span>
@@ -216,7 +216,7 @@
             {{#if item.isCharged}}
             <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.uses.value}}</span>
             <span class="sep"> / </span>
-            <span class="text-box readonly">{{item.uses.max}}</span>
+            <span class="max">{{item.uses.max}}</span>
             <span class="tooltipcontent">
               <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.uses.value}}</span>
               <span class="span2 align-left">@resources.{{item.tag}}.max :</span><span class="span1 align-right"> {{item.uses.max}}</span>
@@ -256,13 +256,13 @@
     {{!-- Natural Armor --}}
     <li class="natural-armor flexrow">
       <h3>{{localize "PF1.BuffTarACNatural"}}</h3>
-      <span class="text-box direct" name="system.attributes.naturalAC" data-dtype="Number">{{system.attributes.naturalAC}}</span>
+      <input class="unsized" name="system.attributes.naturalAC" type="number" data-dtype="Number" value="{{system.attributes.naturalAC}}" placeholder="0">
     </li>
 
     <li class="flexrow">
       <h3>{{localize "PF1.SpellResistance"}}</h3>
       <input class="formula" name="system.attributes.sr.formula" type="text" placeholder="{{localize "PF1.Formula"}}"
-        value="{{#if system.attributes.sr.formula}}{{system.attributes.sr.formula}}{{/if}}"/>
+        value="{{#if system.attributes.sr.formula}}{{system.attributes.sr.formula}}{{/if}}">
     </li>
   </ul>
 

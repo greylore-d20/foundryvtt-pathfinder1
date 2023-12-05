@@ -74,7 +74,7 @@
           {{#if item.isCharged}}
           <span class="text-box value" data-wheel-step="1" data-dtype="Number">{{item.uses.value}}</span>
           <span class="sep"> / </span>
-          <span class="text-box">{{item.uses.max}}</span>
+          <span class="max">{{item.uses.max}}</span>
           <span class="tooltipcontent">
             <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.uses.value}}</span>
             <span class="span2 align-left">@resources.{{item.tag}}.max :</span><span class="span1 align-right"> {{item.uses.max}}</span>
@@ -118,7 +118,7 @@
   {{! Arbitrary Bonus Feats }}
   <div class="flexrow form-group extra-feats">
     <label>{{localize "PF1.BonusFeatFormula"}}</label>
-    <input class="formula" type="text" name="system.details.bonusFeatFormula" value="{{system.details.bonusFeatFormula}}" placeholder="{{localize "PF1.Formula"}}" />
+    <input class="formula" type="text" name="system.details.bonusFeatFormula" value="{{system.details.bonusFeatFormula}}" placeholder="{{localize "PF1.Formula"}}">
   </div>
 
   {{! Feat Counts }}

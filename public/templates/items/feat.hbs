@@ -2,11 +2,11 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img">
 
     <div class="flexrow header-details">
       <h1 class="item-name">
-        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}"/>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}">
       </h1>
 
       {{! Content Source }}
@@ -98,7 +98,7 @@
       <div class="form-group">
         <label>{{localize "PF1.CROffset"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.crOffset" class="formula" value="{{system.crOffset}}" placeholder="{{localize "PF1.Formula"}}" />
+          <input type="text" name="system.crOffset" class="formula" value="{{system.crOffset}}" placeholder="{{localize "PF1.Formula"}}">
         </div>
       </div>
       {{/if}}
@@ -107,7 +107,7 @@
         {{#if owner}}
         {{#unless isTemplate}}
         <label class="checkbox">
-          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}> {{localize "PF1.ShowInQuickbar"}}
         </label>
         {{/unless}}
         {{/if}}
@@ -124,7 +124,7 @@
         {{#each skills as |skill key|}}
         <li class="item flexrow" data-skill="{{key}}">
           <label class="checkbox skill-cs">
-            <input type="checkbox" name="system.classSkills.{{key}}" {{checked skill.classSkill}} /> {{skill.name}}
+            <input type="checkbox" name="system.classSkills.{{key}}" {{checked skill.classSkill}}> {{skill.name}}
           </label>
         </li>
         {{/each}}
@@ -139,7 +139,7 @@
 
       {{! Identifier Tag }}
       {{~> "systems/pf1/templates/items/parts/item-tag.hbs"}}
-      
+
       {{!-- Associated Class --}}
       {{> "systems/pf1/templates/items/parts/item-class-link.hbs"}}
     </div>

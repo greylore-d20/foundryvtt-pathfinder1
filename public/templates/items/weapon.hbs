@@ -1,7 +1,7 @@
 <form class="{{ cssClass }} flexcol" autocomplete="off">
   {{!-- Item Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{ item.img }}" data-tooltip="{{ item.name }}" data-edit="img" />
+    <img class="profile" src="{{ item.img }}" data-tooltip="{{ item.name }}" data-edit="img">
 
     <div class="header-details flexrow">
       {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
@@ -88,7 +88,7 @@
       <div class="form-group">
         <label>{{localize "PF1.EnhancementBonus"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.enh" value="{{ system.enh }}" data-dtype="Number" placeholder="0" />
+          <input type="text" name="system.enh" value="{{ system.enh }}" data-dtype="Number" placeholder="0">
         </div>
       </div>
       {{/unless}}
@@ -107,22 +107,22 @@
       <div class="form-group stacked">
         {{#if isGM}}
         <label class="checkbox">
-          <input type="checkbox" name="system.identified" {{checked system.identified}} /> {{localize "PF1.Identified"}}
+          <input type="checkbox" name="system.identified" {{checked system.identified}}> {{localize "PF1.Identified"}}
         </label>
         {{/if}}
         <label class="checkbox">
-          <input type="checkbox" name="system.masterwork" {{checked system.masterwork}} /> {{localize "PF1.Masterwork"}}
+          <input type="checkbox" name="system.masterwork" {{checked system.masterwork}}> {{localize "PF1.Masterwork"}}
         </label>
         {{#if @root.showIdentifiedData}}
         <label class="checkbox artifact">
-          <input type="checkbox" name="system.artifact" {{checked system.artifact}}/> {{localize "PF1.Artifact"}}
+          <input type="checkbox" name="system.artifact" {{checked system.artifact}}> {{localize "PF1.Artifact"}}
         </label>
         {{/if}}
         <label class="checkbox">
-          <input type="checkbox" name="system.broken" {{checked system.broken}} /> {{localize "PF1.Broken"}}
+          <input type="checkbox" name="system.broken" {{checked system.broken}}> {{localize "PF1.Broken"}}
         </label>
         <label class="checkbox timeworn">
-          <input type="checkbox" name="system.timeworn" {{checked system.timeworn}}/> {{localize "PF1.Timeworn"}}
+          <input type="checkbox" name="system.timeworn" {{checked system.timeworn}}> {{localize "PF1.Timeworn"}}
         </label>
       </div>
 
@@ -142,12 +142,12 @@
       <h3 class="form-header">{{localize "PF1.Misc"}}</h3>
       <div class="form-group stacked">
         <label class="checkbox">
-          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}} />
+          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}>
           {{localize "PF1.ShowInQuickbar"}}
         </label>
 
         <label class="checkbox">
-          <input type="checkbox" name="system.proficient" {{checked system.proficient}}/> {{localize "PF1.Proficient"}}
+          <input type="checkbox" name="system.proficient" {{checked system.proficient}}> {{localize "PF1.Proficient"}}
         </label>
       </div>
 

@@ -72,9 +72,9 @@
 
         <div class="item-detail item-uses flexrow {{#if (and @root.actor item.isCharged)}}tooltip{{/if}}">
           {{#if item.isCharged}}
-          <input type="text" class="select-on-click" data-wheel-step="1" value="{{item.system.uses.value}}" data-dtype="Number"/>
+          <input type="text" class="select-on-click blended" data-wheel-step="1" value="{{item.system.uses.value}}" data-dtype="Number">
           <span class="sep"> / </span>
-          <input type="text" value="{{item.system.uses.max}}" disabled data-dtype="Number"/>
+          <span class="max">{{item.system.uses.max}}</span>
           {{#if @root.actor}}
           <span class="tooltipcontent">
             <span class="span2 align-left">@resources.{{item.tag}}.value :</span><span class="span1 align-right"> {{item.system.uses.value}}</span>

@@ -3,19 +3,19 @@
 <div class="form-group stacked">
   {{!-- Nonlethal --}}
   <label class="checkbox">
-    <input type="checkbox" name="nonlethal" {{checked data.nonlethal}}/> {{localize "PF1.Nonlethal"}}
+    <input type="checkbox" name="nonlethal" {{checked data.nonlethal}}> {{localize "PF1.Nonlethal"}}
   </label>
 
   {{!-- Primary Attack --}}
   {{#if isNaturalAttack}}
   <label class="checkbox">
-    <input type="checkbox" name="naturalAttack.primaryAttack" {{checked data.naturalAttack.primaryAttack}}/> {{localize "PF1.PrimaryAttack"}}
+    <input type="checkbox" name="naturalAttack.primaryAttack" {{checked data.naturalAttack.primaryAttack}}> {{localize "PF1.PrimaryAttack"}}
   </label>
   {{/if}}
 
   {{!-- Touch --}}
   <label class="checkbox">
-    <input type="checkbox" name="touch" {{checked data.touch}}/> {{localize "PF1.TouchAttackShort"}}
+    <input type="checkbox" name="touch" {{checked data.touch}}> {{localize "PF1.TouchAttackShort"}}
   </label>
 </div>
 
@@ -23,7 +23,7 @@
 <div class="form-group">
   <label>{{localize "PF1.EnhancementBonusOverride"}}</label>
   <div class="form-fields">
-    <input type="number" min="0" step="1" name="enh.value" value="{{data.enh.value}}" data-dtype="Number" placeholder="{{itemEnh}}" />
+    <input type="number" min="0" step="1" name="enh.value" value="{{data.enh.value}}" data-dtype="Number" placeholder="{{itemEnh}}">
   </div>
 </div>
 {{/if}}
@@ -57,7 +57,7 @@
 <div class="form-group">
   <label>{{localize "PF1.AttackName"}}</label>
   <div class="form-fields">
-    <input type="text" name="attackName" value="{{data.attackName}}" placeholder="{{localize "PF1.Attack"}}" />
+    <input type="text" name="attackName" value="{{data.attackName}}" placeholder="{{localize "PF1.Attack"}}">
   </div>
 </div>
 
@@ -65,7 +65,7 @@
 <div class="form-group">
   <label>{{localize "PF1.AttackRollBonus"}}</label>
   <div class="form-fields">
-    <input class="formula" type="text" name="attackBonus" value="{{data.attackBonus}}" placeholder="{{localize "PF1.Formula"}}"/>
+    <input class="formula" type="text" name="attackBonus" value="{{data.attackBonus}}" placeholder="{{localize "PF1.Formula"}}">
   </div>
 </div>
 
@@ -73,7 +73,7 @@
 <div class="form-group">
   <label>{{localize "PF1.SecondaryAttackModifier"}}</label>
   <div class="form-fields">
-    <input type="text" class="formula" name="naturalAttack.secondary.attackBonus" value="{{data.naturalAttack.secondary.attackBonus}}" data-dtype="String" placeholder="{{localize "PF1.Formula"}}" />
+    <input type="text" class="formula" name="naturalAttack.secondary.attackBonus" value="{{data.naturalAttack.secondary.attackBonus}}" data-dtype="String" placeholder="{{localize "PF1.Formula"}}">
   </div>
 </div>
 {{/if}}
@@ -82,20 +82,20 @@
 <div class="form-group">
   <label>{{localize "PF1.CriticalThreatRange"}}</label>
   <div class="form-fields">
-    <input type="text" name="ability.critRange" value="{{data.ability.critRange}}" data-dtype="Number"/>
+    <input type="text" name="ability.critRange" value="{{data.ability.critRange}}" data-dtype="Number">
   </div>
 </div>
 
 <div class="form-group">
   <label>{{localize "PF1.CriticalMultiplier"}}</label>
   <div class="form-fields">
-    <input type="text" name="ability.critMult" value="{{data.ability.critMult}}" data-dtype="Number"/>
+    <input type="text" name="ability.critMult" value="{{data.ability.critMult}}" data-dtype="Number">
   </div>
 </div>
 <div class="form-group">
   <label>{{localize "PF1.CriticalConfirmBonus"}}</label>
   <div class="form-fields">
-    <input class="formula" type="text" name="critConfirmBonus" value="{{data.critConfirmBonus}}" placeholder="{{localize "PF1.Formula"}}"/>
+    <input class="formula" type="text" name="critConfirmBonus" value="{{data.critConfirmBonus}}" placeholder="{{localize "PF1.Formula"}}">
   </div>
 </div>
 {{/unless}}
@@ -116,8 +116,8 @@
 <ol class="attack-parts form-group">
   {{#each data.attackParts as |part a|}}
   <li class="attack-part flexrow" data-attack-part="{{a}}">
-    <input class="formula" type="text" name="attackParts.{{a}}.0" placeholder="{{localize "PF1.AttackBonusFormula"}}" value="{{lookup this "0"}}"/>
-    <input type="text" name="attackParts.{{a}}.1" placeholder="{{localize "PF1.Name"}}" value="{{lookup this "1"}}"/>
+    <input class="formula" type="text" name="attackParts.{{a}}.0" placeholder="{{localize "PF1.AttackBonusFormula"}}" value="{{lookup this "0"}}">
+    <input type="text" name="attackParts.{{a}}.1" placeholder="{{localize "PF1.Name"}}" value="{{lookup this "1"}}">
     <a class="attack-control delete-attack"><i class="fas fa-trash"></i></a>
   </li>
   {{/each}}
@@ -131,21 +131,21 @@
   <div class="form-group">
     <label>{{localize 'PF1.FormulaicAttacksCount'}}</label>
     <div class="form-fields">
-      <input type="text" class="formulaic-attacks formula" name="formulaicAttacks.count.formula" value="{{data.formulaicAttacks.count.formula}}" data-dtype="String" placeholder="e.g. ceil(@attributes.bab.total / 5) - 1" />
+      <input type="text" class="formulaic-attacks formula" name="formulaicAttacks.count.formula" value="{{data.formulaicAttacks.count.formula}}" data-dtype="String" placeholder="e.g. ceil(@attributes.bab.total / 5) - 1">
       {{!-- to avoid disappearance of .value --}}
-      <input type="text" disabled class="formula-result small" name="formulaicAttacks.count.value" value="{{data.formulaicAttacks.count.value}}" data-tooltip="PF1.FormulaResult" placeholder="0" data-dtype="Number" />
+      <input type="text" disabled class="formula-result small" name="formulaicAttacks.count.value" value="{{data.formulaicAttacks.count.value}}" data-tooltip="PF1.FormulaResult" placeholder="0" data-dtype="Number">
     </div>
   </div>
   <div class="form-group">
     <label>{{localize 'PF1.AttackBonusFormula'}}</label>
     <div class="form-fields">
-      <input type="text" class="formula" name="formulaicAttacks.bonus.formula" value="{{data.formulaicAttacks.bonus.formula}}" data-dtype="String" placeholder="e.g. @formulaicAttack * -5" />
+      <input type="text" class="formula" name="formulaicAttacks.bonus.formula" value="{{data.formulaicAttacks.bonus.formula}}" data-dtype="String" placeholder="e.g. @formulaicAttack * -5">
     </div>
   </div>
   <div class="form-group">
     <label>{{localize 'PF1.AttackName'}}</label>
     <div class="form-fields">
-      <input type="text" name="formulaicAttacks.label" value="{{data.formulaicAttacks.label}}" data-tooltip="PF1.FormulaAttackHint" data-dtype="String" placeholder="{{localize 'PF1.FormulaAttack'}}" />
+      <input type="text" name="formulaicAttacks.label" value="{{data.formulaicAttacks.label}}" data-tooltip="PF1.FormulaAttackHint" data-dtype="String" placeholder="{{localize 'PF1.FormulaAttack'}}">
     </div>
   </div>
 </div>
@@ -185,7 +185,7 @@
   <ol class="damage-parts form-group tooltip">
     {{#each data.damage.parts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
-      <input class="damage-formula formula" type="text" name="damage.parts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}"/>
+      <input class="damage-formula formula" type="text" name="damage.parts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}">
       {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=type name=(concat "damage.parts." i ".type") damageTypes=@root.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
@@ -210,7 +210,7 @@
   <ol class="damage-parts form-group tooltip">
     {{#each data.damage.critParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
-      <input class="damage-formula formula" type="text" name="damage.critParts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}"/>
+      <input class="damage-formula formula" type="text" name="damage.critParts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}">
       {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=type name=(concat "damage.critParts." i ".type") damageTypes=@root.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
@@ -235,7 +235,7 @@
   <ol class="damage-parts form-group">
     {{#each data.damage.nonCritParts as |part i| }}
     <li class="damage-part flexrow" data-damage-part="{{i}}">
-      <input class="damage-formula formula" type="text" name="damage.nonCritParts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}"/>
+      <input class="damage-formula formula" type="text" name="damage.nonCritParts.{{i}}.formula" placeholder="{{localize "PF1.DamageFormulaHint"}}" value="{{formula}}">
       {{> "systems/pf1/templates/internal/damage-type-visual.hbs" data=type name=(concat "damage.nonCritParts." i ".type") damageTypes=@root.damageTypes}}
       <a class="damage-control delete-damage"><i class="fas fa-trash"></i></a>
     </li>
@@ -256,21 +256,21 @@
 <div class="form-group">
   <label>{{localize "PF1.Multiplier"}}</label>
   <div class="form-fields">
-    <input type="number" name="powerAttack.multiplier" value="{{data.powerAttack.multiplier}}" data-dtype="Number" placeholder="{{localize "PF1.Held"}}" />
+    <input type="number" name="powerAttack.multiplier" value="{{data.powerAttack.multiplier}}" data-dtype="Number" placeholder="{{localize "PF1.Held"}}">
   </div>
 </div>
 
 <div class="form-group">
   <label>{{localize "PF1.DamageBonus"}}</label>
   <div class="form-fields">
-    <input type="number" name="powerAttack.damageBonus" value="{{data.powerAttack.damageBonus}}" data-dtype="Number" />
+    <input type="number" name="powerAttack.damageBonus" value="{{data.powerAttack.damageBonus}}" data-dtype="Number">
   </div>
 </div>
 
 <div class="form-group">
   <label>{{localize "PF1.CriticalMultiplier"}}</label>
   <div class="form-fields">
-    <input type="number" name="powerAttack.critMultiplier" value="{{data.powerAttack.critMultiplier}}" data-dtype="Number" />
+    <input type="number" name="powerAttack.critMultiplier" value="{{data.powerAttack.critMultiplier}}" data-dtype="Number">
   </div>
 </div>
 {{/if}}
@@ -281,7 +281,7 @@
 <div class="form-group input-select">
   <label>{{#unless isSpell}}{{localize "PF1.DCFormula"}}{{else}}{{localize "PF1.DCOffsetFormula"}}{{/unless}}</label>
   <div class="form-fields">
-    <input class="formula" type="text" name="save.dc" value="{{data.save.dc}}" placeholder="0"/>
+    <input class="formula" type="text" name="save.dc" value="{{data.save.dc}}" placeholder="0">
     <select name="save.type">
       {{selectOptions config.savingThrows selected=data.save.type blank="PF1.None" localize=true}}
     </select>
@@ -291,7 +291,7 @@
 <div class="form-group input-select">
   <label>{{localize "PF1.SavingThrowEffect"}}</label>
   <div class="form-fields">
-    <input type="text" name="save.description" value="{{data.save.description}}" placeholder="{{localize "PF1.DCDescriptionExample"}}"/>
+    <input type="text" name="save.description" value="{{data.save.description}}" placeholder="{{localize "PF1.DCDescriptionExample"}}">
   </div>
 </div>
 

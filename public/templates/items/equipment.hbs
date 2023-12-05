@@ -2,7 +2,7 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img" />
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img">
 
     <div class="header-details flexrow">
       {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
@@ -77,7 +77,7 @@
         </div>
       </div>
       {{else}}
-      <input type="hidden" name="system.slot" value="{{system.subType}}" />
+      <input type="hidden" name="system.slot" value="{{system.subType}}">
       {{/if}}
 
       {{!-- Equipment Size --}}
@@ -92,7 +92,7 @@
       <div class="form-group">
         <label>{{localize "PF1.ArmorClass"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number"/>
+          <input type="text" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number">
         </div>
       </div>
 
@@ -101,7 +101,7 @@
       <div class="form-group">
         <label>{{localize "PF1.EnhancementBonus"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.armor.enh" value="{{system.armor.enh}}" data-dtype="Number"/>
+          <input type="text" name="system.armor.enh" value="{{system.armor.enh}}" data-dtype="Number">
         </div>
       </div>
       {{/unless}}
@@ -110,7 +110,7 @@
       <div class="form-group">
         <label>{{localize "PF1.MaxDexterityModifier"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.armor.dex" value="{{system.armor.dex}}" placeholder="{{localize "PF1.Unlimited"}}" data-dtype="Number"/>
+          <input type="text" name="system.armor.dex" value="{{system.armor.dex}}" placeholder="{{localize "PF1.Unlimited"}}" data-dtype="Number">
         </div>
       </div>
 
@@ -118,7 +118,7 @@
       <div class="form-group">
         <label>{{localize "PF1.ArmorCheckPenalty"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.armor.acp" value="{{system.armor.acp}}" data-dtype="Number" placeholder="0"/>
+          <input type="text" name="system.armor.acp" value="{{system.armor.acp}}" data-dtype="Number" placeholder="0">
         </div>
       </div>
 
@@ -126,7 +126,7 @@
       <div class="form-group">
         <label>{{localize "PF1.ArcaneSpellFailure"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.spellFailure" value="{{system.spellFailure}}" data-dtype="Number" placeholder="0"/>
+          <input type="text" name="system.spellFailure" value="{{system.spellFailure}}" data-dtype="Number" placeholder="0">
         </div>
       </div>
 
@@ -136,25 +136,25 @@
       <div class="form-group stacked">
         {{#if isGM}}
         <label class="checkbox">
-          <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{localize "PF1.Identified"}}
+          <input type="checkbox" name="system.identified" {{checked system.identified}}> {{localize "PF1.Identified"}}
         </label>
         {{/if}}
         <label class="checkbox">
-          <input type="checkbox" name="system.masterwork" {{checked system.masterwork}}/> {{localize "PF1.Masterwork"}}
+          <input type="checkbox" name="system.masterwork" {{checked system.masterwork}}> {{localize "PF1.Masterwork"}}
         </label>
         {{#if @root.showIdentifiedData}}
         <label class="checkbox artifact">
-          <input type="checkbox" name="system.artifact" {{checked system.artifact}}/> {{localize "PF1.Artifact"}}
+          <input type="checkbox" name="system.artifact" {{checked system.artifact}}> {{localize "PF1.Artifact"}}
         </label>
         {{/if}}
         <label class="checkbox broken">
-          <input type="checkbox" name="system.broken" {{checked system.broken}}/> {{localize "PF1.Broken"}}
+          <input type="checkbox" name="system.broken" {{checked system.broken}}> {{localize "PF1.Broken"}}
         </label>
         <label class="checkbox timeworn">
-          <input type="checkbox" name="system.timeworn" {{checked system.timeworn}}/> {{localize "PF1.Timeworn"}}
+          <input type="checkbox" name="system.timeworn" {{checked system.timeworn}}> {{localize "PF1.Timeworn"}}
         </label>
         <label class="checkbox nonlethal">
-          <input type="checkbox" name="system.nonlethal" {{checked system.nonlethal}}/> {{localize "PF1.Nonlethal"}}
+          <input type="checkbox" name="system.nonlethal" {{checked system.nonlethal}}> {{localize "PF1.Nonlethal"}}
         </label>
       </div>
 
@@ -163,12 +163,12 @@
       <div class="form-group stacked">
         {{#if owner}}
         <label class="checkbox">
-          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}> {{localize "PF1.ShowInQuickbar"}}
         </label>
         {{/if}}
 
         <label class="checkbox">
-          <input type="checkbox" name="system.proficient" {{checked system.proficient}}/> {{localize "PF1.ProficientAttack"}}
+          <input type="checkbox" name="system.proficient" {{checked system.proficient}}> {{localize "PF1.ProficientAttack"}}
         </label>
       </div>
 

@@ -2,11 +2,11 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img">
 
     <div class="header-details flexrow">
       <h1 class="item-name">
-        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}"/>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.ItemName"}}">
       </h1>
 
       {{! Content Source }}
@@ -64,7 +64,7 @@
         </div>
       </div>
       {{else}}
-      <input type="hidden" name="system.spellbook" value="primary"/>
+      <input type="hidden" name="system.spellbook" value="primary">
       {{/if}}
 
       {{!-- Spell Level --}}
@@ -117,7 +117,7 @@
       <div class="form-group flexrow">
         <label>{{localize "PF1.SubSchool"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.subschool" value="{{system.subschool}}" Placeholder="{{localize "PF1.SubSchoolExample"}}"/>
+          <input type="text" name="system.subschool" value="{{system.subschool}}" Placeholder="{{localize "PF1.SubSchoolExample"}}">
         </div>
       </div>
 
@@ -125,7 +125,7 @@
       <div class="form-group flexrow">
         <label>{{localize "PF1.DescriptorPlural"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.types" value="{{system.types}}" Placeholder="{{localize "PF1.SpellTypesExample"}}"/>
+          <input type="text" name="system.types" value="{{system.types}}" Placeholder="{{localize "PF1.SpellTypesExample"}}">
         </div>
       </div>
 
@@ -134,24 +134,24 @@
 
       <div class="spell-misc form-group stacked">
         <label class="checkbox">
-          <input type="checkbox" name="system.sr" {{checked system.sr}}/> {{localize "PF1.SpellResistance"}}
+          <input type="checkbox" name="system.sr" {{checked system.sr}}> {{localize "PF1.SpellResistance"}}
         </label>
 
         <label class="checkbox">
-          <input type="checkbox" name="system.clCheck" {{checked system.clCheck}}/> {{localize "PF1.CasterLevelCheck"}}
+          <input type="checkbox" name="system.clCheck" {{checked system.clCheck}}> {{localize "PF1.CasterLevelCheck"}}
         </label>
 
         <label class="checkbox">
-          <input type="checkbox" name="system.atWill" {{checked system.atWill}}/> {{localize "PF1.SpellPrepAtWill"}}
+          <input type="checkbox" name="system.atWill" {{checked system.atWill}}> {{localize "PF1.SpellPrepAtWill"}}
         </label>
 
         <label class="checkbox">
-          <input type="checkbox" name="system.domain" {{checked system.domain}}/> {{localize "PF1.Domain"}}/{{localize "PF1.School"}}
+          <input type="checkbox" name="system.domain" {{checked system.domain}}> {{localize "PF1.Domain"}}/{{localize "PF1.School"}}
         </label>
 
         {{#if owner}}
         <label class="checkbox">
-          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}/> {{localize "PF1.ShowInQuickbar"}}
+          <input type="checkbox" name="system.showInQuickbar" {{checked system.showInQuickbar}}> {{localize "PF1.ShowInQuickbar"}}
         </label>
         {{/if}}
       </div>
@@ -238,13 +238,13 @@
         <div class="form-fields">
           <label>{{localize "PF1.CastsLeft"}}</label>
           <div class="form-fields">
-            <input type="text" name="system.preparation.preparedAmount" value="{{system.preparation.preparedAmount}}" data-dtype="Number"/>
+            <input type="text" name="system.preparation.preparedAmount" value="{{system.preparation.preparedAmount}}" data-dtype="Number">
           </div>
         </div>
         <div class="form-fields">
           <label>{{localize "PF1.SpellPrepPrepared"}}</label>
           <div class="form-fields">
-            <input type="text" name="system.preparation.maxAmount" value="{{system.preparation.maxAmount}}" data-dtype="Number"/>
+            <input type="text" name="system.preparation.maxAmount" value="{{system.preparation.maxAmount}}" data-dtype="Number">
           </div>
         </div>
       </div>
@@ -287,7 +287,7 @@
       <div class="form-group">
         <label>{{localize "PF1.CasterLevelOffset"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.clOffset" value="{{system.clOffset}}" data-dtype="Number"/>
+          <input type="text" name="system.clOffset" value="{{system.clOffset}}" data-dtype="Number">
         </div>
       </div>
 
@@ -295,7 +295,7 @@
       <div class="form-group">
         <label>{{localize "PF1.SpellLevelOffset"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.slOffset" value="{{system.slOffset}}" data-dtype="Number"/>
+          <input type="text" name="system.slOffset" value="{{system.slOffset}}" data-dtype="Number">
         </div>
       </div>
 
@@ -304,7 +304,7 @@
       <div class="form-group">
         <label>{{localize "PF1.SpellSlotCost"}}</label>
         <div class="form-fields">
-          <input type="text" name="system.slotCost" value="{{system.slotCost}}" placeholder="1" data-dtype="Number"/>
+          <input type="text" name="system.slotCost" value="{{system.slotCost}}" placeholder="1" data-dtype="Number">
         </div>
       </div>
       {{/unless}}

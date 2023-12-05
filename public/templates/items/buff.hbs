@@ -2,11 +2,11 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header flexrow">
-    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img">
 
     <div class="header-details flexrow">
       <h1 class="item-name">
-        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.BuffName"}}"/>
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{localize "PF1.BuffName"}}">
       </h1>
 
       {{! Content Source }}
@@ -17,7 +17,7 @@
           {{labels.subType}}
         </li>
         <li data-tooltip="@item.level : {{system.level}}">
-          <input type="text" name="system.level" data-dtype="Number" value="{{#if system.level}}{{system.level}}{{/if}}" placeholder="{{localize "PF1.Level"}}"/>
+          <input class="blended" type="text" name="system.level" data-dtype="Number" value="{{#if system.level}}{{system.level}}{{/if}}" placeholder="{{localize "PF1.Level"}}">
         </li>
         <li>
           <label>
@@ -62,7 +62,7 @@
       {{! Hide From Token}}
       <div class="form-group">
         <label>{{localize "PF1.HideFromToken"}}</label>
-        <input type="checkbox" name="system.hideFromToken" {{checked system.hideFromToken}} />
+        <input type="checkbox" name="system.hideFromToken" {{checked system.hideFromToken}}>
       </div>
 
       <h3 class="form-header">{{localize "PF1.Details"}}</h3>
@@ -72,7 +72,7 @@
         <label>{{localize "PF1.Duration"}}</label>
         <div class="form-fields">
           {{#unless (eq system.duration.units "turn")}}
-          <input class="formula" type="text" name="system.duration.value" value="{{system.duration.value}}" placeholder="{{localize "PF1.Formula"}}"/>
+          <input class="formula" type="text" name="system.duration.value" value="{{system.duration.value}}" placeholder="{{localize "PF1.Formula"}}">
           {{/unless}}
           <select name="system.duration.units">
             {{selectOptions config.timePeriodsShort selected=system.duration.units blank=""}}

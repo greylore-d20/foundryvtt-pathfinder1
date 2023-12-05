@@ -3,7 +3,7 @@
     <img class="profile" src="{{data.img}}" data-edit="img">
     <div class="header-details flexrow">
       <h1 class="action-name">
-        <input name="name" type="text" value="{{data.name}}" placeholder="{{localize "PF1.ActionName"}}" />
+        <input name="name" type="text" value="{{data.name}}" placeholder="{{localize "PF1.ActionName"}}">
       </h1>
     </div>
   </header>
@@ -22,7 +22,7 @@
     <div class="tab details" data-group="primary" data-tab="description">
       <div class="form-group">
         <label>{{localize "PF1.Tag"}}</label>
-        <input type="text" placeholder="{{tag}}" value="{{data.tag}}" name="tag" />
+        <input type="text" placeholder="{{tag}}" value="{{data.tag}}" name="tag">
       </div>
       {{editor descriptionHTML target="description" button=true editable=owner engine="prosemirror" collaborate=false}}
     </div>
@@ -49,7 +49,7 @@
       <div class="form-group">
         <label>{{localize "PF1.SoundEffect"}}</label>
         <div class="form-fields">
-          <input type="text" name="soundEffect" placeholder="path/audio.wav" value="{{data.soundEffect}}"/>
+          <input type="text" name="soundEffect" placeholder="path/audio.wav" value="{{data.soundEffect}}">
           {{filePicker target="soundEffect" type="audio"}}
         </div>
       </div>

@@ -2,7 +2,7 @@
 
   {{!-- Item Sheet Header --}}
   <header class="sheet-header loot-header flexrow">
-    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img" />
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img">
 
     <div class="header-details flexrow">
       {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
@@ -64,7 +64,7 @@
 
         <div class="form-group" data-tooltip="PF1.AbundantDesc">
           <label class="checkbox">
-            <input type="checkbox" name="flags.pf1.abundant" {{checked item.flags.pf1.abundant}} /> {{localize "PF1.Abundant"}}
+            <input type="checkbox" name="flags.pf1.abundant" {{checked item.flags.pf1.abundant}}> {{localize "PF1.Abundant"}}
           </label>
         </div>
 
@@ -85,12 +85,12 @@
       <div class="form-group stacked">
         {{#if isGM}}
         <label class="checkbox">
-          <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{localize "PF1.Identified"}}
+          <input type="checkbox" name="system.identified" {{checked system.identified}}> {{localize "PF1.Identified"}}
         </label>
         {{/if}}
 
         <label class="checkbox artifact">
-          <input type="checkbox" name="system.artifact" {{checked system.artifact}}/> {{localize "PF1.Artifact"}}
+          <input type="checkbox" name="system.artifact" {{checked system.artifact}}> {{localize "PF1.Artifact"}}
         </label>
       </div>
       {{/if}}

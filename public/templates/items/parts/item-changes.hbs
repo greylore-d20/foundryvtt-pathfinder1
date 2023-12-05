@@ -12,31 +12,31 @@
       <div class="item-name flag-name flexrow">
         <h4>{{localize "PF1.ChangeFlagNoMediumEncumbrance"}}</h4>
       </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.noMediumEncumbrance" {{checked system.changeFlags.noMediumEncumbrance}}/></div>
+      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.noMediumEncumbrance" {{checked system.changeFlags.noMediumEncumbrance}}></div>
     </li>
     <li class="item change-flag flexrow">
       <div class="item-name flag-name flexrow">
         <h4>{{localize "PF1.ChangeFlagNoHeavyEncumbrance"}}</h4>
       </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.noHeavyEncumbrance" {{checked system.changeFlags.noHeavyEncumbrance}}/></div>
+      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.noHeavyEncumbrance" {{checked system.changeFlags.noHeavyEncumbrance}}></div>
     </li>
     <li class="item change-flag flexrow">
       <div class="item-name flag-name flexrow">
         <h4>{{localize "PF1.ChangeFlagMediumArmorFullSpeed"}}</h4>
       </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.mediumArmorFullSpeed" {{checked system.changeFlags.mediumArmorFullSpeed}}/></div>
+      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.mediumArmorFullSpeed" {{checked system.changeFlags.mediumArmorFullSpeed}}></div>
     </li>
     <li class="item change-flag flexrow">
       <div class="item-name flag-name flexrow">
         <h4>{{localize "PF1.ChangeFlagHeavyArmorFullSpeed"}}</h4>
       </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.heavyArmorFullSpeed" {{checked system.changeFlags.heavyArmorFullSpeed}}/></div>
+      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.heavyArmorFullSpeed" {{checked system.changeFlags.heavyArmorFullSpeed}}></div>
     </li>
     <li class="item change-flag flexrow">
       <div class="item-name flag-name flexrow">
         <h4>{{localize "PF1.ChangeFlagLoseDexToAC"}}</h4>
       </div>
-      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.loseDexToAC" {{checked system.changeFlags.loseDexToAC}}/></div>
+      <div class="item-enabled flexrow"><input type="checkbox" name="system.changeFlags.loseDexToAC" {{checked system.changeFlags.loseDexToAC}}></div>
     </li>
   </ol>
 
@@ -65,7 +65,7 @@
     <li class="item change flexrow" data-change="{{data._id}}">
       <div class="item-name item-formula flexrow">
         {{#unless isScript}}
-        <input class="change-formula formula" type="text" name="system.changes.{{a}}.formula" value="{{data.formula}}" placeholder="{{localize "PF1.Formula"}}" required/>
+        <input class="change-formula formula" type="text" name="system.changes.{{a}}.formula" value="{{data.formula}}" placeholder="{{localize "PF1.Formula"}}" required>
         {{else}}
         <button type="button" class="edit-change-contents"><i class="fas fa-edit"></i> {{localize "PF1.Edit"}}</button>
         {{/unless}}
@@ -93,7 +93,7 @@
 
       <div class="item-priority flexrow">
         <input class="change-priority" type="text" data-dtype="Number" name="system.changes.{{a}}.priority" value="{{data.priority}}"
-          placeholder="0" />
+          placeholder="0">
       </div>
 
       <div class="item-controls flexrow basic">

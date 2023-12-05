@@ -37,7 +37,7 @@
 
         {{#each link.fields as |fv fk|}}
         <td class="links-item-extra-field">
-          <input type="text" data-dtype="{{fv.type}}" value="{{lookup item fk}}" name="system.links.{{link.id}}.{{item.index}}.{{fk}}" />
+          <input type="text" data-dtype="{{fv.type}}" value="{{lookup item fk}}" name="system.links.{{link.id}}.{{item.index}}.{{fk}}">
         </td>
         {{/each}}
 

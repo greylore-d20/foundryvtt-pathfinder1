@@ -51,7 +51,7 @@ export class TooltipWorldConfig extends FormApplication {
       title: game.i18n.localize("PF1.TooltipWorldConfigName"),
       id: "tooltip-world-config",
       template: "systems/pf1/templates/settings/tooltip_world.hbs",
-      width: 720,
+      width: 540,
       height: "auto",
     });
   }

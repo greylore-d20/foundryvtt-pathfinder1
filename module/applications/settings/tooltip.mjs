@@ -86,7 +86,7 @@ export class TooltipConfig extends FormApplication {
       title: game.i18n.localize("PF1.TooltipConfigName"),
       id: "tooltip-config",
       template: "systems/pf1/templates/settings/tooltip.hbs",
-      width: 720,
+      width: 640,
       height: "auto",
     });
   }

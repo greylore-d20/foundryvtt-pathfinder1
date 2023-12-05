@@ -2446,6 +2446,8 @@ export class ActorPF extends ActorBasePF {
     const result = deepClone(dataSkill);
     result.name = skillName;
     result.id = skillId;
+    result.journal ||= pf1.config.skillCompendiumEntries[skillId];
+    if (isSubSkill) result.journal ||= pf1.config.skillCompendiumEntries[mainSkillId];
     if (parentSkill) result.parentSkill = parentSkill;
     return result;
   }

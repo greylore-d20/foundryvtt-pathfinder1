@@ -6,13 +6,9 @@ system:
   description:
     value: >-
       <i>You are good at avoiding unwanted attention and slipping out of
-      bonds.</i>
-
-      <p><b>Benefits</b></p>
-
-      <p>You get a +2 bonus on all Escape Artist and Stealth skill checks. If
-      you have 10 or more ranks in one of these skills, the bonus increases to
-      +4 for that skill.</p>
+      bonds.</i><p><strong>Benefits</strong>: You get a +2 bonus on all Escape
+      Artist and Stealth skill checks. If you have 10 or more ranks in one of
+      these skills, the bonus increases to +4 for that skill.</p>
   tags:
     - General
     - Skill
@@ -21,10 +17,12 @@ system:
       formula: '@skills.ste.rank>=10?4:2'
       subTarget: skill.ste
       modifier: untyped
+      priority: null
     - _id: r8iwxuq0
       formula: '@skills.esc.rank>=10?4:2'
       subTarget: skill.esc
       modifier: untyped
+      priority: null
   tag: feat_stealthy
 _key: '!items!f5FPqAYWlKj3zCIY'
 

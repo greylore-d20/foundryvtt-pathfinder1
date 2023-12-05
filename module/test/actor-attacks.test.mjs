@@ -56,7 +56,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should have the correct damage formula", function () {
-            expect(rolls.damage[0].formula).to.equal("1d8 + 4[Strength]");
+            expect(rolls.damage[0].formula).to.equal("sizeRoll(1, 8, 4) + 4[Strength]");
           });
 
           it("should be a ChatMessage", function () {
@@ -78,7 +78,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should have the correct damage formula", function () {
-            expect(rolls.damage[0].formula).to.equal("1d8 + 4[Strength]");
+            expect(rolls.damage[0].formula).to.equal("sizeRoll(1, 8, 4) + 4[Strength]");
           });
 
           it("should be a ChatMessage", function () {
@@ -106,7 +106,7 @@ export const registerActorItemAttackTests = () => {
               });
 
               it("should have the correct damage formula", function () {
-                expect(rolls.damage[0].formula).to.equal("1d4 + 4[Strength]");
+                expect(rolls.damage[0].formula).to.equal("sizeRoll(1, 8, 2) + 4[Strength]");
               });
             });
 
@@ -130,7 +130,7 @@ export const registerActorItemAttackTests = () => {
               });
 
               it("should have the correct damage formula", function () {
-                expect(rolls.damage[0].formula).to.equal("3d6 + 4[Strength]");
+                expect(rolls.damage[0].formula).to.equal("sizeRoll(1, 8, 6) + 4[Strength]");
               });
             });
           });
@@ -186,7 +186,7 @@ export const registerActorItemAttackTests = () => {
           });
 
           it("should have the correct damage formula", function () {
-            expect(rolls.damage[0].formula).to.equal("1d6 + 6[Strength]");
+            expect(rolls.damage[0].formula).to.equal("sizeRoll(1, 6, 4) + 6[Strength]");
           });
 
           it("should be a ChatMessage", function () {
@@ -209,7 +209,7 @@ export const registerActorItemAttackTests = () => {
             });
 
             it("should have the correct damage formula", function () {
-              expect(rolls.damage[0].formula).to.equal("1d6 + 2[Strength]");
+              expect(rolls.damage[0].formula).to.equal("sizeRoll(1, 6, 4) + 2[Strength]");
             });
           });
         });
@@ -248,7 +248,7 @@ export const registerActorItemAttackTests = () => {
         describe("attack without ammo usage", function () {
           let roll;
           before(async () => {
-            await items.longbow.update({ "system.ammo.type": "" });
+            await items.longbow.firstAction.update({ ammoType: "none" });
             roll = await items.longbow.use({ skipDialog: true });
             messages.push(roll);
           });
@@ -260,14 +260,15 @@ export const registerActorItemAttackTests = () => {
             expect(roll.systemRolls.attacks[0].attack.formula).to.equal("1d20 + 2[Dexterity]");
           });
           it("should have the correct damage formula", function () {
-            expect(roll.systemRolls.attacks[0].damage[0].formula).to.equal("1d8 + 0[Strength]");
+            expect(roll.systemRolls.attacks[0].damage[0].formula).to.equal("sizeRoll(1, 8, 4) + 0[Strength]");
           });
         });
 
         describe("attack with ammo usage and ammo present", function () {
           let roll;
           before(async () => {
-            await items.longbow.update({ "system.ammo.type": "arrow" });
+            await items.longbow.firstAction.update({ ammoType: "arrow" });
+
             items.arrows = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Arrow");
             await items.longbow.update({ "flags.pf1.defaultAmmo": items.arrows.id });
             await items.arrows.update({ "flags.pf1.abundant": false });

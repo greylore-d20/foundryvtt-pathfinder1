@@ -96,7 +96,7 @@ export function getActionDefaultData() {
     touch: false,
     usesAmmo: false,
     spellEffect: "",
-    spellArea: "",
+    area: "",
     conditionals: [],
     enh: {
       value: null,

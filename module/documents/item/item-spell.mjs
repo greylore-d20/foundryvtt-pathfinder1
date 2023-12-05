@@ -796,7 +796,7 @@ export class ItemSpellPF extends ItemPF {
     }
     // Set area label
     {
-      const area = actionData.spellArea;
+      const area = actionData.area;
 
       if (area) label.area = area;
     }

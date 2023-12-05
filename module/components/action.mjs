@@ -478,7 +478,7 @@ export class ItemAction {
       touch: false,
       ammoType: "",
       spellEffect: "",
-      spellArea: "",
+      area: "",
       conditionals: [],
       enh: {
         value: null,

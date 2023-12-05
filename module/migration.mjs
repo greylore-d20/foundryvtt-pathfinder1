@@ -822,6 +822,7 @@ export const migrateItemActionData = function (action, updateData, { itemData, i
   _migrateActionChargeUsage(action, itemData);
   _migrateActionAmmunitionUsage(action, itemData, updateData);
   _migrateActionHarmlessSpell(action, itemData);
+  _migrateActionSpellArea(action, itemData);
 
   // Return the migrated update data
   return action;
@@ -1863,6 +1864,13 @@ const _migrateActionHarmlessSpell = (action, itemData) => {
     action.save.description = action.save.description.replace(/\s*\(?\bharmless\b\)?\s*/, "");
     action.save.harmless = true;
   }
+};
+
+// Migrate .spellArea to .area
+// Added with PF1 vNEXT
+const _migrateActionSpellArea = (action, itemData) => {
+  action.area ||= action.spellArea;
+  delete action.spellArea;
 };
 
 const _migrateItemChargeCost = function (item, updateData) {

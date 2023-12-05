@@ -34,10 +34,10 @@ export const registerItemWeightTests = () => {
         settingWeightUnits = game.settings.get("pf1", "weightUnits");
       });
       after(async () => {
-        await items.embeddedAcid?.sheet?.close();
-        await items.worldAcid.sheet?.close();
+        await items.embeddedAcid?.sheet?.close({ force: true });
+        await items.worldAcid.sheet?.close({ force: true });
         await items.worldAcid.delete();
-        await actor.sheet.close();
+        await actor.sheet.close({ force: true });
         await actor.delete();
 
         await game.settings.set("pf1", "units", settingUnits);

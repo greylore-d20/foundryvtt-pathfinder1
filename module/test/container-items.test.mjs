@@ -70,7 +70,7 @@ export const registerContainerItemTests = () => {
         it("should render a sheet", async function () {
           await items.container.sheet._render(true);
           expect(items.container.sheet.rendered).to.be.true;
-          items.container.sheet.close();
+          items.container.sheet.close({ force: true });
         });
       });
 

@@ -83,7 +83,7 @@ export const unitTest_renderActorSheet = (shared, context, options = { altName: 
 
     it("sheet should render", async function () {
       await sheet._render(true);
-      await sheet.close();
+      await sheet.close({ force: true });
     });
   });
 };

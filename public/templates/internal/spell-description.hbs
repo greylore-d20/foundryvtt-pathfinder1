@@ -22,8 +22,10 @@
   {{#if label.effect}}<strong>{{localize "PF1.Effect"}}</strong>&nbsp;{{{label.effect}}}<br>{{/if}}
   {{#if label.duration}}<strong>{{localize "PF1.Duration"}}</strong>&nbsp;{{{label.duration}}}<br>{{/if}}
     {{#if useDCandSR}}
-      <strong>{{localize "PF1.SavingThrow"}}</strong>&nbsp;{{{label.savingThrow}}};&nbsp;
-      <strong>{{localize "PF1.SpellResistance"}}</strong>&nbsp;{{{label.sr}}}<br>
+      <strong>{{localize "PF1.SavingThrow"}}</strong>&nbsp;{{{label.savingThrow}}};
+      <strong>{{localize "PF1.SpellResistance"}}</strong>&nbsp;{{{label.sr}}}
+      {{~#if label.harmless}}; <strong>{{localize "PF1.Harmless"}}</strong>&nbsp;{{{label.harmless}}}{{/if}}
+      <br>
     {{/if}}
   </p>
 </div>

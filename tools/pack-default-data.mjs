@@ -75,6 +75,7 @@ export function getActionDefaultData() {
       dc: "",
       type: "",
       description: "",
+      harmless: false,
     },
     effectNotes: [],
     attackNotes: [],

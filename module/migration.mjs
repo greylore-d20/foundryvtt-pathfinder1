@@ -811,6 +811,7 @@ export const migrateItemActionData = function (action, updateData, { itemData, i
   _migrateActionPrimaryAttack(action, itemData);
   _migrateActionChargeUsage(action, itemData);
   _migrateActionAmmunitionUsage(action, itemData, updateData);
+  _migrateActionHarmlessSpell(action, itemData);
 
   // Return the migrated update data
   return action;
@@ -1841,6 +1842,17 @@ const _migrateActionAmmunitionUsage = function (action, itemData, updateData) {
   }
 
   delete action.usesAmmo;
+};
+
+// Migrate harmless from save descriptor to the harmless toggle.
+// Added with PF1 vNEXT
+const _migrateActionHarmlessSpell = (action, itemData) => {
+  if (!action.save.description) return;
+
+  if (/\bharmless\b/.test(action.save.description)) {
+    action.save.description = action.save.description.replace(/\s*\(?\bharmless\b\)?\s*/, "");
+    action.save.harmless = true;
+  }
 };
 
 const _migrateItemChargeCost = function (item, updateData) {

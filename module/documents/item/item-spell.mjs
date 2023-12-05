@@ -811,6 +811,10 @@ export class ItemSpellPF extends ItemPF {
 
       if (actionData.range?.units !== "personal") data.useDCandSR = true;
     }
+
+    const harmless = actionData.save?.harmless ?? false;
+    if (harmless) label.harmless = game.i18n.localize("PF1.Yes").toLowerCase();
+
     return data;
   }
 

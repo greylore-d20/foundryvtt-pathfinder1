@@ -1,6 +1,6 @@
 import { createTestActor } from "./actor-utils.mjs";
 import { fetchPackEntryData } from "./utils.mjs";
-import { convertWeight } from "../utils/lib.mjs";
+import { convertWeight, getWeightSystem } from "../utils/lib.mjs";
 
 export const registerItemWeightTests = () => {
   quench.registerBatch(
@@ -36,8 +36,9 @@ export const registerItemWeightTests = () => {
       after(async () => {
         await items.embeddedAcid?.sheet?.close();
         await items.worldAcid.sheet?.close();
-        await actor.delete();
         await items.worldAcid.delete();
+        await actor.sheet.close();
+        await actor.delete();
 
         await game.settings.set("pf1", "units", settingUnits);
         await game.settings.set("pf1", "weightUnits", settingWeightUnits);
@@ -54,6 +55,9 @@ export const registerItemWeightTests = () => {
           it("Settings should be applied correctly", function () {
             expect(game.settings.get("pf1", "weightUnits")).to.equal(weightUnits);
             expect(game.settings.get("pf1", "units")).to.equal(units);
+            let expectedSystem = weightUnits;
+            if (expectedSystem === "default") expectedSystem = units;
+            expect(getWeightSystem()).to.equal(expectedSystem);
           });
 
           for (const kind of ["world", "embedded"]) {
@@ -62,6 +66,7 @@ export const registerItemWeightTests = () => {
               before(async () => {
                 item = items[`${kind}Acid`];
                 await item.update({ "system.quantity": 1, "system.weight.value": 1 });
+                item.reset(); // Force reset for weight system change
                 getItemSheetWeight = async () => {
                   await item.sheet._render(true);
                   return item.sheet._element.find("input.data-weight-value-description-input").val();

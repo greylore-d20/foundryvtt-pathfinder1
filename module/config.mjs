@@ -1769,7 +1769,7 @@ export const spellComponents = {
   emotion: "PF1.SpellComponents.Type.emotion.Abbr",
   material: "PF1.SpellComponents.Type.material.Abbr",
   focus: "PF1.SpellComponents.Type.focus.Abbr",
-  divineFocus: "PF1.SpellComponent.Type.divineFocus.Abbr",
+  divineFocus: "PF1.SpellComponents.Type.divineFocus.Abbr",
 };
 
 /**

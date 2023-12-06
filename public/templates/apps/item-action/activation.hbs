@@ -137,7 +137,8 @@
       <input type="text" value="{{data.uses.self.max}}" disabled data-dtype="Number">
       {{/if}}
       <select name="uses.self.per">
-        {{selectOptions config.limitedUsePeriods selected=data.uses.self.per blank=""}}
+        <option value="">{{localize "PF1.Unlimited"}}</option>
+        {{selectOptions config.limitedUsePeriods selected=data.uses.self.per}}
       </select>
     </div>
   </div>

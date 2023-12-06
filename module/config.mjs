@@ -758,7 +758,6 @@ export const itemActionTypes = {
  */
 export const limitedUsePeriods = {
   single: "PF1.LimitedUseSingle",
-  unlimited: "PF1.Unlimited",
   day: "PF1.LimitedUseDay",
   week: "PF1.LimitedUseWeek",
   charges: "PF1.LimitedUseCharges",

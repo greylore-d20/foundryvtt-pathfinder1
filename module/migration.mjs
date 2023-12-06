@@ -688,6 +688,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateScriptCalls(itemData, updateData);
   _migrateItemActions(itemData, updateData, actor);
   _migrateItemChargeCost(itemData, updateData);
+  _migrateItemLimitedUses(itemData, updateData);
   _migrateItemWeight(itemData, updateData);
   _migrateItemHealth(itemData, updateData);
   _migrateContainerReduction(itemData, updateData);
@@ -774,6 +775,14 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   return updateData;
 }
 
+// Migrate unlimited to empty selection, as the two are identical in meaning
+// Added with PF1 vNEXT
+const _migrateActionLimitedUses = (action, itemData) => {
+  if (action.uses?.self?.per === "unlimited") {
+    delete action.uses.self.per;
+  }
+};
+
 /**
  * Older actors incorrectly has .range.value as number instead of string
  *
@@ -802,6 +811,7 @@ const _migrateActionRange = (action, itemData) => {
 export const migrateItemActionData = function (action, updateData, { itemData, item = null } = {}) {
   action = foundry.utils.mergeObject(pf1.components.ItemAction.defaultData, action);
 
+  _migrateActionLimitedUses(action, itemData);
   _migrateActionRange(action, itemData);
   _migrateActionDamageParts(action, itemData);
   _migrateUnchainedActionEconomy(action, itemData);
@@ -1874,6 +1884,14 @@ const _migrateItemChargeCost = function (item, updateData) {
     ) {
       updateData["system.uses.autoDeductChargesCost"] = "0";
     }
+  }
+};
+
+// Migrate unlimited to empty selection, as the two are identical in meaning
+// Added with PF1 vNEXT
+const _migrateItemLimitedUses = (itemData, updateData) => {
+  if (itemData.system.uses?.per === "unlimited") {
+    updateData["system.uses.per"] = "";
   }
 };
 

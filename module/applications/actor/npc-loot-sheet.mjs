@@ -27,6 +27,11 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
     return "inventory";
   }
 
+  /** @type {CoinType} */
+  get itemValueDenomination() {
+    return "gp";
+  }
+
   async getData() {
     const data = await super.getData();
 
@@ -53,6 +58,8 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
       inv.canEquip = false;
       inv.showValue = true;
     }
+
+    data.labels.currency = `PF1.Currency.Inline.${this.itemValueDenomination}`;
 
     return data;
   }

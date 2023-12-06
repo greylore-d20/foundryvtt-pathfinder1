@@ -1,0 +1,102 @@
+.pf1 {
+  &.sheet {
+    // Rollable Links
+    .editable {
+      .rollable:hover,
+      .action.roll:hover {
+        color: var(--pf1-item-hover-text);
+        text-shadow: var(--pf1-item-hover-shadow);
+        cursor: pointer;
+
+        .tooltipcontent {
+          text-shadow: none;
+        }
+      }
+    }
+  }
+
+  .tooltip {
+    /* Tooltip text */
+    .tooltipcontent {
+      pointer-events: none;
+
+      font-family: sans-serif;
+      font-size: @fontSizeSmall;
+      font-weight: normal;
+      visibility: hidden;
+      background-color: var(--pf1-bg-dark-5);
+      color: var(--color-text-light-0);
+      text-align: center;
+      padding: 5px;
+      border-radius: 6px;
+      line-height: 13px;
+      min-width: 128px;
+      white-space: normal;
+
+      /* Position the tooltip text */
+      position: fixed;
+      z-index: 1;
+
+      // Faster tooltips
+      transform: translateZ(0);
+
+      /* Fade in tooltip */
+      opacity: 0;
+      transition: opacity 0.3s;
+
+      /* Setup tooltips as a grid */
+      display: grid;
+      grid-template-columns: min-content 1fr min-content;
+      grid-auto-rows: min-content;
+      gap: 1px 3px;
+      align-items: center;
+
+      .span1 {
+        white-space: nowrap;
+      }
+      .span2 {
+        grid-column: span 2;
+        white-space: nowrap;
+      }
+      .span3 {
+        grid-column-start: 1;
+        grid-column-end: span 3;
+      }
+
+      .tooltipcontent-context {
+        grid-column: span 3;
+      }
+      .align-right {
+        text-align: right;
+      }
+      .align-rightspaced {
+        text-align: right;
+        padding-inline: 15px 15px;
+      }
+      .align-left {
+        text-align: left;
+      }
+
+      .entity-link.content-link,
+      .inline-preroll.inline-formula {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        i.fa-dice-d20 {
+          color: #a0a099;
+        }
+      }
+
+      .inline-roll {
+        border-color: var(--color-border-dark-5);
+        background: none;
+      }
+    }
+    /* Show the tooltip text when you mouse over the tooltip container */
+    &:hover {
+      .tooltipcontent {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+}

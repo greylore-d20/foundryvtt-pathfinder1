@@ -231,72 +231,81 @@ export async function hideInvisibleTargets(cm, jq) {
   }
 }
 
+const getTokenByUuid = (uuid) => fromUuidSync(uuid)?.object;
+
 /**
  * @param {ChatMessage} cm - Chat message instance
  * @param {JQuery<HTMLElement>} jq - JQuery instance
  */
 export function addTargetCallbacks(cm, jq) {
-  const targetElems = jq.find(".attack-targets .target[data-uuid]");
+  const targetElems = jq[0].querySelectorAll(".attack-targets .target[data-uuid]");
 
   // Define getter functions
-  const _getTokenByElem = async function (elem) {
-    return (await fromUuid(elem?.dataset.uuid ?? ""))?.object;
-  };
+  /**
+   * @param {HTMLElement} elem
+   * @returns {TokenPF|undefined}
+   */
+  function _getTokenByElem(elem) {
+    return fromUuidSync(elem?.dataset.uuid ?? "")?.object;
+  }
+
+  /**
+   * @param {HTMLElement} elem
+   * @returns {HTMLElement}
+   */
   const _getRootTargetElement = function (elem) {
-    if (elem.dataset.uuid != null) return elem;
+    if (elem.dataset.uuid) return elem;
     return elem.closest("[data-uuid]");
   };
 
-  // Create image callback functions
-  const _mouseEnterCallback = function (event) {
-    _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
-      t?._onHoverIn(event, { hoverOutOthers: false });
-    });
-  };
-  const _mouseLeaveCallback = function (event) {
-    _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
-      t?._onHoverOut(event);
-    });
-  };
-  const _imageClickCallback = function (event) {
+  function _mouseEnterCallback(event, uuid) {
+    getTokenByUuid(uuid)?._onHoverIn(event, { hoverOutOthers: false });
+  }
+
+  function _mouseLeaveCallback(event, uuid) {
+    getTokenByUuid(uuid)?._onHoverOut(event);
+  }
+
+  function _imageClickCallback(event, uuid) {
     event.preventDefault();
-    _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
-      if (t?.actor.testUserPermission(game.user, "OWNER")) {
-        if (t._controlled) {
-          if (event.shiftKey) t.release();
-        } else {
-          t.control({ releaseOthers: !event.shiftKey });
-        }
+    const t = getTokenByUuid(uuid);
+    if (t?.actor.testUserPermission(game.user, "OWNER")) {
+      if (t._controlled) {
+        if (event.shiftKey) t.release();
+      } else {
+        t.control({ releaseOthers: !event.shiftKey });
       }
-    });
-  };
+    }
+  }
 
   // Add callbacks
   for (let elem of targetElems) {
-    elem = $(elem);
+    const uuid = elem.dataset.uuid;
+    const t = fromUuidSync(uuid);
+    if (!t) continue;
 
     // Image element events
-    const imgElem = elem.find(".target-image");
-    imgElem.on("mouseenter", _mouseEnterCallback);
-    imgElem.on("mouseleave", _mouseLeaveCallback);
-    imgElem.on("click", _imageClickCallback);
+    const imgElem = elem.querySelector(".target-image");
+    imgElem.addEventListener("mouseenter", (ev) => _mouseEnterCallback(ev, uuid), { passive: true });
+    imgElem.addEventListener("mouseleave", (ev) => _mouseLeaveCallback(ev, uuid), { passive: true });
+    imgElem.addEventListener("click", (ev) => _imageClickCallback(ev, uuid));
 
     // Misc element events
+    elem = $(elem);
     elem.find(".ac").on("click", (event) => {
       event.preventDefault();
 
-      _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
-        if (!t?.actor) return;
-        pf1.utils.chat.targetACClick(cm, jq, t.actor, event);
-      });
+      const t = fromUuidSync(uuid);
+      if (!t?.actor) return;
+      pf1.utils.chat.targetACClick(cm, jq, t.actor, event);
     });
+
     elem.find(".saving-throws .click").on("click", (event) => {
       event.preventDefault();
 
-      _getTokenByElem(_getRootTargetElement(event.currentTarget)).then((t) => {
-        if (!t?.actor) return;
-        pf1.utils.chat.targetSavingThrowClick(cm, jq, t.actor, event);
-      });
+      const t = fromUuidSync(uuid);
+      if (!t?.actor) return;
+      pf1.utils.chat.targetSavingThrowClick(cm, jq, t.actor, event);
     });
   }
 }

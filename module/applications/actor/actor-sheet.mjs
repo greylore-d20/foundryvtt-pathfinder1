@@ -1026,7 +1026,7 @@ export class ActorSheetPF extends ActorSheet {
     super.activateListeners(html);
 
     // Tooltips
-    html.mousemove((ev) => this._moveTooltips(ev));
+    html[0].addEventListener("mousemove", (ev) => this._moveTooltips(ev), { passive: true });
 
     // Activate Item Filters
     const filterLists = html.find(".filter-list");
@@ -1606,7 +1606,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      $(el).one("mouseleave", (event) => this._updateItems());
+      el.addEventListener("mouseleave", () => this._updateItems(), { passive: true, once: true });
     } else this._updateItems();
   }
 
@@ -1628,7 +1628,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      $(el).one("mouseleave", (event) => this._updateItems());
+      el.addEventListener("mouseleave", () => this._updateItems(), { passive: true, once: true });
     } else this._updateItems();
   }
   _setMaxSpellUses(event) {
@@ -1652,7 +1652,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      $(el).one("mouseleave", (event) => this._updateItems());
+      el.addEventListener("mouseleave", () => this._updateItems(), { passive: true, once: true });
     } else this._updateItems();
   }
 
@@ -1679,7 +1679,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      $(el).one("mouseleave", (event) => this._onSubmit(event));
+      el.addEventListener("mouseleave", (event) => this._onSubmit(event), { passive: true, once: true });
     } else this._onSubmit(event);
   }
 
@@ -1698,7 +1698,7 @@ export class ActorSheetPF extends ActorSheet {
 
     this.setItemUpdate(item.id, "system.level", value);
     if (event.originalEvent instanceof MouseEvent) {
-      $(el).one("mouseleave", (event) => this._updateItems());
+      el.addEventListener("mouseleave", () => this._updateItems(), { passive: true, once: true });
     } else this._updateItems();
   }
 
@@ -1907,13 +1907,13 @@ export class ActorSheetPF extends ActorSheet {
 
     let changed = false;
     if (wheelEvent) {
-      elem[0].addEventListener("mouseout", handler);
+      elem[0].addEventListener("mouseout", handler, { passive: true });
       changed = true;
     } else {
-      elem[0].addEventListener("focusout", handler);
-      elem[0].addEventListener("keydown", keyHandler);
+      elem[0].addEventListener("focusout", handler, { passive: true });
+      elem[0].addEventListener("keydown", keyHandler, { passive: true });
     }
-    elem[0].addEventListener("click", handler);
+    elem[0].addEventListener("click", handler, { passive: true });
   }
 
   /* -------------------------------------------- */

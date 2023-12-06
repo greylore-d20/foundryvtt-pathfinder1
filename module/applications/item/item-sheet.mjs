@@ -1179,7 +1179,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      $(el).one("mouseleave", (event) => this._updateActions());
+      el.addEventListener("mouseleave", () => this._updateActions(), { passive: true, once: true });
     } else this._updateActions();
   }
 

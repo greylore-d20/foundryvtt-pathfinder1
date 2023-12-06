@@ -6,11 +6,16 @@ export class TooltipPF extends Application {
       x: 0,
       y: 0,
     };
-    document.addEventListener("mousemove", (event) => {
-      this.mousePos.x = event.clientX;
-      this.mousePos.y = event.clientY;
-      if (this.onMouse && !this.hidden) this._setPosition();
-    });
+
+    document.addEventListener(
+      "mousemove",
+      (event) => {
+        this.mousePos.x = event.clientX;
+        this.mousePos.y = event.clientY;
+        if (this.onMouse && !this.hidden) this._setPosition();
+      },
+      { passive: true }
+    );
 
     /** @type {TokenDocument|null} */
     this.token = null;

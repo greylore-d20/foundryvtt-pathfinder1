@@ -16,8 +16,11 @@
         <li>
           {{labels.subType}}
         </li>
-        <li data-tooltip="@item.level : {{system.level}}">
-          <input class="blended" type="text" name="system.level" data-dtype="Number" value="{{#if system.level}}{{system.level}}{{/if}}" placeholder="{{localize "PF1.Level"}}">
+        <li data-tooltip="@item.level : {{#if system.level}}{{system.level}}{{else}}0{{/if}}">
+          <label>
+            {{localize "PF1.Level"}}:
+            <input class="blended level" type="text" name="system.level" data-dtype="Number" value="{{system.level}}" placeholder="0">
+          </label>
         </li>
         <li>
           <label>

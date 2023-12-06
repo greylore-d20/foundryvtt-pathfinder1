@@ -401,20 +401,28 @@ export class ActorSheetPF extends ActorSheet {
       }
     }
     // Count allowed skill ranks
-    const sourceData = [];
-    setProperty(data.sourceData, "skillRanks", sourceData);
-    this.document.items
-      .filter((obj) => {
-        return obj.type === "class" && obj.system.subType !== "mythic";
-      })
+    const sourceData = [],
+      bgSourceData = [];
+    data.sourceData.skillRanks = sourceData;
+    data.sourceData.bgSkillRanks = bgSourceData;
+    this.document.itemTypes.class
+      .filter((cls) => cls.system.subType !== "mythic")
       .forEach((cls) => {
         const clsLevel = cls.system.hitDice;
         const clsSkillsPerLevel = cls.system.skillsPerLevel;
         const fcSkills = cls.system.fc.skill.value;
         skillRanks.allowed +=
           Math.max(1, clsSkillsPerLevel + this.document.system.abilities.int.mod) * clsLevel + fcSkills;
-        if (data.useBGSkills && pf1.config.backgroundSkillClasses.includes(cls.system.subType))
-          skillRanks.bgAllowed += clsLevel * pf1.config.backgroundSkillsPerLevel;
+        if (data.useBGSkills && pf1.config.backgroundSkillClasses.includes(cls.system.subType)) {
+          const bgranks = clsLevel * pf1.config.backgroundSkillsPerLevel;
+          skillRanks.bgAllowed += bgranks;
+          if (bgranks > 0) {
+            bgSourceData.push({
+              name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
+              value: bgranks,
+            });
+          }
+        }
 
         sourceData.push({
           name: game.i18n.format("PF1.SourceInfoSkillRank_ClassBase", { className: cls.name }),
@@ -463,6 +471,13 @@ export class ActorSheetPF extends ActorSheet {
         skillRanks.sentToBG = skillRanks.bgUsed - skillRanks.bgAllowed;
         skillRanks.allowed -= skillRanks.sentToBG;
         skillRanks.bgAllowed += skillRanks.sentToBG;
+
+        if (skillRanks.sentToBG > 0) {
+          bgSourceData.push({
+            name: game.i18n.localize("PF1.Transferred"),
+            value: skillRanks.sentToBG,
+          });
+        }
       }
     }
     data.skillRanks = skillRanks;
@@ -470,7 +485,7 @@ export class ActorSheetPF extends ActorSheet {
     // Feat count
     {
       const sourceData = [];
-      setProperty(data.sourceData, "bonusFeats", sourceData);
+      data.sourceData.bonusFeats = sourceData;
 
       // Feat count
       // By level
@@ -602,8 +617,8 @@ export class ActorSheetPF extends ActorSheet {
    * Prepare item data for display.
    *
    * @protected
-   * @param {object} result - Item data fed to sheet
    * @param {ItemPF} item - Original document
+   * @returns {object} - Data fed to the sheet
    */
   _prepareItem(item) {
     const result = deepClone(item.system);

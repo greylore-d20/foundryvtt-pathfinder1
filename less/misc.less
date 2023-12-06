@@ -27,32 +27,38 @@ form {
   word-break: break-all;
 }
 
-span.text-box {
-  display: inline-block;
-  text-align: center;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  color: black;
-  min-width: 20px;
-  width: calc(100% - 2px);
-  padding: 1px 3px;
-  cursor: text;
-  min-height: 20px;
-
-  &.readonly {
-    cursor: initial;
-  }
-  &:hover {
-    box-shadow: 0 0 8px red;
-    border-color: black;
-  }
-}
-
-input.text-box {
-  text-align: center;
-}
-
 .pf1 {
+  span.text-box {
+    display: inline-block;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    color: black;
+    min-width: 20px;
+    width: calc(100% - 2px);
+    //padding: 1px 3px;
+    cursor: text;
+    min-height: 1em;
+    line-height: 1.5;
+
+    &.readonly {
+      cursor: initial;
+    }
+
+    &:hover {
+      box-shadow: 0 0 8px red;
+      border-color: black;
+    }
+
+    &:empty:before {
+      content: "\a0";
+    }
+  }
+
+  input.text-box {
+    text-align: center;
+  }
+
   a.disabled {
     * {
       color: @colorBeige;

@@ -235,57 +235,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // The Actor and its Items
     data.token = this.token;
-    data.items = this.document.items.map((item) => {
-      const i = deepClone(item.system);
-      i.document = item;
-      i.type = item.type;
-      i.id = item.id;
-      i.img = item.img;
-      i.isActive = item.isActive;
-      i.isPhysical = item.isPhysical ?? false;
-      i.isSingleUse = item.isSingleUse;
-      i.isCharged = item.isCharged;
-      i.hasResource = i.isCharged && !i.isSingleUse;
-      i.hasUses = i.uses?.max > 0;
-
-      const firstAction = item.firstAction;
-      const firstActionRollData = firstAction?.getRollData();
-
-      i.labels = item.getLabels({ actionId: firstAction?.id, rollData: firstActionRollData });
-      i.hasAttack = firstAction?.hasAttack;
-      i.hasMultiAttack = firstAction?.hasMultiAttack;
-      i.hasDamage = firstAction?.hasDamage;
-      i.hasRange = firstAction?.hasRange;
-      i.hasEffect = firstAction?.hasEffect;
-      i.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
-      i.range = mergeObject(
-        firstAction?.data?.range ?? {},
-        {
-          min: firstAction?.getRange({ type: "min", rollData: firstActionRollData }),
-          max: firstAction?.getRange({ type: "max", rollData: firstActionRollData }),
-        },
-        { inplace: false }
-      );
-      i.sort = item.sort;
-      i.showUnidentifiedData = item.showUnidentifiedData;
-      i.name = item.name; // Copy name over from item to handle identified state correctly
-
-      if (i.isPhysical) {
-        i.quantity ??= 0;
-        i.isStack = i.quantity > 1;
-        i.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
-        i.destroyed = i.hp?.value <= 0;
-      }
-
-      const itemCharges = i.uses?.value != null ? i.uses.value : 1;
-      i.empty = false;
-      if (i.isPhysical && i.quantity <= 0) i.empty = true;
-      else if (i.isCharged && !i.isSingleUse && itemCharges <= 0) i.empty = true;
-      i.disabled = i.empty || i.destroyed || false;
-      if (i.type === "feat" && !i.isActive) i.disabled = true;
-
-      return i;
-    });
+    data.items = this.document.items.map((item) => this._prepareItem(item));
 
     data.items.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     data.labels = this.document.getLabels();
@@ -646,6 +596,65 @@ export class ActorSheetPF extends ActorSheet {
 
     // Return data to the sheet
     return data;
+  }
+
+  /**
+   * Prepare item data for display.
+   *
+   * @protected
+   * @param {object} result - Item data fed to sheet
+   * @param {ItemPF} item - Original document
+   */
+  _prepareItem(item) {
+    const result = deepClone(item.system);
+    result.document = item;
+    result.type = item.type;
+    result.id = item.id;
+    result.img = item.img;
+    result.isActive = item.isActive;
+    result.isPhysical = item.isPhysical ?? false;
+    result.isSingleUse = item.isSingleUse;
+    result.isCharged = item.isCharged;
+    result.hasResource = result.isCharged && !result.isSingleUse;
+    result.hasUses = result.uses?.max > 0;
+
+    const firstAction = item.firstAction;
+    const firstActionRollData = firstAction?.getRollData();
+
+    result.labels = item.getLabels({ actionId: firstAction?.id, rollData: firstActionRollData });
+    result.hasAttack = firstAction?.hasAttack;
+    result.hasMultiAttack = firstAction?.hasMultiAttack;
+    result.hasDamage = firstAction?.hasDamage;
+    result.hasRange = firstAction?.hasRange;
+    result.hasEffect = firstAction?.hasEffect;
+    result.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
+    result.range = mergeObject(
+      firstAction?.data?.range ?? {},
+      {
+        min: firstAction?.getRange({ type: "min", rollData: firstActionRollData }),
+        max: firstAction?.getRange({ type: "max", rollData: firstActionRollData }),
+      },
+      { inplace: false }
+    );
+    result.sort = item.sort;
+    result.showUnidentifiedData = item.showUnidentifiedData;
+    result.name = item.name; // Copy name over from item to handle identified state correctly
+
+    if (result.isPhysical) {
+      result.quantity ??= 0;
+      result.isStack = result.quantity > 1;
+      result.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
+      result.destroyed = result.hp?.value <= 0;
+    }
+
+    const itemCharges = result.uses?.value != null ? result.uses.value : 1;
+    result.empty = false;
+    if (result.isPhysical && result.quantity <= 0) result.empty = true;
+    else if (result.isCharged && !result.isSingleUse && itemCharges <= 0) result.empty = true;
+    result.disabled = result.empty || result.destroyed || false;
+    if (result.type === "feat" && !result.isActive) result.disabled = true;
+
+    return result;
   }
 
   /* -------------------------------------------- */
@@ -2565,26 +2574,27 @@ export class ActorSheetPF extends ActorSheet {
     let hasASF = false;
     const spellbookData = {};
     const spellbooks = data.system.attributes.spells.spellbooks;
-    for (const [key, spellbook] of Object.entries(spellbooks)) {
+    for (const [bookId, spellbook] of Object.entries(spellbooks)) {
       // Required for spellbook selection in settings
-      spellbookData[key] = { orig: spellbook, inUse: spellbook.inUse };
+      spellbookData[bookId] = { orig: spellbook, inUse: spellbook.inUse };
       // The rest are unnecssary processing if spellbook is not enabled
       if (!spellbook.inUse) continue;
-      let spellbookSpells = spells.filter((obj) => obj.spellbook === key);
-      spellbookSpells = this._filterItems(spellbookSpells, this._filters[`spellbook-${key}`]);
-      spellbookData[key].data = this._prepareSpellbook(data, spellbookSpells, key);
-      spellbookData[key].prepared = spellbookSpells.filter(
+      const book = spellbookData[bookId];
+      let spellbookSpells = spells.filter((obj) => obj.spellbook === bookId);
+      spellbookSpells = this._filterItems(spellbookSpells, this._filters[`spellbook-${bookId}`]);
+      book.data = this._prepareSpellbook(data, spellbookSpells, bookId);
+      book.prepared = spellbookSpells.filter(
         (obj) => obj.preparation.mode === "prepared" && obj.preparation.prepared
       ).length;
-      spellbookData[key].rollData = data.rollData.spells[key];
-      spellbookData[key].class = data.rollData.classes[spellbook.class];
+      book.rollData = data.rollData.spells[bookId];
+      book.class = data.rollData.classes[spellbook.class];
       if (spellbook.arcaneSpellFailure) hasASF = true;
     }
 
     if (hasASF) {
       const asfSources = [];
-      const asf = this.actor.items
-        .filter((item) => item.type === "equipment" && item.system.equipped === true)
+      const asf = this.actor.itemTypes.equipment
+        .filter((item) => item.system.equipped === true)
         .reduce((cur, item) => {
           const itemASF = item.system.spellFailure ?? 0;
           if (itemASF > 0) {

@@ -1,0 +1,26 @@
+.chat-message {
+  .pf1.chat-card {
+    &.defense-card {
+      display: flex;
+      flex-flow: column;
+      gap: 1px;
+
+      .defense {
+        display: flex;
+        flex-flow: row;
+        gap: 3px;
+
+        h5 {
+          flex: 1;
+        }
+        .value {
+          flex: 0;
+        }
+
+        > .cmd {
+          flex: 2;
+        }
+      }
+    }
+  }
+}

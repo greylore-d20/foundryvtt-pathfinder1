@@ -86,10 +86,15 @@ export class ActionUse {
       return ERR_REQUIREMENT.DISABLED;
     }
 
-    const itemQuantity = this.item.system.quantity;
-    if (itemQuantity !== undefined && itemQuantity <= 0) {
-      ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
-      return ERR_REQUIREMENT.INSUFFICIENT_QUANTITY;
+    // Cost override set to 0 or to increase charges/quantity
+    if (this.shared.cost !== null && this.shared.cost <= 0) return 0;
+
+    if (this.item.isPhysical) {
+      const itemQuantity = this.item.system.quantity ?? 0;
+      if (itemQuantity <= 0) {
+        ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
+        return ERR_REQUIREMENT.INSUFFICIENT_QUANTITY;
+      }
     }
 
     if (this.action.isSelfCharged && this.action.data.uses.self?.value < 1) {
@@ -488,10 +493,13 @@ export class ActionUse {
 
     let cost = baseCost + bonusCost;
 
+    // Override cost
+    if (this.shared.cost !== null) cost = this.shared.cost;
+
     // Save chargeCost as rollData entry for anything else
     this.shared.rollData.chargeCost = cost;
 
-    if (cost != 0) {
+    if (cost > 0) {
       const uses = this.item.charges;
       if (this.item.type === "spell") {
         if (this.item.spellbook?.spontaneous && !this.item.system.preparation?.spontaneousPrepared) {

@@ -1115,17 +1115,20 @@ export class ItemPF extends ItemBasePF {
    * @see {@link SharedActionData}
    * @param {string} [actionId=""] - The ID of the action to use, defaults to the first action
    * @param {string} [actionID=""] - Deprecated in favor of `actionId`
+   * @param {number} [cost=null] - Cost override. Replaces charge cost or slot cost as appropriate.
    * @param {Event | null} [ev=null] - The event that triggered the use, if any
    * @param {boolean} [skipDialog=getSkipActionPrompt()] - Whether to skip the dialog for this action
    * @param {boolean} [chatMessage=true] - Whether to send a chat message for this action
    * @param {string} [dice="1d20"] - The base dice to roll for this action
    * @param {string} [rollMode] - The roll mode to use for the chat message
    * @param {TokenDocument} [token] Token this action is for, if any.
+   * @throws {Error} - On some invalid inputs.
    * @returns {Promise<SharedActionData | void | ChatMessage | *>}
    */
   async use({
     actionId = "",
     actionID = "",
+    cost = null,
     ev = null,
     skipDialog = getSkipActionPrompt(),
     chatMessage = true,
@@ -1134,6 +1137,8 @@ export class ItemPF extends ItemBasePF {
     token,
   } = {}) {
     rollMode ||= game.settings.get("core", "rollMode");
+
+    if (cost !== null && !Number.isSafeInteger(cost)) throw new Error(`Invalid value for cost override: ${cost}`);
 
     if (actionID) {
       foundry.utils.logCompatibilityWarning("ItemPF.use() actionID parameter is deprecated in favor of actionId", {
@@ -1159,7 +1164,7 @@ export class ItemPF extends ItemBasePF {
 
       // Deduct charges
       if (this.isCharged) {
-        const chargeCost = this.getDefaultChargeCost();
+        const chargeCost = cost ?? this.getDefaultChargeCost();
         if (this.charges < chargeCost) {
           if (this.isSingleUse) {
             return void ui.notifications.warn(game.i18n.localize("PF1.ErrorNoQuantity"));
@@ -1201,6 +1206,7 @@ export class ItemPF extends ItemBasePF {
       skipDialog,
       chatMessage,
       dice,
+      cost,
       fullAttack: true,
       attackBonus: [],
       damageBonus: [],

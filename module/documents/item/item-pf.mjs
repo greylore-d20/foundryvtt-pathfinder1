@@ -256,6 +256,24 @@ export class ItemPF extends ItemBasePF {
     return this.system.subType ?? null;
   }
 
+  /**
+   * The item's material, or `null` if the item has no subtype
+   *
+   * @type {string|null}
+   */
+  get normalMaterial() {
+    return this.system.material?.normal.value || null;
+  }
+
+  /**
+   * The item's material addons, or `null` if the item has no subtype
+   *
+   * @type {string[]|null}
+   */
+  get addonMaterial() {
+    return this.system.material?.addon.filter((o) => o ?? false) || null;
+  }
+
   get firstAction() {
     return this.actions?.get(this.system.actions?.[0]?._id);
   }

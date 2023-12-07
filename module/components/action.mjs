@@ -24,6 +24,14 @@ export class ItemAction {
     this.prepareData();
   }
 
+  get normalMaterial() {
+    return this.data.material?.normal || this.item.system.material?.normal || "";
+  }
+
+  get addonMaterial() {
+    return (this.data.material?.addon || this.item.system.material?.addon || []).filter((o) => o ?? false);
+  }
+
   get description() {
     return this.data.description;
   }
@@ -482,6 +490,10 @@ export class ItemAction {
       conditionals: [],
       enh: {
         value: null,
+      },
+      material: {
+        normal: "",
+        addon: "",
       },
     };
   }

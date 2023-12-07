@@ -283,6 +283,7 @@ Hooks.once("init", function () {
   // Initialize registries with initial/built-in data
   const registries = /** @type {const} */ ([
     ["damageTypes", registry.DamageTypes],
+    ["materialTypes", registry.MaterialTypes],
     ["scriptCalls", registry.ScriptCalls],
     ["conditions", registry.Conditions],
     ["sources", registry.Sources],

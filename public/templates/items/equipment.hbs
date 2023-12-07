@@ -80,6 +80,17 @@
       <input type="hidden" name="system.slot" value="{{system.subType}}">
       {{/if}}
 
+      {{!-- Equipment Materials --}}
+      {{#if (or (eq item.subType "armor") (eq item.subType "shield"))}}
+        {{!-- Base Material --}}
+        {{> "systems/pf1/templates/items/parts/item-materials.hbs" label="PF1.Materials.Base" value_ref="system.armor.material.base.value" value=system.armor.material.base.value custom_ref="system.armor.material.base.custom" custom=system.armor.material.base.custom choices=materialCategories.basics}}
+
+        {{!-- Chosen Material --}}
+        {{> "systems/pf1/templates/items/parts/item-materials.hbs" label="PF1.Materials.Normal" value_ref="system.armor.material.normal.value" value=system.armor.material.normal.value custom_ref="system.armor.material.normal.custom" custom=system.armor.material.normal.custom choices=materialCategories.materials}}
+
+        {{> "systems/pf1/templates/items/parts/item-materials-addon.hbs" reference="system.armor.material.addon" value=system.armor.material.addon}}
+      {{/if}}
+
       {{!-- Equipment Size --}}
       {{> "systems/pf1/templates/items/parts/item-size.hbs" allowAutoResizing=true}}
 

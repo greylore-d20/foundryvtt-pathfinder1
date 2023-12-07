@@ -820,9 +820,15 @@ export class ActorSheetPF extends ActorSheet {
       }
 
       value.forEach((entry, counter) => {
-        const [amount, operator] = [entry.amount, entry.operator];
-        const type1 = pf1.registry.damageTypes.get(entry.types[0]?.toLowerCase())?.name ?? "-";
-        const type2 = pf1.registry.damageTypes.get(entry.types[1]?.toLowerCase())?.name ?? "";
+        const { amount, operator } = entry;
+        const type1 =
+          pf1.registry.damageTypes.get(entry.types[0])?.name ??
+          pf1.registry.materialTypes.get(entry.types[0])?.name ??
+          "-";
+        const type2 =
+          pf1.registry.damageTypes.get(entry.types[1])?.name ??
+          pf1.registry.materialTypes.get(entry.types[1])?.name ??
+          "";
 
         result[`${counter + 1}`] = format(amount, type1, operator, type2);
       });
@@ -2954,6 +2960,7 @@ export class ActorSheetPF extends ActorSheet {
       title: a.innerText,
       fields: a.dataset.fields,
       dtypes: a.dataset.dtypes,
+      width: a.dataset.options === "dr" ? 575 : 450,
       isDR: a.dataset.options === "dr" ? true : false,
     };
 

@@ -2336,6 +2336,7 @@ export class ActorPF extends ActorBasePF {
         tags: srcData.tags,
         weaponGroups: srcData.weaponGroups,
         actions: deepClone(srcData.actions ?? []),
+        material: deepClone(srcData.material),
       },
     };
 
@@ -3595,9 +3596,15 @@ export class ActorPF extends ActorBasePF {
           };
 
           const resistances = actor.system.traits[damage].value.map((entry) => {
-            const [amount, operator] = [entry.amount, entry.operator];
-            const type1 = pf1.registry.damageTypes.get(entry.types[0]?.toLowerCase())?.name ?? "-";
-            const type2 = pf1.registry.damageTypes.get(entry.types[1]?.toLowerCase())?.name ?? "";
+            const { amount, operator } = entry;
+            const type1 =
+              pf1.registry.damageTypes.get(entry.types[0])?.name ??
+              pf1.registry.materialTypes.get(entry.types[0])?.name ??
+              "-";
+            const type2 =
+              pf1.registry.damageTypes.get(entry.types[1])?.name ??
+              pf1.registry.materialTypes.get(entry.types[1])?.name ??
+              "";
 
             return format(amount, type1, operator, type2);
           });

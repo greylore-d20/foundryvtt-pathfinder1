@@ -8,6 +8,7 @@
  */
 export * from "./base-registry.mjs";
 export * from "./damage-types.mjs";
+export * from "./material-types.mjs";
 export * from "./script-call.mjs";
 export * from "./conditions.mjs";
 export * from "./sources.mjs";

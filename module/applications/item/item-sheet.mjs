@@ -372,6 +372,16 @@ export class ItemSheetPF extends ItemSheet {
       }
     }
 
+    // Prepare attack-specific stuff
+    if (item.type === "attack" && item.subType === "weapon") {
+      context.materialCategories = this._prepareMaterialsAndAddons(
+        "weapon",
+        "all",
+        itemData.subType,
+        itemData.material?.normal.value
+      );
+    }
+
     // Prepare weapon specific stuff
     if (item.type === "weapon") {
       context.isRanged = itemData.weaponSubtype === "ranged" || itemData.properties["thr"] === true;
@@ -388,6 +398,13 @@ export class ItemSheetPF extends ItemSheet {
           if (!k.startsWith("_")) context.weaponCategories.subTypes[k] = v;
         }
       }
+
+      context.materialCategories = this._prepareMaterialsAndAddons(
+        item.type,
+        itemData.weaponSubtype,
+        null,
+        itemData.material?.normal.value
+      );
     }
 
     // Prepare equipment specific stuff
@@ -412,6 +429,16 @@ export class ItemSheetPF extends ItemSheet {
       context.hasMultipleSlots = item.hasSlots;
 
       context.hasSubCategory = ["armor", "shield"].includes(subType);
+
+      // Prepare materials where they're needed.
+      if (["armor", "shield"].includes(item.subType)) {
+        context.materialCategories = this._prepareMaterialsAndAddons(
+          item.type,
+          itemData.equipmentSubtype,
+          itemData.subType,
+          itemData.armor.material?.normal.value ?? ""
+        );
+      }
     }
 
     // Prepare spell specific stuff
@@ -636,6 +663,84 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     return context;
+  }
+
+  _prepareMaterialsAndAddons(itemType, itemSubtype, subType, chosenMaterial = "") {
+    const materialList = {};
+    const addonList = [];
+    const basicList = {};
+
+    pf1.registry.materialTypes.forEach((material) => {
+      if (this._isMaterialAllowed(itemType, itemSubtype, subType, material)) {
+        materialList[material.id] = material.name;
+      }
+
+      if (
+        material.addon && // Filter addons by chosen material
+        !(
+          (material.id === "alchemicalsilver" && ["adamantine", "coldiron", "mithral"].includes(chosenMaterial)) ||
+          (material.id === "throneglass" && itemSubtype === "ranged") ||
+          (["heatstoneplating", "lazurite", "sunsilk"].includes(material.id) && itemType === "weapon")
+        )
+      ) {
+        addonList.push({ key: material.id, name: material.name });
+      }
+
+      if (material.basic) {
+        // Filter basic materials
+        basicList[material.id] = material.name;
+      }
+    });
+
+    return {
+      materials: materialList,
+      addons: addonList,
+      basics: basicList,
+    };
+  }
+
+  /**
+   * Check if a given material is okay to be added to our materials list
+   * for the item sheet.
+   *
+   * @param {string} itemType - Whether we're checking weapons or equipment
+   * @param {string} itemSubtype - Item-specific typing to filter with
+   * @param {string} subType - Only relevant with shields, since "other" is used in both shield and general gear
+   * @param {object} material - The Material object from the registry that has our needed metadata
+   * @returns {bool}
+   */
+  _isMaterialAllowed(itemType, itemSubtype, subType, material) {
+    // Let's end this early if we can never be allowed
+    if (material.addon || material.basic) return false;
+
+    // Check whether the material is allowed for the given item
+    switch (itemType) {
+      case "weapon": {
+        switch (itemSubtype) {
+          case "light":
+            return material.allowed.lightBlade;
+          case "1h":
+            return material.allowed.oneHandBlade;
+          case "2h":
+            return material.allowed.twoHandBlade;
+          case "ranged":
+            return material.allowed.rangedWeapon;
+          case "all": // We're prepping an Attack and don't care (don't have the info anyways)
+            return true;
+          default:
+            // Shouldn't find this
+            return false;
+        }
+      }
+      case "equipment": {
+        if (subType === "shield") return material.allowed.buckler;
+        const material = material.allowed[itemSubtype];
+        if (material) return material;
+        return false;
+      }
+    }
+
+    return true; // Finally made it through the gauntlet!
   }
 
   _prepareLinks(data) {
@@ -869,7 +974,7 @@ export class ItemSheetPF extends ItemSheet {
     formData = expandObject(formData);
 
     const system = formData.system;
-
+    console.log("system", system);
     const links = system.links;
     if (links) {
       const oldLinks = this.item.system?.links ?? {};
@@ -919,6 +1024,15 @@ export class ItemSheetPF extends ItemSheet {
       }
 
       setProperty(system, key, Math.max(0, newValue));
+    }
+
+    // Adjust Material Addons
+    // The available addons can change depending in the chosen material,
+    // so we need to get the values to build the addons on the item.
+    const material = system.material;
+    if (material?.addon) {
+      // Convert to array
+      material.addon = Object.values(material.addon);
     }
 
     // Update the Item

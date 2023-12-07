@@ -153,12 +153,37 @@ export class ItemActionSheet extends FormApplication {
       }
     }
 
+    // Add materials and addons
+    data.materialCategories = this._prepareMaterialsAndAddons();
     // Inherited held option's name if any
     data.inheritedHeld = pf1.config.weaponHoldTypes[data.item.system.held];
 
     return data;
   }
 
+  _prepareMaterialsAndAddons() {
+    const materialList = {};
+    const addonList = [];
+    pf1.registry.materialTypes.forEach((material) => {
+      if (
+        material.allowed.lightBlade ||
+        material.allowed.oneHandBlade ||
+        material.allowed.twoHandBlade ||
+        material.allowed.rangedWeapon
+      ) {
+        if (!material.addon && !material.basic) {
+          materialList[material.id] = material.name;
+        } else if (!material.basic && !["heatstoneplating", "lazurite", "sunsilk"].includes(material.id)) {
+          addonList.push({ key: material.id, name: material.name });
+        }
+      }
+    });
+
+    return {
+      materials: materialList,
+      addons: addonList,
+    };
+  }
   /**
    * Copy from core DocumentSheet#isEditable
    */
@@ -500,6 +525,24 @@ export class ItemActionSheet extends FormApplication {
         }
       });
     formData["conditionals"] = conditionalData;
+
+    // Adjust Material Addons
+    const addons = Object.entries(formData).filter((e) => e[0].includes("material.addon"));
+    if (addons.length) {
+      const keySeparator = addons[0][0].lastIndexOf(".");
+      const addonKey = addons[0][0].substring(0, keySeparator);
+
+      formData[addonKey] = [];
+
+      for (const [key, value] of addons) {
+        const finalSeparator = key.lastIndexOf(".");
+        const addonKey = key.substring(0, finalSeparator);
+        const index = key.substring(key.lastIndexOf(".") + 1);
+
+        delete formData[key];
+        formData[addonKey][index] = value;
+      }
+    }
 
     formData = expandObject(formData);
     return this.action.update(formData);

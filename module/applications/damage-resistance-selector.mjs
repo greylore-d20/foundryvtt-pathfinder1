@@ -1,4 +1,5 @@
 import { damageTypes } from "module/registry/damage-types.mjs";
+import { materialTypes } from "module/registry/material-types.mjs";
 import { DamageTypeSelector } from "./damage-type-selector.mjs";
 
 /**
@@ -49,12 +50,27 @@ export class ActorResistanceSelector extends FormApplication {
         }
 
         // If we are looking for ERES, we want to exclude types that are physical or untyped
-        if ((dType.category === "physical" || (dType.category === "misc" && dType._id === "untyped")) && !this.isDR) {
+        if ((dType.category === "physical" || (dType.category === "misc" && dType.id === "untyped")) && !this.isDR) {
           return;
         }
 
-        damages[dType._id] = dType.name;
+        damages[dType.id] = dType.name;
       });
+
+    if (this.isDR) {
+      this.options.id = "damage-resistance-selector";
+
+      pf1.registry.materialTypes.forEach((material) => {
+        if (
+          material.allowed.lightBlade ||
+          material.allowed.oneHandBlade ||
+          material.allowed.twoHandBlade ||
+          material.allowed.rangedWeapon
+        ) {
+          damages[material.id] = material.name;
+        }
+      });
+    }
 
     /**
      * A list of key-value pairs for dropdown damage types
@@ -79,10 +95,9 @@ export class ActorResistanceSelector extends FormApplication {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      id: "damage-resistance-selector",
+      id: "energy-resistance-selector",
       classes: ["pf1", "resistance"],
       template: "systems/pf1/templates/apps/damage-resistance-selector.hbs",
-      width: 450,
       height: "auto",
       closeOnSubmit: true,
       submitOnClose: false,

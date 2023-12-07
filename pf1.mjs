@@ -204,9 +204,6 @@ Hooks.once("init", function () {
   documents.settings.registerClientSettings();
   setDefaultSceneScaling();
 
-  //Calculate conditions for world
-  CONFIG.statusEffects = getConditions();
-
   // Preload Handlebars Templates
   utils.handlebars.preloadHandlebarsTemplates();
   utils.handlebars.registerHandlebarsHelpers();
@@ -287,11 +284,15 @@ Hooks.once("init", function () {
   const registries = /** @type {const} */ ([
     ["damageTypes", registry.DamageTypes],
     ["scriptCalls", registry.ScriptCalls],
+    ["conditions", registry.Conditions],
     ["sources", registry.Sources],
   ]);
   for (const [registryName, registryClass] of registries) {
     pf1.registry[registryName] = new registryClass();
   }
+
+  //Calculate conditions for world
+  CONFIG.statusEffects = getConditions();
 
   // Define getter for config properties moved into registries
   Object.defineProperty(pf1.config, "damageTypes", {
@@ -305,6 +306,42 @@ Hooks.once("init", function () {
     },
   });
 
+  Object.defineProperty(pf1.config, "conditions", {
+    get: () => {
+      foundry.utils.logCompatibilityWarning(
+        "Conditions have been moved into the Conditions registry. " +
+          "Use pf1.registry.conditions.getLabels() for the old format, or access the collection for full condition data.",
+        { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+      );
+      return pf1.registry.conditions.getLabels();
+    },
+  });
+
+  Object.defineProperty(pf1.config, "conditionTextures", {
+    get: () => {
+      foundry.utils.logCompatibilityWarning(
+        "Condition textures have been moved into the Conditions registry. " +
+          "Access the collection for full condition data.",
+        { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+      );
+      return Object.fromEntries(
+        pf1.registry.conditions.map((registryObject) => [registryObject.id, registryObject.texture])
+      );
+    },
+  });
+
+  Object.defineProperty(pf1.config, "conditionMechanics", {
+    get: () => {
+      foundry.utils.logCompatibilityWarning(
+        "Condition mechanics have been moved into the Conditions registry. " +
+          "Access the collection for full condition data.",
+        { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+      );
+      return Object.fromEntries(
+        pf1.registry.conditions.map((registryObject) => [registryObject.id, registryObject.mechanics])
+      );
+    },
+  });
   // Diagonal ruleset implementation
   SquareGrid.prototype.measureDistances = measureDistances;
 
@@ -340,7 +377,7 @@ Hooks.once("i18nInit", function () {
     "featTypes",
     "featTypesPlurals",
     "traitTypes",
-    "conditions",
+    "conditionTypes",
     "lootTypes",
     "flyManeuverabilities",
     "abilityTypes",
@@ -350,7 +387,6 @@ Hooks.once("i18nInit", function () {
     "spellComponents",
     "spellSchools",
     "spellLevels",
-    "conditionTypes",
     "favouredClassBonuses",
     "armorProficiencies",
     "weaponProficiencies",
@@ -386,7 +422,6 @@ Hooks.once("i18nInit", function () {
   // Config (sub-)objects to be sorted
   const toSort = [
     "skills",
-    "conditions",
     "conditionTypes",
     "consumableTypes",
     "creatureTypes",

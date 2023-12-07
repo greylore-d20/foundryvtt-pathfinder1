@@ -25,11 +25,13 @@ export const measureDistances = function (segments, options = {}) {
  */
 export const getConditions = function () {
   const core = CONFIG.statusEffects;
-  let sys = Object.keys(pf1.config.conditions).map((c) => ({
-    id: c,
-    label: pf1.config.conditions[c],
-    icon: pf1.config.conditionTextures[c],
-  }));
+  let sys = pf1.registry.conditions.map((condition) => {
+    return {
+      id: condition.id,
+      label: condition.name,
+      icon: condition.texture,
+    };
+  });
   if (game.settings.get("pf1", "coreEffects")) sys.push(...core);
   else {
     const deadCond = core.find((e) => e.id === "dead");

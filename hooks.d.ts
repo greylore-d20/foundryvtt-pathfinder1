@@ -72,7 +72,7 @@ declare global {
        *
        * @group Actor
        * @remarks Called by {@link Hooks.callAll}
-       * @see {@link pf1.config.conditionTypes conditions}
+       * @see {@link pf1.registry.conditions conditions}
        * @param actor - The actor whose conditions have changed.
        * @param condition - The name of the condition that has changed as per `CONFIG.PF1.conditionTypes`.
        * @param state - The new state of the condition.

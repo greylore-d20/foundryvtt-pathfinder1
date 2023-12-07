@@ -589,7 +589,7 @@ export class ActorPF extends ActorBasePF {
     const conditions = this.system.conditions;
 
     // Populate condition base values
-    for (const condition of Object.keys(pf1.config.conditions)) {
+    for (const condition of pf1.registry.conditions.keys()) {
       conditions[condition] = false;
     }
 
@@ -2147,11 +2147,11 @@ export class ActorPF extends ActorBasePF {
     const previousConditions = {};
 
     const conditions = {};
-    const tracks = Object.values(pf1.config.conditionTracks);
+    const tracks = pf1.registry.conditions.trackedConditions();
     for (const ae of documents) {
       for (const statusId of ae.statuses ?? []) {
         // Skip non-conditions
-        if (!pf1.config.conditions[statusId]) continue;
+        if (!pf1.registry.conditions.has(statusId)) continue;
 
         // Mark this condition for notification
         previousConditions[statusId] = true;
@@ -2192,7 +2192,7 @@ export class ActorPF extends ActorBasePF {
       for (const ae of documents) {
         for (const statusId of ae.statuses ?? []) {
           // Toggle off only if it's valid ID and there isn't any other AEs that have same condition still
-          if (statusId in pf1.config.conditions && !this.statuses.has(statusId)) {
+          if (pf1.registry.conditions.has(statusId) && !this.statuses.has(statusId)) {
             updatedConditions[statusId] = false;
           }
         }
@@ -3255,7 +3255,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @example
    * actor.toggleCondition("dazzled");
-   * @param {boolean} conditionId - A direct condition key, as per PF1.conditions, such as `shaken` or `dazed`.
+   * @param {boolean} conditionId - A direct condition key, as per PF1.registry.conditions, such as `shaken` or `dazed`.
    * @returns {object} Condition ID to boolean mapping of actual updates.
    */
   async toggleCondition(conditionId) {
@@ -3300,7 +3300,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Handle Condition tracks
-    const tracks = Object.values(pf1.config.conditionTracks);
+    const tracks = pf1.registry.conditions.trackedConditions();
     for (const conditionGroup of tracks) {
       const newTrackState = conditionGroup.find((c) => conditions[c] === true);
       if (!newTrackState) continue;
@@ -3315,7 +3315,8 @@ export class ActorPF extends ActorBasePF {
       toCreate = [];
 
     for (const [conditionId, value] of Object.entries(conditions)) {
-      if (pf1.config.conditions[conditionId] === undefined) {
+      const currentCondition = pf1.registry.conditions.get(conditionId);
+      if (currentCondition === undefined) {
         console.error("Unrecognized condition:", conditionId);
         delete conditions[conditionId];
         continue;
@@ -3333,9 +3334,9 @@ export class ActorPF extends ActorBasePF {
               },
             },
             statuses: [conditionId],
-            name: pf1.config.conditions[conditionId],
-            icon: pf1.config.conditionTextures[conditionId],
-            label: pf1.config.conditions[conditionId],
+            name: currentCondition.name,
+            icon: currentCondition.texture,
+            label: currentCondition.name,
           };
 
           toCreate.push(aeData);
@@ -3380,7 +3381,7 @@ export class ActorPF extends ActorBasePF {
    *
    * @example
    * actor.hasCondition("grappled");
-   * @param {string} conditionId - A direct condition key, as per pf1.config.conditions, such as `shaken` or `dazed`.
+   * @param {string} conditionId - A direct condition key, as per pf1.registry.conditions, such as `shaken` or `dazed`.
    * @returns {boolean} Condition state
    */
   hasCondition(conditionId) {

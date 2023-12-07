@@ -17,9 +17,6 @@ const testFormulas = [
   ["3d6x>=5", "3d6x>=5"], // bug#2175
 ];
 
-/**
- *
- */
 export function registerFormulaParsingTests() {
   quench.registerBatch(
     "pf1.roll.formula",

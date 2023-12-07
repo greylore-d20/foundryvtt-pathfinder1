@@ -1259,15 +1259,17 @@ export const addDefaultChanges = function (changes) {
   // Add conditions
   for (const [con, v] of Object.entries(actorData.conditions)) {
     if (!v) continue;
+    const condition = pf1.registry.conditions.get(con);
+    if (!condition) continue;
 
-    const mechanic = pf1.config.conditionMechanics[con];
+    const mechanic = condition.mechanics;
     if (!mechanic) continue;
 
     // Add changes
     for (const change of mechanic.changes ?? []) {
       // Alter change data
       const changeData = deepClone(change);
-      changeData.flavor = pf1.config.conditions[con];
+      changeData.flavor = condition.name;
 
       // Create change object
       const changeObj = new pf1.components.ItemChange(changeData);

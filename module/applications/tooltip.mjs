@@ -168,13 +168,14 @@ export class TooltipPF extends Application {
     if (showForGM || isNonGMOwner || (!actorConfig.hideConditions && !worldConfig.hideConditions)) {
       const conditions = actor.system.conditions;
       for (const [conditionId, active] of Object.entries(conditions)) {
-        if (!active) continue;
-
-        data.conditions = data.conditions || [];
-        data.conditions.push({
-          label: pf1.config.conditions[conditionId],
-          icon: pf1.config.conditionTextures[conditionId],
-        });
+        if (active === true) {
+          data.conditions = data.conditions || [];
+          const condition = pf1.registry.conditions.get(conditionId);
+          data.conditions.push({
+            label: condition.name,
+            icon: condition.texture,
+          });
+        }
       }
     }
 

@@ -194,6 +194,7 @@ export class ActorSheetPF extends ActorSheet {
       isCharacter: this.document.type === "character",
       hasHD: true,
       config: pf1.config,
+      conditions: pf1.registry.conditions,
       useBGSkills: game.settings.get("pf1", "allowBackgroundSkills"),
       isGM: game.user.isGM,
       race: this.document.race != null ? this.document.race.toObject() : null,

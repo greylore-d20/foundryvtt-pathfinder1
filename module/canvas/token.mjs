@@ -18,12 +18,9 @@ export class TokenPF extends Token {
       if (buffItem) {
         await buffItem.setActive(active ?? !buffItem.isActive);
         call = buffItem.isActive;
-      } else {
-        return super.toggleEffect(effect, { active, overlay });
-      }
-    } else if (Object.keys(pf1.config.conditions).includes(effect.id)) {
-      if (active === undefined) await this.actor.toggleCondition(effect.id);
-      else await this.actor.setCondition(effect.id, active);
+      } else call = await super.toggleEffect(effect, { active, overlay });
+    } else if (effect && pf1.registry.conditions.has(effect.id)) {
+      await this.actor.toggleCondition(effect.id);
       call = this.actor.hasCondition(effect.id);
     } else {
       return super.toggleEffect(effect, { active, overlay });

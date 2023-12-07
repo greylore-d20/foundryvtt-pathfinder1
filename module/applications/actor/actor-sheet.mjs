@@ -2292,9 +2292,6 @@ export class ActorSheetPF extends ActorSheet {
     const li = event.currentTarget.closest(".item");
     const item = this.document.items.get(li.dataset.itemId);
 
-    const app = Object.values(item.apps).find((o) => {
-      return o instanceof ItemSheet && o.document === item && o._element != null;
-    });
     item.sheet.render(true, { focus: true });
   }
 

@@ -1,14 +1,13 @@
-import Color from "color";
-import { colorToInt, convertDistance, measureDistance, calculateRangeFormula } from "../utils/lib.mjs";
+import { convertDistance, measureDistance, calculateRangeFormula } from "../utils/lib.mjs";
 import { RollPF } from "../dice/roll.mjs";
 
 const rangeColor = {
-  fill: Color("#ff0000"),
-  border: Color("#ff0000").darken(0.1),
+  fill: Color.from("#FF0000"),
+  border: Color.from("#FF0000").multiply(0.9),
 };
 const reachColor = {
-  fill: Color("#ffff00"),
-  border: Color("#ffff00").darken(0.1),
+  fill: Color.from("#FFFF00"),
+  border: Color.from("#FFFF00").multiply(0.9),
 };
 
 export class SquareHighlight {
@@ -132,8 +131,8 @@ const getAttackReach = function (token, attack, action) {
   }
 
   const result = {
-    normal: new SquareHighlight(origin, colorToInt(rangeColor.fill), colorToInt(rangeColor.border)),
-    reach: new SquareHighlight(origin, colorToInt(reachColor.fill), colorToInt(reachColor.border)),
+    normal: new SquareHighlight(origin, rangeColor.fill, rangeColor.border),
+    reach: new SquareHighlight(origin, reachColor.fill, reachColor.border),
     extra: [],
   };
   for (const s of squares.normal) {
@@ -155,7 +154,7 @@ const getAttackReach = function (token, attack, action) {
         border: a % 2 === 1 ? rangeColor.border : reachColor.border,
       };
 
-      const hl = new SquareHighlight(origin, colorToInt(color.fill), colorToInt(color.border));
+      const hl = new SquareHighlight(origin, color.fill, color.border);
       for (const s of squaresExtra) {
         hl.addSquare(s[0], s[1]);
       }

@@ -1,5 +1,3 @@
-import Color from "color";
-
 /**
  * @param {string} chatTemplate - Chat message template path.
  * @param {object} chatTemplateData - Data to feed to the chat message template.

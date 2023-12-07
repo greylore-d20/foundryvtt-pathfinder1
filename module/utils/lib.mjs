@@ -565,14 +565,6 @@ export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxVa
   return result;
 };
 
-export const colorToInt = function (color) {
-  const rgb = color.rgb().color;
-  const integer =
-    ((Math.round(rgb[0]) & 0xff) << 16) + ((Math.round(rgb[1]) & 0xff) << 8) + (Math.round(rgb[2]) & 0xff);
-
-  return integer;
-};
-
 /**
  * @typedef {object} BuffTargetItem
  * @property {string} [label] - The buff target's label.

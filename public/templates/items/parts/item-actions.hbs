@@ -50,7 +50,7 @@
 {{!-- Limited Uses --}}
 {{#unless isSpell}}
 <div class="form-group uses-per">
-  <label>{{localize "PF1.LimitedUses"}}</label>
+  <label>{{localize "PF1.LimitedUses.Label"}}</label>
   <div class="form-fields">
     {{#if isCharged}}
     <input type="text" name="system.uses.value" value="{{system.uses.value}}" data-dtype="Number" data-tooltip="@resources.{{system.tag}}.value : {{system.uses.value}}" {{disabled inheritCharges}}>

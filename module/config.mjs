@@ -757,10 +757,10 @@ export const itemActionTypes = {
  * Enumerate the lengths of time over which an item can have limited use ability
  */
 export const limitedUsePeriods = {
-  single: "PF1.LimitedUseSingle",
-  day: "PF1.LimitedUseDay",
-  week: "PF1.LimitedUseWeek",
-  charges: "PF1.LimitedUseCharges",
+  single: "PF1.LimitedUses.Periods.single",
+  day: "PF1.LimitedUses.Periods.day",
+  week: "PF1.LimitedUses.Periods.week",
+  charges: "PF1.LimitedUses.Periods.charges",
 };
 
 /* -------------------------------------------- */

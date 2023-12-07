@@ -1082,7 +1082,7 @@ export class ItemPF extends ItemBasePF {
     // Get per item type chat data
     this.getTypeChatData(data, labels, props, enrichOptions.rollData);
 
-    const harmless = action.data.save?.harmless;
+    const harmless = actionData.save?.harmless;
     if (harmless) data.properties.push(game.i18n.localize("PF1.Harmless"));
 
     // Filter properties and return

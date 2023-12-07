@@ -17,7 +17,10 @@
           {{lookup config.classTypes system.subType}}
         </li>
         <li data-tooltip="@classes.{{system.tag}}.level : {{system.level}}<br>@item.level : {{system.level}}{{#unless isMythicPath}}<br>@classes.{{system.tag}}.hitDice : {{system.hitDice}}{{/unless}}">
-          <input type="text" name="system.level" value="{{system.level}}" placeholder="{{#if isMythicPath}}{{localize "PF1.Tier"}}{{else}}{{localize "PF1.Level"}}{{/if}}" data-dtype="Number">
+          <label>
+            {{#if isMythicPath}}{{localize "PF1.Tier"}}{{else}}{{localize "PF1.Level"}}{{/if}}:
+            <input type="text" class="value blended level" name="system.level" value="{{system.level}}" placeholder="0" data-dtype="Number">
+          </label>
         </li>
       </ul>
     </div>

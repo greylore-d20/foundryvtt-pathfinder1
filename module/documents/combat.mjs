@@ -252,46 +252,109 @@ export class CombatPF extends Combat {
   }
 
   /**
-   * Expire active effects & buffs.
-   *
-   * @param {object} data Update data
-   * @param {options} options Context options
-   * @param {string} userId Triggering user ID
-   */
-  async _expireEffectsOnUpdate(data, options, userId) {
-    if (data.turn === undefined && data.round === undefined) return;
-
-    const actor = this.combatant?.actor;
-    if (!actor) return;
-
-    const timeOffset = options.advanceTime ?? 0;
-
-    // Attempt to perform expiration on owning active user
-    const firstOwner = Object.entries(actor.ownership)
-      .filter(([_, level]) => level >= CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)
-      .map(([userId, _]) => game.users.get(userId))
-      .filter((u) => u?.active)
-      .sort((a, b) => a.id.localeCompare(b.id))[0];
-
-    if (firstOwner) {
-      if (firstOwner.id !== game.user.id) return;
-    } else if (!game.user.isGM) return;
-
-    actor.expireActiveEffects({ timeOffset, combat: this });
-  }
-
-  /**
    * @override
    * @param {object} data Update data
    * @param {options} options Context options
    * @param {string} userId Triggering user ID
    */
-  _onUpdate(data, options, userId) {
-    super._onUpdate(data, options, userId);
+  _onUpdate(changed, context, userId) {
+    if (context.direction === 1 && (changed.turn !== undefined || changed.round !== undefined)) {
+      this._onNewTurn(changed, context, userId);
+    }
+  }
+
+  /**
+   * @override
+   * @param {object} changed
+   * @param {object} context
+   * @param {User} user
+   */
+  _preUpdate(changed, context, user) {
+    if ("direction" in context && ("turn" in changed || "round" in changed)) {
+      // Record origin turn and round
+      context.pf1 ??= {};
+      context.pf1.from = { turn: this.turn, round: this.round };
+    }
+  }
+
+  /**
+   * New turn handling.
+   *
+   * @param changed
+   * @param context
+   * @param userId
+   * @private
+   */
+  async _onNewTurn(changed, context, userId) {
+    if (game.users.activeGM?.isSelf && context.pf1?.from) {
+      this._detectSkippedTurns(context.pf1.from, context);
+    }
+
+    this._processCurrentCombatant(changed, context, userId);
+  }
+
+  /**
+   * Determine skipped turns
+   *
+   * @param {object} from
+   * @param {number} from.turn From turn
+   * @param {number} from.round From round
+   * @param {object} context - Update context
+   * @private
+   */
+  _detectSkippedTurns({ turn, round } = {}, context) {
+    const roundChange = this.round !== round;
+
+    // No combatants skipped
+    if (!roundChange && turn + 1 === this.turn) return;
+
+    // Determine skipped combatants
+    const skipped = new Set();
+    for (const [index, combatant] of this.turns.entries()) {
+      // Seeking first, not actually skipped
+      if (!roundChange && index <= turn) continue;
+      // Skipped
+      else if (index < this.turn) skipped.add(combatant);
+      // Skipped (usually via nextRound)
+      else if (roundChange && index > turn) skipped.add(combatant);
+    }
+
+    this._handleSkippedTurns(skipped, context);
+
+    Hooks.callAll("pf1CombatTurnSkip", this, skipped, context);
+  }
+
+  /**
+   * Handle effects of skipped turns.
+   *
+   * @internal
+   * @param {Set<string>} skipped - Combatant IDs of those whose turn was skipped.
+   * @param {object} context - Combat update context
+   */
+  _handleSkippedTurns(skipped, context) {
+    // TODO
+  }
+
+  /**
+   * Process current combatant: expire active effects & buffs.
+   *
+   * @param {object} changed Update data
+   * @param {options} context Context options
+   * @param {string} userId Triggering user ID
+   */
+  async _processCurrentCombatant(changed, context, userId) {
+    const actor = this.combatant?.actor;
+    if (!actor) return;
+
+    // Attempt to perform expiration on owning active user
+    const owner = actor.activeOwner;
+    if (!owner?.isSelf) return;
+
+    const timeOffset = context.advanceTime ?? 0;
     try {
-      this._expireEffectsOnUpdate(data, options, userId);
+      await actor.expireActiveEffects?.({ timeOffset, combat: this });
     } catch (error) {
-      console.error(error);
+      console.error(error, actor);
     }
   }
 

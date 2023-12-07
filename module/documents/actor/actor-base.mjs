@@ -40,6 +40,22 @@ export class ActorBasePF extends Actor {
     this._itemTypes ??= super.itemTypes;
     return this._itemTypes;
   }
+
+  /**
+   * Returns first active owner, favoring players and GM as fallback.
+   *
+   * @type {User|null}
+   */
+  get activeOwner() {
+    const firstOwner =
+      Object.keys(this.ownership)
+        .map((userId) => game.users.get(userId))
+        .filter((u) => u?.active && !u.isGM)
+        .filter((user) => this.testUserPermission(user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER))
+        .sort((a, b) => (a.id > b.id ? 1 : -1))[0] ?? null;
+
+    return firstOwner ?? game.users.activeGM;
+  }
 }
 
 /**

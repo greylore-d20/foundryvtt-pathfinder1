@@ -12,6 +12,7 @@ declare global {
   export import TokenDocumentPF = pf1.documents.TokenDocumentPF;
   export import ActiveEffectPF = pf1.documents.ActiveEffectPF;
   export import CombatPF = pf1.documents.CombatPF;
+  export import CombatantPF = pf1.documents.CombatantPF;
 
   // Component classes
   export import ItemChange = pf1.components.ItemChange;

@@ -586,6 +586,21 @@ declare global {
        * @param data - The created roll data that can be modified.
        */
       pf1GetRollData: (document: ActorPF | ItemPF | ItemAction, data: Record<string, unknown>) => void;
+
+      // ------------------------- //
+      //          Combat           //
+      // ------------------------- //
+
+      /**
+       * Hook event fired when turns are skipped in combat.
+       *
+       * @group Combat
+       * @remarks Called by {@link Hooks.callAll}
+       * @param combat - Relevant combat instance
+       * @param skipped - Set of combatants whose turn was passed over.
+       * @param context - Combat update context object.
+       */
+      pf1CombatTurnSkip: (combat: CombatPF, skipped: Set<CombatantPF>, context: Record<string, unknown>) => void;
     }
 
     /**
@@ -686,6 +701,9 @@ export declare const pf1DeleteItemLink: Hooks.StaticCallbacks["pf1DeleteItemLink
 
 // Roll Data
 export declare const pf1GetRollData: Hooks.StaticCallbacks["pf1GetRollData"];
+
+// Combat
+export declare const pf1CombatTurnSkip: Hooks.StaticCallbacks["pf1CombatTurnSkip"];
 
 // Dynamic hooks
 

@@ -566,6 +566,34 @@ export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxVa
 };
 
 /**
+ * Opens journal or journal page.
+ *
+ * Pages are opened in collapsed state.
+ *
+ * @param {string} uuid - UUID to journal or journal page
+ * @param {object} [options={}] - Additional rendering options
+ * @returns {JournalEntry|JournalEntryPage|null} - Opened document
+ */
+export async function openJournal(uuid, options = {}) {
+  const journal = await fromUuid(uuid);
+
+  if (journal instanceof JournalEntryPage) {
+    journal.parent.sheet.render(true, {
+      pageId: journal.id,
+      editable: false,
+      collapsed: true,
+      width: 600,
+      height: 700,
+      ...options,
+    });
+  } else {
+    journal.sheet.render(true, { editable: false, ...options });
+  }
+
+  return journal;
+}
+
+/**
  * @typedef {object} BuffTargetItem
  * @property {string} [label] - The buff target's label.
  * @property {string} category - The buff target's category.

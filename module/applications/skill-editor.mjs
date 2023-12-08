@@ -1,4 +1,4 @@
-import { createTag } from "../utils/lib.mjs";
+import { createTag, openJournal } from "../utils/lib.mjs";
 
 export class SkillEditor extends FormApplication {
   constructor(actor, skillId, subSkillId, options = {}) {
@@ -188,16 +188,7 @@ export class SkillEditor extends FormApplication {
     event.preventDefault();
     const elem = event.currentTarget.closest(".compendium-entry");
 
-    // Gather data
-    const uuid = elem.dataset.compendiumEntry;
-    const document = await fromUuid(uuid);
-
-    // Open document
-    if (document instanceof JournalEntryPage) {
-      document.parent.sheet.render(true, { pageId: document.id });
-    } else {
-      document.sheet.render(true);
-    }
+    openJournal(elem.dataset.compendiumEntry);
   }
 
   async _onCompendiumControls(event) {

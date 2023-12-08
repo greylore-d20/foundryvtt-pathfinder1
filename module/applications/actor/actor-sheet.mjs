@@ -1,7 +1,13 @@
 import { ActorTraitSelector } from "../trait-selector.mjs";
 import { ActorResistanceSelector } from "../damage-resistance-selector.mjs";
 import { ActorRestDialog } from "./actor-rest.mjs";
-import { createTag, CR, createConsumableSpellDialog, adjustNumberByStringCommand } from "../../utils/lib.mjs";
+import {
+  createTag,
+  CR,
+  createConsumableSpellDialog,
+  adjustNumberByStringCommand,
+  openJournal,
+} from "../../utils/lib.mjs";
 import { getWeightSystem } from "@utils";
 import { PointBuyCalculator } from "../point-buy-calculator.mjs";
 import { Widget_ItemPicker } from "../item-picker.mjs";
@@ -2815,14 +2821,8 @@ export class ActorSheetPF extends ActorSheet {
    */
   async _onOpenCompendiumEntry(event) {
     const uuid = event.currentTarget.dataset.compendiumEntry;
-    const document = await fromUuid(uuid);
 
-    // Open document
-    if (document instanceof JournalEntryPage) {
-      document.parent.sheet.render(true, { pageId: document.id });
-    } else {
-      document.sheet.render(true);
-    }
+    openJournal(uuid);
   }
 
   /* -------------------------------------------- */

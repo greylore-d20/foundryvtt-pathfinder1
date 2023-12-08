@@ -1,7 +1,7 @@
 import { ActorBasePF } from "./actor-base.mjs";
 import { getAbilityModifier } from "@utils";
 import { ItemPF, ItemRacePF } from "@item/_module.mjs";
-import { createTag, fractionalToString, enrichHTMLUnrolled } from "../../utils/lib.mjs";
+import { createTag, fractionalToString, enrichHTMLUnrolled, openJournal } from "../../utils/lib.mjs";
 import {
   applyChanges,
   addDefaultChanges,
@@ -171,14 +171,7 @@ export class ActorPF extends ActorBasePF {
     }
     // Show compendium entry
     else if (action === "open-compendium-entry") {
-      const uuid = button.dataset.compendiumEntry;
-      const document = await fromUuid(uuid);
-
-      if (document instanceof JournalEntryPage) {
-        document.parent.sheet.render(true, { pageId: document.id });
-      } else {
-        document.sheet.render(true);
-      }
+      openJournal(button.dataset.compendiumEntry);
     }
   }
 

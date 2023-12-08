@@ -441,26 +441,29 @@ Hooks.once("i18nInit", function () {
    */
   const doLocalize = (obj, cat) => {
     // Create tuples of (key, localized object/string)
-    const localized = Object.entries(obj).reduce((arr, e) => {
-      if (typeof e[1] === "string") arr.push([e[0], game.i18n.localize(e[1])]);
-      else if (typeof e[1] === "object") arr.push([e[0], doLocalize(e[1], `${cat}.${e[0]}`)]);
+    const localized = Object.entries(obj).reduce((arr, [key, value]) => {
+      if (typeof value === "string") arr.push([key, game.i18n.localize(value)]);
+      else if (typeof value === "object") arr.push([key, doLocalize(value, `${cat}.${key}`)]);
       return arr;
     }, []);
+
     if (toSort.includes(cat)) {
       // Sort simple strings, fall back to sorting by label for objects/categories
-      localized.sort((a, b) => {
-        const localA = typeof a?.[1] === "string" ? a[1] : a[1]?._label;
-        const localB = typeof b?.[1] === "string" ? b[1] : b[1]?._label;
+      localized.sort(([akey, aval], [bkey, bval]) => {
         // Move misc to bottom of every list
-        if (a[0] === "misc") return 1;
-        else if (b[0] === "misc") return -1;
+        if (akey === "misc") return 1;
+        else if (bkey === "misc") return -1;
+
         // Regular sorting of localized strings
+        const localA = typeof aval === "string" ? aval : aval._label;
+        const localB = typeof bval === "string" ? bval : bval._label;
         return localA.localeCompare(localB);
       });
     }
+
     // Get the localized and sorted object out of tuple
-    return localized.reduce((obj, e) => {
-      obj[e[0]] = e[1];
+    return localized.reduce((obj, [key, value]) => {
+      obj[key] = value;
       return obj;
     }, {});
   };

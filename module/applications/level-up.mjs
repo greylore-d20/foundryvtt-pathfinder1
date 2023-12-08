@@ -174,7 +174,7 @@ export class LevelUpForm extends FormApplication {
     // Add ability score
     const newHD = this.actor.getRollData().attributes.hd.total + 1;
     const newAbilityScores = pf1.config.levelAbilityScores[newHD];
-    if (typeof newAbilityScores === "number" && newAbilityScores > 0) {
+    if (newAbilityScores > 0) {
       result.push({
         name: "ability",
         label: "PF1.LevelUp.AbilityScore.Label",

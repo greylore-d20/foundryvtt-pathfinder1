@@ -1797,12 +1797,11 @@ export class ActorSheetPF extends ActorSheet {
 
   _setItemActive(event) {
     event.preventDefault();
-    const itemId = event.currentTarget.closest(".item").dataset.itemId;
-    const item = this.document.items.get(itemId);
+    const el = event.currentTarget;
+    const state = el.checked;
+    const itemId = el.closest(".item").dataset.itemId;
 
-    const value = $(event.currentTarget).prop("checked");
-    this.setItemUpdate(item.id, "system.active", value);
-    this._updateItems();
+    this.actor.items.get(itemId).setActive(state);
   }
 
   _onLevelUp(event) {
@@ -2131,35 +2130,33 @@ export class ActorSheetPF extends ActorSheet {
 
   async _quickChangeItemQuantity(event, add = 1) {
     event.preventDefault();
-    const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
-    const item = this.document.items.get(itemId);
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
 
     const curQuantity = item.system.quantity || 0;
     let newQuantity = Math.max(0, curQuantity + add);
 
     if (item.type === "container") newQuantity = Math.min(newQuantity, 1);
 
-    this.setItemUpdate(item.id, "system.quantity", newQuantity);
-    this._updateItems();
+    item.update({ "system.quantity": newQuantity });
   }
 
   async _quickEquipItem(event) {
     event.preventDefault();
-    const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
-    const item = this.document.items.get(itemId);
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
 
-    if (hasProperty(item, "system.equipped")) {
-      this.setItemUpdate(item.id, "system.equipped", !item.system.equipped);
-      this._updateItems();
+    if (item.isPhysical) {
+      item.update({ "system.equipped": !item.system.equipped });
     }
   }
 
   async _quickCarryItem(event) {
     event.preventDefault();
-    const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
-    const item = this.document.items.get(itemId);
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
 
-    if (hasProperty(item, "system.carried")) {
+    if (item.isPhysical) {
       item.update({ "system.carried": !item.system.carried });
     }
   }
@@ -2169,25 +2166,25 @@ export class ActorSheetPF extends ActorSheet {
     if (!game.user.isGM) {
       return void ui.notifications.error(game.i18n.localize("PF1.ErrorCantIdentify"));
     }
-    // const itemId = $(event.currentTarget).parents(".item").attr("data-item-id");
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.document.items.get(itemId);
 
-    if (hasProperty(item, "system.identified")) {
+    if (item.isPhysical) {
       item.update({ "system.identified": !item.system.identified });
     }
   }
 
   async _itemToggleData(event) {
     event.preventDefault();
-    const a = event.currentTarget;
+    const el = event.currentTarget;
 
-    const itemId = $(a).parents(".item").attr("data-item-id");
-    const item = this.document.items.get(itemId);
-    const property = $(a).attr("name") || a.dataset.name;
+    const itemId = el.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    const property = el.dataset.name;
 
-    const updateData = {};
-    updateData[property] = !getProperty(item, property);
+    const updateData = { system: {} };
+    setProperty(updateData.system, property, !getProperty(item.system, property));
+
     item.update(updateData);
   }
 

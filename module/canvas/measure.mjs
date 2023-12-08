@@ -43,7 +43,6 @@ export class TemplateLayerPF extends TemplateLayer {
     // Create a pending MeasuredTemplateDocument
     const tool = game.activeTool;
     const previewData = {
-      user: game.user.id,
       t: tool,
       x: origin.x,
       y: origin.y,

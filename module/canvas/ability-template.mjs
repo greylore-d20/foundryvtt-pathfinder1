@@ -29,7 +29,6 @@ export class AbilityTemplate extends MeasuredTemplatePF {
     // Prepare template data
     const templateData = {
       t: type,
-      user: game.user.id,
       distance: distance || 5,
       direction: 0,
       x: 0,

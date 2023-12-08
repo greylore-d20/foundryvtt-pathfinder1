@@ -65,8 +65,6 @@ command: >-
             // Render chat message
             let messageData = {
               content: c,
-              user: game.user._id,
-              speaker: ChatMessage.getSpeaker({ user: game.user }),
               type: CONST.CHAT_MESSAGE_TYPES.OTHER,
             };
             messageData = ChatMessage.applyRollMode(messageData, game.settings.get("core", "rollMode"));

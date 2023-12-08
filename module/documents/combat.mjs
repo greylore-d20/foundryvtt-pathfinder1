@@ -148,7 +148,6 @@ export class CombatPF extends Combat {
         // Create card template data
         const hasNotes = notes?.length > 0;
         const templateData = {
-          user: game.user.id,
           formula: roll.formula,
           tooltip: await roll.getTooltip(),
           total: roll.total,

@@ -985,7 +985,6 @@ export class ItemPF extends ItemBasePF {
     // Basic chat message data
     const chatData = mergeObject(
       {
-        user: game.user.id,
         type: CONST.CHAT_MESSAGE_TYPES.OTHER,
         speaker: ChatMessage.implementation.getSpeaker({ actor, token, alias: token?.name }),
         flags: {

@@ -287,7 +287,6 @@ export class D20RollPF extends RollPF {
     const chatTemplate = options.chatTemplate || this.constructor.CHAT_TEMPLATE;
     const chatTemplateData = mergeObject(
       {
-        user: game.user.id,
         formula: this.formula,
         tooltip: await this.getTooltip(),
         total: Math.floor(this.total * 100) / 100,

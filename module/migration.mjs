@@ -1861,7 +1861,12 @@ const _migrateActionHarmlessSpell = (action, itemData) => {
   if (!action.save.description) return;
 
   if (/\bharmless\b/.test(action.save.description)) {
-    action.save.description = action.save.description.replace(/\s*\(?\bharmless\b\)?\s*/, "");
+    action.save.description = action.save.description
+      .replace(/\s*\bharmless\b\s*/, "")
+      .replace(/\(,\s*/, "(")
+      .replace(/\s*,\)/, ")")
+      .replace("()", "")
+      .trim();
     action.save.harmless = true;
   }
 };

@@ -16,14 +16,14 @@ system:
         value: 1 minute/level (D)
       range:
         units: medium
+      measureTemplate:
+        type: circle
+        size: '50'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: 50-ft.-radius
-      measureTemplate:
-        type: circle
-        size: '50'
+      area: 50-ft.-radius
   uses:
     autoDeductChargesCost: ''
   learnedAt:

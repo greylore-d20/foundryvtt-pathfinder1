@@ -14,17 +14,17 @@ system:
           type: action
       duration:
         value: instantaneous
-      actionType: heal
-      save:
-        type: ref
-        description: Reflex half; see text
-      spellArea: 10-ft.-radius burst, centered on you
       range:
         value: '10'
         units: ft
       measureTemplate:
         type: circle
         size: '10'
+      actionType: heal
+      save:
+        type: ref
+        description: Reflex half; see text
+      area: 10-ft.-radius burst, centered on you
   uses:
     autoDeductChargesCost: ''
   learnedAt:

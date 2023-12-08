@@ -16,14 +16,14 @@ system:
         value: 1 minute/level
       range:
         units: medium
+      measureTemplate:
+        type: circle
+        size: '15'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: one creature/level, no two of which can be more than 30 ft. apart
-      measureTemplate:
-        type: circle
-        size: '15'
+      area: one creature/level, no two of which can be more than 30 ft. apart
   uses:
     autoDeductChargesCost: ''
   learnedAt:

@@ -16,14 +16,14 @@ system:
         value: 10 minutes/level (D)
       range:
         units: close
+      measureTemplate:
+        type: circle
+        size: '15'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: several living creatures, no two of which may be more than 30 ft. apart
-      measureTemplate:
-        type: circle
-        size: '15'
+      area: several living creatures, no two of which may be more than 30 ft. apart
   uses:
     autoDeductChargesCost: ''
   learnedAt:

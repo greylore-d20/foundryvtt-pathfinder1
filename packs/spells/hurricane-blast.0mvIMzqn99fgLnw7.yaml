@@ -18,14 +18,15 @@ system:
         value: you
       range:
         units: personal
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (harmless, object)
-      spellArea: 5-ft.-radius burst/2 levels (maximum 25-ft.-radius burst)
       measureTemplate:
         type: circle
         size: min(25, floor(@cl/2) * 5)
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (object)
+        harmless: true
+      area: 5-ft.-radius burst/2 levels (maximum 25-ft.-radius burst)
   uses:
     autoDeductChargesCost: ''
   learnedAt:
@@ -72,4 +73,3 @@ system:
     spray of sand or dust, fan a large fire, overturn delicate awnings or
     hangings, and blow gases or vapors to the edge of its range.</p>
 _key: '!items!0mvIMzqn99fgLnw7'
-

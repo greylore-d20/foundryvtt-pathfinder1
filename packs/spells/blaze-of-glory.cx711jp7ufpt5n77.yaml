@@ -14,17 +14,17 @@ system:
           type: action
       duration:
         value: instantaneous and 1 round/level; see text
-      actionType: heal
-      save:
-        type: will
-        description: Will partial
-      spellArea: 30-ft.-radius burst centered on you
       range:
         value: '30'
         units: ft
       measureTemplate:
         type: circle
         size: '30'
+      actionType: heal
+      save:
+        type: will
+        description: Will partial
+      area: 30-ft.-radius burst centered on you
   learnedAt:
     class:
       paladin: 4

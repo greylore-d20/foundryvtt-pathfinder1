@@ -16,14 +16,15 @@ system:
         value: 1 round/level
       range:
         units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (harmless, object)
-      spellArea: 20-ft.-radius spread
       measureTemplate:
         type: circle
         size: '20'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates (object)
+        harmless: true
+      area: 20-ft.-radius spread
   learnedAt:
     class:
       cleric: 5
@@ -43,4 +44,3 @@ system:
     of that type of outsider. The weapons do not become aligned or change
     composition.</p>
 _key: '!items!c8hh34o1ivvnnx32'
-

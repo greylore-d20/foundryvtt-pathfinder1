@@ -14,17 +14,17 @@ system:
           type: action
       duration:
         value: instantaneous
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude half (see text)
-      spellArea: 20-ft.-radius burst centered on you
       range:
         value: '20'
         units: ft
       measureTemplate:
         type: circle
         size: '20'
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude half (see text)
+      area: 20-ft.-radius burst centered on you
   uses:
     autoDeductChargesCost: ''
   learnedAt:

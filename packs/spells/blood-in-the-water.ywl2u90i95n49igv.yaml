@@ -17,14 +17,15 @@ system:
       range:
         value: '20'
         units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (harmless)
-      spellArea: 20-ft.-radius emanation centered on you
       measureTemplate:
         type: circle
         size: '20'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+        harmless: true
+      area: 20-ft.-radius emanation centered on you
   learnedAt:
     class:
       sorcerer: 2

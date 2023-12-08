@@ -16,14 +16,14 @@ system:
         value: instantaneous
       range:
         units: close
-      actionType: spellsave
-      save:
-        description: see text
-        type: ref
-      spellArea: dirt in a 5-ft. cube
       measureTemplate:
         type: rect
         size: '5'
+      actionType: spellsave
+      save:
+        type: ref
+        description: see text
+      area: dirt in a 5-ft. cube
   uses:
     autoDeductChargesCost: ''
   learnedAt:

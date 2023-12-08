@@ -17,6 +17,8 @@ system:
       +4 bonus for attacking a prone target). A rogue may use this ability one
       additional time per day for every 5 rogue levels she possesses. A rogue
       must be trained in Acrobatics to select this talent.</p>
+  tags:
+    - Rogue Talent
   actions:
     - _id: 5568cl7h9fhqo5hk
       name: Use
@@ -29,8 +31,6 @@ system:
   uses:
     per: day
     maxFormula: 1 + (floor(@classes.rogue.level / 5))
-  tags:
-    - Rogue Talent
   tag: classFeat_acrobaticStunt
   subType: classFeat
   associations:

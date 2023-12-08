@@ -14,17 +14,17 @@ system:
           type: action
       duration:
         value: concentration plus 1 round/level, up to 1 hour/level
+      range:
+        value: '30'
+        units: ft
+      measureTemplate:
+        type: circle
+        size: '30'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: 30-ft.-radius emanation centered on you
-      measureTemplate:
-        type: circle
-        size: '30'
-      range:
-        value: '30'
-        units: ft
+      area: 30-ft.-radius emanation centered on you
   learnedAt:
     class:
       cleric: 5

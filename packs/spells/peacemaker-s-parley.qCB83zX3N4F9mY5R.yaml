@@ -14,14 +14,14 @@ system:
         value: instantaneous
       range:
         units: close
+      measureTemplate:
+        type: circle
+        size: '20'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: creatures in a 20-ft.-radius spread
-      measureTemplate:
-        type: circle
-        size: '20'
+      area: creatures in a 20-ft.-radius spread
   uses:
     autoDeductChargesCost: ''
   learnedAt:

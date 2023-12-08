@@ -17,14 +17,15 @@ system:
       range:
         value: '30'
         units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (harmless)
-      spellArea: cone-shaped burst
       measureTemplate:
         type: cone
         size: '30'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+        harmless: true
+      area: cone-shaped burst
   learnedAt:
     class:
       druid: 3

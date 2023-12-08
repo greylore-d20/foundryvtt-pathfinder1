@@ -16,14 +16,14 @@ system:
         value: 1 min./level (D)
       range:
         units: long
+      measureTemplate:
+        type: circle
+        size: '40'
       actionType: spellsave
       save:
         type: ref
         description: Reflex partial (see text)
-      spellArea: plants in a 40-ft.-radius spread
-      measureTemplate:
-        type: circle
-        size: '40'
+      area: plants in a 40-ft.-radius spread
   uses:
     autoDeductChargesCost: ''
   learnedAt:

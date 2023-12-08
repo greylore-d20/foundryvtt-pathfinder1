@@ -16,14 +16,14 @@ system:
         value: 1 round/level
       range:
         units: medium
+      measureTemplate:
+        type: circle
+        size: '10'
       actionType: spellsave
       save:
         type: will
         description: Will negates (blinding only)
-      spellArea: creatures and objects within 10-ft.-radius spread
-      measureTemplate:
-        type: circle
-        size: '10'
+      area: creatures and objects within 10-ft.-radius spread
   learnedAt:
     class:
       sorcerer: 2

@@ -16,14 +16,15 @@ system:
       range:
         value: '20'
         units: ft
-      actionType: heal
-      save:
-        type: will
-        description: Will half (harmless)
-      spellArea: a 20-ft.-radius burst centered on you
       measureTemplate:
         type: circle
         size: '20'
+      actionType: heal
+      save:
+        type: will
+        description: Will half
+        harmless: true
+      area: a 20-ft.-radius burst centered on you
   learnedAt:
     class:
       bard: 3

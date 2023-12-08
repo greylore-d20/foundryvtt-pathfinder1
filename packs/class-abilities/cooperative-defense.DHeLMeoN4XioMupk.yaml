@@ -17,6 +17,10 @@ system:
     - _id: EWX575qPm4wkmlUH
       name: Use
       img: icons/magic/defensive/shield-barrier-glowing-triangle-green.webp
+      activation:
+        type: nonaction
+        unchained:
+          type: nonaction
   uses:
     per: day
     maxFormula: max(0, floor(@classes.wizard.level / 4) - 1)

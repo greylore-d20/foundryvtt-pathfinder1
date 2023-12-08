@@ -16,16 +16,16 @@ system:
         value: 1 minute/level
       range:
         units: medium
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (see text)
-      spellArea: 60-ft. radius
       measureTemplate:
         type: circle
         size: '60'
         overrideColor: true
         customColor: '#b32d00'
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude negates (see text)
+      area: 60-ft. radius
   uses:
     autoDeductChargesCost: ''
   learnedAt:

@@ -16,14 +16,15 @@ system:
         value: 1 minute/level (D)
       range:
         units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (harmless)
-      spellArea: touched creature's space, up to one 5-foot-cube
       measureTemplate:
         type: rect
         size: '5'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+        harmless: true
+      area: touched creature's space, up to one 5-foot-cube
   uses:
     autoDeductChargesCost: ''
   learnedAt:

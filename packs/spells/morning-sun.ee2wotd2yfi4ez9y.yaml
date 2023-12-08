@@ -16,14 +16,14 @@ system:
         value: 1 minute/level (D)
       range:
         units: close
+      measureTemplate:
+        type: circle
+        size: '60'
       actionType: spellsave
       save:
         type: ref
         description: Fortitude negates and Reflex half, see text
-      spellArea: 60-ft. radius
-      measureTemplate:
-        type: circle
-        size: '60'
+      area: 60-ft. radius
   uses:
     autoDeductChargesCost: ''
   learnedAt:

@@ -16,17 +16,17 @@ system:
         value: concentration (up to 1 round/level); see text
       target:
         value: any number of creatures within area
+      range:
+        value: '30'
+        units: ft
+      measureTemplate:
+        type: circle
+        size: '30'
       actionType: spellsave
       save:
         type: will
         description: Will partial; see text
-      spellArea: 30-ft.-radius emanation centered on you
-      measureTemplate:
-        type: circle
-        size: '30'
-      range:
-        value: '30'
-        units: ft
+      area: 30-ft.-radius emanation centered on you
   uses:
     autoDeductChargesCost: ''
   learnedAt:

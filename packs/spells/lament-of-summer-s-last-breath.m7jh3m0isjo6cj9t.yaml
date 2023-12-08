@@ -16,14 +16,14 @@ system:
         value: 1 round/level
       range:
         units: close
+      measureTemplate:
+        type: circle
+        size: '30'
       actionType: spellsave
       save:
         type: will
         description: Will negates (see text)
-      spellArea: 30-ft. radius spread centered on a creature, object, or point in space
-      measureTemplate:
-        type: circle
-        size: '30'
+      area: 30-ft. radius spread centered on a creature, object, or point in space
   uses:
     autoDeductChargesCost: ''
   learnedAt:

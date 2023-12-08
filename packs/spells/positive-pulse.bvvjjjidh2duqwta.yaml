@@ -16,14 +16,15 @@ system:
         value: instantaneous plus 1 round (see text)
       range:
         units: close
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates or Will negates (harmless); see text
-      spellArea: 5-ft.-radius burst
       measureTemplate:
         type: circle
         size: '5'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates; see text
+        harmless: true
+      area: 5-ft.-radius burst
   learnedAt:
     class:
       sorcerer: 1

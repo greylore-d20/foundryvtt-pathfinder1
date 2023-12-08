@@ -42,7 +42,7 @@ system:
         dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
         type: ref
         description: Reflex half
-      spellArea: 10-foot-radius burst
+      area: 10-foot-radius burst
   uses:
     per: day
     maxFormula: max(0,floor((@classes.wizard.level - 3) / 5))

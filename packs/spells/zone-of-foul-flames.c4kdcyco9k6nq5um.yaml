@@ -16,14 +16,14 @@ system:
         value: 1 minute/level
       range:
         units: close
+      measureTemplate:
+        type: circle
+        size: '20'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: 20-ft.-radius spread
-      measureTemplate:
-        type: circle
-        size: '20'
+      area: 20-ft.-radius spread
   learnedAt:
     class:
       druid: 4

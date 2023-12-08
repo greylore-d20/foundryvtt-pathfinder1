@@ -14,17 +14,18 @@ system:
           type: action
       duration:
         value: 1 round/level (D; see text)
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (harmless)
-      spellArea: 10-ft.-radius burst, centered on you
       range:
         value: '10'
         units: ft
       measureTemplate:
         type: circle
         size: '10'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+        harmless: true
+      area: 10-ft.-radius burst, centered on you
   uses:
     autoDeductChargesCost: ''
   learnedAt:

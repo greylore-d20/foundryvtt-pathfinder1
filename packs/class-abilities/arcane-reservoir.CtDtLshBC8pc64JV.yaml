@@ -31,8 +31,8 @@ system:
       actionType: ''
   uses:
     per: day
-    rechargeFormula: 3 + floor(@classes.arcanist.level / 2)
     maxFormula: 3 + @classes.arcanist.level
+    rechargeFormula: 3 + floor(@classes.arcanist.level / 2)
   tag: classFeat_arcaneReservoir
   subType: classFeat
   associations:

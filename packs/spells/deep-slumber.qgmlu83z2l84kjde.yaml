@@ -16,14 +16,14 @@ system:
         value: 1 min./level
       range:
         units: close
+      measureTemplate:
+        type: circle
+        size: '10'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: one or more living creatures within a 10-ft.-radius burst
-      measureTemplate:
-        type: circle
-        size: '10'
+      area: one or more living creatures within a 10-ft.-radius burst
   learnedAt:
     class:
       sorcerer: 3

@@ -7,6 +7,11 @@ system:
     - _id: bkcqdcg1nvbhub6z
       name: Use
       img: systems/pf1/icons/misc/magic-swirl.png
+      activation:
+        type: standard
+        unchained:
+          cost: 2
+          type: action
       duration:
         value: see text
       target:
@@ -16,12 +21,8 @@ system:
       actionType: spellsave
       save:
         type: will
-        description: Will negates (harmless)
-      activation:
-        type: standard
-        unchained:
-          cost: 2
-          type: action
+        description: Will negates
+        harmless: true
   uses:
     autoDeductChargesCost: ''
   learnedAt:

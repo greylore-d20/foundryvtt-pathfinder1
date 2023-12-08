@@ -16,14 +16,14 @@ system:
         value: 1 minute/level (D)
       range:
         units: personal
+      measureTemplate:
+        type: circle
+        size: '20'
       actionType: spellsave
       save:
         type: fort
         description: Fortitude negates
-      spellArea: 20-ft.-radius emanation centered on you
-      measureTemplate:
-        type: circle
-        size: '20'
+      area: 20-ft.-radius emanation centered on you
   learnedAt:
     class:
       sorcerer: 3

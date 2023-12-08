@@ -14,19 +14,19 @@ system:
           type: action
       duration:
         value: instantaneous
-      actionType: spellsave
-      save:
-        type: ref
-        description: Reflex half (see text)
-      spellArea: >-
-        30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see
-        text)
       range:
         value: up to 30 ft. (see text)
         units: spec
       measureTemplate:
         type: ray
         size: '30'
+      actionType: spellsave
+      save:
+        type: ref
+        description: Reflex half (see text)
+      area: >-
+        30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see
+        text)
     - _id: Pox0qYVhnMsTxhKT
       name: Cone
       img: systems/pf1/icons/misc/magic-swirl.png
@@ -47,7 +47,7 @@ system:
       save:
         type: ref
         description: Reflex half (see text)
-      spellArea: >-
+      area: >-
         30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see
         text)
     - _id: EQmGhKbsfW1Myths
@@ -70,7 +70,7 @@ system:
       save:
         type: ref
         description: Reflex half (see text)
-      spellArea: >-
+      area: >-
         30-ft. line, 20-ft. cone-shaped spread, or 10-ft.-radius spread (see
         text)
   uses:

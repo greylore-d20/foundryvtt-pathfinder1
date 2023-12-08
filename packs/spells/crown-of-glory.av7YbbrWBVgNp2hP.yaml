@@ -16,14 +16,14 @@ system:
         value: 1 minute/level
       range:
         units: personal
+      measureTemplate:
+        type: circle
+        size: '120'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: 120-ft.-radius emanation centered on you
-      measureTemplate:
-        type: circle
-        size: '120'
+      area: 120-ft.-radius emanation centered on you
   uses:
     autoDeductChargesCost: ''
   learnedAt:

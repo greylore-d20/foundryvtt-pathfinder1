@@ -16,12 +16,13 @@ system:
         value: instantaneous
       target:
         value: you and touched objects or other willing creatures
+      range:
+        units: unlimited
       actionType: spellsave
       save:
         type: will
-        description: none or Will negates (harmless, object)
-      range:
-        units: unlimited
+        description: none or Will negates (object)
+        harmless: true
   uses:
     autoDeductChargesCost: ''
   learnedAt:
@@ -56,4 +57,3 @@ system:
     from being teleported. Unattended, nonmagical objects receive no saving
     throw.</p>
 _key: '!items!r37k9siiazcdqkc7'
-

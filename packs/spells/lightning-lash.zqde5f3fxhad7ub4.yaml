@@ -16,14 +16,15 @@ system:
         value: 1 round/level (D)
       range:
         units: personal
-      actionType: spellsave
-      save:
-        type: fort
-        description: Fortitude negates (harmless)
-      spellArea: 20-foot-radius spread
       measureTemplate:
         type: circle
         size: '20'
+      actionType: spellsave
+      save:
+        type: fort
+        description: Fortitude negates
+        harmless: true
+      area: 20-foot-radius spread
   uses:
     autoDeductChargesCost: ''
   learnedAt:

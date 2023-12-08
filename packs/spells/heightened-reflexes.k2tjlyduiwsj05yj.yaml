@@ -17,14 +17,15 @@ system:
       range:
         value: '30'
         units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (harmless)
-      spellArea: allies within a 30-ft.-radius burst centered on you
       measureTemplate:
         type: circle
         size: '30'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+        harmless: true
+      area: allies within a 30-ft.-radius burst centered on you
   learnedAt:
     class:
       bard: 2

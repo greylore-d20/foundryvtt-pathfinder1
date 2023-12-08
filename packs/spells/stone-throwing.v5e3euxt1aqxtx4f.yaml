@@ -16,12 +16,13 @@ system:
         value: 1 minute/level
       target:
         value: creature touched
+      range:
+        units: touch
       actionType: spellsave
       save:
         type: fort
-        description: Fortitude negates (harmless)
-      range:
-        units: touch
+        description: Fortitude negates
+        harmless: true
   uses:
     autoDeductChargesCost: ''
   learnedAt:

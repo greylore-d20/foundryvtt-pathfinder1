@@ -26,8 +26,6 @@ system:
         unchained:
           cost: 2
           type: action
-      range:
-        value: ''
       measureTemplate:
         type: ray
         size: '20'
@@ -47,7 +45,7 @@ system:
         - >-
           Creatures that fail their saving throw catch fire and take 1d6 points
           of fire damage on the following round.
-      spellArea: 20 ft. Line
+      area: 20 ft. Line
   uses:
     per: day
     maxFormula: 3 + @classes.wizard.level

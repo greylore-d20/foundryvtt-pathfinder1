@@ -16,14 +16,14 @@ system:
         value: concentration + 1 round/level
       range:
         units: medium
+      measureTemplate:
+        type: circle
+        size: '10'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: living creatures within a 10-ft.-radius burst
-      measureTemplate:
-        type: circle
-        size: '10'
+      area: living creatures within a 10-ft.-radius burst
   uses:
     autoDeductChargesCost: '0'
   learnedAt:

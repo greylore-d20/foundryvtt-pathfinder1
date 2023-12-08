@@ -16,14 +16,15 @@ system:
         value: 1 minute/level (D)
       range:
         units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (harmless)
-      spellArea: 10-ft.-radius emanation centered on the touched creature's space
       measureTemplate:
         type: circle
         size: '10'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+        harmless: true
+      area: 10-ft.-radius emanation centered on the touched creature's space
   uses:
     autoDeductChargesCost: ''
   learnedAt:

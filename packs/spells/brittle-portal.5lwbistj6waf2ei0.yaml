@@ -16,14 +16,14 @@ system:
         value: 1 round/level
       range:
         units: close
+      measureTemplate:
+        type: circle
+        size: '5'
       actionType: spellsave
       save:
         type: will
         description: Will negates (object)
-      spellArea: 5-ft.-radius spread
-      measureTemplate:
-        type: circle
-        size: '5'
+      area: 5-ft.-radius spread
   uses:
     autoDeductChargesCost: ''
   learnedAt:

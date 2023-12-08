@@ -16,14 +16,14 @@ system:
         value: concentration + 2 rounds
       range:
         units: close
+      measureTemplate:
+        type: circle
+        size: '30'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: 30-ft.-radius emanation
-      measureTemplate:
-        type: circle
-        size: '30'
+      area: 30-ft.-radius emanation
   learnedAt:
     class:
       bard: 3

@@ -17,14 +17,14 @@ system:
         value: 10 minutes/level
       range:
         units: close
+      measureTemplate:
+        type: rect
+        size: '20'
       actionType: spellsave
       save:
         type: will
         description: Will partial
-      spellArea: 20-ft. cube (S)
-      measureTemplate:
-        type: rect
-        size: '20'
+      area: 20-ft. cube (S)
   uses:
     autoDeductChargesCost: ''
   learnedAt:

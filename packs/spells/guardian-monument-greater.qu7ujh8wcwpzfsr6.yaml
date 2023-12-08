@@ -16,16 +16,17 @@ system:
         value: 1 hour/level
       range:
         units: touch
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (harmless)
-      spellArea: >-
-        40-ft. radius from touched object or 60-ft. radius from touched object;
-        see text
       measureTemplate:
         type: circle
         size: '40'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+        harmless: true
+      area: >-
+        40-ft. radius from touched object or 60-ft. radius from touched object;
+        see text
     - _id: avYWbnKuVFk62Ysq
       name: 60-ft. Radius
       img: systems/pf1/icons/misc/magic-swirl.png
@@ -44,8 +45,9 @@ system:
       actionType: spellsave
       save:
         type: will
-        description: Will negates (harmless)
-      spellArea: >-
+        description: Will negates
+        harmless: true
+      area: >-
         40-ft. radius from touched object or 60-ft. radius from touched object;
         see text
   uses:

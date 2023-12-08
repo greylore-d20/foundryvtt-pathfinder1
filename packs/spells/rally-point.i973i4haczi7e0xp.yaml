@@ -17,14 +17,15 @@ system:
       range:
         value: '5'
         units: ft
-      actionType: spellsave
-      save:
-        type: will
-        description: Will negates (harmless)
-      spellArea: one 5-ft. square
       measureTemplate:
         type: rect
         size: '5'
+      actionType: spellsave
+      save:
+        type: will
+        description: Will negates
+        harmless: true
+      area: one 5-ft. square
   uses:
     autoDeductChargesCost: ''
   learnedAt:

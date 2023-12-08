@@ -14,17 +14,18 @@ system:
           type: action
       duration:
         value: 1 min./level (D)
+      range:
+        value: personal or touch
+        units: spec
       measureTemplate:
         type: circle
         size: '10'
       actionType: spellsave
       save:
         type: will
-        description: Will negates (harmless)
-      spellArea: 10-ft.-radius emanation around the creature
-      range:
-        value: personal or touch
-        units: spec
+        description: Will negates
+        harmless: true
+      area: 10-ft.-radius emanation around the creature
   uses:
     autoDeductChargesCost: ''
   learnedAt:

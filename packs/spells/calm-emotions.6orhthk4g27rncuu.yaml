@@ -16,14 +16,14 @@ system:
         value: concentration, up to 1 round/level
       range:
         units: medium
+      measureTemplate:
+        type: circle
+        size: '20'
       actionType: spellsave
       save:
         type: will
         description: Will negates
-      spellArea: creatures in a 20-ft.-radius spread
-      measureTemplate:
-        type: circle
-        size: '20'
+      area: creatures in a 20-ft.-radius spread
   uses:
     autoDeductChargesCost: ''
   learnedAt:

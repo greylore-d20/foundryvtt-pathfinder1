@@ -16,14 +16,14 @@ system:
         value: 10 minute/level
       range:
         units: long
+      measureTemplate:
+        type: circle
+        size: '120'
       actionType: spellsave
       save:
         type: will
         description: Will negates, see text
-      spellArea: 120-ft.-radius emanation
-      measureTemplate:
-        type: circle
-        size: '120'
+      area: 120-ft.-radius emanation
   learnedAt:
     class:
       sorcerer: 7

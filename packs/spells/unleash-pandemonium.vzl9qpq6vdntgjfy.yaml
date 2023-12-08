@@ -16,14 +16,14 @@ system:
         value: concentration (maximum 1 round/level) +1 round (D)
       range:
         units: close
+      measureTemplate:
+        type: circle
+        size: '30'
       actionType: spellsave
       save:
         type: will
         description: Will partial; see text
-      spellArea: 30-foot-radius spread
-      measureTemplate:
-        type: circle
-        size: '30'
+      area: 30-foot-radius spread
   learnedAt:
     class:
       cleric: 5

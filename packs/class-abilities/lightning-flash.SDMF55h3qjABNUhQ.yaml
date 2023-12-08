@@ -24,8 +24,6 @@ system:
           type: action
       target:
         value: 'All '
-      range:
-        value: ''
       measureTemplate:
         type: circle
         size: '5'
@@ -41,9 +39,9 @@ system:
         dc: 10 + floor(@classes.wizard.level / 2) + @abilities.int.mod
         type: ref
         description: Reflex half and not dazzled
-      spellArea: 5 ft. Radius
       effectNotes:
         - Target is dazzled for [[1d4]] rounds.
+      area: 5 ft. Radius
   uses:
     per: day
     maxFormula: 3 + @abilities.int.mod

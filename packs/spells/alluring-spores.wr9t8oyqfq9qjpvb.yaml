@@ -16,14 +16,14 @@ system:
         value: 1 minute/level
       range:
         units: medium
+      measureTemplate:
+        type: circle
+        size: '20'
       actionType: spellsave
       save:
         type: fort
         description: Fortitude negates
-      spellArea: 20-ft.-radius spread
-      measureTemplate:
-        type: circle
-        size: '20'
+      area: 20-ft.-radius spread
   learnedAt:
     class:
       druid: 2

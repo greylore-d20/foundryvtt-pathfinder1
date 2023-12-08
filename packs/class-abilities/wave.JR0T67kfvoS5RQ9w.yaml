@@ -34,11 +34,11 @@ system:
       range:
         value: '30'
         units: ft
-      actionType: other
-      spellArea: 20 feet high and 5 feet long per level
       measureTemplate:
         type: ray
         size: 5 * @classes.wizard.level
+      actionType: other
+      area: 20 feet high and 5 feet long per level
   uses:
     per: day
     maxFormula: floor(@classes.wizard.level / 2)

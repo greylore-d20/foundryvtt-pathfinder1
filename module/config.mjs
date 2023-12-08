@@ -563,19 +563,19 @@ export const sizeStealthMods = {
 export const vehicles = {
   size: {
     lg: {
-      label: "PF1.ActorSizeLarge",
+      label: "PF1.ActorSize.lg",
       space: "PF1.Vehicles.Space.Large",
     },
     huge: {
-      label: "PF1.ActorSizeHuge",
+      label: "PF1.ActorSize.huge",
       space: "PF1.Vehicles.Space.Huge",
     },
     grg: {
-      label: "PF1.ActorSizeGargantuan",
+      label: "PF1.ActorSize.grg",
       space: "PF1.Vehicles.Space.Gargantuan",
     },
     col: {
-      label: "PF1.ActorSizeColossal",
+      label: "PF1.ActorSize.col",
       space: "PF1.Vehicles.Space.Colossal",
     },
   },

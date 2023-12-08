@@ -178,7 +178,7 @@ export class ActorVehiclePF extends ActorPF {
     result.size = sizeChart.indexOf(result.traits.size);
 
     // Add range info
-    result.range = this.constructor.getReach(this.system.traits.size, this.system.traits.stature);
+    result.range = pf1.documents.actor.ActorPF.getReach(this.system.traits.size, this.system.traits.stature);
 
     // Wound Threshold isn't applicable
     result.attributes.woundThresholds = { level: 0 };

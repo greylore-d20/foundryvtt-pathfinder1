@@ -131,7 +131,7 @@ export class ActorHauntPF extends ActorBasePF {
 
     /* ----------------------------- */
     /* Always add the following data
-      /* ----------------------------- */
+    /* ----------------------------- */
 
     // Add combat round, if in combat
     if (game.combats?.viewed) {
@@ -145,14 +145,14 @@ export class ActorHauntPF extends ActorBasePF {
 
     /* ----------------------------- */
     /* Set the following data on a refresh
-      /* ----------------------------- */
+    /* ----------------------------- */
 
     // Set size index
     const sizeChart = Object.keys(pf1.config.sizeChart);
     result.size = sizeChart.indexOf(result.traits.size);
 
     // Add range info
-    result.range = this.constructor.getReach(this.system.traits.size, this.system.traits.stature);
+    result.range = pf1.documents.actor.ActorPF.getReach(this.system.traits.size, this.system.traits.stature);
 
     // Wound Threshold isn't applicable
     result.attributes.woundThresholds = { level: 0 };

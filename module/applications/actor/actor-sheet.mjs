@@ -1119,12 +1119,8 @@ export class ActorSheetPF extends ActorSheet {
     // BAB Check
     html.find(".attribute.bab .rollable").click(this._onRollBAB.bind(this));
 
-    // CMB Check
-    html.find(".attribute.cmb .rollable").click(this._onRollCMB.bind(this));
-
-    // Attack check
-    html.find(".attribute.attack.melee .rollable").click(this._onRollMelee.bind(this));
-    html.find(".attribute.attack.ranged .rollable").click(this._onRollRanged.bind(this));
+    // Generic attack weapon and CMB checks
+    html.find(".attribute.attack .rollable").click(this._onRollAttack.bind(this));
 
     // Initiative Check
     html.find(".attribute.initiative .rollable").click(this._onRollInitiative.bind(this));
@@ -2468,19 +2464,20 @@ export class ActorSheetPF extends ActorSheet {
     this.document.rollBAB({ token: this.token });
   }
 
-  _onRollMelee(event) {
+  /**
+   * @internal
+   * @param {Event} event
+   */
+  _onRollAttack(event) {
     event.preventDefault();
-    this.document.rollAttack({ melee: true, token: this.token });
-  }
+    /** @type {HTMLElement} */
+    let el = event.target;
+    if (!el.classList.contains("rollable")) el = el.closest(".rollable");
 
-  _onRollRanged(event) {
-    event.preventDefault();
-    this.document.rollAttack({ melee: false, token: this.token });
-  }
+    const maneuver = el.dataset.type !== "weapon";
+    const ranged = el.dataset.ranged === "true";
 
-  _onRollCMB(event) {
-    event.preventDefault();
-    this.document.rollCMB({ token: this.token });
+    this.document.rollAttack({ maneuver, ranged, token: this.token });
   }
 
   _onRollInitiative(event) {

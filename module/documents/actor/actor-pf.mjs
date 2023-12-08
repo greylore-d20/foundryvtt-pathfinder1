@@ -2576,140 +2576,83 @@ export class ActorPF extends ActorBasePF {
   /**
    * Roll a basic CMB check for this actor
    *
+   * @deprecated
    * @param {ActorRollOptions & {ranged: boolean, ability: string | null}} [options={}]
    * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
   async rollCMB(options = {}) {
-    if (!this.isOwner) {
-      return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
-    }
-
-    options.ranged ??= false;
-    options.ability ??= null;
-
-    // Add contextual notes
-    const rollData = this.getRollData();
-    const noteObjects = this.getContextNotes("misc.cmb");
-    const notes = this.formatContextNotes(noteObjects, rollData);
-
-    const parts = [];
-
-    const describePart = (value, label) => parts.push(`${value}[${label}]`);
-    const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, -10));
-    srcDetails(this.sourceDetails["system.attributes.cmb.bonus"]);
-    srcDetails(this.sourceDetails["system.attributes.attack.shared"]);
-
-    const size = this.system.traits.size ?? "med";
-    rollData.sizeBonus = pf1.config.sizeSpecialMods[size];
-    if (rollData.sizeBonus != 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
-
-    const changeSources = ["attack"];
-    if (options.ranged === true) changeSources.push("rattack");
-    else changeSources.push("mattack");
-    const effectiveChanges = getHighestChanges(
-      this.changes.filter((c) => changeSources.includes(c.subTarget)),
-      { ignoreTarget: true }
+    foundry.utils.logCompatibilityWarning(
+      "ActorPF.rollCMB() is deprecated in favor of ActorPF.rollAttack({maneuver:true})",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
     );
-    effectiveChanges.forEach((ic) => describePart(ic.value, ic.flavor));
 
-    const abl = options.ability ?? this.system.attributes.cmbAbility;
-    const ablMod = this.system.abilities[abl]?.mod ?? 0;
-    if (ablMod != 0) describePart(ablMod, pf1.config.abilities[abl]);
-
-    // Add grapple note
-    if (this.system.conditions.grappled) {
-      notes.push("+2 to Grapple");
-    }
-
-    const props = [];
-    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-
-    const token = options.token ?? this.token;
-
-    const rollOptions = {
-      ...options,
-      parts,
-      rollData,
-      subject: { core: "cmb" },
-      flavor: game.i18n.localize("PF1.CMB"),
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
-    };
-    console.log({ rollOptions });
-    if (Hooks.call("pf1PreActorRollCmb", this, rollOptions) === false) return;
-    const result = await pf1.dice.d20Roll(rollOptions);
-    Hooks.callAll("pf1ActorRollCmb", this, result);
-    return result;
+    return this.rollAttack({ maneuver: true, ...options });
   }
 
   /**
    * Roll a generic attack
    *
-   * @param {ActorRollOptions & {melee?: boolean}} [options={}]
+   * @param {ActorRollOptions} [options={}]
+   * @param {boolean} [options.maneuver=false] - Whether this is weapon or maneuver check.
+   * @param {boolean} [options.ranged=false] - Melee or ranged.
+   * @param {boolean} [options.ability=null] - Attack ability. If not defined, appropriate one is chosen based on the ranged option.
    * @returns {ChatMessage|object|void} The chat message if one was created, or its data if not. `void` if the roll was cancelled.
    */
-  async rollAttack(options = {}) {
+  async rollAttack({ maneuver = false, ranged = false, ability = null, ...options } = {}) {
     if (!this.isOwner) {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
-    // Default to melee attacks
-    options.melee ??= true;
-
-    const sources = [
-      ...this.sourceDetails["system.attributes.attack.shared"],
-      // ...this.sourceDetails["system.attributes.attack.general"],
-      // ...this.sourceDetails[`system.attributes.attack.${options.melee ? "melee" : "ranged"}`],
-    ];
-
-    // Add contextual notes
-    const rollData = this.getRollData();
-    const noteObjects = [...this.getContextNotes("attacks.effect"), ...this.getContextNotes("attacks.attack")];
-    const notes = this.formatContextNotes(noteObjects, rollData);
-    rollData.item = {};
-
-    const changes = sources
-      .filter((item) => Number.isInteger(item.value))
-      .map((i) => {
-        return `${i.value}[${i.name}]`;
+    if (options.melee !== undefined) {
+      foundry.utils.logCompatibilityWarning("ActorPF.rollAttack() melee parameter has been deprecated.", {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
       });
 
-    // Add attack bonuses from changes
-    const attackTargets = ["attack", options.melee ? "mattack" : "rattack"];
-    const attackChanges = this.changes.filter((c) => attackTargets.includes(c.subTarget));
-    changes.push(
-      ...attackChanges.map((c) => {
-        c.applyChange(this);
-        return `${c.value}[${c.parent ? c.parent.name : c.data.modifier}]`;
-      })
+      ranged = !options.melee;
+      delete options.melee;
+    }
+
+    const rangeLabel = {
+      melee: "PF1.Melee",
+      ranged: "PF1.Ranged",
+    };
+
+    let actionType;
+    if (!maneuver) actionType = ranged ? "rwak" : "mwak";
+    else actionType = ranged ? "rcman" : "mcman";
+
+    const atkData = {
+      ...pf1.components.ItemAction.defaultData,
+      name: !ranged ? game.i18n.localize("PF1.Melee") : game.i18n.localize("PF1.Ranged"),
+      actionType,
+    };
+
+    // Alter attack ability
+    const atkAbl = this.system.attributes?.attack?.[`${ranged ? "ranged" : "melee"}Ability`];
+    atkData.ability.attack = ability ?? (atkAbl || (ranged ? "dex" : "str"));
+
+    // Alter activation type
+    atkData.activation.type = "attack";
+    atkData.activation.unchained.type = "attack";
+
+    // Generate temporary item
+    /** @type {pf1.documents.item.ItemAttackPF} */
+    const atk = new Item.implementation(
+      {
+        type: "attack",
+        name: !maneuver ? game.i18n.localize("TYPES.Item.weapon") : game.i18n.localize("PF1.CMBAbbr"),
+        system: {
+          actions: [atkData],
+        },
+      },
+      { parent: this }
     );
 
-    // Add ability modifier
-    const atkAbl = this.system.attributes?.attack?.[`${options.melee ? "melee" : "ranged"}Ability`];
-    changes.push(`${this.system.abilities[atkAbl].mod}[${pf1.config.abilities[atkAbl]}]`);
-
-    const size = this.system.traits.size ?? "med";
-    rollData.sizeBonus = pf1.config.sizeMods[size];
-    if (rollData.sizeBonus != 0) changes.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
-
-    const props = [];
-    if (notes.length > 0) props.push({ header: game.i18n.localize("PF1.Notes"), value: notes });
-
-    const token = options.token ?? this.token;
-
-    const rollOptions = {
-      ...options,
-      parts: changes,
-      rollData,
-      subject: { core: "attack" },
-      flavor: game.i18n.localize(`PF1.${options.melee ? "Melee" : "Ranged"}`),
-      chatTemplateData: { hasProperties: props.length > 0, properties: props },
-      speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
-    };
-    if (Hooks.call("pf1PreActorRollAttack", this, rollOptions) === false) return;
-    const result = await pf1.dice.d20Roll(rollOptions);
-    Hooks.callAll("pf1ActorRollAttack", this, result);
-    return result;
+    return atk.use(options);
   }
 
   /**

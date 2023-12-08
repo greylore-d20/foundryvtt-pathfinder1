@@ -191,7 +191,7 @@ export const createMiscActorMacro = async (type, uuid, slot, data) => {
       img = "systems/pf1/icons/items/armor/shield-light-metal.png";
       break;
     case "cmb":
-      command += `.rollCMB();`;
+      command += `.rollAttack({maneuver:true});`;
       name = game.i18n.format("PF1.RollCMBMacroName", { actor: actor.name });
       img = "systems/pf1/icons/feats/improved-grapple.jpg";
       break;
@@ -222,7 +222,7 @@ export const createMiscActorMacro = async (type, uuid, slot, data) => {
     case "attack": {
       const { attack } = data;
       const isMelee = attack === "melee";
-      command += `.rollAttack({ melee: ${isMelee ? "true" : "false"}});`;
+      command += `.rollAttack({ ranged: ${isMelee ? "false" : "true"}});`;
       name = game.i18n.format(isMelee ? "PF1.RollMeleeMacroName" : "PF1.RollRangedMacroName", { actor: actor.name });
       img = isMelee ? "systems/pf1/icons/skills/weapon_23.jpg" : "systems/pf1/icons/skills/arrow_07.jpg";
       break;

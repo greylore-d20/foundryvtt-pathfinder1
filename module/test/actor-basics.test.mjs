@@ -57,42 +57,51 @@ export const registerActorBasicTests = () => {
         });
 
         // ---------------------------------- //
-        // CMB                                //
-        // ---------------------------------- //
-        describe("#rollCMB with defaults", function () {
-          /** @type {ChatMessage} */
-          let roll;
-          before(async () => {
-            roll = await actor.rollCMB({ skipDialog: true });
-            messages.push(roll);
-          });
-
-          it("should have the correct formula", function () {
-            expect(roll?.rolls[0]?.formula).to.equal("1d20 + 1[Strength]");
-          });
-
-          it("should be a ChatMessage", function () {
-            expect(roll instanceof pf1.documents.ChatMessagePF).to.be.true;
-          });
-        });
-
-        // ---------------------------------- //
         // Attack                             //
         // ---------------------------------- //
         describe("#rollAttack", function () {
-          /** @type {ChatMessage} */
-          let roll;
-          before(async () => {
-            roll = await actor.rollAttack({ skipDialog: true });
-            messages.push(roll);
+          // ---------------------------------- //
+          // Weapon                             //
+          // ---------------------------------- //
+          describe("with defaults (weapon)", function () {
+            /** @type {ChatMessage} */
+            let msg;
+            before(async () => {
+              msg = await actor.rollAttack({ skipDialog: true });
+              messages.push(msg);
+            });
+
+            it("should be a ChatMessage", function () {
+              expect(msg instanceof pf1.documents.ChatMessagePF).to.be.true;
+            });
+
+            it("should have the correct formula", function () {
+              const metadata = msg.getFlag("pf1", "metadata");
+              const roll = metadata.rolls.attacks[0].attack;
+              expect(roll.formula).to.equal("1d20 + 1[Strength]");
+            });
           });
 
-          it("should have the correct formula", function () {
-            expect(roll?.rolls[0]?.formula).to.equal("1d20 + 1[Strength]");
-          });
+          // ---------------------------------- //
+          // CMB                                //
+          // ---------------------------------- //
+          describe("as CMB", function () {
+            /** @type {ChatMessage} */
+            let msg;
+            before(async () => {
+              msg = await actor.rollAttack({ maneuver: true, skipDialog: true });
+              messages.push(msg);
+            });
 
-          it("should be a ChatMessage", function () {
-            expect(roll instanceof pf1.documents.ChatMessagePF).to.be.true;
+            it("should be a ChatMessage", function () {
+              expect(msg instanceof pf1.documents.ChatMessagePF).to.be.true;
+            });
+
+            it("should have the correct formula", function () {
+              const metadata = msg.getFlag("pf1", "metadata");
+              const roll = metadata.rolls.attacks[0].attack;
+              expect(roll.formula).to.equal("1d20 + 1[Strength]");
+            });
           });
         });
 

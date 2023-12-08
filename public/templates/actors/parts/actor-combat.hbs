@@ -17,16 +17,16 @@
   </div>
 
   {{! CMB }}
-  <div class="info-box tooltip attribute cmb" data-attribute="cmb">
-    <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.CMBAbbr"}}</span></a></h5>
+  <div class="info-box tooltip attribute attack cmb">
+    <h5><a class="rollable" data-type="cmb" data-ranged="false"><i class="fas fa-dice"></i> <span>{{localize "PF1.CMBAbbr"}}</span></a></h5>
     <span class="value">{{numberFormat system.attributes.cmb.total decimals=0 sign=true}}</span>
     {{> "systems/pf1/templates/actors/parts/actor-cmb.hbs"}}
   </div>
 
   <div class="info-box-joined generic-attacks">
     {{! Melee }}
-    <div class="info-box tooltip attribute attack melee" data-attack="melee">
-      <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.Melee"}}</span></a></h5>
+    <div class="info-box tooltip attribute attack melee weapon">
+      <h5><a class="rollable" data-type="weapon" data-ranged="false"><i class="fas fa-dice"></i> <span>{{localize "PF1.Melee"}}</span></a></h5>
       <span class="value">{{numberFormat genericAttacks.melee.modifier decimals=0 sign=true}}</span>
       <span class="tooltipcontent">
         <span class="span2 align-left">+ @attributes.attack.shared :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.shared}}</span>
@@ -43,8 +43,8 @@
     </div>
 
     {{! Ranged }}
-    <div class="info-box tooltip attribute attack ranged" data-attack="ranged">
-      <h5><a class="rollable"><i class="fas fa-dice"></i> <span>{{localize "PF1.Ranged"}}</span></a></h5>
+    <div class="info-box tooltip attribute attack ranged weapon">
+      <h5><a class="rollable" data-type="weapon" data-ranged="true"><i class="fas fa-dice"></i> <span>{{localize "PF1.Ranged"}}</span></a></h5>
       <span class="value">{{numberFormat genericAttacks.ranged.modifier decimals=0 sign=true}}</span>
       <span class="tooltipcontent">
         <span class="span2 align-left">+ @attributes.attack.shared :</span> <span class="span1 align-right"> &nbsp;{{system.attributes.attack.shared}}</span>

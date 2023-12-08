@@ -222,28 +222,6 @@ declare global {
       pf1ActorRollBab: (actor: ActorPF, result: ChatMessage | object) => void;
 
       /**
-       * A hook event fired by the system when an {@link ActorPF} rolls their CMB.
-       *
-       * @group Actor Rolls
-       * @remarks Called by {@link Hooks.call}
-       * @param actor - The actor rolling their CMB
-       * @param options - Additional options for the roll
-       * @returns Explicitly return `false` to prevent the actor from rolling their CMB.
-       */
-      pf1PreActorRollCmb: (actor: ActorPF, options: ActorRollOptions) => boolean;
-
-      /**
-       * A hook event fired by the system after an {@link ActorPF} rolled their CMB.
-       *
-       * @group Actor Rolls
-       * @remarks Called by {@link Hooks.callAll}
-       * @param actor - The actor who rolled their CMB
-       * @param result - The roll result, either as {@link ChatMessage} if one was created, or as object containing
-       *  data that would have been used to create one.
-       */
-      pf1ActorRollCmb: (actor: ActorPF, result: ChatMessage | object) => void;
-
-      /**
        * A hook event fired by the system when an {@link ActorPF} rolls a caster level check.
        *
        * @group Actor Rolls
@@ -338,38 +316,6 @@ declare global {
        * @param ability - The key of the ability that was rolled
        */
       pf1ActorRollAbility: (actor: ActorPF, result: ChatMessage | object, ability: string) => void;
-
-      /**
-       * A hook event fired by the system when an {@link ActorPF} rolls a generic attack.
-       *
-       * @group Actor Rolls
-       * @remarks Called by {@link Hooks.call}
-       * @param actor - The actor rolling an attack
-       * @param options - Additional options for the roll
-       * @returns Explicitly return `false` to prevent the actor from rolling the attack.
-       */
-      pf1PreActorRollAttack: (
-        actor: ActorPF,
-        options: ActorRollOptions & {
-          /**
-           * Whether the attack is a melee attack.
-           *
-           * @defaultValue `true`
-           */
-          melee: boolean;
-        }
-      ) => boolean;
-
-      /**
-       * A hook event fired by the system after an {@link ActorPF} rolled a generic attack.
-       *
-       * @group Actor Rolls
-       * @remarks Called by {@link Hooks.callAll}
-       * @param actor - The actor who rolled an attack
-       * @param result - The roll result, either as {@link ChatMessage} if one was created, or as object containing
-       *  data that would have been used to create one.
-       */
-      pf1ActorRollAttack: (actor: ActorPF, result: ChatMessage | object) => void;
 
       // ------------------------- //
       //            Item           //
@@ -660,21 +606,17 @@ export declare const pf1ActorRest: Hooks.StaticCallbacks["pf1ActorRest"];
 // Actor Rolls
 export declare const pf1PreActorRollSkill: Hooks.StaticCallbacks["pf1PreActorRollSkill"];
 export declare const pf1PreActorRollBab: Hooks.StaticCallbacks["pf1PreActorRollBab"];
-export declare const pf1PreActorRollCmb: Hooks.StaticCallbacks["pf1PreActorRollCmb"];
 export declare const pf1PreActorRollCl: Hooks.StaticCallbacks["pf1PreActorRollCl"];
 export declare const pf1PreActorRollConcentration: Hooks.StaticCallbacks["pf1PreActorRollConcentration"];
 export declare const pf1PreActorRollSave: Hooks.StaticCallbacks["pf1PreActorRollSave"];
 export declare const pf1PreActorRollAbility: Hooks.StaticCallbacks["pf1PreActorRollAbility"];
-export declare const pf1PreActorRollAttack: Hooks.StaticCallbacks["pf1PreActorRollAttack"];
 
 export declare const pf1ActorRollSkill: Hooks.StaticCallbacks["pf1ActorRollSkill"];
 export declare const pf1ActorRollBab: Hooks.StaticCallbacks["pf1ActorRollBab"];
-export declare const pf1ActorRollCmb: Hooks.StaticCallbacks["pf1ActorRollCmb"];
 export declare const pf1ActorRollCl: Hooks.StaticCallbacks["pf1ActorRollCl"];
 export declare const pf1ActorRollConcentration: Hooks.StaticCallbacks["pf1ActorRollConcentration"];
 export declare const pf1ActorRollSave: Hooks.StaticCallbacks["pf1ActorRollSave"];
 export declare const pf1ActorRollAbility: Hooks.StaticCallbacks["pf1ActorRollAbility"];
-export declare const pf1ActorRollAttack: Hooks.StaticCallbacks["pf1ActorRollAttack"];
 
 // Item
 export declare const pf1ClassLevelChange: Hooks.StaticCallbacks["pf1ClassLevelChange"];

@@ -718,11 +718,7 @@ export class ActionUse {
    */
   async promptMeasureTemplate() {
     // Determine size
-    let dist = this.shared.action.data.measureTemplate.size;
-    if (typeof dist === "string") {
-      dist = RollPF.safeRoll(this.shared.action.data.measureTemplate.size, this.shared.rollData).total;
-    }
-    dist = convertDistance(dist)[0];
+    const dist = RollPF.safeRoll(this.shared.action.data.measureTemplate.size, this.shared.rollData).total;
 
     // Create data object
     const templateOptions = {
@@ -1221,8 +1217,8 @@ export class ActionUse {
     if (!skipDialog) {
       const result = await this.createAttackDialog();
 
-      // Stop if result is a boolean (i.e. when closed is clicked on the dialog)
-      if (typeof result !== "object") return;
+      // Stop if result is not an object (i.e. when closed is clicked on the dialog)
+      if (result === null) return;
 
       // Alter roll data
       shared.fullAttack = result.fullAttack;

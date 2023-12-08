@@ -425,20 +425,22 @@ export class AttackDialog extends Application {
   }
 
   async close(options = {}) {
-    if (this._callbacks.resolve != null) this._callbacks.resolve();
+    this._callbacks.resolve?.(null);
     return super.close(options);
   }
 
+  /**
+   * @returns {Promise<object|null>} - Attack configuration object or null if rejected
+   */
   show() {
     return new Promise((resolve, reject) => {
-      this.render(true);
-
       this._callbacks.resolve = (...args) => {
         resolve(...args);
       };
       this._callbacks.reject = (...args) => {
         reject(...args);
       };
+      this.render(true);
     });
   }
 }

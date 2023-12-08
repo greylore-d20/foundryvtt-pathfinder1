@@ -389,7 +389,7 @@ export class ItemSheetPF extends ItemSheet {
       // Prepare categories for weapons
       context.weaponCategories = { types: {}, subTypes: {} };
       for (const [k, v] of Object.entries(pf1.config.weaponTypes)) {
-        if (typeof v === "object") context.weaponCategories.types[k] = v._label;
+        context.weaponCategories.types[k] = v._label;
       }
       const type = itemData.subType;
       if (type in pf1.config.weaponTypes) {
@@ -412,7 +412,7 @@ export class ItemSheetPF extends ItemSheet {
       // Prepare categories for equipment
       context.equipmentCategories = { types: {}, subTypes: {} };
       for (const [k, v] of Object.entries(pf1.config.equipmentTypes)) {
-        if (typeof v === "object") context.equipmentCategories.types[k] = v._label;
+        context.equipmentCategories.types[k] = v._label;
       }
       const subType = itemData.subType;
       if (subType in pf1.config.equipmentTypes) {
@@ -576,7 +576,7 @@ export class ItemSheetPF extends ItemSheet {
         modifiers: pf1.config.bonusModifiers,
       };
       for (const [k, v] of Object.entries(pf1.config.buffTargets)) {
-        if (typeof v === "object") context.changeGlobals.targets[k] = v._label;
+        context.changeGlobals.targets[k] = v._label;
       }
 
       const buffTargets = getBuffTargets(actor);
@@ -974,7 +974,7 @@ export class ItemSheetPF extends ItemSheet {
     formData = expandObject(formData);
 
     const system = formData.system;
-    console.log("system", system);
+
     const links = system.links;
     if (links) {
       const oldLinks = this.item.system?.links ?? {};

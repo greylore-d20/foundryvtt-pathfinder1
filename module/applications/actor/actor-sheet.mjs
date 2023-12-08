@@ -376,7 +376,7 @@ export class ActorSheetPF extends ActorSheet {
 
     // Update traits
     this._prepareTraits(data.system.traits);
-    data.senses = this._prepareSenses(data.system.traits.senses);
+    data.labels.senses = this._prepareSenseLabels();
     data.dr = this._prepareResistance(data.system.traits.dr, "dr");
     data.eres = this._prepareResistance(data.system.traits.eres, "eres");
 
@@ -754,31 +754,26 @@ export class ActorSheetPF extends ActorSheet {
     }
   }
 
-  _prepareSenses(senses) {
+  _prepareSenseLabels() {
     const result = {};
 
-    for (const [k, v] of Object.entries(senses)) {
-      if (k === "ll" && senses[k].enabled) {
-        result[k] = pf1.config.senses[k];
-        continue;
-      }
+    const senses = this.actor.system.traits.senses ?? {};
 
-      if (k === "custom" && v.length) {
-        v.split(pf1.config.re.traitSeparator).forEach((c, i) => {
-          result[`custom${i + 1}`] = c.trim();
-        });
-        continue;
-      }
-
-      if (typeof v === "number" && v > 0) {
-        const converted = pf1.utils.convertDistance(v);
-        result[k] = `${pf1.config.senses[k]} ${converted[0]} ${converted[1]}`;
-        continue;
-      }
-
-      if (v === true) {
-        result[k] = pf1.config.senses[k];
-        continue;
+    for (const [key, value] of Object.entries(senses)) {
+      if (value === 0 || value === false) continue;
+      else if (key === "ll" && senses[key].enabled) {
+        result[key] = pf1.config.senses[key];
+      } else if (key === "custom") {
+        if (value.length) {
+          value.split(pf1.config.re.traitSeparator).forEach((svalue, idx) => {
+            result[`custom${idx + 1}`] = svalue.trim();
+          });
+        }
+      } else if (value === true) {
+        result[key] = pf1.config.senses[key];
+      } else if (value > 0) {
+        const converted = pf1.utils.convertDistance(value);
+        result[key] = `${pf1.config.senses[key]} ${converted[0]} ${converted[1]}`;
       }
     }
 

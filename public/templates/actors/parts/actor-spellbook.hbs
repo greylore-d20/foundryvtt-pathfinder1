@@ -459,15 +459,15 @@
 
         {{#unless ../../spellbook.spontaneous}}
         <div data-tooltip="PF1.Prepared">
-          <span class="text-box" data-type="amount" data-dtype="Number">{{item.preparation.preparedAmount}}</span>
+          <span class="text-box" data-type="amount" data-dtype="Number">{{item.preparation.value}}</span>
         </div>
         <span class="sep"> / </span>
         <div data-tooltip="PF1.InitiallyPrepared">
-          <span class="text-box" data-type="max" data-dtype="Number">{{item.preparation.maxAmount}}</span>
+          <span class="text-box" data-type="max" data-dtype="Number">{{item.preparation.max}}</span>
         </div>
         {{else}}
-        <a class="item-control item-toggle-data {{#if item.preparation.spontaneousPrepared}}enabled{{/if}}" data-name="preparation.spontaneousPrepared"
-          data-tooltip="{{#if item.preparation.spontaneousPrepared}}PF1.Prepared{{else}}PF1.Unprepared{{/if}}">
+        <a class="item-control item-toggle-data {{#if item.preparation.value}}enabled{{/if}}" data-name="preparation.value"
+          data-tooltip="{{#if item.preparation.value}}PF1.Prepared{{else}}PF1.Unprepared{{/if}}">
           <i class="fas fa-cog spell-icon prepared"></i>
         </a>
         {{/unless}}

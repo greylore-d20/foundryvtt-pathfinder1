@@ -1086,7 +1086,7 @@ export class ActorPF extends ActorBasePF {
           const used =
             bookInfo.level[spellLevel]?.spells.reduce((acc, /** @type {pf1.documents.item.ItemSpellPF} */ i) => {
               const { preparation, atWill, domain } = i.system;
-              if (!atWill && preparation.spontaneousPrepared) {
+              if (!atWill && preparation.value) {
                 const slotCost = i.slotCost;
                 if (domain && dSlots > 0) dSlots -= slotCost;
                 else acc += slotCost;
@@ -4963,12 +4963,12 @@ export class ActorPF extends ActorBasePF {
         // Spontaneous don't store casts in individual spells
         if (spellbook.spontaneous) continue;
 
-        if (itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {
-          foundry.utils.setProperty(itemUpdate.system, "preparation.preparedAmount", itemData.preparation.maxAmount);
+        if (itemData.preparation.value < itemData.preparation.max) {
+          foundry.utils.setProperty(itemUpdate.system, "preparation.value", itemData.preparation.max);
         }
         if (!item.system.domain) {
           let sbUses = getPathData(`attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`) || 0;
-          sbUses -= itemData.preparation.maxAmount;
+          sbUses -= itemData.preparation.max ?? 0;
           foundry.utils.setProperty(
             updateData,
             `system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`,

@@ -730,7 +730,6 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   if (!game.system.template.Item.types.includes(itemData.type)) return {};
 
   _migrateItemArrayTypes(itemData, updateData);
-  _migrateItemSpellUses(itemData, updateData);
   _migrateFlagsArrayToObject(itemData, updateData);
   _migrateWeaponImprovised(itemData, updateData);
   _migrateItemSpellDescription(itemData, updateData);
@@ -750,6 +749,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateItemChangeFlags(itemData, updateData);
   _migrateEquipmentSize(itemData, updateData);
   _migrateSpellCosts(itemData, updateData);
+  _migrateSpellPreparation(itemData, updateData, { item });
   _migrateLootEquip(itemData, updateData);
   _migrateItemLinks(itemData, updateData, { item, actor });
   _migrateItemProficiencies(itemData, updateData);
@@ -1308,13 +1308,6 @@ const _migrateItemArrayTypes = function (ent, updateData) {
   }
 };
 
-const _migrateItemSpellUses = function (ent, updateData) {
-  if (foundry.utils.getProperty(ent.system, "preparation") === undefined) return;
-
-  const value = foundry.utils.getProperty(ent.system, "preparation.maxAmount");
-  if (typeof value !== "number") updateData["system.preparation.maxAmount"] = 0;
-};
-
 const _migrateWeaponImprovised = function (ent, updateData) {
   if (ent.type !== "weapon") return;
 
@@ -1753,6 +1746,45 @@ const _migrateSpellCosts = function (ent, updateData) {
     updateData["system.preparation.-=autoDeductCharges"] = null;
   }
 };
+
+/**
+ * Migrate spell preparation
+ *
+ * Added with PF1 vNEXT
+ *
+ * @param {object} itemData
+ * @param {object} updateData
+ * @param {object} context
+ * @param {Item} [context.item=null]
+ */
+function _migrateSpellPreparation(itemData, updateData, { item = null } = {}) {
+  if (itemData.type !== "spell") return;
+
+  const prep = itemData.system.preparation ?? {};
+  if (prep.maxAmount !== undefined) {
+    if (prep.max === undefined) {
+      // Migrate even older non number max amount
+      if (typeof prep.maxAmount !== "number") prep.maxAmount = 0;
+      updateData["system.preparation.max"] = prep.maxAmount ?? 0;
+    }
+    updateData["system.preparation.-=maxAmount"] = null;
+  }
+  if (prep.spontaneousPrepared !== undefined) {
+    if (prep.value === undefined) {
+      updateData["system.preparation.value"] = prep.spontaneousPrepared ? 1 : 0;
+    }
+    updateData["system.preparation.-=spontaneousPrepared"] = null;
+  }
+  if (prep.preparedAmount !== undefined) {
+    if (prep.value === undefined) {
+      updateData["system.preparation.value"] = Math.max(
+        prep.preparedAmount,
+        updateData["system.preparation.value"] ?? 0
+      );
+    }
+    updateData["system.preparation.-=spontaneousPrepared"] = null;
+  }
+}
 
 const _migrateLootEquip = function (ent, updateData) {
   if (ent.type === "loot" && !ent.system.equipped) {

@@ -238,20 +238,20 @@
         <div class="form-fields">
           <label>{{localize "PF1.CastsLeft"}}</label>
           <div class="form-fields">
-            <input type="text" name="system.preparation.preparedAmount" value="{{system.preparation.preparedAmount}}" data-dtype="Number">
+            <input type="text" name="system.preparation.value" value="{{system.preparation.value}}" data-dtype="Number">
           </div>
         </div>
         <div class="form-fields">
           <label>{{localize "PF1.SpellPrepPrepared"}}</label>
           <div class="form-fields">
-            <input type="text" name="system.preparation.maxAmount" value="{{system.preparation.maxAmount}}" data-dtype="Number">
+            <input type="text" name="system.preparation.max" value="{{system.preparation.max}}" data-dtype="Number">
           </div>
         </div>
       </div>
       {{else}}
       <div class="form-group stacked">
         <label class="checkbox">
-          <input type="checkbox" name="system.preparation.spontaneousPrepared" {{checked system.preparation.spontaneousPrepared}}> {{localize "PF1.SpellPrepPrepared"}}
+          <input type="checkbox" data-dtype="Number" name="system.preparation.value" {{checked system.preparation.value}}> {{localize "PF1.SpellPrepPrepared"}}
         </label>
       </div>
       {{/if}}

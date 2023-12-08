@@ -149,7 +149,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Item Type, Status, and Details
     context.itemType = game.i18n.localize(CONFIG.Item.typeLabels[item.type]);
-    context.itemStatus = this._getItemStatus(item);
+    context.itemStatus = this._getItemStatus();
     context.itemProperties = this._getItemProperties();
     context.itemName = item.name;
     if (item.links.charges) context.inheritCharges = item.links.charges;
@@ -939,26 +939,12 @@ export class ItemSheetPF extends ItemSheet {
   /**
    * Get the text item status which is shown beneath the Item type in the top-right corner of the sheet
    *
-   * @param item
    * @returns {string}
    * @private
    */
-  _getItemStatus(item) {
-    const itemData = item.system;
-    if (item.type === "spell") {
-      const spellbook = this.item.spellbook;
-      if (itemData.preparation.mode === "prepared") {
-        if (spellbook?.spellPreparationMode === "spontaneous") {
-          if (itemData.preparation.spontaneousPrepared) return game.i18n.localize("PF1.SpellPrepPrepared");
-          else return game.i18n.localize("PF1.Unprepared");
-        } else if (itemData.preparation.preparedAmount > 0)
-          return game.i18n.format("PF1.AmountPrepared", { count: itemData.preparation.preparedAmount });
-        else return game.i18n.localize("PF1.Unprepared");
-      } else if (itemData.preparation.mode) {
-        return itemData.preparation.mode.titleCase();
-      }
-    } else if (itemData.equipped !== undefined) {
-      return itemData.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
+  _getItemStatus() {
+    if (this.item.isPhysical) {
+      return this.item.system.equipped ? game.i18n.localize("PF1.Equipped") : game.i18n.localize("PF1.NotEquipped");
     }
   }
 

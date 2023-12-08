@@ -22,6 +22,36 @@ export class ItemSpellPF extends ItemPF {
   async _preCreate(data, options, user) {
     await super._preCreate(data, options, user);
     this._assignLevelOnCreate(data, options);
+
+    const prep = data.system.preparation;
+    if (prep) {
+      const prepUpdate = {};
+      if (prep.maxAmount !== undefined) {
+        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.maxAmount is now preparation.max", {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        });
+        prepUpdate.max = prep.maxAmount;
+        prepUpdate["-=maxAmount"] = null;
+      }
+      if (prep.preparedAmount !== undefined) {
+        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.preparedAmount is now preparation.value", {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        });
+        prepUpdate.value = prep.preparedAmount;
+        prepUpdate["-=preparedAmount"] = null;
+      }
+      if (prep.spontaneousPrepared !== undefined) {
+        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.spontaneousPrepared is now preparation.value", {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        });
+        prepUpdate.value = prep.prep.spontaneousPrepared ? 1 : 0;
+        prepUpdate["-=spontaneousPrepared"] = null;
+      }
+      this.updateSource({ system: { preparation: prepUpdate } });
+    }
   }
 
   /**
@@ -37,6 +67,34 @@ export class ItemSpellPF extends ItemPF {
     if (!changed.system) return;
 
     this._preparationPreUpdate(changed);
+
+    const prep = changed.system.preparation;
+    if (prep) {
+      if (prep.maxAmount !== undefined) {
+        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.maxAmount is now preparation.max", {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        });
+        prep.max = prep.maxAmount;
+        delete prep.maxAmount;
+      }
+      if (prep.preparedAmount !== undefined) {
+        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.preparedAmount is now preparation.value", {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        });
+        prep.value = prep.preparedAmount;
+        delete prep.preparedAmount;
+      }
+      if (prep.spontaneousPrepared !== undefined) {
+        foundry.utils.logCompatibilityWarning("ItemSpellPF preparation.spontaneousPrepared is now preparation.value", {
+          since: "PF1 vNEXT",
+          until: "PF1 vNEXT+1",
+        });
+        prep.value = prep.spontaneousPrepared ? 1 : 0;
+        delete prep.spontaneousPrepared;
+      }
+    }
   }
 
   /**
@@ -50,21 +108,21 @@ export class ItemSpellPF extends ItemPF {
     if (!prep) return;
 
     const current = this.system.preparation;
-    const max = prep.maxAmount ?? current.maxAmount ?? 0;
-    const left = prep.preparedAmount ?? current.preparedAmount ?? 0;
+    const max = prep.max ?? current.max ?? 0;
+    const left = prep.value ?? current.value ?? 0;
 
     // Constrain left and max to sane values
     if (left > max) {
-      if (prep.maxAmount !== undefined) {
-        prep.preparedAmount = max;
-      } else if (prep.preparedAmount !== undefined) {
-        prep.maxAmount = left;
+      if (prep.max !== undefined) {
+        prep.value = max;
+      } else if (prep.value !== undefined) {
+        prep.max = left;
       }
     }
 
     // TODO: Remove following once DataModel is implemented with relevant constraints
-    if (prep.maxAmount < 0) prep.maxAmount = 0;
-    if (prep.preparedAmount < 0) prep.preparedAmount = 0;
+    if (prep.max < 0) prep.max = 0;
+    if (prep.value < 0) prep.value = 0;
   }
 
   /**
@@ -138,6 +196,34 @@ export class ItemSpellPF extends ItemPF {
     }
 
     return updates;
+  }
+
+  prepareBaseData() {
+    super.prepareBaseData();
+
+    this.system.preparation ??= {};
+    const prep = this.system.preparation;
+    // Compatibility shims
+    const compat = [
+      ["maxAmount", "max"],
+      ["preparedAmount", "value"],
+      ["spontaneousPrepared", "value"],
+    ];
+    for (const [oldk, newk] of compat) {
+      if (!Object.getOwnPropertyDescriptor(prep, oldk)?.["get"]) {
+        delete prep[oldk];
+        Object.defineProperty(prep, oldk, {
+          get() {
+            foundry.utils.logCompatibilityWarning(
+              `ItemSpellPF preparation.${oldk} is deprecated in favor of preparation.${newk}`,
+              { since: "PF1 vNEXT", until: "PF1 vNEXT+1" }
+            );
+            return prep[newk];
+          },
+          enumerable: false,
+        });
+      }
+    }
   }
 
   getRollData() {
@@ -241,10 +327,10 @@ export class ItemSpellPF extends ItemPF {
     } else {
       const newCharges = isSpontaneous
         ? Math.max(0, (spellbook.spells?.[`spell${spellLevel}`]?.value || 0) + value)
-        : Math.max(0, (this.system.preparation?.preparedAmount || 0) + value);
+        : Math.max(0, (this.system.preparation?.value || 0) + value);
 
       if (!isSpontaneous) {
-        const key = "system.preparation.preparedAmount";
+        const key = "system.preparation.value";
         if (data == null) {
           data = {};
           data[key] = newCharges;
@@ -337,14 +423,14 @@ export class ItemSpellPF extends ItemPF {
     const updateData = { system: { preparation: {} } };
 
     const prep = itemData.preparation;
-    if (prep.preparedAmount == prep.maxAmount) return;
+    if (prep.value == prep.max) return;
 
-    if (maximize) value = prep.maxAmount;
-    value = Math.clamped(value, 0, prep.maxAmount);
+    if (maximize) value = prep.max ?? 0;
+    value = Math.clamped(value, 0, prep.max ?? 0);
 
     if (!Number.isFinite(value)) return;
 
-    updateData.system.preparation.preparedAmount = prep.maxAmount;
+    updateData.system.preparation.value = prep.max ?? 0;
 
     if (commit) this.update(updateData, context);
     return updateData;
@@ -386,17 +472,17 @@ export class ItemSpellPF extends ItemPF {
       spellLevel = itemData.level;
 
     if (this.useSpellPoints()) {
-      if (max) return spellbook.spellPoints?.max;
-      return spellbook.spellPoints?.value;
+      if (max) return spellbook.spellPoints?.max ?? 0;
+      return spellbook.spellPoints?.value ?? 0;
     } else {
       if (isSpontaneous) {
-        if (itemData.preparation.spontaneousPrepared === true) {
+        if (itemData.preparation.value > 0) {
           if (max) return spellbook.spells?.[`spell${spellLevel}`]?.max || 0;
           return spellbook.spells?.[`spell${spellLevel}`]?.value || 0;
         }
       } else {
-        if (max) return itemData.preparation?.maxAmount ?? 0;
-        return itemData.preparation?.preparedAmount ?? 0;
+        if (max) return itemData.preparation?.max ?? 0;
+        return itemData.preparation?.value ?? 0;
       }
     }
 
@@ -755,10 +841,7 @@ export class ItemSpellPF extends ItemPF {
   get canUse() {
     if (this.system.atWill) return true;
 
-    const book = this.spellbook;
-    const prep = this.system.preparation;
-    if (book?.spontaneous) return prep?.spontaneousPrepared ?? true;
-    else return (prep?.preparedAmount ?? 0) > 0;
+    return (this.system.preparation?.value ?? 0) > 0;
   }
 
   /**

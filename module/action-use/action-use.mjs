@@ -567,7 +567,7 @@ export class ActionUse {
     if (cost > 0) {
       const uses = this.item.charges;
       if (this.item.type === "spell") {
-        if (this.item.spellbook?.spontaneous && !this.item.system.preparation?.spontaneousPrepared) {
+        if (this.item.spellbook?.spontaneous && !this.item.system.preparation?.value) {
           cost = Infinity;
         }
       }

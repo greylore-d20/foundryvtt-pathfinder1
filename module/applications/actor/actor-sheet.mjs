@@ -1175,7 +1175,7 @@ export class ActorSheetPF extends ActorSheet {
     });
 
     // Quick toggle item property
-    html.find("a.item-control.item-toggle-data").click(this._itemToggleData.bind(this));
+    html.find("a.item-control.item-toggle-data").click(this._itemPreparedToggle.bind(this));
 
     // Duplicate item
     html.find("a.item-control.item-duplicate").click(this._duplicateItem.bind(this));
@@ -1617,12 +1617,12 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event, el);
 
-    const prevValue = item.system.preparation?.preparedAmount;
+    const prevValue = item.system.preparation?.value ?? 0;
     const value = el.tagName === "INPUT" ? Number(el.value) : Number(el.innerText);
-    this.setItemUpdate(item.id, "system.preparation.preparedAmount", value);
+    this.setItemUpdate(item.id, "system.preparation.value", value);
     if (prevValue < value) {
-      const maxValue = item.system.preparation.maxAmount;
-      this.setItemUpdate(item.id, "system.preparation.maxAmount", Math.max(maxValue, value));
+      const maxValue = item.system.preparation.max ?? 0;
+      this.setItemUpdate(item.id, "system.preparation.max", Math.max(maxValue, value));
     }
 
     // Update on lose focus
@@ -1638,12 +1638,12 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event, el);
 
-    const prevValue = item.system.preparation?.maxAmount;
+    const prevValue = item.system.preparation?.max ?? 0;
     const value = el.tagName === "INPUT" ? Number(el.value) : Number(el.innerText);
-    this.setItemUpdate(item.id, "system.preparation.maxAmount", Math.max(0, value));
+    this.setItemUpdate(item.id, "system.preparation.max", Math.max(0, value));
     if (prevValue > value) {
-      const curValue = item.system.preparation.preparedAmount;
-      this.setItemUpdate(item.id, "system.preparation.preparedAmount", Math.min(curValue, value));
+      const curValue = item.system.preparation.value ?? 0;
+      this.setItemUpdate(item.id, "system.preparation.value", Math.min(curValue, value));
     }
     if (value < 0) {
       el.tagName === "INPUT" ? (el.value = 0) : (el.innerText = 0);
@@ -2124,7 +2124,7 @@ export class ActorSheetPF extends ActorSheet {
     }
   }
 
-  async _itemToggleData(event) {
+  async _itemPreparedToggle(event) {
     event.preventDefault();
     const el = event.currentTarget;
 
@@ -2133,7 +2133,7 @@ export class ActorSheetPF extends ActorSheet {
     const property = el.dataset.name;
 
     const updateData = { system: {} };
-    foundry.utils.setProperty(updateData.system, property, !foundry.utils.getProperty(item.system, property));
+    foundry.utils.setProperty(updateData.system, property, !foundry.utils.getProperty(item.system, property) ? 0 : 1);
 
     item.update(updateData);
   }

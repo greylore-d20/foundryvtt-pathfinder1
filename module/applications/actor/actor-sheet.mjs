@@ -1105,9 +1105,6 @@ export class ActorSheetPF extends ActorSheet {
     /*  Abilities, Skills, Defenses and Traits
     /* -------------------------------------------- */
 
-    // Submit hit points
-    html.find('input[name="system.attributes.hp.value"]').keypress(this._onSubmitElement.bind(this));
-
     // Ability Checks
     html.find(".ability-name").click(this._onRollAbilityTest.bind(this));
 
@@ -2423,20 +2420,6 @@ export class ActorSheetPF extends ActorSheet {
         classes: [...Dialog.defaultOptions.classes, "pf1", "item-split"],
       }
     ).render(true);
-  }
-
-  _onSubmitElement(event) {
-    if (event.key === "Enter") {
-      const elem = event.currentTarget;
-      if (elem.name) {
-        const attr = getProperty(this.document.system, elem.name);
-        if (typeof attr === "number" && attr === parseFloat(elem.value)) {
-          this._onSubmit(event);
-        } else if (typeof attr === "string" && attr === elem.value) {
-          this._onSubmit(event);
-        }
-      }
-    }
   }
 
   /**

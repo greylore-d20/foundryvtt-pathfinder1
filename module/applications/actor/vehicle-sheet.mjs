@@ -118,17 +118,6 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
   /* -------------------------------------------- */
 
   /**
-   * Activate event listeners using the prepared sheet HTML
-   *
-   * @param html {HTML}   The prepared HTML object ready to be rendered into the DOM
-   */
-  activateListeners(html) {
-    super.activateListeners(html);
-
-    html.find('input[name="system.attributes.hp.max"]').keypress(this._onSubmitElement.bind(this));
-  }
-
-  /**
    * Organize and classify Owned Items - We just need attacks
    *
    * @param data

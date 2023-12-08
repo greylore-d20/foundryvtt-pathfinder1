@@ -2,7 +2,6 @@ import { ActorBasePF } from "./actor-base.mjs";
 import { getAbilityModifier } from "@utils";
 import { ItemPF, ItemRacePF } from "@item/_module.mjs";
 import { createTag, fractionalToString, enrichHTMLUnrolled } from "../../utils/lib.mjs";
-import { createCustomChatMessage } from "../../utils/chat.mjs";
 import {
   applyChanges,
   addDefaultChanges,
@@ -3194,7 +3193,7 @@ export class ActorPF extends ActorBasePF {
 
     // Create message
     const actorData = this.system;
-    const data = {
+    const templateData = {
       actor: this,
       name: token?.name ?? this.name,
       tokenUuid: token?.uuid ?? null,
@@ -3218,25 +3217,32 @@ export class ActorPF extends ActorBasePF {
     };
     // Add regeneration and fast healing
     if ((actorData.traits?.fastHealing || "").length || (actorData.traits?.regen || "").length) {
-      data.regen = {
+      templateData.regen = {
         regen: actorData.traits.regen,
         fastHealing: actorData.traits.fastHealing,
       };
     }
 
-    setProperty(data, "flags.pf1.subject", "defenses");
+    rollMode ??= game.settings.get("core", "rollMode");
 
     const chatData = {
+      content: await renderTemplate("systems/pf1/templates/chat/defenses.hbs", templateData),
       speaker: ChatMessage.implementation.getSpeaker({ actor: this, token, alias: token?.name }),
       rollMode,
       flags: {
         core: {
           canPopout: true,
         },
+        pf1: {
+          subject: "defenses",
+        },
       },
     };
 
-    const msg = await createCustomChatMessage("systems/pf1/templates/chat/defenses.hbs", data, chatData);
+    // Apply roll mode
+    ChatMessage.implementation.applyRollMode(chatData, rollMode);
+
+    return ChatMessage.implementation.create(chatData);
   }
 
   _deprecatePF1PrefixConditions(key) {

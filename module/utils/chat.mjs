@@ -1,34 +1,4 @@
 /**
- * @param {string} chatTemplate - Chat message template path.
- * @param {object} chatTemplateData - Data to feed to the chat message template.
- * @param {object} chatData - Chat message data, excluding content.
- * @param {object} [options] - Additional options
- * @param {Roll[]} [options.rolls=[]] - Array of roll instances
- * @returns {Promise<ChatMessage>} - Generated chat message instance.
- */
-export async function createCustomChatMessage(chatTemplate, chatTemplateData = {}, chatData = {}, { rolls = [] } = {}) {
-  chatData.user ??= game.user.id;
-  chatData.type ??= CONST.CHAT_MESSAGE_TYPES.CHAT;
-
-  chatData.content = await renderTemplate(chatTemplate, chatTemplateData);
-  chatData.rollMode ??= game.settings.get("core", "rollMode");
-
-  // Handle different roll modes
-  ChatMessage.implementation.applyRollMode(chatData, chatData.rollMode);
-
-  // Dice So Nice integration
-  if (chatData.roll != null && rolls.length === 0) rolls = [chatData.roll];
-  if (game.dice3d != null && game.dice3d.isEnabled()) {
-    for (const roll of rolls) {
-      await game.dice3d.showForRoll(roll, game.user, false, chatData.whisper, chatData.blind);
-      chatData.sound = null;
-    }
-  }
-
-  return ChatMessage.implementation.create(chatData);
-}
-
-/**
  * @param {ChatMessage} cm - Chat message instance
  * @param {JQuery<HTMLElement>} jq - JQuery instance
  * @param {object} data  - Render options

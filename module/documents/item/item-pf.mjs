@@ -1,5 +1,4 @@
 import { ItemBasePF } from "./item-base.mjs";
-import { createCustomChatMessage } from "../../utils/chat.mjs";
 import { createTag, convertDistance, keepUpdateArray } from "../../utils/lib.mjs";
 import { ItemChange } from "../../components/change.mjs";
 import { ItemAction } from "../../components/action.mjs";
@@ -1002,7 +1001,13 @@ export class ItemPF extends ItemBasePF {
     if (Hooks.call("pf1DisplayCard", this, { template, templateData, chatData }) === false) return;
 
     // Create the chat message
-    return createCustomChatMessage(template, templateData, chatData);
+    chatData.content = await renderTemplate(template, templateData);
+
+    // Apply roll mode
+    chatData.rollMode ??= game.settings.get("core", "rollMode");
+    ChatMessage.implementation.applyRollMode(chatData, chatData.rollMode);
+
+    return ChatMessage.implementation.create(chatData);
   }
 
   /* -------------------------------------------- */

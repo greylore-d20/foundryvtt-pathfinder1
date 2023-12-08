@@ -1,6 +1,5 @@
 import { createTag, convertDistance } from "@utils";
 import { ChatAttack } from "./chat-attack.mjs";
-import { createCustomChatMessage } from "@utils/chat.mjs";
 import { RollPF } from "../dice/roll.mjs";
 import { getDistanceSystem } from "@utils";
 
@@ -1184,13 +1183,15 @@ export class ActionUse {
     // Show chat message
     let result;
     if (this.shared.chatAttacks.length > 0) {
-      if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true)
-        result = await createCustomChatMessage(
-          this.shared.chatTemplate,
-          this.shared.templateData,
-          this.shared.chatData
-        );
-      else result = this.shared;
+      if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true) {
+        this.shared.chatData.content = await renderTemplate(this.shared.chatTemplate, this.shared.templateData);
+
+        // Apply roll mode
+        this.shared.chatData.rollMode ??= game.settings.get("core", "rollMode");
+        ChatMessage.implementation.applyRollMode(this.shared.chatData, this.shared.chatData.rollMode);
+
+        result = await ChatMessage.implementation.create(this.shared.chatData);
+      } else result = this.shared;
     } else {
       if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true) result = this.item.roll();
       else result = { descriptionOnly: true };

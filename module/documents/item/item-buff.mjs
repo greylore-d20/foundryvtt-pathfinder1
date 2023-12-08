@@ -107,7 +107,7 @@ export class ItemBuffPF extends ItemPF {
 
     // Remove old AE
     if (!isActive) {
-      oldEffect?.delete();
+      oldEffect?.delete({ render: false });
     }
     // Add new AE or update old AE
     else {
@@ -115,9 +115,9 @@ export class ItemBuffPF extends ItemPF {
       aeData.active = isActive;
 
       // Update old
-      if (oldEffect) oldEffect.update(aeData);
+      if (oldEffect) oldEffect.update(aeData, { render: false });
       // Create new
-      else ActiveEffect.implementation.create(aeData, { parent: actor });
+      else ActiveEffect.implementation.create(aeData, { parent: actor, render: false });
     }
   }
 

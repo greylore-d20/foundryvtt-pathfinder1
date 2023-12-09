@@ -823,6 +823,7 @@ export const migrateItemActionData = function (action, updateData, { itemData, i
   _migrateActionAmmunitionUsage(action, itemData, updateData);
   _migrateActionHarmlessSpell(action, itemData);
   _migrateActionSpellArea(action, itemData);
+  _migrateActionObsoleteTypes(action, itemData);
 
   // Return the migrated update data
   return action;
@@ -1876,6 +1877,30 @@ const _migrateActionHarmlessSpell = (action, itemData) => {
 const _migrateActionSpellArea = (action, itemData) => {
   action.area ||= action.spellArea;
   delete action.spellArea;
+};
+
+/**
+ * Migrate value types that should never have been those types.
+ *
+ * This may be only correcting macro/module errors and not things caused by the system.
+ * Previously these were type checked in code with special handling.
+ *
+ * @param action
+ * @param itemData
+ */
+const _migrateActionObsoleteTypes = (action, itemData) => {
+  const templateSize = action.measureTemplate?.size;
+  if (templateSize !== undefined) {
+    if (typeof templateSize !== "string") {
+      action.measureTemplate.size = `${templateSize}`;
+    }
+  }
+  const durVal = action.duration?.value;
+  if (durVal !== undefined) {
+    if (typeof durVal !== "string") {
+      action.duration.value = `${durVal}`;
+    }
+  }
 };
 
 const _migrateItemChargeCost = function (item, updateData) {

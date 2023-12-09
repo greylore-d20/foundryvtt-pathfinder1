@@ -47,9 +47,22 @@ export class ActorNPCPF extends ActorPF {
     setProperty(this.system, "details.xp.value", newXP);
   }
 
-  hasArmorProficiency(item, proficiencyName) {
+  /**
+   * @inheritDoc
+   * @remarks If NPC proficiencies is not enabled, this always returns true.
+   */
+  hasArmorProficiency(item) {
     // Assume NPCs to be proficient with their armor
-    return game.settings.get("pf1", "npcProficiencies") ? super.hasArmorProficiency(item, proficiencyName) : true;
+    return game.settings.get("pf1", "npcProficiencies") ? super.hasArmorProficiency(item) : true;
+  }
+
+  /**
+   * @inheritDoc
+   * @remarks If NPC proficiencies is not enabled, this always returns true.
+   */
+  hasWeaponProficiency(item, options = {}) {
+    // Assume NPCs to be proficient with their weapon
+    return game.settings.get("pf1", "npcProficiencies") ? super.hasWeaponProficiency(item, options) : true;
   }
 
   /**

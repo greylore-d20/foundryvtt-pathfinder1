@@ -639,27 +639,26 @@ export class ActorPF extends ActorBasePF {
   /**
    * Checks if there's any matching proficiency
    *
-   * @param {ItemPF } item - The item to check for.
-   * @param {string} proficiencyName - The proficiency name to look for. e.g. 'lightShield' or 'mediumArmor'.
+   * @param {pf1.document.item.ItemEquipmentPF} item - The item to check for.
    * @returns {boolean} Whether the actor is proficient with that item.
    */
-  hasArmorProficiency(item, proficiencyName) {
+  hasArmorProficiency(item) {
     // Check for item type
     if (item.type !== "equipment" || !["armor", "shield"].includes(item.system.subType)) return true;
 
-    // Custom proficiencies
-    const customProficiencies =
-      this.system.traits.armorProf?.customTotal
-        ?.split(pf1.config.re.traitSeparator)
-        .map((item) => item.trim().toLowerCase())
-        .filter((item) => item.length > 0) || [];
+    const aprof = this.system.traits?.armorProf;
+    if (!aprof) return false;
 
-    const name = item.name.toLowerCase(),
-      tag = item.system.tag;
-    return (
-      this.system.traits.armorProf.total.includes(proficiencyName) ||
-      customProficiencies.find((prof) => prof.includes(name) || prof.includes(tag)) != undefined
-    );
+    // Base proficiency
+    if (aprof.total.includes(item.baseArmorProficiency)) return true;
+
+    // Base types with custom proficiencies
+    const profs = aprof.customTotal?.split(pf1.config.re.traitSeparator).map((p) => p.trim()) ?? [];
+    if (profs.length == 0) return false;
+    const baseTypes = item.system.baseTypes ?? [];
+    if (baseTypes.length == 0) return false;
+
+    return profs.some((prof) => baseTypes.includes(prof));
   }
 
   /**
@@ -684,7 +683,7 @@ export class ActorPF extends ActorBasePF {
     }
 
     // Match base types
-    const profs = wprof.customTotal?.split(";").map((p) => p.trim()) ?? [];
+    const profs = wprof.customTotal?.split(pf1.config.re.traitSeparator).map((p) => p.trim()) ?? [];
     if (profs.length == 0) return false;
     const baseTypes = item.system.baseTypes ?? [];
     if (baseTypes.length == 0) return false;

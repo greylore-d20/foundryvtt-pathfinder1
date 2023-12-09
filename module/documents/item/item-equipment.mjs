@@ -194,6 +194,11 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     return ["wondrous", "other"].includes(this.subType);
   }
 
+  /**
+   * @inheritDoc
+   *
+   * @remarks Supports both weapon and armor proficiencies.
+   */
   getProficiency(weapon = true) {
     if (weapon) return this.isProficient;
 
@@ -202,6 +207,14 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
 
     const actor = this.actor;
     if (!actor) return true; // No actor, so always proficient
+
+    return actor.hasArmorProficiency(this);
+  }
+
+  /** @type {string} - Matching base proficiency for the armor or shield type. */
+  get baseArmorProficiency() {
+    const subType = this.subType;
+    if (!["armor", "shield"].includes(subType)) throw new Error(`"${subType}" does not support proficiency`);
 
     // Item type to proficiency maps
     const proficiencyMaps = {
@@ -218,9 +231,7 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
       },
     };
 
-    const proficiencyType = proficiencyMaps[subType][this.system.equipmentSubtype];
-
-    return actor.hasArmorProficiency(this, proficiencyType);
+    return proficiencyMaps[subType][this.system.equipmentSubtype] ?? null;
   }
 
   /**

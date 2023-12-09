@@ -18,6 +18,9 @@ export class ItemAttackPF extends ItemPF {
     }
   }
 
+  /**
+   * @inheritDoc
+   */
   getProficiency(weapon = true) {
     if (!weapon) throw new Error("Attacks do not support non-weapon proficiency");
 

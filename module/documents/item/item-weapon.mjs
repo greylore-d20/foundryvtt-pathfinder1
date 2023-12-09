@@ -87,6 +87,9 @@ export class ItemWeaponPF extends ItemPhysicalPF {
     return !this.inContainer;
   }
 
+  /**
+   * @inheritDoc
+   */
   getProficiency(weapon = true) {
     if (!weapon) throw new Error("Weapons do not support non-weapon proficiency");
 

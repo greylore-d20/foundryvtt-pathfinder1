@@ -1,12 +1,12 @@
 _id: 80ojk5ktyh531ul1
 name: Coin Shot
 type: spell
-img: systems/pf1/icons/misc/magic-swirl.png
+img: icons/commodities/currency/coins-assorted-mix-copper-silver-gold.webp
 system:
   actions:
     - _id: pje30clkvisnsb5f
-      name: Use
-      img: systems/pf1/icons/misc/magic-swirl.png
+      name: Transmute up to 3 coins
+      img: icons/commodities/currency/coins-assorted-mix-copper-silver-gold.webp
       activation:
         type: standard
         unchained:
@@ -18,7 +18,154 @@ system:
         value: up to three coins touched
       range:
         units: touch
-      actionType: ''
+      actionType: other
+      effectNotes:
+        - ' You can make a single ranged attack with a coin as part of casting this spell.'
+      ammoType: none
+    - _id: oSOscxlS03yxxq2q
+      name: Throw Copper Coins
+      img: icons/commodities/currency/coins-wheat-stack-copper.webp
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        value: ''
+      range:
+        value: '20'
+        units: ft
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: rwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size) + min(floor(@cl / 2), 10)[CL/2]
+            type:
+              values:
+                - bludgeoning
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(2, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+        label: 'Coin #{0}'
+      ability:
+        attack: dex
+      touch: true
+      ammoType: none
+    - _id: MMOOI9N4CI4US31p
+      name: Throw Silver Coins
+      img: icons/commodities/currency/coins-shield-sword-stack-silver.webp
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        value: ''
+      range:
+        value: '20'
+        units: ft
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: rwak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size) + min(floor(@cl / 2), 10)[CL/2]
+            type:
+              values:
+                - bludgeoning
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(2, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+        label: 'Coin #{0}'
+      ability:
+        attack: dex
+      attackNotes:
+        - >-
+          Attack counts as silver for the purpose of overcoming damage
+          reduction.
+      touch: true
+      ammoType: none
+    - _id: B8qhMe7woc9KKG8s
+      name: Throw Gold Coins
+      img: icons/commodities/currency/coins-crown-stack-gold.webp
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        value: ''
+      range:
+        value: '20'
+        units: ft
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: rwak
+      attackBonus: 1[Masterwork]
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size) + min(floor(@cl / 2), 10)[CL/2]
+            type:
+              values:
+                - bludgeoning
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(2, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+        label: 'Coin #{0}'
+      ability:
+        attack: dex
+      touch: true
+      ammoType: none
+    - _id: maSVBmkyNyLGbmIU
+      name: Throw Platinum Coins
+      img: icons/commodities/currency/coins-engraved-copper.webp
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        value: ''
+      range:
+        value: '20'
+        units: ft
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: rwak
+      attackBonus: 1[Masterwork]
+      damage:
+        parts:
+          - formula: sizeRoll(1, 10, @size) + min(floor(@cl / 2), 10)[CL/2]
+            type:
+              values:
+                - bludgeoning
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(2, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+        label: 'Coin #{0}'
+      ability:
+        attack: dex
+      attackNotes:
+        - >-
+          Attack counts as adamantine for the purpose of overcoming damage
+          reduction and bypassing hardness.
+      touch: true
+      ammoType: none
+  uses:
+    autoDeductChargesCost: ''
   learnedAt:
     class:
       sorcerer: 1

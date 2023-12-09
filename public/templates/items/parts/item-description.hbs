@@ -8,62 +8,36 @@
 
   <div class="flexrow description-container">
     <div class="item-properties">
-      {{#if isPhysical}}
       {{#each descriptionAttributes as |attr|}}
       {{#if attr.isBoolean}}
       <div class="form-group">
         <label>{{attr.label}}</label>
         <input type="checkbox" name="{{attr.name}}" {{checked attr.value}} {{disabled disabled}}>
       </div>
-      {{/if}}
-      {{#if attr.isNumber}}
+      {{else if attr.isNumber}}
       <div class="form-group">
         <label>{{attr.label}}</label>
-        {{#if attr.fakeName}}
-          <div data-action="input-text" data-for=".{{attr.id}}-description-input" data-attr-name="{{attr.name}}" {{#if (or attr.inputValue (eq attr.inputValue 0))}}data-input-value="{{attr.inputValue}}"{{/if}}>
-          <input class="{{#if attr.id}}{{attr.id}}-description-input{{/if}}" type="number" readonly data-dtype="Number" value="{{numberFormat attr.value decimals=attr.decimals}}" {{disabled disabled}}>
-        </div>
-        {{else}}
-        <input class="{{#if attr.id}}{{attr.name}}-description-input{{/if}} select-on-click" name="{{attr.name}}" type="number" data-dtype="Number" value="{{numberFormat attr.value decimals=attr.decimals}}" {{disabled disabled}}>
-        {{/if}}
+        <input data-action="input-text" name="{{attr.name}}" class="select-on-click" type="number" readonly data-dtype="Number"
+          value="{{numberFormat attr.value decimals=attr.decimals}}"
+          {{#if attr.fakeValue}}data-input-value="{{attr.inputValue}}"{{/if}}
+          {{disabled disabled}}>
       </div>
-      {{/if}}
-      {{#if attr.isString}}
+      {{else if attr.isString}}
       <div class="form-group">
         <label>{{attr.label}}</label>
-        {{#if attr.fakeName}}
-        <div data-action="input-text" data-for=".{{attr.id}}-description-input" data-attr-name="{{attr.name}}">
-          <input class="{{#if attr.id}}{{attr.name}}-description-input{{/if}}" type="text" readonly value="{{attr.value}}">
-        </div>
-        {{else}}
-        <input class="{{#if attr.id}}{{attr.name}}-description-input{{/if}}" name="{{attr.name}}" type="text" value="{{attr.value}}">
-        {{/if}}
+        <input data-action="input-text" name="{{attr.name}}" type="text" readonly value="{{attr.value}}" {{disabled disabled}}>
       </div>
-      {{/if}}
-      {{#if attr.isRange}}
-        <div class="form-group">
-          <label>{{attr.label}}</label>
-          {{!-- Value --}}
-          {{#if attr.value.fakeName}}
-            <div data-action="input-text" data-for=".{attr.value.id}}-description-input" data-attr-name="{{attr.value.name}}">
-              <input class="{{#if attr.value.id}}{{attr.value.name}}-description-input{{/if}}" type="text" data-dtype="Number" readonly value="{{attr.value.value}}">
-            </div>
-          {{else}}
-            <input class="{{#if attr.value.id}}{{attr.value.name}}-description-input{{/if}} select-on-click" name="{{attr.value.name}}" data-dtype="Number" type="text" value="{{attr.value.value}}">
-          {{/if}}
-          <span>/</span>
-          {{!-- Max --}}
-          {{#if attr.max.fakeName}}
-            <div data-action="input-text" data-for=".{attr.max.id}}-description-input" data-attr-name="{{attr.max.name}}">
-              <input class="{{#if attr.max.id}}{{attr.max.name}}-description-input{{/if}}" type="text" data-dtype="Number" readonly value="{{attr.max.value}}">
-            </div>
-          {{else}}
-            <input class="{{#if attr.max.id}}{{attr.max.name}}-description-input{{/if}} select-on-click" name="{{attr.max.name}}" data-dtype="Number" type="text" value="{{attr.max.value}}">
-          {{/if}}
-        </div>
+      {{else if attr.isRange}}
+      <div class="form-group range-value">
+        <label>{{attr.label}}</label>
+        {{!-- Value --}}
+        <input class="select-on-click" name="{{attr.value.name}}" type="number" data-dtype="Number" readonly value="{{attr.value.value}}">
+        <span class="separator">/</span>
+        {{!-- Max --}}
+        <input data-action="input-text" class="select-on-click" name="{{attr.max.name}}" type="text" data-dtype="Number" readonly value="{{attr.max.value}}">
+      </div>
       {{/if}}
       {{/each}}
-      {{/if}}
 
       {{!-- Properties --}}
       <ol class="properties-list">

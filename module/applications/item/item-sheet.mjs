@@ -237,9 +237,9 @@ export class ItemSheetPF extends ItemSheet {
       context.descriptionAttributes.push({
         isNumber: true,
         name: "system.weight.value",
-        fakeName: true,
         label: game.i18n.localize("PF1.Weight"),
         value: itemData.weight.converted.total,
+        fakeValue: true,
         inputValue: itemData.weight.converted.value,
         decimals: 2,
         id: "data-weight-value",
@@ -251,7 +251,6 @@ export class ItemSheetPF extends ItemSheet {
           {
             isNumber: true,
             name: "system.price",
-            fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: item.getValue({ sellValue: 1 }),
             decimals: 2,
@@ -260,7 +259,6 @@ export class ItemSheetPF extends ItemSheet {
           {
             isNumber: true,
             name: "system.unidentified.price",
-            fakeName: true,
             label: game.i18n.localize("PF1.UnidentifiedPriceShort"),
             value: item.getValue({ sellValue: 1, forceUnidentified: true }),
             decimals: 2,
@@ -282,7 +280,6 @@ export class ItemSheetPF extends ItemSheet {
           context.descriptionAttributes.push({
             isNumber: true,
             name: "system.price",
-            fakeName: true,
             label: game.i18n.localize("PF1.Price"),
             value: item.getValue({ sellValue: 1 }),
             decimals: 2,
@@ -1831,28 +1828,36 @@ export class ItemSheetPF extends ItemSheet {
   /**
    * Makes a readonly text input editable, and focus it.
    *
-   * @param event
+   * @param {Event} event
    * @private
    */
   _onInputText(event) {
     event.preventDefault();
-    const elem = this.element.find(event.currentTarget.dataset.for);
 
-    elem.removeAttr("readonly");
-    elem.attr("name", event.currentTarget.dataset.attrName);
-    const { inputValue } = event.currentTarget.dataset;
-    let value = inputValue ?? getProperty(this.item, event.currentTarget.dataset.attrName);
-    elem.attr("value", value);
+    /** @type {HTMLElement} */
+    const elem = event.target;
+
+    elem.readOnly = false;
+
+    // Get and set real value
+    const { inputValue } = elem.dataset;
+    let origValue = inputValue ?? getProperty(this.item, elem.name);
+    const displayValue = elem.value;
+    elem.value = origValue;
     elem.select();
 
-    elem.focusout((event) => {
-      if (typeof value === "number") value = value.toString();
-      if (value !== elem.attr("value")) {
-        this._onSubmit(event);
-      } else {
-        this.render();
-      }
-    });
+    // Restore old display on unfocus if nothing was changed
+    elem.addEventListener(
+      "blur",
+      () => {
+        if (typeof origValue === "number") origValue = origValue.toString();
+        if (origValue === elem.value) {
+          elem.readOnly = true;
+          elem.value = displayValue;
+        }
+      },
+      { once: true, passive: true }
+    );
   }
 
   async _createAttack(event) {
@@ -1953,7 +1958,7 @@ export class ItemSheetPF extends ItemSheet {
 /**
  * @typedef {object} DescriptionAttribute
  * @property {string} name - Data path to which the input will be written
- * @property {boolean} [fakeName] - Whether to show a value different from the one the `name` points to
+ * @property {boolean} [fakeName] - Is player lied to about what they're editing. Unused.
  * @property {string} id
  * @property {boolean} [isNumber] - Whether the input is a number (text input)
  * @property {boolean} [isBoolean] - Whether the input is a boolean (checkbox)
@@ -1963,6 +1968,7 @@ export class ItemSheetPF extends ItemSheet {
  *   Ranges require an object with `value` and `name` properties.
  * @property {{value: string | number, name: string}} [max] - Maximum value for a range input
  * @property {number} [decimals] - Number of decimals to display for `number`s
+ * @property {boolean} [fakeValue] - Is {@link DescriptionAttribute#inputValue} actually used.
  * @property {string} [inputValue] - Value that will appear in the input field when it is edited,
  *                                   overriding the default value retrieved from the item data
  *                                   using {@link DescriptionAttribute#name}

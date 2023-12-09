@@ -703,8 +703,8 @@ export class ItemSheetPF extends ItemSheet {
    * @param {string} itemType - Whether we're checking weapons or equipment
    * @param {string} itemSubtype - Item-specific typing to filter with
    * @param {string} subType - Only relevant with shields, since "other" is used in both shield and general gear
-   * @param {object} material - The Material object from the registry that has our needed metadata
-   * @returns {bool}
+   * @param {pf1.registry.MaterialType} material - The Material object from the registry that has our needed metadata
+   * @returns {boolean}
    */
   _isMaterialAllowed(itemType, itemSubtype, subType, material) {
     // Let's end this early if we can never be allowed
@@ -731,9 +731,7 @@ export class ItemSheetPF extends ItemSheet {
       }
       case "equipment": {
         if (subType === "shield") return material.allowed.buckler;
-        const material = material.allowed[itemSubtype];
-        if (material) return material;
-        return false;
+        return material.allowed[itemSubtype];
       }
     }
 

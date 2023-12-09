@@ -4163,27 +4163,16 @@ export class ActorPF extends ActorBasePF {
   }
 
   getRollData(options = { refresh: false }) {
-    let result;
-
     // Return cached data, if applicable
     const skipRefresh = !options.refresh && this._rollData;
-    if (skipRefresh) {
-      result = this._rollData;
 
-      // Clear certain fields
-      const clearFields = pf1.config.temporaryRollDataFields.actor;
-      for (const k of clearFields) {
-        const arr = k.split(".");
-        const k2 = arr.slice(0, -1).join(".");
-        const k3 = arr.slice(-1)[0];
-        if (k2 === "") delete result[k];
-        else {
-          const obj = getProperty(result, k2);
-          if (typeof obj === "object") delete obj[k3];
-        }
+    const result = { ...(skipRefresh ? this._rollData : deepClone(this.system)) };
+
+    // Clear certain fields if not refreshing
+    if (skipRefresh) {
+      for (const path of pf1.config.temporaryRollDataFields.actor) {
+        setProperty(result, path, undefined);
       }
-    } else {
-      result = deepClone(this.system);
     }
 
     /* ----------------------------- */

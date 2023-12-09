@@ -912,15 +912,15 @@ export class ActorPF extends ActorBasePF {
         const levelData = book.spells[`spell${level}`];
         // 0 is special because it doesn't get bonus preps and can cast them indefinitely so can't use the "cast per day" value
         const spellsForLevel =
-          level === 0 && isSpontaneous
+          (level === 0 && isSpontaneous
             ? pf1.config.casterProgression.spellsPreparedPerDay[mode.raw][casterType][classLevel - 1][level]
-            : castsForLevels[classLevel - 1][level];
+            : castsForLevels[classLevel - 1][level]) ?? 0;
         levelData.base = spellsForLevel;
 
         const offsetFormula = levelData[isSpontaneous ? "castPerDayOffsetFormula" : "preparedOffsetFormula"] || "0";
 
         const max =
-          typeof spellsForLevel === "number" || (level === 0 && book.hasCantrips)
+          level === 0 && book.hasCantrips
             ? spellsForLevel + getAbilityBonus(level) + allLevelMod + RollPF.safeTotal(offsetFormula, rollData)
             : null;
 

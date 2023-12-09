@@ -100,7 +100,8 @@ export class CombatPF extends Combat {
   ) {
     skipDialog ??= getSkipActionPrompt();
     // Structure input data
-    ids = typeof ids === "string" ? [ids] : ids;
+    ids = Array.isArray(ids) ? ids : [ids];
+
     const currentId = this.combatant?.id;
 
     const firstCombatant = this.combatants.get(ids[0]);

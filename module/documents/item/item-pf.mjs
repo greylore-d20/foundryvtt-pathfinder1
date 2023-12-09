@@ -1083,7 +1083,7 @@ export class ItemPF extends ItemBasePF {
 
       // Duration
       if (actionData.duration != null) {
-        if (!["inst", "perm"].includes(actionData.duration.units) && typeof actionData.duration.value === "string") {
+        if (!["inst", "perm"].includes(actionData.duration.units)) {
           const duration = RollPF.safeRoll(actionData.duration.value || "0", enrichOptions.rollData).total;
           dynamicLabels.duration = [duration, pf1.config.timePeriods[actionData.duration.units]].filterJoin(" ");
         }

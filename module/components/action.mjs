@@ -201,12 +201,10 @@ export class ItemAction {
     return singleIncrementRange * this.data.range.maxIncrements;
   }
 
+  /** @type {boolean} - Has measured template */
   get hasTemplate() {
-    const v = this.data.measureTemplate.type;
-    const s = this.data.measureTemplate.size;
-    return (
-      typeof v === "string" && v !== "" && ((typeof s === "string" && s.length > 0) || (typeof s === "number" && s > 0))
-    );
+    const { type, size } = this.data.measureTemplate;
+    return !!type && !!size;
   }
 
   /**
@@ -260,7 +258,7 @@ export class ItemAction {
    * @type {boolean}
    */
   get hasSave() {
-    return typeof this.data.save?.type === "string" && this.data.save?.type.length > 0;
+    return !!this.data.save?.type;
   }
 
   /**

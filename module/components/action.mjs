@@ -195,7 +195,7 @@ export class ItemAction {
     }
 
     rollData ??= this.getRollData();
-    const singleIncrementRange = calculateRange(range, rangeType, rollData);
+    const singleIncrementRange = calculateRange(range, rangeType, rollData)[0];
 
     if (["single", "min"].includes(type)) return singleIncrementRange;
     return singleIncrementRange * this.data.range.maxIncrements;

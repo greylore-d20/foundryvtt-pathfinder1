@@ -19,13 +19,8 @@ export const registerHandlebarsHelpers = function () {
 
     if (rangeType == null) return null;
 
-    const ft = calculateRange(range, rangeType, rollData);
-    if (ft && typeof ft !== "string") {
-      const rv = convertDistance(range);
-      return `${ft} ${rv[1]}`;
-    } else {
-      return "" + (ft ?? "");
-    }
+    const [rng, unit] = calculateRange(range, rangeType, rollData);
+    return `${rng} ${unit}`;
   });
 
   Handlebars.registerHelper("actionRange", (action, rollData) => {
@@ -36,13 +31,8 @@ export const registerHandlebarsHelpers = function () {
 
     if (rangeType == null) return null;
 
-    const ft = calculateRange(range, rangeType, rollData);
-    if (ft && typeof ft !== "string") {
-      const units = convertDistance(range)[1];
-      return `${ft} ${units}`;
-    } else {
-      return ft || "";
-    }
+    const [rng, unit] = calculateRange(range, rangeType, rollData);
+    return `${rng} ${unit}`;
   });
 
   /**

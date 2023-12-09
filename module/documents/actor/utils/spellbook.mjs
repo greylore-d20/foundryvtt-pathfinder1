@@ -119,9 +119,9 @@ export class SpellRanges {
 
   constructor(cl) {
     this.cl = cl;
-    this.close = calculateRange(null, "close", { cl });
-    this.medium = calculateRange(null, "medium", { cl });
-    this.long = calculateRange(null, "long", { cl });
+    this.close = calculateRange(null, "close", { cl })[0];
+    this.medium = calculateRange(null, "medium", { cl })[0];
+    this.long = calculateRange(null, "long", { cl })[0];
   }
 }
 

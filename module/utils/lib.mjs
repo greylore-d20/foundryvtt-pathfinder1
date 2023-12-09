@@ -140,7 +140,7 @@ export const getActorFromId = function (id) {
  * Converts feet to what the world is using as a measurement unit.
  *
  * @param {number} value - The value (in feet) to convert.
- * @param {string} type - The original type to convert from. Either 'ft' (feet, default) or 'mi' (miles, in which case the result is in km (metric))
+ * @param {"ft"|"mi"} type - The original type to convert from. Either 'ft' (feet, default) or 'mi' (miles, in which case the result is in km (metric))
  * @returns {Array.<number, string>} An array containing the converted value in index 0 and the new unit key in index 1 (for use in PF1.measureUnits, for example)
  */
 export const convertDistance = function (value, type = "ft") {
@@ -955,14 +955,23 @@ export const calculateRangeFormula = (formula, type = "ft", rollData = {}) => {
 /**
  * Calculates range formula and converts it.
  *
- * @param formula
- * @param type
- * @param rollData
+ * Wrapper around {@link calculateRangeFormula} and {@link convertDistance}
+ *
+ * @example
+ * Simple example
+ * ```js
+ * const [range,unit] = calculateRange("@level", "mi", { level:2 });
+ * // => range:10560, unit:"ft"
+ * ```
+ *
+ * @param {string} formula - Range formula
+ * @param {string} type - Type fed to calculateRangeFormula
+ * @param {object} rollData - Roll data fed to calculateRangeFormula
+ * @returns {Array.<number, string>} - Range value and unit tuple
  */
 export function calculateRange(formula, type = "ft", rollData = {}) {
-  if (type == null) return null;
   const value = calculateRangeFormula(formula, type, rollData);
-  return convertDistance(value)[0];
+  return convertDistance(value);
 }
 
 /**

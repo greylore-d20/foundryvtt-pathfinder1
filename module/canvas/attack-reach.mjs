@@ -65,8 +65,8 @@ let currentHighlight;
  * Calculates the {@link AttackReachHighlight} for a token's attack.
  *
  * @param {Token} token - The token to calculate the attack reach for
- * @param {import("../documents/item/item-pf.mjs").ItemPF} attack - The attack to calculate the reach for
- * @param {import("../components/action.mjs").ItemAction} action - The action to calculate the reach for
+ * @param {pf1.documents.item.ItemPF} attack - The attack to calculate the reach for
+ * @param {pf1.components.ItemAction} action - The action to calculate the reach for
  * @returns {AttackReachHighlight | undefined} Highlights for this attack, if any
  */
 const getAttackReach = function (token, attack, action) {
@@ -170,8 +170,8 @@ const getAttackReach = function (token, attack, action) {
  * If a highlight already exists, it will be removed.
  *
  * @param {Token} token - The token to calculate the attack reach for
- * @param {import("../documents/item/item-pf.mjs").ItemPF} attack - The attack to calculate the reach for
- * @param {import("../components/action.mjs").ItemAction} action - The action to calculate the reach for
+ * @param {pf1.documents.item.ItemPF} attack - The attack to calculate the reach for
+ * @param {pf1.components.ItemAction} action - The action to calculate the reach for
  */
 export const showAttackReach = function (token, attack, action) {
   // Clear previous highlight

@@ -5,9 +5,9 @@ import { getDistanceSystem } from "@utils";
 
 // Documentation/type imports
 /** @typedef {import("@item/item-pf.mjs").SharedActionData} SharedActionData */
-/** @typedef {import("@item/item-pf.mjs").ItemPF} ItemPF */
-/** @typedef {import("@actor/actor-pf.mjs").ActorPF} ActorPF */
-/** @typedef {import("@component/action.mjs").ItemAction} ItemAction */
+/** @typedef {pf1.documents.item.ItemPF} ItemPF */
+/** @typedef {pf1.documents.actor.ActorPF} ActorPF */
+/** @typedef {pf1.components.ItemAction} ItemAction */
 
 /**
  * Error states for when an item does not meet the requirements for an attack.

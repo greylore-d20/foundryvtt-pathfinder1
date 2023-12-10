@@ -14,7 +14,7 @@ export const registerContainerItemTests = () => {
        * @type {object}
        */
       const shared = {};
-      /** @type {import("../documents/actor/actor-pf.mjs").ActorPF} */
+      /** @type {pf1.documents.actor.ActorPF} */
       let actor;
       const messages = [];
       const items = {};

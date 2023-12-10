@@ -12,7 +12,7 @@ export class ItemAction {
    * @type {pf1.applications.component.ItemActionSheet}
    */
   _sheet = null;
-  /** @type {import("../documents/item/item-pf.mjs").ItemPF} */
+  /** @type {pf1.documents.item.ItemPF} */
   parent = null;
   apps = {};
 

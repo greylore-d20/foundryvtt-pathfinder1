@@ -1,7 +1,7 @@
 import { RollPF } from "../../../dice/roll.mjs";
 
 /**
- * @this {import("@actor/actor-pf.mjs").ActorPF}
+ * @this {pf1.documents.actor.ActorPF}
  */
 export function applyChanges() {
   this.changeOverrides = {};

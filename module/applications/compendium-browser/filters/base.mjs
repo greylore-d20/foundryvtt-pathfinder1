@@ -75,12 +75,12 @@ export class BaseFilter {
   /**
    * A reference to the {@link CompendiumBrowser} this filter is used in.
    *
-   * @type {import("../compendium-browser.mjs").CompendiumBrowser | null}
+   * @type {pf1.applications.compendiumBrowser.CompendiumBrowser | null}
    */
   compendiumBrowser = null;
 
   /**
-   * @param {import("../compendium-browser.mjs").CompendiumBrowser} compendiumBrowser - The compendium browser this filter is used in.
+   * @param {pf1.applications.compendiumBrowser.CompendiumBrowser} compendiumBrowser - The compendium browser this filter is used in.
    */
   constructor(compendiumBrowser) {
     this.compendiumBrowser = compendiumBrowser;

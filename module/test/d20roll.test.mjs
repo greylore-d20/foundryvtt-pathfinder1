@@ -145,13 +145,18 @@ export function registerD20RollTests() {
             await ChatMessage.deleteDocuments(messages.map((m) => m.id));
           });
 
+          let msg;
           it("should create a chat message", async function () {
             const roll = new D20RollPF("1d20");
-            const message = await roll.toMessage();
-            messages.push(message);
-            expect(message).to.be.an.instanceof(ChatMessage);
-            expect(message.rolls[0].formula).to.equal("1d20");
-            expect(message.sound).to.equal(CONFIG.sounds.dice);
+            msg = await roll.toMessage();
+            messages.push(msg);
+            expect(msg).to.be.an.instanceof(ChatMessage);
+          });
+          it("message main roll should be 1d20", function () {
+            expect(msg.rolls[0].formula).to.equal("1d20");
+          });
+          it("message sound should be the default sound", function () {
+            expect(msg.sound).to.equal(CONFIG.sounds.dice);
           });
 
           it("should create a chat message with options", async function () {

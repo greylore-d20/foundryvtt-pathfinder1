@@ -37,22 +37,22 @@ export const registerActorBasicTests = () => {
         // ---------------------------------- //
         describe("#rollBAB with defaults", function () {
           /** @type {ChatMessagePF} */
-          let roll;
+          let msg;
           before(async () => {
-            roll = await actor.rollBAB({ skipDialog: true });
-            messages.push(roll);
+            msg = await actor.rollBAB({ skipDialog: true });
+            messages.push(msg);
           });
 
           it("should have the correct formula", function () {
-            expect(roll?.rolls[0]?.formula).to.equal("1d20 + 0[BAB]");
+            expect(msg?.rolls[0]?.formula).to.equal("1d20 + 0[BAB]");
           });
 
           it("should produce a ChatMessage", function () {
-            expect(roll instanceof pf1.documents.ChatMessagePF).to.be.true;
+            expect(msg).to.be.instanceOf(pf1.documents.ChatMessagePF);
           });
 
           it("should have the correct subject", function () {
-            expect(roll?.flags.pf1?.subject?.core === "bab");
+            expect(msg?.flags.pf1?.subject?.core === "bab");
           });
         });
 
@@ -72,7 +72,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should be a ChatMessage", function () {
-              expect(msg instanceof pf1.documents.ChatMessagePF).to.be.true;
+              expect(msg).to.be.instanceOf(pf1.documents.ChatMessagePF);
             });
 
             it("should have the correct formula", function () {
@@ -94,7 +94,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should be a ChatMessage", function () {
-              expect(msg instanceof pf1.documents.ChatMessagePF).to.be.true;
+              expect(msg).to.be.instanceOf(pf1.documents.ChatMessagePF);
             });
 
             it("should have the correct formula", function () {
@@ -111,52 +111,52 @@ export const registerActorBasicTests = () => {
         describe("#rollSavingThrow", function () {
           describe("Fortitude", function () {
             /** @type {ChatMessage} */
-            let roll;
+            let msg;
             before(async () => {
-              roll = await actor.rollSavingThrow("fort", { skipDialog: true });
-              messages.push(roll);
+              msg = await actor.rollSavingThrow("fort", { skipDialog: true });
+              messages.push(msg);
             });
 
             it("should have the correct formula", function () {
-              expect(roll?.rolls[0]?.formula).to.equal("1d20 + 3[Constitution]");
+              expect(msg?.rolls[0]?.formula).to.equal("1d20 + 3[Constitution]");
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof pf1.documents.ChatMessagePF).to.be.true;
+              expect(msg).to.be.instanceOf(pf1.documents.ChatMessagePF);
             });
           });
 
           describe("Reflex", function () {
             /** @type {ChatMessage} */
-            let roll;
+            let msg;
             before(async () => {
-              roll = await actor.rollSavingThrow("ref", { skipDialog: true });
-              messages.push(roll);
+              msg = await actor.rollSavingThrow("ref", { skipDialog: true });
+              messages.push(msg);
             });
 
             it("should have the correct formula", function () {
-              expect(roll?.rolls[0]?.formula).to.equal("1d20 + 2[Dexterity]");
+              expect(msg?.rolls[0]?.formula).to.equal("1d20 + 2[Dexterity]");
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof pf1.documents.ChatMessagePF).to.be.true;
+              expect(msg).to.be.instanceOf(pf1.documents.ChatMessagePF);
             });
           });
 
           describe("Will", function () {
             /** @type {ChatMessage} */
-            let roll;
+            let msg;
             before(async () => {
-              roll = await actor.rollSavingThrow("will", { skipDialog: true });
-              messages.push(roll);
+              msg = await actor.rollSavingThrow("will", { skipDialog: true });
+              messages.push(msg);
             });
 
             it("should have the correct formula", function () {
-              expect(roll?.rolls[0]?.formula).to.equal("1d20 + 2[Wisdom]");
+              expect(msg?.rolls[0]?.formula).to.equal("1d20 + 2[Wisdom]");
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof pf1.documents.ChatMessagePF).to.be.true;
+              expect(msg).to.be.instanceOf(pf1.documents.ChatMessagePF);
             });
           });
         });
@@ -167,44 +167,44 @@ export const registerActorBasicTests = () => {
         describe("#rollSkill with defaults", function () {
           describe("for a regular skill", function () {
             /** @type {ChatMessage} */
-            let roll;
+            let msg;
             before(async () => {
-              roll = await actor.rollSkill("per", { skipDialog: true });
-              messages.push(roll);
+              msg = await actor.rollSkill("per", { skipDialog: true });
+              messages.push(msg);
             });
 
             it("should have the correct formula", function () {
-              expect(roll.rolls[0].formula).to.equal("1d20 + 2[Wisdom]");
+              expect(msg.rolls[0].formula).to.equal("1d20 + 2[Wisdom]");
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof ChatMessagePF).to.be.true;
+              expect(msg).to.be.instanceOf(ChatMessagePF);
             });
 
             it("should have the correct subject", function () {
-              expect(roll?.flags.pf1?.subject?.skill).to.equal("per");
+              expect(msg?.flags.pf1?.subject?.skill).to.equal("per");
             });
           });
 
           describe("for a subSkill", function () {
             /** @type {ChatMessagePF} */
-            let roll;
+            let msg;
             before(async () => {
               await actor.update({ "system.skills.crf.subSkills": { crf1: { name: "foo", ability: "int", rank: 1 } } });
-              roll = await actor.rollSkill("crf.subSkills.crf1", { skipDialog: true });
-              messages.push(roll);
+              msg = await actor.rollSkill("crf.subSkills.crf1", { skipDialog: true });
+              messages.push(msg);
             });
 
             it("should have the correct formula", function () {
-              expect(roll.rolls[0].formula).to.equal("1d20 + 1[Intelligence] + 1[Skill Ranks]");
+              expect(msg.rolls[0].formula).to.equal("1d20 + 1[Intelligence] + 1[Skill Ranks]");
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof ChatMessagePF).to.be.true;
+              expect(msg).to.be.instanceOf(ChatMessagePF);
             });
 
             it("should have the correct subject", function () {
-              expect(roll?.flags.pf1?.subject?.skill).to.equal("crf.subSkills.crf1");
+              expect(msg?.flags.pf1?.subject?.skill).to.equal("crf.subSkills.crf1");
             });
           });
 
@@ -235,7 +235,7 @@ export const registerActorBasicTests = () => {
             });
 
             it("should be a ChatMessage", function () {
-              expect(roll instanceof ChatMessagePF).to.be.true;
+              expect(roll).to.be.instanceOf(ChatMessagePF);
             });
 
             it("should have the correct subject", function () {
@@ -268,10 +268,10 @@ export const registerActorBasicTests = () => {
           });
 
           it("combat should be a Combat", function () {
-            expect(combat instanceof Combat).to.be.true;
+            expect(combat).to.be.instanceOf(Combat);
           });
           it("combatant should be a Combatant", function () {
-            expect(combatant instanceof Combatant).to.be.true;
+            expect(combatant).to.be.instanceOf(Combatant);
           });
 
           it("should have the correct formula", function () {

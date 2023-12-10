@@ -69,7 +69,7 @@ export const registerItemWeightTests = () => {
                 item.reset(); // Force reset for weight system change
                 getItemSheetWeight = async () => {
                   await item.sheet._render(true);
-                  return item.sheet._element.find("input.data-weight-value-description-input").val();
+                  return item.sheet._element.find("input[name='system.weight.value']").val();
                 };
                 getActorSheetCarried = async () => {
                   await actor.sheet._render(true);

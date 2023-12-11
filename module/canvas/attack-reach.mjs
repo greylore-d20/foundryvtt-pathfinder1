@@ -10,7 +10,7 @@ const reachColor = {
   border: Color.from("#FFFF00").multiply(0.9),
 };
 
-export class SquareHighlight {
+class SquareHighlight {
   constructor(origin, fillColor = 0x00ff00, borderColor = 0x000000) {
     this.origin = origin;
     this.borderColor = borderColor;
@@ -26,12 +26,10 @@ export class SquareHighlight {
     this._squares.push({ x: x, y: y });
   }
 
-  clear(permanent = false) {
+  clear() {
     const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
     if (!hl) return;
     hl.clear();
-
-    if (permanent) canvas.grid.destroyHighlightLayer(`AttackHighlight.${this._id}`);
   }
 
   render() {
@@ -51,159 +49,432 @@ export class SquareHighlight {
 }
 
 /**
- * @typedef {object} AttackReachHighlight
- * An object containing highlights belonging to a specific attack
- * @property {SquareHighlight} normal - Highlight for normal range
- * @property {SquareHighlight} reach - Highlight for reach range
- * @property {SquareHighlight[]} extra - Additional highlights
+ * Calculates the attack for a token's attack.
  */
-
-/** @type {AttackReachHighlight|undefined} */
-let currentHighlight;
-
-/**
- * Calculates the {@link AttackReachHighlight} for a token's attack.
- *
- * @param {Token} token - The token to calculate the attack reach for
- * @param {pf1.documents.item.ItemPF} attack - The attack to calculate the reach for
- * @param {pf1.components.ItemAction} action - The action to calculate the reach for
- * @returns {AttackReachHighlight | undefined} Highlights for this attack, if any
- */
-const getAttackReach = function (token, attack, action) {
-  const grid = canvas.grid;
-  const gridSize = grid.size;
-  const tw = token.document.width;
-  const th = token.document.height;
-  const origin = {
-    x: Math.floor((token.x + tw * gridSize - 0.5 * gridSize) / gridSize),
-    y: Math.floor((token.y + th * gridSize - 0.5 * gridSize) / gridSize),
-  };
-
-  if (!action) return;
-  const rollData = action.getRollData();
-
-  // Determine whether reach
-  const rangeKey = action.data.range.units;
-  if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
-  const isReach = rangeKey === "reach";
-  const range = rollData.range;
-
-  // Determine minimum range
-  const minRangeKey = action.data.range.minUnits;
-  let minRange = null;
-  if (["melee", "touch"].includes(minRangeKey)) minRange = range.melee;
-  if (minRangeKey === "reach") minRange = range.reach;
-  if (minRangeKey === "ft") {
-    minRange = RollPF.safeRoll(action.data.range.minValue || "0", rollData).total;
+class AttackHighlightBase {
+  /** @abstract */
+  clearHighlight() {
+    throw new Error("must be overridden");
+  }
+  /** @abstract */
+  renderHighlight() {
+    throw new Error("must be overridden");
   }
 
-  const squares = {
-    normal: [],
-    reach: [],
-    extra: [],
-  };
-  const useReachRule = game.settings.get("pf1", "alternativeReachCornerRule") !== true;
+  /**
+   * @abstract
+   * @returns {boolean}
+   */
+  get isValid() {
+    throw new Error("must be overridden");
+  }
 
-  if (["melee", "touch", "reach"].includes(rangeKey)) {
-    squares.normal = getReachSquares(token, range.melee, minRange, null, { useReachRule });
-    squares.reach = getReachSquares(token, range.reach, range.melee, null, { useReachRule });
-  } else if (rangeKey === "ft") {
-    const r = calculateRangeFormula(action.data.range.value || "0", "ft", rollData);
-    squares.normal = getReachSquares(token, r, minRange, null, { useReachRule: true });
+  /**
+   * @param {Token} token - The token to calculate the attack reach for
+   * @param {pf1.components.ItemAction} action - The action to calculate the reach for
+   */
+  constructor(token, action) {
+    const attack = action?.item;
+    if (!action || !token || !attack) throw new Error("Invalid arguments.");
+  }
+}
 
-    // Add range increments
-    const maxSquareRange = Math.min(
-      60, // arbitrary limit to enhance performance on large canvases
-      Math.max(
-        (canvas.dimensions.width / canvas.dimensions.size) * canvas.dimensions.distance,
-        (canvas.dimensions.height / canvas.dimensions.size) * canvas.dimensions.distance
-      ) + convertDistance(r)[0]
-    );
-    const rangeIncrements = action.data.range.maxIncrements;
-    for (let a = 1; a < rangeIncrements; a++) {
-      if ((a + 1) * convertDistance(r)[0] <= maxSquareRange) {
-        squares.extra.push(getReachSquares(token, (a + 1) * r, a * r, null, { useReachRule }));
+class GridlessHighlight extends AttackHighlightBase {
+  /** @type {number[]|undefined} */
+  #rangeStops;
+
+  /** @override */
+  get isValid() {
+    return (this.#rangeStops?.length ?? 0) >= 2;
+  }
+
+  /** @type {{x: number, y: number} | undefined} */
+  #center;
+
+  /**
+   * @param {Token} token - The token to calculate the attack reach for
+   * @param {pf1.components.ItemAction} action - The action to calculate the reach for
+   */
+  constructor(token, action) {
+    super(token, action);
+    const attack = action?.item;
+
+    const grid = canvas.grid;
+    const gridSize = grid.size;
+    const tw = token.document.width;
+    const th = token.document.height;
+    this.#center = {
+      x: Math.floor(token.x + (tw * gridSize) / 2),
+      y: Math.floor(token.y + (th * gridSize) / 2),
+    };
+
+    const rollData = action.getRollData();
+
+    // Determine whether reach
+    const rangeKey = action.data.range.units;
+    if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
+    const isReach = rangeKey === "reach";
+    const range = rollData.range;
+
+    // Determine minimum range
+    const minRangeKey = action.data.range.minUnits;
+    let minRange = null;
+    if (["melee", "touch"].includes(minRangeKey)) minRange = range.melee;
+    if (minRangeKey === "reach") minRange = range.reach;
+    if (minRangeKey === "ft") {
+      minRange = RollPF.safeRoll(action.data.range.minValue || "0", rollData).total;
+    }
+
+    const rangeMeasurements = [minRange || 0];
+
+    if (["melee", "touch", "reach"].includes(rangeKey)) {
+      rangeMeasurements.push(range.melee);
+      if (isReach) {
+        rangeMeasurements.push(range.reach);
+      }
+    } else if (rangeKey === "ft") {
+      const r = calculateRangeFormula(action.data.range.value || "0", "ft", rollData);
+      rangeMeasurements.push(r);
+
+      // Add range increments
+      const rangeIncrements = action.data.range.maxIncrements;
+      for (let a = 1; a < rangeIncrements; a++) {
+        rangeMeasurements.push((a + 1) * r);
+      }
+    } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {
+      const range = calculateRangeFormula(null, rangeKey, rollData);
+      rangeMeasurements.push(range);
+    }
+
+    this.#rangeStops = rangeMeasurements.map((r) => {
+      const tokenOffset = r === 0 ? 0 : (tw * gridSize) / 2;
+      return (r * canvas.dimensions.size) / canvas.dimensions.distance + tokenOffset;
+    });
+
+    this._id = randomID();
+    canvas.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
+  }
+
+  clearHighlight() {
+    if (this.isValid) {
+      const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+      if (!hl) return;
+      hl.removeChildren();
+      this.#rangeStops = undefined;
+    }
+  }
+
+  renderHighlight() {
+    if (this.isValid) {
+      const hl = canvas.grid.getHighlightLayer(`AttackHighlight.${this._id}`);
+      if (!hl) return;
+      hl.clear();
+
+      const { x, y } = this.#center;
+
+      const circle = new PIXI.Graphics();
+
+      const stops = /** @type {!number[]} */ (this.#rangeStops);
+      for (let i = stops.length - 1; i > 0; i--) {
+        const outer = stops[i];
+        const inner = stops[i - 1];
+
+        const color = [rangeColor, reachColor][(i + 1) % 2];
+
+        circle.beginFill(color.fill, 0.1);
+        circle.drawCircle(x, y, outer);
+
+        // if inner has a defined value and is not 0, then cut a hole for either the next increment or because it's the minimum range
+        if (inner) {
+          circle.beginHole();
+          circle.drawCircle(x, y, inner);
+          circle.endHole();
+        }
+      }
+      circle.endFill();
+
+      hl.addChild(circle);
+    }
+  }
+}
+
+class SquareGridHighlight extends AttackHighlightBase {
+  /**
+   * @typedef {object} AttackReachHighlight
+   * An object containing highlights belonging to a specific attack
+   * @property {SquareHighlight} normal - Highlight for normal range
+   * @property {SquareHighlight} reach - Highlight for reach range
+   * @property {SquareHighlight[]} extra - Additional highlights
+   */
+
+  /** @type {AttackReachHighlight|undefined} */
+  #currentHighlight;
+
+  /** @override */
+  get isValid() {
+    return !!this.#currentHighlight;
+  }
+
+  /**
+   * @inheritdoc
+   */
+  constructor(token, action) {
+    super(token, action);
+    const attack = action?.item;
+
+    const grid = canvas.grid;
+    const gridSize = grid.size;
+    const tw = token.document.width;
+    const th = token.document.height;
+    const origin = {
+      x: Math.floor((token.x + tw * gridSize - 0.5 * gridSize) / gridSize),
+      y: Math.floor((token.y + th * gridSize - 0.5 * gridSize) / gridSize),
+    };
+
+    const rollData = action.getRollData();
+
+    // Determine whether reach
+    const rangeKey = action.data.range.units;
+    if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
+    const isReach = rangeKey === "reach";
+    const range = rollData.range;
+
+    // Determine minimum range
+    const minRangeKey = action.data.range.minUnits;
+    let minRange = null;
+    if (["melee", "touch"].includes(minRangeKey)) minRange = range.melee;
+    if (minRangeKey === "reach") minRange = range.reach;
+    if (minRangeKey === "ft") {
+      minRange = RollPF.safeRoll(action.data.range.minValue || "0", rollData).total;
+    }
+
+    const squares = {
+      normal: [],
+      reach: [],
+      extra: [],
+    };
+    const useReachRule = game.settings.get("pf1", "alternativeReachCornerRule") !== true;
+
+    if (["melee", "touch", "reach"].includes(rangeKey)) {
+      squares.normal = this.#getReachSquares(token, range.melee, minRange, { useReachRule });
+      squares.reach = this.#getReachSquares(token, range.reach, range.melee, { useReachRule });
+    } else if (rangeKey === "ft") {
+      const r = calculateRangeFormula(action.data.range.value || "0", "ft", rollData);
+      squares.normal = this.#getReachSquares(token, r, minRange, { useReachRule: true });
+
+      // Add range increments
+      const maxSquareRange = Math.min(
+        60, // arbitrary limit to enhance performance on large canvases
+        Math.max(
+          (canvas.dimensions.width / canvas.dimensions.size) * canvas.dimensions.distance,
+          (canvas.dimensions.height / canvas.dimensions.size) * canvas.dimensions.distance
+        ) + convertDistance(r)[0]
+      );
+      const rangeIncrements = action.data.range.maxIncrements;
+      for (let a = 1; a < rangeIncrements; a++) {
+        if ((a + 1) * convertDistance(r)[0] <= maxSquareRange) {
+          squares.extra.push(this.#getReachSquares(token, (a + 1) * r, a * r, { useReachRule }));
+        }
+      }
+    } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {
+      const range = calculateRangeFormula(null, rangeKey, rollData);
+      squares.normal = this.#getReachSquares(token, range, minRange, { useReachRule });
+    }
+
+    const result = {
+      normal: new SquareHighlight(origin, rangeColor.fill, rangeColor.border),
+      reach: new SquareHighlight(origin, reachColor.fill, reachColor.border),
+      extra: [],
+    };
+    for (const s of squares.normal) {
+      result.normal.addSquare(s[0], s[1]);
+    }
+    if (isReach) {
+      for (const s of squares.reach) {
+        result.reach.addSquare(s[0], s[1]);
       }
     }
-  } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {
-    const range = calculateRangeFormula(null, rangeKey, rollData);
-    squares.normal = getReachSquares(token, range, minRange, null, { useReachRule });
-  }
 
-  const result = {
-    normal: new SquareHighlight(origin, rangeColor.fill, rangeColor.border),
-    reach: new SquareHighlight(origin, reachColor.fill, reachColor.border),
-    extra: [],
-  };
-  for (const s of squares.normal) {
-    result.normal.addSquare(s[0], s[1]);
-  }
-  if (isReach) {
-    for (const s of squares.reach) {
-      result.reach.addSquare(s[0], s[1]);
-    }
-  }
+    // Add extra range squares
+    {
+      for (let a = 0; a < squares.extra.length; a++) {
+        const squaresExtra = squares.extra[a];
 
-  // Add extra range squares
-  {
-    for (let a = 0; a < squares.extra.length; a++) {
-      const squaresExtra = squares.extra[a];
+        const color = {
+          fill: a % 2 === 1 ? rangeColor.fill : reachColor.fill,
+          border: a % 2 === 1 ? rangeColor.border : reachColor.border,
+        };
 
-      const color = {
-        fill: a % 2 === 1 ? rangeColor.fill : reachColor.fill,
-        border: a % 2 === 1 ? rangeColor.border : reachColor.border,
-      };
-
-      const hl = new SquareHighlight(origin, color.fill, color.border);
-      for (const s of squaresExtra) {
-        hl.addSquare(s[0], s[1]);
+        const hl = new SquareHighlight(origin, color.fill, color.border);
+        for (const s of squaresExtra) {
+          hl.addSquare(s[0], s[1]);
+        }
+        result.extra.push(hl);
       }
-      result.extra.push(hl);
+    }
+
+    this.#currentHighlight = result;
+  }
+
+  /**
+   *
+   * @param {Token} token
+   * @param {number} range
+   * @param {number} minRange
+   * @param {object} options
+   * @returns
+   */
+  #getReachSquares(token, range, minRange = 0, options) {
+    const result = [];
+    if (canvas.grid.type !== CONST.GRID_TYPES.SQUARE) return result;
+
+    range = convertDistance(range)[0];
+    if (typeof minRange === "number") minRange = convertDistance(minRange)[0];
+
+    // Initialize variables
+    const gridDist = canvas.scene.grid.distance;
+    const gridSize = canvas.grid.size;
+
+    // Determine token squares
+    const tokenSquares = [];
+    for (let a = 0; a < Math.floor(token.w / gridSize); a++) {
+      for (let b = 0; b < Math.floor(token.h / gridSize); b++) {
+        const x = Math.floor((token.x + gridSize * 0.5) / gridSize + a);
+        const y = Math.floor((token.y + gridSize * 0.5) / gridSize + b);
+        tokenSquares.push([x, y]);
+      }
+    }
+
+    // Determine token-based variables
+    const tokenRect = [
+      Math.floor((token.x + gridSize * 0.5) / gridSize),
+      Math.floor((token.y + gridSize * 0.5) / gridSize),
+      Math.floor(token.w / gridSize),
+      Math.floor(token.h / gridSize),
+    ];
+
+    // Create function to determine closest token square
+    const getClosestTokenSquare = function (pos) {
+      const lowest = { square: null, dist: null };
+      for (const s of tokenSquares) {
+        const dist = Math.sqrt((s[0] - pos[0]) ** 2 + (s[1] - pos[1]) ** 2);
+        if (lowest.dist == null || dist < lowest.dist) {
+          lowest.square = s;
+          lowest.dist = dist;
+        }
+      }
+
+      return lowest.square;
+    };
+
+    // Gather potential squares
+    const squareRange = Math.round(range / gridDist);
+    const wMax = squareRange * 2 + tokenRect[2];
+    const hMax = squareRange * 2 + tokenRect[3];
+    const tl = [tokenRect[0] - squareRange, tokenRect[1] - squareRange];
+    for (let a = tl[0]; a < tl[0] + wMax; a++) {
+      for (let b = tl[1]; b < tl[1] + hMax; b++) {
+        const closestSquare = getClosestTokenSquare([a, b]);
+
+        const offset = [a - tokenRect[0], b - tokenRect[1]];
+        if (
+          !(
+            a >= tokenRect[0] &&
+            a < tokenRect[0] + tokenRect[2] &&
+            b >= tokenRect[1] &&
+            b < tokenRect[1] + tokenRect[2] &&
+            minRange != null
+          ) &&
+          this.#shouldAddReachSquare([a, b], closestSquare, range, minRange, options)
+        ) {
+          result.push(offset);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  #shouldAddReachSquare(pos, closestTokenSquare, range, minRange, options = { useReachRule: false }) {
+    const gridSize = canvas.grid.size;
+    const p0 = { x: closestTokenSquare[0] * gridSize, y: closestTokenSquare[1] * gridSize };
+    const p1 = { x: pos[0] * gridSize, y: pos[1] * gridSize };
+
+    const dist = measureDistance(p0, p1);
+    const dist2 = options.useReachRule ? measureDistance(p0, p1, { diagonalRule: "555" }) : null;
+    const reachRuleRange = convertDistance(10)[0];
+    if (dist > range) {
+      // Special rule for 10-ft. reach
+      if (!(options.useReachRule && range === reachRuleRange)) {
+        return false;
+      }
+    }
+
+    if (minRange != null && dist <= minRange) {
+      return false;
+    }
+
+    // Special rule for minimum ranges >= 10-ft.
+    if (options.useReachRule && minRange >= reachRuleRange && dist2 <= reachRuleRange) {
+      return false;
+    }
+
+    return true;
+  }
+
+  clearHighlight() {
+    if (this.#currentHighlight) {
+      this.#currentHighlight.normal.clear();
+      this.#currentHighlight.reach.clear();
+      for (const h of this.#currentHighlight.extra) {
+        h.clear();
+      }
+      this.#currentHighlight = undefined;
     }
   }
 
-  return result;
-};
+  renderHighlight() {
+    if (this.#currentHighlight) {
+      this.#currentHighlight.normal.render();
+      this.#currentHighlight.reach.render();
+      for (const h of this.#currentHighlight.extra) {
+        h.render();
+      }
+    }
+  }
+}
+
+/** @type {AttackHighlightbase|undefined} */
+let attackReachHighlight;
 
 /**
  * Calculates and renders the {@link AttackReachHighlight} for a token's attack.
  * If a highlight already exists, it will be removed.
  *
  * @param {Token} token - The token to calculate the attack reach for
- * @param {pf1.documents.item.ItemPF} attack - The attack to calculate the reach for
  * @param {pf1.components.ItemAction} action - The action to calculate the reach for
  */
-export const showAttackReach = function (token, attack, action) {
+export const showAttackReach = (token, action) => {
   // Clear previous highlight
   clearHighlight();
 
-  const highlight = getAttackReach(token, attack, action);
+  const cls = canvas.grid.type === CONST.GRID_TYPES.SQUARE ? SquareGridHighlight : GridlessHighlight;
 
-  // If a highlight could be created, make it the current highlight and render it
-  if (!highlight) return;
-  currentHighlight = highlight;
-  renderHighlight();
-};
+  try {
+    const highlight = new cls(token, action);
 
-export const clearHighlight = function () {
-  if (currentHighlight) {
-    currentHighlight.normal.clear();
-    currentHighlight.reach.clear();
-    for (const h of currentHighlight.extra) {
-      h.clear();
-    }
-    currentHighlight = undefined;
+    // If a highlight could be created, make it the current highlight and render it
+    if (!highlight.isValid) return;
+    attackReachHighlight = highlight;
+    attackReachHighlight.renderHighlight();
+  } catch {
+    // no action, token, or item to use to render the highlight
   }
 };
 
-const renderHighlight = function () {
-  if (currentHighlight) {
-    currentHighlight.normal.render();
-    currentHighlight.reach.render();
-    for (const h of currentHighlight.extra) {
-      h.render();
-    }
-  }
+export const clearHighlight = () => {
+  attackReachHighlight?.clearHighlight();
+  attackReachHighlight = undefined;
 };
 
 /**
@@ -211,7 +482,7 @@ const renderHighlight = function () {
  *
  * @async
  * @param {string} uuid - UUID of an actor or token
- * @returns {Promise<Token|null>} A Token, if one can be found
+ * @returns {Promise<Token|null|undefined>} A Token, if one can be found
  */
 const _getTokenByUuid = async function (uuid) {
   if (!uuid) return;
@@ -228,8 +499,8 @@ const _getTokenByUuid = async function (uuid) {
  * @param {JQuery<HTMLElement>} html - The chat log
  */
 export function addReachListeners(html) {
-  html.on("mouseenter", ".card-range", onMouseEnterReach);
-  html.on("mouseleave", ".card-range", onMouseLeaveReach);
+  html.on("mouseenter", ".card-range", _onMouseEnterReach);
+  html.on("mouseleave", ".card-range", _onMouseLeaveReach);
 }
 
 /**
@@ -237,8 +508,9 @@ export function addReachListeners(html) {
  *
  * @param {JQuery.MouseEnterEvent<HTMLElement>} event - A `mouseEnter` event
  */
-const onMouseEnterReach = (event) => {
+const _onMouseEnterReach = (event) => {
   event.preventDefault();
+  if (game.settings.get("pf1", "hideReachMeasurements")) return;
 
   const reachElement = event.currentTarget;
   const card = reachElement.closest(".chat-card");
@@ -247,128 +519,21 @@ const onMouseEnterReach = (event) => {
 
   _getTokenByUuid(tokenUuid).then((token) => {
     if (!token) return;
+
     const item = token.actor.allItems.find((item) => item.id === itemId);
-    if (!item) return;
-    if (!game.settings.get("pf1", "hideReachMeasurements")) showAttackReach(token, item, item.actions.get(actionId));
+    const action = item?.actions.get(actionId);
+    if (!action) return;
+
+    showAttackReach(token, action);
   });
 };
 
 /**
- * Handle clearing of reach highlights created by {@link onMouseEnterReach}
+ * Handle clearing of reach highlights created by {@link _onMouseEnterReach}
  *
  * @param {JQuery.MouseLeaveEvent} event - A `mouseLeave` event
  */
-const onMouseLeaveReach = (event) => {
+const _onMouseLeaveReach = (event) => {
   event.preventDefault();
   clearHighlight();
-};
-
-const getReachSquares = function (token, range, minRange = 0, addSquareFunction = null, options) {
-  range = convertDistance(range)[0];
-  if (typeof minRange === "number") minRange = convertDistance(minRange)[0];
-
-  const result = [];
-
-  if (canvas.grid.type !== CONST.GRID_TYPES.SQUARE) return result;
-  if (!addSquareFunction) addSquareFunction = shouldAddReachSquare;
-
-  // Initialize variables
-  const gridDist = canvas.scene.grid.distance;
-  const gridSize = canvas.grid.size;
-
-  // Determine token squares
-  const tokenSquares = [];
-  for (let a = 0; a < Math.floor(token.w / gridSize); a++) {
-    for (let b = 0; b < Math.floor(token.h / gridSize); b++) {
-      const x = Math.floor((token.x + gridSize * 0.5) / gridSize + a);
-      const y = Math.floor((token.y + gridSize * 0.5) / gridSize + b);
-      tokenSquares.push([x, y]);
-    }
-  }
-
-  // Determine token-based variables
-  const tokenRect = [
-    Math.floor((token.x + gridSize * 0.5) / gridSize),
-    Math.floor((token.y + gridSize * 0.5) / gridSize),
-    Math.floor(token.w / gridSize),
-    Math.floor(token.h / gridSize),
-  ];
-
-  // Create function to determine closest token square
-  const getClosestTokenSquare = function (pos) {
-    const lowest = { square: null, dist: null };
-    for (const s of tokenSquares) {
-      const dist = Math.sqrt((s[0] - pos[0]) ** 2 + (s[1] - pos[1]) ** 2);
-      if (lowest.dist == null || dist < lowest.dist) {
-        lowest.square = s;
-        lowest.dist = dist;
-      }
-    }
-
-    return lowest.square;
-  };
-
-  // Gather potential squares
-  const squareRange = Math.round(range / gridDist);
-  const wMax = squareRange * 2 + tokenRect[2];
-  const hMax = squareRange * 2 + tokenRect[3];
-  const tl = [tokenRect[0] - squareRange, tokenRect[1] - squareRange];
-  for (let a = tl[0]; a < tl[0] + wMax; a++) {
-    for (let b = tl[1]; b < tl[1] + hMax; b++) {
-      const closestSquare = getClosestTokenSquare([a, b]);
-
-      const offset = [a - tokenRect[0], b - tokenRect[1]];
-      if (
-        !(
-          a >= tokenRect[0] &&
-          a < tokenRect[0] + tokenRect[2] &&
-          b >= tokenRect[1] &&
-          b < tokenRect[1] + tokenRect[2] &&
-          minRange != null
-        )
-      ) {
-        if (addSquareFunction(token, [a, b], closestSquare, range, minRange, tokenRect, options)) {
-          result.push(offset);
-        }
-      }
-    }
-  }
-
-  return result;
-};
-
-const shouldAddReachSquare = function (
-  token,
-  pos,
-  closestTokenSquare,
-  range,
-  minRange,
-  tokenRect,
-  options = { useReachRule: false }
-) {
-  const gridDist = canvas.scene.grid.distance;
-  const gridSize = canvas.grid.size;
-  const p0 = { x: closestTokenSquare[0] * gridSize, y: closestTokenSquare[1] * gridSize };
-  const p1 = { x: pos[0] * gridSize, y: pos[1] * gridSize };
-
-  const dist = measureDistance(p0, p1);
-  const dist2 = options.useReachRule ? measureDistance(p0, p1, { diagonalRule: "555" }) : null;
-  const reachRuleRange = convertDistance(10)[0];
-  if (dist > range) {
-    // Special rule for 10-ft. reach
-    if (!(options.useReachRule && range === reachRuleRange)) {
-      return false;
-    }
-  }
-
-  if (minRange != null && dist <= minRange) {
-    return false;
-  }
-
-  // Special rule for minimum ranges >= 10-ft.
-  if (options.useReachRule && minRange >= reachRuleRange && dist2 <= reachRuleRange) {
-    return false;
-  }
-
-  return true;
 };

@@ -118,7 +118,7 @@ export class TokenQuickActions {
 
     // Reach highlight on mouse hover
     if (!game.settings.get("pf1", "hideReachMeasurements")) {
-      el.addEventListener("mouseenter", () => showAttackReach(token, item, action), { passive: true });
+      el.addEventListener("mouseenter", () => showAttackReach(token, action), { passive: true });
       el.addEventListener("mouseleave", () => clearHighlight(), { passive: true });
     }
   }

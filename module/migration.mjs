@@ -1899,7 +1899,7 @@ const _migrateActionObsoleteTypes = (action, itemData) => {
     }
   }
   const durVal = action.duration?.value;
-  if (durVal !== undefined) {
+  if (durVal !== undefined && durVal !== null) {
     if (typeof durVal !== "string") {
       action.duration.value = `${durVal}`;
     }

@@ -71,6 +71,18 @@ export class IfElseTerm extends FunctionTerm {
   }
 
   /**
+   * @override
+   * @type {string} - Simpler representation of the result.
+   */
+  get simplify() {
+    const [condition, ifTrue, ifFalse] = this.terms;
+    const state = !!condition.total;
+    const term = state ? ifTrue : ifFalse;
+    if (term) return term.formula;
+    return state ? "1" : "0";
+  }
+
+  /**
    * @type {string}
    */
   get expression() {

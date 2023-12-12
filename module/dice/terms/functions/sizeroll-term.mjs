@@ -37,7 +37,8 @@ export class SizeRollTerm extends FunctionTerm {
   }
 
   /**
-   * Return simpler representation of the sizeRoll (e.g. 3d6 instead of sizeRoll(3, 6)).
+   * @override
+   * @type {string} - Simpler representation of the result (e.g. 3d6 instead of sizeRoll(3, 6)).
    */
   get simplify() {
     return this.roll?.formula;

@@ -38,15 +38,6 @@ export class LookupTerm extends FunctionTerm {
     return `lookup(${this.terms.map((t) => t.formula).join(", ")})${this.flavor ? `[${this.flavor}]` : ""}`;
   }
 
-  get simplify() {
-    const search = this.terms[0];
-    if (!search) return undefined;
-
-    let offset = search.total;
-    if (!this.terms[1 + offset]) offset = 0;
-    return this.terms[1 + offset]?.formula;
-  }
-
   get total() {
     const search = this.terms[0];
     if (!search) return undefined;
@@ -74,6 +65,10 @@ export class LookupTerm extends FunctionTerm {
     else if (this.terms.length < offset + 1) offset = 0;
 
     return this.terms[1 + offset];
+  }
+
+  get simplify() {
+    return this.lookupResult.formula;
   }
 
   get isDeterministic() {

@@ -49,6 +49,13 @@ export class FunctionTerm extends RollTerm {
   }
 
   /**
+   * @type {string} - Simpler formula representation of the result if possible.
+   */
+  get simplify() {
+    return this.formula;
+  }
+
+  /**
    * @type {true} Simple method of checking this is a FunctionTerm
    */
   static get isFunction() {

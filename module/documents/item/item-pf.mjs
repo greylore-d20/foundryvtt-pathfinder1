@@ -273,6 +273,15 @@ export class ItemPF extends ItemBasePF {
     return this.system.material?.addon.filter((o) => o ?? false) || null;
   }
 
+  /**
+   * The item's alignment attributes, or `null` if the item has no alignment attributes
+   *
+   * @type {string|null}
+   */
+  get alignments() {
+    return this.system.alignments ?? null;
+  }
+
   get firstAction() {
     return this.actions?.get(this.system.actions?.[0]?._id);
   }

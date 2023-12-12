@@ -32,6 +32,15 @@ export class ItemAction {
     return (this.data.material?.addon || this.item.system.material?.addon || []).filter((o) => o ?? false);
   }
 
+  /**
+   * The action's alignment attributes, or `null` if the action has no alignment attributes
+   *
+   * @type {string|null}
+   */
+  get alignments() {
+    return this.data.alignments ?? null;
+  }
+
   get description() {
     return this.data.description;
   }
@@ -492,6 +501,12 @@ export class ItemAction {
       material: {
         normal: "",
         addon: "",
+      },
+      alignments: {
+        lawful: null,
+        chaotic: null,
+        good: null,
+        evil: null,
       },
     };
   }

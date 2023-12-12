@@ -32,6 +32,9 @@
 
 {{!-- Material Addon --}}
 {{> "systems/pf1/templates/items/parts/item-materials-addon.hbs" reference="material.addon" value=data.material.addon label="PF1.Materials.AddonOverride"}}
+
+{{!-- Alignment Types --}}
+{{> "systems/pf1/templates/items/parts/item-alignments.hbs" reference="alignments" value=data.alignments label="PF1.AttackAlignmentOverride" isAction=true}}
 {{/if}}
 
 {{!-- Action Type --}}

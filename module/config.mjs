@@ -282,6 +282,20 @@ export const alignmentsShort = {
   ce: "PF1.AlignmentShortCE",
 };
 
+/**
+ * Extra damage reduction types
+ *
+ * @alpha
+ */
+export const damageResistances = {
+  magic: "PF1.DamageResistance.magic",
+  epic: "PF1.DamageResistance.epic",
+  lawful: "PF1.AlignmentL",
+  chaotic: "PF1.AlignmentC",
+  good: "PF1.AlignmentG",
+  evil: "PF1.AlignmentE",
+};
+
 /* -------------------------------------------- */
 
 /**

@@ -417,6 +417,7 @@ Hooks.once("i18nInit", function () {
     "abilityActivationTypesPlurals_unchained",
     "actorStatures",
     "ammoTypes",
+    "damageResistances",
     "vehicles",
   ];
 

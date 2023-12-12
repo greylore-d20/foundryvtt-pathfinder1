@@ -377,6 +377,8 @@ export class ItemSheetPF extends ItemSheet {
         itemData.subType,
         itemData.material?.normal.value
       );
+
+      context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
 
     // Prepare weapon specific stuff
@@ -402,6 +404,8 @@ export class ItemSheetPF extends ItemSheet {
         null,
         itemData.material?.normal.value
       );
+
+      context.alignmentTypes = this._prepareAlignments(itemData.alignments);
     }
 
     // Prepare equipment specific stuff
@@ -696,6 +700,19 @@ export class ItemSheetPF extends ItemSheet {
     };
   }
 
+  _prepareAlignments(alignments) {
+    const alignmentChoices = {};
+
+    Object.keys(pf1.config.damageResistances).forEach((dType) => {
+      if (!["magic", "epic"].includes(dType)) alignmentChoices[dType] = pf1.config.damageResistances[dType];
+    });
+
+    return {
+      choices: alignmentChoices,
+      values: deepClone(alignments),
+    };
+  }
+
   /**
    * Check if a given material is okay to be added to our materials list
    * for the item sheet.
@@ -985,7 +1002,6 @@ export class ItemSheetPF extends ItemSheet {
     formData = expandObject(formData);
 
     const system = formData.system;
-
     const links = system.links;
     if (links) {
       const oldLinks = this.item.system?.links ?? {};

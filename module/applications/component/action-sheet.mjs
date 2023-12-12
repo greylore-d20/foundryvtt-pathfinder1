@@ -158,6 +158,10 @@ export class ItemActionSheet extends FormApplication {
     // Inherited held option's name if any
     data.inheritedHeld = pf1.config.weaponHoldTypes[data.item.system.held];
 
+    // Add alignments
+    data.alignmentTypes = this._prepareAlignments(this.action.alignments);
+    this.alignments = data.alignmentTypes.values; // Use a deep clone we've already made to track our progress.
+
     return data;
   }
 
@@ -184,6 +188,20 @@ export class ItemActionSheet extends FormApplication {
       addons: addonList,
     };
   }
+
+  _prepareAlignments(alignments) {
+    const alignmentChoices = {};
+
+    Object.keys(pf1.config.damageResistances).forEach((dType) => {
+      if (!["magic", "epic"].includes(dType)) alignmentChoices[dType] = pf1.config.damageResistances[dType];
+    });
+
+    return {
+      choices: alignmentChoices,
+      values: alignments,
+    };
+  }
+
   /**
    * Copy from core DocumentSheet#isEditable
    */
@@ -221,6 +239,18 @@ export class ItemActionSheet extends FormApplication {
 
     // Modify conditionals
     html.find(".conditional-control").click(this._onConditionalControl.bind(this));
+
+    // Handle Alignment tristate checkboxes
+    html.find(".alignmentCheckbox").on("change", (event) => {
+      this._onAlignmentChecked(event);
+    });
+
+    const alignmentItems = $(".alignmentCheckbox.actionCheckbox").each((index, item) => {
+      const type = $(item).attr("data-type");
+      if (!(this.alignments[type] || this.alignments[type] === false)) {
+        item.indeterminate = true;
+      }
+    });
   }
 
   _onDragStart(event) {
@@ -499,6 +529,23 @@ export class ItemActionSheet extends FormApplication {
     return this._onSubmit(event);
   }
 
+  async _onAlignmentChecked(event) {
+    const el = event.target;
+    const previousValue = this.alignments[el.dataset.type];
+
+    // Move from one phase to the next in our tristate checkbox
+    el.checked = previousValue === false;
+    el.indeterminate = previousValue === true;
+
+    if (el.checked) {
+      this.alignments[el.dataset.type] = true;
+    } else if (el.indeterminate) {
+      this.alignments[el.dataset.type] = null;
+    } else {
+      this.alignments[el.dataset.type] = false;
+    }
+  }
+
   async _updateObject(event, formData) {
     // Handle conditionals array
     const conditionalData = deepClone(this.object.data.conditionals);
@@ -545,6 +592,11 @@ export class ItemActionSheet extends FormApplication {
     }
 
     formData = expandObject(formData);
+    // Adjust Alignment Types (this is necessary to handle null values for inheritance)
+    for (const [key, value] of Object.entries(this.alignments)) {
+      formData.alignments[key] = value;
+    }
+
     return this.action.update(formData);
   }
 

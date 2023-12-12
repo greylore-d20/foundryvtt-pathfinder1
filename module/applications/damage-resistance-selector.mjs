@@ -60,6 +60,10 @@ export class ActorResistanceSelector extends FormApplication {
     if (this.isDR) {
       this.options.id = "damage-resistance-selector";
 
+      Object.keys(pf1.config.damageResistances).forEach((dType) => {
+        damages[dType] = pf1.config.damageResistances[dType];
+      });
+
       pf1.registry.materialTypes.forEach((material) => {
         if (
           material.allowed.lightBlade ||

@@ -368,11 +368,14 @@ function enforceTemplate(object, template, options = {}) {
   const flattened = utils.flattenObject(diff);
   for (const path of Object.keys(flattened)) {
     // Delete additional properties unless in template or in the exception list
+    // ... but remove exceptions anyway if they're null or empty string.
     const inTemplate = utils.hasProperty(template, path);
     const isExempt =
       options.documentName &&
       TEMPLATE_EXCEPTION_PATHS[options.documentName].some((exceptionPath) => path.startsWith(exceptionPath));
-    if (!inTemplate && !isExempt) {
+
+    const value = flattened[path];
+    if (!inTemplate && (!isExempt || (isExempt && (value === "" || value === null)))) {
       delete flattened[path];
     }
 

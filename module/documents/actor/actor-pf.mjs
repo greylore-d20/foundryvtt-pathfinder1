@@ -14,6 +14,7 @@ import { RollPF } from "../../dice/roll.mjs";
 import { Spellbook, SpellRanges, SpellbookMode, SpellbookSlots } from "./utils/spellbook.mjs";
 import { ItemChange } from "../../components/change.mjs";
 import { VisionPermissionSheet } from "module/applications/vision-permission.mjs";
+import { Resource } from "./components/resource.mjs";
 
 /**
  * Extend the base Actor class to implement additional game system logic.
@@ -2273,13 +2274,8 @@ export class ActorPF extends ActorBasePF {
     if (!item.isCharged) return false;
     if (item.isSingleUse) return false;
 
-    const resource = {
-      value: item.charges,
-      max: item.maxCharges,
-      _id: item.id,
-    };
-
     const tag = item.system.tag;
+    if (!tag) console.error("Attempting create resource on tagless item", item);
 
     if (warnOnDuplicate && this.system.resources[tag] && this.isOwner) {
       const msg = game.i18n.format("PF1.WarningDuplicateTag", {
@@ -2291,7 +2287,9 @@ export class ActorPF extends ActorBasePF {
       console.warn(msg, item);
     }
 
-    this.system.resources[tag] = resource;
+    const res = new Resource(item);
+    this.system.resources[tag] = res;
+
     return true;
   }
 

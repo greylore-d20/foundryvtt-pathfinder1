@@ -579,6 +579,7 @@ export async function migrateActorData(actorData, token, { actor } = {}) {
   _migrateActorNullValues(actorData, updateData);
   _migrateActorSpellbookDomainSlots(actorData, updateData);
   _migrateActorStatures(actorData, updateData, linked);
+  _migrateActorProficiencies(actorData, updateData, { actor });
   _migrateActorInitAbility(actorData, updateData, linked);
   _migrateActorChangeRevamp(actorData, updateData, linked);
   _migrateActorCMBRevamp(actorData, updateData, linked);
@@ -682,7 +683,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateSpellCosts(itemData, updateData);
   _migrateLootEquip(itemData, updateData);
   _migrateItemLinks(itemData, updateData);
-  _migrateProficiencies(itemData, updateData);
+  _migrateItemProficiencies(itemData, updateData);
   _migrateItemNotes(itemData, updateData);
   _migrateSpellData(itemData, updateData);
   _migrateScriptCalls(itemData, updateData);
@@ -1673,16 +1674,18 @@ const _migrateItemLinks = function (ent, updateData) {
   }
 };
 
-const _migrateProficiencies = function (ent, updateData) {
-  // Add proficiency objects to items able to grant proficiencies
-  if (["feat", "class", "race"].includes(ent.type)) {
-    for (const prof of ["armorProf", "weaponProf"]) {
-      if (!hasProperty(ent, `system.${prof}`))
-        updateData[`system.${prof}`] = {
-          value: [],
-          custom: "",
-        };
-    }
+const _migrateItemProficiencies = function (item, updateData) {
+  // Added with PF1 vNEXT
+  // Migrate sim/mar to simple/martial
+  const wprofmap = {
+    sim: "simple",
+    mar: "martial",
+  };
+
+  const oldKeys = Object.keys(wprofmap);
+  if (item.system.weaponProf?.value?.some((p) => oldKeys.includes(p))) {
+    const nwprof = item.system.weaponProf.value.map((p) => wprofmap[p] || p);
+    updateData["system.weaponProf.value"] = nwprof;
   }
 };
 
@@ -2125,6 +2128,27 @@ const _migrateActorStatures = function (ent, updateData) {
 
   if (stature === undefined) {
     updateData["system.traits.stature"] = "tall";
+  }
+};
+
+// Migrate weapon proficiencies
+// Converts sim and mar to simple and martial
+// Added with PF1 vNEXT
+const _migrateActorProficiencies = (actorData, updateData, { actor = null } = {}) => {
+  const wprofs = actorData.system.traits?.weaponProf?.value;
+  if (wprofs === undefined) return;
+
+  if (!Array.isArray(wprofs) || wprofs.length == 0) return; // TODO: Migrate if in wrong format
+
+  const wprofmap = {
+    sim: "simple",
+    mar: "martial",
+  };
+
+  const oldKeys = Object.keys(wprofmap);
+  if (wprofs.some((p) => oldKeys.includes(p))) {
+    const nwprofs = wprofs.map((v) => wprofmap[v] || v);
+    updateData["system.traits.weaponProf.value"] = nwprofs;
   }
 };
 

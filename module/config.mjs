@@ -313,8 +313,8 @@ export const armorProficiencies = {
  * The set of broad Weapon Proficiencies a character may have
  */
 export const weaponProficiencies = {
-  sim: "PF1.WeaponProfSimple",
-  mar: "PF1.WeaponProfMartial",
+  simple: "PF1.WeaponProfSimple",
+  martial: "PF1.WeaponProfMartial",
 };
 
 /* -------------------------------------------- */

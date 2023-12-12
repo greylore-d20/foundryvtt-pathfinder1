@@ -503,7 +503,7 @@ export class CompendiumBrowser extends Application {
 
     const html = this.element[0];
     // Without the delay the following blocks the drag start
-    setTimeout(() => html.classList.add("active-drag"), 50);
+    setTimeout(() => html.classList.add("active-drag"), 0);
     document.body.addEventListener("dragend", () => html.classList.remove("active-drag"), {
       once: true,
       passive: true,

@@ -11,7 +11,7 @@ import { registerContainerItemTests } from "./container-items.test.mjs";
 import { registerItemWeightTests } from "./item-weight.test.mjs";
 import { registerD20RollTests } from "./d20roll.test.mjs";
 import { registerFormulaParsingTests } from "./formula.test.mjs";
-import { registerSizeRollTests } from "./sizeroll.test.mjs";
+import { registerSizeRollTests } from "./roll-terminology.test.mjs";
 import { registerActorRestTests } from "./actor-rest.test.mjs";
 import { registerActorStaticTests } from "./actor-static.tests.mjs";
 

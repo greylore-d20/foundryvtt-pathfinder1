@@ -514,14 +514,10 @@ export class ActorPF extends ActorBasePF {
     this.system.resources ??= {};
 
     this._resetInherentTotals();
-    Hooks.callAll("pf1PrepareBaseActorData", this);
 
-    // Prepare base reach
-    this.system.traits.reach ??= {};
-    this.system.traits.reach.base = this.constructor.getReach(this.system.traits.size, this.system.traits.stature);
-    // TODO: The following should be produced by change system
-    this.system.traits.reach.natural = this.system.traits.reach.base;
-    this.system.traits.reach.total = this.system.traits.reach.base;
+    this._prepareNaturalReach();
+
+    Hooks.callAll("pf1PrepareBaseActorData", this);
 
     // Update total level and mythic tier
     const classes = this.itemTypes.class;
@@ -608,6 +604,35 @@ export class ActorPF extends ActorBasePF {
         enumerable: false,
       });
     }
+  }
+
+  /**
+   * Prepare natural reach for melee range and for reach weapons.
+   *
+   * @protected
+   */
+  _prepareNaturalReach() {
+    // Prepare base natural reach
+    this.system.traits.reach ??= {};
+    const reach = this.system.traits.reach;
+
+    reach.base = this.constructor.getReach(this.system.traits.size, this.system.traits.stature);
+
+    // Reset values
+    reach.natural = reach.base;
+    reach.total = { ...reach.base };
+
+    // Add base natural values to the change sources
+    getSourceInfo(this.sourceInfo, "system.traits.reach.total.melee").positive.push({
+      name: game.i18n.localize("PF1.BuffTarReach"),
+      modifier: "base",
+      value: reach.base.melee,
+    });
+    getSourceInfo(this.sourceInfo, "system.traits.reach.total.reach").positive.push({
+      name: game.i18n.localize("PF1.BuffTarReach"),
+      modifier: "base",
+      value: reach.base.reach,
+    });
   }
 
   /**
@@ -1209,6 +1234,11 @@ export class ActorPF extends ActorBasePF {
     });
 
     applyChanges.call(this);
+
+    const natReach = this.system.traits.reach.total;
+    // Ensure reach never becomes negative value
+    if (natReach.melee < 0) natReach.melee = 0;
+    if (natReach.reach < 0) natReach.reach = 0;
 
     // Prepare specific derived data
     this.prepareSpecificDerivedData();

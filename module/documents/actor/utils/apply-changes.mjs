@@ -348,6 +348,11 @@ export const getChangeFlat = function (target, modifierType, value) {
         result.push(`system.skills.${skillId}.changeBonus`);
       }
       break;
+    case "reach":
+      // Natural reach
+      result.push("system.traits.reach.total.melee");
+      result.push("system.traits.reach.total.reach");
+      break;
     case "strSkills":
       for (const [a, skl] of Object.entries(curData.skills)) {
         if (skl == null) continue;

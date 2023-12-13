@@ -1036,6 +1036,63 @@ export class ActionUse {
 
     if (this.action.data.touch) properties.push(game.i18n.localize("PF1.TouchAttackShort"));
 
+    // Add info for material
+    let materialKey = null;
+    let materialAddons = null;
+    const normalMaterialAction = this.action.data.material?.normal.value;
+    const normalMaterialItem = this.item.system.material?.normal.value;
+    const baseMaterialItem = this.item.system.material?.base?.value;
+    const addonMaterialAction = this.action.data.material?.addon;
+    const addonMaterialItem = this.item.system.material?.addon;
+
+    // Check the action data first, then the normal material, then the base material
+    if (normalMaterialAction && normalMaterialAction.length > 0) materialKey = normalMaterialAction;
+    else if (normalMaterialItem && normalMaterialItem.length > 0) materialKey = normalMaterialItem;
+    else materialKey = baseMaterialItem;
+
+    if (materialKey) {
+      properties.push(pf1.registry.materialTypes.get(materialKey.toLowerCase())?.name ?? materialKey.capitalize());
+    }
+
+    // Check for addon materials; prefer action data, then item data
+    if (addonMaterialAction && addonMaterialAction.length > 0) materialAddons = addonMaterialAction;
+    else if (addonMaterialItem && addonMaterialItem.length > 0) materialAddons = addonMaterialItem;
+
+    if (materialAddons) {
+      const materialAddonNames = materialAddons
+        .map((addon) => {
+          if (!addon) return null;
+          const addonName = pf1.registry.materialTypes.get(addon.toLowerCase())?.name ?? addon.capitalize();
+          return addonName;
+        })
+        .filter((addon) => !!addon);
+
+      if (materialAddonNames.length > 0) properties.push(...materialAddonNames);
+    }
+
+    // Add info for alignments
+    const actionAlignments = this.action.data.alignments;
+    const itemAlignments = this.item.system.alignments;
+    if (actionAlignments) {
+      for (const alignment of Object.keys(actionAlignments)) {
+        if (
+          actionAlignments[alignment] || // The action alignment is true OR
+          (actionAlignments[alignment] === null && // (The action alignment is indeterminate AND
+            itemAlignments[alignment])
+        ) {
+          // The item has the alignment)
+          properties.push(game.i18n.localize(`PF1.Alignment${alignment.charAt(0).toUpperCase()}`));
+        }
+      }
+    } else {
+      // Honestly, this should never happen. An action should always have an alignment now.
+      for (const alignment of Object.keys(itemAlignments ?? {})) {
+        if (itemAlignments[alignment]) {
+          properties.push(game.i18n.localize(`PF1.Alignment${alignment.charAt(0).toUpperCase()}`));
+        }
+      }
+    }
+
     // Add info for Power Attack to melee, Deadly Aim to ranged attacks
     if (this.shared.powerAttack) {
       switch (this.action.data.actionType) {

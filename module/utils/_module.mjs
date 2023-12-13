@@ -39,4 +39,5 @@ export {
   swapDistance,
   swapWeight,
   CR,
+  deepClone,
 } from "./lib.mjs";

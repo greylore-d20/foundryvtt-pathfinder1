@@ -1253,3 +1253,72 @@ export function isItemSameSubGroup(item0, item1) {
   // Assume everything else is only categorized by main type
   return true;
 }
+
+/**
+ * Clone value.
+ *
+ * Similar to `foundry.utils.deepClone()` but does not return references for DataModel instances.
+ *
+ * @remarks
+ * - Documents are returned as references (unless source option is enabled)
+ * - PIXI graphics are returned as references
+ * - DataModels are extracted like objects with `parent` excluded
+ * - Unsupported objects call .toObject() when present, otherwise as references
+ *
+ * @param {object} original - Original data
+ * @param {object} [options] - Additioanl options
+ * @param {boolean} [options.strict=false] - Throw an error if a reference would be returned.
+ * @param {boolean} [options.source=false] - Return source data instead for supporting data.
+ * @throws {Error} - With strict mode if reference would be returned.
+ * @returns {object} - Cloned object
+ */
+export function deepClone(original, { strict = false, source = false } = {}) {
+  return _deepClone(original, strict, source);
+}
+
+function _deepClone(original, strict = false, source = false, _depth = 0) {
+  if (_depth > 100) {
+    throw new Error("Maximum depth exceeded. Be sure your object does not contain cyclical data structures.");
+  }
+  _depth++;
+
+  // Simple types (null, undefined, number, string, bigint, function,...)
+  if (typeof original !== "object" || original === null) return original;
+
+  // Does not clone injected extra data
+  if (Array.isArray(original)) return original.map((value) => _deepClone(value, strict, source, _depth));
+
+  // Dates
+  if (original instanceof Date) return new Date(original);
+
+  // Return documents as is
+  if (original instanceof foundry.abstract.Document) {
+    if (source) return original.toObject();
+    if (strict) throw new Error("Document instance encountered");
+    return original;
+  }
+
+  if (original instanceof PIXI.DisplayObject) {
+    if (strict) throw new Error("PIXI graphic encountered");
+    return original;
+  }
+
+  // Unsupported advanced objects
+  if (original instanceof foundry.abstract.DataModel) {
+    if (source) return original.toObject();
+    // Otherwise treat as regular object
+  } else if (original.constructor && original.constructor !== Object) {
+    if (typeof original.toObject === "function") return original.toObject();
+    else if (typeof original.toJSON === "function") return original.toJSON();
+    if (strict) throw new Error(`Unsupported advanced object: ${original.constructor.name}`);
+    return original;
+  }
+
+  // DataModels and other plain objects
+  const clone = {};
+  for (const k of Object.keys(original)) {
+    clone[k] = _deepClone(original[k], strict, source, _depth);
+  }
+
+  return clone;
+}

@@ -159,10 +159,10 @@ export class ItemBuffPF extends ItemPF {
       const duration = this.system.duration;
       const unit = pf1.config.timePeriodsShort[duration.units];
       if (unit === "turn") {
-        labels.duration = game.i18n.format("PF1.TimeFormat", { value: 1, unit });
+        labels.duration = game.i18n.format("PF1.Time.Format", { value: 1, unit });
       } else if (unit && duration.value) {
         const value = RollPF.safeTotal(duration.value, this.getRollData());
-        labels.duration = game.i18n.format("PF1.TimeFormat", { value, unit });
+        labels.duration = game.i18n.format("PF1.Time.Format", { value, unit });
       } else {
         labels.duration = "";
       }

@@ -135,6 +135,17 @@
     </div>
     {{/if}}
 
+    {{#if misc.conditions}}
+    <div class="flexcol property-group">
+      <label>{{localize "PF1.ConditionPlural"}}</label>
+      <div class="flexrow tag-list">
+        {{#each misc.conditions as |v|}}
+        <span class="tag">{{{v}}}</span>
+        {{/each}}
+      </div>
+    </div>
+    {{/if}}
+
     <div class="saving-throws flexrow">
       <button data-action="defense-save" data-save="fort">{{localize "PF1.SavingThrowFort"}}</button>
       <button data-action="defense-save" data-save="ref">{{localize "PF1.SavingThrowRef"}}</button>

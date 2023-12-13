@@ -36,6 +36,8 @@ export class Condition extends RegistryEntry {
         }
       ),
       journal: new fields.StringField({ nullable: true, blank: false, required: false }),
+      showInDefense: new fields.BooleanField({ required: false, initial: true }),
+      showInAction: new fields.BooleanField({ required: false, initial: true }),
     };
   }
 }
@@ -65,6 +67,8 @@ export class Conditions extends Registry {
       name: "PF1.CondBleed",
       texture: "systems/pf1/icons/conditions/bleed.png",
       journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.L6DTocj1PbOtuspU",
+      showInAction: false,
+      showInDefense: false,
     },
     {
       _id: "blind",
@@ -87,6 +91,7 @@ export class Conditions extends Registry {
       name: "PF1.CondConfused",
       texture: "systems/pf1/icons/conditions/confused.png",
       journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.J2yma0xciBKRUh9t",
+      showInDefense: false,
     },
     {
       _id: "cowering",
@@ -102,12 +107,14 @@ export class Conditions extends Registry {
           },
         ],
       },
+      showInAction: false,
     },
     {
       _id: "dazed",
       name: "PF1.CondDazed",
       texture: "systems/pf1/icons/conditions/dazed.png",
       journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.2A6Gk60pLDKR2zT0",
+      showInAction: false,
     },
     {
       _id: "dazzled",
@@ -123,6 +130,8 @@ export class Conditions extends Registry {
           },
         ],
       },
+      showInDefense: false,
+      showInAction: false,
     },
     {
       _id: "deaf",
@@ -179,6 +188,7 @@ export class Conditions extends Registry {
         ],
       },
       track: "lethargy",
+      showInDefense: false,
     },
     {
       _id: "fatigued",
@@ -200,6 +210,7 @@ export class Conditions extends Registry {
         ],
       },
       track: "lethargy",
+      showInDefense: false,
     },
     {
       _id: "frightened",
@@ -231,6 +242,7 @@ export class Conditions extends Registry {
         ],
       },
       track: "fear",
+      showInAction: false,
     },
     {
       _id: "grappled",
@@ -269,6 +281,7 @@ export class Conditions extends Registry {
           },
         ],
       },
+      showInAction: false,
     },
     {
       _id: "incorporeal",
@@ -292,12 +305,15 @@ export class Conditions extends Registry {
           },
         ],
       },
+      showInAction: false,
+      showInDefense: false,
     },
     {
       _id: "invisible",
       name: "PF1.CondInvisible",
       texture: "systems/pf1/icons/conditions/invisible.png",
       journal: "Compendium.pf1.pf1e-rules.JournalEntry.NSqfXaj4MevUR2uJ.JournalEntryPage.Wr2ZWUZcyVWQ4GtX",
+      showInDefense: false,
     },
     {
       _id: "nauseated",
@@ -361,6 +377,7 @@ export class Conditions extends Registry {
           },
         ],
       },
+      showInAction: false,
     },
     {
       _id: "pinned",
@@ -390,6 +407,7 @@ export class Conditions extends Registry {
         ],
         flags: ["loseDexToAC"],
       },
+      showInAction: false,
     },
     {
       _id: "prone",
@@ -436,6 +454,8 @@ export class Conditions extends Registry {
         ],
       },
       track: "fear",
+      showInAction: false,
+      showInDefense: false,
     },
     {
       _id: "sickened",
@@ -471,6 +491,8 @@ export class Conditions extends Registry {
           },
         ],
       },
+      showInAction: false,
+      showInDefense: false,
     },
     {
       _id: "sleep",
@@ -489,6 +511,7 @@ export class Conditions extends Registry {
           },
         ],
       },
+      showInAction: false,
     },
     {
       _id: "staggered",
@@ -510,6 +533,7 @@ export class Conditions extends Registry {
           },
         ],
       },
+      showInAction: false,
     },
     {
       _id: "squeezing",

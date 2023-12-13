@@ -3139,6 +3139,12 @@ export class ActorPF extends ActorBasePF {
       ];
       energyResistance.push(...values.map((o) => game.i18n.format("PF1.VulnerableTo", { vulnerability: o })));
     }
+    // Conditions
+    const conditions = Object.entries(this.system.conditions ?? {})
+      .filter(([_, enabled]) => enabled)
+      .map(([id]) => pf1.registry.conditions.get(id))
+      .filter((c) => c?.showInDefense)
+      .map((c) => c.name);
 
     // Wound Threshold penalty
     const wT = this.getWoundThresholdData();
@@ -3173,6 +3179,7 @@ export class ActorPF extends ActorBasePF {
         srNotes: srNotes,
         drNotes: drNotes,
         energyResistance: energyResistance,
+        conditions: conditions,
       },
     };
     // Add regeneration and fast healing

@@ -1012,6 +1012,20 @@ export class ActionUse {
       }
     }
 
+    // Add conditions
+    const conditions = Object.entries(this.system.conditions ?? {})
+      .filter(([_, enabled]) => enabled)
+      .map(([id]) => pf1.registry.conditions.get(id))
+      .filter((c) => c?.showInAction);
+
+    // Special case
+    if (this.system.conditions?.deaf && this.item.type === "spell") {
+      // TODO: Check if someone modified the conditions to show anyway?
+      conditions.push(pf1.registry.conditions.get("deaf").name);
+    }
+
+    if (conditions.length) properties.push(...conditions);
+
     // Add info for broken state
     if (this.shared.rollData.item.broken) {
       properties.push(game.i18n.localize("PF1.Broken"));

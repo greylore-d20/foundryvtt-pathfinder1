@@ -1013,13 +1013,13 @@ export class ActionUse {
     }
 
     // Add conditions
-    const conditions = Object.entries(this.system.conditions ?? {})
+    const conditions = Object.entries(this.actor.system.conditions ?? {})
       .filter(([_, enabled]) => enabled)
       .map(([id]) => pf1.registry.conditions.get(id))
       .filter((c) => c?.showInAction);
 
     // Special case
-    if (this.system.conditions?.deaf && this.item.type === "spell") {
+    if (this.actor.system.conditions?.deaf && this.item.type === "spell") {
       // TODO: Check if someone modified the conditions to show anyway?
       conditions.push(pf1.registry.conditions.get("deaf").name);
     }

@@ -101,8 +101,8 @@ export class TokenPF extends Token {
     // Determine the color to use
     const blk = 0x000000;
     let color;
-    if (number === 0) color = PIXI.utils.rgb2hex([1 - boostlessPct / 2, boostlessPct, 0]);
-    else color = PIXI.utils.rgb2hex([0.5 * boostlessPct, 0.7 * boostlessPct, 0.5 + boostlessPct / 2]);
+    if (number === 0) color = Color.fromRGBvalues(1 - boostlessPct / 2, boostlessPct, 0);
+    else color = Color.fromRGBvalues(0.5 * boostlessPct, 0.7 * boostlessPct, 0.5 + boostlessPct / 2);
 
     // Draw the bar
     bar.clear();
@@ -116,6 +116,7 @@ export class TokenPF extends Token {
         .lineStyle(bs, blk, 1.0)
         .drawRoundedRect(0, 0, pct * w, h, 2);
     }
+
     // Draw normal value
     bar
       .beginFill(color, 1.0)

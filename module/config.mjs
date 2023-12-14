@@ -1885,7 +1885,6 @@ export const buffTargets = /** @type {const} */ ({
   mDexA: { label: "PF1.MaxDexArmor", category: "misc", sort: 20000 },
   mDexS: { label: "PF1.MaxDexShield", category: "misc", sort: 21000 },
   reach: { label: "PF1.BuffTarReach", category: "misc", sort: 50000 },
-  reachmin: { label: "PF1.BuffTarReachMin", category: "misc", sort: 51000 },
   str: { label: "PF1.AbilityStr", category: "ability", sort: 30000 },
   dex: { label: "PF1.AbilityDex", category: "ability", sort: 31000 },
   con: { label: "PF1.AbilityCon", category: "ability", sort: 32000 },

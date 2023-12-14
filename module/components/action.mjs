@@ -254,7 +254,7 @@ export class ItemAction {
    * @returns {boolean}
    */
   get isHealing() {
-    return this.data.actionType === "heal" && this.data.damage.parts.length;
+    return this.data.actionType === "heal" && this.hasDamage;
   }
 
   get hasEffect() {

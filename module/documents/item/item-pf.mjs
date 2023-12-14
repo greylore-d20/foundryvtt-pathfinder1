@@ -14,21 +14,21 @@ export class ItemPF extends ItemBasePF {
   constructor(...args) {
     super(...args);
 
-    if (this.links === undefined)
-      /**
-       * An object containing links to other items.
-       *
-       * @type {Record<string, ItemPF>}
-       */
-      this.links = {};
+    /**
+     * An object containing links to other items.
+     *
+     * @type {Record<string, ItemPF>}
+     */
+    this.links ??= {};
 
-    if (this.actions === undefined && this.actions instanceof Array)
+    if (Array.isArray(this.system.actions)) {
       /**
        * A {@link Collection} of {@link ItemAction}s.
        *
        * @type {Collection<ItemAction>}
        */
-      this.actions = new Collection();
+      this.actions ??= new Collection();
+    }
   }
 
   /**

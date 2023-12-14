@@ -617,7 +617,7 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Conditions
-    const conditions = this.actor.system.attributes?.conditions ?? {};
+    const conditions = this.actor.system.conditions;
     data.conditions = pf1.registry.conditions.map((cond) => ({
       id: cond.id,
       img: cond.texture,

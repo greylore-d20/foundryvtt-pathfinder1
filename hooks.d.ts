@@ -68,7 +68,7 @@ declare global {
       // ------------------------- //
       /**
        * A hook event fired by the system when one or more of an actor's conditions have changed.
-       * The `conditions` object can be found in `actor.system.attributes.conditions`.
+       * The `conditions` object can be found in `actor.system.conditions`.
        *
        * @group Actor
        * @remarks Called by {@link Hooks.callAll}

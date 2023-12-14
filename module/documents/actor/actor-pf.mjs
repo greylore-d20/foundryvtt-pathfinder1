@@ -4623,6 +4623,12 @@ export class ActorPF extends ActorBasePF {
 
     // Add class info
     result.classes = this.classes;
+    const negLevels = result.attributes.energyDrain ?? 0;
+    if (negLevels > 0) {
+      for (const cls of Object.values(result.classes)) {
+        cls.level = Math.max(0, cls.unlevel - negLevels);
+      }
+    }
 
     this._rollData = result;
 

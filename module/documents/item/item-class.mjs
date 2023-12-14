@@ -282,6 +282,7 @@ export class ItemClassPF extends ItemPF {
     actor.classes[itemData.tag] = {
       _id: this.id,
       level: itemData.level,
+      unlevel: itemData.level,
       name: this.name,
       hd: itemData.hd,
       hitDice: this.hitDice,

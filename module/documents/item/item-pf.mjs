@@ -22,15 +22,6 @@ export class ItemPF extends ItemBasePF {
        */
       this.links = {};
 
-    if (this._rollData === undefined)
-      /**
-       * Cached {@link ItemPF.getRollData}
-       *
-       * @type {null|object}
-       * @private
-       */
-      this._rollData = null;
-
     if (this.actions === undefined && this.actions instanceof Array)
       /**
        * A {@link Collection} of {@link ItemAction}s.
@@ -1331,8 +1322,6 @@ export class ItemPF extends ItemBasePF {
     if (this.system.resizing && result.size !== undefined) {
       result.item.size = result.size;
     }
-
-    this._rollData = result.item;
 
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
 

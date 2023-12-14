@@ -114,36 +114,19 @@ class GridlessHighlight extends AttackHighlightBase {
     const rangeKey = action.data.range.units;
     if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
     const isReach = rangeKey === "reach";
-    const range = rollData.range;
 
     // Determine minimum range
-    const minRangeKey = action.data.range.minUnits;
-    let minRange = null;
-    if (["melee", "touch"].includes(minRangeKey)) minRange = range.melee;
-    if (minRangeKey === "reach") minRange = range.reach;
-    if (minRangeKey === "ft") {
-      minRange = RollPF.safeRoll(action.data.range.minValue || "0", rollData).total;
-    }
+    const minRange = pf1.utils.convertDistanceBack(action.getRange({ type: "min", rollData }))[0];
+    const r = pf1.utils.convertDistanceBack(action.getRange({ type: "single", rollData }))[0];
 
-    const rangeMeasurements = [minRange || 0];
+    const rangeMeasurements = [minRange || 0, r];
 
-    if (["melee", "touch", "reach"].includes(rangeKey)) {
-      rangeMeasurements.push(range.melee);
-      if (isReach) {
-        rangeMeasurements.push(range.reach);
-      }
-    } else if (rangeKey === "ft") {
-      const r = calculateRangeFormula(action.data.range.value || "0", "ft", rollData);
-      rangeMeasurements.push(r);
-
+    if (rangeKey === "ft") {
       // Add range increments
       const rangeIncrements = action.data.range.maxIncrements;
       for (let a = 1; a < rangeIncrements; a++) {
         rangeMeasurements.push((a + 1) * r);
       }
-    } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {
-      const range = calculateRangeFormula(null, rangeKey, rollData);
-      rangeMeasurements.push(range);
     }
 
     this.#rangeStops = rangeMeasurements.map((r) => {
@@ -187,6 +170,7 @@ class GridlessHighlight extends AttackHighlightBase {
         // if inner has a defined value and is not 0, then cut a hole for either the next increment or because it's the minimum range
         if (inner) {
           circle.beginHole();
+          circle.beginFill(reachColor.fill, 0.1);
           circle.drawCircle(x, y, inner);
           circle.endHole();
         }
@@ -203,7 +187,6 @@ class SquareGridHighlight extends AttackHighlightBase {
    * @typedef {object} AttackReachHighlight
    * An object containing highlights belonging to a specific attack
    * @property {SquareHighlight} normal - Highlight for normal range
-   * @property {SquareHighlight} reach - Highlight for reach range
    * @property {SquareHighlight[]} extra - Additional highlights
    */
 
@@ -237,16 +220,12 @@ class SquareGridHighlight extends AttackHighlightBase {
     const rangeKey = action.data.range.units;
     if (!["melee", "touch", "reach", "ft", "close", "medium"].includes(rangeKey)) return;
     const isReach = rangeKey === "reach";
-    const range = rollData.range;
+    const isFeet = rangeKey === "ft";
 
     // Determine minimum range
-    const minRangeKey = action.data.range.minUnits;
-    let minRange = null;
-    if (["melee", "touch"].includes(minRangeKey)) minRange = range.melee;
-    if (minRangeKey === "reach") minRange = range.reach;
-    if (minRangeKey === "ft") {
-      minRange = RollPF.safeRoll(action.data.range.minValue || "0", rollData).total;
-    }
+    const minRange = pf1.utils.convertDistanceBack(action.getRange({ type: "min", rollData }))[0];
+
+    const r = pf1.utils.convertDistanceBack(action.getRange({ type: "single", rollData }))[0];
 
     const squares = {
       normal: [],
@@ -255,13 +234,9 @@ class SquareGridHighlight extends AttackHighlightBase {
     };
     const useReachRule = game.settings.get("pf1", "alternativeReachCornerRule") !== true;
 
-    if (["melee", "touch", "reach"].includes(rangeKey)) {
-      squares.normal = this.#getReachSquares(token, range.melee, minRange, { useReachRule });
-      squares.reach = this.#getReachSquares(token, range.reach, range.melee, { useReachRule });
-    } else if (rangeKey === "ft") {
-      const r = calculateRangeFormula(action.data.range.value || "0", "ft", rollData);
-      squares.normal = this.#getReachSquares(token, r, minRange, { useReachRule: true });
+    squares.normal = this.#getReachSquares(token, r, minRange, { useReachRule: isFeet ? true : useReachRule });
 
+    if (rangeKey === "ft") {
       // Add range increments
       const maxSquareRange = Math.min(
         60, // arbitrary limit to enhance performance on large canvases
@@ -276,41 +251,31 @@ class SquareGridHighlight extends AttackHighlightBase {
           squares.extra.push(this.#getReachSquares(token, (a + 1) * r, a * r, { useReachRule }));
         }
       }
-    } else if (["close", "medium"].includes(rangeKey) && attack.type === "spell") {
-      const range = calculateRangeFormula(null, rangeKey, rollData);
-      squares.normal = this.#getReachSquares(token, range, minRange, { useReachRule });
     }
 
     const result = {
       normal: new SquareHighlight(origin, rangeColor.fill, rangeColor.border),
-      reach: new SquareHighlight(origin, reachColor.fill, reachColor.border),
       extra: [],
     };
+
     for (const s of squares.normal) {
       result.normal.addSquare(s[0], s[1]);
     }
-    if (isReach) {
-      for (const s of squares.reach) {
-        result.reach.addSquare(s[0], s[1]);
-      }
-    }
 
     // Add extra range squares
-    {
-      for (let a = 0; a < squares.extra.length; a++) {
-        const squaresExtra = squares.extra[a];
+    for (let a = 0; a < squares.extra.length; a++) {
+      const squaresExtra = squares.extra[a];
 
-        const color = {
-          fill: a % 2 === 1 ? rangeColor.fill : reachColor.fill,
-          border: a % 2 === 1 ? rangeColor.border : reachColor.border,
-        };
+      const color = {
+        fill: a % 2 === 1 ? rangeColor.fill : reachColor.fill,
+        border: a % 2 === 1 ? rangeColor.border : reachColor.border,
+      };
 
-        const hl = new SquareHighlight(origin, color.fill, color.border);
-        for (const s of squaresExtra) {
-          hl.addSquare(s[0], s[1]);
-        }
-        result.extra.push(hl);
+      const hl = new SquareHighlight(origin, color.fill, color.border);
+      for (const s of squaresExtra) {
+        hl.addSquare(s[0], s[1]);
       }
+      result.extra.push(hl);
     }
 
     this.#currentHighlight = result;
@@ -322,7 +287,7 @@ class SquareGridHighlight extends AttackHighlightBase {
    * @param {number} range
    * @param {number} minRange
    * @param {object} options
-   * @returns
+   * @returns {Array<Array<number,number>>} - Array of x,y coordinate tuples
    */
   #getReachSquares(token, range, minRange = 0, options) {
     const result = [];
@@ -425,7 +390,6 @@ class SquareGridHighlight extends AttackHighlightBase {
   clearHighlight() {
     if (this.#currentHighlight) {
       this.#currentHighlight.normal.clear();
-      this.#currentHighlight.reach.clear();
       for (const h of this.#currentHighlight.extra) {
         h.clear();
       }
@@ -436,7 +400,6 @@ class SquareGridHighlight extends AttackHighlightBase {
   renderHighlight() {
     if (this.#currentHighlight) {
       this.#currentHighlight.normal.render();
-      this.#currentHighlight.reach.render();
       for (const h of this.#currentHighlight.extra) {
         h.render();
       }

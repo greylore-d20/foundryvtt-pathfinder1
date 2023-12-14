@@ -1072,7 +1072,7 @@ export class ActionUse {
 
     // Add info for alignments
     const actionAlignments = this.action.data.alignments;
-    const itemAlignments = this.item.system.alignments;
+    const itemAlignments = this.item.system.alignments ?? {};
     if (actionAlignments) {
       for (const alignment of Object.keys(actionAlignments)) {
         if (
@@ -1086,7 +1086,7 @@ export class ActionUse {
       }
     } else {
       // Honestly, this should never happen. An action should always have an alignment now.
-      for (const alignment of Object.keys(itemAlignments ?? {})) {
+      for (const alignment of Object.keys(itemAlignments)) {
         if (itemAlignments[alignment]) {
           properties.push(game.i18n.localize(`PF1.Alignment${alignment.charAt(0).toUpperCase()}`));
         }

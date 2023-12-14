@@ -137,6 +137,28 @@ export const registerActorItemAttackTests = () => {
         });
       });
 
+      // reach weapon
+      describe("reach weapon range", function () {
+        const items = {};
+        before(async () => {
+          items.wGuisarme = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Guisarme");
+        });
+
+        it("add guisarme", function () {
+          expect(actor.itemTypes.weapon.find((o) => o === items.wGuisarme).name).to.equal("Guisarme");
+        });
+
+        it("should have max range of 10 ft", function () {
+          const maxRange = items.wGuisarme.firstAction.maxRange;
+          expect(pf1.utils.convertDistanceBack(maxRange)[0]).to.equal(10);
+        });
+
+        it("should have min range of 5 ft", function () {
+          const minRange = items.wGuisarme.firstAction.minRange;
+          expect(pf1.utils.convertDistanceBack(minRange)[0]).to.equal(5);
+        });
+      });
+
       describe("attack with natural attack", function () {
         const items = {};
         before(async () => {

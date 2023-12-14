@@ -1302,7 +1302,7 @@ export class ItemPF extends ItemBasePF {
    */
   getRollData() {
     const actor = this.actor;
-    const result = actor?.getRollData() ?? {};
+    const result = { ...(actor?.getRollData() ?? {}) };
 
     result.item = deepClone(this.system);
 

@@ -94,13 +94,14 @@ export class ActorSheetPFNPC extends ActorSheetPF {
 
     const value = CR.fromString(el.tagName === "INPUT" ? el.value : el.innerText);
     const name = el.getAttribute("name");
+    let updateData;
     if (name) {
-      this._pendingUpdates[name] = value;
+      updateData = { [name]: value };
     }
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      el.addEventListener("mouseleave", (ev) => this._onSubmit(event), { passive: true, once: true });
-    } else this._onSubmit(event);
+      el.addEventListener("mouseleave", (ev) => this._onSubmit(event, { updateData }), { passive: true, once: true });
+    } else this._onSubmit(event, { updateData });
   }
 }

@@ -80,14 +80,6 @@ export class ActorSheetPF extends ActorSheet {
     this._hiddenElems = {};
 
     /**
-     * A dictionary of additional queued updates, to be added on top of the form's data (and cleared afterwards).
-     *
-     * @property
-     * @private
-     */
-    this._pendingUpdates = {};
-
-    /**
      * @type {boolean} Whether the skills are currently locked.
      * @property
      * @private
@@ -1686,14 +1678,18 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Add pending update
+    let updateData;
     if (name) {
-      this._pendingUpdates[name] = value;
+      updateData = { [name]: value };
     }
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {
-      el.addEventListener("mouseleave", (event) => this._onSubmit(event), { passive: true, once: true });
-    } else this._onSubmit(event);
+      el.addEventListener("mouseleave", (event) => this._onSubmit(event, { updateData }), {
+        passive: true,
+        once: true,
+      });
+    } else this._onSubmit(event, { updateData });
   }
 
   _setBuffLevel(event) {
@@ -1704,12 +1700,9 @@ export class ActorSheetPF extends ActorSheet {
 
     this._mouseWheelAdd(event, el);
     const value = el.tagName === "INPUT" ? Number(el.value) : Number(el.innerText);
-    const name = el.getAttribute("name");
-    if (name) {
-      this._pendingUpdates[name] = value;
-    }
 
     this.setItemUpdate(item.id, "system.level", value);
+
     if (event.originalEvent instanceof MouseEvent) {
       el.addEventListener("mouseleave", () => this._updateItems(), { passive: true, once: true });
     } else this._updateItems();
@@ -3278,12 +3271,6 @@ export class ActorSheetPF extends ActorSheet {
         formData[k] = v;
       }
     }
-
-    // Add pending updates
-    for (const [k, v] of Object.entries(this._pendingUpdates)) {
-      formData[k] = v;
-    }
-    this._pendingUpdates = {};
 
     this.searchRefresh = true;
 

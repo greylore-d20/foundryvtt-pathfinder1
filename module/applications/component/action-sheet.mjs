@@ -160,7 +160,7 @@ export class ItemActionSheet extends FormApplication {
 
     // Add alignments
     data.alignmentTypes = this._prepareAlignments(this.action.alignments);
-    this.alignments = data.alignmentTypes.values; // Use a deep clone we've already made to track our progress.
+    this.alignments = data.alignmentTypes?.values; // Use a deep clone we've already made to track our progress.
 
     return data;
   }
@@ -189,7 +189,7 @@ export class ItemActionSheet extends FormApplication {
     };
   }
 
-  _prepareAlignments(alignments) {
+  _prepareAlignments(alignments = {}) {
     const alignmentChoices = {};
 
     Object.keys(pf1.config.damageResistances).forEach((dType) => {
@@ -592,9 +592,11 @@ export class ItemActionSheet extends FormApplication {
     }
 
     formData = expandObject(formData);
-    // Adjust Alignment Types (this is necessary to handle null values for inheritance)
-    for (const [key, value] of Object.entries(this.alignments)) {
-      formData.alignments[key] = value;
+    if (formData.alignments) {
+      // Adjust Alignment Types (this is necessary to handle null values for inheritance)
+      for (const [key, value] of Object.entries(this.alignments)) {
+        formData.alignments[key] = value;
+      }
     }
 
     return this.action.update(formData);

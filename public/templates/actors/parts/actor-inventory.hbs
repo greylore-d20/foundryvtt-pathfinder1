@@ -5,7 +5,7 @@
       {{#each system.currency as |v k|}}
       <li class="denomination {{k}}" data-denomination="{{k}}">
         <label>{{lookup @root.config.currencies k}}</label>
-        <span class="text-box direct allow-relative" name="system.currency.{{k}}">{{#if v}}{{v}}{{/if}}</span>
+        <span class="text-box direct allow-relative" name="system.currency.{{k}}" data-dtype="Number">{{#if v}}{{v}}{{/if}}</span>
         <a class="convert-currency" data-type="{{k}}" data-category="currency" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-long-arrow-alt-left"></i></a>
       </li>
       {{/each}}
@@ -16,7 +16,7 @@
       {{#each system.altCurrency as |v k|}}
       <li class="denomination {{k}} alt-currency" data-denomination="{{k}}">
         <label>{{lookup @root.config.currencies k}}</label>
-        <span class="text-box direct allow-relative" name="system.altCurrency.{{k}}">{{#if v}}{{v}}{{/if}}</span>
+        <span class="text-box direct allow-relative" name="system.altCurrency.{{k}}" data-dtype="Number">{{#if v}}{{v}}{{/if}}</span>
         <a class="convert-currency" data-type="{{k}}" data-category="altCurrency" data-tooltip="PF1.ConvertCurrency"><i class="fas fa-long-arrow-alt-left"></i></a>
       </li>
       {{/each}}

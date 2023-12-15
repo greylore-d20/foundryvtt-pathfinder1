@@ -545,22 +545,26 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
  */
 export const adjustNumberByStringCommand = function (initialValue, cmdStr, maxValue = null, clearValue = null) {
   let result = initialValue;
-
-  if (cmdStr.match(/(=)?([+-]+)?(\d+)/)) {
-    const operator = RegExp.$2;
-    const isAbsolute = RegExp.$1 == "=" || ["--", "++"].includes(operator) || (!RegExp.$1 && !RegExp.$2);
+  const re = cmdStr.match(/(?<abs>=)?(?<op>[+-]+)?(?<value>\d+)/);
+  if (re) {
+    const { op: operator, abs, value: rawValue } = re.groups;
+    const isAbsolute = abs == "=" || ["--", "++"].includes(operator) || (!abs && !operator);
     const isNegative = ["-", "--"].includes(operator);
-    const rawValue = parseInt(RegExp.$3, 10);
-    const value = isNegative ? -rawValue : rawValue;
+    let value = parseInt(rawValue);
+    if (isNegative) value = -value;
     result = isAbsolute ? value : initialValue + value;
-  } else if (cmdStr === "" && clearValue != null) {
+  } else if (cmdStr === "" && clearValue !== null) {
     result = clearValue;
   } else {
     result = parseFloat(cmdStr || "0");
   }
 
-  if (maxValue) result = Math.min(result, maxValue);
-  if (Number.isNaN(result)) result = initialValue;
+  if (Number.isFinite(maxValue)) result = Math.min(result, maxValue);
+
+  if (Number.isNaN(result)) {
+    console.warn("Input resulted in NaN", { initial: initialValue, command: cmdStr });
+    result = initialValue;
+  }
 
   return result;
 };

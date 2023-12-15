@@ -1362,34 +1362,41 @@ export class ActorSheetPF extends ActorSheet {
 
   /* -------------------------------------------- */
 
-  _onSpanTextInput(event, callback = null) {
-    const el = event.currentTarget;
+  /**
+   * @protected
+   * @param {Event} event - Triggering event
+   * @param {Function} callback - Submission handler
+   */
+  _onSpanTextInput(event, callback) {
+    const el = event.target;
     const parent = el.parentElement;
 
     // Replace span element with an input (text) element
-    const newEl = document.createElement(`INPUT`);
+    const newEl = document.createElement("INPUT");
     newEl.type = "text";
     if (el.dataset?.dtype) newEl.dataset.dtype = el.dataset.dtype;
 
-    // Set value of new input element
-    let prevValue = el.innerText;
-    if (el.classList.contains("placeholder")) prevValue = "";
-
     const noCap = el.classList.contains("no-value-cap");
+    const name = el.getAttribute("name"); // span has no .name attribute even if name="" is used
 
-    const name = el.getAttribute("name");
-    let maxValue;
+    let prevValue = 0,
+      maxValue;
+
     if (name) {
       newEl.setAttribute("name", name);
-      prevValue = getProperty(this.document, name) ?? "";
-      if (typeof prevValue !== "string") prevValue = prevValue.toString();
-
+      prevValue = getProperty(this.document, name) || 0;
       if (name.endsWith(".value") && !noCap) {
         const maxName = name.replace(/\.value$/, ".max");
         maxValue = getProperty(this.document, maxName);
       }
+    } else {
+      if (!el.classList.contains("placeholder")) {
+        prevValue = parseFloat(el.innerText || "0");
+      }
     }
-    newEl.value = prevValue;
+
+    // Set value of new input element
+    newEl.value = `${prevValue || 0}`;
 
     // Toggle classes
     const forbiddenClasses = ["placeholder", "direct", "allow-relative"];
@@ -1397,38 +1404,32 @@ export class ActorSheetPF extends ActorSheet {
       if (!forbiddenClasses.includes(cls)) newEl.classList.add(cls);
     }
 
-    // Replace span with input element
     const allowRelative = el.classList.contains("allow-relative"),
       clearValue = parseFloat(el.dataset.clearValue || "0");
+
+    // Replace span with input element
     parent.replaceChild(newEl, el);
-    let changed = false;
-    newEl.addEventListener("keypress", (event) => {
-      if (event.key !== "Enter") return;
-      changed = true;
+
+    newEl.addEventListener("change", (event) => {
+      event.preventDefault();
+      event.stopPropagation(); // Prevent Foundry acting on this
+
+      let newValue;
       if (allowRelative) {
-        const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue, clearValue);
-        newEl.value = number;
+        newValue = adjustNumberByStringCommand(prevValue, newEl.value, maxValue, clearValue);
+        newEl.value = newValue;
+      } else {
+        newValue = parseFloat(newEl.value || "0");
       }
 
-      if (newEl.value.toString() === prevValue.toString()) {
+      // Reset if nothing changed
+      if (newValue === prevValue) {
         parent.replaceChild(el, newEl);
-      } else if (typeof callback === "function") {
-        callback.call(this, event);
       }
-    });
-    newEl.addEventListener("focusout", (event) => {
-      if (!changed) {
-        changed = true;
-        if (allowRelative && parseFloat(prevValue) !== parseFloat(newEl.value)) {
-          const number = adjustNumberByStringCommand(parseFloat(prevValue), newEl.value, maxValue, clearValue);
-          newEl.value = number;
-        }
-
-        if (newEl.value.toString() === prevValue.toString()) {
-          parent.replaceChild(el, newEl);
-        } else if (typeof callback === "function") {
-          callback.call(this, event);
-        }
+      // Pass it to callback
+      else {
+        newEl.readOnly = true;
+        callback.call(this, event);
       }
     });
 
@@ -1671,17 +1672,14 @@ export class ActorSheetPF extends ActorSheet {
     let value = el.dataset.dtype === "String" ? rawValue : Number(rawValue);
 
     // Adjust value if needed
-    const name = el.getAttribute("name");
+    const name = el.name;
     if (name.match(/^system\.abilities\.([a-zA-Z0-9]+)\.value$/)) {
       if (Number.isNaN(parseInt(value))) value = null;
       else value = parseInt(value);
     }
 
-    // Add pending update
     let updateData;
-    if (name) {
-      updateData = { [name]: value };
-    }
+    if (name) updateData = { [name]: value };
 
     // Update on lose focus
     if (event.originalEvent instanceof MouseEvent) {

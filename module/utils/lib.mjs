@@ -154,6 +154,7 @@ export const convertDistance = function (value, type = "ft") {
           return [Math.round((value / 5) * 1.5 * 100) / 100, "m"];
       }
     default:
+      if (!["ft", "mi"].includes(type)) type = "ft";
       return [value, type];
   }
 };

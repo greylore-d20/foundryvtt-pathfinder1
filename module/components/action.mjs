@@ -196,11 +196,16 @@ export class ItemAction {
    * @returns {number|null} The given range, in system configured units, or `null` if no range is applicable.
    */
   getRange({ type = "single", rollData = null } = {}) {
+    const baseRange = this.data.range.units;
     const range = type === "min" ? this.data.range.minValue : this.data.range.value;
-    const rangeType = type === "min" ? this.data.range.minUnits : this.data.range.units;
+    let rangeType = type === "min" ? this.data.range.minUnits : baseRange;
+
     if (!rangeType) {
-      if (type === "min") return 0;
-      return null;
+      if (type === "min") {
+        // Downgrade range to melee when getting minimum range of reach weapons and no explicit minimum range is defined
+        if (baseRange === "reach") rangeType = "melee";
+        else return 0;
+      } else return null;
     }
 
     rollData ??= this.getRollData();

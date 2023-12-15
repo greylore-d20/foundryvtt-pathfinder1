@@ -63,7 +63,7 @@ NumericTerm.prototype.getTooltipData = function () {
 
 // Patch ParentheticalTerm and allowed operators
 ParentheticalTerm.CLOSE_REGEXP = new RegExp(`\\)${RollTerm.FLAVOR_REGEXP_STRING}?`, "g");
-OperatorTerm.REGEXP = /(?:&&|\|\||\*\*|\+|-|\*|\/|\\%|\||:|\?)|(?<![a-z])[!=<>]+/g;
+OperatorTerm.REGEXP = /(?:&&|\|\||\*\*|%|\+|-|\*|\/|\\%|\||:|\?)|(?<![a-z])[!=<>]+/g;
 OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<=", ">=", "??", "||", "&&", "**");
 
 // Document link attribute stuffing

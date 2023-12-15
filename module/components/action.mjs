@@ -241,6 +241,44 @@ export class ItemAction {
   }
 
   /**
+   * Get power attack, deadly aim or piranha strike multiplier.
+   *
+   * @param {object} [options] - Additional options
+   * @param {object} [options.rollData=null] - Roll data instance
+   * @returns {number} - Effective multiplier
+   */
+  getPowerAttackMult({ rollData = null } = {}) {
+    rollData ??= this.getRollData();
+
+    const held = rollData.item?.held || "1h";
+
+    let mult = rollData.action?.powerAttack?.multiplier;
+    // Use defined override
+    if (mult) return mult;
+
+    // Determine default based on attack type and held option
+    mult = 1;
+    if (this.item.subType === "natural") {
+      // Primary
+      if (rollData.action.naturalAttack?.primaryAttack) {
+        // Primary attack gets +50% damage like with two-handing if ability score multiplier is 1.5x or higher
+        if (rollData.action.ability?.damageMult >= 1.5) {
+          mult = 1.5;
+        }
+      }
+      // Secondary
+      else {
+        mult = 0.5;
+      }
+    } else {
+      if (held === "2h") mult = 1.5;
+      else if (held === "oh") mult = 0.5;
+    }
+
+    return mult;
+  }
+
+  /**
    * Does the item have range defined.
    *
    * @type {boolean}

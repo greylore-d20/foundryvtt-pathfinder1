@@ -189,31 +189,10 @@ export class ActionUse {
       let powerAttackBonus = (1 + Math.floor(this.shared.rollData.attributes.bab.total / 4)) * basePowerAttackBonus;
 
       // Get multiplier
-      let powerAttackMultiplier = this.shared.rollData.item?.powerAttack?.multiplier;
-      if (!powerAttackMultiplier) {
-        powerAttackMultiplier = 1;
-        if (this.item.system.subType === "natural") {
-          // Primary
-          if (this.shared.rollData.action.naturalAttack?.primaryAttack) {
-            // Primary attack gets +50% damage like with two-handing if ability score multiplier is 1.5x or higher
-            if (this.shared.rollData.action.ability?.damageMult >= 1.5) {
-              powerAttackMultiplier = 1.5;
-            }
-          }
-          // Secondary
-          else {
-            powerAttackMultiplier = 0.5;
-          }
-        } else {
-          if (held === "2h") powerAttackMultiplier = 1.5;
-          else if (held === "oh") powerAttackMultiplier = 0.5;
-        }
-      } else {
-        powerAttackMultiplier = parseFloat(powerAttackMultiplier);
-      }
+      const paMult = this.shared.action.getPowerAttackMult({ rollData: this.shared.rollData });
 
       // Apply multiplier
-      powerAttackBonus = Math.floor(powerAttackBonus * powerAttackMultiplier);
+      powerAttackBonus = Math.floor(powerAttackBonus * paMult);
 
       // Get label
       const label = ["rwak", "twak", "rsak"].includes(this.action.data.actionType)

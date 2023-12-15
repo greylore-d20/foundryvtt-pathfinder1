@@ -1,6 +1,6 @@
 import { simplify as simplifyFormula } from "@utils/formulas.mjs";
 
-const testFormulas = [
+const simplificationTestFormulas = [
   ["1 == 1 ? 1d6 : 0", "1d6"],
   ["sizeRoll(1, 12)[test]", "1d12"],
   ["sizeRoll(2, 6, @size+1) + 5 + 2", "3d6 + 7"],
@@ -15,6 +15,12 @@ const testFormulas = [
   ["1d8+min(2,@attributes.dex.mod)", "1d8 + 2"],
   ["-.5", "-0.5"],
   ["3d6x>=5", "3d6x>=5"], // bug#2175
+];
+
+const generalTestFormulas = [
+  ["3 % 2", 1],
+  ["4 > 3 ? 2 : 1", 2],
+  ["1 > 2 ? 3 : 4", 4],
 ];
 
 export function registerFormulaParsingTests() {
@@ -32,8 +38,16 @@ export function registerFormulaParsingTests() {
         },
       };
 
+      describe("generic", function () {
+        for (const [formula, result] of generalTestFormulas) {
+          it(formula, async function () {
+            expect((await new Roll.defaultImplementation(formula).evaluate()).total).to.equal(result);
+          });
+        }
+      });
+
       describe("simplifyFormula", function () {
-        testFormulas.forEach(([formula, expected]) => {
+        simplificationTestFormulas.forEach(([formula, expected]) => {
           it(formula, function () {
             expect(simplifyFormula(formula, rollData)).to.equal(expected);
           });

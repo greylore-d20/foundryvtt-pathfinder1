@@ -140,6 +140,8 @@ export class ItemActionSheet extends FormApplication {
         delete data.distanceUnits[d];
       }
     }
+    // Set whether to show minimum range input
+    data.minRangeAvailable = ["reach", "ft", "mi", "seeText"].includes(data.data.range.units);
 
     // Prepare stuff for actions with conditionals
     if (data.data.conditionals) {

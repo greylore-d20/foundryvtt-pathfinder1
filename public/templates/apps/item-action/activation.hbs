@@ -39,7 +39,8 @@
   </div>
 </div>
 
-{{#if data.range.units}}
+{{!-- Only show for reach, feet, miles, and See Text --}}
+{{#if minRangeAvailable}}
 {{!-- Minimum Range --}}
 <div class="form-group input-select">
   <label>{{localize "PF1.MinRange"}}</label>

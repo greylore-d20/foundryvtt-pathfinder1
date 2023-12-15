@@ -325,13 +325,9 @@ export class ItemContainerPF extends ItemPhysicalPF {
    * @private
    */
   _calculateCoinWeight() {
-    const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
-    if (!coinWeightDivisor) return 0;
-    return (
-      Object.values(this.system.currency || {}).reduce((cur, amount) => {
-        return cur + amount;
-      }, 0) / coinWeightDivisor
-    );
+    const divisor = game.settings.get("pf1", "coinWeight");
+    if (!divisor) return 0;
+    return Object.values(this.system.currency || {}).reduce((total, coins) => total + (coins || 0), 0) / divisor;
   }
 
   /** @inheritdoc */

@@ -4154,13 +4154,9 @@ export class ActorPF extends ActorBasePF {
   }
 
   _calculateCoinWeight() {
-    const coinWeightDivisor = game.settings.get("pf1", "coinWeight");
-    if (!coinWeightDivisor) return 0;
-    return (
-      Object.values(this.system.currency).reduce((cur, amount) => {
-        return (parseInt(cur) || 0) + amount;
-      }, 0) / coinWeightDivisor
-    );
+    const divisor = game.settings.get("pf1", "coinWeight");
+    if (!divisor) return 0;
+    return Object.values(this.system.currency || {}).reduce((total, coins) => total + (coins || 0), 0) / divisor;
   }
 
   getCarryCapacity() {

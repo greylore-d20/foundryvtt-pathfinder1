@@ -1,23 +1,20 @@
 import { ActorPF } from "./actor-pf.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { applyChanges } from "./utils/apply-changes.mjs";
 
 export class ActorVehiclePF extends ActorPF {
   prepareBaseData() {
-    this.sourceInfo = {};
-
     // Add base initiative
     this.system.attributes.init.total = this.system.attributes.init.value;
     this.system.attributes.cmd.total = this.system.attributes.cmd.value;
     this.system.attributes.ac.normal.total = this.system.attributes.ac.normal.base;
     this.system.attributes.savingThrows.save.total = this.system.attributes.savingThrows.save.base;
 
-    // For ActorPF compatibility only
-    this.system.attributes.attack ??= {};
+    // Everything below this is needed for getRollData and ActorPF, but useless for the actor
+    this.system.attributes.attack ??= { general: 0, shared: 0 };
     this.system.attributes.woundThresholds ??= {};
     this.system.skills ??= {};
     this.system.attributes.speed ??= {};
 
-    // Needed for getRollData and ActorPF, but useless for the actor
     const strValue = this.system.abilities.str.value;
     this.system.abilities = {
       str: {
@@ -70,20 +67,7 @@ export class ActorVehiclePF extends ActorPF {
       },
     };
 
-    // Needed for getRollData and ActorPF, but useless for the actor
-    this.system.attributes.cmb = { bonus: this.system.abilities.str.value };
-
-    // Needed for getRollData and ActorPF, but useless for the actor
-    this.sourceDetails = {
-      "system.attributes.cmb.bonus": [
-        { name: game.i18n.localize("PF1.Base"), value: this.system.attributes.cmb.bonus },
-      ],
-    };
-
-    // Needed for getRollData and ActorPF, but useless for the actor
-    this.system.attributes.conditions = {
-      grappled: false,
-    };
+    this.sourceDetails = {};
   }
 
   /**
@@ -99,10 +83,15 @@ export class ActorVehiclePF extends ActorPF {
    * @override
    */
   prepareDerivedData() {
-    this.prepareCMB();
-
-    this._setSourceDetails(this.sourceInfo);
+    applyChanges.call(this);
   }
+
+  /**
+   * Needed to prevent unnecessary behavior in ActorPF
+   *
+   * @override
+   */
+  refreshDerivedData() {}
 
   /**
    * Needed to prevent unnecessary behavior in ActorPF

@@ -1,7 +1,7 @@
-import { RollPF } from "../../dice/roll.mjs";
-import { ActorBasePF } from "./actor-base.mjs";
+import { ActorPF } from "./actor-pf.mjs";
+import { applyChanges } from "./utils/apply-changes.mjs";
 
-export class ActorHauntPF extends ActorBasePF {
+export class ActorHauntPF extends ActorPF {
   prepareBaseData() {
     // Needed for getRollData and ActorPF, but useless for the actor
     this.system.abilities = {
@@ -55,17 +55,10 @@ export class ActorHauntPF extends ActorBasePF {
       },
     };
 
-    // Needed for getRollData and ActorPF, but useless for the actor
-    this.system.attributes.cmb = {
-      bonus: this.system.abilities.str.value,
-    };
+    this.system.attributes.attack ??= { general: 0, shared: 0 };
 
-    // Needed for getRollData and ActorPF, but useless for the actor
-    this.sourceDetails = {
-      "system.attributes.cmb.bonus": [
-        { name: game.i18n.localize("PF1.Base"), value: this.system.attributes.cmb.bonus },
-      ],
-    };
+    this.system.skills ??= {};
+    this.sourceDetails = {};
   }
 
   /**
@@ -76,7 +69,15 @@ export class ActorHauntPF extends ActorBasePF {
   prepareDerivedData() {
     this.system.details.cr.total = this.system.details.cr.base;
     this.system.attributes.init.total = this.system.attributes.init.value;
+    applyChanges.call(this);
   }
+
+  /**
+   * Needed to prevent unnecessary behavior in ActorPF
+   *
+   * @override
+   */
+  refreshDerivedData() {}
 
   /**
    * Needed to prevent unnecessary behavior in ActorPF

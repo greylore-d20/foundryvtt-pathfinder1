@@ -1,12 +1,11 @@
 import { ActorPF } from "./actor-pf.mjs";
-import { RollPF } from "../../dice/roll.mjs";
+import { applyChanges } from "./utils/apply-changes.mjs";
 
 export class ActorTrapPF extends ActorPF {
   prepareBaseData() {
-    // Needed for getRollData and ActorPF, but useless for the actor
+    // Everything below this is needed for getRollData and ActorPF, but useless for the actor
     this.system.traits = { size: "med" };
 
-    // Needed for getRollData and ActorPF, but useless for the actor
     this.system.abilities = {
       str: {
         value: 10,
@@ -58,24 +57,13 @@ export class ActorTrapPF extends ActorPF {
       },
     };
 
-    // Needed for getRollData and ActorPF, but useless for the actor
     this.system.attributes = {
-      cmb: {
-        bonus: this.system.abilities.str.value,
-      },
+      attack: { general: 0, shared: 0 },
+      woundThresholds: {},
     };
 
-    // Needed for getRollData and ActorPF, but useless for the actor
-    this.sourceDetails = {
-      "system.attributes.cmb.bonus": [
-        { name: game.i18n.localize("PF1.Base"), value: this.system.attributes.cmb.bonus },
-      ],
-    };
-
-    // Needed for getRollData and ActorPF, but useless for the actor
-    this.system.attributes.conditions = {
-      grappled: false,
-    };
+    this.system.skills ??= {};
+    this.sourceDetails = {};
   }
 
   /**
@@ -83,7 +71,16 @@ export class ActorTrapPF extends ActorPF {
    */
   prepareDerivedData() {
     this.system.details.cr.total = this.system.details.cr.base;
+
+    applyChanges.call(this);
   }
+
+  /**
+   * Needed to prevent unnecessary behavior in ActorPF
+   *
+   * @override
+   */
+  refreshDerivedData() {}
 
   /**
    * Needed to prevent unnecessary behavior in ActorPF

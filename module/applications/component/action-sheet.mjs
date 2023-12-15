@@ -162,6 +162,9 @@ export class ItemActionSheet extends FormApplication {
     data.alignmentTypes = this._prepareAlignments(this.action.alignments);
     this.alignments = data.alignmentTypes?.values; // Use a deep clone we've already made to track our progress.
 
+    // Power attack multiplier if inherited
+    data.paMultiplier = action.getPowerAttackMult({ rollData: data.rollData });
+
     return data;
   }
 

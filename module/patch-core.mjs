@@ -61,6 +61,10 @@ NumericTerm.prototype.getTooltipData = function () {
   };
 };
 
+// Add support for numbers without prefix, e.g. .5
+// This was previously done in StringTerm monkeypatch
+NumericTerm.REGEXP = new RegExp(`^((?:\\d+\\.|\\.)?\\d+)${RollTerm.FLAVOR_REGEXP_STRING}?$`);
+
 // Patch ParentheticalTerm and allowed operators
 ParentheticalTerm.CLOSE_REGEXP = new RegExp(`\\)${RollTerm.FLAVOR_REGEXP_STRING}?`, "g");
 OperatorTerm.REGEXP = /(?:&&|\|\||\*\*|%|\+|-|\*|\/|\\%|\||:|\?)|(?<![a-z])[!=<>]+/g;

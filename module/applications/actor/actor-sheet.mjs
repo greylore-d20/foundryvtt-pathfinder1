@@ -1864,39 +1864,38 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onInputText(event) {
     event.preventDefault();
-    const forStr = event.currentTarget.dataset.for;
-    let elem;
-    if (forStr.match(/CHILD-([0-9]+)/)) {
-      const n = parseInt(RegExp.$1);
-      elem = $(event.currentTarget.children[n]);
-    } else {
-      elem = this.element.find(event.currentTarget.dataset.for);
-    }
-    if (!elem || (elem && elem.attr("disabled"))) return;
+    const elem = event.target;
 
-    elem.prop("readonly", false);
-    elem.attr("name", event.currentTarget.dataset.attrName);
-    const value = getProperty(this.document, event.currentTarget.dataset.attrName);
-    elem.attr("value", value);
+    if (!elem || elem?.disabled) return;
+
+    elem.readOnly = false;
+    const value = getProperty(this.document, elem.name);
+
+    const origValue = elem.value;
+    elem.value = value;
 
     const wheelEvent = event && event instanceof WheelEvent;
     if (wheelEvent) {
-      this._mouseWheelAdd(event, elem[0]);
+      this._mouseWheelAdd(event, elem);
     } else {
       elem.select();
     }
 
     const handler = (event) => {
-      if (wheelEvent) elem[0].removeEventListener("mouseout", handler);
+      // Clear selection if any
+      const s = document.getSelection();
+      if (s.anchorNode === elem || s.anchorNode === elem.parentElement) s.removeAllRanges();
+
+      if (wheelEvent) elem.removeEventListener("mouseout", handler);
       else {
-        elem[0].removeEventListener("focusout", handler);
-        elem[0].removeEventListener("keydown", keyHandler);
+        elem.removeEventListener("focusout", handler);
+        elem.removeEventListener("keydown", keyHandler);
       }
-      elem[0].removeEventListener("click", handler);
+      elem.removeEventListener("click", handler);
 
       if (
-        (typeof value === "string" && value !== elem[0].value) ||
-        (typeof value === "number" && value !== parseInt(elem[0].value))
+        (typeof value === "string" && value !== elem.value) ||
+        (typeof value === "number" && value !== parseInt(elem.value))
       ) {
         changed = true;
       }
@@ -1904,9 +1903,8 @@ export class ActorSheetPF extends ActorSheet {
       if (changed) {
         this._onSubmit(event);
       } else {
-        elem.prop("readonly", true);
-        elem.removeAttr("name");
-        elem.removeAttr("value");
+        elem.readOnly = true;
+        elem.value = origValue;
         return;
       }
     };
@@ -1919,13 +1917,13 @@ export class ActorSheetPF extends ActorSheet {
 
     let changed = false;
     if (wheelEvent) {
-      elem[0].addEventListener("mouseout", handler, { passive: true });
+      elem.addEventListener("mouseout", handler, { passive: true });
       changed = true;
     } else {
-      elem[0].addEventListener("focusout", handler, { passive: true });
-      elem[0].addEventListener("keydown", keyHandler, { passive: true });
+      elem.addEventListener("focusout", handler, { passive: true });
+      elem.addEventListener("keydown", keyHandler, { passive: true });
     }
-    elem[0].addEventListener("click", handler, { passive: true });
+    elem.addEventListener("click", handler, { passive: true });
   }
 
   /* -------------------------------------------- */

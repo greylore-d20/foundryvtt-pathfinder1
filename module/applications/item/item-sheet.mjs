@@ -1,4 +1,10 @@
-import { adjustNumberByStringCommand, getBuffTargetDictionary, getBuffTargets, getDistanceSystem } from "@utils";
+import {
+  adjustNumberByStringCommand,
+  getBuffTargetDictionary,
+  getBuffTargets,
+  getWeightSystem,
+  getDistanceSystem,
+} from "@utils";
 import { ItemPF } from "@item/item-pf.mjs";
 import { ScriptEditor } from "../script-editor.mjs";
 import { ActorTraitSelector } from "../trait-selector.mjs";
@@ -242,6 +248,7 @@ export class ItemSheetPF extends ItemSheet {
         fakeValue: true,
         inputValue: itemData.weight.converted.value,
         decimals: 2,
+        tooltip: "weight",
         id: "data-weight-value",
       });
 
@@ -254,6 +261,7 @@ export class ItemSheetPF extends ItemSheet {
             label: game.i18n.localize("PF1.Price"),
             value: item.getValue({ sellValue: 1 }),
             decimals: 2,
+            tooltip: "price",
             id: "data-price",
           },
           {
@@ -274,6 +282,7 @@ export class ItemSheetPF extends ItemSheet {
             label: game.i18n.localize("PF1.Price"),
             value: item.getValue({ sellValue: 1 }),
             decimals: 2,
+            tooltip: "price",
             id: "data-price",
           });
         } else {
@@ -283,6 +292,7 @@ export class ItemSheetPF extends ItemSheet {
             label: game.i18n.localize("PF1.Price"),
             value: item.getValue({ sellValue: 1 }),
             decimals: 2,
+            tooltip: "price",
             id: "data-price",
           });
         }
@@ -1055,6 +1065,41 @@ export class ItemSheetPF extends ItemSheet {
 
   /* -------------------------------------------- */
 
+  _onHoverTooltip(event) {
+    if (this.item.system.quantity <= 1) return;
+
+    const type = event.target.dataset.tooltipType;
+    const content = [];
+    switch (type) {
+      case "weight":
+        this._onHoverWeightTooltip(event, content);
+        break;
+      case "price":
+        this._onHoverPriceTooltip(event, content);
+        break;
+    }
+    return content.join("<br>");
+  }
+
+  _onHoverWeightTooltip(event, content) {
+    const unit = game.i18n.localize(getWeightSystem() === "metric" ? "PF1.Kgs" : "PF1.Lbs");
+    // TODO: better i18n support
+    const mValue = `${this.item.system.weight.converted.value} ${unit}`;
+
+    content.push(game.i18n.format("PF1.StackDetails.Base", { value: mValue }));
+  }
+
+  _onHoverPriceTooltip(event, content) {
+    const cp = this.item.getValue({ sellValue: 1, single: true, inLowestDenomination: true });
+    const c = pf1.utils.currency.split(cp);
+    const inline = [];
+    Object.entries(c).forEach(([key, value]) => {
+      if (value > 0) inline.push(game.i18n.format(`PF1.Currency.Inline.${key}`, { value }));
+    });
+
+    content.push(game.i18n.format("PF1.StackDetails.Base", { value: inline.join(", ") }));
+  }
+
   /**
    * Activate listeners for interactive item sheet events
    *
@@ -1064,6 +1109,26 @@ export class ItemSheetPF extends ItemSheet {
     super.activateListeners(html);
 
     const hasActor = !!this.actor;
+
+    if (this.document.isPhysical) {
+      html.find(".item-properties input.details-tooptip").each((i, el) => {
+        el.addEventListener(
+          "mouseover",
+          (ev) => {
+            const content = this._onHoverTooltip(ev);
+            if (content) {
+              game.tooltip.activate(el, {
+                text: content,
+                direction: TooltipManager.TOOLTIP_DIRECTIONS.RIGHT,
+                cssClass: "pf1",
+              });
+            }
+          },
+          { passive: true }
+        );
+        el.addEventListener("mouseleave", (ev) => game.tooltip.deactivate(), { passive: true });
+      });
+    }
 
     // Tooltips
     html.mousemove((ev) => this._moveTooltips(ev));

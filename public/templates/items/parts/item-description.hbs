@@ -8,33 +8,33 @@
 
   <div class="flexrow description-container">
     <div class="item-properties">
-      {{#each descriptionAttributes as |attr|}}
-      {{#if attr.isBoolean}}
+      {{#each descriptionAttributes}}
+      {{#if isBoolean}}
       <div class="form-group">
-        <label>{{attr.label}}</label>
-        <input type="checkbox" name="{{attr.name}}" {{checked attr.value}} {{disabled disabled}}>
+        <label>{{label}}</label>
+        <input type="checkbox" name="{{name}}" {{checked value}} {{disabled disabled}}>
       </div>
-      {{else if attr.isNumber}}
+      {{else if isNumber}}
       <div class="form-group">
-        <label>{{attr.label}}</label>
-        <input data-action="input-text" name="{{attr.name}}" class="select-on-click" type="number" readonly data-dtype="Number"
-          value="{{numberFormat attr.value decimals=attr.decimals}}"
-          {{#if attr.fakeValue}}data-input-value="{{attr.inputValue}}"{{/if}}
+        <label>{{label}}</label>
+        <input data-action="input-text" name="{{name}}" class="select-on-click{{#if tooltip}} details-tooptip{{/if}}" type="number" readonly data-dtype="Number"
+          value="{{numberFormat value decimals=decimals}}"{{#if tooltip}} data-tooltip-type="{{tooltip}}"{{/if}}
+          {{#if fakeValue}}data-input-value="{{inputValue}}"{{/if}}
           {{disabled disabled}}>
       </div>
-      {{else if attr.isString}}
+      {{else if isString}}
       <div class="form-group">
-        <label>{{attr.label}}</label>
-        <input data-action="input-text" name="{{attr.name}}" type="text" readonly value="{{attr.value}}" {{disabled disabled}}>
+        <label>{{label}}</label>
+        <input data-action="input-text" name="{{name}}" type="text" readonly value="{{value}}" {{disabled disabled}}>
       </div>
-      {{else if attr.isRange}}
+      {{else if isRange}}
       <div class="form-group range-value">
-        <label>{{attr.label}}</label>
+        <label>{{label}}</label>
         {{!-- Value --}}
-        <input class="select-on-click" name="{{attr.value.name}}" type="number" data-dtype="Number" readonly value="{{attr.value.value}}">
+        <input class="select-on-click" name="{{value.name}}" type="number" data-dtype="Number" readonly value="{{value.value}}">
         <span class="separator">/</span>
         {{!-- Max --}}
-        <input data-action="input-text" class="select-on-click" name="{{attr.max.name}}" type="text" data-dtype="Number" readonly value="{{attr.max.value}}">
+        <input data-action="input-text" class="select-on-click" name="{{max.name}}" type="text" data-dtype="Number" readonly value="{{max.value}}">
       </div>
       {{/if}}
       {{/each}}

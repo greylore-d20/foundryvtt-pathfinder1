@@ -24,7 +24,7 @@ system:
   hardness: 10
   actions:
     - _id: pwqpwbhrl3r4zlfv
-      name: Attack
+      name: Melee
       img: icons/weapons/clubs/club-simple-barbed-black.webp
       activation:
         type: attack
@@ -48,9 +48,42 @@ system:
           formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
+        label: ''
       ability:
         attack: str
         damage: str
+      uses:
+        autoDeductChargesCost: '0'
+      ammoType: none
+    - _id: mWldOL0TOzNk13qe
+      name: Throw
+      img: icons/weapons/clubs/club-simple-barbed-black.webp
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      range:
+        value: '10'
+        units: ft
+        maxIncrements: 5
+      actionType: twak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              values:
+                - bludgeoning
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: dex
+        damage: str
+      ammoType: none
+  uses:
+    per: single
   baseTypes:
     - Wahaika
     - Club
@@ -58,6 +91,12 @@ system:
     value:
       - hammers
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
+      - null
   subType: exotic
   weaponSubtype: 1h
   properties:
@@ -65,5 +104,7 @@ system:
   source:
     id: PZO1123
     pages: '20'
+  ammo:
+    type: ''
 _key: '!items!pIRXX5fRRgO9JfF2'
 

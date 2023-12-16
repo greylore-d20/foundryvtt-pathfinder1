@@ -25,7 +25,7 @@ system:
   hardness: 5
   actions:
     - _id: m3cfkog7o9algr1t
-      name: Attack
+      name: Throw
       img: systems/pf1/icons/items/weapons/sling.png
       activation:
         type: attack
@@ -36,7 +36,8 @@ system:
       range:
         value: '50'
         units: ft
-      actionType: rwak
+        maxIncrements: 5
+      actionType: twak
       damage:
         parts:
           - formula: sizeRoll(1, 4, @size)
@@ -45,10 +46,6 @@ system:
                 - bludgeoning
               custom: ''
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
         label: ''
       ability:
         attack: dex
@@ -59,6 +56,11 @@ system:
   weaponGroups:
     value:
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
   weaponSubtype: ranged
   source:
     id: PZO9452

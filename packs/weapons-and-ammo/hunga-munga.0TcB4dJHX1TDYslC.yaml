@@ -23,7 +23,7 @@ system:
   hardness: 5
   actions:
     - _id: xuxdao639omls9zc
-      name: Attack
+      name: Throw
       img: systems/pf1/icons/items/weapons/hunga-munga.PNG
       activation:
         type: attack
@@ -34,7 +34,36 @@ system:
       range:
         value: '15'
         units: ft
-      actionType: rwak
+        maxIncrements: 5
+      actionType: twak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              values:
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: dex
+        damage: str
+      ammoType: none
+    - _id: SwmYBlvEK6I2Wq0X
+      name: Melee
+      img: systems/pf1/icons/items/weapons/hunga-munga.PNG
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      range:
+        value: '15'
+        units: ft
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: mwak
       damage:
         parts:
           - formula: sizeRoll(1, 6, @size)
@@ -44,22 +73,33 @@ system:
               custom: ''
       formulaicAttacks:
         count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+          formula: ceil(@attributes.bab.total / 5) -1
         bonus:
           formula: '@formulaicAttack * -5'
+        label: ''
       ability:
-        attack: dex
+        attack: str
         damage: str
+      ammoType: none
+  uses:
+    per: single
   baseTypes:
     - Hunga Munga
   weaponGroups:
     value:
       - bladesLight
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
   subType: martial
   weaponSubtype: ranged
   source:
     id: PZO9452
     pages: '0'
+  ammo:
+    type: ''
 _key: '!items!0TcB4dJHX1TDYslC'
 

@@ -1,7 +1,7 @@
 _id: tjuTlbdI85ClQhf6
 name: Starknife
 type: weapon
-img: systems/pf1/icons/items/weapons/starknife.png
+img: icons/weapons/thrown/shuriken-blue.webp
 system:
   description:
     value: >-
@@ -25,8 +25,8 @@ system:
   hardness: 10
   actions:
     - _id: w6e259sbegh59fk9
-      name: Attack
-      img: systems/pf1/icons/items/weapons/starknife.png
+      name: Melee
+      img: icons/weapons/thrown/shuriken-blue.webp
       activation:
         type: attack
         unchained:
@@ -49,19 +49,61 @@ system:
           formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
+        label: ''
       ability:
         attack: str
         damage: str
         critMult: 3
+      ammoType: none
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: EAmLa4ulL7W8ilYM
+      name: Throw
+      img: icons/weapons/thrown/shuriken-blue.webp
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      range:
+        value: '20'
+        units: ft
+        maxIncrements: 5
+      actionType: twak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              values:
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: dex
+        damage: str
+        critMult: 3
+      ammoType: none
+  uses:
+    per: single
   baseTypes:
     - Starknife
   weaponGroups:
     value:
       - bladesLight
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
+      - null
   subType: martial
   source:
     id: PZO1123
     pages: '18'
+  ammo:
+    type: ''
 _key: '!items!tjuTlbdI85ClQhf6'
 

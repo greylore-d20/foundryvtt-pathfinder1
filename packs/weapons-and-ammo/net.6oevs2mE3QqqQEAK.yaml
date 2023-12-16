@@ -36,7 +36,7 @@ system:
   hardness: 5
   actions:
     - _id: apr414c66hp6i8i7
-      name: Attack
+      name: Throw
       img: systems/pf1/icons/items/weapons/net.png
       activation:
         type: attack
@@ -48,27 +48,26 @@ system:
         value: '10'
         units: ft
       actionType: rwak
-      damage:
-        parts:
-          - formula: 'NULL'
-            type:
-              values:
-                - untyped
-              custom: ''
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
+        label: ''
       ability:
         attack: dex
-        damage: str
-        critMult: 0
+        critMult: null
+        critRange: null
+      touch: true
+      ammoType: none
+  uses:
+    per: single
   baseTypes:
     - Net
   weaponGroups:
     value:
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
   subType: exotic
   weaponSubtype: ranged
   properties:
@@ -76,5 +75,7 @@ system:
   source:
     id: PZO9452
     pages: '33'
+  ammo:
+    type: ''
 _key: '!items!6oevs2mE3QqqQEAK'
 

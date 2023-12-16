@@ -26,7 +26,7 @@ system:
   hardness: 5
   actions:
     - _id: kvnono81fo9i55p8
-      name: Attack
+      name: Throw
       img: systems/pf1/icons/items/weapons/chakram.png
       activation:
         type: attack
@@ -37,7 +37,8 @@ system:
       range:
         value: '30'
         units: ft
-      actionType: rwak
+        maxIncrements: 5
+      actionType: twak
       damage:
         parts:
           - formula: sizeRoll(1, 8, @size)
@@ -46,13 +47,46 @@ system:
                 - slashing
               custom: ''
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
+        label: ''
       ability:
         attack: dex
         damage: str
+      ammoType: none
+    - _id: eYYMLfpxhSpu1Pj8
+      name: Melee
+      img: systems/pf1/icons/items/weapons/chakram.png
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      range:
+        value: '30'
+        units: melee
+      uses:
+        autoDeductChargesCost: '0'
+      actionType: mwak
+      attackBonus: '-1'
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              values:
+                - slashing
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: str
+        damage: str
+      save:
+        dc: '15'
+        type: ref
+        description: Reflex see text
+      ammoType: none
+  uses:
+    per: single
   baseTypes:
     - Chakram
   weaponGroups:
@@ -60,10 +94,17 @@ system:
       - bladesLight
       - bladesHeavy
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
   subType: martial
   weaponSubtype: ranged
   source:
     id: PZO9452
     pages: '0'
+  ammo:
+    type: ''
 _key: '!items!MK5NI8fCMwndhONO'
 

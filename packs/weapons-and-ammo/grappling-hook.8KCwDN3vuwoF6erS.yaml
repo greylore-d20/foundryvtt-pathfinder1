@@ -36,7 +36,7 @@ system:
   hardness: 5
   actions:
     - _id: fc0gaj7vzr849tbj
-      name: Attack
+      name: Throw
       img: systems/pf1/icons/items/weapons/grappling-hook.png
       activation:
         type: attack
@@ -47,7 +47,8 @@ system:
       range:
         value: '10'
         units: ft
-      actionType: rwak
+        maxIncrements: 5
+      actionType: twak
       damage:
         parts:
           - formula: sizeRoll(1, 6, @size)
@@ -56,18 +57,21 @@ system:
                 - piercing
               custom: ''
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
+        label: ''
       ability:
         attack: dex
         damage: str
+      ammoType: none
   baseTypes:
     - Grappling Hook
   weaponGroups:
     value:
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
   subType: exotic
   weaponSubtype: ranged
   properties:
@@ -75,5 +79,7 @@ system:
   source:
     id: PZO9422
     pages: '19'
+  ammo:
+    type: ''
 _key: '!items!8KCwDN3vuwoF6erS'
 

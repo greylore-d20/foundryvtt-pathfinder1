@@ -20,7 +20,7 @@ system:
   hardness: 10
   actions:
     - _id: xzamnmf2rl7rxs0w
-      name: Attack
+      name: Melee
       img: systems/pf1/icons/items/weapons/trident.PNG
       activation:
         type: attack
@@ -44,15 +44,54 @@ system:
           formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
+        label: ''
       ability:
         attack: str
         damage: str
+      uses:
+        autoDeductChargesCost: '0'
+      ammoType: none
+    - _id: NuickNLEH0YVjDE1
+      name: Throw
+      img: systems/pf1/icons/items/weapons/trident.PNG
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      range:
+        value: '10'
+        units: ft
+        maxIncrements: 5
+      actionType: twak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 8, @size)
+            type:
+              values:
+                - piercing
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: dex
+        damage: str
+      ammoType: none
+  uses:
+    per: single
   baseTypes:
     - Trident
   weaponGroups:
     value:
       - spears
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
+      - null
   subType: martial
   weaponSubtype: 1h
   properties:
@@ -60,5 +99,7 @@ system:
   source:
     id: PZO1123
     pages: '18'
+  ammo:
+    type: ''
 _key: '!items!2mw29eyL5mzZgKqR'
 

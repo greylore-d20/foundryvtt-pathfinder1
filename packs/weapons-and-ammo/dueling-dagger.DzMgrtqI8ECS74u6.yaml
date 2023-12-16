@@ -26,7 +26,7 @@ system:
   hardness: 10
   actions:
     - _id: a0j9urr2qwpuby2g
-      name: Attack
+      name: Melee
       img: systems/pf1/icons/items/weapons/dagger-dueling.png
       activation:
         type: attack
@@ -51,10 +51,42 @@ system:
           formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
+        label: ''
       ability:
         attack: str
         damage: str
         critRange: 19
+      uses:
+        autoDeductChargesCost: '0'
+      ammoType: none
+    - _id: scvblAz2j7mqLUtX
+      name: Throw
+      img: systems/pf1/icons/items/weapons/dagger-dueling.png
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      range:
+        value: '10'
+        units: ft
+        maxIncrements: 5
+      actionType: twak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 4, @size)
+            type:
+              values:
+                - piercing
+                - slashing
+              custom: ''
+      formulaicAttacks: null
+      ability:
+        attack: dex
+        damage: str
+  uses:
+    per: single
   baseTypes:
     - Dueling Dagger
     - Dagger
@@ -62,11 +94,19 @@ system:
     value:
       - bladesLight
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
+      - null
   subType: martial
   properties:
     spc: true
   source:
     id: PZO9481
     pages: '8'
+  ammo:
+    type: ''
 _key: '!items!DzMgrtqI8ECS74u6'
 

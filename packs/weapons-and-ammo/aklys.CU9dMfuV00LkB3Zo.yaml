@@ -23,7 +23,7 @@ system:
   hardness: 5
   actions:
     - _id: 2vr622ax6hn78dab
-      name: Attack
+      name: Melee
       img: systems/pf1/icons/items/weapons/aklys.png
       activation:
         type: attack
@@ -47,15 +47,54 @@ system:
           formula: min(3, ceil(@attributes.bab.total / 5) - 1)
         bonus:
           formula: '@formulaicAttack * -5'
+        label: ''
       ability:
         attack: str
         damage: str
+      ammoType: none
+      uses:
+        autoDeductChargesCost: '0'
+    - _id: rB0MWkXSio9ntqBL
+      name: Throw
+      img: systems/pf1/icons/items/weapons/aklys.png
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      range:
+        value: '20'
+        units: ft
+        maxIncrements: 5
+      actionType: twak
+      damage:
+        parts:
+          - formula: sizeRoll(1, 6, @size)
+            type:
+              values:
+                - bludgeoning
+              custom: ''
+      formulaicAttacks:
+        label: ''
+      ability:
+        attack: dex
+        damage: str
+      ammoType: none
+  uses:
+    per: single
   baseTypes:
     - Aklys
   weaponGroups:
     value:
       - hammers
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
+      - null
   subType: exotic
   properties:
     prf: true
@@ -63,5 +102,7 @@ system:
   source:
     id: PZO1123
     pages: '20'
+  ammo:
+    type: ''
 _key: '!items!CU9dMfuV00LkB3Zo'
 

@@ -25,7 +25,7 @@ system:
   hardness: 5
   actions:
     - _id: 95cyy0pjnhpjl9aq
-      name: Attack
+      name: Throw
       img: systems/pf1/icons/items/weapons/chakram.png
       activation:
         type: attack
@@ -34,9 +34,10 @@ system:
       duration:
         units: inst
       range:
-        value: '0'
+        value: '30'
         units: ft
-      actionType: rwak
+        maxIncrements: 5
+      actionType: twak
       damage:
         parts:
           - formula: sizeRoll(1, 6, @size)
@@ -45,23 +46,30 @@ system:
                 - slashing
               custom: ''
       formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
+        label: ''
       ability:
         attack: dex
         damage: str
         critRange: 18
+      ammoType: none
+  uses:
+    per: single
   baseTypes:
     - Crystal Chakram
   weaponGroups:
     value:
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
   subType: exotic
   weaponSubtype: ranged
   source:
     id: PZO9216
     pages: '8'
+  ammo:
+    type: ''
 _key: '!items!bEZGQcXqVZtvS4hd'
 

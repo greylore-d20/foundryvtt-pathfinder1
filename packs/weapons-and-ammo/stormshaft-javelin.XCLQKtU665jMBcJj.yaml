@@ -24,7 +24,7 @@ system:
   hardness: 5
   actions:
     - _id: fpx7n21o92omz4c5
-      name: Attack
+      name: Throw
       img: systems/pf1/icons/items/weapons/javelin.PNG
       activation:
         type: attack
@@ -35,7 +35,8 @@ system:
       range:
         value: '30'
         units: ft
-      actionType: rwak
+        maxIncrements: 5
+      actionType: twak
       damage:
         parts:
           - formula: sizeRoll(1, 6, @size)
@@ -43,20 +44,23 @@ system:
               values:
                 - piercing
               custom: ''
-      formulaicAttacks:
-        count:
-          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
-        bonus:
-          formula: '@formulaicAttack * -5'
+      formulaicAttacks: null
       ability:
         attack: dex
         damage: str
+  uses:
+    per: single
   baseTypes:
     - Stormshaft Javelin
   weaponGroups:
     value:
       - spears
       - thrown
+  material:
+    normal:
+      value: ''
+    addon:
+      - null
   subType: exotic
   weaponSubtype: ranged
   properties:
@@ -64,5 +68,7 @@ system:
   source:
     id: PZO9481
     pages: '9'
+  ammo:
+    type: ''
 _key: '!items!XCLQKtU665jMBcJj'
 

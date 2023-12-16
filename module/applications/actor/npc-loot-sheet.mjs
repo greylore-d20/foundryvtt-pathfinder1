@@ -63,4 +63,17 @@ export class ActorSheetPFNPCLoot extends ActorSheetPFNPC {
 
     return data;
   }
+
+  /**
+   * @inheritDoc
+   */
+  _prepareItem(item) {
+    const result = super._prepareItem(item);
+
+    if (item.isPhysical) {
+      result.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
+    }
+
+    return result;
+  }
 }

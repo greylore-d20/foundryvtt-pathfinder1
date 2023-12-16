@@ -668,7 +668,6 @@ export class ActorSheetPF extends ActorSheet {
     if (result.isPhysical) {
       result.quantity ??= 0;
       result.isStack = result.quantity > 1;
-      result.price = item.getValue({ recursive: false, sellValue: 1, inLowestDenomination: true }) / 100;
       result.destroyed = result.hp?.value <= 0;
     }
 

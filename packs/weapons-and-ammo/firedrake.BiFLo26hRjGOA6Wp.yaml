@@ -5,31 +5,22 @@ img: icons/commodities/treasure/statue-carved-figurehead.webp
 system:
   description:
     value: >-
-      <h3>Statistics</h3>
-
-      <p><b>Weight</b> -</p>
-
-      <p><b>Damage</b> 6d6; <b>Critical</b> -; <b>Range</b> -; <b>Type</b>
-      fire</p>
-
-      <p><b>Crew</b> 3; <b>Aim</b> 2; <b>Load</b> 5; <b>Speed</b> 10 ft.</p>
-
-      <p><b>Category</b> Direct-Fire (Huge); <b>Proficiency</b> Siege Engine</p>
-
-      <h3>Description</h3>
-
-      <p>These large siege engines are typically wheeled or attached to vehicles
-      that can transport them to the battlefield. This apparatus fires gouts of
+      <h3>Statistics</h3><p><strong>Weight</strong>
+      -</p><p><strong>Damage</strong> 6d6; <strong>Critical</strong> -;
+      <strong>Range</strong> -; <strong>Type</strong>
+      fire</p><p><strong>Crew</strong> 3; <strong>Aim</strong> 2;
+      <strong>Load</strong> 5; <strong>Speed</strong> 10
+      ft.</p><p><strong>Category</strong> Direct-Fire (Huge);
+      <strong>Proficiency</strong> Siege Engine</p><h3>Description</h3><p>These
+      large siege engines are typically wheeled or attached to vehicles that can
+      transport them to the battlefield. This apparatus fires gouts of
       alchemist's fire in either a 60-foot line or a 30-foot cone (siege crew
       leader's choice). Targets in the area take 6d6 points of fire damage (DC
-      15 Reflex save halves); those who fail their saves also catch on fire.</p>
-
-      <p>A firedrake with the broken condition that suffers a further mishap
-      explodes, dealing its damage to all creatures within a 20-foot blast (DC
-      15 Reflex save halves). Firedrakes have a hardness of 10 and 70 hit
-      points.</p>
-
-      <p>One use of firedrake ammunition costs 200 gp and weighs 20 pounds.</p>
+      15 Reflex save halves); those who fail their saves also catch on
+      fire.</p><p>A firedrake with the broken condition that suffers a further
+      mishap explodes, dealing its damage to all creatures within a 20-foot
+      blast (DC 15 Reflex save halves).</p><p>One use of firedrake ammunition
+      costs 200 gp and weighs 20 pounds.</p>
   price: 4000
   hp:
     max: 70
@@ -37,7 +28,7 @@ system:
   hardness: 10
   actions:
     - _id: fvm8jqh37m4asjrn
-      name: Attack
+      name: Line
       img: icons/commodities/treasure/statue-carved-figurehead.webp
       activation:
         type: attack
@@ -47,6 +38,41 @@ system:
         units: inst
       range:
         value: '60'
+        units: ft
+      measureTemplate:
+        type: ray
+        size: '60'
+      actionType: save
+      damage:
+        parts:
+          - formula: sizeRoll(6, 6, @size)
+            type:
+              values:
+                - fire
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: dex
+        critRange: null
+      save:
+        dc: '15'
+        type: ref
+        description: Reflex half
+    - _id: b6IvnHeQXBDRIaGI
+      name: Cone
+      img: icons/commodities/treasure/statue-carved-figurehead.webp
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      range:
+        value: '30'
         units: ft
       measureTemplate:
         type: cone
@@ -71,6 +97,44 @@ system:
         dc: '15'
         type: ref
         description: Reflex half
+    - _id: ecL0dse7dRGzfvJZ
+      name: Explode
+      img: icons/commodities/treasure/statue-carved-figurehead.webp
+      activation:
+        type: attack
+        unchained:
+          type: attack
+      duration:
+        units: inst
+      target:
+        value: all creatures
+      range:
+        value: '20'
+        units: ft
+      measureTemplate:
+        type: circle
+        size: '20'
+      actionType: save
+      damage:
+        parts:
+          - formula: sizeRoll(6, 6, @size)
+            type:
+              values:
+                - fire
+              custom: ''
+      formulaicAttacks:
+        count:
+          formula: min(3, ceil(@attributes.bab.total / 5) - 1)
+        bonus:
+          formula: '@formulaicAttack * -5'
+      ability:
+        attack: dex
+        critRange: null
+      save:
+        dc: '15'
+        type: ref
+        description: Reflex half
+      area: 20-foot blast
   baseTypes:
     - Firedrake
   subType: exotic

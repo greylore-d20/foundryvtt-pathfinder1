@@ -5,24 +5,23 @@ img: icons/weapons/guns/gun-pistol-wood.webp
 system:
   description:
     value: >-
-      <h3>Statistics</h3><p><b>Damage</b> 1d3 (small), 1d4 (medium);
-      <b>Critical</b> x3; <b>Range</b> 10 ft.; <b>Type</b> B and P</p>
-
-      <p><b>Misfire</b> 1 (5 ft.); <b>Capacity</b> 1</p>
-
-      <h3>Description</h3>
-
-      <p>A combination weapon, this gun mixes a coat pistol with a sword cane.
-      The sword cane pistol is considered a double weapon for the purpose of
-      creating masterwork or magical versions of this weapon. The pistol
+      <h3>Statistics</h3><p><strong>Damage</strong> 1d3 (small), 1d4 (medium);
+      <strong>Critical</strong> x3; <strong>Range</strong> 10 ft.;
+      <strong>Type</strong> B and P</p><p><strong>Misfire</strong> 1 (5 ft.);
+      <strong>Capacity</strong> 1</p><h3>Description</h3><p>A combination
+      weapon, this gun mixes a
+      @UUID[Compendium.pf1.weapons-and-ammo.Item.GlbFk7TosnBKkr8d]{coat pistol}
+      with a @UUID[Compendium.pf1.weapons-and-ammo.Item.VudBuNqCanzGfOvk]{sword
+      cane}. The sword cane pistol is considered a double weapon for the purpose
+      of creating masterwork or magical versions of this weapon. The pistol
       attachment makes the nature of the weapon a little more difficult to hide.
       An observer must succeed at a DC 15 Perception check to realize that an
       undrawn sword cane pistol is a weapon rather than a simple walking stick;
-      the DC decreases to 5 if the observer is able to handle the weapon.</p>
-
-      <p>A sword cane pistol uses either a bullet and 1 dose of black powder or
-      a single alchemical cartridge as ammunition. The sword part of the weapon
-      must be drawn in order to load the pistol part of the weapon.</p>
+      the DC decreases to 5 if the observer is able to handle the
+      weapon.</p><p>A sword cane pistol uses either a bullet and 1 dose of black
+      powder or a single alchemical cartridge as ammunition. The sword part of
+      the weapon must be drawn in order to load the pistol part of the
+      weapon.</p>
   tags:
     - PFS
     - Early Firearm
@@ -32,7 +31,7 @@ system:
   hardness: 10
   actions:
     - _id: kglz54xwm4kbsd0b
-      name: Attack
+      name: Shoot
       img: icons/weapons/guns/gun-pistol-wood.webp
       activation:
         type: attack
@@ -42,8 +41,9 @@ system:
         units: inst
       range:
         value: '10'
-        units: melee
-      actionType: mwak
+        units: ft
+        maxIncrements: 10
+      actionType: rwak
       damage:
         parts:
           - formula: sizeRoll(1, 4, @size)
@@ -59,9 +59,7 @@ system:
           formula: '@formulaicAttack * -5'
         label: ''
       ability:
-        attack: str
-        damage: str
-        critRange: null
+        attack: dex
         critMult: 3
       ammoType: gunBullet
   baseTypes:

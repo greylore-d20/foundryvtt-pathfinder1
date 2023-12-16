@@ -1411,28 +1411,47 @@ export class ActorSheetPF extends ActorSheet {
     // Replace span with input element
     parent.replaceChild(newEl, el);
 
-    newEl.addEventListener("change", (event) => {
-      event.preventDefault();
-      event.stopPropagation(); // Prevent Foundry acting on this
+    let changed;
+    newEl.addEventListener(
+      "change",
+      (event) => {
+        event.preventDefault();
+        event.stopPropagation(); // Prevent Foundry acting on this
+        changed = true;
 
-      let newValue;
-      if (allowRelative) {
-        newValue = adjustNumberByStringCommand(prevValue, newEl.value, maxValue, clearValue);
-        newEl.value = newValue;
-      } else {
-        newValue = parseFloat(newEl.value || "0");
-      }
+        let newValue;
+        if (allowRelative) {
+          newValue = adjustNumberByStringCommand(prevValue, newEl.value, maxValue, clearValue);
+          newEl.value = newValue;
+        } else {
+          newValue = parseFloat(newEl.value || "0");
+        }
 
-      // Reset if nothing changed
-      if (newValue === prevValue) {
-        parent.replaceChild(el, newEl);
-      }
-      // Pass it to callback
-      else {
-        newEl.readOnly = true;
-        callback.call(this, event);
-      }
-    });
+        // Reset if nothing changed (probably never triggers, since it's not a change)
+        if (newValue === prevValue) {
+          parent.replaceChild(el, newEl);
+        }
+        // Pass it to callback
+        else {
+          newEl.readOnly = true;
+          callback.call(this, event);
+        }
+      },
+      { once: true }
+    );
+
+    newEl.addEventListener(
+      "focusout",
+      (event) => {
+        if (changed) return;
+
+        const newValue = parseFloat(newEl.value || "0");
+        if (newValue === prevValue) {
+          parent.replaceChild(el, newEl);
+        }
+      },
+      { passive: true, once: true }
+    );
 
     // Select text inside new element
     newEl.focus();

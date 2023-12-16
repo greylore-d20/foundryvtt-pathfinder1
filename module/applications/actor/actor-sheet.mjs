@@ -647,20 +647,24 @@ export class ActorSheetPF extends ActorSheet {
     const firstActionRollData = firstAction?.getRollData();
 
     result.labels = item.getLabels({ actionId: firstAction?.id, rollData: firstActionRollData });
-    result.hasAttack = firstAction?.hasAttack;
-    result.hasMultiAttack = firstAction?.hasMultiAttack;
-    result.hasDamage = firstAction?.hasDamage;
-    result.hasRange = firstAction?.hasRange;
-    result.hasEffect = firstAction?.hasEffect;
     result.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
-    result.range = foundry.utils.mergeObject(
-      firstAction?.data?.range ?? {},
-      {
-        min: firstAction?.getRange({ type: "min", rollData: firstActionRollData }),
-        max: firstAction?.getRange({ type: "max", rollData: firstActionRollData }),
-      },
-      { inplace: false }
-    );
+    if (result.hasAction) {
+      result.hasAttack = firstAction.hasAttack;
+      result.hasMultiAttack = firstAction.hasMultiAttack;
+      result.hasDamage = firstAction.hasDamage;
+      result.hasRange = firstAction.hasRange;
+      result.hasEffect = firstAction.hasEffect;
+      if (this._canShowRange(item)) {
+        result.range = foundry.utils.mergeObject(
+          firstAction?.data?.range ?? {},
+          {
+            min: firstAction?.getRange({ type: "min", rollData: firstActionRollData }),
+            max: firstAction?.getRange({ type: "max", rollData: firstActionRollData }),
+          },
+          { inplace: false }
+        );
+      }
+    }
     result.sort = item.sort;
     result.showUnidentifiedData = item.showUnidentifiedData;
     result.name = item.name; // Copy name over from item to handle identified state correctly
@@ -679,6 +683,17 @@ export class ActorSheetPF extends ActorSheet {
     if (result.type === "feat" && !result.isActive) result.disabled = true;
 
     return result;
+  }
+
+  /**
+   * Determine if the item can have its range shown on this sheet.
+   *
+   * @protected
+   * @param {Item} item
+   * @returns {boolean}
+   */
+  _canShowRange(item) {
+    return item.type === "attack";
   }
 
   /* -------------------------------------------- */

@@ -4,7 +4,9 @@
   <header class="sheet-header flexrow">
     <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img">
 
-    {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
+    <div class="header-details flexrow">
+      {{> "systems/pf1/templates/items/parts/item-name.hbs"}}
+    </div>
   </header>
 
   {{!-- Item Sheet Navigation --}}

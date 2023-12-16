@@ -20,7 +20,7 @@ export class ItemLootPF extends ItemPhysicalPF {
       changed.system?.subType !== this.system.subType &&
       changed.system?.extraType === undefined
     ) {
-      setProperty(changed, "system.extraType", "");
+      foundry.utils.setProperty(changed, "system.extraType", "");
     }
   }
 

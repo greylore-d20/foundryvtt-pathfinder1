@@ -28,7 +28,7 @@ export class CombatantPF extends Combatant {
   duplicateWithData(data = {}, context = {}) {
     console.debug("Duplicating combatant:", this);
     context.parent ??= this.combat;
-    return this.constructor.create(mergeObject(this.toObject(), data), context);
+    return this.constructor.create(foundry.utils.mergeObject(this.toObject(), data), context);
   }
 
   /**

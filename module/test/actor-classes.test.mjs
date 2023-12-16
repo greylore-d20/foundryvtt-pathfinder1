@@ -74,7 +74,7 @@ export const registerActorItemClassTests = () => {
               await game.settings.set(
                 "pf1",
                 "healthConfig",
-                mergeObject(
+                foundry.utils.mergeObject(
                   previousHealthConfig,
                   {
                     continuity: "continuous",
@@ -133,7 +133,7 @@ export const registerActorItemClassTests = () => {
               await game.settings.set(
                 "pf1",
                 "healthConfig",
-                mergeObject(
+                foundry.utils.mergeObject(
                   previousHealthConfig,
                   {
                     continuity: "continuous",
@@ -165,7 +165,7 @@ export const registerActorItemClassTests = () => {
               await game.settings.set(
                 "pf1",
                 "healthConfig",
-                mergeObject(
+                foundry.utils.mergeObject(
                   previousHealthConfig,
                   {
                     variants: {

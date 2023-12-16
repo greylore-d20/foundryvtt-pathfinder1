@@ -17,7 +17,7 @@ export class ItemAction {
   apps = {};
 
   constructor(data, parent) {
-    this.data = mergeObject(ItemAction.defaultData, data);
+    this.data = foundry.utils.mergeObject(ItemAction.defaultData, data);
 
     this.parent = parent;
 
@@ -76,8 +76,8 @@ export class ItemAction {
 
     if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
-      data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newActionData = deepClone(parent.system.actions || []);
+      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
+      const newActionData = foundry.utils.deepClone(parent.system.actions || []);
       newActionData.push(...data);
 
       // Update parent
@@ -438,7 +438,7 @@ export class ItemAction {
   getRollData() {
     const result = this.item.getRollData();
 
-    result.action = deepClone(this.data);
+    result.action = foundry.utils.deepClone(this.data);
     result.dc = this.hasSave ? this.getDC(result) : 0;
 
     if (Hooks.events["pf1GetRollData"]?.length > 0) Hooks.callAll("pf1GetRollData", this, result);
@@ -448,7 +448,7 @@ export class ItemAction {
 
   static get defaultData() {
     return {
-      _id: randomID(16),
+      _id: foundry.utils.randomID(16),
       name: game.i18n.localize("PF1.Action"),
       img: "systems/pf1/icons/skills/gray_04.jpg",
       description: "",
@@ -573,20 +573,20 @@ export class ItemAction {
     if (this.data.uses.self?.per) {
       const maxFormula = this.data.uses.self.per === "single" ? "1" : this.data.uses.self.maxFormula;
       const maxUses = RollPF.safeTotal(maxFormula, rollData);
-      setProperty(this.data, "uses.self.max", maxUses);
+      foundry.utils.setProperty(this.data, "uses.self.max", maxUses);
     }
 
     // Remove enhancement bonus override, if wrong type
     if (this.data.enh?.value != null && !["weapon", "attack"].includes(this.item.type)) {
-      setProperty(this.data, "enh.value", null);
+      foundry.utils.setProperty(this.data, "enh.value", null);
     }
 
     // Initialize default damageMult if missing
     if (this.data.ability?.damageMult === undefined) {
-      setProperty(this.data, "ability.damageMult", 1);
+      foundry.utils.setProperty(this.data, "ability.damageMult", 1);
     }
     if (this.data.naturalAttack?.secondary?.damageMult === undefined) {
-      setProperty(this.data, "naturalAttack.secondary.damageMult", 0.5);
+      foundry.utils.setProperty(this.data, "naturalAttack.secondary.damageMult", 0.5);
     }
   }
 
@@ -606,7 +606,7 @@ export class ItemAction {
   }
 
   async delete() {
-    const actions = deepClone(this.item.system.actions);
+    const actions = foundry.utils.deepClone(this.item.system.actions);
     actions.findSplice((a) => a._id == this.id);
 
     // Close applications
@@ -623,8 +623,8 @@ export class ItemAction {
   async update(updateData, options = {}) {
     const idx = this.item.system.actions.findIndex((action) => action._id === this.id);
     if (idx < 0) throw new Error(`Action ${this.id} not found on item.`);
-    const prevData = deepClone(this.data);
-    const newUpdateData = mergeObject(prevData, expandObject(updateData));
+    const prevData = foundry.utils.deepClone(this.data);
+    const newUpdateData = foundry.utils.mergeObject(prevData, foundry.utils.expandObject(updateData));
 
     // Make sure this action has a name, even if it's removed
     newUpdateData["name"] ||= this.name;
@@ -771,7 +771,7 @@ export class ItemAction {
     }
 
     // Update item
-    setProperty(this.data, "formulaicAttacks.count.value", extraAttacks);
+    foundry.utils.setProperty(this.data, "formulaicAttacks.count.value", extraAttacks);
 
     return extraAttacks;
   }
@@ -1164,7 +1164,7 @@ export class ItemAction {
   getConditionalSubTargets(target) {
     const result = {};
     // Add static targets
-    if (hasProperty(pf1.config.conditionalTargets, target)) {
+    if (foundry.utils.hasProperty(pf1.config.conditionalTargets, target)) {
       for (const [k, v] of Object.entries(pf1.config.conditionalTargets[target])) {
         if (!k.startsWith("_") && !k.startsWith("~")) result[k] = v;
       }

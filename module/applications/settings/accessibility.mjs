@@ -17,7 +17,7 @@ export class AccessibilityConfig extends FormApplication {
 
     if (!this._init) {
       const settings = await game.settings.get("pf1", "accessibilityConfig");
-      this._settings = mergeObject(this.constructor.defaultSettings, settings);
+      this._settings = foundry.utils.mergeObject(this.constructor.defaultSettings, settings);
       this._init = true;
     }
     data.settings = this._settings;
@@ -27,7 +27,7 @@ export class AccessibilityConfig extends FormApplication {
 
   /** @override */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       title: game.i18n.localize("PF1.AccessibilityConfigName"),
       id: "accessibility-config",
       template: "systems/pf1/templates/settings/accessibility.hbs",
@@ -56,7 +56,7 @@ export class AccessibilityConfig extends FormApplication {
    * @override
    */
   async _updateObject(event, formData) {
-    const settings = expandObject(formData);
+    const settings = foundry.utils.expandObject(formData);
     // Some mild sanitation for the numeric values.
     await game.settings.set("pf1", "accessibilityConfig", settings);
     ui.notifications.info("Updated Pathfinder accessibility configuration.");

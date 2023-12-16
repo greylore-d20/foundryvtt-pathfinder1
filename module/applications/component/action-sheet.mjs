@@ -9,7 +9,7 @@ export class ItemActionSheet extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       template: "systems/pf1/templates/apps/item-action.hbs",
       classes: ["pf1", "item", "sheet", "item-action"],
       width: 580,
@@ -63,7 +63,7 @@ export class ItemActionSheet extends FormApplication {
     data.action = action;
     data.item = item;
     data.actor = actor;
-    data.data = foundry.utils.mergeObject(action.constructor.defaultData, deepClone(action.data), {
+    data.data = foundry.utils.mergeObject(action.constructor.defaultData, foundry.utils.deepClone(action.data), {
       inplace: false,
     });
     data.damageTypes = pf1.registry.damageTypes.toObject();
@@ -134,7 +134,7 @@ export class ItemActionSheet extends FormApplication {
     data.inheritedAmmoType = item?.system.ammo?.type;
 
     // Add distance units
-    data.distanceUnits = deepClone(pf1.config.distanceUnits);
+    data.distanceUnits = foundry.utils.deepClone(pf1.config.distanceUnits);
     if (item.type !== "spell") {
       for (const d of ["close", "medium", "long"]) {
         delete data.distanceUnits[d];
@@ -323,10 +323,10 @@ export class ItemActionSheet extends FormApplication {
       }
 
       // Renew conditional ID
-      data._id = randomID(16);
+      data._id = foundry.utils.randomID(16);
 
       // Append conditional
-      const conditionals = deepClone(action.data.conditionals || []);
+      const conditionals = foundry.utils.deepClone(action.data.conditionals || []);
       conditionals.push(data);
       await this.object.update({ conditionals });
     }
@@ -354,13 +354,13 @@ export class ItemActionSheet extends FormApplication {
     const key = a.closest(".notes").dataset.name;
 
     if (a.classList.contains("add-entry")) {
-      const notes = deepClone(getProperty(this.object.data, key) ?? []);
+      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key) ?? []);
       notes.push("");
       const updateData = { [key]: notes };
       return this._onSubmit(event, { updateData });
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
-      const notes = deepClone(getProperty(this.object.data, key));
+      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.object.data, key));
       notes.splice(index, 1);
 
       const updateData = {};
@@ -430,9 +430,9 @@ export class ItemActionSheet extends FormApplication {
       };
 
       // Add data
-      const damage = getProperty(this.action.data, k2);
+      const damage = foundry.utils.getProperty(this.action.data, k2);
       const updateData = {};
-      const damageParts = getProperty(damage, k3) ?? [];
+      const damageParts = foundry.utils.getProperty(damage, k3) ?? [];
       damageParts.push(initialData);
       updateData[path] = damageParts;
       return this._onSubmit(event, { updateData });
@@ -441,8 +441,8 @@ export class ItemActionSheet extends FormApplication {
     // Remove a damage component
     if (a.classList.contains("delete-damage")) {
       const li = a.closest(".damage-part");
-      const damage = deepClone(getProperty(this.action.data, k2));
-      const damageParts = getProperty(damage, k3) ?? [];
+      const damage = foundry.utils.deepClone(foundry.utils.getProperty(this.action.data, k2));
+      const damageParts = foundry.utils.getProperty(damage, k3) ?? [];
       if (damageParts.length) {
         damageParts.splice(Number(li.dataset.damagePart), 1);
         const updateData = {};
@@ -463,7 +463,7 @@ export class ItemActionSheet extends FormApplication {
       const app = new pf1.applications.DamageTypeSelector(
         this.object,
         `${damagePart}.${damageIndex}.type`,
-        getProperty(this.object.data, damagePart)[damageIndex].type
+        foundry.utils.getProperty(this.object.data, damagePart)[damageIndex].type
       );
       return app.render(true);
     }
@@ -485,7 +485,7 @@ export class ItemActionSheet extends FormApplication {
 
     // Add new attack component
     if (a.classList.contains("add-attack")) {
-      const attackParts = deepClone(this.action.data.attackParts);
+      const attackParts = foundry.utils.deepClone(this.action.data.attackParts);
       attackParts.push(["", ""]);
       return this._onSubmit(event, { updateData: { attackParts } });
     }
@@ -493,7 +493,7 @@ export class ItemActionSheet extends FormApplication {
     // Remove an attack component
     if (a.classList.contains("delete-attack")) {
       const li = a.closest(".attack-part");
-      const attackParts = deepClone(this.action.data.attackParts);
+      const attackParts = foundry.utils.deepClone(this.action.data.attackParts);
       attackParts.splice(Number(li.dataset.attackPart), 1);
       return this._onSubmit(event, { updateData: { attackParts: attackParts } });
     }
@@ -553,7 +553,7 @@ export class ItemActionSheet extends FormApplication {
 
   async _updateObject(event, formData) {
     // Handle conditionals array
-    const conditionalData = deepClone(this.object.data.conditionals);
+    const conditionalData = foundry.utils.deepClone(this.object.data.conditionals);
     Object.entries(formData)
       .filter((o) => o[0].startsWith("conditionals"))
       .forEach((o) => {
@@ -563,17 +563,17 @@ export class ItemActionSheet extends FormApplication {
           const conditionalIdx = parseInt(reResult[1]);
           const modifierIdx = parseInt(reResult[2]);
           const conditional =
-            conditionalData[conditionalIdx] ?? deepClone(this.object.data.conditionals[conditionalIdx]);
+            conditionalData[conditionalIdx] ?? foundry.utils.deepClone(this.object.data.conditionals[conditionalIdx]);
           const path = reResult[3];
-          setProperty(conditional.modifiers[modifierIdx], path, o[1]);
+          foundry.utils.setProperty(conditional.modifiers[modifierIdx], path, o[1]);
         }
         // Handle conditional
         else if ((reResult = o[0].match(/^conditionals.([0-9]+).(.+)$/))) {
           const conditionalIdx = parseInt(reResult[1]);
           const conditional =
-            conditionalData[conditionalIdx] ?? deepClone(this.object.data.conditionals[conditionalIdx]);
+            conditionalData[conditionalIdx] ?? foundry.utils.deepClone(this.object.data.conditionals[conditionalIdx]);
           const path = reResult[2];
-          setProperty(conditional, path, o[1]);
+          foundry.utils.setProperty(conditional, path, o[1]);
         }
       });
     formData["conditionals"] = conditionalData;
@@ -596,7 +596,7 @@ export class ItemActionSheet extends FormApplication {
       }
     }
 
-    formData = expandObject(formData);
+    formData = foundry.utils.expandObject(formData);
     if (formData.alignments) {
       // Adjust Alignment Types (this is necessary to handle null values for inheritance)
       for (const [key, value] of Object.entries(this.alignments)) {

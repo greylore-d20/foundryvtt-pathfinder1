@@ -92,7 +92,7 @@ export class CheckboxFilter extends baseFilter.BaseFilter {
     // Find the first entry that has data in the field and use its data
     let fieldData;
     entries.find((entry) => {
-      return (fieldData = getProperty(entry, this.constructor.indexField));
+      return (fieldData = foundry.utils.getProperty(entry, this.constructor.indexField));
     });
     if (["Array", "Object"].includes(foundry.utils.getType(fieldData))) this.booleanOperator = BOOLEAN_OPERATOR.AND;
   }
@@ -102,7 +102,7 @@ export class CheckboxFilter extends baseFilter.BaseFilter {
     const entries = this.compendiumBrowser?.entries.contents;
     const observedValues = new Set(
       entries.flatMap((entry) => {
-        const data = getProperty(entry, this.constructor.indexField);
+        const data = foundry.utils.getProperty(entry, this.constructor.indexField);
         if (Array.isArray(data)) {
           if (data.length === 0) return [];
           else return data;
@@ -160,7 +160,7 @@ export class CheckboxFilter extends baseFilter.BaseFilter {
     if (types.size && !types.has(entry.type)) return false;
 
     /** @type {string | string[] | Record<string, boolean>} */
-    const data = getProperty(entry, this.constructor.indexField);
+    const data = foundry.utils.getProperty(entry, this.constructor.indexField);
 
     const testMethod = this.booleanOperator === BOOLEAN_OPERATOR.OR ? "some" : "every";
     if (Array.isArray(data)) {

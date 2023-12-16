@@ -112,7 +112,7 @@ export class ActionUse {
    * @returns {object} The roll data object for this attack.
    */
   getRollData() {
-    const rollData = deepClone(this.shared.action.getRollData());
+    const rollData = foundry.utils.deepClone(this.shared.action.getRollData());
     rollData.d20 = this.shared.dice !== "1d20" ? this.shared.dice : "";
 
     return rollData;
@@ -168,7 +168,7 @@ export class ActionUse {
 
     // Primary attack
     if (formData["primary-attack"] != null)
-      setProperty(this.shared.rollData, "action.naturalAttack.primaryAttack", formData["primary-attack"]);
+      foundry.utils.setProperty(this.shared.rollData, "action.naturalAttack.primaryAttack", formData["primary-attack"]);
 
     // Use measure template
     if (formData["measure-template"] != null) this.shared.useMeasureTemplate = formData["measure-template"];
@@ -200,7 +200,9 @@ export class ActionUse {
         : game.i18n.localize("PF1.PowerAttack");
 
       // Get penalty
-      const powerAttackPenalty = -(1 + Math.floor(getProperty(this.shared.rollData, "attributes.bab.total") / 4));
+      const powerAttackPenalty = -(
+        1 + Math.floor(foundry.utils.getProperty(this.shared.rollData, "attributes.bab.total") / 4)
+      );
 
       // Add bonuses
       this.shared.rollData.powerAttackPenalty = powerAttackPenalty;
@@ -432,7 +434,7 @@ export class ActionUse {
         }
       }
       // Expand data into rollData to enable referencing in formulae
-      this.shared.rollData.conditionals = expandObject(conditionalData, 5);
+      this.shared.rollData.conditionals = foundry.utils.expandObject(conditionalData, 5);
 
       // Add specific pre-rolled rollData entries
       for (const target of ["effect.cl", "effect.dc", "misc.charges"]) {
@@ -589,7 +591,7 @@ export class ActionUse {
 
       // Add damage
       if (this.shared.action.hasDamage) {
-        const extraParts = duplicate(this.shared.damageBonus);
+        const extraParts = foundry.utils.deepClone(this.shared.damageBonus);
         const nonCritParts = [];
         const critParts = [];
 
@@ -656,7 +658,7 @@ export class ActionUse {
     });
     // Add damage
     await attack.addDamage({
-      extraParts: duplicate(this.shared.damageBonus),
+      extraParts: foundry.utils.deepClone(this.shared.damageBonus),
       critical: false,
       conditionalParts: this.shared.conditionalParts,
     });
@@ -875,7 +877,7 @@ export class ActionUse {
     // Parse template data
     const identified = Boolean(this.shared.rollData.item?.identified ?? true);
     const name = identified ? `${this.item.name} (${this.shared.action.name})` : this.item.getName(true);
-    this.shared.templateData = mergeObject(
+    this.shared.templateData = foundry.utils.mergeObject(
       this.shared.templateData,
       {
         tokenUuid: token ? token.document?.uuid ?? token.uuid : null,
@@ -927,7 +929,10 @@ export class ActionUse {
     if (this.item.type === "spell" && actor) {
       // Spell failure
       if (actor.spellFailure > 0 && this.item.system.components.somatic) {
-        const spellbook = getProperty(actor.system, `attributes.spells.spellbooks.${this.item.system.spellbook}`);
+        const spellbook = foundry.utils.getProperty(
+          actor.system,
+          `attributes.spells.spellbooks.${this.item.system.spellbook}`
+        );
         if (spellbook && spellbook.arcaneSpellFailure) {
           const roll = RollPF.safeRoll("1d100");
           this.shared.templateData.spellFailure = roll.total;

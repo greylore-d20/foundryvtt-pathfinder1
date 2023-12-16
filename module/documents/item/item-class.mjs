@@ -167,7 +167,7 @@ export class ItemClassPF extends ItemPF {
 
     // Remove items associated to this class
     if (newLevel < curLevel) {
-      const associations = duplicate(this.getFlag("pf1", "links.classAssociations") || {});
+      const associations = foundry.utils.deepClone(this.getFlag("pf1", "links.classAssociations") || {});
       const itemIds = [];
       for (const [id, level] of Object.entries(associations)) {
         const item = actor.items.get(id);

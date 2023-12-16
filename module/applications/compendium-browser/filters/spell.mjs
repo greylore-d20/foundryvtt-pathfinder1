@@ -77,7 +77,7 @@ export class SpellLevelFilter extends CheckboxFilter {
     // Require either any of the active filters to match if OR, or all filters to return a match if AND
     return activeLearnedAtFilters[testMethod]((filter) => {
       /** @type {Record<string, number>} */
-      const learnedAt = getProperty(entry, filter.constructor.indexField) ?? {};
+      const learnedAt = foundry.utils.getProperty(entry, filter.constructor.indexField) ?? {};
       const activeLearnedAtChoices = filter.choices.filter((choice) => choice.active);
       // Require either one of the classes etc. to match if OR, or all classes etc. to match if AND
       return activeLearnedAtChoices[testMethod]((learnedAtChoice) => {

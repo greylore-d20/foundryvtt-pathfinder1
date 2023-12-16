@@ -19,7 +19,7 @@ export class ExperienceDistributor extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["pf1", "xp-distributor"],
       title: game.i18n.localize("PF1.Application.XPDistributor.Title"),
       template: "systems/pf1/templates/apps/xp-distributor.hbs",
@@ -192,7 +192,7 @@ export class ExperienceDistributor extends FormApplication {
     const xp = actor.system.details?.xp?.value ?? 0;
 
     return {
-      id: randomID(16),
+      id: foundry.utils.randomID(16),
       isNPC: actor.type !== "character",
       actor,
       selected: this._shouldActorBeSelected(actor),

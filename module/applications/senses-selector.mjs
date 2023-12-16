@@ -3,7 +3,7 @@ import { getDistanceSystem } from "@utils";
 export class SensesSelector extends DocumentSheet {
   static get defaultOptions() {
     const options = super.defaultOptions;
-    return mergeObject(options, {
+    return foundry.utils.mergeObject(options, {
       classes: ["pf1", "senses-selector"],
       template: "systems/pf1/templates/apps/senses-selector.hbs",
       width: 500,
@@ -38,7 +38,7 @@ export class SensesSelector extends DocumentSheet {
   async getData() {
     const actor = this.document;
 
-    const senses = deepClone(actor.system.traits?.senses ?? {});
+    const senses = foundry.utils.deepClone(actor.system.traits?.senses ?? {});
     for (const [key, type] of Object.entries(this.constructor.convertKeys)) {
       const value = senses[key];
       if (type === "distance" && value > 0) {

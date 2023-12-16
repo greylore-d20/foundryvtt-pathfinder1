@@ -36,7 +36,7 @@ export class AbilityTemplate extends MeasuredTemplatePF {
       flags,
       fillColor: data.color ? data.color : game.user.color,
       texture: data.texture ? data.texture : null,
-      _id: randomID(16),
+      _id: foundry.utils.randomID(16),
     };
 
     // Additional type-specific data

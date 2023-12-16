@@ -139,12 +139,12 @@ export class ActorTrapPF extends ActorPF {
         const k3 = arr.slice(-1)[0];
         if (k2 === "") delete result[k];
         else {
-          const obj = getProperty(result, k2);
+          const obj = foundry.utils.getProperty(result, k2);
           if (typeof obj === "object") delete obj[k3];
         }
       }
     } else {
-      result = deepClone(this.system);
+      result = foundry.utils.deepClone(this.system);
     }
 
     /* ----------------------------- */

@@ -13,7 +13,7 @@ export class ActionChooser extends Application {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       template: "systems/pf1/templates/apps/action-chooser.hbs",
       classes: ["pf1", "action-chooser"],
       width: 400,

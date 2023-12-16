@@ -34,7 +34,7 @@ export class ActorNPCPF extends ActorPF {
     super.prepareSpecificDerivedData();
 
     // Reset CR
-    setProperty(this.system, "details.cr.total", this.getCR());
+    foundry.utils.setProperty(this.system, "details.cr.total", this.getCR());
 
     // Reset experience value
     let newXP = 0;
@@ -44,7 +44,7 @@ export class ActorNPCPF extends ActorPF {
     } catch (e) {
       newXP = this.getCRExp(1);
     }
-    setProperty(this.system, "details.xp.value", newXP);
+    foundry.utils.setProperty(this.system, "details.xp.value", newXP);
   }
 
   /**

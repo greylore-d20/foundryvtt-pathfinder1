@@ -11,7 +11,7 @@ export class ItemBuffPF extends ItemPF {
   async _preUpdate(changed, context, user) {
     // Add activation time when not present
     if (changed.system?.active && changed.system?.duration?.start === undefined) {
-      setProperty(changed, "system.duration.start", game.time.worldTime);
+      foundry.utils.setProperty(changed, "system.duration.start", game.time.worldTime);
     }
 
     if (this.isActive && changed.system?.active == false) {
@@ -232,7 +232,7 @@ export class ItemBuffPF extends ItemPF {
     const createData = super.getRawEffectData();
 
     const hideIcon = this.system.hideFromToken;
-    setProperty(createData, "flags.pf1.show", !hideIcon);
+    foundry.utils.setProperty(createData, "flags.pf1.show", !hideIcon);
 
     // Add buff durations
     const duration = this.system.duration;

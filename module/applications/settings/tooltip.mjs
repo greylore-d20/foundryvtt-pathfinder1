@@ -82,7 +82,7 @@ export class TooltipConfig extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       title: game.i18n.localize("PF1.TooltipConfigName"),
       id: "tooltip-config",
       template: "systems/pf1/templates/settings/tooltip.hbs",
@@ -115,7 +115,7 @@ export class TooltipConfig extends FormApplication {
     if (el.dataset?.dtype === "Boolean") value = Boolean(value);
     else if (el.dataset?.dtype === "Number") value = parseFloat(value);
 
-    setProperty(this._cachedData, `data.${key}`, value);
+    foundry.utils.setProperty(this._cachedData, `data.${key}`, value);
     this.render();
   }
 
@@ -135,7 +135,7 @@ export class TooltipConfig extends FormApplication {
   }
 
   async _updateObject(event, formData) {
-    const settings = expandObject(formData);
+    const settings = foundry.utils.expandObject(formData);
 
     await game.settings.set("pf1", "tooltipConfig", settings);
     ui.notifications.info(game.i18n.localize("PF1.TooltipConfigUpdateInfo"));

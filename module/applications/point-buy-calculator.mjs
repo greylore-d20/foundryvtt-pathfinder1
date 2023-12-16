@@ -19,7 +19,7 @@ export class PointBuyCalculator extends DocumentSheet {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["pf1", "pointbuy-calculator"],
       template: "systems/pf1/templates/apps/point-buy-calculator.hbs",
       width: 320,

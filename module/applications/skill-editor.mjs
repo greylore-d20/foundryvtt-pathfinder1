@@ -55,7 +55,7 @@ export class SkillEditor extends FormApplication {
     data.config = pf1.config;
 
     // Skill data
-    data.skill = mergeObject(
+    data.skill = foundry.utils.mergeObject(
       this.skill,
       {
         skillId: this.skillId,
@@ -95,7 +95,7 @@ export class SkillEditor extends FormApplication {
     const updateData = { system: { skills: {} } };
     const skillCoreUpdateData = updateData.system.skills;
 
-    formData = expandObject(formData);
+    formData = foundry.utils.expandObject(formData);
     // Forcibly slugify provided tag to ensure it is not invalid (e.g. contain periods)
     const tag = formData.tag?.slugify({ strict: true });
     const newData = formData.skill;

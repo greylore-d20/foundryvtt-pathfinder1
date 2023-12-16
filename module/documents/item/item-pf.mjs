@@ -717,7 +717,7 @@ export class ItemPF extends ItemBasePF {
       let change = null;
       if (prior && prior.has(c._id)) {
         change = prior.get(c._id);
-        change.data = mergeObject(ItemChange.defaultData, c);
+        change.data = foundry.utils.mergeObject(ItemChange.defaultData, c);
         change.prepareData();
       } else change = new pf1.components.ItemChange(c, this);
       collection.set(c._id || change.data._id, change);
@@ -732,7 +732,7 @@ export class ItemPF extends ItemBasePF {
       let action = null;
       if (prior && prior.has(o._id)) {
         action = prior.get(o._id);
-        action.data = mergeObject(ItemAction.defaultData, o);
+        action.data = foundry.utils.mergeObject(ItemAction.defaultData, o);
         action.prepareData();
       } else action = new pf1.components.ItemAction(o, this);
       collection.set(o._id || action.data._id, action);
@@ -783,7 +783,7 @@ export class ItemPF extends ItemBasePF {
       return super.update(data, context);
     }
 
-    data = expandObject(data);
+    data = foundry.utils.expandObject(data);
 
     this.memorizeVariables();
 
@@ -805,8 +805,8 @@ export class ItemPF extends ItemBasePF {
     const memKeys = this.memoryVariables;
     this._memoryVariables = {};
     for (const k of memKeys) {
-      if (hasProperty(this.system, k)) {
-        this._memoryVariables[k] = deepClone(getProperty(this.system, k));
+      if (foundry.utils.hasProperty(this.system, k)) {
+        this._memoryVariables[k] = foundry.utils.deepClone(foundry.utils.getProperty(this.system, k));
       }
     }
 
@@ -983,7 +983,7 @@ export class ItemPF extends ItemBasePF {
     pfFlags.metadata.item = this.id;
 
     // Basic chat message data
-    const chatData = mergeObject(
+    const chatData = foundry.utils.mergeObject(
       {
         type: CONST.CHAT_MESSAGE_TYPES.OTHER,
         speaker: ChatMessage.implementation.getSpeaker({ actor, token, alias: token?.name }),
@@ -1304,7 +1304,7 @@ export class ItemPF extends ItemBasePF {
     const actor = this.actor;
     const result = { ...(actor?.getRollData() ?? {}) };
 
-    result.item = deepClone(this.system);
+    result.item = foundry.utils.deepClone(this.system);
 
     // Add @class
     const classTag = result.item.class;
@@ -1312,11 +1312,11 @@ export class ItemPF extends ItemBasePF {
 
     // Add dictionary flag
     if (this.system.tag) {
-      result.item.dFlags = getProperty(result, `dFlags.${this.system.tag}`);
+      result.item.dFlags = foundry.utils.getProperty(result, `dFlags.${this.system.tag}`);
     }
 
     // Set aura strength
-    setProperty(result, "item.auraStrength", this.auraStrength);
+    foundry.utils.setProperty(result, "item.auraStrength", this.auraStrength);
 
     // Resize item
     if (this.system.resizing && result.size !== undefined) {
@@ -1645,7 +1645,7 @@ export class ItemPF extends ItemBasePF {
   async removeItemLink(id, { commit = true } = {}) {
     const updateData = {};
     for (const [type, linkItems] of Object.entries(this.system.links ?? {})) {
-      const items = deepClone(linkItems);
+      const items = foundry.utils.deepClone(linkItems);
       const idx = items.findIndex((item) => item.id === id || item.uuid === id);
       if (idx >= 0) {
         items.splice(idx, 1);
@@ -1710,7 +1710,10 @@ export class ItemPF extends ItemBasePF {
           result[`skill.${s}`] = skl;
         }
       } else {
-        const actorSkills = mergeObject(duplicate(pf1.config.skills), this.actor.system.skills);
+        const actorSkills = foundry.utils.mergeObject(
+          foundry.utils.deepClone(pf1.config.skills),
+          this.actor.system.skills
+        );
         for (const [s, skl] of Object.entries(actorSkills)) {
           if (!skl.subSkills) {
             if (skl.custom) result[`skill.${s}`] = skl.name;
@@ -1724,7 +1727,7 @@ export class ItemPF extends ItemBasePF {
       }
     }
     // Add static subtargets
-    else if (hasProperty(pf1.config.buffTargets, target)) {
+    else if (foundry.utils.hasProperty(pf1.config.buffTargets, target)) {
       for (const [k, v] of Object.entries(pf1.config.buffTargets[target])) {
         if (!k.startsWith("_") && !k.startsWith("~")) result[k] = v;
       }

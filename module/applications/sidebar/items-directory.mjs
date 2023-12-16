@@ -22,7 +22,7 @@ export class ItemDirectoryPF extends ItemDirectory {
     if (
       documentType !== "Folder" &&
       action === "update" &&
-      !data.some((d) => this.options.renderUpdateKeys.some((k) => getProperty(d, k) !== undefined))
+      !data.some((d) => this.options.renderUpdateKeys.some((k) => foundry.utils.getProperty(d, k) !== undefined))
     )
       return;
 

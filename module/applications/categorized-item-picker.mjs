@@ -73,7 +73,7 @@ export class Widget_CategorizedItemPicker extends Application {
 
       for (const item of cat.items) {
         data.items.push(
-          mergeObject(
+          foundry.utils.mergeObject(
             {
               category: cat.key,
             },

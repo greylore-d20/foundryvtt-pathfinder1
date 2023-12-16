@@ -375,12 +375,13 @@ export const mergeObjectExt = function (
   const depth = _d + 1;
 
   // Maybe copy the original data at depth 0
-  if (!inplace && _d === 0) original = duplicate(original);
+  if (!inplace && _d === 0) original = foundry.utils.deepClone(original);
 
   // Enforce object expansion at depth 0
   if (_d === 0 && Object.keys(original).some((k) => /\./.test(k)))
     original = expandObjectExt(original, { makeArrays: makeArrays });
-  if (_d === 0 && Object.keys(other).some((k) => /\./.test(k))) other = expandObject(other, { makeArrays: makeArrays });
+  if (_d === 0 && Object.keys(other).some((k) => /\./.test(k)))
+    other = foundry.utils.expandObject(other, { makeArrays: makeArrays });
 
   // Iterate over the other object
   for (let [k, v] of Object.entries(other)) {
@@ -469,8 +470,8 @@ export const mergeObjectExt = function (
 export const naturalSort = function (arr, propertyKey = "", { numeric = true, ignorePunctuation = false } = {}) {
   const collator = new Intl.Collator(game.settings.get("core", "language"), { numeric, ignorePunctuation });
   return arr.sort((a, b) => {
-    const propA = propertyKey ? (propertyKey in a ? a[propertyKey] : getProperty(a, propertyKey)) : a;
-    const propB = propertyKey ? (propertyKey in b ? b[propertyKey] : getProperty(b, propertyKey)) : b;
+    const propA = propertyKey ? (propertyKey in a ? a[propertyKey] : foundry.utils.getProperty(a, propertyKey)) : a;
+    const propB = propertyKey ? (propertyKey in b ? b[propertyKey] : foundry.utils.getProperty(b, propertyKey)) : b;
     return collator.compare(propA, propB);
   });
 };
@@ -487,8 +488,8 @@ export const createConsumableSpellDialog = async function (itemData, { allowSpel
   });
 
   const getFormData = (html) => {
-    const formData = expandObject(new FormDataExtended(html.querySelector("form")).object);
-    mergeObject(itemData, formData);
+    const formData = foundry.utils.expandObject(new FormDataExtended(html.querySelector("form")).object);
+    foundry.utils.mergeObject(itemData, formData);
     // NaN check here to allow SL 0
     if (Number.isNaN(itemData.sl)) itemData.sl = 1;
     return itemData;
@@ -612,7 +613,7 @@ export async function openJournal(uuid, options = {}) {
  * @returns {Object<string, BuffTargetItem>} The resulting array of buff targets.
  */
 export const getBuffTargets = function (actor, type = "buffs") {
-  const buffTargets = duplicate(
+  const buffTargets = foundry.utils.deepClone(
     {
       buffs: pf1.config.buffTargets,
       contextNotes: pf1.config.contextNoteTargets,
@@ -650,7 +651,7 @@ export const getBuffTargetDictionary = function (actor, type = "buffs") {
   const buffTargets = getBuffTargets(actor, type);
 
   // Assemble initial categories and items
-  const targetCategories = duplicate(
+  const targetCategories = foundry.utils.deepClone(
     {
       buffs: pf1.config.buffTargetCategories,
       contextNotes: pf1.config.contextNoteCategories,
@@ -1032,22 +1033,22 @@ export function refreshSheets({ reset = true, actor = true, item = true, action 
  * @param {string} keepPath A path to the array to keep, separated with dots. e.g. "system.damageParts".
  */
 export function keepUpdateArray(sourceObj, targetObj, keepPath) {
-  const newValue = getProperty(targetObj, keepPath);
+  const newValue = foundry.utils.getProperty(targetObj, keepPath);
   if (newValue == null) return;
   if (Array.isArray(newValue)) return;
 
-  const newArray = deepClone(getProperty(sourceObj, keepPath) || []);
+  const newArray = foundry.utils.deepClone(foundry.utils.getProperty(sourceObj, keepPath) || []);
 
   for (const [key, value] of Object.entries(newValue)) {
     if (foundry.utils.getType(value) === "Object") {
-      const subData = expandObject(value);
-      newArray[key] = mergeObject(newArray[key], subData);
+      const subData = foundry.utils.expandObject(value);
+      newArray[key] = foundry.utils.mergeObject(newArray[key], subData);
     } else {
       newArray[key] = value;
     }
   }
 
-  setProperty(targetObj, keepPath, newArray);
+  foundry.utils.setProperty(targetObj, keepPath, newArray);
 }
 
 /**

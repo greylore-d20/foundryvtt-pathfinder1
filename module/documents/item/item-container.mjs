@@ -179,7 +179,7 @@ export class ItemContainerPF extends ItemPhysicalPF {
     for (const itemData of data) {
       // Find unique ID
       do {
-        itemData._id = randomID(16);
+        itemData._id = foundry.utils.randomID(16);
       } while (this.system.items[itemData._id] !== undefined);
 
       // Create temporary item

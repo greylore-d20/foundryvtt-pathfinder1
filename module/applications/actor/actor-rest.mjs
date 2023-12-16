@@ -1,7 +1,7 @@
 export class ActorRestDialog extends DocumentSheet {
   static get defaultOptions() {
     const options = super.defaultOptions;
-    return mergeObject(options, {
+    return foundry.utils.mergeObject(options, {
       classes: ["pf1", "actor-rest"],
       template: "systems/pf1/templates/apps/actor-rest.hbs",
       width: 500,

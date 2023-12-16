@@ -49,10 +49,10 @@ export class ActorTraitSelector extends DocumentSheet {
    */
   getData() {
     // Get current values
-    const attr = getProperty(this.object, this.attribute) ?? { value: [], custom: "" };
+    const attr = foundry.utils.getProperty(this.object, this.attribute) ?? { value: [], custom: "" };
 
     // Populate choices
-    const choices = duplicate(this.options.choices);
+    const choices = foundry.utils.deepClone(this.options.choices);
     for (const [k, v] of Object.entries(choices)) {
       choices[k] = {
         label: v,

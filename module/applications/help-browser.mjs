@@ -42,7 +42,7 @@ export class HelpBrowserPF extends Application {
 
   /** @inheritdoc */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["pf1", "help-browser"],
       template: "systems/pf1/templates/apps/help-browser.hbs",
       minWidth: 800,

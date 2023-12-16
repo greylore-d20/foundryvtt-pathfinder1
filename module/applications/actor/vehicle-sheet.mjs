@@ -54,7 +54,7 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
       isGM: game.user.isGM,
     };
 
-    data.system = deepClone(this.document.system);
+    data.system = foundry.utils.deepClone(this.document.system);
 
     data.vehicleSizes = Object.fromEntries(
       Object.entries(pf1.config.vehicles.size).map(([key, data]) => [key, data.label])
@@ -64,7 +64,7 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
     data.actor = this.actor;
     data.token = this.token;
     data.items = this.document.items.map((item) => {
-      const i = deepClone(item.system);
+      const i = foundry.utils.deepClone(item.system);
       i.document = item;
       i.type = item.type;
       i.id = item.id;
@@ -84,7 +84,7 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
       i.hasRange = firstAction?.hasRange;
       i.hasEffect = firstAction?.hasEffect;
       i.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
-      i.range = mergeObject(
+      i.range = foundry.utils.mergeObject(
         firstAction?.data?.range ?? {},
         {
           min: firstAction?.getRange({ type: "min", rollData: firstActionRollData }),
@@ -129,9 +129,10 @@ export class ActorSheetPFVehicle extends ActorSheetPF {
       (arr, item) => {
         item.img = item.img || foundry.data.ItemData.DEFAULT_ICON;
         item.hasUses = item.uses && item.uses.max > 0;
-        item.isCharged = ["day", "week", "charges"].includes(getProperty(item, "uses.per"));
+        item.isCharged = ["day", "week", "charges"].includes(foundry.utils.getProperty(item, "uses.per"));
 
-        const itemCharges = getProperty(item, "uses.value") != null ? getProperty(item, "uses.value") : 1;
+        const itemCharges =
+          foundry.utils.getProperty(item, "uses.value") != null ? foundry.utils.getProperty(item, "uses.value") : 1;
 
         if (item.type === "attack") arr[0].push(item);
         return arr;

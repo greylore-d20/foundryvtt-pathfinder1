@@ -1,7 +1,7 @@
 export class ActorSheetFlags extends DocumentSheet {
   static get defaultOptions() {
     const options = super.defaultOptions;
-    return mergeObject(options, {
+    return foundry.utils.mergeObject(options, {
       id: "actor-flags",
       classes: ["pf1"],
       template: "systems/pf1/templates/apps/actor-flags.hbs",
@@ -46,7 +46,7 @@ export class ActorSheetFlags extends DocumentSheet {
     const flags = {};
     for (const [k, v] of Object.entries(pf1.config.characterFlags)) {
       if (!Object.prototype.hasOwnProperty.call(flags, v.section)) flags[v.section] = {};
-      const flag = duplicate(v);
+      const flag = foundry.utils.deepClone(v);
       flag.type = v.type.name;
       flag.isCheckbox = v.type === Boolean;
       flag.isSelect = Object.prototype.hasOwnProperty.call(v, "choices");

@@ -4,7 +4,7 @@ export class ItemScriptCall {
   static AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 
   constructor(data, parent) {
-    this.data = mergeObject(this.constructor.defaultData, data);
+    this.data = foundry.utils.mergeObject(this.constructor.defaultData, data);
     this.parent = parent;
 
     if (this.type === "macro") {
@@ -27,8 +27,8 @@ export class ItemScriptCall {
 
     if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
-      data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newScriptCallData = deepClone(parent.system.scriptCalls || []);
+      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
+      const newScriptCallData = foundry.utils.deepClone(parent.system.scriptCalls || []);
       newScriptCallData.push(...data);
 
       // Update parent
@@ -43,7 +43,7 @@ export class ItemScriptCall {
 
   static get defaultData() {
     return {
-      _id: randomID(16),
+      _id: foundry.utils.randomID(16),
       name: game.i18n.localize("PF1.ScriptCalls.NewName"),
       img: "icons/svg/dice-target.svg",
       type: "script",

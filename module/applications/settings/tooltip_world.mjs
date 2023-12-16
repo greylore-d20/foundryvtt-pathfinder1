@@ -47,7 +47,7 @@ export class TooltipWorldConfig extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       title: game.i18n.localize("PF1.TooltipWorldConfigName"),
       id: "tooltip-world-config",
       template: "systems/pf1/templates/settings/tooltip_world.hbs",
@@ -69,7 +69,7 @@ export class TooltipWorldConfig extends FormApplication {
   }
 
   async _updateObject(event, formData) {
-    const settings = expandObject(formData);
+    const settings = foundry.utils.expandObject(formData);
 
     await game.settings.set("pf1", "tooltipWorldConfig", settings);
     ui.notifications.info(game.i18n.localize("PF1.TooltipConfigUpdateInfo"));

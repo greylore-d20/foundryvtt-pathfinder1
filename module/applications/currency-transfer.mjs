@@ -27,14 +27,14 @@ export class CurrencyTransfer extends FormApplication {
 
     // Currency checks
     if (source.container) {
-      source.amount = mergeObject(source.container.system.currency, source.amount ?? {});
+      source.amount = foundry.utils.mergeObject(source.container.system.currency, source.amount ?? {});
     } else if (source.actor) {
-      source.amount = mergeObject(
+      source.amount = foundry.utils.mergeObject(
         source.alt ? source.actor.system.altCurrency : source.actor.system.currency,
         source.amount ?? {}
       );
     } else if (game.user.isGM) {
-      source.amount = mergeObject({ pp: "∞", gp: "∞", sp: "∞", cp: "∞" }, source.amount ?? {});
+      source.amount = foundry.utils.mergeObject({ pp: "∞", gp: "∞", sp: "∞", cp: "∞" }, source.amount ?? {});
     } else {
       ui.notification.warning("Cannot use Infinite currency transfer as non-gm.");
       return undefined;
@@ -69,7 +69,7 @@ export class CurrencyTransfer extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["pf1", "currency-transfer"],
       template: "systems/pf1/templates/apps/currency-transfer.hbs",
       width: 380,
@@ -208,8 +208,10 @@ export class CurrencyTransfer extends FormApplication {
     if (!Object.values(amount).find((a) => a > 0))
       return this._failed("PF1.Application.CurrencyTransfer.Insufficient"), false;
 
-    let sourceCurrency = duplicate(sourceAlt ? sourceDoc?.system.altCurrency : sourceDoc?.system.currency);
-    const destCurrency = duplicate(destAlt ? destDoc.system.altCurrency : destDoc.system.currency);
+    let sourceCurrency = foundry.utils.deepClone(
+      sourceAlt ? sourceDoc?.system.altCurrency : sourceDoc?.system.currency
+    );
+    const destCurrency = foundry.utils.deepClone(destAlt ? destDoc.system.altCurrency : destDoc.system.currency);
     if ((!sourceCurrency && !game.user.isGM) || !destCurrency) return false;
     const originalSource = Object.assign(Object.fromEntries(this.order.map((o) => [o, Infinity])), sourceCurrency);
 

@@ -215,7 +215,7 @@ export class AttackDialog extends Application {
         this.attacks.splice(
           place,
           0,
-          mergeObject(this.constructor.defaultAttack, {
+          foundry.utils.mergeObject(this.constructor.defaultAttack, {
             id: elem.name,
             label: game.i18n.localize(translationString[elem.name]),
             attackBonusTotal: "", // Don't show anything in the mod field, as the data is not updated live
@@ -316,10 +316,10 @@ export class AttackDialog extends Application {
         this.rollData.sl = this.base.sl + parseInt(elem.value);
         break;
       case "damage-ability-multiplier":
-        setProperty(this.rollData, "item.ability.damageMult", elem.value);
+        foundry.utils.setProperty(this.rollData, "item.ability.damageMult", elem.value);
         break;
       case "held":
-        setProperty(this.rollData, "item.held", elem.value);
+        foundry.utils.setProperty(this.rollData, "item.held", elem.value);
         break;
     }
 

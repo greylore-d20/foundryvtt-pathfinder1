@@ -146,7 +146,7 @@ export function alterTargetDefense(cm, jq) {
   jq.find(".attack-targets .saving-throws div[data-saving-throw]").each((a, el) => {
     const actorUUID = el.closest(".target").dataset.uuid;
     const save = el.dataset.savingThrow;
-    const value = getProperty(defenseData, `${actorUUID}.save.${save}`);
+    const value = foundry.utils.getProperty(defenseData, `${actorUUID}.save.${save}`);
     if (value == null) return;
     $(el).find(".value").text(value.toString());
   });

@@ -171,7 +171,7 @@ export const registerActorItemAttackTests = () => {
                 subType: "natural",
                 primaryAttack: true,
                 actions: [
-                  mergeObject(rawActionData, {
+                  foundry.utils.mergeObject(rawActionData, {
                     name: "Bite",
                     actionType: "mwak",
                     damage: {

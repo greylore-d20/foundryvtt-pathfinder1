@@ -17,7 +17,7 @@ export class ActorResistanceSelector extends FormApplication {
     this.isDR = this.options.isDR === true;
 
     /** Working copy of our trait's data */
-    const resistances = deepClone(getProperty(this.object, this.attribute) ?? {});
+    const resistances = foundry.utils.deepClone(foundry.utils.getProperty(this.object, this.attribute) ?? {});
 
     /**
      * Custom user input for damage sources
@@ -98,7 +98,7 @@ export class ActorResistanceSelector extends FormApplication {
 
   /** @override */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       id: "energy-resistance-selector",
       classes: ["pf1", "resistance"],
       template: "systems/pf1/templates/apps/damage-resistance-selector.hbs",

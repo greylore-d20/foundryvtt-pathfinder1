@@ -646,7 +646,7 @@ export class ItemSpellPF extends ItemPF {
     );
 
     // Create and return synthetic item data
-    return new ItemPF(expandObject(itemData)).toObject();
+    return new ItemPF(foundry.utils.expandObject(itemData)).toObject();
   }
 
   /**
@@ -697,7 +697,7 @@ export class ItemSpellPF extends ItemPF {
       types: "",
     };
     const data = {
-      data: mergeObject(this.system, srcData, { inplace: false }),
+      data: foundry.utils.mergeObject(this.system, srcData, { inplace: false }),
       label: label,
     };
 

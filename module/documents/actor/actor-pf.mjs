@@ -476,12 +476,15 @@ export class ActorPF extends ActorBasePF {
     context.pf1.reason = "duration";
 
     if (deleteActiveEffects.length) {
-      const deleteAEContext = mergeObject({ render: !disableBuffs.length && !disableActiveEffects.length }, context);
+      const deleteAEContext = foundry.utils.mergeObject(
+        { render: !disableBuffs.length && !disableActiveEffects.length },
+        context
+      );
       await this.deleteEmbeddedDocuments("ActiveEffect", deleteActiveEffects, deleteAEContext);
     }
 
     if (disableActiveEffects.length) {
-      const disableAEContext = mergeObject({ render: !disableBuffs.length }, context);
+      const disableAEContext = foundry.utils.mergeObject({ render: !disableBuffs.length }, context);
       await this.updateEmbeddedDocuments("ActiveEffect", disableActiveEffects, disableAEContext);
     }
 
@@ -570,7 +573,7 @@ export class ActorPF extends ActorBasePF {
     this._prepareClassSkills();
 
     // Reset HD
-    setProperty(this.system, "attributes.hd.total", this.system.details.level.value);
+    foundry.utils.setProperty(this.system, "attributes.hd.total", this.system.details.level.value);
   }
 
   prepareConditions() {
@@ -657,7 +660,7 @@ export class ActorPF extends ActorBasePF {
       }
       this.system.skills[skillKey].cs = skillSet.has(skillKey);
       for (const k2 of Object.keys(skillData.subSkills ?? {})) {
-        setProperty(skillData, `subSkills.${k2}.cs`, skillSet.has(skillKey));
+        foundry.utils.setProperty(skillData, `subSkills.${k2}.cs`, skillSet.has(skillKey));
       }
     }
   }
@@ -1285,7 +1288,7 @@ export class ActorPF extends ActorBasePF {
       const proficiencies = this.items.reduce(
         (profs, item) => {
           // Check only items able to grant proficiencies
-          if (hasProperty(item, `system.${prof}`)) {
+          if (foundry.utils.hasProperty(item, `system.${prof}`)) {
             // Get existing sourceInfo for item with this name, create sourceInfo if none is found
             // Remember whether sourceInfo can be modified or has to be pushed at the end
             let sInfo = getSourceInfo(this.sourceInfo, `system.traits.${prof}`).positive.find(
@@ -1419,7 +1422,7 @@ export class ActorPF extends ActorBasePF {
 
     // Combine AC types
     for (const k of ["ac.normal.total", "ac.shield.total", "ac.natural.total"]) {
-      const v = getProperty(actorData, k);
+      const v = foundry.utils.getProperty(actorData, k);
       if (v) {
         for (const k2 of ["normal", "flatFooted"]) {
           attributes.ac[k2].total += v;
@@ -1894,7 +1897,7 @@ export class ActorPF extends ActorBasePF {
     // Reset totals
     for (const [k, v] of Object.entries(keys)) {
       try {
-        setProperty(this.system, k, v);
+        foundry.utils.setProperty(this.system, k, v);
       } catch (err) {
         console.log(err, k);
       }
@@ -2025,7 +2028,7 @@ export class ActorPF extends ActorBasePF {
     // Portrait and token image mismatch
     if (this.img !== this.prototypeToken.texture.src) return;
 
-    setProperty(changed, "prototypeToken.texture.src", changed.img);
+    foundry.utils.setProperty(changed, "prototypeToken.texture.src", changed.img);
   }
 
   /**
@@ -2045,7 +2048,7 @@ export class ActorPF extends ActorBasePF {
     let initializeVision = false,
       refreshLighting = false;
 
-    if (hasProperty(changed.system, "traits.senses")) {
+    if (foundry.utils.hasProperty(changed.system, "traits.senses")) {
       initializeVision = true;
       if (changed.system.traits.senses.ll) {
         refreshLighting = true;
@@ -2350,15 +2353,15 @@ export class ActorPF extends ActorBasePF {
         baseTypes: srcData.baseTypes,
         tags: srcData.tags,
         weaponGroups: srcData.weaponGroups,
-        actions: deepClone(srcData.actions ?? []),
-        material: deepClone(srcData.material),
+        actions: foundry.utils.deepClone(srcData.actions ?? []),
+        material: foundry.utils.deepClone(srcData.material),
         alignments: srcData.alignments,
       },
     };
 
     // Add ensure action IDs are correct and unique
     for (const action of attackItem.system.actions) {
-      action._id = randomID(16);
+      action._id = foundry.utils.randomID(16);
     }
 
     // Create attack
@@ -2457,10 +2460,10 @@ export class ActorPF extends ActorBasePF {
     }
 
     rollData ??= this.getRollData();
-    const dataSkill = getProperty(rollData.skills, skillId);
+    const dataSkill = foundry.utils.getProperty(rollData.skills, skillId);
     if (!dataSkill) throw new Error(`Invalid skill ID '${skillId}'`);
 
-    const result = deepClone(dataSkill);
+    const result = foundry.utils.deepClone(dataSkill);
     result.name = skillName;
     result.id = skillId;
     result.journal ||= pf1.config.skillCompendiumEntries[skillId];
@@ -2688,7 +2691,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollCL(bookId, options = {}) {
     const spellbook = this.system.attributes.spells.spellbooks[bookId];
-    const rollData = duplicate(this.getRollData());
+    const rollData = this.getRollData();
     rollData.cl = spellbook.cl.total;
 
     // Set up roll parts
@@ -2734,7 +2737,7 @@ export class ActorPF extends ActorBasePF {
    */
   async rollConcentration(bookId, options = {}) {
     const spellbook = this.system.attributes.spells.spellbooks[bookId];
-    const rollData = duplicate(this.getRollData());
+    const rollData = this.getRollData();
     rollData.cl = spellbook.cl.total;
     rollData.mod = this.system.abilities[spellbook.ability]?.mod ?? 0;
 
@@ -2937,7 +2940,7 @@ export class ActorPF extends ActorBasePF {
     // No combatants. Possibly from reroll being disabled.
     if (combatants.length == 0) return combat;
 
-    mergeObject(initiativeOptions, { d20: dice, bonus, rollMode, skipDialog });
+    foundry.utils.mergeObject(initiativeOptions, { d20: dice, bonus, rollMode, skipDialog });
     await combat.rollInitiative(combatants, initiativeOptions);
     return combat;
   }
@@ -3262,7 +3265,7 @@ export class ActorPF extends ActorBasePF {
    * @returns {object} Condition ID to boolean mapping of actual updates.
    */
   async setConditions(conditions = {}, context = {}) {
-    conditions = deepClone(conditions);
+    conditions = foundry.utils.deepClone(conditions);
 
     // Backgrounds compatibility
     for (const key of Object.keys(conditions)) {
@@ -3334,14 +3337,14 @@ export class ActorPF extends ActorBasePF {
     context.pf1.updateConditionTracks = false;
 
     if (toDelete.length) {
-      const deleteContext = deepClone(context);
+      const deleteContext = foundry.utils.deepClone(context);
       // Prevent double render
       if (context.trender && toCreate.length) deleteContext.render = false;
       // Without await the deletions may not happen at all, presumably due to race condition, if AEs are also created.
       await this.deleteEmbeddedDocuments("ActiveEffect", toDelete, context);
     }
     if (toCreate.length) {
-      const createContext = deepClone(context);
+      const createContext = foundry.utils.deepClone(context);
       await this.createEmbeddedDocuments("ActiveEffect", toCreate, context);
     }
 
@@ -3374,7 +3377,7 @@ export class ActorPF extends ActorBasePF {
   async applyDamage(value, options = {}) {
     return this.constructor.applyDamage(
       value,
-      mergeObject(options, {
+      foundry.utils.mergeObject(options, {
         targets: [this],
       })
     );
@@ -3742,8 +3745,8 @@ export class ActorPF extends ActorBasePF {
       const flats = getChangeFlat.call(this, fk, "penalty");
       for (const k of flats) {
         if (!k) continue;
-        const curValue = getProperty(this, k) ?? 0;
-        setProperty(this, k, curValue - penalty);
+        const curValue = foundry.utils.getProperty(this, k) ?? 0;
+        foundry.utils.setProperty(this, k, curValue - penalty);
       }
     }
   }
@@ -4314,12 +4317,12 @@ export class ActorPF extends ActorBasePF {
     // Return cached data, if applicable
     const skipRefresh = !options.refresh && this._rollData;
 
-    const result = { ...(skipRefresh ? this._rollData : deepClone(this.system)) };
+    const result = { ...(skipRefresh ? this._rollData : foundry.utils.deepClone(this.system)) };
 
     // Clear certain fields if not refreshing
     if (skipRefresh) {
       for (const path of pf1.config.temporaryRollDataFields.actor) {
-        setProperty(result, path, undefined);
+        foundry.utils.setProperty(result, path, undefined);
       }
     }
 
@@ -4567,7 +4570,8 @@ export class ActorPF extends ActorBasePF {
     const itemUpdates = [];
 
     // Get data at path, either from passed updateData or directly from actor
-    const getPathData = (path) => getProperty(updateData.system, path) ?? getProperty(this.system, path);
+    const getPathData = (path) =>
+      foundry.utils.getProperty(updateData.system, path) ?? foundry.utils.getProperty(this.system, path);
 
     // Update charged items
     for (const item of this.items) {
@@ -4579,7 +4583,7 @@ export class ActorPF extends ActorBasePF {
         const bookId = itemData.spellbook,
           level = itemData.level;
 
-        const spellbook = getProperty(actorData, `attributes.spells.spellbooks.${bookId}`);
+        const spellbook = foundry.utils.getProperty(actorData, `attributes.spells.spellbooks.${bookId}`);
 
         // Skip spells with missing spellbook
         if (!spellbook) {
@@ -4591,12 +4595,16 @@ export class ActorPF extends ActorBasePF {
         if (spellbook.spontaneous) continue;
 
         if (itemData.preparation.preparedAmount < itemData.preparation.maxAmount) {
-          setProperty(itemUpdate.system, "preparation.preparedAmount", itemData.preparation.maxAmount);
+          foundry.utils.setProperty(itemUpdate.system, "preparation.preparedAmount", itemData.preparation.maxAmount);
         }
         if (!item.system.domain) {
           let sbUses = getPathData(`attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`) || 0;
           sbUses -= itemData.preparation.maxAmount;
-          setProperty(updateData, `system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`, sbUses);
+          foundry.utils.setProperty(
+            updateData,
+            `system.attributes.spells.spellbooks.${bookId}.spells.spell${level}.value`,
+            sbUses
+          );
         }
       }
 
@@ -4681,14 +4689,14 @@ export class ActorPF extends ActorBasePF {
     // Restore health and ability damage
     if (restoreHealth === true) {
       const healUpdate = this._restingHeal(options);
-      mergeObject(updateData, healUpdate);
+      foundry.utils.mergeObject(updateData, healUpdate);
     }
 
     let itemUpdates = [];
     // Restore daily uses of spells, feats, etc.
     if (restoreDailyUses === true) {
       const spellbookUpdates = await this.resetSpellbookUsage({ commit: false });
-      mergeObject(updateData, spellbookUpdates);
+      foundry.utils.mergeObject(updateData, spellbookUpdates);
 
       itemUpdates = await this.rechargeItems({ commit: false, updateData });
     }
@@ -4699,8 +4707,8 @@ export class ActorPF extends ActorBasePF {
 
     const context = { pf1: { action: "rest", restOptions: options } };
 
-    if (itemUpdates.length) await this.updateEmbeddedDocuments("Item", itemUpdates, deepClone(context));
-    if (!foundry.utils.isEmpty(updateData.system)) await this.update(updateData, deepClone(context));
+    if (itemUpdates.length) await this.updateEmbeddedDocuments("Item", itemUpdates, foundry.utils.deepClone(context));
+    if (!foundry.utils.isEmpty(updateData.system)) await this.update(updateData, foundry.utils.deepClone(context));
 
     Hooks.callAll("pf1ActorRest", this, options, updateData, itemUpdates);
 
@@ -4717,7 +4725,7 @@ export class ActorPF extends ActorBasePF {
    */
   async modifyTokenAttribute(attribute, value, isDelta = false, isBar = true) {
     let doc = this;
-    const current = getProperty(this.system, attribute),
+    const current = foundry.utils.getProperty(this.system, attribute),
       updates = {};
     const resourceMatch = /^resources\.(?<tag>[^.]+)$/.exec(attribute);
     if (resourceMatch) {

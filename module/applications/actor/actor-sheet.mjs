@@ -208,7 +208,7 @@ export class ActorSheetPF extends ActorSheet {
 
     const rollData = this.document.getRollData();
     data.rollData = rollData;
-    data.system = deepClone(this.document.system);
+    data.system = foundry.utils.deepClone(this.document.system);
 
     data.inCharacterGeneration = this.inCharacterGeneration;
 
@@ -275,7 +275,8 @@ export class ActorSheetPF extends ActorSheet {
     }
 
     // Hit point sources
-    if (this.document.sourceDetails != null) data.sourceDetails = expandObject(this.document.sourceDetails);
+    if (this.document.sourceDetails != null)
+      data.sourceDetails = foundry.utils.expandObject(this.document.sourceDetails);
     else data.sourceDetails = null;
 
     // Ability Scores
@@ -630,7 +631,7 @@ export class ActorSheetPF extends ActorSheet {
    * @returns {object} - Data fed to the sheet
    */
   _prepareItem(item) {
-    const result = deepClone(item.system);
+    const result = foundry.utils.deepClone(item.system);
     result.document = item;
     result.type = item.type;
     result.id = item.id;
@@ -652,7 +653,7 @@ export class ActorSheetPF extends ActorSheet {
     result.hasRange = firstAction?.hasRange;
     result.hasEffect = firstAction?.hasEffect;
     result.hasAction = item.hasAction || item.getScriptCalls("use").length > 0;
-    result.range = mergeObject(
+    result.range = foundry.utils.mergeObject(
       firstAction?.data?.range ?? {},
       {
         min: firstAction?.getRange({ type: "min", rollData: firstActionRollData }),
@@ -1384,10 +1385,10 @@ export class ActorSheetPF extends ActorSheet {
 
     if (name) {
       newEl.setAttribute("name", name);
-      prevValue = getProperty(this.document, name) || 0;
+      prevValue = foundry.utils.getProperty(this.document, name) || 0;
       if (name.endsWith(".value") && !noCap) {
         const maxName = name.replace(/\.value$/, ".max");
-        maxValue = getProperty(this.document, maxName);
+        maxValue = foundry.utils.getProperty(this.document, maxName);
       }
     } else {
       if (!el.classList.contains("placeholder")) {
@@ -1860,7 +1861,7 @@ export class ActorSheetPF extends ActorSheet {
     if (!elem || elem?.disabled) return;
 
     elem.readOnly = false;
-    const value = getProperty(this.document, elem.name);
+    const value = foundry.utils.getProperty(this.document, elem.name);
 
     const origValue = elem.value;
     elem.value = value;
@@ -2166,7 +2167,7 @@ export class ActorSheetPF extends ActorSheet {
     const property = el.dataset.name;
 
     const updateData = { system: {} };
-    setProperty(updateData.system, property, !getProperty(item.system, property));
+    foundry.utils.setProperty(updateData.system, property, !foundry.utils.getProperty(item.system, property));
 
     item.update(updateData);
   }
@@ -2239,7 +2240,7 @@ export class ActorSheetPF extends ActorSheet {
     const itemData = {
       name: game.i18n.format("PF1.NewItem", { type: typeName }),
       type,
-      system: duplicate(header.dataset),
+      system: foundry.utils.duplicate(header.dataset),
     };
 
     delete itemData.system.type;
@@ -2624,7 +2625,7 @@ export class ActorSheetPF extends ActorSheet {
     const featData = this.constructor.featTypeData;
     for (const [featKey, featValue] of Object.entries(pf1.config.featTypes)) {
       // Merge type specific data into common data template
-      features[featKey] = mergeObject(
+      features[featKey] = foundry.utils.mergeObject(
         featureDefaults,
         {
           // Fist generic data derived from the config object
@@ -3260,7 +3261,7 @@ export class ActorSheetPF extends ActorSheet {
         if (el.dataset.dtype === "Number") value = Number(value);
         else if (el.dataset.dtype === "Boolean") value = Boolean(value);
 
-        if (getProperty(this.document.system, name) !== value) {
+        if (foundry.utils.getProperty(this.document.system, name) !== value) {
           changedData[name] = value;
         }
       }

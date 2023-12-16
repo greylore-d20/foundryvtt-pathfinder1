@@ -8,7 +8,9 @@ export class EntrySelector extends FormApplication {
     this.isFlag = this.options.flag === true;
     this.isBoolean = this.options.boolean === true;
     this.isFlat = this.options.flat === true;
-    const data = deepClone(getProperty(this.object, this.attribute) ?? (this.isFlag ? {} : []));
+    const data = foundry.utils.deepClone(
+      foundry.utils.getProperty(this.object, this.attribute) ?? (this.isFlag ? {} : [])
+    );
 
     this.originalEntries = data;
     this.entries = this.isFlag ? (this.isBoolean ? Object.keys(data).map((d) => [d]) : Object.entries(data)) : data;

@@ -2,12 +2,12 @@ export class DamageTypeSelector extends FormApplication {
   constructor(object, dataPath, data, options = {}) {
     super(object, options);
     this._dataPath = dataPath;
-    this._data = deepClone(data);
+    this._data = foundry.utils.deepClone(data);
     if (!this._data) this._data = [];
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       width: 720,
       height: 590,
       template: "systems/pf1/templates/apps/damage-type-selector.hbs",
@@ -83,7 +83,7 @@ export class DamageTypeSelector extends FormApplication {
         break;
     }
 
-    setProperty(this._data, dataPath, value);
+    foundry.utils.setProperty(this._data, dataPath, value);
   }
 
   _toggleDamageType(event) {
@@ -97,7 +97,7 @@ export class DamageTypeSelector extends FormApplication {
   }
 
   async _updateObject(event, formData) {
-    formData = expandObject(formData);
+    formData = foundry.utils.expandObject(formData);
     const result = this._data;
 
     return this.object.update({ [this._dataPath]: result });

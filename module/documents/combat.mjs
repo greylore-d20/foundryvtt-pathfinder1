@@ -170,7 +170,7 @@ export class CombatPF extends Combat {
         };
 
         // Mimic core Foundry data
-        setProperty(chatData, "flags.core.initiativeRoll", true);
+        foundry.utils.setProperty(chatData, "flags.core.initiativeRoll", true);
 
         // Generate message proper via D20RollPF
         chatData = await roll.toMessage(chatData, {

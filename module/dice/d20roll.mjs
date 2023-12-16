@@ -15,7 +15,7 @@ export class D20RollPF extends RollPF {
    */
   constructor(formula, data, options = {}) {
     super(formula, data, options);
-    this.options = mergeObject(this.constructor.defaultOptions, options);
+    this.options = foundry.utils.mergeObject(this.constructor.defaultOptions, options);
 
     // No dice in the formula
     if (!(this.terms[0] instanceof Die)) {
@@ -285,7 +285,7 @@ export class D20RollPF extends RollPF {
     if (!this._evaluated) await this.evaluate({ async: true });
 
     const chatTemplate = options.chatTemplate || this.constructor.CHAT_TEMPLATE;
-    const chatTemplateData = mergeObject(
+    const chatTemplateData = foundry.utils.mergeObject(
       {
         formula: this.formula,
         tooltip: await this.getTooltip(),
@@ -329,7 +329,7 @@ export class D20RollPF extends RollPF {
     // Add combat reference if such exists
     const actor = ChatMessage.getSpeakerActor(messageData.speaker);
     if (actor && game.combat?.combatants.some((c) => c.actor === actor)) {
-      setProperty(messageData, "flags.pf1.metadata.combat", game.combat.id);
+      foundry.utils.setProperty(messageData, "flags.pf1.metadata.combat", game.combat.id);
     }
 
     const message = new ChatMessage.implementation(messageData);

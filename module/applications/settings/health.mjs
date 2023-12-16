@@ -105,7 +105,7 @@ export class HealthConfig extends FormApplication {
    * @override
    */
   async _updateObject(event, formData) {
-    const settings = expandObject(formData);
+    const settings = foundry.utils.expandObject(formData);
     // Some mild sanitation for the numeric values.
     for (const hd of Object.values(settings.hitdice)) {
       hd.rate = Math.clamped(hd.rate, 0, 100);

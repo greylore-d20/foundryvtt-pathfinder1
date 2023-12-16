@@ -254,7 +254,7 @@ export class ChatAttack {
     let data = this.damage;
     if (critical === true) data = this.critDamage;
 
-    const rollData = duplicate(this.rollData);
+    const rollData = foundry.utils.deepClone(this.rollData);
     // Enforce critical multiplier
     rollData.critCount = 0;
 

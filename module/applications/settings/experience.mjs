@@ -25,7 +25,7 @@ export class ExperienceConfig extends FormApplication {
   constructor(...args) {
     super(...args);
 
-    this._settings = duplicate(game.settings.get("pf1", "experienceConfig"));
+    this._settings = game.settings.get("pf1", "experienceConfig").toObject();
   }
 
   /** @override */
@@ -78,7 +78,7 @@ export class ExperienceConfig extends FormApplication {
 
   /** @override */
   async _updateObject(event, formData) {
-    this._settings = mergeObject(this._settings, expandObject(formData));
+    this._settings = foundry.utils.mergeObject(this._settings, foundry.utils.expandObject(formData));
     this.render();
   }
 }

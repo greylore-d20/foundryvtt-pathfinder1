@@ -17,7 +17,7 @@ class SquareHighlight {
     this.fillColor = fillColor;
     this._squares = [];
 
-    this._id = randomID();
+    this._id = foundry.utils.randomID();
 
     canvas.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
   }
@@ -134,7 +134,7 @@ class GridlessHighlight extends AttackHighlightBase {
       return (r * canvas.dimensions.size) / canvas.dimensions.distance + tokenOffset;
     });
 
-    this._id = randomID();
+    this._id = foundry.utils.randomID();
     canvas.grid.addHighlightLayer(`AttackHighlight.${this._id}`);
   }
 

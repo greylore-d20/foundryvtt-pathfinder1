@@ -188,7 +188,9 @@ export class CompendiumBrowser extends Application {
     // NOTE: This decouples the entry from the compendium; it will no longer be refreshed automatically, but changes will stick
     const result = foundry.utils.deepClone(entry);
     // Add default `system` data for the entry's type, as pruned compendium data omits default values
-    result.system = mergeObject(game.model[this.documentName][entry.type], result.system, { inplace: false });
+    result.system = foundry.utils.mergeObject(game.model[this.documentName][entry.type], result.system, {
+      inplace: false,
+    });
     // Add `pack` related fields to allow filtering by pack and label display
     result.__pack = pack.collection;
     result.__packLabel = pack.metadata.label;

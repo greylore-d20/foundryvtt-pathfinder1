@@ -4,7 +4,7 @@ import { getAbilityModifier } from "@utils";
 
 export class ItemChange {
   constructor(data, parent) {
-    this.data = mergeObject(this.constructor.defaultData, data);
+    this.data = foundry.utils.mergeObject(this.constructor.defaultData, data);
     this.parent = parent;
     this.updateTime = new Date();
   }
@@ -22,9 +22,9 @@ export class ItemChange {
 
     if (parent instanceof pf1.documents.item.ItemPF) {
       // Prepare data
-      data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
+      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
 
-      const newChangeData = deepClone(parent.system.changes ?? []);
+      const newChangeData = foundry.utils.deepClone(parent.system.changes ?? []);
       newChangeData.push(...data);
 
       // Ensure unique IDs within the item
@@ -61,7 +61,7 @@ export class ItemChange {
 
   static get defaultData() {
     return {
-      _id: randomID(8),
+      _id: foundry.utils.randomID(8),
       formula: "",
       operator: "add",
       subTarget: "",
@@ -151,11 +151,11 @@ export class ItemChange {
 
     data = this.preUpdate(data);
 
-    const changes = deepClone(this.parent.system.changes ?? []);
+    const changes = foundry.utils.deepClone(this.parent.system.changes ?? []);
 
     const idx = changes.findIndex((change) => change._id === this.id);
     if (idx >= 0) {
-      changes[idx] = mergeObject(changes[idx], data);
+      changes[idx] = foundry.utils.mergeObject(changes[idx], data);
       return this.parent.update({ "system.changes": changes });
     }
   }
@@ -273,7 +273,7 @@ export class ItemChange {
       switch (operator) {
         case "add":
           {
-            let base = getProperty(actor, t);
+            let base = foundry.utils.getProperty(actor, t);
 
             // Don't change non-existing ability scores
             if (base == null) {
@@ -287,12 +287,12 @@ export class ItemChange {
             if (typeof base === "number") {
               if (pf1.config.stackingBonusModifiers.includes(this.modifier)) {
                 // Add stacking bonus
-                setProperty(actor, t, base + value);
+                foundry.utils.setProperty(actor, t, base + value);
                 override[operator][this.modifier] = (prior ?? 0) + value;
               } else {
                 // Use higher value only
                 const diff = !prior ? value : Math.max(0, value - (prior ?? 0));
-                setProperty(actor, t, base + diff);
+                foundry.utils.setProperty(actor, t, base + diff);
                 override[operator][this.modifier] = Math.max(prior ?? 0, value);
               }
             }
@@ -300,7 +300,7 @@ export class ItemChange {
           break;
 
         case "set":
-          setProperty(actor, t, value);
+          foundry.utils.setProperty(actor, t, value);
           override[operator][this.modifier] = value;
           break;
       }

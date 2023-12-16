@@ -90,7 +90,7 @@ export class ItemCreateDialog extends FormApplication {
     const subtypes = this.getSubtypes(createData.type);
     if (!subtypes && createData.system?.subType !== undefined) delete createData.system.subType;
 
-    const types = deepClone(CONFIG.Item.typeLabels);
+    const types = foundry.utils.deepClone(CONFIG.Item.typeLabels);
     delete types.base; // base is Foundry's unusable default
 
     return {
@@ -127,7 +127,7 @@ export class ItemCreateDialog extends FormApplication {
     // Fill in default type if missing
     data.type ||= CONFIG.Item.defaultType || game.documentTypes.Item[1];
 
-    this.createData = mergeObject(this.initialData, data, { inplace: false });
+    this.createData = foundry.utils.mergeObject(this.initialData, data, { inplace: false });
     this.createData.system ??= {};
 
     // Clean up data

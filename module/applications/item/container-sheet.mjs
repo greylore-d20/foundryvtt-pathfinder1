@@ -40,7 +40,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       width: 800,
       classes: ["pf1", "sheet", "item"],
       scrollY: [".item-groups-list"],
@@ -654,7 +654,7 @@ export class ItemSheetPF_Container extends ItemSheetPF {
   async _updateItems() {
     const promises = [];
 
-    const updates = duplicate(this._itemUpdates);
+    const updates = this._itemUpdates;
     this._itemUpdates = [];
 
     for (const data of updates) {

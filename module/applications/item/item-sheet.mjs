@@ -40,7 +40,7 @@ export class ItemSheetPF extends ItemSheet {
   /* -------------------------------------------- */
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       width: 580,
       classes: ["pf1", "sheet", "item"],
       scrollY: [".tab", ".buff-flags", ".editor-content"],
@@ -360,7 +360,7 @@ export class ItemSheetPF extends ItemSheet {
         }, {});
       } else {
         // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = mergeObject(deepClone(pf1.config.skills), actorData.skills ?? {});
+        const skills = foundry.utils.mergeObject(foundry.utils.deepClone(pf1.config.skills), actorData.skills ?? {});
         context.skills = Object.entries(skills).reduce((cur, [skillId, skillIdata]) => {
           const name = pf1.config.skills[skillId] || skillIdata.name;
           cur[skillId] = { name: name, classSkill: item.system.classSkills?.[skillId] === true };
@@ -454,7 +454,7 @@ export class ItemSheetPF extends ItemSheet {
       context.isPreparedSpell = !context.isSpontaneousLike;
       context.usesSpellpoints = spellbook != null ? spellbook.spellPoints?.useSystem ?? false : false;
       context.isAtWill = itemData.atWill;
-      context.spellbooks = deepClone(actorData?.attributes.spells.spellbooks ?? {});
+      context.spellbooks = foundry.utils.deepClone(actorData?.attributes.spells.spellbooks ?? {});
 
       const desc = await renderTemplate(
         "systems/pf1/templates/internal/spell-description.hbs",
@@ -516,7 +516,7 @@ export class ItemSheetPF extends ItemSheet {
         }, {});
       } else {
         // Get sorted skill list from config, custom skills get appended to bottom of list
-        const skills = mergeObject(deepClone(pf1.config.skills), actorData.skills ?? {});
+        const skills = foundry.utils.mergeObject(foundry.utils.deepClone(pf1.config.skills), actorData.skills ?? {});
         context.skills = Object.entries(skills).reduce((cur, [skillId, skillData]) => {
           const name = pf1.config.skills[skillId] != null ? pf1.config.skills[skillId] : skillData.name;
           cur[skillId] = { name: name, classSkill: itemData.classSkills?.[skillId] === true };
@@ -549,7 +549,7 @@ export class ItemSheetPF extends ItemSheet {
     for (const [t, choices] of Object.entries(profs)) {
       if (!itemData[t]) continue;
 
-      const trait = deepClone(itemData[t]);
+      const trait = foundry.utils.deepClone(itemData[t]);
       context[t] = trait;
 
       let values = [];
@@ -595,7 +595,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Prepare stuff for items with context notes
     if (itemData.contextNotes) {
-      context.contextNotes = deepClone(itemData.contextNotes);
+      context.contextNotes = foundry.utils.deepClone(itemData.contextNotes);
       const noteTargets = getBuffTargets(actor, "contextNotes");
       context.contextNotes.forEach((o) => {
         const target = noteTargets[o.subTarget];
@@ -605,7 +605,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Add distance units
-    context.distanceUnits = deepClone(pf1.config.distanceUnits);
+    context.distanceUnits = foundry.utils.deepClone(pf1.config.distanceUnits);
     if (item.type !== "spell") {
       for (const d of ["close", "medium", "long"]) {
         delete context.distanceUnits[d];
@@ -615,7 +615,7 @@ export class ItemSheetPF extends ItemSheet {
     // Parse notes
     if (itemData.attackNotes) {
       const value = itemData.attackNotes;
-      setProperty(context, "notes.attack", value);
+      foundry.utils.setProperty(context, "notes.attack", value);
     }
 
     // Add item flags
@@ -649,7 +649,7 @@ export class ItemSheetPF extends ItemSheet {
     }
 
     // Content source, fill in from registry
-    context.bookSource = deepClone(itemData.source);
+    context.bookSource = foundry.utils.deepClone(itemData.source);
     if (context.bookSource?.id) {
       const rsource = pf1.registry.sources.get(itemData.source.id);
       if (rsource) {
@@ -709,7 +709,7 @@ export class ItemSheetPF extends ItemSheet {
 
     return {
       choices: alignmentChoices,
-      values: deepClone(alignments),
+      values: foundry.utils.deepClone(alignments),
     };
   }
 
@@ -816,7 +816,7 @@ export class ItemSheetPF extends ItemSheet {
     for (const links of data.links.list) {
       const items = item.system.links?.[links.id] || [];
       for (let index = 0; index < items.length; index++) {
-        const linkData = deepClone(items[index]);
+        const linkData = foundry.utils.deepClone(items[index]);
         linkData.index = index; // Record index so sorted lists maintain data cohesion
 
         const linkedItem = item.getLinkedItemSync(linkData);
@@ -877,7 +877,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Iterate over all script calls, and adjust data
     const scriptCalls = Object.hasOwnProperty.call(this.document, "scriptCalls")
-      ? deepClone(Array.from(this.document.scriptCalls).map((o) => o.data))
+      ? foundry.utils.deepClone(Array.from(this.document.scriptCalls).map((o) => o.data))
       : [];
 
     // Add data
@@ -999,7 +999,7 @@ export class ItemSheetPF extends ItemSheet {
    * @private
    */
   async _updateObject(event, formData) {
-    formData = expandObject(formData);
+    formData = foundry.utils.expandObject(formData);
 
     const system = formData.system;
     const links = system.links;
@@ -1008,9 +1008,9 @@ export class ItemSheetPF extends ItemSheet {
       // Handle links arrays
       for (const [linkType, typedLinks] of Object.entries(links)) {
         // Maintain array and merge new data in
-        links[linkType] = deepClone(oldLinks[linkType] ?? []);
+        links[linkType] = foundry.utils.deepClone(oldLinks[linkType] ?? []);
         for (const [index, linkData] of Object.entries(typedLinks)) {
-          links[linkType][index] = mergeObject(links[linkType][index] ?? {}, linkData);
+          links[linkType][index] = foundry.utils.mergeObject(links[linkType][index] ?? {}, linkData);
         }
       }
     }
@@ -1030,7 +1030,7 @@ export class ItemSheetPF extends ItemSheet {
     // @TODO: Create a common relative input handler.
     const relativeKeys = ["currency.pp", "currency.gp", "currency.sp", "currency.cp"];
     for (const key of relativeKeys) {
-      const value = getProperty(system, key);
+      const value = foundry.utils.getProperty(system, key);
       if (typeof value !== "string") continue;
 
       // Add or subtract values
@@ -1039,7 +1039,7 @@ export class ItemSheetPF extends ItemSheet {
         const operator = RegExp.$1;
         let value = parseInt(RegExp.$2);
         if (operator === "-") value = -value;
-        const originalValue = getProperty(this.item.system, key);
+        const originalValue = foundry.utils.getProperty(this.item.system, key);
         newValue = originalValue + value;
       } else if (value.match(/^[0-9]+$/)) {
         newValue = parseInt(value);
@@ -1050,7 +1050,7 @@ export class ItemSheetPF extends ItemSheet {
         newValue = 0;
       }
 
-      setProperty(system, key, Math.max(0, newValue));
+      foundry.utils.setProperty(system, key, Math.max(0, newValue));
     }
 
     // Adjust Material Addons
@@ -1231,12 +1231,12 @@ export class ItemSheetPF extends ItemSheet {
     let maxValue;
     if (name) {
       newEl.setAttribute("name", name);
-      prevValue = getProperty(this.document, name) ?? "";
+      prevValue = foundry.utils.getProperty(this.document, name) ?? "";
       if (typeof prevValue !== "string") prevValue = prevValue.toString();
 
       if (name.endsWith(".value") && !noCap) {
         const maxName = name.replace(/\.value$/, ".max");
-        maxValue = getProperty(this.document, maxName);
+        maxValue = foundry.utils.getProperty(this.document, maxName);
       }
     }
     newEl.value = prevValue;
@@ -1536,7 +1536,7 @@ export class ItemSheetPF extends ItemSheet {
       // Re-order
       if (srcItem === item) {
         const targetActionID = event.target?.closest("li.action-part")?.dataset?.itemId;
-        const prevActions = deepClone(item.system.actions);
+        const prevActions = foundry.utils.deepClone(item.system.actions);
 
         let targetIdx;
         if (!targetActionID) targetIdx = prevActions.length - 1;
@@ -1550,8 +1550,8 @@ export class ItemSheetPF extends ItemSheet {
 
       // Add to another item
       else {
-        const prevActions = deepClone(this.object.system.actions ?? []);
-        data.data._id = randomID(16);
+        const prevActions = foundry.utils.deepClone(this.object.system.actions ?? []);
+        data.data._id = foundry.utils.randomID(16);
         prevActions.splice(prevActions.length, 0, data.data);
         await this.object.update({ "system.actions": prevActions });
       }
@@ -1699,10 +1699,10 @@ export class ItemSheetPF extends ItemSheet {
     // Duplicate action
     if (a.classList.contains("duplicate-action")) {
       const li = a.closest(".action-part");
-      const action = deepClone(this.item.actions.get(li.dataset.itemId).data);
+      const action = foundry.utils.deepClone(this.item.actions.get(li.dataset.itemId).data);
       action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
-      action._id = randomID(16);
-      const actionParts = deepClone(this.item.system.actions ?? []);
+      action._id = foundry.utils.randomID(16);
+      const actionParts = foundry.utils.deepClone(this.item.system.actions ?? []);
       actionParts.push(action);
       return this._onSubmit(event, { updateData: { "system.actions": actionParts } });
     }
@@ -1741,7 +1741,7 @@ export class ItemSheetPF extends ItemSheet {
       const li = a.closest(".change");
       const changeId = li.dataset.change;
 
-      const changes = deepClone(this.item.system.changes ?? []);
+      const changes = foundry.utils.deepClone(this.item.system.changes ?? []);
       changes.findSplice((c) => c._id === changeId);
 
       return this._onSubmit(event, { updateData: { "system.changes": changes } });
@@ -1779,7 +1779,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Add new note
     if (a.classList.contains("add-note")) {
-      const contextNotes = deepClone(this.item.system.contextNotes || []);
+      const contextNotes = foundry.utils.deepClone(this.item.system.contextNotes || []);
       contextNotes.push(ItemPF.defaultContextNote);
       await this._onSubmit(event, { updateData: { "system.contextNotes": contextNotes } });
     }
@@ -1787,7 +1787,7 @@ export class ItemSheetPF extends ItemSheet {
     // Remove a note
     if (a.classList.contains("delete-note")) {
       const li = a.closest(".context-note");
-      const contextNotes = deepClone(this.item.system.contextNotes || []);
+      const contextNotes = foundry.utils.deepClone(this.item.system.contextNotes || []);
       contextNotes.splice(Number(li.dataset.note), 1);
       await this._onSubmit(event, {
         updateData: { "system.contextNotes": contextNotes },
@@ -1836,7 +1836,7 @@ export class ItemSheetPF extends ItemSheet {
 
       await this._onSubmit(event, { preventRender: true });
 
-      let links = deepClone(this.item.system.links?.[linkType] ?? []);
+      let links = foundry.utils.deepClone(this.item.system.links?.[linkType] ?? []);
       const { uuid, itemId } = li.dataset;
       const link = links.find((o) => {
         if (uuid) return o.uuid === uuid;
@@ -1871,7 +1871,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Get and set real value
     const { inputValue } = elem.dataset;
-    let origValue = inputValue ?? getProperty(this.item, elem.name);
+    let origValue = inputValue ?? foundry.utils.getProperty(this.item, elem.name);
     const displayValue = elem.value;
     elem.value = origValue;
     elem.select();
@@ -1965,13 +1965,13 @@ export class ItemSheetPF extends ItemSheet {
     const key = a.closest(".notes").dataset.name;
 
     if (a.classList.contains("add-entry")) {
-      const notes = deepClone(getProperty(this.document, key) ?? []);
+      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.document, key) ?? []);
       notes.push("");
       const updateData = { [key]: notes };
       return this._onSubmit(event, { updateData });
     } else if (a.classList.contains("delete-entry")) {
       const index = a.closest(".entry").dataset.index;
-      const notes = deepClone(getProperty(this.document, key) ?? []);
+      const notes = foundry.utils.deepClone(foundry.utils.getProperty(this.document, key) ?? []);
       notes.splice(index, 1);
       const updateData = { [key]: notes };
       return this._onSubmit(event, { updateData });

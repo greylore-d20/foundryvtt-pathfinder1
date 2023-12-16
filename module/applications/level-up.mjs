@@ -34,7 +34,7 @@ export class LevelUpForm extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["pf1", "level-up"],
       template: "systems/pf1/templates/apps/level-up.hbs",
       width: 620,
@@ -62,8 +62,8 @@ export class LevelUpForm extends FormApplication {
 
   static async addClassWizard(actor, rawData) {
     // Alter initial data
-    setProperty(rawData, "system.hp", 0);
-    setProperty(rawData, "system.level", 0);
+    foundry.utils.setProperty(rawData, "system.hp", 0);
+    foundry.utils.setProperty(rawData, "system.level", 0);
 
     // Add class item
     const item = new Item.implementation(rawData);
@@ -232,7 +232,7 @@ export class LevelUpForm extends FormApplication {
 
     for (const item of parsedData.newItems) {
       const prevItem = newItems.find((o) => o._id === item._id);
-      if (prevItem != null) mergeObject(prevItem, item);
+      if (prevItem != null) foundry.utils.mergeObject(prevItem, item);
       else newItems.push(item);
     }
 
@@ -379,7 +379,7 @@ export class LevelUpForm extends FormApplication {
     const id = section.choice;
     if (["hp", "skill", "alt"].includes(id)) {
       const key = `system.fc.${section.choice}.value`;
-      result.item[key] = getProperty(this.object, key) + 1;
+      result.item[key] = foundry.utils.getProperty(this.object, key) + 1;
 
       const fcKey = { hp: "HP", skill: "Skill", alt: "Alt" }[id];
       result.chatData.fc = {
@@ -417,7 +417,7 @@ export class LevelUpForm extends FormApplication {
     const item = this.actor.items.find((o) => o.getFlag("pf1", "levelUp") === true);
     // Add level up ability score feature if it doesn't exist yet
     if (!item) {
-      const newItem = mergeObject(
+      const newItem = foundry.utils.mergeObject(
         pf1.config.levelAbilityScoreFeature,
         {
           flags: {
@@ -432,11 +432,11 @@ export class LevelUpForm extends FormApplication {
       newItem.name = game.i18n.localize(newItem.name);
 
       // Add changes
-      setProperty(
+      foundry.utils.setProperty(
         newItem,
         "system.changes",
         Object.entries(added).reduce((cur, o) => {
-          const change = mergeObject(pf1.components.ItemChange.defaultData, {
+          const change = foundry.utils.mergeObject(pf1.components.ItemChange.defaultData, {
             formula: `${o[1]}`,
             subTarget: o[0],
             modifier: "untypedPerm",
@@ -452,7 +452,7 @@ export class LevelUpForm extends FormApplication {
     // If a level up ability score feature already exists, update it
     else {
       const cb = async function () {
-        const changes = deepClone(item.system.changes ?? []);
+        const changes = foundry.utils.deepClone(item.system.changes ?? []);
         for (const [key, value] of Object.entries(added)) {
           const change = changes.find((o) => o.subTarget === key);
 
@@ -468,7 +468,7 @@ export class LevelUpForm extends FormApplication {
 
           // Add new change
           changes.push(
-            mergeObject(pf1.components.ItemChange.defaultData, {
+            foundry.utils.mergeObject(pf1.components.ItemChange.defaultData, {
               subTarget: key,
               formula: `${value}`,
               modifier: "untypedPerm",
@@ -538,7 +538,7 @@ export class LevelUpForm extends FormApplication {
     if (a.classList.contains("active")) return;
 
     this.currentSection.currentItem = this.currentSection.items.find((o) => o.id === a.dataset.id);
-    setProperty(this.currentSection, "choice", a.dataset.id);
+    foundry.utils.setProperty(this.currentSection, "choice", a.dataset.id);
     return this._render();
   }
 
@@ -567,7 +567,7 @@ export class LevelUpForm extends FormApplication {
     }
 
     // Change section choice
-    setProperty(section, key, value);
+    foundry.utils.setProperty(section, key, value);
   }
 
   _onClickAbilityScoreOperator(event) {

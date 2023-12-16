@@ -10,7 +10,7 @@ export class ChangeLogWindow extends FormApplication {
 
   static get defaultOptions() {
     const options = super.defaultOptions;
-    return mergeObject(options, {
+    return foundry.utils.mergeObject(options, {
       id: "changelog",
       classes: ["pf1", "changelog"],
       template: "systems/pf1/templates/apps/changelog.hbs",

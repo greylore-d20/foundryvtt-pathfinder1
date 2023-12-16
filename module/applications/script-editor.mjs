@@ -19,7 +19,7 @@ export class ScriptEditor extends FormApplication {
   }
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["pf1", "script-editor"],
       template: "systems/pf1/templates/apps/script-editor.hbs",
       width: 640,

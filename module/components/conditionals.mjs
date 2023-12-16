@@ -13,8 +13,8 @@ export class ItemConditional {
 
     if (parent instanceof pf1.components.ItemAction) {
       // Prepare data
-      data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newConditionalData = deepClone(parent.data.conditionals || []);
+      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
+      const newConditionalData = foundry.utils.deepClone(parent.data.conditionals || []);
       newConditionalData.push(...data);
 
       // Update parent
@@ -29,7 +29,7 @@ export class ItemConditional {
 
   static get defaultData() {
     return {
-      _id: randomID(16),
+      _id: foundry.utils.randomID(16),
       default: false,
       name: "",
       modifiers: [],
@@ -70,8 +70,8 @@ export class ItemConditional {
 
   async update(updateData, options = {}) {
     const idx = this.parent.data.conditionals.indexOf(this.data);
-    const prevData = deepClone(this.data);
-    const newUpdateData = mergeObject(prevData, updateData);
+    const prevData = foundry.utils.deepClone(this.data);
+    const newUpdateData = foundry.utils.mergeObject(prevData, updateData);
 
     // Make sure modifiers remain in an array
     keepUpdateArray(this.data, newUpdateData, "modifiers");
@@ -104,8 +104,8 @@ export class ItemConditionalModifier {
 
     if (parent instanceof pf1.components.ItemConditional) {
       // Prepare data
-      data = data.map((dataObj) => mergeObject(this.defaultData, dataObj));
-      const newConditionalModifierData = deepClone(parent.data.modifiers || []);
+      data = data.map((dataObj) => foundry.utils.mergeObject(this.defaultData, dataObj));
+      const newConditionalModifierData = foundry.utils.deepClone(parent.data.modifiers || []);
       newConditionalModifierData.push(...data);
 
       // Update parent
@@ -120,7 +120,7 @@ export class ItemConditionalModifier {
 
   static get defaultData() {
     return {
-      _id: randomID(16),
+      _id: foundry.utils.randomID(16),
       formula: "",
       target: "",
       subTarget: "",
@@ -139,18 +139,18 @@ export class ItemConditionalModifier {
 
   async update(updateData, options = {}) {
     const idx = this.parent.data.modifiers.indexOf(this.data);
-    const prevData = deepClone(this.data);
-    const newUpdateData = flattenObject(mergeObject(prevData, updateData));
+    const prevData = foundry.utils.deepClone(this.data);
+    const newUpdateData = foundry.utils.flattenObject(foundry.utils.mergeObject(prevData, updateData));
 
     if (options.dryRun) return newUpdateData;
-    await this.parent.update({ [`modifiers.${idx}`]: expandObject(newUpdateData) });
+    await this.parent.update({ [`modifiers.${idx}`]: foundry.utils.expandObject(newUpdateData) });
   }
 
   async delete() {
     const idx = this.parent.data.modifiers.indexOf(this.data);
     if (idx < 0) throw new Error(`Modifier not found in parent ${this.parent.name}`);
 
-    const modifiers = duplicate(this.parent.data.modifiers);
+    const modifiers = foundry.utils.duplicate(this.parent.data.modifiers);
     modifiers.splice(idx, 1);
     return this.parent.update({ modifiers });
   }

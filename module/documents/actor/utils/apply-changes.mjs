@@ -1273,7 +1273,7 @@ export const addDefaultChanges = function (changes) {
     // Add changes
     for (const change of mechanic.changes ?? []) {
       // Alter change data
-      const changeData = deepClone(change);
+      const changeData = foundry.utils.deepClone(change);
       changeData.flavor = condition.name;
 
       // Create change object
@@ -1382,7 +1382,7 @@ export const getHighestChanges = function (changes, options = { ignoreTarget: fa
     highestID: null,
   };
   const highest = Object.keys(pf1.config.bonusModifiers).reduce((cur, k) => {
-    if (options.ignoreTarget) cur[k] = duplicate(highestTemplate);
+    if (options.ignoreTarget) cur[k] = foundry.utils.deepClone(highestTemplate);
     else cur[k] = {};
     return cur;
   }, {});

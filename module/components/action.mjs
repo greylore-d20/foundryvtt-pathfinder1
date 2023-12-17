@@ -374,6 +374,7 @@ export class ItemAction {
     if (this.item.subType === "natural") contexts.push("ndamage");
 
     const changes = this.item.getContextChanges(contexts);
+    if (changes.length == 0) return [];
     return getHighestChanges(changes, { ignoreTarget: true });
   }
 
@@ -781,11 +782,11 @@ export class ItemAction {
    * @see {@link ItemPF.getContextChanges}
    */
   get attackSources() {
-    const context = [this.isRanged ? "rattack" : "mattack"];
-    if (this.item.subType === "natural") context.push("nattack");
-    if (this.data.actionType === "twak") context.push("tattack");
+    const contexts = [this.isRanged ? "rattack" : "mattack"];
+    if (this.item.subType === "natural") contexts.push("nattack");
+    if (this.data.actionType === "twak") contexts.push("tattack");
 
-    return this.item.getContextChanges(context);
+    return this.item.getContextChanges(contexts);
   }
 
   /**

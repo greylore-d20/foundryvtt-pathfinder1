@@ -1256,12 +1256,13 @@ export class ItemPF extends ItemBasePF {
   /**
    * Finds, filters and alters changes relevant to a context, and returns the result (as an array)
    *
+   * @remarks - Always returns empty array if no actor is present.
    * @param {"mattack"|"rattack"|"nattack"|"tattack"|"wdamage"|"sdamage"|"rwdamage"|"twdamage"|"mwdamage"|"ndamage"|"rdamage"|"tdamage"|"mdamage"} context - The given context.
-   * @returns {ItemChange[]} The resulting changes.
+   * @returns {ItemChange[]} - The matching changes.
    */
-  getContextChanges(context = "attack") {
+  getContextChanges(context = ["attack"]) {
     if (!this.actor) return [];
-    const subTargets = new Set(this.getContextStack(context));
+    const subTargets = this.getContextStack(context);
     return this.actor.changes.filter((c) => subTargets.has(c.subTarget));
   }
 
@@ -1269,28 +1270,31 @@ export class ItemPF extends ItemBasePF {
    * Retrieve stack of contexts related to the one given.
    *
    * @private
-   * @param {"mattack"|"rattack"|"nattack"|"tattack"|"wdamage"|"sdamage"|"rwdamage"|"twdamage"|"mwdamage"|"ndamage"|"rdamage"|"tdamage"|"mdamage"} context Context ID or array of them.
-   * @returns {string[]}
+   * @param {Array<string>} contexts Context subtarget ID array.
+   * @returns {Set<string>} - Modified context array.
    */
-  getContextStack(context) {
-    const contexts = Array.isArray(context) ? context : [context];
-    switch (context) {
-      case "mattack":
-      case "rattack":
-      case "nattack":
-        contexts.unshift("attack");
-        break;
-      case "wdamage":
-      case "sdamage":
-        contexts.unshift("damage");
-        break;
-      case "mwdamage":
-      case "rwdamage":
-      case "twdamage":
-        contexts.unshift("damage", "wdamage");
-        break;
+  getContextStack(contexts) {
+    const result = new Set(contexts);
+    for (const context of contexts) {
+      switch (context) {
+        case "mattack":
+        case "rattack":
+        case "nattack":
+        case "tattack":
+          result.add("attack");
+          break;
+        case "wdamage":
+        case "sdamage":
+          result.add("damage");
+          break;
+        case "mwdamage":
+        case "rwdamage":
+        case "twdamage":
+          result.add("damage", "wdamage");
+          break;
+      }
     }
-    return contexts;
+    return result;
   }
 
   /* -------------------------------------------- */

@@ -809,7 +809,7 @@ export class ActionUse {
   /**
    * Adds an attack's chat card data to the shared object.
    */
-  getMessageData() {
+  async getMessageData() {
     if (this.shared.chatAttacks.length === 0) return;
 
     // Create chat template data
@@ -840,10 +840,11 @@ export class ActionUse {
     let extraText = "";
     if (this.shared.templateData.attacks.length > 0) extraText = this.shared.templateData.attacks[0].attackNotesHTML;
 
-    const itemChatData = this.item.getChatData(
-      { rollData: this.shared.rollData },
-      { actionId: this.shared.action.id, chatcard: true }
-    );
+    const itemChatData = await this.item.getChatData({
+      actionId: this.shared.action.id,
+      chatcard: true,
+      rollData: this.shared.rollData,
+    });
 
     // Get properties
     const properties = [...itemChatData.properties, ...this.addGenericPropertyLabels()];
@@ -1236,7 +1237,23 @@ export class ActionUse {
     let result;
     if (this.shared.chatAttacks.length > 0) {
       if (this.shared.chatMessage && this.shared.scriptData.hideChat !== true) {
-        this.shared.chatData.content = await renderTemplate(this.shared.chatTemplate, this.shared.templateData);
+        const enrichOptions = {
+          rollData: this.shared.rollData,
+          secrets: this.isOwner,
+          async: true,
+          relativeTo: this.actor,
+        };
+
+        const content = await renderTemplate(this.shared.chatTemplate, this.shared.templateData);
+        this.shared.chatData.content = await TextEditor.enrichHTML(content, enrichOptions);
+
+        const hiddenData = this.shared.chatData["flags.pf1.identifiedInfo"];
+        if (hiddenData?.description) {
+          hiddenData.description = await TextEditor.enrichHTML(hiddenData.description, enrichOptions);
+        }
+        if (hiddenData?.actionDescription) {
+          hiddenData.actionDescription = await TextEditor.enrichHTML(hiddenData.actionDescription, enrichOptions);
+        }
 
         // Apply roll mode
         this.shared.chatData.rollMode ??= game.settings.get("core", "rollMode");
@@ -1344,7 +1361,7 @@ export class ActionUse {
     this.updateAmmoUsage();
 
     // Retrieve message data
-    this.getMessageData();
+    await this.getMessageData();
 
     // Post message
     let result;

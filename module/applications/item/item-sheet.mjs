@@ -1607,26 +1607,30 @@ export class ItemSheetPF extends ItemSheet {
    * @param {JQuery.ClickEvent<HTMLElement>} event - The click event on the item
    * @private
    */
-  _onItemSummary(event) {
+  async _onItemSummary(event) {
     event.preventDefault();
-    const li = $(event.currentTarget).closest(".item:not(.sheet)");
+    const li = $(event.currentTarget).closest(".item[data-item-id]");
     // Check whether pseudo-item belongs to another collection
-    const collection = li.attr("data-item-collection") ?? "items";
-    const item = this.document[collection].get(li.attr("data-item-id"));
+    const item = this.item.actions.get(li.attr("data-item-id"));
+
+    const rollData = this.action.getRollData();
     // For actions (embedded into a parent item), show only the action's summary instead of a complete one
-    const isAction = collection === "actions";
-    const { description, actionDescription, properties } = item.getChatData({ chatcard: false });
+    const { actionDescription, properties } = await item.getChatData({ chatcard: false, rollData });
 
     // Toggle summary
     if (li.hasClass("expanded")) {
       const summary = li.children(".item-summary");
       summary.slideUp(200, () => summary.remove());
     } else {
-      const div = $(`<div class="item-summary">${isAction ? actionDescription : description}</div>`);
-      const props = $(`<div class="item-properties tag-list"></div>`);
-      // Transform properties into a tag list containing HTML, and append to div
-      properties?.forEach((p) => props.append(`<span class="tag">${p}</span>`));
-      div.append(props);
+      const templateData = {
+        description: actionDescription,
+        properties,
+      };
+      let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
+      content = TextEditor.enrichHTML(content, { rollData });
+
+      const div = $(content);
+
       li.append(div.hide());
       div.slideDown(200);
     }

@@ -926,7 +926,7 @@ export class ItemPF extends ItemBasePF {
     // Basic template rendering data
     token ??= actor?.token;
     const rollData = this.getRollData();
-    const itemChatData = this.getChatData({ rollData });
+    const itemChatData = await this.getChatData({ rollData });
     const identified = Boolean(rollData.item?.identified ?? true);
 
     const templateData = {
@@ -942,19 +942,26 @@ export class ItemPF extends ItemBasePF {
       isSpell: this.type === "spell",
       name: this.getName(true),
       description: identified ? itemChatData.identifiedDescription : itemChatData.unidentifiedDescription,
-      rollData: rollData,
+      rollData,
       hasExtraProperties: false,
       extraProperties: [],
     };
 
     const pfFlags = {};
 
+    const enrichOptions = {
+      rollData,
+      secrets: this.isOwner,
+      async: true,
+      relativeTo: this.actor,
+    };
+
     // If the item is unidentified, store data for GM info box containing identified info
     if (identified === false) {
       pfFlags.identifiedInfo = {
         identified,
         name: this._source.name,
-        description: itemChatData.identifiedDescription,
+        description: await TextEditor.enrichHTML(itemChatData.identifiedDescription, enrichOptions),
       };
     }
 
@@ -1000,7 +1007,8 @@ export class ItemPF extends ItemBasePF {
     if (Hooks.call("pf1DisplayCard", this, { template, templateData, chatData }) === false) return;
 
     // Create the chat message
-    chatData.content = await renderTemplate(template, templateData);
+    const content = await renderTemplate(template, templateData);
+    chatData.content = await TextEditor.enrichHTML(content, enrichOptions);
 
     // Apply roll mode
     chatData.rollMode ??= game.settings.get("core", "rollMode");
@@ -1025,36 +1033,26 @@ export class ItemPF extends ItemBasePF {
    *                                      defaults to {@link ItemPF.firstAction}
    * @returns {ChatData} The chat data for this item (+action)
    */
-  getChatData(enrichOptions = {}, options = {}) {
+  async getChatData({ chatcard = false, actionId = null, rollData = {} } = {}) {
     /** @type {ChatData} */
     const data = {};
-    const { actionId = null } = options;
     const action = actionId ? this.actions.get(actionId) : this.firstAction;
 
-    enrichOptions.rollData ??= action ? action.getRollData() : this.getRollData();
+    rollData ??= action ? action.getRollData() : this.getRollData();
+    const itemData = rollData.item ?? this.system;
+    const actionData = rollData.action ?? action?.data ?? {};
 
-    const labels = this.getLabels({ actionId, rollData: enrichOptions.rollData });
-
-    enrichOptions.secrets ??= this.isOwner;
-    enrichOptions.async = false; // @TODO: Work on making this async, somehow
-
-    enrichOptions.relativeTo = this.actor;
-
-    const itemData = enrichOptions.rollData?.item ?? this.system;
-    const actionData = enrichOptions.rollData?.action ?? action?.data ?? {};
+    const labels = this.getLabels({ actionId, rollData });
 
     // Rich text descriptions
-    const description = this.getDescription({ chatcard: options.chatcard });
-    data.identifiedDescription = TextEditor.enrichHTML(description, enrichOptions);
+    data.identifiedDescription = this.getDescription({ chatcard });
+
     if (itemData.shortDescription) {
-      data.identifiedDescription = `${data.identifiedDescription}${TextEditor.enrichHTML(
-        itemData.shortDescription,
-        enrichOptions
-      )}`;
+      data.identifiedDescription = `${data.identifiedDescription}${itemData.shortDescription}`;
     }
-    data.unidentifiedDescription = TextEditor.enrichHTML(itemData.description.unidentified, enrichOptions);
+    data.unidentifiedDescription = itemData.description.unidentified;
     data.description = this.showUnidentifiedData ? data.unidentifiedDescription : data.identifiedDescription;
-    data.actionDescription = TextEditor.enrichHTML(actionData.description, enrichOptions);
+    data.actionDescription = actionData.description;
 
     // General equipment properties
     const props = [];
@@ -1069,7 +1067,7 @@ export class ItemPF extends ItemBasePF {
       dynamicLabels.level = labels.sl || "";
       // Range
       if (actionData.range != null) {
-        const range = action.getRange({ type: "max", rollData: enrichOptions.rollData }),
+        const range = action.getRange({ type: "max", rollData }),
           units = actionData.range.units === "mi" ? "mi" : "ft";
         const distanceValues = convertDistance(range, units);
         dynamicLabels.range =
@@ -1084,7 +1082,7 @@ export class ItemPF extends ItemBasePF {
       // Duration
       if (actionData.duration != null) {
         if (!["inst", "perm"].includes(actionData.duration.units)) {
-          const duration = RollPF.safeRoll(actionData.duration.value || "0", enrichOptions.rollData).total;
+          const duration = RollPF.safeRoll(actionData.duration.value || "0", rollData).total;
           dynamicLabels.duration = [duration, pf1.config.timePeriods[actionData.duration.units]].filterJoin(" ");
         }
       }
@@ -1102,7 +1100,7 @@ export class ItemPF extends ItemBasePF {
     }
 
     // Get per item type chat data
-    this.getTypeChatData(data, labels, props, enrichOptions.rollData);
+    this.getTypeChatData(data, labels, props, rollData);
 
     const harmless = actionData.save?.harmless;
     if (harmless) props.push(game.i18n.localize("PF1.Harmless"));

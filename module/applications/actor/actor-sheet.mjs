@@ -1843,7 +1843,7 @@ export class ActorSheetPF extends ActorSheet {
    */
   _onItemSummary(event) {
     event.preventDefault();
-    const li = $(event.currentTarget).parents(".item");
+    const li = event.target.closest(".item[data-item-id]");
     this.openItemSummary(li);
   }
 
@@ -1853,32 +1853,39 @@ export class ActorSheetPF extends ActorSheet {
    * @param {JQuery<HTMLElement>} elem - The element to open. Likely will have the `item` class in CSS.
    * @param {boolean} [instant=false] - Whether to instantly show the expansion (true), or animate it (false)
    */
-  openItemSummary(elem, { instant = false } = {}) {
+  async openItemSummary(elem, { instant = false, rollData } = {}) {
     // Check whether pseudo-item belongs to another collection
-    const collection = elem.attr("data-item-collection") ?? "items";
-    const itemId = elem.attr("data-item-id");
-    const item = this.document[collection].get(itemId);
-    const { description, properties } = item.getChatData({ chatcard: false });
+    const itemId = elem.dataset.itemId;
+    const item = this.actor.items.get(itemId);
+
+    rollData ??= item.getRollData();
+    const { description, properties } = await item.getChatData({ chatcard: false, rollData });
 
     // Toggle summary
     this._expandedItems = this._expandedItems.filter((o) => o !== itemId);
-    if (elem.hasClass("expanded")) {
-      const summary = elem.children(".item-summary");
+    if (elem.classList.contains("expanded")) {
+      const summary = elem.querySelector(".item-summary");
       if (instant) summary.remove();
-      else summary.slideUp(200, () => summary.remove());
+      else $(summary).slideUp(200, () => summary.remove());
     } else {
-      const div = $(`<div class="item-summary">${description}</div>`);
-      const props = $(`<div class="item-properties tag-list"></div>`);
-      properties.forEach((p) => props.append(`<span class="tag">${p}</span>`));
-      div.append(props);
-      if (instant) elem.append(div);
+      const templateData = {
+        description,
+        properties,
+      };
+      let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
+      content = await TextEditor.enrichHTML(content, { rollData, async: true, secrets: this.actor.isOwner });
+
+      const div = $(content);
+
+      if (instant) elem.append(...div);
       else {
-        elem.append(div.hide());
+        div.hide();
+        elem.append(...div);
         div.slideDown(200);
       }
       this._expandedItems.push(itemId);
     }
-    elem.toggleClass("expanded");
+    elem.classList.toggle("expanded");
   }
 
   /**
@@ -3007,8 +3014,8 @@ export class ActorSheetPF extends ActorSheet {
     for (const itemId of this._expandedItems) {
       // Only display summaries of items that are still present
       if (this.object.items.has(itemId)) {
-        const elem = html.find(`.item-list>.item[data-item-id="${itemId}"]`);
-        if (elem.length) this.openItemSummary(elem, { instant: true });
+        const elem = html.find(`.item-list>.item[data-item-id="${itemId}"]`)[0];
+        if (elem) this.openItemSummary(elem, { instant: true });
       } else {
         // Delete itemIds belonging to items no longer found in the actor
         this._expandedItems.findSplice((o) => o === itemId);

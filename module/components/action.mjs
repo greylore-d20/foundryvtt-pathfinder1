@@ -658,12 +658,11 @@ export class ItemAction {
    * regardless of whether it is the first action or not.
    *
    * @see {@link ItemPF#getChatData}
-   * @param {EnrichmentOptions} [htmlOptions] - Options passed to {@link ItemPF#getChatData} affecting text enrichment
    * @param {object} [chatDataOptions] - Options passed to {@link ItemPF#getChatData} affecting the chat data
-   * @returns {import("../documents/item/item-pf.mjs").ChatData} Chat data for this action's parent and this action
+   * @returns {Promise<import("../documents/item/item-pf.mjs").ChatData>} Chat data for this action's parent and this action
    */
-  getChatData(htmlOptions = {}, chatDataOptions = {}) {
-    return this.parent.getChatData(htmlOptions, { ...chatDataOptions, actionId: this.id });
+  async getChatData(chatDataOptions = {}) {
+    return this.item.getChatData({ ...chatDataOptions, actionId: this.id });
   }
 
   /**

@@ -1885,6 +1885,10 @@ export class ItemSheetPF extends ItemSheet {
           elem.readOnly = true;
           elem.value = displayValue;
         }
+
+        // Clear selection
+        const s = document.getSelection();
+        if (s.anchorNode === elem || s.anchorNode === elem.parentElement) s.removeAllRanges();
       },
       { once: true, passive: true }
     );

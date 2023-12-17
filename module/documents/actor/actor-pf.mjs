@@ -1516,7 +1516,7 @@ export class ActorPF extends ActorBasePF {
           const speedValue = this.system.attributes.speed[speedKey].total;
           if (speedValue > 0) {
             this.system.attributes.speed[speedKey].total = this.constructor.getReducedMovementSpeed(speedValue);
-            getSourceInfo(this.sourceInfo, `system.attributes.speed.${speedKey}.add`).negative.push(sInfo);
+            getSourceInfo(this.sourceInfo, `system.attributes.speed.${speedKey}.total`).negative.push(sInfo);
           }
         }
       }

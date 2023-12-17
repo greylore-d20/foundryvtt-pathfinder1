@@ -481,40 +481,23 @@ export const getChangeFlat = function (target, modifierType, value) {
     case "allSpeeds":
       for (const speedKey of Object.keys(curData.attributes.speed)) {
         const base = curData.attributes.speed[speedKey]?.base;
-        if (base !== undefined) result.push(`system.attributes.speed.${speedKey}.total`);
+        result.push(`system.attributes.speed.${speedKey}.total`);
       }
       break;
     case "landSpeed":
-      if (modifierType === "base") return ["system.attributes.speed.land.total"];
-      result.push("system.attributes.speed.land.add", "system.attributes.speed.land.total");
+      result.push("system.attributes.speed.land.total");
       break;
     case "climbSpeed":
-      if (modifierType === "base") {
-        result.push("system.attributes.speed.climb.total");
-        break;
-      }
-      result.push("system.attributes.speed.climb.add", "system.attributes.speed.climb.total");
+      result.push("system.attributes.speed.climb.total");
       break;
     case "swimSpeed":
-      if (modifierType === "base") {
-        result.push("system.attributes.speed.swim.total");
-        break;
-      }
-      result.push("system.attributes.speed.swim.add", "system.attributes.speed.swim.total");
+      result.push("system.attributes.speed.swim.total");
       break;
     case "burrowSpeed":
-      if (modifierType === "base") {
-        result.push("system.attributes.speed.burrow.total");
-        break;
-      }
-      result.push("system.attributes.speed.burrow.add", "system.attributes.speed.burrow.total");
+      result.push("system.attributes.speed.burrow.total");
       break;
     case "flySpeed":
-      if (modifierType === "base") {
-        result.push("system.attributes.speed.fly.total");
-        break;
-      }
-      result.push("system.attributes.speed.fly.add", "system.attributes.speed.fly.total");
+      result.push("system.attributes.speed.fly.total");
       break;
     case "cmb":
       result.push("system.attributes.cmb.bonus");

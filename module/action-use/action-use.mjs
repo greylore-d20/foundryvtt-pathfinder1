@@ -1000,7 +1000,8 @@ export class ActionUse {
     const conditions = Object.entries(this.actor.system.conditions ?? {})
       .filter(([_, enabled]) => enabled)
       .map(([id]) => pf1.registry.conditions.get(id))
-      .filter((c) => c?.showInAction);
+      .filter((c) => c?.showInAction)
+      .map((c) => c.name);
 
     // Special case
     if (this.actor.system.conditions?.deaf && this.item.type === "spell") {

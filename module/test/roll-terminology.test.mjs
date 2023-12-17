@@ -31,6 +31,9 @@ export function registerSizeRollTests() {
           it("10d6 down by one, converted to 8d8 and stepped down to 8d6", function () {
             expect(sizeRoll(10, 6, small)[0].formula).to.equal("8d6");
           });
+          it("1d12 up by one: converted to 2d6 and up to 3d6", function () {
+            expect(sizeRoll(1, 12, large)[0].formula).to.equal("3d6");
+          });
           it("2d12 down by one: converted to 4d6 and down to 3d8", function () {
             expect(sizeRoll(2, 12, small)[0].formula).to.equal("3d8");
           });

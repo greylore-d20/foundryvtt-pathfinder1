@@ -673,7 +673,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateArmorCategories(itemData, updateData);
   _migrateArmorMaxDex(itemData, updateData);
   _migrateItemSize(itemData, updateData);
-  _migrateAbilityTypes(itemData, updateData);
+  _migrateItemFeatAbilityTypes(itemData, updateData);
   _migrateClassLevels(itemData, updateData);
   _migrateSavingThrowTypes(itemData, updateData);
   _migrateCR(itemData, updateData);
@@ -1427,15 +1427,14 @@ const _migrateItemSize = function (ent, updateData, linked) {
   }
 };
 
-const _migrateAbilityTypes = function (ent, updateData) {
-  if (ent.type !== "feat") return;
+const _migrateItemFeatAbilityTypes = function (itemData, updateData) {
+  if (itemData.type !== "feat") return;
 
-  if (foundry.utils.getProperty(ent, "system.abilityType") == null) {
-    updateData["system.abilityType"] = "none";
-  }
-  // Fix buggy value
-  if (foundry.utils.getProperty(ent, "system.abilityType") === "n/a") {
-    updateData["system.abilityType"] = "none";
+  const type = itemData.system.abilityType;
+  // Convert "none" and other invalid values (e.g. null or "n/a") to "na"
+  // Added with PF1 vNEXT
+  if (pf1.config.abilityTypes[type] === undefined) {
+    updateData["system.abilityType"] = "na";
   }
 };
 

@@ -64,9 +64,8 @@
 
           <select name="system.abilityType" value="{{system.abilityType}}">
             {{#select system.abilityType}}
-            <option value="none"></option>
-            {{#each config.abilityTypes as |type a|}}
-            <option value="{{a}}">{{localize type.short}}</option>
+            {{#each config.abilityTypes}}
+            <option value="{{@key}}">{{long}} ({{short}})</option>
             {{/each}}
             {{/select}}
           </select>

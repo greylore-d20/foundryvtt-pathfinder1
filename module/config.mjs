@@ -928,17 +928,21 @@ export const traitTypes = {
  * Ability types, each with their short and their long form
  */
 export const abilityTypes = {
+  na: {
+    long: "PF1.AbilityTypes.na.Label",
+    short: "PF1.AbilityTypes.na.Short",
+  },
   ex: {
-    short: "PF1.AbilityTypeShortExtraordinary",
-    long: "PF1.AbilityTypeExtraordinary",
+    long: "PF1.AbilityTypes.ex.Label",
+    short: "PF1.AbilityTypes.ex.Short",
   },
   su: {
-    short: "PF1.AbilityTypeShortSupernatural",
-    long: "PF1.AbilityTypeSupernatural",
+    long: "PF1.AbilityTypes.su.Label",
+    short: "PF1.AbilityTypes.su.Short",
   },
   sp: {
-    short: "PF1.AbilityTypeShortSpell-Like",
-    long: "PF1.AbilityTypeSpell-Like",
+    long: "PF1.AbilityTypes.sp.Label",
+    short: "PF1.AbilityTypes.sp.Short",
   },
 };
 

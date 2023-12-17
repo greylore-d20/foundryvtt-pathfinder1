@@ -2673,13 +2673,8 @@ export class ActorSheetPF extends ActorSheet {
 
     for (const f of feats) {
       const k = f.subType;
-      if (f.abilityType && f.abilityType !== "none") {
-        f.abilityTypeShort = pf1.config.abilityTypes[f.abilityType].short;
-        f.abilityType = pf1.config.abilityTypes[f.abilityType].long;
-      } else {
-        f.abilityTypeShort = "";
-        f.abilityType = "";
-      }
+      const ablType = f.abilityType;
+      f.typelabel = pf1.config.abilityTypes[ablType]?.short || pf1.config.abilityTypes.na.short;
       features[k]?.items?.push(f);
     }
     classes.sort((a, b) => b.level - a.level);

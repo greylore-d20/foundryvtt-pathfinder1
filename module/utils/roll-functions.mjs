@@ -45,11 +45,13 @@ export const sizeRoll = function (origCount, origSides, targetSize = "M", initia
       origSides = origCount % 2 == 0 ? 8 : 6;
       origCount = Math.floor((origCount + 1) / 2);
     }
-    // D12
-    else if (origSides === 12) {
-      origCount *= 2;
-      origSides = 6;
-    }
+  }
+
+  // D12
+  // Each d12 counts as 2d6
+  if (origSides === 12) {
+    origCount *= 2;
+    origSides = 6;
   }
 
   // Get initial die type

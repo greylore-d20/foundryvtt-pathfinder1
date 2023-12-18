@@ -1,19 +1,24 @@
 /**
- * sizeRoll() tests
- *
- * @see https://paizo.com/paizo/faq/v5748nruor1fm#v5748eaic9t3f
+ * Roll terminology tests
  */
 export function registerSizeRollTests() {
   quench.registerBatch(
     "pf1.utils.roll",
     async (context) => {
-      const { describe, it, expect, after, assert } = context;
+      const { describe, it, before, expect, after, assert } = context;
 
+      /**
+       * sizeRoll()
+       *
+       * @see https://paizo.com/paizo/faq/v5748nruor1fm#v5748eaic9t3f
+       */
       describe("sizeRoll()", function () {
         const sizeRoll = pf1.utils.roll.sizeRoll;
         const medium = 4;
         const large = medium + 1;
+        const huge = medium + 2;
         const small = medium - 1;
+        const tiny = medium - 2;
 
         describe("1d6/1d8 border rules", function () {
           it("1d6 up by one to 1d8", function () {
@@ -96,6 +101,98 @@ export function registerSizeRollTests() {
           // Incorrect answer ignoring the above rule: 3d6
           it("Small 2d6 up by one size step to 2d8", function () {
             expect(sizeRoll(2, 6, medium, small)[0].formula).to.equal("2d8");
+          });
+        });
+
+        describe("entire pre-defined table", function () {
+          describe("for medium creature", function () {
+            const medSizeTransforms = [
+              ["1", "1d3"],
+              ["1", "1d4"],
+              [null, "1d6"],
+              [null, "1d8"],
+              [null, "2d6"],
+              [null, "3d6"],
+              [null, "3d8"],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, null],
+              [null, ""], // from this point on the rules no longer say what should happen for enlarging (going off chart)
+              [null, ""],
+              [null, ""],
+              [null, ""],
+            ];
+
+            // Fill in parts that can be automatically determined
+            medSizeTransforms.forEach(([reduced, enlarged], idx) => {
+              if (reduced === null) medSizeTransforms[idx][0] = pf1.config.sizeDie[idx - 2];
+              if (enlarged === null) medSizeTransforms[idx][1] = pf1.config.sizeDie[idx + 4];
+            });
+
+            describe("reduced twice", function () {
+              medSizeTransforms.forEach(([reduced], idx) => {
+                if (!reduced) return;
+                const formula = pf1.config.sizeDie[idx];
+                const [die, size] = formula.split("d", 2).map((n) => Number(n));
+                it(`${formula} reduced twice to ${reduced}`, function () {
+                  expect(sizeRoll(die || 1, size || 1, tiny)[0].formula).to.equal(reduced);
+                });
+              });
+            });
+
+            describe("enlarged twice", function () {
+              medSizeTransforms.forEach(([_, enlarged], idx) => {
+                if (!enlarged) return;
+                const formula = pf1.config.sizeDie[idx];
+                const [die, size] = formula.split("d", 2).map((n) => Number(n));
+                it(`${formula} enlarged twice to ${enlarged}`, function () {
+                  expect(sizeRoll(die || 1, size || 1, huge)[0].formula).to.equal(enlarged);
+                });
+              });
+            });
+          });
+
+          describe("for large creature, reduced twice", function () {
+            const lgSizeTransforms = [
+              "1",
+              "1",
+              "1",
+              "1d2",
+              "1d3",
+              "1d4",
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+            ];
+
+            lgSizeTransforms.forEach((reduced, idx) => {
+              // Fill in parts that can be automatically determined
+              if (reduced === null) reduced = pf1.config.sizeDie[idx - 3];
+              const formula = pf1.config.sizeDie[idx];
+              const [die, size] = formula.split("d", 2).map((n) => Number(n));
+              it(`${formula} reduced twice to ${reduced}`, function () {
+                expect(sizeRoll(die || 1, size || 1, small, large)[0].formula).to.equal(reduced);
+              });
+            });
           });
         });
       });

@@ -854,43 +854,31 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   async _prepareScriptCalls(data) {
-    const categories = pf1.registry.scriptCalls.filter((scriptCallCategory) => {
-      if (!scriptCallCategory.itemTypes.includes(this.document.type)) return false;
-      return !(scriptCallCategory.hidden === true && !game.user.isGM);
+    data.scriptCalls = null;
+
+    // Don't show the Script Calls section if players are not allowed to edit script macros
+    if (!game.user.can("MACRO_SCRIPT")) return;
+
+    const categories = pf1.registry.scriptCalls.filter((category) => {
+      if (!category.itemTypes.includes(this.document.type)) return false;
+      return !(category.hidden === true && !game.user.isGM);
     });
     // Don't show the Script Calls section if there are no categories for this item type
-    if (!categories.length) {
-      data.scriptCalls = null;
-      return;
-    }
-    // Don't show the Script Calls section if players are not allowed to edit script macros
-    if (!game.user.can("MACRO_SCRIPT")) {
-      data.scriptCalls = null;
-      return;
-    }
+    if (!categories.length) return;
 
     data.scriptCalls = {};
 
-    // Prepare data to add
-    const checkYes = '<i class="fas fa-check"></i>';
-    const checkNo = '<i class="fas fa-times"></i>';
-
     // Iterate over all script calls, and adjust data
-    const scriptCalls = Object.hasOwnProperty.call(this.document, "scriptCalls")
-      ? foundry.utils.deepClone(Array.from(this.document.scriptCalls).map((o) => o.data))
-      : [];
-
-    // Add data
-    for (const o of scriptCalls) o.hide = o.hidden && !game.user.isGM;
+    const scriptCalls = this.item.scriptCalls ?? [];
 
     // Create categories, and assign items to them
-    for (const c of categories) {
-      data.scriptCalls[c.id] = {
-        name: game.i18n.localize(c.name),
-        tooltip: c.info,
-        items: scriptCalls.filter((o) => o.category === c.id),
+    for (const { id, name, info } of categories) {
+      data.scriptCalls[id] = {
+        name,
+        tooltip: info,
+        items: scriptCalls.filter((sc) => sc.category === id && !sc.hide),
         dataset: {
-          category: c.id,
+          category: id,
         },
       };
     }

@@ -53,23 +53,44 @@ export class ItemScriptCall {
     };
   }
 
+  /** @type {string} */
   get id() {
     return this.data._id;
   }
+
+  /** @type {string} */
   get type() {
     return this.data.type;
   }
+
+  /** @type {string} */
   get value() {
     return this.data.value;
   }
+
+  /** @type {string} */
   get category() {
     return this.data.category;
   }
+
+  /** @type {string} */
   get name() {
     return this.data.name;
   }
+
+  /** @type {string} */
+  get img() {
+    return this.data.img;
+  }
+
+  /** @type {boolean} */
   get hidden() {
     return this.data.hidden;
+  }
+
+  /** @type {boolean} */
+  get hide() {
+    return this.hidden && !game.user.isGM;
   }
 
   async getScriptBody() {

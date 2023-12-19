@@ -60,14 +60,14 @@
             {{localize "PF1.ScriptCalls.Name"}}
         </h3>
 
-        {{#each scriptCalls as |section k|}}
-        <ol class="item-list" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
+        {{#each scriptCalls}}
+        <ol class="item-list" {{#each dataset as |value|}}data-{{@key}}="{{value}}"{{/each}}>
             <li class="item-list-header flexrow">
                 <div class="item-name">
                     {{#if tooltip}}
                     <i class="fas fa-info fa-fw item-info" data-tooltip="{{tooltip}}"></i>
                     {{/if}}
-                    <h3>{{localize section.name}}</h3>
+                    <h3>{{localize name}}</h3>
                 </div>
 
                 {{#if @root.isGM}}
@@ -86,23 +86,18 @@
             </li>
 
             <ol class="item-list">
-                {{#each section.items as |item i|}}
-                {{#unless hide}}
-                <li class="item flexrow" data-item-id="{{item._id}}">
+                {{#each items}}
+                <li class="item flexrow" data-item-id="{{id}}">
                     <div class="item-name">
-                        <div class="item-image no-hover" style='background-image: url("{{item.img}}")'></div>
-                        <h4>{{item.name}}</h4>
+                        <div class="item-image no-hover" style='background-image: url("{{img}}")'></div>
+                        <h4>{{name}}</h4>
                     </div>
 
                     {{#if @root.isGM}}
                     <div class="item-detail item-hidden">
                         <a class="item-control item-hide">
                         <span class='hidden-icon'>
-                          {{#if hidden}}
-                          <i class="fas fa-check"></i>
-                          {{else}}
-                          <i class="fas fa-times"></i>
-                          {{/if}}
+                          <i class="fas {{#if hidden}}fa-check is-visible{{else}}fa-times is-hidden{{/if}} fa-fw"></i>
                         </span>
                         </a>
                     </div>
@@ -113,7 +108,6 @@
                         <a class="item-control item-delete" data-tooltip="PF1.DeleteItem"><i class="fas fa-trash"></i></a>
                     </div>
                 </li>
-                {{/unless}}
                 {{/each}}
             </ol>
         </ol>

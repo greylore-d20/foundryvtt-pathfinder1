@@ -1847,6 +1847,8 @@ export const conditionTypes = {
 
 export const buffTypes = {
   temp: "PF1.Temporary",
+  spell: "TYPES.Item.spell",
+  feat: "TYPES.Item.feat",
   perm: "PF1.Permanent",
   item: "PF1.Item",
   misc: "PF1.Misc",

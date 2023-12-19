@@ -3,6 +3,7 @@ import { ExperienceConfig, ExperienceConfigModel } from "../applications/setting
 import { AccessibilityConfig, AccessibilityConfigModel } from "../applications/settings/accessibility.mjs";
 import { TooltipConfig, TokenTooltipConfigModel } from "../applications/settings/tooltip.mjs";
 import { TooltipWorldConfig, TokenTooltipWorldConfigModel } from "../applications/settings/tooltip_world.mjs";
+import { IntegrationConfig, IntegrationModel } from "module/applications/settings/integration.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
 import { setDefaultSceneScaling } from "@utils";
 
@@ -142,6 +143,23 @@ export const registerSystemSettings = function () {
       TooltipPF.toggle(!settings.disable);
       pf1.tooltip?.setPosition();
     },
+  });
+
+  game.settings.register("pf1", "integration", {
+    type: IntegrationModel,
+    default: new IntegrationModel(),
+    scope: "world",
+    config: false,
+    requiresReload: true,
+  });
+
+  game.settings.registerMenu("pf1", "integration", {
+    name: "PF1.Application.Integration.Title",
+    label: "PF1.Application.Integration.Label",
+    hint: "PF1.Application.Integration.Hint",
+    restricted: true,
+    icon: "fa-solid fa-check-to-slot",
+    type: IntegrationConfig,
   });
 
   // MEASURING

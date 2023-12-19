@@ -19,7 +19,7 @@ import { initializeSocket } from "./module/socket.mjs";
 import { SemanticVersion } from "./module/utils/semver.mjs";
 import * as chat from "./module/utils/chat.mjs";
 import * as macros from "./module/documents/macros.mjs";
-import { initializeModules } from "./module/modules.mjs";
+import { initializeModuleIntegration } from "./module/modules.mjs";
 import { ActorPFProxy } from "@actor/actor-proxy.mjs";
 import { ItemPFProxy } from "@item/item-proxy.mjs";
 
@@ -278,7 +278,7 @@ Hooks.once("init", function () {
   initializeSocket();
 
   // Initialize module integrations
-  initializeModules();
+  initializeModuleIntegration();
 
   // Initialize registries with initial/built-in data
   const registries = /** @type {const} */ ([

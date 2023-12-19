@@ -768,6 +768,7 @@ export class ActionUse {
    * Handles Dice So Nice integration.
    */
   async handleDiceSoNice() {
+    if (!game.settings.get("pf1", "integration").diceSoNice) return;
     if (!game.dice3d?.isEnabled()) return;
 
     // Use try to make sure a chat card is rendered even if DsN fails
@@ -856,7 +857,8 @@ export class ActionUse {
     // Set attack sound
     if (this.shared.action.data.soundEffect) this.shared.chatData.sound = this.shared.action.data.soundEffect;
     // Set dice sound if neither attack sound nor Dice so Nice are available
-    else if (game.dice3d == null || !game.dice3d.isEnabled()) this.shared.chatData.sound = CONFIG.sounds.dice;
+    else if (!game.settings.get("pf1", "integration").diceSoNice || !game.dice3d?.isEnabled())
+      this.shared.chatData.sound = CONFIG.sounds.dice;
 
     // Get extra text
     const props = [];

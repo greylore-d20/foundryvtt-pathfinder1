@@ -3117,15 +3117,11 @@ export class ActorPF extends ActorBasePF {
     // Add misc data
     const reSplit = pf1.config.re.traitSeparator;
     // Damage Reduction
-    let drNotes = [];
-    if (this.system.traits.dr.length) {
-      drNotes = this.system.traits.dr.split(reSplit);
-    }
+    const drNotes = Object.values(this.parseResistances("dr"));
+
     // Energy Resistance
-    const energyResistance = [];
-    if (this.system.traits.eres.length) {
-      energyResistance.push(...this.system.traits.eres.split(reSplit));
-    }
+    const energyResistance = Object.values(this.parseResistances("eres"));
+
     // Damage Immunity
     if (this.system.traits.di.value.length || this.system.traits.di.custom.length) {
       const values = [
@@ -3369,6 +3365,71 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   /**
+   * Helper function for actor energy resistance and damage reduction feedback.
+   *
+   * @param {string} damage Value to check resistances for. Either "dr" or "eres".
+   * @returns {object} Entry to label mapping of resistances or reductions.
+   */
+  parseResistances(damage) {
+    const format = (amount, type, operator, type2) => {
+      let translatedType = type;
+      if (type2) {
+        switch (operator) {
+          case false: {
+            // Combine with AND
+            translatedType = game.i18n.format("PF1.Application.DamageResistanceSelector.CombinationFormattedAnd", {
+              type1: type,
+              type2: type2,
+            });
+            break;
+          }
+          default:
+          case true: {
+            // Combine with OR
+            translatedType = game.i18n.format("PF1.Application.DamageResistanceSelector.CombinationFormattedOr", {
+              type1: type,
+              type2: type2,
+            });
+            break;
+          }
+        }
+      }
+
+      return damage === "dr" ? `${amount}/${translatedType}` : `${translatedType} ${amount}`;
+    };
+
+    const damages = this.system.traits[damage];
+    const resistances = {};
+    damages.value.forEach((entry, counter) => {
+      const { amount, operator } = entry;
+      const type1 =
+        pf1.registry.damageTypes.get(entry.types[0])?.name ??
+        pf1.registry.materialTypes.get(entry.types[0])?.name ??
+        pf1.config.damageResistances[entry.types[0]] ??
+        "-";
+      const type2 =
+        pf1.registry.damageTypes.get(entry.types[1])?.name ??
+        pf1.registry.materialTypes.get(entry.types[1])?.name ??
+        pf1.config.damageResistances[entry.types[1]] ??
+        "";
+
+      resistances[`${counter + 1}`] = format(amount, type1, operator, type2);
+    });
+
+    if (damages.custom.length) {
+      damages.custom.split(pf1.config.re.traitSeparator).forEach((entry, counter) => {
+        const split = entry.split(damage === "dr" ? /\s*\/\s*/ : /\s+/);
+        const type = split[damage === "dr" ? 1 : 0];
+        const amount = split[damage === "dr" ? 0 : 1];
+
+        resistances[`custom${counter + 1}`] = format(amount, type, null, "");
+      });
+    }
+
+    return resistances;
+  }
+
+  /**
    * Wrapper for the static function, taking this actor as the only target.
    *
    * @param {number} value Value to adjust health by.
@@ -3421,8 +3482,7 @@ export class ActorPF extends ActorBasePF {
     const healthConfig = game.settings.get("pf1", "healthConfig");
 
     const numReg = /(\d+)/g,
-      sliceReg = /[^,;\n]*(\d+)[^,;\n]*/g,
-      sliceReg2 = /[^,;\n]+/g;
+      sliceReg = /[^,;\n]+/g;
 
     const _submit = async function (form, multiplier) {
       if (form) {
@@ -3540,66 +3600,14 @@ export class ActorPF extends ActorBasePF {
         const isToken = tok instanceof Token;
         const actor = isToken ? tok.actor : tok;
 
-        const buildResistances = (damage) => {
-          const format = (amount, type, operator, type2) => {
-            let translatedType = type;
-            if (type2) {
-              switch (operator) {
-                case false: {
-                  // Combine with AND
-                  translatedType = game.i18n.format(
-                    "PF1.Application.DamageResistanceSelector.CombinationFormattedAnd",
-                    {
-                      type1: type,
-                      type2: type2,
-                    }
-                  );
-                  break;
-                }
-                default:
-                case true: {
-                  // Combine with OR
-                  translatedType = game.i18n.format("PF1.Application.DamageResistanceSelector.CombinationFormattedOr", {
-                    type1: type,
-                    type2: type2,
-                  });
-                  break;
-                }
-              }
-            }
-
-            return damage === "dr" ? `${amount}/${translatedType}` : `${translatedType} ${amount}`;
-          };
-
-          const resistances = actor.system.traits[damage].value.map((entry) => {
-            const { amount, operator } = entry;
-            const type1 =
-              pf1.registry.damageTypes.get(entry.types[0])?.name ??
-              pf1.registry.materialTypes.get(entry.types[0])?.name ??
-              pf1.config.damageResistances[entry.types[0]] ??
-              "-";
-            const type2 =
-              pf1.registry.damageTypes.get(entry.types[1])?.name ??
-              pf1.registry.materialTypes.get(entry.types[1])?.name ??
-              pf1.config.damageResistances[entry.types[1]] ??
-              "";
-
-            return format(amount, type1, operator, type2);
-          });
-
-          resistances.push(...(actor.system.traits[damage].custom.match(sliceReg) ?? []));
-
-          return resistances;
-        };
-
         return {
           _id: isToken ? tok.id : actor.id,
           name: isToken ? tok.name : actor.name,
           isToken,
-          dr: buildResistances("dr"),
-          eres: buildResistances("eres"),
-          di: [...actor.system.traits.di.value, ...(actor.system.traits.di.custom.match(sliceReg2) ?? [])],
-          dv: [...actor.system.traits.dv.value, ...(actor.system.traits.dv.custom.match(sliceReg2) ?? [])],
+          dr: Object.values(actor.parseResistances("dr")),
+          eres: Object.values(actor.parseResistances("eres")),
+          di: [...actor.system.traits.di.value, ...(actor.system.traits.di.custom.match(sliceReg) ?? [])],
+          dv: [...actor.system.traits.dv.value, ...(actor.system.traits.dv.custom.match(sliceReg) ?? [])],
           checked: true,
         };
       });

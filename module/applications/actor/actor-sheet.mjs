@@ -370,8 +370,8 @@ export class ActorSheetPF extends ActorSheet {
     // Update traits
     this._prepareTraits(data.system.traits);
     data.labels.senses = this._prepareSenseLabels();
-    data.dr = this._prepareResistance(data.system.traits.dr, "dr");
-    data.eres = this._prepareResistance(data.system.traits.eres, "eres");
+    data.dr = this.document.parseResistances("dr");
+    data.eres = this.document.parseResistances("eres");
 
     // Prepare owned items
     this._prepareItems(data);
@@ -787,75 +787,6 @@ export class ActorSheetPF extends ActorSheet {
     return result;
   }
 
-  /**
-   *
-   * @param {Object<string, any>} damages - The traits object containing both custom text input and more structured resistances
-   * @param {string} damageType  - The type of resistance to check ("dr" or "eres" for damage reduction or energy resistance, respectively)
-   * @returns {Object<string, string>} - An object of key-value pairs of string labels for the actor sheet
-   */
-  _prepareResistance(damages, damageType) {
-    const result = {};
-
-    const format = (amount, type, operator, type2) => {
-      let translatedType = type;
-      if (type2) {
-        switch (operator) {
-          case false: {
-            // Combine with AND
-            translatedType = game.i18n.format("PF1.Application.DamageResistanceSelector.CombinationFormattedAnd", {
-              type1: type,
-              type2: type2,
-            });
-            break;
-          }
-          default:
-          case true: {
-            // Combine with OR
-            translatedType = game.i18n.format("PF1.Application.DamageResistanceSelector.CombinationFormattedOr", {
-              type1: type,
-              type2: type2,
-            });
-            break;
-          }
-        }
-      }
-
-      return damageType === "dr" ? `${amount}/${translatedType}` : `${translatedType} ${amount}`;
-    };
-
-    for (const [key, value] of Object.entries(damages)) {
-      if (key === "custom") {
-        if (value.length) {
-          value.split(pf1.config.re.traitSeparator).forEach((term, counter) => {
-            const split = term.split(damageType === "dr" ? /\s*\/\s*/ : /\s+/);
-            const type = split[damageType === "dr" ? 1 : 0];
-            const amount = split[damageType === "dr" ? 0 : 1];
-
-            result[`custom${counter + 1}`] = format(amount, type, null, "");
-          });
-        }
-        continue;
-      }
-
-      value.forEach((entry, counter) => {
-        const { amount, operator } = entry;
-        const type1 =
-          pf1.registry.damageTypes.get(entry.types[0])?.name ??
-          pf1.registry.materialTypes.get(entry.types[0])?.name ??
-          pf1.config.damageResistances[entry.types[0]] ??
-          "-";
-        const type2 =
-          pf1.registry.damageTypes.get(entry.types[1])?.name ??
-          pf1.registry.materialTypes.get(entry.types[1])?.name ??
-          pf1.config.damageResistances[entry.types[1]] ??
-          "";
-
-        result[`${counter + 1}`] = format(amount, type1, operator, type2);
-      });
-    }
-
-    return result;
-  }
   /* -------------------------------------------- */
 
   /**

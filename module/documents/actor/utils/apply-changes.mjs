@@ -51,9 +51,8 @@ export function applyChanges() {
   const continuousChanges = changes.filter((o) => o.continuous === true);
 
   // Apply all changes
-  for (let a = 0; a < changes.length; a++) {
-    const change = changes[a];
-    const flats = getChangeFlat.call(this, change.subTarget, change.modifier, change.value);
+  for (const change of changes) {
+    const flats = change.getTargets(this);
     for (const f of flats) {
       if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
     }
@@ -63,8 +62,7 @@ export function applyChanges() {
     // Apply continuous changes
     for (const cc of continuousChanges) {
       if (cc === change) continue;
-
-      const flats = getChangeFlat.call(this, cc.subTarget, cc.modifier, cc.value);
+      const flats = cc.getTargets(this);
       for (const f of flats) {
         if (!this.changeOverrides[f]) this.changeOverrides[f] = createOverride();
       }

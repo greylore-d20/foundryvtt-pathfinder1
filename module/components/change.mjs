@@ -205,7 +205,7 @@ export class ItemChange {
    */
   applyChange(actor, targets = null, { applySourceInfo = true } = {}) {
     // Prepare change targets
-    targets ??= getChangeFlat.call(actor, this.subTarget, this.modifier);
+    targets ??= this.getTargets(actor);
 
     // Ensure application of script changes creates a warning
     if (this.operator === "script") {
@@ -442,5 +442,14 @@ export class ItemChange {
         return { operator: "add", value: 0 };
       };
     }
+  }
+
+  /**
+   * @see {@link getChangeFlat}
+   * @param {ActorPF} actor - Actor instance
+   * @returns {Array<string>} - Valid targets for this change on specified actor
+   */
+  getTargets(actor) {
+    return getChangeFlat.call(actor, this.subTarget, this.modifier, this.value);
   }
 }

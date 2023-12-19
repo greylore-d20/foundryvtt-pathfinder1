@@ -2505,7 +2505,7 @@ export class ActorPF extends ActorBasePF {
     const parts = [];
     const changes = getHighestChanges(
       this.changes.filter((c) => {
-        const cf = getChangeFlat.call(this, c.subTarget, c.modifier);
+        const cf = c.getTargets(this);
 
         if (haveParentSkill && cf.includes(`system.skills.${mainSkillId}.changeBonus`)) return true;
         return cf.includes(`system.skills.${skillId}.changeBonus`);

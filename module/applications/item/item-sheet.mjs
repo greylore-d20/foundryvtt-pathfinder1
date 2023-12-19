@@ -887,7 +887,7 @@ export class ItemSheetPF extends ItemSheet {
     for (const c of categories) {
       data.scriptCalls[c.id] = {
         name: game.i18n.localize(c.name),
-        info: c.info ? game.i18n.localize(c.info) : null,
+        tooltip: c.info,
         items: scriptCalls.filter((o) => o.category === c.id),
         dataset: {
           category: c.id,

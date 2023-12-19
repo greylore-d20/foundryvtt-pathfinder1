@@ -64,8 +64,8 @@
         <ol class="item-list" {{#each section.dataset as |v k|}}data-{{k}}="{{v}}"{{/each}}>
             <li class="item-list-header flexrow">
                 <div class="item-name">
-                    {{#if section.info}}
-                    <i class="fas fa-info item-info" data-tooltip="{{section.info}}"></i>
+                    {{#if tooltip}}
+                    <i class="fas fa-info fa-fw item-info" data-tooltip="{{tooltip}}"></i>
                     {{/if}}
                     <h3>{{localize section.name}}</h3>
                 </div>

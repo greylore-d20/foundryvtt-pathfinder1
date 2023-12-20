@@ -3110,43 +3110,36 @@ export class ActorSheetPF extends ActorSheet {
       }
       // Choose how to import class
       if (itemData.type === "class" && itemData.system.subType !== "mythic" && !(event && event.shiftKey)) {
-        const doReturn = await new Promise((resolve) => {
-          new Dialog(
-            {
-              title: game.i18n.localize("PF1.AddClass"),
-              content: `<div class="pf1"><p>${game.i18n.localize(
-                "PF1.Info.AddClassDialog_Desc"
-              )}</p><div class="help-text"><i class="fas fa-info-circle"></i> ${game.i18n.localize(
-                "PF1.Info.AddClassDialog"
-              )}</div></div>`,
-              buttons: {
-                normal: {
-                  icon: '<i class="fas fa-hat-wizard"></i>',
-                  label: game.i18n.localize("PF1.Normal"),
-                  callback: () => {
-                    LevelUpForm.addClassWizard(this.actor, itemData).then(() => {
-                      resolve(true);
-                    });
-                  },
-                },
-                raw: {
-                  icon: '<i class="fas fa-file"></i>',
-                  label: game.i18n.localize("PF1.Raw"),
-                  callback: () => {
-                    resolve(false);
-                  },
+        const accept = await Dialog.wait(
+          {
+            title: game.i18n.localize("PF1.AddClass"),
+            content: `<div class="pf1"><p>${game.i18n.localize(
+              "PF1.Info.AddClassDialog_Desc"
+            )}</p><div class="help-text"><i class="fas fa-info-circle"></i> ${game.i18n.localize(
+              "PF1.Info.AddClassDialog"
+            )}</div></div>`,
+            buttons: {
+              normal: {
+                icon: '<i class="fas fa-hat-wizard"></i>',
+                label: game.i18n.localize("PF1.Normal"),
+                callback: () => {
+                  LevelUpForm.addClassWizard(this.actor, itemData);
+                  return false; // above adds the item itself if necessary
                 },
               },
-              close: () => {
-                resolve(true);
+              raw: {
+                icon: '<i class="fas fa-file"></i>',
+                label: game.i18n.localize("PF1.Raw"),
+                callback: () => true,
               },
             },
-            {
-              classes: [...Dialog.defaultOptions.classes, "pf1", "add-character-class"],
-            }
-          ).render(true);
-        });
-        if (doReturn) return false;
+            close: () => false,
+          },
+          {
+            classes: [...Dialog.defaultOptions.classes, "pf1", "add-character-class"],
+          }
+        );
+        if (!accept) continue;
       }
 
       const newItem = new Item.implementation(itemData);

@@ -1290,7 +1290,8 @@ export class ItemPF extends ItemBasePF {
         case "mwdamage":
         case "rwdamage":
         case "twdamage":
-          result.add("damage", "wdamage");
+          result.add("damage");
+          result.add("wdamage");
           break;
       }
     }

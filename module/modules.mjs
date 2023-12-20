@@ -10,7 +10,7 @@ import { convertDistance } from "./utils/lib.mjs";
 export function initializeModuleIntegration() {
   const integration = game.settings.get("pf1", "integration");
   // Drag Ruler <https://foundryvtt.com/packages/drag-ruler>
-  if (game.modules.get("drag-ruler").active && integration.dragRuler) {
+  if (game.modules.get("drag-ruler")?.active && integration.dragRuler) {
     Hooks.once("dragRuler.ready", (SpeedProvider) => {
       const enhancedTerrain = game.modules.get("enhanced-terrain-layer")?.active && integration.enhancedTerrainLayer;
 

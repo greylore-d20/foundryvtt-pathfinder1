@@ -1069,14 +1069,16 @@ export class ItemSheetPF extends ItemSheet {
     // Tooltips
     html.mousemove((ev) => this._moveTooltips(ev));
 
-    // Edit action
-    html.find(".actions .item-list .item").on("contextmenu", this._onActionEdit.bind(this));
-
-    // Item summaries
-    html.find(".item .item-name h4").on("click", (event) => this._onItemSummary(event));
+    // Action interactions
+    html
+      .find(".actions .item-list .item .item-name")
+      // Edit action
+      .on("contextmenu", this._onActionEdit.bind(this))
+      // Action summaries
+      .on("click", this._onActionSummary.bind(this));
 
     // Action control
-    html.find(".action-controls a").on("click", this._onActionControl.bind(this));
+    html.find(".actions .action-controls a").on("click", this._onActionControl.bind(this));
 
     // Open help browser
     html.find("a.help-browser[data-url]").click(this._openHelpBrowser.bind(this));
@@ -1298,7 +1300,7 @@ export class ItemSheetPF extends ItemSheet {
   _setActionUses(event) {
     if (!(event.originalEvent instanceof MouseEvent)) event.preventDefault();
     const el = event.currentTarget;
-    const actionId = el.closest(".item").dataset.itemId;
+    const actionId = el.closest(".item[data-action-id]").dataset.actionId;
     const action = this.document.actions.get(actionId);
 
     this._mouseWheelAdd(event, el);
@@ -1483,11 +1485,12 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   _onDragStart(event) {
-    const elem = event.currentTarget;
+    const elem = event.target;
 
     // Drag action
-    if (elem.dataset?.itemId) {
-      const action = this.item.actions.get(elem.dataset.itemId);
+    const actionId = elem.dataset.actionId;
+    if (actionId) {
+      const action = this.item.actions.get(actionId);
       const obj = { type: "action", uuid: this.item.uuid, actionId: action.id, data: action.data };
       event.dataTransfer.setData("text/plain", JSON.stringify(obj));
     }
@@ -1523,7 +1526,7 @@ export class ItemSheetPF extends ItemSheet {
 
       // Re-order
       if (srcItem === item) {
-        const targetActionID = event.target?.closest("li.action-part")?.dataset?.itemId;
+        const targetActionID = event.target?.closest(".item[data-action-id]")?.dataset?.actionId;
         const prevActions = foundry.utils.deepClone(item.system.actions);
 
         let targetIdx;
@@ -1595,34 +1598,36 @@ export class ItemSheetPF extends ItemSheet {
    * @param {JQuery.ClickEvent<HTMLElement>} event - The click event on the item
    * @private
    */
-  async _onItemSummary(event) {
+  async _onActionSummary(event) {
     event.preventDefault();
-    const li = $(event.currentTarget).closest(".item[data-item-id]");
-    // Check whether pseudo-item belongs to another collection
-    const item = this.item.actions.get(li.attr("data-item-id"));
 
-    const rollData = this.action.getRollData();
+    const li = event.target.closest(".item[data-action-id]");
+    // Check whether pseudo-item belongs to another collection
+    const action = this.item.actions.get(li.dataset.actionId);
+
+    const rollData = action.getRollData();
+
     // For actions (embedded into a parent item), show only the action's summary instead of a complete one
-    const { actionDescription, properties } = await item.getChatData({ chatcard: false, rollData });
+    const { actionDescription, properties } = await action.getChatData({ chatcard: false, rollData });
 
     // Toggle summary
-    if (li.hasClass("expanded")) {
-      const summary = li.children(".item-summary");
-      summary.slideUp(200, () => summary.remove());
+    if (li.classList.contains("expanded")) {
+      const summary = li.querySelector(".item-summary");
+      $(summary).slideUp(200, () => summary.remove());
     } else {
       const templateData = {
         description: actionDescription,
         properties,
       };
       let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);
-      content = TextEditor.enrichHTML(content, { rollData });
+      content = await TextEditor.enrichHTML(content, { rollData, async: true, owner: this.item.isOwner });
 
       const div = $(content);
-
-      li.append(div.hide());
+      div.hide();
+      li.append(...div);
       div.slideDown(200);
     }
-    li.toggleClass("expanded");
+    li.classList.toggle("expanded");
   }
 
   /**
@@ -1643,6 +1648,8 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onActionControl(event) {
     event.preventDefault();
+    event.stopPropagation();
+
     const a = event.currentTarget;
 
     // Edit action
@@ -1666,8 +1673,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Remove action
     if (a.classList.contains("delete-action")) {
-      const li = a.closest(".action-part");
-      const action = this.item.actions.get(li.dataset.itemId);
+      const li = a.closest(".item[data-action-id]");
+      const action = this.item.actions.get(li.dataset.actionId);
 
       const deleteItem = async () => {
         return action.delete();
@@ -1690,8 +1697,8 @@ export class ItemSheetPF extends ItemSheet {
 
     // Duplicate action
     if (a.classList.contains("duplicate-action")) {
-      const li = a.closest(".action-part");
-      const action = foundry.utils.deepClone(this.item.actions.get(li.dataset.itemId).data);
+      const li = a.closest(".item[data-action-id]");
+      const action = foundry.utils.deepClone(this.item.actions.get(li.dataset.actionId).data);
       action.name = `${action.name} (${game.i18n.localize("PF1.Copy")})`;
       action._id = foundry.utils.randomID(16);
       const actionParts = foundry.utils.deepClone(this.item.system.actions ?? []);
@@ -1702,20 +1709,10 @@ export class ItemSheetPF extends ItemSheet {
 
   async _onActionEdit(event) {
     event.preventDefault();
-    const a = event.currentTarget;
-    const li = a.closest(".action-part");
-    const action = this.item.actions.get(li.dataset.itemId);
+    event.stopPropagation();
 
-    // Find existing window
-    for (const app of Object.values(this.item.apps)) {
-      if (app.object === action) {
-        app.render(true, { focus: true });
-        return;
-      }
-    }
-
-    // Open new window
-    action.sheet.render(true);
+    const li = event.target.closest(".item[data-action-id]");
+    this.item.actions.get(li.dataset.actionId).sheet.render(true);
   }
 
   async _onBuffControl(event) {

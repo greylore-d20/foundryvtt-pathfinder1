@@ -305,7 +305,7 @@ export class ItemChange {
           break;
       }
 
-      if (applySourceInfo) this.applySourceInfo(actor, value);
+      if (applySourceInfo) this.applySourceInfo(actor);
 
       // Adjust ability modifier
       const modifierChanger = t.match(/^system\.abilities\.([a-zA-Z0-9]+)\.(?:total|penalty|base)$/);

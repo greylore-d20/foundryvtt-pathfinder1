@@ -104,17 +104,6 @@ OperatorTerm.OPERATORS.push("\\%", "!", "?", ":", "=", "<", ">", "==", "===", "<
   };
 }
 
-// Remove warnings for conflicting uneditable system bindings
-{
-  const origFunc = KeybindingsConfig.prototype._detectConflictingActions;
-  KeybindingsConfig.prototype._detectConflictingActions = function (actionId, action, binding) {
-    // Uneditable System bindings are never wrong, they can never conflict with something
-    if (actionId.startsWith("pf1.") && action.uneditable.includes(binding)) return [];
-
-    return origFunc.call(this, actionId, action, binding);
-  };
-}
-
 // Patch the `fromData` method used by Foundry to allow rolls from builds with a renamed roll class
 // to still be created from JSON for tooltips etc.
 // Introduced in v0.81.1 for Foundry v9.269

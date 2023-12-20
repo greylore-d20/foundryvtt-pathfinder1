@@ -7,8 +7,8 @@ export class ItemAttackPF extends ItemPF {
    * @param {object} context
    * @param {User} user
    */
-  _preUpdate(changed, context, user) {
-    super._preUpdate(changed, context, user);
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
 
     if (!changed.system) return;
 

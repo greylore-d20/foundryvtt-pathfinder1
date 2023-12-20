@@ -43,6 +43,8 @@ export class ItemRacePF extends ItemPF {
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
 
+    if (!changed.system) return;
+
     const actor = this.actor;
     if (actor?.type === "basic") return;
 

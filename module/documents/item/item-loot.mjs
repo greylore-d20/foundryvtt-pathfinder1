@@ -14,13 +14,15 @@ export class ItemLootPF extends ItemPhysicalPF {
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
 
+    if (!changed.system) return;
+
     // Reset loot extra type when loot subtype is changed
     if (
       changed.system?.subType !== undefined &&
       changed.system?.subType !== this.system.subType &&
       changed.system?.extraType === undefined
     ) {
-      foundry.utils.setProperty(changed, "system.extraType", "");
+      changed.system.extraType = "";
     }
   }
 

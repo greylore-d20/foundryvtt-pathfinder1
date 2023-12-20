@@ -10,6 +10,8 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
 
+    if (!changed.system) return;
+
     // Set equipment subtype and slot
     const type = changed.system?.subType;
     if (type !== undefined && type !== this.subType) {

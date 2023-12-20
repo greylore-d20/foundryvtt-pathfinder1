@@ -9,6 +9,10 @@ export class ItemBuffPF extends ItemPF {
    * @param {User} user
    */
   async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
+
+    if (!changed.system) return;
+
     // Add activation time when not present
     if (changed.system?.active && changed.system?.duration?.start === undefined) {
       foundry.utils.setProperty(changed, "system.duration.start", game.time.worldTime);
@@ -19,8 +23,6 @@ export class ItemBuffPF extends ItemPF {
       context.pf1 ??= {};
       context.pf1.startTime = effect?.duration.startTime;
     }
-
-    await super._preUpdate(changed, context, user);
   }
 
   /**

@@ -10,6 +10,8 @@ export class ItemWeaponPF extends ItemPhysicalPF {
   async _preUpdate(changed, context, user) {
     await super._preUpdate(changed, context, user);
 
+    if (!changed.system) return;
+
     // Set weapon subtype if not present
     const newWeaponType = changed.system?.subType;
     if (newWeaponType != null && newWeaponType !== this.system.subType) {

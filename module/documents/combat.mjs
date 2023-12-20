@@ -269,7 +269,9 @@ export class CombatPF extends Combat {
    * @param {object} context
    * @param {User} user
    */
-  _preUpdate(changed, context, user) {
+  async _preUpdate(changed, context, user) {
+    await super._preUpdate(changed, context, user);
+
     if ("direction" in context && ("turn" in changed || "round" in changed)) {
       // Record origin turn and round
       context.pf1 ??= {};

@@ -335,6 +335,29 @@ export class ActionUse {
     return allAttacks;
   }
 
+  async autoSelectAmmo() {
+    const ammoType = this.shared.action.ammoType;
+    if (!ammoType) return;
+
+    const ammoId = this.item.getFlag("pf1", "defaultAmmo");
+    const item = this.item.actor?.items.get(ammoId);
+    if (item) return;
+
+    const ammo = this.actor.itemTypes.loot
+      .filter(
+        (i) =>
+          i.subType === "ammo" &&
+          i.system.extraType === ammoType &&
+          i.system.quantity > 0 &&
+          i.system.identified !== false
+      )
+      .sort((a, b) => a.system.price - b.system.price);
+
+    if (ammo.length == 0) return;
+
+    await this.item.setFlag("pf1", "defaultAmmo", ammo[0].id);
+  }
+
   /**
    * Subtracts ammo for this attack, updating relevant items with new quantities.
    *
@@ -1282,6 +1305,8 @@ export class ActionUse {
     // Check requirements for item
     let reqErr = await this.checkRequirements();
     if (reqErr > 0) return { err: pf1.actionUse.ERR_REQUIREMENT, code: reqErr };
+
+    await this.autoSelectAmmo();
 
     // Get new roll data
     shared.rollData = this.getRollData();

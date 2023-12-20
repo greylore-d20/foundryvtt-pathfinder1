@@ -1945,7 +1945,7 @@ export class ItemPF extends ItemBasePF {
         });
       });
 
-    const sources = this.getAttackSources(actionId);
+    const sources = this.getAttackSources(actionId, { rollData });
     const totalBonus = sources.reduce((f, s) => f + s.value, 0);
 
     return attacks.map((a, i) => a + totalBonus + condBonuses[i]);
@@ -1964,9 +1964,12 @@ export class ItemPF extends ItemBasePF {
    * Attack sources for a specific action.
    *
    * @param {string} actionId Action ID
+   * @param {object} [options={}] - Additional options
+   * @param {object} [options.rollData] - Roll data instance
    * @returns {object[]|undefined} Array of value and label pairs for attack bonus sources on the main attack, or undefined if the action is missing.
    */
-  getAttackSources(actionId) {
+  getAttackSources(actionId, { rollData } = {}) {
+    /** @type {pf1.components.ItemAction} */
     const action = this.actions.get(actionId);
     if (!action) return;
 
@@ -1977,14 +1980,11 @@ export class ItemPF extends ItemBasePF {
       actionData = action.data;
 
     if (!actorData || !actionData) return sources;
-    const rollData = action.getRollData();
+    rollData ??= action.getRollData();
 
     const describePart = (value, name, modifier, sort = 0) => {
       sources.push({ value, name, modifier, sort });
     };
-
-    // BAB is last for some reason, array is reversed to try make it the first.
-    const srcDetails = (s) => s?.reverse().forEach((d) => describePart(d.value, d.name, d.modifier, -10));
 
     const isManeuver = action.isCombatManeuver;
 
@@ -1995,10 +1995,6 @@ export class ItemPF extends ItemBasePF {
 
     // Add size bonus
     if (sizeBonus != 0) describePart(sizeBonus, game.i18n.localize("PF1.Size"), "size", -20);
-
-    srcDetails(this.actor.sourceDetails["system.attributes.attack.shared"]);
-    if (isManeuver) srcDetails(this.actor.sourceDetails["system.attributes.cmb.bonus"]);
-    srcDetails(this.actor.sourceDetails["system.attributes.attack.general"]);
 
     const changeSources = action.attackSources;
 

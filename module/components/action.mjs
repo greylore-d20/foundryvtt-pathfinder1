@@ -782,10 +782,12 @@ export class ItemAction {
    * @see {@link ItemPF.getContextChanges}
    */
   get attackSources() {
-    const contexts = [this.isRanged ? "rattack" : "mattack"];
+    const contexts = ["~attackCore"];
+    if (this.isCombatManeuver) contexts.push("cmb");
+    if (this.isRanged) contexts.push("rattack");
+    else contexts.push("mattack");
     if (this.item.subType === "natural") contexts.push("nattack");
     if (this.data.actionType === "twak") contexts.push("tattack");
-
     return this.item.getContextChanges(contexts);
   }
 
@@ -822,17 +824,6 @@ export class ItemAction {
     // Define Roll parts
     const parts = [];
 
-    this.actor?.sourceDetails["system.attributes.attack.shared"]
-      ?.reverse()
-      .forEach((s) => parts.push(`${s.value}[${s.name}]`));
-
-    // CMB specific modifiers
-    if (isCMB) {
-      this.actor?.sourceDetails["system.attributes.cmb.bonus"]
-        ?.reverse()
-        .forEach((s) => parts.push(`${s.value}[${s.name}]`));
-    }
-
     // Add size bonus
     if (rollData.sizeBonus !== 0) parts.push(`@sizeBonus[${game.i18n.localize("PF1.Size")}]`);
 
@@ -841,6 +832,30 @@ export class ItemAction {
     if (ability?.mod !== 0) {
       parts.push(`@abilities.${abl}.mod[${pf1.config.abilities[abl]}]`);
     }
+
+    // Add change bonus
+    const changes = this.attackSources;
+
+    // Get attack bonus
+    getHighestChanges(
+      changes.filter((c) => {
+        c.applyChange(this.actor);
+        return !["set", "="].includes(c.operator);
+      }),
+      { ignoreTarget: true }
+    )
+      .filter((c) => c.value != 0)
+      .reduce((cur, c) => {
+        cur.push({
+          value: c.value,
+          source: c.flavor,
+        });
+        return cur;
+      }, [])
+      .forEach((c) => {
+        parts.push(`${c.value}[${RollPF.cleanFlavor(c.source)}]`);
+      });
+
     // Add bonus parts
     parts.push(...extraParts);
     // Add attack bonus
@@ -852,9 +867,6 @@ export class ItemAction {
       rollData.item.attackBonus = actionData.attackBonus;
       parts.push(`@item.attackBonus[${game.i18n.localize("PF1.AttackRollBonus")}]`);
     }
-
-    // Add change bonus
-    const changes = this.attackSources;
 
     // Add masterwork bonus to changes (if applicable)
     if (["mwak", "rwak", "twak", "mcman", "rcman"].includes(this.data.actionType) && this.item.system.masterwork) {
@@ -881,24 +893,6 @@ export class ItemAction {
           flavor: game.i18n.localize("PF1.EnhancementBonus"),
         })
       );
-    }
-    let changeBonus = [];
-    // Get attack bonus
-    changeBonus = getHighestChanges(
-      changes.filter((c) => {
-        c.applyChange(this.actor);
-        return !["set", "="].includes(c.operator);
-      }),
-      { ignoreTarget: true }
-    ).reduce((cur, c) => {
-      cur.push({
-        value: c.value,
-        source: c.flavor,
-      });
-      return cur;
-    }, []);
-    for (const c of changeBonus) {
-      parts.push(`${c.value}[${RollPF.cleanFlavor(c.source)}]`);
     }
 
     // Add proficiency penalty

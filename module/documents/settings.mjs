@@ -4,6 +4,7 @@ import { AccessibilityConfig, AccessibilityConfigModel } from "../applications/s
 import { TooltipConfig, TokenTooltipConfigModel } from "../applications/settings/tooltip.mjs";
 import { TooltipWorldConfig, TokenTooltipWorldConfigModel } from "../applications/settings/tooltip_world.mjs";
 import { IntegrationConfig, IntegrationModel } from "module/applications/settings/integration.mjs";
+import { PerformanceConfig, PerformanceModel } from "module/applications/settings/performance.mjs";
 import { TooltipPF } from "../applications/tooltip.mjs";
 import { setDefaultSceneScaling } from "@utils";
 
@@ -160,6 +161,22 @@ export const registerSystemSettings = function () {
     restricted: true,
     icon: "fa-solid fa-check-to-slot",
     type: IntegrationConfig,
+  });
+
+  game.settings.register("pf1", "performance", {
+    scope: "client",
+    default: new PerformanceModel(),
+    type: PerformanceModel,
+    config: false,
+  });
+
+  game.settings.registerMenu("pf1", "performance", {
+    name: "PF1.Application.Performance.Title",
+    label: "PF1.Application.Performance.Button",
+    hint: "PF1.Application.Performance.Hint",
+    restricted: false,
+    icon: "fa-solid fa-gauge",
+    type: PerformanceConfig,
   });
 
   // MEASURING
@@ -583,18 +600,6 @@ export const registerSystemSettings = function () {
   game.settings.register("pf1", "invertSectionFilterShiftBehaviour", {
     name: "SETTINGS.pf1InvertSectionFilterBehaviourN",
     hint: "SETTINGS.pf1InvertSectionFilterBehaviourH",
-    scope: "client",
-    config: true,
-    default: false,
-    type: Boolean,
-  });
-
-  /**
-   * Hide reach measurements
-   */
-  game.settings.register("pf1", "hideReachMeasurements", {
-    name: "SETTINGS.pf1HideReachMeasurementsN",
-    hint: "SETTINGS.pf1HideReachMeasurementsH",
     scope: "client",
     config: true,
     default: false,

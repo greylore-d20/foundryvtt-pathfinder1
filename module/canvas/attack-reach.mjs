@@ -238,16 +238,18 @@ class SquareGridHighlight extends AttackHighlightBase {
 
     if (rangeKey === "ft") {
       // Add range increments
+      const ftDistance = convertDistance(r)[0];
+      const userLimit = game.settings.get("pf1", "performance").reachLimit;
       const maxSquareRange = Math.min(
-        60, // arbitrary limit to enhance performance on large canvases
+        userLimit, // arbitrary limit to enhance performance on large canvases
         Math.max(
           (canvas.dimensions.width / canvas.dimensions.size) * canvas.dimensions.distance,
           (canvas.dimensions.height / canvas.dimensions.size) * canvas.dimensions.distance
-        ) + convertDistance(r)[0]
+        ) + ftDistance
       );
       const rangeIncrements = action.data.range.maxIncrements;
       for (let a = 1; a < rangeIncrements; a++) {
-        if ((a + 1) * convertDistance(r)[0] <= maxSquareRange) {
+        if ((a + 1) * ftDistance <= maxSquareRange) {
           squares.extra.push(this.#getReachSquares(token, (a + 1) * r, a * r, { useReachRule }));
         }
       }
@@ -473,7 +475,7 @@ export function addReachListeners(html) {
  */
 const _onMouseEnterReach = (event) => {
   event.preventDefault();
-  if (game.settings.get("pf1", "hideReachMeasurements")) return;
+  if (game.settings.get("pf1", "performance").reachLimit < 10) return;
 
   const reachElement = event.currentTarget;
   const card = reachElement.closest(".chat-card");

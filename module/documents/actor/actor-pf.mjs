@@ -1726,7 +1726,7 @@ export class ActorPF extends ActorBasePF {
       if (abl.damage != null && abl.damage !== 0) {
         sourceDetails[`system.abilities.${a}.total`].push({
           name: game.i18n.localize("PF1.AbilityDamage"),
-          value: `-${Math.floor(Math.abs(abl.damage) / 2)} (Mod only)`,
+          value: `-${Math.floor(Math.abs(abl.damage) / 2)} (${game.i18n.localize("PF1.ModifierOnlyShort")})`,
         });
       }
       if (abl.drain != null && abl.drain !== 0) {

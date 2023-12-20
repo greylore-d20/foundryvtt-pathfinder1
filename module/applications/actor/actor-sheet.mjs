@@ -1795,7 +1795,7 @@ export class ActorSheetPF extends ActorSheet {
       else $(summary).slideUp(200, () => summary.remove());
     } else {
       const templateData = {
-        description,
+        description: description || game.i18n.localize("PF1.NoDescription"),
         properties,
       };
       let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);

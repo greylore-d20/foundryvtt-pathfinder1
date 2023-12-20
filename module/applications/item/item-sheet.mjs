@@ -1615,7 +1615,7 @@ export class ItemSheetPF extends ItemSheet {
       $(summary).slideUp(200, () => summary.remove());
     } else {
       const templateData = {
-        description: actionDescription,
+        description: actionDescription || game.i18n.localize("PF1.NoDescription"),
         properties,
       };
       let content = await renderTemplate("systems/pf1/templates/actors/parts/actor-item-summary.hbs", templateData);

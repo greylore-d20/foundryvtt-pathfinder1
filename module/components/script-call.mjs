@@ -1,8 +1,9 @@
 import { ScriptEditor } from "../applications/script-editor.mjs";
 
+/**
+ * Script Call
+ */
 export class ItemScriptCall {
-  static AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
-
   constructor(data, parent) {
     this.data = foundry.utils.mergeObject(this.constructor.defaultData, data);
     this.parent = parent;
@@ -93,8 +94,33 @@ export class ItemScriptCall {
     return this.hidden && !game.user.isGM;
   }
 
+  /**
+   * @deprecated
+   * @returns {string}
+   */
   async getScriptBody() {
-    return this.type === "script" ? this.value : (await fromUuid(this.value))?.data.command ?? "";
+    foundry.utils.logCompatibilityWarning("ItemScriptCall.getScriptBody() has been deprecated with no replacement.", {
+      since: "PF1 vNEXT",
+      until: "PF1 vNEXT+1",
+    });
+    return this.type === "script" ? this.value : (await fromUuid(this.value))?.command ?? "";
+  }
+
+  /**
+   * Get macro delegate for executing this script call with.
+   *
+   * @returns {Macro}
+   */
+  async getDelegate() {
+    if (this.type === "script") {
+      return new Macro({
+        type: "script",
+        command: this.value,
+        name: this.name,
+      });
+    } else {
+      return fromUuid(this.value);
+    }
   }
 
   async update(data, options = {}) {
@@ -142,24 +168,18 @@ export class ItemScriptCall {
    *
    * @param {object} shared - An object passed between script calls, and which is passed back as a result of ItemPF.executeScriptCalls.
    * @param {Object<string, object>} extraParams - A dictionary containing extra parameters to pass on to the call.
+   * @returns {*} - Script return value if any
    */
   async execute(shared, extraParams = {}) {
     // Add variables to the evaluation scope
     const item = this.parent;
     const actor = item.actor;
-    const token =
-      actor?.token?.object ?? (actor ? canvas.tokens.placeables.find((t) => t.actor?.id === actor.id) : null);
+    const token = actor?.token?.object ?? actor.getActiveTokens(false, false)[0];
 
-    // Attempt script execution
-    const body = `await (async () => {
-      ${await this.getScriptBody()}
-    })()`;
-    const fn = this.constructor.AsyncFunction("item", "actor", "token", "shared", ...Object.keys(extraParams), body);
-    try {
-      return await fn.call(this, item, actor, token, shared, ...Object.values(extraParams));
-    } catch (err) {
-      ui.notifications.error(`There was an error in your script/macro syntax. See the console (F12) for details`);
-      console.error(err);
-    }
+    const scm = await this.getDelegate();
+    if (!scm) return;
+
+    // Create temporary macro for handling execution context and other utility
+    return scm.execute({ item, actor, token, shared, ...extraParams });
   }
 }

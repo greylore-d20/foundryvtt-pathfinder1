@@ -73,7 +73,10 @@ export class ItemEquipmentPF extends ItemPhysicalPF {
     const ac = this.showUnidentifiedData
       ? itemData.armor.value || 0
       : (itemData.armor.value || 0) + (itemData.armor.enh || 0);
-    labels.armor = ac > 0 ? `${ac} AC` : "";
+
+    if (ac > 0) {
+      labels.armor = `${ac} ${game.i18n.localize("PF1.ACNormal")}`;
+    }
 
     if (this.subType === "armor") {
       labels.slot = pf1.config.equipmentSlots.armor.armor;

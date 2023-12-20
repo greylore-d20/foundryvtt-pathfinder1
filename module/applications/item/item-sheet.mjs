@@ -948,7 +948,7 @@ export class ItemSheetPF extends ItemSheet {
         if (typeLabel) props.push(typeLabel);
       }
       // Add AC
-      props.push(labels.armor);
+      if (labels.armor) props.push(labels.armor);
     } else if (item.type === "feat") {
       props.push(labels.subType);
     }
@@ -966,7 +966,7 @@ export class ItemSheetPF extends ItemSheet {
 
     // Tags
     const tags = item.system.tags;
-    if (tags != null) {
+    if (tags?.length) {
       props.push(...tags);
     }
 

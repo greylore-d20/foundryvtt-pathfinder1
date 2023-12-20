@@ -116,21 +116,9 @@ export class ItemScriptCall {
     // For Macros
     if (this.type === "macro") {
       const macro = await fromUuid(this.value);
-      let err;
-      if (macro) {
-        if (macro.testUserPermission(game.user, "OBSERVER")) {
-          macro.sheet.render(true, { focus: true });
-        } else {
-          err = game.i18n.format("DOCUMENT.SheetPermissionWarn", { document: macro.documentName });
-        }
-      } else {
-        err = game.i18n.format("PF1.ErrorNoMacroID", { id: this.value });
-      }
+      if (!macro) return void ui.notifications.error(game.i18n.format("PF1.ErrorNoMacroID", { id: this.value }));
 
-      if (err) {
-        console.error(err);
-        ui.notifications.error(err);
-      }
+      macro.sheet.render(true, { focus: true });
     }
     // For regular script calls
     else {
@@ -140,6 +128,7 @@ export class ItemScriptCall {
         parent: this.parent,
         scriptCall: true,
       }).render(true);
+
       const result = await scriptEditor.awaitResult();
       if (result) {
         return this.update({ value: result.command, name: result.name });

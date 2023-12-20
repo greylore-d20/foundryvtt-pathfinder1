@@ -626,7 +626,8 @@ export class ActionUse {
             : game.i18n.localize("PF1.PowerAttack");
 
           const powerAttackBonus = this.shared.rollData.powerAttackBonus;
-          const powerAttackCritBonus = powerAttackBonus * (this.shared.rollData.item?.powerAttack?.critMultiplier ?? 1);
+          const powerAttackCritBonus =
+            powerAttackBonus * (this.shared.rollData.action?.powerAttack?.critMultiplier ?? 1);
           nonCritParts.push(`${powerAttackBonus}[${label}]`);
           critParts.push(`${powerAttackCritBonus}[${label}]`);
         }

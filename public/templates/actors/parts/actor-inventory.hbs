@@ -47,21 +47,21 @@
           <h3>{{section.label}}</h3>
         </div>
 
-        {{#if section.hasSlots}}<div class="item-detail item-slot"><i class="icon icon-inventory-slot large" data-tooltip="PF1.Slot"></i></div>{{/if}}
-        {{#if section.hasActions}}<div class="item-detail item-actions"><i class="icon icon-gears large" data-tooltip="PF1.ActionPlural"></i></div>{{/if}}
+        {{#if section.hasSlots}}<div class="item-detail item-slot"><i class="icon-pf icon-inventory-slot" data-tooltip="PF1.Slot"></i></div>{{/if}}
+        {{#if section.hasActions}}<div class="item-detail item-actions"><i class="icon-pf icon-gears" data-tooltip="PF1.ActionPlural"></i></div>{{/if}}
 
         {{#if section.showValue}}
-        <div class="item-detail item-value"><i class="icon icon-coins large" data-tooltip="PF1.Value"></i></div>
+        <div class="item-detail item-value"><i class="icon-pf icon-coins" data-tooltip="PF1.Value"></i></div>
         {{/if}}
-        <div class="item-detail item-weight"><i class="icon icon-weight large" src="systems/pf1/icons/actions/weight.svg" data-tooltip="PF1.ItemWeight"></i></div>
+        <div class="item-detail item-weight"><i class="icon-pf icon-weight" src="systems/pf1/icons/actions/weight.svg" data-tooltip="PF1.ItemWeight"></i></div>
         {{#if @root.isGM}}
-        <div class="item-detail item-identified"><i class="icon icon-quill-ink large" data-tooltip="PF1.Identified"></i></div>
+        <div class="item-detail item-identified"><i class="icon-pf icon-quill-ink" data-tooltip="PF1.Identified"></i></div>
         {{/if}}
-        <div class="item-detail item-carried"><i class="icon icon-wheelbarrow large" data-tooltip="PF1.Carried"></i></div>
+        <div class="item-detail item-carried"><i class="icon-pf icon-wheelbarrow" data-tooltip="PF1.Carried"></i></div>
         {{#if section.canEquip}}
-        <div class="item-detail item-equipped"><i class="icon icon-battle-gear large" data-tooltip="PF1.Equipped"></i></div>
+        <div class="item-detail item-equipped"><i class="icon-pf icon-battle-gear" data-tooltip="PF1.Equipped"></i></div>
         {{/if}}
-        <div class="item-detail item-uses"><i class="icon icon-battery-pack large" data-tooltip="PF1.ChargePlural"></i></div>
+        <div class="item-detail item-uses"><i class="icon-pf icon-battery-pack" data-tooltip="PF1.ChargePlural"></i></div>
 
         {{#if @root.owner}}
         <div class="item-controls">

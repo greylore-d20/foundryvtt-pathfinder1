@@ -9,7 +9,7 @@
           <div class="damage-type{{#if (arrayHas array=@root.data.values value=dt._id)}} toggled{{/if}}" data-id="{{dt._id}}">
             {{!-- Icon --}}
             {{#if dt.icon}}
-            <i class="{{dt.icon}} icon" style="color: {{dt.color}}"></i>
+            <i class="{{dt.icon}} icon-pf" style="color: {{dt.color}}"></i>
             {{else}}
             <img class="icon" src="{{dt.img}}">
             {{/if}}
@@ -30,7 +30,7 @@
         <div class="damage-type{{#if (arrayHas array=@root.data.values value=dt._id)}} toggled{{/if}}" data-id="{{dt._id}}">
             {{!-- Icon --}}
             {{#if dt.icon}}
-            <i class="{{dt.icon}} icon" style="color: {{dt.color}}"></i>
+            <i class="{{dt.icon}} icon-pf" style="color: {{dt.color}}"></i>
             {{else}}
             <img class="icon" src="{{dt.img}}">
             {{/if}}

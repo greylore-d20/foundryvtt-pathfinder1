@@ -1295,6 +1295,12 @@ export class ItemPF extends ItemBasePF {
           break;
       }
     }
+
+    // Add generic ranged damage for ranged weapon damage and thrown weapon damage
+    if (result.has("rwdamage") || result.has("twdamage")) {
+      result.add("rdamage");
+    }
+
     return result;
   }
 

@@ -56,6 +56,16 @@ export class ActorBasePF extends Actor {
 
     return firstOwner ?? game.users.activeGM;
   }
+
+  /**
+   * Get related combatants.
+   *
+   * @param {Combat} [combat=game.combat] Combat instance
+   * @returns {Combatant[]} Related combatants.
+   */
+  getCombatants(combat = game.combat) {
+    return combat?.combatants.filter((c) => c.actor === this) ?? [];
+  }
 }
 
 /**

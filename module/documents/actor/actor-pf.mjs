@@ -231,16 +231,6 @@ export class ActorPF extends ActorBasePF {
 
   /* -------------------------------------------- */
 
-  /**
-   * Get related combatants.
-   *
-   * @param {Combat} [combat=game.combat] Combat instance
-   * @returns {Combatant[]} Related combatants.
-   */
-  getCombatants(combat = game.combat) {
-    return combat?.combatants.filter((c) => c.actor === this) ?? [];
-  }
-
   get spellFailure() {
     return this.items
       .filter((o) => {

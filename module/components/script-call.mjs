@@ -126,6 +126,7 @@ export class ItemScriptCall {
         command: this.value,
         name: this.name,
         parent: this.parent,
+        script: this.id,
         scriptCall: true,
       }).render(true);
 

@@ -1382,12 +1382,11 @@ export class ItemSheetPF extends ItemSheet {
 
   _onScriptCallEdit(event) {
     event.preventDefault();
-    const a = event.currentTarget;
-    const item = this.document.scriptCalls ? this.document.scriptCalls.get(a.dataset.itemId) : null;
+    const el = event.currentTarget;
 
-    if (item) {
-      item.edit();
-    }
+    /** @type {pf1.components.ItemScriptCall} */
+    const script = this.document.scriptCalls?.get(el.dataset.itemId);
+    script?.edit();
   }
 
   _moveTooltips(event) {

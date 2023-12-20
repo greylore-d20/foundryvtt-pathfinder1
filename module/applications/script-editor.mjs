@@ -6,6 +6,7 @@ export class ScriptEditor extends FormApplication {
     this.name = options.name || null;
 
     this.parent = options.parent;
+    this.script = options.script;
 
     this.isScriptCall = options.scriptCall === true;
 
@@ -16,6 +17,10 @@ export class ScriptEditor extends FormApplication {
     this._promises = {
       submit: [],
     };
+  }
+
+  get id() {
+    return `script-call-${this.parent.uuid.replaceAll(".", "-")}-id-${this.script}`;
   }
 
   static get defaultOptions() {

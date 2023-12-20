@@ -234,10 +234,6 @@
   .attack-targets {
     h2 {
       flex: 1 100%;
-      &:hover {
-        text-shadow: 0 0 10px red;
-        cursor: pointer;
-      }
     }
 
     margin-bottom: 4px;
@@ -268,6 +264,8 @@
         > div {
           display: flex;
           justify-content: space-evenly;
+          text-align: center;
+          align-items: center;
 
           &.click {
             &:hover {
@@ -296,11 +294,6 @@
       img.target-image {
         width: 48px;
         height: 48px;
-        min-width: 48px;
-        min-height: 48px;
-        max-width: 48px;
-        max-height: 48px;
-        border: 1px solid black;
         object-fit: cover;
         object-position: 50% 0;
         margin: 0;
@@ -321,6 +314,8 @@
         > div {
           display: flex;
           justify-content: space-evenly;
+          text-align: center;
+          align-items: center;
 
           > * {
             flex: 0 0 16px;

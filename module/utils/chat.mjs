@@ -179,24 +179,39 @@ export function createInlineRollString(roll, { hide3d = true } = {}) {
  * @param {JQuery<HTMLElement>} jq - JQuery instance
  */
 export async function hideInvisibleTargets(cm, jq) {
-  const targetElems = jq.find(".attack-targets .target");
+  const targetsElem = jq.find(".pf1.chat-card .attack-targets");
+
+  // TODO: Delay this until canvas is ready
+  if (!canvas.ready) {
+    targetsElem.hide();
+    return;
+  }
+
+  const targetElems = targetsElem.find(".target");
   const targets = targetElems.toArray().reduce((cur, o) => {
     cur.push({ uuid: o.dataset.uuid, elem: o });
     return cur;
   }, []);
 
+  let hasVisible = false;
   for (const t of targets) {
     const elem = $(t.elem);
 
     // Gather token
-    const token = await fromUuid(t.uuid);
+    const token = fromUuidSync(t.uuid);
     if (!token) continue;
     t.token = token.object;
 
     // Hide if token invisible
-    if (!t.token?.visible) elem.hide();
-    else elem.show();
+    if (!t.token?.isVisible) elem.hide();
+    else {
+      hasVisible = true;
+      elem.show();
+    }
   }
+
+  // Hide targets if there's none visible to not reveal presence of invisible targets
+  if (!hasVisible) targetsElem.hide();
 }
 
 const getTokenByUuid = (uuid) => fromUuidSync(uuid)?.object;

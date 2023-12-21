@@ -2345,42 +2345,19 @@ export class ActorPF extends ActorBasePF {
   /* -------------------------------------------- */
 
   async createAttackFromWeapon(item) {
-    if (item.type !== "weapon") throw new Error("Wrong Item type");
+    foundry.utils.logCompatibilityWarning(
+      "ActorPF.createAttackFromWeapon() is deprecated in favor of ItemAttackPF.fromItem()",
+      {
+        since: "PF1 vNEXT",
+        until: "PF1 vNEXT+1",
+      }
+    );
 
     if (!this.isOwner) {
       return void ui.notifications.warn(game.i18n.format("PF1.ErrorNoActorPermissionAlt", { name: this.name }));
     }
 
-    const srcData = item.toObject().system;
-
-    // Get attack template
-    const attackItem = {
-      name: item.name,
-      type: "attack",
-      img: item.img,
-      system: {
-        subType: "weapon",
-        held: srcData.held,
-        masterwork: srcData.masterwork,
-        proficient: srcData.proficient,
-        enh: srcData.enh,
-        broken: srcData.broken,
-        timeworn: srcData.timeworn,
-        cursed: srcData.cursed,
-        artifact: srcData.artifact,
-        baseTypes: srcData.baseTypes,
-        tags: srcData.tags,
-        weaponGroups: srcData.weaponGroups,
-        actions: foundry.utils.deepClone(srcData.actions ?? []),
-        material: foundry.utils.deepClone(srcData.material),
-        alignments: srcData.alignments,
-      },
-    };
-
-    // Add ensure action IDs are correct and unique
-    for (const action of attackItem.system.actions) {
-      action._id = foundry.utils.randomID(16);
-    }
+    const attackItem = pf1.documents.item.ItemAttackPF.fromItem(item);
 
     // Create attack
     const [newItem] = await this.createEmbeddedDocuments("Item", [attackItem]);

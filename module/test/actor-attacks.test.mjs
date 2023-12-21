@@ -32,7 +32,10 @@ export const registerActorItemAttackTests = () => {
         const items = {};
         before(async () => {
           items.wLongsword = await addCompendiumItemToActor(actor, "pf1.weapons-and-ammo", "Longsword");
-          items.aLongsword = await actor.createAttackFromWeapon(items.wLongsword);
+          items.aLongsword = await Item.implementation.create(
+            pf1.documents.item.ItemAttackPF.fromItem(items.wLongsword),
+            { parent: actor }
+          );
         });
 
         it("add longsword", function () {

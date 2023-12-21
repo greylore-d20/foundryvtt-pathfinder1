@@ -1883,11 +1883,29 @@ export class ItemSheetPF extends ItemSheet {
   }
 
   async _createAttack(event) {
-    if (this.item.actor == null) throw new Error(game.i18n.localize("PF1.ErrorItemNoOwner"));
+    if (!this.actor) throw new Error(game.i18n.localize("PF1.ErrorItemNoOwner"));
 
     await this._onSubmit(event, { preventRender: true });
 
-    await this.item.actor.createAttackFromWeapon(this.item);
+    const sourceItem = this.item;
+
+    const attackItem = pf1.documents.item.ItemAttackPF.fromItem(sourceItem);
+
+    // Show in quickbar only if if the original item is there
+    attackItem.system.showInQuickbar = sourceItem.system.showInQuickbar;
+
+    // Create attack
+    const newItem = await Item.implementation.create(attackItem, { parent: this.actor });
+    if (!newItem) throw new Error("Failed to create attack from weapon");
+
+    // Disable quick use of weapon
+    await sourceItem.update({ "system.showInQuickbar": false });
+
+    // Create link
+    await sourceItem.createItemLink("children", "data", newItem, newItem.id);
+
+    // Notify user
+    ui.notifications.info(game.i18n.format("PF1.NotificationCreatedAttack", { item: sourceItem.name }));
   }
 
   async _createSpellbook(event) {

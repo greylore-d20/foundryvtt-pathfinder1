@@ -36,4 +36,49 @@ export class ItemAttackPF extends ItemPF {
 
     return this.actor?.hasWeaponProficiency?.(this) ?? true;
   }
+
+  /**
+   * Creates attack from provided item.
+   *
+   * @remarks - Only supports weapon item type.
+   * @param {Item} item - Source item
+   * @throws {Error} - On unsupported type
+   * @returns {object} - Attack item data
+   */
+  static fromItem(item) {
+    if (item.type !== "weapon") throw new Error(`Unsupported item type "${item.type}"`);
+
+    const srcData = item.toObject().system;
+
+    // Get attack template
+    const attackItem = {
+      name: item.name,
+      type: "attack",
+      img: item.img,
+      system: {
+        subType: "weapon",
+        held: srcData.held,
+        masterwork: srcData.masterwork,
+        proficient: srcData.proficient,
+        enh: srcData.enh,
+        broken: srcData.broken,
+        timeworn: srcData.timeworn,
+        cursed: srcData.cursed,
+        artifact: srcData.artifact,
+        baseTypes: srcData.baseTypes,
+        tags: srcData.tags,
+        weaponGroups: srcData.weaponGroups,
+        actions: srcData.actions ?? [],
+        material: srcData.material,
+        alignments: srcData.alignments,
+      },
+    };
+
+    // Ensure action IDs are correct and unique
+    for (const action of attackItem.system.actions) {
+      action._id = foundry.utils.randomID(16);
+    }
+
+    return attackItem;
+  }
 }

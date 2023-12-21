@@ -75,10 +75,12 @@ export class ActorCharacterPF extends ActorPF {
    * getLevelExp(1) // -> 3000, the XP needed for level 2
    *
    * @param {number} level - Desired level to level-up.
+   * @param {object} [options] - Additional options
+   * @param {object} [options.rollData] - Roll data instance
    * @returns {number} - The XP required for next level.
    * @throws {Error} - If invalid level is provided.
    */
-  getLevelExp(level) {
+  getLevelExp(level, { rollData = null } = {}) {
     if (!Number.isInteger(level) || !(level >= 0)) throw new Error(`Level "${level}" must be zero or greater integer.`);
 
     const config = game.settings.get("pf1", "experienceConfig");
@@ -96,13 +98,15 @@ export class ActorCharacterPF extends ActorPF {
     // Custom formula experience track
     let totalXP = 0;
     if (config.custom.formula.length > 0) {
+      rollData ??= this.getRollData();
       for (let a = 0; a < level; a++) {
-        const rollData = this.getRollData();
         rollData.level = a + 1;
         const roll = RollPF.safeRoll(config.custom.formula, rollData);
         totalXP += roll.total;
       }
+      delete rollData.level; // Cleanup
     }
+
     return Math.max(1, totalXP);
   }
 

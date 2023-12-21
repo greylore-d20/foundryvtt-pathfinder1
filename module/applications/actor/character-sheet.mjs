@@ -45,7 +45,9 @@ export class ActorSheetPFCharacter extends ActorSheetPF {
     data.disableExperience = xpSettings.disable;
     data.showXpBar = !xpSettings.disable;
     if (!xpSettings.disable) {
-      data.minimumExperience = this.actor.getLevelExp(Math.max(0, (this.actor.system.details.level.value ?? 0) - 1));
+      data.minimumExperience = this.actor.getLevelExp(Math.max(0, (this.actor.system.details.level.value ?? 0) - 1), {
+        rollData: data.rollData,
+      });
     }
 
     data.hasClasses = this.actor.itemTypes.class.length > 0;

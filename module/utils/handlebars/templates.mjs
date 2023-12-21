@@ -88,7 +88,6 @@ const templatePaths = /** @type {const} */ ([
 
   // Internal Rendering Partials
   "systems/pf1/templates/internal/spell-description.hbs",
-  "systems/pf1/templates/internal/consumable-description.hbs",
   "systems/pf1/templates/internal/damage-tooltip.hbs",
   "systems/pf1/templates/internal/token-config_vision.hbs",
   "systems/pf1/templates/internal/damage-type-visual.hbs",

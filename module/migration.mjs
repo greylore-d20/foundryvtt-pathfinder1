@@ -732,7 +732,7 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateItemSpellUses(itemData, updateData);
   _migrateFlagsArrayToObject(itemData, updateData);
   _migrateWeaponImprovised(itemData, updateData);
-  _migrateSpellDescription(itemData, updateData);
+  _migrateItemSpellDescription(itemData, updateData);
   _migrateClassDynamics(itemData, updateData);
   _migrateClassType(itemData, updateData);
   _migrateClassCasting(itemData, updateData);
@@ -753,7 +753,6 @@ export async function migrateItemData(itemData, actor = null, { item, _depth = 0
   _migrateItemLinks(itemData, updateData);
   _migrateItemProficiencies(itemData, updateData);
   _migrateItemNotes(itemData, updateData);
-  _migrateSpellData(itemData, updateData);
   _migrateScriptCalls(itemData, updateData);
   _migrateItemActions(itemData, updateData, actor);
   _migrateItemChargeCost(itemData, updateData);
@@ -1292,18 +1291,17 @@ const _migrateWeaponImprovised = function (ent, updateData) {
   }
 };
 
-const _migrateSpellDescription = function (ent, updateData) {
-  if (ent.type !== "spell") return;
+// Migrates the weird .shortDescription back to .description.value
+// Added with PF1 vNEXT
+const _migrateItemSpellDescription = function (itemData, updateData) {
+  if (itemData.type !== "spell") return;
 
-  const curValue = foundry.utils.getProperty(ent, "system.shortDescription");
-  if (curValue != null) return;
+  if (!itemData.system.shortDescription) return;
 
-  const obj = foundry.utils.getProperty(ent, "system.description.value");
-  if (typeof obj !== "string") return;
-  const html = $(`<div>${obj}</div>`);
-  const elem = html.find("h2").next();
-  if (elem.length === 1) updateData["system.shortDescription"] = elem.prop("outerHTML");
-  else updateData["system.shortDescription"] = html.prop("innerHTML");
+  updateData["system.-=shortDescription"] = null;
+  if (!itemData.system.description?.value) {
+    updateData["system.description.value"] = itemData.system.shortDescription;
+  }
 };
 
 const _migrateSpellDivineFocus = function (item, updateData) {
@@ -1785,18 +1783,6 @@ const _migrateItemNotes = function (ent, updateData) {
       if (typeof value === "string" && value.length > 0) {
         updateData[k] = value.trim().split(/[\n\r]/);
       }
-    }
-  }
-};
-
-/**
- * @param item
- * @param updateData
- */
-const _migrateSpellData = function (item, updateData) {
-  if (item.type === "spell") {
-    if (item.system.description?.value !== undefined) {
-      updateData["system.description.-=value"] = null;
     }
   }
 };

@@ -641,16 +641,7 @@ export class ItemSpellPF extends ItemPF {
 
     // Set description
     itemData.system.description.value = this._replaceConsumableConversionString(
-      await renderTemplate("systems/pf1/templates/internal/consumable-description.hbs", {
-        origData,
-        data: itemData,
-        isWand,
-        isPotion,
-        isScroll,
-        sl: level,
-        cl,
-        config: pf1.config,
-      }),
+      origData.system.description.value,
       rollData
     );
 
@@ -749,10 +740,6 @@ export class ItemSpellPF extends ItemPF {
    */
   get isDomain() {
     return this.system.domain === true;
-  }
-
-  get fullDescription() {
-    return super.fullDescription + this.system.shortDescription;
   }
 
   /**

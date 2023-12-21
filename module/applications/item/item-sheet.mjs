@@ -467,8 +467,8 @@ export class ItemSheetPF extends ItemSheet {
       });
 
       // Enrich description
-      if (itemData.shortDescription != null) {
-        context.shortDescription = await TextEditor.enrichHTML(itemData.shortDescription, {
+      if (itemData.description?.value) {
+        context.enrichedDescription = await TextEditor.enrichHTML(itemData.description.value, {
           rollData,
           secrets: context.owner,
           async: true,

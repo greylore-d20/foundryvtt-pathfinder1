@@ -1058,8 +1058,8 @@ export class ItemPF extends ItemBasePF {
     // Rich text descriptions
     data.identifiedDescription = this.getDescription({ chatcard });
 
-    if (itemData.shortDescription) {
-      data.identifiedDescription = `${data.identifiedDescription}${itemData.shortDescription}`;
+    if (itemData.description?.value) {
+      data.identifiedDescription = `${data.identifiedDescription}${itemData.description.value}`;
     }
     data.unidentifiedDescription = itemData.description.unidentified;
     data.description = this.showUnidentifiedData ? data.unidentifiedDescription : data.identifiedDescription;

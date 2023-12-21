@@ -5,6 +5,7 @@ export class LevelUpForm extends FormApplication {
   constructor(item, options = {}) {
     super(item, options);
 
+    /** @type {ActorPF} */
     this.actor = item.actor ?? options.actor;
 
     if (!this.actor) throw new Error("LevelUpForm needs an actor");
@@ -215,7 +216,7 @@ export class LevelUpForm extends FormApplication {
   async _updateObject(event, formData) {
     const parsedData = {
       item: { system: {} },
-      chatData: { config: pf1.config },
+      chatData: {},
       newItems: [],
       summary: {},
       callbacks: [],
@@ -252,6 +253,8 @@ export class LevelUpForm extends FormApplication {
       newItems.unshift(levelingClass.toObject());
     }
 
+    const oldFeatCount = this.actor.getFeatCount();
+
     // Add items
     if (newItems.length) {
       await this.actor.createEmbeddedDocuments("Item", newItems);
@@ -282,7 +285,7 @@ export class LevelUpForm extends FormApplication {
 
       // Show new feat count
       const featCount = this.actor.getFeatCount();
-      featCount.new = Math.max(0, featCount.max - featCount.value);
+      featCount.new = Math.max(0, featCount.max - oldFeatCount.max);
       ex.feats = featCount;
       ex.enabled = featCount.new > 0;
 

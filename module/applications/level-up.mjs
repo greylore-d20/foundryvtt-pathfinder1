@@ -433,6 +433,7 @@ export class LevelUpForm extends FormApplication {
       );
 
       newItem.name = game.i18n.localize(newItem.name);
+      newItem.system.description.value = game.i18n.localize(newItem.system.description.value);
 
       // Add changes
       foundry.utils.setProperty(

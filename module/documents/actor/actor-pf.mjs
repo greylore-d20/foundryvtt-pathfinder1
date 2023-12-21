@@ -63,14 +63,6 @@ export class ActorPF extends ActorBasePF {
        */
       this._rollData = null;
 
-    if (this._runningFunctions === undefined)
-      /**
-       * Keeps track of currently running async functions that shouldn't run multiple times simultaneously.
-       *
-       * @type {Object<string>}
-       */
-      this._runningFunctions = {};
-
     if (this.containerItems === undefined)
       /**
        * All items this actor is holding in containers.

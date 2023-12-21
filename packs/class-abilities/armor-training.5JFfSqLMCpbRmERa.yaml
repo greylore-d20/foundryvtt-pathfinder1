@@ -11,25 +11,29 @@ system:
       bonus allowed by his armor by 1. Every four levels thereafter (7th, 11th,
       and 15th), these bonuses increase by +1 each time, to a maximum –4
       reduction of the armor check penalty and a +4 increase of the maximum
-      <em>Dexterity</em> bonus allowed.</p>
-
-      <p>In addition, a fighter can also move at his normal speed while wearing
-      medium armor. At 7th level, a fighter can move at his normal speed while
-      wearing heavy armor.</p>
+      <em>Dexterity</em> bonus allowed.</p><p>In addition, a fighter can also
+      move at his normal speed while wearing medium armor.</p>
   changes:
     - _id: pv0gclyb
       formula: '-clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)'
       subTarget: acpA
       modifier: untyped
+      priority: null
     - _id: e0zzcqzk
       formula: clamped(floor((@classes.fighter.level + 1) / 4), 0, 4)
       subTarget: mDexA
       modifier: untyped
+      priority: null
+  changeFlags:
+    mediumArmorFullSpeed: true
   tag: classFeat_armorTraining
   subType: classFeat
   associations:
     classes:
       - Fighter
   abilityType: ex
+  source:
+    id: PZO1110
+    pages: '55'
 _key: '!items!5JFfSqLMCpbRmERa'
 
